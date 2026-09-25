@@ -1,6 +1,6 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-26 (session 2) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-09-26 (session 3) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `design-system/library-components` (not pushed, not merged into `main`).
 
 ## Where we are
@@ -10,11 +10,12 @@ Branch: `design-system/library-components` (not pushed, not merged into `main`).
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. |
 | F-01 Auth | SPECIFIED | `docs/features/auth/spec.md` + acceptance criteria. Not modelled or designed yet. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
-| Design system — tokens | PERSISTED (2026-09-26) | **359 tokens** (58 primitive · 52 semantic · 200 component · scales), `mode: light \| dark`. Live checksum `9ebc8db7`. |
+| Design system — tokens | PERSISTED (2026-09-26) | **375 tokens** (58 primitive · 52 semantic · 216 component · scales), `mode: light \| dark`. Live checksum `977d7a4c`. |
 | Design system — token canvas | DONE | Boards 00–08, refreshed for every token added this session. |
 | Design system — usage & spacing rules | APPROVED (2026-09-26) + Owner amendments | See *Key decisions*. |
 | Design system — primitive components | **BUILT** — C01 APPROVED · C02–C17 PROPOSED | 17 components (108 reusable nodes) in `design-system.lib.pen`, each with a spec in `components/`. |
-| Design system — composite components (tier 2–3) | NOT STARTED | Text field, nav item, segmented control, toast, calendar day, metric tile, select / multi-select / action menu, table row, app panel. |
+| Design system — composite components (tier 2) | **BUILT** — C18–C26 PROPOSED (2026-09-26) | Text field, Select, Multi-select, Action menu, Nav item (+ Nav Group Label), Segmented control, Toast, Calendar day, Metric tile. Plus Icon button **SM** (ghost). |
+| Design system — composite components (tier 3) | NOT STARTED | Table header / row, app panel. |
 | Code | NONE | No app scaffold yet (F-00 Foundation is TODO). |
 
 ## Component library (`design-system.lib.pen`)
@@ -25,7 +26,8 @@ Branch: `design-system/library-components` (not pushed, not merged into `main`).
 |---|---|
 | 1 (y 6800) | **Actions:** C01 Button · C02 Icon button · **Form controls:** C03 Input · C04 Textarea · C05 Checkbox · C06 Radio · C07 Switch · C08 Stepper |
 | 2 (y 9359) | **Menus:** C09 Menu item · C10 Menu · **Navigation:** C11 Segmented item · **Status:** C12 Stage chip · C13 Count badge · C14 Notification badge · C15 Metric delta · **Display:** C16 Avatar |
-| 3 (y 11983) | **Display:** C17 Kbd |
+| 3 (y 11983) | **Display:** C17 Kbd · **Tier 2:** C18 Text field · C19 Select · C20 Multi-select · C21 Action menu · C22 Nav item · C23 Segmented control · C24 Toast |
+| 4 (y 14801) | C25 Calendar day · C26 Metric tile |
 
 **The pattern** (Figma best practice adapted to pen.dev; the Button pilot was approved by the Owner):
 
@@ -53,6 +55,8 @@ Branch: `design-system/library-components` (not pushed, not merged into `main`).
   - Tier 1: C05–C07, C12, C13.
   - Tier 1b: C02–C04, C08, C11, C14–C17.
   - Tier 1c: C09–C10 menus. These have **no legacy evidence** and need a careful review.
+  - Tier 2: C18–C26 composites built from nested primitive instances.
+- **Composite pattern (tier 2):** a composite's state variants **don't swap** the nested primitive ref. Replacing the nested ref gives it a new ID per variant and breaks instance override paths. Instead, each variant re-applies the primitive state's token overrides on **one stable nested instance** (for example Text field `c67yIW`, Select `Et1pR/c67yIW`). Floating parts (Select/Action menu Menus) are `layoutPosition: absolute` and off when closed. A composite built on another composite is a ref of its base (`_MultiSelect/Base` is a ref of `_Select/Base` with its Menu slot replaced).
 
 ## Design-system artifacts (`docs/design-system/`)
 
@@ -95,6 +99,12 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 - **Tier 1c:** Menu item and Menu, for dropdown / select / action menu.
 - **Canvas:** components sit below the tokens, 8 per row, ordered by group. The C-codes were renumbered to match the canvas order.
 
+**Session 3 (2026-09-26):**
+- **Tier 2 tokens approved** ("approve all"): 16 component tokens — `calendar.day.label/number/dot/dot-selected`, `nav.item.background-hover`, `nav.group-label`, `metric.tile.label/value`, `metric.spark.gap/radius`, `toast.<tone>.action` ×5, `icon-button.sm.padding`.
+- **SP6 amended:** toast title ↔ body (2) joins the half-step list.
+- **Icon button SM** (32 px, ghost only) for the toast close and table-row action menus. MD variants renamed `Icon Button/<Style>/MD/<State>` (IDs unchanged).
+- Snaps: spark and dot gap 3 → 4; toast padding 12/14 → 12; calendar date weight 800 → 700; nav group label 11/600 → overline.
+
 ## Open gaps (deferred)
 
 - GAP-01 dark-mode evidence
@@ -109,18 +119,13 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 
 ## Next steps
 
-1. **Owner review** of C02–C17 (especially C09–C10 menus). Mark each APPROVED in its spec and in `registry.json` status.
-2. **Tier 2 composites**, built from nested primitive instances:
-   - Text field: Input + label + helper/error.
-   - Nav item: + Count badge.
-   - Segmented control: track + Segmented items.
-   - Toast (style B): + ghost Icon button.
-   - Calendar day.
-   - Metric tile: + Metric delta.
-   - Select, Multi-select and Action menu: trigger + Menu.
-   
-   Settle the half-step question for toast `text-gap` (2) and table `cell.gap` (10) as each one comes up.
-3. **Tier 3:** table header and row (Avatar + Stage chip), and the app panel (header + content slot).
+1. **Owner review** of C02–C26: especially C09–C10 menus and the tier 2 composites C18–C26. Mark each one APPROVED in its spec and in the `registry.json` status.
+2. Open tier 2 questions:
+   - Toast close optical nudge (§4.6 exception in code?).
+   - Calendar day hover state.
+   - Combobox (Select with search) for lists of 10 or more options.
+   - Segmented LG size for the client gallery.
+3. **Tier 3:** table header and row (Avatar + Stage chip + Action menu SM), and the app panel (header + content slot). Settle table `cell.gap` (10) as a half-step.
 4. Re-run `/sdv:verify-design-system`; the verification report is stale.
 5. Merge the branch, then resume the feature track: `/sdv:discover-feature workspace` (pair it with F-01 Auth) → model → design.
 

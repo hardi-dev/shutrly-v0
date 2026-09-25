@@ -156,6 +156,17 @@ add("calendar.day.background","color",SC("surface.sunken"))
 add("calendar.day.background-selected","color",SC("surface.inverse"))
 add("calendar.day.label-selected","color",SC("accent.on-inverse"))
 add("calendar.day.number-selected","color",SC("text.inverse"))
+# ── tier 2 composites (Owner 2026-09-26) ──
+add("calendar.day.label","color",SC("text.muted"))
+add("calendar.day.number","color",SC("text.primary"))
+add("calendar.day.dot","color",SC("action.primary"))
+add("calendar.day.dot-selected","color",SC("accent.on-inverse"))   # visible on inverse cell in both modes
+add("nav.item.background-hover","color",SC("surface.sunken"))
+add("nav.group-label","color",SC("text.muted"))                     # legacy #A1A1AA darkened for AA
+add("metric.tile.label","color",SC("text.secondary"))
+add("metric.tile.value","color",SC("text.primary"))
+add("metric.spark.gap","number",SP("space.1"))                      # 3 → 4
+add("metric.spark.radius","number",SP("radius.2xs"))                # 2
 for st in ["success","info","warning","danger","highlight"]:
     if st=="highlight": bg, fg, bd = "accent.soft","accent.soft-fg","status.highlight.border"
     else: bg, fg, bd = f"status.{st}.bg", f"status.{st}.fg", f"status.{st}.border"
@@ -163,6 +174,7 @@ for st in ["success","info","warning","danger","highlight"]:
     add(f"toast.{st}.border","color",SC(bd))
     add(f"toast.{st}.icon","color",SC(fg))
     add(f"toast.{st}.title","color",SC(fg),SC("text.primary"))
+    add(f"toast.{st}.action","color",SC(fg),SC("text.primary"))   # tier 2: action link = title colour
 add("toast.surface","color",SC("surface.panel"))
 add("toast.body","color",SC("text.secondary"))
 add("toast.radius","number",SP("radius.md"))
@@ -259,6 +271,7 @@ add("icon-button.background-hover","color",SC("surface.sunken"))
 add("icon-button.border","color",SC("border.default"))
 add("icon-button.icon","color",SC("text.primary"))
 add("icon-button.padding","number",SP("space.3"))              # 16 icon + 2×12 = 40 (matches input height)
+add("icon-button.sm.padding","number",SP("space.2"))           # tier 2: 16 icon + 2×8 = 32 (toast close, row actions)
 add("icon-button.radius","number",SP("radius.sm"))
 add("badge.danger.background","color",SC("status.danger.solid"))
 add("badge.danger.text","color",SC("status.danger.on-solid"))
@@ -396,7 +409,7 @@ mapping = {
                     "rules_status": "APPROVED 2026-09-26",
                     "note": "Documentation boards bind every swatch/scale to live variables; dark previews use theme mode=dark."},
  "components": {k: v for k, v in json.loads((ROOT/"components"/"registry.json").read_text()).items() if not k.startswith("$")} if (ROOT/"components"/"registry.json").exists() else {},
- "components_status": "IN PROGRESS — C01 Button APPROVED 2026-09-26; tier 1 (C02–C06), 1b (C07–C15), 1c (C16–C17) PROPOSED 2026-09-26; tiers 2–3 pending.",
+ "components_status": "IN PROGRESS — C01 Button APPROVED 2026-09-26; tiers 1 / 1b / 1c (C02–C17) PROPOSED 2026-09-26; tier 2 composites (C18–C26) PROPOSED 2026-09-26; tier 3 pending.",
  "unsupported": {
    "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.","typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",
                  "shadow": "Composite shadow split into elevation.N.offset-y / blur (number) + color.semantic.elevation.N.color (color)."},

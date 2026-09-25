@@ -152,8 +152,12 @@
     "component/button/secondary/text": "component.button.secondary.text",
     "component/calendar/day/background": "component.calendar.day.background",
     "component/calendar/day/background-selected": "component.calendar.day.background-selected",
+    "component/calendar/day/dot": "component.calendar.day.dot",
+    "component/calendar/day/dot-selected": "component.calendar.day.dot-selected",
     "component/calendar/day/gap": "component.calendar.day.gap",
+    "component/calendar/day/label": "component.calendar.day.label",
     "component/calendar/day/label-selected": "component.calendar.day.label-selected",
+    "component/calendar/day/number": "component.calendar.day.number",
     "component/calendar/day/number-selected": "component.calendar.day.number-selected",
     "component/calendar/day/padding-y": "component.calendar.day.padding-y",
     "component/calendar/day/radius": "component.calendar.day.radius",
@@ -186,6 +190,7 @@
     "component/icon-button/icon": "component.icon-button.icon",
     "component/icon-button/padding": "component.icon-button.padding",
     "component/icon-button/radius": "component.icon-button.radius",
+    "component/icon-button/sm/padding": "component.icon-button.sm.padding",
     "component/input/background": "component.input.background",
     "component/input/background-disabled": "component.input.background-disabled",
     "component/input/border": "component.input.border",
@@ -239,17 +244,23 @@
     "component/metric/delta/warning/text": "component.metric.delta.warning.text",
     "component/metric/spark/bar": "component.metric.spark.bar",
     "component/metric/spark/current": "component.metric.spark.current",
+    "component/metric/spark/gap": "component.metric.spark.gap",
+    "component/metric/spark/radius": "component.metric.spark.radius",
     "component/metric/tile/background": "component.metric.tile.background",
     "component/metric/tile/border": "component.metric.tile.border",
     "component/metric/tile/gap": "component.metric.tile.gap",
+    "component/metric/tile/label": "component.metric.tile.label",
     "component/metric/tile/padding": "component.metric.tile.padding",
     "component/metric/tile/radius": "component.metric.tile.radius",
+    "component/metric/tile/value": "component.metric.tile.value",
     "component/nav/count/background": "component.nav.count.background",
     "component/nav/count/padding-x": "component.nav.count.padding-x",
     "component/nav/count/padding-y": "component.nav.count.padding-y",
     "component/nav/count/radius": "component.nav.count.radius",
     "component/nav/count/text": "component.nav.count.text",
+    "component/nav/group-label": "component.nav.group-label",
     "component/nav/item/background-active": "component.nav.item.background-active",
+    "component/nav/item/background-hover": "component.nav.item.background-hover",
     "component/nav/item/gap": "component.nav.item.gap",
     "component/nav/item/icon": "component.nav.item.icon",
     "component/nav/item/padding-x": "component.nav.item.padding-x",
@@ -303,15 +314,18 @@
     "component/table/row/padding-x": "component.table.row.padding-x",
     "component/table/row/padding-y": "component.table.row.padding-y",
     "component/toast/body": "component.toast.body",
+    "component/toast/danger/action": "component.toast.danger.action",
     "component/toast/danger/background": "component.toast.danger.background",
     "component/toast/danger/border": "component.toast.danger.border",
     "component/toast/danger/icon": "component.toast.danger.icon",
     "component/toast/danger/title": "component.toast.danger.title",
     "component/toast/gap": "component.toast.gap",
+    "component/toast/highlight/action": "component.toast.highlight.action",
     "component/toast/highlight/background": "component.toast.highlight.background",
     "component/toast/highlight/border": "component.toast.highlight.border",
     "component/toast/highlight/icon": "component.toast.highlight.icon",
     "component/toast/highlight/title": "component.toast.highlight.title",
+    "component/toast/info/action": "component.toast.info.action",
     "component/toast/info/background": "component.toast.info.background",
     "component/toast/info/border": "component.toast.info.border",
     "component/toast/info/icon": "component.toast.info.icon",
@@ -319,12 +333,14 @@
     "component/toast/padding-x": "component.toast.padding-x",
     "component/toast/padding-y": "component.toast.padding-y",
     "component/toast/radius": "component.toast.radius",
+    "component/toast/success/action": "component.toast.success.action",
     "component/toast/success/background": "component.toast.success.background",
     "component/toast/success/border": "component.toast.success.border",
     "component/toast/success/icon": "component.toast.success.icon",
     "component/toast/success/title": "component.toast.success.title",
     "component/toast/surface": "component.toast.surface",
     "component/toast/text-gap": "component.toast.text-gap",
+    "component/toast/warning/action": "component.toast.warning.action",
     "component/toast/warning/background": "component.toast.warning.background",
     "component/toast/warning/border": "component.toast.warning.border",
     "component/toast/warning/icon": "component.toast.warning.icon",
@@ -380,11 +396,11 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 359,
+    "total": 375,
     "primitive": 58,
     "semantic": 52,
-    "component": 200,
-    "themed": 49
+    "component": 216,
+    "themed": 54
   },
   "transforms": {
     "opacity/*": "Pencil value = token $value × 100 (Pencil opacity variables are percent; e.g. opacity.disabled 0.4 → 40)"
@@ -1037,7 +1053,7 @@
       ]
     },
     "icon-button": {
-      "status": "PROPOSED (tier 1b) 2026-09-26",
+      "status": "PROPOSED (tier 1b) 2026-09-26 · size SM (ghost) added tier 2 2026-09-26",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C02 — Icon button",
@@ -1053,6 +1069,10 @@
         "style": [
           "outline",
           "ghost"
+        ],
+        "size": [
+          "md",
+          "sm"
         ],
         "state": [
           "default",
@@ -1079,19 +1099,25 @@
         "Badge": "w1Fg4G"
       },
       "variants": {
-        "outline/default": "m9dUlL",
-        "outline/hover": "q55i4",
-        "outline/focus": "z8x6cH",
-        "outline/disabled": "cSqu0",
-        "ghost/default": "qY0Em",
-        "ghost/hover": "sDBli",
-        "ghost/focus": "RXlcJ",
-        "ghost/disabled": "V85La"
+        "outline/md/default": "m9dUlL",
+        "outline/md/hover": "q55i4",
+        "outline/md/focus": "z8x6cH",
+        "outline/md/disabled": "cSqu0",
+        "ghost/md/default": "qY0Em",
+        "ghost/md/hover": "sDBli",
+        "ghost/md/focus": "RXlcJ",
+        "ghost/md/disabled": "V85La",
+        "ghost/sm/default": "VA96y",
+        "ghost/sm/hover": "zl5JW",
+        "ghost/sm/focus": "j1Kf3I",
+        "ghost/sm/disabled": "Zyrkn"
       },
       "tokens": [
         "component.icon-button.*"
       ],
-      "gaps": []
+      "gaps": [
+        "outline SM deferred until needed"
+      ]
     },
     "notification-badge": {
       "status": "PROPOSED (tier 1b) 2026-09-26",
@@ -1275,9 +1301,600 @@
         "no legacy evidence",
         "Pencil: Get visitor may throw inside replaced instance slots — skipChildren on refs"
       ]
+    },
+    "text-field": {
+      "status": "PROPOSED (tier 2) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C18 — Text field",
+        "id": "P42vwq"
+      },
+      "spec": "docs/design-system/components/text-field.md",
+      "base": {
+        "name": "_TextField/Base",
+        "id": "TFmAG",
+        "private": true
+      },
+      "axes": {
+        "state": [
+          "default",
+          "hover",
+          "focus",
+          "error",
+          "disabled"
+        ]
+      },
+      "props": {
+        "label": {
+          "kind": "text",
+          "layer": "Label",
+          "default": "Email klien"
+        },
+        "optional": {
+          "kind": "boolean",
+          "layer": "Optional",
+          "default": false
+        },
+        "helper": {
+          "kind": "text",
+          "layer": "Helper",
+          "default": "Tautan galeri dikirim ke email ini."
+        },
+        "message": {
+          "kind": "boolean",
+          "layer": "Message",
+          "default": true
+        },
+        "input": {
+          "kind": "nested",
+          "layer": "Input",
+          "ref": "input/default/default",
+          "paths": "Input/<layer> e.g. c67yIW/tvTDd (Placeholder), c67yIW/CykHo (Value)"
+        }
+      },
+      "layers": {
+        "Label row": "OjQDs",
+        "Label": "Gmk0c",
+        "Optional": "RsEBb",
+        "Input": "c67yIW",
+        "Message": "i0umVC",
+        "Message icon": "I0aOa6",
+        "Helper": "uh4XA"
+      },
+      "variants": {
+        "default": "HHNPk",
+        "hover": "Feq2q",
+        "focus": "mZcc4",
+        "error": "AVpMa",
+        "disabled": "Q64HTj"
+      },
+      "nested": [
+        "input"
+      ],
+      "tokens": [
+        "component.input.*"
+      ],
+      "gaps": [
+        "state variants re-apply Input/<State> overrides on one stable nested Input (replacing the nested ref would change its id per variant)"
+      ]
+    },
+    "select": {
+      "status": "PROPOSED (tier 2) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C19 — Select",
+        "id": "epNyK"
+      },
+      "spec": "docs/design-system/components/select.md",
+      "base": {
+        "name": "_Select/Base",
+        "id": "R1MZh",
+        "private": true
+      },
+      "axes": {
+        "state": [
+          "default",
+          "hover",
+          "open",
+          "error",
+          "disabled"
+        ]
+      },
+      "props": {
+        "field": {
+          "kind": "nested",
+          "layer": "Field",
+          "ref": "text-field/default",
+          "paths": "Et1pR/Gmk0c label, Et1pR/c67yIW/tvTDd placeholder, Et1pR/c67yIW/CykHo value, Et1pR/uh4XA helper"
+        },
+        "menu": {
+          "kind": "nested+slot",
+          "layer": "Menu",
+          "ref": "menu",
+          "fill": "Replace(instance+'/xGHsR/JoK1p', …)",
+          "position": "absolute y 65 (4 px below the Input)"
+        }
+      },
+      "layers": {
+        "Field": "Et1pR",
+        "Menu": "xGHsR"
+      },
+      "variants": {
+        "default": "Wc7hd",
+        "hover": "v7bysV",
+        "open": "b5dem",
+        "error": "A6bXr",
+        "disabled": "umHpv"
+      },
+      "nested": [
+        "text-field",
+        "menu",
+        "menu-item"
+      ],
+      "tokens": [
+        "component.input.*",
+        "component.menu.*",
+        "elevation.1.*"
+      ],
+      "gaps": [
+        "menu y offset assumes the label row is on (15 px); hide the label → move the menu to y 44",
+        "combobox (search in menu) not built"
+      ]
+    },
+    "multi-select": {
+      "status": "PROPOSED (tier 2) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C20 — Multi-select",
+        "id": "A56Q5"
+      },
+      "spec": "docs/design-system/components/multi-select.md",
+      "base": {
+        "name": "_MultiSelect/Base",
+        "id": "K1H9l",
+        "private": true,
+        "ref_of": "_Select/Base"
+      },
+      "axes": {
+        "state": [
+          "default",
+          "hover",
+          "open",
+          "error",
+          "disabled"
+        ]
+      },
+      "props": {
+        "field": {
+          "kind": "nested",
+          "layer": "Field",
+          "paths": "same as select (Et1pR/…)"
+        },
+        "items": {
+          "kind": "slot (replaced in base)",
+          "layer": "Items",
+          "id": "xthKF",
+          "items": {
+            "Group label": "jELyt",
+            "WhatsApp": "JDxlW",
+            "Email": "CC64P",
+            "SMS": "nr0AY",
+            "Instagram DM": "B23y4"
+          },
+          "toggle": "Replace(<item>/iWymw, {type:'ref', ref: checkbox checked/default})"
+        }
+      },
+      "layers": {
+        "Field": "Et1pR",
+        "Menu": "xGHsR",
+        "Items": "xthKF"
+      },
+      "variants": {
+        "default": "X8ErE9",
+        "hover": "nvFx0",
+        "open": "q4NjNG",
+        "error": "ny8DD",
+        "disabled": "h1Cq6"
+      },
+      "nested": [
+        "select",
+        "menu-item",
+        "checkbox",
+        "menu-group-label"
+      ],
+      "tokens": [
+        "component.input.*",
+        "component.menu.*",
+        "component.checkbox.*"
+      ],
+      "gaps": [
+        "trigger overflow '+N' is a code behaviour"
+      ]
+    },
+    "action-menu": {
+      "status": "PROPOSED (tier 2) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C21 — Action menu",
+        "id": "TWp5Y"
+      },
+      "spec": "docs/design-system/components/action-menu.md",
+      "base": {
+        "name": "_ActionMenu/Base",
+        "id": "B7K1d",
+        "private": true
+      },
+      "axes": {
+        "size": [
+          "md",
+          "sm"
+        ],
+        "state": [
+          "closed",
+          "open"
+        ]
+      },
+      "props": {
+        "trigger": {
+          "kind": "nested",
+          "layer": "Trigger",
+          "ref": "icon-button/ghost/md/default",
+          "icon": "ellipsis"
+        },
+        "items": {
+          "kind": "slot (replaced in base)",
+          "layer": "Items",
+          "id": "c8fWyJ",
+          "fill": "Replace(instance+'/RCAAJ/JoK1p', …)"
+        }
+      },
+      "layers": {
+        "Trigger": "m4ka0s",
+        "Menu": "RCAAJ",
+        "Items": "c8fWyJ"
+      },
+      "variants": {
+        "md/closed": "rXttF",
+        "md/open": "tQSj1",
+        "sm/closed": "tgN4c",
+        "sm/open": "M3v1E5"
+      },
+      "nested": [
+        "icon-button",
+        "menu",
+        "menu-item",
+        "menu-divider"
+      ],
+      "tokens": [
+        "component.icon-button.*",
+        "component.menu.*",
+        "elevation.1.*"
+      ],
+      "gaps": [
+        "menu x offset is fixed per size (MD −200, SM −208) for a 240 menu"
+      ]
+    },
+    "nav-item": {
+      "status": "PROPOSED (tier 2) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C22 — Nav item",
+        "id": "UZTgh"
+      },
+      "spec": "docs/design-system/components/nav-item.md",
+      "base": {
+        "name": "_NavItem/Base",
+        "id": "cvsvP",
+        "private": true
+      },
+      "axes": {
+        "state": [
+          "default",
+          "hover",
+          "active",
+          "focus"
+        ]
+      },
+      "props": {
+        "icon": {
+          "kind": "instance-swap",
+          "layer": "Icon",
+          "default": "folder-kanban"
+        },
+        "label": {
+          "kind": "text",
+          "layer": "Label",
+          "default": "Proyek"
+        },
+        "count": {
+          "kind": "boolean",
+          "layer": "Count",
+          "nested": "count-badge",
+          "default": false,
+          "text": "E6JiYt/BTnxI"
+        }
+      },
+      "layers": {
+        "Icon": "MpR9k",
+        "Label": "m6S2m",
+        "Count": "E6JiYt"
+      },
+      "variants": {
+        "default": "K0UQ06",
+        "hover": "Ijxgm",
+        "active": "CInVy",
+        "focus": "XBgH6"
+      },
+      "nested": [
+        "count-badge"
+      ],
+      "tokens": [
+        "component.nav.*"
+      ],
+      "gaps": [
+        "nav.count.* should become count-badge.* if the badge spreads (open)",
+        "label truncation is a code behaviour"
+      ],
+      "related": {
+        "nav-group-label": {
+          "id": "Rjoxp",
+          "layers": {
+            "Label": "p1hGy"
+          },
+          "tokens": [
+            "component.nav.group-label",
+            "component.nav.item.padding-x",
+            "space.1"
+          ]
+        }
+      }
+    },
+    "segmented-control": {
+      "status": "PROPOSED (tier 2) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C23 — Segmented control",
+        "id": "GD7cE"
+      },
+      "spec": "docs/design-system/components/segmented-control.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "items": {
+          "kind": "slot",
+          "layer": "Items",
+          "id": "ULzG1",
+          "recommended": [
+            "NcbI1",
+            "AptHz",
+            "BrUPr",
+            "u7e89"
+          ],
+          "default": [
+            "Hari (active)",
+            "Minggu",
+            "Bulan"
+          ],
+          "fill": "Replace(instance+'/ULzG1', …)"
+        }
+      },
+      "layers": {
+        "Items": "ULzG1"
+      },
+      "variants": {
+        "default": "uMP5H"
+      },
+      "nested": [
+        "segmented-item"
+      ],
+      "tokens": [
+        "component.segmented.*"
+      ],
+      "gaps": [
+        "LG size for the client gallery (≥ 44 px) not built"
+      ]
+    },
+    "toast": {
+      "status": "PROPOSED (tier 2) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C24 — Toast",
+        "id": "NFr0T"
+      },
+      "spec": "docs/design-system/components/toast.md",
+      "base": {
+        "name": "_Toast/Base",
+        "id": "B50hT",
+        "private": true
+      },
+      "axes": {
+        "tone": [
+          "success",
+          "info",
+          "warning",
+          "danger",
+          "highlight"
+        ]
+      },
+      "props": {
+        "title": {
+          "kind": "text",
+          "layer": "Title"
+        },
+        "body": {
+          "kind": "boolean+text",
+          "layer": "Body",
+          "default": true
+        },
+        "action": {
+          "kind": "boolean+text",
+          "layer": "Action",
+          "default": false
+        },
+        "icon": {
+          "kind": "instance-swap",
+          "layer": "Icon",
+          "note": "fixed per tone"
+        },
+        "close": {
+          "kind": "nested",
+          "layer": "Close",
+          "ref": "icon-button/ghost/sm/default",
+          "icon": "x"
+        }
+      },
+      "layers": {
+        "Icon": "k7lq2",
+        "Title": "m0dqT6",
+        "Body": "fhch4",
+        "Action": "M54Ca",
+        "Close": "F4Fv5K"
+      },
+      "variants": {
+        "success": "E4PkTw",
+        "info": "S5bhVn",
+        "warning": "pt1q7",
+        "danger": "F3GrC5",
+        "highlight": "ef21N"
+      },
+      "nested": [
+        "icon-button"
+      ],
+      "tokens": [
+        "component.toast.*",
+        "elevation.1.*"
+      ],
+      "gaps": [
+        "close button (32) sits top-aligned; its X glyph centres 7 px below the title line (no negative offsets in Pencil)"
+      ]
+    },
+    "calendar-day": {
+      "status": "PROPOSED (tier 2) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C25 — Calendar day",
+        "id": "J3EsT8"
+      },
+      "spec": "docs/design-system/components/calendar-day.md",
+      "base": {
+        "name": "_CalendarDay/Base",
+        "id": "RmXbc",
+        "private": true
+      },
+      "axes": {
+        "state": [
+          "default",
+          "selected",
+          "focus"
+        ]
+      },
+      "props": {
+        "day": {
+          "kind": "text",
+          "layer": "Day",
+          "default": "Sen"
+        },
+        "date": {
+          "kind": "text",
+          "layer": "Date",
+          "default": "22"
+        },
+        "dots": {
+          "kind": "boolean",
+          "layers": [
+            "Dot 1",
+            "Dot 2",
+            "Dot 3"
+          ],
+          "default": [
+            true,
+            false,
+            false
+          ]
+        }
+      },
+      "layers": {
+        "Day": "gotez",
+        "Date": "BYi8t",
+        "Dots": "gBNhF",
+        "Dot 1": "zB5te",
+        "Dot 2": "Z0m2o9",
+        "Dot 3": "onKaK"
+      },
+      "variants": {
+        "default": "v87EDR",
+        "selected": "Hbsc8",
+        "focus": "qTeQQ"
+      },
+      "nested": [],
+      "tokens": [
+        "component.calendar.day.*",
+        "space.1"
+      ],
+      "gaps": [
+        "no hover state/token",
+        "dots gap binds space.1 (no component alias)",
+        "date weight 800 in legacy → 700 (weights ≤ 700 rule)"
+      ]
+    },
+    "metric-tile": {
+      "status": "PROPOSED (tier 2) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C26 — Metric tile",
+        "id": "w2pc7t"
+      },
+      "spec": "docs/design-system/components/metric-tile.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "label": {
+          "kind": "text",
+          "layer": "Label",
+          "default": "Pendapatan"
+        },
+        "value": {
+          "kind": "text",
+          "layer": "Value",
+          "default": "Rp 18,4 jt"
+        },
+        "delta": {
+          "kind": "boolean+nested",
+          "layer": "Delta",
+          "ref": "metric-delta/positive",
+          "default": true,
+          "swap": "Replace(instance+'/MbBqV', {type:'ref', ref:'GU07z'})"
+        },
+        "spark": {
+          "kind": "boolean",
+          "layer": "Spark",
+          "default": true
+        }
+      },
+      "layers": {
+        "Label": "Wtx9f",
+        "Delta": "MbBqV",
+        "Value": "CXKcw",
+        "Spark": "dUbG4"
+      },
+      "variants": {
+        "default": "AJT5R"
+      },
+      "nested": [
+        "metric-delta"
+      ],
+      "tokens": [
+        "component.metric.*",
+        "space.2"
+      ],
+      "gaps": [
+        "tabular figures (DESIGN TOKEN GAP)",
+        "no negative (red) delta tone",
+        "Head/Value-row min gap binds space.2"
+      ]
     }
   },
-  "components_status": "IN PROGRESS — C01 Button APPROVED 2026-09-26; tier 1 (C02–C06), 1b (C07–C15), 1c (C16–C17) PROPOSED 2026-09-26; tiers 2–3 pending.",
+  "components_status": "IN PROGRESS — C01 Button APPROVED 2026-09-26; tiers 1 / 1b / 1c (C02–C17) PROPOSED 2026-09-26; tier 2 composites (C18–C26) PROPOSED 2026-09-26; tier 3 pending.",
   "unsupported": {
     "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.",
     "typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",

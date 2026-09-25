@@ -11,7 +11,7 @@ Last updated: 2026-09-26 · Read this first when resuming work, then [docs/READM
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
 | Design system — tokens | PERSISTED (2026-09-26) | 289 tokens (58 primitive · 49 semantic · 134 component · scales), `mode: light | dark`. |
 | Design system — token canvas | DONE | Library boards 00–08 bound to live variables. |
-| Design system — usage & spacing rules | PROPOSED | `token-usage.md` + boards 07/08; awaiting Owner approval. |
+| Design system — usage & spacing rules | APPROVED (2026-09-26) | `token-usage.md` + boards 07/08. |
 | Design system — reusable components | NOT STARTED | **Blocking** for feature design (see verification report). |
 | Code | NONE | No app scaffold yet (F-00 Foundation is TODO). |
 
@@ -23,7 +23,7 @@ Last updated: 2026-09-26 · Read this first when resuming work, then [docs/READM
 | `design-system.lib.pen` | Approved library: 289 Pencil variables, theme axis `mode`, documentation boards 00 Cover · 01–05 Foundations · 06 Component tokens · 07 Usage rules · 08 Spacing rules. No components yet. |
 | `tokens.json` | Canonical DTCG tokens. Light = `$value`, dark = `$extensions["dev.pen.modes"].dark`. **Generated — edit `scripts/gen_tokens.py`, not this file.** |
 | `pencil-mapping.json` | Token path ⇄ Pencil variable, transforms (opacity ×100), unsupported composites, canvas board list. Generated. |
-| `token-usage.md` | Usage rules (G1–G8, colour tables, typography, spacing SP1–SP11, radius, elevation, opacity, a11y). PROPOSED. |
+| `token-usage.md` | Usage rules (G1–G8, colour tables, typography, spacing SP1–SP11, radius, elevation, opacity, a11y). APPROVED 2026-09-26. |
 | `verification-report.md` | Last `/sdv:verify-design-system` result: tokens PASS; blocker = no reusable components. |
 | `scripts/gen_tokens.py` | Token source of truth + generator → `tokens.json`, `pencil-mapping.json`, `scripts/pencil-vars.json` (Pencil `SetVariables` payload). |
 | `scripts/verify_json.py`, `verify_vars.py` | Cross-check JSON ⇄ mapping ⇄ payload + layer rules; FNV-1a checksum (current: `37f6438f`, 289 vars). |
@@ -44,7 +44,7 @@ Root files: `design.pen` (pre-existing, not used by this work) and `dont-touch-o
 GAP-01 dark-mode evidence · GAP-02 interaction/error states beyond those drawn · GAP-03 workspace brand-override rules · GAP-04 client gallery (mobile) · GAP-05 EN/ID copy mix (id-ID assumed) · tabular figures for money/time.
 
 ## Next steps
-1. Owner: approve (or edit) the usage + spacing rules → mark APPROVED in `token-usage.md` and boards 07/08.
+1. ~~Owner: approve the usage + spacing rules~~ — done 2026-09-26.
 2. Build reusable library components bound to `component/*` variables (button, nav item + count, stage chip ×5, metric tile, calendar day, toast B ×5, text field states, checkbox/radio/switch, segmented, table row, stepper, app panel); document each with a component spec.
 3. Re-run `/sdv:verify-design-system`.
 4. Resume the feature track: `/sdv:discover-feature workspace` (pair with F-01 Auth) → `/sdv:model-feature` → `/sdv:design-feature` (feature `.pen` files import the library and use linked instances).

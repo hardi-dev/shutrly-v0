@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 2, 2026-09-26). The Menu part has no legacy evidence (see C10).
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 2, 2026-09-26). The Menu part has no legacy evidence (see C10).
 - Direction/token approval: `APPROVED` (existing `input.*`, `menu.*`)
 - Pencil library: `design-system.lib.pen` › **C19 — Select** (`epNyK`)
 

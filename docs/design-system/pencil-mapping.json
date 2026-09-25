@@ -273,8 +273,10 @@
     "component/panel/app/content/gap": "component.panel.app.content.gap",
     "component/panel/app/content/padding-x": "component.panel.app.content.padding-x",
     "component/panel/app/content/padding-y": "component.panel.app.content.padding-y",
+    "component/panel/app/header/gap": "component.panel.app.header.gap",
     "component/panel/app/header/padding-x": "component.panel.app.header.padding-x",
     "component/panel/app/radius": "component.panel.app.radius",
+    "component/panel/app/title": "component.panel.app.title",
     "component/segmented/gap": "component.segmented.gap",
     "component/segmented/item/background-active": "component.segmented.item.background-active",
     "component/segmented/item/border-active": "component.segmented.item.border-active",
@@ -307,12 +309,23 @@
     "component/switch/track-off-hover": "component.switch.track-off-hover",
     "component/switch/track-on": "component.switch.track-on",
     "component/switch/track-on-hover": "component.switch.track-on-hover",
+    "component/table/background": "component.table.background",
+    "component/table/border": "component.table.border",
     "component/table/cell/gap": "component.table.cell.gap",
+    "component/table/cell/text": "component.table.cell.text",
+    "component/table/cell/text-strong": "component.table.cell.text-strong",
+    "component/table/footer/link": "component.table.footer.link",
     "component/table/header/background": "component.table.header.background",
+    "component/table/header/border": "component.table.header.border",
+    "component/table/header/padding-y": "component.table.header.padding-y",
     "component/table/header/text": "component.table.header.text",
+    "component/table/radius": "component.table.radius",
+    "component/table/row/background-hover": "component.table.row.background-hover",
     "component/table/row/border": "component.table.row.border",
     "component/table/row/padding-x": "component.table.row.padding-x",
     "component/table/row/padding-y": "component.table.row.padding-y",
+    "component/table/toolbar/padding-x": "component.table.toolbar.padding-x",
+    "component/table/toolbar/padding-y": "component.table.toolbar.padding-y",
     "component/toast/body": "component.toast.body",
     "component/toast/danger/action": "component.toast.danger.action",
     "component/toast/danger/background": "component.toast.danger.background",
@@ -396,11 +409,11 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 375,
+    "total": 388,
     "primitive": 58,
     "semantic": 52,
-    "component": 216,
-    "themed": 54
+    "component": 229,
+    "themed": 55
   },
   "transforms": {
     "opacity/*": "Pencil value = token $value × 100 (Pencil opacity variables are percent; e.g. opacity.disabled 0.4 → 40)"
@@ -512,7 +525,7 @@
       ]
     },
     "stage-chip": {
-      "status": "PROPOSED (tier 1) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C12 — Stage chip",
@@ -551,7 +564,7 @@
       "gaps": []
     },
     "count-badge": {
-      "status": "PROPOSED (tier 1) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C13 — Count badge",
@@ -581,7 +594,7 @@
       ]
     },
     "checkbox": {
-      "status": "PROPOSED (tier 1) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C05 — Checkbox",
@@ -641,7 +654,7 @@
       "gaps": []
     },
     "radio": {
-      "status": "PROPOSED (tier 1) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C06 — Radio",
@@ -696,7 +709,7 @@
       ]
     },
     "switch": {
-      "status": "PROPOSED (tier 1) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C07 — Switch",
@@ -752,7 +765,7 @@
       ]
     },
     "input": {
-      "status": "PROPOSED (tier 1b) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C03 — Input",
@@ -835,7 +848,7 @@
       ]
     },
     "textarea": {
-      "status": "PROPOSED (tier 1b) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C04 — Textarea",
@@ -883,7 +896,7 @@
       "gaps": []
     },
     "segmented-item": {
-      "status": "PROPOSED (tier 1b) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C11 — Segmented item",
@@ -925,7 +938,7 @@
       "gaps": []
     },
     "metric-delta": {
-      "status": "PROPOSED (tier 1b) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C15 — Metric delta",
@@ -965,7 +978,7 @@
       ]
     },
     "stepper": {
-      "status": "PROPOSED (tier 1b) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C08 — Stepper",
@@ -1011,7 +1024,7 @@
       ]
     },
     "avatar": {
-      "status": "PROPOSED (tier 1b) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C16 — Avatar",
@@ -1053,7 +1066,7 @@
       ]
     },
     "icon-button": {
-      "status": "PROPOSED (tier 1b) 2026-09-26 · size SM (ghost) added tier 2 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26 · size SM (ghost) added tier 2 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C02 — Icon button",
@@ -1120,7 +1133,7 @@
       ]
     },
     "notification-badge": {
-      "status": "PROPOSED (tier 1b) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C14 — Notification badge",
@@ -1148,7 +1161,7 @@
       "gaps": []
     },
     "kbd": {
-      "status": "PROPOSED (tier 1b) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C17 — Kbd",
@@ -1176,7 +1189,7 @@
       "gaps": []
     },
     "menu-item": {
-      "status": "PROPOSED (tier 1c, no legacy evidence) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1c, no legacy evidence) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C09 — Menu item",
@@ -1252,7 +1265,7 @@
       ]
     },
     "menu": {
-      "status": "PROPOSED (tier 1c, no legacy evidence) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1c, no legacy evidence) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C10 — Menu",
@@ -1303,7 +1316,7 @@
       ]
     },
     "text-field": {
-      "status": "PROPOSED (tier 2) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C18 — Text field",
@@ -1379,7 +1392,7 @@
       ]
     },
     "select": {
-      "status": "PROPOSED (tier 2) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C19 — Select",
@@ -1442,7 +1455,7 @@
       ]
     },
     "multi-select": {
-      "status": "PROPOSED (tier 2) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C20 — Multi-select",
@@ -1512,7 +1525,7 @@
       ]
     },
     "action-menu": {
-      "status": "PROPOSED (tier 2) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C21 — Action menu",
@@ -1575,7 +1588,7 @@
       ]
     },
     "nav-item": {
-      "status": "PROPOSED (tier 2) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C22 — Nav item",
@@ -1650,7 +1663,7 @@
       }
     },
     "segmented-control": {
-      "status": "PROPOSED (tier 2) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C23 — Segmented control",
@@ -1695,7 +1708,7 @@
       ]
     },
     "toast": {
-      "status": "PROPOSED (tier 2) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C24 — Toast",
@@ -1769,7 +1782,7 @@
       ]
     },
     "calendar-day": {
-      "status": "PROPOSED (tier 2) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C25 — Calendar day",
@@ -1838,7 +1851,7 @@
       ]
     },
     "metric-tile": {
-      "status": "PROPOSED (tier 2) 2026-09-26",
+      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C26 — Metric tile",
@@ -1892,9 +1905,346 @@
         "no negative (red) delta tone",
         "Head/Value-row min gap binds space.2"
       ]
+    },
+    "table": {
+      "status": "PROPOSED (tier 3) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C27 — Table",
+        "id": "zWcpb"
+      },
+      "spec": "docs/design-system/components/table.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "title": {
+          "kind": "text",
+          "layer": "Title",
+          "id": "ycT8w"
+        },
+        "subtitle": {
+          "kind": "boolean+text",
+          "layer": "Subtitle",
+          "id": "aIKsB",
+          "default": true
+        },
+        "filter": {
+          "kind": "boolean+nested",
+          "layer": "Filter",
+          "id": "YTJjx",
+          "ref": "segmented-control",
+          "default": true
+        },
+        "rows": {
+          "kind": "slot",
+          "layer": "Rows",
+          "id": "cYo5t",
+          "recommended": [
+            "r7YZY",
+            "XlPZD"
+          ],
+          "note": "last row strokeWidth {bottom:0}"
+        },
+        "count": {
+          "kind": "text",
+          "layer": "Count",
+          "id": "X0Kcc"
+        },
+        "link": {
+          "kind": "boolean+text",
+          "layer": "Link",
+          "id": "QTddd",
+          "default": true
+        }
+      },
+      "layers": {
+        "Title": "ycT8w",
+        "Subtitle": "aIKsB",
+        "Filter": "YTJjx",
+        "Header": "KZSJQ",
+        "Rows": "cYo5t",
+        "Count": "X0Kcc",
+        "Link": "QTddd"
+      },
+      "variants": {
+        "default": "FCsTI"
+      },
+      "related": {
+        "table-cell": {
+          "base": {
+            "name": "_TableCell/Base",
+            "id": "Nm9LJ",
+            "private": true
+          },
+          "axes": {
+            "type": [
+              "text",
+              "strong",
+              "client",
+              "stage",
+              "actions"
+            ]
+          },
+          "variants": {
+            "text": "f0oyj",
+            "strong": "f7pbaS",
+            "client": "lVDvO",
+            "stage": "rS9BY",
+            "actions": "C1MRI"
+          },
+          "layers": {
+            "Avatar": "cTnMA",
+            "Text": "qlRSm",
+            "Primary": "Q4FlPn",
+            "Secondary": "m3GsQx",
+            "Stage": "T67o9d",
+            "Actions": "EUP7g"
+          },
+          "notes": "width per column; swap stage via Replace(<cell>/T67o9d, {type:'ref', ref: Stage Chip/<Stage>, enabled:true})"
+        },
+        "table-header-cell": {
+          "id": "T3MFWw",
+          "layers": {
+            "Label": "t55nF"
+          }
+        },
+        "table-header-row": {
+          "id": "oOFk7",
+          "slot": {
+            "Cells": "mxhia"
+          }
+        },
+        "table-row": {
+          "base": {
+            "name": "_TableRow/Base",
+            "id": "Y1wn7",
+            "private": true
+          },
+          "axes": {
+            "state": [
+              "default",
+              "hover"
+            ]
+          },
+          "variants": {
+            "default": "r7YZY",
+            "hover": "XlPZD"
+          },
+          "slot": {
+            "Cells": "GoLkn"
+          }
+        }
+      },
+      "nested": [
+        "segmented-control",
+        "avatar",
+        "stage-chip",
+        "action-menu"
+      ],
+      "tokens": [
+        "component.table.*"
+      ],
+      "gaps": [
+        "footer count/title/subtitle bind semantic text tokens (no component alias)",
+        "no sort, selection or empty/loading states (GAP-02)",
+        "legacy dark filter pills replaced by Segmented control (Owner 2026-09-26)"
+      ]
+    },
+    "app-panel": {
+      "status": "PROPOSED (tier 3) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C28 — App panel",
+        "id": "yepgE"
+      },
+      "spec": "docs/design-system/components/app-panel.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "title": {
+          "kind": "text",
+          "layer": "Title",
+          "id": "nrRBd"
+        },
+        "actions": {
+          "kind": "slot",
+          "layer": "Actions",
+          "id": "uR9Ye",
+          "recommended": [
+            "vmSeU",
+            "m9dUlL",
+            "Q49yf7",
+            "JmfmZ"
+          ]
+        },
+        "content": {
+          "kind": "slot",
+          "layer": "Content",
+          "id": "C5QYo",
+          "fill": "Replace(instance+'/C5QYo', {type:'frame', layout:'vertical', padding:[content.padding-y, content.padding-x], gap: content.gap})"
+        }
+      },
+      "layers": {
+        "Panel header": "gmoTC",
+        "Title": "nrRBd",
+        "Actions": "uR9Ye",
+        "Content": "C5QYo"
+      },
+      "variants": {
+        "default": "UmVJD"
+      },
+      "nested": [
+        "input",
+        "icon-button",
+        "button",
+        "metric-tile"
+      ],
+      "tokens": [
+        "component.panel.app.*"
+      ],
+      "gaps": [
+        "header height 72 is literal (Pencil can't bind height)",
+        "greeting/metrics default content bind semantic/scale tokens (screen layout, G3)",
+        "breakpoints not specified"
+      ]
+    },
+    "sidebar": {
+      "status": "PROPOSED (tier 3) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C29 — Sidebar",
+        "id": "nSDgz"
+      },
+      "spec": "docs/design-system/components/sidebar.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "workspace": {
+          "kind": "text",
+          "layer": "Workspace",
+          "id": "rAUNw"
+        },
+        "name": {
+          "kind": "text",
+          "layer": "Name",
+          "id": "EpYE1"
+        },
+        "email": {
+          "kind": "text",
+          "layer": "Email",
+          "id": "pMF7b"
+        },
+        "initials": {
+          "kind": "text",
+          "layer": "Avatar/Initials",
+          "path": "aXcVC/DloPs"
+        },
+        "nav": {
+          "kind": "slot",
+          "layer": "Nav",
+          "id": "tilEo",
+          "recommended": [
+            "K0UQ06",
+            "Ijxgm",
+            "CInVy",
+            "XBgH6",
+            "Rjoxp"
+          ]
+        },
+        "navBottom": {
+          "kind": "slot",
+          "layer": "Nav bottom",
+          "id": "pRu41",
+          "recommended": [
+            "K0UQ06",
+            "Ijxgm",
+            "CInVy",
+            "XBgH6"
+          ]
+        }
+      },
+      "layers": {
+        "Workspace": "rAUNw",
+        "Nav": "tilEo",
+        "Nav bottom": "pRu41",
+        "Avatar": "aXcVC",
+        "Name": "EpYE1",
+        "Email": "pMF7b"
+      },
+      "variants": {
+        "default": "vB50q"
+      },
+      "nested": [
+        "nav-item",
+        "nav-group-label",
+        "avatar",
+        "icon-button"
+      ],
+      "tokens": [
+        "space.1",
+        "space.2",
+        "space.2-5",
+        "space.3",
+        "radius.sm",
+        "radius.xs",
+        "color.semantic.border.default",
+        "color.semantic.surface.panel",
+        "color.semantic.text.*",
+        "color.semantic.accent.highlight",
+        "color.semantic.accent.on-highlight"
+      ],
+      "gaps": [
+        "layout region: binds semantic/scale tokens (board 08 layout map) — promote to sidebar.* tokens if the Owner wants G3 component aliases",
+        "logo mark monochrome (legacy blue) until brand rules (GAP-03)",
+        "collapsed / drawer modes not built",
+        "height drawn at 936; fills the shell"
+      ]
+    },
+    "app-shell": {
+      "status": "PROPOSED (tier 3) 2026-09-26 (template)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C30 — App shell",
+        "id": "f7qs8Z"
+      },
+      "spec": "docs/design-system/components/app-shell.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "sidebar": {
+          "kind": "nested",
+          "layer": "Sidebar",
+          "id": "fNszT",
+          "ref": "sidebar"
+        },
+        "panel": {
+          "kind": "nested",
+          "layer": "Panel",
+          "id": "Sw0yD",
+          "ref": "app-panel"
+        }
+      },
+      "layers": {
+        "Sidebar": "fNszT",
+        "Panel": "Sw0yD"
+      },
+      "variants": {
+        "default": "y9uBJl"
+      },
+      "nested": [
+        "sidebar",
+        "app-panel"
+      ],
+      "tokens": [
+        "color.semantic.surface.canvas",
+        "space.3"
+      ],
+      "gaps": [
+        "1440 × 960 only; breakpoints future"
+      ]
     }
   },
-  "components_status": "IN PROGRESS — C01 Button APPROVED 2026-09-26; tiers 1 / 1b / 1c (C02–C17) PROPOSED 2026-09-26; tier 2 composites (C18–C26) PROPOSED 2026-09-26; tier 3 pending.",
+  "components_status": "IN PROGRESS — C01–C26 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2); tier 3 (C27–C30) PROPOSED 2026-09-26.",
   "unsupported": {
     "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.",
     "typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",

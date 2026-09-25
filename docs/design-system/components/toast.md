@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 2, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 2, 2026-09-26)
 - Direction/token approval: `APPROVED`. Style **B** is the Owner's decision. `toast.<tone>.action` was added on 2026-09-26. SP6 was amended the same day so `toast.text-gap` (2) is a sanctioned half-step.
 - Pencil library: `design-system.lib.pen` › **C24 — Toast** (`NFr0T`)
 - Evidence: `exploration.pen` › Feedback — Toast study › Variant B (light and dark)

@@ -1,6 +1,6 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-26 (session 3) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-09-26 (session 4) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `design-system/library-components` (not pushed, not merged into `main`).
 
 ## Where we are
@@ -10,12 +10,12 @@ Branch: `design-system/library-components` (not pushed, not merged into `main`).
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. |
 | F-01 Auth | SPECIFIED | `docs/features/auth/spec.md` + acceptance criteria. Not modelled or designed yet. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
-| Design system — tokens | PERSISTED (2026-09-26) | **375 tokens** (58 primitive · 52 semantic · 216 component · scales), `mode: light \| dark`. Live checksum `977d7a4c`. |
+| Design system — tokens | PERSISTED (2026-09-26) | **388 tokens** (58 primitive · 52 semantic · 229 component · scales), `mode: light \| dark`. Live checksum `cca9dc04`. |
 | Design system — token canvas | DONE | Boards 00–08, refreshed for every token added this session. |
 | Design system — usage & spacing rules | APPROVED (2026-09-26) + Owner amendments | See *Key decisions*. |
-| Design system — primitive components | **BUILT** — C01 APPROVED · C02–C17 PROPOSED | 17 components (108 reusable nodes) in `design-system.lib.pen`, each with a spec in `components/`. |
-| Design system — composite components (tier 2) | **BUILT** — C18–C26 PROPOSED (2026-09-26) | Text field, Select, Multi-select, Action menu, Nav item (+ Nav Group Label), Segmented control, Toast, Calendar day, Metric tile. Plus Icon button **SM** (ghost). |
-| Design system — composite components (tier 3) | NOT STARTED | Table header / row, app panel. |
+| Design system — primitive components | **APPROVED** — C01–C17 | 17 components (108 reusable nodes) in `design-system.lib.pen`, each with a spec in `components/`. |
+| Design system — composite components (tier 2) | **APPROVED** — C18–C26 (2026-09-26) | Text field, Select, Multi-select, Action menu, Nav item (+ Nav Group Label), Segmented control, Toast, Calendar day, Metric tile. Plus Icon button **SM** (ghost). |
+| Design system — composite components (tier 3) | **BUILT** — C27–C30 PROPOSED (2026-09-26) | Table (+ cells, header cell/row, row), App panel, Sidebar, App shell template. |
 | Code | NONE | No app scaffold yet (F-00 Foundation is TODO). |
 
 ## Component library (`design-system.lib.pen`)
@@ -27,7 +27,7 @@ Branch: `design-system/library-components` (not pushed, not merged into `main`).
 | 1 (y 6800) | **Actions:** C01 Button · C02 Icon button · **Form controls:** C03 Input · C04 Textarea · C05 Checkbox · C06 Radio · C07 Switch · C08 Stepper |
 | 2 (y 9359) | **Menus:** C09 Menu item · C10 Menu · **Navigation:** C11 Segmented item · **Status:** C12 Stage chip · C13 Count badge · C14 Notification badge · C15 Metric delta · **Display:** C16 Avatar |
 | 3 (y 11983) | **Display:** C17 Kbd · **Tier 2:** C18 Text field · C19 Select · C20 Multi-select · C21 Action menu · C22 Nav item · C23 Segmented control · C24 Toast |
-| 4 (y 14801) | C25 Calendar day · C26 Metric tile |
+| 4 (y 14801) | C25 Calendar day · C26 Metric tile · **Tier 3:** C27 Table · C28 App panel · C29 Sidebar · C30 App shell (1600 wide page) |
 
 **The pattern** (Figma best practice adapted to pen.dev; the Button pilot was approved by the Owner):
 
@@ -105,6 +105,15 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 - **Icon button SM** (32 px, ghost only) for the toast close and table-row action menus. MD variants renamed `Icon Button/<Style>/MD/<State>` (IDs unchanged).
 - Snaps: spark and dot gap 3 → 4; toast padding 12/14 → 12; calendar date weight 800 → 700; nav group label 11/600 → overline.
 
+**Session 4 (2026-09-26):**
+- **C02–C26 approved** (Owner review).
+- **Tier 3 tokens approved:** 13 — `table.background/border/radius`, `table.toolbar.padding-y/-x`, `table.header.padding-y/border`, `table.row.background-hover`, `table.cell.text/text-strong`, `table.footer.link` (light `action.primary`, dark `status.info.fg`), `panel.app.title`, `panel.app.header.gap`.
+- **SP6 amended:** table cell avatar ↔ name (10) joins the half-step list.
+- **Table filter** = Segmented control (legacy dark pills dropped). Scope extended with **Sidebar + App shell**.
+- Sidebar binds semantic/scale tokens as a layout region (no `sidebar.*` aliases yet; Owner may promote). Logo mark monochrome, log-out neutral.
+- Metric tile label now fills and wraps (collided with the delta in narrow tiles).
+- **Pending (not persisted): Page Content + max-width.** Owner asked to extract the App Panel's Content region into its own component: outer frame fill width with padding 28/40, and inner `Container` as a **slot** fixed at 1096 and centred. Pen has no `maxWidth`, so the fixed centred container emulates it; code uses `max-width: 1096px; width: 100%`. The token would be `size.content-max` = 1096 (scale) → `panel.app.content.max-width`. It was built once, but Pen closed the file before saving. After reopening, `Insert` into the App Panel's `Content` slot (`C5QYo`) and whole-document `Get` visitors threw `Cannot read properties of undefined (reading 'id')`. The token was removed from `gen_tokens.py` so the repo matches the saved library (388 / `cca9dc04`). Redo it in a fresh Pen session (see gotchas).
+
 ## Open gaps (deferred)
 
 - GAP-01 dark-mode evidence
@@ -119,15 +128,22 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 
 ## Next steps
 
-1. **Owner review** of C02–C26: especially C09–C10 menus and the tier 2 composites C18–C26. Mark each one APPROVED in its spec and in the `registry.json` status.
-2. Open tier 2 questions:
-   - Toast close optical nudge (§4.6 exception in code?).
-   - Calendar day hover state.
-   - Combobox (Select with search) for lists of 10 or more options.
-   - Segmented LG size for the client gallery.
-3. **Tier 3:** table header and row (Avatar + Stage chip + Action menu SM), and the app panel (header + content slot). Settle table `cell.gap` (10) as a half-step.
+1. **Redo Page Content** (see *Pending* above) in a freshly opened library:
+   - Add `size.content-max` (1096) and `panel.app.content.max-width` to `gen_tokens.py`, run the pipeline, then `SetVariables`.
+   - Build `Page Content` on C28.
+   - Put an instance in App Panel `C5QYo` and move Greeting + Metrics into its `Container`.
+   - Re-point the C28 *Content* example and the App Shell docs to the new path (`Sw0yD/C5QYo/<Page Content>/Container`).
+   - Add a 1920-wide shell exhibit to prove the centring.
+2. **Owner review** of C27–C30 (Table, App panel, Sidebar, App shell). Mark APPROVED in the specs and in `registry.json`. Decide whether the Sidebar gets `sidebar.*` aliases.
+3. Open questions:
+   - Toast close optical nudge.
+   - Calendar day hover.
+   - Combobox.
+   - Segmented LG.
+   - Table sort, selection, empty and loading states (GAP-02).
+   - Shell breakpoints.
 4. Re-run `/sdv:verify-design-system`; the verification report is stale.
-5. Merge the branch, then resume the feature track: `/sdv:discover-feature workspace` (pair it with F-01 Auth) → model → design.
+5. Resume the feature track: `/sdv:discover-feature workspace` (pair it with F-01 Auth) → model → design, starting screens from the **App Shell** (C30).
 
 ## Working notes / gotchas
 
@@ -150,3 +166,10 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
   6. Update the registry and specs.
   7. ⌘S.
 - **Shell:** `head` on this machine isn't coreutils; use `sed -n`.
+- **Library size / Pen stability (2026-09-26):**
+  - `design-system.lib.pen` is about 3.2 MB (30 component pages).
+  - During session 4, Pen closed the file mid-edit. After reopening, some MCP calls failed with `reading 'id'` on edits that propagate to many instances: inserting into a master slot that instances have `Replace`d, and whole-document `Get`.
+  - **Don't ⌘S a window in that state.** Close it without saving, reopen, and verify the variable checksum first.
+  - Save (⌘S) after every page, not at the end.
+  - If it recurs, split the library: keep tokens + primitives in `design-system.lib.pen` and move tier 3 / templates to a second `.pen` file. Instances can't cross files, so templates would need copies of the primitives, or the split has to follow Pen's import support.
+- **Changing a master slot that instances have replaced** (for example App Panel `C5QYo`, replaced in the C28 *Content* example): delete or redo those example instances first, then edit the master.

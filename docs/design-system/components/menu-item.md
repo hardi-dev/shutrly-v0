@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 1c, 2026-09-26). **No legacy evidence**: derived from tokens and existing component patterns, so review it carefully.
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 1c, 2026-09-26). **No legacy evidence**: derived from tokens and existing component patterns, so review it carefully.
 - Direction/token approval: `APPROVED` tokens; `menu.*` added 2026-09-26
 - Pencil library: `design-system.lib.pen` › **C09 — Menu item** (`TbrWC`)
 - Consumer: Menu (C10) → Select, Multi-select and Action menu (tier 2)

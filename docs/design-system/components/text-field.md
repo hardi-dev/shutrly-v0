@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 2, 2026-09-26 — awaiting Owner review)
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 2, 2026-09-26 — awaiting Owner review)
 - Direction/token approval: `APPROVED` (uses existing `component.input.*`)
 - Pencil library: `design-system.lib.pen` › **C18 — Text field** (`P42vwq`)
 - Consumers: every form; the trigger field of Select (C19) and Multi-select (C20)

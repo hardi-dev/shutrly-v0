@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 1b, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 1b, 2026-09-26)
 - Direction/token approval: `APPROVED`
 - Pencil library: `design-system.lib.pen` › **C15 — Metric delta** (`I7T5uL`)
 - Consumer: Metric tile (tier 2)

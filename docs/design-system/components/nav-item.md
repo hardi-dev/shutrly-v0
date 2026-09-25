@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 2, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 2, 2026-09-26)
 - Direction/token approval: `APPROVED`. `nav.item.background-hover` and `nav.group-label` were added on 2026-09-26.
 - Pencil library: `design-system.lib.pen` › **C22 — Nav item** (`UZTgh`)
 - Evidence: the legacy dashboard sidebar (`exploration.pen` › Dashboard — Product-grounded › Sidebar)

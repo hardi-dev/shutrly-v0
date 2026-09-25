@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 2, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 2, 2026-09-26)
 - Direction/token approval: `APPROVED` (existing `segmented.*`, amended to whole steps on 2026-09-26)
 - Pencil library: `design-system.lib.pen` › **C23 — Segmented control** (`GD7cE`)
 - Evidence: legacy Frame 1 › Timeline Head › Segmented (Hari / Minggu / Bulan)

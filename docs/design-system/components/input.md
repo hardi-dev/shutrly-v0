@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 1b, 2026-09-26 — awaiting Owner review)
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 1b, 2026-09-26 — awaiting Owner review)
 - Direction/token approval: `APPROVED` (tokens and rules 2026-09-26; `input.search.background` and `input.text-disabled` added 2026-09-26)
 - Owner: Shutrly design system (Owner: hardi-dev)
 - Last reviewed: 2026-09-26

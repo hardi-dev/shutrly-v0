@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 2, 2026-09-26). No legacy evidence for the menu.
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 2, 2026-09-26). No legacy evidence for the menu.
 - Direction/token approval: `APPROVED` (existing `icon-button.*`, `menu.*`; `icon-button.sm.padding` added 2026-09-26)
 - Pencil library: `design-system.lib.pen` › **C21 — Action menu** (`TWp5Y`)
 

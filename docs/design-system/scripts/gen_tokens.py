@@ -309,6 +309,18 @@ add("table.row.border","color",SC("border.subtle"))
 add("table.row.padding-y","number",SP("space.3"))         # 12
 add("table.row.padding-x","number",SP("space.5"))         # 20
 add("table.cell.gap","number",SP("space.2-5"))            # avatar↔name 10
+# ── tier 3 (Owner 2026-09-26) ──
+add("table.background","color",SC("surface.panel"))
+add("table.border","color",SC("border.default"))
+add("table.radius","number",SP("radius.lg"))                  # 16 (legacy card)
+add("table.toolbar.padding-y","number",SP("space.4"))         # 16
+add("table.toolbar.padding-x","number",SP("space.5"))         # 20 (= row padding-x)
+add("table.header.padding-y","number",SP("space.2"))          # 8
+add("table.header.border","color",SC("border.default"))
+add("table.row.background-hover","color",SC("surface.subtle"))  # clickable rows (no legacy)
+add("table.cell.text","color",SC("text.secondary"))
+add("table.cell.text-strong","color",SC("text.primary"))
+add("table.footer.link","color",SC("action.primary"),SC("status.info.fg"))  # §2: small blue text fails on dark
 add("panel.app.header.padding-x","number",SP("space.7"))  # 28
 add("panel.app.content.padding-y","number",SP("space.7")) # 28
 add("panel.app.content.padding-x","number",SP("space.10"))# 40
@@ -316,6 +328,8 @@ add("panel.app.content.gap","number",SP("space.7"))       # 28
 add("panel.app.background","color",SC("surface.panel"))
 add("panel.app.border","color",SC("border.default"))
 add("panel.app.radius","number",SP("radius.lg"))
+add("panel.app.title","color",SC("text.primary"))
+add("panel.app.header.gap","number",SP("space.3"))        # title/actions 12
 
 # ---------- build DTCG ----------
 def setp(d, path, val):
@@ -409,7 +423,7 @@ mapping = {
                     "rules_status": "APPROVED 2026-09-26",
                     "note": "Documentation boards bind every swatch/scale to live variables; dark previews use theme mode=dark."},
  "components": {k: v for k, v in json.loads((ROOT/"components"/"registry.json").read_text()).items() if not k.startswith("$")} if (ROOT/"components"/"registry.json").exists() else {},
- "components_status": "IN PROGRESS — C01 Button APPROVED 2026-09-26; tiers 1 / 1b / 1c (C02–C17) PROPOSED 2026-09-26; tier 2 composites (C18–C26) PROPOSED 2026-09-26; tier 3 pending.",
+ "components_status": "IN PROGRESS — C01–C26 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2); tier 3 (C27–C30) PROPOSED 2026-09-26.",
  "unsupported": {
    "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.","typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",
                  "shadow": "Composite shadow split into elevation.N.offset-y / blur (number) + color.semantic.elevation.N.color (color)."},

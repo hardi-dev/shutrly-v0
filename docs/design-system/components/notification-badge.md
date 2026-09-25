@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 1b, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 1b, 2026-09-26)
 - Direction/token approval: `APPROVED`. `badge.danger.*` and the new semantic `status.danger.on-solid` were added on 2026-09-26.
 - Pencil library: `design-system.lib.pen` › **C14 — Notification badge** (`uKgTV`)
 - Pencil component: `Notification Badge` (`HoAYC`), layer `Count` (`hnJrZ`)

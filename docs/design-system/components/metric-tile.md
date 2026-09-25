@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 2, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 2, 2026-09-26)
 - Direction/token approval: `APPROVED`. `metric.tile.label/value` and `metric.spark.gap/radius` were added on 2026-09-26.
 - Pencil library: `design-system.lib.pen` › **C26 — Metric tile** (`w2pc7t`)
 - Evidence: legacy Frame 4 › Metrics. The Owner's decision is to follow it exactly.
@@ -17,7 +17,7 @@ One KPI on the dashboard: a label, a value, a trend delta and a 7-bar sparkline.
 |---|---|---|---|
 | 1 | Tile | root | 278 wide (`fill_container` in a row); vertical; padding 16 (`metric.tile.padding`); gap 12 (`metric.tile.gap`); `metric.tile.background` + 1 px `metric.tile.border`; `metric.tile.radius`. Flat, with no shadow (§6). |
 | 2 | Head | `Head` | Label and Delta, space-between, with a minimum gap of 8 (`space.2`). |
-| 3 | Label | `Label` (`Wtx9f`) | label 12/600, `metric.tile.label` → `text.secondary`. |
+| 3 | Label | `Label` (`Wtx9f`) | label 12/600, `metric.tile.label` → `text.secondary`. Fills the space left of the Delta and wraps (Head is top-aligned) — changed 2026-09-26 (tier 3) after it collided with the Delta in narrow tiles. |
 | 4 | Delta | `Delta` (`MbBqV`) | Nested **Metric Delta/Positive** (C15); its text is at `MbBqV/GqwpL`. |
 | 5 | Value row | `Value row` | Value and Spark, bottom-aligned, space-between, with a minimum gap of 8. |
 | 6 | Value | `Value` (`CXKcw`) | metric type 26/700/−0.6, `metric.tile.value` → `text.primary`. |

@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 1b, 2026-09-26). Size **SM** (ghost only) added in tier 2, 2026-09-26, for the toast close and the table-row action menu.
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 1b, 2026-09-26). Size **SM** (ghost only) added in tier 2, 2026-09-26, for the toast close and the table-row action menu.
 - Direction/token approval: `APPROVED` (`icon-button.*` added 2026-09-26; `icon-button.sm.padding` added 2026-09-26)
 - Pencil library: `design-system.lib.pen` › **C02 — Icon button** (`l3eUy`)
 - Consumers: app header (bell), toast close, password input eye, table "more"

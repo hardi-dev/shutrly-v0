@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 1b, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 1b, 2026-09-26)
 - Direction/token approval: `APPROVED`. Spacing was amended to whole steps by the Owner on 2026-09-26: item 6/12 → **8/16**, track padding and gap 2 → **4**. `segmented.item.text-hover` was added.
 - Pencil library: `design-system.lib.pen` › **C11 — Segmented item** (`JU4XC`)
 - Consumer: Segmented control (tier 2 composite: a track holding 2–4 items)

@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 2, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 2, 2026-09-26)
 - Direction/token approval: `APPROVED`. `calendar.day.label/number/dot/dot-selected` were added on 2026-09-26.
 - Pencil library: `design-system.lib.pen` › **C25 — Calendar day** (`J3EsT8`)
 - Evidence: legacy Frame 3 › This Week › Day Strip

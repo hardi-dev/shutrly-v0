@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 1b, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 1b, 2026-09-26)
 - Direction/token approval: `APPROVED` (`avatar.*` added 2026-09-26)
 - Pencil library: `design-system.lib.pen` › **C16 — Avatar** (`fSpXU`)
 - Consumers: Table row (tier 3), account menu

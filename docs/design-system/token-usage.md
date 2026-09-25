@@ -1,6 +1,6 @@
 # Token usage rules — Shutrly / Studio Lime
 
-Status: APPROVED token set (2026-09-26) · Rules: PROPOSED for approval · Source of values: [`tokens.json`](tokens.json) · Visual version: `design-system.lib.pen` › board **07 — Usage rules**
+Status: APPROVED token set (2026-09-26) · Rules: APPROVED 2026-09-26 (Owner: "approve") · Amended 2026-09-26 (Owner): `space.9` = 36 added to SP1; §4.2 button padding 10/16 → 12/36, LG 12/24 → 16/48 (3:1 squish, whole steps per SP6); §4.4 checkbox/radio/switch ↔ label 10 → 8; segmented item 6/12 → 8/16, track padding/gap 2 → 4; new semantic `border.control-hover`, `control.track-off-hover`, `status.danger.on-solid`; `menu.*` (tier 1c); tier 2 (2026-09-26): SP6 list adds toast text (title ↔ body 2), 16 component tokens (`calendar.day.label/number/dot/dot-selected`, `nav.item.background-hover`, `nav.group-label`, `metric.tile.label/value`, `metric.spark.gap/radius`, `toast.<tone>.action`, `icon-button.sm.padding`); tier 3 (2026-09-26): SP6 list adds table cell avatar ↔ name (10), 13 tokens (`table.background/border/radius`, `table.toolbar.padding-y/-x`, `table.header.padding-y/border`, `table.row.background-hover`, `table.cell.text/text-strong`, `table.footer.link`, `panel.app.title`, `panel.app.header.gap`) · Source of values: [`tokens.json`](tokens.json) · Visual version: `design-system.lib.pen` › board **07 — Usage rules**
 
 These rules say *which* token to reach for, *when*, and what never to do. They apply to Pencil designs, the `components/ui` wrappers, and application code (ADR-010: Tailwind theme variables mirror these tokens).
 
@@ -57,7 +57,7 @@ These rules say *which* token to reach for, *when*, and what never to do. They a
 | `border.default` | Panel, tile, card, toast edges; dividers between panels | Row separators inside tables |
 | `border.subtle` | Row separators and hairlines inside a panel | Field outlines |
 | `border.input` / `border.input-hover` | Text fields at rest / hover (Option A; GAP-06 accepted) | Containers |
-| `border.control` | Unchecked checkbox & radio outline (≥ 3:1) | Decorative lines |
+| `border.control` / `border.control-hover` | Unchecked checkbox & radio outline (≥ 3:1) / its hover | Decorative lines |
 
 ### Action & focus
 - `action.primary` — **one primary action per view region** (e.g. "Proyek baru"), the active nav item, checked checkbox, selected radio, switch on. Label always `action.on-primary`.
@@ -81,7 +81,7 @@ These rules say *which* token to reach for, *when*, and what never to do. They a
 | `status.info` | Neutral information / scheduled | *Dijadwalkan*, gallery sync running |
 | `status.positive` | Metric trend up | "+12,4 %" delta |
 
-- Use `.bg` + `.fg` of the **same** status together; `.border` only on toasts; `danger.solid` for error field borders and the notification badge.
+- Use `.bg` + `.fg` of the **same** status together; `.border` only on toasts; `danger.solid` for error field borders and the notification badge, with `danger.on-solid` for its content.
 - **Never rely on colour alone**: always add an icon or text label.
 - Don't use status colours for categories, decoration, or brand.
 - Stage chip mapping (fixed): Pemotretan → accent.soft · Dijadwalkan → info · Editing → warning · Menunggu DP → danger · Terkirim → success.
@@ -115,12 +115,12 @@ Visual version: `design-system.lib.pen` › board **08 — Spacing rules**.
 ### 4.1 Principles
 | # | Rule |
 |---|---|
-| SP1 | **4 px base.** Every space is a `space.*` step (2 · 4 · 6 · 8 · 10 · 12 · 16 · 20 · 24 · 28 · 32 · 40 · 48). Off-scale values (3, 5, 7, 9, 14, 18, 26 …) are snapped, never introduced. |
+| SP1 | **4 px base.** Every space is a `space.*` step (2 · 4 · 6 · 8 · 10 · 12 · 16 · 20 · 24 · 28 · 32 · 36 · 40 · 48). Off-scale values (3, 5, 7, 9, 14, 18, 26 …) are snapped, never introduced. |
 | SP2 | **Padding = inside a container, gap = between siblings.** Padding pushes content away from its own edge; gap separates children of the same parent. Don't fake one with the other. |
 | SP3 | **Proximity: inside < between.** Space inside a group is always smaller than the space between groups (label→field 6 < field→field 16 < section→section 28). If two items belong together, they must be visibly closer to each other than to anything else. |
 | SP4 | **Same relationship, same space.** Siblings of the same kind (tiles in a row, rows in a table, fields in a form) always share one gap value. |
 | SP5 | **Component spacing is owned by the component.** Inside a library component, use its `component.*` padding/gap tokens; screens never override an instance's internal padding. |
-| SP6 | **Half-steps (`space.0-5`, `1-5`, `2-5` = 2 / 6 / 10) only inside small components** (chips, badges, nav items, day cells, form label gaps). Layouts use whole steps. |
+| SP6 | **Half-steps (`space.0-5`, `1-5`, `2-5` = 2 / 6 / 10) only inside small components** (chips, badges incl. kbd, nav items, day cells, form label gaps, switch knob inset, toast title ↔ body, table cell avatar ↔ name). Layouts use whole steps. |
 | SP7 | **No spacer elements, no margins.** Use the parent's `gap`/`padding`. The only allowed spacer is a flexible `fill_container` spacer that pushes content to an edge (e.g. sidebar footer). In code: `gap-*`, `p-*`, not `m-*` on children (ADR-010 Tailwind). |
 | SP8 | **Don't stack spacing to invent a value** (e.g. padding 12 + gap 8 to fake 20 between two things). If you need 20, use `space.5` on one property. |
 | SP9 | **Nesting: inner ≤ outer.** A child container's padding is ≤ its parent's padding (panel 28/40 › tile 16 › chip 2/8). Pair with radius: inner radius ≤ outer radius. |
@@ -131,7 +131,7 @@ Visual version: `design-system.lib.pen` › board **08 — Spacing rules**.
 | Type | Shape | Use | Shutrly tokens |
 |---|---|---|---|
 | **Square inset** | equal on all sides | Tiles, cards, toasts, panels, popovers | tile 16 (`metric.tile.padding`), toast 12, calendar-week card 24 |
-| **Squish inset** | vertical ≈ ½ horizontal | Buttons, chips, inputs, nav items, table rows, tabs | button 10/16, chip 2/8, nav 8/12, table row 12/20, segmented item 6/12, input 0/12 at 40 px height |
+| **Squish inset** | vertical ≈ ½ horizontal | Buttons, chips, inputs, nav items, table rows, tabs | button 12/36 (LG 16/48) — 3:1, chip 2/8, nav 8/12, table row 12/20, segmented item 8/16, input 0/12 at 40 px height, textarea 12/12 |
 | **Layout inset** | large, horizontal ≥ vertical | App panel header/content | header x 28, content 28 / 40 (`panel.app.*`) |
 
 Don't: squish insets on cards (cramped), square insets on buttons/chips (bloated).
@@ -152,10 +152,11 @@ Don't: squish insets on cards (cramped), square insets on buttons/chips (bloated
 ### 4.4 Inline (horizontal gap)
 | Space | Token | Use |
 |---|---|---|
-| 2 | `space.0-5` | Segmented items |
+| 2 | `space.0-5` | Rare (segmented moved to `space.1` on 2026-09-26) |
+| 4 | `space.1` | Segmented items; stepper buttons ↔ value |
 | 6 | `space.1-5` | Status dot ↔ chip label |
-| 8 | `space.2` | Icon ↔ label in buttons/inputs; chips in a row |
-| 10 | `space.2-5` | Nav icon ↔ label; avatar ↔ name; checkbox ↔ label |
+| 8 | `space.2` | Icon ↔ label in buttons/inputs; chips in a row; checkbox/radio ↔ label; switch label ↔ track |
+| 10 | `space.2-5` | Nav icon ↔ label; avatar ↔ name |
 | 12 | `space.3` | Toolbar controls (search ↔ bell ↔ avatar); toast icon ↔ text |
 | 16 | `space.4` | Tiles in a row; form columns |
 | 24 | `space.6` | Content columns (timeline ↔ week card) |
@@ -175,7 +176,7 @@ Don't: squish insets on cards (cramped), square insets on buttons/chips (bloated
 Allowed only inside a library component, max ±2 px, documented in the component spec (e.g. icon nudged to align with a text baseline). Never in screen layouts.
 
 ## 5. Radius
-- `radius.full` buttons, chips, segmented, switch · `radius.sm` inputs, nav items · `radius.md` tiles, toasts · `radius.lg` app panel, day cells · `radius.xs` checkbox, delta, kbd · `radius.2xs` chart bars · `radius.xl` sheets.
+- `radius.full` buttons, chips, segmented, switch, stepper, avatar, badges · `radius.sm` inputs, nav items, icon buttons, menu items · `radius.md` tiles, toasts, menus · `radius.lg` app panel, day cells · `radius.xs` checkbox, delta, kbd · `radius.2xs` chart bars · `radius.xl` sheets.
 - Nested corners: inner radius ≤ outer radius.
 
 ## 6. Elevation

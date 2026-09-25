@@ -55,6 +55,7 @@ S = {
  "border.input":          ("neutral.300","neutral.700","Text field at rest (Option A; GAP-06 accepted)"),
  "border.input-hover":    ("neutral.400","neutral.500","Text field hover"),
  "border.control":        ("neutral.500","neutral.500","Checkbox/radio outline (>= 3:1)"),
+ "border.control-hover":  ("neutral.600","neutral.400","Checkbox/radio outline · hover (Owner 2026-09-26)"),
  "text.primary":          ("neutral.900","neutral.50","Headings, body, values"),
  "text.secondary":        ("neutral.600","neutral.300","Secondary copy, labels"),
  "text.muted":            ("neutral.500","neutral.400","Helper, placeholder, column heads, icons"),
@@ -66,6 +67,7 @@ S = {
  "focus.ring":            ("blue.500","blue.500","2px focus border"),
  "focus.glow":            ("alpha.blue-500-a25","alpha.blue-500-a40","Soft focus halo"),
  "control.track-off":     ("neutral.300","neutral.700","Switch off track"),
+ "control.track-off-hover": ("neutral.400","neutral.600","Switch off track · hover (Owner 2026-09-26)"),
  "control.knob":          ("neutral.0","neutral.50","Switch knob"),
  "accent.highlight":      ("lime.300","lime.300","Brand lime: workspace mark, today marker"),
  "accent.on-highlight":   ("neutral.900","neutral.900","Content on accent.highlight"),
@@ -87,6 +89,7 @@ S = {
  "status.danger.fg":      ("red.700","red.400","Danger text/icon"),
  "status.danger.border":  ("alpha.red-700-a25","alpha.red-400-a33","Danger toast border"),
  "status.danger.solid":   ("red.600","red.400","Error field border, notification badge"),
+ "status.danger.on-solid":("neutral.0","neutral.950","Content on status.danger.solid (Owner 2026-09-26, tier 1b)"),
  "status.info.bg":        ("blue.50","alpha.blue-450-a16","Info chip/toast fill"),
  "status.info.fg":        ("blue.700","blue.450","Info text/icon; links on dark"),
  "status.info.border":    ("alpha.blue-700-a25","alpha.blue-450-a33","Info toast border"),
@@ -97,7 +100,7 @@ S = {
 
 NUM = {  # number tokens: path -> (value, description)
  "space.0-5":(2,""),"space.1":(4,""),"space.1-5":(6,""),"space.2":(8,""),"space.2-5":(10,""),"space.3":(12,""),
- "space.4":(16,""),"space.5":(20,""),"space.6":(24,""),"space.7":(28,""),"space.8":(32,""),"space.10":(40,""),"space.12":(48,""),
+ "space.4":(16,""),"space.5":(20,""),"space.6":(24,""),"space.7":(28,""),"space.8":(32,""),"space.9":(36,""),"space.10":(40,""),"space.12":(48,""),
  "radius.2xs":(2,"Bars"),"radius.xs":(4,"Kbd, delta, checkbox"),"radius.sm":(8,"Nav item, input"),"radius.md":(12,"Tile, toast"),
  "radius.lg":(16,"App panel, day cell"),"radius.xl":(24,"Sheet"),"radius.full":(999,"Pill"),
  "opacity.disabled":(0.4,""),"opacity.hover-overlay":(0.06,""),"opacity.status-tint":(0.16,"Dark status backgrounds"),"opacity.scrim":(0.5,""),
@@ -122,11 +125,12 @@ add("button.primary.background","color",SC("action.primary"))
 add("button.primary.background-hover","color",SC("action.primary-hover"))
 add("button.primary.text","color",SC("action.on-primary"))
 add("button.secondary.background","color",SC("surface.panel"))
+add("button.secondary.background-hover","color",SC("surface.sunken"))  # Owner 2026-09-26: secondary hover
 add("button.secondary.border","color",SC("border.default"))
 add("button.secondary.text","color",SC("text.primary"))
 add("button.radius","number",SP("radius.full"))
-add("button.md.padding-x","number",SP("space.4")); add("button.md.padding-y","number",SP("space.2-5"))
-add("button.lg.padding-x","number",SP("space.6")); add("button.lg.padding-y","number",SP("space.3"))
+add("button.md.padding-x","number",SP("space.9")); add("button.md.padding-y","number",SP("space.3"))  # 12/36 = 3:1 squish (Owner 2026-09-26; was 10/16)
+add("button.lg.padding-x","number",SP("space.12")); add("button.lg.padding-y","number",SP("space.4"))  # 16/48 = 3:1 (Owner 2026-09-26; was 12/24)
 add("nav.item.background-active","color",SC("action.primary"))
 add("nav.item.text-active","color",SC("action.on-primary"))
 add("nav.item.text","color",SC("text.primary"))
@@ -152,6 +156,17 @@ add("calendar.day.background","color",SC("surface.sunken"))
 add("calendar.day.background-selected","color",SC("surface.inverse"))
 add("calendar.day.label-selected","color",SC("accent.on-inverse"))
 add("calendar.day.number-selected","color",SC("text.inverse"))
+# ── tier 2 composites (Owner 2026-09-26) ──
+add("calendar.day.label","color",SC("text.muted"))
+add("calendar.day.number","color",SC("text.primary"))
+add("calendar.day.dot","color",SC("action.primary"))
+add("calendar.day.dot-selected","color",SC("accent.on-inverse"))   # visible on inverse cell in both modes
+add("nav.item.background-hover","color",SC("surface.sunken"))
+add("nav.group-label","color",SC("text.muted"))                     # legacy #A1A1AA darkened for AA
+add("metric.tile.label","color",SC("text.secondary"))
+add("metric.tile.value","color",SC("text.primary"))
+add("metric.spark.gap","number",SP("space.1"))                      # 3 → 4
+add("metric.spark.radius","number",SP("radius.2xs"))                # 2
 for st in ["success","info","warning","danger","highlight"]:
     if st=="highlight": bg, fg, bd = "accent.soft","accent.soft-fg","status.highlight.border"
     else: bg, fg, bd = f"status.{st}.bg", f"status.{st}.fg", f"status.{st}.border"
@@ -159,6 +174,7 @@ for st in ["success","info","warning","danger","highlight"]:
     add(f"toast.{st}.border","color",SC(bd))
     add(f"toast.{st}.icon","color",SC(fg))
     add(f"toast.{st}.title","color",SC(fg),SC("text.primary"))
+    add(f"toast.{st}.action","color",SC(fg),SC("text.primary"))   # tier 2: action link = title colour
 add("toast.surface","color",SC("surface.panel"))
 add("toast.body","color",SC("text.secondary"))
 add("toast.radius","number",SP("radius.md"))
@@ -171,19 +187,30 @@ add("input.border-error","color",SC("status.danger.solid"))
 add("input.border-disabled","color",SC("border.default"))
 add("input.text","color",SC("text.primary"))
 add("input.placeholder","color",SC("text.muted"))
+add("input.text-disabled","color",SC("text.disabled"))  # tier 1b (G3)
 add("input.label","color",SC("text.primary"))
 add("input.helper","color",SC("text.muted"))
 add("input.error-text","color",SC("status.danger.fg"))
 add("input.radius","number",SP("radius.sm"))
 add("input.height","number",SP("space.10"))
 add("input.padding-x","number",SP("space.3"))
+add("checkbox.background","color",SC("surface.panel"))  # unchecked box/radio fill (G3)
 add("checkbox.border","color",SC("border.control"))
+add("checkbox.label","color",SC("text.primary"))  # checkbox/radio label (G3)
+add("checkbox.border-hover","color",SC("border.control-hover"))  # Owner 2026-09-26
 add("checkbox.background-checked","color",SC("action.primary"))
+add("checkbox.background-checked-hover","color",SC("action.primary-hover"))  # Owner 2026-09-26
 add("checkbox.mark","color",SC("action.on-primary"))
 add("checkbox.radius","number",SP("radius.xs"))
 add("switch.track-on","color",SC("action.primary"))
+add("switch.track-on-hover","color",SC("action.primary-hover"))  # Owner 2026-09-26
 add("switch.track-off","color",SC("control.track-off"))
+add("switch.track-off-hover","color",SC("control.track-off-hover"))  # Owner 2026-09-26
 add("switch.knob","color",SC("control.knob"))
+add("switch.label","color",SC("text.primary"))  # (G3)
+add("switch.gap","number",SP("space.2"))          # track↔label 8 (Owner 2026-09-26)
+add("switch.padding","number",SP("space.0-5"))    # knob inset 2 (SP6: inside small component)
+add("switch.radius","number",SP("radius.full"))
 # --- spacing (padding/gap) component tokens, added 2026-09-26 after verification GAP ---
 # Observed legacy value in comment; snapped to the approved 4 px scale (CONFLICT-03 rule).
 add("button.gap","number",SP("space.2"))                  # icon↔label 8
@@ -192,6 +219,7 @@ add("nav.item.padding-x","number",SP("space.3"))          # 12
 add("nav.item.gap","number",SP("space.2-5"))              # 10
 add("nav.count.padding-y","number",SP("space.0-5"))       # 1 → 2
 add("nav.count.padding-x","number",SP("space.2"))         # 7 → 8
+add("nav.count.radius","number",SP("radius.full"))
 add("chip.stage.padding-y","number",SP("space.0-5"))      # 3 → 2 (matches count/delta/now-label chips)
 add("chip.stage.padding-x","number",SP("space.2"))        # 9 → 8
 add("chip.stage.gap","number",SP("space.1-5"))            # dot↔label 6
@@ -208,23 +236,91 @@ add("toast.gap","number",SP("space.3"))                   # icon↔text 12
 add("toast.text-gap","number",SP("space.0-5"))            # title↔body 2
 add("input.gap","number",SP("space.1-5"))                 # label↔field↔helper 6
 add("input.content-gap","number",SP("space.2"))           # prefix/icon↔text 8
-add("checkbox.gap","number",SP("space.2-5"))              # box↔label 10
+add("checkbox.gap","number",SP("space.2"))                # box↔label 10 → 8 (Owner 2026-09-26, whole steps)
 add("segmented.track","color",SC("surface.sunken"))
 add("segmented.item.background-active","color",SC("surface.panel"))
 add("segmented.item.border-active","color",SC("border.default"))
 add("segmented.item.text","color",SC("text.muted"))
 add("segmented.item.text-active","color",SC("text.primary"))
-add("segmented.padding","number",SP("space.0-5"))         # 3 → 2
-add("segmented.gap","number",SP("space.0-5"))             # 2
-add("segmented.item.padding-y","number",SP("space.1-5"))  # 6
-add("segmented.item.padding-x","number",SP("space.3"))    # 14 → 12
+add("segmented.padding","number",SP("space.1"))           # 3 → 2 → 4 (Owner 2026-09-26, whole steps)
+add("segmented.gap","number",SP("space.1"))               # 2 → 4 (Owner 2026-09-26)
+add("segmented.item.padding-y","number",SP("space.2"))    # 6 → 8 (Owner 2026-09-26)
+add("segmented.item.padding-x","number",SP("space.4"))    # 14 → 12 → 16 (Owner 2026-09-26)
 add("segmented.radius","number",SP("radius.full"))
+# ── tier 1b (Owner 2026-09-26) ──
+add("segmented.item.text-hover","color",SC("text.secondary"))
+add("input.search.background","color",SC("surface.subtle"))   # search field fill (legacy)
+add("input.padding-y","number",SP("space.3"))                  # textarea only (single-line input is 40 px, centred)
+add("stepper.background","color",SC("surface.panel"))
+add("stepper.border","color",SC("border.input"))
+add("stepper.value","color",SC("text.primary"))
+add("stepper.button.background","color",SC("surface.sunken"))
+add("stepper.button.background-hover","color",SC("surface.muted"))
+add("stepper.button.icon","color",SC("text.primary"))
+add("stepper.button-primary.background","color",SC("action.primary"))        # "+" = primary (Owner)
+add("stepper.button-primary.background-hover","color",SC("action.primary-hover"))
+add("stepper.button-primary.icon","color",SC("action.on-primary"))
+add("stepper.padding","number",SP("space.1"))                  # 3 → 4
+add("stepper.gap","number",SP("space.1"))
+add("stepper.radius","number",SP("radius.full"))
+add("avatar.background","color",SC("surface.muted"))
+add("avatar.text","color",SC("text.secondary"))
+add("avatar.radius","number",SP("radius.full"))
+add("icon-button.background","color",SC("surface.panel"))
+add("icon-button.background-hover","color",SC("surface.sunken"))
+add("icon-button.border","color",SC("border.default"))
+add("icon-button.icon","color",SC("text.primary"))
+add("icon-button.padding","number",SP("space.3"))              # 16 icon + 2×12 = 40 (matches input height)
+add("icon-button.sm.padding","number",SP("space.2"))           # tier 2: 16 icon + 2×8 = 32 (toast close, row actions)
+add("icon-button.radius","number",SP("radius.sm"))
+add("badge.danger.background","color",SC("status.danger.solid"))
+add("badge.danger.text","color",SC("status.danger.on-solid"))
+add("badge.danger.padding-y","number",SP("space.0-5"))         # 1 → 2 (SP6 badge)
+add("badge.danger.padding-x","number",SP("space.1-5"))         # 5 → 6 (SP6 badge)
+add("badge.danger.radius","number",SP("radius.full"))
+add("kbd.background","color",SC("surface.panel"))
+add("kbd.border","color",SC("border.default"))
+add("kbd.text","color",SC("text.secondary"))
+add("kbd.padding-y","number",SP("space.0-5"))                  # 1 → 2 (SP6 small component)
+add("kbd.padding-x","number",SP("space.1-5"))                  # 5 → 6
+add("kbd.radius","number",SP("radius.xs"))
+# ── tier 1c: menu (Owner 2026-09-26; no legacy evidence — PROPOSED) ──
+add("menu.background","color",SC("surface.panel"))
+add("menu.border","color",SC("border.default"))
+add("menu.divider","color",SC("border.subtle"))
+add("menu.group-label","color",SC("text.muted"))
+add("menu.padding","number",SP("space.1"))                     # 4 around items
+add("menu.radius","number",SP("radius.md"))                    # 12 outer ≥ item 8 (SP9)
+add("menu.item.text","color",SC("text.primary"))
+add("menu.item.description","color",SC("text.muted"))
+add("menu.item.icon","color",SC("text.muted"))
+add("menu.item.check","color",SC("action.primary"))            # selected indicator (like checked checkbox)
+add("menu.item.background-hover","color",SC("surface.sunken"))  # hover = keyboard highlight
+add("menu.item.text-disabled","color",SC("text.disabled"))
+add("menu.item.text-destructive","color",SC("status.danger.fg"))
+add("menu.item.background-destructive-hover","color",SC("status.danger.bg"))
+add("menu.item.padding-y","number",SP("space.2"))              # 8
+add("menu.item.padding-x","number",SP("space.3"))              # 12
+add("menu.item.gap","number",SP("space.2"))                    # icon/check ↔ text 8
+add("menu.item.radius","number",SP("radius.sm"))               # 8
 add("table.header.background","color",SC("surface.subtle"))
 add("table.header.text","color",SC("text.muted"))
 add("table.row.border","color",SC("border.subtle"))
 add("table.row.padding-y","number",SP("space.3"))         # 12
 add("table.row.padding-x","number",SP("space.5"))         # 20
 add("table.cell.gap","number",SP("space.2-5"))            # avatar↔name 10
+# ── tier 3 (Owner 2026-09-26) ──
+add("table.background","color",SC("surface.panel"))
+add("table.border","color",SC("border.default"))
+add("table.radius","number",SP("radius.lg"))                  # 16 (legacy card)
+add("table.toolbar.padding-y","number",SP("space.4"))         # 16
+add("table.toolbar.padding-x","number",SP("space.5"))         # 20 (= row padding-x)
+add("table.header.padding-y","number",SP("space.2"))          # 8
+add("table.header.border","color",SC("border.default"))
+add("table.row.background-hover","color",SC("surface.subtle"))  # clickable rows (no legacy)
+add("table.cell.text","color",SC("text.secondary"))
+add("table.cell.text-strong","color",SC("text.primary"))
+add("table.footer.link","color",SC("action.primary"),SC("status.info.fg"))  # §2: small blue text fails on dark
 add("panel.app.header.padding-x","number",SP("space.7"))  # 28
 add("panel.app.content.padding-y","number",SP("space.7")) # 28
 add("panel.app.content.padding-x","number",SP("space.10"))# 40
@@ -232,6 +328,8 @@ add("panel.app.content.gap","number",SP("space.7"))       # 28
 add("panel.app.background","color",SC("surface.panel"))
 add("panel.app.border","color",SC("border.default"))
 add("panel.app.radius","number",SP("radius.lg"))
+add("panel.app.title","color",SC("text.primary"))
+add("panel.app.header.gap","number",SP("space.3"))        # title/actions 12
 
 # ---------- build DTCG ----------
 def setp(d, path, val):
@@ -321,9 +419,11 @@ mapping = {
  "transforms": {"opacity/*": "Pencil value = token $value × 100 (Pencil opacity variables are percent; e.g. opacity.disabled 0.4 → 40)"},
  "library_canvas": {"boards": ["00 — Cover", "01 — Color · primitives", "02 — Color · semantic", "03 — Typography",
                                "04 — Spacing · radius · opacity", "05 — Elevation", "06 — Component tokens", "07 — Usage rules", "08 — Spacing rules"],
-                    "usage_rules": "docs/design-system/token-usage.md (PROPOSED)",
+                    "usage_rules": "docs/design-system/token-usage.md (APPROVED 2026-09-26)",
+                    "rules_status": "APPROVED 2026-09-26",
                     "note": "Documentation boards bind every swatch/scale to live variables; dark previews use theme mode=dark."},
- "components_status": "NOT YET BUILT — component tokens persisted; reusable Pencil components pending (next step).",
+ "components": {k: v for k, v in json.loads((ROOT/"components"/"registry.json").read_text()).items() if not k.startswith("$")} if (ROOT/"components"/"registry.json").exists() else {},
+ "components_status": "IN PROGRESS — C01–C26 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2); tier 3 (C27–C30) PROPOSED 2026-09-26.",
  "unsupported": {
    "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.","typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",
                  "shadow": "Composite shadow split into elevation.N.offset-y / blur (number) + color.semantic.elevation.N.color (color)."},

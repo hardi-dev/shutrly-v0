@@ -7646,7 +7646,8 @@
                       "content": "Dimas & Sari · Prewedding",
                       "lineHeight": 1.2,
                       "fontFamily": "Plus Jakarta Sans",
-                      "fontSize": 13
+                      "fontSize": 13,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -29074,7 +29075,7 @@
                   "fill": "#1F1E1C",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "RESOLVED  CONFLICT-01  blue.500 = #2F5BFF; #2F6BFF retired.\nRESOLVED  CONFLICT-02  Legacy slate folded into zinc.\nRESOLVED  CONFLICT-03  Spacing/radius snapped to scale.\nDEFERRED  GAP-01  Dark mode has no visual evidence (values inferred).\nDEFERRED  GAP-02  Hover/focus/disabled/opacity/form-error states.\nDEFERRED  GAP-03  Workspace brand-override rules + contrast guard.\nDEFERRED  GAP-04  Client gallery (mobile) surfaces.\nDEFERRED  GAP-05  EN/ID copy mix; id-ID default assumed.\nACCEPTED  GAP-06  Input border = Option A neutral.300 | neutral.700 (user 2026-09-26; B #F4F4F5 rejected as too soft). ≈1.5–1.7:1 < WCAG 1.4.11 — mitigated by visible labels, 40 px height, 2 px focus/error borders.",
+                  "content": "RESOLVED  CONFLICT-01  blue.500 = #2F5BFF; #2F6BFF retired.\nRESOLVED  CONFLICT-02  Legacy slate folded into zinc.\nRESOLVED  CONFLICT-03  Spacing/radius snapped to scale.\nDEFERRED  GAP-01  Dark mode has no visual evidence (values inferred).\nDEFERRED  GAP-02  Hover/focus/disabled/opacity/form-error states.\nDEFERRED  GAP-03  Workspace brand-override rules + contrast guard.\nDEFERRED  GAP-04  Client gallery (mobile) surfaces.\nDEFERRED  GAP-05  EN/ID copy mix; id-ID default assumed.\nACCEPTED  GAP-06  Input border = Option A neutral.300 | neutral.700 (user 2026-09-26; B #F4F4F5 rejected as too soft). ≈1.5–1.7:1 < WCAG 1.4.11 — mitigated by visible labels, 40 px height, 2 px focus/error borders.\nAPPROVED  RULES  token-usage.md + library boards 07/08 (Owner \"approve\", 2026-09-26).",
                   "lineHeight": 1.35,
                   "fontFamily": "Inter",
                   "fontSize": 13,

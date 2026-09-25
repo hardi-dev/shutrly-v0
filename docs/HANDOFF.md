@@ -1,7 +1,7 @@
 # Handoff — Shutrly
 
 Last updated: 2026-09-26 (session 4) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `design-system/library-components` (not pushed, not merged into `main`).
+Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system/library-components` is kept. No remote is configured, so nothing is pushed.
 
 ## Where we are
 
@@ -56,6 +56,8 @@ Branch: `design-system/library-components` (not pushed, not merged into `main`).
   - Tier 1b: C02–C04, C08, C11, C14–C17.
   - Tier 1c: C09–C10 menus. These have **no legacy evidence** and need a careful review.
   - Tier 2: C18–C26 composites built from nested primitive instances.
+  - Tier 3: C27 Table (cells, header cell/row, row, card), C28 App panel, C29 Sidebar, C30 App shell template. PROPOSED.
+- **Approval status:** C01–C26 APPROVED · C27–C30 PROPOSED.
 - **Composite pattern (tier 2):** a composite's state variants **don't swap** the nested primitive ref. Replacing the nested ref gives it a new ID per variant and breaks instance override paths. Instead, each variant re-applies the primitive state's token overrides on **one stable nested instance** (for example Text field `c67yIW`, Select `Et1pR/c67yIW`). Floating parts (Select/Action menu Menus) are `layoutPosition: absolute` and off when closed. A composite built on another composite is a ref of its base (`_MultiSelect/Base` is a ref of `_Select/Base` with its Menu slot replaced).
 
 ## Design-system artifacts (`docs/design-system/`)
@@ -63,14 +65,14 @@ Branch: `design-system/library-components` (not pushed, not merged into `main`).
 | File | Role |
 |---|---|
 | `exploration.pen` | Provisional canvas: boards 01–03 (directions, token studies, true-scale case, **decision record**, now including the rules approval) and the Owner's copied legacy frames. |
-| `design-system.lib.pen` | Approved library: 359 Pencil variables, theme axis `mode`, boards 00–08, and component pages C01–C17. |
+| `design-system.lib.pen` | Library: 388 Pencil variables, theme axis `mode`, boards 00–08, and component pages C01–C30 (about 3.2 MB; see *Library size / Pen stability*). |
 | `tokens.json` | Canonical DTCG tokens. **Generated: edit `scripts/gen_tokens.py`, not this file.** |
 | `pencil-mapping.json` | Token ⇄ Pencil variable map, transforms, `library_canvas` (`rules_status` APPROVED), `components` (from the registry), `components_status`. Generated. |
 | `token-usage.md` | Usage rules G1–G8 and SP1–SP11. APPROVED 2026-09-26, with the amendments recorded in its status line. |
 | `components/*.md`, `components/registry.json` | Component specs and the machine-readable registry. |
 | `verification-report.md` | **Stale:** the last `/sdv:verify-design-system` ran before any components existed. |
 | `scripts/gen_tokens.py` | Token source of truth and generator. It also merges `components/registry.json`. |
-| `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `9ebc8db7` (359 vars). |
+| `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `cca9dc04` (388 vars). |
 | `scripts/pencil-canvas-builders.md` | Pencil MCP snippets for boards 00–08. |
 
 The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy source; never modify) are intentionally untracked.

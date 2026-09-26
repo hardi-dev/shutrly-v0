@@ -52411,10 +52411,10 @@
           "type": "text",
           "id": "vpLIA",
           "name": "Decision",
-          "fill": "#B45309",
+          "fill": "#3F6212",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "DECISION  ·  PENDING Owner: A or B. Recommendation: A — same destinations and look as the desktop Sidebar (a collapsed state, not a new navigation model), fits every Sidebar item without a “Lainnya” step; B matches the phone but hides five destinations behind a popover.",
+          "content": "DECISION  ·  Owner 2026-09-26: OPTION A — icon rail 72 with tooltips (hover/focus). Next: size.rail + tooltip tokens → library Tooltip, Nav Rail Item, Sidebar/Rail, App Shell/Tablet.",
           "lineHeight": 1.5,
           "fontFamily": "IBM Plex Mono",
           "fontSize": 12

@@ -62,13 +62,13 @@ These are the open items from [technical-design.md](technical-design.md) › *Ri
 
 ## F-00 contracts this plan consumes
 
-F-00 Foundation is not built yet. Task 0 verifies that each of these exists with **exactly** this shape. If F-00 chose different names, update this table and the imports in every task before starting.
+F-00 Foundation is implemented. Task 0 verifies that each of these exists with **exactly** this shape. If F-00 chose different names, update this table and the imports in every task before starting.
 
 | Path | Export | Shape |
 |---|---|---|
-| `src/adapters/db/client.ts` + `client.types.ts` | `createDb`; `Db`, `DbHandle` (types file) | `createDb(databaseUrl: string): DbHandle` where `DbHandle = { db: Db; pool: Pool }` — Drizzle `neon-serverless` over a new `Pool`; `Db` is the Drizzle database type with the full schema |
+| `src/adapters/db/client/client.ts` + `client.types.ts` | `createDb`; `Db`, `DbHandle` (types file) | `createDb(databaseUrl: string): DbHandle` where `DbHandle = { db: Db; pool: Pool }` — Drizzle `neon-serverless` over a new `Pool`; `Db` is the Drizzle database type with the full schema |
 | `src/adapters/db/schema/index.ts` | schema barrel | `export * from "./<table-file>"` per schema file |
-| `src/composition/request-context.ts` + `request-context.types.ts` | `getRequestContext`; `RequestContext` (types file) | `(): Promise<{ env: AppEnv; waitUntil(p: Promise<unknown>): void; ip: string; requestId: string; headers: Headers }>` |
+| `src/composition/request-context/request-context.ts` + `request-context.types.ts` | `getRequestContext`; `RequestContext` (types file) | `(): Promise<{ env: AppEnv; waitUntil(p: Promise<unknown>): void; ip: string; requestId: string; headers: Headers }>` |
 | `src/shared/env/app-env.schema.ts` / `app-env.types.ts` / `app-env.ts` | `appEnvSchema` / `AppEnv` / `parseAppEnv` | Zod object for Worker bindings, including `DATABASE_URL`; this plan adds the auth keys in Task 4 |
 | `src/shared/errors/domain-error.ts` | `DomainError` | `abstract class DomainError extends Error { abstract readonly code: string }` |
 | `src/shared/logging/logger.ts` | `logger` | `{ info(event: string, fields?: Record<string, unknown>): void; warn(...): void; error(...): void }` |
@@ -182,7 +182,7 @@ Expected: each answer matches the *Decisions this plan assumes* table. If an ans
 Run:
 
 ```bash
-for f in src/adapters/db/client.ts src/adapters/db/schema/index.ts src/composition/request-context.ts src/shared/env/app-env.ts src/shared/errors/domain-error.ts src/shared/logging/logger.ts src/ui/primitives/button/button.tsx src/ui/primitives/text-field/text-field.tsx src/ui/theme/tokens.css tests/integration/helpers/test-db.ts; do test -f "$f" && echo "ok  $f" || echo "MISSING $f"; done
+for f in src/adapters/db/client/client.ts src/adapters/db/schema/index.ts src/composition/request-context/request-context.ts src/shared/env/app-env.ts src/shared/errors/domain-error.ts src/shared/logging/logger.ts src/ui/primitives/button/button.tsx src/ui/primitives/text-field/text-field.tsx src/ui/theme/tokens.css tests/integration/helpers/test-db.ts; do test -f "$f" && echo "ok  $f" || echo "MISSING $f"; done
 ```
 
 Expected: ten `ok` lines. Any `MISSING` means F-00 is not done; stop.

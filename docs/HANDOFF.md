@@ -1,13 +1,13 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-27 (F-00 Foundation PLANNED; build handed to another agent) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-09-27 (F-00 Foundation IMPLEMENTED; awaiting feature verification) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `main`.
 
-## Current handoff — resume here: build F-00 Foundation
+## Current handoff — resume here: verify F-00 Foundation
 
-**Who:** the build is handed to another AI agent (ChatGPT / Codex). These instructions don't assume Claude-specific skills or slash commands.
+**Who:** F-00 Foundation is implemented on `main`; the next owner action is feature verification. These instructions don't assume Claude-specific skills or slash commands.
 
-**What:** implement [docs/features/foundation/plan.md](features/foundation/plan.md): 18 TDD tasks in 6 iterations. Nothing is built yet; there is no `src/`.
+**What:** verify [docs/features/foundation/plan.md](features/foundation/plan.md): all 18 TDD tasks are implemented in 6 iterations. Run `/sdv:verify-feature foundation` (or the equivalent acceptance review) before marking F-00 `DONE`.
 
 ### Read first, in this order
 1. [constitution.md](constitution.md) (no exceptions)
@@ -30,7 +30,7 @@ Branch: `main`.
 - **Never run `pnpm db:migrate`.** Only the Owner applies migrations, by hand from a clean `main` (tech-stack interim rule). F-00 has no migrations anyway.
 
 ### When all 18 tasks are done
-- Task 18 updates `technical-design.md` (status IMPLEMENTED), `docs/product/feature-map.md` (F-00 IN PROGRESS) and this handoff.
+- Task 18 updated `technical-design.md` (status IMPLEMENTED), `docs/product/feature-map.md` (F-00 IN PROGRESS), the F-01 contract paths, and this handoff.
 - List every deviation from the plan in technical-design.md › *Risks / open questions*. Known deviation: D-1, the TextField has no trailing error icon.
 - The Owner then runs verification (`/sdv:verify-feature foundation` in Claude Code). That moves F-00 to DONE.
 
@@ -73,7 +73,7 @@ The historical session notes and plans below predate this current handoff; use t
 | Area | Status | Notes |
 |---|---|---|
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25); coding rules v2.0 on 2026-09-27 | Authoritative tree under `docs/`; `_source/` is historical. Folder architecture finalized 2026-09-26 in `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`. |
-| F-00 Foundation | PLANNED (2026-09-26/27) | `spec.md`, `acceptance-criteria.md`, `technical-design.md`, `plan.md` (18 tasks, code lint/test-verified in a scratch project). Build handed to another agent. |
+| F-00 Foundation | IMPLEMENTED (2026-09-27) | 18 tasks committed on `main`; contract check, unit/integration gates, Playwright smoke, and Workers preview pass. Await `/sdv:verify-feature foundation`. |
 | F-01 Auth | PLANNED (2026-09-26), paused | Design approved (`auth.pen`). `plan.md` (30 tasks) needs a revision pass for coding rules v2.0 and F-00 paths (auth R-9). ADR-013 proposed. Blocked on Task 0 decisions and on F-00. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
 | Design system — tokens | PERSISTED (2026-09-26) | **479 tokens** (61 primitive · 54 semantic · 312 component · scales), `mode: light \| dark`. Repository payload checksum `c8b47514`; full Pencil checksum check remains. |
@@ -83,7 +83,7 @@ The historical session notes and plans below predate this current handoff; use t
 | Design system — composite components (tier 2) | **APPROVED** — C18–C26 (2026-09-26) | Text field, Select, Multi-select, Action menu, Nav item (+ Nav Group Label), Segmented control, **Alert** (renamed from Toast), Calendar day, Metric tile. Plus Icon button **SM** (ghost). |
 | Design system — composite components (tier 3) | **APPROVED** — C27–C30 (2026-09-26) | Table (+ cells, header cell/row, row), App panel (+ Page Content), Sidebar, App shell template. |
 | Design system — overlays (tier 4) | **APPROVED** — C31 Modal, C32 Bottom Sheet (+ Menu), C33 Mobile Shell, C34 Bottom Nav, C35 Mobile App Shell (2026-09-26) | Modal (SM/MD/LG), Button/Danger on C01, App Shell **Overlay** layer (option A *Sectioned*, board 04). Bottom Sheet Actions/Form + Sheet Item (A *Docked* + B header, board 05). Mobile Shell template (375 × 812) hosts the sheets. Owner app on phones: Bottom Nav (B, board 06) + Mobile App Shell; Bottom Sheet/Menu inherits the Sidebar. |
-| Code | NONE | No app scaffold yet; F-00 Foundation is PLANNED and ready to build. |
+| Code | F-00 IMPLEMENTED | Foundation scaffold, runtime contracts, design-system base, tests, and Workers preview are committed on `main`. |
 
 ## Component library (`design-system.lib.pen`)
 

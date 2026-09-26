@@ -69,4 +69,4 @@ Alert titles do not repeat the screen heading. Actions (resend, request new link
 
 Kept for reference (Owner): `M3WMS` R2 · Product showcase, `umFqj` R2.3 · Desktop + client phone, `u6hvV` R5.1b · Tilted mosaic (the source exploration). Rounds 1–4 and the device-mockup row were otherwise deleted; a Gemini device-mockup attempt did not meet expectations.
 
-Open items: photos are Unsplash placeholders (licensed or commissioned photos needed); literal colours in the scrim gradient; the panel is decorative (`aria-hidden`, no auth content), per *Copy and behavior*. Source screens for future mockups: `assets/mockup-src/`.
+Open items: photos are Unsplash placeholders (licensed or commissioned photos needed); literal colours in the scrim gradient; the panel is decorative (`aria-hidden`, no auth content), per *Copy and behavior*.

@@ -357,6 +357,45 @@ add("modal.footer.border","color",SC("border.subtle"))
 add("button.danger.background","color",SC("status.danger.solid"))
 add("button.danger.background-hover","color",SC("status.danger.solid-hover"))
 add("button.danger.text","color",SC("status.danger.on-solid"))
+# Bottom Sheet (C32, mobile; Owner 2026-09-26: option A "Docked" + option B header; exploration board 05)
+add("sheet.scrim","color",SC("overlay.scrim"))
+add("sheet.background","color",SC("surface.panel"))
+add("sheet.radius","number",SP("radius.xl"))                   # 24, top corners only
+add("sheet.grabber","color",SC("border.input"))
+add("sheet.title","color",SC("text.primary"))
+add("sheet.description","color",SC("text.secondary"))
+add("sheet.meta","color",SC("text.muted"))                     # centred action-list header caption
+add("sheet.close.background","color",SC("surface.sunken"))     # round close (option B header)
+add("sheet.header.padding-y","number",SP("space.2"))           # 8
+add("sheet.header.padding-x","number",SP("space.5"))           # 20
+add("sheet.header.gap","number",SP("space.3"))                 # heading ↔ close 12
+add("sheet.header.text-gap","number",SP("space.1"))            # title ↔ description 4
+add("sheet.item.text","color",SC("text.primary"))
+add("sheet.item.icon","color",SC("text.secondary"))
+add("sheet.item.text-destructive","color",SC("status.danger.fg"))
+add("sheet.item.border","color",SC("border.subtle"))
+add("sheet.item.padding-x","number",SP("space.5"))             # 20
+add("sheet.item.gap","number",SP("space.2-5"))                 # icon ↔ label 10 (14 drawn; Owner 2026-09-26: 10, SP6 amended)
+add("sheet.body.padding-y","number",SP("space.4"))             # 16
+add("sheet.body.padding-x","number",SP("space.5"))             # 20
+add("sheet.body.gap","number",SP("space.3"))                   # 12 (10 drawn → 12; Owner kept 12)
+add("sheet.footer.background","color",SC("surface.subtle"))
+add("sheet.footer.border","color",SC("border.subtle"))
+add("sheet.footer.padding-y","number",SP("space.4"))           # 16
+add("sheet.footer.padding-x","number",SP("space.5"))           # 20
+# Bottom Nav (C34, mobile Owner app; Owner 2026-09-26: option B "colour only · raised CTA", padding-top raised to 12; exploration board 06)
+add("bottom-nav.background","color",SC("surface.panel"))
+add("bottom-nav.border","color",SC("border.subtle"))
+add("bottom-nav.padding-top","number",SP("space.3"))           # 12 (Owner: 6 → 12)
+add("bottom-nav.padding-bottom","number",SP("space.1"))        # 4, then the device safe area
+add("bottom-nav.padding-x","number",SP("space.2"))             # 8
+add("bottom-nav.item.gap","number",SP("space.1"))              # icon ↔ label 4
+add("bottom-nav.item.icon","color",SC("text.muted"))
+add("bottom-nav.item.text","color",SC("text.secondary"))
+add("bottom-nav.item.active","color",SC("action.primary"),SC("status.info.fg"))  # dark: AA for 11 px labels
+add("bottom-nav.cta.background","color",SC("action.primary"))
+add("bottom-nav.cta.icon","color",SC("action.on-primary"))
+add("bottom-nav.cta.ring","color",SC("surface.panel"))         # 4 px ring separating the raised CTA from content
 
 # ---------- build DTCG ----------
 def setp(d, path, val):
@@ -450,7 +489,7 @@ mapping = {
                     "rules_status": "APPROVED 2026-09-26",
                     "note": "Documentation boards bind every swatch/scale to live variables; dark previews use theme mode=dark."},
  "components": {k: v for k, v in json.loads((ROOT/"components"/"registry.json").read_text()).items() if not k.startswith("$")} if (ROOT/"components"/"registry.json").exists() else {},
- "components_status": "IN PROGRESS — C01–C30 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3); C31 Modal (+ Button/Danger, App Shell Overlay) PROPOSED 2026-09-26; C32 Bottom Sheet planned.",
+ "components_status": "IN PROGRESS — C01–C30 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3); C31 Modal (+ Button/Danger, App Shell Overlay), C32 Bottom Sheet (+ Menu), C33 Mobile Shell, C34 Bottom Nav and C35 Mobile App Shell PROPOSED 2026-09-26.",
  "unsupported": {
    "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.","typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",
                  "shadow": "Composite shadow split into elevation.N.offset-y / blur (number) + color.semantic.elevation.N.color (color)."},

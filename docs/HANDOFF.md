@@ -10,13 +10,13 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. |
 | F-01 Auth | SPECIFIED | `docs/features/auth/spec.md` + acceptance criteria. Not modelled or designed yet. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
-| Design system — tokens | PERSISTED (2026-09-26) | **416 tokens** (61 primitive · 54 semantic · 251 component · scales), `mode: light \| dark`. Live checksum `81dfb03c`. |
+| Design system — tokens | PERSISTED (2026-09-26) | **453 tokens** (61 primitive · 54 semantic · 288 component · scales), `mode: light \| dark`. Live checksum `4ea0bcc1`. |
 | Design system — token canvas | DONE | Boards 00–08, refreshed for every token added this session. |
 | Design system — usage & spacing rules | APPROVED (2026-09-26) + Owner amendments | See *Key decisions*. |
 | Design system — primitive components | **APPROVED** — C01–C17 | 17 components (108 reusable nodes) in `design-system.lib.pen`, each with a spec in `components/`. |
 | Design system — composite components (tier 2) | **APPROVED** — C18–C26 (2026-09-26) | Text field, Select, Multi-select, Action menu, Nav item (+ Nav Group Label), Segmented control, Toast, Calendar day, Metric tile. Plus Icon button **SM** (ghost). |
 | Design system — composite components (tier 3) | **APPROVED** — C27–C30 (2026-09-26) | Table (+ cells, header cell/row, row), App panel (+ Page Content), Sidebar, App shell template. |
-| Design system — overlays (tier 4) | **BUILT** — C31 Modal PROPOSED (2026-09-26); C32 Bottom Sheet next | Modal (SM/MD/LG), Button/Danger on C01, App Shell **Overlay** layer. Direction: option A *Sectioned* (exploration board 04). |
+| Design system — overlays (tier 4) | **BUILT** — C31 Modal, C32 Bottom Sheet (+ Menu), C33 Mobile Shell, C34 Bottom Nav, C35 Mobile App Shell PROPOSED (2026-09-26) | Modal (SM/MD/LG), Button/Danger on C01, App Shell **Overlay** layer (option A *Sectioned*, board 04). Bottom Sheet Actions/Form + Sheet Item (A *Docked* + B header, board 05). Mobile Shell template (375 × 812) hosts the sheets. Owner app on phones: Bottom Nav (B, board 06) + Mobile App Shell; Bottom Sheet/Menu inherits the Sidebar. |
 | Code | NONE | No app scaffold yet (F-00 Foundation is TODO). |
 
 ## Component library (`design-system.lib.pen`)
@@ -28,7 +28,7 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
 | 1 (y 6800) | **Actions:** C01 Button · C02 Icon button · **Form controls:** C03 Input · C04 Textarea · C05 Checkbox · C06 Radio · C07 Switch · C08 Stepper |
 | 2 (y 9359) | **Menus:** C09 Menu item · C10 Menu · **Navigation:** C11 Segmented item · **Status:** C12 Stage chip · C13 Count badge · C14 Notification badge · C15 Metric delta · **Display:** C16 Avatar |
 | 3 (y 11983) | **Display:** C17 Kbd · **Tier 2:** C18 Text field · C19 Select · C20 Multi-select · C21 Action menu · C22 Nav item · C23 Segmented control · C24 Toast |
-| 4 (y 14801) | C25 Calendar day · C26 Metric tile · **Tier 3:** C27 Table · C28 App panel · C29 Sidebar · C30 App shell (1600 wide page) · **Tier 4:** C31 Modal (x 9440) · C32 Bottom Sheet (planned, x 10980) |
+| 4 (y 14801) | C25 Calendar day · C26 Metric tile · **Tier 3:** C27 Table · C28 App panel · C29 Sidebar · C30 App shell (1600 wide page) · **Tier 4:** C31 Modal (x 9440) · C32 Bottom sheet (x 10980) · C33 Mobile shell (x 12520) · C34 Bottom nav (x 14060) · C35 Mobile app shell (x 15600) — row 4 now runs to 11 pages |
 
 **The pattern** (Figma best practice adapted to pen.dev; the Button pilot was approved by the Owner):
 
@@ -58,22 +58,22 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
   - Tier 1c: C09–C10 menus. These have **no legacy evidence** and need a careful review.
   - Tier 2: C18–C26 composites built from nested primitive instances.
   - Tier 3: C27 Table (cells, header cell/row, row, card), C28 App panel (+ Page Content), C29 Sidebar, C30 App shell template. APPROVED.
-- **Approval status:** C01–C30 APPROVED · C31 Modal PROPOSED.
+- **Approval status:** C01–C30 APPROVED · C31–C35 PROPOSED.
 - **Composite pattern (tier 2):** a composite's state variants **don't swap** the nested primitive ref. Replacing the nested ref gives it a new ID per variant and breaks instance override paths. Instead, each variant re-applies the primitive state's token overrides on **one stable nested instance** (for example Text field `c67yIW`, Select `Et1pR/c67yIW`). Floating parts (Select/Action menu Menus) are `layoutPosition: absolute` and off when closed. A composite built on another composite is a ref of its base (`_MultiSelect/Base` is a ref of `_Select/Base` with its Menu slot replaced).
 
 ## Design-system artifacts (`docs/design-system/`)
 
 | File | Role |
 |---|---|
-| `exploration.pen` | Provisional canvas: boards 01–03 and **04 — Modal & overlay study** (options A/B; A picked) (directions, token studies, true-scale case, **decision record**, now including the rules approval) and the Owner's copied legacy frames. |
-| `design-system.lib.pen` | Library: 416 Pencil variables, theme axis `mode`, boards 00–08, and component pages C01–C30 (about 3.2 MB; see *Library size / Pen stability*). |
+| `exploration.pen` | Provisional canvas: boards 01–03 and **04 — Modal & overlay study** (options A/B; A picked), **05 — Bottom sheet study** (A/B; A + B header picked), **06 — Mobile app shell study** (A/B; B picked, padding-top 12) (directions, token studies, true-scale case, **decision record**, now including the rules approval) and the Owner's copied legacy frames. |
+| `design-system.lib.pen` | Library: 453 Pencil variables, theme axis `mode`, boards 00–08, and component pages C01–C30 (about 3.2 MB; see *Library size / Pen stability*). |
 | `tokens.json` | Canonical DTCG tokens. **Generated: edit `scripts/gen_tokens.py`, not this file.** |
 | `pencil-mapping.json` | Token ⇄ Pencil variable map, transforms, `library_canvas` (`rules_status` APPROVED), `components` (from the registry), `components_status`. Generated. |
 | `token-usage.md` | Usage rules G1–G8 and SP1–SP11. APPROVED 2026-09-26, with the amendments recorded in its status line. |
 | `components/*.md`, `components/registry.json` | Component specs and the machine-readable registry. |
 | `verification-report.md` | **Stale:** the last `/sdv:verify-design-system` ran before any components existed. |
 | `scripts/gen_tokens.py` | Token source of truth and generator. It also merges `components/registry.json`. |
-| `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `81dfb03c` (416 vars). |
+| `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `4ea0bcc1` (453 vars). |
 | `scripts/pencil-canvas-builders.md` | Pencil MCP snippets for boards 00–08. |
 
 The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy source; never modify) are intentionally untracked.
@@ -122,12 +122,18 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 - **Button/Danger** added to C01 (MD/LG × 4 states) for destructive confirms.
 - **App Shell Overlay:** boolean layer (off), absolute 1440 × 960 with `modal.scrim`, centring a Modal slot (default Modal/MD). It covers the whole screen, sidebar included.
 
+- **Bottom Sheet (tier 4):** two options explored (board 05). Owner: "A is better, but I like header of B" → docked, full-width sheet (top corners 24, rows with `border.subtle`, footer on `surface.subtle`) with B's header (no divider; centred title + meta for action lists, left title + round close on `surface.sunken` for forms). 25 `sheet.*` tokens approved; no new primitives/semantics. Components: Sheet Item Default/Destructive, Bottom Sheet/Actions, Bottom Sheet/Form. Shown on a phone placeholder (no mobile shell — GAP-04).
+
+- **Sheet spacing + mobile frame (Owner "fix the gap", both):** sheet item icon ↔ label = **10** (`space.2-5`; SP6 list amended), Form body gap stays 12. New **C33 Mobile Shell** template (status bar · app bar back/title/action · Content slot · safe area · Overlay with Sheet slot); C32 examples now sit on it. No new tokens (layout region, G3).
+
+- **Mobile App Shell (Owner):** Bottom Nav = Dasbor · Proyek · [+ CTA] · Klien · Lainnya (Owner). Two options explored (board 06); Owner picked **B** (colour-only active tab, raised 54 px CTA with a `surface.panel` ring) and raised the bar's padding-top 6 → **12**. 12 `bottom-nav.*` tokens (active colour: light `action.primary`, dark `status.info.fg`). *Lainnya* → **Bottom Sheet/Menu**: header = Sidebar logo + round close; list = workspace switcher (Owner: moved from header into the content), Invoice (3), KATALOG (Layanan, Tim), Template pesan · Sumber klien · Pengaturan (unlabelled, as in the Sidebar — Owner: inherit the Sidebar, add nothing it lacks), account + Keluar. Separator line above the switcher. Sheet Item gained an optional Count. C35 Mobile App Shell = status bar · app bar (title, search, notifications) · Content · Bottom Nav · Overlay (default Menu sheet). C33 stays the sub-page / client template (Back + title).
+
 ## Open gaps (deferred)
 
 - GAP-01 dark-mode evidence
 - GAP-02 loading states (button, switch) and states beyond those drawn
 - GAP-03 workspace brand-override rules
-- GAP-04 client gallery (mobile)
+- GAP-04 client gallery (mobile) — frame now exists (C33 Mobile Shell); screens, bottom navigation and breakpoints still open
 - GAP-05 EN/ID copy mix (id-ID assumed)
 - Tabular figures for money and time
 - No negative (red) metric delta tone
@@ -137,8 +143,8 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 ## Next steps
 
 1. Optional: a 1920-wide shell exhibit to show the centring (page C30 is 1600 wide, so it needs its own row).
-2. **Owner review of C31 Modal** (+ Button/Danger, App Shell Overlay).
-3. **C32 Bottom Sheet** (mobile): `radius.xl` top corners, grabber, same scrim; explore first if the Owner wants options. Needs a mobile frame (GAP-04). Still open: `sidebar.*` aliases.
+2. **Owner review of C31 Modal** (+ Button/Danger, App Shell Overlay) **and C32 Bottom sheet**.
+3. Owner review of **C33–C35** (Mobile shell, Bottom nav, Mobile app shell, Menu sheet); then tablet breakpoints. Still open: `sidebar.*` aliases; move row 4 (11 pages) into a new row.
 4. Open questions:
    - Toast close optical nudge.
    - Calendar day hover.

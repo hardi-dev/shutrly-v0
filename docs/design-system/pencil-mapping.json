@@ -142,6 +142,18 @@
     "component/badge/danger/padding-y": "component.badge.danger.padding-y",
     "component/badge/danger/radius": "component.badge.danger.radius",
     "component/badge/danger/text": "component.badge.danger.text",
+    "component/bottom-nav/background": "component.bottom-nav.background",
+    "component/bottom-nav/border": "component.bottom-nav.border",
+    "component/bottom-nav/cta/background": "component.bottom-nav.cta.background",
+    "component/bottom-nav/cta/icon": "component.bottom-nav.cta.icon",
+    "component/bottom-nav/cta/ring": "component.bottom-nav.cta.ring",
+    "component/bottom-nav/item/active": "component.bottom-nav.item.active",
+    "component/bottom-nav/item/gap": "component.bottom-nav.item.gap",
+    "component/bottom-nav/item/icon": "component.bottom-nav.item.icon",
+    "component/bottom-nav/item/text": "component.bottom-nav.item.text",
+    "component/bottom-nav/padding-bottom": "component.bottom-nav.padding-bottom",
+    "component/bottom-nav/padding-top": "component.bottom-nav.padding-top",
+    "component/bottom-nav/padding-x": "component.bottom-nav.padding-x",
     "component/button/danger/background": "component.button.danger.background",
     "component/button/danger/background-hover": "component.button.danger.background-hover",
     "component/button/danger/text": "component.button.danger.text",
@@ -315,6 +327,31 @@
     "component/segmented/padding": "component.segmented.padding",
     "component/segmented/radius": "component.segmented.radius",
     "component/segmented/track": "component.segmented.track",
+    "component/sheet/background": "component.sheet.background",
+    "component/sheet/body/gap": "component.sheet.body.gap",
+    "component/sheet/body/padding-x": "component.sheet.body.padding-x",
+    "component/sheet/body/padding-y": "component.sheet.body.padding-y",
+    "component/sheet/close/background": "component.sheet.close.background",
+    "component/sheet/description": "component.sheet.description",
+    "component/sheet/footer/background": "component.sheet.footer.background",
+    "component/sheet/footer/border": "component.sheet.footer.border",
+    "component/sheet/footer/padding-x": "component.sheet.footer.padding-x",
+    "component/sheet/footer/padding-y": "component.sheet.footer.padding-y",
+    "component/sheet/grabber": "component.sheet.grabber",
+    "component/sheet/header/gap": "component.sheet.header.gap",
+    "component/sheet/header/padding-x": "component.sheet.header.padding-x",
+    "component/sheet/header/padding-y": "component.sheet.header.padding-y",
+    "component/sheet/header/text-gap": "component.sheet.header.text-gap",
+    "component/sheet/item/border": "component.sheet.item.border",
+    "component/sheet/item/gap": "component.sheet.item.gap",
+    "component/sheet/item/icon": "component.sheet.item.icon",
+    "component/sheet/item/padding-x": "component.sheet.item.padding-x",
+    "component/sheet/item/text": "component.sheet.item.text",
+    "component/sheet/item/text-destructive": "component.sheet.item.text-destructive",
+    "component/sheet/meta": "component.sheet.meta",
+    "component/sheet/radius": "component.sheet.radius",
+    "component/sheet/scrim": "component.sheet.scrim",
+    "component/sheet/title": "component.sheet.title",
     "component/stepper/background": "component.stepper.background",
     "component/stepper/border": "component.stepper.border",
     "component/stepper/button-primary/background": "component.stepper.button-primary.background",
@@ -437,11 +474,11 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 416,
+    "total": 453,
     "primitive": 61,
     "semantic": 54,
-    "component": 251,
-    "themed": 57
+    "component": 288,
+    "themed": 58
   },
   "transforms": {
     "opacity/*": "Pencil value = token $value × 100 (Pencil opacity variables are percent; e.g. opacity.disabled 0.4 → 40)"
@@ -2448,9 +2485,539 @@
         "no max-height / scrolling body spec yet",
         "no legacy evidence (exploration board 04, option A)"
       ]
+    },
+    "sheet-item": {
+      "status": "PROPOSED (tier 4) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C32 — Bottom sheet",
+        "id": "m6YUOs"
+      },
+      "spec": "docs/design-system/components/bottom-sheet.md",
+      "base": {
+        "name": "_SheetItem/Base",
+        "id": "hHxAm",
+        "private": true
+      },
+      "axes": {
+        "tone": [
+          "default",
+          "destructive"
+        ]
+      },
+      "props": {
+        "label": {
+          "kind": "text",
+          "layer": "Label",
+          "id": "elAPX",
+          "default": "Unduh foto"
+        },
+        "icon": {
+          "kind": "instance-swap",
+          "layer": "Icon",
+          "id": "MLkPM",
+          "default": "download"
+        },
+        "count": {
+          "kind": "boolean",
+          "layer": "Count",
+          "id": "bZ2Ux",
+          "default": false,
+          "nested": "count-badge (set Count/BTnxI)"
+        }
+      },
+      "layers": {
+        "Icon": "MLkPM",
+        "Label": "elAPX",
+        "Count": "bZ2Ux"
+      },
+      "variants": {
+        "default": "FRtU1",
+        "destructive": "FAObX"
+      },
+      "nested": [
+        "count-badge"
+      ],
+      "tokens": [
+        "component.sheet.item.*",
+        "component.sheet.background"
+      ],
+      "gaps": [
+        "height 52 literal (Pencil can't bind height)"
+      ]
+    },
+    "bottom-sheet": {
+      "status": "PROPOSED (tier 4) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C32 — Bottom sheet",
+        "id": "m6YUOs"
+      },
+      "spec": "docs/design-system/components/bottom-sheet.md",
+      "base": null,
+      "axes": {
+        "type": [
+          "actions",
+          "form",
+          "menu"
+        ]
+      },
+      "props": {
+        "actions.title": {
+          "kind": "text",
+          "layer": "Title",
+          "id": "bEyU3"
+        },
+        "actions.meta": {
+          "kind": "boolean",
+          "layer": "Meta",
+          "id": "GyfP0",
+          "default": true
+        },
+        "actions.items": {
+          "kind": "slot",
+          "layer": "Items",
+          "id": "CLpYz",
+          "recommended": [
+            "FRtU1",
+            "FAObX"
+          ],
+          "fill": "Replace(instance+'/CLpYz', {type:'frame', name:'Items', layout:'vertical', width:'fill_container'})"
+        },
+        "form.title": {
+          "kind": "text",
+          "layer": "Title",
+          "id": "di5Wv"
+        },
+        "form.description": {
+          "kind": "boolean",
+          "layer": "Description",
+          "id": "fmisv",
+          "default": true
+        },
+        "form.close": {
+          "kind": "boolean",
+          "layer": "Close",
+          "id": "P9kIA4",
+          "default": true
+        },
+        "form.body": {
+          "kind": "slot",
+          "layer": "Body",
+          "id": "XCxn4",
+          "recommended": [
+            "HHNPk",
+            "Wc7hd",
+            "Imyla",
+            "SSy18",
+            "n8NmOH",
+            "oSTqI",
+            "t7L0yL"
+          ],
+          "fill": "Replace(instance+'/XCxn4', {type:'frame', name:'Body', layout:'vertical', width:'fill_container', padding:['$component/sheet/body/padding-y','$component/sheet/body/padding-x'], gap:'$component/sheet/body/gap'})"
+        },
+        "form.actions": {
+          "kind": "slot",
+          "layer": "Actions",
+          "id": "x5l7Wq",
+          "recommended": [
+            "aBT7T",
+            "c3U6N",
+            "ZDOwL"
+          ],
+          "fill": "Replace(instance+'/x5l7Wq', {type:'frame', name:'Actions', layout:'vertical', width:'fill_container', gap:'$component/sheet/body/gap'}) then LG buttons width fill_container"
+        },
+        "menu.items": {
+          "kind": "slot",
+          "layer": "Items",
+          "id": "MfblZ",
+          "recommended": [
+            "FRtU1",
+            "FAObX",
+            "Rjoxp"
+          ]
+        },
+        "menu.close": {
+          "kind": "boolean",
+          "layer": "Close",
+          "id": "mt8sl",
+          "default": true
+        }
+      },
+      "layers": {
+        "actions": {
+          "Grabber": "YgWu7",
+          "Header": "IVFxg",
+          "Items": "CLpYz",
+          "Safe area": "Rjdpx"
+        },
+        "form": {
+          "Grabber": "b3NPP",
+          "Header": "N45tz",
+          "Heading": "ZkmI0",
+          "Close": "P9kIA4",
+          "Body": "XCxn4",
+          "Footer": "M5rKks",
+          "Actions": "x5l7Wq",
+          "Safe area": "VoKRV"
+        },
+        "menu": {
+          "Grabber": "H8E1Yj",
+          "Header": "VsQBD",
+          "Workspace switcher": "Gf9J9",
+          "Items": "MfblZ",
+          "Account": "OnXpV",
+          "Log out": "JVVIR",
+          "Safe area": "TF9Tw",
+          "Logo": "o5FI3",
+          "Close": "mt8sl",
+          "Workspace": "yurxA"
+        }
+      },
+      "variants": {
+        "actions": "U0wHw",
+        "form": "vSBbR",
+        "menu": "oWJw2"
+      },
+      "nested": [
+        "avatar",
+        "button",
+        "count-badge",
+        "icon-button",
+        "nav-group-label",
+        "radio",
+        "sheet-item"
+      ],
+      "tokens": [
+        "component.sheet.*",
+        "elevation.2"
+      ],
+      "gaps": [
+        "width 375 = design frame; code 100% of viewport (max 560 on tablet)",
+        "upward shadow offset −8 is literal (elevation offsets are positive)",
+        "no mobile shell yet (GAP-04): shown on a phone placeholder",
+        "max-height 90% / scrolling body documented, not drawn"
+      ]
+    },
+    "mobile-shell": {
+      "status": "PROPOSED (tier 4) 2026-09-26 (template)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C33 — Mobile shell",
+        "id": "rmpdk"
+      },
+      "spec": "docs/design-system/components/mobile-shell.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "title": {
+          "kind": "text",
+          "layer": "Title",
+          "id": "YDCza",
+          "default": "Galeri"
+        },
+        "back": {
+          "kind": "boolean",
+          "layer": "Back",
+          "id": "A7FVe",
+          "default": true
+        },
+        "action": {
+          "kind": "boolean",
+          "layer": "Action",
+          "id": "iYuut",
+          "default": true
+        },
+        "content": {
+          "kind": "slot",
+          "layer": "Content",
+          "id": "JOcL3",
+          "recommended": [
+            "AJT5R",
+            "FCsTI",
+            "HHNPk",
+            "uMP5H",
+            "aBT7T",
+            "E4PkTw"
+          ],
+          "fill": "Replace(instance+'/JOcL3', {type:'frame', name:'Content', layout:'vertical', width:'fill_container', height:'fill_container', padding:'$space/4', gap:'$space/3'})"
+        },
+        "overlay": {
+          "kind": "boolean",
+          "layer": "Overlay",
+          "id": "uTdi7",
+          "default": false
+        },
+        "sheet": {
+          "kind": "slot",
+          "layer": "Sheet",
+          "id": "gc8dt",
+          "recommended": [
+            "U0wHw",
+            "vSBbR"
+          ],
+          "default": "OxGbt (Bottom Sheet/Actions)"
+        }
+      },
+      "layers": {
+        "Status bar": "gcvMh",
+        "App bar": "ombNI",
+        "Back": "A7FVe",
+        "Title": "YDCza",
+        "Action": "iYuut",
+        "Content": "JOcL3",
+        "Safe area": "c6tsWc",
+        "Overlay": "uTdi7",
+        "Sheet": "gc8dt"
+      },
+      "variants": {
+        "default": "XHlWT"
+      },
+      "nested": [
+        "icon-button",
+        "bottom-sheet"
+      ],
+      "tokens": [
+        "color.semantic.surface.panel",
+        "color.semantic.border.subtle",
+        "space.1",
+        "space.2",
+        "space.3",
+        "space.4",
+        "component.sheet.scrim"
+      ],
+      "gaps": [
+        "no bottom navigation",
+        "tablet/Owner breakpoints unspecified",
+        "status bar/home indicator are device context only"
+      ]
+    },
+    "bottom-nav-item": {
+      "status": "PROPOSED (tier 4) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C34 — Bottom nav",
+        "id": "QifL8"
+      },
+      "spec": "docs/design-system/components/bottom-nav.md",
+      "base": {
+        "name": "_BottomNavItem/Base",
+        "id": "D0lDq",
+        "private": true
+      },
+      "axes": {
+        "state": [
+          "default",
+          "active"
+        ]
+      },
+      "props": {
+        "label": {
+          "kind": "text",
+          "layer": "Label",
+          "id": "sJlqM"
+        },
+        "icon": {
+          "kind": "instance-swap",
+          "layer": "Icon",
+          "id": "Tz5za"
+        },
+        "badge": {
+          "kind": "boolean",
+          "layer": "Badge",
+          "id": "qSiIY",
+          "default": false,
+          "nested": "notification-badge (Count hnJrZ)"
+        }
+      },
+      "layers": {
+        "Icon wrap": "ktiaG",
+        "Icon": "Tz5za",
+        "Badge": "qSiIY",
+        "Label": "sJlqM"
+      },
+      "variants": {
+        "default": "x1Mgr3",
+        "active": "bKADv"
+      },
+      "nested": [
+        "notification-badge"
+      ],
+      "tokens": [
+        "component.bottom-nav.item.*"
+      ],
+      "gaps": []
+    },
+    "bottom-nav-cta": {
+      "status": "PROPOSED (tier 4) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C34 — Bottom nav",
+        "id": "QifL8"
+      },
+      "spec": "docs/design-system/components/bottom-nav.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "icon": {
+          "kind": "instance-swap",
+          "layer": "Icon",
+          "id": "nCt5A",
+          "default": "plus"
+        }
+      },
+      "layers": {
+        "Icon": "nCt5A"
+      },
+      "variants": {
+        "default": "tLfnG"
+      },
+      "nested": [],
+      "tokens": [
+        "component.bottom-nav.cta.*",
+        "elevation.1"
+      ],
+      "gaps": [
+        "54 size literal"
+      ]
+    },
+    "bottom-nav": {
+      "status": "PROPOSED (tier 4) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C34 — Bottom nav",
+        "id": "QifL8"
+      },
+      "spec": "docs/design-system/components/bottom-nav.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "items": {
+          "kind": "slot",
+          "layer": "Items",
+          "id": "gZgRf",
+          "recommended": [
+            "x1Mgr3",
+            "bKADv",
+            "tLfnG"
+          ]
+        }
+      },
+      "layers": {
+        "Items": "gZgRf",
+        "Tab Dasbor": "uzabE",
+        "Tab Proyek": "Ryjdm",
+        "CTA slot": "suEnL",
+        "CTA": "Iir7g",
+        "Tab Klien": "YChMw",
+        "Tab Lainnya": "wTYuN",
+        "Safe area": "bOGkI"
+      },
+      "variants": {
+        "default": "lymtg"
+      },
+      "nested": [
+        "bottom-nav-item",
+        "bottom-nav-cta"
+      ],
+      "tokens": [
+        "component.bottom-nav.*"
+      ],
+      "gaps": [
+        "no hide-on-scroll / keyboard state drawn"
+      ]
+    },
+    "mobile-app-shell": {
+      "status": "PROPOSED (tier 4) 2026-09-26 (template)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C35 — Mobile app shell",
+        "id": "u8w6u"
+      },
+      "spec": "docs/design-system/components/mobile-app-shell.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "title": {
+          "kind": "text",
+          "layer": "Title",
+          "id": "jlmjH",
+          "default": "Dasbor"
+        },
+        "content": {
+          "kind": "slot",
+          "layer": "Content",
+          "id": "HvRky",
+          "recommended": [
+            "AJT5R",
+            "FCsTI",
+            "HHNPk",
+            "uMP5H",
+            "aBT7T",
+            "E4PkTw"
+          ],
+          "fill": "Replace(instance+'/HvRky', {type:'frame', name:'Content', layout:'vertical', width:'fill_container', height:'fill_container', padding:'$space/4', gap:'$space/4'})"
+        },
+        "bottomNav": {
+          "kind": "nested",
+          "layer": "Bottom Nav",
+          "id": "SpGXb",
+          "ref": "bottom-nav"
+        },
+        "overlay": {
+          "kind": "boolean",
+          "layer": "Overlay",
+          "id": "Ey5pi",
+          "default": false
+        },
+        "sheet": {
+          "kind": "slot",
+          "layer": "Sheet",
+          "id": "aQWCT",
+          "recommended": [
+            "oWJw2",
+            "U0wHw",
+            "vSBbR"
+          ],
+          "default": "xSveZ (Bottom Sheet/Menu)"
+        }
+      },
+      "layers": {
+        "Top": "jqblo",
+        "Status bar": "IgmBj",
+        "App bar": "nUiGs",
+        "Title": "jlmjH",
+        "Search": "oGnhL",
+        "Notifications": "x84QK",
+        "Content": "HvRky",
+        "Bottom Nav": "SpGXb",
+        "Overlay": "Ey5pi",
+        "Sheet": "aQWCT"
+      },
+      "variants": {
+        "default": "c6qPz7"
+      },
+      "nested": [
+        "icon-button",
+        "bottom-nav",
+        "bottom-sheet"
+      ],
+      "tokens": [
+        "color.semantic.surface.canvas",
+        "color.semantic.surface.panel",
+        "color.semantic.border.subtle",
+        "space.1",
+        "space.2",
+        "space.4",
+        "component.sheet.scrim"
+      ],
+      "gaps": [
+        "tablet 768–1279 unspecified",
+        "sub-pages use C33 (back + title)"
+      ]
     }
   },
-  "components_status": "IN PROGRESS — C01–C30 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3); C31 Modal (+ Button/Danger, App Shell Overlay) PROPOSED 2026-09-26; C32 Bottom Sheet planned.",
+  "components_status": "IN PROGRESS — C01–C30 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3); C31 Modal (+ Button/Danger, App Shell Overlay), C32 Bottom Sheet (+ Menu), C33 Mobile Shell, C34 Bottom Nav and C35 Mobile App Shell PROPOSED 2026-09-26.",
   "unsupported": {
     "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.",
     "typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",

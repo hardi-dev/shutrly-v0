@@ -22,6 +22,8 @@
     "e2e": "playwright test",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "auth:set-status": "tsx --conditions=react-server scripts/auth/set-user-status.ts",
+    "auth:purge-rate-limits": "tsx --conditions=react-server scripts/auth/purge-auth-rate-limits.ts",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build"
   },

@@ -252,15 +252,15 @@ Each iteration follows plan → implement → test → verify → commit. The st
 
 ### Iteration 1 — Scaffold and local gate (Tasks 1–2)
 
-- [ ] Pinned dependencies, `tsconfig` (`@/*`, `types: ["node"]` because TS 6 defaults `types` to `[]`), Next config, Tailwind/PostCSS, placeholder layout and page
-- [ ] The full coding-rules ESLint config + local rules, Prettier (100 columns), pre-commit hook; Vitest with `unit` (node) and `dom` (jsdom) projects and the `server-only` alias
+- [x] Pinned dependencies, `tsconfig` (`@/*`, `types: ["node"]` because TS 6 defaults `types` to `[]`), Next config, Tailwind/PostCSS, placeholder layout and page
+- [x] The full coding-rules ESLint config + local rules, Prettier (100 columns), pre-commit hook; Vitest with `unit` (node) and `dom` (jsdom) projects and the `server-only` alias
 - **Done:** `pnpm dev` renders the page; `pnpm typecheck && pnpm lint && pnpm build` pass; Vitest loads (AC-FND-001, 002).
 
 ### Iteration 2 — Runtime basics (Tasks 3–6)
 
-- [ ] `AppEnv`; `DomainError` + `logger`
-- [ ] OpenNext + Wrangler config, `.dev.vars`, `getRequestContext`
-- [ ] `onRequestError`
+- [x] `AppEnv`; `DomainError` + `logger`
+- [x] OpenNext + Wrangler config, `.dev.vars`, `getRequestContext`
+- [x] `onRequestError`
 - **Done:** AC-FND-004, 011 and the logging half of 010 pass; the gate is green.
 
 ### Iteration 3 — Database (Tasks 7–10)

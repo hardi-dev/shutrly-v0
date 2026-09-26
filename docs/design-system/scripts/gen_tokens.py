@@ -106,6 +106,7 @@ NUM = {  # number tokens: path -> (value, description)
  "space.4":(16,""),"space.5":(20,""),"space.6":(24,""),"space.7":(28,""),"space.8":(32,""),"space.9":(36,""),"space.10":(40,""),"space.12":(48,""),
  "size.rail":(72,"Tablet icon rail width (Owner 2026-09-26, board 07 option A)"),
  "size.content-max":(1096,"Page content max-width: 1440 shell − 252 sidebar − 12 gutter − 2×40 content padding (layout size, not spacing)"),
+ "size.content-narrow":(720,"Centered single-column content width inside Page Content; Owner approved 2026-09-26 from Auth Profile"),
  "radius.2xs":(2,"Bars"),"radius.xs":(4,"Kbd, delta, checkbox"),"radius.sm":(8,"Nav item, input"),"radius.md":(12,"Tile, toast"),
  "radius.lg":(16,"App panel, day cell"),"radius.xl":(24,"Sheet"),"radius.full":(999,"Pill"),
  "opacity.disabled":(0.4,""),"opacity.hover-overlay":(0.06,""),"opacity.status-tint":(0.16,"Dark status backgrounds"),"opacity.scrim":(0.5,""),
@@ -175,14 +176,14 @@ add("metric.spark.radius","number",SP("radius.2xs"))                # 2
 for st in ["success","info","warning","danger","highlight"]:
     if st=="highlight": bg, fg, bd = "accent.soft","accent.soft-fg","status.highlight.border"
     else: bg, fg, bd = f"status.{st}.bg", f"status.{st}.fg", f"status.{st}.border"
-    add(f"toast.{st}.background","color",SC(bg))
-    add(f"toast.{st}.border","color",SC(bd))
-    add(f"toast.{st}.icon","color",SC(fg))
-    add(f"toast.{st}.title","color",SC(fg),SC("text.primary"))
-    add(f"toast.{st}.action","color",SC(fg),SC("text.primary"))   # tier 2: action link = title colour
-add("toast.surface","color",SC("surface.panel"))
-add("toast.body","color",SC("text.secondary"))
-add("toast.radius","number",SP("radius.md"))
+    add(f"alert.{st}.background","color",SC(bg))
+    add(f"alert.{st}.border","color",SC(bd))
+    add(f"alert.{st}.icon","color",SC(fg))
+    add(f"alert.{st}.title","color",SC(fg),SC("text.primary"))
+    add(f"alert.{st}.action","color",SC(fg),SC("text.primary"))   # tier 2: action link = title colour
+add("alert.surface","color",SC("surface.panel"))
+add("alert.body","color",SC("text.secondary"))
+add("alert.radius","number",SP("radius.md"))
 add("input.background","color",SC("surface.panel"))
 add("input.background-disabled","color",SC("surface.sunken"))
 add("input.border","color",SC("border.input"))
@@ -235,10 +236,10 @@ add("metric.delta.radius","number",SP("radius.xs"))       # 4
 add("calendar.day.padding-y","number",SP("space.2-5"))    # 10
 add("calendar.day.gap","number",SP("space.1"))            # 4
 add("calendar.day.radius","number",SP("radius.lg"))       # 16
-add("toast.padding-y","number",SP("space.3"))             # 12
-add("toast.padding-x","number",SP("space.3"))             # 12 / 14 → 12
-add("toast.gap","number",SP("space.3"))                   # icon↔text 12
-add("toast.text-gap","number",SP("space.0-5"))            # title↔body 2
+add("alert.padding-y","number",SP("space.3"))             # 12
+add("alert.padding-x","number",SP("space.3"))             # 12 / 14 → 12
+add("alert.gap","number",SP("space.3"))                   # icon↔text 12
+add("alert.text-gap","number",SP("space.0-5"))            # title↔body 2
 add("input.gap","number",SP("space.1-5"))                 # label↔field↔helper 6
 add("input.content-gap","number",SP("space.2"))           # prefix/icon↔text 8
 add("checkbox.gap","number",SP("space.2"))                # box↔label 10 → 8 (Owner 2026-09-26, whole steps)

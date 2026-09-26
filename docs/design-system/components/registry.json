@@ -1290,16 +1290,16 @@
    "LG size for the client gallery (≥ 44 px) not built"
   ]
  },
- "toast": {
+ "alert": {
   "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
-   "name": "C24 — Toast",
+   "name": "C24 — Alert",
    "id": "NFr0T"
   },
-  "spec": "docs/design-system/components/toast.md",
+  "spec": "docs/design-system/components/alert.md",
   "base": {
-   "name": "_Toast/Base",
+   "name": "_Alert/Base",
    "id": "B50hT",
    "private": true
   },
@@ -1333,8 +1333,9 @@
     "note": "fixed per tone"
    },
    "close": {
-    "kind": "nested",
-    "layer": "Close",
+    "kind": "boolean+nested",
+    "layer": "Close align",
+    "default": false,
     "ref": "icon-button/ghost/sm/default",
     "icon": "x"
    }
@@ -1358,12 +1359,9 @@
    "icon-button"
   ],
   "tokens": [
-   "component.toast.*",
-   "elevation.1.*"
+   "component.alert.*"
   ],
-  "gaps": [
-   "close button (32) sits top-aligned; its X glyph centres 7 px below the title line (no negative offsets in Pencil)"
-  ]
+  "gaps": []
  },
  "calendar-day": {
   "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",

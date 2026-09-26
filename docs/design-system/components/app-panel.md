@@ -28,7 +28,7 @@ The panel's content region, extracted as its own component so that very wide scr
 | Part | Layer | Description |
 |---|---|---|
 | Root | `B4HAVd` | Width fill; padding 28 / 40 (`panel.app.content.padding-y/-x`); centres the Container. |
-| Container | `bBehO` (slot) | Fixed **1096** = `panel.app.content.max-width` (`size.content-max`: 1440 shell − 252 sidebar − 12 gutter − 2 × 40). Sections stack at 28 (`panel.app.content.gap`). Recommended: Table, Metric Tile, Segmented Control, Text Field, Buttons, Toast. |
+| Container | `bBehO` (slot) | Fixed **1096** = `panel.app.content.max-width` (`size.content-max`: 1440 shell − 252 sidebar − 12 gutter − 2 × 40). Sections stack at 28 (`panel.app.content.gap`). Recommended: Table, Metric Tile, Segmented Control, Text Field, Buttons, Alert. |
 | Hint | `Wnclu` | Placeholder text, replaced with the page sections. |
 
 Pencil has no max-width and can't bind width to a variable, so the Container is a literal 1096 and centres on wider panels. **In code:** `max-width: 1096px; width: 100%; margin-inline: auto`, so below 1176 it shrinks with the panel. On the canvas a panel narrower than 1176 clips the Container; show panels at 1176 or wider.

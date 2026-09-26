@@ -16,7 +16,7 @@ The Owner app on a phone, and the mobile twin of the App Shell (C30). Every top-
 |---|---|---|
 | Top | `jqblo` | `surface.panel`, bottom border `border.subtle`. Holds the Status bar `IgmBj` (54, a device inset) and the App bar `nUiGs`. |
 | App bar | `nUiGs` | 52 high; padding 0 / `space.2` / 0 / `space.4`. Title `jlmjH` (title 18 / 700, fill) · Search `oGnhL` · Notifications `x84QK` (Icon Button Ghost MD, with badge) |
-| Content | `HvRky` (slot) | On `surface.canvas`; padding and gap `space.4`. Accepts Metric Tile, Table, Text Field, Segmented Control, Button LG and Toast. |
+| Content | `HvRky` (slot) | On `surface.canvas`; padding and gap `space.4`. Accepts Metric Tile, Table, Text Field, Segmented Control, Button LG and Alert. |
 | Bottom Nav | `SpGXb` | Nested C34, with its own safe area |
 | Overlay | `Ey5pi` | Boolean, **off**. Absolute 375 × 812 in `sheet.scrim`; the Sheet slot docks at the bottom. |
 | Sheet | `aQWCT` (slot) | Accepts Bottom Sheet/Menu, /Actions and /Form. The default is **Bottom Sheet/Menu** (`xSveZ`) for *Lainnya*. |

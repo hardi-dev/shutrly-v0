@@ -25,7 +25,7 @@ A dialog shown over a scrim. Use it for a focused task that must be finished or 
 | 4 | Title | `V8uAA` | title 18 / 700 / −0.4, `modal.title`. Text property. |
 | 5 | Description | `PPg3y` | body-sm 13, line height 1.5, `modal.description`. Boolean (on). |
 | 6 | Close | `M80T4e` | Icon Button / Ghost / SM (`VA96y`), icon `x`. Boolean (on). |
-| 7 | Body | `c5Prsw` (slot) | Padding `modal.body.padding` (24), gap `modal.body.gap` (16). Accepts Text Field, Select, Multi-select, Textarea, Checkbox, Radio, Switch, Table and Toast. |
+| 7 | Body | `c5Prsw` (slot) | Padding `modal.body.padding` (24), gap `modal.body.gap` (16). Accepts Text Field, Select, Multi-select, Textarea, Checkbox, Radio, Switch, Table and Alert. |
 | 8 | Footer | `Pp1eX` | `modal.footer.background` (`surface.subtle`), top border `modal.footer.border`, padding `modal.footer.padding-y/-x` (16 / 24), right-aligned |
 | 9 | Actions | `I7e8yh` (slot) | Gap `modal.footer.gap` (12). Accepts Button Secondary, Primary and Danger. Default: *Batal* + *Simpan*. |
 

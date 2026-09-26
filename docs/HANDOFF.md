@@ -1,20 +1,32 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-26 (session 4, Page Content) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system/library-components` is kept. No remote is configured, so nothing is pushed.
+Last updated: 2026-09-26 (F-01 Auth design and Alert handoff) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `main`. This handoff records the saved Pen state before the Alert is applied to auth screens.
+
+## Current handoff — resume here
+
+- **F-01 Auth canvas:** `docs/features/auth/auth.pen` was saved on disk at **2026-09-26 16:52:38** (273,046 bytes). It has 15 desktop states paired with 15 mobile states, arranged side by side; desktop editorial panels are intentionally blank and dark. The Owner's 720 px Profile/Password content column is centered. Four isolated verification notice explorations and two linked Toast comparison instances remain at the bottom of the canvas. The actual desktop verification instruction is `OIDUp`; its mobile counterpart is `JYf3F`.
+- **Owner decision:** Rename the existing library Toast component to **Alert**, use it inline without × for the verification instruction, and preserve it while the page is open. The Owner then asked to hand off and commit before applying it to auth screens.
+- **Library saved:** `docs/design-system/design-system.lib.pen` was saved at **2026-09-26 17:03:11** (4,111,384 bytes). C24 is now **Alert**; base `B50hT` and tone IDs (`E4PkTw`, `S5bhVn`, `pt1q7`, `F3GrC5`, `ef21N`) are unchanged for linked instances. Close is off by default, shadow is disabled, component variable bindings use `component/alert/*`, board 06 labels were renamed, and cover count is 479. The earlier approved `size/content-narrow = 720` variable was also synced. An `Alert/Info` screenshot rendered correctly after the variable sync.
+- **Repository tokens:** `scripts/gen_tokens.py` now generates `component.alert.*` in place of `component.toast.*`; generated `tokens.json`, `pencil-mapping.json`, and `scripts/pencil-vars.json` contain 479 variables. `verify_json.py` reported **0 issues**; `verify_vars.py` reported checksum **`c8b47514`**. The Alert spec is `components/alert.md`, and `components/registry.json` retains the stable Pencil IDs.
+- **Next step:** Open `auth.pen` in Pen and replace `OIDUp` and `JYf3F` with linked `Alert/Info` instances. Set title/body to the verification copy, width to fill the form, and leave Close disabled. Then inspect desktop/mobile screenshots, save with ⌘S, and verify the disk mtime. The old exploratory Toast comparison instances can be renamed or retired after this review.
+- **Verification still needed:** Run a full design-system canvas/consumer check after the auth replacement. Pencil's `metadata.component` on the private base still reports `toast` because `Update` did not change it, even though the visible name, registry, contexts and bindings now say Alert. Do not claim full library verification from the targeted screenshot. Board 08 does not yet document the approved 720 px layout example.
+- **Do not touch unrelated work:** `docs/design-system/exploration.pen`, root `design.pen`, and `dont-touch-old-design.zip` belong to the Owner and are outside this commit.
+
+The historical session notes and plans below predate this current handoff; use the section above as the active state.
 
 ## Where we are
 
 | Area | Status | Notes |
 |---|---|---|
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. Folder architecture finalized 2026-09-26 in `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`. |
-| F-01 Auth | MODELED | `docs/features/auth/spec.md` + acceptance criteria + `technical-design.md` + `diagrams/` + `docs/superpowers/plans/2026-09-26-auth.md`. Pencil design and F-00 foundation still gate implementation. |
+| F-01 Auth | DESIGNED, IN REVIEW | 15 desktop/mobile pairs in `auth.pen`; selected verification instruction still awaits the new linked `Alert/Info`. F-00 foundation still gates implementation. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
-| Design system — tokens | PERSISTED (2026-09-26) | **478 tokens** (61 primitive · 54 semantic · 312 component · scales), `mode: light \| dark`. Live checksum `c36593e9`. |
-| Design system — token canvas | DONE | Boards 00–08, refreshed for every token added this session. |
+| Design system — tokens | PERSISTED (2026-09-26) | **479 tokens** (61 primitive · 54 semantic · 312 component · scales), `mode: light \| dark`. Repository payload checksum `c8b47514`; full Pencil checksum check remains. |
+| Design system — token canvas | PARTIAL UPDATE | Cover count and board 06 Alert labels updated; board 08 still needs the approved 720 px layout example. |
 | Design system — usage & spacing rules | APPROVED (2026-09-26) + Owner amendments | See *Key decisions*. |
 | Design system — primitive components | **APPROVED** — C01–C17 | 17 components (108 reusable nodes) in `design-system.lib.pen`, each with a spec in `components/`. |
-| Design system — composite components (tier 2) | **APPROVED** — C18–C26 (2026-09-26) | Text field, Select, Multi-select, Action menu, Nav item (+ Nav Group Label), Segmented control, Toast, Calendar day, Metric tile. Plus Icon button **SM** (ghost). |
+| Design system — composite components (tier 2) | **APPROVED** — C18–C26 (2026-09-26) | Text field, Select, Multi-select, Action menu, Nav item (+ Nav Group Label), Segmented control, **Alert** (renamed from Toast), Calendar day, Metric tile. Plus Icon button **SM** (ghost). |
 | Design system — composite components (tier 3) | **APPROVED** — C27–C30 (2026-09-26) | Table (+ cells, header cell/row, row), App panel (+ Page Content), Sidebar, App shell template. |
 | Design system — overlays (tier 4) | **APPROVED** — C31 Modal, C32 Bottom Sheet (+ Menu), C33 Mobile Shell, C34 Bottom Nav, C35 Mobile App Shell (2026-09-26) | Modal (SM/MD/LG), Button/Danger on C01, App Shell **Overlay** layer (option A *Sectioned*, board 04). Bottom Sheet Actions/Form + Sheet Item (A *Docked* + B header, board 05). Mobile Shell template (375 × 812) hosts the sheets. Owner app on phones: Bottom Nav (B, board 06) + Mobile App Shell; Bottom Sheet/Menu inherits the Sidebar. |
 | Code | NONE | No app scaffold yet (F-00 Foundation is TODO). |
@@ -144,9 +156,9 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 - Menu components have no legacy evidence
 - `nav.count.*` should be renamed to `count-badge.*` if the badge is used outside navigation
 
-## Next steps
+## Historical next steps (superseded by current handoff)
 
-**⚠️ Resume here (2026-09-26, session ended on token limit).** The library in the open Pen window is broken in memory. **Close it with "Don't Save"** and reopen from disk (the file = commit `67e5526`, healthy: 478 vars, checksum `c36593e9`).
+The following checklist records an earlier component restructuring idea. Its old warning about a broken Pen window no longer describes the saved library listed at the top of this file.
 
 1. **Restructure approved by the Owner (not done yet):**
    - **Tooltip → primitive C38** (page at x 9888, y 19863) + an optional `Tooltip` layer (off, absolute x 48 y 8) at the **end** of `_IconButton/Base` (`s4zsCg`), so every icon-only button can show it.

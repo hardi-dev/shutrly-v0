@@ -17,7 +17,7 @@ The phone screen template (375 × 812). Every phone screen starts from it, begin
 |---|---|---|
 | Status bar | `gcvMh` | 54 high, time and indicators. **Device inset** (`env(safe-area-inset-top)`); the app never draws it. |
 | App bar | `ombNI` | 52 high, padding-x `space.2`, gap `space.1`, bottom border `border.subtle`. Back `A7FVe` (Icon Button Ghost MD, chevron-left) · Title `YDCza` (subtitle 16 / 700, fill) · Action `iYuut` (Icon Button Ghost MD, share-2). Back and Action are optional. |
-| Content | `JOcL3` (slot) | Fill; padding `space.4` (16), gap `space.3` (12). Accepts Metric Tile, Table, Text Field, Segmented Control, Button LG and Toast. |
+| Content | `JOcL3` (slot) | Fill; padding `space.4` (16), gap `space.3` (12). Accepts Metric Tile, Table, Text Field, Segmented Control, Button LG and Alert. |
 | Safe area | `c6tsWc` | 34 high, home indicator. **Device inset** (`env(safe-area-inset-bottom)`). |
 | Overlay | `uTdi7` | Boolean, **off**. Absolute 375 × 812, `sheet.scrim`, docks the Sheet slot to the bottom. |
 | Sheet | `gc8dt` (slot) | Accepts Bottom Sheet/Actions · /Form. The default is Bottom Sheet/Actions (`OxGbt`). The sheet has its own safe area. |

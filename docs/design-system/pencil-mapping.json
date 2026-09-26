@@ -134,6 +134,38 @@
     "color/semantic/text/muted": "color.semantic.text.muted",
     "color/semantic/text/primary": "color.semantic.text.primary",
     "color/semantic/text/secondary": "color.semantic.text.secondary",
+    "component/alert/body": "component.alert.body",
+    "component/alert/danger/action": "component.alert.danger.action",
+    "component/alert/danger/background": "component.alert.danger.background",
+    "component/alert/danger/border": "component.alert.danger.border",
+    "component/alert/danger/icon": "component.alert.danger.icon",
+    "component/alert/danger/title": "component.alert.danger.title",
+    "component/alert/gap": "component.alert.gap",
+    "component/alert/highlight/action": "component.alert.highlight.action",
+    "component/alert/highlight/background": "component.alert.highlight.background",
+    "component/alert/highlight/border": "component.alert.highlight.border",
+    "component/alert/highlight/icon": "component.alert.highlight.icon",
+    "component/alert/highlight/title": "component.alert.highlight.title",
+    "component/alert/info/action": "component.alert.info.action",
+    "component/alert/info/background": "component.alert.info.background",
+    "component/alert/info/border": "component.alert.info.border",
+    "component/alert/info/icon": "component.alert.info.icon",
+    "component/alert/info/title": "component.alert.info.title",
+    "component/alert/padding-x": "component.alert.padding-x",
+    "component/alert/padding-y": "component.alert.padding-y",
+    "component/alert/radius": "component.alert.radius",
+    "component/alert/success/action": "component.alert.success.action",
+    "component/alert/success/background": "component.alert.success.background",
+    "component/alert/success/border": "component.alert.success.border",
+    "component/alert/success/icon": "component.alert.success.icon",
+    "component/alert/success/title": "component.alert.success.title",
+    "component/alert/surface": "component.alert.surface",
+    "component/alert/text-gap": "component.alert.text-gap",
+    "component/alert/warning/action": "component.alert.warning.action",
+    "component/alert/warning/background": "component.alert.warning.background",
+    "component/alert/warning/border": "component.alert.warning.border",
+    "component/alert/warning/icon": "component.alert.warning.icon",
+    "component/alert/warning/title": "component.alert.warning.title",
     "component/avatar/background": "component.avatar.background",
     "component/avatar/radius": "component.avatar.radius",
     "component/avatar/text": "component.avatar.text",
@@ -409,38 +441,6 @@
     "component/table/skeleton": "component.table.skeleton",
     "component/table/toolbar/padding-x": "component.table.toolbar.padding-x",
     "component/table/toolbar/padding-y": "component.table.toolbar.padding-y",
-    "component/toast/body": "component.toast.body",
-    "component/toast/danger/action": "component.toast.danger.action",
-    "component/toast/danger/background": "component.toast.danger.background",
-    "component/toast/danger/border": "component.toast.danger.border",
-    "component/toast/danger/icon": "component.toast.danger.icon",
-    "component/toast/danger/title": "component.toast.danger.title",
-    "component/toast/gap": "component.toast.gap",
-    "component/toast/highlight/action": "component.toast.highlight.action",
-    "component/toast/highlight/background": "component.toast.highlight.background",
-    "component/toast/highlight/border": "component.toast.highlight.border",
-    "component/toast/highlight/icon": "component.toast.highlight.icon",
-    "component/toast/highlight/title": "component.toast.highlight.title",
-    "component/toast/info/action": "component.toast.info.action",
-    "component/toast/info/background": "component.toast.info.background",
-    "component/toast/info/border": "component.toast.info.border",
-    "component/toast/info/icon": "component.toast.info.icon",
-    "component/toast/info/title": "component.toast.info.title",
-    "component/toast/padding-x": "component.toast.padding-x",
-    "component/toast/padding-y": "component.toast.padding-y",
-    "component/toast/radius": "component.toast.radius",
-    "component/toast/success/action": "component.toast.success.action",
-    "component/toast/success/background": "component.toast.success.background",
-    "component/toast/success/border": "component.toast.success.border",
-    "component/toast/success/icon": "component.toast.success.icon",
-    "component/toast/success/title": "component.toast.success.title",
-    "component/toast/surface": "component.toast.surface",
-    "component/toast/text-gap": "component.toast.text-gap",
-    "component/toast/warning/action": "component.toast.warning.action",
-    "component/toast/warning/background": "component.toast.warning.background",
-    "component/toast/warning/border": "component.toast.warning.border",
-    "component/toast/warning/icon": "component.toast.warning.icon",
-    "component/toast/warning/title": "component.toast.warning.title",
     "component/tooltip/background": "component.tooltip.background",
     "component/tooltip/padding-x": "component.tooltip.padding-x",
     "component/tooltip/padding-y": "component.tooltip.padding-y",
@@ -482,6 +482,7 @@
     "radius/xl": "radius.xl",
     "radius/xs": "radius.xs",
     "size/content-max": "size.content-max",
+    "size/content-narrow": "size.content-narrow",
     "size/rail": "size.rail",
     "space/0-5": "space.0-5",
     "space/1": "space.1",
@@ -499,7 +500,7 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 478,
+    "total": 479,
     "primitive": 61,
     "semantic": 54,
     "component": 312,
@@ -1815,16 +1816,16 @@
         "LG size for the client gallery (≥ 44 px) not built"
       ]
     },
-    "toast": {
+    "alert": {
       "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
-        "name": "C24 — Toast",
+        "name": "C24 — Alert",
         "id": "NFr0T"
       },
-      "spec": "docs/design-system/components/toast.md",
+      "spec": "docs/design-system/components/alert.md",
       "base": {
-        "name": "_Toast/Base",
+        "name": "_Alert/Base",
         "id": "B50hT",
         "private": true
       },
@@ -1858,8 +1859,9 @@
           "note": "fixed per tone"
         },
         "close": {
-          "kind": "nested",
-          "layer": "Close",
+          "kind": "boolean+nested",
+          "layer": "Close align",
+          "default": false,
           "ref": "icon-button/ghost/sm/default",
           "icon": "x"
         }
@@ -1883,12 +1885,9 @@
         "icon-button"
       ],
       "tokens": [
-        "component.toast.*",
-        "elevation.1.*"
+        "component.alert.*"
       ],
-      "gaps": [
-        "close button (32) sits top-aligned; its X glyph centres 7 px below the title line (no negative offsets in Pencil)"
-      ]
+      "gaps": []
     },
     "calendar-day": {
       "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",

@@ -123,7 +123,7 @@
                       "id": "w4Y5S",
                       "name": "Text",
                       "fill": "$color/semantic/text/secondary",
-                      "content": "478 tokens",
+                      "content": "479 tokens",
                       "lineHeight": 1.35,
                       "fontFamily": "$font/family/base",
                       "fontSize": 12,
@@ -19873,7 +19873,7 @@
                   "id": "DrN85",
                   "name": "Value",
                   "fill": "$color/semantic/text/muted",
-                  "content": "12 · Tile, toast",
+                  "content": "12 · Tile, alert",
                   "lineHeight": 1.35,
                   "fontFamily": "$font/family/base",
                   "fontSize": 11,
@@ -20987,7 +20987,7 @@
               "fill": "$color/semantic/text/secondary",
               "textGrowth": "fixed-width",
               "width": 880,
-              "content": "Component-scoped aliases — the contract each reusable component binds to: colours point at semantic tokens, padding/gap/radius point at the spacing and radius scales. Never a primitive, never a raw value. Toast titles are the only component tokens with their own mode split.",
+              "content": "Component-scoped aliases — the contract each reusable component binds to: colours point at semantic tokens, padding/gap/radius point at the spacing and radius scales. Never a primitive, never a raw value. Alert titles are the only component tokens with their own mode split.",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
               "fontSize": 16,
@@ -42703,7 +42703,7 @@
                 {
                   "type": "frame",
                   "id": "lbCjh",
-                  "name": "Component toast",
+                  "name": "Component alert",
                   "width": "fill_container",
                   "layout": "vertical",
                   "children": [
@@ -42730,7 +42730,7 @@
                           "id": "KKv4W",
                           "name": "Name",
                           "fill": "$color/semantic/text/primary",
-                          "content": "Toast",
+                          "content": "Alert",
                           "lineHeight": 1.35,
                           "fontFamily": "$font/family/base",
                           "fontSize": 18,
@@ -42753,7 +42753,7 @@
                     {
                       "type": "frame",
                       "id": "aiy9p",
-                      "name": "component/toast/success/background",
+                      "name": "component/alert/success/background",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -42799,7 +42799,7 @@
                               "cornerRadius": 2,
                               "id": "bjpci",
                               "name": "Swatch",
-                              "fill": "$component/toast/success/background",
+                              "fill": "$color/semantic/status/success/bg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -42825,7 +42825,7 @@
                               "cornerRadius": 2,
                               "id": "Kcro6",
                               "name": "Swatch",
-                              "fill": "$component/toast/success/background",
+                              "fill": "$color/semantic/status/success/bg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -42849,7 +42849,7 @@
                     {
                       "type": "frame",
                       "id": "l35ZA",
-                      "name": "component/toast/success/border",
+                      "name": "component/alert/success/border",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -42895,7 +42895,7 @@
                               "cornerRadius": 2,
                               "id": "u5mNEB",
                               "name": "Swatch",
-                              "fill": "$component/toast/success/border",
+                              "fill": "$color/semantic/status/success/border",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -42921,7 +42921,7 @@
                               "cornerRadius": 2,
                               "id": "u04L66",
                               "name": "Swatch",
-                              "fill": "$component/toast/success/border",
+                              "fill": "$color/semantic/status/success/border",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -42945,7 +42945,7 @@
                     {
                       "type": "frame",
                       "id": "M7zTn7",
-                      "name": "component/toast/success/icon",
+                      "name": "component/alert/success/icon",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -42991,7 +42991,7 @@
                               "cornerRadius": 2,
                               "id": "SJXjT",
                               "name": "Swatch",
-                              "fill": "$component/toast/success/icon",
+                              "fill": "$color/semantic/status/success/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43017,7 +43017,7 @@
                               "cornerRadius": 2,
                               "id": "r90aTG",
                               "name": "Swatch",
-                              "fill": "$component/toast/success/icon",
+                              "fill": "$color/semantic/status/success/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43041,7 +43041,7 @@
                     {
                       "type": "frame",
                       "id": "kvRuI",
-                      "name": "component/toast/success/title",
+                      "name": "component/alert/success/title",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -43087,7 +43087,7 @@
                               "cornerRadius": 2,
                               "id": "K9DcE",
                               "name": "Swatch",
-                              "fill": "$component/toast/success/title",
+                              "fill": "$color/semantic/status/success/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43113,7 +43113,7 @@
                               "cornerRadius": 2,
                               "id": "KmdgM",
                               "name": "Swatch",
-                              "fill": "$component/toast/success/title",
+                              "fill": "$color/semantic/text/primary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43137,7 +43137,7 @@
                     {
                       "type": "frame",
                       "id": "Sati1",
-                      "name": "component/toast/success/action",
+                      "name": "component/alert/success/action",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -43183,7 +43183,7 @@
                               "cornerRadius": 2,
                               "id": "Ost97",
                               "name": "Swatch",
-                              "fill": "$component/toast/success/action",
+                              "fill": "$color/semantic/status/success/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43209,7 +43209,7 @@
                               "cornerRadius": 2,
                               "id": "O5UhVp",
                               "name": "Swatch",
-                              "fill": "$component/toast/success/action",
+                              "fill": "$color/semantic/text/primary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43233,7 +43233,7 @@
                     {
                       "type": "frame",
                       "id": "Agtpd",
-                      "name": "component/toast/info/background",
+                      "name": "component/alert/info/background",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -43279,7 +43279,7 @@
                               "cornerRadius": 2,
                               "id": "gSgEe",
                               "name": "Swatch",
-                              "fill": "$component/toast/info/background",
+                              "fill": "$color/semantic/status/info/bg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43305,7 +43305,7 @@
                               "cornerRadius": 2,
                               "id": "s53j0s",
                               "name": "Swatch",
-                              "fill": "$component/toast/info/background",
+                              "fill": "$color/semantic/status/info/bg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43329,7 +43329,7 @@
                     {
                       "type": "frame",
                       "id": "y4luyh",
-                      "name": "component/toast/info/border",
+                      "name": "component/alert/info/border",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -43375,7 +43375,7 @@
                               "cornerRadius": 2,
                               "id": "fdxbK",
                               "name": "Swatch",
-                              "fill": "$component/toast/info/border",
+                              "fill": "$color/semantic/status/info/border",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43401,7 +43401,7 @@
                               "cornerRadius": 2,
                               "id": "WbCJR",
                               "name": "Swatch",
-                              "fill": "$component/toast/info/border",
+                              "fill": "$color/semantic/status/info/border",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43425,7 +43425,7 @@
                     {
                       "type": "frame",
                       "id": "nqmBK",
-                      "name": "component/toast/info/icon",
+                      "name": "component/alert/info/icon",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -43471,7 +43471,7 @@
                               "cornerRadius": 2,
                               "id": "O5WVN0",
                               "name": "Swatch",
-                              "fill": "$component/toast/info/icon",
+                              "fill": "$color/semantic/status/info/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43497,7 +43497,7 @@
                               "cornerRadius": 2,
                               "id": "yWW8I",
                               "name": "Swatch",
-                              "fill": "$component/toast/info/icon",
+                              "fill": "$color/semantic/status/info/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43521,7 +43521,7 @@
                     {
                       "type": "frame",
                       "id": "I0qjJI",
-                      "name": "component/toast/info/title",
+                      "name": "component/alert/info/title",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -43567,7 +43567,7 @@
                               "cornerRadius": 2,
                               "id": "rq2hl",
                               "name": "Swatch",
-                              "fill": "$component/toast/info/title",
+                              "fill": "$color/semantic/status/info/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43593,7 +43593,7 @@
                               "cornerRadius": 2,
                               "id": "hdfIV",
                               "name": "Swatch",
-                              "fill": "$component/toast/info/title",
+                              "fill": "$color/semantic/text/primary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43617,7 +43617,7 @@
                     {
                       "type": "frame",
                       "id": "lTLOL",
-                      "name": "component/toast/info/action",
+                      "name": "component/alert/info/action",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -43663,7 +43663,7 @@
                               "cornerRadius": 2,
                               "id": "Izo3b",
                               "name": "Swatch",
-                              "fill": "$component/toast/info/action",
+                              "fill": "$color/semantic/status/info/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43689,7 +43689,7 @@
                               "cornerRadius": 2,
                               "id": "OI1hH",
                               "name": "Swatch",
-                              "fill": "$component/toast/info/action",
+                              "fill": "$color/semantic/text/primary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43713,7 +43713,7 @@
                     {
                       "type": "frame",
                       "id": "svNKt",
-                      "name": "component/toast/warning/background",
+                      "name": "component/alert/warning/background",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -43759,7 +43759,7 @@
                               "cornerRadius": 2,
                               "id": "v94Sg",
                               "name": "Swatch",
-                              "fill": "$component/toast/warning/background",
+                              "fill": "$color/semantic/status/warning/bg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43785,7 +43785,7 @@
                               "cornerRadius": 2,
                               "id": "h3Wet",
                               "name": "Swatch",
-                              "fill": "$component/toast/warning/background",
+                              "fill": "$color/semantic/status/warning/bg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43809,7 +43809,7 @@
                     {
                       "type": "frame",
                       "id": "cVRlf",
-                      "name": "component/toast/warning/border",
+                      "name": "component/alert/warning/border",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -43855,7 +43855,7 @@
                               "cornerRadius": 2,
                               "id": "hxJ0Z",
                               "name": "Swatch",
-                              "fill": "$component/toast/warning/border",
+                              "fill": "$color/semantic/status/warning/border",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43881,7 +43881,7 @@
                               "cornerRadius": 2,
                               "id": "txDEI",
                               "name": "Swatch",
-                              "fill": "$component/toast/warning/border",
+                              "fill": "$color/semantic/status/warning/border",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43905,7 +43905,7 @@
                     {
                       "type": "frame",
                       "id": "p8YMw",
-                      "name": "component/toast/warning/icon",
+                      "name": "component/alert/warning/icon",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -43951,7 +43951,7 @@
                               "cornerRadius": 2,
                               "id": "H6cgSu",
                               "name": "Swatch",
-                              "fill": "$component/toast/warning/icon",
+                              "fill": "$color/semantic/status/warning/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -43977,7 +43977,7 @@
                               "cornerRadius": 2,
                               "id": "BUNhu",
                               "name": "Swatch",
-                              "fill": "$component/toast/warning/icon",
+                              "fill": "$color/semantic/status/warning/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44001,7 +44001,7 @@
                     {
                       "type": "frame",
                       "id": "EaDML",
-                      "name": "component/toast/warning/title",
+                      "name": "component/alert/warning/title",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -44047,7 +44047,7 @@
                               "cornerRadius": 2,
                               "id": "unEDB",
                               "name": "Swatch",
-                              "fill": "$component/toast/warning/title",
+                              "fill": "$color/semantic/status/warning/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44073,7 +44073,7 @@
                               "cornerRadius": 2,
                               "id": "WYMU5",
                               "name": "Swatch",
-                              "fill": "$component/toast/warning/title",
+                              "fill": "$color/semantic/text/primary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44097,7 +44097,7 @@
                     {
                       "type": "frame",
                       "id": "qB8wC",
-                      "name": "component/toast/warning/action",
+                      "name": "component/alert/warning/action",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -44143,7 +44143,7 @@
                               "cornerRadius": 2,
                               "id": "lu8Pb",
                               "name": "Swatch",
-                              "fill": "$component/toast/warning/action",
+                              "fill": "$color/semantic/status/warning/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44169,7 +44169,7 @@
                               "cornerRadius": 2,
                               "id": "QiK0P",
                               "name": "Swatch",
-                              "fill": "$component/toast/warning/action",
+                              "fill": "$color/semantic/text/primary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44193,7 +44193,7 @@
                     {
                       "type": "frame",
                       "id": "E9auC",
-                      "name": "component/toast/danger/background",
+                      "name": "component/alert/danger/background",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -44239,7 +44239,7 @@
                               "cornerRadius": 2,
                               "id": "KSHij",
                               "name": "Swatch",
-                              "fill": "$component/toast/danger/background",
+                              "fill": "$color/semantic/status/danger/bg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44265,7 +44265,7 @@
                               "cornerRadius": 2,
                               "id": "MiPEl",
                               "name": "Swatch",
-                              "fill": "$component/toast/danger/background",
+                              "fill": "$color/semantic/status/danger/bg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44289,7 +44289,7 @@
                     {
                       "type": "frame",
                       "id": "LQMU7",
-                      "name": "component/toast/danger/border",
+                      "name": "component/alert/danger/border",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -44335,7 +44335,7 @@
                               "cornerRadius": 2,
                               "id": "L9udOJ",
                               "name": "Swatch",
-                              "fill": "$component/toast/danger/border",
+                              "fill": "$color/semantic/status/danger/border",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44361,7 +44361,7 @@
                               "cornerRadius": 2,
                               "id": "KhlpK",
                               "name": "Swatch",
-                              "fill": "$component/toast/danger/border",
+                              "fill": "$color/semantic/status/danger/border",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44385,7 +44385,7 @@
                     {
                       "type": "frame",
                       "id": "Fyo4A",
-                      "name": "component/toast/danger/icon",
+                      "name": "component/alert/danger/icon",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -44431,7 +44431,7 @@
                               "cornerRadius": 2,
                               "id": "W7nTZN",
                               "name": "Swatch",
-                              "fill": "$component/toast/danger/icon",
+                              "fill": "$color/semantic/status/danger/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44457,7 +44457,7 @@
                               "cornerRadius": 2,
                               "id": "INbzW",
                               "name": "Swatch",
-                              "fill": "$component/toast/danger/icon",
+                              "fill": "$color/semantic/status/danger/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44481,7 +44481,7 @@
                     {
                       "type": "frame",
                       "id": "ghUrc",
-                      "name": "component/toast/danger/title",
+                      "name": "component/alert/danger/title",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -44527,7 +44527,7 @@
                               "cornerRadius": 2,
                               "id": "J5IsqE",
                               "name": "Swatch",
-                              "fill": "$component/toast/danger/title",
+                              "fill": "$color/semantic/status/danger/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44553,7 +44553,7 @@
                               "cornerRadius": 2,
                               "id": "G5xUY",
                               "name": "Swatch",
-                              "fill": "$component/toast/danger/title",
+                              "fill": "$color/semantic/text/primary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44577,7 +44577,7 @@
                     {
                       "type": "frame",
                       "id": "SD060",
-                      "name": "component/toast/danger/action",
+                      "name": "component/alert/danger/action",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -44623,7 +44623,7 @@
                               "cornerRadius": 2,
                               "id": "k8QYvb",
                               "name": "Swatch",
-                              "fill": "$component/toast/danger/action",
+                              "fill": "$color/semantic/status/danger/fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44649,7 +44649,7 @@
                               "cornerRadius": 2,
                               "id": "d3ioi0",
                               "name": "Swatch",
-                              "fill": "$component/toast/danger/action",
+                              "fill": "$color/semantic/text/primary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44673,7 +44673,7 @@
                     {
                       "type": "frame",
                       "id": "qOiEp",
-                      "name": "component/toast/highlight/background",
+                      "name": "component/alert/highlight/background",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -44719,7 +44719,7 @@
                               "cornerRadius": 2,
                               "id": "MbHFn",
                               "name": "Swatch",
-                              "fill": "$component/toast/highlight/background",
+                              "fill": "$color/semantic/accent/soft",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44745,7 +44745,7 @@
                               "cornerRadius": 2,
                               "id": "s6yfw",
                               "name": "Swatch",
-                              "fill": "$component/toast/highlight/background",
+                              "fill": "$color/semantic/accent/soft",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44769,7 +44769,7 @@
                     {
                       "type": "frame",
                       "id": "RMLcz",
-                      "name": "component/toast/highlight/border",
+                      "name": "component/alert/highlight/border",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -44815,7 +44815,7 @@
                               "cornerRadius": 2,
                               "id": "dZKU2",
                               "name": "Swatch",
-                              "fill": "$component/toast/highlight/border",
+                              "fill": "$color/semantic/status/highlight/border",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44841,7 +44841,7 @@
                               "cornerRadius": 2,
                               "id": "ygmNC",
                               "name": "Swatch",
-                              "fill": "$component/toast/highlight/border",
+                              "fill": "$color/semantic/status/highlight/border",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44865,7 +44865,7 @@
                     {
                       "type": "frame",
                       "id": "Qx6sG",
-                      "name": "component/toast/highlight/icon",
+                      "name": "component/alert/highlight/icon",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -44911,7 +44911,7 @@
                               "cornerRadius": 2,
                               "id": "CCct4",
                               "name": "Swatch",
-                              "fill": "$component/toast/highlight/icon",
+                              "fill": "$color/semantic/accent/soft-fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44937,7 +44937,7 @@
                               "cornerRadius": 2,
                               "id": "BqRar",
                               "name": "Swatch",
-                              "fill": "$component/toast/highlight/icon",
+                              "fill": "$color/semantic/accent/soft-fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -44961,7 +44961,7 @@
                     {
                       "type": "frame",
                       "id": "Ayt1U",
-                      "name": "component/toast/highlight/title",
+                      "name": "component/alert/highlight/title",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -45007,7 +45007,7 @@
                               "cornerRadius": 2,
                               "id": "pXdmj",
                               "name": "Swatch",
-                              "fill": "$component/toast/highlight/title",
+                              "fill": "$color/semantic/accent/soft-fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -45033,7 +45033,7 @@
                               "cornerRadius": 2,
                               "id": "FxkVR",
                               "name": "Swatch",
-                              "fill": "$component/toast/highlight/title",
+                              "fill": "$color/semantic/text/primary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -45057,7 +45057,7 @@
                     {
                       "type": "frame",
                       "id": "E518Sl",
-                      "name": "component/toast/highlight/action",
+                      "name": "component/alert/highlight/action",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -45103,7 +45103,7 @@
                               "cornerRadius": 2,
                               "id": "AQsr3",
                               "name": "Swatch",
-                              "fill": "$component/toast/highlight/action",
+                              "fill": "$color/semantic/accent/soft-fg",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -45129,7 +45129,7 @@
                               "cornerRadius": 2,
                               "id": "EucKa",
                               "name": "Swatch",
-                              "fill": "$component/toast/highlight/action",
+                              "fill": "$color/semantic/text/primary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -45153,7 +45153,7 @@
                     {
                       "type": "frame",
                       "id": "di7XL",
-                      "name": "component/toast/surface",
+                      "name": "component/alert/surface",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -45199,7 +45199,7 @@
                               "cornerRadius": 2,
                               "id": "dpJJk",
                               "name": "Swatch",
-                              "fill": "$component/toast/surface",
+                              "fill": "$color/semantic/surface/panel",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -45225,7 +45225,7 @@
                               "cornerRadius": 2,
                               "id": "aY2X4",
                               "name": "Swatch",
-                              "fill": "$component/toast/surface",
+                              "fill": "$color/semantic/surface/panel",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -45249,7 +45249,7 @@
                     {
                       "type": "frame",
                       "id": "lZCk3",
-                      "name": "component/toast/body",
+                      "name": "component/alert/body",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -45295,7 +45295,7 @@
                               "cornerRadius": 2,
                               "id": "pOcZa",
                               "name": "Swatch",
-                              "fill": "$component/toast/body",
+                              "fill": "$color/semantic/text/secondary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -45321,7 +45321,7 @@
                               "cornerRadius": 2,
                               "id": "bWjBz",
                               "name": "Swatch",
-                              "fill": "$component/toast/body",
+                              "fill": "$color/semantic/text/secondary",
                               "width": "fill_container",
                               "height": "fill_container"
                             }
@@ -45345,7 +45345,7 @@
                     {
                       "type": "frame",
                       "id": "dL7nt",
-                      "name": "component/toast/radius",
+                      "name": "component/alert/radius",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -45413,7 +45413,7 @@
                     {
                       "type": "frame",
                       "id": "inSE5",
-                      "name": "component/toast/padding-y",
+                      "name": "component/alert/padding-y",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -45481,7 +45481,7 @@
                     {
                       "type": "frame",
                       "id": "je8Ga",
-                      "name": "component/toast/padding-x",
+                      "name": "component/alert/padding-x",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -45549,7 +45549,7 @@
                     {
                       "type": "frame",
                       "id": "I4dfT7",
-                      "name": "component/toast/gap",
+                      "name": "component/alert/gap",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -45617,7 +45617,7 @@
                     {
                       "type": "frame",
                       "id": "q6yQLz",
-                      "name": "component/toast/text-gap",
+                      "name": "component/alert/text-gap",
                       "width": "fill_container",
                       "stroke": "$color/semantic/border/subtle",
                       "strokeWidth": {
@@ -53227,7 +53227,7 @@
                       "fill": "$color/semantic/text/secondary",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "2 / 6 / 10 only in chips, badges, nav, day cells, field anatomy, toast text, table cell avatar ↔ name (amended 2026-09-26).",
+                      "content": "2 / 6 / 10 only in chips, badges, nav, day cells, field anatomy, alert text, table cell avatar ↔ name (amended 2026-09-26).",
                       "lineHeight": 1.45,
                       "fontFamily": "$font/family/base",
                       "fontSize": 12,
@@ -53476,7 +53476,7 @@
                 {
                   "type": "frame",
                   "id": "ujTMJ",
-                  "name": "Toast",
+                  "name": "Alert",
                   "width": "fill_container",
                   "layout": "vertical",
                   "gap": 10,
@@ -53490,10 +53490,7 @@
                       "cornerRadius": 4,
                       "stroke": "#E5487F",
                       "strokeWidth": 1,
-                      "padding": [
-                        "$component/toast/padding-y",
-                        "$component/toast/padding-x"
-                      ],
+                      "padding": "$space/3",
                       "children": [
                         {
                           "type": "frame",
@@ -53535,7 +53532,7 @@
                       "id": "h6dtJN",
                       "name": "Name",
                       "fill": "$color/semantic/text/primary",
-                      "content": "Toast",
+                      "content": "Alert",
                       "lineHeight": 1.35,
                       "fontFamily": "$font/family/base",
                       "fontSize": 13,
@@ -53557,7 +53554,7 @@
                       "fill": "$color/semantic/text/muted",
                       "textGrowth": "fixed-width",
                       "width": 150,
-                      "content": "toast.padding-y/x · 12",
+                      "content": "alert.padding-y/x · 12",
                       "lineHeight": 1.35,
                       "textAlign": "center",
                       "fontFamily": "IBM Plex Mono",
@@ -54073,7 +54070,7 @@
                           "fill": "$color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Parts of one text unit — toast title ↔ body",
+                          "content": "Parts of one text unit — alert title ↔ body",
                           "lineHeight": 1.35,
                           "fontFamily": "$font/family/base",
                           "fontSize": 12,
@@ -55423,7 +55420,7 @@
                           "fill": "$color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Toolbar controls; toast icon ↔ text",
+                          "content": "Toolbar controls; alert icon ↔ text",
                           "lineHeight": 1.35,
                           "fontFamily": "$font/family/base",
                           "fontSize": 12,
@@ -57280,7 +57277,7 @@
                       "fill": "$color/semantic/text/secondary",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "2 / 6 / 10 belong to chips, nav, fields, toast text, table cells — not layouts.",
+                      "content": "2 / 6 / 10 belong to chips, nav, fields, alert text, table cells — not layouts.",
                       "lineHeight": 1.35,
                       "fontFamily": "$font/family/base",
                       "fontSize": 12,
@@ -81347,7 +81344,7 @@
       "id": "NFr0T",
       "x": 10780,
       "y": 11983,
-      "name": "C24 — Toast",
+      "name": "C24 — Alert",
       "width": 1440,
       "fill": "$color/semantic/surface/panel",
       "layout": "vertical",
@@ -81388,7 +81385,7 @@
               "id": "EYEyw",
               "name": "Title",
               "fill": "$color/semantic/text/primary",
-              "content": "Toast",
+              "content": "Alert",
               "fontFamily": "$font/family/base",
               "fontSize": 44,
               "fontWeight": "700",
@@ -81401,7 +81398,7 @@
               "fill": "$color/semantic/text/secondary",
               "textGrowth": "fixed-width",
               "width": 880,
-              "content": "Short, non-blocking feedback after an action (style B, Owner decision): tinted status surface, status icon, title, body, optional action link and a ghost SM close (C02). Floats with elevation.1. Tokens: component.toast.*.",
+              "content": "Persistent inline guidance or status beside related content. Tinted surface, status icon, title, optional body/action, and optional Close (off by default). No timer or floating shadow. Tokens: component.alert.*.",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
               "fontSize": 16,
@@ -81434,7 +81431,7 @@
               "fill": "$color/semantic/text/secondary",
               "textGrowth": "fixed-width",
               "width": "fill_container",
-              "content": "Name = Toast/<Tone> · private base _Toast/Base. Tones: success, info, warning, danger, highlight. Text: Title, Body, Action. Booleans: Body (on), Action (off). Nested: Close = Icon Button/Ghost/SM/Default (icon x). Width 360 (fixed; stack bottom-right, gap 12).",
+              "content": "Name = Alert/<Tone> · private base _Alert/Base. Tones: success, info, warning, danger, highlight. Text: Title, Body, Action. Booleans: Body (on), Action (off), Close (off). Library specimen width 360; instances fill their content region.",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
               "fontSize": 13,
@@ -81470,7 +81467,7 @@
                           "id": "skhKi",
                           "name": "Caption",
                           "fill": "$color/semantic/text/muted",
-                          "content": "_Toast/Base (private)",
+                          "content": "_Alert/Base (private)",
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
                           "fontWeight": "normal"
@@ -81478,8 +81475,8 @@
                         {
                           "type": "frame",
                           "id": "B50hT",
-                          "name": "_Toast/Base",
-                          "context": "PRIVATE base for Toast tones.",
+                          "name": "_Alert/Base",
+                          "context": "PRIVATE base for inline Alert tones. Close off by default.",
                           "reusable": true,
                           "metadata": {
                             "type": "component",
@@ -81487,14 +81484,15 @@
                             "role": "base"
                           },
                           "width": 360,
-                          "fill": "$component/toast/success/background",
-                          "cornerRadius": "$component/toast/radius",
-                          "stroke": "$component/toast/success/border",
+                          "fill": "$component/alert/success/background",
+                          "cornerRadius": "$component/alert/radius",
+                          "stroke": "$component/alert/success/border",
                           "strokeWidth": 1,
                           "strokeAlignment": "inner",
                           "effect": {
                             "type": "shadow",
                             "shadowType": "outer",
+                            "enabled": false,
                             "color": "$color/semantic/elevation/1/color",
                             "offset": {
                               "x": 0,
@@ -81502,10 +81500,10 @@
                             },
                             "blur": "$elevation/1/blur"
                           },
-                          "gap": "$component/toast/gap",
+                          "gap": "$component/alert/gap",
                           "padding": [
-                            "$component/toast/padding-y",
-                            "$component/toast/padding-x"
+                            "$component/alert/padding-y",
+                            "$component/alert/padding-x"
                           ],
                           "children": [
                             {
@@ -81516,7 +81514,7 @@
                               "height": 16,
                               "icon": "circle-check",
                               "library": "lucide",
-                              "fill": "$component/toast/success/icon"
+                              "fill": "$component/alert/success/icon"
                             },
                             {
                               "type": "frame",
@@ -81524,13 +81522,13 @@
                               "name": "Text",
                               "width": "fill_container",
                               "layout": "vertical",
-                              "gap": "$component/toast/text-gap",
+                              "gap": "$component/alert/text-gap",
                               "children": [
                                 {
                                   "type": "text",
                                   "id": "m0dqT6",
                                   "name": "Title",
-                                  "fill": "$component/toast/success/title",
+                                  "fill": "$component/alert/success/title",
                                   "textGrowth": "fixed-width",
                                   "width": "fill_container",
                                   "content": "Pembayaran dicatat",
@@ -81543,7 +81541,7 @@
                                   "type": "text",
                                   "id": "fhch4",
                                   "name": "Body",
-                                  "fill": "$component/toast/body",
+                                  "fill": "$component/alert/body",
                                   "textGrowth": "fixed-width",
                                   "width": "fill_container",
                                   "content": "Rp 2.000.000 masuk ke INV-0042 · status kini Sebagian.",
@@ -81559,7 +81557,7 @@
                                   "y": 0,
                                   "name": "Action",
                                   "enabled": false,
-                                  "fill": "$component/toast/success/action",
+                                  "fill": "$component/alert/success/action",
                                   "content": "Lihat invoice",
                                   "lineHeight": 1.4,
                                   "fontFamily": "$font/family/base",
@@ -81571,7 +81569,10 @@
                             {
                               "type": "frame",
                               "id": "IXhZl",
+                              "x": 316,
+                              "y": 12,
                               "name": "Close align",
+                              "enabled": false,
                               "height": 18,
                               "justifyContent": "center",
                               "alignItems": "center",
@@ -81615,24 +81616,24 @@
                           "type": "ref",
                           "reusable": true,
                           "ref": "B50hT",
-                          "name": "Toast/Success",
-                          "context": "Toast · tone=success. Text: Title, Body, Action. Booleans: Body (on), Action (off). Swap: Icon only within the tone's meaning. Close = Icon Button/Ghost/SM (aria-label \"Tutup\"). role=status. Spec: docs/design-system/components/toast.md",
-                          "fill": "$component/toast/success/background",
-                          "stroke": "$component/toast/success/border",
+                          "name": "Alert/Success",
+                          "context": "Alert · tone=success. Persistent inline message. Text: Title, Body, Action. Booleans: Body (on), Action (off), Close (off). Close is enabled only when optional content is safe to dismiss. Spec: docs/design-system/components/alert.md",
+                          "fill": "$component/alert/success/background",
+                          "stroke": "$component/alert/success/border",
                           "descendants": {
                             "k7lq2": {
                               "icon": "circle-check",
-                              "fill": "$component/toast/success/icon"
+                              "fill": "$component/alert/success/icon"
                             },
                             "m0dqT6": {
-                              "fill": "$component/toast/success/title",
+                              "fill": "$component/alert/success/title",
                               "content": "Pembayaran dicatat"
                             },
                             "fhch4": {
                               "content": "Rp 2.000.000 masuk ke INV-0042 · status kini Sebagian."
                             },
                             "M54Ca": {
-                              "fill": "$component/toast/success/action"
+                              "fill": "$component/alert/success/action"
                             }
                           }
                         }
@@ -81660,24 +81661,24 @@
                           "type": "ref",
                           "reusable": true,
                           "ref": "B50hT",
-                          "name": "Toast/Info",
-                          "context": "Toast · tone=info. Text: Title, Body, Action. Booleans: Body (on), Action (off). Swap: Icon only within the tone's meaning. Close = Icon Button/Ghost/SM (aria-label \"Tutup\"). role=status. Spec: docs/design-system/components/toast.md",
-                          "fill": "$component/toast/info/background",
-                          "stroke": "$component/toast/info/border",
+                          "name": "Alert/Info",
+                          "context": "Alert · tone=info. Persistent inline message. Text: Title, Body, Action. Booleans: Body (on), Action (off), Close (off). Close is enabled only when optional content is safe to dismiss. Spec: docs/design-system/components/alert.md",
+                          "fill": "$component/alert/info/background",
+                          "stroke": "$component/alert/info/border",
                           "descendants": {
                             "k7lq2": {
                               "icon": "info",
-                              "fill": "$component/toast/info/icon"
+                              "fill": "$component/alert/info/icon"
                             },
                             "m0dqT6": {
-                              "fill": "$component/toast/info/title",
+                              "fill": "$component/alert/info/title",
                               "content": "Sinkron galeri berjalan"
                             },
                             "fhch4": {
                               "content": "128 foto sedang diunggah ke folder Drive klien."
                             },
                             "M54Ca": {
-                              "fill": "$component/toast/info/action"
+                              "fill": "$component/alert/info/action"
                             }
                           }
                         }
@@ -81713,24 +81714,24 @@
                           "type": "ref",
                           "reusable": true,
                           "ref": "B50hT",
-                          "name": "Toast/Warning",
-                          "context": "Toast · tone=warning. Text: Title, Body, Action. Booleans: Body (on), Action (off). Swap: Icon only within the tone's meaning. Close = Icon Button/Ghost/SM (aria-label \"Tutup\"). role=status. Spec: docs/design-system/components/toast.md",
-                          "fill": "$component/toast/warning/background",
-                          "stroke": "$component/toast/warning/border",
+                          "name": "Alert/Warning",
+                          "context": "Alert · tone=warning. Persistent inline message. Text: Title, Body, Action. Booleans: Body (on), Action (off), Close (off). Close is enabled only when optional content is safe to dismiss. Spec: docs/design-system/components/alert.md",
+                          "fill": "$component/alert/warning/background",
+                          "stroke": "$component/alert/warning/border",
                           "descendants": {
                             "k7lq2": {
                               "icon": "triangle-alert",
-                              "fill": "$component/toast/warning/icon"
+                              "fill": "$component/alert/warning/icon"
                             },
                             "m0dqT6": {
-                              "fill": "$component/toast/warning/title",
+                              "fill": "$component/alert/warning/title",
                               "content": "Kuota pilihan hampir penuh"
                             },
                             "fhch4": {
                               "content": "Klien sudah memilih 28 dari 30 foto."
                             },
                             "M54Ca": {
-                              "fill": "$component/toast/warning/action"
+                              "fill": "$component/alert/warning/action"
                             }
                           }
                         }
@@ -81758,24 +81759,24 @@
                           "type": "ref",
                           "reusable": true,
                           "ref": "B50hT",
-                          "name": "Toast/Danger",
-                          "context": "Toast · tone=danger. Text: Title, Body, Action. Booleans: Body (on), Action (off). Swap: Icon only within the tone's meaning. Close = Icon Button/Ghost/SM (aria-label \"Tutup\"). role=alert. Spec: docs/design-system/components/toast.md",
-                          "fill": "$component/toast/danger/background",
-                          "stroke": "$component/toast/danger/border",
+                          "name": "Alert/Danger",
+                          "context": "Alert · tone=danger. Persistent inline message. Text: Title, Body, Action. Booleans: Body (on), Action (off), Close (off). Close is enabled only when optional content is safe to dismiss. Spec: docs/design-system/components/alert.md",
+                          "fill": "$component/alert/danger/background",
+                          "stroke": "$component/alert/danger/border",
                           "descendants": {
                             "k7lq2": {
                               "icon": "circle-alert",
-                              "fill": "$component/toast/danger/icon"
+                              "fill": "$component/alert/danger/icon"
                             },
                             "m0dqT6": {
-                              "fill": "$component/toast/danger/title",
+                              "fill": "$component/alert/danger/title",
                               "content": "Folder Drive tidak dapat diakses"
                             },
                             "fhch4": {
                               "content": "Periksa izin berbagi folder, lalu coba lagi."
                             },
                             "M54Ca": {
-                              "fill": "$component/toast/danger/action"
+                              "fill": "$component/alert/danger/action"
                             }
                           }
                         }
@@ -81811,24 +81812,24 @@
                           "type": "ref",
                           "reusable": true,
                           "ref": "B50hT",
-                          "name": "Toast/Highlight",
-                          "context": "Toast · tone=highlight. Text: Title, Body, Action. Booleans: Body (on), Action (off). Swap: Icon only within the tone's meaning. Close = Icon Button/Ghost/SM (aria-label \"Tutup\"). role=status. Spec: docs/design-system/components/toast.md",
-                          "fill": "$component/toast/highlight/background",
-                          "stroke": "$component/toast/highlight/border",
+                          "name": "Alert/Highlight",
+                          "context": "Alert · tone=highlight. Persistent inline message. Text: Title, Body, Action. Booleans: Body (on), Action (off), Close (off). Close is enabled only when optional content is safe to dismiss. Spec: docs/design-system/components/alert.md",
+                          "fill": "$component/alert/highlight/background",
+                          "stroke": "$component/alert/highlight/border",
                           "descendants": {
                             "k7lq2": {
                               "icon": "sparkles",
-                              "fill": "$component/toast/highlight/icon"
+                              "fill": "$component/alert/highlight/icon"
                             },
                             "m0dqT6": {
-                              "fill": "$component/toast/highlight/title",
+                              "fill": "$component/alert/highlight/title",
                               "content": "Sesi hari ini dimulai"
                             },
                             "fhch4": {
                               "content": "Rina & Dimas · Prewedding · 09:00, Kebun Raya."
                             },
                             "M54Ca": {
-                              "fill": "$component/toast/highlight/action"
+                              "fill": "$component/alert/highlight/action"
                             }
                           }
                         }
@@ -81882,7 +81883,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Title: what happened, ≤ 6 words, no period. Body: one sentence of detail (optional). Action: one verb link that undoes or opens the result (Batalkan, Lihat invoice). Success/info auto-dismiss after ~5 s; warning/danger stay until closed.",
+                  "content": "Title: brief status or guidance, ≤ 6 words. Body: one sentence of relevant detail (optional). Action: at most one contextual link. The alert remains visible while its information is relevant.",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -82325,7 +82326,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Confirm a completed action or report a background event. Stack at the bottom-right of the app panel, newest on top, gap 12 (space.3), max 3 visible. Tone mapping follows status rules (§2): highlight = accent.soft for \"happening now\".",
+                  "content": "Place in the page flow beside the related content or action. Use Info for verification guidance; place the resend button after the alert. No timed dismissal or floating stack.",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -82351,7 +82352,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "•  Don't: use a toast for errors the user must fix in a form — put them on the field (Text field error).",
+                  "content": "•  Don’t use Alert as the only field-level error cue; show input error state and helper text too.",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -82364,7 +82365,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "•  Don't: put more than one action, or a destructive action without undo, in a toast.",
+                  "content": "•  Don’t include more than one action or hide required guidance behind Close.",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -82455,7 +82456,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "•  Live region: role=status (polite) for success/info/highlight; role=alert (assertive) for danger/warning.",
+                  "content": "•  Static guidance stays in reading order. Use role=status for newly inserted non-urgent feedback and role=alert for urgent errors.",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -82468,7 +82469,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "•  Close is a ghost SM Icon button with aria-label \"Tutup\"; Esc dismisses the newest toast. Auto-dismiss pauses on hover/focus.",
+                  "content": "•  Close is optional and off by default. Enable only when the message is safe to dismiss; label the button for assistive technology.",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -82481,7 +82482,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "•  Never the only way to reach the action — it must also exist on the page.",
+                  "content": "•  Keep important actions available outside the Alert as well.",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -101310,163 +101311,6 @@
       "type": "color",
       "value": "$color/semantic/text/inverse"
     },
-    "component/toast/success/background": {
-      "type": "color",
-      "value": "$color/semantic/status/success/bg"
-    },
-    "component/toast/success/border": {
-      "type": "color",
-      "value": "$color/semantic/status/success/border"
-    },
-    "component/toast/success/icon": {
-      "type": "color",
-      "value": "$color/semantic/status/success/fg"
-    },
-    "component/toast/success/title": {
-      "type": "color",
-      "value": [
-        {
-          "value": "$color/semantic/status/success/fg",
-          "theme": {
-            "mode": "light"
-          }
-        },
-        {
-          "value": "$color/semantic/text/primary",
-          "theme": {
-            "mode": "dark"
-          }
-        }
-      ]
-    },
-    "component/toast/info/background": {
-      "type": "color",
-      "value": "$color/semantic/status/info/bg"
-    },
-    "component/toast/info/border": {
-      "type": "color",
-      "value": "$color/semantic/status/info/border"
-    },
-    "component/toast/info/icon": {
-      "type": "color",
-      "value": "$color/semantic/status/info/fg"
-    },
-    "component/toast/info/title": {
-      "type": "color",
-      "value": [
-        {
-          "value": "$color/semantic/status/info/fg",
-          "theme": {
-            "mode": "light"
-          }
-        },
-        {
-          "value": "$color/semantic/text/primary",
-          "theme": {
-            "mode": "dark"
-          }
-        }
-      ]
-    },
-    "component/toast/warning/background": {
-      "type": "color",
-      "value": "$color/semantic/status/warning/bg"
-    },
-    "component/toast/warning/border": {
-      "type": "color",
-      "value": "$color/semantic/status/warning/border"
-    },
-    "component/toast/warning/icon": {
-      "type": "color",
-      "value": "$color/semantic/status/warning/fg"
-    },
-    "component/toast/warning/title": {
-      "type": "color",
-      "value": [
-        {
-          "value": "$color/semantic/status/warning/fg",
-          "theme": {
-            "mode": "light"
-          }
-        },
-        {
-          "value": "$color/semantic/text/primary",
-          "theme": {
-            "mode": "dark"
-          }
-        }
-      ]
-    },
-    "component/toast/danger/background": {
-      "type": "color",
-      "value": "$color/semantic/status/danger/bg"
-    },
-    "component/toast/danger/border": {
-      "type": "color",
-      "value": "$color/semantic/status/danger/border"
-    },
-    "component/toast/danger/icon": {
-      "type": "color",
-      "value": "$color/semantic/status/danger/fg"
-    },
-    "component/toast/danger/title": {
-      "type": "color",
-      "value": [
-        {
-          "value": "$color/semantic/status/danger/fg",
-          "theme": {
-            "mode": "light"
-          }
-        },
-        {
-          "value": "$color/semantic/text/primary",
-          "theme": {
-            "mode": "dark"
-          }
-        }
-      ]
-    },
-    "component/toast/highlight/background": {
-      "type": "color",
-      "value": "$color/semantic/accent/soft"
-    },
-    "component/toast/highlight/border": {
-      "type": "color",
-      "value": "$color/semantic/status/highlight/border"
-    },
-    "component/toast/highlight/icon": {
-      "type": "color",
-      "value": "$color/semantic/accent/soft-fg"
-    },
-    "component/toast/highlight/title": {
-      "type": "color",
-      "value": [
-        {
-          "value": "$color/semantic/accent/soft-fg",
-          "theme": {
-            "mode": "light"
-          }
-        },
-        {
-          "value": "$color/semantic/text/primary",
-          "theme": {
-            "mode": "dark"
-          }
-        }
-      ]
-    },
-    "component/toast/surface": {
-      "type": "color",
-      "value": "$color/semantic/surface/panel"
-    },
-    "component/toast/body": {
-      "type": "color",
-      "value": "$color/semantic/text/secondary"
-    },
-    "component/toast/radius": {
-      "type": "number",
-      "value": "$radius/md"
-    },
     "component/input/background": {
       "type": "color",
       "value": "$color/semantic/surface/panel"
@@ -101630,22 +101474,6 @@
     "component/calendar/day/radius": {
       "type": "number",
       "value": "$radius/lg"
-    },
-    "component/toast/padding-y": {
-      "type": "number",
-      "value": "$space/3"
-    },
-    "component/toast/padding-x": {
-      "type": "number",
-      "value": "$space/3"
-    },
-    "component/toast/gap": {
-      "type": "number",
-      "value": "$space/3"
-    },
-    "component/toast/text-gap": {
-      "type": "number",
-      "value": "$space/0-5"
     },
     "component/input/gap": {
       "type": "number",
@@ -102093,91 +101921,6 @@
     "component/calendar/day/dot-selected": {
       "type": "color",
       "value": "$color/semantic/accent/on-inverse"
-    },
-    "component/toast/success/action": {
-      "type": "color",
-      "value": [
-        {
-          "value": "$color/semantic/status/success/fg",
-          "theme": {
-            "mode": "light"
-          }
-        },
-        {
-          "value": "$color/semantic/text/primary",
-          "theme": {
-            "mode": "dark"
-          }
-        }
-      ]
-    },
-    "component/toast/info/action": {
-      "type": "color",
-      "value": [
-        {
-          "value": "$color/semantic/status/info/fg",
-          "theme": {
-            "mode": "light"
-          }
-        },
-        {
-          "value": "$color/semantic/text/primary",
-          "theme": {
-            "mode": "dark"
-          }
-        }
-      ]
-    },
-    "component/toast/warning/action": {
-      "type": "color",
-      "value": [
-        {
-          "value": "$color/semantic/status/warning/fg",
-          "theme": {
-            "mode": "light"
-          }
-        },
-        {
-          "value": "$color/semantic/text/primary",
-          "theme": {
-            "mode": "dark"
-          }
-        }
-      ]
-    },
-    "component/toast/danger/action": {
-      "type": "color",
-      "value": [
-        {
-          "value": "$color/semantic/status/danger/fg",
-          "theme": {
-            "mode": "light"
-          }
-        },
-        {
-          "value": "$color/semantic/text/primary",
-          "theme": {
-            "mode": "dark"
-          }
-        }
-      ]
-    },
-    "component/toast/highlight/action": {
-      "type": "color",
-      "value": [
-        {
-          "value": "$color/semantic/accent/soft-fg",
-          "theme": {
-            "mode": "light"
-          }
-        },
-        {
-          "value": "$color/semantic/text/primary",
-          "theme": {
-            "mode": "dark"
-          }
-        }
-      ]
     },
     "component/icon-button/sm/padding": {
       "type": "number",
@@ -102646,6 +102389,268 @@
     "component/tooltip/padding-x": {
       "type": "number",
       "value": "$space/2"
+    },
+    "size/content-narrow": {
+      "type": "number",
+      "value": 720
+    },
+    "component/alert/success/background": {
+      "type": "color",
+      "value": "$color/semantic/status/success/bg"
+    },
+    "component/alert/success/border": {
+      "type": "color",
+      "value": "$color/semantic/status/success/border"
+    },
+    "component/alert/success/icon": {
+      "type": "color",
+      "value": "$color/semantic/status/success/fg"
+    },
+    "component/alert/success/title": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/status/success/fg",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/alert/success/action": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/status/success/fg",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/alert/info/background": {
+      "type": "color",
+      "value": "$color/semantic/status/info/bg"
+    },
+    "component/alert/info/border": {
+      "type": "color",
+      "value": "$color/semantic/status/info/border"
+    },
+    "component/alert/info/icon": {
+      "type": "color",
+      "value": "$color/semantic/status/info/fg"
+    },
+    "component/alert/info/title": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/status/info/fg",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/alert/info/action": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/status/info/fg",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/alert/warning/background": {
+      "type": "color",
+      "value": "$color/semantic/status/warning/bg"
+    },
+    "component/alert/warning/border": {
+      "type": "color",
+      "value": "$color/semantic/status/warning/border"
+    },
+    "component/alert/warning/icon": {
+      "type": "color",
+      "value": "$color/semantic/status/warning/fg"
+    },
+    "component/alert/warning/title": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/status/warning/fg",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/alert/warning/action": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/status/warning/fg",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/alert/danger/background": {
+      "type": "color",
+      "value": "$color/semantic/status/danger/bg"
+    },
+    "component/alert/danger/border": {
+      "type": "color",
+      "value": "$color/semantic/status/danger/border"
+    },
+    "component/alert/danger/icon": {
+      "type": "color",
+      "value": "$color/semantic/status/danger/fg"
+    },
+    "component/alert/danger/title": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/status/danger/fg",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/alert/danger/action": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/status/danger/fg",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/alert/highlight/background": {
+      "type": "color",
+      "value": "$color/semantic/accent/soft"
+    },
+    "component/alert/highlight/border": {
+      "type": "color",
+      "value": "$color/semantic/status/highlight/border"
+    },
+    "component/alert/highlight/icon": {
+      "type": "color",
+      "value": "$color/semantic/accent/soft-fg"
+    },
+    "component/alert/highlight/title": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/accent/soft-fg",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/alert/highlight/action": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/accent/soft-fg",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/alert/surface": {
+      "type": "color",
+      "value": "$color/semantic/surface/panel"
+    },
+    "component/alert/body": {
+      "type": "color",
+      "value": "$color/semantic/text/secondary"
+    },
+    "component/alert/radius": {
+      "type": "number",
+      "value": "$radius/md"
+    },
+    "component/alert/padding-y": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/alert/padding-x": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/alert/gap": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/alert/text-gap": {
+      "type": "number",
+      "value": "$space/0-5"
     }
   },
   "fileToken": "a25701b4-4c5b-41fc-8af0-91535884d9bf"

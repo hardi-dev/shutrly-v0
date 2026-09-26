@@ -5,6 +5,8 @@ import {
   Calendar03Icon,
   ChevronDownIcon,
   Delete02Icon,
+  GoogleIcon,
+  InformationCircleIcon,
   Search01Icon,
   SentIcon,
   ViewIcon,
@@ -25,6 +27,8 @@ export const ICON_NAMES: readonly IconName[] = [
   "send",
   "arrow-right",
   "trash-2",
+  "info",
+  "google",
 ];
 
 export const ICON_REGISTRY: Record<IconName, IconSvgElement> = {
@@ -38,4 +42,6 @@ export const ICON_REGISTRY: Record<IconName, IconSvgElement> = {
   send: SentIcon,
   "arrow-right": ArrowRight05Icon,
   "trash-2": Delete02Icon,
+  info: InformationCircleIcon,
+  google: GoogleIcon,
 };

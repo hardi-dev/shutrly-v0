@@ -21,6 +21,8 @@
 | `eye`, `eye-off` | Password visibility |
 | `circle-alert` | Error and validation messages |
 | `plus`, `send`, `arrow-right`, `trash-2` | Button actions |
+| `info` | Informational alerts |
+| `google` | Google sign-in |
 
 ## Sizing and accessibility
 

@@ -10,7 +10,9 @@ export type IconName =
   | "plus"
   | "send"
   | "arrow-right"
-  | "trash-2";
+  | "trash-2"
+  | "info"
+  | "google";
 
 export type IconSize = "sm" | "md";
 

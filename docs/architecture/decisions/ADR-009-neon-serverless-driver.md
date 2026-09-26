@@ -27,7 +27,7 @@ The app runs on Cloudflare Workers ([ADR-008](ADR-008-cloudflare-runtime.md)) ag
 - Integration tests need network access to Neon; a local container would require Neon's WebSocket proxy.
 - Shared non-production data: a preview whose code expects an unmerged migration can break or be broken by others; migration-bearing branches must be merged (or previewed locally) before relying on their preview. Test leftovers accumulate; add a periodic cleanup of test workspaces.
 - Revisit per-branch Neon databases if collisions become frequent.
-- Per-request pool lifecycle must be centralized in `infrastructure/db` so it can't leak.
+- Per-request pool lifecycle must be centralized in `adapters/db` so it can't leak.
 
 ## Related
 - Constitution: C-005

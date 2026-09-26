@@ -27,24 +27,49 @@ flowchart TB
 
 ```text
 src/
-  app/                 UI: routes, pages, layouts, server actions, route handlers (thin)
-  modules/<context>/   Application: use cases, authorization, transactions, DTOs
-      auth, workspace, catalog, projects, galleries, selection, billing, messaging
-  domain/              Domain: entities, value objects, invariants, state transitions (no framework imports)
-  infrastructure/      Adapters: better-auth, db (drizzle schema/migrations), google-drive, whatsapp, cloudflare
+  app/                 Next.js routes, pages, layouts, server actions, route handlers (thin)
+  features/<feature>/  Product-facing bounded contexts, each with domain/application/ui
+      auth, workspace, booking, gallery, finance, communications
+  adapters/            Vendor implementations of application-owned ports
+      auth, db, email, storage, queue, source
+  composition/         Dependency-injection/composition root; wires ports to adapters
+  ui/                  Shared design-system primitives and patterns
+  shared/              Small genuinely cross-feature types/errors/utilities
 ```
 
-Dependency direction: `app → modules → domain`; `modules → infrastructure` only through interfaces defined in `modules`/`domain` (e.g. `GallerySourceProvider`). `domain` imports nothing from the other layers.
+Each feature is internally structured as `domain/`, `application/`, and `ui/`. Dependency direction is `app → composition → features/application → features/domain`; feature application code depends on ports, and `adapters/` implements those ports. `features/domain` imports no framework or vendor code. `composition/` is the only place that wires concrete adapters to ports.
+
+### Unit folder and test convention
+
+Every meaningful implementation unit gets its own folder. The implementation, sibling TDD test, types, and runtime schema are co-located when applicable:
+
+```text
+src/features/auth/application/use-cases/register-owner/
+  register-owner.ts
+  register-owner.test.ts
+  register-owner.types.ts
+  register-owner.schema.ts
+
+src/features/auth/ui/register-form/
+  register-form.tsx
+  register-form.test.tsx
+  register-form.types.ts
+  register-form.schema.ts
+```
+
+Unit tests live beside the unit they drive. Cross-boundary integration tests and browser journeys remain in `tests/integration/` and `tests/e2e/`.
 
 ## Responsibilities
-### UI (`app/`)
+### UI and routing (`app/`, `features/*/ui`, `ui/`)
 Rendering, form UX, client-side validation for feedback, calling server actions. No business rules, no direct DB access.
-### Application (`modules/`)
+### Feature application (`features/*/application`)
 Resolve session + workspace context, authorize, validate input (Zod), run use cases inside transactions, map domain errors to responses.
-### Domain (`domain/`)
+### Feature domain (`features/*/domain`)
 Invariants and transitions from [business-rules.md](../domain/business-rules.md): value shapes, limits, lifecycle guards, totals.
-### Infrastructure (`infrastructure/`)
-Drizzle schema + repositories, Better Auth config, Drive adapter, WhatsApp link builder, secrets access.
+### Adapters (`adapters/`)
+Drizzle schema + repositories, Better Auth, Resend, Drive, R2, Queues, WhatsApp, Cloudflare, and secrets access. Adapters are vendor-facing implementations only and never define product policy.
+### Composition (`composition/`)
+Construct feature use cases with concrete adapters and expose safe entry points to `app/`. No business rules belong here.
 
 ## Cross-Cutting Concerns
 

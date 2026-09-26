@@ -7,8 +7,8 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
 
 | Area | Status | Notes |
 |---|---|---|
-| Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. |
-| F-01 Auth | SPECIFIED | `docs/features/auth/spec.md` + acceptance criteria. Not modelled or designed yet. |
+| Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. Folder architecture finalized 2026-09-26 in `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`. |
+| F-01 Auth | PLANNED | `docs/features/auth/spec.md` + acceptance criteria + `technical-design.md` + `docs/superpowers/plans/2026-09-26-auth.md`. Flow modelling/design and F-00 foundation still gate implementation. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
 | Design system — tokens | PERSISTED (2026-09-26) | **478 tokens** (61 primitive · 54 semantic · 312 component · scales), `mode: light \| dark`. Live checksum `c36593e9`. |
 | Design system — token canvas | DONE | Boards 00–08, refreshed for every token added this session. |
@@ -157,7 +157,7 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 2. **Known blocker for step 1:** inserting into `_IconButton/Base` fails with `Duplicate node id 'ZnHc4'`. `ZnHc4` is the Table inside the C31 LG modal example `ZUbsF` (rebuilt after the earlier incident). Fix order: after reopening, **delete `ZUbsF` alone**, run the whole-doc check, have the Owner ⌘S, then insert the Tooltip layer alone, check, save. Rebuild the LG example afterwards.
 3. Owner review of this round (C36 Combobox, the rail/tablet work after the restructure, Segmented LG, Calendar hover, Table states, sidebar aliases, toast close alignment).
 4. Re-run `/sdv:verify-design-system`; the verification report is stale.
-5. Resume the feature track: `/sdv:discover-feature workspace` (pair with F-01 Auth) → model → design, from App Shell (desktop / tablet) and Mobile App Shell.
+5. Resume the feature track: `/sdv:model-feature auth` → `/sdv:design-feature auth` → execute the F-00 foundation gate and the auth implementation plan in `docs/superpowers/plans/2026-09-26-auth.md`; then `/sdv:verify-feature auth`.
 
 ## Working notes / gotchas
 

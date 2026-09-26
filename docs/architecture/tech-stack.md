@@ -18,11 +18,11 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 
 ## UI
 - Styling: Tailwind CSS v4, tokens as CSS variables mirrored from Pencil ([ADR-010](decisions/ADR-010-tailwind-react-aria.md))
-- Components: React Aria Components, wrapped in `src/components/ui/*` ([ADR-010](decisions/ADR-010-tailwind-react-aria.md))
+- Components: React Aria Components, wrapped in `src/ui/primitives/*` and `src/ui/patterns/*` ([ADR-010](decisions/ADR-010-tailwind-react-aria.md))
 - Design source: Pencil
 
 ## Backend
-- Runtime / application layer: Next.js server actions + route handlers → application services in `src/modules/*`
+- Runtime / application layer: Next.js server actions + route handlers → composition root → application services in `src/features/*/application`
 - Database: Neon PostgreSQL via Drizzle
 - DB driver: `@neondatabase/serverless` WebSocket `Pool`, per request ([ADR-009](decisions/ADR-009-neon-serverless-driver.md))
 - Authentication: Better Auth with Drizzle adapter; email + password and Google sign-in ([ADR-012](decisions/ADR-012-google-sign-in.md))

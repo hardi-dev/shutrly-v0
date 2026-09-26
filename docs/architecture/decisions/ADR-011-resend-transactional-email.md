@@ -9,7 +9,7 @@ Better Auth needs an email sender for verification links and password-reset link
 ## Decision
 - Send transactional auth emails through **Resend** (HTTP API, `fetch`-based SDK — Workers-compatible).
 - Only the platform's own auth emails go through Resend in MVP: email verification and password reset.
-- Sending sits behind an `AuthEmailSender` interface in `infrastructure/email`; Better Auth callbacks call it.
+- Sending sits behind an `AuthEmailSender` port owned by `features/auth/application`; the Resend implementation lives in `adapters/email` and is wired through `composition/`.
 - The API key is a server secret; the sending domain has SPF/DKIM/DMARC configured before production.
 - Email bodies and verification/reset URLs are never logged (C-103 redaction applies to these tokens).
 

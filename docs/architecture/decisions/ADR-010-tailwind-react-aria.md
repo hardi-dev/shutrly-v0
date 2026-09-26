@@ -9,7 +9,7 @@ Visual truth lives in Pencil; code must match it closely. The constitution targe
 ## Decision
 - Styling: **Tailwind CSS v4**; design tokens (color, radius, spacing, type) as CSS variables in the Tailwind theme, mirrored from Pencil.
 - Behavior/accessibility: **React Aria Components** (`react-aria-components`), unstyled and styled with Tailwind via their `data-*` state attributes.
-- Own a thin wrapper set in `src/components/ui/*` (Button, TextField, Dialog, Menu, Select, DatePicker, GridList, Toast, …); features import the wrappers, not React Aria directly.
+- Own a thin wrapper set in `src/ui/primitives/*` and `src/ui/patterns/*` (Button, TextField, Dialog, Menu, Select, DatePicker, GridList, Toast, …); features import the wrappers, not React Aria directly.
 - Workspace branding = overriding the token CSS variables at runtime on client-facing pages.
 - Photo selection grid builds on React Aria `GridList` (multi-select, keyboard, touch).
 - Locale from `I18nProvider` (`id-ID` default) for dates/numbers.
@@ -29,3 +29,4 @@ Visual truth lives in Pencil; code must match it closely. The constitution targe
 ## Related
 - Constitution: C-007, C-008
 - Coding rules: UI / Components
+- Folder architecture: `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`

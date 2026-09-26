@@ -15,7 +15,10 @@
     "typecheck": "next typegen && tsc --noEmit",
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write . && eslint --fix .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

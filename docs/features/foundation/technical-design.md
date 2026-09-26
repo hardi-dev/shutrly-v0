@@ -265,9 +265,9 @@ Each iteration follows plan → implement → test → verify → commit. The st
 
 ### Iteration 3 — Database (Tasks 7–10)
 
-- [ ] `createDb` + schema barrel; `withRequestDb` + `/api/health`
-- [ ] Tenant conventions + `WorkspaceId` / `WorkspaceContext`
-- [ ] `drizzle.config.ts`, `openTestDb`, integration config and smoke test
+- [x] `createDb` + schema barrel; `withRequestDb` + `/api/health`
+- [x] Tenant conventions + `WorkspaceId` / `WorkspaceContext`
+- [x] `drizzle.config.ts`, `openTestDb`, integration config and smoke test
 - **Done:** AC-FND-005 (unit), 006, 007, 008, 016 pass; `pnpm test:integration` is green against non-prod Neon; `curl /api/health` returns `{"ok":true}` under `next dev`.
 
 ### Iteration 4 — Boundaries (Task 11)

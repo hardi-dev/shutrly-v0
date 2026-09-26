@@ -1,1 +1,12 @@
 @import "tailwindcss";
+@import "../ui/theme/tokens.css";
+
+@layer base {
+  body {
+    background: var(--color-semantic-surface-canvas);
+    color: var(--color-semantic-text-primary);
+    font-family: var(--font-sans-loaded), var(--font-family-base), sans-serif;
+    font-size: var(--font-size-body);
+    line-height: var(--font-line-height-body);
+  }
+}

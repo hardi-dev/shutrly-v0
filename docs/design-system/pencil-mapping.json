@@ -244,6 +244,8 @@
     "component/icon-button/padding": "component.icon-button.padding",
     "component/icon-button/radius": "component.icon-button.radius",
     "component/icon-button/sm/padding": "component.icon-button.sm.padding",
+    "component/icon/size-md": "component.icon.size-md",
+    "component/icon/size-sm": "component.icon.size-sm",
     "component/input/background": "component.input.background",
     "component/input/background-disabled": "component.input.background-disabled",
     "component/input/border": "component.input.border",
@@ -500,10 +502,10 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 479,
+    "total": 481,
     "primitive": 61,
     "semantic": 54,
-    "component": 312,
+    "component": 314,
     "themed": 58
   },
   "transforms": {

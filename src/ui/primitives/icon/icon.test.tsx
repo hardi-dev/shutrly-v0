@@ -23,7 +23,7 @@ describe("Icon", () => {
     render(<Icon name="search" size="md" aria-label="Cari" data-testid="search-icon" />);
     const icon = screen.getByTestId("search-icon");
 
-    expect(icon).toHaveClass("size-(--space-4)");
+    expect(icon).toHaveClass("size-(--component-icon-size-md)");
     expect(icon).toHaveAccessibleName("Cari");
     expect(icon).not.toHaveAttribute("aria-hidden");
   });

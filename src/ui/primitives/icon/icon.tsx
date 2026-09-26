@@ -8,8 +8,8 @@ import { ICON_REGISTRY } from "./icon.registry";
 import type { IconProps } from "./icon.types";
 
 const SIZE_CLASSES = {
-  sm: "size-(--space-3)",
-  md: "size-(--space-4)",
+  sm: "size-(--component-icon-size-sm)",
+  md: "size-(--component-icon-size-md)",
 } as const;
 
 /**

@@ -24,11 +24,18 @@
 
 ## Sizing and accessibility
 
-- Default size is `md`: 16 px, backed by `space.4`.
-- `sm` is 12 px, backed by `space.3`.
+- Default size is `md`: 16 px, backed by `component.icon.size-md` → `space.4`.
+- `sm` is 12 px, backed by `component.icon.size-sm` → `space.3`.
 - Icons are decorative by default (`aria-hidden="true"`). Pass an accessible label when an icon itself communicates meaning.
 - Clickable icons remain controls owned by the consuming component. Use a labelled button around `Icon`; do not make `Icon` responsible for press behavior.
 - Colour is inherited from the parent and must be supplied with an existing design token.
+
+## Token dependencies
+
+| Decision | Token | Alias |
+|---|---|---|
+| Small icon size | `component.icon.size-sm` | `space.3` → 12 px |
+| Default icon size | `component.icon.size-md` | `space.4` → 16 px |
 
 ## Implementation rules
 

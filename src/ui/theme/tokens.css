@@ -294,6 +294,8 @@
   --component-input-content-gap: var(--space-2);
   --component-input-search-background: var(--color-semantic-surface-subtle);
   --component-input-padding-y: var(--space-3);
+  --component-icon-size-sm: var(--space-3);
+  --component-icon-size-md: var(--space-4);
   --component-checkbox-background: var(--color-semantic-surface-panel);
   --component-checkbox-border: var(--color-semantic-border-control);
   --component-checkbox-label: var(--color-semantic-text-primary);

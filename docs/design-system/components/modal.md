@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 4, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (tier 4, Owner review)
 - Direction/token approval: `APPROVED`. The Owner picked option A, *Sectioned*, from exploration board 04 (`exploration.pen` › **04 — Modal & overlay study**) and approved its tokens on 2026-09-26:
   - new primitives `red.300`, `alpha.neutral-950-a50` and `alpha.black-a60`;
   - new semantics `overlay.scrim` and `status.danger.solid-hover`;

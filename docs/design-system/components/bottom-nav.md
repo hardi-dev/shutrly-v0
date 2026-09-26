@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 4, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (tier 4, Owner review)
 - Direction/token approval: `APPROVED`. The Owner picked option B on exploration board 06 (`exploration.pen` › **06 — Mobile app shell study**) and raised the top padding: "let's go with B, but we need to increase padding top". That adds 12 `bottom-nav.*` tokens and no new primitives or semantics.
 - Pencil library: `design-system.lib.pen` › **C34 — Bottom nav** (`QifL8`)
 - Evidence: none in the legacy frames. The destinations come from the desktop Sidebar (C29).

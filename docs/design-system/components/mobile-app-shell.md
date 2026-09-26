@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 4, 2026-09-26). The Owner asked for "App Shell for Mobile" with a Bottom Nav and a menu sheet that inherits the desktop sidebar.
+- Lifecycle: `APPROVED` 2026-09-26 (tier 4, Owner review). The Owner asked for "App Shell for Mobile" with a Bottom Nav and a menu sheet that inherits the desktop sidebar.
 - Tokens: none of its own. It's a layout region (G3). Its parts use `bottom-nav.*` and `sheet.*`.
 - Pencil library: `design-system.lib.pen` › **C35 — Mobile app shell** (`u8w6u`)
 

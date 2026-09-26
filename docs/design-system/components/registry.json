@@ -1888,7 +1888,7 @@
   ]
  },
  "modal": {
-  "status": "PROPOSED (tier 4) 2026-09-26",
+  "status": "APPROVED (tier 4) 2026-09-26",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C31 — Modal",
@@ -1987,7 +1987,7 @@
   ]
  },
  "sheet-item": {
-  "status": "PROPOSED (tier 4) 2026-09-26",
+  "status": "APPROVED (tier 4) 2026-09-26",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C32 — Bottom sheet",
@@ -2047,7 +2047,7 @@
   ]
  },
  "bottom-sheet": {
-  "status": "PROPOSED (tier 4) 2026-09-26",
+  "status": "APPROVED (tier 4) 2026-09-26",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C32 — Bottom sheet",
@@ -2200,7 +2200,7 @@
   ]
  },
  "mobile-shell": {
-  "status": "PROPOSED (tier 4) 2026-09-26 (template)",
+  "status": "APPROVED (tier 4) 2026-09-26 (template)",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C33 — Mobile shell",
@@ -2293,7 +2293,7 @@
   ]
  },
  "bottom-nav-item": {
-  "status": "PROPOSED (tier 4) 2026-09-26",
+  "status": "APPROVED (tier 4) 2026-09-26",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C34 — Bottom nav",
@@ -2349,7 +2349,7 @@
   "gaps": []
  },
  "bottom-nav-cta": {
-  "status": "PROPOSED (tier 4) 2026-09-26",
+  "status": "APPROVED (tier 4) 2026-09-26",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C34 — Bottom nav",
@@ -2382,7 +2382,7 @@
   ]
  },
  "bottom-nav": {
-  "status": "PROPOSED (tier 4) 2026-09-26",
+  "status": "APPROVED (tier 4) 2026-09-26",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C34 — Bottom nav",
@@ -2428,7 +2428,7 @@
   ]
  },
  "mobile-app-shell": {
-  "status": "PROPOSED (tier 4) 2026-09-26 (template)",
+  "status": "APPROVED (tier 4) 2026-09-26 (template)",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C35 — Mobile app shell",

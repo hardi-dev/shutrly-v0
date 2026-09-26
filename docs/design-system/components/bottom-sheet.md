@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 4, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (tier 4, Owner review)
 - Direction/token approval: `APPROVED`.
   - The Owner compared two options on exploration board 05 (`exploration.pen` › **05 — Bottom sheet study**). The pick is option A *Docked* with option B's header ("A is better, but I like header of B").
   - 25 `sheet.*` tokens were approved on 2026-09-26. There are no new primitives or semantics.

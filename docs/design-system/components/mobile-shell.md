@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 4, 2026-09-26). The Owner asked to fix the missing mobile frame (GAP-04) after C32.
+- Lifecycle: `APPROVED` 2026-09-26 (tier 4, Owner review). The Owner asked to fix the missing mobile frame (GAP-04) after C32.
 - Tokens: none added. It's a **layout region** like the Sidebar, so it binds semantic and scale tokens under G3's layout clause.
 - Pencil library: `design-system.lib.pen` › **C33 — Mobile shell** (`rmpdk`)
 - Evidence: none in the legacy frames. The client gallery (mobile) was GAP-04.

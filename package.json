@@ -10,6 +10,7 @@
     "prepare": "simple-git-hooks",
     "dev": "next dev",
     "build": "next build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "start": "next start",
     "typecheck": "next typegen && tsc --noEmit",
     "lint": "prettier --check . && eslint .",

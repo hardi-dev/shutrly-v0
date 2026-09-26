@@ -146,9 +146,18 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 
 ## Next steps
 
-1. Owner review of this round: C36 Combobox, C37 Nav rail & tablet shell, Segmented LG, Calendar hover, Table states, sidebar aliases, toast close alignment.
-2. Re-run `/sdv:verify-design-system`; the verification report is stale.
-3. Resume the feature track: `/sdv:discover-feature workspace` (pair it with F-01 Auth) → model → design, starting screens from the **App Shell** (C30), **App Shell/Tablet** (C37) and **Mobile App Shell** (C35).
+**⚠️ Resume here (2026-09-26, session ended on token limit).** The library in the open Pen window is broken in memory. **Close it with "Don't Save"** and reopen from disk (the file = commit `67e5526`, healthy: 478 vars, checksum `c36593e9`).
+
+1. **Restructure approved by the Owner (not done yet):**
+   - **Tooltip → primitive C38** (page at x 9888, y 19863) + an optional `Tooltip` layer (off, absolute x 48 y 8) at the **end** of `_IconButton/Base` (`s4zsCg`), so every icon-only button can show it.
+   - **Nav Item/Rail/Default·Hover·Active·Focus** rebuilt as refs of `_IconButton/Base` (Ghost MD look, fills/icons from `nav.item.*`, Tooltip on for Hover/Focus), shown as a row in the **C22 Nav item** matrix. Replace the instances in `Sidebar/Rail`, then delete `_NavRailItem/Base` + `Nav Rail Item/*` (`xhCvp`, `odApP`, `GMxFW`, `OKf00`, `vRX3t`).
+   - **Sidebar/Rail** (`JRUY0`) moves into the **C29** matrix; rename `Sidebar` (`vB50q`) → `Sidebar/Expanded`.
+   - **App Shell/Tablet** (`lQnS8`) + its examples move to **C30**; rename `App Shell` (`y9uBJl`) → `App Shell/Desktop`.
+   - Delete page **C37** (`jNOvR`); fold `components/nav-rail.md` into tooltip.md (new), nav-item.md, icon-button.md, sidebar.md, app-shell.md; update the registry.
+2. **Known blocker for step 1:** inserting into `_IconButton/Base` fails with `Duplicate node id 'ZnHc4'`. `ZnHc4` is the Table inside the C31 LG modal example `ZUbsF` (rebuilt after the earlier incident). Fix order: after reopening, **delete `ZUbsF` alone**, run the whole-doc check, have the Owner ⌘S, then insert the Tooltip layer alone, check, save. Rebuild the LG example afterwards.
+3. Owner review of this round (C36 Combobox, the rail/tablet work after the restructure, Segmented LG, Calendar hover, Table states, sidebar aliases, toast close alignment).
+4. Re-run `/sdv:verify-design-system`; the verification report is stale.
+5. Resume the feature track: `/sdv:discover-feature workspace` (pair with F-01 Auth) → model → design, from App Shell (desktop / tablet) and Mobile App Shell.
 
 ## Working notes / gotchas
 
@@ -181,5 +190,6 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
   - Never leave `slot: []`. An empty list rejects every insert with `Cannot read properties of undefined (reading 'id')`.
   - Pencil can't `Replace`/`Copy` into a slot of an instance nested **inside another master** (`reading 'parent'`, or "use Update/Replace"). Fill slots only on top-level instances, e.g. `Replace(<shell>/Sw0yD/d2hCuQ/bBehO, …)`.
   - A replaced node keeps its new ID in the instance path: re-replace `KS7sb/XNJJO`, not `KS7sb/C5QYo`.
+- **Master edits that break the file (2026-09-26):** `Move`-ing a newly inserted layer inside a deeply nested master (Table Cell / Header Cell) corrupted every existing Table instance in memory and emptied the Table master's row cells; Pen then refused to save ("pen.dev can't save your changes"). Rules: insert new layers at the **end** of a master, never `Move` them; after every master edit run `Get((n,ctx)=>{ctx.skipChildren();return n.name})` (whole-doc check) and test pages one per call (`Get(pageId,{depth:30})`) — errors abort the whole call. Broken instances are fixed by deleting and rebuilding them. An IPC error (`reading 'parent'`) can leave a half-applied change: close without saving and reopen.
 - **Pencil targets the frontmost Pen window**, whatever `filePath` says: run `open -a Pen <file>` before switching files, and check `GetVariables` (the library has variables; `exploration.pen` has none).
 - **CLI save isn't possible:** `osascript` keystrokes are blocked (no Accessibility permission), so the Owner presses ⌘S.

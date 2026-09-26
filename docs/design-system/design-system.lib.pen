@@ -123,7 +123,7 @@
                       "id": "w4Y5S",
                       "name": "Text",
                       "fill": "$color/semantic/text/secondary",
-                      "content": "388 tokens",
+                      "content": "390 tokens",
                       "lineHeight": 1.35,
                       "fontFamily": "$font/family/base",
                       "fontSize": 12,
@@ -488,7 +488,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "229 component-scoped aliases",
+                  "content": "230 component-scoped aliases",
                   "lineHeight": 1.35,
                   "fontFamily": "$font/family/base",
                   "fontSize": 12,
@@ -26707,7 +26707,7 @@
                           "id": "FQ0pO",
                           "name": "Count",
                           "fill": "$color/semantic/text/muted",
-                          "content": "9 tokens  ·  L / D",
+                          "content": "10 tokens  ·  L / D",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -27404,6 +27404,74 @@
                           "textGrowth": "fixed-width",
                           "width": 230,
                           "content": "→ space/3",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "GmiS8",
+                      "name": "component/panel/app/content/max-width",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "dA41g",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "app/content/max-width",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "UmDG3",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "j9I5ak",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "1096 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "v1m5M5",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ size/content-max",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -78204,7 +78272,7 @@
               "fill": "$color/semantic/text/secondary",
               "textGrowth": "fixed-width",
               "width": 880,
-              "content": "The white working surface of every Owner page (legacy dashboard › Panel): a 72 px header with the page title and header actions, and a Content slot with layout insets 28 / 40 and section gap 28. Sits on surface.canvas next to the Sidebar (C29). Tokens: component.panel.app.*.",
+              "content": "The white working surface of every Owner page (legacy dashboard › Panel): a 72 px header with the page title and header actions, and a Content slot holding Page Content (layout insets 28 / 40, section gap 28, container max-width 1096 centred). Sits on surface.canvas next to the Sidebar (C29). Tokens: component.panel.app.*.",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
               "fontSize": 16,
@@ -78237,7 +78305,7 @@
               "fill": "$color/semantic/text/secondary",
               "textGrowth": "fixed-width",
               "width": "fill_container",
-              "content": "Single component. Text: Title. Slots: Actions (header, right; Input/Search, Icon Button/Outline, Button), Content (page sections). Height hugs content; in the App shell it fills the screen. Default content = greeting + metric row (dashboard).",
+              "content": "Single component. Text: Title. Slots: Actions (header, right; Input/Search, Icon Button/Outline, Button), Content (accepts Page Content; its Container slot takes the page sections). Height hugs content; in the App shell it fills the screen. Default content = empty Page Content; the dashboard (greeting + metric row) is shown in the Modes exhibit.",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
               "fontSize": 13,
@@ -78321,7 +78389,7 @@
                   "id": "Xz3tq",
                   "name": "Caption",
                   "fill": "$color/semantic/text/muted",
-                  "content": "App Panel · default content (shown at 1176, its width in the 1440 shell)",
+                  "content": "App Panel · default (empty Page Content), shown at 1176, its width in the 1440 shell",
                   "fontFamily": "IBM Plex Mono",
                   "fontSize": 11,
                   "fontWeight": "normal"
@@ -78424,159 +78492,18 @@
                       "type": "frame",
                       "id": "C5QYo",
                       "name": "Content",
-                      "slot": [],
+                      "slot": [
+                        "B4HAVd"
+                      ],
                       "width": "fill_container",
                       "layout": "vertical",
-                      "gap": "$component/panel/app/content/gap",
-                      "padding": [
-                        "$component/panel/app/content/padding-y",
-                        "$component/panel/app/content/padding-x"
-                      ],
                       "children": [
                         {
-                          "type": "frame",
-                          "id": "CqIjG",
-                          "name": "Greeting",
-                          "width": "fill_container",
-                          "gap": "$space/6",
-                          "justifyContent": "space_between",
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "o6VD1",
-                              "name": "Greeting text",
-                              "layout": "vertical",
-                              "gap": "$space/1-5",
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "u5a2f",
-                                  "name": "Headline",
-                                  "fill": "$color/semantic/text/primary",
-                                  "content": "Selamat pagi, Alya.",
-                                  "fontFamily": "$font/family/base",
-                                  "fontSize": "$font/size/display",
-                                  "fontWeight": "$font/weight/bold",
-                                  "letterSpacing": "$font/letter-spacing/display"
-                                },
-                                {
-                                  "type": "text",
-                                  "id": "c33Cwf",
-                                  "name": "Sub",
-                                  "fill": "$color/semantic/text/muted",
-                                  "content": "Fokus hari ini: sesi, pilihan klien, pengiriman, dan invoice yang belum dibayar.",
-                                  "fontFamily": "$font/family/base",
-                                  "fontSize": "$font/size/body",
-                                  "fontWeight": "$font/weight/regular"
-                                }
-                              ]
-                            },
-                            {
-                              "id": "PASAU",
-                              "type": "ref",
-                              "ref": "aBT7T",
-                              "name": "Primary action",
-                              "descendants": {
-                                "fMNO1": {
-                                  "enabled": true,
-                                  "icon": "plus"
-                                },
-                                "xnhuK": {
-                                  "content": "Proyek baru"
-                                }
-                              }
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "gL8yZ",
-                          "name": "Metrics",
-                          "width": "fill_container",
-                          "gap": "$space/4",
-                          "children": [
-                            {
-                              "id": "br4uV",
-                              "type": "ref",
-                              "ref": "AJT5R",
-                              "name": "Tile Pendapatan",
-                              "width": "fill_container",
-                              "descendants": {
-                                "Wtx9f": {
-                                  "content": "Pendapatan"
-                                },
-                                "MbBqV/GqwpL": {
-                                  "content": "+12,4%"
-                                },
-                                "CXKcw": {
-                                  "content": "Rp 18,4 jt"
-                                }
-                              }
-                            },
-                            {
-                              "id": "DxbXN",
-                              "type": "ref",
-                              "ref": "AJT5R",
-                              "name": "Tile Sesi bulan ini",
-                              "width": "fill_container",
-                              "descendants": {
-                                "Wtx9f": {
-                                  "content": "Sesi bulan ini"
-                                },
-                                "MbBqV/GqwpL": {
-                                  "content": "+3"
-                                },
-                                "CXKcw": {
-                                  "content": "14"
-                                }
-                              }
-                            },
-                            {
-                              "id": "CC593",
-                              "type": "ref",
-                              "ref": "AJT5R",
-                              "name": "Tile Rata-rata turnaround",
-                              "width": "fill_container",
-                              "descendants": {
-                                "Wtx9f": {
-                                  "content": "Rata-rata turnaround"
-                                },
-                                "MbBqV": {
-                                  "enabled": false
-                                },
-                                "CXKcw": {
-                                  "content": "6 hari"
-                                }
-                              }
-                            },
-                            {
-                              "id": "p5aJLJ",
-                              "type": "ref",
-                              "ref": "AJT5R",
-                              "name": "Tile Tagihan tertunda",
-                              "width": "fill_container",
-                              "descendants": {
-                                "Wtx9f": {
-                                  "content": "Tagihan tertunda"
-                                },
-                                "MbBqV": {
-                                  "id": "LrEAV",
-                                  "type": "ref",
-                                  "ref": "GU07z",
-                                  "name": "Delta",
-                                  "descendants": {
-                                    "GqwpL": {
-                                      "content": "3 invoice"
-                                    }
-                                  }
-                                },
-                                "CXKcw": {
-                                  "content": "Rp 4,2 jt"
-                                }
-                              }
-                            }
-                          ]
+                          "id": "d2hCuQ",
+                          "type": "ref",
+                          "ref": "B4HAVd",
+                          "name": "Page Content",
+                          "width": "fill_container"
                         }
                       ]
                     }
@@ -78595,7 +78522,8 @@
           "strokeWidth": {
             "top": 1
           },
-          "gap": 40,
+          "layout": "vertical",
+          "gap": 16,
           "padding": [
             32,
             0,
@@ -78607,7 +78535,7 @@
               "type": "frame",
               "id": "vERrz",
               "name": "Notes",
-              "width": 360,
+              "width": "fill_container",
               "layout": "vertical",
               "gap": 10,
               "children": [
@@ -78628,7 +78556,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Fill the Content slot with page sections (gap 28 = panel.app.content.gap, SP4). Replace it: Replace(<panel>/C5QYo, {type:\"frame\", layout:\"vertical\", width:\"fill_container\", padding:[\"$component/panel/app/content/padding-y\",\"$component/panel/app/content/padding-x\"], gap:\"$component/panel/app/content/gap\"}). Header actions: search 300 + icon buttons + at most one Button.",
+                  "content": "The Content slot holds a Page Content instance (padding 28/40, Container max-width 1096 centred). Fill it: Replace(<panel>/C5QYo/<Page Content>/bBehO, {type:\"frame\", name:\"Container\", width:1096, layout:\"vertical\", gap:\"$component/panel/app/content/gap\"}), then insert the page sections (gap 28, SP4). Header actions: search 300 + icon buttons + at most one Button.",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -78652,7 +78580,7 @@
                   "id": "NxE4S",
                   "name": "Caption",
                   "fill": "$color/semantic/text/muted",
-                  "content": "Proyek page · title + one Button · Table as content",
+                  "content": "Proyek page · title + one Button · Table in the Page Content container",
                   "fontFamily": "IBM Plex Mono",
                   "fontSize": 11,
                   "fontWeight": "normal"
@@ -78708,30 +78636,44 @@
                     },
                     "C5QYo": {
                       "type": "frame",
-                      "id": "XNJJO",
+                      "id": "hEXE3",
                       "name": "Content",
                       "width": "fill_container",
                       "layout": "vertical",
-                      "gap": "$component/panel/app/content/gap",
-                      "padding": [
-                        "$component/panel/app/content/padding-y",
-                        "$component/panel/app/content/padding-x"
-                      ],
                       "children": [
                         {
-                          "id": "QOG9b",
+                          "id": "P9RZr",
                           "type": "ref",
-                          "ref": "FCsTI",
-                          "name": "Table",
+                          "ref": "B4HAVd",
+                          "name": "Page Content",
                           "width": "fill_container",
-                          "descendants": {
-                            "aIKsB": {
-                              "enabled": false
-                            },
-                            "QTddd": {
-                              "enabled": false
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "l0kyZ",
+                              "name": "Container",
+                              "width": 1096,
+                              "layout": "vertical",
+                              "gap": "$component/panel/app/content/gap",
+                              "children": [
+                                {
+                                  "id": "mZ2GQ",
+                                  "type": "ref",
+                                  "ref": "FCsTI",
+                                  "name": "Table",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "aIKsB": {
+                                      "enabled": false
+                                    },
+                                    "QTddd": {
+                                      "enabled": false
+                                    }
+                                  }
+                                }
+                              ]
                             }
-                          }
+                          ]
                         }
                       ]
                     }
@@ -78750,7 +78692,8 @@
           "strokeWidth": {
             "top": 1
           },
-          "gap": 40,
+          "layout": "vertical",
+          "gap": 16,
           "padding": [
             32,
             0,
@@ -78762,7 +78705,7 @@
               "type": "frame",
               "id": "k3M9k",
               "name": "Notes",
-              "width": 360,
+              "width": "fill_container",
               "layout": "vertical",
               "gap": 10,
               "children": [
@@ -78833,7 +78776,168 @@
                       "type": "ref",
                       "ref": "UmVJD",
                       "name": "Instance",
-                      "width": "fill_container"
+                      "width": "fill_container",
+                      "descendants": {
+                        "d2hCuQ": {
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "nIfJm",
+                              "name": "Container",
+                              "width": 1096,
+                              "layout": "vertical",
+                              "gap": "$component/panel/app/content/gap",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "UMAcQ",
+                                  "name": "Greeting",
+                                  "width": "fill_container",
+                                  "gap": "$space/6",
+                                  "justifyContent": "space_between",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "lPVOL",
+                                      "name": "Greeting text",
+                                      "layout": "vertical",
+                                      "gap": "$space/1-5",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "F4BTvT",
+                                          "name": "Headline",
+                                          "fill": "$color/semantic/text/primary",
+                                          "content": "Selamat pagi, Alya.",
+                                          "fontFamily": "$font/family/base",
+                                          "fontSize": "$font/size/display",
+                                          "fontWeight": "$font/weight/bold",
+                                          "letterSpacing": "$font/letter-spacing/display"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "s8fSs",
+                                          "name": "Sub",
+                                          "fill": "$color/semantic/text/muted",
+                                          "content": "Fokus hari ini: sesi, pilihan klien, pengiriman, dan invoice yang belum dibayar.",
+                                          "fontFamily": "$font/family/base",
+                                          "fontSize": "$font/size/body",
+                                          "fontWeight": "$font/weight/regular"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "Cm0tY",
+                                      "type": "ref",
+                                      "ref": "aBT7T",
+                                      "name": "Primary action",
+                                      "descendants": {
+                                        "fMNO1": {
+                                          "enabled": true,
+                                          "icon": "plus"
+                                        },
+                                        "xnhuK": {
+                                          "content": "Proyek baru"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "L5P4TW",
+                                  "name": "Metrics",
+                                  "width": "fill_container",
+                                  "gap": "$space/4",
+                                  "children": [
+                                    {
+                                      "id": "oMbTa",
+                                      "type": "ref",
+                                      "ref": "AJT5R",
+                                      "name": "Tile Pendapatan",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "Wtx9f": {
+                                          "content": "Pendapatan"
+                                        },
+                                        "MbBqV/GqwpL": {
+                                          "content": "+12,4%"
+                                        },
+                                        "CXKcw": {
+                                          "content": "Rp 18,4 jt"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "xRhRH",
+                                      "type": "ref",
+                                      "ref": "AJT5R",
+                                      "name": "Tile Sesi bulan ini",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "Wtx9f": {
+                                          "content": "Sesi bulan ini"
+                                        },
+                                        "MbBqV/GqwpL": {
+                                          "content": "+3"
+                                        },
+                                        "CXKcw": {
+                                          "content": "14"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "hf1oJ",
+                                      "type": "ref",
+                                      "ref": "AJT5R",
+                                      "name": "Tile Rata-rata turnaround",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "Wtx9f": {
+                                          "content": "Rata-rata turnaround"
+                                        },
+                                        "MbBqV": {
+                                          "enabled": false
+                                        },
+                                        "CXKcw": {
+                                          "content": "6 hari"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "J0xvh",
+                                      "type": "ref",
+                                      "ref": "AJT5R",
+                                      "name": "Tile Tagihan tertunda",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "Wtx9f": {
+                                          "content": "Tagihan tertunda"
+                                        },
+                                        "MbBqV": {
+                                          "id": "GvoFI",
+                                          "type": "ref",
+                                          "ref": "GU07z",
+                                          "name": "Delta",
+                                          "descendants": {
+                                            "GqwpL": {
+                                              "content": "3 invoice"
+                                            }
+                                          }
+                                        },
+                                        "CXKcw": {
+                                          "content": "Rp 4,2 jt"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
                     }
                   ]
                 },
@@ -78868,7 +78972,168 @@
                       "type": "ref",
                       "ref": "UmVJD",
                       "name": "Instance",
-                      "width": "fill_container"
+                      "width": "fill_container",
+                      "descendants": {
+                        "d2hCuQ": {
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "j9vuKb",
+                              "name": "Container",
+                              "width": 1096,
+                              "layout": "vertical",
+                              "gap": "$component/panel/app/content/gap",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "ATnvJ",
+                                  "name": "Greeting",
+                                  "width": "fill_container",
+                                  "gap": "$space/6",
+                                  "justifyContent": "space_between",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "J7B1r5",
+                                      "name": "Greeting text",
+                                      "layout": "vertical",
+                                      "gap": "$space/1-5",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "EQlAH",
+                                          "name": "Headline",
+                                          "fill": "$color/semantic/text/primary",
+                                          "content": "Selamat pagi, Alya.",
+                                          "fontFamily": "$font/family/base",
+                                          "fontSize": "$font/size/display",
+                                          "fontWeight": "$font/weight/bold",
+                                          "letterSpacing": "$font/letter-spacing/display"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "oXZAN",
+                                          "name": "Sub",
+                                          "fill": "$color/semantic/text/muted",
+                                          "content": "Fokus hari ini: sesi, pilihan klien, pengiriman, dan invoice yang belum dibayar.",
+                                          "fontFamily": "$font/family/base",
+                                          "fontSize": "$font/size/body",
+                                          "fontWeight": "$font/weight/regular"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "d7wrlz",
+                                      "type": "ref",
+                                      "ref": "aBT7T",
+                                      "name": "Primary action",
+                                      "descendants": {
+                                        "fMNO1": {
+                                          "enabled": true,
+                                          "icon": "plus"
+                                        },
+                                        "xnhuK": {
+                                          "content": "Proyek baru"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "s2jmd",
+                                  "name": "Metrics",
+                                  "width": "fill_container",
+                                  "gap": "$space/4",
+                                  "children": [
+                                    {
+                                      "id": "IcNeZ",
+                                      "type": "ref",
+                                      "ref": "AJT5R",
+                                      "name": "Tile Pendapatan",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "Wtx9f": {
+                                          "content": "Pendapatan"
+                                        },
+                                        "MbBqV/GqwpL": {
+                                          "content": "+12,4%"
+                                        },
+                                        "CXKcw": {
+                                          "content": "Rp 18,4 jt"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "Z8V2q0",
+                                      "type": "ref",
+                                      "ref": "AJT5R",
+                                      "name": "Tile Sesi bulan ini",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "Wtx9f": {
+                                          "content": "Sesi bulan ini"
+                                        },
+                                        "MbBqV/GqwpL": {
+                                          "content": "+3"
+                                        },
+                                        "CXKcw": {
+                                          "content": "14"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "onvec",
+                                      "type": "ref",
+                                      "ref": "AJT5R",
+                                      "name": "Tile Rata-rata turnaround",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "Wtx9f": {
+                                          "content": "Rata-rata turnaround"
+                                        },
+                                        "MbBqV": {
+                                          "enabled": false
+                                        },
+                                        "CXKcw": {
+                                          "content": "6 hari"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "TO7s5",
+                                      "type": "ref",
+                                      "ref": "AJT5R",
+                                      "name": "Tile Tagihan tertunda",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "Wtx9f": {
+                                          "content": "Tagihan tertunda"
+                                        },
+                                        "MbBqV": {
+                                          "id": "Zpz2c",
+                                          "type": "ref",
+                                          "ref": "GU07z",
+                                          "name": "Delta",
+                                          "descendants": {
+                                            "GqwpL": {
+                                              "content": "3 invoice"
+                                            }
+                                          }
+                                        },
+                                        "CXKcw": {
+                                          "content": "Rp 4,2 jt"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
                     }
                   ]
                 }
@@ -79074,7 +79339,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "•  Content reflows at 1280; below that the sidebar collapses (future breakpoint spec).",
+                  "content": "•  The content container stops at 1096 (panel.app.content.max-width) and centres on wider screens; below 1280 the sidebar collapses (future breakpoint spec).",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -80060,7 +80325,7 @@
               "fill": "$color/semantic/text/secondary",
               "textGrowth": "fixed-width",
               "width": 880,
-              "content": "The Owner app screen template at 1440 × 960 (legacy dashboard › Screen): surface.canvas, 12 px gutter (space.3) on top, right and bottom, Sidebar (C29) on the left, App panel (C28) filling the rest. Start every Owner screen from an instance of this and fill the panel's Content slot.",
+              "content": "The Owner app screen template at 1440 × 960 (legacy dashboard › Screen): surface.canvas, 12 px gutter (space.3) on top, right and bottom, Sidebar (C29) on the left, App panel (C28) filling the rest. Start every Owner screen from an instance of this and fill the Page Content container inside the panel.",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
               "fontSize": 16,
@@ -80093,7 +80358,7 @@
               "fill": "$color/semantic/text/secondary",
               "textGrowth": "fixed-width",
               "width": "fill_container",
-              "content": "App Shell (reusable). Paths: Sidebar = nested C29 (set the Active nav item by replacing items in its Nav slot); Panel = nested C28 (Title, Actions slot, Content slot). Screens override only these; gutter and panel insets are owned by the template (SP5).",
+              "content": "App Shell (reusable). Paths: Sidebar = nested C29 (set the Active nav item by replacing items in its Nav slot); Panel = nested C28 (Title, Actions slot, Content slot → Page Content). Fill a screen: Replace(<shell>/Sw0yD/d2hCuQ/bBehO, Container frame width 1096) and insert the sections. Screens override only these; gutter, panel insets and the 1096 max-width are owned by the template (SP5).",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
               "fontSize": 13,
@@ -80116,7 +80381,7 @@
                   "id": "W2cfq",
                   "name": "Caption",
                   "fill": "$color/semantic/text/muted",
-                  "content": "App Shell · light · dashboard default content",
+                  "content": "App Shell · light · template (empty Page Content)",
                   "fontFamily": "IBM Plex Mono",
                   "fontSize": 11,
                   "fontWeight": "normal"
@@ -80176,6 +80441,167 @@
                   "name": "App Shell · dark",
                   "theme": {
                     "mode": "dark"
+                  },
+                  "descendants": {
+                    "Sw0yD/d2hCuQ": {
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "J4XNGO",
+                          "name": "Container",
+                          "width": 1096,
+                          "layout": "vertical",
+                          "gap": "$component/panel/app/content/gap",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "r5cjXr",
+                              "name": "Greeting",
+                              "width": "fill_container",
+                              "gap": "$space/6",
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "ZyJYe",
+                                  "name": "Greeting text",
+                                  "layout": "vertical",
+                                  "gap": "$space/1-5",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "AHhSg",
+                                      "name": "Headline",
+                                      "fill": "$color/semantic/text/primary",
+                                      "content": "Selamat pagi, Alya.",
+                                      "fontFamily": "$font/family/base",
+                                      "fontSize": "$font/size/display",
+                                      "fontWeight": "$font/weight/bold",
+                                      "letterSpacing": "$font/letter-spacing/display"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "YyOnf",
+                                      "name": "Sub",
+                                      "fill": "$color/semantic/text/muted",
+                                      "content": "Fokus hari ini: sesi, pilihan klien, pengiriman, dan invoice yang belum dibayar.",
+                                      "fontFamily": "$font/family/base",
+                                      "fontSize": "$font/size/body",
+                                      "fontWeight": "$font/weight/regular"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "id": "varAk",
+                                  "type": "ref",
+                                  "ref": "aBT7T",
+                                  "name": "Primary action",
+                                  "descendants": {
+                                    "fMNO1": {
+                                      "enabled": true,
+                                      "icon": "plus"
+                                    },
+                                    "xnhuK": {
+                                      "content": "Proyek baru"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "iyGOE",
+                              "name": "Metrics",
+                              "width": "fill_container",
+                              "gap": "$space/4",
+                              "children": [
+                                {
+                                  "id": "HXNLY",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "name": "Tile Pendapatan",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Pendapatan"
+                                    },
+                                    "MbBqV/GqwpL": {
+                                      "content": "+12,4%"
+                                    },
+                                    "CXKcw": {
+                                      "content": "Rp 18,4 jt"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "PbiOm",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "name": "Tile Sesi bulan ini",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Sesi bulan ini"
+                                    },
+                                    "MbBqV/GqwpL": {
+                                      "content": "+3"
+                                    },
+                                    "CXKcw": {
+                                      "content": "14"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "bvAOx",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "name": "Tile Rata-rata turnaround",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Rata-rata turnaround"
+                                    },
+                                    "MbBqV": {
+                                      "enabled": false
+                                    },
+                                    "CXKcw": {
+                                      "content": "6 hari"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "ziv12",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "name": "Tile Tagihan tertunda",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Tagihan tertunda"
+                                    },
+                                    "MbBqV": {
+                                      "id": "IR2qQ",
+                                      "type": "ref",
+                                      "ref": "GU07z",
+                                      "name": "Delta",
+                                      "descendants": {
+                                        "GqwpL": {
+                                          "content": "3 invoice"
+                                        }
+                                      }
+                                    },
+                                    "CXKcw": {
+                                      "content": "Rp 4,2 jt"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
                   }
                 }
               ]

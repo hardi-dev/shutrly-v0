@@ -101,6 +101,7 @@ S = {
 NUM = {  # number tokens: path -> (value, description)
  "space.0-5":(2,""),"space.1":(4,""),"space.1-5":(6,""),"space.2":(8,""),"space.2-5":(10,""),"space.3":(12,""),
  "space.4":(16,""),"space.5":(20,""),"space.6":(24,""),"space.7":(28,""),"space.8":(32,""),"space.9":(36,""),"space.10":(40,""),"space.12":(48,""),
+ "size.content-max":(1096,"Page content max-width: 1440 shell − 252 sidebar − 12 gutter − 2×40 content padding (layout size, not spacing)"),
  "radius.2xs":(2,"Bars"),"radius.xs":(4,"Kbd, delta, checkbox"),"radius.sm":(8,"Nav item, input"),"radius.md":(12,"Tile, toast"),
  "radius.lg":(16,"App panel, day cell"),"radius.xl":(24,"Sheet"),"radius.full":(999,"Pill"),
  "opacity.disabled":(0.4,""),"opacity.hover-overlay":(0.06,""),"opacity.status-tint":(0.16,"Dark status backgrounds"),"opacity.scrim":(0.5,""),
@@ -330,6 +331,7 @@ add("panel.app.border","color",SC("border.default"))
 add("panel.app.radius","number",SP("radius.lg"))
 add("panel.app.title","color",SC("text.primary"))
 add("panel.app.header.gap","number",SP("space.3"))        # title/actions 12
+add("panel.app.content.max-width","number",SP("size.content-max"))  # Owner 2026-09-26: Page Content container; Pencil can't bind width → documented
 
 # ---------- build DTCG ----------
 def setp(d, path, val):

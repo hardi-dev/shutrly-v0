@@ -20,10 +20,10 @@ The Owner app screen template. Every Owner screen starts from an instance of thi
 
 To make a screen, insert an instance, then:
 - set `Sw0yD/nrRBd` (title);
-- replace `Sw0yD/uR9Ye` (actions) and `Sw0yD/C5QYo` (content);
+- replace `Sw0yD/uR9Ye` (actions), and fill the content with `Replace(<shell>/Sw0yD/d2hCuQ/bBehO, {type:"frame", name:"Container", width:1096, layout:"vertical", gap:"$component/panel/app/content/gap"})` (Page Content's container, max-width 1096 centred);
 - make the current page's Nav item Active by replacing items in `fNszT/tilEo`.
 
-The gutter and panel insets are owned by the template (SP5).
+The gutter, panel insets and the 1096 content max-width are owned by the template (SP5). The master shows an empty Page Content; the dark example (`TXZxf`) shows the dashboard.
 
 ## Accessibility
 

@@ -1,6 +1,6 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-26 (session 4) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-09-26 (session 4, Page Content) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system/library-components` is kept. No remote is configured, so nothing is pushed.
 
 ## Where we are
@@ -10,12 +10,12 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. |
 | F-01 Auth | SPECIFIED | `docs/features/auth/spec.md` + acceptance criteria. Not modelled or designed yet. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
-| Design system — tokens | PERSISTED (2026-09-26) | **388 tokens** (58 primitive · 52 semantic · 229 component · scales), `mode: light \| dark`. Live checksum `cca9dc04`. |
+| Design system — tokens | PERSISTED (2026-09-26) | **390 tokens** (58 primitive · 52 semantic · 230 component · scales), `mode: light \| dark`. Live checksum `1199133c`. |
 | Design system — token canvas | DONE | Boards 00–08, refreshed for every token added this session. |
 | Design system — usage & spacing rules | APPROVED (2026-09-26) + Owner amendments | See *Key decisions*. |
 | Design system — primitive components | **APPROVED** — C01–C17 | 17 components (108 reusable nodes) in `design-system.lib.pen`, each with a spec in `components/`. |
 | Design system — composite components (tier 2) | **APPROVED** — C18–C26 (2026-09-26) | Text field, Select, Multi-select, Action menu, Nav item (+ Nav Group Label), Segmented control, Toast, Calendar day, Metric tile. Plus Icon button **SM** (ghost). |
-| Design system — composite components (tier 3) | **BUILT** — C27–C30 PROPOSED (2026-09-26) | Table (+ cells, header cell/row, row), App panel, Sidebar, App shell template. |
+| Design system — composite components (tier 3) | **BUILT** — C27–C30 PROPOSED (2026-09-26) | Table (+ cells, header cell/row, row), App panel (+ Page Content), Sidebar, App shell template. |
 | Code | NONE | No app scaffold yet (F-00 Foundation is TODO). |
 
 ## Component library (`design-system.lib.pen`)
@@ -56,7 +56,7 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
   - Tier 1b: C02–C04, C08, C11, C14–C17.
   - Tier 1c: C09–C10 menus. These have **no legacy evidence** and need a careful review.
   - Tier 2: C18–C26 composites built from nested primitive instances.
-  - Tier 3: C27 Table (cells, header cell/row, row, card), C28 App panel, C29 Sidebar, C30 App shell template. PROPOSED.
+  - Tier 3: C27 Table (cells, header cell/row, row, card), C28 App panel (+ Page Content), C29 Sidebar, C30 App shell template. PROPOSED.
 - **Approval status:** C01–C26 APPROVED · C27–C30 PROPOSED.
 - **Composite pattern (tier 2):** a composite's state variants **don't swap** the nested primitive ref. Replacing the nested ref gives it a new ID per variant and breaks instance override paths. Instead, each variant re-applies the primitive state's token overrides on **one stable nested instance** (for example Text field `c67yIW`, Select `Et1pR/c67yIW`). Floating parts (Select/Action menu Menus) are `layoutPosition: absolute` and off when closed. A composite built on another composite is a ref of its base (`_MultiSelect/Base` is a ref of `_Select/Base` with its Menu slot replaced).
 
@@ -65,14 +65,14 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
 | File | Role |
 |---|---|
 | `exploration.pen` | Provisional canvas: boards 01–03 (directions, token studies, true-scale case, **decision record**, now including the rules approval) and the Owner's copied legacy frames. |
-| `design-system.lib.pen` | Library: 388 Pencil variables, theme axis `mode`, boards 00–08, and component pages C01–C30 (about 3.2 MB; see *Library size / Pen stability*). |
+| `design-system.lib.pen` | Library: 390 Pencil variables, theme axis `mode`, boards 00–08, and component pages C01–C30 (about 3.2 MB; see *Library size / Pen stability*). |
 | `tokens.json` | Canonical DTCG tokens. **Generated: edit `scripts/gen_tokens.py`, not this file.** |
 | `pencil-mapping.json` | Token ⇄ Pencil variable map, transforms, `library_canvas` (`rules_status` APPROVED), `components` (from the registry), `components_status`. Generated. |
 | `token-usage.md` | Usage rules G1–G8 and SP1–SP11. APPROVED 2026-09-26, with the amendments recorded in its status line. |
 | `components/*.md`, `components/registry.json` | Component specs and the machine-readable registry. |
 | `verification-report.md` | **Stale:** the last `/sdv:verify-design-system` ran before any components existed. |
 | `scripts/gen_tokens.py` | Token source of truth and generator. It also merges `components/registry.json`. |
-| `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `cca9dc04` (388 vars). |
+| `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `1199133c` (390 vars). |
 | `scripts/pencil-canvas-builders.md` | Pencil MCP snippets for boards 00–08. |
 
 The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy source; never modify) are intentionally untracked.
@@ -114,7 +114,7 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 - **Table filter** = Segmented control (legacy dark pills dropped). Scope extended with **Sidebar + App shell**.
 - Sidebar binds semantic/scale tokens as a layout region (no `sidebar.*` aliases yet; Owner may promote). Logo mark monochrome, log-out neutral.
 - Metric tile label now fills and wraps (collided with the delta in narrow tiles).
-- **Pending (not persisted): Page Content + max-width.** Owner asked to extract the App Panel's Content region into its own component: outer frame fill width with padding 28/40, and inner `Container` as a **slot** fixed at 1096 and centred. Pen has no `maxWidth`, so the fixed centred container emulates it; code uses `max-width: 1096px; width: 100%`. The token would be `size.content-max` = 1096 (scale) → `panel.app.content.max-width`. It was built once, but Pen closed the file before saving. After reopening, `Insert` into the App Panel's `Content` slot (`C5QYo`) and whole-document `Get` visitors threw `Cannot read properties of undefined (reading 'id')`. The token was removed from `gen_tokens.py` so the repo matches the saved library (388 / `cca9dc04`). Redo it in a fresh Pen session (see gotchas).
+- **Page Content + max-width (done).** The App Panel's Content region is its own component, **Page Content** (`B4HAVd`, on C28): outer fill width with padding 28/40, and an inner `Container` **slot** fixed at 1096 and centred. Pen has no `maxWidth`, so the fixed centred container emulates it; code uses `max-width: 1096px; width: 100%`. New tokens: `size.content-max` = 1096 (scale) → `panel.app.content.max-width`. App Panel `C5QYo` now accepts only Page Content and has no padding/gap of its own. The masters show an empty Page Content; the dashboard lives in the C28 Modes examples and the dark App Shell example (`TXZxf`). The C28 Content and Modes exhibits were restacked (notes above the artwork) so the panels are wide enough for the 1096 container.
 
 ## Open gaps (deferred)
 
@@ -130,12 +130,7 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 
 ## Next steps
 
-1. **Redo Page Content** (see *Pending* above) in a freshly opened library:
-   - Add `size.content-max` (1096) and `panel.app.content.max-width` to `gen_tokens.py`, run the pipeline, then `SetVariables`.
-   - Build `Page Content` on C28.
-   - Put an instance in App Panel `C5QYo` and move Greeting + Metrics into its `Container`.
-   - Re-point the C28 *Content* example and the App Shell docs to the new path (`Sw0yD/C5QYo/<Page Content>/Container`).
-   - Add a 1920-wide shell exhibit to prove the centring.
+1. Optional: a 1920-wide shell exhibit to show the centring (page C30 is 1600 wide, so it needs its own row).
 2. **Owner review** of C27–C30 (Table, App panel, Sidebar, App shell). Mark APPROVED in the specs and in `registry.json`. Decide whether the Sidebar gets `sidebar.*` aliases.
 3. Open questions:
    - Toast close optical nudge.
@@ -173,5 +168,9 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
   - During session 4, Pen closed the file mid-edit. After reopening, some MCP calls failed with `reading 'id'` on edits that propagate to many instances: inserting into a master slot that instances have `Replace`d, and whole-document `Get`.
   - **Don't ⌘S a window in that state.** Close it without saving, reopen, and verify the variable checksum first.
   - Save (⌘S) after every page, not at the end.
-  - If it recurs, split the library: keep tokens + primitives in `design-system.lib.pen` and move tier 3 / templates to a second `.pen` file. Instances can't cross files, so templates would need copies of the primitives, or the split has to follow Pen's import support.
-- **Changing a master slot that instances have replaced** (for example App Panel `C5QYo`, replaced in the C28 *Content* example): delete or redo those example instances first, then edit the master.
+  - **Root cause found:** the failures weren't file size. App Panel `C5QYo` had `slot: []` (an empty allowed-list), and every insert into it threw `reading 'id'`. Listing the allowed components fixed it. Saving works at ~3.25 MB, so no split is needed for now.
+- **Slots gotchas:**
+  - Never leave `slot: []`. An empty list rejects every insert with `Cannot read properties of undefined (reading 'id')`.
+  - Pencil can't `Replace`/`Copy` into a slot of an instance nested **inside another master** (`reading 'parent'`, or "use Update/Replace"). Fill slots only on top-level instances, e.g. `Replace(<shell>/Sw0yD/d2hCuQ/bBehO, …)`.
+  - A replaced node keeps its new ID in the instance path: re-replace `KS7sb/XNJJO`, not `KS7sb/C5QYo`.
+- **CLI save isn't possible:** `osascript` keystrokes are blocked (no Accessibility permission), so the Owner presses ⌘S.

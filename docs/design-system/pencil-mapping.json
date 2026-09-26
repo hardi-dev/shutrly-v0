@@ -271,6 +271,7 @@
     "component/panel/app/background": "component.panel.app.background",
     "component/panel/app/border": "component.panel.app.border",
     "component/panel/app/content/gap": "component.panel.app.content.gap",
+    "component/panel/app/content/max-width": "component.panel.app.content.max-width",
     "component/panel/app/content/padding-x": "component.panel.app.content.padding-x",
     "component/panel/app/content/padding-y": "component.panel.app.content.padding-y",
     "component/panel/app/header/gap": "component.panel.app.header.gap",
@@ -393,6 +394,7 @@
     "radius/sm": "radius.sm",
     "radius/xl": "radius.xl",
     "radius/xs": "radius.xs",
+    "size/content-max": "size.content-max",
     "space/0-5": "space.0-5",
     "space/1": "space.1",
     "space/1-5": "space.1-5",
@@ -409,10 +411,10 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 388,
+    "total": 390,
     "primitive": 58,
     "semantic": 52,
-    "component": 229,
+    "component": 230,
     "themed": 55
   },
   "transforms": {
@@ -2050,6 +2052,51 @@
         "legacy dark filter pills replaced by Segmented control (Owner 2026-09-26)"
       ]
     },
+    "page-content": {
+      "status": "PROPOSED (tier 3) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C28 — App panel",
+        "id": "yepgE"
+      },
+      "spec": "docs/design-system/components/app-panel.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "container": {
+          "kind": "slot",
+          "layer": "Container",
+          "id": "bBehO",
+          "recommended": [
+            "FCsTI",
+            "AJT5R",
+            "uMP5H",
+            "HHNPk",
+            "Q49yf7",
+            "aBT7T",
+            "E4PkTw"
+          ],
+          "fill": "Replace(instance+'/bBehO', {type:'frame', name:'Container', width:1096, layout:'vertical', gap:'$component/panel/app/content/gap'})"
+        }
+      },
+      "layers": {
+        "Container": "bBehO",
+        "Hint": "Wnclu"
+      },
+      "variants": {
+        "default": "B4HAVd"
+      },
+      "nested": [],
+      "tokens": [
+        "component.panel.app.content.padding-y",
+        "component.panel.app.content.padding-x",
+        "component.panel.app.content.gap",
+        "component.panel.app.content.max-width"
+      ],
+      "gaps": [
+        "Pencil has no max-width and can't bind width: Container is a literal 1096 (= panel.app.content.max-width); code uses max-width 1096px + width 100%"
+      ]
+    },
     "app-panel": {
       "status": "PROPOSED (tier 3) 2026-09-26",
       "file": "docs/design-system/design-system.lib.pen",
@@ -2081,14 +2128,19 @@
           "kind": "slot",
           "layer": "Content",
           "id": "C5QYo",
-          "fill": "Replace(instance+'/C5QYo', {type:'frame', layout:'vertical', padding:[content.padding-y, content.padding-x], gap: content.gap})"
+          "recommended": [
+            "B4HAVd"
+          ],
+          "default": "d2hCuQ (Page Content instance)",
+          "fill": "Replace(instance+'/C5QYo/d2hCuQ/bBehO', {type:'frame', name:'Container', width:1096, layout:'vertical', gap:'$component/panel/app/content/gap'}) then Insert the sections"
         }
       },
       "layers": {
         "Panel header": "gmoTC",
         "Title": "nrRBd",
         "Actions": "uR9Ye",
-        "Content": "C5QYo"
+        "Content": "C5QYo",
+        "Page Content": "d2hCuQ"
       },
       "variants": {
         "default": "UmVJD"
@@ -2096,15 +2148,14 @@
       "nested": [
         "input",
         "icon-button",
-        "button",
-        "metric-tile"
+        "page-content"
       ],
       "tokens": [
         "component.panel.app.*"
       ],
       "gaps": [
         "header height 72 is literal (Pencil can't bind height)",
-        "greeting/metrics default content bind semantic/scale tokens (screen layout, G3)",
+        "slot fill only works on top-level instances: Pencil can't replace a slot inside an instance nested in another master",
         "breakpoints not specified"
       ]
     },

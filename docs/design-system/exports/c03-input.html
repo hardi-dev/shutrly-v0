@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>C03 Input matrix</title>
+    <link rel="stylesheet" href="./matrix.css" />
+  </head>
+  <body>
+    <div class="toolbar">
+      <h1>C03 — Input</h1>
+      <button type="button" onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'">Toggle dark mode</button>
+    </div>
+    <p class="caption">Default: 5 states. Search: default, hover and focus. Configurations are included below.</p>
+    <main id="matrix" class="matrix"></main>
+    <script>
+      const variants = [
+        ["default", "default"], ["default", "hover"], ["default", "focus"], ["default", "error"], ["default", "disabled"],
+        ["search", "default"], ["search", "hover"], ["search", "focus"]
+      ];
+      document.querySelector("#matrix").innerHTML = variants.map(([variant, state]) => `
+        <section class="matrix-card">
+          <div class="matrix-label">${variant} / ${state}</div>
+          <div class="input-shell">
+            <input class="input" aria-label="${variant} ${state}" data-variant="${variant}" data-state="${state}" value="${state === "focus" ? "Terisi" : ""}" placeholder="${variant === "search" ? "Cari proyek" : "Placeholder"}" ${state === "disabled" ? "disabled" : ""} />
+          </div>
+        </section>`).join("");
+      document.querySelector("#matrix").insertAdjacentHTML("beforeend", `
+        <section class="matrix-card"><div class="matrix-label">prefix / filled</div><div class="input-shell"><input class="input" aria-label="Harga" value="150000" /></div><span class="caption">Rp · 150000</span></section>
+        <section class="matrix-card"><div class="matrix-label">password / select / date</div><div class="input-shell"><input class="input" aria-label="Password" value="••••••••" /></div><span class="caption">Password · Layanan ⌄ · Tanggal sesi ▣</span></section>
+        <section class="matrix-card"><div class="matrix-label">search / shortcut</div><div class="input-shell"><input class="input" data-variant="search" aria-label="Search" placeholder="Cari proyek" /><span class="caption">⌕ · ⌘K</span></div></section>`);
+    </script>
+  </body>
+</html>

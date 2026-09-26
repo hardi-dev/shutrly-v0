@@ -1,25 +1,12 @@
 "use client";
 
-import { FieldError, Input, Label, Text, TextField as AriaTextField } from "react-aria-components";
+import { FieldError, Label, Text, TextField as AriaTextField } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
 
-import type { TextFieldProps } from "./text-field.types";
-
-// C03 Input: 40 px high, 1 px border; focus and error read as 2 px via an inset shadow (no layout shift).
-const INPUT = [
-  "h-(--component-input-height) w-full rounded-(--component-input-radius)",
-  "px-(--component-input-padding-x)",
-  "border border-(--component-input-border) bg-(--component-input-background)",
-  "text-(length:--font-size-body) text-(--component-input-text)",
-  "placeholder:text-(--component-input-placeholder)",
-  "outline-none transition-colors",
-  "data-hovered:border-(--component-input-border-hover)",
-  "data-focused:border-(--component-input-border-focus)",
-  "data-focused:shadow-[inset_0_0_0_1px_var(--component-input-border-focus),0_0_0_4px_var(--color-semantic-focus-glow)]",
-  "data-invalid:border-(--component-input-border-error)",
-  "data-invalid:shadow-[inset_0_0_0_1px_var(--component-input-border-error)]",
-];
+import { Input } from "../input/input";
+import { TEXT_FIELD_COPY } from "./text-field.copy";
+import type { TextFieldContentProps, TextFieldProps } from "./text-field.types";
 
 const MESSAGE = "text-(length:--font-size-label)";
 
@@ -30,38 +17,95 @@ const MESSAGE = "text-(length:--font-size-label)";
  * @param props - controlled `value` / `onChange`, plus `errorMessage` to mark it invalid
  * @returns the labelled field
  */
-export function TextField({
-  label,
-  name,
-  type = "text",
-  autoComplete,
-  placeholder,
-  description,
-  errorMessage,
-  isReadOnly,
-  value,
-  onChange,
-  onBlur,
-  inputRef,
-}: Readonly<TextFieldProps>) {
-  const isInvalid = Boolean(errorMessage);
+export function TextField(props: Readonly<TextFieldProps>) {
+  const isInvalid = Boolean(props.errorMessage);
   return (
     <AriaTextField
-      name={name}
-      type={type}
-      autoComplete={autoComplete}
-      value={value}
-      onChange={onChange}
-      onBlur={onBlur}
-      isReadOnly={isReadOnly}
+      name={props.name}
+      type={props.type}
+      autoComplete={props.autoComplete}
+      value={props.value}
+      onChange={props.onChange}
+      onBlur={props.onBlur}
+      isReadOnly={props.isReadOnly}
+      isDisabled={props.isDisabled}
       isInvalid={isInvalid}
       validationBehavior="aria"
       className="flex flex-col gap-(--component-input-gap)"
     >
+      <TextFieldContent {...props} isInvalid={isInvalid} />
+    </AriaTextField>
+  );
+}
+
+function TextFieldContent({ ...props }: Readonly<TextFieldContentProps>) {
+  return (
+    <>
+      <TextFieldLabel {...props} />
+      <TextFieldInput {...props} />
+      <TextFieldMessage {...props} />
+    </>
+  );
+}
+
+function TextFieldLabel({ label, isOptional }: Readonly<TextFieldContentProps>) {
+  return (
+    <div className="flex items-center gap-(--space-1)">
       <Label className="text-(length:--font-size-label) font-semibold text-(--component-input-label)">
         {label}
       </Label>
-      <Input ref={inputRef} placeholder={placeholder} className={cn(INPUT)} />
+      {isOptional ? (
+        <span className="text-(length:--font-size-label) text-(--component-input-helper)">
+          {TEXT_FIELD_COPY.optionalSuffix}
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+function TextFieldInput({
+  type = "text",
+  autoComplete,
+  placeholder,
+  isReadOnly,
+  isDisabled,
+  isInvalid,
+  prefix,
+  iconLeading,
+  iconTrailing,
+  shortcut,
+  name,
+  value,
+  onChange,
+  inputRef,
+}: Readonly<TextFieldContentProps>) {
+  return (
+    <Input
+      inputRef={inputRef}
+      type={type}
+      autoComplete={autoComplete}
+      name={name}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      isReadOnly={isReadOnly}
+      isDisabled={isDisabled}
+      isInvalid={isInvalid}
+      prefix={prefix}
+      iconLeading={iconLeading}
+      iconTrailing={iconTrailing}
+      shortcut={shortcut}
+    />
+  );
+}
+
+function TextFieldMessage({
+  description,
+  errorMessage,
+  isInvalid,
+}: Readonly<TextFieldContentProps>) {
+  return (
+    <>
       {description && !isInvalid ? (
         <Text slot="description" className={cn(MESSAGE, "text-(--component-input-helper)")}>
           {description}
@@ -76,7 +120,7 @@ export function TextField({
         <CircleAlertIcon />
         {errorMessage}
       </FieldError>
-    </AriaTextField>
+    </>
   );
 }
 

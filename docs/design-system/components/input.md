@@ -13,6 +13,11 @@
 
 The editable box only, with no label or helper text; Text field (tier 2) adds those. One base covers text, prefix (Rp), password, select, date and search by switching optional parts on and off. Search is its own type because its fill is different.
 
+## Local explorer
+
+Run `pnpm storybook` and open **Primitives/Input** to explore the default/search variants,
+configurations, and states. The static HTML matrix is [c03-input.html](../exports/c03-input.html).
+
 ## Anatomy
 
 | # | Part | Layer name | Required | Description |
@@ -81,4 +86,5 @@ The height of 40 is documented (`input.height` exists as a number token; Pencil 
 ## Implementation references
 
 - Pencil: `C03 — Input` (`YcyAG`), base `kWK5j`
+- Code component: `src/ui/primitives/input/input.tsx`
 - Rules: token-usage.md G3, SP1, §4.2, §8 (GAP-06)

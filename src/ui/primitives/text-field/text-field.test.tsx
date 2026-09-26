@@ -24,6 +24,21 @@ function renderField(props: Partial<TextFieldProps> = {}) {
 }
 
 describe("TextField", () => {
+  it("renders the optional suffix and helper using the C18 anatomy", () => {
+    renderField({ description: "Gunakan email aktif.", isOptional: true });
+
+    expect(screen.getByText("(opsional)")).toBeInTheDocument();
+    expect(screen.getByText("Gunakan email aktif.")).toBeInTheDocument();
+  });
+
+  it("supports C03 input configurations inside the field", () => {
+    renderField({ prefix: "Rp", iconLeading: "search", iconTrailing: "eye" });
+
+    expect(screen.getByText("Rp")).toBeInTheDocument();
+    expect(screen.getByTestId("input-icon-leading")).toBeInTheDocument();
+    expect(screen.getByTestId("input-icon-trailing")).toBeInTheDocument();
+  });
+
   it("AC-FND-014 labels the input and forwards name, type and autoComplete", () => {
     const { input } = renderField({ autoComplete: "email", placeholder: "rina@studio.id" });
     expect(input.tagName).toBe("INPUT");

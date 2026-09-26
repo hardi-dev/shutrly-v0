@@ -10,7 +10,8 @@
 ## Local explorer
 
 Run `pnpm storybook` and open **Primitives/TextField** to explore the implemented React component,
-its helper/error states, controlled input behavior, and light/dark themes.
+its complete state matrix, C03 configurations, helper/error states, controlled input behavior, and
+light/dark themes. The static HTML matrix is [c18-text-field.html](../exports/c18-text-field.html).
 
 ## Purpose
 
@@ -75,4 +76,5 @@ The state variants **don't swap** the nested Input for another Input variant. Sw
 ## Implementation references
 
 - Pencil: `C18 — Text field` (`P42vwq`), base `TFmAG`
+- Code component: `src/ui/primitives/text-field/text-field.tsx` composed from `src/ui/primitives/input/input.tsx`
 - Rules: token-usage.md G3, SP3, SP4, SP6, §8

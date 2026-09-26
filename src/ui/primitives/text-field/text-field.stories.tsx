@@ -109,3 +109,31 @@ export const Password: StoryObj<typeof meta> = {
     onBlur: handleStoryBlur,
   },
 };
+
+export const Matrix: StoryObj<typeof meta> = {
+  render: () => (
+    <div className="grid max-w-[320px] gap-(--space-4)">
+      <EmptyRender />
+      <HelperRender />
+      <InvalidRender />
+      <ReadOnlyRender />
+      <TextField
+        label={TEXT_FIELD_STORY_COPY.optional}
+        name="optional"
+        value=""
+        isOptional
+        onChange={handleStoryChange}
+        onBlur={handleStoryBlur}
+        placeholder={TEXT_FIELD_STORY_COPY.optionalPlaceholder}
+      />
+      <TextField
+        label={TEXT_FIELD_STORY_COPY.search}
+        name="search"
+        value=""
+        iconLeading="search"
+        onChange={handleStoryChange}
+        onBlur={handleStoryBlur}
+      />
+    </div>
+  ),
+};

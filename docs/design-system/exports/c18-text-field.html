@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>C18 Text field matrix</title>
+    <link rel="stylesheet" href="./matrix.css" />
+  </head>
+  <body>
+    <div class="toolbar">
+      <h1>C18 — Text field</h1>
+      <button type="button" onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'">Toggle dark mode</button>
+    </div>
+    <p class="caption">5 approved states. The field anatomy is label row → C03 input → helper/error message.</p>
+    <main id="matrix" class="field-grid"></main>
+    <script>
+      const states = ["default", "hover", "focus", "error", "disabled"];
+      document.querySelector("#matrix").innerHTML = states.map((state) => `
+        <section class="field-card" data-state="${state}">
+          <div class="field">
+            <div class="field-label-row"><strong>Email klien</strong>${state === "default" ? "<span>(opsional)</span>" : ""}</div>
+            <input class="input" aria-label="Email klien" data-state="${state}" value="${state === "focus" ? "rina@studio.id" : ""}" placeholder="rina@studio.id" ${state === "disabled" ? "disabled" : ""} />
+            <div class="field-message">${state === "error" ? "ⓘ Masukkan email yang valid, mis. rina@studio.id" : "Tautan galeri dikirim ke email ini."}</div>
+          </div>
+          <div class="matrix-label">${state}</div>
+        </section>`).join("");
+    </script>
+  </body>
+</html>

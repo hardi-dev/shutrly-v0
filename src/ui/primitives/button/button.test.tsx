@@ -6,6 +6,54 @@ import { describe, expect, it, vi } from "vitest";
 import { Button } from "./button";
 
 describe("Button", () => {
+  it("renders every approved variant and size with token-backed metadata", () => {
+    render(
+      <>
+        <Button variant="primary" size="md">
+          Primary MD
+        </Button>
+        <Button variant="primary" size="lg">
+          Primary LG
+        </Button>
+        <Button variant="secondary" size="md">
+          Secondary MD
+        </Button>
+        <Button variant="secondary" size="lg">
+          Secondary LG
+        </Button>
+        <Button variant="danger" size="md">
+          Danger MD
+        </Button>
+        <Button variant="danger" size="lg">
+          Danger LG
+        </Button>
+      </>,
+    );
+
+    expect(screen.getByRole("button", { name: "Primary MD" })).toHaveAttribute(
+      "data-variant",
+      "primary",
+    );
+    expect(screen.getByRole("button", { name: "Primary MD" })).toHaveAttribute("data-size", "md");
+    expect(screen.getByRole("button", { name: "Danger LG" })).toHaveAttribute(
+      "data-variant",
+      "danger",
+    );
+    expect(screen.getByRole("button", { name: "Danger LG" })).toHaveAttribute("data-size", "lg");
+  });
+
+  it("renders named leading and trailing icons without requiring icon-only usage", () => {
+    render(
+      <Button iconLeading="plus" iconTrailing="chevron-down">
+        Proyek baru
+      </Button>,
+    );
+
+    expect(screen.getByRole("button", { name: "Proyek baru" })).toHaveAccessibleName("Proyek baru");
+    expect(screen.getByTestId("button-icon-leading")).toHaveAttribute("aria-hidden", "true");
+    expect(screen.getByTestId("button-icon-trailing")).toHaveAttribute("aria-hidden", "true");
+  });
+
   it("AC-FND-013 fires onPress once per click, Enter and Space", async () => {
     const user = userEvent.setup();
     const onPress = vi.fn();

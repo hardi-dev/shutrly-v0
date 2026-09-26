@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>C01 Button matrix</title>
+    <link rel="stylesheet" href="./matrix.css" />
+  </head>
+  <body>
+    <div class="toolbar">
+      <h1>C01 — Button</h1>
+      <button type="button" onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'">Toggle dark mode</button>
+    </div>
+    <p class="caption">24 approved variants: type × size × state. Hover/focus/disabled are explicit matrix fixtures.</p>
+    <main id="matrix" class="matrix"></main>
+    <script>
+      const types = ["primary", "secondary", "danger"];
+      const sizes = ["md", "lg"];
+      const states = ["default", "hover", "focus", "disabled"];
+      const labels = { primary: "Simpan", secondary: "Batal", danger: "Hapus proyek" };
+      document.querySelector("#matrix").innerHTML = types.flatMap((type) => sizes.flatMap((size) => states.map((state) => `
+        <section class="matrix-card">
+          <div class="matrix-label">${type} / ${size} / ${state}</div>
+          <button class="button" data-variant="${type}" data-size="${size}" data-state="${state}" ${state === "disabled" ? "disabled" : ""}>
+            ${state === "default" ? "＋" : ""}${labels[type]}${type === "secondary" ? "⌄" : ""}
+          </button>
+        </section>`)));
+    </script>
+  </body>
+</html>

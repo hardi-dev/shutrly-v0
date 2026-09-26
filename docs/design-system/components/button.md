@@ -13,7 +13,8 @@
 ## Local explorer
 
 Run `pnpm storybook` and open **Primitives/Button** to explore the implemented React component,
-its variants, controls, focus behavior, and light/dark themes.
+its complete type × size matrix, icon controls, focus behavior, and light/dark themes. The static
+HTML matrix is [c01-button.html](../exports/c01-button.html).
 
 ## Purpose
 
@@ -179,7 +180,7 @@ Heights are documented, not bound (Pencil can't bind `width`/`height`): MD 42 px
 ## Implementation references
 
 - Pencil: `design-system.lib.pen` › `C01 — Button` (`Q12x0F`), base `s93Zz0`
-- Code component: `components/ui/button` (not built yet, F-00 Foundation)
+- Code component: `src/ui/primitives/button/button.tsx`, C01 type × size × state matrix
 - Related rules: token-usage.md G3, G4, SP5, SP6, SP11, §2 *Action & focus*, §4.2, §5, §8
 - Research: Figma Help Center (variants, component properties, slots), Figma *Creating and organizing variants*, EightShapes *Component Specifications* and *The Figma Component Review*, Atlassian Button, Primer Button
 - Design-system version: unreleased

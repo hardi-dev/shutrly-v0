@@ -22,7 +22,7 @@ P = {
  "lime":    [("50","#F4FBDF","O"),("100","#EEFBC8","O"),("300","#C6F432","O"),("400","#A3D916","O"),("500","#84CC16","O"),("800","#3F6212","O"),("900","#3F5200","O")],
  "green":   [("50","#E8F7EE","O"),("400","#4ADE80","P"),("700","#15803D","O")],
  "amber":   [("50","#FEF3E2","O"),("100","#FDE7C4","O"),("400","#FBBF24","P"),("700","#B45309","O")],
- "red":     [("50","#FDECEC","O"),("400","#F87171","P"),("600","#DC2626","O"),("700","#B91C1C","O")],
+ "red":     [("50","#FDECEC","O"),("400","#F87171","P"),("300","#FCA5A5","P"),("600","#DC2626","O"),("700","#B91C1C","O")]  # red.300: Owner 2026-09-26 (danger hover, dark),
 }
 # alpha primitives: name -> (base primitive, alpha hex, pct)
 A = {
@@ -33,6 +33,7 @@ A = {
  "amber-400-a16":("amber.400","29",16),"amber-400-a33":("amber.400","55",33),"amber-700-a25":("amber.700","40",25),
  "red-400-a16":("red.400","29",16),"red-400-a33":("red.400","55",33),"red-700-a25":("red.700","40",25),
  "neutral-900-a08":("neutral.900","14",8),"neutral-900-a14":("neutral.900","24",14),"black-a40":(None,"66",40),
+ "neutral-950-a50":("neutral.950","80",50),"black-a60":(None,"99",60),  # Owner 2026-09-26: modal scrim (= opacity.scrim in light)
 }
 HEX = {f"{g}.{k}": v for g, steps in P.items() for k, v, _ in steps}
 for n,(base,a,_) in A.items():
@@ -96,6 +97,8 @@ S = {
  "status.highlight.border":("alpha.lime-800-a25","alpha.lime-300-a33","Highlight toast border"),
  "elevation.1.color":     ("alpha.neutral-900-a08","alpha.black-a40","Menu/popover/toast shadow"),
  "elevation.2.color":     ("alpha.neutral-900-a14","alpha.black-a40","Dialog/sheet shadow"),
+ "overlay.scrim":         ("alpha.neutral-950-a50","alpha.black-a60","Modal/sheet backdrop (Owner 2026-09-26)"),
+ "status.danger.solid-hover":("red.700","red.300","Danger button hover (Owner 2026-09-26)"),
 }
 
 NUM = {  # number tokens: path -> (value, description)
@@ -332,6 +335,28 @@ add("panel.app.radius","number",SP("radius.lg"))
 add("panel.app.title","color",SC("text.primary"))
 add("panel.app.header.gap","number",SP("space.3"))        # title/actions 12
 add("panel.app.content.max-width","number",SP("size.content-max"))  # Owner 2026-09-26: Page Content container; Pencil can't bind width → documented
+# Modal (C31, option A "Sectioned", Owner 2026-09-26; exploration board 04)
+add("modal.scrim","color",SC("overlay.scrim"))
+add("modal.background","color",SC("surface.panel"))
+add("modal.border","color",SC("border.default"))
+add("modal.radius","number",SP("radius.lg"))                   # 16 = App panel
+add("modal.title","color",SC("text.primary"))
+add("modal.description","color",SC("text.secondary"))
+add("modal.header.padding-y","number",SP("space.5"))           # 20
+add("modal.header.padding-x","number",SP("space.6"))           # 24
+add("modal.header.gap","number",SP("space.3"))                 # heading ↔ close 12
+add("modal.header.text-gap","number",SP("space.1"))            # title ↔ description 4
+add("modal.header.border","color",SC("border.default"))
+add("modal.body.padding","number",SP("space.6"))               # 24
+add("modal.body.gap","number",SP("space.4"))                   # 16
+add("modal.footer.padding-y","number",SP("space.4"))           # 16
+add("modal.footer.padding-x","number",SP("space.6"))           # 24
+add("modal.footer.gap","number",SP("space.3"))                 # between buttons 12
+add("modal.footer.background","color",SC("surface.subtle"))
+add("modal.footer.border","color",SC("border.subtle"))
+add("button.danger.background","color",SC("status.danger.solid"))
+add("button.danger.background-hover","color",SC("status.danger.solid-hover"))
+add("button.danger.text","color",SC("status.danger.on-solid"))
 
 # ---------- build DTCG ----------
 def setp(d, path, val):
@@ -425,7 +450,7 @@ mapping = {
                     "rules_status": "APPROVED 2026-09-26",
                     "note": "Documentation boards bind every swatch/scale to live variables; dark previews use theme mode=dark."},
  "components": {k: v for k, v in json.loads((ROOT/"components"/"registry.json").read_text()).items() if not k.startswith("$")} if (ROOT/"components"/"registry.json").exists() else {},
- "components_status": "IN PROGRESS — C01–C30 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3).",
+ "components_status": "IN PROGRESS — C01–C30 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3); C31 Modal (+ Button/Danger, App Shell Overlay) PROPOSED 2026-09-26; C32 Bottom Sheet planned.",
  "unsupported": {
    "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.","typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",
                  "shadow": "Composite shadow split into elevation.N.offset-y / blur (number) + color.semantic.elevation.N.color (color)."},

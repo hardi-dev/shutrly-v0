@@ -17,17 +17,21 @@ The Owner app screen template. Every Owner screen starts from an instance of thi
 | Root | `y9uBJl` | `surface.canvas`; padding `space.3` on the top, right and bottom, and 0 on the left (the sidebar sits flush left) |
 | Sidebar | `fNszT` | Nested C29, height fill |
 | Panel | `Sw0yD` | Nested C28, width and height fill (1176 × 936) |
+| Overlay | `fwm7P` | Boolean, **off** by default. Absolute, 1440 × 960, `modal.scrim`; centres the Modal slot. |
+| Modal | `hnTfu` (slot) | Accepts Modal/SM·MD·LG (C31); default Modal/MD `nRbAO`. |
 
 To make a screen, insert an instance, then:
 - set `Sw0yD/nrRBd` (title);
 - replace `Sw0yD/uR9Ye` (actions), and fill the content with `Replace(<shell>/Sw0yD/d2hCuQ/bBehO, {type:"frame", name:"Container", width:1096, layout:"vertical", gap:"$component/panel/app/content/gap"})` (Page Content's container, max-width 1096 centred);
 - make the current page's Nav item Active by replacing items in `fNszT/tilEo`.
 
+To show a modal: `Update(<shell>, {descendants:{fwm7P:{enabled:true}}})`, then fill `<shell>/fwm7P/hnTfu/nRbAO/c5Prsw` (Body) and `…/I7e8yh` (Actions), or replace `…/hnTfu/nRbAO` with another Modal size. C30's *Modal overlay* exhibit shows a delete confirm.
+
 The gutter, panel insets and the 1096 content max-width are owned by the template (SP5). The master shows an empty Page Content; the dark example (`TXZxf`) shows the dashboard.
 
 ## Accessibility
 
-- Landmarks: `<nav>` (the sidebar) and `<main>` (the panel). A skip link, *Langsung ke konten*, is the first focusable element.
+- Landmarks: `<nav>` (the sidebar) and `<main>` (the panel). The Overlay is a portal to `<body>`; while it is open the sidebar and panel are `inert`. A skip link, *Langsung ke konten*, is the first focusable element.
 
 ## Gaps
 

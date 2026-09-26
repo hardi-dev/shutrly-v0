@@ -4,8 +4,8 @@
     {
       "type": "frame",
       "id": "Ac3uX",
-      "x": 0,
-      "y": 0,
+      "x": 206,
+      "y": -3532,
       "name": "00 — Cover",
       "theme": {
         "mode": "light"
@@ -123,7 +123,7 @@
                       "id": "w4Y5S",
                       "name": "Text",
                       "fill": "$color/semantic/text/secondary",
-                      "content": "390 tokens",
+                      "content": "416 tokens",
                       "lineHeight": 1.35,
                       "fontFamily": "$font/family/base",
                       "fontSize": 12,
@@ -233,7 +233,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "58 raw values: neutral, blue, lime, green, amber, red, alpha",
+                  "content": "61 raw values: neutral, blue, lime, green, amber, red, alpha",
                   "lineHeight": 1.35,
                   "fontFamily": "$font/family/base",
                   "fontSize": 12,
@@ -284,7 +284,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "52 purpose tokens with light + dark values",
+                  "content": "54 purpose tokens with light + dark values",
                   "lineHeight": 1.35,
                   "fontFamily": "$font/family/base",
                   "fontSize": 12,
@@ -488,7 +488,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "230 component-scoped aliases",
+                  "content": "251 component-scoped aliases",
                   "lineHeight": 1.35,
                   "fontFamily": "$font/family/base",
                   "fontSize": 12,
@@ -681,8 +681,8 @@
     {
       "type": "frame",
       "id": "OCT9c",
-      "x": 1540,
-      "y": 0,
+      "x": 1746,
+      "y": -3532,
       "name": "01 — Color · primitives",
       "theme": {
         "mode": "light"
@@ -3439,7 +3439,7 @@
                   "id": "xv9ip",
                   "name": "Hue desc",
                   "fill": "$color/semantic/text/muted",
-                  "content": "Danger, errors, badges.  ·  4 steps",
+                  "content": "Danger, errors, badges.  ·  5 steps",
                   "lineHeight": 1.35,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -3511,6 +3511,72 @@
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
                           "content": "red/50",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ZyMYZ",
+                  "name": "red.300",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": "$radius/sm",
+                      "id": "wywgq",
+                      "name": "Swatch",
+                      "fill": "$color/primitive/red/300",
+                      "width": "fill_container",
+                      "height": 80,
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "gf50T",
+                      "name": "Meta",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "jLJqy",
+                          "name": "Step",
+                          "fill": "$color/semantic/text/primary",
+                          "content": "300",
+                          "lineHeight": 1.35,
+                          "fontFamily": "$font/family/base",
+                          "fontSize": 14,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "qSJjn",
+                          "name": "Hex",
+                          "fill": "$color/semantic/text/secondary",
+                          "content": "#FCA5A5",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "cr9pH",
+                          "name": "Var",
+                          "fill": "$color/semantic/text/muted",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "red/300",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 10,
@@ -3773,13 +3839,6 @@
                   "name": "Spacer",
                   "width": "fill_container",
                   "height": 1
-                },
-                {
-                  "type": "frame",
-                  "id": "ZOlls",
-                  "name": "Spacer",
-                  "width": "fill_container",
-                  "height": 1
                 }
               ]
             }
@@ -3817,7 +3876,7 @@
                   "id": "e5O40p",
                   "name": "Hue desc",
                   "fill": "$color/semantic/text/muted",
-                  "content": "Tints shown over light (left) and dark (right) backgrounds  ·  21 tokens",
+                  "content": "Tints shown over light (left) and dark (right) backgrounds  ·  23 tokens",
                   "lineHeight": 1.35,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -5594,6 +5653,216 @@
                   ]
                 }
               ]
+            },
+            {
+              "type": "frame",
+              "id": "lAHRD",
+              "name": "Alpha row",
+              "width": "fill_container",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Zpy3c",
+                  "name": "alpha.neutral-950-a50",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "P7W0rr",
+                      "name": "Swatch",
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": 64,
+                      "cornerRadius": "$radius/sm",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "LwI8L",
+                          "name": "On light",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "fill": "#FFFFFF",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "ur9sd",
+                              "name": "Tint",
+                              "fill": "$color/primitive/alpha/neutral-950-a50",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "u5X2vT",
+                          "name": "On dark",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "fill": "#18181B",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "siQxO",
+                              "name": "Tint",
+                              "fill": "$color/primitive/alpha/neutral-950-a50",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "OLb8I",
+                      "name": "Step",
+                      "fill": "$color/semantic/text/primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "neutral-950-a50",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font/family/base",
+                      "fontSize": 12,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "lMjdS",
+                      "name": "Hex",
+                      "fill": "$color/semantic/text/secondary",
+                      "content": "#09090B80",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Z4ZGu",
+                  "name": "alpha.black-a60",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "F3NKoD",
+                      "name": "Swatch",
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": 64,
+                      "cornerRadius": "$radius/sm",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "CmIiR",
+                          "name": "On light",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "fill": "#FFFFFF",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "ORTcP",
+                              "name": "Tint",
+                              "fill": "$color/primitive/alpha/black-a60",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "xjaFa",
+                          "name": "On dark",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "fill": "#18181B",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "nvbwV",
+                              "name": "Tint",
+                              "fill": "$color/primitive/alpha/black-a60",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "J4iAV",
+                      "name": "Step",
+                      "fill": "$color/semantic/text/primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "black-a60",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font/family/base",
+                      "fontSize": 12,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ZyLjk",
+                      "name": "Hex",
+                      "fill": "$color/semantic/text/secondary",
+                      "content": "#00000099",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "m2nNy",
+                  "name": "Spacer",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "MRAuE",
+                  "name": "Spacer",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "ZVh2T",
+                  "name": "Spacer",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "RcZ9f",
+                  "name": "Spacer",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "EZZlp",
+                  "name": "Spacer",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
             }
           ]
         }
@@ -5602,8 +5871,8 @@
     {
       "type": "frame",
       "id": "nr1nN",
-      "x": 3080,
-      "y": 0,
+      "x": 3286,
+      "y": -3532,
       "name": "02 — Color · semantic",
       "theme": {
         "mode": "light"
@@ -16096,6 +16365,190 @@
                   ]
                 }
               ]
+            },
+            {
+              "type": "frame",
+              "id": "GHAsJ",
+              "name": "status/danger/solid-hover",
+              "width": "fill_container",
+              "stroke": "$color/semantic/border/subtle",
+              "strokeWidth": {
+                "bottom": 1
+              },
+              "gap": 16,
+              "padding": [
+                12,
+                0
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "M9aqb",
+                  "name": "Token",
+                  "width": 300,
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "TXUiV",
+                      "name": "Name",
+                      "fill": "$color/semantic/text/primary",
+                      "content": "status.danger.solid-hover",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "GwBZ0",
+                      "name": "Usage",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "Danger button hover",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font/family/base",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hCdFm",
+                  "name": "light preview",
+                  "theme": {
+                    "mode": "light"
+                  },
+                  "width": 260,
+                  "height": 56,
+                  "fill": "$color/semantic/surface/panel",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "gap": 10,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": "$radius/xs",
+                      "id": "a5dfq",
+                      "name": "Fill",
+                      "fill": "$color/semantic/status/danger/solid-hover",
+                      "width": 96,
+                      "height": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vXm70",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "x0HGd",
+                          "name": "Hex",
+                          "fill": "$color/semantic/text/secondary",
+                          "content": "#B91C1C",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "V5OTy",
+                  "name": "dark preview",
+                  "theme": {
+                    "mode": "dark"
+                  },
+                  "width": 260,
+                  "height": 56,
+                  "fill": "$color/semantic/surface/panel",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "gap": 10,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": "$radius/xs",
+                      "id": "gImEw",
+                      "name": "Fill",
+                      "fill": "$color/semantic/status/danger/solid-hover",
+                      "width": 96,
+                      "height": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "NTrsM",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "hwfp3",
+                          "name": "Hex",
+                          "fill": "$color/semantic/text/secondary",
+                          "content": "#FCA5A5",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "d6tBSJ",
+                  "name": "Alias",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pe4JA",
+                      "name": "Light alias",
+                      "fill": "$color/semantic/text/secondary",
+                      "content": "light → red/700",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "gbOFA",
+                      "name": "Dark alias",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "dark  → red/300",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -16517,6 +16970,190 @@
                   ]
                 }
               ]
+            },
+            {
+              "type": "frame",
+              "id": "TuELW",
+              "name": "overlay/scrim",
+              "width": "fill_container",
+              "stroke": "$color/semantic/border/subtle",
+              "strokeWidth": {
+                "bottom": 1
+              },
+              "gap": 16,
+              "padding": [
+                12,
+                0
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "UiPQL",
+                  "name": "Token",
+                  "width": 300,
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Jmcpc",
+                      "name": "Name",
+                      "fill": "$color/semantic/text/primary",
+                      "content": "overlay.scrim",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "qmWlq",
+                      "name": "Usage",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "Modal / sheet backdrop",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font/family/base",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "leGBP",
+                  "name": "light preview",
+                  "theme": {
+                    "mode": "light"
+                  },
+                  "width": 260,
+                  "height": 56,
+                  "fill": "$color/semantic/surface/panel",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "gap": 10,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": "$radius/xs",
+                      "id": "u88VG",
+                      "name": "Fill",
+                      "fill": "$color/semantic/overlay/scrim",
+                      "width": 96,
+                      "height": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "C27kPg",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "UGiY5",
+                          "name": "Hex",
+                          "fill": "$color/semantic/text/secondary",
+                          "content": "#09090B80",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "EnZwq",
+                  "name": "dark preview",
+                  "theme": {
+                    "mode": "dark"
+                  },
+                  "width": 260,
+                  "height": 56,
+                  "fill": "$color/semantic/surface/panel",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "gap": 10,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": "$radius/xs",
+                      "id": "RbKFC",
+                      "name": "Fill",
+                      "fill": "$color/semantic/overlay/scrim",
+                      "width": 96,
+                      "height": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "lqQOD",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "XfjoM",
+                          "name": "Hex",
+                          "fill": "$color/semantic/text/secondary",
+                          "content": "#00000099",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "jxeyN",
+                  "name": "Alias",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "dEIq3",
+                      "name": "Light alias",
+                      "fill": "$color/semantic/text/secondary",
+                      "content": "light → alpha/neutral-950-a50",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "DZh6z",
+                      "name": "Dark alias",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "dark  → alpha/black-a60",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -16525,8 +17162,8 @@
     {
       "type": "frame",
       "id": "GjdkY",
-      "x": 4620,
-      "y": 0,
+      "x": 4826,
+      "y": -3532,
       "name": "03 — Typography",
       "theme": {
         "mode": "light"
@@ -17659,8 +18296,8 @@
     {
       "type": "frame",
       "id": "NScNf",
-      "x": 6160,
-      "y": 0,
+      "x": 6366,
+      "y": -3532,
       "name": "04 — Spacing · radius · opacity",
       "theme": {
         "mode": "light"
@@ -19901,8 +20538,8 @@
     {
       "type": "frame",
       "id": "n5LhE",
-      "x": 7700,
-      "y": 0,
+      "x": 7906,
+      "y": -3532,
       "name": "05 — Elevation",
       "theme": {
         "mode": "light"
@@ -20289,8 +20926,8 @@
     {
       "type": "frame",
       "id": "wEiZZ",
-      "x": 9240,
-      "y": 0,
+      "x": 9446,
+      "y": -3532,
       "name": "06 — Component tokens",
       "theme": {
         "mode": "light"
@@ -20415,7 +21052,7 @@
                           "id": "n5GRJ5",
                           "name": "Count",
                           "fill": "$color/semantic/text/muted",
-                          "content": "13 tokens  ·  L / D",
+                          "content": "16 tokens  ·  L / D",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -21496,6 +22133,294 @@
                           "textGrowth": "fixed-width",
                           "width": 230,
                           "content": "→ space/2",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "n98oR",
+                      "name": "component/button/danger/background",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "EiT5B",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "danger/background",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ap15f",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "ehfxA",
+                              "name": "Swatch",
+                              "fill": "$component/button/danger/background",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "v2pgwu",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "hFVGX",
+                              "name": "Swatch",
+                              "fill": "$component/button/danger/background",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "zI0uy",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ status/danger/solid",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "y1GJXj",
+                      "name": "component/button/danger/background-hover",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "HnU8t",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "danger/background-hover",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "J9Bek",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "vzndF",
+                              "name": "Swatch",
+                              "fill": "$component/button/danger/background-hover",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "K0CbPV",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "u9rH9",
+                              "name": "Swatch",
+                              "fill": "$component/button/danger/background-hover",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "lEq65",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ status/danger/solid-hover",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "V2VAZD",
+                      "name": "component/button/danger/text",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "RTlQV",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "danger/text",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "MWVeU",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "ge9Tm",
+                              "name": "Swatch",
+                              "fill": "$component/button/danger/text",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "v7imyP",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "QnkZ5",
+                              "name": "Swatch",
+                              "fill": "$component/button/danger/text",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "d3ZM4D",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ status/danger/on-solid",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -32156,6 +33081,1506 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Y68FI",
+                  "name": "Component modal",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "xNQhA",
+                      "name": "Group header",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        0,
+                        0,
+                        8,
+                        0
+                      ],
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Knm29",
+                          "name": "Name",
+                          "fill": "$color/semantic/text/primary",
+                          "content": "Modal",
+                          "lineHeight": 1.35,
+                          "fontFamily": "$font/family/base",
+                          "fontSize": 18,
+                          "fontWeight": "700",
+                          "letterSpacing": -0.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "P6aLs",
+                          "name": "Count",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "18 tokens  ·  L / D",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "PVTX5",
+                      "name": "component/modal/scrim",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "W78Vw4",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "scrim",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "m2uNBI",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "gKYm3",
+                              "name": "Swatch",
+                              "fill": "$component/modal/scrim",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "rFGcW",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "JTVck",
+                              "name": "Swatch",
+                              "fill": "$component/modal/scrim",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "sgCAS",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ overlay/scrim",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "NgZ61",
+                      "name": "component/modal/background",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "TMKUK",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "background",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Y1P4n5",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "itM1k",
+                              "name": "Swatch",
+                              "fill": "$component/modal/background",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "HUuHH",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "RL1zN",
+                              "name": "Swatch",
+                              "fill": "$component/modal/background",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "kbmj3",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ surface/panel",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "iEsn6",
+                      "name": "component/modal/border",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ZGFvs",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "border",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Qrad0",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "O3kby",
+                              "name": "Swatch",
+                              "fill": "$component/modal/border",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "bTUki",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "TIRg3",
+                              "name": "Swatch",
+                              "fill": "$component/modal/border",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "c1CbI",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ border/default",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "EDWF0",
+                      "name": "component/modal/radius",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "v2xCH",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "radius",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Mr2F4",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "EVDAU",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "16 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "j5Dvz",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ radius/lg",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "L1Grf",
+                      "name": "component/modal/title",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ZF6Oi",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "title",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "DNhm5",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "n73lX",
+                              "name": "Swatch",
+                              "fill": "$component/modal/title",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "PwdAN",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "jIG8Q",
+                              "name": "Swatch",
+                              "fill": "$component/modal/title",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "q4xYa",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ text/primary",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "q3wmU",
+                      "name": "component/modal/description",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "g3Ures",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "description",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "zRmFr",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "q55Uf",
+                              "name": "Swatch",
+                              "fill": "$component/modal/description",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Fdy19",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "l82jyq",
+                              "name": "Swatch",
+                              "fill": "$component/modal/description",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "ybbTV",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ text/secondary",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "LPYrv",
+                      "name": "component/modal/header/padding-y",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fA9iZ",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "header/padding-y",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ZbtJV",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "idKfH",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "20 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "wr59E",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/5",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "aWJgB",
+                      "name": "component/modal/header/padding-x",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "g5Q37f",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "header/padding-x",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "RStuX",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "WBIWl",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "24 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "v9zmM",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/6",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "bCgT6",
+                      "name": "component/modal/header/gap",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pfgqm",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "header/gap",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "IYuRO",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "A7rpDc",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "12 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "rWjw2",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/3",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ykblg",
+                      "name": "component/modal/header/text-gap",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "T2Sd0",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "header/text-gap",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nxlUx",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "aZWA2",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "4 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "Gigh3",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/1",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "agI7c",
+                      "name": "component/modal/header/border",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "xINPh",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "header/border",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "EVMhm",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "KqLyV",
+                              "name": "Swatch",
+                              "fill": "$component/modal/header/border",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "i4rynP",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "aCRrh",
+                              "name": "Swatch",
+                              "fill": "$component/modal/header/border",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "fhFCe",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ border/default",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "OCsUk",
+                      "name": "component/modal/body/padding",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Jcxsn",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "body/padding",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "W9aw5y",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "iglqV",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "24 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "oIgfB",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/6",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "SzYOW",
+                      "name": "component/modal/body/gap",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Ip4MS",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "body/gap",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "xJUSz",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "bzPmt",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "16 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "neXNc",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/4",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "SverU",
+                      "name": "component/modal/footer/padding-y",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "TCxlz",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "footer/padding-y",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "xQuVW",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "x9TdgB",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "16 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "cxIjG",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/4",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "m6LQ3r",
+                      "name": "component/modal/footer/padding-x",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "CUhRC",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "footer/padding-x",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "XQ3rp",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "OpL8j",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "24 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "cpZae",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/6",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vIupK",
+                      "name": "component/modal/footer/gap",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "DN9qb",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "footer/gap",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "P4aPVe",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "wcezp",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "12 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "z0rWG",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/3",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "C8RAio",
+                      "name": "component/modal/footer/background",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "LAGwV",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "footer/background",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "b3R1VO",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "AHpPr",
+                              "name": "Swatch",
+                              "fill": "$component/modal/footer/background",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "dOUF0",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "yXAeo",
+                              "name": "Swatch",
+                              "fill": "$component/modal/footer/background",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "iE27Z",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ surface/subtle",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "KELbP",
+                      "name": "component/modal/footer/border",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Zv062",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "footer/border",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "fiS1j",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "Ki3J4",
+                              "name": "Swatch",
+                              "fill": "$component/modal/footer/border",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "myWCd",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "zXAIk",
+                              "name": "Swatch",
+                              "fill": "$component/modal/footer/border",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "JCHCA",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ border/subtle",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -41112,8 +43537,8 @@
     {
       "type": "frame",
       "id": "ZlyoI",
-      "x": 10780,
-      "y": 0,
+      "x": 10986,
+      "y": -3532,
       "name": "07 — Usage rules",
       "theme": {
         "mode": "light"
@@ -45099,8 +47524,8 @@
     {
       "type": "frame",
       "id": "m1aoW1",
-      "x": 12320,
-      "y": 0,
+      "x": 12526,
+      "y": -3532,
       "name": "08 — Spacing rules",
       "theme": {
         "mode": "light"
@@ -50179,7 +52604,7 @@
               "fill": "$color/semantic/text/secondary",
               "textGrowth": "fixed-width",
               "width": 880,
-              "content": "Triggers an action in the current view (save, create, send). Use links for navigation. One primary button per view region (token-usage §2 Action).",
+              "content": "Triggers an action in the current view (save, create, send). Use links for navigation. One primary button per view region (token-usage §2 Action). Danger (added 2026-09-26) is only for confirming a destructive action, usually in a Modal confirm; it replaces the primary there.",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
               "fontSize": 16,
@@ -51088,6 +53513,340 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hdUro",
+                  "name": "Row Danger / MD",
+                  "height": 72,
+                  "stroke": "$color/semantic/border/subtle",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "vcLh6",
+                      "name": "Row label",
+                      "fill": "$color/semantic/text/muted",
+                      "textGrowth": "fixed-width",
+                      "width": 180,
+                      "content": "Danger / MD",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ufPlf",
+                      "name": "Cell Default",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "z3mR7",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "s93Zz0",
+                          "name": "Button/Danger/MD/Default",
+                          "context": "Button · type=danger size=md state=default. Destructive confirm only (Modal confirm, delete). Text prop: Label. Boolean props: Icon leading, Icon trailing. Spec: docs/design-system/components/button.md",
+                          "fill": "$component/button/danger/background",
+                          "descendants": {
+                            "fMNO1": {
+                              "fill": "$component/button/danger/text"
+                            },
+                            "xnhuK": {
+                              "fill": "$component/button/danger/text",
+                              "content": "Hapus"
+                            },
+                            "z3xApy": {
+                              "fill": "$component/button/danger/text"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "DlN1R",
+                      "name": "Cell Hover",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "v3T5p",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "s93Zz0",
+                          "name": "Button/Danger/MD/Hover",
+                          "context": "Button · type=danger size=md state=hover. Destructive confirm only (Modal confirm, delete). Text prop: Label. Boolean props: Icon leading, Icon trailing. Spec: docs/design-system/components/button.md",
+                          "fill": "$component/button/danger/background-hover",
+                          "descendants": {
+                            "fMNO1": {
+                              "fill": "$component/button/danger/text"
+                            },
+                            "xnhuK": {
+                              "fill": "$component/button/danger/text",
+                              "content": "Hapus"
+                            },
+                            "z3xApy": {
+                              "fill": "$component/button/danger/text"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "i0zeK",
+                      "name": "Cell Focus",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "KPQep",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "s93Zz0",
+                          "name": "Button/Danger/MD/Focus",
+                          "context": "Button · type=danger size=md state=focus. Destructive confirm only (Modal confirm, delete). Text prop: Label. Boolean props: Icon leading, Icon trailing. Spec: docs/design-system/components/button.md",
+                          "fill": "$component/button/danger/background",
+                          "stroke": "$color/semantic/focus/ring",
+                          "strokeWidth": 2,
+                          "strokeAlignment": "outer",
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "$color/semantic/focus/glow",
+                            "blur": 6
+                          },
+                          "descendants": {
+                            "fMNO1": {
+                              "fill": "$component/button/danger/text"
+                            },
+                            "xnhuK": {
+                              "fill": "$component/button/danger/text",
+                              "content": "Hapus"
+                            },
+                            "z3xApy": {
+                              "fill": "$component/button/danger/text"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "D0qFR",
+                      "name": "Cell Disabled",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "dHTCl",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "s93Zz0",
+                          "name": "Button/Danger/MD/Disabled",
+                          "context": "Button · type=danger size=md state=disabled. Destructive confirm only (Modal confirm, delete). Text prop: Label. Boolean props: Icon leading, Icon trailing. Spec: docs/design-system/components/button.md",
+                          "fill": "$component/button/danger/background",
+                          "opacity": "$opacity/disabled",
+                          "descendants": {
+                            "fMNO1": {
+                              "fill": "$component/button/danger/text"
+                            },
+                            "xnhuK": {
+                              "fill": "$component/button/danger/text",
+                              "content": "Hapus"
+                            },
+                            "z3xApy": {
+                              "fill": "$component/button/danger/text"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "YfmtM",
+                  "name": "Row Danger / LG",
+                  "height": 72,
+                  "stroke": "$color/semantic/border/subtle",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "NaYZD",
+                      "name": "Row label",
+                      "fill": "$color/semantic/text/muted",
+                      "textGrowth": "fixed-width",
+                      "width": 180,
+                      "content": "Danger / LG",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ThFlm",
+                      "name": "Cell Default",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "ZDOwL",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "s93Zz0",
+                          "name": "Button/Danger/LG/Default",
+                          "context": "Button · type=danger size=lg state=default. Destructive confirm only (Modal confirm, delete). Text prop: Label. Boolean props: Icon leading, Icon trailing. Spec: docs/design-system/components/button.md",
+                          "fill": "$component/button/danger/background",
+                          "padding": [
+                            "$component/button/lg/padding-y",
+                            "$component/button/lg/padding-x"
+                          ],
+                          "descendants": {
+                            "fMNO1": {
+                              "fill": "$component/button/danger/text"
+                            },
+                            "xnhuK": {
+                              "fill": "$component/button/danger/text",
+                              "content": "Hapus"
+                            },
+                            "z3xApy": {
+                              "fill": "$component/button/danger/text"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Ho2bl",
+                      "name": "Cell Hover",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "n90hA",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "s93Zz0",
+                          "name": "Button/Danger/LG/Hover",
+                          "context": "Button · type=danger size=lg state=hover. Destructive confirm only (Modal confirm, delete). Text prop: Label. Boolean props: Icon leading, Icon trailing. Spec: docs/design-system/components/button.md",
+                          "fill": "$component/button/danger/background-hover",
+                          "padding": [
+                            "$component/button/lg/padding-y",
+                            "$component/button/lg/padding-x"
+                          ],
+                          "descendants": {
+                            "fMNO1": {
+                              "fill": "$component/button/danger/text"
+                            },
+                            "xnhuK": {
+                              "fill": "$component/button/danger/text",
+                              "content": "Hapus"
+                            },
+                            "z3xApy": {
+                              "fill": "$component/button/danger/text"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "YguSl",
+                      "name": "Cell Focus",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "haHU6",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "s93Zz0",
+                          "name": "Button/Danger/LG/Focus",
+                          "context": "Button · type=danger size=lg state=focus. Destructive confirm only (Modal confirm, delete). Text prop: Label. Boolean props: Icon leading, Icon trailing. Spec: docs/design-system/components/button.md",
+                          "fill": "$component/button/danger/background",
+                          "padding": [
+                            "$component/button/lg/padding-y",
+                            "$component/button/lg/padding-x"
+                          ],
+                          "stroke": "$color/semantic/focus/ring",
+                          "strokeWidth": 2,
+                          "strokeAlignment": "outer",
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "$color/semantic/focus/glow",
+                            "blur": 6
+                          },
+                          "descendants": {
+                            "fMNO1": {
+                              "fill": "$component/button/danger/text"
+                            },
+                            "xnhuK": {
+                              "fill": "$component/button/danger/text",
+                              "content": "Hapus"
+                            },
+                            "z3xApy": {
+                              "fill": "$component/button/danger/text"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "byHUX",
+                      "name": "Cell Disabled",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "UFc5r",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "s93Zz0",
+                          "name": "Button/Danger/LG/Disabled",
+                          "context": "Button · type=danger size=lg state=disabled. Destructive confirm only (Modal confirm, delete). Text prop: Label. Boolean props: Icon leading, Icon trailing. Spec: docs/design-system/components/button.md",
+                          "fill": "$component/button/danger/background",
+                          "padding": [
+                            "$component/button/lg/padding-y",
+                            "$component/button/lg/padding-x"
+                          ],
+                          "opacity": "$opacity/disabled",
+                          "descendants": {
+                            "fMNO1": {
+                              "fill": "$component/button/danger/text"
+                            },
+                            "xnhuK": {
+                              "fill": "$component/button/danger/text",
+                              "content": "Hapus"
+                            },
+                            "z3xApy": {
+                              "fill": "$component/button/danger/text"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
@@ -51541,6 +54300,38 @@
                           "name": "Instance"
                         }
                       ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "fYmWw",
+                      "name": "Danger",
+                      "gap": 16,
+                      "children": [
+                        {
+                          "id": "tiCHc",
+                          "type": "ref",
+                          "ref": "z3mR7",
+                          "name": "Instance"
+                        },
+                        {
+                          "id": "xVVqh",
+                          "type": "ref",
+                          "ref": "v3T5p",
+                          "name": "Instance"
+                        },
+                        {
+                          "id": "PdOo9",
+                          "type": "ref",
+                          "ref": "KPQep",
+                          "name": "Instance"
+                        },
+                        {
+                          "id": "vfz4Q",
+                          "type": "ref",
+                          "ref": "dHTCl",
+                          "name": "Instance"
+                        }
+                      ]
                     }
                   ]
                 },
@@ -51626,6 +54417,38 @@
                           "id": "Mk0Fv",
                           "type": "ref",
                           "ref": "iQ7e5",
+                          "name": "Instance"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "pyRG2",
+                      "name": "Danger",
+                      "gap": 16,
+                      "children": [
+                        {
+                          "id": "bEYe2",
+                          "type": "ref",
+                          "ref": "z3mR7",
+                          "name": "Instance"
+                        },
+                        {
+                          "id": "tmUzR",
+                          "type": "ref",
+                          "ref": "v3T5p",
+                          "name": "Instance"
+                        },
+                        {
+                          "id": "l0UxY",
+                          "type": "ref",
+                          "ref": "KPQep",
+                          "name": "Instance"
+                        },
+                        {
+                          "id": "b8nFkf",
+                          "type": "ref",
+                          "ref": "dHTCl",
                           "name": "Instance"
                         }
                       ]
@@ -80390,7 +83213,7 @@
                   "type": "frame",
                   "id": "y9uBJl",
                   "name": "App Shell",
-                  "context": "App Shell · Owner screen template 1440 × 960. Nested: Sidebar (C29), Panel (C28 App Panel: Title, Actions, Content). Gutter space.3 top/right/bottom; sidebar flush left. Spec: docs/design-system/components/app-shell.md",
+                  "context": "App Shell · Owner screen template 1440 × 960. Nested: Sidebar (C29), Panel (C28 App Panel: Title, Actions, Content). Gutter space.3 top/right/bottom; sidebar flush left. Spec: docs/design-system/components/app-shell.md Boolean: Overlay (off) — scrim over the whole screen + Modal slot (Modal/SM·MD·LG), centred.",
                   "reusable": true,
                   "metadata": {
                     "type": "component",
@@ -80421,6 +83244,42 @@
                       "name": "Panel",
                       "width": "fill_container",
                       "height": "fill_container"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "fwm7P",
+                      "layoutPosition": "absolute",
+                      "x": 0,
+                      "y": 0,
+                      "name": "Overlay",
+                      "enabled": false,
+                      "width": 1440,
+                      "height": 960,
+                      "fill": "$component/modal/scrim",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "hnTfu",
+                          "name": "Modal",
+                          "slot": [
+                            "cdSbf",
+                            "f8ym9",
+                            "yAPhv"
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "nRbAO",
+                              "type": "ref",
+                              "ref": "f8ym9",
+                              "name": "Modal"
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 },
@@ -80674,6 +83533,1419 @@
               "fontFamily": "$font/family/base",
               "fontSize": 13,
               "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "WsDAD",
+          "name": "Exhibit — Modal overlay",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "MdwMP",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Modal overlay",
+              "fontFamily": "$font/family/base",
+              "fontSize": "$font/size/title",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "eXrdR",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Boolean Overlay (off by default): an absolute layer over the whole 1440 × 960 screen with modal.scrim, centring the Modal slot. Turn it on and fill the modal on a top-level instance: Update(<shell>, {descendants:{fwm7P:{enabled:true}}}), then Replace(<shell>/fwm7P/hnTfu/nRbAO/c5Prsw …) for the Body and …/I7e8yh for the Actions (or Replace …/hnTfu/nRbAO with another Modal size). Code: portal to <body>, focus trap, Esc closes, page inert and scroll-locked.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "Bram1",
+              "name": "Set grid",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "stroke": "$color/semantic/border/default",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 8,
+              "padding": 16,
+              "children": [
+                {
+                  "id": "Efe7u",
+                  "type": "ref",
+                  "ref": "y9uBJl",
+                  "name": "App Shell · overlay",
+                  "descendants": {
+                    "Sw0yD/nrRBd": {
+                      "content": "Proyek"
+                    },
+                    "fwm7P": {
+                      "enabled": true
+                    },
+                    "hnTfu": {
+                      "children": [
+                        {
+                          "id": "e91g8",
+                          "type": "ref",
+                          "ref": "cdSbf",
+                          "name": "Modal",
+                          "descendants": {
+                            "V8uAA": {
+                              "content": "Hapus proyek?"
+                            },
+                            "PPg3y": {
+                              "enabled": false
+                            },
+                            "c5Prsw": {
+                              "type": "frame",
+                              "id": "rknHN",
+                              "name": "Body",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$component/modal/body/gap",
+                              "padding": "$component/modal/body/padding",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "yLNuW",
+                                  "name": "Body text",
+                                  "fill": "$color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Proyek “Rina & Adi — Prewedding” dan semua file galerinya akan dihapus permanen. Tindakan ini tidak bisa dibatalkan.",
+                                  "lineHeight": "$font/line-height/body",
+                                  "fontFamily": "$font/family/base",
+                                  "fontSize": "$font/size/body",
+                                  "fontWeight": "$font/weight/regular"
+                                }
+                              ]
+                            },
+                            "Pp1eX": {
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "r7hKG",
+                                  "name": "Actions",
+                                  "gap": "$component/modal/footer/gap",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "Bp7eZ",
+                                      "type": "ref",
+                                      "ref": "JmfmZ",
+                                      "name": "Cancel",
+                                      "descendants": {
+                                        "xnhuK": {
+                                          "content": "Batal"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "Fnzak",
+                                      "type": "ref",
+                                      "ref": "z3mR7",
+                                      "name": "Confirm",
+                                      "descendants": {
+                                        "xnhuK": {
+                                          "content": "Hapus proyek"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "ukLqT",
+      "x": 9440,
+      "y": 14801,
+      "name": "C31 — Modal",
+      "width": 1440,
+      "fill": "$color/semantic/surface/panel",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 64,
+      "children": [
+        {
+          "type": "frame",
+          "id": "HYXtb",
+          "name": "Header",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            0,
+            0,
+            32,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "xH9v4",
+              "name": "Overline",
+              "fill": "$color/semantic/text/muted",
+              "content": "COMPONENT  ·  C31  ·  OVERLAYS  ·  TIER 3",
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 0.6
+            },
+            {
+              "type": "text",
+              "id": "HuJRS",
+              "name": "Title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Modal",
+              "fontFamily": "$font/family/base",
+              "fontSize": 44,
+              "fontWeight": "700",
+              "letterSpacing": -1.2
+            },
+            {
+              "type": "text",
+              "id": "FYGhK",
+              "name": "Description",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 880,
+              "content": "A dialog over a scrim for a focused task (create, edit) or a confirmation. Option A “Sectioned” (Owner 2026-09-26, exploration board 04): header with title, optional description and close; Body slot; Footer slot with actions on surface.subtle. Widths SM 400 · MD 560 · LG 720. Shown in the App Shell’s Overlay layer. Tokens: component.modal.*, button.danger.*.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "iuMRo",
+          "name": "Exhibit — Component set",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "AbuJH",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Component set",
+              "fontFamily": "$font/family/base",
+              "fontSize": "$font/size/title",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "Stcdi",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Source components. Name = Modal/<Size>; private base _Modal/Base holds the structure and the variants only change width (SM 400 confirm · MD 560 form · LG 720 detail). Fill the Body and Actions slots with Replace on a top-level instance. The masters never include the scrim: the App Shell Overlay layer (C30) owns it.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "Davbw",
+              "name": "Set grid",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "stroke": "$color/semantic/border/default",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "QNCTV",
+                  "name": "Caption",
+                  "fill": "$color/semantic/text/muted",
+                  "content": "_Modal/Base (private) · MD 560",
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "G9VQuU",
+                  "name": "_Modal/Base",
+                  "context": "PRIVATE base for Modal variants — do not instance in screens. Edit structure here; variants inherit.",
+                  "reusable": true,
+                  "metadata": {
+                    "type": "component",
+                    "component": "modal",
+                    "role": "base"
+                  },
+                  "clip": true,
+                  "width": 560,
+                  "fill": "$component/modal/background",
+                  "cornerRadius": "$component/modal/radius",
+                  "stroke": "$component/modal/border",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$color/semantic/elevation/2/color",
+                    "offset": {
+                      "x": 0,
+                      "y": "$elevation/2/offset-y"
+                    },
+                    "blur": "$elevation/2/blur"
+                  },
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "VpbJF",
+                      "name": "Header",
+                      "width": "fill_container",
+                      "stroke": "$component/modal/header/border",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": "$component/modal/header/gap",
+                      "padding": [
+                        "$component/modal/header/padding-y",
+                        "$component/modal/header/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "fOsAM",
+                          "name": "Heading",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$component/modal/header/text-gap",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "V8uAA",
+                              "name": "Title",
+                              "fill": "$component/modal/title",
+                              "content": "Judul modal",
+                              "fontFamily": "$font/family/base",
+                              "fontSize": "$font/size/title",
+                              "fontWeight": "$font/weight/bold",
+                              "letterSpacing": "$font/letter-spacing/title"
+                            },
+                            {
+                              "type": "text",
+                              "id": "PPg3y",
+                              "name": "Description",
+                              "fill": "$component/modal/description",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Deskripsi singkat tentang tujuan modal ini.",
+                              "lineHeight": "$font/line-height/body",
+                              "fontFamily": "$font/family/base",
+                              "fontSize": "$font/size/body-sm",
+                              "fontWeight": "$font/weight/regular"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "M80T4e",
+                          "type": "ref",
+                          "ref": "VA96y",
+                          "name": "Close",
+                          "descendants": {
+                            "wSyzB": {
+                              "icon": "x"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "c5Prsw",
+                      "name": "Body",
+                      "slot": [
+                        "HHNPk",
+                        "Wc7hd",
+                        "X8ErE9",
+                        "t7L0yL",
+                        "n8NmOH",
+                        "Imyla",
+                        "oSTqI",
+                        "FCsTI",
+                        "E4PkTw"
+                      ],
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$component/modal/body/gap",
+                      "padding": "$component/modal/body/padding",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nA4wg",
+                          "name": "Body text",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Isi modal — ganti slot Body dengan field, teks, atau konten lain.",
+                          "lineHeight": "$font/line-height/body",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": "$font/size/body",
+                          "fontWeight": "$font/weight/regular"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Pp1eX",
+                      "name": "Footer",
+                      "width": "fill_container",
+                      "fill": "$component/modal/footer/background",
+                      "stroke": "$component/modal/footer/border",
+                      "strokeWidth": {
+                        "top": 1
+                      },
+                      "gap": "$component/modal/footer/gap",
+                      "padding": [
+                        "$component/modal/footer/padding-y",
+                        "$component/modal/footer/padding-x"
+                      ],
+                      "justifyContent": "end",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "I7e8yh",
+                          "name": "Actions",
+                          "slot": [
+                            "JmfmZ",
+                            "Q49yf7",
+                            "z3mR7"
+                          ],
+                          "gap": "$component/modal/footer/gap",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "kBv0h",
+                              "type": "ref",
+                              "ref": "JmfmZ",
+                              "name": "Cancel",
+                              "descendants": {
+                                "xnhuK": {
+                                  "content": "Batal"
+                                }
+                              }
+                            },
+                            {
+                              "id": "N6Nu59",
+                              "type": "ref",
+                              "ref": "Q49yf7",
+                              "name": "Confirm",
+                              "descendants": {
+                                "xnhuK": {
+                                  "content": "Simpan"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "JimiY",
+                  "name": "Row SM + MD",
+                  "gap": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "dk3ce",
+                      "name": "Col SM",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ow6Th",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Modal/SM · 400",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "cdSbf",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "G9VQuU",
+                          "name": "Modal/SM",
+                          "context": "Modal · size=sm (400). Text: Title, Description (boolean). Boolean: Close. Slots: Body (fields, text, table…), Actions (Button Secondary + Primary, or + Danger for destructive confirms). Show inside the App Shell Overlay (scrim). Spec: docs/design-system/components/modal.md",
+                          "width": 400
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "k9k7G",
+                      "name": "Col MD",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "HHGqp",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Modal/MD · 560",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "f8ym9",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "G9VQuU",
+                          "name": "Modal/MD",
+                          "context": "Modal · size=md (560). Text: Title, Description (boolean). Boolean: Close. Slots: Body (fields, text, table…), Actions (Button Secondary + Primary, or + Danger for destructive confirms). Show inside the App Shell Overlay (scrim). Spec: docs/design-system/components/modal.md",
+                          "width": 560
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rivU8",
+                  "name": "Col LG",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "b3rQnV",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "Modal/LG · 720",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "yAPhv",
+                      "type": "ref",
+                      "reusable": true,
+                      "ref": "G9VQuU",
+                      "name": "Modal/LG",
+                      "context": "Modal · size=lg (720). Text: Title, Description (boolean). Boolean: Close. Slots: Body (fields, text, table…), Actions (Button Secondary + Primary, or + Danger for destructive confirms). Show inside the App Shell Overlay (scrim). Spec: docs/design-system/components/modal.md",
+                      "width": 720
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "n7k4SF",
+          "name": "Exhibit — Content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "x5V3E",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Content",
+              "fontFamily": "$font/family/base",
+              "fontSize": "$font/size/title",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "RRSCC",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Confirm (SM): title is the question, body states the consequence, Danger confirms, no description. Form (MD): title + description, fields in Body at gap 16, primary on the right. Detail (LG): read-mostly content such as a table. Fill: Replace(<modal>/c5Prsw, {type:\"frame\", name:\"Body\", layout:\"vertical\", width:\"fill_container\", padding:\"$component/modal/body/padding\", gap:\"$component/modal/body/gap\"}) and Replace(<modal>/I7e8yh, {type:\"frame\", name:\"Actions\", gap:\"$component/modal/footer/gap\", alignItems:\"center\"}).",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "zJKHZ",
+              "name": "Stage",
+              "clip": true,
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ZCpaR",
+                  "name": "Scrim",
+                  "width": "fill_container",
+                  "fill": "$component/modal/scrim",
+                  "layout": "vertical",
+                  "gap": 32,
+                  "padding": 40,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "L7dlCc",
+                      "name": "Row",
+                      "gap": 32,
+                      "children": [
+                        {
+                          "id": "Bs0IZ",
+                          "type": "ref",
+                          "ref": "cdSbf",
+                          "name": "Example confirm",
+                          "descendants": {
+                            "V8uAA": {
+                              "content": "Hapus proyek?"
+                            },
+                            "PPg3y": {
+                              "enabled": false
+                            },
+                            "c5Prsw": {
+                              "type": "frame",
+                              "id": "nmF4E",
+                              "name": "Body",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$component/modal/body/gap",
+                              "padding": "$component/modal/body/padding",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "JBdVB",
+                                  "name": "Body text",
+                                  "fill": "$color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Proyek “Rina & Adi — Prewedding” dan semua file galerinya akan dihapus permanen. Tindakan ini tidak bisa dibatalkan.",
+                                  "lineHeight": "$font/line-height/body",
+                                  "fontFamily": "$font/family/base",
+                                  "fontSize": "$font/size/body",
+                                  "fontWeight": "$font/weight/regular"
+                                }
+                              ]
+                            },
+                            "Pp1eX": {
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "E2gZ7",
+                                  "name": "Actions",
+                                  "gap": "$component/modal/footer/gap",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "r0mWaM",
+                                      "type": "ref",
+                                      "ref": "JmfmZ",
+                                      "name": "Cancel",
+                                      "descendants": {
+                                        "xnhuK": {
+                                          "content": "Batal"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "U7Rlj",
+                                      "type": "ref",
+                                      "ref": "z3mR7",
+                                      "name": "Confirm",
+                                      "descendants": {
+                                        "xnhuK": {
+                                          "content": "Hapus proyek"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "Wa728",
+                          "type": "ref",
+                          "ref": "f8ym9",
+                          "name": "Example form",
+                          "descendants": {
+                            "V8uAA": {
+                              "content": "Proyek baru"
+                            },
+                            "PPg3y": {
+                              "content": "Isi detail dasar; jadwal & paket bisa diatur nanti."
+                            },
+                            "c5Prsw": {
+                              "type": "frame",
+                              "id": "lt1gj",
+                              "name": "Body",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$component/modal/body/gap",
+                              "padding": "$component/modal/body/padding",
+                              "children": [
+                                {
+                                  "id": "lAwi8",
+                                  "type": "ref",
+                                  "ref": "HHNPk",
+                                  "name": "Client",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Gmk0c": {
+                                      "content": "Nama klien"
+                                    },
+                                    "c67yIW/tvTDd": {
+                                      "content": "Contoh: Rina & Adi"
+                                    },
+                                    "i0umVC": {
+                                      "enabled": false
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "PNZoo",
+                                  "type": "ref",
+                                  "ref": "Wc7hd",
+                                  "name": "Session",
+                                  "width": "fill_container"
+                                },
+                                {
+                                  "id": "KueB2",
+                                  "type": "ref",
+                                  "ref": "HHNPk",
+                                  "name": "Email",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "RsEBb": {
+                                      "enabled": true
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "Pp1eX": {
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "RlzYc",
+                                  "name": "Actions",
+                                  "gap": "$component/modal/footer/gap",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "uR9CN",
+                                      "type": "ref",
+                                      "ref": "JmfmZ",
+                                      "name": "Cancel",
+                                      "descendants": {
+                                        "xnhuK": {
+                                          "content": "Batal"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "gcrhw",
+                                      "type": "ref",
+                                      "ref": "Q49yf7",
+                                      "name": "Confirm",
+                                      "descendants": {
+                                        "xnhuK": {
+                                          "content": "Simpan proyek"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "tIToZ",
+                      "type": "ref",
+                      "ref": "yAPhv",
+                      "name": "Example detail",
+                      "descendants": {
+                        "V8uAA": {
+                          "content": "Proyek aktif · Maret"
+                        },
+                        "PPg3y": {
+                          "content": "4 proyek dengan sesi bulan ini."
+                        },
+                        "c5Prsw": {
+                          "type": "frame",
+                          "id": "eO0TN",
+                          "name": "Body",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$component/modal/body/gap",
+                          "padding": "$component/modal/body/padding",
+                          "children": [
+                            {
+                              "id": "elBdy",
+                              "type": "ref",
+                              "ref": "FCsTI",
+                              "name": "Table",
+                              "width": "fill_container",
+                              "descendants": {
+                                "aIKsB": {
+                                  "enabled": false
+                                },
+                                "YTJjx": {
+                                  "enabled": false
+                                },
+                                "QTddd": {
+                                  "enabled": false
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "Pp1eX": {
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "aFUZ1",
+                              "name": "Actions",
+                              "gap": "$component/modal/footer/gap",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "id": "Nm4dg",
+                                  "type": "ref",
+                                  "ref": "JmfmZ",
+                                  "name": "Close",
+                                  "descendants": {
+                                    "xnhuK": {
+                                      "content": "Tutup"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "AEagV",
+          "name": "Exhibit — Modes",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "numQ9",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Modes",
+              "fontFamily": "$font/family/base",
+              "fontSize": "$font/size/title",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "Fy9mX",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "modal.scrim = overlay.scrim (neutral-950 @ 50% light · black @ 60% dark). Surface, border, footer and text follow the mode axis; shadow = elevation.2.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "sBqMr",
+              "name": "Artwork",
+              "width": "fill_container",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "r66Ji",
+                  "name": "Mode light",
+                  "theme": {
+                    "mode": "light"
+                  },
+                  "clip": true,
+                  "width": "fill_container",
+                  "fill": "$color/semantic/surface/canvas",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "AHdFJ",
+                      "name": "Scrim",
+                      "width": "fill_container",
+                      "fill": "$component/modal/scrim",
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 32,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "PiMi4",
+                          "name": "Caption",
+                          "fill": "#FFFFFFB3",
+                          "content": "LIGHT",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "n3wrob",
+                          "type": "ref",
+                          "ref": "cdSbf",
+                          "name": "Instance",
+                          "descendants": {
+                            "V8uAA": {
+                              "content": "Hapus proyek?"
+                            },
+                            "PPg3y": {
+                              "enabled": false
+                            },
+                            "c5Prsw": {
+                              "type": "frame",
+                              "id": "FN0YG",
+                              "name": "Body",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$component/modal/body/gap",
+                              "padding": "$component/modal/body/padding",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "dFncI",
+                                  "name": "Body text",
+                                  "fill": "$color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Proyek dan semua file galerinya akan dihapus permanen.",
+                                  "lineHeight": "$font/line-height/body",
+                                  "fontFamily": "$font/family/base",
+                                  "fontSize": "$font/size/body",
+                                  "fontWeight": "$font/weight/regular"
+                                }
+                              ]
+                            },
+                            "Pp1eX": {
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "ECTZq",
+                                  "name": "Actions",
+                                  "gap": "$component/modal/footer/gap",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "kH4S4",
+                                      "type": "ref",
+                                      "ref": "JmfmZ",
+                                      "name": "Cancel",
+                                      "descendants": {
+                                        "xnhuK": {
+                                          "content": "Batal"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "D3ffj",
+                                      "type": "ref",
+                                      "ref": "z3mR7",
+                                      "name": "Confirm",
+                                      "descendants": {
+                                        "xnhuK": {
+                                          "content": "Hapus proyek"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "O1wgN",
+                  "name": "Mode dark",
+                  "theme": {
+                    "mode": "dark"
+                  },
+                  "clip": true,
+                  "width": "fill_container",
+                  "fill": "$color/semantic/surface/canvas",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "NMBH0",
+                      "name": "Scrim",
+                      "width": "fill_container",
+                      "fill": "$component/modal/scrim",
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 32,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GzCf7",
+                          "name": "Caption",
+                          "fill": "#FFFFFFB3",
+                          "content": "DARK",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "lbPhJ",
+                          "type": "ref",
+                          "ref": "cdSbf",
+                          "name": "Instance",
+                          "descendants": {
+                            "V8uAA": {
+                              "content": "Hapus proyek?"
+                            },
+                            "PPg3y": {
+                              "enabled": false
+                            },
+                            "c5Prsw": {
+                              "type": "frame",
+                              "id": "a0s4JW",
+                              "name": "Body",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$component/modal/body/gap",
+                              "padding": "$component/modal/body/padding",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "yUL04",
+                                  "name": "Body text",
+                                  "fill": "$color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Proyek dan semua file galerinya akan dihapus permanen.",
+                                  "lineHeight": "$font/line-height/body",
+                                  "fontFamily": "$font/family/base",
+                                  "fontSize": "$font/size/body",
+                                  "fontWeight": "$font/weight/regular"
+                                }
+                              ]
+                            },
+                            "Pp1eX": {
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "Y779C",
+                                  "name": "Actions",
+                                  "gap": "$component/modal/footer/gap",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "ByfVy",
+                                      "type": "ref",
+                                      "ref": "JmfmZ",
+                                      "name": "Cancel",
+                                      "descendants": {
+                                        "xnhuK": {
+                                          "content": "Batal"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "L2NEy",
+                                      "type": "ref",
+                                      "ref": "z3mR7",
+                                      "name": "Confirm",
+                                      "descendants": {
+                                        "xnhuK": {
+                                          "content": "Hapus proyek"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Bu6BW",
+          "name": "Exhibit — Usage",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "c6EsJ",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "CYgEM",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Usage",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "svM3D",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "A modal interrupts. Use it only when the task must finish (or be cancelled) before the page continues.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "H0aOF",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "dal5q",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Do: one modal at a time; never open a modal from a modal.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "owD0i",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Do: SM for confirmations, MD for short forms (≤ 5 fields), LG for read-mostly detail. Longer flows get a page.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "A6YYs",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Do: actions right-aligned, Cancel (Secondary) then the confirming action; at most one Primary or one Danger.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "grBgU",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Do: Danger only for destructive, irreversible actions; the label repeats the verb (“Hapus proyek”), never “Ya” / “OK”.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "NFvux",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Don't: stack toasts or menus over the scrim; don't put a Table with row actions inside a modal (use a page).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "ugwj6",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Mobile (client gallery, GAP-04): use the Bottom Sheet (C32) instead.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "hw4qI",
+          "name": "Exhibit — Accessibility",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "V6jBu",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "QYYmy",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Accessibility",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "PX1HE",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "WCAG 2.1 AA (C-008); WAI-ARIA dialog pattern.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ryITs",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "GZwGe",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  role=dialog + aria-modal=true; aria-labelledby = Title, aria-describedby = Description (or the confirm body). Destructive confirms use role=alertdialog.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "BdoUt",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Focus moves into the modal on open (first field, or Cancel for a destructive confirm) and is trapped; on close it returns to the trigger.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "QuJCn",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Esc and the Close button (aria-label “Tutup”) cancel. Clicking the scrim cancels forms only when nothing was typed.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "Cay8H",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Page behind is inert (inert / aria-hidden) and scroll-locked.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "ZE8bL",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Danger button: white on red.600 4.83 : 1 (light) · near-black on red.400 (dark) meets AA.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                }
+              ]
             }
           ]
         }
@@ -82961,6 +87233,136 @@
     "component/panel/app/content/max-width": {
       "type": "number",
       "value": "$size/content-max"
+    },
+    "color/primitive/red/300": {
+      "type": "color",
+      "value": "#FCA5A5"
+    },
+    "color/primitive/alpha/neutral-950-a50": {
+      "type": "color",
+      "value": "#09090B80"
+    },
+    "color/primitive/alpha/black-a60": {
+      "type": "color",
+      "value": "#00000099"
+    },
+    "color/semantic/status/danger/solid-hover": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/primitive/red/700",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/primitive/red/300",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "color/semantic/overlay/scrim": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/primitive/alpha/neutral-950-a50",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/primitive/alpha/black-a60",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/button/danger/background": {
+      "type": "color",
+      "value": "$color/semantic/status/danger/solid"
+    },
+    "component/button/danger/background-hover": {
+      "type": "color",
+      "value": "$color/semantic/status/danger/solid-hover"
+    },
+    "component/button/danger/text": {
+      "type": "color",
+      "value": "$color/semantic/status/danger/on-solid"
+    },
+    "component/modal/scrim": {
+      "type": "color",
+      "value": "$color/semantic/overlay/scrim"
+    },
+    "component/modal/background": {
+      "type": "color",
+      "value": "$color/semantic/surface/panel"
+    },
+    "component/modal/border": {
+      "type": "color",
+      "value": "$color/semantic/border/default"
+    },
+    "component/modal/radius": {
+      "type": "number",
+      "value": "$radius/lg"
+    },
+    "component/modal/title": {
+      "type": "color",
+      "value": "$color/semantic/text/primary"
+    },
+    "component/modal/description": {
+      "type": "color",
+      "value": "$color/semantic/text/secondary"
+    },
+    "component/modal/header/padding-y": {
+      "type": "number",
+      "value": "$space/5"
+    },
+    "component/modal/header/padding-x": {
+      "type": "number",
+      "value": "$space/6"
+    },
+    "component/modal/header/gap": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/modal/header/text-gap": {
+      "type": "number",
+      "value": "$space/1"
+    },
+    "component/modal/header/border": {
+      "type": "color",
+      "value": "$color/semantic/border/default"
+    },
+    "component/modal/body/padding": {
+      "type": "number",
+      "value": "$space/6"
+    },
+    "component/modal/body/gap": {
+      "type": "number",
+      "value": "$space/4"
+    },
+    "component/modal/footer/padding-y": {
+      "type": "number",
+      "value": "$space/4"
+    },
+    "component/modal/footer/padding-x": {
+      "type": "number",
+      "value": "$space/6"
+    },
+    "component/modal/footer/gap": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/modal/footer/background": {
+      "type": "color",
+      "value": "$color/semantic/surface/subtle"
+    },
+    "component/modal/footer/border": {
+      "type": "color",
+      "value": "$color/semantic/border/subtle"
     }
   },
   "fileToken": "a25701b4-4c5b-41fc-8af0-91535884d9bf"

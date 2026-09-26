@@ -10,12 +10,13 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. |
 | F-01 Auth | SPECIFIED | `docs/features/auth/spec.md` + acceptance criteria. Not modelled or designed yet. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
-| Design system — tokens | PERSISTED (2026-09-26) | **390 tokens** (58 primitive · 52 semantic · 230 component · scales), `mode: light \| dark`. Live checksum `1199133c`. |
+| Design system — tokens | PERSISTED (2026-09-26) | **416 tokens** (61 primitive · 54 semantic · 251 component · scales), `mode: light \| dark`. Live checksum `81dfb03c`. |
 | Design system — token canvas | DONE | Boards 00–08, refreshed for every token added this session. |
 | Design system — usage & spacing rules | APPROVED (2026-09-26) + Owner amendments | See *Key decisions*. |
 | Design system — primitive components | **APPROVED** — C01–C17 | 17 components (108 reusable nodes) in `design-system.lib.pen`, each with a spec in `components/`. |
 | Design system — composite components (tier 2) | **APPROVED** — C18–C26 (2026-09-26) | Text field, Select, Multi-select, Action menu, Nav item (+ Nav Group Label), Segmented control, Toast, Calendar day, Metric tile. Plus Icon button **SM** (ghost). |
 | Design system — composite components (tier 3) | **APPROVED** — C27–C30 (2026-09-26) | Table (+ cells, header cell/row, row), App panel (+ Page Content), Sidebar, App shell template. |
+| Design system — overlays (tier 4) | **BUILT** — C31 Modal PROPOSED (2026-09-26); C32 Bottom Sheet next | Modal (SM/MD/LG), Button/Danger on C01, App Shell **Overlay** layer. Direction: option A *Sectioned* (exploration board 04). |
 | Code | NONE | No app scaffold yet (F-00 Foundation is TODO). |
 
 ## Component library (`design-system.lib.pen`)
@@ -27,7 +28,7 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
 | 1 (y 6800) | **Actions:** C01 Button · C02 Icon button · **Form controls:** C03 Input · C04 Textarea · C05 Checkbox · C06 Radio · C07 Switch · C08 Stepper |
 | 2 (y 9359) | **Menus:** C09 Menu item · C10 Menu · **Navigation:** C11 Segmented item · **Status:** C12 Stage chip · C13 Count badge · C14 Notification badge · C15 Metric delta · **Display:** C16 Avatar |
 | 3 (y 11983) | **Display:** C17 Kbd · **Tier 2:** C18 Text field · C19 Select · C20 Multi-select · C21 Action menu · C22 Nav item · C23 Segmented control · C24 Toast |
-| 4 (y 14801) | C25 Calendar day · C26 Metric tile · **Tier 3:** C27 Table · C28 App panel · C29 Sidebar · C30 App shell (1600 wide page) |
+| 4 (y 14801) | C25 Calendar day · C26 Metric tile · **Tier 3:** C27 Table · C28 App panel · C29 Sidebar · C30 App shell (1600 wide page) · **Tier 4:** C31 Modal (x 9440) · C32 Bottom Sheet (planned, x 10980) |
 
 **The pattern** (Figma best practice adapted to pen.dev; the Button pilot was approved by the Owner):
 
@@ -57,22 +58,22 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
   - Tier 1c: C09–C10 menus. These have **no legacy evidence** and need a careful review.
   - Tier 2: C18–C26 composites built from nested primitive instances.
   - Tier 3: C27 Table (cells, header cell/row, row, card), C28 App panel (+ Page Content), C29 Sidebar, C30 App shell template. APPROVED.
-- **Approval status:** C01–C30 APPROVED.
+- **Approval status:** C01–C30 APPROVED · C31 Modal PROPOSED.
 - **Composite pattern (tier 2):** a composite's state variants **don't swap** the nested primitive ref. Replacing the nested ref gives it a new ID per variant and breaks instance override paths. Instead, each variant re-applies the primitive state's token overrides on **one stable nested instance** (for example Text field `c67yIW`, Select `Et1pR/c67yIW`). Floating parts (Select/Action menu Menus) are `layoutPosition: absolute` and off when closed. A composite built on another composite is a ref of its base (`_MultiSelect/Base` is a ref of `_Select/Base` with its Menu slot replaced).
 
 ## Design-system artifacts (`docs/design-system/`)
 
 | File | Role |
 |---|---|
-| `exploration.pen` | Provisional canvas: boards 01–03 (directions, token studies, true-scale case, **decision record**, now including the rules approval) and the Owner's copied legacy frames. |
-| `design-system.lib.pen` | Library: 390 Pencil variables, theme axis `mode`, boards 00–08, and component pages C01–C30 (about 3.2 MB; see *Library size / Pen stability*). |
+| `exploration.pen` | Provisional canvas: boards 01–03 and **04 — Modal & overlay study** (options A/B; A picked) (directions, token studies, true-scale case, **decision record**, now including the rules approval) and the Owner's copied legacy frames. |
+| `design-system.lib.pen` | Library: 416 Pencil variables, theme axis `mode`, boards 00–08, and component pages C01–C30 (about 3.2 MB; see *Library size / Pen stability*). |
 | `tokens.json` | Canonical DTCG tokens. **Generated: edit `scripts/gen_tokens.py`, not this file.** |
 | `pencil-mapping.json` | Token ⇄ Pencil variable map, transforms, `library_canvas` (`rules_status` APPROVED), `components` (from the registry), `components_status`. Generated. |
 | `token-usage.md` | Usage rules G1–G8 and SP1–SP11. APPROVED 2026-09-26, with the amendments recorded in its status line. |
 | `components/*.md`, `components/registry.json` | Component specs and the machine-readable registry. |
 | `verification-report.md` | **Stale:** the last `/sdv:verify-design-system` ran before any components existed. |
 | `scripts/gen_tokens.py` | Token source of truth and generator. It also merges `components/registry.json`. |
-| `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `1199133c` (390 vars). |
+| `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `81dfb03c` (416 vars). |
 | `scripts/pencil-canvas-builders.md` | Pencil MCP snippets for boards 00–08. |
 
 The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy source; never modify) are intentionally untracked.
@@ -117,6 +118,10 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 - **C27–C30 approved** (Owner review).
 - **Page Content + max-width (done).** The App Panel's Content region is its own component, **Page Content** (`B4HAVd`, on C28): outer fill width with padding 28/40, and an inner `Container` **slot** fixed at 1096 and centred. Pen has no `maxWidth`, so the fixed centred container emulates it; code uses `max-width: 1096px; width: 100%`. New tokens: `size.content-max` = 1096 (scale) → `panel.app.content.max-width`. App Panel `C5QYo` now accepts only Page Content and has no padding/gap of its own. The masters show an empty Page Content; the dashboard lives in the C28 Modes examples and the dark App Shell example (`TXZxf`). The C28 Content and Modes exhibits were restacked (notes above the artwork) so the panels are wide enough for the 1096 container.
 
+- **Modal (tier 4):** Owner asked for a Modal + a modal slot in the App Shell, then a mobile Bottom Sheet. Two options were explored first (exploration board 04); the Owner picked **A — Sectioned** (radius 16, header divider + close, footer on `surface.subtle`) and approved its tokens: primitives `red.300`, `alpha.neutral-950-a50`, `alpha.black-a60`; semantics `overlay.scrim`, `status.danger.solid-hover`; 18 `modal.*`; 3 `button.danger.*`. Widths SM 400 · MD 560 · LG 720.
+- **Button/Danger** added to C01 (MD/LG × 4 states) for destructive confirms.
+- **App Shell Overlay:** boolean layer (off), absolute 1440 × 960 with `modal.scrim`, centring a Modal slot (default Modal/MD). It covers the whole screen, sidebar included.
+
 ## Open gaps (deferred)
 
 - GAP-01 dark-mode evidence
@@ -132,16 +137,17 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 ## Next steps
 
 1. Optional: a 1920-wide shell exhibit to show the centring (page C30 is 1600 wide, so it needs its own row).
-2. **Modal** (Owner request, 2026-09-26): a Modal component plus a Modal (overlay) slot in the App Shell, then a **Bottom Sheet** for mobile. No legacy evidence; built from `elevation.2`, `radius.xl`, `opacity.scrim`. Token set needs Owner approval first. Still open: `sidebar.*` aliases.
-3. Open questions:
+2. **Owner review of C31 Modal** (+ Button/Danger, App Shell Overlay).
+3. **C32 Bottom Sheet** (mobile): `radius.xl` top corners, grabber, same scrim; explore first if the Owner wants options. Needs a mobile frame (GAP-04). Still open: `sidebar.*` aliases.
+4. Open questions:
    - Toast close optical nudge.
    - Calendar day hover.
    - Combobox.
    - Segmented LG.
    - Table sort, selection, empty and loading states (GAP-02).
    - Shell breakpoints.
-4. Re-run `/sdv:verify-design-system`; the verification report is stale.
-5. Resume the feature track: `/sdv:discover-feature workspace` (pair it with F-01 Auth) → model → design, starting screens from the **App Shell** (C30).
+5. Re-run `/sdv:verify-design-system`; the verification report is stale.
+6. Resume the feature track: `/sdv:discover-feature workspace` (pair it with F-01 Auth) → model → design, starting screens from the **App Shell** (C30).
 
 ## Working notes / gotchas
 
@@ -174,4 +180,5 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
   - Never leave `slot: []`. An empty list rejects every insert with `Cannot read properties of undefined (reading 'id')`.
   - Pencil can't `Replace`/`Copy` into a slot of an instance nested **inside another master** (`reading 'parent'`, or "use Update/Replace"). Fill slots only on top-level instances, e.g. `Replace(<shell>/Sw0yD/d2hCuQ/bBehO, …)`.
   - A replaced node keeps its new ID in the instance path: re-replace `KS7sb/XNJJO`, not `KS7sb/C5QYo`.
+- **Pencil targets the frontmost Pen window**, whatever `filePath` says: run `open -a Pen <file>` before switching files, and check `GetVariables` (the library has variables; `exploration.pen` has none).
 - **CLI save isn't possible:** `osascript` keystrokes are blocked (no Accessibility permission), so the Owner presses ⌘S.

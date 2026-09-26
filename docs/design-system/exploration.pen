@@ -29103,8 +29103,8 @@
     {
       "type": "frame",
       "id": "buKOi",
-      "x": 4347,
-      "y": 7137,
+      "x": 8844,
+      "y": 4952,
       "name": "Dashboard — Product-grounded (EN)",
       "width": 1440,
       "layout": "vertical",
@@ -30095,8 +30095,8 @@
     {
       "type": "frame",
       "id": "ZGpTM",
-      "x": 2863,
-      "y": 7519,
+      "x": 7360,
+      "y": 5334,
       "name": "Frame 1",
       "width": 688,
       "height": 649,
@@ -31086,8 +31086,8 @@
     {
       "type": "frame",
       "id": "ozgZU",
-      "x": 1996,
-      "y": 7619,
+      "x": 6493,
+      "y": 5434,
       "name": "Frame 2",
       "width": 716,
       "height": 511,
@@ -32209,8 +32209,8 @@
     {
       "type": "frame",
       "id": "UGjKB",
-      "x": 1337,
-      "y": 7619,
+      "x": 5834,
+      "y": 5434,
       "name": "Frame 3",
       "width": 474,
       "height": 531,
@@ -32953,8 +32953,8 @@
     {
       "type": "frame",
       "id": "NrC5s",
-      "x": 1448,
-      "y": 8299,
+      "x": 5945,
+      "y": 6114,
       "name": "Frame 4",
       "width": 1160,
       "height": 95,
@@ -33578,6 +33578,2588 @@
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "AS7fQ",
+      "x": 4776,
+      "y": 0,
+      "name": "04 — Modal & overlay study",
+      "width": 1440,
+      "fill": "#F4F3F0",
+      "layout": "vertical",
+      "gap": 24,
+      "padding": 48,
+      "children": [
+        {
+          "type": "text",
+          "id": "q8WBRO",
+          "name": "Board index",
+          "fill": "#5E5B55",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "SHUTRLY  /  DESIGN EXPLORATION                                      04  /  04",
+          "lineHeight": 1.35,
+          "fontFamily": "IBM Plex Mono",
+          "fontSize": 12
+        },
+        {
+          "type": "text",
+          "id": "HIahC",
+          "name": "Board title",
+          "fill": "#1F1E1C",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Modal & overlay — two options",
+          "fontFamily": "Inter",
+          "fontSize": 40
+        },
+        {
+          "type": "text",
+          "id": "O01FAt",
+          "name": "Board description",
+          "fill": "#5E5B55",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "PROPOSED 2026-09-26 · Owner request: Modal component + App Shell modal slot, then a mobile Bottom Sheet. No legacy evidence — built from existing foundations only: elevation.2 (dialog/sheet shadow), opacity.scrim 0.5, radius.lg/xl, spacing scale, Button. Widths SM 400 · MD 560 · LG 720 (Owner). Button/Danger drafted here (Owner: add it). Nothing is in tokens.json or the library until the Owner picks A or B.",
+          "lineHeight": 1.5,
+          "fontFamily": "Inter",
+          "fontSize": 16
+        },
+        {
+          "type": "rectangle",
+          "id": "yAW0t",
+          "name": "Section divider",
+          "fill": "#DAD6CE",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "Pv1Og",
+          "name": "Option A — Sectioned",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 14,
+          "children": [
+            {
+              "type": "text",
+              "id": "roRTA",
+              "name": "Heading",
+              "fill": "#1F1E1C",
+              "content": "A  /  Sectioned — header · body · footer, like the App panel",
+              "fontFamily": "Inter",
+              "fontSize": 20
+            },
+            {
+              "type": "text",
+              "id": "s0vXp",
+              "name": "Spec",
+              "fill": "#5E5B55",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "radius.lg 16 (= App panel) · 1 px border.default · header 20/24 + close (Icon Button Ghost SM) · hairline under header · body 24 · footer 16/24 on surface.subtle with border.subtle top · buttons right-aligned, gap 12 · elevation.2",
+              "lineHeight": 1.5,
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 11
+            },
+            {
+              "type": "frame",
+              "id": "W4EKt",
+              "name": "Stage light",
+              "clip": true,
+              "width": "fill_container",
+              "fill": "#F4F4F5",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "KCvdx",
+                  "name": "Scrim",
+                  "width": "fill_container",
+                  "fill": "#09090B80",
+                  "gap": 32,
+                  "padding": 40,
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "hshE7",
+                      "name": "Mode",
+                      "fill": "#FFFFFFB3",
+                      "content": "light",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11
+                    },
+                    {
+                      "type": "frame",
+                      "id": "xQkHj",
+                      "name": "Modal A MD form",
+                      "clip": true,
+                      "width": 560,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 16,
+                      "stroke": "#E4E4E7",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#18181B24",
+                        "offset": {
+                          "x": 0,
+                          "y": 16
+                        },
+                        "blur": 40
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "BZw7F",
+                          "name": "Header",
+                          "width": "fill_container",
+                          "stroke": "#E4E4E7",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "gap": 12,
+                          "padding": [
+                            20,
+                            24
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "l0xsL",
+                              "name": "Heading",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "NEfIv",
+                                  "fill": "#18181B",
+                                  "content": "Proyek baru",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 18,
+                                  "fontWeight": "700",
+                                  "letterSpacing": -0.4
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "RhHyB",
+                                  "fill": "#52525B",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Isi detail dasar; jadwal & paket bisa diatur nanti.",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 13
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "qLLCT",
+                              "name": "Close",
+                              "cornerRadius": 8,
+                              "padding": 8,
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "syYhm",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "x",
+                                  "library": "lucide",
+                                  "fill": "#71717A"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "IvLgA",
+                          "name": "Body",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 16,
+                          "padding": 24,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "UzBmS",
+                              "name": "Field",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 6,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "rRbij",
+                                  "fill": "#18181B",
+                                  "content": "Nama klien",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "tKD2e",
+                                  "name": "Input",
+                                  "width": "fill_container",
+                                  "height": 40,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 8,
+                                  "stroke": "#D4D4D8",
+                                  "strokeWidth": 1,
+                                  "strokeAlignment": "inner",
+                                  "padding": [
+                                    0,
+                                    12
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "M8Ircl",
+                                      "fill": "#71717A",
+                                      "content": "mis. Rina & Adi",
+                                      "fontFamily": "Plus Jakarta Sans",
+                                      "fontSize": 14
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "KpF2O",
+                              "name": "Field",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 6,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n8pJE4",
+                                  "fill": "#18181B",
+                                  "content": "Jenis sesi",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "cyQ47",
+                                  "name": "Input",
+                                  "width": "fill_container",
+                                  "height": 40,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 8,
+                                  "stroke": "#D4D4D8",
+                                  "strokeWidth": 1,
+                                  "strokeAlignment": "inner",
+                                  "padding": [
+                                    0,
+                                    12
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "c8Mio",
+                                      "fill": "#71717A",
+                                      "content": "Pilih jenis sesi",
+                                      "fontFamily": "Plus Jakarta Sans",
+                                      "fontSize": 14
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "WSpp9",
+                          "name": "Footer",
+                          "width": "fill_container",
+                          "fill": "#F4F4F5",
+                          "stroke": "#E4E4E7",
+                          "strokeWidth": {
+                            "top": 1
+                          },
+                          "gap": 12,
+                          "padding": [
+                            16,
+                            24
+                          ],
+                          "justifyContent": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "NHAJz",
+                              "name": "Button secondary",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 999,
+                              "stroke": "#E4E4E7",
+                              "strokeWidth": 1,
+                              "strokeAlignment": "inner",
+                              "padding": [
+                                12,
+                                36
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "cELx3",
+                                  "fill": "#18181B",
+                                  "content": "Batal",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "fXTvq",
+                              "name": "Button primary",
+                              "fill": "#2F5BFF",
+                              "cornerRadius": 999,
+                              "padding": [
+                                12,
+                                36
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "A3O7C3",
+                                  "fill": "#FFFFFF",
+                                  "content": "Simpan proyek",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "tzWwo",
+                      "name": "Modal A SM confirm",
+                      "clip": true,
+                      "width": 400,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 16,
+                      "stroke": "#E4E4E7",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#18181B24",
+                        "offset": {
+                          "x": 0,
+                          "y": 16
+                        },
+                        "blur": 40
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "jE4Z2",
+                          "name": "Header",
+                          "width": "fill_container",
+                          "stroke": "#E4E4E7",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "gap": 12,
+                          "padding": [
+                            20,
+                            24
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "KNTJo",
+                              "name": "Heading",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "eYg5i",
+                                  "fill": "#18181B",
+                                  "content": "Hapus proyek?",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 18,
+                                  "fontWeight": "700",
+                                  "letterSpacing": -0.4
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "ScmhX",
+                              "name": "Close",
+                              "cornerRadius": 8,
+                              "padding": 8,
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "b6e9xW",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "x",
+                                  "library": "lucide",
+                                  "fill": "#71717A"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "tjMIK",
+                          "name": "Body",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 16,
+                          "padding": 24,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "EgDCY",
+                              "fill": "#52525B",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Proyek “Rina & Adi — Prewedding” dan semua file galerinya akan dihapus permanen. Tindakan ini tidak bisa dibatalkan.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "Plus Jakarta Sans",
+                              "fontSize": 14
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "BsIB7",
+                          "name": "Footer",
+                          "width": "fill_container",
+                          "fill": "#F4F4F5",
+                          "stroke": "#E4E4E7",
+                          "strokeWidth": {
+                            "top": 1
+                          },
+                          "gap": 12,
+                          "padding": [
+                            16,
+                            24
+                          ],
+                          "justifyContent": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "u7PK6Q",
+                              "name": "Button secondary",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 999,
+                              "stroke": "#E4E4E7",
+                              "strokeWidth": 1,
+                              "strokeAlignment": "inner",
+                              "padding": [
+                                12,
+                                24
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "SKZbh",
+                                  "fill": "#18181B",
+                                  "content": "Batal",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "YxhPR",
+                              "name": "Button danger",
+                              "fill": "#DC2626",
+                              "cornerRadius": 999,
+                              "padding": [
+                                12,
+                                24
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "YdtwH",
+                                  "fill": "#FFFFFF",
+                                  "content": "Hapus",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "lCuJ5",
+              "name": "Stage dark",
+              "clip": true,
+              "width": "fill_container",
+              "fill": "#09090B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "EwFEP",
+                  "name": "Scrim",
+                  "width": "fill_container",
+                  "fill": "#00000099",
+                  "gap": 32,
+                  "padding": 40,
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "I4CiJ",
+                      "name": "Mode",
+                      "fill": "#FFFFFFB3",
+                      "content": "dark",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11
+                    },
+                    {
+                      "type": "frame",
+                      "id": "BaqXR",
+                      "name": "Modal A MD form",
+                      "clip": true,
+                      "width": 560,
+                      "fill": "#18181B",
+                      "cornerRadius": 16,
+                      "stroke": "#27272A",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000066",
+                        "offset": {
+                          "x": 0,
+                          "y": 16
+                        },
+                        "blur": 40
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "ib3kM",
+                          "name": "Header",
+                          "width": "fill_container",
+                          "stroke": "#27272A",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "gap": 12,
+                          "padding": [
+                            20,
+                            24
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "wYotY",
+                              "name": "Heading",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "IFhMV",
+                                  "fill": "#FAFAFA",
+                                  "content": "Proyek baru",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 18,
+                                  "fontWeight": "700",
+                                  "letterSpacing": -0.4
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "VSlxx",
+                                  "fill": "#D4D4D8",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Isi detail dasar; jadwal & paket bisa diatur nanti.",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 13
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "BQL05",
+                              "name": "Close",
+                              "cornerRadius": 8,
+                              "padding": 8,
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "QaTYt",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "x",
+                                  "library": "lucide",
+                                  "fill": "#A1A1AA"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "x0PNH0",
+                          "name": "Body",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 16,
+                          "padding": 24,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "RkjIV",
+                              "name": "Field",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 6,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ds9mA",
+                                  "fill": "#FAFAFA",
+                                  "content": "Nama klien",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Fo7Z9",
+                                  "name": "Input",
+                                  "width": "fill_container",
+                                  "height": 40,
+                                  "fill": "#18181B",
+                                  "cornerRadius": 8,
+                                  "stroke": "#3F3F46",
+                                  "strokeWidth": 1,
+                                  "strokeAlignment": "inner",
+                                  "padding": [
+                                    0,
+                                    12
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "zbNaF",
+                                      "fill": "#A1A1AA",
+                                      "content": "mis. Rina & Adi",
+                                      "fontFamily": "Plus Jakarta Sans",
+                                      "fontSize": 14
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "qiBNY",
+                              "name": "Field",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 6,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Z1ThX",
+                                  "fill": "#FAFAFA",
+                                  "content": "Jenis sesi",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "MmT0P",
+                                  "name": "Input",
+                                  "width": "fill_container",
+                                  "height": 40,
+                                  "fill": "#18181B",
+                                  "cornerRadius": 8,
+                                  "stroke": "#3F3F46",
+                                  "strokeWidth": 1,
+                                  "strokeAlignment": "inner",
+                                  "padding": [
+                                    0,
+                                    12
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "G5ijsi",
+                                      "fill": "#A1A1AA",
+                                      "content": "Pilih jenis sesi",
+                                      "fontFamily": "Plus Jakarta Sans",
+                                      "fontSize": 14
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "YtxPd",
+                          "name": "Footer",
+                          "width": "fill_container",
+                          "fill": "#1F1F23",
+                          "stroke": "#27272A",
+                          "strokeWidth": {
+                            "top": 1
+                          },
+                          "gap": 12,
+                          "padding": [
+                            16,
+                            24
+                          ],
+                          "justifyContent": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "YV9Hp",
+                              "name": "Button secondary",
+                              "fill": "#18181B",
+                              "cornerRadius": 999,
+                              "stroke": "#27272A",
+                              "strokeWidth": 1,
+                              "strokeAlignment": "inner",
+                              "padding": [
+                                12,
+                                36
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "SXjiW",
+                                  "fill": "#FAFAFA",
+                                  "content": "Batal",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "YjpNT",
+                              "name": "Button primary",
+                              "fill": "#2F5BFF",
+                              "cornerRadius": 999,
+                              "padding": [
+                                12,
+                                36
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Y4NxH",
+                                  "fill": "#FFFFFF",
+                                  "content": "Simpan proyek",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "fJhjl",
+                      "name": "Modal A SM confirm",
+                      "clip": true,
+                      "width": 400,
+                      "fill": "#18181B",
+                      "cornerRadius": 16,
+                      "stroke": "#27272A",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000066",
+                        "offset": {
+                          "x": 0,
+                          "y": 16
+                        },
+                        "blur": 40
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "qZ24U",
+                          "name": "Header",
+                          "width": "fill_container",
+                          "stroke": "#27272A",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "gap": 12,
+                          "padding": [
+                            20,
+                            24
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "Dbo7B",
+                              "name": "Heading",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "cuWgB",
+                                  "fill": "#FAFAFA",
+                                  "content": "Hapus proyek?",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 18,
+                                  "fontWeight": "700",
+                                  "letterSpacing": -0.4
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "awpLe",
+                              "name": "Close",
+                              "cornerRadius": 8,
+                              "padding": 8,
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "ok2SW",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "x",
+                                  "library": "lucide",
+                                  "fill": "#A1A1AA"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "B8PsS",
+                          "name": "Body",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 16,
+                          "padding": 24,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nPyjE",
+                              "fill": "#D4D4D8",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Proyek “Rina & Adi — Prewedding” dan semua file galerinya akan dihapus permanen. Tindakan ini tidak bisa dibatalkan.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "Plus Jakarta Sans",
+                              "fontSize": 14
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "eHMKs",
+                          "name": "Footer",
+                          "width": "fill_container",
+                          "fill": "#1F1F23",
+                          "stroke": "#27272A",
+                          "strokeWidth": {
+                            "top": 1
+                          },
+                          "gap": 12,
+                          "padding": [
+                            16,
+                            24
+                          ],
+                          "justifyContent": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "iGFLt",
+                              "name": "Button secondary",
+                              "fill": "#18181B",
+                              "cornerRadius": 999,
+                              "stroke": "#27272A",
+                              "strokeWidth": 1,
+                              "strokeAlignment": "inner",
+                              "padding": [
+                                12,
+                                24
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "BXAPH",
+                                  "fill": "#FAFAFA",
+                                  "content": "Batal",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "s9Gc10",
+                              "name": "Button danger",
+                              "fill": "#F87171",
+                              "cornerRadius": 999,
+                              "padding": [
+                                12,
+                                24
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Mty5t",
+                                  "fill": "#09090B",
+                                  "content": "Hapus",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "fbIrO",
+          "name": "Section divider",
+          "fill": "#DAD6CE",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "XkBXb",
+          "name": "Option B — Open",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 14,
+          "children": [
+            {
+              "type": "text",
+              "id": "r2M0F",
+              "name": "Heading",
+              "fill": "#1F1E1C",
+              "content": "B  /  Open — one surface, no dividers, softer; same family as the Bottom Sheet",
+              "fontFamily": "Inter",
+              "fontSize": 20
+            },
+            {
+              "type": "text",
+              "id": "BdtHz",
+              "name": "Spec",
+              "fill": "#5E5B55",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "radius.xl 24 (= Bottom Sheet) · no border in light, 1 px border.default in dark · padding 24 all round, section gap 20 · no header/footer dividers · confirm variant: 40 px status icon badge + full-width equal buttons · form variant: close top-right, buttons right-aligned · elevation.2",
+              "lineHeight": 1.5,
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 11
+            },
+            {
+              "type": "frame",
+              "id": "mkZiT",
+              "name": "Stage light",
+              "clip": true,
+              "width": "fill_container",
+              "fill": "#F4F4F5",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ULgQu",
+                  "name": "Scrim",
+                  "width": "fill_container",
+                  "fill": "#09090B80",
+                  "gap": 32,
+                  "padding": 40,
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "dIYaf",
+                      "name": "Mode",
+                      "fill": "#FFFFFFB3",
+                      "content": "light",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11
+                    },
+                    {
+                      "type": "frame",
+                      "id": "YGqPd",
+                      "name": "Modal B MD form",
+                      "clip": true,
+                      "width": 560,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 24,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#18181B24",
+                        "offset": {
+                          "x": 0,
+                          "y": 16
+                        },
+                        "blur": 40
+                      },
+                      "layout": "vertical",
+                      "gap": 20,
+                      "padding": 24,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "QZI82",
+                          "name": "Header",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "VY9PL",
+                              "name": "Heading",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "gjQZk",
+                                  "fill": "#18181B",
+                                  "content": "Proyek baru",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 18,
+                                  "fontWeight": "700",
+                                  "letterSpacing": -0.4
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Mg0lU",
+                                  "fill": "#52525B",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Isi detail dasar; jadwal & paket bisa diatur nanti.",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 13
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "BOVzP",
+                              "name": "Close",
+                              "cornerRadius": 8,
+                              "padding": 8,
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "V3MhRW",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "x",
+                                  "library": "lucide",
+                                  "fill": "#71717A"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "iaBao",
+                          "name": "Body",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 16,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "kaJAT",
+                              "name": "Field",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 6,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "r0kYg6",
+                                  "fill": "#18181B",
+                                  "content": "Nama klien",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "zlHN0",
+                                  "name": "Input",
+                                  "width": "fill_container",
+                                  "height": 40,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 8,
+                                  "stroke": "#D4D4D8",
+                                  "strokeWidth": 1,
+                                  "strokeAlignment": "inner",
+                                  "padding": [
+                                    0,
+                                    12
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "eN61S",
+                                      "fill": "#71717A",
+                                      "content": "mis. Rina & Adi",
+                                      "fontFamily": "Plus Jakarta Sans",
+                                      "fontSize": 14
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "ftIuw",
+                              "name": "Field",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 6,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "CCRHa",
+                                  "fill": "#18181B",
+                                  "content": "Jenis sesi",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "wbO3G",
+                                  "name": "Input",
+                                  "width": "fill_container",
+                                  "height": 40,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 8,
+                                  "stroke": "#D4D4D8",
+                                  "strokeWidth": 1,
+                                  "strokeAlignment": "inner",
+                                  "padding": [
+                                    0,
+                                    12
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "w2WEIQ",
+                                      "fill": "#71717A",
+                                      "content": "Pilih jenis sesi",
+                                      "fontFamily": "Plus Jakarta Sans",
+                                      "fontSize": 14
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "D0KeC",
+                          "name": "Footer",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "padding": [
+                            4,
+                            0,
+                            0,
+                            0
+                          ],
+                          "justifyContent": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "pjpqS",
+                              "name": "Button secondary",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 999,
+                              "stroke": "#E4E4E7",
+                              "strokeWidth": 1,
+                              "strokeAlignment": "inner",
+                              "padding": [
+                                12,
+                                36
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "y6C4F1",
+                                  "fill": "#18181B",
+                                  "content": "Batal",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "stPvL",
+                              "name": "Button primary",
+                              "fill": "#2F5BFF",
+                              "cornerRadius": 999,
+                              "padding": [
+                                12,
+                                36
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "N9fs7y",
+                                  "fill": "#FFFFFF",
+                                  "content": "Simpan proyek",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qn8Tp",
+                      "name": "Modal B SM confirm",
+                      "clip": true,
+                      "width": 400,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 24,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#18181B24",
+                        "offset": {
+                          "x": 0,
+                          "y": 16
+                        },
+                        "blur": 40
+                      },
+                      "layout": "vertical",
+                      "gap": 20,
+                      "padding": 24,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "frRCi",
+                          "name": "Status icon",
+                          "width": 40,
+                          "height": 40,
+                          "fill": "#FDECEC",
+                          "cornerRadius": 999,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "PgGXa",
+                              "width": 20,
+                              "height": 20,
+                              "icon": "trash-2",
+                              "library": "lucide",
+                              "fill": "#B91C1C"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "rnoxs",
+                          "name": "Text",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 6,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "DCVTs",
+                              "fill": "#18181B",
+                              "content": "Hapus proyek?",
+                              "fontFamily": "Plus Jakarta Sans",
+                              "fontSize": 18,
+                              "fontWeight": "700",
+                              "letterSpacing": -0.4
+                            },
+                            {
+                              "type": "text",
+                              "id": "IMt5K",
+                              "fill": "#52525B",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Proyek “Rina & Adi — Prewedding” dan semua file galerinya akan dihapus permanen. Tindakan ini tidak bisa dibatalkan.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "Plus Jakarta Sans",
+                              "fontSize": 14
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "JMd2O",
+                          "name": "Footer",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "padding": [
+                            4,
+                            0,
+                            0,
+                            0
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "xxey4",
+                              "name": "Button secondary",
+                              "width": "fill_container",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 999,
+                              "stroke": "#E4E4E7",
+                              "strokeWidth": 1,
+                              "strokeAlignment": "inner",
+                              "padding": [
+                                12,
+                                24
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "pixS5",
+                                  "fill": "#18181B",
+                                  "content": "Batal",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "o9af5",
+                              "name": "Button danger",
+                              "width": "fill_container",
+                              "fill": "#DC2626",
+                              "cornerRadius": 999,
+                              "padding": [
+                                12,
+                                24
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ByjwP",
+                                  "fill": "#FFFFFF",
+                                  "content": "Hapus",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pzUks",
+              "name": "Stage dark",
+              "clip": true,
+              "width": "fill_container",
+              "fill": "#09090B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "m23qF",
+                  "name": "Scrim",
+                  "width": "fill_container",
+                  "fill": "#00000099",
+                  "gap": 32,
+                  "padding": 40,
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pL31X",
+                      "name": "Mode",
+                      "fill": "#FFFFFFB3",
+                      "content": "dark",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11
+                    },
+                    {
+                      "type": "frame",
+                      "id": "i7Gx75",
+                      "name": "Modal B MD form",
+                      "clip": true,
+                      "width": 560,
+                      "fill": "#18181B",
+                      "cornerRadius": 24,
+                      "stroke": "#27272A",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000066",
+                        "offset": {
+                          "x": 0,
+                          "y": 16
+                        },
+                        "blur": 40
+                      },
+                      "layout": "vertical",
+                      "gap": 20,
+                      "padding": 24,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "X5Yfwl",
+                          "name": "Header",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "H52aZq",
+                              "name": "Heading",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Zv0xY",
+                                  "fill": "#FAFAFA",
+                                  "content": "Proyek baru",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 18,
+                                  "fontWeight": "700",
+                                  "letterSpacing": -0.4
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "L75vl",
+                                  "fill": "#D4D4D8",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Isi detail dasar; jadwal & paket bisa diatur nanti.",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 13
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "ZwVTn",
+                              "name": "Close",
+                              "cornerRadius": 8,
+                              "padding": 8,
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "B0mN3",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "x",
+                                  "library": "lucide",
+                                  "fill": "#A1A1AA"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ysC3l",
+                          "name": "Body",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 16,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "O3qM2f",
+                              "name": "Field",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 6,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "yt62O",
+                                  "fill": "#FAFAFA",
+                                  "content": "Nama klien",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Rmonl",
+                                  "name": "Input",
+                                  "width": "fill_container",
+                                  "height": 40,
+                                  "fill": "#18181B",
+                                  "cornerRadius": 8,
+                                  "stroke": "#3F3F46",
+                                  "strokeWidth": 1,
+                                  "strokeAlignment": "inner",
+                                  "padding": [
+                                    0,
+                                    12
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "Dei1H",
+                                      "fill": "#A1A1AA",
+                                      "content": "mis. Rina & Adi",
+                                      "fontFamily": "Plus Jakarta Sans",
+                                      "fontSize": 14
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "t3ppy",
+                              "name": "Field",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 6,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ed4wT",
+                                  "fill": "#FAFAFA",
+                                  "content": "Jenis sesi",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 12,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "DaK6T",
+                                  "name": "Input",
+                                  "width": "fill_container",
+                                  "height": 40,
+                                  "fill": "#18181B",
+                                  "cornerRadius": 8,
+                                  "stroke": "#3F3F46",
+                                  "strokeWidth": 1,
+                                  "strokeAlignment": "inner",
+                                  "padding": [
+                                    0,
+                                    12
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "UbpPD",
+                                      "fill": "#A1A1AA",
+                                      "content": "Pilih jenis sesi",
+                                      "fontFamily": "Plus Jakarta Sans",
+                                      "fontSize": 14
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "oWB4e",
+                          "name": "Footer",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "padding": [
+                            4,
+                            0,
+                            0,
+                            0
+                          ],
+                          "justifyContent": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "R5GM2k",
+                              "name": "Button secondary",
+                              "fill": "#18181B",
+                              "cornerRadius": 999,
+                              "stroke": "#27272A",
+                              "strokeWidth": 1,
+                              "strokeAlignment": "inner",
+                              "padding": [
+                                12,
+                                36
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "PMF7U",
+                                  "fill": "#FAFAFA",
+                                  "content": "Batal",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "N6jhd",
+                              "name": "Button primary",
+                              "fill": "#2F5BFF",
+                              "cornerRadius": 999,
+                              "padding": [
+                                12,
+                                36
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "iNnN2",
+                                  "fill": "#FFFFFF",
+                                  "content": "Simpan proyek",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Gg1xo",
+                      "name": "Modal B SM confirm",
+                      "clip": true,
+                      "width": 400,
+                      "fill": "#18181B",
+                      "cornerRadius": 24,
+                      "stroke": "#27272A",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000066",
+                        "offset": {
+                          "x": 0,
+                          "y": 16
+                        },
+                        "blur": 40
+                      },
+                      "layout": "vertical",
+                      "gap": 20,
+                      "padding": 24,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "s7fEV",
+                          "name": "Status icon",
+                          "width": 40,
+                          "height": 40,
+                          "fill": "#F8717129",
+                          "cornerRadius": 999,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "gkaxD",
+                              "width": 20,
+                              "height": 20,
+                              "icon": "trash-2",
+                              "library": "lucide",
+                              "fill": "#F87171"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Fx48K",
+                          "name": "Text",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 6,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "t9Zjqo",
+                              "fill": "#FAFAFA",
+                              "content": "Hapus proyek?",
+                              "fontFamily": "Plus Jakarta Sans",
+                              "fontSize": 18,
+                              "fontWeight": "700",
+                              "letterSpacing": -0.4
+                            },
+                            {
+                              "type": "text",
+                              "id": "R0v4v",
+                              "fill": "#D4D4D8",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Proyek “Rina & Adi — Prewedding” dan semua file galerinya akan dihapus permanen. Tindakan ini tidak bisa dibatalkan.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "Plus Jakarta Sans",
+                              "fontSize": 14
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "SI8YY",
+                          "name": "Footer",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "padding": [
+                            4,
+                            0,
+                            0,
+                            0
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "hJYk7",
+                              "name": "Button secondary",
+                              "width": "fill_container",
+                              "fill": "#18181B",
+                              "cornerRadius": 999,
+                              "stroke": "#27272A",
+                              "strokeWidth": 1,
+                              "strokeAlignment": "inner",
+                              "padding": [
+                                12,
+                                24
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "aJQAS",
+                                  "fill": "#FAFAFA",
+                                  "content": "Batal",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "qOirl",
+                              "name": "Button danger",
+                              "width": "fill_container",
+                              "fill": "#F87171",
+                              "cornerRadius": 999,
+                              "padding": [
+                                12,
+                                24
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "gdpb4",
+                                  "fill": "#09090B",
+                                  "content": "Hapus",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "AuIeg",
+          "name": "Section divider",
+          "fill": "#DAD6CE",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "A8HNRc",
+          "name": "Shared parts",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "sdGfa",
+              "name": "Button/Danger draft",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 14,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "h6iDxj",
+                  "name": "Heading",
+                  "fill": "#1F1E1C",
+                  "content": "C  /  Button/Danger (both options)",
+                  "fontFamily": "Inter",
+                  "fontSize": 20
+                },
+                {
+                  "type": "text",
+                  "id": "S2lCE",
+                  "name": "Spec",
+                  "fill": "#5E5B55",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "background status.danger.solid · hover L red.700 / D red.300 (new primitive #FCA5A5) · label status.danger.on-solid · disabled opacity.disabled · same sizes & radius as Button (MD 12/36, LG 16/48, pill)",
+                  "lineHeight": 1.5,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11
+                },
+                {
+                  "type": "frame",
+                  "id": "Uglry",
+                  "name": "Row light",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": "#E4E4E7",
+                  "strokeWidth": 1,
+                  "gap": 12,
+                  "padding": 20,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "O3TFM",
+                      "name": "Default",
+                      "fill": "#DC2626",
+                      "cornerRadius": 999,
+                      "padding": [
+                        12,
+                        36
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ZMUBA",
+                          "fill": "#FFFFFF",
+                          "content": "Hapus",
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "rzHGW",
+                      "name": "Hover",
+                      "fill": "#B91C1C",
+                      "cornerRadius": 999,
+                      "padding": [
+                        12,
+                        36
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "FMCRY",
+                          "fill": "#FFFFFF",
+                          "content": "Hapus",
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JsBmF",
+                      "name": "Disabled",
+                      "opacity": 0.4,
+                      "fill": "#DC2626",
+                      "cornerRadius": 999,
+                      "padding": [
+                        12,
+                        36
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "kUPgn",
+                          "fill": "#FFFFFF",
+                          "content": "Hapus",
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "SAAUn",
+                      "name": "LG",
+                      "fill": "#DC2626",
+                      "cornerRadius": 999,
+                      "padding": [
+                        16,
+                        48
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Yj0BP",
+                          "fill": "#FFFFFF",
+                          "content": "Hapus",
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ABzac",
+                  "name": "Row dark",
+                  "width": "fill_container",
+                  "fill": "#18181B",
+                  "cornerRadius": 12,
+                  "stroke": "#E4E4E7",
+                  "strokeWidth": 1,
+                  "gap": 12,
+                  "padding": 20,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "RYWUO",
+                      "name": "Default",
+                      "fill": "#F87171",
+                      "cornerRadius": 999,
+                      "padding": [
+                        12,
+                        36
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "v2okAI",
+                          "fill": "#09090B",
+                          "content": "Hapus",
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "rEWGn",
+                      "name": "Hover",
+                      "fill": "#FCA5A5",
+                      "cornerRadius": 999,
+                      "padding": [
+                        12,
+                        36
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "myHci",
+                          "fill": "#09090B",
+                          "content": "Hapus",
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "og8vZ",
+                      "name": "Disabled",
+                      "opacity": 0.4,
+                      "fill": "#F87171",
+                      "cornerRadius": 999,
+                      "padding": [
+                        12,
+                        36
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "odfl5",
+                          "fill": "#09090B",
+                          "content": "Hapus",
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "X8qYi",
+                      "name": "LG",
+                      "fill": "#F87171",
+                      "cornerRadius": 999,
+                      "padding": [
+                        16,
+                        48
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Y9TLqQ",
+                          "fill": "#09090B",
+                          "content": "Hapus",
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "NqJIy",
+              "name": "Shell overlay sketch",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 14,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "JYFf4",
+                  "name": "Heading",
+                  "fill": "#1F1E1C",
+                  "content": "D  /  App Shell · Overlay slot (whole screen)",
+                  "fontFamily": "Inter",
+                  "fontSize": 20
+                },
+                {
+                  "type": "text",
+                  "id": "C1D9S",
+                  "name": "Spec",
+                  "fill": "#5E5B55",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "New layer 'Overlay' on App Shell: absolute, fills 1440 × 960, off by default. scrim fill + centred Modal slot (accepts Modal variants). Code: portal to <body>, focus trap, Esc closes, scroll lock.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11
+                },
+                {
+                  "type": "frame",
+                  "id": "AkXOn",
+                  "name": "Mini shell",
+                  "clip": true,
+                  "width": 560,
+                  "height": 350,
+                  "fill": "#F4F4F5",
+                  "cornerRadius": 12,
+                  "gap": 8,
+                  "padding": [
+                    8,
+                    8,
+                    8,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "I0ROmW",
+                      "name": "Sidebar",
+                      "width": 100,
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 10,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 4,
+                          "id": "vy4s5",
+                          "fill": "#E4E4E7",
+                          "width": "fill_container",
+                          "height": 10
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 4,
+                          "id": "V8WvGi",
+                          "fill": "#2F5BFF",
+                          "width": "fill_container",
+                          "height": 10
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 4,
+                          "id": "A0He5C",
+                          "fill": "#E4E4E7",
+                          "width": "fill_container",
+                          "height": 10
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 4,
+                          "id": "jUzog",
+                          "fill": "#E4E4E7",
+                          "width": "fill_container",
+                          "height": 10
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 4,
+                          "id": "kHI07",
+                          "fill": "#E4E4E7",
+                          "width": "fill_container",
+                          "height": 10
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 4,
+                          "id": "QFmH8",
+                          "fill": "#E4E4E7",
+                          "width": "fill_container",
+                          "height": 10
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "TBUcK",
+                      "name": "Panel",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 8,
+                      "stroke": "#E4E4E7",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "gap": 10,
+                      "padding": 16,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 4,
+                          "id": "aL0qe",
+                          "fill": "#E4E4E7",
+                          "width": 120,
+                          "height": 12
+                        },
+                        {
+                          "type": "frame",
+                          "id": "LKrGq",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 6,
+                              "id": "nz7hl",
+                              "fill": "#F4F4F5",
+                              "width": "fill_container",
+                              "height": 56
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 6,
+                              "id": "rh6HF",
+                              "fill": "#F4F4F5",
+                              "width": "fill_container",
+                              "height": 56
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 6,
+                              "id": "IXUhn",
+                              "fill": "#F4F4F5",
+                              "width": "fill_container",
+                              "height": 56
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 6,
+                              "id": "ZNyDa",
+                              "fill": "#F4F4F5",
+                              "width": "fill_container",
+                              "height": 56
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "Izsa8",
+                          "fill": "#F4F4F5",
+                          "width": "fill_container",
+                          "height": 120
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "O4jXT",
+                      "layoutPosition": "absolute",
+                      "x": 0,
+                      "y": 0,
+                      "name": "Overlay",
+                      "width": 560,
+                      "height": 350,
+                      "fill": "#09090B80",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "TKPRD",
+                          "name": "Modal slot",
+                          "width": 200,
+                          "height": 120,
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 12,
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "#18181B24",
+                            "offset": {
+                              "x": 0,
+                              "y": 16
+                            },
+                            "blur": 40
+                          },
+                          "layout": "vertical",
+                          "gap": 8,
+                          "padding": 14,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 4,
+                              "id": "a0rSH",
+                              "fill": "#18181B",
+                              "width": 90,
+                              "height": 10
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 4,
+                              "id": "zhtn1",
+                              "fill": "#E4E4E7",
+                              "width": "fill_container",
+                              "height": 8
+                            },
+                            {
+                              "type": "frame",
+                              "id": "dHcZM",
+                              "width": "fill_container",
+                              "gap": 6,
+                              "padding": [
+                                18,
+                                0,
+                                0,
+                                0
+                              ],
+                              "justifyContent": "end",
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "cornerRadius": 999,
+                                  "id": "MoXK7",
+                                  "fill": "#E4E4E7",
+                                  "width": 40,
+                                  "height": 16
+                                },
+                                {
+                                  "type": "rectangle",
+                                  "cornerRadius": 999,
+                                  "id": "umH3L",
+                                  "fill": "#2F5BFF",
+                                  "width": 50,
+                                  "height": 16
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "sSn0r",
+          "name": "Section divider",
+          "fill": "#DAD6CE",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "EQZr1",
+          "name": "Proposed tokens",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "sejgF",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "WBD0N",
+                  "fill": "#1F1E1C",
+                  "content": "Shared (A and B)",
+                  "fontFamily": "Inter",
+                  "fontSize": 20
+                },
+                {
+                  "type": "text",
+                  "id": "mDd9V",
+                  "fill": "#1F1E1C",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "NEW primitives  alpha.neutral-950-a50 #09090B80 · alpha.black-a60 #00000099 · red.300 #FCA5A5\nNEW semantic    overlay.scrim  L neutral-950-a50 · D black-a60\n                status.danger.solid-hover  L red.700 · D red.300\nmodal.scrim            → overlay.scrim\nmodal.background       → surface.panel\nmodal.title            → text.primary      (title 18/700)\nmodal.description      → text.secondary    (body-sm 13)\nmodal.body.gap         → space.4   16\nmodal.footer.gap       → space.3   12\nbutton.danger.background(-hover) → status.danger.solid(-hover)\nbutton.danger.text     → status.danger.on-solid\nshadow: elevation.2 (existing, 'Dialog/sheet')",
+                  "lineHeight": 1.6,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "x1Soqb",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "E9sYQ",
+                  "fill": "#1F1E1C",
+                  "content": "Option A — Sectioned",
+                  "fontFamily": "Inter",
+                  "fontSize": 20
+                },
+                {
+                  "type": "text",
+                  "id": "zMonn",
+                  "fill": "#1F1E1C",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "modal.radius           → radius.lg   16\nmodal.border           → border.default  (both modes)\nmodal.header.padding-y → space.5  20\nmodal.header.padding-x → space.6  24\nmodal.header.border    → border.default\nmodal.body.padding     → space.6  24\nmodal.footer.padding-y → space.4  16\nmodal.footer.padding-x → space.6  24\nmodal.footer.background→ surface.subtle\nmodal.footer.border    → border.subtle\n≈ 22 tokens total",
+                  "lineHeight": 1.6,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Si2uU",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "UsGKg",
+                  "fill": "#1F1E1C",
+                  "content": "Option B — Open",
+                  "fontFamily": "Inter",
+                  "fontSize": 20
+                },
+                {
+                  "type": "text",
+                  "id": "SKsXs",
+                  "fill": "#1F1E1C",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "modal.radius           → radius.xl   24 (= Bottom Sheet)\nmodal.border           → L transparent · D border.default\nmodal.padding          → space.6  24\nmodal.gap              → space.5  20  (header ↔ body ↔ footer)\nmodal.icon.size 40 (literal)\nmodal.icon.background  → status.<tone>.bg\nmodal.icon.fg          → status.<tone>.fg\n≈ 19 tokens total\nConfirm: buttons fill equally; Form: right-aligned",
+                  "lineHeight": 1.6,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "MWUOU",
+          "name": "Section divider",
+          "fill": "#DAD6CE",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "text",
+          "id": "o66F2",
+          "name": "Decision",
+          "fill": "#3F6212",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "DECISION  ·  Owner picked OPTION A (Sectioned) 2026-09-26. Token set A + shared pending explicit approval. Next: tokens → library C31 Modal (+ Button/Danger on C01) → App Shell Overlay slot → C32 Bottom Sheet (mobile).",
+          "lineHeight": 1.5,
+          "fontFamily": "IBM Plex Mono",
+          "fontSize": 12
         }
       ]
     }

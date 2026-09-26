@@ -1,6 +1,6 @@
 # Token usage rules — Shutrly / Studio Lime
 
-Status: APPROVED token set (2026-09-26) · Rules: APPROVED 2026-09-26 (Owner: "approve") · Amended 2026-09-26 (Owner): `space.9` = 36 added to SP1; §4.2 button padding 10/16 → 12/36, LG 12/24 → 16/48 (3:1 squish, whole steps per SP6); §4.4 checkbox/radio/switch ↔ label 10 → 8; segmented item 6/12 → 8/16, track padding/gap 2 → 4; new semantic `border.control-hover`, `control.track-off-hover`, `status.danger.on-solid`; `menu.*` (tier 1c); tier 2 (2026-09-26): SP6 list adds toast text (title ↔ body 2), 16 component tokens (`calendar.day.label/number/dot/dot-selected`, `nav.item.background-hover`, `nav.group-label`, `metric.tile.label/value`, `metric.spark.gap/radius`, `toast.<tone>.action`, `icon-button.sm.padding`); tier 3 (2026-09-26): SP6 list adds table cell avatar ↔ name (10), 13 tokens (`table.background/border/radius`, `table.toolbar.padding-y/-x`, `table.header.padding-y/border`, `table.row.background-hover`, `table.cell.text/text-strong`, `table.footer.link`, `panel.app.title`, `panel.app.header.gap`) · Source of values: [`tokens.json`](tokens.json) · Visual version: `design-system.lib.pen` › board **07 — Usage rules**
+Status: APPROVED token set (2026-09-26) · Rules: APPROVED 2026-09-26 (Owner: "approve") · Amended 2026-09-26 (Owner): `space.9` = 36 added to SP1; §4.2 button padding 10/16 → 12/36, LG 12/24 → 16/48 (3:1 squish, whole steps per SP6); §4.4 checkbox/radio/switch ↔ label 10 → 8; segmented item 6/12 → 8/16, track padding/gap 2 → 4; new semantic `border.control-hover`, `control.track-off-hover`, `status.danger.on-solid`; `menu.*` (tier 1c); tier 2 (2026-09-26): SP6 list adds toast text (title ↔ body 2), 16 component tokens (`calendar.day.label/number/dot/dot-selected`, `nav.item.background-hover`, `nav.group-label`, `metric.tile.label/value`, `metric.spark.gap/radius`, `toast.<tone>.action`, `icon-button.sm.padding`); tier 3 (2026-09-26): SP6 list adds table cell avatar ↔ name (10), 13 tokens (`table.background/border/radius`, `table.toolbar.padding-y/-x`, `table.header.padding-y/border`, `table.row.background-hover`, `table.cell.text/text-strong`, `table.footer.link`, `panel.app.title`, `panel.app.header.gap`); page content (2026-09-26): `size.content-max`, `panel.app.content.max-width`; modal (2026-09-26, option A): new primitives `red.300`, `alpha.neutral-950-a50`, `alpha.black-a60`, new semantic `overlay.scrim`, `status.danger.solid-hover`, 18 `modal.*` + 3 `button.danger.*` tokens · Source of values: [`tokens.json`](tokens.json) · Visual version: `design-system.lib.pen` › board **07 — Usage rules**
 
 These rules say *which* token to reach for, *when*, and what never to do. They apply to Pencil designs, the `components/ui` wrappers, and application code (ADR-010: Tailwind theme variables mirror these tokens).
 
@@ -41,6 +41,7 @@ These rules say *which* token to reach for, *when*, and what never to do. They a
 | `surface.inverse` | One emphasised element: "Berlangsung" chip, selected day, active tab pill | More than one or two items per view |
 
 - Do: separate a panel from the canvas with `border.default`. Don't: stack panel-on-panel without a border.
+- `overlay.scrim` is only the backdrop behind a Modal or Bottom Sheet (App Shell Overlay). Never use it to dim content in the page flow.
 
 ### Text
 | Token | Use for | Don't use for |
@@ -176,7 +177,7 @@ Don't: squish insets on cards (cramped), square insets on buttons/chips (bloated
 Allowed only inside a library component, max ±2 px, documented in the component spec (e.g. icon nudged to align with a text baseline). Never in screen layouts.
 
 ## 5. Radius
-- `radius.full` buttons, chips, segmented, switch, stepper, avatar, badges · `radius.sm` inputs, nav items, icon buttons, menu items · `radius.md` tiles, toasts, menus · `radius.lg` app panel, day cells · `radius.xs` checkbox, delta, kbd · `radius.2xs` chart bars · `radius.xl` sheets.
+- `radius.full` buttons, chips, segmented, switch, stepper, avatar, badges · `radius.sm` inputs, nav items, icon buttons, menu items · `radius.md` tiles, toasts, menus · `radius.lg` app panel, modals, day cells · `radius.xs` checkbox, delta, kbd · `radius.2xs` chart bars · `radius.xl` sheets.
 - Nested corners: inner radius ≤ outer radius.
 
 ## 6. Elevation
@@ -185,7 +186,7 @@ Allowed only inside a library component, max ±2 px, documented in the component
 - Don't add shadows to cards in the page flow.
 
 ## 7. Opacity
-- `opacity.disabled` for disabled controls only. `opacity.scrim` for modal backdrops. `opacity.status-tint` is already baked into dark status backgrounds — don't reapply it.
+- `opacity.disabled` for disabled controls only. `opacity.scrim` for modal backdrops (already baked into `overlay.scrim` — don't reapply it). `opacity.status-tint` is already baked into dark status backgrounds — don't reapply it.
 - Don't lower text opacity to make it "lighter" (G7).
 
 ## 8. Accessibility (WCAG 2.1 AA, C-008)

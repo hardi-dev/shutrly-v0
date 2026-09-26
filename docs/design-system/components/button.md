@@ -12,7 +12,7 @@
 
 ## Purpose
 
-Triggers an action in the current view: save, create, send, confirm. Use a link for navigation. Each view region has **one** primary button (token-usage §2 *Action & focus*).
+Triggers an action in the current view: save, create, send, confirm. Types: primary, secondary, danger (destructive confirms). Use a link for navigation. Each view region has **one** primary button (token-usage §2 *Action & focus*).
 
 ## Anatomy
 
@@ -33,7 +33,7 @@ pen.dev has no component sets or variant properties, so:
 
 | Property | Figma type | Values / default | pen.dev mechanism |
 |---|---|---|---|
-| `type` | Variant | `primary`, `secondary` / `primary` | component `Button/<Type>/…` |
+| `type` | Variant | `primary`, `secondary`, `danger` (added 2026-09-26) / `primary` | component `Button/<Type>/…` |
 | `size` | Variant | `md`, `lg` / `md` | padding → `button.<size>.padding-*` |
 | `state` | Variant | `default`, `hover`, `focus`, `disabled` / `default` | component `…/<State>` |
 | `iconLeading` | Boolean | `false` | `descendants: { "Icon leading": { enabled: true } }` |
@@ -91,6 +91,9 @@ pen.dev has no component sets or variant properties, so:
 | Secondary hover | `component.button.secondary.background-hover` | `surface.sunken` → `#F4F4F5` / `#1F1F23` | PERSISTED (added 2026-09-26) |
 | Secondary border | `component.button.secondary.border` | `border.default` → `#E4E4E7` / `#27272A` | PERSISTED |
 | Secondary label + icon | `component.button.secondary.text` | `text.primary` → `#18181B` / `#FAFAFA` | PERSISTED |
+| Danger background | `component.button.danger.background` | `status.danger.solid` → `#DC2626` / `#F87171` | PERSISTED (2026-09-26) |
+| Danger hover | `component.button.danger.background-hover` | `status.danger.solid-hover` → `#B91C1C` / `#FCA5A5` | PERSISTED (2026-09-26) |
+| Danger label + icon | `component.button.danger.text` | `status.danger.on-solid` → `#FFFFFF` / `#09090B` | PERSISTED (2026-09-26) |
 | Padding MD | `component.button.md.padding-y` / `-x` | `space.3` / `space.9` → 12 / 36 — 3:1 (was 10 / 16; amended 2026-09-26) | PERSISTED |
 | Padding LG | `component.button.lg.padding-y` / `-x` | `space.4` / `space.12` → 16 / 48 — 3:1 (was 12 / 24; amended 2026-09-26) | PERSISTED |
 | Gap (icons ↔ label) | `component.button.gap` | `space.2` → 8 | PERSISTED |
@@ -145,6 +148,7 @@ Heights are documented, not bound (Pencil can't bind `width`/`height`): MD 42 px
 ### Do
 
 - Use one primary per region, with secondary for the alternative (e.g. *Batal* + *Simpan*).
+- **Danger** (`Button/Danger/<Size>/<State>`, Owner 2026-09-26) only confirms a destructive, irreversible action, usually in a Modal confirm, where it takes the primary's place. Its label repeats the verb (*Hapus proyek*), never *Ya* / *OK*. Contrast: white on `#DC2626` 4.83 : 1; `#09090B` on `#F87171` in dark.
 - Right-align actions in dialogs and forms.
 
 ### Don't

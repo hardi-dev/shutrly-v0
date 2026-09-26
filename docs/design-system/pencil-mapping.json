@@ -23,6 +23,7 @@
     "color/primitive/alpha/amber-400-a33": "color.primitive.alpha.amber-400-a33",
     "color/primitive/alpha/amber-700-a25": "color.primitive.alpha.amber-700-a25",
     "color/primitive/alpha/black-a40": "color.primitive.alpha.black-a40",
+    "color/primitive/alpha/black-a60": "color.primitive.alpha.black-a60",
     "color/primitive/alpha/blue-450-a16": "color.primitive.alpha.blue-450-a16",
     "color/primitive/alpha/blue-450-a33": "color.primitive.alpha.blue-450-a33",
     "color/primitive/alpha/blue-500-a25": "color.primitive.alpha.blue-500-a25",
@@ -37,6 +38,7 @@
     "color/primitive/alpha/lime-800-a25": "color.primitive.alpha.lime-800-a25",
     "color/primitive/alpha/neutral-900-a08": "color.primitive.alpha.neutral-900-a08",
     "color/primitive/alpha/neutral-900-a14": "color.primitive.alpha.neutral-900-a14",
+    "color/primitive/alpha/neutral-950-a50": "color.primitive.alpha.neutral-950-a50",
     "color/primitive/alpha/red-400-a16": "color.primitive.alpha.red-400-a16",
     "color/primitive/alpha/red-400-a33": "color.primitive.alpha.red-400-a33",
     "color/primitive/alpha/red-700-a25": "color.primitive.alpha.red-700-a25",
@@ -73,6 +75,7 @@
     "color/primitive/neutral/850": "color.primitive.neutral.850",
     "color/primitive/neutral/900": "color.primitive.neutral.900",
     "color/primitive/neutral/950": "color.primitive.neutral.950",
+    "color/primitive/red/300": "color.primitive.red.300",
     "color/primitive/red/400": "color.primitive.red.400",
     "color/primitive/red/50": "color.primitive.red.50",
     "color/primitive/red/600": "color.primitive.red.600",
@@ -100,12 +103,14 @@
     "color/semantic/elevation/2/color": "color.semantic.elevation.2.color",
     "color/semantic/focus/glow": "color.semantic.focus.glow",
     "color/semantic/focus/ring": "color.semantic.focus.ring",
+    "color/semantic/overlay/scrim": "color.semantic.overlay.scrim",
     "color/semantic/progress/positive": "color.semantic.progress.positive",
     "color/semantic/status/danger/bg": "color.semantic.status.danger.bg",
     "color/semantic/status/danger/border": "color.semantic.status.danger.border",
     "color/semantic/status/danger/fg": "color.semantic.status.danger.fg",
     "color/semantic/status/danger/on-solid": "color.semantic.status.danger.on-solid",
     "color/semantic/status/danger/solid": "color.semantic.status.danger.solid",
+    "color/semantic/status/danger/solid-hover": "color.semantic.status.danger.solid-hover",
     "color/semantic/status/highlight/border": "color.semantic.status.highlight.border",
     "color/semantic/status/info/bg": "color.semantic.status.info.bg",
     "color/semantic/status/info/border": "color.semantic.status.info.border",
@@ -137,6 +142,9 @@
     "component/badge/danger/padding-y": "component.badge.danger.padding-y",
     "component/badge/danger/radius": "component.badge.danger.radius",
     "component/badge/danger/text": "component.badge.danger.text",
+    "component/button/danger/background": "component.button.danger.background",
+    "component/button/danger/background-hover": "component.button.danger.background-hover",
+    "component/button/danger/text": "component.button.danger.text",
     "component/button/gap": "component.button.gap",
     "component/button/lg/padding-x": "component.button.lg.padding-x",
     "component/button/lg/padding-y": "component.button.lg.padding-y",
@@ -253,6 +261,24 @@
     "component/metric/tile/padding": "component.metric.tile.padding",
     "component/metric/tile/radius": "component.metric.tile.radius",
     "component/metric/tile/value": "component.metric.tile.value",
+    "component/modal/background": "component.modal.background",
+    "component/modal/body/gap": "component.modal.body.gap",
+    "component/modal/body/padding": "component.modal.body.padding",
+    "component/modal/border": "component.modal.border",
+    "component/modal/description": "component.modal.description",
+    "component/modal/footer/background": "component.modal.footer.background",
+    "component/modal/footer/border": "component.modal.footer.border",
+    "component/modal/footer/gap": "component.modal.footer.gap",
+    "component/modal/footer/padding-x": "component.modal.footer.padding-x",
+    "component/modal/footer/padding-y": "component.modal.footer.padding-y",
+    "component/modal/header/border": "component.modal.header.border",
+    "component/modal/header/gap": "component.modal.header.gap",
+    "component/modal/header/padding-x": "component.modal.header.padding-x",
+    "component/modal/header/padding-y": "component.modal.header.padding-y",
+    "component/modal/header/text-gap": "component.modal.header.text-gap",
+    "component/modal/radius": "component.modal.radius",
+    "component/modal/scrim": "component.modal.scrim",
+    "component/modal/title": "component.modal.title",
     "component/nav/count/background": "component.nav.count.background",
     "component/nav/count/padding-x": "component.nav.count.padding-x",
     "component/nav/count/padding-y": "component.nav.count.padding-y",
@@ -411,11 +437,11 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 390,
-    "primitive": 58,
-    "semantic": 52,
-    "component": 230,
-    "themed": 55
+    "total": 416,
+    "primitive": 61,
+    "semantic": 54,
+    "component": 251,
+    "themed": 57
   },
   "transforms": {
     "opacity/*": "Pencil value = token $value × 100 (Pencil opacity variables are percent; e.g. opacity.disabled 0.4 → 40)"
@@ -453,7 +479,8 @@
       "axes": {
         "type": [
           "primary",
-          "secondary"
+          "secondary",
+          "danger"
         ],
         "size": [
           "md",
@@ -514,7 +541,15 @@
         "secondary/lg/default": "c3U6N",
         "secondary/lg/hover": "ZuSbE",
         "secondary/lg/focus": "fg9QG",
-        "secondary/lg/disabled": "nqNHl"
+        "secondary/lg/disabled": "nqNHl",
+        "danger/md/default": "z3mR7",
+        "danger/md/hover": "v3T5p",
+        "danger/md/focus": "KPQep",
+        "danger/md/disabled": "dHTCl",
+        "danger/lg/default": "ZDOwL",
+        "danger/lg/hover": "n90hA",
+        "danger/lg/focus": "haHU6",
+        "danger/lg/disabled": "UFc5r"
       },
       "tokens": [
         "component.button.*",
@@ -2273,29 +2308,149 @@
           "layer": "Panel",
           "id": "Sw0yD",
           "ref": "app-panel"
+        },
+        "overlay": {
+          "kind": "boolean",
+          "layer": "Overlay",
+          "id": "fwm7P",
+          "default": false
+        },
+        "modal": {
+          "kind": "slot",
+          "layer": "Modal",
+          "id": "hnTfu",
+          "recommended": [
+            "cdSbf",
+            "f8ym9",
+            "yAPhv"
+          ],
+          "default": "nRbAO (Modal/MD)"
         }
       },
       "layers": {
         "Sidebar": "fNszT",
-        "Panel": "Sw0yD"
+        "Panel": "Sw0yD",
+        "Overlay": "fwm7P",
+        "Modal": "hnTfu"
       },
       "variants": {
         "default": "y9uBJl"
       },
       "nested": [
         "sidebar",
-        "app-panel"
+        "app-panel",
+        "modal"
       ],
       "tokens": [
         "color.semantic.surface.canvas",
-        "space.3"
+        "space.3",
+        "component.modal.scrim"
       ],
       "gaps": [
         "1440 × 960 only; breakpoints future"
       ]
+    },
+    "modal": {
+      "status": "PROPOSED (tier 4) 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C31 — Modal",
+        "id": "ukLqT"
+      },
+      "spec": "docs/design-system/components/modal.md",
+      "base": {
+        "name": "_Modal/Base",
+        "id": "G9VQuU",
+        "private": true
+      },
+      "axes": {
+        "size": [
+          "sm",
+          "md",
+          "lg"
+        ]
+      },
+      "props": {
+        "title": {
+          "kind": "text",
+          "layer": "Title",
+          "id": "V8uAA",
+          "default": "Judul modal"
+        },
+        "description": {
+          "kind": "boolean",
+          "layer": "Description",
+          "id": "PPg3y",
+          "default": true
+        },
+        "close": {
+          "kind": "boolean",
+          "layer": "Close",
+          "id": "M80T4e",
+          "default": true
+        },
+        "body": {
+          "kind": "slot",
+          "layer": "Body",
+          "id": "c5Prsw",
+          "recommended": [
+            "HHNPk",
+            "Wc7hd",
+            "X8ErE9",
+            "t7L0yL",
+            "n8NmOH",
+            "Imyla",
+            "oSTqI",
+            "FCsTI",
+            "E4PkTw"
+          ],
+          "fill": "Replace(instance+'/c5Prsw', {type:'frame', name:'Body', layout:'vertical', width:'fill_container', padding:'$component/modal/body/padding', gap:'$component/modal/body/gap'})"
+        },
+        "actions": {
+          "kind": "slot",
+          "layer": "Actions",
+          "id": "I7e8yh",
+          "recommended": [
+            "JmfmZ",
+            "Q49yf7",
+            "z3mR7"
+          ],
+          "fill": "Replace(instance+'/I7e8yh', {type:'frame', name:'Actions', gap:'$component/modal/footer/gap', alignItems:'center'})"
+        }
+      },
+      "layers": {
+        "Header": "VpbJF",
+        "Heading": "fOsAM",
+        "Title": "V8uAA",
+        "Description": "PPg3y",
+        "Close": "M80T4e",
+        "Body": "c5Prsw",
+        "Footer": "Pp1eX",
+        "Actions": "I7e8yh"
+      },
+      "variants": {
+        "sm": "cdSbf",
+        "md": "f8ym9",
+        "lg": "yAPhv"
+      },
+      "nested": [
+        "icon-button",
+        "button"
+      ],
+      "tokens": [
+        "component.modal.*",
+        "component.button.danger.*",
+        "color.semantic.overlay.scrim",
+        "elevation.2"
+      ],
+      "gaps": [
+        "widths 400/560/720 are literal (Pencil can't bind width)",
+        "no max-height / scrolling body spec yet",
+        "no legacy evidence (exploration board 04, option A)"
+      ]
     }
   },
-  "components_status": "IN PROGRESS — C01–C30 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3).",
+  "components_status": "IN PROGRESS — C01–C30 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3); C31 Modal (+ Button/Danger, App Shell Overlay) PROPOSED 2026-09-26; C32 Bottom Sheet planned.",
   "unsupported": {
     "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.",
     "typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",

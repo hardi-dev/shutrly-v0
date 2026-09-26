@@ -43,9 +43,12 @@ Insert(f, {type:"ref", ref:"NcbI1", descendants:{FnOrw:{content:"Minggu"}}})
 
 - Use Select for 5+ options or for a form value. Use the sidebar to change page. Use a Switch for a single on/off setting.
 
+## LG (added 2026-09-26)
+
+`Segmented Control/LG` (`WadoU`) is used for mobile filters (44 px targets). Its Items slot holds `Segmented Item/LG/*` (Active `a17zLE`, Default `SaNob`, Hover `OD6NY`, Focus `w3GDB`): padding `segmented.item.lg.padding-y/-x` (12 / 20) with a body 14 label.
+
 ## Gaps
 
-- LG size for the client gallery.
 
 ## Implementation references
 

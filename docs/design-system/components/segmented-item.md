@@ -27,6 +27,10 @@ The private base is `_SegmentedItem/Base` (`k0HnIZ`), with layer `Label` `FnOrw`
 | `state` | Variant | `active` `NcbI1`, `default` `AptHz`, `hover` `BrUPr`, `focus` `u7e89` | component `Segmented Item/<State>` |
 | `label` | Text | "Minggu" | `descendants` content |
 
+## LG size (added 2026-09-26)
+
+`Segmented Item/LG/<State>` has the same states, padding `segmented.item.lg.padding-y/-x` (12 / 20) and label `font.size.body` (14). Use it only inside `Segmented Control/LG`.
+
 ## Token dependencies
 
 | Part | Token |

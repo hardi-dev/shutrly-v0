@@ -362,6 +362,8 @@
     "component/sidebar/logo": "component.sidebar.logo",
     "component/sidebar/padding-x": "component.sidebar.padding-x",
     "component/sidebar/padding-y": "component.sidebar.padding-y",
+    "component/sidebar/rail/gap": "component.sidebar.rail.gap",
+    "component/sidebar/rail/width": "component.sidebar.rail.width",
     "component/sidebar/workspace/background": "component.sidebar.workspace.background",
     "component/sidebar/workspace/border": "component.sidebar.workspace.border",
     "component/sidebar/workspace/mark": "component.sidebar.workspace.mark",
@@ -439,6 +441,11 @@
     "component/toast/warning/border": "component.toast.warning.border",
     "component/toast/warning/icon": "component.toast.warning.icon",
     "component/toast/warning/title": "component.toast.warning.title",
+    "component/tooltip/background": "component.tooltip.background",
+    "component/tooltip/padding-x": "component.tooltip.padding-x",
+    "component/tooltip/padding-y": "component.tooltip.padding-y",
+    "component/tooltip/radius": "component.tooltip.radius",
+    "component/tooltip/text": "component.tooltip.text",
     "elevation/1/blur": "elevation.1.blur",
     "elevation/1/offset-y": "elevation.1.offset-y",
     "elevation/2/blur": "elevation.2.blur",
@@ -475,6 +482,7 @@
     "radius/xl": "radius.xl",
     "radius/xs": "radius.xs",
     "size/content-max": "size.content-max",
+    "size/rail": "size.rail",
     "space/0-5": "space.0-5",
     "space/1": "space.1",
     "space/1-5": "space.1-5",
@@ -491,10 +499,10 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 470,
+    "total": 478,
     "primitive": 61,
     "semantic": 54,
-    "component": 305,
+    "component": 312,
     "themed": 58
   },
   "transforms": {
@@ -1005,6 +1013,10 @@
           "default",
           "hover",
           "focus"
+        ],
+        "size": [
+          "md",
+          "lg"
         ]
       },
       "props": {
@@ -1021,7 +1033,11 @@
         "active": "NcbI1",
         "default": "AptHz",
         "hover": "BrUPr",
-        "focus": "u7e89"
+        "focus": "u7e89",
+        "lg/active": "a17zLE",
+        "lg/default": "SaNob",
+        "lg/hover": "OD6NY",
+        "lg/focus": "w3GDB"
       },
       "tokens": [
         "component.segmented.*"
@@ -1786,7 +1802,8 @@
         "Items": "ULzG1"
       },
       "variants": {
-        "default": "uMP5H"
+        "default": "uMP5H",
+        "lg": "WadoU"
       },
       "nested": [
         "segmented-item"
@@ -1852,7 +1869,8 @@
         "Title": "m0dqT6",
         "Body": "fhch4",
         "Action": "M54Ca",
-        "Close": "F4Fv5K"
+        "Close": "F4Fv5K",
+        "Close align": "IXhZl"
       },
       "variants": {
         "success": "E4PkTw",
@@ -1928,7 +1946,8 @@
       "variants": {
         "default": "v87EDR",
         "selected": "Hbsc8",
-        "focus": "qTeQQ"
+        "focus": "qTeQQ",
+        "hover": "k6Pzsk"
       },
       "nested": [],
       "tokens": [
@@ -2058,7 +2077,14 @@
         "Link": "QTddd"
       },
       "variants": {
-        "default": "FCsTI"
+        "default": "FCsTI",
+        "header-cell/sorted": "UD38Q",
+        "header-cell/select": "h0RSa",
+        "cell/select": "xbQwc",
+        "cell/selected": "whHzE",
+        "row/selected": "bd9LK",
+        "row/skeleton": "eFemy",
+        "empty-state": "w0HQb"
       },
       "related": {
         "table-cell": {
@@ -2137,8 +2163,8 @@
       ],
       "gaps": [
         "footer count/title/subtitle bind semantic text tokens (no component alias)",
-        "no sort, selection or empty/loading states (GAP-02)",
-        "legacy dark filter pills replaced by Segmented control (Owner 2026-09-26)"
+        "legacy dark filter pills replaced by Segmented control (Owner 2026-09-26)",
+        "no pagination (GAP-02)"
       ]
     },
     "page-content": {
@@ -2309,10 +2335,13 @@
         "Nav bottom": "pRu41",
         "Avatar": "aXcVC",
         "Name": "EpYE1",
-        "Email": "pMF7b"
+        "Email": "pMF7b",
+        "rail.Nav": "r1Gq4",
+        "rail.Nav bottom": "A4gKt"
       },
       "variants": {
-        "default": "vB50q"
+        "default": "vB50q",
+        "rail": "JRUY0"
       },
       "nested": [
         "nav-item",
@@ -2321,17 +2350,8 @@
         "icon-button"
       ],
       "tokens": [
-        "space.1",
-        "space.2",
-        "space.2-5",
-        "space.3",
-        "radius.sm",
-        "radius.xs",
-        "color.semantic.border.default",
-        "color.semantic.surface.panel",
-        "color.semantic.text.*",
-        "color.semantic.accent.highlight",
-        "color.semantic.accent.on-highlight"
+        "component.sidebar.*",
+        "component.nav.*"
       ],
       "gaps": [
         "layout region: binds semantic/scale tokens (board 08 layout map) — promote to sidebar.* tokens if the Owner wants G3 component aliases",
@@ -2385,10 +2405,15 @@
         "Sidebar": "fNszT",
         "Panel": "Sw0yD",
         "Overlay": "fwm7P",
-        "Modal": "hnTfu"
+        "Modal": "hnTfu",
+        "tablet.Rail": "f4EPF6",
+        "tablet.Panel": "QhPny",
+        "tablet.Overlay": "bbU0M",
+        "tablet.Modal": "o14Rz"
       },
       "variants": {
-        "default": "y9uBJl"
+        "default": "y9uBJl",
+        "tablet": "lQnS8"
       },
       "nested": [
         "sidebar",
@@ -3032,9 +3057,170 @@
         "tablet 768–1279 unspecified",
         "sub-pages use C33 (back + title)"
       ]
+    },
+    "combobox": {
+      "status": "PROPOSED 2026-09-26 (open question resolved)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C36 — Combobox",
+        "id": "wDOnD"
+      },
+      "spec": "docs/design-system/components/combobox.md",
+      "base": {
+        "name": "_Combobox/Base",
+        "id": "lhmhP",
+        "private": true,
+        "ref": "_Select/Base R1MZh"
+      },
+      "axes": {
+        "state": [
+          "default",
+          "open",
+          "disabled"
+        ]
+      },
+      "props": {
+        "label": {
+          "kind": "text",
+          "layer": "Et1pR/Gmk0c"
+        },
+        "placeholder": {
+          "kind": "text",
+          "layer": "Et1pR/c67yIW/tvTDd"
+        },
+        "query": {
+          "kind": "text",
+          "layer": "Et1pR/c67yIW/CykHo"
+        },
+        "helper": {
+          "kind": "text",
+          "layer": "Et1pR/uh4XA"
+        },
+        "items": {
+          "kind": "slot",
+          "layer": "Menu/Items",
+          "id": "Ly5N6",
+          "path": "xGHsR/Ly5N6",
+          "recommended": [
+            "iSqRB",
+            "mCgnL",
+            "qKcfI",
+            "z7QON",
+            "yNxME"
+          ]
+        }
+      },
+      "variants": {
+        "default": "CiTrY",
+        "open": "LN80X",
+        "disabled": "CGRMW"
+      },
+      "nested": [
+        "select",
+        "text-field",
+        "menu",
+        "menu-item"
+      ],
+      "tokens": [
+        "component.menu.*",
+        "component.menu.item.text-action",
+        "component.input.*"
+      ],
+      "gaps": [
+        "Error/Hover states follow Select (not drawn)"
+      ]
+    },
+    "tooltip": {
+      "status": "PROPOSED 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C37 — Nav rail & tablet shell",
+        "id": "jNOvR"
+      },
+      "spec": "docs/design-system/components/nav-rail.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "label": {
+          "kind": "text",
+          "layer": "Label",
+          "id": "WLS9S"
+        }
+      },
+      "layers": {
+        "Label": "WLS9S"
+      },
+      "variants": {
+        "default": "OYkds"
+      },
+      "nested": [],
+      "tokens": [
+        "component.tooltip.*",
+        "elevation.1"
+      ],
+      "gaps": []
+    },
+    "nav-rail-item": {
+      "status": "PROPOSED 2026-09-26",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C37 — Nav rail & tablet shell",
+        "id": "jNOvR"
+      },
+      "spec": "docs/design-system/components/nav-rail.md",
+      "base": {
+        "name": "_NavRailItem/Base",
+        "id": "xhCvp",
+        "private": true
+      },
+      "axes": {
+        "state": [
+          "default",
+          "hover",
+          "active",
+          "focus"
+        ]
+      },
+      "props": {
+        "icon": {
+          "kind": "instance-swap",
+          "layer": "Icon",
+          "id": "r4Ryb"
+        },
+        "badge": {
+          "kind": "boolean",
+          "layer": "Badge",
+          "id": "mKYsh",
+          "default": false
+        },
+        "tooltip": {
+          "kind": "text",
+          "layer": "Tooltip/Label",
+          "path": "B1PEOz/WLS9S"
+        }
+      },
+      "layers": {
+        "Icon": "r4Ryb",
+        "Badge": "mKYsh",
+        "Tooltip": "B1PEOz"
+      },
+      "variants": {
+        "default": "odApP",
+        "hover": "GMxFW",
+        "active": "OKf00",
+        "focus": "vRX3t"
+      },
+      "nested": [
+        "notification-badge",
+        "tooltip"
+      ],
+      "tokens": [
+        "component.nav.item.*"
+      ],
+      "gaps": []
     }
   },
-  "components_status": "IN PROGRESS — C01–C35 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3, 4).",
+  "components_status": "IN PROGRESS — C01–C35 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3, 4); C36 Combobox, C37 Nav rail & tablet shell and the open-question additions PROPOSED 2026-09-26.",
   "unsupported": {
     "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.",
     "typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",

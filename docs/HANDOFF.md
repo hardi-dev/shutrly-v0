@@ -10,7 +10,7 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. |
 | F-01 Auth | SPECIFIED | `docs/features/auth/spec.md` + acceptance criteria. Not modelled or designed yet. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
-| Design system — tokens | PERSISTED (2026-09-26) | **453 tokens** (61 primitive · 54 semantic · 288 component · scales), `mode: light \| dark`. Live checksum `4ea0bcc1`. |
+| Design system — tokens | PERSISTED (2026-09-26) | **478 tokens** (61 primitive · 54 semantic · 312 component · scales), `mode: light \| dark`. Live checksum `c36593e9`. |
 | Design system — token canvas | DONE | Boards 00–08, refreshed for every token added this session. |
 | Design system — usage & spacing rules | APPROVED (2026-09-26) + Owner amendments | See *Key decisions*. |
 | Design system — primitive components | **APPROVED** — C01–C17 | 17 components (108 reusable nodes) in `design-system.lib.pen`, each with a spec in `components/`. |
@@ -58,22 +58,22 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
   - Tier 1c: C09–C10 menus. These have **no legacy evidence** and need a careful review.
   - Tier 2: C18–C26 composites built from nested primitive instances.
   - Tier 3: C27 Table (cells, header cell/row, row, card), C28 App panel (+ Page Content), C29 Sidebar, C30 App shell template. APPROVED.
-- **Approval status:** C01–C35 APPROVED.
+- **Approval status:** C01–C35 APPROVED · C36 Combobox, C37 Nav rail & tablet shell + this round's additions PROPOSED.
 - **Composite pattern (tier 2):** a composite's state variants **don't swap** the nested primitive ref. Replacing the nested ref gives it a new ID per variant and breaks instance override paths. Instead, each variant re-applies the primitive state's token overrides on **one stable nested instance** (for example Text field `c67yIW`, Select `Et1pR/c67yIW`). Floating parts (Select/Action menu Menus) are `layoutPosition: absolute` and off when closed. A composite built on another composite is a ref of its base (`_MultiSelect/Base` is a ref of `_Select/Base` with its Menu slot replaced).
 
 ## Design-system artifacts (`docs/design-system/`)
 
 | File | Role |
 |---|---|
-| `exploration.pen` | Provisional canvas: boards 01–03 and **04 — Modal & overlay study** (options A/B; A picked), **05 — Bottom sheet study** (A/B; A + B header picked), **06 — Mobile app shell study** (A/B; B picked, padding-top 12) (directions, token studies, true-scale case, **decision record**, now including the rules approval) and the Owner's copied legacy frames. |
-| `design-system.lib.pen` | Library: 453 Pencil variables, theme axis `mode`, boards 00–08, and component pages C01–C30 (about 3.2 MB; see *Library size / Pen stability*). |
+| `exploration.pen` | Provisional canvas: boards 01–03 and **04 — Modal & overlay study** (options A/B; A picked), **05 — Bottom sheet study** (A/B; A + B header picked), **06 — Mobile app shell study** (A/B; B picked, padding-top 12), **07 — Tablet rail study** (A/B; A picked) (directions, token studies, true-scale case, **decision record**, now including the rules approval) and the Owner's copied legacy frames. |
+| `design-system.lib.pen` | Library: 478 Pencil variables, theme axis `mode`, boards 00–08, and component pages C01–C30 (about 3.2 MB; see *Library size / Pen stability*). |
 | `tokens.json` | Canonical DTCG tokens. **Generated: edit `scripts/gen_tokens.py`, not this file.** |
 | `pencil-mapping.json` | Token ⇄ Pencil variable map, transforms, `library_canvas` (`rules_status` APPROVED), `components` (from the registry), `components_status`. Generated. |
 | `token-usage.md` | Usage rules G1–G8 and SP1–SP11. APPROVED 2026-09-26, with the amendments recorded in its status line. |
 | `components/*.md`, `components/registry.json` | Component specs and the machine-readable registry. |
 | `verification-report.md` | **Stale:** the last `/sdv:verify-design-system` ran before any components existed. |
 | `scripts/gen_tokens.py` | Token source of truth and generator. It also merges `components/registry.json`. |
-| `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `4ea0bcc1` (453 vars). |
+| `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `c36593e9` (478 vars). |
 | `scripts/pencil-canvas-builders.md` | Pencil MCP snippets for boards 00–08. |
 
 The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy source; never modify) are intentionally untracked.
@@ -130,6 +130,8 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 
 - **C31–C35 approved** (Owner review).
 
+- **Handoff next steps resolved (2026-09-26, Owner picked the recommended defaults):** 1920 App Shell exhibit (`C30 — App shell · 1920`, row 5); rows re-laid out by the Owner (C33–C35 now row 5, y 19863); `sidebar.*` aliases (10, same values; Sidebar + Menu sheet rebound); Calendar Day/Hover (`surface.muted`); toast close aligned to the title line; Segmented Item/LG + Segmented Control/LG; Table states (sorted header, select column, selected row, skeleton, empty state); **C36 Combobox**. Tablet: Owner picked **A — icon rail 72 with tooltips** (board 07) → **C37** Tooltip, Nav Rail Item, Sidebar/Rail, App Shell/Tablet (`size.rail`, `sidebar.rail.*`, `tooltip.*`).
+
 ## Open gaps (deferred)
 
 - GAP-01 dark-mode evidence
@@ -144,17 +146,9 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 
 ## Next steps
 
-1. Optional: a 1920-wide shell exhibit to show the centring (page C30 is 1600 wide, so it needs its own row).
-2. Tablet breakpoints (768–1279). Still open: `sidebar.*` aliases; move row 4 (11 pages) into a new row.
-3. Open questions:
-   - Toast close optical nudge.
-   - Calendar day hover.
-   - Combobox.
-   - Segmented LG.
-   - Table sort, selection, empty and loading states (GAP-02).
-   - Shell breakpoints.
-4. Re-run `/sdv:verify-design-system`; the verification report is stale.
-5. Resume the feature track: `/sdv:discover-feature workspace` (pair it with F-01 Auth) → model → design, starting screens from the **App Shell** (C30).
+1. Owner review of this round: C36 Combobox, C37 Nav rail & tablet shell, Segmented LG, Calendar hover, Table states, sidebar aliases, toast close alignment.
+2. Re-run `/sdv:verify-design-system`; the verification report is stale.
+3. Resume the feature track: `/sdv:discover-feature workspace` (pair it with F-01 Auth) → model → design, starting screens from the **App Shell** (C30), **App Shell/Tablet** (C37) and **Mobile App Shell** (C35).
 
 ## Working notes / gotchas
 

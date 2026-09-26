@@ -123,7 +123,7 @@
                       "id": "w4Y5S",
                       "name": "Text",
                       "fill": "$color/semantic/text/secondary",
-                      "content": "453 tokens",
+                      "content": "478 tokens",
                       "lineHeight": 1.35,
                       "fontFamily": "$font/family/base",
                       "fontSize": 12,
@@ -488,7 +488,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "288 component-scoped aliases",
+                  "content": "312 component-scoped aliases",
                   "lineHeight": 1.35,
                   "fontFamily": "$font/family/base",
                   "fontSize": 12,
@@ -26608,7 +26608,7 @@
                           "id": "eDCFO",
                           "name": "Count",
                           "fill": "$color/semantic/text/muted",
-                          "content": "11 tokens  ·  L / D",
+                          "content": "12 tokens  ·  L / D",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -27581,6 +27581,102 @@
                           "textGrowth": "fixed-width",
                           "width": 230,
                           "content": "→ radius/lg",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "UmZe8",
+                      "name": "component/calendar/day/background-hover",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "BCV2Y",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "day/background-hover",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ro1Cp",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "h9qmcP",
+                              "name": "Swatch",
+                              "fill": "$component/calendar/day/background-hover",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "eqJlK",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "ncUm5",
+                              "name": "Swatch",
+                              "fill": "$component/calendar/day/background-hover",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "f1DDO",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ surface/muted",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -31512,7 +31608,7 @@
                           "id": "P5efeG",
                           "name": "Count",
                           "fill": "$color/semantic/text/muted",
-                          "content": "18 tokens  ·  L / D",
+                          "content": "19 tokens  ·  L / D",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -33073,6 +33169,102 @@
                           "textGrowth": "fixed-width",
                           "width": 230,
                           "content": "→ radius/sm",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "U8ePpc",
+                      "name": "component/menu/item/text-action",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "dT8wm",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "item/text-action",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "n9gxNP",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "z5zyL",
+                              "name": "Swatch",
+                              "fill": "$component/menu/item/text-action",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "K9cU6",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "E6ouJL",
+                              "name": "Swatch",
+                              "fill": "$component/menu/item/text-action",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "xOYhz",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ action/primary",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -35665,6 +35857,454 @@
                           "textGrowth": "fixed-width",
                           "width": 230,
                           "content": "→ surface/panel",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "QXvcy",
+                  "name": "Component Tooltip",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "U2AZyQ",
+                      "name": "Group header",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        0,
+                        0,
+                        8,
+                        0
+                      ],
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "g0li4",
+                          "name": "Name",
+                          "fill": "$color/semantic/text/primary",
+                          "content": "Tooltip",
+                          "lineHeight": 1.35,
+                          "fontFamily": "$font/family/base",
+                          "fontSize": 18,
+                          "fontWeight": "700",
+                          "letterSpacing": -0.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "x4RoB0",
+                          "name": "Count",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "5 tokens  ·  L / D",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Lc7Km",
+                      "name": "component/tooltip/background",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "k4cJq",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "background",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "tp87t",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "NToSY",
+                              "name": "Swatch",
+                              "fill": "$component/tooltip/background",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "VqyN4",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "eWzRY",
+                              "name": "Swatch",
+                              "fill": "$component/tooltip/background",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "HFUKo",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ surface/inverse",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "S8rje",
+                      "name": "component/tooltip/text",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "wqpOg",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "text",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "KVQDS",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "qfgfE",
+                              "name": "Swatch",
+                              "fill": "$component/tooltip/text",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "H1CXP",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "rUwvq",
+                              "name": "Swatch",
+                              "fill": "$component/tooltip/text",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "pGY52",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ text/inverse",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Q41SB",
+                      "name": "component/tooltip/radius",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "gglln",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "radius",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "mmZp1",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "LMlmu",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "8 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "q27XR",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ radius/sm",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "XutIj",
+                      "name": "component/tooltip/padding-y",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Kv0s4",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "padding-y",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Mf4k5",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "tBrQ0",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "4 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "j7pcnR",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/1",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "DzmC4",
+                      "name": "component/tooltip/padding-x",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "sz0Nw",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "padding-x",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "wVobr",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "lgmUj",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "8 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "rXxKu",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/2",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -39222,7 +39862,7 @@
                           "id": "scKWv",
                           "name": "Count",
                           "fill": "$color/semantic/text/muted",
-                          "content": "11 tokens  ·  L / D",
+                          "content": "13 tokens  ·  L / D",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -40145,6 +40785,142 @@
                           "fontWeight": "normal"
                         }
                       ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "kvHci",
+                      "name": "component/segmented/item/lg/padding-y",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "xjAd9",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "item/lg/padding-y",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "XI488",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "trfLF",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "12 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "u8e7tU",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/3",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JLDBp",
+                      "name": "component/segmented/item/lg/padding-x",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "uzxRH",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "item/lg/padding-x",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "grckv",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Yykd6",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "20 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "OsjdA",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/5",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
                     }
                   ]
                 },
@@ -40190,7 +40966,7 @@
                           "id": "Z5Wsg",
                           "name": "Count",
                           "fill": "$color/semantic/text/muted",
-                          "content": "17 tokens  ·  L / D",
+                          "content": "20 tokens  ·  L / D",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -41627,6 +42403,294 @@
                           "textGrowth": "fixed-width",
                           "width": 230,
                           "content": "→ space/2",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vm0qY",
+                      "name": "component/table/row/background-selected",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "rCW27",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "row/background-selected",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "JWRuK",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "yfPAX",
+                              "name": "Swatch",
+                              "fill": "$component/table/row/background-selected",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "QOndK",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "h70OL",
+                              "name": "Swatch",
+                              "fill": "$component/table/row/background-selected",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "ugvOH",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ status/info/bg",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "PWfvW",
+                      "name": "component/table/header/text-sorted",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "NeXbw",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "header/text-sorted",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "i9cp9",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "xrVGV",
+                              "name": "Swatch",
+                              "fill": "$component/table/header/text-sorted",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "iMXKA",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "WVQyC",
+                              "name": "Swatch",
+                              "fill": "$component/table/header/text-sorted",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "cGZI6",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ text/primary",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "GyIuU",
+                      "name": "component/table/skeleton",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "YYo2B",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "skeleton",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Sryu8",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "aJpDw",
+                              "name": "Swatch",
+                              "fill": "$component/table/skeleton",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "HvQPy",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "tPjbj",
+                              "name": "Swatch",
+                              "fill": "$component/table/skeleton",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "Kh8Gv",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ surface/sunken",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -46727,6 +47791,1014 @@
                           "textGrowth": "fixed-width",
                           "width": 230,
                           "content": "→ space/5",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "opZIU",
+                  "name": "Component Sidebar",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "ikD1F",
+                      "name": "Group header",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        0,
+                        0,
+                        8,
+                        0
+                      ],
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "hZXDg",
+                          "name": "Name",
+                          "fill": "$color/semantic/text/primary",
+                          "content": "Sidebar",
+                          "lineHeight": 1.35,
+                          "fontFamily": "$font/family/base",
+                          "fontSize": 18,
+                          "fontWeight": "700",
+                          "letterSpacing": -0.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "hQrmU",
+                          "name": "Count",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "12 tokens  ·  L / D",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "n0ZBJ6",
+                      "name": "component/sidebar/padding-y",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "g6fZ3Q",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "padding-y",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "S109D",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "k9Bfg",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "8 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "G3DHy",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/2",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "j02pm",
+                      "name": "component/sidebar/padding-x",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "i9c2W",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "padding-x",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Z9KIN9",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "g3XrMA",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "12 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "yR6Zi",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/3",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jYb6A",
+                      "name": "component/sidebar/gap",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "w4gg8",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "gap",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "v1l7of",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Q17q9",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "12 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "p2okkN",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/3",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "B6tKzn",
+                      "name": "component/sidebar/logo",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "a2Vspb",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "logo",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "y3OXS2",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "BDY84",
+                              "name": "Swatch",
+                              "fill": "$component/sidebar/logo",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "y4Iw4",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "CTeWl",
+                              "name": "Swatch",
+                              "fill": "$component/sidebar/logo",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "Tmj3G",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ text/primary",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "akNca",
+                      "name": "component/sidebar/divider",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "lWh5N",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "divider",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "YJg5j",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "aurxJ",
+                              "name": "Swatch",
+                              "fill": "$component/sidebar/divider",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "bh42M",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "It74a",
+                              "name": "Swatch",
+                              "fill": "$component/sidebar/divider",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "k6p42",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ border/default",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "p5JdrT",
+                      "name": "component/sidebar/workspace/background",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "qI043",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "workspace/background",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "HJTiP",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "BfNDY",
+                              "name": "Swatch",
+                              "fill": "$component/sidebar/workspace/background",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "unOLo",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "l9ScVY",
+                              "name": "Swatch",
+                              "fill": "$component/sidebar/workspace/background",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "dgDpW",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ surface/panel",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "f984p",
+                      "name": "component/sidebar/workspace/border",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "jgN5f",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "workspace/border",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "sMcep",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "z4HcK",
+                              "name": "Swatch",
+                              "fill": "$component/sidebar/workspace/border",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "oQZPL",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "E8eRr",
+                              "name": "Swatch",
+                              "fill": "$component/sidebar/workspace/border",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "J1PR18",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ border/default",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "I3Box",
+                      "name": "component/sidebar/workspace/radius",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "D0YyH",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "workspace/radius",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "zsT94",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "I49OE",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "8 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "hwhBp",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ radius/sm",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "lbnWp",
+                      "name": "component/sidebar/workspace/mark",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fucCJ",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "workspace/mark",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "p4fLOW",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "V6Kwua",
+                              "name": "Swatch",
+                              "fill": "$component/sidebar/workspace/mark",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "a3tnk",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "b1eTl1",
+                              "name": "Swatch",
+                              "fill": "$component/sidebar/workspace/mark",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "bQi7C",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ accent/highlight",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Wh1FO",
+                      "name": "component/sidebar/account/gap",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "mZZbg",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "account/gap",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ImUJl",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "SCs1e",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "10 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "F66S4",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/2-5",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "v3Qd7T",
+                      "name": "component/sidebar/rail/width",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "viEtb",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "rail/width",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "PyrdB",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "UKGcR",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "72 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "Mlq48",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ size/rail",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "sPDPJ",
+                      "name": "component/sidebar/rail/gap",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Q80Gfv",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "rail/gap",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "e0M7ay",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Aicav",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "8 px",
+                              "lineHeight": 1.35,
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "O0ZJ1q",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/2",
                           "lineHeight": 1.35,
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
@@ -95904,6 +97976,2002 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "wDOnD",
+      "x": 6808,
+      "y": 19863,
+      "name": "C36 — Combobox",
+      "width": 1440,
+      "fill": "$color/semantic/surface/panel",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 64,
+      "children": [
+        {
+          "type": "frame",
+          "id": "cSsJz",
+          "name": "Header",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            0,
+            0,
+            32,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "OLete",
+              "name": "Overline",
+              "fill": "$color/semantic/text/muted",
+              "content": "COMPONENT  ·  C36  ·  FORM CONTROLS  ·  TIER 2 (open question resolved)",
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 0.6
+            },
+            {
+              "type": "text",
+              "id": "HIOzU",
+              "name": "Title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Combobox",
+              "fontFamily": "$font/family/base",
+              "fontSize": 44,
+              "fontWeight": "700",
+              "letterSpacing": -1.2
+            },
+            {
+              "type": "text",
+              "id": "gEwaK",
+              "name": "Description",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 880,
+              "content": "A searchable Select: the Input is the search, the Menu lists matches, and a last “Tambah …” row creates a new record from the query (menu.item.text-action = action.primary). Built like the Multi-select: private base = instance of _Select/Base (C19) with its Menu slot replaced. Use for long or growing lists (clients, packages); use Select for ≤ 7 fixed options.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Pw5NW",
+          "name": "Exhibit — Component set",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "v2Rlc",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Component set",
+              "fontFamily": "$font/family/base",
+              "fontSize": "$font/size/title",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "J1LmQD",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Source components. Name = Combobox/<State>; private base _Combobox/Base = instance of _Select/Base (C19) with the Menu’s Items replaced: Group label (match count), matches as Menu Items (keyboard-highlighted = Menu Item/Default/Hover, with a Description line), Divider, and the create row (Menu Item + plus icon, label in menu.item.text-action). States: Default · Open (query in Input/Value, focus ring, Menu on) · Disabled. Error/Hover follow Select.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "nq1my",
+              "name": "Set grid",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "stroke": "$color/semantic/border/default",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 32,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "e1qsm",
+                  "name": "Row 1",
+                  "gap": 40,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "XJ8gf",
+                      "name": "Col _Combobox/Base (private)",
+                      "width": 320,
+                      "layout": "vertical",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "zS6RF",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "_Combobox/Base (private)",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "lhmhP",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "R1MZh",
+                          "name": "_Combobox/Base",
+                          "context": "PRIVATE base for Combobox variants (instance of _Select/Base with a searchable Menu + create row).",
+                          "width": 320,
+                          "descendants": {
+                            "Et1pR/Gmk0c": {
+                              "content": "Klien"
+                            },
+                            "Et1pR/c67yIW/VnKAn": {
+                              "enabled": true,
+                              "icon": "search"
+                            },
+                            "Et1pR/c67yIW/tvTDd": {
+                              "content": "Cari atau tambah klien"
+                            },
+                            "Et1pR/c67yIW/Qp2xi": {
+                              "enabled": true,
+                              "icon": "chevrons-up-down"
+                            },
+                            "Et1pR/uh4XA": {
+                              "content": "Ketik nama untuk mencari. Enter memilih yang disorot."
+                            },
+                            "xGHsR": {
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "Ly5N6",
+                                  "name": "Items",
+                                  "slot": [
+                                    "iSqRB",
+                                    "mCgnL",
+                                    "qKcfI",
+                                    "z7QON",
+                                    "yNxME"
+                                  ],
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "children": [
+                                    {
+                                      "id": "qvAJT",
+                                      "type": "ref",
+                                      "ref": "yNxME",
+                                      "name": "Group",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "n0wAh6": {
+                                          "content": "KLIEN · 3 COCOK"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "rZQxc",
+                                      "type": "ref",
+                                      "ref": "mCgnL",
+                                      "name": "Match 1",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "vHwtA": {
+                                          "content": "Rina & Adi"
+                                        },
+                                        "leQSn": {
+                                          "enabled": true,
+                                          "content": "3 proyek · terakhir Mar"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "ih36w",
+                                      "type": "ref",
+                                      "ref": "iSqRB",
+                                      "name": "Match 2",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "vHwtA": {
+                                          "content": "Rina Kartika"
+                                        },
+                                        "leQSn": {
+                                          "enabled": true,
+                                          "content": "1 proyek"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "ykgKq",
+                                      "type": "ref",
+                                      "ref": "iSqRB",
+                                      "name": "Match 3",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "vHwtA": {
+                                          "content": "Marina Putri"
+                                        },
+                                        "leQSn": {
+                                          "enabled": true,
+                                          "content": "Belum ada proyek"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "dwfQf",
+                                      "type": "ref",
+                                      "ref": "z7QON",
+                                      "name": "Divider",
+                                      "width": "fill_container"
+                                    },
+                                    {
+                                      "id": "S05HU",
+                                      "type": "ref",
+                                      "ref": "iSqRB",
+                                      "name": "Create",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "FL9Kk": {
+                                          "enabled": true,
+                                          "icon": "plus",
+                                          "fill": "$component/menu/item/text-action"
+                                        },
+                                        "vHwtA": {
+                                          "content": "Tambah “Rin” sebagai klien baru",
+                                          "fill": "$component/menu/item/text-action",
+                                          "fontWeight": "$font/weight/semibold"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "K6EuPf",
+                      "name": "Col Combobox/Default",
+                      "width": 320,
+                      "layout": "vertical",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "AO4G9",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Combobox/Default",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "CiTrY",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "lhmhP",
+                          "name": "Combobox/Default",
+                          "width": 320,
+                          "context": "Combobox · state=default. Field = Text Field (Label, Helper, Input: search icon, Placeholder/Value = the query). Menu (absolute, 4 px under the Input, on only while open): Group label with the match count, Menu Items (the highlighted match = Hover), Divider, “Tambah …” create row. Spec: docs/design-system/components/combobox.md"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "HyS7d",
+                      "name": "Col Combobox/Disabled",
+                      "width": 320,
+                      "layout": "vertical",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "T4B4QB",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Combobox/Disabled",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "CGRMW",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "lhmhP",
+                          "name": "Combobox/Disabled",
+                          "width": 320,
+                          "context": "Combobox · state=disabled. Field = Text Field (Label, Helper, Input: search icon, Placeholder/Value = the query). Menu (absolute, 4 px under the Input, on only while open): Group label with the match count, Menu Items (the highlighted match = Hover), Divider, “Tambah …” create row. Spec: docs/design-system/components/combobox.md",
+                          "opacity": "$opacity/disabled"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "VP7g0",
+                  "name": "Row 2",
+                  "gap": 40,
+                  "padding": [
+                    0,
+                    0,
+                    300,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Pxh7a",
+                      "name": "Col Combobox/Open · typing “Rin”",
+                      "width": 320,
+                      "layout": "vertical",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "FBO6s",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Combobox/Open · typing “Rin”",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "LN80X",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "lhmhP",
+                          "name": "Combobox/Open",
+                          "width": 320,
+                          "context": "Combobox · state=open. Field = Text Field (Label, Helper, Input: search icon, Placeholder/Value = the query). Menu (absolute, 4 px under the Input, on only while open): Group label with the match count, Menu Items (the highlighted match = Hover), Divider, “Tambah …” create row. Spec: docs/design-system/components/combobox.md",
+                          "descendants": {
+                            "Et1pR/c67yIW": {
+                              "stroke": "$component/input/border-focus",
+                              "strokeWidth": 2,
+                              "effect": {
+                                "type": "shadow",
+                                "shadowType": "outer",
+                                "color": "$color/semantic/focus/glow",
+                                "blur": 6
+                              }
+                            },
+                            "Et1pR/c67yIW/tvTDd": {
+                              "enabled": false
+                            },
+                            "Et1pR/c67yIW/CykHo": {
+                              "enabled": true,
+                              "content": "Rin"
+                            },
+                            "xGHsR": {
+                              "enabled": true
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Z2DAQ",
+          "name": "Exhibit — Content",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "INQVp",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Content",
+              "fontFamily": "$font/family/base",
+              "fontSize": "$font/size/title",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "FnBMB",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "No results: the Group label says so, the list is empty and the create row stays. Replace(<instance>/xGHsR/Ly5N6, {type:\"frame\", name:\"Items\", layout:\"vertical\", width:\"fill_container\"}) and insert the rows.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "PSG2w",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "gap": 40,
+              "padding": [
+                24,
+                24,
+                160,
+                24
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "fPPQC",
+                  "name": "Case",
+                  "width": 320,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "jCZhu",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "no results · query “Zul”",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "v7IOmz",
+                      "type": "ref",
+                      "ref": "LN80X",
+                      "name": "Case specimen",
+                      "width": 320,
+                      "descendants": {
+                        "Et1pR/c67yIW/CykHo": {
+                          "content": "Zul"
+                        },
+                        "xGHsR": {
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "b1lDm",
+                              "name": "Items",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "children": [
+                                {
+                                  "id": "iO0qa",
+                                  "type": "ref",
+                                  "ref": "yNxME",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "n0wAh6": {
+                                      "content": "TIDAK ADA KLIEN “ZUL”"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "pd3t8",
+                                  "type": "ref",
+                                  "ref": "iSqRB",
+                                  "name": "Create",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "FL9Kk": {
+                                      "enabled": true,
+                                      "icon": "plus",
+                                      "fill": "$component/menu/item/text-action"
+                                    },
+                                    "vHwtA": {
+                                      "content": "Tambah “Zul” sebagai klien baru",
+                                      "fill": "$component/menu/item/text-action",
+                                      "fontWeight": "$font/weight/semibold"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "tbPn7",
+          "name": "Exhibit — Usage",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "BvLNk",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "BcInn",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Usage",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "z6UBi",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Combobox for long or growing lists; Select for ≤ 7 fixed options; Multi-select for several picks.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nms5l",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "oY6Rd",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Filter as the user types (match anywhere in the name); show at most 8 matches, then “Lihat semua”.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "ABhWc",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  The create row is always last and repeats the query in quotes; it opens the create form prefilled (Modal on desktop, Form sheet on mobile).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "d5qk0O",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Descriptions carry one disambiguating fact (projects, phone), never a second action.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "VWWZL",
+          "name": "Exhibit — Accessibility",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "rXjQa",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "RqZZ1",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Accessibility",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "h4O3Hx",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "WAI-ARIA combobox pattern (list autocomplete).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "SJm1K",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vMHoz",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Input role=combobox, aria-expanded, aria-controls = the listbox, aria-activedescendant = the highlighted option.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "N7gzQ",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  ↑/↓ move the highlight, Enter picks, Esc closes and keeps the query; the match count is announced (aria-live=polite).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                },
+                {
+                  "type": "text",
+                  "id": "ex6fo",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  The create row is an option with an explicit label (“Tambah Zul sebagai klien baru”).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "$font/weight/regular"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "jNOvR",
+      "x": 8348,
+      "y": 19863,
+      "name": "C37 — Nav rail & tablet shell",
+      "width": 1440,
+      "fill": "$color/semantic/surface/panel",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 64,
+      "children": [
+        {
+          "type": "frame",
+          "id": "pXZj0",
+          "name": "Header",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            0,
+            0,
+            32,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "a4zfqg",
+              "name": "Overline",
+              "fill": "$color/semantic/text/muted",
+              "content": "COMPONENT + TEMPLATE  ·  C37  ·  NAVIGATION  ·  TABLET",
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 0.6
+            },
+            {
+              "type": "text",
+              "id": "LmFJD",
+              "name": "Title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Nav rail & tablet shell",
+              "fontFamily": "$font/family/base",
+              "fontSize": 44,
+              "fontWeight": "700",
+              "letterSpacing": -1.2
+            },
+            {
+              "type": "text",
+              "id": "oCiOz",
+              "name": "Description",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 880,
+              "content": "Tablet (768–1279): the Sidebar collapsed to a 72 px icon rail (Owner 2026-09-26, exploration board 07 option A, with tooltips). Same destinations and Nav Item colours as the Sidebar (C29); labels move into a Tooltip on hover/focus; counts become Notification Badges. The expand button opens the full Sidebar as an overlay. < 768 = Mobile App Shell (C35) · ≥ 1280 = App Shell (C30).",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "j0N8lL",
+          "name": "Exhibit — Component set",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "JzUF3",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Component set",
+              "fontFamily": "$font/family/base",
+              "fontSize": "$font/size/title",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "T836Z3",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "tf4wm",
+              "name": "Set grid",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "stroke": "$color/semantic/border/default",
+              "strokeWidth": 1,
+              "gap": 48,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "fEWwR",
+                  "name": "Col tooltip",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "QYTAZ",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "Tooltip",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "OYkds",
+                      "name": "Tooltip",
+                      "context": "Tooltip · short label for an icon-only control (rail items, icon buttons). Text: Label (≤ 3 words). Shown on hover and keyboard focus after 300 ms. Spec: docs/design-system/components/nav-rail.md",
+                      "reusable": true,
+                      "metadata": {
+                        "type": "component",
+                        "component": "tooltip"
+                      },
+                      "fill": "$component/tooltip/background",
+                      "cornerRadius": "$component/tooltip/radius",
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "$color/semantic/elevation/1/color",
+                        "offset": {
+                          "x": 0,
+                          "y": "$elevation/1/offset-y"
+                        },
+                        "blur": "$elevation/1/blur"
+                      },
+                      "padding": [
+                        "$component/tooltip/padding-y",
+                        "$component/tooltip/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "WLS9S",
+                          "name": "Label",
+                          "fill": "$component/tooltip/text",
+                          "content": "Klien",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": "$font/size/label",
+                          "fontWeight": "$font/weight/semibold"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "zPQcO",
+                  "name": "Col rail items",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "qQTDs",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "_NavRailItem/Base (private) · Default · Hover · Active · Focus",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "SiK1M",
+                      "gap": 72,
+                      "padding": [
+                        0,
+                        80,
+                        0,
+                        0
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "xhCvp",
+                          "name": "_NavRailItem/Base",
+                          "context": "PRIVATE base for Nav Rail Item states.",
+                          "reusable": true,
+                          "metadata": {
+                            "type": "component",
+                            "component": "nav-rail-item",
+                            "role": "base"
+                          },
+                          "width": 40,
+                          "height": 40,
+                          "cornerRadius": "$component/nav/item/radius",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "r4Ryb",
+                              "name": "Icon",
+                              "width": 18,
+                              "height": 18,
+                              "icon": "users",
+                              "library": "lucide",
+                              "fill": "$component/nav/item/icon"
+                            },
+                            {
+                              "id": "mKYsh",
+                              "type": "ref",
+                              "ref": "HoAYC",
+                              "name": "Badge",
+                              "enabled": false,
+                              "layoutPosition": "absolute",
+                              "x": 24,
+                              "y": 2
+                            },
+                            {
+                              "id": "B1PEOz",
+                              "type": "ref",
+                              "ref": "OYkds",
+                              "name": "Tooltip",
+                              "enabled": false,
+                              "layoutPosition": "absolute",
+                              "x": 52,
+                              "y": 8
+                            }
+                          ]
+                        },
+                        {
+                          "id": "odApP",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "xhCvp",
+                          "name": "Nav Rail Item/Default",
+                          "context": "Nav Rail Item · state=default. Swap: Icon. Tooltip text = the Sidebar label (shown on hover/focus). Boolean: Badge (Notification Badge; set Count). Code: link with aria-label; aria-current=page when active. Spec: docs/design-system/components/nav-rail.md"
+                        },
+                        {
+                          "id": "GMxFW",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "xhCvp",
+                          "name": "Nav Rail Item/Hover",
+                          "context": "Nav Rail Item · state=hover. Swap: Icon. Tooltip text = the Sidebar label (shown on hover/focus). Boolean: Badge (Notification Badge; set Count). Code: link with aria-label; aria-current=page when active. Spec: docs/design-system/components/nav-rail.md",
+                          "fill": "$component/nav/item/background-hover",
+                          "descendants": {
+                            "B1PEOz": {
+                              "enabled": true
+                            }
+                          }
+                        },
+                        {
+                          "id": "OKf00",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "xhCvp",
+                          "name": "Nav Rail Item/Active",
+                          "context": "Nav Rail Item · state=active. Swap: Icon. Tooltip text = the Sidebar label (shown on hover/focus). Boolean: Badge (Notification Badge; set Count). Code: link with aria-label; aria-current=page when active. Spec: docs/design-system/components/nav-rail.md",
+                          "fill": "$component/nav/item/background-active",
+                          "descendants": {
+                            "r4Ryb": {
+                              "fill": "$component/nav/item/text-active",
+                              "icon": "layout-grid"
+                            },
+                            "B1PEOz/WLS9S": {
+                              "content": "Dasbor"
+                            }
+                          }
+                        },
+                        {
+                          "id": "vRX3t",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "xhCvp",
+                          "name": "Nav Rail Item/Focus",
+                          "context": "Nav Rail Item · state=focus. Swap: Icon. Tooltip text = the Sidebar label (shown on hover/focus). Boolean: Badge (Notification Badge; set Count). Code: link with aria-label; aria-current=page when active. Spec: docs/design-system/components/nav-rail.md",
+                          "stroke": "$color/semantic/focus/ring",
+                          "strokeWidth": 2,
+                          "strokeAlignment": "outer",
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "$color/semantic/focus/glow",
+                            "blur": 6
+                          },
+                          "descendants": {
+                            "B1PEOz": {
+                              "enabled": true
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "qtVmf",
+                  "name": "Col rail",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "zAG6r",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "Sidebar/Rail · 72",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JRUY0",
+                      "name": "Sidebar/Rail",
+                      "context": "Sidebar · rail (tablet 768–1279), width sidebar.rail.width = size.rail 72. Same destinations as the Sidebar: Nav slot (Nav Rail Items + hairline between groups), Nav bottom slot; workspace mark opens the workspace menu; Expand opens the full Sidebar as an overlay. Spec: docs/design-system/components/nav-rail.md",
+                      "reusable": true,
+                      "metadata": {
+                        "type": "component",
+                        "component": "sidebar",
+                        "variant": "rail"
+                      },
+                      "width": 72,
+                      "height": 744,
+                      "layout": "vertical",
+                      "gap": "$component/sidebar/rail/gap",
+                      "padding": [
+                        "$component/sidebar/padding-y",
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "d2hdjN",
+                          "name": "Logo",
+                          "width": 40,
+                          "height": 40,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "LZvm8",
+                              "name": "Mark",
+                              "width": 22,
+                              "height": 22,
+                              "icon": "aperture",
+                              "library": "lucide",
+                              "fill": "$component/sidebar/logo"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "VVXZM",
+                          "name": "Workspace",
+                          "width": 40,
+                          "height": 40,
+                          "fill": "$component/sidebar/workspace/background",
+                          "cornerRadius": "$component/sidebar/workspace/radius",
+                          "stroke": "$component/sidebar/workspace/border",
+                          "strokeWidth": 1,
+                          "strokeAlignment": "inner",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "HbcMi",
+                              "name": "Workspace mark",
+                              "width": 20,
+                              "height": 20,
+                              "fill": "$component/sidebar/workspace/mark",
+                              "cornerRadius": "$radius/xs",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "z3corP",
+                                  "name": "Icon",
+                                  "width": 12,
+                                  "height": 12,
+                                  "icon": "camera",
+                                  "library": "lucide",
+                                  "fill": "$color/semantic/accent/on-highlight"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "alO9W",
+                          "name": "Divider",
+                          "fill": "$component/sidebar/divider",
+                          "width": 32,
+                          "height": 1
+                        },
+                        {
+                          "type": "frame",
+                          "id": "r1Gq4",
+                          "name": "Nav",
+                          "slot": [
+                            "odApP",
+                            "GMxFW",
+                            "OKf00",
+                            "vRX3t"
+                          ],
+                          "layout": "vertical",
+                          "gap": "$component/sidebar/rail/gap",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "lngYe",
+                              "type": "ref",
+                              "ref": "OKf00",
+                              "name": "Nav Dasbor",
+                              "descendants": {
+                                "r4Ryb": {
+                                  "icon": "layout-grid"
+                                },
+                                "B1PEOz/WLS9S": {
+                                  "content": "Dasbor"
+                                }
+                              }
+                            },
+                            {
+                              "id": "dqxPf",
+                              "type": "ref",
+                              "ref": "odApP",
+                              "name": "Nav Proyek",
+                              "descendants": {
+                                "r4Ryb": {
+                                  "icon": "folder-kanban"
+                                },
+                                "mKYsh": {
+                                  "enabled": true
+                                },
+                                "mKYsh/hnJrZ": {
+                                  "content": "12"
+                                },
+                                "B1PEOz/WLS9S": {
+                                  "content": "Proyek"
+                                }
+                              }
+                            },
+                            {
+                              "id": "h5Vew",
+                              "type": "ref",
+                              "ref": "odApP",
+                              "name": "Nav Klien",
+                              "descendants": {
+                                "r4Ryb": {
+                                  "icon": "users"
+                                },
+                                "B1PEOz/WLS9S": {
+                                  "content": "Klien"
+                                }
+                              }
+                            },
+                            {
+                              "id": "t9sZGC",
+                              "type": "ref",
+                              "ref": "odApP",
+                              "name": "Nav Invoice",
+                              "descendants": {
+                                "r4Ryb": {
+                                  "icon": "receipt"
+                                },
+                                "mKYsh": {
+                                  "enabled": true
+                                },
+                                "mKYsh/hnJrZ": {
+                                  "content": "3"
+                                },
+                                "B1PEOz/WLS9S": {
+                                  "content": "Invoice"
+                                }
+                              }
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "i8V8n",
+                              "name": "Group divider",
+                              "fill": "$component/sidebar/divider",
+                              "width": 24,
+                              "height": 1
+                            },
+                            {
+                              "id": "x1rRy",
+                              "type": "ref",
+                              "ref": "odApP",
+                              "name": "Nav Layanan",
+                              "descendants": {
+                                "r4Ryb": {
+                                  "icon": "package"
+                                },
+                                "B1PEOz/WLS9S": {
+                                  "content": "Layanan"
+                                }
+                              }
+                            },
+                            {
+                              "id": "cYVXp",
+                              "type": "ref",
+                              "ref": "odApP",
+                              "name": "Nav Tim",
+                              "descendants": {
+                                "r4Ryb": {
+                                  "icon": "user-round-cog"
+                                },
+                                "B1PEOz/WLS9S": {
+                                  "content": "Tim"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Uf9Op",
+                          "name": "Spacer",
+                          "width": 1,
+                          "height": "fill_container"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "A4gKt",
+                          "name": "Nav bottom",
+                          "slot": [
+                            "odApP",
+                            "GMxFW",
+                            "OKf00",
+                            "vRX3t"
+                          ],
+                          "layout": "vertical",
+                          "gap": "$component/sidebar/rail/gap",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "OUye0",
+                              "type": "ref",
+                              "ref": "odApP",
+                              "name": "Nav Template pesan",
+                              "descendants": {
+                                "r4Ryb": {
+                                  "icon": "message-square-text"
+                                },
+                                "B1PEOz/WLS9S": {
+                                  "content": "Template pesan"
+                                }
+                              }
+                            },
+                            {
+                              "id": "ycw6L",
+                              "type": "ref",
+                              "ref": "odApP",
+                              "name": "Nav Sumber klien",
+                              "descendants": {
+                                "r4Ryb": {
+                                  "icon": "share-2"
+                                },
+                                "B1PEOz/WLS9S": {
+                                  "content": "Sumber klien"
+                                }
+                              }
+                            },
+                            {
+                              "id": "o6fNtV",
+                              "type": "ref",
+                              "ref": "odApP",
+                              "name": "Nav Pengaturan",
+                              "descendants": {
+                                "r4Ryb": {
+                                  "icon": "settings"
+                                },
+                                "B1PEOz/WLS9S": {
+                                  "content": "Pengaturan"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "ImnwL",
+                          "name": "Divider",
+                          "fill": "$component/sidebar/divider",
+                          "width": 32,
+                          "height": 1
+                        },
+                        {
+                          "id": "Tqr15",
+                          "type": "ref",
+                          "ref": "qY0Em",
+                          "name": "Expand",
+                          "descendants": {
+                            "wSyzB": {
+                              "icon": "panel-left-open"
+                            }
+                          }
+                        },
+                        {
+                          "id": "Gv7Lh",
+                          "type": "ref",
+                          "ref": "N7uFQ",
+                          "name": "Avatar",
+                          "descendants": {
+                            "DloPs": {
+                              "content": "AP"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "fGXHI",
+          "name": "Exhibit — Tablet shell",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "iZ9QO",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "App Shell/Tablet",
+              "fontFamily": "$font/family/base",
+              "fontSize": "$font/size/title",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "d0yJxf",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Template for tablet screens: Sidebar/Rail (72) + App Panel filling the rest (940 at 1024). Gutter space.3 top/right/bottom like the desktop shell. The Page Content Container is overridden to fill (max-width 1096 in code never triggers below 1280). Overlay (boolean, off) = scrim + Modal slot, sized 1024 × 768 (override on resized instances). Fill on a top-level instance: Replace(<shell>/<panel>/d2hCuQ/bBehO, …), active tab: Replace(<shell>/<rail>/<item>, Nav Rail Item/Active).",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "sg6Kc",
+              "name": "Set grid",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "stroke": "$color/semantic/border/default",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "FgMms",
+                  "name": "Caption",
+                  "fill": "$color/semantic/text/muted",
+                  "content": "App Shell/Tablet · 1024 × 768 (template)",
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "lQnS8",
+                  "name": "App Shell/Tablet",
+                  "context": "App Shell · tablet template 1024 × 768 (768–1279). Nested: Sidebar/Rail (set the active Nav Rail Item), App Panel (Title, Actions, Content → Page Content; its Container is fill here — max-width 1096 still applies in code). Boolean: Overlay (off; Modal slot). Spec: docs/design-system/components/nav-rail.md",
+                  "reusable": true,
+                  "metadata": {
+                    "type": "component",
+                    "component": "app-shell",
+                    "variant": "tablet"
+                  },
+                  "clip": true,
+                  "width": 1024,
+                  "height": 768,
+                  "fill": "$color/semantic/surface/canvas",
+                  "padding": [
+                    "$space/3",
+                    "$space/3",
+                    "$space/3",
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "f4EPF6",
+                      "type": "ref",
+                      "ref": "JRUY0",
+                      "name": "Rail",
+                      "height": "fill_container"
+                    },
+                    {
+                      "id": "QhPny",
+                      "type": "ref",
+                      "ref": "UmVJD",
+                      "name": "Panel",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "descendants": {
+                        "rGZAL": {
+                          "width": 300
+                        },
+                        "d2hCuQ/bBehO": {
+                          "width": "fill_container"
+                        }
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "bbU0M",
+                      "layoutPosition": "absolute",
+                      "x": 0,
+                      "y": 0,
+                      "name": "Overlay",
+                      "enabled": false,
+                      "width": 1024,
+                      "height": 768,
+                      "fill": "$component/modal/scrim",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "o14Rz",
+                          "name": "Modal",
+                          "slot": [
+                            "cdSbf",
+                            "f8ym9",
+                            "yAPhv"
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "NB6IX",
+                              "type": "ref",
+                              "ref": "f8ym9",
+                              "name": "Modal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "eOjFJ",
+          "name": "Exhibit — Content",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "mlwQj",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Content & modes",
+              "fontFamily": "$font/family/base",
+              "fontSize": "$font/size/title",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "LdNoW",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Dashboard on the tablet shell: tiles 2 per row (gap 16), the greeting row keeps its primary Button. Light shows the hover state on Klien (Nav Rail Item/Hover with its Tooltip). Dark uses the same Nav Item colours as the Sidebar (active = action.primary fill).",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "Bn2fn",
+              "name": "Case light",
+              "theme": {
+                "mode": "light"
+              },
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "stroke": "$color/semantic/border/default",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "daSEN",
+                  "name": "Caption",
+                  "fill": "$color/semantic/text/muted",
+                  "content": "LIGHT · hover on Klien",
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "id": "y2lMm",
+                  "type": "ref",
+                  "ref": "lQnS8",
+                  "name": "App Shell/Tablet",
+                  "descendants": {
+                    "f4EPF6/h5Vew": {
+                      "id": "o8tKO",
+                      "type": "ref",
+                      "ref": "GMxFW",
+                      "name": "Nav Klien",
+                      "descendants": {
+                        "r4Ryb": {
+                          "icon": "users"
+                        },
+                        "B1PEOz": {
+                          "enabled": false
+                        },
+                        "B1PEOz/WLS9S": {
+                          "content": "Klien"
+                        }
+                      }
+                    },
+                    "QhPny/d2hCuQ": {
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "H0wo12",
+                          "name": "Container",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$component/panel/app/content/gap",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "ROygO",
+                              "name": "Greeting",
+                              "width": "fill_container",
+                              "gap": "$space/6",
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "m8QgN",
+                                  "name": "Greeting text",
+                                  "layout": "vertical",
+                                  "gap": "$space/1-5",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "gyGjn",
+                                      "name": "Headline",
+                                      "fill": "$color/semantic/text/primary",
+                                      "content": "Selamat pagi, Alya.",
+                                      "fontFamily": "$font/family/base",
+                                      "fontSize": "$font/size/display",
+                                      "fontWeight": "$font/weight/bold",
+                                      "letterSpacing": "$font/letter-spacing/display"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "fS5qW",
+                                      "name": "Sub",
+                                      "fill": "$color/semantic/text/muted",
+                                      "content": "Fokus hari ini: sesi, pilihan klien, pengiriman, dan invoice yang belum dibayar.",
+                                      "fontFamily": "$font/family/base",
+                                      "fontSize": "$font/size/body",
+                                      "fontWeight": "$font/weight/regular"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "id": "v2WAH",
+                                  "type": "ref",
+                                  "ref": "aBT7T",
+                                  "name": "Primary action",
+                                  "descendants": {
+                                    "fMNO1": {
+                                      "enabled": true,
+                                      "icon": "plus"
+                                    },
+                                    "xnhuK": {
+                                      "content": "Proyek baru"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "RYEQY",
+                              "name": "Metrics row",
+                              "width": "fill_container",
+                              "gap": "$space/4",
+                              "children": [
+                                {
+                                  "id": "YJaUQ",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Pendapatan"
+                                    },
+                                    "MbBqV/GqwpL": {
+                                      "content": "+12,4%"
+                                    },
+                                    "CXKcw": {
+                                      "content": "Rp 18,4 jt"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "G2OyGT",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Sesi bulan ini"
+                                    },
+                                    "MbBqV/GqwpL": {
+                                      "content": "+3"
+                                    },
+                                    "CXKcw": {
+                                      "content": "14"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "TR5yq",
+                              "name": "Metrics row",
+                              "width": "fill_container",
+                              "gap": "$space/4",
+                              "children": [
+                                {
+                                  "id": "YNt5C",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Turnaround"
+                                    },
+                                    "MbBqV": {
+                                      "enabled": false
+                                    },
+                                    "CXKcw": {
+                                      "content": "6 hari"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "LsqBz",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Tagihan"
+                                    },
+                                    "MbBqV": {
+                                      "enabled": false
+                                    },
+                                    "CXKcw": {
+                                      "content": "Rp 4,2 jt"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "p5uD2",
+                  "type": "ref",
+                  "ref": "OYkds",
+                  "name": "Tooltip (portal)",
+                  "layoutPosition": "absolute",
+                  "x": 92,
+                  "y": 279,
+                  "descendants": {
+                    "WLS9S": {
+                      "content": "Klien"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "SpdSW",
+              "name": "Case dark",
+              "theme": {
+                "mode": "dark"
+              },
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "stroke": "$color/semantic/border/default",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "We0qg",
+                  "name": "Caption",
+                  "fill": "$color/semantic/text/muted",
+                  "content": "DARK",
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "id": "ETTz6",
+                  "type": "ref",
+                  "ref": "lQnS8",
+                  "name": "App Shell/Tablet",
+                  "descendants": {
+                    "QhPny/d2hCuQ": {
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "t0xmhm",
+                          "name": "Container",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$component/panel/app/content/gap",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "Mzfdc",
+                              "name": "Greeting",
+                              "width": "fill_container",
+                              "gap": "$space/6",
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "hf5LD",
+                                  "name": "Greeting text",
+                                  "layout": "vertical",
+                                  "gap": "$space/1-5",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "M75ZQ",
+                                      "name": "Headline",
+                                      "fill": "$color/semantic/text/primary",
+                                      "content": "Selamat pagi, Alya.",
+                                      "fontFamily": "$font/family/base",
+                                      "fontSize": "$font/size/display",
+                                      "fontWeight": "$font/weight/bold",
+                                      "letterSpacing": "$font/letter-spacing/display"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "Wv3zb",
+                                      "name": "Sub",
+                                      "fill": "$color/semantic/text/muted",
+                                      "content": "Fokus hari ini: sesi, pilihan klien, pengiriman, dan invoice yang belum dibayar.",
+                                      "fontFamily": "$font/family/base",
+                                      "fontSize": "$font/size/body",
+                                      "fontWeight": "$font/weight/regular"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "id": "u89RBL",
+                                  "type": "ref",
+                                  "ref": "aBT7T",
+                                  "name": "Primary action",
+                                  "descendants": {
+                                    "fMNO1": {
+                                      "enabled": true,
+                                      "icon": "plus"
+                                    },
+                                    "xnhuK": {
+                                      "content": "Proyek baru"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "EAr0v",
+                              "name": "Metrics row",
+                              "width": "fill_container",
+                              "gap": "$space/4",
+                              "children": [
+                                {
+                                  "id": "xbe2Z",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Pendapatan"
+                                    },
+                                    "MbBqV/GqwpL": {
+                                      "content": "+12,4%"
+                                    },
+                                    "CXKcw": {
+                                      "content": "Rp 18,4 jt"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "YCy2w",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Sesi bulan ini"
+                                    },
+                                    "MbBqV/GqwpL": {
+                                      "content": "+3"
+                                    },
+                                    "CXKcw": {
+                                      "content": "14"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "JLS4D",
+                              "name": "Metrics row",
+                              "width": "fill_container",
+                              "gap": "$space/4",
+                              "children": [
+                                {
+                                  "id": "X6Oqgy",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Turnaround"
+                                    },
+                                    "MbBqV": {
+                                      "enabled": false
+                                    },
+                                    "CXKcw": {
+                                      "content": "6 hari"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "ovLTy",
+                                  "type": "ref",
+                                  "ref": "AJT5R",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Wtx9f": {
+                                      "content": "Tagihan"
+                                    },
+                                    "MbBqV": {
+                                      "enabled": false
+                                    },
+                                    "CXKcw": {
+                                      "content": "Rp 4,2 jt"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "themes": {
@@ -98546,6 +102614,38 @@
     "component/sidebar/account/gap": {
       "type": "number",
       "value": "$space/2-5"
+    },
+    "size/rail": {
+      "type": "number",
+      "value": 72
+    },
+    "component/sidebar/rail/width": {
+      "type": "number",
+      "value": "$size/rail"
+    },
+    "component/sidebar/rail/gap": {
+      "type": "number",
+      "value": "$space/2"
+    },
+    "component/tooltip/background": {
+      "type": "color",
+      "value": "$color/semantic/surface/inverse"
+    },
+    "component/tooltip/text": {
+      "type": "color",
+      "value": "$color/semantic/text/inverse"
+    },
+    "component/tooltip/radius": {
+      "type": "number",
+      "value": "$radius/sm"
+    },
+    "component/tooltip/padding-y": {
+      "type": "number",
+      "value": "$space/1"
+    },
+    "component/tooltip/padding-x": {
+      "type": "number",
+      "value": "$space/2"
     }
   },
   "fileToken": "a25701b4-4c5b-41fc-8af0-91535884d9bf"

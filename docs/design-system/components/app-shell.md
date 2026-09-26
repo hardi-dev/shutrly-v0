@@ -29,14 +29,18 @@ To show a modal: `Update(<shell>, {descendants:{fwm7P:{enabled:true}}})`, then f
 
 The gutter, panel insets and the 1096 content max-width are owned by the template (SP5). The master shows an empty Page Content; the dark example (`TXZxf`) shows the dashboard.
 
+## Wide screens
+
+`C30 — App shell · 1920` (`R6JQ6`) shows the same shell at 1920 × 1080. The Sidebar stays 252 wide and the panel fills the rest. Page Content keeps its Container at 1096 and centres it.
+
 ## Accessibility
 
 - Landmarks: `<nav>` (the sidebar) and `<main>` (the panel). The Overlay is a portal to `<body>`; while it is open the sidebar and panel are `inert`. A skip link, *Langsung ke konten*, is the first focusable element.
 
 ## Gaps
 
-- The design width is 1440 only. Below 1280 the sidebar should collapse to icons, and below 768 it becomes a drawer; these breakpoints are future work.
-- The client gallery (mobile, GAP-04) uses a different shell.
+- Tablet (768–1279): use `App Shell/Tablet` (C37, Sidebar/Rail + panel). Below 768: use the Mobile App Shell (C35).
+- On the canvas the Overlay is absolute and can't fill, so a resized shell instance also overrides `fwm7P` width and height. In code it is `position: fixed; inset: 0`.
 
 ## Implementation references
 

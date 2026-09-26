@@ -51,9 +51,9 @@ In dark mode, the title and action switch to `text.primary` on the tinted surfac
 - The toast is never the only way to reach its action.
 - Contrast: the title and action (`status.*.fg`) on the tone's `.bg` are ≥ 4.5 : 1 in light mode; `text.primary` on the dark tint in dark mode.
 
-## Known issue
+## Close alignment (resolved 2026-09-26)
 
-The close button (32 px) is top-aligned, so its × glyph sits 7 px below the centre of the title line. Pencil has no negative offsets, and SP8 forbids stacking spacing to fake one. Code may nudge it with `margin-block: -6px` as a §4.6 optical exception once the Owner approves.
+The close button (32 px) sits in a `Close align` frame (`IXhZl`) that is 18 px high, the height of the title line (13 × 1.4). The frame centres the button, which overflows it without clipping, so the × lines up with the title's centre. Code: `align-self: start; margin-block: -7px` on the 32 px button (a §4.6 optical exception, approved by the Owner). No new token.
 
 ## Implementation references
 

@@ -44,9 +44,12 @@ The private base is `_CalendarDay/Base` (`RmXbc`).
 - Selected uses `aria-pressed` (or `aria-selected`) and is shown by the inverse fill, not colour alone.
 - Arrow keys move between days. Focus is always visible.
 
+## Hover (added 2026-09-26)
+
+`Calendar Day/Hover` (`k6Pzsk`) is an unselected day under the pointer. It uses `calendar.day.background-hover` → `surface.muted`, one step darker than the resting `surface.sunken`. Selected and Focus take precedence over Hover.
+
 ## Gaps
 
-- No hover state or token.
 - The dots gap binds `space.1` directly, because there's no component alias.
 
 ## Implementation references

@@ -32,10 +32,13 @@
 - The workspace switcher is a button (`aria-haspopup=menu`) that opens a Menu of workspaces.
 - Collapse and log out need `aria-label`s (*Ciutkan sidebar*, *Keluar*).
 
+## Tokens (added 2026-09-26)
+
+The Owner promoted the layout region to component aliases. The values didn't change: `sidebar.padding-y/-x` (8 / 12), `sidebar.gap` (12), `sidebar.logo` (`text.primary`), `sidebar.divider` (`border.default`), `sidebar.workspace.background/border/radius/mark` (`surface.panel` / `border.default` / `radius.sm` / `accent.highlight`) and `sidebar.account.gap` (10). The Bottom Sheet/Menu logo, workspace switcher and account bind the same aliases.
+
 ## Gaps
 
-- Collapsed (icon-only) and mobile drawer modes.
-- Optional `sidebar.*` component aliases.
+- Collapsed = `Sidebar/Rail` (C37, tablet). Mobile uses the Bottom Nav + Menu sheet (C34/C32) instead of a drawer.
 
 ## Implementation references
 

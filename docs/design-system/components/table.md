@@ -46,6 +46,21 @@ const c = Replace(r+"/GoLkn", {type:"frame", name:"Cells", width:"fill_container
 Insert(c, {type:"ref", ref:"lVDvO", width:"fill_container", descendants:{Q4FlPn:{content:"Rina & Adi"}, "cTnMA/DloPs":{content:"RA"}}})
 ```
 
+## States (added 2026-09-26)
+
+| Component | ID | Use |
+|---|---|---|
+| `Table Header Cell/Sorted` | `UD38Q` | The sorted column: label in `table.header.text-sorted` plus a 12 px chevron (down = descending; swap to `chevron-up` for ascending). Code: `aria-sort`. |
+| `Table Header Cell/Select` | `h0RSa` | 32 wide, select-all Checkbox (swap to Checked or Mixed). |
+| `Table Cell/Select` · `/Selected` | `xbQwc` · `whHzE` | 32 wide, a row Checkbox, unchecked or checked. |
+| `Table Row/Selected` | `bd9LK` | `table.row.background-selected` (`status.info.bg`); pair it with `Table Cell/Selected`. Code: `aria-selected`. |
+| `Table Row/Skeleton` | `eFemy` | Loading placeholder: avatar circle and bars in `table.skeleton` on `table.background`. Show 3–5 rows; the table gets `aria-busy`. |
+| `Table Empty State` | `w0HQb` | Replaces the Rows slot when there is nothing to show: a 40 icon circle, Title, Body and an optional Secondary Button. Hide the footer count. |
+
+The header cell and cell bases carry an optional `Checkbox` layer (last child, off). **Never move a newly inserted layer inside these masters**: that corrupted the existing Table instances on 2026-09-26, so Pen couldn't save.
+
+The master's sample rows use a plain 130 frame holding a Stage Chip for the *Tahap* column, because Pencil can't swap the chip inside a cell nested in a master. In screens, use `Table Cell/Stage` and `Replace(<cell>/T67o9d, …)` on a top-level instance.
+
 ## Decisions and snaps
 
 - Filter: the legacy dark inverse pills are replaced by the **Segmented control** (Owner, 2026-09-26), so the app has one filter pattern.
@@ -61,7 +76,7 @@ Insert(c, {type:"ref", ref:"lVDvO", width:"fill_container", descendants:{Q4FlPn:
 
 ## Gaps
 
-- No sorting, row selection, empty, loading or pagination states (GAP-02).
+- No pagination (GAP-02).
 - The toolbar title and subtitle and the footer count bind semantic text tokens; they have no component aliases.
 
 ## Implementation references

@@ -104,6 +104,7 @@ S = {
 NUM = {  # number tokens: path -> (value, description)
  "space.0-5":(2,""),"space.1":(4,""),"space.1-5":(6,""),"space.2":(8,""),"space.2-5":(10,""),"space.3":(12,""),
  "space.4":(16,""),"space.5":(20,""),"space.6":(24,""),"space.7":(28,""),"space.8":(32,""),"space.9":(36,""),"space.10":(40,""),"space.12":(48,""),
+ "size.rail":(72,"Tablet icon rail width (Owner 2026-09-26, board 07 option A)"),
  "size.content-max":(1096,"Page content max-width: 1440 shell − 252 sidebar − 12 gutter − 2×40 content padding (layout size, not spacing)"),
  "radius.2xs":(2,"Bars"),"radius.xs":(4,"Kbd, delta, checkbox"),"radius.sm":(8,"Nav item, input"),"radius.md":(12,"Tile, toast"),
  "radius.lg":(16,"App panel, day cell"),"radius.xl":(24,"Sheet"),"radius.full":(999,"Pill"),
@@ -415,6 +416,14 @@ add("table.row.background-selected","color",SC("status.info.bg"))  # selected ro
 add("table.header.text-sorted","color",SC("text.primary"))     # sorted column head + chevron
 add("table.skeleton","color",SC("surface.sunken"))             # loading placeholder bars
 add("menu.item.text-action","color",SC("action.primary"))      # Combobox "Tambah …" create row
+# Tablet rail + tooltip (Owner 2026-09-26: board 07 option A "icon rail with tooltips")
+add("sidebar.rail.width","number",SP("size.rail"))             # 72; Pencil can't bind width → documented
+add("sidebar.rail.gap","number",SP("space.2"))                 # 8 between rail items
+add("tooltip.background","color",SC("surface.inverse"))
+add("tooltip.text","color",SC("text.inverse"))
+add("tooltip.radius","number",SP("radius.sm"))                 # 8
+add("tooltip.padding-y","number",SP("space.1"))                # 4
+add("tooltip.padding-x","number",SP("space.2"))                # 8
 
 # ---------- build DTCG ----------
 def setp(d, path, val):
@@ -508,7 +517,7 @@ mapping = {
                     "rules_status": "APPROVED 2026-09-26",
                     "note": "Documentation boards bind every swatch/scale to live variables; dark previews use theme mode=dark."},
  "components": {k: v for k, v in json.loads((ROOT/"components"/"registry.json").read_text()).items() if not k.startswith("$")} if (ROOT/"components"/"registry.json").exists() else {},
- "components_status": "IN PROGRESS — C01–C35 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3, 4).",
+ "components_status": "IN PROGRESS — C01–C35 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3, 4); C36 Combobox, C37 Nav rail & tablet shell and the open-question additions PROPOSED 2026-09-26.",
  "unsupported": {
    "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.","typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",
                  "shadow": "Composite shadow split into elevation.N.offset-y / blur (number) + color.semantic.elevation.N.color (color)."},

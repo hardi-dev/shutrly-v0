@@ -20,6 +20,7 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 - Styling: Tailwind CSS v4, tokens as CSS variables mirrored from Pencil ([ADR-010](decisions/ADR-010-tailwind-react-aria.md))
 - Components: React Aria Components, wrapped in `src/ui/primitives/*` and `src/ui/patterns/*` ([ADR-010](decisions/ADR-010-tailwind-react-aria.md))
 - Design source: Pencil
+- Local explorer: Storybook 10.6.0 with `@storybook/nextjs-vite`, Controls, Docs, and a11y; local-only via `pnpm storybook` ([ADR-014](decisions/ADR-014-local-storybook-component-explorer.md))
 
 ## Backend
 - Runtime / application layer: Next.js server actions + route handlers → composition root → application services in `src/features/*/application`
@@ -38,6 +39,7 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 - Unit: Vitest
 - Integration: Vitest against the single shared non-production Neon database ([ADR-009](decisions/ADR-009-neon-serverless-driver.md))
 - E2E: Playwright
+- Component exploration and isolated UI documentation: Storybook stories colocated with `src/ui` units
 
 ## Code quality
 - Lint: ESLint 9 flat config with `eslint-config-next`, `typescript-eslint` `strictTypeChecked`, `eslint-plugin-boundaries`, SonarJS, `simple-import-sort`, `eslint-comments`, plus the local rules in `eslint/local-rules.mjs`

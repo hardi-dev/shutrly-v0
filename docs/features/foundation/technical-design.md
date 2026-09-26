@@ -145,6 +145,7 @@ drizzle/                                          migrations output (first file 
   - Plus Jakarta Sans through `next/font/google`, exposed as `--font-sans-loaded`. The body font stack is `var(--font-sans-loaded), var(--font-family-base), sans-serif`.
   - The body gets `surface.canvas` and `text.primary`.
   - `AppProviders` is a small `"use client"` wrapper holding React Aria's `I18nProvider locale="id-ID"` (ADR-010).
+  - **Local component explorer:** Storybook 10.6.0 uses `@storybook/nextjs-vite`; `.storybook/preview.tsx` loads `globals.css`, wraps stories with `AppProviders`, and exposes the `light` / `dark` token modes. Stories are colocated with `src/ui` units. The token explorer reads `docs/design-system/tokens.json` without duplicating token values. Storybook is local-only and is not part of the production route or build ([ADR-014](../../architecture/decisions/ADR-014-local-storybook-component-explorer.md)).
 - **`Button`** (design-system C01):
   - Props exactly as in the auth contract, **but `variant` is `"primary" | "secondary"`**. C01 has no ghost button; see *Contract changes*.
   - MD size only (padding 12/36, line height 18 px, so it's 42 px high).

@@ -84,6 +84,7 @@ The historical session notes and plans below predate this current handoff; use t
 | Design system — composite components (tier 3) | **APPROVED** — C27–C30 (2026-09-26) | Table (+ cells, header cell/row, row), App panel (+ Page Content), Sidebar, App shell template. |
 | Design system — overlays (tier 4) | **APPROVED** — C31 Modal, C32 Bottom Sheet (+ Menu), C33 Mobile Shell, C34 Bottom Nav, C35 Mobile App Shell (2026-09-26) | Modal (SM/MD/LG), Button/Danger on C01, App Shell **Overlay** layer (option A *Sectioned*, board 04). Bottom Sheet Actions/Form + Sheet Item (A *Docked* + B header, board 05). Mobile Shell template (375 × 812) hosts the sheets. Owner app on phones: Bottom Nav (B, board 06) + Mobile App Shell; Bottom Sheet/Menu inherits the Sidebar. |
 | Code | F-00 IMPLEMENTED | Foundation scaffold, runtime contracts, design-system base, tests, and Workers preview are committed on `main`. |
+| Local component explorer | IMPLEMENTED (2026-09-27) | Storybook 10.6.0 with Button, TextField, and Token Explorer stories. Run `pnpm storybook`; local-only on port 6006. Decision: [ADR-014](architecture/decisions/ADR-014-local-storybook-component-explorer.md). |
 
 ## Component library (`design-system.lib.pen`)
 
@@ -137,6 +138,7 @@ The historical session notes and plans below predate this current handoff; use t
 | `pencil-mapping.json` | Token ⇄ Pencil variable map, transforms, `library_canvas` (`rules_status` APPROVED), `components` (from the registry), `components_status`. Generated. |
 | `token-usage.md` | Usage rules G1–G8 and SP1–SP11. APPROVED 2026-09-26, with the amendments recorded in its status line. |
 | `components/*.md`, `components/registry.json` | Component specs and the machine-readable registry. |
+| `storybook.md` | Local Storybook explorer: startup, story map, source-of-truth boundaries, and verification. |
 | `verification-report.md` | **Stale:** the last `/sdv:verify-design-system` ran before any components existed. |
 | `scripts/gen_tokens.py` | Token source of truth and generator. It also merges `components/registry.json`. |
 | `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `c36593e9` (478 vars). |

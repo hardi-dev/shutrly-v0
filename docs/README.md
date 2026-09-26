@@ -29,7 +29,7 @@ When artifacts conflict, the higher one wins. Never silently resolve a conflict 
 | | [architecture/overview.md](architecture/overview.md) | Layers, boundaries, security, data mapping rules |
 | | [architecture/decisions/](architecture/decisions/) | ADRs |
 | Status | [HANDOFF.md](HANDOFF.md) | Current progress, decisions, next steps, gotchas |
-| Design system | [design-system/](design-system/) | Tokens (`tokens.json`), Pencil library + exploration, usage rules, verification |
+| Design system | [design-system/](design-system/) | Tokens (`tokens.json`), Pencil library + exploration, usage rules, component specs, and the local Storybook explorer |
 | Guardrails | [constitution.md](constitution.md), [coding-rules.md](coding-rules.md) | Non-negotiables, conventions |
 | Features | [features/](features/) | Created only for the feature currently in work |
 | Source | [_source/](_source/) | Original UML draft + blueprint (historical reference) |

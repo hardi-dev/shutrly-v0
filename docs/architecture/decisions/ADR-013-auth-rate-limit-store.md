@@ -1,6 +1,6 @@
 # ADR-013: Auth rate limits stored in Neon behind a RateLimiter port
 
-Status: Proposed
+Status: Accepted (Owner 2026-09-27)
 Date: 2026-09-26
 
 ## Context

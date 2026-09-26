@@ -11,7 +11,7 @@ An Owner can create an account with email + password or Google, prove ownership 
 As a photographer (Owner), I want a secure account that only I can access, so that my workspaces, clients, and invoices stay private to me.
 
 ## Preconditions
-- F-00 foundation: Better Auth wired to Neon via Drizzle (ADR-001, ADR-002, ADR-009), error model, rate limiting available.
+- F-00 foundation (implemented 2026-09-27): per-request Neon Pool via Drizzle (ADR-001, ADR-009), request context and env, error model, logger, and design-system primitives. F-01 itself adds Better Auth (ADR-002) and the rate limiter (ADR-013).
 - Resend configured with a verified sending domain (ADR-011).
 - Google OAuth client (identity scopes only) configured per environment (ADR-012).
 - Actor is an Owner; clients and freelancers never reach these screens (BR-AUTH-001).
@@ -91,7 +91,7 @@ Email is trimmed and compared case-insensitively. Password rules: see A-1.
 - **A-7 Auto sign-in after verification:** opening a valid verification link signs the Owner in.
 
 ## Dependencies
-- F-00 Foundation (auth wiring, rate limiter, error model, `components/ui` form primitives).
+- F-00 Foundation (per-request database, env, error model, logger, `src/ui` primitives).
 - F-02 Workspace — owns first-workspace creation and post-login workspace resolution.
 - Resend (ADR-011); Better Auth (ADR-002); Google sign-in (ADR-012); Cloudflare Workers runtime (ADR-008).
 
@@ -104,4 +104,4 @@ Email is trimmed and compared case-insensitively. Password rules: see A-1.
 - Client or freelancer login (BR-AUTH-001).
 
 ## Open Questions / SPEC GAPS
-- UI and email copy language(s) — existing gap in coding rules, deferred to `/sdv:design-feature auth` (default Indonesian with English fallback).
+- ~~UI and email copy language(s)~~ — RESOLVED (Owner 2026-09-27): Indonesian for auth screens and emails (technical-design.md › CONFLICT-1).

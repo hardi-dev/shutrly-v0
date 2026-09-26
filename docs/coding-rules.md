@@ -184,10 +184,14 @@ Keep heavily tested logic (selection limits, invoice totals, lifecycle transitio
   - Style states through React Aria `data-*` attributes.
 - Focus rings use `color.semantic.focus.ring` (+ `focus.glow`). Modals and toasts render only through the App Shell's overlay slot (F-02).
 - Pixel/visual truth is the approved Pencil design referenced in the feature's `design.md`.
+- UI is built from **HTML exports** of the approved frames (Owner, 2026-09-27):
+  - Before implementing a screen, ask the Owner to export its frames to `docs/features/<slug>/exports/`. Stop if an export is missing.
+  - Follow the export's structure, copy and spacing, and map every raw value to a token. A value with no token is a `DESIGN TOKEN GAP`: report it and never hard-code it.
+  - Compare the finished screen with its export at the desktop and mobile widths.
 
 ### Copy
 - **(lint)** User-facing copy is never inline in JSX. JSX text and copy props (`label`, `description`, `errorMessage`, `placeholder`, `title`, `alt`, `aria-label`, `message`) take a constant from a sibling `*.copy.ts`. Copy not drawn in Pencil carries `// not in Pencil`. Rule: `local/ui-copy`, applied to `src/**/*.tsx` except tests.
-- Copy follows the workspace language. The MVP UI language is Indonesian with an English fallback. **SPEC GAP:** confirm the UI language(s) (auth CONFLICT-1).
+- Copy follows the workspace language. The MVP UI language is Indonesian (Owner decision, auth CONFLICT-1, 2026-09-27). Frames drawn in another language are translated in `*.copy.ts` and in Pencil before export.
 
 ## UI States
 Cover idle, loading, empty, success, validation error, domain/server error, retry, and disabled states where applicable (C-007).
@@ -221,7 +225,7 @@ Cover idle, loading, empty, success, validation error, domain/server error, retr
 |---|---|
 | Project docs (`docs/`) | English |
 | Code, identifiers, DB names, comments, JSDoc, commit messages, developer error messages | English |
-| UI copy | Indonesian (MVP, pending auth CONFLICT-1); lives in `*.copy.ts` |
+| UI copy | Indonesian (MVP; auth CONFLICT-1 resolved 2026-09-27); lives in `*.copy.ts` |
 
 ## Git
 - [Conventional commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`, `chore:`, `test:`; a scope is optional, e.g. `feat(auth):`), in English, lowercase, with no trailing period.

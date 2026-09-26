@@ -1,6 +1,6 @@
 # F-01 Auth — Visual design
 
-Status: DESIGNED (Owner approved 2026-09-26). Remaining review items below are follow-ups, not blockers. Pencil source: [auth.pen](auth.pen). The Owner chose a split layout and English as the primary UI language. Desktop right panels use the chosen editorial panel (see *Editorial panel decision*).
+Status: DESIGNED (Owner approved 2026-09-26). Remaining review items below are follow-ups, not blockers. Pencil source: [auth.pen](auth.pen). The Owner chose a split layout. The frames were drawn in English, but the UI language is **Indonesian** (CONFLICT-1, Owner 2026-09-27), so the frame text is translated before implementation (see *HTML exports for implementation*). Desktop right panels use the chosen editorial panel (see *Editorial panel decision*).
 
 ## Direction
 
@@ -33,7 +33,7 @@ The canvas places each 1440 px desktop frame immediately left of its 390 px mobi
 
 ## Copy and behavior
 
-- English is primary for these auth screens. Localisation fallback and workspace language policy in `docs/coding-rules.md` need reconciliation before implementation.
+- The UI language is Indonesian (CONFLICT-1 resolved 2026-09-27). The implementation's `*.copy.ts` files hold the Indonesian strings, translated from these frames. Update the frame text to match them before exporting.
 - Password and verification rules remain in [spec.md](spec.md) and [acceptance-criteria.md](acceptance-criteria.md). The visual design does not alter the server-authoritative flows.
 - Generic registration, recovery, and login errors avoid revealing whether an account exists.
 - The editorial panel is visual context only; it must not contain auth controls or required instructions.
@@ -43,6 +43,9 @@ The canvas places each 1440 px desktop frame immediately left of its 390 px mobi
 1. Replace the placeholder Unsplash photos in the editorial panel with licensed or commissioned photos.
 2. Confirm the Alert copy in the notice table below.
 3. Resolve the design-system loading-state gap and confirm final copy before implementation.
+4. Translate the frame text to Indonesian, using the strings in plan.md's `*.copy.ts` blocks (approved 2026-09-27). Export every state to HTML when implementation reaches the UI (see below).
+5. **Approved (Owner 2026-09-27):** add DESIGN TOKEN GAPs T1–T4 through the design-system pipeline before plan Task 25: `size.auth-panel` 600, `size.auth-form` 420, `font.size.hero` 44 and `space.16` 64. The editorial body text is 15 in `Z5xhk`, but no 15 token exists; the plan uses `font.size.body` (14). Adjust the frame, or add a token (technical-design.md › Risks).
+6. Confirm the copy not drawn in Pencil (`// not in Pencil` in the `*.copy.ts` files, plus the auth emails), listed after implementation (plan Task 32).
 
 ## Inline notices (Alert)
 
@@ -70,3 +73,29 @@ Alert titles do not repeat the screen heading. Actions (resend, request new link
 Kept for reference (Owner): `M3WMS` R2 · Product showcase, `umFqj` R2.3 · Desktop + client phone, `u6hvV` R5.1b · Tilted mosaic (the source exploration). Rounds 1–4 and the device-mockup row were otherwise deleted; a Gemini device-mockup attempt did not meet expectations.
 
 Open items: photos are Unsplash placeholders (licensed or commissioned photos needed); literal colours in the scrim gradient; the panel is decorative (`aria-hidden`, no auth content), per *Copy and behavior*.
+
+**Implementation (Owner 2026-09-27):** the mosaic, with its scrim but without the headline and body, is exported as an image (`public/auth/editorial/mosaic.webp`, plus `@2x`). The headline and body stay live text in code. The scrim's literal colours therefore never reach the code.
+
+## HTML exports for implementation
+
+Owner request, 2026-09-27: the front end is built from **HTML exports** of these frames, so that it is pixel-perfect. After translating the frame text (review item 4), export each state to `docs/features/auth/exports/<state>-<frameId>.html`:
+
+| Export (desktop · mobile) | State |
+|---|---|
+| `login-amp4Y` · `login-IOC5i` | Login |
+| `login-invalid-q8b0R9` · `login-invalid-n4KUP` | Login invalid credentials |
+| `login-processing-U9laqq` · `login-processing-QIIvK` | Login processing |
+| `login-focus-u9HFU` · `login-focus-g0ghE` | Login keyboard focus |
+| `register-m3QGM` · `register-UryLp` | Register |
+| `register-errors-hTP6i` · `register-errors-aIY0r` | Register field errors |
+| `verify-pending-p3NbDB` · `verify-pending-TXoQI` | Verification pending |
+| `invalid-verify-link-TIvfA` · `invalid-verify-link-ifV1Z` | Invalid verification link |
+| `forgot-password-o9WtCo` · `forgot-password-e091S` | Forgot password |
+| `reset-sent-DccPx` · `reset-sent-NkvJG` | Reset request sent |
+| `reset-password-RFaNT` · `reset-password-vHZGg` | Set new password |
+| `invalid-reset-link-x5ds7` · `invalid-reset-link-Hf3VK` | Invalid reset link |
+| `account-unavailable-kXr5x` · `account-unavailable-FFue5` | Account unavailable |
+| `profile-t7CXVK` · `profile-vEZsy` | Profile and password |
+| `profile-google-TInkk` · `profile-google-Vygzt` | Google-only profile |
+
+Also export `public/auth/editorial/mosaic.webp` (and `@2x`) from `Z5xhk`. Each UI task in [plan.md](plan.md) stops until its exports exist, then finishes with a fidelity pass against them. Playwright checks every pair pixel by pixel (`tests/e2e/auth/auth-fidelity.spec.ts`).

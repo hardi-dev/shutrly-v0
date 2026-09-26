@@ -224,7 +224,11 @@ Covers: C-007
 
 **Given** Resend fails when sending a verification or reset email
 **When** the Owner registers, resends, or requests a reset
-**Then** account state is saved, the user sees a retryable message, and the failure is logged without the link.
+**Then** the account state or request is saved, and the failure is logged without the link.
+**And** register and forgot password still show their generic screen: the email is sent in the background, and the screen must not reveal whether an account exists (A-5). The Verification pending screen offers resend.
+**And** resend waits for the provider and shows a retryable message when the send fails.
+
+*Amended 2026-09-27 (Owner, SPEC GAP-4):* the retryable message appears on resend only.
 
 ## AC-AUTH-023 — Accessible auth forms
 Covers: C-008

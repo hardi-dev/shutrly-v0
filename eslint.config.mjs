@@ -213,6 +213,9 @@ export default defineConfig([
       "@typescript-eslint/consistent-type-assertions": "off",
       "@typescript-eslint/unbound-method": "off",
       "max-lines-per-function": "off",
+      // Tests use fixed non-production credentials and private-range IPs (coding-rules › Tooling).
+      "sonarjs/no-hardcoded-passwords": "off",
+      "sonarjs/no-hardcoded-ip": "off",
     },
   },
   { files: ["**/*.{js,mjs,cjs}"], ...tseslint.configs.disableTypeChecked },

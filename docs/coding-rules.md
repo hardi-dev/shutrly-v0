@@ -22,6 +22,8 @@ These are conventions. You may break one with a written reason in a code comment
 
 If a SonarJS rule is wrong for this project, turn it off in `eslint.config.mjs`, either for the whole workspace or for a file glob such as tests. Put the reason in a comment beside it and in this file. Never turn it off case by case with a comment **(lint)**.
 
+Turned off for test files only (`TESTS` glob in `eslint.config.mjs`): `sonarjs/no-hardcoded-passwords` and `sonarjs/no-hardcoded-ip`. Tests use fixed non-production credentials and private-range IPs, which are not secrets.
+
 ## General
 - Explicit, readable code; small focused units.
 - No premature abstractions or unrelated refactors (C-010).

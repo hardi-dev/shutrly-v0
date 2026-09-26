@@ -1,3 +1,4 @@
+import { TEST_APP_ENV } from "@tests/support/env/test-app-env";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("../request-context/request-context", () => ({ getRequestContext: vi.fn() }));
@@ -17,7 +18,7 @@ const end = vi.fn(() => {
 const waitUntil = vi.fn();
 const fakeDb = { fake: true };
 const rc = {
-  env: { DATABASE_URL: "postgresql://user:pw@db.example/app", APP_STAGE: "test" as const },
+  env: TEST_APP_ENV,
   waitUntil,
   ip: "203.0.113.7",
   requestId: "r1",

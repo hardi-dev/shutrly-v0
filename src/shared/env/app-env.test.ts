@@ -1,10 +1,11 @@
+import { TEST_APP_ENV } from "@tests/support/env/test-app-env";
 import { describe, expect, it } from "vitest";
 
 import { parseAppEnv } from "./app-env";
 
 const valid = {
+  ...TEST_APP_ENV,
   DATABASE_URL: "postgresql://user:pw@db.example.neon.tech/app?sslmode=require",
-  APP_STAGE: "test",
 };
 
 describe("parseAppEnv", () => {
@@ -13,11 +14,14 @@ describe("parseAppEnv", () => {
   });
 
   it("AC-FND-004 names a missing key", () => {
-    expect(() => parseAppEnv({ APP_STAGE: "test" })).toThrow("Invalid environment: DATABASE_URL");
+    const withoutUrl = Object.fromEntries(
+      Object.entries(valid).filter(([key]) => key !== "DATABASE_URL"),
+    );
+    expect(() => parseAppEnv(withoutUrl)).toThrow("Invalid environment: DATABASE_URL");
   });
 
   it("AC-FND-004 names every invalid key", () => {
-    expect(() => parseAppEnv({ DATABASE_URL: "nope", APP_STAGE: "staging" })).toThrow(
+    expect(() => parseAppEnv({ ...valid, DATABASE_URL: "nope", APP_STAGE: "staging" })).toThrow(
       "Invalid environment: DATABASE_URL, APP_STAGE",
     );
   });
@@ -25,7 +29,7 @@ describe("parseAppEnv", () => {
   it("AC-FND-004 never echoes a value", () => {
     let message = "";
     try {
-      parseAppEnv({ DATABASE_URL: "not-a-url-supersecret123", APP_STAGE: "test" });
+      parseAppEnv({ ...valid, DATABASE_URL: "not-a-url-supersecret123" });
     } catch (error) {
       message = (error as Error).message;
     }

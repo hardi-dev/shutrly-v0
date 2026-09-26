@@ -1,3 +1,4 @@
+import { TEST_APP_ENV } from "@tests/support/env/test-app-env";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@opennextjs/cloudflare", () => ({ getCloudflareContext: vi.fn() }));
@@ -9,7 +10,7 @@ import { headers } from "next/headers";
 import { getRequestContext } from "./request-context";
 
 const waitUntil = vi.fn();
-const env = { DATABASE_URL: "postgresql://user:pw@db.example/app", APP_STAGE: "test", ASSETS: {} };
+const env = { ...TEST_APP_ENV, ASSETS: {} };
 
 function givenRequest(
   requestHeaders: Record<string, string>,
@@ -29,7 +30,7 @@ describe("getRequestContext", () => {
   it("AC-FND-004 parses the Worker bindings into AppEnv", async () => {
     givenRequest({});
     const rc = await getRequestContext();
-    expect(rc.env).toEqual({ DATABASE_URL: env.DATABASE_URL, APP_STAGE: "test" });
+    expect(rc.env).toEqual(TEST_APP_ENV);
   });
 
   it("AC-FND-004 fails fast on invalid bindings", async () => {

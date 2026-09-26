@@ -1,9 +1,51 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-26 (F-01 Auth PLANNED + detailed plan) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `main`. This handoff is committed together with the F-01 plan.
+Last updated: 2026-09-27 (F-00 Foundation PLANNED; build handed to another agent) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `main`.
 
-## Current handoff — resume here
+## Current handoff — resume here: build F-00 Foundation
+
+**Who:** the build is handed to another AI agent (ChatGPT / Codex). These instructions don't assume Claude-specific skills or slash commands.
+
+**What:** implement [docs/features/foundation/plan.md](features/foundation/plan.md): 18 TDD tasks in 6 iterations. Nothing is built yet; there is no `src/`.
+
+### Read first, in this order
+1. [constitution.md](constitution.md) (no exceptions)
+2. [coding-rules.md](coding-rules.md) **v2.0** (2026-09-27). The Task 2 lint config enforces every rule marked **(lint)**.
+3. [architecture/overview.md](architecture/overview.md) — the folder architecture is authoritative. Coding rules and plans adapt to it, never the other way round.
+4. `docs/features/foundation/`: `spec.md`, `acceptance-criteria.md` (AC-FND-001…016), `technical-design.md`, then `plan.md`.
+
+### How to execute
+- **One task at a time, in order.** Follow every step exactly as written: write the failing test, see it fail, implement, see it pass, commit. Each task ends with its own commit, and the commit message is given in the plan.
+- **Copy code blocks verbatim.** On 2026-09-27, every code block was linted, type-checked and unit-tested in a scratch project with the pinned versions: 102 tests passed. If something fails, the environment or a version has drifted. Read the error and fix the cause; don't loosen a lint rule or a test.
+- **Pin versions exactly** (`pnpm add -E`), as listed in the plan and in technical-design.md › *Verified versions*. TypeScript stays on **6.0.3** and ESLint on **9.39.5**, which is deliberate (see the plan's Global Constraints).
+- **Gate for each iteration:** `pnpm typecheck && pnpm lint && pnpm test && pnpm build`. Integration tests (`pnpm test:integration`) and E2E (`pnpm e2e`) start in iterations 3 and 6.
+- **Iteration done:** tick the iteration's checklist in technical-design.md › *Iterations* and commit it with the last task.
+
+### Stop and ask the Owner (don't work around it)
+- **Before Task 5:** the Owner must create `.dev.vars` with the non-prod Neon `DATABASE_URL` (pooled), `DATABASE_URL_UNPOOLED` (direct) and `APP_STAGE=development`. Before Task 10, they must also create `.env.test` (`DATABASE_URL` pooled, `APP_STAGE=test`). Never write or print real connection strings; both files are git-ignored.
+- **Any test or command fails in a way the plan's notes don't cover.** The known cases are R-3 (Vitest projects key), R-5 (two `typescript-eslint` copies) and the notes under Tasks 9 and 10.
+- **Neon WebSocket fails under `pnpm preview` / workerd** (Task 17, R-4). This is an ADR-008/009 risk and needs an Owner decision.
+- **The code would need to break the architecture or the coding rules.** Report it as a deviation; don't bend the rules.
+- **Never run `pnpm db:migrate`.** Only the Owner applies migrations, by hand from a clean `main` (tech-stack interim rule). F-00 has no migrations anyway.
+
+### When all 18 tasks are done
+- Task 18 updates `technical-design.md` (status IMPLEMENTED), `docs/product/feature-map.md` (F-00 IN PROGRESS) and this handoff.
+- List every deviation from the plan in technical-design.md › *Risks / open questions*. Known deviation: D-1, the TextField has no trailing error icon.
+- The Owner then runs verification (`/sdv:verify-feature foundation` in Claude Code). That moves F-00 to DONE.
+
+### Decisions made in the 2026-09-26/27 planning sessions
+- **Scope:** F-00 is local only; CI and Cloudflare deploy come before the first ship. The App Shell is built by F-02.
+- **Migrations:** interim rule accepted (CONFLICT-F00-1).
+- **Coding rules v2.0:** the Owner's standard from the earlier shutrly repo, adapted to this architecture. It covers boundaries, SonarJS, import sorting, `server-only`, the `.types.ts` / `.schema.ts` / `.copy.ts` siblings, no `as`, JSDoc, and a Prettier pre-commit hook. The rules the file does not adopt, and why, are listed at its end.
+- **Unit folders:** every F-00 unit lives in its own folder, e.g. `src/adapters/db/client/client.ts` and `src/composition/request-db/request-db.ts`. Only Next- and Drizzle-fixed files are exempt.
+
+## Paused: F-01 Auth (don't build yet)
+
+- **Status:** PLANNED, but blocked on F-00 **and** on a revision pass. Its plan predates coding rules v2.0 and F-00's unit-folder paths; see auth technical-design.md **R-7** (Next 16 `middleware.ts` → `proxy.ts`) and **R-9** (coding-rules gaps, stale contract paths). Revise it with `/sdv:plan-feature auth` after F-00 is built.
+- Earlier auth notes (2026-09-26) are kept below for context.
+
+### Auth notes from 2026-09-26
 
 - **F-01 Auth is PLANNED.** The design was approved on 2026-09-26, and `technical-design.md` was replanned the same day (status DRAFT, 9 iterations). The plan proposes **ADR-013** (Neon-backed auth rate limits, status Proposed).
 - **Detailed plan:** `docs/features/auth/plan.md` has 30 TDD tasks (0–29) in superpowers format, kept in the feature folder by Owner request. `docs/superpowers/plans/2026-09-26-auth.md` is superseded.
@@ -30,8 +72,9 @@ The historical session notes and plans below predate this current handoff; use t
 
 | Area | Status | Notes |
 |---|---|---|
-| Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. Folder architecture finalized 2026-09-26 in `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`. |
-| F-01 Auth | PLANNED (2026-09-26) | Design approved (`auth.pen`). `technical-design.md` (DRAFT) + `plan.md` (30 tasks). ADR-013 proposed. Blocked on the Owner decisions in Task 0 and on F-00. |
+| Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25); coding rules v2.0 on 2026-09-27 | Authoritative tree under `docs/`; `_source/` is historical. Folder architecture finalized 2026-09-26 in `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`. |
+| F-00 Foundation | PLANNED (2026-09-26/27) | `spec.md`, `acceptance-criteria.md`, `technical-design.md`, `plan.md` (18 tasks, code lint/test-verified in a scratch project). Build handed to another agent. |
+| F-01 Auth | PLANNED (2026-09-26), paused | Design approved (`auth.pen`). `plan.md` (30 tasks) needs a revision pass for coding rules v2.0 and F-00 paths (auth R-9). ADR-013 proposed. Blocked on Task 0 decisions and on F-00. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
 | Design system — tokens | PERSISTED (2026-09-26) | **479 tokens** (61 primitive · 54 semantic · 312 component · scales), `mode: light \| dark`. Repository payload checksum `c8b47514`; full Pencil checksum check remains. |
 | Design system — token canvas | PARTIAL UPDATE | Cover count and board 06 Alert labels updated; board 08 still needs the approved 720 px layout example. |
@@ -40,7 +83,7 @@ The historical session notes and plans below predate this current handoff; use t
 | Design system — composite components (tier 2) | **APPROVED** — C18–C26 (2026-09-26) | Text field, Select, Multi-select, Action menu, Nav item (+ Nav Group Label), Segmented control, **Alert** (renamed from Toast), Calendar day, Metric tile. Plus Icon button **SM** (ghost). |
 | Design system — composite components (tier 3) | **APPROVED** — C27–C30 (2026-09-26) | Table (+ cells, header cell/row, row), App panel (+ Page Content), Sidebar, App shell template. |
 | Design system — overlays (tier 4) | **APPROVED** — C31 Modal, C32 Bottom Sheet (+ Menu), C33 Mobile Shell, C34 Bottom Nav, C35 Mobile App Shell (2026-09-26) | Modal (SM/MD/LG), Button/Danger on C01, App Shell **Overlay** layer (option A *Sectioned*, board 04). Bottom Sheet Actions/Form + Sheet Item (A *Docked* + B header, board 05). Mobile Shell template (375 × 812) hosts the sheets. Owner app on phones: Bottom Nav (B, board 06) + Mobile App Shell; Bottom Sheet/Menu inherits the Sidebar. |
-| Code | NONE | No app scaffold yet (F-00 Foundation is TODO). |
+| Code | NONE | No app scaffold yet; F-00 Foundation is PLANNED and ready to build. |
 
 ## Component library (`design-system.lib.pen`)
 

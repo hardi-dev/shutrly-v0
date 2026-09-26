@@ -258,4 +258,16 @@ Each iteration runs plan → implement → test → verify → commit and is don
 - **R-4 — Better Auth option names** (`requireEmailVerification: false`, `autoSignInAfterVerification`, `revokeSessionsOnPasswordReset`, `accountLinking.trustedProviders`, cookie cache) must be checked against the installed version; the takeover guard must be re-verified on upgrades (ADR-012).
 - **R-5 — Editorial photos** are Unsplash placeholders in the design; licensed or commissioned photos are needed before production.
 - **R-6 — App Shell in code.** RESOLVED (Owner 2026-09-26): the App Shell, Sidebar and App Panel code (design-system C28–C30) is built by **F-02 Workspace**, not F-00 or F-01. Iteration 7 (Profile) waits until F-02 provides `src/ui/patterns/app-shell/app-shell.tsx`.
-- **R-7 — F-00 is TODO.** Nothing here can start until F-00 is specified and built.
+- **R-7 — Next 16 renamed `middleware.ts` to `proxy.ts`.** F-00 pins Next 16.3.6 (required by OpenNext 1.20.6). This plan's `src/middleware.ts` must be revisited in Task 0: use the `proxy.ts` convention and confirm that OpenNext Cloudflare supports it. Found while planning F-00, 2026-09-26.
+- **R-8 — F-00 not built yet.** F-00 is PLANNED ([foundation/plan.md](../foundation/plan.md)). Nothing here can start until it's built and verified.
+- **R-9 — This plan predates coding rules v2.0** (2026-09-27, [coding-rules.md](../../coding-rules.md)). Before Task 1, re-plan the code in [plan.md](plan.md) against the new rules; `pnpm lint` from F-00 will reject the current code. The known gaps are:
+  - no `import "server-only"` in `adapters/`, `composition/` or `features/*/application`;
+  - exported types and Zod schemas that must move into sibling `*.types.ts` / `*.schema.ts` files;
+  - UI copy inline in JSX, which must move into `*.copy.ts` files (the language is still pending CONFLICT-1);
+  - about 16 `as` assertions;
+  - `process.env` reads in `src/`, which must use `getRequestContext().env` instead;
+  - inline JSX handlers;
+  - missing JSDoc;
+  - imports of `Db`, `AppEnv`, `appEnvSchema` and `RequestContext`, which now come from F-00's `*.types.ts` / `*.schema.ts` files (see plan.md › *F-00 contracts*).
+
+  Recommended: run `/sdv:plan-feature auth` as a revision pass, after F-00 is built so that its lint config can check the revised code.

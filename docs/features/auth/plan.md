@@ -66,20 +66,22 @@ F-00 Foundation is not built yet. Task 0 verifies that each of these exists with
 
 | Path | Export | Shape |
 |---|---|---|
-| `src/adapters/db/client.ts` | `createDb`, `Db` | `createDb(databaseUrl: string): { db: Db; pool: Pool }` — Drizzle `neon-serverless` over a new `Pool`; `Db` is the Drizzle database type with the full schema |
+| `src/adapters/db/client.ts` + `client.types.ts` | `createDb`; `Db`, `DbHandle` (types file) | `createDb(databaseUrl: string): DbHandle` where `DbHandle = { db: Db; pool: Pool }` — Drizzle `neon-serverless` over a new `Pool`; `Db` is the Drizzle database type with the full schema |
 | `src/adapters/db/schema/index.ts` | schema barrel | `export * from "./<table-file>"` per schema file |
-| `src/composition/request-context.ts` | `getRequestContext` | `(): Promise<{ env: AppEnv; waitUntil(p: Promise<unknown>): void; ip: string; requestId: string; headers: Headers }>` |
-| `src/shared/env/app-env.ts` | `AppEnv`, `appEnvSchema` | Zod object for Worker bindings, including `DATABASE_URL`; this plan adds the auth keys in Task 4 |
+| `src/composition/request-context.ts` + `request-context.types.ts` | `getRequestContext`; `RequestContext` (types file) | `(): Promise<{ env: AppEnv; waitUntil(p: Promise<unknown>): void; ip: string; requestId: string; headers: Headers }>` |
+| `src/shared/env/app-env.schema.ts` / `app-env.types.ts` / `app-env.ts` | `appEnvSchema` / `AppEnv` / `parseAppEnv` | Zod object for Worker bindings, including `DATABASE_URL`; this plan adds the auth keys in Task 4 |
 | `src/shared/errors/domain-error.ts` | `DomainError` | `abstract class DomainError extends Error { abstract readonly code: string }` |
 | `src/shared/logging/logger.ts` | `logger` | `{ info(event: string, fields?: Record<string, unknown>): void; warn(...): void; error(...): void }` |
-| `src/ui/primitives/button/button.tsx` | `Button` | React Aria button: `{ type?: "button" \| "submit"; variant?: "primary" \| "secondary" \| "ghost"; isDisabled?: boolean; onPress?: () => void; className?: string; children }` |
-| `src/ui/primitives/text-field/text-field.tsx` | `TextField` | `{ label: string; name: string; type?: string; autoComplete?: string; placeholder?: string; description?: string; errorMessage?: string; isReadOnly?: boolean; value: string; onChange(v: string): void; onBlur(): void; inputRef?: React.Ref<HTMLInputElement> }`; sets `aria-invalid` and `aria-describedby` for the error |
+| `src/ui/primitives/button/button.tsx` | `Button` | React Aria button: `{ type?: "button" \| "submit"; variant?: "primary" \| "secondary"; isDisabled?: boolean; onPress?: () => void; className?: string; children }` |
+| `src/ui/primitives/text-field/text-field.tsx` | `TextField` | `{ label: string; name: string; type?: string; autoComplete?: string; placeholder?: string; description?: string; errorMessage?: string; isReadOnly?: boolean; value: string; onChange: (v: string) => void; onBlur: () => void; inputRef?: Ref<HTMLInputElement> }` (`TextFieldProps` in `text-field.types.ts`); sets `aria-invalid` and `aria-describedby` for the error |
+| `src/ui/cn/cn.ts` | `cn` | `cn(...inputs: ClassValue[]): string` (clsx + tailwind-merge); the only way to merge `className` (coding rules v2.0) |
 | `src/ui/theme/tokens.css` | CSS variables | one variable per token, path with `.` → `-`, e.g. `--color-semantic-surface-inverse`, `--component-alert-info-background`, `--space-4` |
 | `tests/integration/helpers/test-db.ts` | `openTestDb` | `(): Promise<{ db: Db; close(): Promise<void> }>` against `DATABASE_URL` from `.env.test` |
 | `package.json` scripts | — | `typecheck`, `lint`, `test` (unit, jsdom for `.tsx`), `test:integration`, `e2e`, `db:generate` |
 | `package.json` dependencies | — | `next`, `react`, `zod@4`, `react-hook-form`, `@hookform/resolvers`, `drizzle-orm`, `@neondatabase/serverless`, `vitest`, `@testing-library/react`, `@testing-library/user-event`, `jsdom`, `@playwright/test`, `tsx` |
 | `playwright.config.ts` | — | `webServer` runs the app locally at `BETTER_AUTH_URL` with `baseURL` set to it |
 | `tsconfig.json` | path alias | `@/*` → `src/*` |
+| `.dev.vars` / `.env.test` | env files | Runtime env for `next dev`, `pnpm preview` and drizzle-kit is `.dev.vars` (Wrangler). `.env.test` is for integration tests only. F-01 adds its keys to both and to `.env.example`. Playwright `baseURL` is `http://localhost:3000` (F-00 plan, 2026-09-26). |
 
 ## File Structure
 

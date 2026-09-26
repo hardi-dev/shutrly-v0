@@ -39,6 +39,13 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 - Integration: Vitest against the single shared non-production Neon database ([ADR-009](decisions/ADR-009-neon-serverless-driver.md))
 - E2E: Playwright
 
+## Code quality
+- Lint: ESLint 9 flat config with `eslint-config-next`, `typescript-eslint` `strictTypeChecked`, `eslint-plugin-boundaries`, SonarJS, `simple-import-sort`, `eslint-comments`, plus the local rules in `eslint/local-rules.mjs`
+- Format: Prettier (100 columns). A pre-commit hook (`simple-git-hooks` + `lint-staged`) formats and lint-fixes staged files
+- Class names: `clsx` + `tailwind-merge` via `cn()`
+- Server/client guard: `server-only`
+- The rules themselves live in [coding-rules.md](../coding-rules.md)
+
 ## Deployment
 - Cloudflare; preview deployment per git branch, all previews share the non-production Neon database
 - Two Neon databases only: **production** and one shared **non-production** (dev, CI, previews)

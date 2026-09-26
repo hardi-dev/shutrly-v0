@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 3, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (tier 3, Owner review)
 - Direction/token approval: `APPROVED` tokens. It adds no new tokens: the sidebar is a **layout region**, so it binds semantic and scale tokens per the board 08 layout map (padding 8·12, section gap 12), following G3's "screens and layouts" clause. The Owner may promote these to `sidebar.*` component aliases.
 - Pencil library: `design-system.lib.pen` › **C29 — Sidebar** (`nSDgz`)
 - Evidence: legacy dashboard › Sidebar

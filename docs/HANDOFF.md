@@ -15,7 +15,7 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
 | Design system — usage & spacing rules | APPROVED (2026-09-26) + Owner amendments | See *Key decisions*. |
 | Design system — primitive components | **APPROVED** — C01–C17 | 17 components (108 reusable nodes) in `design-system.lib.pen`, each with a spec in `components/`. |
 | Design system — composite components (tier 2) | **APPROVED** — C18–C26 (2026-09-26) | Text field, Select, Multi-select, Action menu, Nav item (+ Nav Group Label), Segmented control, Toast, Calendar day, Metric tile. Plus Icon button **SM** (ghost). |
-| Design system — composite components (tier 3) | **BUILT** — C27–C30 PROPOSED (2026-09-26) | Table (+ cells, header cell/row, row), App panel (+ Page Content), Sidebar, App shell template. |
+| Design system — composite components (tier 3) | **APPROVED** — C27–C30 (2026-09-26) | Table (+ cells, header cell/row, row), App panel (+ Page Content), Sidebar, App shell template. |
 | Code | NONE | No app scaffold yet (F-00 Foundation is TODO). |
 
 ## Component library (`design-system.lib.pen`)
@@ -56,8 +56,8 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
   - Tier 1b: C02–C04, C08, C11, C14–C17.
   - Tier 1c: C09–C10 menus. These have **no legacy evidence** and need a careful review.
   - Tier 2: C18–C26 composites built from nested primitive instances.
-  - Tier 3: C27 Table (cells, header cell/row, row, card), C28 App panel (+ Page Content), C29 Sidebar, C30 App shell template. PROPOSED.
-- **Approval status:** C01–C26 APPROVED · C27–C30 PROPOSED.
+  - Tier 3: C27 Table (cells, header cell/row, row, card), C28 App panel (+ Page Content), C29 Sidebar, C30 App shell template. APPROVED.
+- **Approval status:** C01–C30 APPROVED.
 - **Composite pattern (tier 2):** a composite's state variants **don't swap** the nested primitive ref. Replacing the nested ref gives it a new ID per variant and breaks instance override paths. Instead, each variant re-applies the primitive state's token overrides on **one stable nested instance** (for example Text field `c67yIW`, Select `Et1pR/c67yIW`). Floating parts (Select/Action menu Menus) are `layoutPosition: absolute` and off when closed. A composite built on another composite is a ref of its base (`_MultiSelect/Base` is a ref of `_Select/Base` with its Menu slot replaced).
 
 ## Design-system artifacts (`docs/design-system/`)
@@ -114,6 +114,7 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 - **Table filter** = Segmented control (legacy dark pills dropped). Scope extended with **Sidebar + App shell**.
 - Sidebar binds semantic/scale tokens as a layout region (no `sidebar.*` aliases yet; Owner may promote). Logo mark monochrome, log-out neutral.
 - Metric tile label now fills and wraps (collided with the delta in narrow tiles).
+- **C27–C30 approved** (Owner review).
 - **Page Content + max-width (done).** The App Panel's Content region is its own component, **Page Content** (`B4HAVd`, on C28): outer fill width with padding 28/40, and an inner `Container` **slot** fixed at 1096 and centred. Pen has no `maxWidth`, so the fixed centred container emulates it; code uses `max-width: 1096px; width: 100%`. New tokens: `size.content-max` = 1096 (scale) → `panel.app.content.max-width`. App Panel `C5QYo` now accepts only Page Content and has no padding/gap of its own. The masters show an empty Page Content; the dashboard lives in the C28 Modes examples and the dark App Shell example (`TXZxf`). The C28 Content and Modes exhibits were restacked (notes above the artwork) so the panels are wide enough for the 1096 container.
 
 ## Open gaps (deferred)
@@ -131,7 +132,7 @@ The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy sou
 ## Next steps
 
 1. Optional: a 1920-wide shell exhibit to show the centring (page C30 is 1600 wide, so it needs its own row).
-2. **Owner review** of C27–C30 (Table, App panel, Sidebar, App shell). Mark APPROVED in the specs and in `registry.json`. Decide whether the Sidebar gets `sidebar.*` aliases.
+2. **Modal** (Owner request, 2026-09-26): a Modal component plus a Modal (overlay) slot in the App Shell, then a **Bottom Sheet** for mobile. No legacy evidence; built from `elevation.2`, `radius.xl`, `opacity.scrim`. Token set needs Owner approval first. Still open: `sidebar.*` aliases.
 3. Open questions:
    - Toast close optical nudge.
    - Calendar day hover.

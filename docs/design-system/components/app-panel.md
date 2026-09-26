@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 3, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (tier 3, Owner review)
 - Direction/token approval: `APPROVED`. `panel.app.title` and `panel.app.header.gap` were added on 2026-09-26. `panel.app.content.max-width` (→ `size.content-max` 1096) was added on 2026-09-26 with the Page Content extraction.
 - Pencil library: `design-system.lib.pen` › **C28 — App panel** (`yepgE`)
 - Evidence: legacy dashboard › Panel

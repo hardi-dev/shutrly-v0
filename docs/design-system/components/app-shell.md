@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 3, 2026-09-26). Added to the tier 3 scope by the Owner.
+- Lifecycle: `APPROVED` 2026-09-26 (tier 3, Owner review). Added to the tier 3 scope by the Owner.
 - Pencil library: `design-system.lib.pen` › **C30 — App shell** (`f7qs8Z`)
 - Evidence: legacy dashboard › Screen
 

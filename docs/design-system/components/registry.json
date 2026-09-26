@@ -1472,7 +1472,7 @@
   ]
  },
  "table": {
-  "status": "PROPOSED (tier 3) 2026-09-26",
+  "status": "APPROVED (tier 3) 2026-09-26",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C27 — Table",
@@ -1616,7 +1616,7 @@
   ]
  },
  "page-content": {
-  "status": "PROPOSED (tier 3) 2026-09-26",
+  "status": "APPROVED (tier 3) 2026-09-26",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C28 — App panel",
@@ -1661,7 +1661,7 @@
   ]
  },
  "app-panel": {
-  "status": "PROPOSED (tier 3) 2026-09-26",
+  "status": "APPROVED (tier 3) 2026-09-26",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C28 — App panel",
@@ -1723,7 +1723,7 @@
   ]
  },
  "sidebar": {
-  "status": "PROPOSED (tier 3) 2026-09-26",
+  "status": "APPROVED (tier 3) 2026-09-26",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C29 — Sidebar",
@@ -1815,7 +1815,7 @@
   ]
  },
  "app-shell": {
-  "status": "PROPOSED (tier 3) 2026-09-26 (template)",
+  "status": "APPROVED (tier 3) 2026-09-26 (template)",
   "file": "docs/design-system/design-system.lib.pen",
   "page": {
    "name": "C30 — App shell",

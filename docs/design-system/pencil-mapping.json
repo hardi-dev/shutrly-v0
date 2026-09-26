@@ -1909,7 +1909,7 @@
       ]
     },
     "table": {
-      "status": "PROPOSED (tier 3) 2026-09-26",
+      "status": "APPROVED (tier 3) 2026-09-26",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C27 — Table",
@@ -2053,7 +2053,7 @@
       ]
     },
     "page-content": {
-      "status": "PROPOSED (tier 3) 2026-09-26",
+      "status": "APPROVED (tier 3) 2026-09-26",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C28 — App panel",
@@ -2098,7 +2098,7 @@
       ]
     },
     "app-panel": {
-      "status": "PROPOSED (tier 3) 2026-09-26",
+      "status": "APPROVED (tier 3) 2026-09-26",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C28 — App panel",
@@ -2160,7 +2160,7 @@
       ]
     },
     "sidebar": {
-      "status": "PROPOSED (tier 3) 2026-09-26",
+      "status": "APPROVED (tier 3) 2026-09-26",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C29 — Sidebar",
@@ -2252,7 +2252,7 @@
       ]
     },
     "app-shell": {
-      "status": "PROPOSED (tier 3) 2026-09-26 (template)",
+      "status": "APPROVED (tier 3) 2026-09-26 (template)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C30 — App shell",
@@ -2295,7 +2295,7 @@
       ]
     }
   },
-  "components_status": "IN PROGRESS — C01–C26 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2); tier 3 (C27–C30) PROPOSED 2026-09-26.",
+  "components_status": "IN PROGRESS — C01–C30 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3).",
   "unsupported": {
     "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.",
     "typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",

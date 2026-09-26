@@ -2,7 +2,7 @@
 
 ## Status and approval
 
-- Lifecycle: `PROPOSED` (tier 3, 2026-09-26)
+- Lifecycle: `APPROVED` 2026-09-26 (tier 3, Owner review)
 - Direction/token approval: `APPROVED`. 11 `table.*` tokens were added on 2026-09-26 (Owner: "approve all"). SP6 was amended so the table cell avatar ↔ name gap (10) is allowed.
 - Pencil library: `design-system.lib.pen` › **C27 — Table** (`zWcpb`)
 - Evidence: legacy Frame 2 › Production Table (Booking & Produksi)

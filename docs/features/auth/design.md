@@ -1,6 +1,6 @@
 # F-01 Auth — Visual design
 
-Status: IN REVIEW (2026-09-26) — awaiting Owner approval to mark DESIGNED. Pencil source: [auth.pen](auth.pen). The Owner chose a split layout and English as the primary UI language. Desktop right panels use the chosen editorial panel (see *Editorial panel decision*).
+Status: DESIGNED (Owner approved 2026-09-26). Remaining review items below are follow-ups, not blockers. Pencil source: [auth.pen](auth.pen). The Owner chose a split layout and English as the primary UI language. Desktop right panels use the chosen editorial panel (see *Editorial panel decision*).
 
 ## Direction
 

@@ -1,17 +1,21 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-26 (F-01 Auth design and Alert handoff) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `main`. This handoff records the saved Pen state before the Alert is applied to auth screens.
+Last updated: 2026-09-26 (F-01 Auth DESIGNED) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `main`, clean after `b3267a0`.
 
 ## Current handoff — resume here
 
-- **F-01 Auth canvas:** `docs/features/auth/auth.pen` was saved on disk at **2026-09-26 16:52:38** (273,046 bytes). It has 15 desktop states paired with 15 mobile states, arranged side by side; desktop editorial panels are intentionally blank and dark. The Owner's 720 px Profile/Password content column is centered. Four isolated verification notice explorations and two linked Toast comparison instances remain at the bottom of the canvas. The actual desktop verification instruction is `OIDUp`; its mobile counterpart is `JYf3F`.
-- **Owner decision:** Rename the existing library Toast component to **Alert**, use it inline without × for the verification instruction, and preserve it while the page is open. The Owner then asked to hand off and commit before applying it to auth screens.
-- **Library saved:** `docs/design-system/design-system.lib.pen` was saved at **2026-09-26 17:03:11** (4,111,384 bytes). C24 is now **Alert**; base `B50hT` and tone IDs (`E4PkTw`, `S5bhVn`, `pt1q7`, `F3GrC5`, `ef21N`) are unchanged for linked instances. Close is off by default, shadow is disabled, component variable bindings use `component/alert/*`, board 06 labels were renamed, and cover count is 479. The earlier approved `size/content-narrow = 720` variable was also synced. An `Alert/Info` screenshot rendered correctly after the variable sync.
-- **Repository tokens:** `scripts/gen_tokens.py` now generates `component.alert.*` in place of `component.toast.*`; generated `tokens.json`, `pencil-mapping.json`, and `scripts/pencil-vars.json` contain 479 variables. `verify_json.py` reported **0 issues**; `verify_vars.py` reported checksum **`c8b47514`**. The Alert spec is `components/alert.md`, and `components/registry.json` retains the stable Pencil IDs.
-- **Next step:** Open `auth.pen` in Pen and replace `OIDUp` and `JYf3F` with linked `Alert/Info` instances. Set title/body to the verification copy, width to fill the form, and leave Close disabled. Then inspect desktop/mobile screenshots, save with ⌘S, and verify the disk mtime. The old exploratory Toast comparison instances can be renamed or retired after this review.
-- **Verification still needed:** Run a full design-system canvas/consumer check after the auth replacement. Pencil's `metadata.component` on the private base still reports `toast` because `Update` did not change it, even though the visible name, registry, contexts and bindings now say Alert. Do not claim full library verification from the targeted screenshot. Board 08 does not yet document the approved 720 px layout example.
-- **Do not touch unrelated work:** `docs/design-system/exploration.pen`, root `design.pen`, and `dont-touch-old-design.zip` belong to the Owner and are outside this commit.
+- **F-01 Auth is DESIGNED** (Owner approved 2026-09-26). `docs/features/auth/design.md` and `docs/product/feature-map.md` record it.
+- **Canvas:** `docs/features/auth/auth.pen` saved at **2026-09-26 22:35:21** (415,829 bytes), committed in `703ca6d`. 15 desktop/mobile state pairs.
+  - **Notices:** all 12 inline notices are linked library **Alerts** (Info for pending/sent, Danger for invalid links, account unavailable and invalid credentials), width fill, Close off. IDs are in the design.md *Inline notices (Alert)* table.
+  - **Editorial panel:** the Owner chose **R5.1b · Tilted mosaic**. It is the local reusable component `Z5xhk` "Auth / Editorial panel" (840×900: mosaic rotated −15°, Unsplash photo tiles, 2 lime aperture tiles, scrim + headline). All 13 desktop screens with an editorial side use a ref of it; Profile screens use the App Shell instead.
+  - **Kept explorations (Owner: do not delete):** `M3WMS` (R2 Product showcase), `umFqj` (R2.3 Desktop + client phone), `u6hvV` (R5.1b Tilted mosaic), at y ≈ 11672.
+- **Housekeeping done:** generated Gemini PNGs and `assets/mockup-src/` removed (`9b1cfba`); `exploration.pen` tablet-rail decision committed (`2db7c45`); root `design.pen` and `dont-touch-old-design.zip` moved to macOS Trash (recoverable until the Trash is emptied); `.gstack/` ignored (`b3267a0`).
+- **Next step:** `/sdv:plan-feature auth` — a technical design/plan already exists at `docs/superpowers/plans/2026-09-26-auth.md`; reconcile it with the approved design. F-00 Foundation still gates implementation.
+- **Follow-ups (non-blocking):**
+  - Replace the Unsplash placeholder photos in `Z5xhk` with licensed photos; scrim colours are literal; mark the panel `aria-hidden` in code.
+  - The library copy imported into `auth.pen` is stale (Toast names, 478 variables). Reopen `auth.pen` and confirm it refreshes to Alert/* and 479 variables.
+  - Full design-system verification is still owed (`/sdv:verify-design-system`; report is stale). Private base `metadata.component` still says `toast`; board 08 lacks the 720 px layout example.
 
 The historical session notes and plans below predate this current handoff; use the section above as the active state.
 
@@ -20,7 +24,7 @@ The historical session notes and plans below predate this current handoff; use t
 | Area | Status | Notes |
 |---|---|---|
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. Folder architecture finalized 2026-09-26 in `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`. |
-| F-01 Auth | DESIGNED, IN REVIEW | 15 desktop/mobile pairs in `auth.pen`; selected verification instruction still awaits the new linked `Alert/Info`. F-00 foundation still gates implementation. |
+| F-01 Auth | DESIGNED (2026-09-26) | 15 desktop/mobile pairs in `auth.pen`; all notices are linked Alerts; editorial panel `Z5xhk` (R5.1b tilted mosaic). F-00 foundation still gates implementation. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
 | Design system — tokens | PERSISTED (2026-09-26) | **479 tokens** (61 primitive · 54 semantic · 312 component · scales), `mode: light \| dark`. Repository payload checksum `c8b47514`; full Pencil checksum check remains. |
 | Design system — token canvas | PARTIAL UPDATE | Cover count and board 06 Alert labels updated; board 08 still needs the approved 720 px layout example. |
@@ -88,7 +92,7 @@ The historical session notes and plans below predate this current handoff; use t
 | `scripts/verify_json.py`, `verify_vars.py` | JSON ⇄ mapping ⇄ payload checks, plus the FNV-1a checksum. The current total is `c36593e9` (478 vars). |
 | `scripts/pencil-canvas-builders.md` | Pencil MCP snippets for boards 00–08. |
 
-The root files `design.pen` (unused) and `dont-touch-old-design.zip` (legacy source; never modify) are intentionally untracked.
+The former root files `design.pen` and `dont-touch-old-design.zip` were moved to the macOS Trash on 2026-09-26 at the Owner's request.
 
 ## Key decisions (Owner)
 

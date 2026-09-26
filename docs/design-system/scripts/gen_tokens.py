@@ -396,6 +396,25 @@ add("bottom-nav.item.active","color",SC("action.primary"),SC("status.info.fg")) 
 add("bottom-nav.cta.background","color",SC("action.primary"))
 add("bottom-nav.cta.icon","color",SC("action.on-primary"))
 add("bottom-nav.cta.ring","color",SC("surface.panel"))         # 4 px ring separating the raised CTA from content
+# Sidebar aliases (Owner 2026-09-26: promote the layout region to component tokens; values unchanged)
+add("sidebar.padding-y","number",SP("space.2"))                # 8
+add("sidebar.padding-x","number",SP("space.3"))                # 12
+add("sidebar.gap","number",SP("space.3"))                      # sections 12
+add("sidebar.logo","color",SC("text.primary"))
+add("sidebar.divider","color",SC("border.default"))
+add("sidebar.workspace.background","color",SC("surface.panel"))
+add("sidebar.workspace.border","color",SC("border.default"))
+add("sidebar.workspace.radius","number",SP("radius.sm"))
+add("sidebar.workspace.mark","color",SC("accent.highlight"))
+add("sidebar.account.gap","number",SP("space.2-5"))            # avatar ↔ name 10
+# Open questions resolved (Owner 2026-09-26, recommended defaults)
+add("calendar.day.background-hover","color",SC("surface.muted"))   # rest is surface.sunken → one step darker
+add("segmented.item.lg.padding-y","number",SP("space.3"))      # 12 (LG, mobile filters)
+add("segmented.item.lg.padding-x","number",SP("space.5"))      # 20
+add("table.row.background-selected","color",SC("status.info.bg"))  # selected rows (Checkbox column)
+add("table.header.text-sorted","color",SC("text.primary"))     # sorted column head + chevron
+add("table.skeleton","color",SC("surface.sunken"))             # loading placeholder bars
+add("menu.item.text-action","color",SC("action.primary"))      # Combobox "Tambah …" create row
 
 # ---------- build DTCG ----------
 def setp(d, path, val):

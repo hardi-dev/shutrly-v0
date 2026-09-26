@@ -67287,6 +67287,155 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "type": "frame",
+                  "id": "J83uHR",
+                  "name": "Row Segmented Item / LG",
+                  "height": 72,
+                  "stroke": "$color/semantic/border/subtle",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "l5Jao",
+                      "name": "Row label",
+                      "fill": "$color/semantic/text/muted",
+                      "textGrowth": "fixed-width",
+                      "width": 180,
+                      "content": "Segmented Item / LG",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "WCaLt",
+                      "name": "Cell Active",
+                      "width": 150,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "a17zLE",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "k0HnIZ",
+                          "name": "Segmented Item/LG/Active",
+                          "context": "Segmented Item · size=lg state=active (mobile filters; padding 12/20, label body 14). Text prop: Label. Spec: docs/design-system/components/segmented-item.md",
+                          "padding": [
+                            "$component/segmented/item/lg/padding-y",
+                            "$component/segmented/item/lg/padding-x"
+                          ],
+                          "fill": "$component/segmented/item/background-active",
+                          "stroke": "$component/segmented/item/border-active",
+                          "strokeWidth": 1,
+                          "strokeAlignment": "inner",
+                          "descendants": {
+                            "FnOrw": {
+                              "fontSize": "$font/size/body",
+                              "fill": "$component/segmented/item/text-active",
+                              "content": "Hari"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "r61B3",
+                      "name": "Cell Default",
+                      "width": 150,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "SaNob",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "k0HnIZ",
+                          "name": "Segmented Item/LG/Default",
+                          "context": "Segmented Item · size=lg state=default (mobile filters; padding 12/20, label body 14). Text prop: Label. Spec: docs/design-system/components/segmented-item.md",
+                          "padding": [
+                            "$component/segmented/item/lg/padding-y",
+                            "$component/segmented/item/lg/padding-x"
+                          ],
+                          "descendants": {
+                            "FnOrw": {
+                              "fontSize": "$font/size/body"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "eoECD",
+                      "name": "Cell Hover",
+                      "width": 150,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "OD6NY",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "k0HnIZ",
+                          "name": "Segmented Item/LG/Hover",
+                          "context": "Segmented Item · size=lg state=hover (mobile filters; padding 12/20, label body 14). Text prop: Label. Spec: docs/design-system/components/segmented-item.md",
+                          "padding": [
+                            "$component/segmented/item/lg/padding-y",
+                            "$component/segmented/item/lg/padding-x"
+                          ],
+                          "descendants": {
+                            "FnOrw": {
+                              "fontSize": "$font/size/body",
+                              "fill": "$component/segmented/item/text-hover"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vqIgl",
+                      "name": "Cell Focus",
+                      "width": 150,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "w3GDB",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "k0HnIZ",
+                          "name": "Segmented Item/LG/Focus",
+                          "context": "Segmented Item · size=lg state=focus (mobile filters; padding 12/20, label body 14). Text prop: Label. Spec: docs/design-system/components/segmented-item.md",
+                          "padding": [
+                            "$component/segmented/item/lg/padding-y",
+                            "$component/segmented/item/lg/padding-x"
+                          ],
+                          "stroke": "$color/semantic/focus/ring",
+                          "strokeWidth": 2,
+                          "strokeAlignment": "inner",
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "$color/semantic/focus/glow",
+                            "blur": 6
+                          },
+                          "descendants": {
+                            "FnOrw": {
+                              "fontSize": "$font/size/body"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
@@ -78350,82 +78499,164 @@
               "cornerRadius": "$radius/md",
               "stroke": "$color/semantic/border/default",
               "strokeWidth": 1,
-              "gap": 24,
+              "gap": 48,
               "padding": 24,
-              "alignItems": "center",
+              "alignItems": "end",
               "children": [
                 {
                   "type": "frame",
-                  "id": "uMP5H",
-                  "name": "Segmented Control",
-                  "context": "Segmented Control · 2–4 views. Slot: Items (Segmented Item variants: Active ×1, Default/Hover/Focus). Default: Hari (active), Minggu, Bulan. Fill via Replace(<instance>/Items, {type:\"frame\", …}) or override Items' labels. Spec: docs/design-system/components/segmented-control.md",
-                  "reusable": true,
-                  "metadata": {
-                    "type": "component",
-                    "component": "segmented-control"
-                  },
-                  "fill": "$component/segmented/track",
-                  "cornerRadius": "$component/segmented/radius",
-                  "padding": "$component/segmented/padding",
+                  "id": "nVwLX",
+                  "name": "Col MD",
+                  "layout": "vertical",
+                  "gap": 8,
                   "children": [
                     {
                       "type": "frame",
-                      "id": "ULzG1",
-                      "name": "Items",
-                      "slot": [
-                        "NcbI1",
-                        "AptHz",
-                        "BrUPr",
-                        "u7e89"
-                      ],
-                      "gap": "$component/segmented/gap",
+                      "id": "uMP5H",
+                      "name": "Segmented Control",
+                      "context": "Segmented Control · 2–4 views. Slot: Items (Segmented Item variants: Active ×1, Default/Hover/Focus). Default: Hari (active), Minggu, Bulan. Fill via Replace(<instance>/Items, {type:\"frame\", …}) or override Items' labels. Spec: docs/design-system/components/segmented-control.md",
+                      "reusable": true,
+                      "metadata": {
+                        "type": "component",
+                        "component": "segmented-control"
+                      },
+                      "fill": "$component/segmented/track",
+                      "cornerRadius": "$component/segmented/radius",
+                      "padding": "$component/segmented/padding",
                       "children": [
                         {
-                          "id": "DXFJu",
-                          "type": "ref",
-                          "ref": "NcbI1",
-                          "name": "Item Hari",
-                          "descendants": {
-                            "FnOrw": {
-                              "content": "Hari"
+                          "type": "frame",
+                          "id": "ULzG1",
+                          "name": "Items",
+                          "slot": [
+                            "NcbI1",
+                            "AptHz",
+                            "BrUPr",
+                            "u7e89"
+                          ],
+                          "gap": "$component/segmented/gap",
+                          "children": [
+                            {
+                              "id": "DXFJu",
+                              "type": "ref",
+                              "ref": "NcbI1",
+                              "name": "Item Hari",
+                              "descendants": {
+                                "FnOrw": {
+                                  "content": "Hari"
+                                }
+                              }
+                            },
+                            {
+                              "id": "lLSKb",
+                              "type": "ref",
+                              "ref": "AptHz",
+                              "name": "Item Minggu",
+                              "descendants": {
+                                "FnOrw": {
+                                  "content": "Minggu"
+                                }
+                              }
+                            },
+                            {
+                              "id": "F56zx9",
+                              "type": "ref",
+                              "ref": "AptHz",
+                              "name": "Item Bulan",
+                              "descendants": {
+                                "FnOrw": {
+                                  "content": "Bulan"
+                                }
+                              }
                             }
-                          }
-                        },
-                        {
-                          "id": "lLSKb",
-                          "type": "ref",
-                          "ref": "AptHz",
-                          "name": "Item Minggu",
-                          "descendants": {
-                            "FnOrw": {
-                              "content": "Minggu"
-                            }
-                          }
-                        },
-                        {
-                          "id": "F56zx9",
-                          "type": "ref",
-                          "ref": "AptHz",
-                          "name": "Item Bulan",
-                          "descendants": {
-                            "FnOrw": {
-                              "content": "Bulan"
-                            }
-                          }
+                          ]
                         }
                       ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "j5vime",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "Segmented Control · default content",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
                 {
-                  "type": "text",
-                  "id": "j5vime",
-                  "name": "Caption",
-                  "fill": "$color/semantic/text/muted",
-                  "content": "Segmented Control · default content",
-                  "fontFamily": "IBM Plex Mono",
-                  "fontSize": 11,
-                  "fontWeight": "normal"
+                  "type": "frame",
+                  "id": "CzPyF",
+                  "name": "Col LG",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "id": "WadoU",
+                      "type": "ref",
+                      "reusable": true,
+                      "ref": "uMP5H",
+                      "name": "Segmented Control/LG",
+                      "context": "Segmented Control · size=lg (mobile: 44 px tall targets). Slot: Items (Segmented Item/LG/*). Spec: docs/design-system/components/segmented-control.md",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "TsgMK",
+                          "name": "Items",
+                          "slot": [
+                            "a17zLE",
+                            "SaNob",
+                            "OD6NY",
+                            "w3GDB"
+                          ],
+                          "gap": "$component/segmented/gap",
+                          "children": [
+                            {
+                              "id": "NC2yN",
+                              "type": "ref",
+                              "ref": "a17zLE",
+                              "descendants": {
+                                "FnOrw": {
+                                  "content": "Hari"
+                                }
+                              }
+                            },
+                            {
+                              "id": "lKRK6",
+                              "type": "ref",
+                              "ref": "SaNob",
+                              "descendants": {
+                                "FnOrw": {
+                                  "content": "Minggu"
+                                }
+                              }
+                            },
+                            {
+                              "id": "r2iCzc",
+                              "type": "ref",
+                              "ref": "SaNob",
+                              "descendants": {
+                                "FnOrw": {
+                                  "content": "Bulan"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "xTbVp",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "Segmented Control/LG · mobile filters",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
                 }
               ]
             }
@@ -79266,15 +79497,25 @@
                               ]
                             },
                             {
-                              "id": "F4Fv5K",
-                              "type": "ref",
-                              "ref": "VA96y",
-                              "name": "Close",
-                              "descendants": {
-                                "wSyzB": {
-                                  "icon": "x"
+                              "type": "frame",
+                              "id": "IXhZl",
+                              "name": "Close align",
+                              "height": 18,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "id": "F4Fv5K",
+                                  "type": "ref",
+                                  "ref": "VA96y",
+                                  "name": "Close",
+                                  "descendants": {
+                                    "wSyzB": {
+                                      "icon": "x"
+                                    }
+                                  }
                                 }
-                              }
+                              ]
                             }
                           ]
                         }
@@ -80431,6 +80672,35 @@
                       "ref": "RmXbc",
                       "name": "Calendar Day/Default",
                       "context": "Calendar Day · state=default. Text: Day (Sen…Min), Date. Booleans: Dot 1–3. Code: button with aria-pressed (selected) and aria-label \"Kamis, 25 September, 3 sesi\". Spec: docs/design-system/components/calendar-day.md"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hOGv8",
+                  "name": "Cell Hover",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "CYwob",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "HOVER",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "k6Pzsk",
+                      "type": "ref",
+                      "reusable": true,
+                      "ref": "RmXbc",
+                      "name": "Calendar Day/Hover",
+                      "fill": "$component/calendar/day/background-hover",
+                      "context": "Calendar Day · state=hover (pointer over an unselected day; resolved open question 2026-09-26). Text: Day, Date. Booleans: Dot 1–3. Spec: docs/design-system/components/calendar-day.md"
                     }
                   ]
                 },
@@ -82585,6 +82855,18 @@
                               "ref": "tgN4c",
                               "name": "Actions",
                               "enabled": false
+                            },
+                            {
+                              "id": "CoxJG",
+                              "type": "ref",
+                              "ref": "n8NmOH",
+                              "name": "Checkbox",
+                              "enabled": false,
+                              "descendants": {
+                                "bnoVV": {
+                                  "enabled": false
+                                }
+                              }
                             }
                           ]
                         }
@@ -82791,6 +83073,7 @@
                             "component": "table-header-cell"
                           },
                           "width": 130,
+                          "gap": "$space/1",
                           "alignItems": "center",
                           "children": [
                             {
@@ -82803,8 +83086,194 @@
                               "fontSize": "$font/size/overline",
                               "fontWeight": "$font/weight/bold",
                               "letterSpacing": "$font/letter-spacing/overline"
+                            },
+                            {
+                              "type": "icon",
+                              "id": "Dd7jy",
+                              "x": 0,
+                              "y": 0,
+                              "name": "Sort",
+                              "enabled": false,
+                              "width": 12,
+                              "height": 12,
+                              "icon": "chevron-down",
+                              "library": "lucide",
+                              "fill": "$component/table/header/text-sorted"
+                            },
+                            {
+                              "id": "n9wSOk",
+                              "type": "ref",
+                              "ref": "n8NmOH",
+                              "name": "Checkbox",
+                              "enabled": false,
+                              "descendants": {
+                                "bnoVV": {
+                                  "enabled": false
+                                }
+                              }
                             }
                           ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Y1SP5",
+                  "name": "Row states",
+                  "gap": 24,
+                  "alignItems": "end",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "mSmi9",
+                      "name": "Cell HEADER SORTED",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pqoEs",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "HEADER SORTED",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "UD38Q",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "T3MFWw",
+                          "name": "Table Header Cell/Sorted",
+                          "context": "Table Header Cell · sorted column (aria-sort). Label in table.header.text-sorted + chevron (down = descending, up = ascending: swap icon). Spec: docs/design-system/components/table.md",
+                          "descendants": {
+                            "t55nF": {
+                              "fill": "$component/table/header/text-sorted",
+                              "content": "TANGGAL"
+                            },
+                            "Dd7jy": {
+                              "enabled": true
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "hy5nx",
+                      "name": "Cell HEADER SELECT",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "jBiWY",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "HEADER SELECT",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "h0RSa",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "T3MFWw",
+                          "name": "Table Header Cell/Select",
+                          "width": 32,
+                          "context": "Table Header Cell · select-all checkbox column (32). Swap the checkbox to Checked/Mixed for all/some rows. Spec: docs/design-system/components/table.md",
+                          "descendants": {
+                            "t55nF": {
+                              "enabled": false
+                            },
+                            "n9wSOk": {
+                              "enabled": true
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "iYx2H",
+                      "name": "Cell SELECT",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "EHyoD",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "SELECT",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "xbQwc",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "Nm9LJ",
+                          "name": "Table Cell/Select",
+                          "width": 32,
+                          "context": "Table Cell · row checkbox column (32). Unchecked. Spec: docs/design-system/components/table.md",
+                          "descendants": {
+                            "qlRSm": {
+                              "enabled": false
+                            },
+                            "CoxJG": {
+                              "enabled": true
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "InWnu",
+                      "name": "Cell SELECT · CHECKED",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ZWTBh",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "SELECT · CHECKED",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "whHzE",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "Nm9LJ",
+                          "name": "Table Cell/Selected",
+                          "width": 32,
+                          "context": "Table Cell · row checkbox column (32). Checked — pair with Table Row/Selected. Spec: docs/design-system/components/table.md",
+                          "descendants": {
+                            "qlRSm": {
+                              "enabled": false
+                            },
+                            "CoxJG": {
+                              "id": "njTRz",
+                              "type": "ref",
+                              "ref": "H41tQ",
+                              "name": "Checkbox",
+                              "descendants": {
+                                "bnoVV": {
+                                  "enabled": false
+                                }
+                              }
+                            }
+                          }
                         }
                       ]
                     }
@@ -82863,7 +83332,9 @@
                               "id": "mxhia",
                               "name": "Cells",
                               "slot": [
-                                "T3MFWw"
+                                "T3MFWw",
+                                "UD38Q",
+                                "h0RSa"
                               ],
                               "width": "fill_container",
                               "alignItems": "center",
@@ -82995,7 +83466,9 @@
                                 "f7pbaS",
                                 "lVDvO",
                                 "rS9BY",
-                                "C1MRI"
+                                "C1MRI",
+                                "xbQwc",
+                                "whHzE"
                               ],
                               "width": "fill_container",
                               "alignItems": "center",
@@ -83133,6 +83606,337 @@
                           "context": "Table Row · state=hover (clickable rows only; table.row.background-hover). Slot: Cells (Table Cell types; keep widths equal to the header's). Last row: strokeWidth 0 (the footer draws the edge). Spec: docs/design-system/components/table.md",
                           "width": "fill_container",
                           "fill": "$component/table/row/background-hover"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "F7iVx",
+                      "name": "Block TABLE ROW / SELECTED",
+                      "width": 840,
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "PqILW",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "TABLE ROW / SELECTED",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "bd9LK",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "Y1wn7",
+                          "name": "Table Row/Selected",
+                          "width": "fill_container",
+                          "fill": "$component/table/row/background-selected",
+                          "context": "Table Row · state=selected (its Select cell is checked; aria-selected=true). Slot: Cells. Spec: docs/design-system/components/table.md",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "RzpFp",
+                              "name": "Cells",
+                              "width": "fill_container",
+                              "gap": "$component/table/cell/gap",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "id": "I9bIt",
+                                  "type": "ref",
+                                  "ref": "whHzE",
+                                  "name": "Select"
+                                },
+                                {
+                                  "id": "S2iSXl",
+                                  "type": "ref",
+                                  "ref": "lVDvO",
+                                  "name": "Client",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "cTnMA/DloPs": {
+                                      "content": "RA"
+                                    },
+                                    "Q4FlPn": {
+                                      "content": "Rina & Adi"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "uUSVi",
+                                  "type": "ref",
+                                  "ref": "f0oyj",
+                                  "name": "Type",
+                                  "width": 130,
+                                  "descendants": {
+                                    "Q4FlPn": {
+                                      "content": "Prewedding"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "hq7FX",
+                      "name": "Block TABLE ROW / SKELETON (loading)",
+                      "width": 840,
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "W1s80",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "TABLE ROW / SKELETON (loading)",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "eFemy",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "Y1wn7",
+                          "name": "Table Row/Skeleton",
+                          "width": "fill_container",
+                          "context": "Table Row · loading placeholder (3–5 rows while data loads; aria-busy on the table). Bars in table.skeleton. Spec: docs/design-system/components/table.md",
+                          "fill": "$component/table/background",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "XiL5u",
+                              "name": "Cells",
+                              "width": "fill_container",
+                              "gap": "$component/table/cell/gap",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "H6NtkA",
+                                  "name": "Client",
+                                  "width": "fill_container",
+                                  "gap": "$component/table/cell/gap",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "ellipse",
+                                      "id": "IgXQI",
+                                      "name": "Avatar",
+                                      "fill": "$component/table/skeleton",
+                                      "width": 32,
+                                      "height": 32
+                                    },
+                                    {
+                                      "type": "rectangle",
+                                      "cornerRadius": "$radius/xs",
+                                      "id": "HVWz3",
+                                      "name": "Bar",
+                                      "fill": "$component/table/skeleton",
+                                      "width": 140,
+                                      "height": 10
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Zeu0d",
+                                  "name": "Col",
+                                  "width": 130,
+                                  "children": [
+                                    {
+                                      "type": "rectangle",
+                                      "cornerRadius": "$radius/xs",
+                                      "id": "AUchm",
+                                      "name": "Bar",
+                                      "fill": "$component/table/skeleton",
+                                      "width": 80,
+                                      "height": 10
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "hKzhe",
+                                  "name": "Col",
+                                  "width": 120,
+                                  "children": [
+                                    {
+                                      "type": "rectangle",
+                                      "cornerRadius": "$radius/xs",
+                                      "id": "rvHkj",
+                                      "name": "Bar",
+                                      "fill": "$component/table/skeleton",
+                                      "width": 70,
+                                      "height": 10
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "T1tkY",
+                                  "name": "Col",
+                                  "width": 130,
+                                  "children": [
+                                    {
+                                      "type": "rectangle",
+                                      "cornerRadius": "$radius/xs",
+                                      "id": "IgXLc",
+                                      "name": "Bar",
+                                      "fill": "$component/table/skeleton",
+                                      "width": 90,
+                                      "height": 10
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "sWP3L",
+                                  "name": "Col",
+                                  "width": 110,
+                                  "children": [
+                                    {
+                                      "type": "rectangle",
+                                      "cornerRadius": "$radius/xs",
+                                      "id": "Bn37x",
+                                      "name": "Bar",
+                                      "fill": "$component/table/skeleton",
+                                      "width": 70,
+                                      "height": 10
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "QHMDK",
+                                  "name": "Col actions",
+                                  "width": 32,
+                                  "height": 1
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "AnoEM",
+                      "name": "Block TABLE EMPTY STATE",
+                      "width": 840,
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "MQZuZ",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "TABLE EMPTY STATE",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "w0HQb",
+                          "name": "Table Empty State",
+                          "context": "Table Empty State · replaces the Rows slot when there is nothing to show (no data yet, or no filter results). Text: Title, Body. Boolean: Action (Button Secondary MD). Spec: docs/design-system/components/table.md",
+                          "reusable": true,
+                          "metadata": {
+                            "type": "component",
+                            "component": "table-empty-state"
+                          },
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$space/2",
+                          "padding": [
+                            "$space/10",
+                            "$space/6"
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "f4mVK",
+                              "name": "Icon",
+                              "width": 40,
+                              "height": 40,
+                              "fill": "$color/semantic/surface/sunken",
+                              "cornerRadius": "$radius/full",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "QtZgS",
+                                  "name": "Glyph",
+                                  "width": 20,
+                                  "height": 20,
+                                  "icon": "folder-open",
+                                  "library": "lucide",
+                                  "fill": "$color/semantic/text/muted"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "rCTR4",
+                              "name": "Title",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "Belum ada proyek",
+                              "fontFamily": "$font/family/base",
+                              "fontSize": "$font/size/body",
+                              "fontWeight": "$font/weight/semibold"
+                            },
+                            {
+                              "type": "text",
+                              "id": "I9eRVV",
+                              "name": "Body",
+                              "fill": "$color/semantic/text/secondary",
+                              "content": "Proyek yang Anda buat akan muncul di sini.",
+                              "fontFamily": "$font/family/base",
+                              "fontSize": "$font/size/body-sm",
+                              "fontWeight": "$font/weight/regular"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "xRWEs",
+                              "name": "Action",
+                              "padding": [
+                                "$space/2",
+                                0,
+                                0,
+                                0
+                              ],
+                              "children": [
+                                {
+                                  "id": "J0Ouy",
+                                  "type": "ref",
+                                  "ref": "JmfmZ",
+                                  "name": "Button",
+                                  "descendants": {
+                                    "fMNO1": {
+                                      "enabled": true,
+                                      "icon": "plus"
+                                    },
+                                    "xnhuK": {
+                                      "content": "Buat proyek"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }
@@ -83292,7 +84096,10 @@
                           "name": "Rows",
                           "slot": [
                             "r7YZY",
-                            "XlPZD"
+                            "XlPZD",
+                            "bd9LK",
+                            "eFemy",
+                            "w0HQb"
                           ],
                           "width": "fill_container",
                           "layout": "vertical",
@@ -83312,25 +84119,25 @@
                                   "alignItems": "center",
                                   "children": [
                                     {
-                                      "id": "PNHoO",
+                                      "id": "WUWPh",
                                       "type": "ref",
                                       "ref": "lVDvO",
-                                      "name": "Cell Klien",
+                                      "name": "Klien",
                                       "width": "fill_container",
                                       "descendants": {
                                         "cTnMA/DloPs": {
                                           "content": "DS"
                                         },
                                         "Q4FlPn": {
-                                          "content": "Dimas & Sari"
+                                          "content": "Dinar & Sari"
                                         }
                                       }
                                     },
                                     {
-                                      "id": "m4Uvf",
+                                      "id": "OTjUr",
                                       "type": "ref",
                                       "ref": "f0oyj",
-                                      "name": "Cell Jenis",
+                                      "name": "Jenis",
                                       "width": 130,
                                       "descendants": {
                                         "Q4FlPn": {
@@ -83339,51 +84146,51 @@
                                       }
                                     },
                                     {
-                                      "id": "MgMUQ",
+                                      "id": "JgkMI",
                                       "type": "ref",
                                       "ref": "f0oyj",
-                                      "name": "Cell Tanggal",
+                                      "name": "Tanggal",
                                       "width": 120,
                                       "descendants": {
                                         "Q4FlPn": {
-                                          "content": "Hari ini, 09:00"
+                                          "content": "Sab, 28 Sep"
                                         }
                                       }
                                     },
                                     {
-                                      "id": "o6yAK",
-                                      "type": "ref",
-                                      "ref": "rS9BY",
-                                      "name": "Cell Tahap",
+                                      "type": "frame",
+                                      "id": "I2CIS",
+                                      "name": "Tahap",
                                       "width": 130,
-                                      "descendants": {
-                                        "T67o9d": {
-                                          "id": "I7Q6t0",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "W3c8eO",
                                           "type": "ref",
                                           "ref": "w9aTAe",
-                                          "name": "Stage",
-                                          "enabled": true
+                                          "name": "Stage"
                                         }
-                                      }
+                                      ]
                                     },
                                     {
-                                      "id": "qgR2J",
+                                      "id": "FUNLY",
                                       "type": "ref",
                                       "ref": "f7pbaS",
-                                      "name": "Cell Nilai",
+                                      "name": "Nilai",
                                       "width": 110,
                                       "descendants": {
                                         "Q4FlPn": {
-                                          "content": "Rp 6.500.000"
+                                          "content": "Rp 4.800.000"
                                         }
                                       }
                                     },
                                     {
-                                      "id": "ZOKKQ",
+                                      "id": "gUKgX",
                                       "type": "ref",
                                       "ref": "C1MRI",
-                                      "name": "Cell Aksi",
-                                      "width": 32
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
                                     }
                                   ]
                                 }
@@ -83404,25 +84211,25 @@
                                   "alignItems": "center",
                                   "children": [
                                     {
-                                      "id": "nGeGl",
+                                      "id": "GWs0Z",
                                       "type": "ref",
                                       "ref": "lVDvO",
-                                      "name": "Cell Klien",
+                                      "name": "Klien",
                                       "width": "fill_container",
                                       "descendants": {
                                         "cTnMA/DloPs": {
-                                          "content": "KT"
+                                          "content": "BT"
                                         },
                                         "Q4FlPn": {
-                                          "content": "Kopi Tuku"
+                                          "content": "Bayu Tirta"
                                         }
                                       }
                                     },
                                     {
-                                      "id": "NUaVD",
+                                      "id": "f4N39Q",
                                       "type": "ref",
                                       "ref": "f0oyj",
-                                      "name": "Cell Jenis",
+                                      "name": "Jenis",
                                       "width": 130,
                                       "descendants": {
                                         "Q4FlPn": {
@@ -83431,51 +84238,51 @@
                                       }
                                     },
                                     {
-                                      "id": "kJ5xU",
+                                      "id": "d0wts",
                                       "type": "ref",
                                       "ref": "f0oyj",
-                                      "name": "Cell Tanggal",
+                                      "name": "Tanggal",
                                       "width": 120,
                                       "descendants": {
                                         "Q4FlPn": {
-                                          "content": "Hari ini, 13:30"
+                                          "content": "Sen, 30 Sep"
                                         }
                                       }
                                     },
                                     {
-                                      "id": "T5jgn1",
-                                      "type": "ref",
-                                      "ref": "rS9BY",
-                                      "name": "Cell Tahap",
+                                      "type": "frame",
+                                      "id": "V6d69",
+                                      "name": "Tahap",
                                       "width": 130,
-                                      "descendants": {
-                                        "T67o9d": {
-                                          "id": "Uggrc",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "lyqQe",
                                           "type": "ref",
                                           "ref": "LQGDd",
-                                          "name": "Stage",
-                                          "enabled": true
+                                          "name": "Stage"
                                         }
-                                      }
+                                      ]
                                     },
                                     {
-                                      "id": "uZK8Z",
+                                      "id": "N2JNto",
                                       "type": "ref",
                                       "ref": "f7pbaS",
-                                      "name": "Cell Nilai",
+                                      "name": "Nilai",
                                       "width": 110,
                                       "descendants": {
                                         "Q4FlPn": {
-                                          "content": "Rp 4.500.000"
+                                          "content": "Rp 2.500.000"
                                         }
                                       }
                                     },
                                     {
-                                      "id": "CyblH",
+                                      "id": "X9BAv",
                                       "type": "ref",
                                       "ref": "C1MRI",
-                                      "name": "Cell Aksi",
-                                      "width": 32
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
                                     }
                                   ]
                                 }
@@ -83496,10 +84303,10 @@
                                   "alignItems": "center",
                                   "children": [
                                     {
-                                      "id": "NEOam",
+                                      "id": "uF2HY",
                                       "type": "ref",
                                       "ref": "lVDvO",
-                                      "name": "Cell Klien",
+                                      "name": "Klien",
                                       "width": "fill_container",
                                       "descendants": {
                                         "cTnMA/DloPs": {
@@ -83511,10 +84318,10 @@
                                       }
                                     },
                                     {
-                                      "id": "FrLpG",
+                                      "id": "UaPp9",
                                       "type": "ref",
                                       "ref": "f0oyj",
-                                      "name": "Cell Jenis",
+                                      "name": "Jenis",
                                       "width": 130,
                                       "descendants": {
                                         "Q4FlPn": {
@@ -83523,10 +84330,10 @@
                                       }
                                     },
                                     {
-                                      "id": "XWkRZ",
+                                      "id": "rZHt7",
                                       "type": "ref",
                                       "ref": "f0oyj",
-                                      "name": "Cell Tanggal",
+                                      "name": "Tanggal",
                                       "width": 120,
                                       "descendants": {
                                         "Q4FlPn": {
@@ -83535,26 +84342,25 @@
                                       }
                                     },
                                     {
-                                      "id": "Ur8yT",
-                                      "type": "ref",
-                                      "ref": "rS9BY",
-                                      "name": "Cell Tahap",
+                                      "type": "frame",
+                                      "id": "f2D99L",
+                                      "name": "Tahap",
                                       "width": 130,
-                                      "descendants": {
-                                        "T67o9d": {
-                                          "id": "xMCoN",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "PFYmA",
                                           "type": "ref",
                                           "ref": "ZVQLe",
-                                          "name": "Stage",
-                                          "enabled": true
+                                          "name": "Stage"
                                         }
-                                      }
+                                      ]
                                     },
                                     {
-                                      "id": "e6zEpG",
+                                      "id": "vmS99",
                                       "type": "ref",
                                       "ref": "f7pbaS",
-                                      "name": "Cell Nilai",
+                                      "name": "Nilai",
                                       "width": 110,
                                       "descendants": {
                                         "Q4FlPn": {
@@ -83563,11 +84369,12 @@
                                       }
                                     },
                                     {
-                                      "id": "p3GWT",
+                                      "id": "HfJgt",
                                       "type": "ref",
                                       "ref": "C1MRI",
-                                      "name": "Cell Aksi",
-                                      "width": 32
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
                                     }
                                   ]
                                 }
@@ -83589,10 +84396,10 @@
                                   "alignItems": "center",
                                   "children": [
                                     {
-                                      "id": "eDuVj",
+                                      "id": "ji5J6",
                                       "type": "ref",
                                       "ref": "lVDvO",
-                                      "name": "Cell Klien",
+                                      "name": "Klien",
                                       "width": "fill_container",
                                       "descendants": {
                                         "cTnMA/DloPs": {
@@ -83604,10 +84411,10 @@
                                       }
                                     },
                                     {
-                                      "id": "VowFN",
+                                      "id": "ACSUi",
                                       "type": "ref",
                                       "ref": "f0oyj",
-                                      "name": "Cell Jenis",
+                                      "name": "Jenis",
                                       "width": 130,
                                       "descendants": {
                                         "Q4FlPn": {
@@ -83616,38 +84423,37 @@
                                       }
                                     },
                                     {
-                                      "id": "Pprhh",
+                                      "id": "kdah0",
                                       "type": "ref",
                                       "ref": "f0oyj",
-                                      "name": "Cell Tanggal",
+                                      "name": "Tanggal",
                                       "width": 120,
                                       "descendants": {
                                         "Q4FlPn": {
-                                          "content": "16 Sep"
+                                          "content": "15 Sep"
                                         }
                                       }
                                     },
                                     {
-                                      "id": "w1PEvz",
-                                      "type": "ref",
-                                      "ref": "rS9BY",
-                                      "name": "Cell Tahap",
+                                      "type": "frame",
+                                      "id": "U7H5N",
+                                      "name": "Tahap",
                                       "width": 130,
-                                      "descendants": {
-                                        "T67o9d": {
-                                          "id": "ZsxYF",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "Q6IcI",
                                           "type": "ref",
                                           "ref": "i9SFm",
-                                          "name": "Stage",
-                                          "enabled": true
+                                          "name": "Stage"
                                         }
-                                      }
+                                      ]
                                     },
                                     {
-                                      "id": "dVjx8",
+                                      "id": "uMv2i",
                                       "type": "ref",
                                       "ref": "f7pbaS",
-                                      "name": "Cell Nilai",
+                                      "name": "Nilai",
                                       "width": 110,
                                       "descendants": {
                                         "Q4FlPn": {
@@ -83656,11 +84462,12 @@
                                       }
                                     },
                                     {
-                                      "id": "q0Qlx",
+                                      "id": "PfFLr",
                                       "type": "ref",
                                       "ref": "C1MRI",
-                                      "name": "Cell Aksi",
-                                      "width": 32
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
                                     }
                                   ]
                                 }
@@ -83803,23 +84610,17 @@
                           "fontWeight": "normal"
                         },
                         {
-                          "id": "wUuvA",
+                          "id": "I3tjGV",
                           "type": "ref",
                           "ref": "FCsTI",
                           "name": "Case specimen",
                           "width": "fill_container",
                           "descendants": {
-                            "ycT8w": {
-                              "content": "Invoice tertunda"
-                            },
                             "aIKsB": {
                               "enabled": false
                             },
                             "YTJjx": {
                               "enabled": false
-                            },
-                            "X0Kcc": {
-                              "content": "4 invoice · Rp 12,4 jt"
                             },
                             "QTddd": {
                               "enabled": false
@@ -83862,6 +84663,124 @@
                             "m3GsQx": {
                               "enabled": true,
                               "content": "0812-3456-7890"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "EhbJx",
+                      "name": "Case",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nbvEY",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "empty · Rows slot → Table Empty State (footer count hidden)",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "pQymz",
+                          "type": "ref",
+                          "ref": "FCsTI",
+                          "name": "Case specimen",
+                          "width": "fill_container",
+                          "descendants": {
+                            "aIKsB": {
+                              "enabled": false
+                            },
+                            "cYo5t": {
+                              "type": "frame",
+                              "id": "daFbN",
+                              "name": "Rows",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "children": [
+                                {
+                                  "id": "tGFYG",
+                                  "type": "ref",
+                                  "ref": "w0HQb",
+                                  "width": "fill_container"
+                                }
+                              ]
+                            },
+                            "X0Kcc": {
+                              "enabled": false
+                            },
+                            "QTddd": {
+                              "enabled": false
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "CteFg",
+                      "name": "Case",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "XJuof",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "loading · 3 × Table Row/Skeleton",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "nEAAs",
+                          "type": "ref",
+                          "ref": "FCsTI",
+                          "name": "Case specimen",
+                          "width": "fill_container",
+                          "descendants": {
+                            "aIKsB": {
+                              "enabled": false
+                            },
+                            "cYo5t": {
+                              "type": "frame",
+                              "id": "A8Qcu",
+                              "name": "Rows",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "children": [
+                                {
+                                  "id": "wnQlD",
+                                  "type": "ref",
+                                  "ref": "eFemy",
+                                  "width": "fill_container"
+                                },
+                                {
+                                  "id": "NSBxY",
+                                  "type": "ref",
+                                  "ref": "eFemy",
+                                  "width": "fill_container"
+                                },
+                                {
+                                  "id": "Ryuqj",
+                                  "type": "ref",
+                                  "ref": "eFemy",
+                                  "width": "fill_container"
+                                }
+                              ]
+                            },
+                            "X0Kcc": {
+                              "enabled": false
+                            },
+                            "QTddd": {
+                              "enabled": false
                             }
                           }
                         }
@@ -83936,7 +84855,7 @@
               "children": [
                 {
                   "type": "frame",
-                  "id": "FRirg",
+                  "id": "ssuVT",
                   "name": "Mode light",
                   "theme": {
                     "mode": "light"
@@ -83952,7 +84871,7 @@
                   "children": [
                     {
                       "type": "text",
-                      "id": "mIO62",
+                      "id": "L9QaSr",
                       "name": "Caption",
                       "fill": "$color/semantic/text/muted",
                       "content": "LIGHT",
@@ -83961,17 +84880,17 @@
                       "fontWeight": "normal"
                     },
                     {
-                      "id": "BzsYU",
+                      "id": "N35WB",
                       "type": "ref",
                       "ref": "FCsTI",
-                      "name": "Instance",
+                      "name": "Case specimen",
                       "width": "fill_container"
                     }
                   ]
                 },
                 {
                   "type": "frame",
-                  "id": "ATVJZ",
+                  "id": "h90td3",
                   "name": "Mode dark",
                   "theme": {
                     "mode": "dark"
@@ -83987,7 +84906,7 @@
                   "children": [
                     {
                       "type": "text",
-                      "id": "YI627",
+                      "id": "zBbXj",
                       "name": "Caption",
                       "fill": "$color/semantic/text/muted",
                       "content": "DARK",
@@ -83996,10 +84915,10 @@
                       "fontWeight": "normal"
                     },
                     {
-                      "id": "NVr1K",
+                      "id": "rbgY3",
                       "type": "ref",
                       "ref": "FCsTI",
-                      "name": "Instance",
+                      "name": "Case specimen",
                       "width": "fill_container"
                     }
                   ]
@@ -84617,7 +85536,7 @@
                   "fontWeight": "normal"
                 },
                 {
-                  "id": "KS7sb",
+                  "id": "zk6FY",
                   "type": "ref",
                   "ref": "UmVJD",
                   "name": "Case specimen",
@@ -84628,13 +85547,13 @@
                     },
                     "uR9Ye": {
                       "type": "frame",
-                      "id": "DKUZn",
+                      "id": "IwlGc",
                       "name": "Actions",
                       "gap": "$component/panel/app/header/gap",
                       "alignItems": "center",
                       "children": [
                         {
-                          "id": "CvJaa",
+                          "id": "M1Mlpf",
                           "type": "ref",
                           "ref": "vmSeU",
                           "name": "Search",
@@ -84649,7 +85568,7 @@
                           }
                         },
                         {
-                          "id": "pMTRr",
+                          "id": "u2MlC",
                           "type": "ref",
                           "ref": "Q49yf7",
                           "name": "New",
@@ -84665,44 +85584,30 @@
                         }
                       ]
                     },
-                    "C5QYo": {
-                      "type": "frame",
-                      "id": "hEXE3",
-                      "name": "Content",
-                      "width": "fill_container",
-                      "layout": "vertical",
+                    "d2hCuQ": {
                       "children": [
                         {
-                          "id": "P9RZr",
-                          "type": "ref",
-                          "ref": "B4HAVd",
-                          "name": "Page Content",
-                          "width": "fill_container",
+                          "type": "frame",
+                          "id": "EaM7P",
+                          "name": "Container",
+                          "width": 1096,
+                          "layout": "vertical",
+                          "gap": "$component/panel/app/content/gap",
                           "children": [
                             {
-                              "type": "frame",
-                              "id": "l0kyZ",
-                              "name": "Container",
-                              "width": 1096,
-                              "layout": "vertical",
-                              "gap": "$component/panel/app/content/gap",
-                              "children": [
-                                {
-                                  "id": "mZ2GQ",
-                                  "type": "ref",
-                                  "ref": "FCsTI",
-                                  "name": "Table",
-                                  "width": "fill_container",
-                                  "descendants": {
-                                    "aIKsB": {
-                                      "enabled": false
-                                    },
-                                    "QTddd": {
-                                      "enabled": false
-                                    }
-                                  }
+                              "id": "QgZzO",
+                              "type": "ref",
+                              "ref": "FCsTI",
+                              "name": "Table",
+                              "width": "fill_container",
+                              "descendants": {
+                                "aIKsB": {
+                                  "enabled": false
+                                },
+                                "QTddd": {
+                                  "enabled": false
                                 }
-                              ]
+                              }
                             }
                           ]
                         }
@@ -85504,10 +86409,10 @@
                   "width": 252,
                   "height": 936,
                   "layout": "vertical",
-                  "gap": "$space/3",
+                  "gap": "$component/sidebar/gap",
                   "padding": [
-                    "$space/2",
-                    "$space/3"
+                    "$component/sidebar/padding-y",
+                    "$component/sidebar/padding-x"
                   ],
                   "children": [
                     {
@@ -85537,13 +86442,13 @@
                               "height": 22,
                               "icon": "aperture",
                               "library": "lucide",
-                              "fill": "$color/semantic/text/primary"
+                              "fill": "$component/sidebar/logo"
                             },
                             {
                               "type": "text",
                               "id": "CdNdh",
                               "name": "Wordmark",
-                              "fill": "$color/semantic/text/primary",
+                              "fill": "$component/sidebar/logo",
                               "content": "shutrly",
                               "fontFamily": "$font/family/base",
                               "fontSize": "$font/size/title",
@@ -85569,7 +86474,7 @@
                       "type": "rectangle",
                       "id": "FIL60",
                       "name": "Divider",
-                      "fill": "$color/semantic/border/default",
+                      "fill": "$component/sidebar/divider",
                       "width": "fill_container",
                       "height": 1
                     },
@@ -85578,9 +86483,9 @@
                       "id": "D9qGb",
                       "name": "Workspace switcher",
                       "width": "fill_container",
-                      "fill": "$color/semantic/surface/panel",
-                      "cornerRadius": "$radius/sm",
-                      "stroke": "$color/semantic/border/default",
+                      "fill": "$component/sidebar/workspace/background",
+                      "cornerRadius": "$component/sidebar/workspace/radius",
+                      "stroke": "$component/sidebar/workspace/border",
                       "strokeWidth": 1,
                       "strokeAlignment": "inner",
                       "gap": "$space/2",
@@ -85596,7 +86501,7 @@
                           "name": "Workspace mark",
                           "width": 20,
                           "height": 20,
-                          "fill": "$color/semantic/accent/highlight",
+                          "fill": "$component/sidebar/workspace/mark",
                           "cornerRadius": "$radius/xs",
                           "justifyContent": "center",
                           "alignItems": "center",
@@ -85641,7 +86546,7 @@
                       "type": "rectangle",
                       "id": "PRzLi",
                       "name": "Divider",
-                      "fill": "$color/semantic/border/default",
+                      "fill": "$component/sidebar/divider",
                       "width": "fill_container",
                       "height": 1
                     },
@@ -85863,7 +86768,7 @@
                       "type": "rectangle",
                       "id": "xDOTb",
                       "name": "Divider",
-                      "fill": "$color/semantic/border/default",
+                      "fill": "$component/sidebar/divider",
                       "width": "fill_container",
                       "height": 1
                     },
@@ -85872,7 +86777,7 @@
                       "id": "B5IsTM",
                       "name": "Account",
                       "width": "fill_container",
-                      "gap": "$space/2-5",
+                      "gap": "$component/sidebar/account/gap",
                       "padding": [
                         "$space/1",
                         "$space/2"
@@ -87534,7 +88439,7 @@
                       ]
                     },
                     {
-                      "id": "tIToZ",
+                      "id": "ZUbsF",
                       "type": "ref",
                       "ref": "yAPhv",
                       "name": "Example detail",
@@ -87547,7 +88452,7 @@
                         },
                         "c5Prsw": {
                           "type": "frame",
-                          "id": "eO0TN",
+                          "id": "Sqw2e",
                           "name": "Body",
                           "width": "fill_container",
                           "layout": "vertical",
@@ -87555,7 +88460,7 @@
                           "padding": "$component/modal/body/padding",
                           "children": [
                             {
-                              "id": "elBdy",
+                              "id": "ZnHc4",
                               "type": "ref",
                               "ref": "FCsTI",
                               "name": "Table",
@@ -87578,13 +88483,13 @@
                           "children": [
                             {
                               "type": "frame",
-                              "id": "aFUZ1",
+                              "id": "ACvYg",
                               "name": "Actions",
                               "gap": "$component/modal/footer/gap",
                               "alignItems": "center",
                               "children": [
                                 {
-                                  "id": "Nm4dg",
+                                  "id": "UCGzB",
                                   "type": "ref",
                                   "ref": "JmfmZ",
                                   "name": "Close",
@@ -88954,13 +89859,13 @@
                                       "height": 22,
                                       "icon": "aperture",
                                       "library": "lucide",
-                                      "fill": "$color/semantic/text/primary"
+                                      "fill": "$component/sidebar/logo"
                                     },
                                     {
                                       "type": "text",
                                       "id": "H0iGo",
                                       "name": "Wordmark",
-                                      "fill": "$color/semantic/text/primary",
+                                      "fill": "$component/sidebar/logo",
                                       "content": "shutrly",
                                       "fontFamily": "$font/family/base",
                                       "fontSize": "$font/size/title",
@@ -89021,9 +89926,9 @@
                                       "id": "Gf9J9",
                                       "name": "Workspace switcher",
                                       "width": "fill_container",
-                                      "fill": "$color/semantic/surface/panel",
-                                      "cornerRadius": "$radius/sm",
-                                      "stroke": "$color/semantic/border/default",
+                                      "fill": "$component/sidebar/workspace/background",
+                                      "cornerRadius": "$component/sidebar/workspace/radius",
+                                      "stroke": "$component/sidebar/workspace/border",
                                       "strokeWidth": 1,
                                       "strokeAlignment": "inner",
                                       "gap": "$space/2",
@@ -89039,7 +89944,7 @@
                                           "name": "Workspace mark",
                                           "width": 20,
                                           "height": 20,
-                                          "fill": "$color/semantic/accent/highlight",
+                                          "fill": "$component/sidebar/workspace/mark",
                                           "cornerRadius": "$radius/xs",
                                           "justifyContent": "center",
                                           "alignItems": "center",
@@ -89215,7 +90120,7 @@
                               "strokeWidth": {
                                 "top": 1
                               },
-                              "gap": "$space/2-5",
+                              "gap": "$component/sidebar/account/gap",
                               "padding": [
                                 "$space/3",
                                 "$space/3",
@@ -94731,6 +95636,274 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "R6JQ6",
+      "x": 4620,
+      "y": 19863,
+      "name": "C30 — App shell · 1920",
+      "width": 2048,
+      "fill": "$color/semantic/surface/panel",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 64,
+      "children": [
+        {
+          "type": "frame",
+          "id": "bhfI8",
+          "name": "Header",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            0,
+            0,
+            32,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "TMpxI",
+              "name": "Overline",
+              "fill": "$color/semantic/text/muted",
+              "content": "TEMPLATE  ·  C30  ·  WIDE SCREEN EXHIBIT",
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 0.6
+            },
+            {
+              "type": "text",
+              "id": "i3yDY7",
+              "name": "Title",
+              "fill": "$color/semantic/text/primary",
+              "content": "App shell at 1920",
+              "fontFamily": "$font/family/base",
+              "fontSize": 44,
+              "fontWeight": "700",
+              "letterSpacing": -1.2
+            },
+            {
+              "type": "text",
+              "id": "x6ZaE",
+              "name": "Description",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 1200,
+              "content": "The same App Shell (C30) instance stretched to 1920 × 1080. Sidebar stays 252; the App panel fills the rest (1656); Page Content keeps its Container at 1096 (panel.app.content.max-width) and centres it, so lines and tiles don’t stretch on large screens. Code: max-width 1096px; margin-inline auto. Canvas note: the Overlay layer is absolute and can’t fill, so a resized shell instance also overrides fwm7P width/height (here 1920 × 1080); in code it is position: fixed; inset: 0.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "s6cfcS",
+          "name": "Stage",
+          "clip": true,
+          "width": "fill_container",
+          "fill": "$color/semantic/surface/canvas",
+          "cornerRadius": "$radius/md",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": 1,
+          "children": [
+            {
+              "id": "jQNSN",
+              "type": "ref",
+              "ref": "y9uBJl",
+              "name": "App Shell · 1920",
+              "width": 1920,
+              "height": 1080,
+              "descendants": {
+                "Sw0yD/d2hCuQ": {
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "y0BWNg",
+                      "name": "Container",
+                      "width": 1096,
+                      "layout": "vertical",
+                      "gap": "$component/panel/app/content/gap",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "GR4wy",
+                          "name": "Greeting",
+                          "width": "fill_container",
+                          "gap": "$space/6",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "fYthN",
+                              "name": "Greeting text",
+                              "layout": "vertical",
+                              "gap": "$space/1-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "r8Zk4a",
+                                  "name": "Headline",
+                                  "fill": "$color/semantic/text/primary",
+                                  "content": "Selamat pagi, Alya.",
+                                  "fontFamily": "$font/family/base",
+                                  "fontSize": "$font/size/display",
+                                  "fontWeight": "$font/weight/bold",
+                                  "letterSpacing": "$font/letter-spacing/display"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "u3k4s",
+                                  "name": "Sub",
+                                  "fill": "$color/semantic/text/muted",
+                                  "content": "Fokus hari ini: sesi, pilihan klien, pengiriman, dan invoice yang belum dibayar.",
+                                  "fontFamily": "$font/family/base",
+                                  "fontSize": "$font/size/body",
+                                  "fontWeight": "$font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "QI8hK",
+                              "type": "ref",
+                              "ref": "aBT7T",
+                              "name": "Primary action",
+                              "descendants": {
+                                "fMNO1": {
+                                  "enabled": true,
+                                  "icon": "plus"
+                                },
+                                "xnhuK": {
+                                  "content": "Proyek baru"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "wQruP",
+                          "name": "Metrics",
+                          "width": "fill_container",
+                          "gap": "$space/4",
+                          "children": [
+                            {
+                              "id": "EbSfO",
+                              "type": "ref",
+                              "ref": "AJT5R",
+                              "name": "Tile Pendapatan",
+                              "width": "fill_container",
+                              "descendants": {
+                                "Wtx9f": {
+                                  "content": "Pendapatan"
+                                },
+                                "MbBqV/GqwpL": {
+                                  "content": "+12,4%"
+                                },
+                                "CXKcw": {
+                                  "content": "Rp 18,4 jt"
+                                }
+                              }
+                            },
+                            {
+                              "id": "c9VUg",
+                              "type": "ref",
+                              "ref": "AJT5R",
+                              "name": "Tile Sesi bulan ini",
+                              "width": "fill_container",
+                              "descendants": {
+                                "Wtx9f": {
+                                  "content": "Sesi bulan ini"
+                                },
+                                "MbBqV/GqwpL": {
+                                  "content": "+3"
+                                },
+                                "CXKcw": {
+                                  "content": "14"
+                                }
+                              }
+                            },
+                            {
+                              "id": "e8h0AV",
+                              "type": "ref",
+                              "ref": "AJT5R",
+                              "name": "Tile Rata-rata turnaround",
+                              "width": "fill_container",
+                              "descendants": {
+                                "Wtx9f": {
+                                  "content": "Rata-rata turnaround"
+                                },
+                                "MbBqV": {
+                                  "enabled": false
+                                },
+                                "CXKcw": {
+                                  "content": "6 hari"
+                                }
+                              }
+                            },
+                            {
+                              "id": "A7jUiS",
+                              "type": "ref",
+                              "ref": "AJT5R",
+                              "name": "Tile Tagihan tertunda",
+                              "width": "fill_container",
+                              "descendants": {
+                                "Wtx9f": {
+                                  "content": "Tagihan tertunda"
+                                },
+                                "MbBqV": {
+                                  "id": "W3FeEz",
+                                  "type": "ref",
+                                  "ref": "GU07z",
+                                  "name": "Delta",
+                                  "descendants": {
+                                    "GqwpL": {
+                                      "content": "3 invoice"
+                                    }
+                                  }
+                                },
+                                "CXKcw": {
+                                  "content": "Rp 4,2 jt"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "id": "IWveJ",
+                          "type": "ref",
+                          "ref": "FCsTI",
+                          "name": "Table",
+                          "width": "fill_container",
+                          "descendants": {
+                            "aIKsB": {
+                              "enabled": false
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "fwm7P": {
+                  "enabled": false,
+                  "width": 1920,
+                  "height": 1080
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
   ],
   "themes": {
@@ -97305,6 +98478,74 @@
     "component/bottom-nav/cta/ring": {
       "type": "color",
       "value": "$color/semantic/surface/panel"
+    },
+    "component/calendar/day/background-hover": {
+      "type": "color",
+      "value": "$color/semantic/surface/muted"
+    },
+    "component/segmented/item/lg/padding-y": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/segmented/item/lg/padding-x": {
+      "type": "number",
+      "value": "$space/5"
+    },
+    "component/menu/item/text-action": {
+      "type": "color",
+      "value": "$color/semantic/action/primary"
+    },
+    "component/table/header/text-sorted": {
+      "type": "color",
+      "value": "$color/semantic/text/primary"
+    },
+    "component/table/row/background-selected": {
+      "type": "color",
+      "value": "$color/semantic/status/info/bg"
+    },
+    "component/table/skeleton": {
+      "type": "color",
+      "value": "$color/semantic/surface/sunken"
+    },
+    "component/sidebar/padding-y": {
+      "type": "number",
+      "value": "$space/2"
+    },
+    "component/sidebar/padding-x": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/sidebar/gap": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/sidebar/logo": {
+      "type": "color",
+      "value": "$color/semantic/text/primary"
+    },
+    "component/sidebar/divider": {
+      "type": "color",
+      "value": "$color/semantic/border/default"
+    },
+    "component/sidebar/workspace/background": {
+      "type": "color",
+      "value": "$color/semantic/surface/panel"
+    },
+    "component/sidebar/workspace/border": {
+      "type": "color",
+      "value": "$color/semantic/border/default"
+    },
+    "component/sidebar/workspace/radius": {
+      "type": "number",
+      "value": "$radius/sm"
+    },
+    "component/sidebar/workspace/mark": {
+      "type": "color",
+      "value": "$color/semantic/accent/highlight"
+    },
+    "component/sidebar/account/gap": {
+      "type": "number",
+      "value": "$space/2-5"
     }
   },
   "fileToken": "a25701b4-4c5b-41fc-8af0-91535884d9bf"

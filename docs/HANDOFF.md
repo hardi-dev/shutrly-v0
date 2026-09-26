@@ -1,13 +1,19 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-27 (F-00 Foundation IMPLEMENTED; awaiting feature verification) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-09-27 (F-00 Foundation DONE; F-01 Auth planned and approved, next to build) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `main`.
 
-## Current handoff — resume here: verify F-00 Foundation
+## Current handoff — resume here: build F-01 Auth
 
-**Who:** F-00 Foundation is implemented on `main`; the next owner action is feature verification. These instructions don't assume Claude-specific skills or slash commands.
+**F-00 Foundation is DONE** (verified 2026-09-27; [verification-report.md](features/foundation/verification-report.md)). None of its follow-ups blocks F-01:
+- F-1: commit the missing lint test cases.
+- F-2: **delete the empty `drizzle/meta/` folder before auth Task 5**, or `pnpm db:generate` fails.
+- F-3: decide the two token gaps (label line height, ring/border widths).
+- F-4: add the TextField trailing error icon (D-1).
 
-**What:** verify [docs/features/foundation/plan.md](features/foundation/plan.md): all 18 TDD tasks are implemented in 6 iterations. Run `/sdv:verify-feature foundation` (or the equivalent acceptance review) before marking F-00 `DONE`.
+**Next:** `/sdv:build-feature auth 1`, following [features/auth/plan.md](features/auth/plan.md). Its technical design is APPROVED and every Owner decision is recorded. The Owner still has to fill in `GOOGLE_*`, `RESEND_API_KEY` and `AUTH_EMAIL_FROM` in `.dev.vars` and `.env.test`. See *Next after F-00: F-01 Auth* below.
+
+The F-00 build instructions below are kept for reference.
 
 ### Read first, in this order
 1. [constitution.md](constitution.md) (no exceptions)
@@ -40,10 +46,38 @@ Branch: `main`.
 - **Coding rules v2.0:** the Owner's standard from the earlier shutrly repo, adapted to this architecture. It covers boundaries, SonarJS, import sorting, `server-only`, the `.types.ts` / `.schema.ts` / `.copy.ts` siblings, no `as`, JSDoc, and a Prettier pre-commit hook. The rules the file does not adopt, and why, are listed at its end.
 - **Unit folders:** every F-00 unit lives in its own folder, e.g. `src/adapters/db/client/client.ts` and `src/composition/request-db/request-db.ts`. Only Next- and Drizzle-fixed files are exempt.
 
-## Paused: F-01 Auth (don't build yet)
+## Next after F-00: F-01 Auth (revised 2026-09-27, don't build yet)
 
-- **Status:** PLANNED, but blocked on F-00 **and** on a revision pass. Its plan predates coding rules v2.0 and F-00's unit-folder paths; see auth technical-design.md **R-7** (Next 16 `middleware.ts` → `proxy.ts`) and **R-9** (coding-rules gaps, stale contract paths). Revise it with `/sdv:plan-feature auth` after F-00 is built.
-- Earlier auth notes (2026-09-26) are kept below for context.
+- **Status:** PLANNED. On 2026-09-27, [plan.md](features/auth/plan.md) (33 tasks, 0–32) and [technical-design.md](features/auth/technical-design.md) were **rewritten for coding rules v2.0** and the implemented F-00 (R-9 resolved). The code blocks were verified in a scratch worktree, and every task was replayed on a clean checkout:
+  - typecheck, lint and `next build` pass;
+  - 208 unit/DOM tests pass;
+  - the migration was generated and reviewed.
+
+  The integration and E2E suites are only linted and type-checked: they need the migrated database and the HTML exports.
+- **Owner decisions on 2026-09-27:**
+  - **CONFLICT-1: the UI language is Indonesian.** Every string is in a per-unit `*.copy.ts`. Coding rules were updated.
+  - **The editorial mosaic is an exported image;** the headline stays live text.
+  - **Pixel-perfect UI comes from HTML exports** of each Pencil frame (`docs/features/auth/exports/`). Every UI task stops until its exports exist, then finishes with a fidelity pass, and Playwright compares each export with its route. The rule is now in coding-rules.md › Styling and in AGENTS.md.
+- **Architecture changes found by lint:**
+  - An adapter never imports another adapter, so everything that touches Drizzle (including Better Auth's `drizzleAdapter`) is under `adapters/db/*`.
+  - `app/` reaches behaviour only through `composition/auth/*` flow entry points; `app/_auth` is gone.
+  - No folder may be named `better-auth` or `resend`, because the vendor-import ban matches that path segment.
+  - `middleware.ts` became `src/proxy.ts`.
+  - The operator scripts run with `tsx --conditions=react-server` because of `server-only`.
+- **Before Task 1 (Owner):**
+  - ~~Answer the open decisions~~. Done 2026-09-27: SPEC GAP-2/3/4 decided, AC-022 amended, ADR-013 Accepted, ADR-012 wording amended.
+  - Add the auth keys to `.dev.vars` and `.env.test` (plan Task 0). Both files point to the one non-production Neon database; there is no Neon branch (Owner 2026-09-27).
+- **After Task 5 (Owner):** apply `drizzle/0000_auth_identity.sql` with `pnpm db:migrate`.
+- **Before Task 25:**
+  - Add the approved tokens T1–T4 (`size.auth-panel` 600, `size.auth-form` 420, `font.size.hero` 44, `space.16` 64) through the design-system pipeline (approved 2026-09-27).
+  - Translate `auth.pen` text to Indonesian (approved 2026-09-27).
+  - The Owner exports the 15 state pairs and the mosaic image when implementation reaches the UI (design.md › *HTML exports for implementation*).
+- **technical-design.md: APPROVED** (Owner 2026-09-27).
+- **Env keys:** added to `.dev.vars` and `.env.test` (2026-09-27).
+  - Already set: `BETTER_AUTH_SECRET` (a random value per file, generated locally), `BETTER_AUTH_URL`, and `E2E_EMAIL_CAPTURE=1` (in `.dev.vars` only).
+  - The Owner still fills `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `RESEND_API_KEY` and `AUTH_EMAIL_FROM`. `parseAppEnv` rejects empty values from Task 2 on.
+- **Next step:** finish verifying F-00 (`/sdv:verify-feature foundation`), then run `/sdv:build-feature auth 1`.
+- The earlier auth notes (2026-09-26) are kept below for context. Their task numbers refer to the superseded 30-task plan.
 
 ### Auth notes from 2026-09-26
 
@@ -73,8 +107,8 @@ The historical session notes and plans below predate this current handoff; use t
 | Area | Status | Notes |
 |---|---|---|
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25); coding rules v2.0 on 2026-09-27 | Authoritative tree under `docs/`; `_source/` is historical. Folder architecture finalized 2026-09-26 in `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`. |
-| F-00 Foundation | IMPLEMENTED (2026-09-27) | 18 tasks committed on `main`; contract check, unit/integration gates, Playwright smoke, and Workers preview pass. Await `/sdv:verify-feature foundation`. |
-| F-01 Auth | PLANNED (2026-09-26), paused | Design approved (`auth.pen`). `plan.md` (30 tasks) needs a revision pass for coding rules v2.0 and F-00 paths (auth R-9). ADR-013 proposed. Blocked on Task 0 decisions and on F-00. |
+| F-00 Foundation | DONE (verified 2026-09-27) | [verification-report.md](features/foundation/verification-report.md): all 16 ACs pass. Non-blocking follow-ups F-1…F-4. |
+| F-01 Auth | PLANNED (revised 2026-09-27) | Design approved (`auth.pen`); UI language Indonesian. `plan.md` has 33 tasks, rewritten for coding rules v2.0 and replay-verified. ADR-013 proposed. Blocked on the Task 0 decisions, F-00 verification, the token gaps and the HTML exports. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
 | Design system — tokens | PERSISTED (2026-09-26) | **479 tokens** (61 primitive · 54 semantic · 312 component · scales), `mode: light \| dark`. Repository payload checksum `c8b47514`; full Pencil checksum check remains. |
 | Design system — token canvas | PARTIAL UPDATE | Cover count and board 06 Alert labels updated; board 08 still needs the approved 720 px layout example. |

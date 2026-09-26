@@ -1,6 +1,6 @@
 # F-00 Foundation — Spec
 
-Status: PLANNED (2026-09-26) · Slug: `foundation` · Rules: BR-WS-002, BR-WS-003 · Journeys: none (technical enabler)
+Status: DONE (verified 2026-09-27, [verification-report.md](verification-report.md)) · Slug: `foundation` · Rules: BR-WS-002, BR-WS-003 · Journeys: none (technical enabler)
 
 ## Goal
 Give the repository a runnable, testable Next.js scaffold on the approved architecture. It must provide **exactly** the contracts F-01 Auth consumes ([auth/plan.md › F-00 contracts](../auth/plan.md)) plus the tenant-isolation building blocks every later feature relies on. After F-00, a feature starts from a green local quality gate.
@@ -72,6 +72,13 @@ As the **developer (Owner + AI agent)**, I want a scaffold with enforced boundar
 - **A-4:** `Button` ships only the variants in the auth contract (`primary | secondary`; C01 has no ghost). Danger and sizes beyond MD are added when a feature needs them (C-010).
 - **A-5:** `APP_STAGE` is the production guard for tests. It is an F-00 convention, not a product rule.
 - **A-6:** Only folders that contain code are created. Empty feature folders are not scaffolded.
+- **Scope note (2026-09-27, verification):** after the plan, design-system work extended the primitives:
+  - `Button` gained `danger`, `lg` and icons;
+  - an `Input` primitive and the semantic `Icon` registry were added;
+  - two icon-size tokens were added (481 tokens in total);
+  - Storybook was added (ADR-014).
+
+  These are accepted as design-system work (see verification-report.md). The runtime env file for `next dev` is `.dev.vars`, not `.env.local`.
 
 ## Out of scope
 - **CI (GitHub Actions) and Cloudflare deployment/previews.** Owner decision 2026-09-26: F-00 is local only. They're scheduled before the first `/sdv:ship`.

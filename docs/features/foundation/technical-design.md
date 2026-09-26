@@ -1,6 +1,6 @@
 # Technical Design — F-00 Foundation
 
-Status: IMPLEMENTED (2026-09-27) — awaiting `/sdv:verify-feature foundation` · Detailed TDD plan: [plan.md](plan.md)
+Status: DONE (verified 2026-09-27, [verification-report.md](verification-report.md)) · Detailed TDD plan: [plan.md](plan.md)
 
 ## Context
 

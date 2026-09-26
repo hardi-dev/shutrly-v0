@@ -7,6 +7,11 @@
 - Pencil library: `design-system.lib.pen` › **C18 — Text field** (`P42vwq`)
 - Consumers: every form; the trigger field of Select (C19) and Multi-select (C20)
 
+## Local explorer
+
+Run `pnpm storybook` and open **Primitives/TextField** to explore the implemented React component,
+its helper/error states, controlled input behavior, and light/dark themes.
+
 ## Purpose
 
 A complete form field: a visible label, the Input box (C03), and a helper or error message. Input is only the box. Text field is what forms use, because a field must always have a visible label (the GAP-06 mitigation).

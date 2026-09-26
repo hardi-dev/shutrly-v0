@@ -10,6 +10,11 @@
 - Pencil node/component IDs: see [Variants and properties](#variants-and-properties)
 - Consumer references: none yet
 
+## Local explorer
+
+Run `pnpm storybook` and open **Primitives/Button** to explore the implemented React component,
+its variants, controls, focus behavior, and light/dark themes.
+
 ## Purpose
 
 Triggers an action in the current view: save, create, send, confirm. Types: primary, secondary, danger (destructive confirms). Use a link for navigation. Each view region has **one** primary button (token-usage §2 *Action & focus*).

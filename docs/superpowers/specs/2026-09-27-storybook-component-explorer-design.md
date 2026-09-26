@@ -1,7 +1,7 @@
 # Storybook Component Explorer
 
-**Status:** Proposed — awaiting Owner review  
-**Date:** 2026-09-27  
+**Status:** Proposed — awaiting Owner review
+**Date:** 2026-09-27
 **Scope:** Internal, local-only design-system exploration
 
 ## Context

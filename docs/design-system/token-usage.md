@@ -177,6 +177,12 @@ Don't: squish insets on cards (cramped), square insets on buttons/chips (bloated
 
 **Alert (Owner approved 2026-09-26).** Place `Alert/<Tone>` inline beside the related content or action. It persists without a timer; the Close control is off by default and appears only for safely dismissible information. Use `component.alert.*` tokens and let the instance fill its content region. See [Alert](components/alert.md).
 
+## Local explorer
+
+Run `pnpm storybook` to inspect implemented components and the token gallery locally. Storybook
+reads the real React components and the canonical `docs/design-system/tokens.json`; it is an
+exploration surface, not a replacement for these usage rules or component specs.
+
 ### 4.6 Optical exceptions
 Allowed only inside a library component, max ±2 px, documented in the component spec (e.g. icon nudged to align with a text baseline). Never in screen layouts.
 

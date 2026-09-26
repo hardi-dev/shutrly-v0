@@ -41,7 +41,7 @@ These are the open items from [technical-design.md](technical-design.md) › *Ri
 | SPEC GAP-3 resend without session | After register, a signed httpOnly `shutrly_pending_email` cookie (30 min) identifies the email for resend. | 16, 18 |
 | SPEC GAP-4 email failure visibility | Register and forgot password send in the background and always show the generic screen. Only resend awaits the send and can show `EMAIL_DELIVERY_FAILED`. | 15, 16, 22 |
 | ADR-013 | Auth rate-limit counters are stored in Neon (`auth_rate_limit`). | 3, 8 |
-| R-6 App Shell in code | `src/ui/patterns/app-shell/app-shell.tsx` exists before Task 25 (built by F-00 or F-02). | 25 |
+| R-6 App Shell in code | `src/ui/patterns/app-shell/app-shell.tsx` exists before Task 25 (built by F-02 — Owner 2026-09-26). | 25 |
 | ADR-012 wording | Google is **not** in Better Auth `trustedProviders`, so Google's `email_verified` is always required. The takeover guard runs in `mapProfileToUser`. Same outcome, stricter mechanism; the Owner is asked to amend the wording. | 26, 29 |
 
 ## Verified library facts (Better Auth 1.7.6, read from the published package)

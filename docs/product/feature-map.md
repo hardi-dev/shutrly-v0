@@ -6,9 +6,9 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 
 | ID | Epic / Feature | Slug | Key rules | Journeys | Status |
 |---|---|---|---|---|---|
-| F-00 | Foundation: repo scaffold, Drizzle base schema conventions, error model, workspace-scoping helpers, CI gates | `foundation` | BR-WS-002, BR-WS-003 | — | TODO |
+| F-00 | Foundation: repo scaffold, Drizzle base schema conventions, error model, workspace-scoping helpers, local quality gate (CI + deploy deferred, Owner 2026-09-26) | `foundation` | BR-WS-002, BR-WS-003 | — | SPECIFIED |
 | F-01 | Auth & account (register, verify, login, reset, profile) | `auth` | BR-AUTH-* | J-01 | PLANNED |
-| F-02 | Workspace onboarding & switching, branding | `workspace` | BR-WS-* | J-01 | TODO |
+| F-02 | Workspace onboarding & switching, branding, App Shell / Sidebar code (Owner 2026-09-26) | `workspace` | BR-WS-* | J-01 | TODO |
 | F-03 | Message templates | `message-templates` | BR-MSG-* | — | TODO |
 | F-04 | Source configuration (Google Drive) | `source-config` | BR-SRC-001 | — | TODO |
 | F-05 | Service catalog (categories, item definitions, services, items, booking fields) | `catalog` | BR-CAT-* | J-02 | TODO |
@@ -25,4 +25,4 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-16 | Operational hardening (isolation, abuse, concurrency, provider-failure tests; backups; caching review) | `hardening` | constitution C-004..C-006 | — | TODO |
 
 ## Next up
-**F-01 Auth** + **F-02 Workspace** (discover together — onboarding is one journey), preceded by the minimal **F-00 Foundation** needed to run them.
+**F-01 Auth** + **F-02 Workspace** (discover together — onboarding is one journey), preceded by the minimal **F-00 Foundation** needed to run them. CI (GitHub Actions) and Cloudflare deploy are out of F-00 and must be scheduled before the first `/sdv:ship`.

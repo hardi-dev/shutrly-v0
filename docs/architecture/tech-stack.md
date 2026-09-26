@@ -43,6 +43,7 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 - Cloudflare; preview deployment per git branch, all previews share the non-production Neon database
 - Two Neon databases only: **production** and one shared **non-production** (dev, CI, previews)
 - Migrations run from `main` via CI only; preview deploys never migrate the shared database
+  - **Interim (Owner 2026-09-26, until CI exists):** the Owner runs `pnpm db:migrate` by hand from a clean, up-to-date `main` checkout. Never from a feature branch.
 
 ## Architecture Principles
 - Domain logic is framework-free and unit-testable.

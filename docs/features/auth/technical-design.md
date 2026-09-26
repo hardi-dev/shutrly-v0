@@ -257,5 +257,5 @@ Each iteration runs plan → implement → test → verify → commit and is don
 - **R-3 — Password hashing on Workers.** Better Auth's scrypt hashing is CPU-heavy; it must fit the Workers CPU limit on the chosen plan. Measure in iteration 1.
 - **R-4 — Better Auth option names** (`requireEmailVerification: false`, `autoSignInAfterVerification`, `revokeSessionsOnPasswordReset`, `accountLinking.trustedProviders`, cookie cache) must be checked against the installed version; the takeover guard must be re-verified on upgrades (ADR-012).
 - **R-5 — Editorial photos** are Unsplash placeholders in the design; licensed or commissioned photos are needed before production.
-- **R-6 — App Shell in code.** Profile depends on the App Shell and Sidebar components (design-system C28–C30), which have no code yet. Iteration 7 either depends on F-00/F-02 providing them or must include a minimal shell; confirm ownership.
+- **R-6 — App Shell in code.** RESOLVED (Owner 2026-09-26): the App Shell, Sidebar and App Panel code (design-system C28–C30) is built by **F-02 Workspace**, not F-00 or F-01. Iteration 7 (Profile) waits until F-02 provides `src/ui/patterns/app-shell/app-shell.tsx`.
 - **R-7 — F-00 is TODO.** Nothing here can start until F-00 is specified and built.

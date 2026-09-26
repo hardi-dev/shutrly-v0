@@ -1,6 +1,6 @@
 # F-01 Auth & Account — Technical Design
 
-Status: PLANNED (2026-09-26)
+Status: MODELED + PLANNED (2026-09-26)
 
 ## Scope
 
@@ -162,7 +162,7 @@ All enumeration-sensitive operations use the same response shape and comparable 
 ## Build order and dependency gates
 
 1. F-00 foundation: scaffold, environment/secrets, Drizzle/Neon pool, Better Auth adapter, Resend port, rate limiter, error model, UI primitives, and test harness.
-2. Model and approve auth flow diagrams plus Pencil auth screens/states.
+2. Auth flow diagrams are modeled in `diagrams/activity.md`, `diagrams/sequence.md`, and `diagrams/state.md`; approve Pencil auth screens/states next.
 3. Implement identity schema/config and core email/password flow.
 4. Add request policy gates, status operator script, and workspace destination port.
 5. Add recovery/profile flows.

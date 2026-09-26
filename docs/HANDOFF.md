@@ -8,7 +8,7 @@ Branch: work is merged into `main` (merge `ed08da0`, 2026-09-26). `design-system
 | Area | Status | Notes |
 |---|---|---|
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. Folder architecture finalized 2026-09-26 in `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`. |
-| F-01 Auth | PLANNED | `docs/features/auth/spec.md` + acceptance criteria + `technical-design.md` + `docs/superpowers/plans/2026-09-26-auth.md`. Flow modelling/design and F-00 foundation still gate implementation. |
+| F-01 Auth | MODELED | `docs/features/auth/spec.md` + acceptance criteria + `technical-design.md` + `diagrams/` + `docs/superpowers/plans/2026-09-26-auth.md`. Pencil design and F-00 foundation still gate implementation. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
 | Design system — tokens | PERSISTED (2026-09-26) | **478 tokens** (61 primitive · 54 semantic · 312 component · scales), `mode: light \| dark`. Live checksum `c36593e9`. |
 | Design system — token canvas | DONE | Boards 00–08, refreshed for every token added this session. |

@@ -280,7 +280,7 @@ Each iteration is done only when the quality gate in [coding-rules.md](../../cod
 - **SPEC GAP-4 — Email failure visibility vs. enumeration. DECIDED (Owner 2026-09-27):** public forms always show the generic outcome; only resend surfaces `EMAIL_DELIVERY_FAILED`. AC-AUTH-022 is amended accordingly.
 - **R-1 — Rate-limit store. RESOLVED:** ADR-013 Accepted (Owner 2026-09-27). Neon counters behind `RateLimiterPort`; ADR-008 now points to it. Until CI exists, the purge runs by hand (`pnpm auth:purge-rate-limits`); schedule it before the first ship.
 - **R-2 — Token supersession.** Resolved by design: Better Auth 1.7.6 verification JWTs are reusable, and older reset tokens stay valid. `auth_latest_link` makes links single-use and superseding. `better-auth-contract.test.ts` pins the library behaviour.
-- **R-3 — Password hashing on Workers.** Better Auth's scrypt is CPU-heavy. Measure it under `pnpm preview` (plan Task 19) and record the number here.
+- **R-3 — Password hashing on Workers. RESOLVED (2026-09-27).** A local `pnpm preview` sign-up through `/api/auth/sign-up/email` returned `200 OK (513ms)` in Wrangler output. The `/register` page is a later UI task, so the mounted Better Auth endpoint was used as the equivalent measurement path.
 - **R-4 — Better Auth upgrades.** The option names and the Google guard are pinned by the contract and Google integration tests; re-run both on every upgrade (ADR-012).
 - **R-5 — Editorial photos.** The mosaic export must use licensed or commissioned photos before production.
 - **R-6 — App Shell in code. RESOLVED (Owner 2026-09-26):** F-02 builds the App Shell and `(owner)/layout.tsx`. The Profile page renders only its content.

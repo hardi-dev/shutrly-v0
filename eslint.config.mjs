@@ -140,7 +140,10 @@ export default defineConfig([
   comments.recommended,
   {
     languageOptions: {
-      parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname },
+      parserOptions: {
+        projectService: { allowDefaultProject: [".storybook/*.ts", ".storybook/*.tsx"] },
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     plugins: { boundaries, "simple-import-sort": simpleImportSort, local: localRules },
     settings: { "boundaries/elements": ELEMENTS },

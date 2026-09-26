@@ -4,7 +4,7 @@
 
 - Lifecycle: `APPROVED` 2026-09-26. The Owner renamed the former `Toast` component to `Alert` for persistent inline guidance in F-01 Auth. The existing component IDs and tone variants remain linked.
 - Pencil library: `design-system.lib.pen` › **C24 — Alert** (`NFr0T`)
-- Feature evidence: `auth.pen` › verification instruction on desktop and mobile
+- Feature evidence: `auth.pen` › all 12 auth notices (verification, reset sent, invalid links, account unavailable, invalid credentials) on desktop and mobile — see `docs/features/auth/design.md`
 
 ## Purpose
 

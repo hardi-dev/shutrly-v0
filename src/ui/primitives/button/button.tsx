@@ -1,17 +1,11 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { Button as AriaButton } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
 
-import type {
-  ButtonIconName,
-  ButtonIconProps,
-  ButtonProps,
-  ButtonSize,
-  ButtonVariant,
-} from "./button.types";
+import { Icon } from "../icon/icon";
+import type { ButtonIconProps, ButtonProps, ButtonSize, ButtonVariant } from "./button.types";
 
 // C01 MD: padding 12/36, 18 px line → 42 px high. Focus: 2 px ring, offset 2, plus the glow halo.
 const BASE = [
@@ -83,50 +77,6 @@ export function Button({
   );
 }
 
-const BUTTON_ICON_PATHS: Record<ButtonIconName, ReactNode> = {
-  plus: (
-    <>
-      <path d="M5 12h14" />
-      <path d="M12 5v14" />
-    </>
-  ),
-  send: (
-    <>
-      <path d="m22 2-7 20-4-9-9-4Z" />
-      <path d="M22 2 11 13" />
-    </>
-  ),
-  "chevron-down": <path d="m6 9 6 6 6-6" />,
-  "arrow-right": (
-    <>
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </>
-  ),
-  "trash-2": (
-    <>
-      <path d="M3 6h18" />
-      <path d="M8 6V4h8v2" />
-      <path d="m19 6-1 14H6L5 6" />
-      <path d="M10 11v5" />
-      <path d="M14 11v5" />
-    </>
-  ),
-};
-
 function ButtonIcon({ name, side }: Readonly<ButtonIconProps>) {
-  const common = {
-    "aria-hidden": true,
-    "data-testid": `button-icon-${side}`,
-    width: 16,
-    height: 16,
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 2,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-  };
-
-  return <svg {...common}>{BUTTON_ICON_PATHS[name]}</svg>;
+  return <Icon name={name} data-testid={`button-icon-${side}`} aria-hidden="true" />;
 }

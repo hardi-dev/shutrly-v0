@@ -23,11 +23,11 @@ configurations, and states. The static HTML matrix is [c03-input.html](../export
 | # | Part | Layer name | Required | Description |
 |---|---|---|---:|---|
 | 1 | Container | root | Yes | 40 px high (documented); fill, border, radius and padding-x bound. |
-| 2 | Leading icon | `Icon leading` | No | 16 px lucide icon (for example `search`), `input.placeholder` colour. |
+| 2 | Leading icon | `Icon leading` | No | 16 px semantic Icon (for example `search`), `input.placeholder` colour. |
 | 3 | Prefix | `Prefix` | No | Unit text such as "Rp". |
 | 4 | Placeholder | `Placeholder` | One of 3/5 | An example value in `input.placeholder`. |
 | 5 | Value | `Value` | One of 3/5 | The entered text, in `input.text`. |
-| 6 | Trailing icon | `Icon trailing` | No | `chevron-down` (select), `calendar` (date), `eye` (password), `circle-alert` (error). |
+| 6 | Trailing icon | `Icon trailing` | No | Semantic Icon: `chevron-down` (select), `calendar` (date), `eye` (password), `circle-alert` (error). |
 | 7 | Shortcut | `Shortcut` | No | Nested **Kbd** (C17) instance, e.g. ⌘K. |
 
 ## Variants and properties
@@ -81,10 +81,12 @@ The height of 40 is documented (`input.height` exists as a number token; Pencil 
 - Always paired with a visible label (Text field); a placeholder is not a label.
 - An error is never shown by colour alone: an icon and a message go with it.
 - The password eye is a ghost Icon button with `aria-label` and `aria-pressed`.
+- Icon mappings come from the shared [Icon](icon.md) Hugeicons Free registry; actions are labelled buttons around the icon.
 - Search uses `role=searchbox` and `aria-keyshortcuts` when the shortcut is shown.
 
 ## Implementation references
 
 - Pencil: `C03 — Input` (`YcyAG`), base `kWK5j`
 - Code component: `src/ui/primitives/input/input.tsx`
+- Shared icon primitive: `src/ui/primitives/icon/icon.tsx`
 - Rules: token-usage.md G3, SP1, §4.2, §8 (GAP-06)

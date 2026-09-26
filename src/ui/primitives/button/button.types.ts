@@ -1,8 +1,13 @@
 import type { ReactNode } from "react";
 
+import type { IconName } from "../icon/icon.types";
+
 export type ButtonVariant = "primary" | "secondary" | "danger";
 export type ButtonSize = "md" | "lg";
-export type ButtonIconName = "plus" | "send" | "chevron-down" | "arrow-right" | "trash-2";
+export type ButtonIconName = Extract<
+  IconName,
+  "plus" | "send" | "chevron-down" | "arrow-right" | "trash-2"
+>;
 
 export interface ButtonIconProps {
   name: ButtonIconName;

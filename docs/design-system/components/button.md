@@ -25,9 +25,9 @@ Triggers an action in the current view: save, create, send, confirm. Types: prim
 | # | Part | Layer name | Required | Description |
 |---|---|---|---:|---|
 | 1 | Container | root | Yes | Fill, stroke, radius, padding and gap. Hugs its content. |
-| 2 | Leading icon | `Icon leading` | No | 16 px lucide icon before the label: *what* the action is (plus, send). Boolean, **off** by default; icon can be swapped. |
+| 2 | Leading icon | `Icon leading` | No | 16 px semantic Icon before the label: *what* the action is (plus, send). Boolean, **off** by default; icon can be swapped. |
 | 3 | Label | `Label` | Yes | One line, `font.size.body` / `font.weight.semibold`. |
-| 4 | Trailing icon | `Icon trailing` | No | 16 px lucide icon after the label: *where* it goes (arrow-right) or that it opens a menu (chevron-down). Boolean, **off** by default; icon can be swapped. |
+| 4 | Trailing icon | `Icon trailing` | No | 16 px semantic Icon after the label: *where* it goes (arrow-right) or that it opens a menu (chevron-down). Boolean, **off** by default; icon can be swapped. |
 
 ## Variants and properties
 
@@ -84,7 +84,7 @@ pen.dev has no component sets or variant properties, so:
 - The label is one line, sentence case, verb first (*Simpan*, *Kirim tautan*, *Proyek baru*). No end punctuation.
 - **Too much:** the button hugs its label and never truncates or wraps; shorten the copy instead. Tested with 5 words (*Kirim tautan galeri ke klien*).
 - **Too little:** never an empty button, and never icon-only. An icon button needs its own component (out of scope).
-- **Icons:** lucide, 16 px, same colour as the label. Swap the icon, never recolour it.
+- **Icons:** shared Hugeicons Free semantic Icon, 16 px, same colour as the label. Swap the icon, never recolour it.
 
 ## Token dependencies
 
@@ -124,6 +124,7 @@ Heights are documented, not bound (Pencil can't bind `width`/`height`): MD 42 px
 ## Library and consumer rules
 
 - The source components live in `design-system.lib.pen` › **C01 — Button**.
+- Code icons come from the shared [Icon](icon.md) registry.
 - Screens use instances of `Button/<Type>/<Size>/Default` and change only `Label` and the `enabled` / `icon` of `Icon leading` and `Icon trailing`.
 - Never instance `_Button/Base` in a screen. Never detach, and never override the fill, padding or radius of an instance.
 - Hover, focus and disabled variants are for specs and prototypes; in code they are states of one component.

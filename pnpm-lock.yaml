@@ -11,6 +11,12 @@ importers:
       '@hookform/resolvers':
         specifier: 5.9.1
         version: 5.9.1(@standard-schema/spec@1.1.0)(react-hook-form@7.89.0(@types/react@19.3.0)(react@19.3.0))(valibot@1.5.0(typescript@6.0.3))(zod@4.6.5)
+      '@hugeicons/core-free-icons':
+        specifier: 4.3.5
+        version: 4.3.5
+      '@hugeicons/react':
+        specifier: 1.1.10
+        version: 1.1.10(react@19.3.0)
       '@neondatabase/serverless':
         specifier: 1.1.0
         version: 1.1.0
@@ -1196,6 +1202,14 @@ packages:
         optional: true
       zod:
         optional: true
+
+  '@hugeicons/core-free-icons@4.3.5':
+    resolution: {integrity: sha512-Sv+NjHRPnQk+yZsGCMcGznCHdTfJR9PMMOEKcJYAQU4gy90dmlc9PwdtvYOImBZIjiheMsTLL5eMn2DmHxUiUg==}
+
+  '@hugeicons/react@1.1.10':
+    resolution: {integrity: sha512-9tAsd92yMVVGP+E+d8cM+wc0VnXuYZHNbWQi7TOe8k2neawmhiaFmVFbzyruejhOMa197/LbgvSED32ayUo3ZA==}
+    peerDependencies:
+      react: '>=16.0.0'
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -6457,6 +6471,12 @@ snapshots:
       '@standard-schema/spec': 1.1.0
       valibot: 1.5.0(typescript@6.0.3)
       zod: 4.6.5
+
+  '@hugeicons/core-free-icons@4.3.5': {}
+
+  '@hugeicons/react@1.1.10(react@19.3.0)':
+    dependencies:
+      react: 19.3.0
 
   '@humanfs/core@0.19.2':
     dependencies:

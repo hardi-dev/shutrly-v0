@@ -1,11 +1,26 @@
 import type { Ref } from "react";
 
+import type { IconName } from "../icon/icon.types";
+
 export type InputVariant = "default" | "search";
-export type InputIconName = "search" | "chevron-down" | "calendar" | "eye" | "circle-alert";
+export type InputIconName = Extract<
+  IconName,
+  "search" | "chevron-down" | "calendar" | "eye" | "eye-off" | "circle-alert"
+>;
+
+export interface InputIconAction {
+  label: string;
+  onPress: () => void;
+}
 
 export interface InputIconProps {
   name: InputIconName;
   side: "leading" | "trailing";
+}
+
+export interface InputAdornmentIconProps extends InputIconProps {
+  action?: InputIconAction;
+  isDisabled?: boolean;
 }
 
 export interface InputFrameProps extends InputProps {
@@ -27,7 +42,9 @@ export interface InputProps {
   isInvalid?: boolean;
   prefix?: string;
   iconLeading?: InputIconName;
+  iconLeadingAction?: InputIconAction;
   iconTrailing?: InputIconName;
+  iconTrailingAction?: InputIconAction;
   shortcut?: string;
   className?: string;
   "aria-label"?: string;

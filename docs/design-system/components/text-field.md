@@ -17,6 +17,8 @@ light/dark themes. The static HTML matrix is [c18-text-field.html](../exports/c1
 
 A complete form field: a visible label, the Input box (C03), and a helper or error message. Input is only the box. Text field is what forms use, because a field must always have a visible label (the GAP-06 mitigation).
 
+The nested Input uses the shared [Icon](icon.md) registry for leading/trailing icons and forwards icon actions, including password visibility controls.
+
 ## Anatomy
 
 | # | Part | Layer name | Required | Description |

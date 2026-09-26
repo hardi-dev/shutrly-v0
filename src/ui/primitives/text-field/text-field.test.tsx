@@ -39,6 +39,24 @@ describe("TextField", () => {
     expect(screen.getByTestId("input-icon-trailing")).toBeInTheDocument();
   });
 
+  it("forwards clickable leading and trailing icon actions to C03", async () => {
+    const user = userEvent.setup();
+    const onLeadingPress = vi.fn();
+    const onTrailingPress = vi.fn();
+    renderField({
+      iconLeading: "search",
+      iconLeadingAction: { label: "Cari", onPress: onLeadingPress },
+      iconTrailing: "eye",
+      iconTrailingAction: { label: "Tampilkan password", onPress: onTrailingPress },
+    });
+
+    await user.click(screen.getByRole("button", { name: "Cari" }));
+    await user.click(screen.getByRole("button", { name: "Tampilkan password" }));
+
+    expect(onLeadingPress).toHaveBeenCalledTimes(1);
+    expect(onTrailingPress).toHaveBeenCalledTimes(1);
+  });
+
   it("AC-FND-014 labels the input and forwards name, type and autoComplete", () => {
     const { input } = renderField({ autoComplete: "email", placeholder: "rina@studio.id" });
     expect(input.tagName).toBe("INPUT");

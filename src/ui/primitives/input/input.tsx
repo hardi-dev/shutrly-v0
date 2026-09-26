@@ -1,12 +1,19 @@
 "use client";
 
-import type { ChangeEvent, ReactNode } from "react";
+import type { ChangeEvent } from "react";
 import { useCallback } from "react";
-import { Input as AriaInput } from "react-aria-components";
+import { Button as AriaButton, Input as AriaInput } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
 
-import type { InputFrameProps, InputIconName, InputIconProps, InputProps } from "./input.types";
+import { Icon } from "../icon/icon";
+import type {
+  InputAdornmentIconProps,
+  InputFrameProps,
+  InputIconName,
+  InputIconProps,
+  InputProps,
+} from "./input.types";
 
 const INPUT = [
   "h-(--component-input-height) w-full rounded-(--component-input-radius)",
@@ -26,34 +33,10 @@ const INPUT = [
 
 const LEFT_INSET = "pl-[calc(var(--component-input-padding-x)+var(--space-6))]";
 const RIGHT_INSET = "pr-[calc(var(--component-input-padding-x)+var(--space-6))]";
-const INPUT_ICON_PATHS: Record<InputIconName, ReactNode> = {
-  search: (
-    <>
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </>
-  ),
-  "chevron-down": <path d="m6 9 6 6 6-6" />,
-  calendar: (
-    <>
-      <rect width="18" height="18" x="3" y="4" rx="2" />
-      <path d="M16 2v4M8 2v4M3 10h18" />
-    </>
-  ),
-  eye: (
-    <>
-      <path d="M2.1 12.3a1 1 0 0 1 0-.6C3.5 8.1 7.3 5.5 12 5.5s8.5 2.6 9.9 6.2a1 1 0 0 1 0 .6C20.5 15.9 16.7 18.5 12 18.5s-8.5-2.6-9.9-6.2Z" />
-      <circle cx="12" cy="12" r="3" />
-    </>
-  ),
-  "circle-alert": (
-    <>
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 8v4M12 16h.01" />
-    </>
-  ),
-};
-
+const LEFT_COMPOUND_INSET =
+  "pl-[calc(var(--component-input-padding-x)+var(--space-6)+var(--space-6))]";
+const RIGHT_COMPOUND_INSET =
+  "pr-[calc(var(--component-input-padding-x)+var(--space-6)+var(--space-6))]";
 /**
  * Renders the reusable C03 input primitive and its optional adornments.
  * @param props - input value, state and C03 configuration properties
@@ -64,10 +47,20 @@ export function Input({ variant = "default", type, ...props }: Readonly<InputPro
   return <InputFrame {...props} variant={variant} type={type} resolvedType={resolvedType} />;
 }
 
-function InputFrame({ resolvedType, variant, ...props }: Readonly<InputFrameProps>) {
+function InputFrame({
+  resolvedType,
+  variant,
+  iconLeadingAction,
+  iconTrailingAction,
+  ...props
+}: Readonly<InputFrameProps>) {
   return (
     <span className="relative block w-full">
-      <InputAdornment {...props} />
+      <InputAdornment
+        {...props}
+        iconLeadingAction={iconLeadingAction}
+        iconTrailingAction={iconTrailingAction}
+      />
       <InputElement {...props} variant={variant} resolvedType={resolvedType} />
     </span>
   );
@@ -95,6 +88,7 @@ function InputElement({
     (event: ChangeEvent<HTMLInputElement>) => onChange?.(event.target.value),
     [onChange],
   );
+  const [leftInset, rightInset] = getInputInsets(iconLeading, prefix, iconTrailing, shortcut);
   return (
     <AriaInput
       {...props}
@@ -109,54 +103,110 @@ function InputElement({
       aria-invalid={isInvalid || undefined}
       role={variant === "search" ? "searchbox" : undefined}
       data-variant={variant}
-      className={cn(
-        INPUT,
-        iconLeading || prefix ? LEFT_INSET : null,
-        iconTrailing || shortcut ? RIGHT_INSET : null,
-        className,
-      )}
+      className={cn(INPUT, leftInset, rightInset, className)}
     />
   );
 }
 
-function InputAdornment({ prefix, iconLeading, iconTrailing, shortcut }: Readonly<InputProps>) {
+function getInputInset(
+  hasFirstAdornment: boolean,
+  hasSecondAdornment: boolean,
+  singleInset: string,
+  compoundInset: string,
+): string | null {
+  if (hasFirstAdornment && hasSecondAdornment) {
+    return compoundInset;
+  }
+  if (hasFirstAdornment || hasSecondAdornment) {
+    return singleInset;
+  }
+  return null;
+}
+
+function getInputInsets(
+  iconLeading: InputIconName | undefined,
+  prefix: string | undefined,
+  iconTrailing: InputIconName | undefined,
+  shortcut: string | undefined,
+): [string | null, string | null] {
+  return [
+    getInputInset(Boolean(iconLeading), Boolean(prefix), LEFT_INSET, LEFT_COMPOUND_INSET),
+    getInputInset(Boolean(iconTrailing), Boolean(shortcut), RIGHT_INSET, RIGHT_COMPOUND_INSET),
+  ];
+}
+
+function InputAdornment({
+  prefix,
+  iconLeading,
+  iconLeadingAction,
+  iconTrailing,
+  iconTrailingAction,
+  shortcut,
+  isDisabled,
+}: Readonly<InputProps>) {
   return (
     <>
-      {iconLeading ? <InputIcon name={iconLeading} side="leading" /> : null}
-      {prefix ? (
-        <span className="pointer-events-none absolute inset-y-0 left-(--component-input-padding-x) flex items-center text-(--component-input-placeholder)">
-          {prefix}
+      {iconLeading || prefix ? (
+        <span
+          data-testid="input-adornment-leading"
+          className="pointer-events-none absolute inset-y-0 left-(--component-input-padding-x) flex items-center gap-(--space-1) text-(--component-input-placeholder)"
+        >
+          {iconLeading ? (
+            <InputAdornmentIcon
+              name={iconLeading}
+              side="leading"
+              action={iconLeadingAction}
+              isDisabled={isDisabled}
+            />
+          ) : null}
+          {prefix ? <span>{prefix}</span> : null}
         </span>
       ) : null}
-      {iconTrailing ? <InputIcon name={iconTrailing} side="trailing" /> : null}
-      {shortcut ? (
-        <kbd className="pointer-events-none absolute inset-y-0 right-(--component-input-padding-x) flex items-center text-(length:--font-size-label) text-(--component-input-placeholder)">
-          {shortcut}
-        </kbd>
+      {iconTrailing || shortcut ? (
+        <span
+          data-testid="input-adornment-trailing"
+          className="pointer-events-none absolute inset-y-0 right-(--component-input-padding-x) flex items-center gap-(--space-1) text-(--component-input-placeholder)"
+        >
+          {iconTrailing ? (
+            <InputAdornmentIcon
+              name={iconTrailing}
+              side="trailing"
+              action={iconTrailingAction}
+              isDisabled={isDisabled}
+            />
+          ) : null}
+          {shortcut ? <kbd className="text-(length:--font-size-label)">{shortcut}</kbd> : null}
+        </span>
       ) : null}
     </>
   );
 }
 
-function InputIcon({ name, side }: Readonly<InputIconProps>) {
-  const common = {
-    "aria-hidden": true,
-    "data-testid": `input-icon-${side}`,
-    width: 16,
-    height: 16,
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 2,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-    className: cn(
-      "pointer-events-none absolute inset-y-0 flex items-center text-(--component-input-placeholder)",
-      side === "leading"
-        ? "left-(--component-input-padding-x)"
-        : "right-(--component-input-padding-x)",
-    ),
-  };
+function InputAdornmentIcon({ name, side, action, isDisabled }: Readonly<InputAdornmentIconProps>) {
+  const icon = <InputIcon name={name} side={side} />;
+  if (!action) {
+    return icon;
+  }
+  return (
+    <AriaButton
+      type="button"
+      aria-label={action.label}
+      onPress={action.onPress}
+      isDisabled={isDisabled}
+      className="pointer-events-auto flex size-(--space-6) items-center justify-center rounded-(--component-input-radius) outline-none focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
+    >
+      {icon}
+    </AriaButton>
+  );
+}
 
-  return <svg {...common}>{INPUT_ICON_PATHS[name]}</svg>;
+function InputIcon({ name, side }: Readonly<InputIconProps>) {
+  return (
+    <Icon
+      name={name}
+      data-testid={`input-icon-${side}`}
+      aria-hidden="true"
+      className="text-(--component-input-placeholder)"
+    />
+  );
 }

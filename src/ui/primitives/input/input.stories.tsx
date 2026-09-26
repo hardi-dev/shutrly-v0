@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { useState } from "react";
 
 import { Input } from "./input";
 import { INPUT_STORY_COPY } from "./input.stories.copy";
@@ -13,7 +14,7 @@ const meta = {
     iconLeading: { control: "select", options: [undefined, "search"] },
     iconTrailing: {
       control: "select",
-      options: [undefined, "chevron-down", "calendar", "eye", "circle-alert"],
+      options: [undefined, "chevron-down", "calendar", "eye", "eye-off", "circle-alert"],
     },
     isDisabled: { control: "boolean" },
     isInvalid: { control: "boolean" },
@@ -44,9 +45,27 @@ export const Prefix: StoryObj<typeof meta> = {
     "aria-label": "Harga",
   },
 };
-export const Password: StoryObj<typeof meta> = {
-  args: { type: "password", value: "password", iconTrailing: "eye", "aria-label": "Password" },
-};
+
+function PasswordRender() {
+  const [isVisible, setIsVisible] = useState(false);
+  const handleToggleVisibility = () => {
+    setIsVisible((visible) => !visible);
+  };
+  return (
+    <Input
+      type={isVisible ? "text" : "password"}
+      value="password"
+      iconTrailing={isVisible ? "eye-off" : "eye"}
+      iconTrailingAction={{
+        label: isVisible ? INPUT_STORY_COPY.passwordHide : INPUT_STORY_COPY.passwordShow,
+        onPress: handleToggleVisibility,
+      }}
+      aria-label={INPUT_STORY_COPY.passwordLabel}
+    />
+  );
+}
+
+export const Password: StoryObj<typeof meta> = { render: PasswordRender };
 export const Select: StoryObj<typeof meta> = {
   args: { placeholder: "Layanan", iconTrailing: "chevron-down", "aria-label": "Layanan" },
 };

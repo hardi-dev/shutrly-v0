@@ -1,6 +1,6 @@
 import type { Ref } from "react";
 
-import type { InputIconName } from "../input/input.types";
+import type { InputIconAction, InputIconName } from "../input/input.types";
 
 export interface TextFieldProps {
   label: string;
@@ -15,7 +15,9 @@ export interface TextFieldProps {
   isDisabled?: boolean;
   prefix?: string;
   iconLeading?: InputIconName;
+  iconLeadingAction?: InputIconAction;
   iconTrailing?: InputIconName;
+  iconTrailingAction?: InputIconAction;
   shortcut?: string;
   value: string;
   onChange: (value: string) => void;

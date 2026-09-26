@@ -1,17 +1,24 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-26 (F-01 Auth DESIGNED) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `main`, clean after `b3267a0`.
+Last updated: 2026-09-26 (F-01 Auth PLANNED + detailed plan) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `main`. This handoff is committed together with the F-01 plan.
 
 ## Current handoff — resume here
 
-- **F-01 Auth is DESIGNED** (Owner approved 2026-09-26). `docs/features/auth/design.md` and `docs/product/feature-map.md` record it.
+- **F-01 Auth is PLANNED.** The design was approved on 2026-09-26, and `technical-design.md` was replanned the same day (status DRAFT, 9 iterations). The plan proposes **ADR-013** (Neon-backed auth rate limits, status Proposed).
+- **Detailed plan:** `docs/features/auth/plan.md` has 30 TDD tasks (0–29) in superpowers format, kept in the feature folder by Owner request. `docs/superpowers/plans/2026-09-26-auth.md` is superseded.
+  - It was checked against the **published Better Auth 1.7.6 source**.
+  - **Verification and reset links:** Better Auth's verification JWTs are reusable, and older reset tokens stay valid. The plan adds an `auth_latest_link` table so links are single-use and a newer link supersedes older ones.
+  - **Google:** Google is kept **out** of `trustedProviders`, and the takeover guard for BR-AUTH-007 runs in `mapProfileToUser`. This matches ADR-012's intent but not its wording; the Owner is asked to amend the wording.
+  - **Copy:** screen text is copied verbatim from `auth.pen`. Strings not drawn in Pencil are marked `// not in Pencil` for review.
+  - **Not run:** none of the plan's code has been compiled or executed, because there is no `src/` yet.
+- **Task 0 is the gate.** It needs Owner answers to CONFLICT-1 (UI language), SPEC GAP-2 (F-02 destination), SPEC GAP-3 (pending-email cookie), SPEC GAP-4 (email failure only on resend), ADR-013, the ADR-012 wording, and R-6 (who builds the App Shell before Task 25). It also needs F-00 Foundation to exist with the contracts listed in plan.md › *F-00 contracts*.
 - **Canvas:** `docs/features/auth/auth.pen` saved at **2026-09-26 22:35:21** (415,829 bytes), committed in `703ca6d`. 15 desktop/mobile state pairs.
   - **Notices:** all 12 inline notices are linked library **Alerts** (Info for pending/sent, Danger for invalid links, account unavailable and invalid credentials), width fill, Close off. IDs are in the design.md *Inline notices (Alert)* table.
   - **Editorial panel:** the Owner chose **R5.1b · Tilted mosaic**. It is the local reusable component `Z5xhk` "Auth / Editorial panel" (840×900: mosaic rotated −15°, Unsplash photo tiles, 2 lime aperture tiles, scrim + headline). All 13 desktop screens with an editorial side use a ref of it; Profile screens use the App Shell instead.
   - **Kept explorations (Owner: do not delete):** `M3WMS` (R2 Product showcase), `umFqj` (R2.3 Desktop + client phone), `u6hvV` (R5.1b Tilted mosaic), at y ≈ 11672.
 - **Housekeeping done:** generated Gemini PNGs and `assets/mockup-src/` removed (`9b1cfba`); `exploration.pen` tablet-rail decision committed (`2db7c45`); root `design.pen` and `dont-touch-old-design.zip` moved to macOS Trash (recoverable until the Trash is emptied); `.gstack/` ignored (`b3267a0`).
-- **Next step:** `/sdv:plan-feature auth` — a technical design/plan already exists at `docs/superpowers/plans/2026-09-26-auth.md`; reconcile it with the approved design. F-00 Foundation still gates implementation.
+- **Next step:** the Owner answers the Task 0 decisions. Then run `/sdv:discover-feature foundation` → plan → build F-00, so that it provides every contract plan.md needs. Then run `/sdv:build-feature auth 1`, executing plan.md with superpowers:subagent-driven-development or executing-plans.
 - **Follow-ups (non-blocking):**
   - Replace the Unsplash placeholder photos in `Z5xhk` with licensed photos; scrim colours are literal; mark the panel `aria-hidden` in code.
   - The library copy imported into `auth.pen` is stale (Toast names, 478 variables). Reopen `auth.pen` and confirm it refreshes to Alert/* and 479 variables.
@@ -24,7 +31,7 @@ The historical session notes and plans below predate this current handoff; use t
 | Area | Status | Notes |
 |---|---|---|
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25) | Authoritative tree under `docs/`; `_source/` is historical. Folder architecture finalized 2026-09-26 in `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`. |
-| F-01 Auth | DESIGNED (2026-09-26) | 15 desktop/mobile pairs in `auth.pen`; all notices are linked Alerts; editorial panel `Z5xhk` (R5.1b tilted mosaic). F-00 foundation still gates implementation. |
+| F-01 Auth | PLANNED (2026-09-26) | Design approved (`auth.pen`). `technical-design.md` (DRAFT) + `plan.md` (30 tasks). ADR-013 proposed. Blocked on the Owner decisions in Task 0 and on F-00. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
 | Design system — tokens | PERSISTED (2026-09-26) | **479 tokens** (61 primitive · 54 semantic · 312 component · scales), `mode: light \| dark`. Repository payload checksum `c8b47514`; full Pencil checksum check remains. |
 | Design system — token canvas | PARTIAL UPDATE | Cover count and board 06 Alert labels updated; board 08 still needs the approved 720 px layout example. |

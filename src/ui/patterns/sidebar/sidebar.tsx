@@ -4,41 +4,96 @@ import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Icon } from "@/ui/primitives/icon/icon";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
+import { NavItemCompactContext } from "../nav-item/nav-item-context";
 import { SIDEBAR_COPY } from "./sidebar.copy";
 import type { SidebarAccount, SidebarProps, SidebarWorkspace } from "./sidebar.types";
 
-/** Renders the desktop workspace sidebar with switcher, navigation and account slots (C29). */
+/** Renders the expanded sidebar or its compact rail mode (C29/C37). */
+// eslint-disable-next-line max-lines-per-function -- coordinates expanded and compact navigation regions
 export function Sidebar({
   workspace,
   account,
   children,
   navBottom,
+  isCompact = false,
   onCollapse,
+  onExpand,
   onLogout,
 }: Readonly<SidebarProps>) {
   return (
-    <aside
-      className="flex h-full w-(--component-sidebar-width) shrink-0 flex-col gap-(--component-sidebar-gap) bg-transparent px-(--component-sidebar-padding-x) py-(--component-sidebar-padding-y)"
-      aria-label={SIDEBAR_COPY.label}
-    >
-      <SidebarLogo onCollapse={onCollapse} />
-      <div className="h-px bg-(--component-sidebar-divider)" />
-      <WorkspaceSwitcher workspace={workspace} />
-      <nav
-        aria-label={SIDEBAR_COPY.navigationLabel}
-        className="flex min-h-0 flex-1 flex-col gap-(--space-3) overflow-y-auto"
+    <NavItemCompactContext.Provider value={isCompact}>
+      <aside
+        className={
+          isCompact
+            ? "flex h-full w-(--size-rail) shrink-0 flex-col items-center gap-(--component-sidebar-rail-gap) py-(--component-sidebar-padding-y)"
+            : "flex h-full w-(--component-sidebar-width) shrink-0 flex-col gap-(--component-sidebar-gap) bg-transparent px-(--component-sidebar-padding-x) py-(--component-sidebar-padding-y)"
+        }
+        aria-label={SIDEBAR_COPY.label}
       >
-        <div className="flex flex-col gap-(--space-1)">{children}</div>
-        {navBottom ? (
-          <div className="mt-auto flex flex-col gap-(--space-1)">{navBottom}</div>
-        ) : null}
-      </nav>
-      <SidebarAccount account={account} onLogout={onLogout} />
-    </aside>
+        <SidebarLogo isCompact={isCompact} onCollapse={onCollapse} onExpand={onExpand} />
+        {!isCompact ? <div className="h-px bg-(--component-sidebar-divider)" /> : null}
+        <WorkspaceSwitcher workspace={workspace} isCompact={isCompact} />
+        {isCompact ? <div className="h-px w-full bg-(--component-sidebar-divider)" /> : null}
+        <nav
+          aria-label={SIDEBAR_COPY.navigationLabel}
+          className={
+            isCompact
+              ? "flex min-h-0 flex-1 flex-col items-center gap-(--component-sidebar-rail-gap) overflow-y-auto"
+              : "flex min-h-0 flex-1 flex-col gap-(--space-3) overflow-y-auto"
+          }
+        >
+          <div className={isCompact ? "contents" : "flex flex-col gap-(--space-1)"}>{children}</div>
+          {navBottom ? (
+            <div
+              className={
+                isCompact
+                  ? "mt-auto flex flex-col items-center gap-(--component-sidebar-rail-gap)"
+                  : "mt-auto flex flex-col gap-(--space-1)"
+              }
+            >
+              {navBottom}
+            </div>
+          ) : null}
+        </nav>
+        {isCompact ? <div className="h-px w-full bg-(--component-sidebar-divider)" /> : null}
+        <SidebarAccount account={account} isCompact={isCompact} onLogout={onLogout} />
+      </aside>
+    </NavItemCompactContext.Provider>
   );
 }
 
-function SidebarLogo({ onCollapse }: Readonly<{ onCollapse?: () => void }>) {
+// eslint-disable-next-line max-lines-per-function -- renders the expanded and compact logo controls
+function SidebarLogo({
+  isCompact,
+  onCollapse,
+  onExpand,
+}: Readonly<{ isCompact: boolean; onCollapse?: () => void; onExpand?: () => void }>) {
+  if (isCompact) {
+    return (
+      <AriaButton
+        type="button"
+        aria-label={SIDEBAR_COPY.expand}
+        onPress={onExpand}
+        className="group flex size-(--size-mark-lg) items-center justify-center rounded-(--radius-xs) outline-none focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
+      >
+        <span className="flex size-full items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
+          <Icon
+            name="camera"
+            size="sm"
+            aria-hidden="true"
+            className="text-(--color-semantic-accent-on-highlight) group-hover:hidden group-focus-visible:hidden"
+          />
+          <Icon
+            name="panel-left-open"
+            size="sm"
+            aria-hidden="true"
+            className="hidden text-(--color-semantic-text-primary) group-hover:block group-focus-visible:block"
+          />
+        </span>
+      </AriaButton>
+    );
+  }
+
   return (
     <div className="flex items-center gap-(--space-2) px-(--space-2)">
       <div className="flex size-(--size-mark-lg) items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
@@ -62,13 +117,20 @@ function SidebarLogo({ onCollapse }: Readonly<{ onCollapse?: () => void }>) {
   );
 }
 
-function WorkspaceSwitcher({ workspace }: Readonly<{ workspace: SidebarWorkspace }>) {
+function WorkspaceSwitcher({
+  workspace,
+  isCompact,
+}: Readonly<{ workspace: SidebarWorkspace; isCompact: boolean }>) {
   return (
     <AriaButton
       type="button"
       aria-haspopup="menu"
       aria-label={workspace.name}
-      className="flex items-center gap-(--space-2) rounded-(--component-sidebar-workspace-radius) border border-(--component-sidebar-workspace-border) bg-(--component-sidebar-workspace-background) px-(--component-sidebar-padding-x) py-(--component-sidebar-padding-y) text-left outline-none data-hovered:bg-(--color-semantic-surface-sunken)"
+      className={
+        isCompact
+          ? "flex size-(--space-10) items-center justify-center rounded-(--component-sidebar-workspace-radius) border border-(--component-sidebar-workspace-border) bg-(--component-sidebar-workspace-background) outline-none"
+          : "flex items-center gap-(--space-2) rounded-(--component-sidebar-workspace-radius) border border-(--component-sidebar-workspace-border) bg-(--component-sidebar-workspace-background) px-(--component-sidebar-padding-x) py-(--component-sidebar-padding-y) text-left outline-none data-hovered:bg-(--color-semantic-surface-sunken)"
+      }
     >
       <div className="flex size-(--size-mark-md) items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
         <Icon
@@ -78,23 +140,32 @@ function WorkspaceSwitcher({ workspace }: Readonly<{ workspace: SidebarWorkspace
           className="text-(--color-semantic-accent-on-highlight)"
         />
       </div>
-      <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-(--color-semantic-text-primary)">
-        {workspace.name}
-      </span>
-      <Icon
-        name="chevrons-up-down"
-        size="sm"
-        aria-hidden="true"
-        className="text-(--color-semantic-text-muted)"
-      />
+      {!isCompact ? (
+        <>
+          <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-(--color-semantic-text-primary)">
+            {workspace.name}
+          </span>
+          <Icon
+            name="chevrons-up-down"
+            size="sm"
+            aria-hidden="true"
+            className="text-(--color-semantic-text-muted)"
+          />
+        </>
+      ) : null}
     </AriaButton>
   );
 }
 
 function SidebarAccount({
   account,
+  isCompact,
   onLogout,
-}: Readonly<{ account: SidebarAccount; onLogout?: () => void }>) {
+}: Readonly<{ account: SidebarAccount; isCompact: boolean; onLogout?: () => void }>) {
+  if (isCompact) {
+    return <Avatar initials={account.initials} aria-label={account.name} />;
+  }
+
   return (
     <div className="flex items-center gap-(--component-sidebar-account-gap) px-(--space-2) py-(--space-1)">
       <Avatar initials={account.initials} aria-label={account.name} />
@@ -110,3 +181,5 @@ function SidebarAccount({
     </div>
   );
 }
+
+export type { SidebarAccount, SidebarWorkspace };

@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { Link as AriaLink } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
@@ -6,6 +7,7 @@ import { Icon } from "@/ui/primitives/icon/icon";
 import { Tooltip } from "@/ui/primitives/tooltip/tooltip";
 
 import type { NavItemProps } from "./nav-item.types";
+import { NavItemCompactContext } from "./nav-item-context";
 
 const BASE = [
   "flex min-w-0 items-center gap-(--component-nav-item-gap)",
@@ -25,6 +27,7 @@ export function NavItem({
   isCompact = false,
   className,
 }: Readonly<NavItemProps>) {
+  const compact = useContext(NavItemCompactContext) || isCompact;
   let countLabel: string | null = null;
   if (count && count >= 100) {
     countLabel = "99+";
@@ -39,7 +42,7 @@ export function NavItem({
       aria-label={accessibleLabel}
       aria-current={isActive ? "page" : undefined}
       className={cn(
-        isCompact
+        compact
           ? "flex size-(--space-10) items-center justify-center rounded-(--component-nav-item-radius)"
           : BASE,
         !isActive && "hover:bg-(--component-nav-item-background-hover)",
@@ -59,10 +62,10 @@ export function NavItem({
           isActive && "text-(--component-nav-item-text-active)",
         )}
       />
-      {!isCompact ? <span className="min-w-0 flex-1 truncate">{label}</span> : null}
-      {!isCompact && count ? <CountBadge count={count} /> : null}
+      {!compact ? <span className="min-w-0 flex-1 truncate">{label}</span> : null}
+      {!compact && count ? <CountBadge count={count} /> : null}
     </AriaLink>
   );
 
-  return isCompact ? <Tooltip label={label}>{item}</Tooltip> : item;
+  return compact ? <Tooltip label={label}>{item}</Tooltip> : item;
 }

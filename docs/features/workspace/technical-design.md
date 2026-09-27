@@ -41,8 +41,7 @@ src/
       modal/                               C31 SM/MD/LG, React Aria Modal + Dialog
       bottom-sheet/  sheet-item/           C32 Actions/Form/Menu, React Aria Modal + Dialog
       app-panel/                           C28 + Page Content (title, actions, content container)
-      sidebar/                             C29: logo row, switcher slot, nav slots, account slot
-      sidebar-rail/                        C37 Sidebar/Rail
+      sidebar/                             C29 + C37 expanded/compact modes
       mobile-app-shell/                    C35: app bar, content, Bottom Nav, sheet layer
       app-shell/                           C30 + C37 tablet: responsive composition, skip link, overlay layer
       split-layout/                        moved from features/auth/ui/auth-split-layout
@@ -236,7 +235,7 @@ A missing export stops the task. Raw values map to tokens, and a value with no t
 | BottomSheet (Actions/Form/Menu), SheetItem | bottom-sheet.md | `ModalOverlay` docked bottom, max 90 dvh, reduced motion fades, Count as "Aktif" | `c32-bottom-sheet.html` |
 | AppPanel + PageContent | app-panel.md | `<main id="konten">`, title, actions slot, 1096 container (`size.content-max`) / 720 (`size.content-narrow`) | `c28-app-panel.html` |
 | Sidebar | sidebar.md | `<nav aria-label="Utama">`, switcher slot, nav slots, collapse *Ciutkan sidebar*, account + *Keluar* | `c29-sidebar.html` |
-| SidebarRail + tablet shell | nav-rail.md | 72 rail (`size.rail`), Expand overlay (GAP-F02-2 decided: full Sidebar over the panel) | `c37-nav-rail.html` |
+| Sidebar compact mode + tablet shell | nav-rail.md | 72 rail (`size.rail`), Expand overlay (GAP-F02-2 decided: full Sidebar over the panel) | `c37-nav-rail.html` |
 | MobileAppShell | mobile-app-shell.md | `<header>`, `<main>`, Bottom Nav, sheet layer; content `inert` while a sheet is open | `c35-mobile-app-shell.html` |
 | AppShell | app-shell.md | skip link *Langsung ke konten* first, overlay layer (portal; the rest `inert`), breakpoints, collapse cookie | `c30-app-shell.html` |
 | SplitLayout, EditorialPanel (moved) | auth design | unchanged output; editorial `children` slot | — (auth exports) |
@@ -377,7 +376,7 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 - [x] Tablet Expand overlay (GAP-F02-2 decided): the full Sidebar as an overlay above the panel, never pushing it. React Aria `ModalOverlay` with the `overlay.scrim` backdrop. Esc, a scrim click and the Sidebar's collapse button close it; focus is trapped and returns to Expand. Styled from the `c29-sidebar` export (no frame of its own).
 - [x] AppPanel + PageContent (wide 1096 / narrow 720)
 - [x] Sidebar (logo row + collapse, switcher slot, nav and nav-bottom slots, account + log-out slot)
-- [x] SidebarRail + tablet layout; Expand overlay per the decision
+- [x] Sidebar compact mode + tablet layout; Expand overlay per the decision
 - [x] MobileAppShell (app bar title, content, Bottom Nav, sheet layer)
 - [x] AppShell: responsive composition and skip link first; owner-shell cookie integration remains a Batch B concern
 - [x] Move `AuthSplitLayout` → `ui/patterns/split-layout` and `EditorialPanel` → `ui/patterns/editorial-panel` (headline → `children`); update F-01 imports; auth DOM tests stay green

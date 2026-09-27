@@ -15,7 +15,7 @@ The Owner app screen template. Every Owner screen starts from an instance of thi
 | Part | ID | Notes |
 |---|---|---|
 | Root | `y9uBJl` | `surface.canvas`; padding `space.3` on the top, right and bottom, and 0 on the left (the sidebar sits flush left) |
-| Sidebar | `fNszT` | Nested C29, height fill |
+| Sidebar | `fNszT` | Nested C29; expanded or compact 72 px rail mode, height fill |
 | Panel | `Sw0yD` | Nested C28, width and height fill (1176 × 936) |
 | Overlay | `fwm7P` | Boolean, **off** by default. Absolute, 1440 × 960, `modal.scrim`; centres the Modal slot. |
 | Modal | `hnTfu` (slot) | Accepts Modal/SM·MD·LG (C31); default Modal/MD `nRbAO`. |
@@ -29,6 +29,15 @@ To show a modal: `Update(<shell>, {descendants:{fwm7P:{enabled:true}}})`, then f
 
 The gutter, panel insets and the 1096 content max-width are owned by the template (SP5). The master shows an empty Page Content; the dark example (`TXZxf`) shows the dashboard.
 
+## Responsive sidebar behavior
+
+- At `xl` and above, the sidebar starts expanded. Its header collapse button
+  changes it to compact rail mode inline, allowing the panel to grow. The logo
+  in compact mode expands it again.
+- From `md` through `lg`, the compact rail is the default. Clicking its logo
+  opens the expanded Sidebar as a dismissible overlay.
+- Below `md`, the Mobile App Shell owns navigation.
+
 ## Wide screens
 
 `C30 — App shell · 1920` (`R6JQ6`) shows the same shell at 1920 × 1080. The Sidebar stays 252 wide and the panel fills the rest. Page Content keeps its Container at 1096 and centres it.
@@ -39,7 +48,7 @@ The gutter, panel insets and the 1096 content max-width are owned by the templat
 
 ## Gaps
 
-- Tablet (768–1279): use `App Shell/Tablet` (C37, Sidebar/Rail + panel). Below 768: use the Mobile App Shell (C35).
+- Tablet (`md` through `lg`): use the compact Sidebar rail + panel. Below `md`: use the Mobile App Shell (C35).
 - On the canvas the Overlay is absolute and can't fill, so a resized shell instance also overrides `fwm7P` width and height. In code it is `position: fixed; inset: 0`.
 
 ## Implementation references

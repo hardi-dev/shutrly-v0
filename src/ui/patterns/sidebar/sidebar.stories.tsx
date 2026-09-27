@@ -32,3 +32,4 @@ const meta = {
 
 export default meta;
 export const Default: StoryObj<typeof meta> = {};
+export const Compact: StoryObj<typeof meta> = { args: { isCompact: true } };

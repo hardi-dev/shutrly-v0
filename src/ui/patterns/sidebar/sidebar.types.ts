@@ -15,6 +15,8 @@ export interface SidebarProps {
   account: SidebarAccount;
   children: ReactNode;
   navBottom?: ReactNode;
+  isCompact?: boolean;
   onCollapse?: () => void;
+  onExpand?: () => void;
   onLogout?: () => void;
 }

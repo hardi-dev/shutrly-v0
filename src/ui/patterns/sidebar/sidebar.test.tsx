@@ -44,4 +44,23 @@ describe("Sidebar (C29)", () => {
     expect(onCollapse).toHaveBeenCalledOnce();
     expect(onLogout).toHaveBeenCalledOnce();
   });
+
+  it("renders the compact rail mode with an expand action on the logo", () => {
+    const onExpand = vi.fn();
+    render(
+      <Sidebar
+        workspace={{ name: "Studio Lime" }}
+        account={{ name: "Hardi Ansari", email: "hardi@example.com", initials: "HA" }}
+        isCompact
+        onExpand={onExpand}
+      >
+        <NavItem href="/projects" label="Proyek" icon="folder-kanban" isActive isCompact />
+      </Sidebar>,
+    );
+
+    expect(screen.getByRole("complementary")).toHaveClass("w-(--size-rail)");
+    expect(screen.queryByText("shutrly")).toBeNull();
+    screen.getByRole("button", { name: "Buka sidebar" }).click();
+    expect(onExpand).toHaveBeenCalledOnce();
+  });
 });

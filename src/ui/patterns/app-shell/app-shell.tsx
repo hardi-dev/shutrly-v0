@@ -7,7 +7,6 @@ import { AppPanel, PageContent } from "../app-panel/app-panel";
 import { BottomNav } from "../bottom-nav/bottom-nav";
 import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
 import { Sidebar } from "../sidebar/sidebar";
-import { SidebarRail } from "../sidebar-rail/sidebar-rail";
 import { APP_SHELL_COPY } from "./app-shell.copy";
 import type { AppShellProps } from "./app-shell.types";
 
@@ -26,6 +25,7 @@ export function AppShell({
   mobileSheet,
   isMobileOverlayOpen = false,
 }: Readonly<AppShellProps>) {
+  const [isDesktopSidebarCollapsed, setIsDesktopSidebarCollapsed] = useState(false);
   const [isTabletSidebarOpen, setIsTabletSidebarOpen] = useState(false);
 
   function handleOpenTabletSidebar() {
@@ -34,6 +34,14 @@ export function AppShell({
 
   function handleCloseTabletSidebar() {
     setIsTabletSidebarOpen(false);
+  }
+
+  function handleCollapseDesktopSidebar() {
+    setIsDesktopSidebarCollapsed(true);
+  }
+
+  function handleExpandDesktopSidebar() {
+    setIsDesktopSidebarCollapsed(false);
   }
 
   return (
@@ -46,7 +54,9 @@ export function AppShell({
         account={account}
         nav={nav}
         navBottom={navBottom}
-        onCollapse={handleOpenTabletSidebar}
+        isCompact={isDesktopSidebarCollapsed}
+        onCollapse={handleCollapseDesktopSidebar}
+        onExpand={handleExpandDesktopSidebar}
       />
       <TabletRail
         workspace={workspace}
@@ -84,15 +94,21 @@ function DesktopSidebar({
   account,
   nav,
   navBottom,
+  isCompact,
   onCollapse,
+  onExpand,
 }: Readonly<Pick<AppShellProps, "workspace" | "account" | "nav" | "navBottom">> & {
+  isCompact: boolean;
   onCollapse: () => void;
+  onExpand: () => void;
 }) {
   return (
-    <div className="hidden min-[1280px]:flex">
+    <div className="hidden xl:flex">
       <Sidebar
         workspace={workspace}
         account={account}
+        isCompact={isCompact}
+        onExpand={onExpand}
         onCollapse={onCollapse}
         navBottom={navBottom}
       >
@@ -112,15 +128,16 @@ function TabletRail({
   onExpand: () => void;
 }) {
   return (
-    <div className="hidden min-[768px]:flex min-[1280px]:hidden">
-      <SidebarRail
+    <div className="hidden md:flex xl:hidden">
+      <Sidebar
         workspace={workspace}
         account={account}
+        isCompact
         onExpand={onExpand}
         navBottom={navBottom}
       >
         {nav}
-      </SidebarRail>
+      </Sidebar>
     </div>
   );
 }
@@ -137,7 +154,7 @@ function DesktopContent({
   children: AppShellProps["children"];
 }>) {
   return (
-    <div id={id} className="hidden min-w-0 flex-1 min-[768px]:flex">
+    <div id={id} className="hidden min-w-0 flex-1 md:flex">
       <AppPanel title={title} actions={panelActions}>
         <PageContent>{children}</PageContent>
       </AppPanel>
@@ -158,7 +175,7 @@ function MobileContent({
   >
 >) {
   return (
-    <div className="flex min-w-0 flex-1 min-[768px]:hidden">
+    <div className="flex min-w-0 flex-1 md:hidden">
       <MobileAppShell
         title={title}
         bottomNav={<BottomNavFromProps {...mobileBottomNav} />}

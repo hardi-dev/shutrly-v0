@@ -1,5 +1,9 @@
 # Component: `Sidebar`
 
+The same component renders the expanded desktop navigation and the 72 px
+compact rail. Compact mode hides labels, uses compact Nav Items with Tooltips,
+and turns the logo into the expand control.
+
 ## Status and approval
 
 - Lifecycle: `APPROVED` 2026-09-26 (tier 3, Owner review)
@@ -31,6 +35,9 @@
 - `<nav aria-label="Utama">` wraps both nav slots. The Active item has `aria-current=page`.
 - The workspace switcher is a button (`aria-haspopup=menu`) that opens a Menu of workspaces.
 - Collapse and log out need `aria-label`s (*Ciutkan sidebar*, *Keluar*).
+- In compact mode, the logo is the *Buka sidebar* button. On desktop it changes
+  from the brand mark to the expand icon on hover/focus; on tablet it opens the
+  expanded Sidebar overlay.
 
 ## Tokens (added 2026-09-26)
 
@@ -38,7 +45,8 @@ The Owner promoted the layout region to component aliases. The values didn't cha
 
 ## Gaps
 
-- Collapsed = `Sidebar/Rail` (C37, tablet). Mobile uses the Bottom Nav + Menu sheet (C34/C32) instead of a drawer.
+- Compact mode is the `Sidebar/Rail` layout (C37) rendered by this component.
+  Mobile uses the Bottom Nav + Menu sheet (C34/C32) instead of a drawer.
 
 ## Implementation references
 

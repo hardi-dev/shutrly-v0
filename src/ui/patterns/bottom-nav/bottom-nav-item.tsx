@@ -27,17 +27,20 @@ export function BottomNavItem({
         className,
       )}
     >
-      <span className="relative">
+      <span className="relative flex size-(--space-7) items-center justify-center">
         <Icon
           name={icon}
           aria-hidden="true"
           className={cn(
-            "text-(--component-bottom-nav-item-icon)",
+            "size-(--space-5) text-(--component-bottom-nav-item-icon)",
             isActive && "text-(--component-bottom-nav-item-active)",
           )}
         />
         {count ? (
-          <CountBadge count={count} className="absolute -right-(--space-2) -top-(--space-1)" />
+          <CountBadge
+            count={count}
+            className="absolute left-(--space-4) top-[calc(var(--space-0-5)*-1)] z-10"
+          />
         ) : null}
       </span>
       <span className="text-(length:--font-size-caption)">{label}</span>

@@ -15,31 +15,43 @@ export function BottomNav({ items, ctaLabel, onCtaPress, className }: Readonly<B
     <nav
       aria-label={BOTTOM_NAV_COPY.navLabel}
       className={cn(
-        "flex items-end justify-between border-t border-(--component-bottom-nav-border)",
-        "bg-(--component-bottom-nav-background) px-(--component-bottom-nav-padding-x)",
-        "pt-(--component-bottom-nav-padding-top)",
-        "pb-[calc(var(--component-bottom-nav-padding-bottom)+env(safe-area-inset-bottom))]",
+        "border-t border-(--component-bottom-nav-border)",
+        "bg-(--component-bottom-nav-background)",
         className,
       )}
     >
-      {items.slice(0, 2).map((item) => (
-        <BottomNavItem key={item.href} {...item} />
-      ))}
-      <AriaButton
-        aria-label={ctaLabel}
-        onPress={onCtaPress}
+      <div
         className={cn(
-          "flex size-(--component-bottom-nav-cta-size) shrink-0 items-center justify-center rounded-full",
-          "bg-(--component-bottom-nav-cta-background) text-(--component-bottom-nav-cta-icon)",
-          "ring-(--space-1) ring-(--component-bottom-nav-cta-ring) outline-none",
-          "focus-visible:shadow-[0_0_0_0_var(--component-bottom-nav-cta-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
+          "flex w-full items-start justify-between px-(--component-bottom-nav-padding-x)",
+          "pt-(--component-bottom-nav-padding-top)",
+          "pb-(--component-bottom-nav-padding-bottom)",
         )}
       >
-        <Icon name="plus" aria-hidden="true" />
-      </AriaButton>
-      {items.slice(2).map((item) => (
-        <BottomNavItem key={item.href} {...item} />
-      ))}
+        {items.slice(0, 2).map((item) => (
+          <BottomNavItem key={item.href} {...item} />
+        ))}
+        <div
+          data-testid="bottom-nav-cta-slot"
+          className="relative flex h-(--space-12) w-(--space-16) shrink-0 items-start justify-center"
+        >
+          <AriaButton
+            aria-label={ctaLabel}
+            onPress={onCtaPress}
+            className={cn(
+              "absolute -top-(--space-8) flex size-(--component-bottom-nav-cta-size) items-center justify-center rounded-full",
+              "bg-(--component-bottom-nav-cta-background) text-(--component-bottom-nav-cta-icon)",
+              "ring-(--space-1) ring-(--component-bottom-nav-cta-ring) outline-none",
+              "focus-visible:shadow-[0_0_0_0_var(--component-bottom-nav-cta-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
+            )}
+          >
+            <Icon name="plus" aria-hidden="true" className="size-(--space-6)" />
+          </AriaButton>
+        </div>
+        {items.slice(2).map((item) => (
+          <BottomNavItem key={item.href} {...item} />
+        ))}
+      </div>
+      <div className="h-(--space-8) w-full" aria-hidden="true" />
     </nav>
   );
 }

@@ -20,6 +20,12 @@ describe("BottomNav (C34)", () => {
 
     expect(screen.getByRole("navigation", { name: "Utama" })).toBeInTheDocument();
     expect(screen.getAllByRole("link")).toHaveLength(4);
-    expect(screen.getByRole("button", { name: "Proyek baru" })).toBeInTheDocument();
+    const cta = screen.getByRole("button", { name: "Proyek baru" });
+    expect(cta).toBeInTheDocument();
+    expect(cta).toHaveClass("absolute", "-top-(--space-8)");
+    expect(screen.getByTestId("bottom-nav-cta-slot")).toHaveClass(
+      "h-(--space-12)",
+      "w-(--space-16)",
+    );
   });
 });

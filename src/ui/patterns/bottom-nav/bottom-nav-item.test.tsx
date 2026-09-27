@@ -11,4 +11,14 @@ describe("BottomNavItem (C34)", () => {
     expect(link).toHaveAttribute("aria-current", "page");
     expect(link).toHaveClass("text-(--component-bottom-nav-item-active)", "font-semibold");
   });
+
+  it("places the count badge beside the icon wrapper", () => {
+    render(<BottomNavItem href="/projects" label="Proyek" icon="folder-kanban" count={12} />);
+
+    expect(screen.getByText("12")).toHaveClass(
+      "left-(--space-4)",
+      "top-[calc(var(--space-0-5)*-1)]",
+      "z-10",
+    );
+  });
 });

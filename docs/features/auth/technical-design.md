@@ -1,6 +1,6 @@
 # Technical Design — F-01 Auth & Account
 
-Status: IMPLEMENTED (local verification 2026-09-27): revised for coding rules v2.0 and the implemented F-00, with the remaining review items recorded below.
+Status: DONE (verified 2026-09-27, [verification-report.md](verification-report.md)): revised for coding rules v2.0 and the implemented F-00. Remaining follow-ups and ship blockers are in the report.
 
 ## Context
 
@@ -241,31 +241,31 @@ Every test title starts with its `AC-AUTH-*`/`BR-AUTH-*` ID. Visual fidelity was
 Each iteration is done only when the quality gate in [coding-rules.md](../../coding-rules.md) passes. Tasks with code and tests are in [plan.md](plan.md).
 
 ### Iteration 1 — Identity core (tasks 0–5)
-- [ ] Gate; dependencies and the `@tests` alias; auth env keys; credentials and account domain; auth schema and migration.
+- [x] Gate; dependencies and the `@tests` alias; auth env keys; credentials and account domain; auth schema and migration.
 - **Done when:** the unit gate is green and the Owner has applied `0000_auth_identity.sql` to non-production.
 
 ### Iteration 2 — Application core (tasks 6–11)
-- [ ] Ports, errors, logging and outbox, rate limits, field schemas and paths, pending-email seal, owner-access policy and use-case fakes.
+- [x] Ports, errors, logging and outbox, rate limits, field schemas and paths, pending-email seal, owner-access policy and use-case fakes.
 - **Done when:** the unit gate is green.
 
 ### Iteration 3 — Use cases (tasks 12–17)
-- [ ] All 12 use cases, unit-tested over fakes.
+- [x] All 12 use cases, unit-tested over fakes.
 - **Done when:** the unit gate is green.
 
 ### Iteration 4 — Adapters (tasks 18–21)
-- [ ] Drizzle adapters, the Better Auth adapter with the Google guard, email adapters, operator scripts.
+- [x] Drizzle adapters, the Better Auth adapter with the Google guard, email adapters, operator scripts.
 - **Done when:** `pnpm test:integration` is green, and R-2/R-3 findings are recorded.
 
 ### Iteration 5 — Composition and routes (tasks 22–23)
-- [ ] Auth scope, cookies, owner guard, flow entry points, Better Auth route, Proxy.
+- [x] Auth scope, cookies, owner guard, flow entry points, Better Auth route, Proxy.
 - **Done when:** the full gate and `pnpm build` are green.
 
 ### Iteration 6 — Auth UI foundation (tasks 24–26)
-- [ ] Alert and icons, split layout and editorial panel, form plumbing.
+- [x] Alert and icons, split layout and editorial panel, form plumbing.
 - **Done when:** the design-token gaps are resolved and the layout matches the `amp4Y`/`IOC5i` exports.
 
 ### Iteration 7 — Screens (tasks 27–30)
-- [ ] Register and verification, login and unavailable, recovery, profile.
+- [x] Register and verification, login and unavailable, recovery, profile.
 - **Done when:** every screen has a manual fidelity review against its export, with remaining differences recorded as deviations.
 
 ### Iteration 8 — Journey verification (tasks 31–32)

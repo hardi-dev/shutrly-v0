@@ -1,5 +1,4 @@
 import { Button } from "@/ui/primitives/button/button";
-import { Icon } from "@/ui/primitives/icon/icon";
 
 import { GOOGLE_BUTTON_COPY } from "./google-button.copy";
 import type { GoogleButtonProps } from "./google-button.types";
@@ -14,7 +13,6 @@ export function GoogleButton({ action }: Readonly<GoogleButtonProps>) {
   return (
     <form action={action}>
       <Button type="submit" variant="secondary" size="lg" className="w-full">
-        <Icon name="google" />
         {GOOGLE_BUTTON_COPY.label}
       </Button>
     </form>

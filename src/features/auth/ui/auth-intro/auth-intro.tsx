@@ -8,7 +8,7 @@ import type { AuthIntroProps } from "./auth-intro.types";
 export function AuthIntro({ title, lead }: Readonly<AuthIntroProps>) {
   return (
     <div className="flex flex-col gap-(--space-2)">
-      <h1 className="text-(length:--font-size-display) font-bold text-(--color-semantic-text-primary)">
+      <h1 className="text-(length:--font-size-display) leading-tight font-bold text-(--color-semantic-text-primary)">
         {title}
       </h1>
       <p className="text-(length:--font-size-body) text-(--color-semantic-text-secondary)">

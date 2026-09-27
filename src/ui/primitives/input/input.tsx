@@ -92,6 +92,7 @@ function InputElement({
   return (
     <AriaInput
       {...props}
+      suppressHydrationWarning
       ref={inputRef}
       type={resolvedType}
       value={value}

@@ -44,5 +44,8 @@ export function parseSetCookie(raw: string): ParsedCookie {
  */
 export async function applySetCookies(setCookies: string[]): Promise<void> {
   const jar = await cookies();
-  for (const raw of setCookies) jar.set(parseSetCookie(raw));
+  for (const raw of setCookies) {
+    const parsed = parseSetCookie(raw);
+    jar.set({ ...parsed, value: decodeURIComponent(parsed.value) });
+  }
 }

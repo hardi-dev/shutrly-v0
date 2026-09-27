@@ -14,6 +14,7 @@ import {
   PENDING_EMAIL_COOKIE,
   readPendingEmail,
 } from "../pending-email-cookie/pending-email-cookie";
+import { parseSetCookie } from "../session-cookies/session-cookies";
 import type { VerifyPageState } from "./verify-flow.types";
 
 const INVALID_VERIFY_LINK = "/verify?state=invalid";
@@ -30,7 +31,10 @@ export function verifyEmailLinkResponse(request: Request): Promise<Response> {
     const path = result.ok ? result.outcome.path : INVALID_VERIFY_LINK;
     const response = NextResponse.redirect(new URL(path, request.url), 303);
     if (!result.ok) return response;
-    for (const cookie of result.setCookies) response.headers.append("set-cookie", cookie);
+    for (const cookie of result.setCookies) {
+      const parsed = parseSetCookie(cookie);
+      response.cookies.set({ ...parsed, value: decodeURIComponent(parsed.value) });
+    }
     response.cookies.delete(PENDING_EMAIL_COOKIE);
     return response;
   });

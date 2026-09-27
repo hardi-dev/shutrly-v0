@@ -11,7 +11,7 @@ import { AUTH_SPLIT_LAYOUT_COPY } from "./auth-split-layout.copy";
  */
 export function AuthSplitLayout({ children }: Readonly<PropsWithChildren>) {
   return (
-    <div className="grid min-h-dvh bg-(--color-semantic-surface-panel) lg:grid-cols-[var(--size-auth-panel)_minmax(0,1fr)]">
+    <div className="grid min-h-dvh overflow-hidden bg-(--color-semantic-surface-panel) lg:grid-cols-[var(--size-auth-panel)_minmax(0,1fr)]">
       <main className="flex min-h-dvh flex-col p-(--space-6) lg:p-(--space-12)">
         <p className="flex items-center gap-(--space-2)">
           <span
@@ -23,9 +23,7 @@ export function AuthSplitLayout({ children }: Readonly<PropsWithChildren>) {
           </span>
         </p>
         <div className="flex flex-1 flex-col items-center justify-center py-(--space-8)">
-          <div className="flex w-full flex-col gap-(--space-6) lg:w-(--size-auth-form)">
-            {children}
-          </div>
+          <div className="flex w-(--size-auth-form) flex-col gap-(--space-6)">{children}</div>
         </div>
         <p className="text-(length:--font-size-label) text-(--color-semantic-text-muted)">
           {AUTH_SPLIT_LAYOUT_COPY.footer}

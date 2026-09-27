@@ -7,8 +7,24 @@ import type {
 
 import type { CaptureEnv } from "./capturing-email-sender.types";
 
-// E2E only, under local `next dev`: links stay in this process so Playwright can open them.
-const captured: AuthLink[] = [];
+interface CaptureStore {
+  links: AuthLink[];
+}
+
+declare global {
+  var __shutrlyAuthE2eCapture: CaptureStore | undefined;
+}
+
+// E2E only, under local `next dev`: keep one store across Next route bundles.
+const existingCapture = globalThis.__shutrlyAuthE2eCapture;
+let captured: AuthLink[];
+if (existingCapture) {
+  captured = existingCapture.links;
+} else {
+  const newCapture: CaptureStore = { links: [] };
+  globalThis.__shutrlyAuthE2eCapture = newCapture;
+  captured = newCapture.links;
+}
 
 /**
  * Tell whether E2E email capture may run: the flag is set and the app URL is localhost.

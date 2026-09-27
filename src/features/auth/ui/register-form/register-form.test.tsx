@@ -3,7 +3,10 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { AUTH_ERROR_COPY } from "../auth-error-alert/auth-error-alert.copy";
-import { FIELD_ERROR_COPY } from "../controlled-text-field/controlled-text-field.copy";
+import {
+  CONTROLLED_TEXT_FIELD_COPY,
+  FIELD_ERROR_COPY,
+} from "../controlled-text-field/controlled-text-field.copy";
 import { RegisterForm } from "./register-form";
 import { REGISTER_FORM_COPY as COPY } from "./register-form.copy";
 
@@ -30,9 +33,9 @@ describe("RegisterForm", () => {
     render(<RegisterForm action={vi.fn()} />);
     const password = screen.getByLabelText(COPY.password);
     expect(password).toHaveAttribute("type", "password");
-    await user.click(screen.getByRole("button", { name: "Tampilkan kata sandi" }));
+    await user.click(screen.getByRole("button", { name: CONTROLLED_TEXT_FIELD_COPY.showPassword }));
     expect(password).toHaveAttribute("type", "text");
-    await user.click(screen.getByRole("button", { name: "Sembunyikan kata sandi" }));
+    await user.click(screen.getByRole("button", { name: CONTROLLED_TEXT_FIELD_COPY.hidePassword }));
     expect(password).toHaveAttribute("type", "password");
   });
 

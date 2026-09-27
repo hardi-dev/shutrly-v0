@@ -11,3 +11,9 @@ export const FIELD_ERROR_COPY: Record<FieldErrorKey, string> = {
   "password.mismatch": "Kata sandi tidak cocok.", // not in Pencil
   "password.wrongCurrent": "Kata sandi saat ini salah.", // not in Pencil
 };
+
+// Password visibility labels are accessibility copy, not drawn in Pencil.
+export const CONTROLLED_TEXT_FIELD_COPY = {
+  showPassword: "Tampilkan kata sandi",
+  hidePassword: "Sembunyikan kata sandi",
+} as const;

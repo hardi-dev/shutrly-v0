@@ -7,7 +7,7 @@ import { useController } from "react-hook-form";
 import { fieldErrorKeySchema } from "@/features/auth/application/errors/auth-errors/auth-errors.schema";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { FIELD_ERROR_COPY } from "./controlled-text-field.copy";
+import { CONTROLLED_TEXT_FIELD_COPY, FIELD_ERROR_COPY } from "./controlled-text-field.copy";
 import type { ControlledTextFieldProps } from "./controlled-text-field.types";
 
 function errorText(message: string | undefined): string | undefined {
@@ -36,7 +36,9 @@ export function ControlledTextField<T extends FieldValues>({
   if (isPassword) {
     iconTrailing = isPasswordVisible ? "eye-off" : "eye";
     iconTrailingAction = {
-      label: isPasswordVisible ? "Sembunyikan kata sandi" : "Tampilkan kata sandi",
+      label: isPasswordVisible
+        ? CONTROLLED_TEXT_FIELD_COPY.hidePassword
+        : CONTROLLED_TEXT_FIELD_COPY.showPassword,
       onPress: () => {
         setIsPasswordVisible((visible) => !visible);
       },

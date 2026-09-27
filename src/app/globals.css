@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "../ui/theme/tokens.css";
 
+@source not "../../docs";
+
 @layer base {
   body {
     background: var(--color-semantic-surface-canvas);

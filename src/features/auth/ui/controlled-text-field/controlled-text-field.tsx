@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { FieldValues } from "react-hook-form";
 import { useController } from "react-hook-form";
 
@@ -26,14 +27,32 @@ export function ControlledTextField<T extends FieldValues>({
   ...field
 }: Readonly<ControlledTextFieldProps<T>>) {
   const { field: bound, fieldState } = useController({ control, name });
+  const isPassword = field.type === "password";
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  let resolvedType = field.type;
+  if (isPassword && isPasswordVisible) resolvedType = "text";
+  let iconTrailing: "eye" | "eye-off" | undefined;
+  let iconTrailingAction: { label: string; onPress: () => void } | undefined;
+  if (isPassword) {
+    iconTrailing = isPasswordVisible ? "eye-off" : "eye";
+    iconTrailingAction = {
+      label: isPasswordVisible ? "Sembunyikan kata sandi" : "Tampilkan kata sandi",
+      onPress: () => {
+        setIsPasswordVisible((visible) => !visible);
+      },
+    };
+  }
   return (
     <TextField
       {...field}
+      type={resolvedType}
       name={bound.name}
       value={typeof bound.value === "string" ? bound.value : ""}
       onChange={bound.onChange}
       onBlur={bound.onBlur}
       inputRef={bound.ref}
+      iconTrailing={iconTrailing}
+      iconTrailingAction={iconTrailingAction}
       errorMessage={errorText(fieldState.error?.message)}
     />
   );

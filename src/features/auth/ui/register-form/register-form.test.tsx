@@ -25,6 +25,17 @@ describe("RegisterForm", () => {
     }
   });
 
+  it("shows and hides the password when the eye button is pressed", async () => {
+    const user = userEvent.setup();
+    render(<RegisterForm action={vi.fn()} />);
+    const password = screen.getByLabelText(COPY.password);
+    expect(password).toHaveAttribute("type", "password");
+    await user.click(screen.getByRole("button", { name: "Tampilkan kata sandi" }));
+    expect(password).toHaveAttribute("type", "text");
+    await user.click(screen.getByRole("button", { name: "Sembunyikan kata sandi" }));
+    expect(password).toHaveAttribute("type", "password");
+  });
+
   it("AC-AUTH-002 AC-AUTH-023 validates on the client and focuses the first invalid field", async () => {
     const action = vi.fn();
     render(<RegisterForm action={action} />);

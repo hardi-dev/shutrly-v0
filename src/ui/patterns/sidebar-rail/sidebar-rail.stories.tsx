@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-import { NavRailItem } from "../nav-rail-item/nav-rail-item";
+import { NavItem } from "../nav-item/nav-item";
 import { SidebarRail } from "./sidebar-rail";
 import { SIDEBAR_RAIL_STORY_COPY } from "./sidebar-rail.stories.copy";
 
@@ -12,17 +12,23 @@ const meta = {
     account: { name: SIDEBAR_RAIL_STORY_COPY.account, email: "hardi@example.com", initials: "HA" },
     children: (
       <>
-        <NavRailItem
+        <NavItem
           href="/projects"
           label={SIDEBAR_RAIL_STORY_COPY.projects}
           icon="folder-kanban"
           isActive
+          isCompact
         />
-        <NavRailItem href="/clients" label={SIDEBAR_RAIL_STORY_COPY.clients} icon="users" />
+        <NavItem href="/clients" label={SIDEBAR_RAIL_STORY_COPY.clients} icon="users" isCompact />
       </>
     ),
     navBottom: (
-      <NavRailItem href="/settings" label={SIDEBAR_RAIL_STORY_COPY.settings} icon="settings" />
+      <NavItem
+        href="/settings"
+        label={SIDEBAR_RAIL_STORY_COPY.settings}
+        icon="settings"
+        isCompact
+      />
     ),
   },
   parameters: { designSystemSpec: "docs/design-system/components/nav-rail.md" },

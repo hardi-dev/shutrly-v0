@@ -6,5 +6,6 @@ export interface NavItemProps {
   icon: IconName;
   count?: number;
   isActive?: boolean;
+  isCompact?: boolean;
   className?: string;
 }

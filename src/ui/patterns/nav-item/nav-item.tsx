@@ -3,6 +3,7 @@ import { Link as AriaLink } from "react-aria-components";
 import { cn } from "@/ui/cn/cn";
 import { CountBadge } from "@/ui/primitives/count-badge/count-badge";
 import { Icon } from "@/ui/primitives/icon/icon";
+import { Tooltip } from "@/ui/primitives/tooltip/tooltip";
 
 import type { NavItemProps } from "./nav-item.types";
 
@@ -21,6 +22,7 @@ export function NavItem({
   icon,
   count,
   isActive = false,
+  isCompact = false,
   className,
 }: Readonly<NavItemProps>) {
   let countLabel: string | null = null;
@@ -31,14 +33,18 @@ export function NavItem({
   }
   const accessibleLabel = countLabel ? `${label} ${countLabel}` : label;
 
-  return (
+  const item = (
     <AriaLink
       href={href}
       aria-label={accessibleLabel}
       aria-current={isActive ? "page" : undefined}
       className={cn(
-        BASE,
+        isCompact
+          ? "flex size-(--space-10) items-center justify-center rounded-(--component-nav-item-radius)"
+          : BASE,
         !isActive && "hover:bg-(--component-nav-item-background-hover)",
+        "text-(--component-nav-item-icon) outline-none transition-colors",
+        "focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
         isActive &&
           "bg-(--component-nav-item-background-active) text-(--component-nav-item-text-active)",
         className,
@@ -53,8 +59,10 @@ export function NavItem({
           isActive && "text-(--component-nav-item-text-active)",
         )}
       />
-      <span className="min-w-0 flex-1 truncate">{label}</span>
-      {count ? <CountBadge count={count} /> : null}
+      {!isCompact ? <span className="min-w-0 flex-1 truncate">{label}</span> : null}
+      {!isCompact && count ? <CountBadge count={count} /> : null}
     </AriaLink>
   );
+
+  return isCompact ? <Tooltip label={label}>{item}</Tooltip> : item;
 }

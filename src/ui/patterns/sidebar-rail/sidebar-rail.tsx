@@ -4,7 +4,6 @@ import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Icon } from "@/ui/primitives/icon/icon";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { NavRailItem } from "../nav-rail-item/nav-rail-item";
 import { SIDEBAR_COPY } from "../sidebar/sidebar.copy";
 import type { SidebarAccount, SidebarWorkspace } from "../sidebar/sidebar.types";
 import type { SidebarRailProps } from "./sidebar-rail.types";
@@ -81,5 +80,4 @@ function RailWorkspace({ workspace }: Readonly<{ workspace: SidebarWorkspace }>)
   );
 }
 
-export { NavRailItem };
 export type { SidebarAccount, SidebarWorkspace };

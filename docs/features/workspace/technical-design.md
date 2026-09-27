@@ -35,8 +35,7 @@ src/
       textarea/                            C04 (+ the label row, as in the design)
     patterns/
       alert/                 (extend)      + success tone
-      nav-item/  nav-group-label/          C22
-      nav-rail-item/                       C37
+      nav-item/  nav-group-label/          C22 (expanded + compact rail mode)
       bottom-nav/  bottom-nav-item/        C34 (+ CTA)
       menu/  menu-item/                    C09/C10 (+ group label, divider), React Aria Menu/MenuTrigger
       modal/                               C31 SM/MD/LG, React Aria Modal + Dialog
@@ -230,7 +229,7 @@ A missing export stops the task. Raw values map to tokens, and a value with no t
 | Tooltip | nav-rail.md | `TooltipTrigger` 300 ms, Esc, portal | `c37-nav-rail.html` |
 | Textarea | textarea.md | `TextField` + `TextArea`, label, helper, error, optional | `c04-textarea.html` |
 | NavItem, NavGroupLabel | nav-item.md | `Link`, `aria-current=page`, Count off | `c22-nav-item.html` |
-| NavRailItem | nav-rail.md | `Link` + Tooltip, `aria-label` | `c37-nav-rail.html` |
+| NavItem (`isCompact`) | nav-rail.md | `Link` + Tooltip, `aria-label` | `c37-nav-rail.html` |
 | BottomNav, BottomNavItem, CTA | bottom-nav.md | `<nav aria-label="Utama">`, links, CTA `<a>`/button, safe area | `c34-bottom-nav.html` |
 | Menu, MenuItem, MenuGroupLabel, MenuDivider | menu.md, menu-item.md | `MenuTrigger` / `Menu` / `MenuItem` / `MenuSection` / `Separator`, Selected with check | `c09-menu-item.html`, `c10-menu.html` |
 | Modal | modal.md | `ModalOverlay` + `Modal` + `Dialog`, SM/MD/LG, Close *Tutup*, focus return, scroll lock | `c31-modal.html` |
@@ -355,7 +354,7 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 #### Iteration 2 — Navigation items
 - [x] Exports (2026-09-27): `c22-nav-item`, `c34-bottom-nav`, `c37-nav-rail`
 - [ ] NavItem + NavGroupLabel (Default/Active, `aria-current`)
-- [ ] Tooltip; NavRailItem (Default/Hover/Active/Focus; the label is the accessible name)
+- [x] Tooltip; NavItem compact mode (Default/Hover/Active/Focus; the label is the accessible name)
 - [ ] BottomNavItem (Default/Active, colour + weight), BottomNav CTA, BottomNav (4 tabs + CTA, safe area)
 - [ ] Tests + stories
 - **Done when:** the gate is green, keyboard focus and the tooltip timing are tested, and the units match the exports.

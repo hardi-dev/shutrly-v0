@@ -22,4 +22,13 @@ describe("NavItem (C22)", () => {
     );
     expect(screen.getByTestId("nav-item-icon")).toBeInTheDocument();
   });
+
+  it("renders a compact destination with a tooltip and no visible label", () => {
+    render(<NavItem href="/settings" label="Pengaturan" icon="settings" isCompact />);
+
+    const link = screen.getByRole("link", { name: "Pengaturan" });
+    expect(link).toHaveAttribute("aria-describedby");
+    expect(link).toHaveClass("size-(--space-10)", "justify-center");
+    expect(screen.queryByText("Pengaturan")).toBeNull();
+  });
 });

@@ -1,4 +1,4 @@
-# Component: `Nav Rail` (+ `Tooltip`, `Nav Rail Item`, `Sidebar/Rail`, `App Shell/Tablet`)
+# Component: `Nav Rail` (+ `Tooltip`, compact `Nav Item`, `Sidebar/Rail`, `App Shell/Tablet`)
 
 ## Status and approval
 
@@ -15,25 +15,24 @@ The tablet layout (768–1279 px). The desktop Sidebar collapses to a 72 px icon
 | Component | ID | Structure |
 |---|---|---|
 | `Tooltip` | `OYkds` | `tooltip.background` (`surface.inverse`), `tooltip.radius` (8), padding `tooltip.padding-y/-x` (4 / 8), shadow `elevation.1`. Label `WLS9S` (label 12 / 600, `tooltip.text`). General purpose: rail items and icon-only buttons. |
-| `_NavRailItem/Base` (private) | `xhCvp` | 40 × 40, `nav.item.radius`, centred. Icon `r4Ryb` (18, `nav.item.icon`) · Badge `mKYsh` (Notification Badge, absolute, off) · Tooltip `B1PEOz` (absolute to the right, off) |
-| `Nav Rail Item/Default` · `/Hover` · `/Active` · `/Focus` | `odApP` · `GMxFW` · `OKf00` · `vRX3t` | Hover: `nav.item.background-hover` + Tooltip. Active: `nav.item.background-active` with the icon in `nav.item.text-active` (the same as Nav Item/Active). Focus: 2 px `focus.ring` + glow + Tooltip. |
+| `Nav Item` with `isCompact` (code mode) | — | 40 × 40, `nav.item.radius`, centred. Icon uses `nav.item.icon`; the visible label is omitted and the shared Tooltip exposes it on hover/focus. Active and focus use the same tokens as expanded `Nav Item`. |
 | `Sidebar/Rail` | `JRUY0` | 72 (= `sidebar.rail.width` → `size.rail`), gap `sidebar.rail.gap` (8), padding-y `sidebar.padding-y`, centred. Contents: Logo mark (`sidebar.logo`) · Workspace (40, `sidebar.workspace.*`; opens the workspace menu) · Divider · **Nav** slot `r1Gq4` (Dasbor, Proyek 12, Klien, Invoice 3, a group hairline, Layanan, Tim) · Spacer · **Nav bottom** slot `A4gKt` (Template pesan, Sumber klien, Pengaturan) · Divider · Expand (Icon Button Ghost MD `panel-left-open`) · Avatar MD |
 | `App Shell/Tablet` | `lQnS8` | 1024 × 768, `surface.canvas`, gutter `space.3` on the top, right and bottom. Nested Rail `f4EPF6` + App Panel `QhPny` (fill). The Page Content Container is overridden to fill, and Search is 300. Overlay `bbU0M` (off): `modal.scrim` + Modal slot `o14Rz`. |
 
 **Use (top-level instance):**
 - Content: `Replace(<shell>/QhPny/d2hCuQ/bBehO, {type:"frame", name:"Container", width:"fill_container", layout:"vertical", gap:"$component/panel/app/content/gap"})`
-- Active page: `Replace(<shell>/f4EPF6/<item>, {type:"ref", ref:"OKf00", descendants:{r4Ryb:{icon}, "B1PEOz/WLS9S":{content:label}}})`, and set the previously active item back to Default.
+- Active page: render the shared `Nav Item` with `isCompact` and `isActive`, and set the previously active item back to its default state.
 - **Canvas note:** the rail comes before the panel in the layer order, so a rail item's own Tooltip is hidden under the panel. The C37 hover example places a Tooltip above the shell instead. In code the tooltip renders in a portal above everything.
 
 ## Rules
 
-- The same destinations and order as the Sidebar (C29). The KATALOG label becomes a hairline, because the Tooltip carries the name.
+- The same destinations and order as the Sidebar (C29). The KATALOG label becomes a hairline, because the compact `Nav Item` Tooltip carries the name.
 - A tooltip shows on hover and keyboard focus after 300 ms and hides on Esc. It holds only the destination name, at most 3 words.
 - Expand opens the full Sidebar as an overlay above the panel, never pushing it. Esc and clicking outside close it.
 
 ## Accessibility
 
-- Rail items are links with `aria-label` (the Tooltip text) and `aria-current=page` when active. The Tooltip is linked with `aria-describedby`, never used as the only name.
+- Compact `Nav Item`s are links with `aria-label` (the Tooltip text) and `aria-current=page` when active. The Tooltip is linked with `aria-describedby`, never used as the only name.
 - Badge counts are part of the name (*Proyek, 12 baru*).
 - Targets are 40 × 40 with 8 px gaps, which meets the 24 px minimum (WCAG 2.2 AA) and is comfortable for touch.
 

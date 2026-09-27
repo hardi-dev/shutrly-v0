@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { NavRailItem } from "../nav-rail-item/nav-rail-item";
+import { NavItem } from "../nav-item/nav-item";
 import { SidebarRail } from "./sidebar-rail";
 
 describe("SidebarRail (C37)", () => {
@@ -11,7 +11,7 @@ describe("SidebarRail (C37)", () => {
         workspace={{ name: "Studio Lime" }}
         account={{ name: "Hardi Ansari", email: "hardi@example.com", initials: "HA" }}
       >
-        <NavRailItem href="/projects" label="Proyek" icon="folder-kanban" isActive />
+        <NavItem href="/projects" label="Proyek" icon="folder-kanban" isActive isCompact />
       </SidebarRail>,
     );
 

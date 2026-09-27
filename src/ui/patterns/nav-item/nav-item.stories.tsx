@@ -14,3 +14,4 @@ export const Default: StoryObj<typeof meta> = {};
 export const ActiveWithCount: StoryObj<typeof meta> = {
   args: { isActive: true, count: 12 },
 };
+export const Compact: StoryObj<typeof meta> = { args: { isCompact: true } };

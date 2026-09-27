@@ -1,4 +1,4 @@
-# Component: `Nav Item` (+ `Nav Group Label`)
+# Component: `Nav Item` (+ `Nav Group Label`, compact rail mode)
 
 ## Status and approval
 
@@ -9,7 +9,10 @@
 
 ## Purpose
 
-One destination in the Owner app sidebar. Exactly one item is Active.
+One destination in the Owner app navigation. Exactly one item is Active. The same
+component supports the expanded Sidebar and the compact tablet rail through its
+`isCompact` mode; this keeps active, hover, focus, and accessibility behavior in
+one place.
 
 ## Anatomy
 
@@ -19,6 +22,11 @@ One destination in the Owner app sidebar. Exactly one item is Active.
 | 2 | Icon | `Icon` (`MpR9k`) | 16 px lucide, `nav.item.icon`. |
 | 3 | Label | `Label` (`m6S2m`) | body 14/500, `nav.item.text`, `fill_container`. |
 | 4 | Count | `Count` (`E6JiYt`) | Nested **Count Badge** (C13); off by default. Its text is at `E6JiYt/BTnxI`. |
+
+In compact mode (`isCompact`), the item is a 40 × 40 icon target. The label is
+removed from the visible layout and exposed through the Tooltip, while the link
+keeps the label as its accessible name. Compact items use the same active and
+hover tokens as expanded items.
 
 ## Variants
 
@@ -42,13 +50,18 @@ The private base is `_NavItem/Base` (`cvsvP`).
 
 - The label is the page name in one or two words. Long labels wrap in Pen; code truncates them with an ellipsis and a title.
 - The count is for neutral totals only. Alerts go on the notification bell.
-- Always show the icon with the label; never icon-only in the expanded sidebar.
+- Always show the icon with the label in the expanded sidebar.
+- Use compact mode for the tablet rail: show the icon only and provide the label
+  through the Tooltip.
 
 ## Accessibility
 
 - Links sit inside `<nav aria-label="Utama">`. The Active item has `aria-current=page` and a filled background, so it isn't shown by colour alone.
 - The count is part of the accessible name (*Proyek, 12*).
 - The target is 36 px high: fine for the owner web app (≥ 24 px).
+- Compact targets are 40 × 40 and link the Tooltip with `aria-describedby`.
+- An active item does not apply the hover background, so hovering it does not
+  reduce the contrast of its active text and icon.
 
 ## Gaps
 

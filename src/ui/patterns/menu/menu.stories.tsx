@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { MenuSection } from "react-aria-components";
 
 import { Button } from "@/ui/primitives/button/button";
 
@@ -73,15 +74,14 @@ export const ActionMenu: StoryObj<typeof meta> = {
 
 export const Grouped: StoryObj<typeof meta> = {
   render: () => (
-    <MenuTrigger label={MENU_STORY_COPY.grouped.trigger} defaultOpen>
-      <Button variant="secondary" iconTrailing="chevron-down">
-        {MENU_STORY_COPY.grouped.trigger}
-      </Button>
+    <div className="w-[240px]">
       <Menu aria-label={MENU_STORY_COPY.grouped.trigger}>
-        <MenuGroupLabel>{MENU_STORY_COPY.grouped.label}</MenuGroupLabel>
-        <MenuItem label={MENU_STORY_COPY.grouped.services} onSelect={handleStorySelect} />
-        <MenuItem label={MENU_STORY_COPY.grouped.team} isDisabled onSelect={handleStorySelect} />
+        <MenuSection>
+          <MenuGroupLabel>{MENU_STORY_COPY.grouped.label}</MenuGroupLabel>
+          <MenuItem label={MENU_STORY_COPY.grouped.services} onSelect={handleStorySelect} />
+          <MenuItem label={MENU_STORY_COPY.grouped.team} isDisabled onSelect={handleStorySelect} />
+        </MenuSection>
       </Menu>
-    </MenuTrigger>
+    </div>
   ),
 };

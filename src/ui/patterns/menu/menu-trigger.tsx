@@ -1,6 +1,6 @@
 "use client";
 
-import { Children, cloneElement, isValidElement, useState } from "react";
+import { Children, cloneElement, isValidElement } from "react";
 import { MenuTrigger as AriaMenuTrigger, Popover } from "react-aria-components";
 
 import type { MenuTriggerProps } from "./menu-trigger.types";
@@ -8,14 +8,12 @@ import type { MenuTriggerProps } from "./menu-trigger.types";
 /** Connects a trigger to a positioned, keyboard-navigable Menu (C10). */
 export function MenuTrigger({ label, children }: Readonly<MenuTriggerProps>) {
   const [trigger, menu] = Children.toArray(children);
-  const [isOpen, setIsOpen] = useState(false);
-
   if (!isValidElement<{ "aria-label"?: string }>(trigger) || !isValidElement(menu)) {
     return null;
   }
 
   return (
-    <AriaMenuTrigger isOpen={isOpen} onOpenChange={setIsOpen}>
+    <AriaMenuTrigger>
       {cloneElement(trigger, { "aria-label": label })}
       <Popover
         placement="bottom start"

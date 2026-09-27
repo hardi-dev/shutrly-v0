@@ -18,14 +18,12 @@ Branch: `main`.
   - ADR-015 is **Accepted**.
   - GAP-F02-2: the tablet Expand overlay is built per nav-rail.md (Iteration 4).
   - T5: `size.sidebar` 252, plus `size.mark-md` 20 and `size.mark-lg` 22 (Iteration 4).
-  - GAP-F02-3: the preview card uses no literals. The shadow uses `elevation.2`; new tokens are `size.editorial-card` 360 and `size.mark-sm` 14. The Owner rebinds `UTew4` in Pencil before the Iteration 8 exports.
+  - GAP-F02-3: the preview card uses no literals. The shadow uses `elevation.2`; new tokens are `size.editorial-card` 360 and `size.mark-sm` 14. The `UTew4` shadow is rebound in Pencil (done 2026-09-27). Width and marks stay literal in Pencil, which can't bind sizes, and are tokenised in code.
 - **Owner actions still pending:**
   - `/sdv:sync-pencil` after the Iteration 4 token task. This also closes F-6.
-  - The `UTew4` rebind before Iteration 8.
 - **Exports: done 2026-09-27 via Pencil MCP.**
   - 16 library component pages in `docs/design-system/exports/`.
-  - 24 workspace frames in `docs/features/workspace/exports/`.
-  - The 8 onboarding frames are still pending: they wait for the `UTew4` rebind (Iteration 8).
+  - All 32 workspace frames in `docs/features/workspace/exports/`, including the 8 onboarding frames after the `UTew4` rebind.
 - **technical-design.md: APPROVED** (Owner 2026-09-27).
 - **Next:** `/sdv:build-feature workspace 1`.
 

@@ -34,12 +34,12 @@
           "effect": {
             "type": "shadow",
             "shadowType": "outer",
-            "color": "#00000059",
+            "color": "$G:color/semantic/elevation/2/color",
             "offset": {
               "x": 0,
-              "y": 16
+              "y": "$G:elevation/2/offset-y"
             },
-            "blur": 48
+            "blur": "$G:elevation/2/blur"
           },
           "layout": "vertical",
           "gap": "$G:component/sidebar/gap",

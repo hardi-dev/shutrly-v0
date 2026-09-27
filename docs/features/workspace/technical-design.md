@@ -408,11 +408,9 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 - **Done when:** `pnpm test:integration` is green, the full gate and `pnpm build` are green, and F-01's integration tests still pass with the real destination.
 
 #### Iteration 8 — Onboarding
-- [ ] Token + Pencil (GAP-F02-3 decided), before the exports:
-  - Add `size.editorial-card` = 360 and `size.mark-sm` = 14 through the pipeline.
-  - The Owner rebinds `UTew4` in `workspace.pen`: the card shadow → `$elevation/2/*`, the width → `size.editorial-card`, and the marks → `size.mark-sm` / `size.mark-md`.
-  - Then remove the G4 exceptions (2) from design.md.
-- [ ] Exports, **after** the `UTew4` rebind above: `onboarding-BbSnR`, `onboarding-z0GB3`, `onboarding-duplicate-ffqh6`, `onboarding-duplicate-lFOKQ`, `onboarding-processing-EoCGL`, `onboarding-processing-y1C8M`, `onboarding-error-JCHet`, `onboarding-error-x0AxCg` (Pencil MCP `Export(…, "html-tailwind", …)`)
+- [x] Pencil (GAP-F02-3, 2026-09-27): the `UTew4` card shadow (`Wk19T`) is bound to `$G:color/semantic/elevation/2/color`, `$G:elevation/2/offset-y` and `$G:elevation/2/blur`.
+- [ ] Tokens: add `size.editorial-card` = 360 and `size.mark-sm` = 14 through the pipeline. The code uses them where Pencil keeps literal 360 / 14 / 20 (it can't bind sizes).
+- [x] Exports (2026-09-27): `onboarding-BbSnR`, `onboarding-z0GB3`, `onboarding-duplicate-ffqh6`, `onboarding-duplicate-lFOKQ`, `onboarding-processing-EoCGL`, `onboarding-processing-y1C8M`, `onboarding-error-JCHet`, `onboarding-error-x0AxCg`. The mosaic `url()` in the 4 desktop files was corrected to `../../../../public/…`, because Pencil writes it relative to the `.pen` file, not to `exports/`.
 - [ ] `/onboarding/workspace` page, OnboardingScreen/Form, WorkspacePreviewCard in the EditorialPanel slot, signed-in row with *Keluar*
 - [ ] `/workspace` redirector
 - **Done when:** the gate is green, DOM tests cover the 4 states (AC-WS-006, 024), and the page matches the exports at 1440 and 390.
@@ -453,17 +451,19 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
   - Add `size.sidebar` = 252, aliased by `sidebar.width`.
   - The Sidebar's logo mark (22) and workspace mark (20), which are literal in sidebar.md, get `size.mark-lg` = 22 and `size.mark-md` = 20.
   - All are added in Iteration 4 through `gen_tokens.py`, then `/sdv:sync-pencil`.
-- **GAP-F02-3 — WorkspacePreviewCard literals. DECIDED (Owner 2026-09-27): no exceptions, everything tokenised.**
-  - Shadow → the existing `elevation.2` (colour, offset-y, blur): the card is a floating layer. This drops the literal `#00000059`, and the Owner rebinds `UTew4` so design and code match.
-  - Width 360 → new `size.editorial-card`.
-  - Marks 14 / 20 → new `size.mark-sm` / existing-from-T5 `size.mark-md`.
-  - Added in Iteration 8, before the onboarding exports. design.md's G4 exception (2) is removed once `UTew4` is rebound.
+- **GAP-F02-3 — WorkspacePreviewCard literals. DECIDED (Owner 2026-09-27): the code uses no literals.**
+  - **Shadow → the existing `elevation.2`** (colour, offset-y, blur): the card is a floating layer.
+    - **Done in Pencil on 2026-09-27:** `UTew4` is rebound, so the literal `#00000059`/48 is gone, and the exports show `0 16px 40px` with the elevation colour.
+    - In light mode `elevation.2` is lighter (neutral-900 at 14 %) than the old 35 % black.
+  - **Width 360 → new `size.editorial-card`; marks 14 / 20 → new `size.mark-sm` / `size.mark-md` (from T5).** These are code tokens only.
+    - Pencil can't bind sizes to variables. It keeps literal 360 / 14 / 20, which is the same documented limitation as `size.rail`, the modal widths and the bottom-nav sizes.
+    - The tokens are added in Iteration 8, and the code uses them.
 - **R-6 — Token generator drift.** T1–T4 (F-01) were added to `tokens.json` directly, not to `docs/design-system/scripts/gen_tokens.py`, so regenerating would drop them. Iteration 4's token task back-fills them into the generator first.
 - **R-7 — More literal sizes in Batch A.** The component specs mark several sizes as literal because Pencil can't bind size: modal widths 400/560/720, bottom-nav item 64 and CTA 54, sheet item 52 / max 560, avatar, rail item 40.
   - Each Batch A iteration first checks these against existing tokens (`space.*`, `size.*`).
   - A value with no token is reported as a DESIGN TOKEN GAP before that unit is built, never hard-coded.
 - **Token drift F-6** (T1–T4 not in Pencil) doesn't block the code, but the onboarding exports carry literal 600/420/64. Map them to `size.auth-panel`, `size.auth-form` and `space.16`, which already exist in `tokens.css`.
-- **R-1 — Exports. DONE (2026-09-27), except onboarding.** Exported through Pencil MCP `Export(…, "html-tailwind", …)`, the same scaffold as the F-01 exports. There are 24 frames in `docs/features/workspace/exports/` and 16 component pages in `docs/design-system/exports/`. The 8 onboarding frames wait for the GAP-F02-3 `UTew4` rebind (Iteration 8). Re-export any frame whose design changes before its iteration is built.
+- **R-1 — Exports. DONE (2026-09-27), all 32 frames.** Exported through Pencil MCP `Export(…, "html-tailwind", …)`, the same scaffold as the F-01 exports. There are 32 frames in `docs/features/workspace/exports/` and 16 component pages in `docs/design-system/exports/`. The 8 onboarding frames followed after the `UTew4` shadow rebind. Re-export any frame whose design changes before its iteration is built.
 - **R-2 — Next 16 not-found boundaries.** A layout's `notFound()` is caught by the parent segment's `not-found.tsx`. Confirm this in `node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/not-found.md` at Iteration 9. Fallback: the `[workspaceId]` layout renders the not-found screen directly and sets 404 through `notFound()` in the page.
 - **R-3 — An unknown `[section]` shows *Tidak ditemukan*.** A section outside `COMING_SOON_SECTIONS` calls `notFound()` and falls through to `w/not-found.tsx` (ADR-015). The copy review can split "page" from "workspace" not found later.
 - **R-4 — Page GET writes.** `enterWorkspace` may touch on a page render. A prefetch of the current workspace is a no-op because of the conditional touch. Pages of another workspace are never linked (switching is a POST), so a prefetch can't count them as opened (ADR-015).

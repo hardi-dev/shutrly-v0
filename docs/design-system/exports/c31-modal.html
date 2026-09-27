@@ -1,0 +1,1887 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      tailwind = { config: { corePlugins: { preflight: false } } };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400&family=Plus+Jakarta+Sans%3Awght%40200..800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *, ::before, ::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body style="background-color: #FFFFFF">
+    <div
+      data-pencil-name="C31 — Modal"
+      class="box-border w-[1440px] h-fit flex flex-col gap-[40px] p-[64px] justify-start items-start bg-[#FFFFFF]"
+    >
+      <div
+        data-pencil-name="Header"
+        class="[box-sizing:content-box] w-[1312px] h-[222.5px] shrink-0 flex flex-col gap-[12px] p-[0px_0px_32px_0px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:0px_0px_-0.5px_0px]"
+      >
+        <div
+          data-pencil-name="Overline"
+          class="text-[12px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal tracking-[0.6px] text-left [white-space:nowrap]"
+        >
+          COMPONENT · C31 · OVERLAYS · TIER 3
+        </div>
+        <div
+          data-pencil-name="Title"
+          class="text-[44px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-1.2px] text-left [white-space:nowrap]"
+        >
+          Modal
+        </div>
+        <div
+          data-pencil-name="Description"
+          class="text-[16px]/[24px] box-border w-[880px] text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+        >
+          A dialog over a scrim for a focused task (create, edit) or a confirmation. Option A
+          “Sectioned” (Owner 2026-09-26, exploration board 04): header with title, optional
+          description and close; Body slot; Footer slot with actions on surface.subtle. Widths SM
+          400 · MD 560 · LG 720. Shown in the App Shell’s Overlay layer. Tokens: component.modal.*,
+          button.danger.*.
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Component set"
+        class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] justify-start items-start"
+      >
+        <div
+          data-pencil-name="Exhibit title"
+          class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+        >
+          Component set
+        </div>
+        <div
+          data-pencil-name="Exhibit note"
+          class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+        >
+          Source components. Name = Modal/&lt;Size&gt;; private base _Modal/Base holds the structure
+          and the variants only change width (SM 400 confirm · MD 560 form · LG 720 detail). Fill
+          the Body and Actions slots with Replace on a top-level instance. The masters never include
+          the scrim: the App Shell Overlay layer (C30) owns it.
+        </div>
+        <div
+          data-pencil-name="Set grid"
+          class="box-border w-full h-fit shrink-0 flex flex-col gap-[12px] p-[24px] justify-start items-start bg-[#F4F4F5] [outline:1px_solid_#E4E4E7] [outline-offset:-0.5px] rounded-[12px]"
+        >
+          <div
+            data-pencil-name="Caption"
+            class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+          >
+            _Modal/Base (private) · MD 560
+          </div>
+          <div
+            data-pencil-name="_Modal/Base"
+            class="box-border w-[560px] h-fit shrink-0 [box-shadow:0px_16px_40px_#18181B24] flex flex-col gap-0 justify-start items-start bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[16px] overflow-hidden"
+          >
+            <div
+              data-pencil-name="Header"
+              class="[box-sizing:content-box] w-[560px] h-[86.5px] shrink-0 flex flex-row gap-[12px] p-[20px_24px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:0px_0px_-0.5px_0px]"
+            >
+              <div
+                data-pencil-name="Heading"
+                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
+              >
+                <div
+                  data-pencil-name="Title"
+                  class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-0.4px] text-left [white-space:nowrap]"
+                >
+                  Judul modal
+                </div>
+                <div
+                  data-pencil-name="Description"
+                  class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                >
+                  Deskripsi singkat tentang tujuan modal ini.
+                </div>
+              </div>
+              <div
+                data-pencil-name="Close"
+                class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+              >
+                <svg
+                  data-pencil-name="Icon"
+                  data-icon-name="x"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="box-border w-[16px] shrink-0 h-[16px]"
+                >
+                  <path
+                    d="M3.34619 2.93945q-0.25293 0.08545-0.37939 0.30762-0.04102 0.08545-0.04102 0.25293 0 0.16748 0.04102 0.25293 0.04443 0.08203 1.62353 1.66455l1.58252 1.58252-1.58252 1.58252q-1.5791 1.58252-1.62353 1.66797-0.04102 0.08203-0.04102 0.23584 0 0.15381 0.03418 0.23926 0.0376 0.08203 0.1333 0.18115 0.09912 0.0957 0.18115 0.1333 0.08545 0.03418 0.23926 0.03418 0.15381 0 0.23584-0.04102 0.08545-0.04443 1.66797-1.62353l1.58252-1.58252 1.58252 1.58252q1.58252 1.5791 1.66455 1.62353 0.08545 0.04102 0.23926 0.04102 0.15381 0 0.23584-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.23926 0-0.15381-0.04443-0.23584-0.04101-0.08545-1.62012-1.66797l-1.58252-1.58252 1.58252-1.58252q1.5791-1.58252 1.62012-1.66455 0.04443-0.08545 0.04443-0.25293 0-0.16748-0.04102-0.25293-0.09912-0.16748-0.28027-0.2666-0.05811-0.02734-0.09912-0.04102-0.04102-0.01367-0.15381-0.01367-0.11279 0-0.15381 0.01367-0.04101 0.01367-0.11279 0.04102-0.09912 0.05811-1.66455 1.62695l-1.56885 1.56543-2.82666-2.81299q-0.31104-0.29395-0.42041-0.37939-0.08545-0.05469-0.19824-0.05469l-0.02735 0q-0.14014 0-0.18115 0.01367z"
+                    fill="#18181B"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Body"
+              class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[24px] justify-start items-start"
+            >
+              <div
+                data-pencil-name="Body text"
+                class="text-[14px]/[21px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+              >
+                Isi modal — ganti slot Body dengan field, teks, atau konten lain.
+              </div>
+            </div>
+            <div
+              data-pencil-name="Footer"
+              class="[box-sizing:content-box] w-[560px] h-[73.5px] shrink-0 flex flex-row gap-[12px] p-[16px_24px] justify-end items-center bg-[#FAFAFA] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:-0.5px_0px_0px_0px]"
+            >
+              <div
+                data-pencil-name="Actions"
+                class="box-border w-fit shrink-0 h-fit flex flex-row gap-[12px] justify-start items-center"
+              >
+                <div
+                  data-pencil-name="Cancel"
+                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[999px]"
+                >
+                  <div
+                    data-pencil-name="Label"
+                    class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                  >
+                    Batal
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Confirm"
+                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#2F5BFF] rounded-[999px]"
+                >
+                  <div
+                    data-pencil-name="Label"
+                    class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                  >
+                    Simpan
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Row SM + MD"
+            class="box-border w-fit h-fit shrink-0 flex flex-row gap-[24px] justify-start items-start"
+          >
+            <div
+              data-pencil-name="Col SM"
+              class="box-border w-fit shrink-0 h-fit flex flex-col gap-[12px] justify-start items-start"
+            >
+              <div
+                data-pencil-name="Caption"
+                class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                Modal/SM · 400
+              </div>
+              <div
+                data-pencil-name="Modal/SM"
+                class="box-border w-[400px] h-fit shrink-0 [box-shadow:0px_16px_40px_#18181B24] flex flex-col gap-0 justify-start items-start bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[16px] overflow-hidden"
+              >
+                <div
+                  data-pencil-name="Header"
+                  class="[box-sizing:content-box] w-[400px] h-[86.5px] shrink-0 flex flex-row gap-[12px] p-[20px_24px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:0px_0px_-0.5px_0px]"
+                >
+                  <div
+                    data-pencil-name="Heading"
+                    class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
+                  >
+                    <div
+                      data-pencil-name="Title"
+                      class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-0.4px] text-left [white-space:nowrap]"
+                    >
+                      Judul modal
+                    </div>
+                    <div
+                      data-pencil-name="Description"
+                      class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                    >
+                      Deskripsi singkat tentang tujuan modal ini.
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Close"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                  >
+                    <svg
+                      data-pencil-name="Icon"
+                      data-icon-name="x"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[16px] shrink-0 h-[16px]"
+                    >
+                      <path
+                        d="M3.34619 2.93945q-0.25293 0.08545-0.37939 0.30762-0.04102 0.08545-0.04102 0.25293 0 0.16748 0.04102 0.25293 0.04443 0.08203 1.62353 1.66455l1.58252 1.58252-1.58252 1.58252q-1.5791 1.58252-1.62353 1.66797-0.04102 0.08203-0.04102 0.23584 0 0.15381 0.03418 0.23926 0.0376 0.08203 0.1333 0.18115 0.09912 0.0957 0.18115 0.1333 0.08545 0.03418 0.23926 0.03418 0.15381 0 0.23584-0.04102 0.08545-0.04443 1.66797-1.62353l1.58252-1.58252 1.58252 1.58252q1.58252 1.5791 1.66455 1.62353 0.08545 0.04102 0.23926 0.04102 0.15381 0 0.23584-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.23926 0-0.15381-0.04443-0.23584-0.04101-0.08545-1.62012-1.66797l-1.58252-1.58252 1.58252-1.58252q1.5791-1.58252 1.62012-1.66455 0.04443-0.08545 0.04443-0.25293 0-0.16748-0.04102-0.25293-0.09912-0.16748-0.28027-0.2666-0.05811-0.02734-0.09912-0.04102-0.04102-0.01367-0.15381-0.01367-0.11279 0-0.15381 0.01367-0.04101 0.01367-0.11279 0.04102-0.09912 0.05811-1.66455 1.62695l-1.56885 1.56543-2.82666-2.81299q-0.31104-0.29395-0.42041-0.37939-0.08545-0.05469-0.19824-0.05469l-0.02735 0q-0.14014 0-0.18115 0.01367z"
+                        fill="#18181B"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Body"
+                  class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[24px] justify-start items-start"
+                >
+                  <div
+                    data-pencil-name="Body text"
+                    class="text-[14px]/[21px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                  >
+                    Isi modal — ganti slot Body dengan field, teks, atau konten lain.
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Footer"
+                  class="[box-sizing:content-box] w-[400px] h-[73.5px] shrink-0 flex flex-row gap-[12px] p-[16px_24px] justify-end items-center bg-[#FAFAFA] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:-0.5px_0px_0px_0px]"
+                >
+                  <div
+                    data-pencil-name="Actions"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[12px] justify-start items-center"
+                  >
+                    <div
+                      data-pencil-name="Cancel"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Batal
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Confirm"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#2F5BFF] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Simpan
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Col MD"
+              class="box-border w-fit shrink-0 h-fit flex flex-col gap-[12px] justify-start items-start"
+            >
+              <div
+                data-pencil-name="Caption"
+                class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                Modal/MD · 560
+              </div>
+              <div
+                data-pencil-name="Modal/MD"
+                class="box-border w-[560px] h-fit shrink-0 [box-shadow:0px_16px_40px_#18181B24] flex flex-col gap-0 justify-start items-start bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[16px] overflow-hidden"
+              >
+                <div
+                  data-pencil-name="Header"
+                  class="[box-sizing:content-box] w-[560px] h-[86.5px] shrink-0 flex flex-row gap-[12px] p-[20px_24px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:0px_0px_-0.5px_0px]"
+                >
+                  <div
+                    data-pencil-name="Heading"
+                    class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
+                  >
+                    <div
+                      data-pencil-name="Title"
+                      class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-0.4px] text-left [white-space:nowrap]"
+                    >
+                      Judul modal
+                    </div>
+                    <div
+                      data-pencil-name="Description"
+                      class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                    >
+                      Deskripsi singkat tentang tujuan modal ini.
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Close"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                  >
+                    <svg
+                      data-pencil-name="Icon"
+                      data-icon-name="x"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[16px] shrink-0 h-[16px]"
+                    >
+                      <path
+                        d="M3.34619 2.93945q-0.25293 0.08545-0.37939 0.30762-0.04102 0.08545-0.04102 0.25293 0 0.16748 0.04102 0.25293 0.04443 0.08203 1.62353 1.66455l1.58252 1.58252-1.58252 1.58252q-1.5791 1.58252-1.62353 1.66797-0.04102 0.08203-0.04102 0.23584 0 0.15381 0.03418 0.23926 0.0376 0.08203 0.1333 0.18115 0.09912 0.0957 0.18115 0.1333 0.08545 0.03418 0.23926 0.03418 0.15381 0 0.23584-0.04102 0.08545-0.04443 1.66797-1.62353l1.58252-1.58252 1.58252 1.58252q1.58252 1.5791 1.66455 1.62353 0.08545 0.04102 0.23926 0.04102 0.15381 0 0.23584-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.23926 0-0.15381-0.04443-0.23584-0.04101-0.08545-1.62012-1.66797l-1.58252-1.58252 1.58252-1.58252q1.5791-1.58252 1.62012-1.66455 0.04443-0.08545 0.04443-0.25293 0-0.16748-0.04102-0.25293-0.09912-0.16748-0.28027-0.2666-0.05811-0.02734-0.09912-0.04102-0.04102-0.01367-0.15381-0.01367-0.11279 0-0.15381 0.01367-0.04101 0.01367-0.11279 0.04102-0.09912 0.05811-1.66455 1.62695l-1.56885 1.56543-2.82666-2.81299q-0.31104-0.29395-0.42041-0.37939-0.08545-0.05469-0.19824-0.05469l-0.02735 0q-0.14014 0-0.18115 0.01367z"
+                        fill="#18181B"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Body"
+                  class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[24px] justify-start items-start"
+                >
+                  <div
+                    data-pencil-name="Body text"
+                    class="text-[14px]/[21px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                  >
+                    Isi modal — ganti slot Body dengan field, teks, atau konten lain.
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Footer"
+                  class="[box-sizing:content-box] w-[560px] h-[73.5px] shrink-0 flex flex-row gap-[12px] p-[16px_24px] justify-end items-center bg-[#FAFAFA] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:-0.5px_0px_0px_0px]"
+                >
+                  <div
+                    data-pencil-name="Actions"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[12px] justify-start items-center"
+                  >
+                    <div
+                      data-pencil-name="Cancel"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Batal
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Confirm"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#2F5BFF] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Simpan
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Col LG"
+            class="box-border w-fit h-fit shrink-0 flex flex-col gap-[12px] justify-start items-start"
+          >
+            <div
+              data-pencil-name="Caption"
+              class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+            >
+              Modal/LG · 720
+            </div>
+            <div
+              data-pencil-name="Modal/LG"
+              class="box-border w-[720px] h-fit shrink-0 [box-shadow:0px_16px_40px_#18181B24] flex flex-col gap-0 justify-start items-start bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[16px] overflow-hidden"
+            >
+              <div
+                data-pencil-name="Header"
+                class="[box-sizing:content-box] w-[720px] h-[86.5px] shrink-0 flex flex-row gap-[12px] p-[20px_24px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:0px_0px_-0.5px_0px]"
+              >
+                <div
+                  data-pencil-name="Heading"
+                  class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
+                >
+                  <div
+                    data-pencil-name="Title"
+                    class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-0.4px] text-left [white-space:nowrap]"
+                  >
+                    Judul modal
+                  </div>
+                  <div
+                    data-pencil-name="Description"
+                    class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                  >
+                    Deskripsi singkat tentang tujuan modal ini.
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Close"
+                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                >
+                  <svg
+                    data-pencil-name="Icon"
+                    data-icon-name="x"
+                    data-icon-set="lucide"
+                    viewBox="0 0 13.99993896484375 14"
+                    preserveAspectRatio="xMidYMid meet"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="box-border w-[16px] shrink-0 h-[16px]"
+                  >
+                    <path
+                      d="M3.34619 2.93945q-0.25293 0.08545-0.37939 0.30762-0.04102 0.08545-0.04102 0.25293 0 0.16748 0.04102 0.25293 0.04443 0.08203 1.62353 1.66455l1.58252 1.58252-1.58252 1.58252q-1.5791 1.58252-1.62353 1.66797-0.04102 0.08203-0.04102 0.23584 0 0.15381 0.03418 0.23926 0.0376 0.08203 0.1333 0.18115 0.09912 0.0957 0.18115 0.1333 0.08545 0.03418 0.23926 0.03418 0.15381 0 0.23584-0.04102 0.08545-0.04443 1.66797-1.62353l1.58252-1.58252 1.58252 1.58252q1.58252 1.5791 1.66455 1.62353 0.08545 0.04102 0.23926 0.04102 0.15381 0 0.23584-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.23926 0-0.15381-0.04443-0.23584-0.04101-0.08545-1.62012-1.66797l-1.58252-1.58252 1.58252-1.58252q1.5791-1.58252 1.62012-1.66455 0.04443-0.08545 0.04443-0.25293 0-0.16748-0.04102-0.25293-0.09912-0.16748-0.28027-0.2666-0.05811-0.02734-0.09912-0.04102-0.04102-0.01367-0.15381-0.01367-0.11279 0-0.15381 0.01367-0.04101 0.01367-0.11279 0.04102-0.09912 0.05811-1.66455 1.62695l-1.56885 1.56543-2.82666-2.81299q-0.31104-0.29395-0.42041-0.37939-0.08545-0.05469-0.19824-0.05469l-0.02735 0q-0.14014 0-0.18115 0.01367z"
+                      fill="#18181B"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <div
+                data-pencil-name="Body"
+                class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[24px] justify-start items-start"
+              >
+                <div
+                  data-pencil-name="Body text"
+                  class="text-[14px]/[21px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                >
+                  Isi modal — ganti slot Body dengan field, teks, atau konten lain.
+                </div>
+              </div>
+              <div
+                data-pencil-name="Footer"
+                class="[box-sizing:content-box] w-[720px] h-[73.5px] shrink-0 flex flex-row gap-[12px] p-[16px_24px] justify-end items-center bg-[#FAFAFA] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:-0.5px_0px_0px_0px]"
+              >
+                <div
+                  data-pencil-name="Actions"
+                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[12px] justify-start items-center"
+                >
+                  <div
+                    data-pencil-name="Cancel"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[999px]"
+                  >
+                    <div
+                      data-pencil-name="Label"
+                      class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                    >
+                      Batal
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Confirm"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#2F5BFF] rounded-[999px]"
+                  >
+                    <div
+                      data-pencil-name="Label"
+                      class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                    >
+                      Simpan
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Content"
+        class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[32px_0px_0px_0px] justify-start items-start"
+      >
+        <div
+          data-pencil-name="Exhibit title"
+          class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+        >
+          Content
+        </div>
+        <div
+          data-pencil-name="Exhibit note"
+          class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+        >
+          Confirm (SM): title is the question, body states the consequence, Danger confirms, no
+          description. Form (MD): title + description, fields in Body at gap 16, primary on the
+          right. Detail (LG): read-mostly content such as a table. Fill:
+          Replace(&lt;modal&gt;/c5Prsw, {type:"frame", name:"Body", layout:"vertical",
+          width:"fill_container", padding:"$component/modal/body/padding",
+          gap:"$component/modal/body/gap"}) and Replace(&lt;modal&gt;/I7e8yh, {type:"frame",
+          name:"Actions", gap:"$component/modal/footer/gap", alignItems:"center"}).
+        </div>
+        <div
+          data-pencil-name="Stage"
+          class="box-border w-full h-fit shrink-0 flex flex-col gap-0 justify-start items-start bg-[#F4F4F5] rounded-[12px] overflow-hidden"
+        >
+          <div
+            data-pencil-name="Scrim"
+            class="box-border w-full h-fit shrink-0 flex flex-col gap-[32px] p-[40px] justify-start items-center bg-[#09090B80]"
+          >
+            <div
+              data-pencil-name="Row"
+              class="box-border w-fit h-fit shrink-0 flex flex-row gap-[32px] justify-start items-start"
+            >
+              <div
+                data-pencil-name="Example confirm"
+                class="box-border w-[400px] shrink-0 h-fit [box-shadow:0px_16px_40px_#18181B24] flex flex-col gap-0 justify-start items-start bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[16px] overflow-hidden"
+              >
+                <div
+                  data-pencil-name="Header"
+                  class="[box-sizing:content-box] w-[400px] h-[71.5px] shrink-0 flex flex-row gap-[12px] p-[20px_24px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:0px_0px_-0.5px_0px]"
+                >
+                  <div
+                    data-pencil-name="Heading"
+                    class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
+                  >
+                    <div
+                      data-pencil-name="Title"
+                      class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-0.4px] text-left [white-space:nowrap]"
+                    >
+                      Hapus proyek?
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Close"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                  >
+                    <svg
+                      data-pencil-name="Icon"
+                      data-icon-name="x"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[16px] shrink-0 h-[16px]"
+                    >
+                      <path
+                        d="M3.34619 2.93945q-0.25293 0.08545-0.37939 0.30762-0.04102 0.08545-0.04102 0.25293 0 0.16748 0.04102 0.25293 0.04443 0.08203 1.62353 1.66455l1.58252 1.58252-1.58252 1.58252q-1.5791 1.58252-1.62353 1.66797-0.04102 0.08203-0.04102 0.23584 0 0.15381 0.03418 0.23926 0.0376 0.08203 0.1333 0.18115 0.09912 0.0957 0.18115 0.1333 0.08545 0.03418 0.23926 0.03418 0.15381 0 0.23584-0.04102 0.08545-0.04443 1.66797-1.62353l1.58252-1.58252 1.58252 1.58252q1.58252 1.5791 1.66455 1.62353 0.08545 0.04102 0.23926 0.04102 0.15381 0 0.23584-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.23926 0-0.15381-0.04443-0.23584-0.04101-0.08545-1.62012-1.66797l-1.58252-1.58252 1.58252-1.58252q1.5791-1.58252 1.62012-1.66455 0.04443-0.08545 0.04443-0.25293 0-0.16748-0.04102-0.25293-0.09912-0.16748-0.28027-0.2666-0.05811-0.02734-0.09912-0.04102-0.04102-0.01367-0.15381-0.01367-0.11279 0-0.15381 0.01367-0.04101 0.01367-0.11279 0.04102-0.09912 0.05811-1.66455 1.62695l-1.56885 1.56543-2.82666-2.81299q-0.31104-0.29395-0.42041-0.37939-0.08545-0.05469-0.19824-0.05469l-0.02735 0q-0.14014 0-0.18115 0.01367z"
+                        fill="#18181B"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Body"
+                  class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[24px] justify-start items-start"
+                >
+                  <div
+                    data-pencil-name="Body text"
+                    class="text-[14px]/[21px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                  >
+                    Proyek “Rina &amp; Adi — Prewedding” dan semua file galerinya akan dihapus
+                    permanen. Tindakan ini tidak bisa dibatalkan.
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Footer"
+                  class="[box-sizing:content-box] w-[400px] h-[73.5px] shrink-0 flex flex-row gap-[12px] p-[16px_24px] justify-end items-center bg-[#FAFAFA] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:-0.5px_0px_0px_0px]"
+                >
+                  <div
+                    data-pencil-name="Actions"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[12px] justify-start items-center"
+                  >
+                    <div
+                      data-pencil-name="Cancel"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Batal
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Confirm"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#DC2626] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Hapus proyek
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                data-pencil-name="Example form"
+                class="box-border w-[560px] shrink-0 h-fit [box-shadow:0px_16px_40px_#18181B24] flex flex-col gap-0 justify-start items-start bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[16px] overflow-hidden"
+              >
+                <div
+                  data-pencil-name="Header"
+                  class="[box-sizing:content-box] w-[560px] h-[86.5px] shrink-0 flex flex-row gap-[12px] p-[20px_24px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:0px_0px_-0.5px_0px]"
+                >
+                  <div
+                    data-pencil-name="Heading"
+                    class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
+                  >
+                    <div
+                      data-pencil-name="Title"
+                      class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-0.4px] text-left [white-space:nowrap]"
+                    >
+                      Proyek baru
+                    </div>
+                    <div
+                      data-pencil-name="Description"
+                      class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                    >
+                      Isi detail dasar; jadwal &amp; paket bisa diatur nanti.
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Close"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                  >
+                    <svg
+                      data-pencil-name="Icon"
+                      data-icon-name="x"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[16px] shrink-0 h-[16px]"
+                    >
+                      <path
+                        d="M3.34619 2.93945q-0.25293 0.08545-0.37939 0.30762-0.04102 0.08545-0.04102 0.25293 0 0.16748 0.04102 0.25293 0.04443 0.08203 1.62353 1.66455l1.58252 1.58252-1.58252 1.58252q-1.5791 1.58252-1.62353 1.66797-0.04102 0.08203-0.04102 0.23584 0 0.15381 0.03418 0.23926 0.0376 0.08203 0.1333 0.18115 0.09912 0.0957 0.18115 0.1333 0.08545 0.03418 0.23926 0.03418 0.15381 0 0.23584-0.04102 0.08545-0.04443 1.66797-1.62353l1.58252-1.58252 1.58252 1.58252q1.58252 1.5791 1.66455 1.62353 0.08545 0.04102 0.23926 0.04102 0.15381 0 0.23584-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.23926 0-0.15381-0.04443-0.23584-0.04101-0.08545-1.62012-1.66797l-1.58252-1.58252 1.58252-1.58252q1.5791-1.58252 1.62012-1.66455 0.04443-0.08545 0.04443-0.25293 0-0.16748-0.04102-0.25293-0.09912-0.16748-0.28027-0.2666-0.05811-0.02734-0.09912-0.04102-0.04102-0.01367-0.15381-0.01367-0.11279 0-0.15381 0.01367-0.04101 0.01367-0.11279 0.04102-0.09912 0.05811-1.66455 1.62695l-1.56885 1.56543-2.82666-2.81299q-0.31104-0.29395-0.42041-0.37939-0.08545-0.05469-0.19824-0.05469l-0.02735 0q-0.14014 0-0.18115 0.01367z"
+                        fill="#18181B"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Body"
+                  class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[24px] justify-start items-start"
+                >
+                  <div
+                    data-pencil-name="Client"
+                    class="box-border w-full h-fit shrink-0 flex flex-col gap-[6px] justify-start items-start"
+                  >
+                    <div
+                      data-pencil-name="Label row"
+                      class="box-border w-full h-fit shrink-0 flex flex-row gap-[4px] justify-start items-center"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[12px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Nama klien
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Input"
+                      class="box-border w-full h-[40px] shrink-0 flex flex-row gap-[8px] p-[0px_12px] justify-start items-center bg-[#FFFFFF] [border:1px_solid_#D4D4D8] rounded-[8px]"
+                    >
+                      <div
+                        data-pencil-name="Placeholder"
+                        class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                      >
+                        Contoh: Rina &amp; Adi
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Session"
+                    class="box-border w-full h-fit shrink-0 flex flex-col gap-0 justify-start items-start"
+                  >
+                    <div
+                      data-pencil-name="Field"
+                      class="box-border w-full h-fit shrink-0 flex flex-col gap-[6px] justify-start items-start"
+                    >
+                      <div
+                        data-pencil-name="Label row"
+                        class="box-border w-full h-fit shrink-0 flex flex-row gap-[4px] justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Label"
+                          class="text-[12px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                        >
+                          Layanan
+                        </div>
+                      </div>
+                      <div
+                        data-pencil-name="Input"
+                        class="box-border w-full h-[40px] shrink-0 flex flex-row gap-[8px] p-[0px_12px] justify-start items-center bg-[#FFFFFF] [border:1px_solid_#D4D4D8] rounded-[8px]"
+                      >
+                        <div
+                          data-pencil-name="Placeholder"
+                          class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                        >
+                          Pilih layanan
+                        </div>
+                        <svg
+                          data-pencil-name="Icon trailing"
+                          data-icon-name="chevron-down"
+                          data-icon-set="lucide"
+                          viewBox="0 0 13.99993896484375 14"
+                          preserveAspectRatio="xMidYMid meet"
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="box-border w-[16px] shrink-0 h-[16px]"
+                        >
+                          <path
+                            d="M3.34619 4.68945q-0.25293 0.08545-0.37939 0.30762-0.04102 0.08545-0.04102 0.25293 0 0.16748 0.04785 0.25977 0.05127 0.08887 1.8628 1.9038 1.81494 1.81152 1.9038 1.8628 0.09229 0.04785 0.25977 0.04785 0.16748 0 0.25635-0.04785 0.09229-0.05127 1.90381-1.8628 1.81494-1.81494 1.86279-1.9038 0.05127-0.09229 0.05127-0.25977 0-0.16748-0.04102-0.25293-0.09912-0.16748-0.28027-0.2666-0.05811-0.02734-0.09912-0.04102-0.04102-0.01367-0.15381-0.01367-0.11279 0-0.15381 0.01367-0.04101 0.01367-0.11279 0.04102-0.09912 0.05811-1.66455 1.62695l-1.56885 1.56543-2.82666-2.81299q-0.31104-0.29395-0.42041-0.37939-0.08545-0.05469-0.19824-0.05469l-0.02735 0q-0.14014 0-0.18115 0.01367z"
+                            fill="#71717A"
+                          ></path>
+                        </svg>
+                      </div>
+                      <div
+                        data-pencil-name="Message"
+                        class="box-border w-full h-fit shrink-0 flex flex-row gap-[8px] justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Helper"
+                          class="text-[12px]/[17px] box-border [flex:1_1_0] text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                        >
+                          Menentukan durasi dan harga dasar.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Email"
+                    class="box-border w-full h-fit shrink-0 flex flex-col gap-[6px] justify-start items-start"
+                  >
+                    <div
+                      data-pencil-name="Label row"
+                      class="box-border w-full h-fit shrink-0 flex flex-row gap-[4px] justify-start items-center"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[12px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Email klien
+                      </div>
+                      <div
+                        data-pencil-name="Optional"
+                        class="text-[12px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+                      >
+                        (opsional)
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Input"
+                      class="box-border w-full h-[40px] shrink-0 flex flex-row gap-[8px] p-[0px_12px] justify-start items-center bg-[#FFFFFF] [border:1px_solid_#D4D4D8] rounded-[8px]"
+                    >
+                      <div
+                        data-pencil-name="Placeholder"
+                        class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                      >
+                        nama@email.com
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Message"
+                      class="box-border w-full h-fit shrink-0 flex flex-row gap-[8px] justify-start items-center"
+                    >
+                      <div
+                        data-pencil-name="Helper"
+                        class="text-[12px]/[17px] box-border [flex:1_1_0] text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                      >
+                        Tautan galeri dikirim ke email ini.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Footer"
+                  class="[box-sizing:content-box] w-[560px] h-[73.5px] shrink-0 flex flex-row gap-[12px] p-[16px_24px] justify-end items-center bg-[#FAFAFA] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:-0.5px_0px_0px_0px]"
+                >
+                  <div
+                    data-pencil-name="Actions"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[12px] justify-start items-center"
+                  >
+                    <div
+                      data-pencil-name="Cancel"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Batal
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Confirm"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#2F5BFF] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Simpan proyek
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Example detail"
+              class="box-border w-[720px] h-fit shrink-0 [box-shadow:0px_16px_40px_#18181B24] flex flex-col gap-0 justify-start items-start bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[16px] overflow-hidden"
+            >
+              <div
+                data-pencil-name="Header"
+                class="[box-sizing:content-box] w-[720px] h-[86.5px] shrink-0 flex flex-row gap-[12px] p-[20px_24px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:0px_0px_-0.5px_0px]"
+              >
+                <div
+                  data-pencil-name="Heading"
+                  class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
+                >
+                  <div
+                    data-pencil-name="Title"
+                    class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-0.4px] text-left [white-space:nowrap]"
+                  >
+                    Proyek aktif · Maret
+                  </div>
+                  <div
+                    data-pencil-name="Description"
+                    class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                  >
+                    4 proyek dengan sesi bulan ini.
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Close"
+                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                >
+                  <svg
+                    data-pencil-name="Icon"
+                    data-icon-name="x"
+                    data-icon-set="lucide"
+                    viewBox="0 0 13.99993896484375 14"
+                    preserveAspectRatio="xMidYMid meet"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="box-border w-[16px] shrink-0 h-[16px]"
+                  >
+                    <path
+                      d="M3.34619 2.93945q-0.25293 0.08545-0.37939 0.30762-0.04102 0.08545-0.04102 0.25293 0 0.16748 0.04102 0.25293 0.04443 0.08203 1.62353 1.66455l1.58252 1.58252-1.58252 1.58252q-1.5791 1.58252-1.62353 1.66797-0.04102 0.08203-0.04102 0.23584 0 0.15381 0.03418 0.23926 0.0376 0.08203 0.1333 0.18115 0.09912 0.0957 0.18115 0.1333 0.08545 0.03418 0.23926 0.03418 0.15381 0 0.23584-0.04102 0.08545-0.04443 1.66797-1.62353l1.58252-1.58252 1.58252 1.58252q1.58252 1.5791 1.66455 1.62353 0.08545 0.04102 0.23926 0.04102 0.15381 0 0.23584-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.23926 0-0.15381-0.04443-0.23584-0.04101-0.08545-1.62012-1.66797l-1.58252-1.58252 1.58252-1.58252q1.5791-1.58252 1.62012-1.66455 0.04443-0.08545 0.04443-0.25293 0-0.16748-0.04102-0.25293-0.09912-0.16748-0.28027-0.2666-0.05811-0.02734-0.09912-0.04102-0.04102-0.01367-0.15381-0.01367-0.11279 0-0.15381 0.01367-0.04101 0.01367-0.11279 0.04102-0.09912 0.05811-1.66455 1.62695l-1.56885 1.56543-2.82666-2.81299q-0.31104-0.29395-0.42041-0.37939-0.08545-0.05469-0.19824-0.05469l-0.02735 0q-0.14014 0-0.18115 0.01367z"
+                      fill="#18181B"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <div
+                data-pencil-name="Body"
+                class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[24px] justify-start items-start"
+              >
+                <div
+                  data-pencil-name="Table"
+                  class="box-border w-full h-fit shrink-0 flex flex-col gap-0 justify-start items-start bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[16px] overflow-hidden"
+                >
+                  <div
+                    data-pencil-name="Toolbar"
+                    class="box-border w-full h-fit shrink-0 flex flex-row gap-[16px] p-[16px_20px] justify-between items-center"
+                  >
+                    <div
+                      data-pencil-name="Title group"
+                      class="box-border w-fit shrink-0 h-fit flex flex-col gap-[2px] justify-start items-start"
+                    >
+                      <div
+                        data-pencil-name="Title"
+                        class="text-[16px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+                      >
+                        Booking &amp; Produksi
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Header"
+                    class="[box-sizing:content-box] w-[672px] h-[28px] shrink-0 flex flex-row gap-0 p-[8px_20px] justify-start items-center bg-[#FAFAFA] [border-width:1px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:-0.5px_0px_-0.5px_0px]"
+                  >
+                    <div
+                      data-pencil-name="Cells"
+                      class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 justify-start items-center"
+                    >
+                      <div
+                        data-pencil-name="Head KLIEN"
+                        class="box-border [flex:1_1_0] h-fit flex flex-row gap-[4px] justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Label"
+                          class="text-[10px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[0.6px] text-left [white-space:nowrap]"
+                        >
+                          KLIEN
+                        </div>
+                      </div>
+                      <div
+                        data-pencil-name="Head JENIS"
+                        class="box-border w-[130px] shrink-0 h-fit flex flex-row gap-[4px] justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Label"
+                          class="text-[10px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[0.6px] text-left [white-space:nowrap]"
+                        >
+                          JENIS
+                        </div>
+                      </div>
+                      <div
+                        data-pencil-name="Head TANGGAL"
+                        class="box-border w-[120px] shrink-0 h-fit flex flex-row gap-[4px] justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Label"
+                          class="text-[10px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[0.6px] text-left [white-space:nowrap]"
+                        >
+                          TANGGAL
+                        </div>
+                      </div>
+                      <div
+                        data-pencil-name="Head TAHAP"
+                        class="box-border w-[130px] shrink-0 h-fit flex flex-row gap-[4px] justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Label"
+                          class="text-[10px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[0.6px] text-left [white-space:nowrap]"
+                        >
+                          TAHAP
+                        </div>
+                      </div>
+                      <div
+                        data-pencil-name="Head NILAI"
+                        class="box-border w-[110px] shrink-0 h-fit flex flex-row gap-[4px] justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Label"
+                          class="text-[10px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[0.6px] text-left [white-space:nowrap]"
+                        >
+                          NILAI
+                        </div>
+                      </div>
+                      <div
+                        data-pencil-name="Head actions"
+                        class="box-border w-[32px] shrink-0 h-fit flex flex-row gap-[4px] justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Label"
+                          class="text-[10px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[0.6px] text-left [white-space:nowrap]"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Rows"
+                    class="box-border w-full h-fit shrink-0 flex flex-col gap-0 justify-start items-start"
+                  >
+                    <div
+                      data-pencil-name="Row Dimas &amp; Sari"
+                      class="[box-sizing:content-box] w-[672px] h-[59.5px] shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:0px_0px_-0.5px_0px]"
+                    >
+                      <div
+                        data-pencil-name="Cells"
+                        class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Klien"
+                          class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Avatar"
+                            class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+                          >
+                            <div
+                              data-pencil-name="Initials"
+                              class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+                            >
+                              DS
+                            </div>
+                          </div>
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                            >
+                              Dinar &amp; Sari
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Jenis"
+                          class="box-border w-[130px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                            >
+                              Prewedding
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Tanggal"
+                          class="box-border w-[120px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                            >
+                              Sab, 28 Sep
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Tahap"
+                          class="box-border w-[130px] shrink-0 h-fit flex flex-row gap-0 justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Stage"
+                            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#F4FBDF] rounded-[999px]"
+                          >
+                            <div
+                              data-pencil-name="Dot"
+                              class="box-border w-[6px] shrink-0 h-[6px] bg-[#3F6212] rounded-full"
+                            ></div>
+                            <div
+                              data-pencil-name="Label"
+                              class="text-[11px]/[normal] box-border text-[#3F6212] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                            >
+                              Pemotretan
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Nilai"
+                          class="box-border w-[110px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                            >
+                              Rp 4.800.000
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Aksi"
+                          class="box-border w-[32px] shrink-0 h-fit flex flex-row gap-[10px] justify-end items-center"
+                        >
+                          <div
+                            data-pencil-name="Actions"
+                            class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+                          >
+                            <div
+                              data-pencil-name="Trigger"
+                              class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                            >
+                              <svg
+                                data-pencil-name="Icon"
+                                data-icon-name="ellipsis"
+                                data-icon-set="lucide"
+                                viewBox="0 0 13.99993896484375 14"
+                                preserveAspectRatio="xMidYMid meet"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="box-border w-[16px] shrink-0 h-[16px]"
+                              >
+                                <path
+                                  d="M2.77197 5.85156q-0.2666 0.01367-0.50244 0.18115-0.33838 0.22559-0.45801 0.59815-0.11621 0.36914 0.00684 0.7417 0.12646 0.36914 0.46484 0.6084 0.26318 0.18115 0.62891 0.18115 0.25293 0 0.44092-0.0752 0.18799-0.07861 0.37597-0.2666 0.19141-0.19141 0.26661-0.37939 0.07861-0.18799 0.07861-0.44092 0-0.25293-0.07861-0.44092-0.0752-0.18799-0.25635-0.37256-0.15381-0.15381-0.29395-0.22216-0.30762-0.15381-0.67334-0.1128z m4.10157 0q-0.2085 0.01367-0.37598 0.09912-0.23926 0.11279-0.3999 0.31446-0.16064 0.20166-0.23243 0.44091-0.02734 0.11279-0.02734 0.29395 0 0.18115 0.02734 0.29395 0.08545 0.30762 0.30762 0.5332 0.22559 0.22217 0.5332 0.30762 0.11279 0.02734 0.29395 0.02734 0.18115 0 0.29395-0.02734 0.30762-0.08545 0.52978-0.30762 0.22559-0.22559 0.31104-0.5332 0.02734-0.11279 0.02734-0.29395 0-0.18115-0.02734-0.29395-0.07178-0.23926-0.23243-0.44091-0.16064-0.20166-0.3999-0.31446-0.26318-0.14014-0.6289-0.09912z m4.07421 0q-0.39307 0.02734-0.70068 0.33496-0.16748 0.18457-0.24609 0.37256-0.0752 0.18799-0.0752 0.44092 0 0.25293 0.0752 0.44775 0.07861 0.19482 0.2666 0.3794 0.19141 0.18115 0.37939 0.25976 0.18799 0.0752 0.44092 0.0752 0.36572 0 0.62891-0.18115 0.33838-0.23926 0.46142-0.6084 0.12647-0.37256 0.00684-0.7417-0.11621-0.37256-0.46143-0.60156-0.3418-0.23242-0.77588-0.17774z"
+                                  fill="#18181B"
+                                ></path>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Row Kopi Tuku"
+                      class="[box-sizing:content-box] w-[672px] h-[55.5px] shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:0px_0px_-0.5px_0px]"
+                    >
+                      <div
+                        data-pencil-name="Cells"
+                        class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Klien"
+                          class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Avatar"
+                            class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+                          >
+                            <div
+                              data-pencil-name="Initials"
+                              class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+                            >
+                              BT
+                            </div>
+                          </div>
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                            >
+                              Bayu Tirta
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Jenis"
+                          class="box-border w-[130px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                            >
+                              Produk
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Tanggal"
+                          class="box-border w-[120px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                            >
+                              Sen, 30 Sep
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Tahap"
+                          class="box-border w-[130px] shrink-0 h-fit flex flex-row gap-0 justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Stage"
+                            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#EEF3FF] rounded-[999px]"
+                          >
+                            <div
+                              data-pencil-name="Dot"
+                              class="box-border w-[6px] shrink-0 h-[6px] bg-[#1D4ED8] rounded-full"
+                            ></div>
+                            <div
+                              data-pencil-name="Label"
+                              class="text-[11px]/[normal] box-border text-[#1D4ED8] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                            >
+                              Dijadwalkan
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Nilai"
+                          class="box-border w-[110px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                            >
+                              Rp 2.500.000
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Aksi"
+                          class="box-border w-[32px] shrink-0 h-fit flex flex-row gap-[10px] justify-end items-center"
+                        >
+                          <div
+                            data-pencil-name="Actions"
+                            class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+                          >
+                            <div
+                              data-pencil-name="Trigger"
+                              class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                            >
+                              <svg
+                                data-pencil-name="Icon"
+                                data-icon-name="ellipsis"
+                                data-icon-set="lucide"
+                                viewBox="0 0 13.99993896484375 14"
+                                preserveAspectRatio="xMidYMid meet"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="box-border w-[16px] shrink-0 h-[16px]"
+                              >
+                                <path
+                                  d="M2.77197 5.85156q-0.2666 0.01367-0.50244 0.18115-0.33838 0.22559-0.45801 0.59815-0.11621 0.36914 0.00684 0.7417 0.12646 0.36914 0.46484 0.6084 0.26318 0.18115 0.62891 0.18115 0.25293 0 0.44092-0.0752 0.18799-0.07861 0.37597-0.2666 0.19141-0.19141 0.26661-0.37939 0.07861-0.18799 0.07861-0.44092 0-0.25293-0.07861-0.44092-0.0752-0.18799-0.25635-0.37256-0.15381-0.15381-0.29395-0.22216-0.30762-0.15381-0.67334-0.1128z m4.10157 0q-0.2085 0.01367-0.37598 0.09912-0.23926 0.11279-0.3999 0.31446-0.16064 0.20166-0.23243 0.44091-0.02734 0.11279-0.02734 0.29395 0 0.18115 0.02734 0.29395 0.08545 0.30762 0.30762 0.5332 0.22559 0.22217 0.5332 0.30762 0.11279 0.02734 0.29395 0.02734 0.18115 0 0.29395-0.02734 0.30762-0.08545 0.52978-0.30762 0.22559-0.22559 0.31104-0.5332 0.02734-0.11279 0.02734-0.29395 0-0.18115-0.02734-0.29395-0.07178-0.23926-0.23243-0.44091-0.16064-0.20166-0.3999-0.31446-0.26318-0.14014-0.6289-0.09912z m4.07421 0q-0.39307 0.02734-0.70068 0.33496-0.16748 0.18457-0.24609 0.37256-0.0752 0.18799-0.0752 0.44092 0 0.25293 0.0752 0.44775 0.07861 0.19482 0.2666 0.3794 0.19141 0.18115 0.37939 0.25976 0.18799 0.0752 0.44092 0.0752 0.36572 0 0.62891-0.18115 0.33838-0.23926 0.46142-0.6084 0.12647-0.37256 0.00684-0.7417-0.11621-0.37256-0.46143-0.60156-0.3418-0.23242-0.77588-0.17774z"
+                                  fill="#18181B"
+                                ></path>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Row Rina &amp; Adi"
+                      class="[box-sizing:content-box] w-[672px] h-[55.5px] shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:0px_0px_-0.5px_0px]"
+                    >
+                      <div
+                        data-pencil-name="Cells"
+                        class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Klien"
+                          class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Avatar"
+                            class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+                          >
+                            <div
+                              data-pencil-name="Initials"
+                              class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+                            >
+                              RA
+                            </div>
+                          </div>
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                            >
+                              Rina &amp; Adi
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Jenis"
+                          class="box-border w-[130px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                            >
+                              Pernikahan
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Tanggal"
+                          class="box-border w-[120px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                            >
+                              14 Sep
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Tahap"
+                          class="box-border w-[130px] shrink-0 h-fit flex flex-row gap-0 justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Stage"
+                            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#FEF3E2] rounded-[999px]"
+                          >
+                            <div
+                              data-pencil-name="Dot"
+                              class="box-border w-[6px] shrink-0 h-[6px] bg-[#B45309] rounded-full"
+                            ></div>
+                            <div
+                              data-pencil-name="Label"
+                              class="text-[11px]/[normal] box-border text-[#B45309] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                            >
+                              Editing
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Nilai"
+                          class="box-border w-[110px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                            >
+                              Rp 18.000.000
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Aksi"
+                          class="box-border w-[32px] shrink-0 h-fit flex flex-row gap-[10px] justify-end items-center"
+                        >
+                          <div
+                            data-pencil-name="Actions"
+                            class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+                          >
+                            <div
+                              data-pencil-name="Trigger"
+                              class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                            >
+                              <svg
+                                data-pencil-name="Icon"
+                                data-icon-name="ellipsis"
+                                data-icon-set="lucide"
+                                viewBox="0 0 13.99993896484375 14"
+                                preserveAspectRatio="xMidYMid meet"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="box-border w-[16px] shrink-0 h-[16px]"
+                              >
+                                <path
+                                  d="M2.77197 5.85156q-0.2666 0.01367-0.50244 0.18115-0.33838 0.22559-0.45801 0.59815-0.11621 0.36914 0.00684 0.7417 0.12646 0.36914 0.46484 0.6084 0.26318 0.18115 0.62891 0.18115 0.25293 0 0.44092-0.0752 0.18799-0.07861 0.37597-0.2666 0.19141-0.19141 0.26661-0.37939 0.07861-0.18799 0.07861-0.44092 0-0.25293-0.07861-0.44092-0.0752-0.18799-0.25635-0.37256-0.15381-0.15381-0.29395-0.22216-0.30762-0.15381-0.67334-0.1128z m4.10157 0q-0.2085 0.01367-0.37598 0.09912-0.23926 0.11279-0.3999 0.31446-0.16064 0.20166-0.23243 0.44091-0.02734 0.11279-0.02734 0.29395 0 0.18115 0.02734 0.29395 0.08545 0.30762 0.30762 0.5332 0.22559 0.22217 0.5332 0.30762 0.11279 0.02734 0.29395 0.02734 0.18115 0 0.29395-0.02734 0.30762-0.08545 0.52978-0.30762 0.22559-0.22559 0.31104-0.5332 0.02734-0.11279 0.02734-0.29395 0-0.18115-0.02734-0.29395-0.07178-0.23926-0.23243-0.44091-0.16064-0.20166-0.3999-0.31446-0.26318-0.14014-0.6289-0.09912z m4.07421 0q-0.39307 0.02734-0.70068 0.33496-0.16748 0.18457-0.24609 0.37256-0.0752 0.18799-0.0752 0.44092 0 0.25293 0.0752 0.44775 0.07861 0.19482 0.2666 0.3794 0.19141 0.18115 0.37939 0.25976 0.18799 0.0752 0.44092 0.0752 0.36572 0 0.62891-0.18115 0.33838-0.23926 0.46142-0.6084 0.12647-0.37256 0.00684-0.7417-0.11621-0.37256-0.46143-0.60156-0.3418-0.23242-0.77588-0.17774z"
+                                  fill="#18181B"
+                                ></path>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Row Keluarga Wijaya"
+                      class="box-border w-full h-fit shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center"
+                    >
+                      <div
+                        data-pencil-name="Cells"
+                        class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 justify-start items-center"
+                      >
+                        <div
+                          data-pencil-name="Klien"
+                          class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Avatar"
+                            class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+                          >
+                            <div
+                              data-pencil-name="Initials"
+                              class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+                            >
+                              KW
+                            </div>
+                          </div>
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                            >
+                              Keluarga Wijaya
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Jenis"
+                          class="box-border w-[130px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                            >
+                              Keluarga
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Tanggal"
+                          class="box-border w-[120px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                            >
+                              15 Sep
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Tahap"
+                          class="box-border w-[130px] shrink-0 h-fit flex flex-row gap-0 justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Stage"
+                            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#FDECEC] rounded-[999px]"
+                          >
+                            <div
+                              data-pencil-name="Dot"
+                              class="box-border w-[6px] shrink-0 h-[6px] bg-[#B91C1C] rounded-full"
+                            ></div>
+                            <div
+                              data-pencil-name="Label"
+                              class="text-[11px]/[normal] box-border text-[#B91C1C] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                            >
+                              Menunggu DP
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Nilai"
+                          class="box-border w-[110px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                        >
+                          <div
+                            data-pencil-name="Text"
+                            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+                          >
+                            <div
+                              data-pencil-name="Primary"
+                              class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                            >
+                              Rp 2.800.000
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          data-pencil-name="Aksi"
+                          class="box-border w-[32px] shrink-0 h-fit flex flex-row gap-[10px] justify-end items-center"
+                        >
+                          <div
+                            data-pencil-name="Actions"
+                            class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+                          >
+                            <div
+                              data-pencil-name="Trigger"
+                              class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                            >
+                              <svg
+                                data-pencil-name="Icon"
+                                data-icon-name="ellipsis"
+                                data-icon-set="lucide"
+                                viewBox="0 0 13.99993896484375 14"
+                                preserveAspectRatio="xMidYMid meet"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="box-border w-[16px] shrink-0 h-[16px]"
+                              >
+                                <path
+                                  d="M2.77197 5.85156q-0.2666 0.01367-0.50244 0.18115-0.33838 0.22559-0.45801 0.59815-0.11621 0.36914 0.00684 0.7417 0.12646 0.36914 0.46484 0.6084 0.26318 0.18115 0.62891 0.18115 0.25293 0 0.44092-0.0752 0.18799-0.07861 0.37597-0.2666 0.19141-0.19141 0.26661-0.37939 0.07861-0.18799 0.07861-0.44092 0-0.25293-0.07861-0.44092-0.0752-0.18799-0.25635-0.37256-0.15381-0.15381-0.29395-0.22216-0.30762-0.15381-0.67334-0.1128z m4.10157 0q-0.2085 0.01367-0.37598 0.09912-0.23926 0.11279-0.3999 0.31446-0.16064 0.20166-0.23243 0.44091-0.02734 0.11279-0.02734 0.29395 0 0.18115 0.02734 0.29395 0.08545 0.30762 0.30762 0.5332 0.22559 0.22217 0.5332 0.30762 0.11279 0.02734 0.29395 0.02734 0.18115 0 0.29395-0.02734 0.30762-0.08545 0.52978-0.30762 0.22559-0.22559 0.31104-0.5332 0.02734-0.11279 0.02734-0.29395 0-0.18115-0.02734-0.29395-0.07178-0.23926-0.23243-0.44091-0.16064-0.20166-0.3999-0.31446-0.26318-0.14014-0.6289-0.09912z m4.07421 0q-0.39307 0.02734-0.70068 0.33496-0.16748 0.18457-0.24609 0.37256-0.0752 0.18799-0.0752 0.44092 0 0.25293 0.0752 0.44775 0.07861 0.19482 0.2666 0.3794 0.19141 0.18115 0.37939 0.25976 0.18799 0.0752 0.44092 0.0752 0.36572 0 0.62891-0.18115 0.33838-0.23926 0.46142-0.6084 0.12647-0.37256 0.00684-0.7417-0.11621-0.37256-0.46143-0.60156-0.3418-0.23242-0.77588-0.17774z"
+                                  fill="#18181B"
+                                ></path>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Footer"
+                    class="[box-sizing:content-box] w-[672px] h-[38.5px] shrink-0 flex flex-row gap-[16px] p-[12px_20px] justify-between items-center [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:-0.5px_0px_0px_0px]"
+                  >
+                    <div
+                      data-pencil-name="Count"
+                      class="text-[12px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+                    >
+                      Menampilkan 4 dari 18 proyek aktif
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                data-pencil-name="Footer"
+                class="[box-sizing:content-box] w-[720px] h-[73.5px] shrink-0 flex flex-row gap-[12px] p-[16px_24px] justify-end items-center bg-[#FAFAFA] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:-0.5px_0px_0px_0px]"
+              >
+                <div
+                  data-pencil-name="Actions"
+                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[12px] justify-start items-center"
+                >
+                  <div
+                    data-pencil-name="Close"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[999px]"
+                  >
+                    <div
+                      data-pencil-name="Label"
+                      class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                    >
+                      Tutup
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Modes"
+        class="[box-sizing:content-box] w-[1312px] h-[436.5px] shrink-0 flex flex-col gap-[16px] p-[32px_0px_0px_0px] justify-start items-start [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:-0.5px_0px_0px_0px]"
+      >
+        <div
+          data-pencil-name="Exhibit title"
+          class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+        >
+          Modes
+        </div>
+        <div
+          data-pencil-name="Exhibit note"
+          class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+        >
+          modal.scrim = overlay.scrim (neutral-950 @ 50% light · black @ 60% dark). Surface, border,
+          footer and text follow the mode axis; shadow = elevation.2.
+        </div>
+        <div
+          data-pencil-name="Artwork"
+          class="box-border w-full h-fit shrink-0 flex flex-row gap-[16px] justify-start items-start"
+        >
+          <div
+            data-pencil-name="Mode light"
+            class="box-border [flex:1_1_0] h-fit flex flex-col gap-0 justify-start items-start bg-[#F4F4F5] [outline:1px_solid_#E4E4E7] [outline-offset:-0.5px] rounded-[8px] overflow-hidden"
+          >
+            <div
+              data-pencil-name="Scrim"
+              class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[32px] justify-start items-center bg-[#09090B80]"
+            >
+              <div
+                data-pencil-name="Caption"
+                class="text-[11px]/[normal] box-border text-[#FFFFFFB3] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                LIGHT
+              </div>
+              <div
+                data-pencil-name="Instance"
+                class="box-border w-[400px] h-fit shrink-0 [box-shadow:0px_16px_40px_#18181B24] flex flex-col gap-0 justify-start items-start bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[16px] overflow-hidden"
+              >
+                <div
+                  data-pencil-name="Header"
+                  class="[box-sizing:content-box] w-[400px] h-[71.5px] shrink-0 flex flex-row gap-[12px] p-[20px_24px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:0px_0px_-0.5px_0px]"
+                >
+                  <div
+                    data-pencil-name="Heading"
+                    class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
+                  >
+                    <div
+                      data-pencil-name="Title"
+                      class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-0.4px] text-left [white-space:nowrap]"
+                    >
+                      Hapus proyek?
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Close"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                  >
+                    <svg
+                      data-pencil-name="Icon"
+                      data-icon-name="x"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[16px] shrink-0 h-[16px]"
+                    >
+                      <path
+                        d="M3.34619 2.93945q-0.25293 0.08545-0.37939 0.30762-0.04102 0.08545-0.04102 0.25293 0 0.16748 0.04102 0.25293 0.04443 0.08203 1.62353 1.66455l1.58252 1.58252-1.58252 1.58252q-1.5791 1.58252-1.62353 1.66797-0.04102 0.08203-0.04102 0.23584 0 0.15381 0.03418 0.23926 0.0376 0.08203 0.1333 0.18115 0.09912 0.0957 0.18115 0.1333 0.08545 0.03418 0.23926 0.03418 0.15381 0 0.23584-0.04102 0.08545-0.04443 1.66797-1.62353l1.58252-1.58252 1.58252 1.58252q1.58252 1.5791 1.66455 1.62353 0.08545 0.04102 0.23926 0.04102 0.15381 0 0.23584-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.23926 0-0.15381-0.04443-0.23584-0.04101-0.08545-1.62012-1.66797l-1.58252-1.58252 1.58252-1.58252q1.5791-1.58252 1.62012-1.66455 0.04443-0.08545 0.04443-0.25293 0-0.16748-0.04102-0.25293-0.09912-0.16748-0.28027-0.2666-0.05811-0.02734-0.09912-0.04102-0.04102-0.01367-0.15381-0.01367-0.11279 0-0.15381 0.01367-0.04101 0.01367-0.11279 0.04102-0.09912 0.05811-1.66455 1.62695l-1.56885 1.56543-2.82666-2.81299q-0.31104-0.29395-0.42041-0.37939-0.08545-0.05469-0.19824-0.05469l-0.02735 0q-0.14014 0-0.18115 0.01367z"
+                        fill="#18181B"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Body"
+                  class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[24px] justify-start items-start"
+                >
+                  <div
+                    data-pencil-name="Body text"
+                    class="text-[14px]/[21px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                  >
+                    Proyek dan semua file galerinya akan dihapus permanen.
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Footer"
+                  class="[box-sizing:content-box] w-[400px] h-[73.5px] shrink-0 flex flex-row gap-[12px] p-[16px_24px] justify-end items-center bg-[#FAFAFA] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:-0.5px_0px_0px_0px]"
+                >
+                  <div
+                    data-pencil-name="Actions"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[12px] justify-start items-center"
+                  >
+                    <div
+                      data-pencil-name="Cancel"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#E4E4E7] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Batal
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Confirm"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#DC2626] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Hapus proyek
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Mode dark"
+            class="box-border [flex:1_1_0] h-fit flex flex-col gap-0 justify-start items-start bg-[#09090B] [outline:1px_solid_#27272A] [outline-offset:-0.5px] rounded-[8px] overflow-hidden"
+          >
+            <div
+              data-pencil-name="Scrim"
+              class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[32px] justify-start items-center bg-[#00000099]"
+            >
+              <div
+                data-pencil-name="Caption"
+                class="text-[11px]/[normal] box-border text-[#FFFFFFB3] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                DARK
+              </div>
+              <div
+                data-pencil-name="Instance"
+                class="box-border w-[400px] h-fit shrink-0 [box-shadow:0px_16px_40px_#00000066] flex flex-col gap-0 justify-start items-start bg-[#18181B] [border:1px_solid_#27272A] rounded-[16px] overflow-hidden"
+              >
+                <div
+                  data-pencil-name="Header"
+                  class="[box-sizing:content-box] w-[400px] h-[71.5px] shrink-0 flex flex-row gap-[12px] p-[20px_24px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#27272A] [margin:0px_0px_-0.5px_0px]"
+                >
+                  <div
+                    data-pencil-name="Heading"
+                    class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
+                  >
+                    <div
+                      data-pencil-name="Title"
+                      class="text-[18px]/[normal] box-border text-[#FAFAFA] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-0.4px] text-left [white-space:nowrap]"
+                    >
+                      Hapus proyek?
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Close"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+                  >
+                    <svg
+                      data-pencil-name="Icon"
+                      data-icon-name="x"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[16px] shrink-0 h-[16px]"
+                    >
+                      <path
+                        d="M3.34619 2.93945q-0.25293 0.08545-0.37939 0.30762-0.04102 0.08545-0.04102 0.25293 0 0.16748 0.04102 0.25293 0.04443 0.08203 1.62353 1.66455l1.58252 1.58252-1.58252 1.58252q-1.5791 1.58252-1.62353 1.66797-0.04102 0.08203-0.04102 0.23584 0 0.15381 0.03418 0.23926 0.0376 0.08203 0.1333 0.18115 0.09912 0.0957 0.18115 0.1333 0.08545 0.03418 0.23926 0.03418 0.15381 0 0.23584-0.04102 0.08545-0.04443 1.66797-1.62353l1.58252-1.58252 1.58252 1.58252q1.58252 1.5791 1.66455 1.62353 0.08545 0.04102 0.23926 0.04102 0.15381 0 0.23584-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.23926 0-0.15381-0.04443-0.23584-0.04101-0.08545-1.62012-1.66797l-1.58252-1.58252 1.58252-1.58252q1.5791-1.58252 1.62012-1.66455 0.04443-0.08545 0.04443-0.25293 0-0.16748-0.04102-0.25293-0.09912-0.16748-0.28027-0.2666-0.05811-0.02734-0.09912-0.04102-0.04102-0.01367-0.15381-0.01367-0.11279 0-0.15381 0.01367-0.04101 0.01367-0.11279 0.04102-0.09912 0.05811-1.66455 1.62695l-1.56885 1.56543-2.82666-2.81299q-0.31104-0.29395-0.42041-0.37939-0.08545-0.05469-0.19824-0.05469l-0.02735 0q-0.14014 0-0.18115 0.01367z"
+                        fill="#FAFAFA"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Body"
+                  class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[24px] justify-start items-start"
+                >
+                  <div
+                    data-pencil-name="Body text"
+                    class="text-[14px]/[21px] box-border w-full text-[#D4D4D8] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                  >
+                    Proyek dan semua file galerinya akan dihapus permanen.
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Footer"
+                  class="[box-sizing:content-box] w-[400px] h-[73.5px] shrink-0 flex flex-row gap-[12px] p-[16px_24px] justify-end items-center bg-[#1F1F23] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#1F1F23] [margin:-0.5px_0px_0px_0px]"
+                >
+                  <div
+                    data-pencil-name="Actions"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[12px] justify-start items-center"
+                  >
+                    <div
+                      data-pencil-name="Cancel"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#18181B] [border:1px_solid_#27272A] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#FAFAFA] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Batal
+                      </div>
+                    </div>
+                    <div
+                      data-pencil-name="Confirm"
+                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#F87171] rounded-[999px]"
+                    >
+                      <div
+                        data-pencil-name="Label"
+                        class="text-[14px]/[normal] box-border text-[#09090B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                      >
+                        Hapus proyek
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Usage"
+        class="[box-sizing:content-box] w-[1312px] h-[279.5px] shrink-0 flex flex-row gap-[40px] p-[32px_0px_0px_0px] justify-start items-start [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:-0.5px_0px_0px_0px]"
+      >
+        <div
+          data-pencil-name="Notes"
+          class="box-border w-[360px] shrink-0 h-fit flex flex-col gap-[10px] justify-start items-start"
+        >
+          <div
+            data-pencil-name="Exhibit title"
+            class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+          >
+            Usage
+          </div>
+          <div
+            data-pencil-name="Exhibit note"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            A modal interrupts. Use it only when the task must finish (or be cancelled) before the
+            page continues.
+          </div>
+        </div>
+        <div
+          data-pencil-name="Artwork"
+          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[16px] p-[24px] justify-start items-start bg-[#F4F4F5] rounded-[12px]"
+        >
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Do: one modal at a time; never open a modal from a modal.
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Do: SM for confirmations, MD for short forms (≤ 5 fields), LG for read-mostly detail.
+            Longer flows get a page.
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Do: actions right-aligned, Cancel (Secondary) then the confirming action; at most one
+            Primary or one Danger.
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Do: Danger only for destructive, irreversible actions; the label repeats the verb
+            (“Hapus proyek”), never “Ya” / “OK”.
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Don't: stack toasts or menus over the scrim; don't put a Table with row actions inside
+            a modal (use a page).
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Mobile (client gallery, GAP-04): use the Bottom Sheet (C32) instead.
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Accessibility"
+        class="[box-sizing:content-box] w-[1312px] h-[263.5px] shrink-0 flex flex-row gap-[40px] p-[32px_0px_0px_0px] justify-start items-start [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:-0.5px_0px_0px_0px]"
+      >
+        <div
+          data-pencil-name="Notes"
+          class="box-border w-[360px] shrink-0 h-fit flex flex-col gap-[10px] justify-start items-start"
+        >
+          <div
+            data-pencil-name="Exhibit title"
+            class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+          >
+            Accessibility
+          </div>
+          <div
+            data-pencil-name="Exhibit note"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            WCAG 2.1 AA (C-008); WAI-ARIA dialog pattern.
+          </div>
+        </div>
+        <div
+          data-pencil-name="Artwork"
+          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[16px] p-[24px] justify-start items-start bg-[#F4F4F5] rounded-[12px]"
+        >
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • role=dialog + aria-modal=true; aria-labelledby = Title, aria-describedby = Description
+            (or the confirm body). Destructive confirms use role=alertdialog.
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Focus moves into the modal on open (first field, or Cancel for a destructive confirm)
+            and is trapped; on close it returns to the trigger.
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Esc and the Close button (aria-label “Tutup”) cancel. Clicking the scrim cancels forms
+            only when nothing was typed.
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Page behind is inert (inert / aria-hidden) and scroll-locked.
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Danger button: white on red.600 4.83 : 1 (light) · near-black on red.400 (dark) meets
+            AA.
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

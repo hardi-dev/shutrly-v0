@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      tailwind = { config: { corePlugins: { preflight: false } } };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400&family=Plus+Jakarta+Sans%3Awght%40200..800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *, ::before, ::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body style="background-color: #FFFFFF">
+    <div
+      data-pencil-name="C13 — Count badge"
+      class="box-border w-[1440px] h-fit flex flex-col gap-[40px] p-[64px] justify-start items-start bg-[#FFFFFF]"
+    >
+      <div
+        data-pencil-name="Header"
+        class="[box-sizing:content-box] w-[1312px] h-[174.5px] shrink-0 flex flex-col gap-[12px] p-[0px_0px_32px_0px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:0px_0px_-0.5px_0px]"
+      >
+        <div
+          data-pencil-name="Overline"
+          class="text-[12px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal tracking-[0.6px] text-left [white-space:nowrap]"
+        >
+          COMPONENT · C13 · STATUS
+        </div>
+        <div
+          data-pencil-name="Title"
+          class="text-[44px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-1.2px] text-left [white-space:nowrap]"
+        >
+          Count badge
+        </div>
+        <div
+          data-pencil-name="Description"
+          class="text-[16px]/[24px] box-border w-[880px] text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+        >
+          Neutral number showing how many items sit behind a nav item, tab or filter (e.g. Proyek
+          12). Informational only — not an alert. Tokens: component.nav.count.*.
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Component set"
+        class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] justify-start items-start"
+      >
+        <div
+          data-pencil-name="Exhibit title"
+          class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+        >
+          Component set
+        </div>
+        <div
+          data-pencil-name="Exhibit note"
+          class="text-[13px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+        >
+          Single component, no variant axes (no base needed). Text prop: Count.
+        </div>
+        <div
+          data-pencil-name="Set grid"
+          class="box-border w-fit h-fit shrink-0 flex flex-row gap-[24px] p-[24px] justify-start items-center bg-[#F4F4F5] [outline:1px_solid_#E4E4E7] [outline-offset:-0.5px] rounded-[12px]"
+        >
+          <div
+            data-pencil-name="Count Badge"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[2px_8px] justify-start items-center bg-[#E4E4E7] rounded-[999px]"
+          >
+            <div
+              data-pencil-name="Count"
+              class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+            >
+              12
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Content"
+        class="[box-sizing:content-box] w-[1312px] h-[124.5px] shrink-0 flex flex-row gap-[40px] p-[32px_0px_0px_0px] justify-start items-start [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:-0.5px_0px_0px_0px]"
+      >
+        <div
+          data-pencil-name="Notes"
+          class="box-border w-[360px] shrink-0 h-fit flex flex-col gap-[10px] justify-start items-start"
+        >
+          <div
+            data-pencil-name="Exhibit title"
+            class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+          >
+            Content
+          </div>
+          <div
+            data-pencil-name="Exhibit note"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            Digits only. 0 → hide the badge (don't show "0"). ≥ 100 → "99+". No words, no icons.
+            Hugs its number; pill keeps 1-digit counts round-ish.
+          </div>
+        </div>
+        <div
+          data-pencil-name="Artwork"
+          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[16px] p-[24px] justify-start items-start bg-[#F4F4F5] rounded-[12px]"
+        >
+          <div
+            data-pencil-name="Cases"
+            class="box-border w-fit h-fit shrink-0 flex flex-row gap-[32px] justify-start items-end"
+          >
+            <div
+              data-pencil-name="Case"
+              class="box-border w-fit shrink-0 h-fit flex flex-col gap-[8px] justify-start items-start"
+            >
+              <div
+                data-pencil-name="Case specimen"
+                class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[2px_8px] justify-start items-center bg-[#E4E4E7] rounded-[999px]"
+              >
+                <div
+                  data-pencil-name="Count"
+                  class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                >
+                  3
+                </div>
+              </div>
+              <div
+                data-pencil-name="Caption"
+                class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                1 digit
+              </div>
+            </div>
+            <div
+              data-pencil-name="Case"
+              class="box-border w-fit shrink-0 h-fit flex flex-col gap-[8px] justify-start items-start"
+            >
+              <div
+                data-pencil-name="Case specimen"
+                class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[2px_8px] justify-start items-center bg-[#E4E4E7] rounded-[999px]"
+              >
+                <div
+                  data-pencil-name="Count"
+                  class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                >
+                  12
+                </div>
+              </div>
+              <div
+                data-pencil-name="Caption"
+                class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                2 digits
+              </div>
+            </div>
+            <div
+              data-pencil-name="Case"
+              class="box-border w-fit shrink-0 h-fit flex flex-col gap-[8px] justify-start items-start"
+            >
+              <div
+                data-pencil-name="Case specimen"
+                class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[2px_8px] justify-start items-center bg-[#E4E4E7] rounded-[999px]"
+              >
+                <div
+                  data-pencil-name="Count"
+                  class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                >
+                  99+
+                </div>
+              </div>
+              <div
+                data-pencil-name="Caption"
+                class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                cap
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Modes"
+        class="[box-sizing:content-box] w-[1312px] h-[211.5px] shrink-0 flex flex-row gap-[40px] p-[32px_0px_0px_0px] justify-start items-start [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:-0.5px_0px_0px_0px]"
+      >
+        <div
+          data-pencil-name="Notes"
+          class="box-border w-[360px] shrink-0 h-fit flex flex-col gap-[10px] justify-start items-start"
+        >
+          <div
+            data-pencil-name="Exhibit title"
+            class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+          >
+            Modes
+          </div>
+          <div
+            data-pencil-name="Exhibit note"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            surface.muted + text.secondary in both modes.
+          </div>
+        </div>
+        <div
+          data-pencil-name="Artwork"
+          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[16px] p-[24px] justify-start items-start bg-[#F4F4F5] rounded-[12px]"
+        >
+          <div
+            data-pencil-name="Mode light"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-[16px] p-[20px] justify-start items-center bg-[#FFFFFF] [outline:1px_solid_#E4E4E7] [outline-offset:-0.5px] rounded-[8px]"
+          >
+            <div
+              data-pencil-name="Caption"
+              class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+            >
+              LIGHT
+            </div>
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[2px_8px] justify-start items-center bg-[#E4E4E7] rounded-[999px]"
+            >
+              <div
+                data-pencil-name="Count"
+                class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+              >
+                3
+              </div>
+            </div>
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[2px_8px] justify-start items-center bg-[#E4E4E7] rounded-[999px]"
+            >
+              <div
+                data-pencil-name="Count"
+                class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+              >
+                12
+              </div>
+            </div>
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[2px_8px] justify-start items-center bg-[#E4E4E7] rounded-[999px]"
+            >
+              <div
+                data-pencil-name="Count"
+                class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+              >
+                99+
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Mode dark"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-[16px] p-[20px] justify-start items-center bg-[#18181B] [outline:1px_solid_#27272A] [outline-offset:-0.5px] rounded-[8px]"
+          >
+            <div
+              data-pencil-name="Caption"
+              class="text-[11px]/[normal] box-border text-[#A1A1AA] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+            >
+              DARK
+            </div>
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[2px_8px] justify-start items-center bg-[#27272A] rounded-[999px]"
+            >
+              <div
+                data-pencil-name="Count"
+                class="text-[11px]/[normal] box-border text-[#D4D4D8] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+              >
+                3
+              </div>
+            </div>
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[2px_8px] justify-start items-center bg-[#27272A] rounded-[999px]"
+            >
+              <div
+                data-pencil-name="Count"
+                class="text-[11px]/[normal] box-border text-[#D4D4D8] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+              >
+                12
+              </div>
+            </div>
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[2px_8px] justify-start items-center bg-[#27272A] rounded-[999px]"
+            >
+              <div
+                data-pencil-name="Count"
+                class="text-[11px]/[normal] box-border text-[#D4D4D8] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+              >
+                99+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Usage"
+        class="[box-sizing:content-box] w-[1312px] h-[143.5px] shrink-0 flex flex-row gap-[40px] p-[32px_0px_0px_0px] justify-start items-start [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:-0.5px_0px_0px_0px]"
+      >
+        <div
+          data-pencil-name="Notes"
+          class="box-border w-[360px] shrink-0 h-fit flex flex-col gap-[10px] justify-start items-start"
+        >
+          <div
+            data-pencil-name="Exhibit title"
+            class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+          >
+            Usage
+          </div>
+          <div
+            data-pencil-name="Exhibit note"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            Use for neutral totals next to a label. Unread/alert counts (e.g. notification bell) are
+            a different, danger-toned badge — not this component (future: needs component tokens).
+          </div>
+        </div>
+        <div
+          data-pencil-name="Artwork"
+          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[16px] p-[24px] justify-start items-start bg-[#F4F4F5] rounded-[12px]"
+        >
+          <div
+            data-pencil-name="Example · nav item"
+            class="box-border w-[240px] h-fit shrink-0 flex flex-row gap-[10px] p-[8px_12px] justify-start items-center bg-[#F4F4F5] rounded-[8px]"
+          >
+            <svg
+              data-pencil-name="Icon"
+              data-icon-name="folder-kanban"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[16px] shrink-0 h-[16px]"
+            >
+              <path
+                d="M1.97559 1.20313q-0.47852 0.09912-0.83741 0.44433-0.35547 0.3418-0.4956 0.80322-0.04102 0.14014-0.04102 0.34864-0.01367 0.2666-0.02734 1.13476l0.01367 6.23096q0.01367 0.61523 0.02734 0.69726 0.11279 0.45117 0.40674 0.78614 0.29395 0.33496 0.72803 0.50244l0.04102 0.01367q0.12646 0.04443 0.30761 0.05811 0.2666 0.01367 1.14844 0.02734l7.44775 0q0.9126 0 1.17578-0.02734 0.18457-0.01367 0.31104-0.05811l0.04102-0.01367q0.37598-0.12646 0.66308-0.39648 0.28711-0.27344 0.42725-0.65284l0.01367-0.04101q0.04443-0.12646 0.05811-0.25293 0.02734-0.18115 0.02734-0.71436l0-2.39258q0.01367-3.03857 0-3.20605-0.07178-0.50586-0.34863-0.88184-0.36572-0.4751-0.96729-0.64599l-0.14014-0.04102-4.71679-0.01367q-0.33838-0.01367-0.40674-0.02734-0.09912-0.04443-0.19141-0.14014-0.08887-0.09912-0.27002-0.36572-0.21191-0.32129-0.3247-0.4751-0.41699-0.56055-1.09034-0.70068-0.09912-0.02734-0.33496-0.02735l-1.14843 0-1.16211 0q-0.22559 0.01367-0.33496 0.02735z m2.89502 1.18945q0.11279 0.05811 0.1538 0.10596 0.04443 0.04785 0.32471 0.45459 0.38965 0.56055 0.58789 0.72802 0.29395 0.23926 0.66992 0.35205l0.14014 0.04102 2.52246 0q2.51904 0.01367 2.57373 0.03418 0.05811 0.02051 0.14014 0.07861 0.08545 0.05469 0.12646 0.09912 0.04102 0.04102 0.08545 0.13672l0.04102 0.09912 0 6.13184-0.04102 0.09912q-0.11279 0.2085-0.32471 0.29395l-0.0957 0.02734-8.96191 0q-0.61523 0-0.6836-0.02734-0.21191-0.08545-0.3247-0.29395l-0.04102-0.09912 0-7.88184 0.04102-0.09912q0.05811-0.12646 0.16748-0.21533 0.11279-0.09229 0.25293-0.10596 0.09912-0.01367 1.31592-0.01367l1.20654 0 0.12305 0.05469z m-0.34864 2.87109q-0.11279 0.02734-0.21875 0.11279-0.10254 0.08203-0.15381 0.18116-0.04785 0.09912-0.06152 0.31787-0.01367 0.21533-0.01367 1.12451 0 0.90918 0.01367 1.12793 0.01367 0.21533 0.05469 0.31445 0.04443 0.06836 0.11963 0.14014 0.07861 0.06836 0.16064 0.11279 0.23926 0.10938 0.48194 0 0.24609-0.11279 0.31787-0.36572 0.02734-0.08203 0.02734-1.32959 0-1.24756-0.02734-1.32959-0.05811-0.18115-0.19825-0.28711-0.13672-0.10596-0.32129-0.11963-0.11279-0.01367-0.18115 0z m2.33789 0q-0.12646 0.02734-0.23925 0.1333-0.10938 0.10596-0.16748 0.23242-0.02734 0.06836-0.02735 0.18116 0 0.11279 0 0.6289l0 0.72803 0.04102 0.08545q0.04443 0.06836 0.12646 0.15381 0.08545 0.08203 0.16065 0.12646 0.07861 0.04102 0.24609 0.04102 0.16748 0 0.24268-0.04102 0.07861-0.04443 0.16064-0.12646 0.08545-0.08545 0.12988-0.15381l0.04102-0.08545 0-0.72803q0-0.51611 0-0.6289 0-0.11279-0.02734-0.18116-0.08545-0.19824-0.27344-0.30078-0.18799-0.10596-0.41358-0.06494z m2.33789 0q-0.08545 0.02734-0.18457 0.09229-0.0957 0.06152-0.15039 0.1333l-0.01367 0.01367q-0.05811 0.08203-0.07178 0.16748-0.01367 0.11279-0.02734 0.4751l0.01367 3.33252 0.04102 0.09912q0.04443 0.08203 0.11279 0.16064 0.07178 0.0752 0.14014 0.1128 0.07178 0.03418 0.16748 0.04785 0.23926 0.04102 0.43408-0.09229 0.19824-0.1333 0.23926-0.36914 0.02734-0.09912 0.02734-1.84912 0-1.75-0.02734-1.86279-0.02734-0.16748-0.15381-0.29395-0.09912-0.11279-0.25293-0.15381-0.15381-0.04102-0.29395-0.01367z"
+                fill="#71717A"
+              ></path>
+            </svg>
+            <div
+              data-pencil-name="Label"
+              class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-medium text-left"
+            >
+              Proyek
+            </div>
+            <div
+              data-pencil-name="Count"
+              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[2px_8px] justify-start items-center bg-[#E4E4E7] rounded-[999px]"
+            >
+              <div
+                data-pencil-name="Count"
+                class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+              >
+                12
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Caption"
+            class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+          >
+            preview only — the real Nav item component comes in tier 2
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Accessibility"
+        class="[box-sizing:content-box] w-[1312px] h-[171.5px] shrink-0 flex flex-row gap-[40px] p-[32px_0px_0px_0px] justify-start items-start [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:-0.5px_0px_0px_0px]"
+      >
+        <div
+          data-pencil-name="Notes"
+          class="box-border w-[360px] shrink-0 h-fit flex flex-col gap-[10px] justify-start items-start"
+        >
+          <div
+            data-pencil-name="Exhibit title"
+            class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+          >
+            Accessibility
+          </div>
+          <div
+            data-pencil-name="Exhibit note"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            WCAG 2.1 AA (C-008).
+          </div>
+        </div>
+        <div
+          data-pencil-name="Artwork"
+          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[16px] p-[24px] justify-start items-start bg-[#F4F4F5] rounded-[12px]"
+        >
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Contrast: text.secondary on surface.muted ≥ 4.5 : 1 in both modes (board 02).
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Announce with its label: "Proyek, 12" — put the count inside the link/button name, or
+            aria-label on the parent.
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Decorative when the number is repeated elsewhere; otherwise never colour-only (it's a
+            number).
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

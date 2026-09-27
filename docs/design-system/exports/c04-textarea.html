@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      tailwind = { config: { corePlugins: { preflight: false } } };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono%3Awght%40400&family=Plus+Jakarta+Sans%3Awght%40200..800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *, ::before, ::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body style="background-color: #FFFFFF">
+    <div
+      data-pencil-name="C04 — Textarea"
+      class="box-border w-[1440px] h-fit flex flex-col gap-[40px] p-[64px] justify-start items-start bg-[#FFFFFF]"
+    >
+      <div
+        data-pencil-name="Header"
+        class="[box-sizing:content-box] w-[1312px] h-[174.5px] shrink-0 flex flex-col gap-[12px] p-[0px_0px_32px_0px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:0px_0px_-0.5px_0px]"
+      >
+        <div
+          data-pencil-name="Overline"
+          class="text-[12px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal tracking-[0.6px] text-left [white-space:nowrap]"
+        >
+          COMPONENT · C04 · FORM CONTROLS
+        </div>
+        <div
+          data-pencil-name="Title"
+          class="text-[44px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-1.2px] text-left [white-space:nowrap]"
+        >
+          Textarea
+        </div>
+        <div
+          data-pencil-name="Description"
+          class="text-[16px]/[24px] box-border w-[880px] text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+        >
+          Multi-line text entry (Catatan untuk klien). Same states and tokens as Input; adds
+          input.padding-y (12) because the box isn't a fixed 40 px line.
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Component set"
+        class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] justify-start items-start"
+      >
+        <div
+          data-pencil-name="Exhibit title"
+          class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+        >
+          Component set
+        </div>
+        <div
+          data-pencil-name="Exhibit note"
+          class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+        >
+          Name = Textarea/&lt;State&gt; · private base _Textarea/Base. Default height 96 (≈ 3 lines,
+          documented); grows with content in code up to a max, then scrolls.
+        </div>
+        <div
+          data-pencil-name="Set grid"
+          class="box-border w-fit h-fit shrink-0 flex flex-col gap-0 p-[24px] justify-start items-start bg-[#F4F4F5] [outline:1px_solid_#E4E4E7] [outline-offset:-0.5px] rounded-[12px]"
+        >
+          <div
+            data-pencil-name="Row "
+            class="[box-sizing:content-box] w-[1220px] h-[35.5px] shrink-0 flex flex-row gap-[16px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:0px_0px_-0.5px_0px]"
+          >
+            <div
+              data-pencil-name="Row label"
+              class="text-[11px]/[normal] box-border w-[140px] shrink-0 text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left"
+            ></div>
+            <div
+              data-pencil-name="Cell Default"
+              class="box-border w-[200px] shrink-0 h-full flex flex-row gap-0 justify-start items-center"
+            >
+              <div
+                data-pencil-name="Col label"
+                class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                DEFAULT
+              </div>
+            </div>
+            <div
+              data-pencil-name="Cell Hover"
+              class="box-border w-[200px] shrink-0 h-full flex flex-row gap-0 justify-start items-center"
+            >
+              <div
+                data-pencil-name="Col label"
+                class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                HOVER
+              </div>
+            </div>
+            <div
+              data-pencil-name="Cell Focus"
+              class="box-border w-[200px] shrink-0 h-full flex flex-row gap-0 justify-start items-center"
+            >
+              <div
+                data-pencil-name="Col label"
+                class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                FOCUS
+              </div>
+            </div>
+            <div
+              data-pencil-name="Cell Error"
+              class="box-border w-[200px] shrink-0 h-full flex flex-row gap-0 justify-start items-center"
+            >
+              <div
+                data-pencil-name="Col label"
+                class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                ERROR
+              </div>
+            </div>
+            <div
+              data-pencil-name="Cell Disabled"
+              class="box-border w-[200px] shrink-0 h-full flex flex-row gap-0 justify-start items-center"
+            >
+              <div
+                data-pencil-name="Col label"
+                class="text-[11px]/[normal] box-border text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+              >
+                DISABLED
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Row _Textarea/Base"
+            class="[box-sizing:content-box] w-[356px] h-[119.5px] shrink-0 flex flex-row gap-[16px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:0px_0px_-0.5px_0px]"
+          >
+            <div
+              data-pencil-name="Row label"
+              class="text-[11px]/[normal] box-border w-[140px] shrink-0 text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left"
+            >
+              _Textarea/Base
+            </div>
+            <div
+              data-pencil-name="Cell base"
+              class="box-border w-[200px] shrink-0 h-full flex flex-row gap-0 justify-start items-center"
+            >
+              <div
+                data-pencil-name="_Textarea/Base"
+                class="box-border w-[190px] shrink-0 h-[96px] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#FFFFFF] [border:1px_solid_#D4D4D8] rounded-[8px]"
+              >
+                <div
+                  data-pencil-name="Placeholder"
+                  class="text-[14px]/[21px] box-border w-full text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                >
+                  Tulis catatan untuk klien…
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Row Textarea"
+            class="[box-sizing:content-box] w-[1220px] h-[119.5px] shrink-0 flex flex-row gap-[16px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F4F4F5] [margin:0px_0px_-0.5px_0px]"
+          >
+            <div
+              data-pencil-name="Row label"
+              class="text-[11px]/[normal] box-border w-[140px] shrink-0 text-[#71717A] font-['IBM_Plex_Mono',system-ui,sans-serif] font-normal text-left"
+            >
+              Textarea
+            </div>
+            <div
+              data-pencil-name="Cell Default"
+              class="box-border w-[200px] shrink-0 h-full flex flex-row gap-0 justify-start items-center"
+            >
+              <div
+                data-pencil-name="Textarea/Default"
+                class="box-border w-[190px] shrink-0 h-[96px] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#FFFFFF] [border:1px_solid_#D4D4D8] rounded-[8px]"
+              >
+                <div
+                  data-pencil-name="Placeholder"
+                  class="text-[14px]/[21px] box-border w-full text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                >
+                  Tulis catatan untuk klien…
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Cell Hover"
+              class="box-border w-[200px] shrink-0 h-full flex flex-row gap-0 justify-start items-center"
+            >
+              <div
+                data-pencil-name="Textarea/Hover"
+                class="box-border w-[190px] shrink-0 h-[96px] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#FFFFFF] [border:1px_solid_#A1A1AA] rounded-[8px]"
+              >
+                <div
+                  data-pencil-name="Placeholder"
+                  class="text-[14px]/[21px] box-border w-full text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                >
+                  Tulis catatan untuk klien…
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Cell Focus"
+              class="box-border w-[200px] shrink-0 h-full flex flex-row gap-0 justify-start items-center"
+            >
+              <div
+                data-pencil-name="Textarea/Focus"
+                class="box-border w-[190px] shrink-0 h-[96px] [box-shadow:0px_0px_6px_#2F5BFF40] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#FFFFFF] [border:2px_solid_#2F5BFF] rounded-[8px]"
+              >
+                <div
+                  data-pencil-name="Value"
+                  class="text-[14px]/[21px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                >
+                  Mohon datang 15 menit lebih awal. Parkir tersedia di basement.
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Cell Error"
+              class="box-border w-[200px] shrink-0 h-full flex flex-row gap-0 justify-start items-center"
+            >
+              <div
+                data-pencil-name="Textarea/Error"
+                class="box-border w-[190px] shrink-0 h-[96px] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#FFFFFF] [border:2px_solid_#DC2626] rounded-[8px]"
+              >
+                <div
+                  data-pencil-name="Value"
+                  class="text-[14px]/[21px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                >
+                  Mohon datang 15 menit lebih awal. Parkir tersedia di basement.
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Cell Disabled"
+              class="box-border w-[200px] shrink-0 h-full flex flex-row gap-0 justify-start items-center"
+            >
+              <div
+                data-pencil-name="Textarea/Disabled"
+                class="box-border w-[190px] shrink-0 h-[96px] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#F4F4F5] [border:1px_solid_#E4E4E7] rounded-[8px]"
+              >
+                <div
+                  data-pencil-name="Value"
+                  class="text-[14px]/[21px] box-border w-full text-[#A1A1AA] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                >
+                  Mohon datang 15 menit lebih awal. Parkir tersedia di basement.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Modes"
+        class="[box-sizing:content-box] w-[1312px] h-[351.5px] shrink-0 flex flex-row gap-[40px] p-[32px_0px_0px_0px] justify-start items-start [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:-0.5px_0px_0px_0px]"
+      >
+        <div
+          data-pencil-name="Notes"
+          class="box-border w-[360px] shrink-0 h-fit flex flex-col gap-[10px] justify-start items-start"
+        >
+          <div
+            data-pencil-name="Exhibit title"
+            class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+          >
+            Modes
+          </div>
+          <div
+            data-pencil-name="Exhibit note"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            Same tokens as Input.
+          </div>
+        </div>
+        <div
+          data-pencil-name="Artwork"
+          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[16px] p-[24px] justify-start items-start bg-[#F4F4F5] rounded-[12px]"
+        >
+          <div
+            data-pencil-name="Mode light"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[16px] justify-start items-center bg-[#FFFFFF] [outline:1px_solid_#E4E4E7] [outline-offset:-0.5px] rounded-[8px]"
+          >
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-[190px] shrink-0 h-[96px] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#FFFFFF] [border:1px_solid_#D4D4D8] rounded-[8px]"
+            >
+              <div
+                data-pencil-name="Placeholder"
+                class="text-[14px]/[21px] box-border w-full text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+              >
+                Tulis catatan untuk klien…
+              </div>
+            </div>
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-[190px] shrink-0 h-[96px] [box-shadow:0px_0px_6px_#2F5BFF40] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#FFFFFF] [border:2px_solid_#2F5BFF] rounded-[8px]"
+            >
+              <div
+                data-pencil-name="Value"
+                class="text-[14px]/[21px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+              >
+                Mohon datang 15 menit lebih awal. Parkir tersedia di basement.
+              </div>
+            </div>
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-[190px] shrink-0 h-[96px] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#FFFFFF] [border:2px_solid_#DC2626] rounded-[8px]"
+            >
+              <div
+                data-pencil-name="Value"
+                class="text-[14px]/[21px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+              >
+                Mohon datang 15 menit lebih awal. Parkir tersedia di basement.
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Mode dark"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[16px] justify-start items-center bg-[#18181B] [outline:1px_solid_#27272A] [outline-offset:-0.5px] rounded-[8px]"
+          >
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-[190px] shrink-0 h-[96px] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#18181B] [border:1px_solid_#3F3F46] rounded-[8px]"
+            >
+              <div
+                data-pencil-name="Placeholder"
+                class="text-[14px]/[21px] box-border w-full text-[#A1A1AA] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+              >
+                Tulis catatan untuk klien…
+              </div>
+            </div>
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-[190px] shrink-0 h-[96px] [box-shadow:0px_0px_6px_#2F5BFF66] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#18181B] [border:2px_solid_#2F5BFF] rounded-[8px]"
+            >
+              <div
+                data-pencil-name="Value"
+                class="text-[14px]/[21px] box-border w-full text-[#FAFAFA] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+              >
+                Mohon datang 15 menit lebih awal. Parkir tersedia di basement.
+              </div>
+            </div>
+            <div
+              data-pencil-name="Instance"
+              class="box-border w-[190px] shrink-0 h-[96px] flex flex-col gap-0 p-[12px] justify-start items-start bg-[#18181B] [border:2px_solid_#F87171] rounded-[8px]"
+            >
+              <div
+                data-pencil-name="Value"
+                class="text-[14px]/[21px] box-border w-full text-[#FAFAFA] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+              >
+                Mohon datang 15 menit lebih awal. Parkir tersedia di basement.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Exhibit — Accessibility"
+        class="[box-sizing:content-box] w-[1312px] h-[171.5px] shrink-0 flex flex-row gap-[40px] p-[32px_0px_0px_0px] justify-start items-start [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#E4E4E7] [margin:-0.5px_0px_0px_0px]"
+      >
+        <div
+          data-pencil-name="Notes"
+          class="box-border w-[360px] shrink-0 h-fit flex flex-col gap-[10px] justify-start items-start"
+        >
+          <div
+            data-pencil-name="Exhibit title"
+            class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+          >
+            Accessibility
+          </div>
+          <div
+            data-pencil-name="Exhibit note"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            WCAG 2.1 AA.
+          </div>
+        </div>
+        <div
+          data-pencil-name="Artwork"
+          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[16px] p-[24px] justify-start items-start bg-[#F4F4F5] rounded-[12px]"
+        >
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Visible label via Text field; character limit announced with aria-describedby when
+            present.
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Resize: vertical only (code). Focus and error as Input.
+          </div>
+          <div
+            data-pencil-name="Bullet"
+            class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+          >
+            • Enter inserts a newline — never submits the form.
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

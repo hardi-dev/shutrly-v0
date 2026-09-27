@@ -1,13 +1,26 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-27 (F-00 Foundation DONE; F-01 Auth implemented, verification next) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-09-27 (F-00 Foundation DONE; F-01 Auth DONE; F-02 Workspace DESIGNED) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `main`.
 
-## Current handoff — resume here: verify F-01 Auth
+## Current handoff — resume here: plan F-02 Workspace
 
-F-01 Auth is implemented locally through Task 32. Functional verification is green: 209 unit tests, 38 integration tests, and 24/24 non-fidelity E2E tests passed in the latest runs. The automated fidelity E2E test was removed at the Owner's request after 11/35 snapshot comparisons failed; the deviation is recorded in `docs/features/auth/technical-design.md`.
+**F-02 Workspace is DESIGNED** (Owner approved on 2026-09-27). Read in this order: [spec.md](features/workspace/spec.md), [acceptance-criteria.md](features/workspace/acceptance-criteria.md) (AC-WS-001…025; 010 deprecated), and [design.md](features/workspace/design.md).
+- **Pencil:** [workspace.pen](features/workspace/workspace.pen) imports the library as `G:`. It holds 32 frames: desktop at x 0 and mobile at x 1520, one state per row going down, plus the local component `UTew4` Editorial preview. The exploration is in `exploration.pen` › board 08 (`Etl3k`); the Owner chose option D (`bEbHx`).
+- **Owner decisions on 2026-09-27:**
+  - BR-WS-004…007: no logo, a name-only onboarding form, no archive or delete.
+  - **No Select workspace step.** Sign-in opens the most recently opened workspace (BR-WS-006 amended after research; AC-WS-010 deprecated).
+  - F-02 builds the App Shell code for desktop, tablet and mobile.
+  - **A-7:** the full library navigation is shown.
+  - **SPEC GAP-F02-1 = (c):** unbuilt destinations open a *Segera hadir* page (AC-WS-025).
+- **Component status** (design.md › Component usage): only Button, Text Field, Icon and Alert (info/danger) exist in code. Fourteen library components still have to be built: App Shell, Sidebar, Tablet rail, Mobile App Shell, Bottom Nav, Nav Item, Textarea, Menu and Menu Item, Modal, Bottom Sheet and Sheet Item. Alert needs a Success tone, and `EditorialPanel` needs a headline slot.
+- **Before building (Owner):**
+  - Export the HTML for each frame into `docs/features/workspace/exports/` (design.md › HTML exports).
+  - Optionally run `/sdv:sync-pencil` first to close token drift F-6 (T1–T4 aren't in Pencil).
+- **Library findings for `/sdv:verify-design-system`:** the Mobile App Shell's Overlay has a fixed 375 × 812 size, and Sheet Item has no selected variant.
+- **Next:** `/sdv:plan-feature workspace`.
 
-**Next:** `/sdv:verify-feature auth`. Do not call F-01 shipped yet: the verification should review the recorded fidelity deviation, the real Google scope check, and the non-Pencil copy review. CI and Cloudflare deployment remain prerequisites before `/sdv:ship`.
+**F-01 Auth is DONE** (verified 2026-09-27; [verification-report.md](features/auth/verification-report.md)). It has non-blocking follow-ups F-5…F-8 and ship blockers S-1…S-6 (CI and deploy, the real Google smoke test, the D-3 copy review, licensed mosaic photos, the rate-limit purge schedule, and F-02).
 
 The sections below retain the historical build notes for context.
 

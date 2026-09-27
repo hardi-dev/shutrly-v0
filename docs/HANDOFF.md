@@ -1,13 +1,23 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-27 (F-00 Foundation DONE; F-01 Auth DONE; F-02 Workspace PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `main`.
+Last updated: 2026-09-28 (F-02 Batch A DONE; ready for Batch B) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `codex/f02-workspace-batch-a`.
 
-## Current handoff — resume here: build F-02 Workspace
+## Current handoff — resume here: start F-02 Workspace Batch B
 
-**F-02 Workspace is PLANNED** (2026-09-27): [technical-design.md](features/workspace/technical-design.md), status DRAFT until the Owner approves. It has 12 iterations in two batches:
-- **Batch A (iterations 1–4)** builds the design-system components that aren't in code yet: icon names, Alert success, IconButton, Avatar, CountBadge, Tooltip, Textarea, nav items, Bottom Nav, Menu, Modal, Bottom Sheet, App Panel, Sidebar, rail, Mobile App Shell and App Shell. It also moves the split layout and editorial panel into `src/ui/patterns`.
-- **Batch B (iterations 5–12)** builds the workspace feature: domain and `workspace` table (migration `0001`, applied by the Owner), application, adapter and composition, onboarding, the owner shell and pages, the switcher and create flow, settings, and E2E.
+**F-02 Workspace is APPROVED and Batch A is DONE** (2026-09-28): [technical-design.md](features/workspace/technical-design.md) remains the implementation source of truth. It has 12 iterations in two batches:
+- **Batch A (iterations 1–4) DONE:** design-system primitives and patterns, navigation, overlays, Sidebar/rail, Mobile App Shell, App Shell, token usage validation, and Storybook preview framing.
+- **Batch B (iterations 5–12) NEXT:** workspace domain/schema, application, adapter/composition, onboarding, owner shell/pages, switcher/create flow, settings, journeys and E2E.
+
+**Next room starting point:** begin with **Iteration 5 — Domain and schema** in `features/workspace/technical-design.md`. The Owner must apply migration `0001`; never run `pnpm db:migrate` from the agent.
+
+**Batch A commits:** `d24a7fc` CSS token usage validation and App Panel background fix; `fc0fb62` official Textarea min-height token; `eaff80b` darker Storybook preview frame; `821cf4c` saved `design-system.lib.pen`.
+
+**Batch A verification:** `pnpm tokens:check`, `pnpm typecheck`, targeted Storybook/Textarea/token tests, lint and visual Storybook checks pass. `tokens:check` validates 495 generated tokens and CSS variable usage across 333 files. The working tree still contains only the Owner's pre-existing edits to `docs/design-system/exploration.pen` and `docs/features/auth/auth.pen`; preserve them.
+
+**Accepted global blockers:** the 12 unrelated Auth/Foundation test failures remain accepted for now. The build blocker caused by missing `public/auth/editorial/mosaic@2x.webp` also remains accepted pending the Owner's asset decision; do not hide or overwrite these failures.
+
+**Owner action still pending:** `/sdv:sync-pencil` after the Iteration 4 token work. This should be completed before relying on Pencil variable verification in Batch B.
 - **New ADR-015 (Accepted 2026-09-27):**
   - URL-scoped routes `/w/[workspaceId]` with English slugs.
   - Resolution order: F-01 gate → 0 workspaces go to onboarding → *not found*.
@@ -19,13 +29,11 @@ Branch: `main`.
   - GAP-F02-2: the tablet Expand overlay is built per nav-rail.md (Iteration 4).
   - T5: `size.sidebar` 252, plus `size.mark-md` 20 and `size.mark-lg` 22 (Iteration 4).
   - GAP-F02-3: the preview card uses no literals. The shadow uses `elevation.2`; new tokens are `size.editorial-card` 360 and `size.mark-sm` 14. The `UTew4` shadow is rebound in Pencil (done 2026-09-27). Width and marks stay literal in Pencil, which can't bind sizes, and are tokenised in code.
-- **Owner actions still pending:**
-  - `/sdv:sync-pencil` after the Iteration 4 token task. This also closes F-6.
 - **Exports: done 2026-09-27 via Pencil MCP.**
   - 16 library component pages in `docs/design-system/exports/`.
   - All 32 workspace frames in `docs/features/workspace/exports/`, including the 8 onboarding frames after the `UTew4` rebind.
 - **technical-design.md: APPROVED** (Owner 2026-09-27).
-- **Next:** `/sdv:build-feature workspace 1`.
+- **Historical planning note:** the previous generic entry point was `/sdv:build-feature workspace 1`; the active continuation is now Batch B, Iteration 5.
 
 **F-01 Auth is DONE** (verified 2026-09-27; [verification-report.md](features/auth/verification-report.md)). It has non-blocking follow-ups F-5…F-8 and ship blockers S-1…S-6 (CI and deploy, the real Google smoke test, the D-3 copy review, licensed mosaic photos, the rate-limit purge schedule, and F-02).
 

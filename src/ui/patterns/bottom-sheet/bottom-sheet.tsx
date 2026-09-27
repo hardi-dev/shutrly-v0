@@ -48,7 +48,7 @@ export function BottomSheet({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       isDismissable
-      className="fixed inset-0 z-50 flex items-end justify-center bg-(--component-sheet-scrim) opacity-0 transition-opacity duration-300 ease-out data-[entering]:opacity-100 data-[exiting]:opacity-0 motion-reduce:transition-none"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-(--component-sheet-scrim) data-[entering]:animate-[bottom-sheet-scrim-in_300ms_ease-out] data-[exiting]:animate-[bottom-sheet-scrim-out_300ms_ease-in] motion-reduce:animate-none"
     >
       <SheetContent
         dialogRef={dialogRef}
@@ -87,7 +87,7 @@ function SheetContent({
   }
 
   return (
-    <AriaModal className="max-h-[90dvh] w-full max-w-[560px] translate-y-full overflow-hidden rounded-t-(--component-sheet-radius) bg-(--component-sheet-background) shadow-[0_-8px_40px_var(--color-semantic-elevation-2-color)] transition-transform duration-300 ease-out data-[entering]:translate-y-0 data-[exiting]:translate-y-full motion-reduce:transition-none">
+    <AriaModal className="max-h-[90dvh] w-full max-w-[560px] overflow-hidden rounded-t-(--component-sheet-radius) bg-(--component-sheet-background) shadow-[0_-8px_40px_var(--color-semantic-elevation-2-color)] data-[entering]:animate-[bottom-sheet-in_300ms_ease-out] data-[exiting]:animate-[bottom-sheet-out_300ms_ease-in] motion-reduce:animate-none">
       <Dialog
         ref={dialogRef}
         role="dialog"

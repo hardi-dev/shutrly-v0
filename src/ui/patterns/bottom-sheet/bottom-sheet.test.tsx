@@ -50,10 +50,8 @@ describe("BottomSheet (C32)", () => {
     expect(sheet).toHaveAttribute("aria-modal", "true");
     expect(sheet).toHaveClass("max-h-[90dvh]");
     expect(sheet.parentElement).toHaveClass(
-      "translate-y-full",
-      "transition-transform",
-      "data-[entering]:translate-y-0",
-      "data-[exiting]:translate-y-full",
+      "data-[entering]:animate-[bottom-sheet-in_300ms_ease-out]",
+      "data-[exiting]:animate-[bottom-sheet-out_300ms_ease-in]",
     );
     expect(sheet.querySelector("div[aria-hidden='true']")).toHaveAttribute("aria-hidden", "true");
     expect(screen.getByText("IMG_2041.jpg")).toBeInTheDocument();

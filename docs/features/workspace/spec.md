@@ -1,7 +1,7 @@
 # Feature: Workspace — onboarding, switching, branding, App Shell
 
 ID: F-02 · Slug: `workspace`
-Status: PLANNED (2026-09-27) · [technical-design.md](technical-design.md)
+Status: IN PROGRESS (2026-09-28) · [technical-design.md](technical-design.md)
 Journey: [J-01 Owner onboarding](../../product/user-journeys.md) · Paired with: F-01 `auth`
 
 ## Goal

@@ -1,6 +1,6 @@
 # Technical Design — F-02 Workspace
 
-Status: APPROVED (Owner 2026-09-27). The build is split into **two batches**:
+Status: IN PROGRESS (build started 2026-09-28; approved by Owner 2026-09-27). The build is split into **two batches**:
 - **Batch A (iterations 1–4)** builds the design-system components F-02 needs that aren't in code yet ([design.md](design.md) › *Component usage*, ❌/⚠️ rows). It is feature-agnostic `src/ui` work.
 - **Batch B (iterations 5–12)** builds the workspace feature on top of it.
 
@@ -345,11 +345,11 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 
 #### Iteration 1 — Primitives and small patterns
 - [x] Exports (Pencil MCP, 2026-09-27): `c02-icon-button`, `c04-textarea`, `c13-count-badge`, `c16-avatar`, `c24-alert` in `docs/design-system/exports/`
-- [ ] Icon registry: the new semantic names (Hugeicons equivalents of the lucide names in design.md)
-- [ ] Alert `success` tone
-- [ ] IconButton (Ghost SM/MD), Avatar (MD, initials), CountBadge
-- [ ] Textarea (label row, optional, helper, error, disabled)
-- [ ] Tests + stories for each; update `components/registry.json` code status if it tracks it
+- [x] Icon registry: the new semantic names (Hugeicons equivalents of the lucide names in design.md)
+- [x] Alert `success` tone
+- [x] IconButton (Ghost SM/MD), Avatar (MD, initials), CountBadge
+- [x] Textarea (label row, optional, helper, error, disabled)
+- [x] Tests + stories for each; `components/registry.json` has no code-status field to update
 - **Done when:** the gate is green, each unit matches its export (manual review at 1:1), and the Storybook a11y panel is clean.
 
 #### Iteration 2 — Navigation items

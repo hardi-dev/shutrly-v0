@@ -5,18 +5,25 @@ import type { AlertProps, AlertTone } from "./alert.types";
 
 // C24 Alert (docs/design-system/components/alert.md): Close off, icon fixed by tone.
 const TONE: Record<AlertTone, string> = {
+  success: "bg-(--component-alert-success-background) border-(--component-alert-success-border)",
   info: "bg-(--component-alert-info-background) border-(--component-alert-info-border)",
   danger: "bg-(--component-alert-danger-background) border-(--component-alert-danger-border)",
 };
 const ICON_TONE: Record<AlertTone, string> = {
+  success: "text-(--component-alert-success-icon)",
   info: "text-(--component-alert-info-icon)",
   danger: "text-(--component-alert-danger-icon)",
 };
 const TITLE_TONE: Record<AlertTone, string> = {
+  success: "text-(--component-alert-success-title)",
   info: "text-(--component-alert-info-title)",
   danger: "text-(--component-alert-danger-title)",
 };
-const LIVE_ROLE: Record<AlertTone, "status" | "alert"> = { info: "status", danger: "alert" };
+const LIVE_ROLE: Record<AlertTone, "status" | "alert"> = {
+  success: "status",
+  info: "status",
+  danger: "alert",
+};
 
 /**
  * Inline message in the page flow (design-system C24). Static guidance is not announced; live
@@ -38,7 +45,7 @@ export function Alert({ tone, title, body, live = false, className, ref }: Reado
         className,
       )}
     >
-      <Icon name={tone === "info" ? "info" : "circle-alert"} className={ICON_TONE[tone]} />
+      <Icon name={tone === "danger" ? "circle-alert" : "info"} className={ICON_TONE[tone]} />
       <div className="flex min-w-0 flex-col gap-(--component-alert-text-gap)">
         <p className={cn("text-(length:--font-size-body-sm) font-semibold", TITLE_TONE[tone])}>
           {title}

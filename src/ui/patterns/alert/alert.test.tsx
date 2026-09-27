@@ -26,4 +26,15 @@ describe("Alert (C24)", () => {
     expect(container.querySelectorAll("p")).toHaveLength(1);
     expect(container.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
   });
+
+  it("renders the success tone with its success token classes", () => {
+    render(<Alert tone="success" title="Tersimpan" />);
+    const alert = screen.getByText("Tersimpan").closest("[data-tone]");
+
+    expect(alert).toHaveAttribute("data-tone", "success");
+    expect(alert).toHaveClass(
+      "bg-(--component-alert-success-background)",
+      "border-(--component-alert-success-border)",
+    );
+  });
 });

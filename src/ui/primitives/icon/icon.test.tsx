@@ -27,4 +27,30 @@ describe("Icon", () => {
     expect(icon).toHaveAccessibleName("Cari");
     expect(icon).not.toHaveAttribute("aria-hidden");
   });
+
+  it("registers the workspace semantic icon names", () => {
+    expect(ICON_NAMES).toEqual(
+      expect.arrayContaining([
+        "camera",
+        "chevrons-up-down",
+        "layout-grid",
+        "folder-kanban",
+        "users",
+        "receipt",
+        "package",
+        "user-round-cog",
+        "message-square-text",
+        "share-2",
+        "settings",
+        "menu",
+        "check",
+        "chevron-right",
+        "search-x",
+        "panel-left",
+        "panel-left-open",
+        "log-out",
+        "x",
+      ]),
+    );
+  });
 });

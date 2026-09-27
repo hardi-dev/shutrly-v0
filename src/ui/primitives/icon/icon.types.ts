@@ -12,7 +12,26 @@ export type IconName =
   | "arrow-right"
   | "trash-2"
   | "info"
-  | "google";
+  | "google"
+  | "camera"
+  | "chevrons-up-down"
+  | "layout-grid"
+  | "folder-kanban"
+  | "users"
+  | "receipt"
+  | "package"
+  | "user-round-cog"
+  | "message-square-text"
+  | "share-2"
+  | "settings"
+  | "menu"
+  | "check"
+  | "chevron-right"
+  | "search-x"
+  | "panel-left"
+  | "panel-left-open"
+  | "log-out"
+  | "x";
 
 export type IconSize = "sm" | "md";
 

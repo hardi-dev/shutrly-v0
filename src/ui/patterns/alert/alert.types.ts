@@ -1,6 +1,6 @@
 import type { Ref } from "react";
 
-export type AlertTone = "info" | "danger";
+export type AlertTone = "success" | "info" | "danger";
 
 export interface AlertProps {
   tone: AlertTone;

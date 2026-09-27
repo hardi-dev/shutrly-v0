@@ -60,6 +60,11 @@ describe("Sidebar (C29)", () => {
 
     expect(screen.getByRole("complementary")).toHaveClass("w-(--size-rail)");
     expect(screen.queryByText("shutrly")).toBeNull();
+    const workspaceSwitcher = screen.getByRole("button", { name: "Studio Lime" });
+    expect(
+      workspaceSwitcher.querySelector('svg[data-icon="chevrons-up-down"]'),
+    ).toBeInTheDocument();
+    expect(workspaceSwitcher.querySelector('svg[data-icon="camera"]')).toBeNull();
     screen.getByRole("button", { name: "Buka sidebar" }).click();
     expect(onExpand).toHaveBeenCalledOnce();
   });

@@ -132,16 +132,25 @@ function WorkspaceSwitcher({
           : "flex items-center gap-(--space-2) rounded-(--component-sidebar-workspace-radius) border border-(--component-sidebar-workspace-border) bg-(--component-sidebar-workspace-background) px-(--component-sidebar-padding-x) py-(--component-sidebar-padding-y) text-left outline-none data-hovered:bg-(--color-semantic-surface-sunken)"
       }
     >
-      <div className="flex size-(--size-mark-md) items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
+      {isCompact ? (
         <Icon
-          name="camera"
+          name="chevrons-up-down"
           size="sm"
           aria-hidden="true"
-          className="text-(--color-semantic-accent-on-highlight)"
+          data-icon="chevrons-up-down"
+          className="text-(--color-semantic-text-muted)"
         />
-      </div>
-      {!isCompact ? (
+      ) : (
         <>
+          <div className="flex size-(--size-mark-md) items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
+            <Icon
+              name="camera"
+              size="sm"
+              aria-hidden="true"
+              data-icon="camera"
+              className="text-(--color-semantic-accent-on-highlight)"
+            />
+          </div>
           <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-(--color-semantic-text-primary)">
             {workspace.name}
           </span>
@@ -152,7 +161,7 @@ function WorkspaceSwitcher({
             className="text-(--color-semantic-text-muted)"
           />
         </>
-      ) : null}
+      )}
     </AriaButton>
   );
 }

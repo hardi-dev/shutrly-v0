@@ -54420,7 +54420,7 @@
               "id": "RDyMm",
               "name": "Label",
               "fill": "#18181B",
-              "content": "D · Owner mix — left panel from C (form + what you get), right panel from A (editorial + live sidebar preview)",
+              "content": "D · Owner mix — left from C (aligned to auth.pen: gap 24, button MD, signed-in row in form, © footer); right = auth mosaic (mosaic@2x.webp) + sidebar preview card in place of the headline",
               "fontFamily": "Plus Jakarta Sans",
               "fontSize": 16,
               "fontWeight": "600"
@@ -54491,7 +54491,7 @@
                           "name": "Form",
                           "width": 420,
                           "layout": "vertical",
-                          "gap": 28,
+                          "gap": 24,
                           "children": [
                             {
                               "type": "frame",
@@ -54787,13 +54787,13 @@
                             {
                               "type": "frame",
                               "id": "kpIAc",
-                              "name": "Button/Primary/LG",
+                              "name": "Button/Primary/MD",
                               "width": "fill_container",
                               "fill": "#2F5BFF",
                               "cornerRadius": 999,
                               "padding": [
-                                16,
-                                48
+                                12,
+                                36
                               ],
                               "justifyContent": "center",
                               "children": [
@@ -54805,6 +54805,35 @@
                                   "content": "Buat workspace",
                                   "fontFamily": "Plus Jakarta Sans",
                                   "fontSize": 14,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "JQ8Ho",
+                              "name": "Signed-in row",
+                              "width": "fill_container",
+                              "gap": 4,
+                              "justifyContent": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Nv6fp",
+                                  "name": "Signed in",
+                                  "fill": "#52525B",
+                                  "content": "Masuk sebagai rina@asterstudio.id ·",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 13
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "pM2oR",
+                                  "name": "Logout link",
+                                  "fill": "#1D4ED8",
+                                  "content": "Keluar",
+                                  "fontFamily": "Plus Jakarta Sans",
+                                  "fontSize": 13,
                                   "fontWeight": "600"
                                 }
                               ]
@@ -54822,22 +54851,12 @@
                       "children": [
                         {
                           "type": "text",
-                          "id": "yBPa0",
-                          "name": "Signed in",
+                          "id": "Sn6M2",
+                          "name": "Footer copyright",
                           "fill": "#71717A",
-                          "content": "Masuk sebagai rina@asterstudio.id",
+                          "content": "© 2026 Shutrly",
                           "fontFamily": "Plus Jakarta Sans",
                           "fontSize": 12
-                        },
-                        {
-                          "type": "text",
-                          "id": "FPebZ",
-                          "name": "Logout",
-                          "fill": "#18181B",
-                          "content": "Keluar",
-                          "fontFamily": "Plus Jakarta Sans",
-                          "fontSize": 12,
-                          "fontWeight": "600"
                         }
                       ]
                     }
@@ -54846,22 +54865,39 @@
                 {
                   "type": "frame",
                   "id": "OkPKU",
-                  "name": "Editorial side",
+                  "name": "Editorial side (mosaic + preview)",
                   "width": "fill_container",
                   "height": "fill_container",
-                  "fill": "#18181B",
+                  "fill": [
+                    "#18181B",
+                    {
+                      "type": "image",
+                      "enabled": true,
+                      "url": "../../public/auth/editorial/mosaic@2x.webp",
+                      "mode": "fill"
+                    }
+                  ],
                   "layout": "vertical",
-                  "gap": 48,
                   "padding": 64,
-                  "justifyContent": "center",
+                  "justifyContent": "end",
                   "children": [
                     {
                       "type": "frame",
                       "id": "rwZf7",
                       "name": "Sidebar preview",
-                      "width": 300,
+                      "width": 360,
                       "fill": "#F4F4F5",
                       "cornerRadius": 16,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000059",
+                        "offset": {
+                          "x": 0,
+                          "y": 16
+                        },
+                        "blur": 48
+                      },
                       "layout": "vertical",
                       "gap": 12,
                       "padding": 12,
@@ -55040,53 +55076,6 @@
                               "fontWeight": "500"
                             }
                           ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "F8XkHw",
-                      "name": "Copy",
-                      "width": 520,
-                      "layout": "vertical",
-                      "gap": 12,
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "c4hT2B",
-                          "name": "Overline",
-                          "fill": "#C6F432",
-                          "content": "PRATINJAU",
-                          "fontFamily": "Plus Jakarta Sans",
-                          "fontSize": 11,
-                          "fontWeight": "600",
-                          "letterSpacing": 0.6
-                        },
-                        {
-                          "type": "text",
-                          "id": "h801E",
-                          "name": "Headline",
-                          "fill": "#FFFFFF",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "Setiap brand punya ruangnya sendiri.",
-                          "lineHeight": 1.1,
-                          "fontFamily": "Plus Jakarta Sans",
-                          "fontSize": 44,
-                          "fontWeight": "700",
-                          "letterSpacing": -1
-                        },
-                        {
-                          "type": "text",
-                          "id": "aGtoz",
-                          "name": "Body",
-                          "fill": "#FFFFFF",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "Nama yang kamu ketik langsung muncul di sidebar. Tambah brand lain kapan saja dari pengalih workspace.",
-                          "lineHeight": 1.5,
-                          "fontFamily": "Plus Jakarta Sans",
-                          "fontSize": 14
                         }
                       ]
                     }

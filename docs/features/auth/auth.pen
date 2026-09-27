@@ -81,7 +81,7 @@
                           "id": "y6DOkB",
                           "name": "Title",
                           "fill": "$a:color/semantic/text/primary",
-                          "content": "Welcome back",
+                          "content": "Selamat datang kembali",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -94,7 +94,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Sign in to keep your photography business moving.",
+                          "content": "Masuk untuk menjaga bisnis fotografi Anda tetap berjalan.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -120,10 +120,25 @@
                             "a:Gmk0c": {
                               "content": "Email"
                             },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
+                            },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "you@studio.com"
+                              "content": "anda@studio.com"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
                             },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -136,16 +151,31 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:Gmk0c": {
-                              "content": "Password"
+                              "content": "Kata sandi"
+                            },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
                             },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "Enter your password"
+                              "content": "Masukkan kata sandi Anda"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
                             },
                             "a:c67yIW/a:Qp2xi": {
                               "enabled": true,
                               "icon": "eye"
                             },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
+                            },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -164,7 +194,7 @@
                           "id": "b3fQ7R",
                           "name": "Forgot password link",
                           "fill": "$a:color/semantic/status/info/fg",
-                          "content": "Forgot password?",
+                          "content": "Lupa kata sandi?",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "$a:font/weight/semibold"
@@ -187,7 +217,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Sign in"
+                              "content": "Masuk"
                             }
                           }
                         },
@@ -199,7 +229,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Continue with Google"
+                              "content": "Lanjutkan dengan Google"
                             }
                           }
                         }
@@ -218,7 +248,7 @@
                           "id": "C7vua",
                           "name": "Prompt text",
                           "fill": "$a:color/semantic/text/secondary",
-                          "content": "New to Shutrly?",
+                          "content": "Baru di Shutrly?",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "normal"
@@ -228,7 +258,7 @@
                           "id": "q0avPA",
                           "name": "Create account link",
                           "fill": "$a:color/semantic/status/info/fg",
-                          "content": "Create an account",
+                          "content": "Buat akun",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "$a:font/weight/semibold"
@@ -257,7 +287,15 @@
           "ref": "Z5xhk",
           "name": "Editorial side",
           "width": "fill_container",
-          "height": "fill_container"
+          "height": "fill_container",
+          "descendants": {
+            "PQXvX": {
+              "content": "Setiap foto yang Anda ambil,\ntepat di tempatnya."
+            },
+            "vWPHy": {
+              "content": "Booking, galeri, seleksi, dan invoice untuk fotografer."
+            }
+          }
         }
       ]
     },
@@ -341,7 +379,7 @@
                           "id": "vXYCN",
                           "name": "Title",
                           "fill": "$a:color/semantic/text/primary",
-                          "content": "Create your account",
+                          "content": "Buat akun Anda",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -354,7 +392,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "A clearer way to manage every shoot, from first enquiry to final delivery.",
+                          "content": "Cara yang lebih rapi untuk mengelola setiap pemotretan, dari pertanyaan pertama hingga pengiriman akhir.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -378,12 +416,27 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:Gmk0c": {
-                              "content": "Your name"
+                              "content": "Nama Anda"
+                            },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
                             },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "Your full name"
+                              "content": "Nama lengkap Anda"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
                             },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -398,10 +451,25 @@
                             "a:Gmk0c": {
                               "content": "Email"
                             },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
+                            },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "you@studio.com"
+                              "content": "anda@studio.com"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
                             },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -414,16 +482,31 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:Gmk0c": {
-                              "content": "Password"
+                              "content": "Kata sandi"
+                            },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
                             },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "Enter your password"
+                              "content": "Masukkan kata sandi Anda"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
                             },
                             "a:c67yIW/a:Qp2xi": {
                               "enabled": true,
                               "icon": "eye"
                             },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
+                            },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -446,7 +529,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Create account"
+                              "content": "Buat akun"
                             }
                           }
                         },
@@ -458,7 +541,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Continue with Google"
+                              "content": "Lanjutkan dengan Google"
                             }
                           }
                         }
@@ -477,7 +560,7 @@
                           "id": "qOSoP",
                           "name": "Prompt text",
                           "fill": "$a:color/semantic/text/secondary",
-                          "content": "Already have an account?",
+                          "content": "Sudah punya akun?",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "normal"
@@ -487,7 +570,7 @@
                           "id": "UTrbU",
                           "name": "Create account link",
                           "fill": "$a:color/semantic/status/info/fg",
-                          "content": "Sign in",
+                          "content": "Masuk",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "$a:font/weight/semibold"
@@ -516,7 +599,15 @@
           "ref": "Z5xhk",
           "name": "Editorial side",
           "width": "fill_container",
-          "height": "fill_container"
+          "height": "fill_container",
+          "descendants": {
+            "PQXvX": {
+              "content": "Setiap foto yang Anda ambil,\ntepat di tempatnya."
+            },
+            "vWPHy": {
+              "content": "Booking, galeri, seleksi, dan invoice untuk fotografer."
+            }
+          }
         }
       ]
     },
@@ -783,7 +874,7 @@
                           "id": "u4LMrV",
                           "name": "Title",
                           "fill": "$a:color/semantic/text/primary",
-                          "content": "Reset your password",
+                          "content": "Atur ulang kata sandi",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -796,7 +887,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Enter your email and we’ll send a reset link if the account can use a password.",
+                          "content": "Masukkan email Anda. Kami akan mengirim tautan atur ulang jika akun itu memakai kata sandi.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -822,10 +913,25 @@
                             "a:Gmk0c": {
                               "content": "Email"
                             },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
+                            },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "you@studio.com"
+                              "content": "anda@studio.com"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
                             },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -848,7 +954,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Send reset link"
+                              "content": "Kirim tautan atur ulang"
                             }
                           }
                         }
@@ -867,7 +973,7 @@
                           "id": "EPyvd",
                           "name": "Prompt text",
                           "fill": "$a:color/semantic/text/secondary",
-                          "content": "Remember your password?",
+                          "content": "Ingat kata sandi Anda?",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "normal"
@@ -877,7 +983,7 @@
                           "id": "OqhfZ",
                           "name": "Create account link",
                           "fill": "$a:color/semantic/status/info/fg",
-                          "content": "Back to sign in",
+                          "content": "Kembali ke halaman masuk",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "$a:font/weight/semibold"
@@ -906,7 +1012,15 @@
           "ref": "Z5xhk",
           "name": "Editorial side",
           "width": "fill_container",
-          "height": "fill_container"
+          "height": "fill_container",
+          "descendants": {
+            "PQXvX": {
+              "content": "Setiap foto yang Anda ambil,\ntepat di tempatnya."
+            },
+            "vWPHy": {
+              "content": "Booking, galeri, seleksi, dan invoice untuk fotografer."
+            }
+          }
         }
       ]
     },
@@ -990,7 +1104,7 @@
                           "id": "KWKtE",
                           "name": "Title",
                           "fill": "$a:color/semantic/text/primary",
-                          "content": "Choose a new password",
+                          "content": "Buat kata sandi baru",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -1003,7 +1117,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Use 8–128 characters. After you reset it, sign in again on every device.",
+                          "content": "Gunakan 8–128 karakter. Setelah diatur ulang, masuk lagi di setiap perangkat.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -1027,10 +1141,10 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:Gmk0c": {
-                              "content": "New password"
+                              "content": "Kata sandi baru"
                             },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "Enter new password"
+                              "content": "Masukkan kata sandi baru"
                             },
                             "a:c67yIW/a:Qp2xi": {
                               "enabled": true,
@@ -1049,10 +1163,10 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:Gmk0c": {
-                              "content": "Confirm new password"
+                              "content": "Konfirmasi kata sandi baru"
                             },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "Enter it again"
+                              "content": "Masukkan sekali lagi"
                             },
                             "a:c67yIW/a:Qp2xi": {
                               "enabled": true,
@@ -1081,7 +1195,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Save new password"
+                              "content": "Simpan kata sandi baru"
                             }
                           }
                         }
@@ -1100,7 +1214,7 @@
                           "id": "u10axy",
                           "name": "Prompt text",
                           "fill": "$a:color/semantic/text/secondary",
-                          "content": "Remember your password?",
+                          "content": "Ingat kata sandi Anda?",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "normal"
@@ -1110,7 +1224,7 @@
                           "id": "YYhXa",
                           "name": "Create account link",
                           "fill": "$a:color/semantic/status/info/fg",
-                          "content": "Back to sign in",
+                          "content": "Kembali ke halaman masuk",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "$a:font/weight/semibold"
@@ -1139,7 +1253,15 @@
           "ref": "Z5xhk",
           "name": "Editorial side",
           "width": "fill_container",
-          "height": "fill_container"
+          "height": "fill_container",
+          "descendants": {
+            "PQXvX": {
+              "content": "Setiap foto yang Anda ambil,\ntepat di tempatnya."
+            },
+            "vWPHy": {
+              "content": "Booking, galeri, seleksi, dan invoice untuk fotografer."
+            }
+          }
         }
       ]
     },
@@ -1393,7 +1515,7 @@
                           "id": "QxkAH",
                           "name": "Title",
                           "fill": "$a:color/semantic/text/primary",
-                          "content": "Check your inbox",
+                          "content": "Periksa kotak masuk Anda",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -1406,7 +1528,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "If a password reset is available for this address, we’ll send you a link.",
+                          "content": "Jika atur ulang kata sandi tersedia untuk alamat ini, kami akan mengirimkan tautannya.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -1422,10 +1544,10 @@
                       "width": "fill_container",
                       "descendants": {
                         "a:m0dqT6": {
-                          "content": "The link expires in one hour"
+                          "content": "Tautan kedaluwarsa dalam satu jam"
                         },
                         "a:fhch4": {
-                          "content": "Check your spam folder if it does not arrive."
+                          "content": "Periksa folder spam jika tautan tidak masuk."
                         },
                         "a:IXhZl": {
                           "enabled": false
@@ -1439,7 +1561,7 @@
                       "fill": "$a:color/semantic/status/info/fg",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "Back to sign in",
+                      "content": "Kembali ke halaman masuk",
                       "lineHeight": "$a:font/line-height/body",
                       "fontFamily": "$a:font/family/base",
                       "fontSize": "$a:font/size/body-sm",
@@ -1467,7 +1589,15 @@
           "ref": "Z5xhk",
           "name": "Editorial side",
           "width": "fill_container",
-          "height": "fill_container"
+          "height": "fill_container",
+          "descendants": {
+            "PQXvX": {
+              "content": "Setiap foto yang Anda ambil,\ntepat di tempatnya."
+            },
+            "vWPHy": {
+              "content": "Booking, galeri, seleksi, dan invoice untuk fotografer."
+            }
+          }
         }
       ]
     },
@@ -1551,7 +1681,7 @@
                           "id": "U3Qyf7",
                           "name": "Title",
                           "fill": "$a:color/semantic/text/primary",
-                          "content": "Account unavailable",
+                          "content": "Akun tidak tersedia",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -1564,7 +1694,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "This account cannot access Shutrly right now. Contact support if you think this is a mistake.",
+                          "content": "Akun ini tidak bisa mengakses Shutrly saat ini. Hubungi dukungan jika menurut Anda ini keliru.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -1580,10 +1710,10 @@
                       "width": "fill_container",
                       "descendants": {
                         "a:m0dqT6": {
-                          "content": "Workspace data is hidden"
+                          "content": "Data workspace disembunyikan"
                         },
                         "a:fhch4": {
-                          "content": "Your workspaces and private data are not shown while access is unavailable."
+                          "content": "Workspace dan data pribadi Anda tidak ditampilkan selama akses tidak tersedia."
                         },
                         "a:IXhZl": {
                           "enabled": false
@@ -1598,7 +1728,7 @@
                       "width": "fill_container",
                       "descendants": {
                         "a:xnhuK": {
-                          "content": "Sign out"
+                          "content": "Keluar"
                         }
                       }
                     }
@@ -1624,7 +1754,15 @@
           "ref": "Z5xhk",
           "name": "Editorial side",
           "width": "fill_container",
-          "height": "fill_container"
+          "height": "fill_container",
+          "descendants": {
+            "PQXvX": {
+              "content": "Setiap foto yang Anda ambil,\ntepat di tempatnya."
+            },
+            "vWPHy": {
+              "content": "Booking, galeri, seleksi, dan invoice untuk fotografer."
+            }
+          }
         }
       ]
     },
@@ -2048,7 +2186,7 @@
                           "id": "BrRsw",
                           "name": "Title",
                           "fill": "$a:color/semantic/text/primary",
-                          "content": "Welcome back",
+                          "content": "Selamat datang kembali",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -2061,7 +2199,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Sign in to keep your photography business moving.",
+                          "content": "Masuk untuk menjaga bisnis fotografi Anda tetap berjalan.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -2087,10 +2225,25 @@
                             "a:Gmk0c": {
                               "content": "Email"
                             },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
+                            },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "you@studio.com"
+                              "content": "anda@studio.com"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
                             },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -2103,16 +2256,31 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:Gmk0c": {
-                              "content": "Password"
+                              "content": "Kata sandi"
+                            },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
                             },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "Enter your password"
+                              "content": "Masukkan kata sandi Anda"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
                             },
                             "a:c67yIW/a:Qp2xi": {
                               "enabled": true,
                               "icon": "eye"
                             },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
+                            },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -2131,7 +2299,7 @@
                           "id": "K5USV",
                           "name": "Forgot password link",
                           "fill": "$a:color/semantic/status/info/fg",
-                          "content": "Forgot password?",
+                          "content": "Lupa kata sandi?",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "$a:font/weight/semibold"
@@ -2154,7 +2322,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Sign in"
+                              "content": "Masuk"
                             }
                           }
                         },
@@ -2166,7 +2334,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Continue with Google"
+                              "content": "Lanjutkan dengan Google"
                             }
                           }
                         }
@@ -2185,7 +2353,7 @@
                           "id": "gkHse",
                           "name": "Prompt text",
                           "fill": "$a:color/semantic/text/secondary",
-                          "content": "New to Shutrly?",
+                          "content": "Baru di Shutrly?",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "normal"
@@ -2195,7 +2363,7 @@
                           "id": "kOP8l",
                           "name": "Create account link",
                           "fill": "$a:color/semantic/status/info/fg",
-                          "content": "Create an account",
+                          "content": "Buat akun",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "$a:font/weight/semibold"
@@ -2300,7 +2468,7 @@
                           "id": "o3ZUX",
                           "name": "Title",
                           "fill": "$a:color/semantic/text/primary",
-                          "content": "Create your account",
+                          "content": "Buat akun Anda",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -2313,7 +2481,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "A clearer way to manage every shoot, from first enquiry to final delivery.",
+                          "content": "Cara yang lebih rapi untuk mengelola setiap pemotretan, dari pertanyaan pertama hingga pengiriman akhir.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -2337,12 +2505,27 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:Gmk0c": {
-                              "content": "Your name"
+                              "content": "Nama Anda"
+                            },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
                             },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "Your full name"
+                              "content": "Nama lengkap Anda"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
                             },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -2357,10 +2540,25 @@
                             "a:Gmk0c": {
                               "content": "Email"
                             },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
+                            },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "you@studio.com"
+                              "content": "anda@studio.com"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
                             },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -2373,16 +2571,31 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:Gmk0c": {
-                              "content": "Password"
+                              "content": "Kata sandi"
+                            },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
                             },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "Enter your password"
+                              "content": "Masukkan kata sandi Anda"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
                             },
                             "a:c67yIW/a:Qp2xi": {
                               "enabled": true,
                               "icon": "eye"
                             },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
+                            },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -2405,7 +2618,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Create account"
+                              "content": "Buat akun"
                             }
                           }
                         },
@@ -2417,7 +2630,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Continue with Google"
+                              "content": "Lanjutkan dengan Google"
                             }
                           }
                         }
@@ -2436,7 +2649,7 @@
                           "id": "B7SeTw",
                           "name": "Prompt text",
                           "fill": "$a:color/semantic/text/secondary",
-                          "content": "Already have an account?",
+                          "content": "Sudah punya akun?",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "normal"
@@ -2446,7 +2659,7 @@
                           "id": "GCkHu",
                           "name": "Create account link",
                           "fill": "$a:color/semantic/status/info/fg",
-                          "content": "Sign in",
+                          "content": "Masuk",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "$a:font/weight/semibold"
@@ -4018,7 +4231,7 @@
                           "id": "m8nYTe",
                           "name": "Title",
                           "fill": "$a:color/semantic/text/primary",
-                          "content": "Reset link expired",
+                          "content": "Tautan atur ulang kedaluwarsa",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -4031,7 +4244,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Request a new password reset link to continue safely.",
+                          "content": "Minta tautan atur ulang kata sandi yang baru untuk melanjutkan dengan aman.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -4047,10 +4260,10 @@
                       "width": "fill_container",
                       "descendants": {
                         "a:m0dqT6": {
-                          "content": "Links work only once"
+                          "content": "Tautan hanya bisa digunakan sekali"
                         },
                         "a:fhch4": {
-                          "content": "For your security, each verification and reset link can be used one time."
+                          "content": "Demi keamanan, setiap tautan verifikasi dan atur ulang hanya bisa digunakan satu kali."
                         },
                         "a:IXhZl": {
                           "enabled": false
@@ -4065,7 +4278,7 @@
                       "width": "fill_container",
                       "descendants": {
                         "a:xnhuK": {
-                          "content": "Request a reset link"
+                          "content": "Minta tautan atur ulang"
                         }
                       }
                     },
@@ -4076,7 +4289,7 @@
                       "fill": "$a:color/semantic/status/info/fg",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "Back to sign in",
+                      "content": "Kembali ke halaman masuk",
                       "lineHeight": "$a:font/line-height/body",
                       "fontFamily": "$a:font/family/base",
                       "fontSize": "$a:font/size/body-sm",
@@ -4104,7 +4317,15 @@
           "ref": "Z5xhk",
           "name": "Editorial side",
           "width": "fill_container",
-          "height": "fill_container"
+          "height": "fill_container",
+          "descendants": {
+            "PQXvX": {
+              "content": "Setiap foto yang Anda ambil,\ntepat di tempatnya."
+            },
+            "vWPHy": {
+              "content": "Booking, galeri, seleksi, dan invoice untuk fotografer."
+            }
+          }
         }
       ]
     },
@@ -4188,7 +4409,7 @@
                           "id": "QB3ad",
                           "name": "Title",
                           "fill": "$a:color/semantic/text/primary",
-                          "content": "Reset your password",
+                          "content": "Atur ulang kata sandi",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -4201,7 +4422,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Enter your email and we’ll send a reset link if the account can use a password.",
+                          "content": "Masukkan email Anda. Kami akan mengirim tautan atur ulang jika akun itu memakai kata sandi.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -4227,10 +4448,25 @@
                             "a:Gmk0c": {
                               "content": "Email"
                             },
+                            "a:RsEBb": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:MePi8": {
+                              "enabled": false
+                            },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "you@studio.com"
+                              "content": "anda@studio.com"
+                            },
+                            "a:c67yIW/a:CykHo": {
+                              "enabled": false
+                            },
+                            "a:c67yIW/a:UFzsV/a:Xmo7V": {
+                              "enabled": false
                             },
                             "a:i0umVC": {
+                              "enabled": false
+                            },
+                            "a:uh4XA": {
                               "enabled": false
                             }
                           }
@@ -4253,7 +4489,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Send reset link"
+                              "content": "Kirim tautan atur ulang"
                             }
                           }
                         }
@@ -4272,7 +4508,7 @@
                           "id": "tQBeG",
                           "name": "Prompt text",
                           "fill": "$a:color/semantic/text/secondary",
-                          "content": "Remember your password?",
+                          "content": "Ingat kata sandi Anda?",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "normal"
@@ -4282,7 +4518,7 @@
                           "id": "y6zxty",
                           "name": "Create account link",
                           "fill": "$a:color/semantic/status/info/fg",
-                          "content": "Back to sign in",
+                          "content": "Kembali ke halaman masuk",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "$a:font/weight/semibold"
@@ -4389,7 +4625,7 @@
                           "fill": "$a:color/semantic/text/primary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Choose a new password",
+                          "content": "Buat kata sandi baru",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -4402,7 +4638,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Use 8–128 characters. After you reset it, sign in again on every device.",
+                          "content": "Gunakan 8–128 karakter. Setelah diatur ulang, masuk lagi di setiap perangkat.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -4426,10 +4662,10 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:Gmk0c": {
-                              "content": "New password"
+                              "content": "Kata sandi baru"
                             },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "Enter new password"
+                              "content": "Masukkan kata sandi baru"
                             },
                             "a:c67yIW/a:Qp2xi": {
                               "enabled": true,
@@ -4448,10 +4684,10 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:Gmk0c": {
-                              "content": "Confirm new password"
+                              "content": "Konfirmasi kata sandi baru"
                             },
                             "a:c67yIW/a:tvTDd": {
-                              "content": "Enter it again"
+                              "content": "Masukkan sekali lagi"
                             },
                             "a:c67yIW/a:Qp2xi": {
                               "enabled": true,
@@ -4480,7 +4716,7 @@
                           "width": "fill_container",
                           "descendants": {
                             "a:xnhuK": {
-                              "content": "Save new password"
+                              "content": "Simpan kata sandi baru"
                             }
                           }
                         }
@@ -4499,7 +4735,7 @@
                           "id": "qw0jf",
                           "name": "Prompt text",
                           "fill": "$a:color/semantic/text/secondary",
-                          "content": "Remember your password?",
+                          "content": "Ingat kata sandi Anda?",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "normal"
@@ -4509,7 +4745,7 @@
                           "id": "Yf3Fw",
                           "name": "Create account link",
                           "fill": "$a:color/semantic/status/info/fg",
-                          "content": "Back to sign in",
+                          "content": "Kembali ke halaman masuk",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body-sm",
                           "fontWeight": "$a:font/weight/semibold"
@@ -4780,7 +5016,7 @@
                           "fill": "$a:color/semantic/text/primary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Check your inbox",
+                          "content": "Periksa kotak masuk Anda",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -4793,7 +5029,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "If a password reset is available for this address, we’ll send you a link.",
+                          "content": "Jika atur ulang kata sandi tersedia untuk alamat ini, kami akan mengirimkan tautannya.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -4809,10 +5045,10 @@
                       "width": "fill_container",
                       "descendants": {
                         "a:m0dqT6": {
-                          "content": "The link expires in one hour"
+                          "content": "Tautan kedaluwarsa dalam satu jam"
                         },
                         "a:fhch4": {
-                          "content": "Check your spam folder if it does not arrive."
+                          "content": "Periksa folder spam jika tautan tidak masuk."
                         },
                         "a:IXhZl": {
                           "enabled": false
@@ -4826,7 +5062,7 @@
                       "fill": "$a:color/semantic/status/info/fg",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "Back to sign in",
+                      "content": "Kembali ke halaman masuk",
                       "lineHeight": "$a:font/line-height/body",
                       "fontFamily": "$a:font/family/base",
                       "fontSize": "$a:font/size/body-sm",
@@ -4932,7 +5168,7 @@
                           "fill": "$a:color/semantic/text/primary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Account unavailable",
+                          "content": "Akun tidak tersedia",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -4945,7 +5181,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "This account cannot access Shutrly right now. Contact support if you think this is a mistake.",
+                          "content": "Akun ini tidak bisa mengakses Shutrly saat ini. Hubungi dukungan jika menurut Anda ini keliru.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -4961,10 +5197,10 @@
                       "width": "fill_container",
                       "descendants": {
                         "a:m0dqT6": {
-                          "content": "Workspace data is hidden"
+                          "content": "Data workspace disembunyikan"
                         },
                         "a:fhch4": {
-                          "content": "Your workspaces and private data are not shown while access is unavailable."
+                          "content": "Workspace dan data pribadi Anda tidak ditampilkan selama akses tidak tersedia."
                         },
                         "a:IXhZl": {
                           "enabled": false
@@ -4979,7 +5215,7 @@
                       "width": "fill_container",
                       "descendants": {
                         "a:xnhuK": {
-                          "content": "Sign out"
+                          "content": "Keluar"
                         }
                       }
                     }
@@ -6116,7 +6352,7 @@
                           "fill": "$a:color/semantic/text/primary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Reset link expired",
+                          "content": "Tautan atur ulang kedaluwarsa",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/display",
                           "fontWeight": "$a:font/weight/bold",
@@ -6129,7 +6365,7 @@
                           "fill": "$a:color/semantic/text/secondary",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "Request a new password reset link to continue safely.",
+                          "content": "Minta tautan atur ulang kata sandi yang baru untuk melanjutkan dengan aman.",
                           "lineHeight": "$a:font/line-height/body",
                           "fontFamily": "$a:font/family/base",
                           "fontSize": "$a:font/size/body",
@@ -6145,10 +6381,10 @@
                       "width": "fill_container",
                       "descendants": {
                         "a:m0dqT6": {
-                          "content": "Links work only once"
+                          "content": "Tautan hanya bisa digunakan sekali"
                         },
                         "a:fhch4": {
-                          "content": "For your security, each verification and reset link can be used one time."
+                          "content": "Demi keamanan, setiap tautan verifikasi dan atur ulang hanya bisa digunakan satu kali."
                         },
                         "a:IXhZl": {
                           "enabled": false
@@ -6163,7 +6399,7 @@
                       "width": "fill_container",
                       "descendants": {
                         "a:xnhuK": {
-                          "content": "Request a reset link"
+                          "content": "Minta tautan atur ulang"
                         }
                       }
                     },
@@ -6174,7 +6410,7 @@
                       "fill": "$a:color/semantic/status/info/fg",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "Back to sign in",
+                      "content": "Kembali ke halaman masuk",
                       "lineHeight": "$a:font/line-height/body",
                       "fontFamily": "$a:font/family/base",
                       "fontSize": "$a:font/size/body-sm",
@@ -6934,7 +7170,8 @@
               "content": "Projects, galleries, selections and invoices for every brand you run — in one place.",
               "lineHeight": 1.5,
               "fontFamily": "$a:font/family/base",
-              "fontSize": 16
+              "fontSize": 16,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -7425,7 +7662,8 @@
               "content": "The owner dashboard and the client gallery share one project, one link and one set of limits.",
               "lineHeight": 1.5,
               "fontFamily": "$a:font/family/base",
-              "fontSize": 16
+              "fontSize": 16,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -7707,7 +7945,8 @@
                               "content": "Edited",
                               "lineHeight": 1.4,
                               "fontFamily": "$a:font/family/base",
-                              "fontSize": 11
+                              "fontSize": 11,
+                              "fontWeight": "normal"
                             },
                             {
                               "type": "text",

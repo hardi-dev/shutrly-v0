@@ -102651,6 +102651,14 @@
     "component/alert/text-gap": {
       "type": "number",
       "value": "$space/0-5"
+    },
+    "component/icon/size-sm": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/icon/size-md": {
+      "type": "number",
+      "value": "$space/4"
     }
   },
   "fileToken": "a25701b4-4c5b-41fc-8af0-91535884d9bf"

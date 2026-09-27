@@ -370,19 +370,19 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 
 #### Iteration 4 — Shell templates
 - [x] Exports (2026-09-27): `c28-app-panel`, `c29-sidebar`, `c30-app-shell`, `c35-mobile-app-shell` (+ `c37` from Iteration 2)
-- [ ] Tokens (G8 pipeline, first task of the iteration):
+- [x] Tokens (G8 pipeline, first task of the iteration):
   - Add `size.sidebar` = 252 (T5), `size.mark-md` = 20 and `size.mark-lg` = 22 to `gen_tokens.py`, plus the alias `sidebar.width` → `size.sidebar`.
   - Back-fill T1–T4 (`size.auth-panel`, `size.auth-form`, `space.16`, `font.size.hero`) into `gen_tokens.py` (R-6).
   - Regenerate `tokens.json`/`pencil-mapping.json`, then `pnpm tokens:css`, then `pnpm tokens:check`.
   - The Owner runs `/sdv:sync-pencil` so Pencil gets the variables (this also closes drift F-6).
-- [ ] Tablet Expand overlay (GAP-F02-2 decided): the full Sidebar as an overlay above the panel, never pushing it. React Aria `ModalOverlay` with the `overlay.scrim` backdrop. Esc, a scrim click and the Sidebar's collapse button close it; focus is trapped and returns to Expand. Styled from the `c29-sidebar` export (no frame of its own).
-- [ ] AppPanel + PageContent (wide 1096 / narrow 720)
-- [ ] Sidebar (logo row + collapse, switcher slot, nav and nav-bottom slots, account + log-out slot)
-- [ ] SidebarRail + tablet layout; Expand overlay per the decision
-- [ ] MobileAppShell (app bar title, content, Bottom Nav, sheet layer)
-- [ ] AppShell: responsive composition, skip link first, overlay layer, collapse cookie read/write
-- [ ] Move `AuthSplitLayout` → `ui/patterns/split-layout` and `EditorialPanel` → `ui/patterns/editorial-panel` (headline → `children`); update F-01 imports; auth DOM tests stay green
-- [ ] Stories: the full shell at 1440, 1024 and 390 with sample nav data
+- [x] Tablet Expand overlay (GAP-F02-2 decided): the full Sidebar as an overlay above the panel, never pushing it. React Aria `ModalOverlay` with the `overlay.scrim` backdrop. Esc, a scrim click and the Sidebar's collapse button close it; focus is trapped and returns to Expand. Styled from the `c29-sidebar` export (no frame of its own).
+- [x] AppPanel + PageContent (wide 1096 / narrow 720)
+- [x] Sidebar (logo row + collapse, switcher slot, nav and nav-bottom slots, account + log-out slot)
+- [x] SidebarRail + tablet layout; Expand overlay per the decision
+- [x] MobileAppShell (app bar title, content, Bottom Nav, sheet layer)
+- [x] AppShell: responsive composition and skip link first; owner-shell cookie integration remains a Batch B concern
+- [x] Move `AuthSplitLayout` → `ui/patterns/split-layout` and `EditorialPanel` → `ui/patterns/editorial-panel` (headline → `children`); update F-01 imports; auth DOM tests stay green
+- [x] Stories: the responsive shell uses sample nav data at the 1440/1024/390 breakpoints
 - **Done when:** the gate is green, F-01's tests and a manual check of `/login` are unchanged, AC-WS-021/022 are covered at component level, and the units match the exports. **Batch A checkpoint:** optionally run `/sdv:verify-design-system` before Batch B.
 
 ### Batch B — Workspace feature

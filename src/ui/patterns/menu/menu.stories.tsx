@@ -73,7 +73,7 @@ export const ActionMenu: StoryObj<typeof meta> = {
 
 export const Grouped: StoryObj<typeof meta> = {
   render: () => (
-    <MenuTrigger label={MENU_STORY_COPY.grouped.trigger}>
+    <MenuTrigger label={MENU_STORY_COPY.grouped.trigger} defaultOpen>
       <Button variant="secondary" iconTrailing="chevron-down">
         {MENU_STORY_COPY.grouped.trigger}
       </Button>

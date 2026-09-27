@@ -33,4 +33,12 @@ export interface ModalStoryCopy {
   description?: string;
   cancel?: string;
   confirm?: string;
+  form?: {
+    nameLabel: string;
+    namePlaceholder: string;
+    nameDescription: string;
+    prefixLabel: string;
+    prefixPlaceholder: string;
+    prefixDescription: string;
+  };
 }

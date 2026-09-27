@@ -12,6 +12,14 @@ export const MODAL_COPY = {
     body: "Isi modal",
     cancel: "Batal",
     confirm: "Simpan",
+    form: {
+      nameLabel: "Nama workspace",
+      namePlaceholder: "Contoh: Studio Lime",
+      nameDescription: "Nama ini akan terlihat oleh tim Anda.",
+      prefixLabel: "Prefix invoice",
+      prefixPlaceholder: "Contoh: SL",
+      prefixDescription: "Gunakan 2–6 karakter huruf atau angka.",
+    },
   },
   large: {
     title: "Detail workspace",

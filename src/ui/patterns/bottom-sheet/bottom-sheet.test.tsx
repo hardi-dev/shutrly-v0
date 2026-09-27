@@ -49,6 +49,12 @@ describe("BottomSheet (C32)", () => {
     const sheet = screen.getByRole("dialog", { name: "Foto proyek" });
     expect(sheet).toHaveAttribute("aria-modal", "true");
     expect(sheet).toHaveClass("max-h-[90dvh]");
+    expect(sheet.parentElement).toHaveClass(
+      "translate-y-full",
+      "transition-transform",
+      "data-[entering]:translate-y-0",
+      "data-[exiting]:translate-y-full",
+    );
     expect(sheet.querySelector("div[aria-hidden='true']")).toHaveAttribute("aria-hidden", "true");
     expect(screen.getByText("IMG_2041.jpg")).toBeInTheDocument();
 

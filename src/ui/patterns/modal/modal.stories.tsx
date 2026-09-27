@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 
 import { Button } from "@/ui/primitives/button/button";
+import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { Modal } from "./modal";
 import { MODAL_COPY } from "./modal.copy";
@@ -19,6 +20,35 @@ function getModalStoryCopy(size: "sm" | "md" | "lg"): ModalStoryCopy {
     return MODAL_COPY.large;
   }
   return MODAL_COPY.medium;
+}
+
+function WorkspaceForm() {
+  const [name, setName] = useState("");
+  const [prefix, setPrefix] = useState("");
+  const formCopy = MODAL_COPY.medium.form;
+
+  return (
+    <div className="flex flex-col gap-(--space-4)">
+      <TextField
+        label={formCopy.nameLabel}
+        name="workspace-name"
+        placeholder={formCopy.namePlaceholder}
+        description={formCopy.nameDescription}
+        value={name}
+        onChange={setName}
+        onBlur={handleNoop}
+      />
+      <TextField
+        label={formCopy.prefixLabel}
+        name="invoice-prefix"
+        placeholder={formCopy.prefixPlaceholder}
+        description={formCopy.prefixDescription}
+        value={prefix}
+        onChange={setPrefix}
+        onBlur={handleNoop}
+      />
+    </div>
+  );
 }
 
 const meta = {
@@ -79,7 +109,7 @@ function ModalStory({
         isDestructive={isDestructive}
         actions={actions}
       >
-        <p>{copy.body}</p>
+        {size === "md" ? <WorkspaceForm /> : <p>{copy.body}</p>}
       </Modal>
     </>
   );

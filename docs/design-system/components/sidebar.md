@@ -18,7 +18,7 @@ and turns the logo into the expand control.
 | 1 | Root | No fill (canvas shows through); vertical; gap `space.3`; padding `space.2` / `space.3` |
 | 2 | Logo row | padding-x `space.2`. Mark (aperture 22) and wordmark (title 18/700) in `text.primary`, then collapse (Icon Button/Ghost/SM `panel-left`) |
 | 3 | Divider | 1 px `border.default` |
-| 4 | Workspace switcher | `surface.panel` + `border.default`, `radius.sm`, padding 8/12 (legacy 9/10 → 8/12, aligned with nav items), gap 8. Mark 20 × 20 `accent.highlight` with a `radius.xs` corner and a camera icon in `accent.on-highlight`; name (body 14/500, text `Workspace` `rAUNw`); chevrons in `text.muted` |
+| 4 | Workspace switcher | `surface.panel` + `border.default`, `radius.sm`, padding 8/12 (legacy 9/10 → 8/12, aligned with nav items), gap 8. Name (body 14/500, text `Workspace` `rAUNw`); chevrons in `text.muted`. Compact mode keeps only the switch icon. |
 | 5 | Nav | slot `tilEo`: groups gap 12, items gap 4 (Nav Item, Nav Group Label) |
 | 6 | Spacer | the one allowed flexible spacer (SP7) |
 | 7 | Nav bottom | slot `pRu41`: settings-type destinations |

@@ -20,6 +20,9 @@ describe("Sidebar (C29)", () => {
       "aria-haspopup",
       "menu",
     );
+    expect(
+      screen.getByRole("button", { name: "Studio Lime" }).querySelector('svg[data-icon="camera"]'),
+    ).toBeNull();
     expect(screen.getByRole("link", { name: "Proyek" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByText("Hardi Ansari")).toBeInTheDocument();
     expect(screen.getByText("hardi@example.com")).toBeInTheDocument();

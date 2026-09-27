@@ -142,15 +142,6 @@ function WorkspaceSwitcher({
         />
       ) : (
         <>
-          <div className="flex size-(--size-mark-md) items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
-            <Icon
-              name="camera"
-              size="sm"
-              aria-hidden="true"
-              data-icon="camera"
-              className="text-(--color-semantic-accent-on-highlight)"
-            />
-          </div>
           <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-(--color-semantic-text-primary)">
             {workspace.name}
           </span>

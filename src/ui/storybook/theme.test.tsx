@@ -12,5 +12,8 @@ describe("ThemeFrame", () => {
     );
 
     expect(screen.getByText("content").parentElement).toHaveAttribute("data-theme", mode);
+    expect(screen.getByText("content").parentElement).toHaveClass(
+      "bg-(--color-semantic-surface-muted)",
+    );
   });
 });

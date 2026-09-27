@@ -1,15 +1,15 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-28 (F-02 Batch A DONE; ready for Batch B) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-09-28 (F-02 Batch B implementation complete; workspace E2E follow-up remains) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `codex/f02-workspace-batch-a`.
 
-## Current handoff — resume here: start F-02 Workspace Batch B
+## Current handoff — resume here: workspace E2E and final visual verification
 
-**F-02 Workspace is APPROVED and Batch A is DONE** (2026-09-28): [technical-design.md](features/workspace/technical-design.md) remains the implementation source of truth. It has 12 iterations in two batches:
+**F-02 Workspace is APPROVED; Batch A and the Batch B implementation are complete** (2026-09-28): [technical-design.md](features/workspace/technical-design.md) remains the implementation source of truth. It has 12 iterations in two batches:
 - **Batch A (iterations 1–4) DONE:** design-system primitives and patterns, navigation, overlays, Sidebar/rail, Mobile App Shell, App Shell, token usage validation, and Storybook preview framing.
-- **Batch B (iterations 5–12) NEXT:** workspace domain/schema, application, adapter/composition, onboarding, owner shell/pages, switcher/create flow, settings, journeys and E2E.
+- **Batch B (iterations 5–11) IMPLEMENTED:** workspace domain/schema, application, adapter/composition, onboarding, owner shell/pages, switcher/create flow, and settings. Iteration 12 still needs dedicated workspace Playwright journeys and visual comparison.
 
-**Next room starting point:** begin with **Iteration 5 — Domain and schema** in `features/workspace/technical-design.md`. The Owner must apply migration `0001`; never run `pnpm db:migrate` from the agent.
+**Next room starting point:** add the dedicated workspace Playwright journeys in Iteration 12. Migration `0001_workspace.sql` was applied successfully with explicit Owner authorization.
 
 **Batch A commits:** `d24a7fc` CSS token usage validation and App Panel background fix; `fc0fb62` official Textarea min-height token; `eaff80b` darker Storybook preview frame; `821cf4c` saved `design-system.lib.pen`.
 

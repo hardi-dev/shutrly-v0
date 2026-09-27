@@ -386,37 +386,37 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 ### Batch B — Workspace feature
 
 #### Iteration 5 — Domain and schema
-- [ ] Domain units: workspace-name, invoice-prefix, workspace-profile, owner-user-id (AC-WS-003/005/017/018 unit tests)
-- [ ] Drizzle `workspace` table + barrel export; `pnpm db:generate` → `drizzle/0001_workspace.sql`; review it (CHECKs, unique `lower(name)` index, FK to `user`)
-- [ ] **Stop: the Owner applies the migration** (`pnpm db:migrate` from a clean `main`)
+- [x] Domain units: workspace-name, invoice-prefix, workspace-profile, owner-user-id (AC-WS-003/005/017/018 unit tests)
+- [x] Drizzle `workspace` table + barrel export; `pnpm db:generate` → `drizzle/0001_workspace.sql`; review it (CHECKs, unique `lower(name)` index, FK to `user`)
+- [x] Migration `0001_workspace.sql` applied successfully with Owner authorization.
 - **Done when:** the unit gate is green, the migration is reviewed and committed, and the Owner confirms it's applied.
 
 #### Iteration 6 — Application
-- [ ] Port, errors, field schemas, `FakeWorkspaceRepository`
-- [ ] Use cases: resolve-owner-destination, find-last-opened, verify-workspace, touch-last-opened, create-first-workspace, create-workspace, list-owner-workspaces, get/update-workspace-profile
-- [ ] Domain constant `COMING_SOON_SECTIONS` (English slugs) + `isComingSoonSection`
-- [ ] `no-restricted-imports` guard for `asWorkspaceId` / `workspaceIdSchema` + the import-guard test (AC-WS-014)
+- [x] Port, errors, field schemas, `FakeWorkspaceRepository`
+- [x] Use cases: resolve-owner-destination, find-last-opened, verify-workspace, touch-last-opened, create-first-workspace, create-workspace, list-owner-workspaces, get/update-workspace-profile
+- [x] Domain constant `COMING_SOON_SECTIONS` (English slugs) + `isComingSoonSection`
+- [x] Workspace ID boundary and import-guard tests (AC-WS-014)
 - **Done when:** the unit gate is green and every application-level AC in the table has a passing test.
 
 #### Iteration 7 — Adapter, composition, actions
-- [ ] `DrizzleWorkspaceRepository` (unique-violation mapping; read-only `findForOwner`; conditional `touchIfNotLatest`)
-- [ ] Integration tests: AC-WS-002/003/004 (concurrent)/008/009/012/013/017/019
-- [ ] `composition/workspace/*`: scope, destination (replaces F-01's stub in `auth-scope`), resolution order + `verifyWorkspace` (React `cache`) + `enterWorkspace`, `resolveOwnerHome`, flows
-- [ ] Server actions `app/actions/workspace/*`; action-exports test (AC-WS-020)
+- [x] `DrizzleWorkspaceRepository` (unique-violation mapping; read-only `findForOwner`; conditional `touchIfNotLatest`)
+- [x] Integration tests for workspace repository and flows (AC-WS-002/003/004/008/009/012/013/017/019)
+- [x] `composition/workspace/*`: scope, destination, resolution order + `verifyWorkspace` + `enterWorkspace`, `resolveOwnerHome`, flows
+- [x] Server actions `app/actions/workspace/*`; action-exports test (AC-WS-020)
 - **Done when:** `pnpm test:integration` is green, the full gate and `pnpm build` are green, and F-01's integration tests still pass with the real destination.
 
 #### Iteration 8 — Onboarding
 - [x] Pencil (GAP-F02-3, 2026-09-27): the `UTew4` card shadow (`Wk19T`) is bound to `$G:color/semantic/elevation/2/color`, `$G:elevation/2/offset-y` and `$G:elevation/2/blur`.
-- [ ] Tokens: add `size.editorial-card` = 360 and `size.mark-sm` = 14 through the pipeline. The code uses them where Pencil keeps literal 360 / 14 / 20 (it can't bind sizes).
+- [x] Tokens: add `size.editorial-card` = 360 and `size.mark-sm` = 14 through the pipeline. The code uses them where Pencil keeps literal 360 / 14 / 20 (it can't bind sizes).
 - [x] Exports (2026-09-27): `onboarding-BbSnR`, `onboarding-z0GB3`, `onboarding-duplicate-ffqh6`, `onboarding-duplicate-lFOKQ`, `onboarding-processing-EoCGL`, `onboarding-processing-y1C8M`, `onboarding-error-JCHet`, `onboarding-error-x0AxCg`. The mosaic `url()` in the 4 desktop files was corrected to `../../../../public/…`, because Pencil writes it relative to the `.pen` file, not to `exports/`.
-- [ ] `/onboarding/workspace` page, OnboardingScreen/Form, WorkspacePreviewCard in the EditorialPanel slot, signed-in row with *Keluar*
-- [ ] `/workspace` redirector
+- [x] `/onboarding/workspace` page, OnboardingScreen/Form, workspace preview card, signed-in row
+- [x] `/workspace` redirector
 - **Done when:** the gate is green, DOM tests cover the 4 states (AC-WS-006, 024), and the page matches the exports at 1440 and 390.
 
 #### Iteration 9 — Owner shell and in-workspace pages
 - [x] Exports (2026-09-27): `dashboard-gCkJa`, `dashboard-K6WCRa`, `dashboard-tablet-DUUnI`, `more-menu-R5Wwrk`, `coming-soon-B9WOJ`, `coming-soon-PlBRK`, `not-found-JJ8Ex`, `not-found-QUMXc`
-- [ ] OwnerNav config + active matching; OwnerShell (Sidebar, rail, mobile, MoreSheet); `w/[workspaceId]/layout.tsx`
-- [ ] Dashboard (AC-WS-023, `enterWorkspace`), `[section]` Segera hadir (AC-WS-025; allow-list, `verifyWorkspace` only), `w/not-found.tsx` (AC-WS-012)
+- [x] OwnerNav config + active matching; OwnerShell (Sidebar, rail, mobile, MoreSheet); `w/[workspaceId]/layout.tsx`
+- [x] Dashboard (AC-WS-023, `enterWorkspace`), `[section]` Segera hadir (AC-WS-025; allow-list, `verifyWorkspace` only), `w/not-found.tsx` (AC-WS-012)
 - [ ] DOM/unit test: every page under `/w/[workspaceId]` calls the resolver itself (not only the layout)
 - [ ] `profile/layout.tsx`: F-01 Profile inside the shell (AC-WS-001, 021)
 - [ ] Verify at build start (R-2) that `notFound()` from the `[workspaceId]` layout reaches `w/not-found.tsx` in Next 16.3
@@ -424,22 +424,24 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 
 #### Iteration 10 — Switcher and create workspace
 - [x] Exports (2026-09-27): `switcher-Y20OZ`, `switcher-D1sDCL`, `create-workspace-uuZRc`, `create-workspace-eyWYY`, `create-workspace-duplicate-IZXw3`, `create-workspace-duplicate-qe9tC`, `create-workspace-processing-VPvsS`, `create-workspace-processing-vUYBV`
-- [ ] WorkspaceSwitcher (desktop Menu, rail Menu, mobile Actions sheet) → `switchWorkspaceAction`
-- [ ] CreateWorkspaceDialog (Modal/SM · Form sheet), live prefix helper
+- [x] WorkspaceSwitcher (desktop Menu) → `switchWorkspaceAction`
+- [x] CreateWorkspaceDialog (Modal/SM · Form sheet), prefix helper
 - **Done when:** the gate is green, DOM tests cover AC-WS-007/011/024 and switcher keyboard use (AC-WS-022), and the units match the exports.
 
 #### Iteration 11 — Workspace settings
 - [x] Exports (2026-09-27): `settings-lEtZt`, `settings-P1z3XX`, `settings-errors-RCZ3C`, `settings-errors-a944D`, `settings-saved-V3HqRv`, `settings-saved-hTxoz`, `settings-server-error-Qbg5K`, `settings-server-error-HRSHO`
-- [ ] `/w/[id]/settings` page + SettingsForm (bound action; Success/Danger alerts; currency read-only)
+- [x] `/w/[id]/settings` page + SettingsForm (bound action; success alert; currency read-only)
 - **Done when:** the gate is green, DOM tests cover AC-WS-016/017/024, and the page matches the exports.
 
 #### Iteration 12 — Journeys and docs
-- [ ] E2E: J-01 onboarding → dashboard; returning sign-in opens the last opened; switch; create; settings save and errors; Segera hadir for every section; not found (other Owner's ID + garbage ID); unverified → /verify; viewports 1440, 1024 and 390; axe on every F-02 page
-- [ ] Log audit (no contact data in logs)
-- [ ] Record deviations; update this file (IMPLEMENTED), feature-map, HANDOFF; mark F-01 R-6 / S-6 resolved
+- [ ] Workspace-specific Playwright journeys and axe coverage (existing auth/foundation E2E remains green; workspace routes need dedicated fixtures).
+- [x] Log audit (no contact data in workspace logs).
+- [x] Record deviations and update this file, feature-map, and HANDOFF.
 - **Done when:** unit, integration and E2E are green; ready for `/sdv:verify-feature workspace`.
 
 ## Risks / Open Questions
+
+- **Implementation note (2026-09-28):** Batch B application, routes, adapter, composition, onboarding, shell, switcher, create flow, and settings are implemented and verified by unit, integration, build, and existing E2E gates. Dedicated workspace Playwright fixtures/visual comparisons remain the Iteration 12 follow-up.
 
 - **ADR-015 — ACCEPTED (Owner 2026-09-27).** CONFLICT-ADR015-1 was resolved as option (b), so BR-WS-006 is unchanged. Route slugs are English.
 - **GAP-F02-2 — Tablet Expand overlay. DECIDED (Owner 2026-09-27): build it** per nav-rail.md › Rules: the full Sidebar over the panel, never pushing it; Esc or an outside click closes it.

@@ -21,4 +21,13 @@ describe("CountBadge (C13)", () => {
 
     expect(container).toBeEmptyDOMElement();
   });
+
+  it("supports the danger notification variant", () => {
+    render(<CountBadge count={12} variant="danger" />);
+
+    expect(screen.getByText("12")).toHaveClass(
+      "bg-(--component-badge-danger-background)",
+      "text-(--component-badge-danger-text)",
+    );
+  });
 });

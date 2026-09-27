@@ -40,7 +40,8 @@ export function BottomNav({ items, ctaLabel, onCtaPress, className }: Readonly<B
             className={cn(
               "absolute -top-(--space-8) flex size-(--component-bottom-nav-cta-size) items-center justify-center rounded-full",
               "bg-(--component-bottom-nav-cta-background) text-(--component-bottom-nav-cta-icon)",
-              "ring-(--space-1) ring-(--component-bottom-nav-cta-ring) outline-none",
+              "outline-4 outline-(--component-bottom-nav-cta-ring)",
+              "shadow-[0_var(--elevation-1-offset-y)_var(--elevation-1-blur)_var(--color-semantic-elevation-1-color)]",
               "focus-visible:shadow-[0_0_0_0_var(--component-bottom-nav-cta-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
             )}
           >
@@ -51,7 +52,7 @@ export function BottomNav({ items, ctaLabel, onCtaPress, className }: Readonly<B
           <BottomNavItem key={item.href} {...item} />
         ))}
       </div>
-      <div className="h-(--space-8) w-full" aria-hidden="true" />
+      <div className="h-[env(safe-area-inset-bottom)] w-full" aria-hidden="true" />
     </nav>
   );
 }

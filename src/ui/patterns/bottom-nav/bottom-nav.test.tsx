@@ -22,7 +22,12 @@ describe("BottomNav (C34)", () => {
     expect(screen.getAllByRole("link")).toHaveLength(4);
     const cta = screen.getByRole("button", { name: "Proyek baru" });
     expect(cta).toBeInTheDocument();
-    expect(cta).toHaveClass("absolute", "-top-(--space-8)");
+    expect(cta).toHaveClass(
+      "absolute",
+      "-top-(--space-8)",
+      "outline-4",
+      "outline-(--component-bottom-nav-cta-ring)",
+    );
     expect(screen.getByTestId("bottom-nav-cta-slot")).toHaveClass(
       "h-(--space-12)",
       "w-(--space-16)",

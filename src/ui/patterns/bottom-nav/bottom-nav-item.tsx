@@ -39,6 +39,7 @@ export function BottomNavItem({
         {count ? (
           <CountBadge
             count={count}
+            variant="danger"
             className="absolute left-(--space-4) top-[calc(var(--space-0-5)*-1)] z-10"
           />
         ) : null}

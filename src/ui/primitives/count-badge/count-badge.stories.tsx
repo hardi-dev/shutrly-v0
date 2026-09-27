@@ -14,4 +14,5 @@ export default meta;
 
 export const Default: StoryObj<typeof meta> = {};
 export const Capped: StoryObj<typeof meta> = { args: { count: 120 } };
+export const Danger: StoryObj<typeof meta> = { args: { variant: "danger" } };
 export const Hidden: StoryObj<typeof meta> = { args: { count: 0 } };

@@ -19,6 +19,8 @@ describe("BottomNavItem (C34)", () => {
       "left-(--space-4)",
       "top-[calc(var(--space-0-5)*-1)]",
       "z-10",
+      "bg-(--component-badge-danger-background)",
+      "text-(--component-badge-danger-text)",
     );
   });
 });

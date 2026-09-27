@@ -36,7 +36,9 @@ Use the Storybook theme toolbar to switch between the approved `light` and `dark
 | Generated CSS variables | `src/ui/theme/tokens.css` | Loaded through the shared preview styles |
 
 Do not copy token values into a story or edit tokens from Storybook. Change tokens through the
-existing generator pipeline, then run `pnpm tokens:check`.
+existing generator pipeline, then run `pnpm tokens:check`. The check also scans CSS-bearing source
+files for `var(--...)` and Tailwind arbitrary-value references such as `bg-(--...)`, reporting
+unknown variables with their file and line number.
 
 ## Story conventions
 

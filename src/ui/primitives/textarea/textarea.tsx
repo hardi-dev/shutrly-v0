@@ -15,7 +15,7 @@ import { TEXTAREA_COPY } from "./textarea.copy";
 import type { TextareaProps } from "./textarea.types";
 
 const TEXTAREA = [
-  "min-h-(--space-24) w-full resize-y rounded-(--component-input-radius)",
+  "min-h-24 w-full resize-y rounded-(--component-input-radius)",
   "border border-(--component-input-border) bg-(--component-input-background)",
   "px-(--component-input-padding-x) py-(--component-input-padding-y)",
   "text-(length:--font-size-body) text-(--component-input-text) outline-none",

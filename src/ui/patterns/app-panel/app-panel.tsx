@@ -7,7 +7,7 @@ export function AppPanel({ title, actions, children }: Readonly<AppPanelProps>) 
   return (
     <main
       aria-labelledby={titleId}
-      className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-(--component-panel-app-radius) border border-(--component-panel-app-border) bg-(--component-panel-background)"
+      className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-(--component-panel-app-radius) border border-(--component-panel-app-border) bg-(--component-panel-app-background)"
     >
       <header className="flex h-[72px] shrink-0 items-center justify-between gap-(--component-panel-app-header-gap) border-b border-(--component-panel-app-border) px-(--component-panel-app-header-padding-x)">
         <h1

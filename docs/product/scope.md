@@ -4,7 +4,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25)
 
 ## MVP
 - Owner account: register, verify email (link), login/logout, Google sign-in (identity only, auto-linked by email), forgot/reset/change password, update profile (display name only). Transactional auth emails sent by the platform to the Owner.
-- Multiple Workspaces (brands) per Owner; branding, invoice prefix, default currency (IDR).
+- Multiple Workspaces (brands) per Owner; branding (name, brand name, contact email/phone/address — no logo), invoice prefix, default currency (IDR). Create, edit and switch only.
 - Workspace message templates (WhatsApp channel) and source configuration (Google Drive).
 - Service catalog: categories, reusable item definitions, services with item values (`NUMBER`/`RANGE`), service-specific booking fields.
 - Clients.
@@ -19,6 +19,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25)
 
 ## Explicitly Out of Scope
 - Staff/multi-user workspaces (`WorkspaceMember`), freelancer logins.
+- Workspace logo upload, workspace archive or deletion (Owner 2026-09-27, F-02 discovery).
 - Client accounts.
 - Social sign-in providers other than Google, adding a password to a Google-only account, unlinking Google, 2FA, email change, avatar, self-service account deletion, admin UI for user status.
 - Direct WhatsApp API sending, message history, delivery status.

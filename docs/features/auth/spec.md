@@ -46,7 +46,7 @@ Email is trimmed and compared case-insensitively. Password rules: see A-1.
 ## Main Flow — returning Owner
 1. Owner submits Login with email + password.
 2. System checks credentials, then status (BR-AUTH-005), then verification (BR-AUTH-003).
-3. Verified + active → session created → hand-off to F-02 workspace resolution (zero workspaces → onboarding; otherwise workspace dashboard/selection).
+3. Verified + active → session created → hand-off to F-02 workspace resolution (zero workspaces → onboarding; otherwise the dashboard of the most recently opened workspace, BR-WS-006).
 
 ## Alternative Flows
 - **Unverified login:** valid credentials but unverified → session is created but restricted: every owner route redirects to Verification pending; only resend, logout, and the verification link work (BR-AUTH-003).

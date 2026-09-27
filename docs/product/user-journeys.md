@@ -7,10 +7,10 @@
 ```mermaid
 flowchart LR
     A[Register] --> B[Verify email] --> C[Create first Workspace] --> D[Dashboard]
-    R[Returning: Login] --> S[Select Workspace] --> D
+    R[Returning: Login] --> S[Last opened Workspace] --> D
 ```
 
-**Alternate:** verification pending → resend; "Continue with Google" skips email verification (Google-verified email, BR-AUTH-006); verified user with zero workspaces is always redirected to onboarding.
+**Alternate:** verification pending → resend; "Continue with Google" skips email verification (Google-verified email, BR-AUTH-006); verified user with zero workspaces is always redirected to onboarding; a returning Owner lands in the workspace they opened most recently, with no selection step, and switches brands from the sidebar (BR-WS-006).
 **Success:** verified Owner with ≥1 workspace sees its dashboard.
 
 ## J-02 — Catalog setup

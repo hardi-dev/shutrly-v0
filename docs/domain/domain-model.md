@@ -6,7 +6,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25). Business-oriented; pe
 
 **Identity & tenancy**
 - **User (Owner)** — authenticated internal account; owns workspaces.
-- **Workspace** — one brand/business; the tenant boundary. Holds branding, invoice prefix, default currency.
+- **Workspace** — one brand/business; the tenant boundary. Holds branding (name, brand name, contact — no logo in MVP), invoice prefix, default currency (BR-WS-004).
 - **MessageTemplate** — reusable, typed WhatsApp message with `{{variables}}`.
 - **WorkspaceSourceConfig** — provider configuration (MVP: Google Drive public links).
 

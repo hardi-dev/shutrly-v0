@@ -46,6 +46,18 @@ All tenant data (clients, services, projects, galleries, invoices, payments, tem
 ### BR-WS-003 — Workspace context is verified
 Every Owner action resolves an active workspace and verifies the Owner owns it. A workspace ID supplied by the browser is never trusted without that check.
 
+### BR-WS-004 — Workspace profile
+A workspace has a name (required), an optional brand name shown to clients (falling back to the name when empty), optional contact email, phone and address, an invoice prefix (BR-WS-005), and a default currency (BR-CUR-001, IDR only). There is no logo in MVP. *(F-02 discovery, Owner 2026-09-27.)*
+
+### BR-WS-005 — Invoice prefix
+Every workspace has an invoice prefix, suggested from its name at creation and editable later. A change applies only to invoices numbered afterwards; issued invoice numbers never change (C-102, BR-INV-001). *(F-02 discovery, Owner 2026-09-27.)*
+
+### BR-WS-006 — Active workspace after sign-in
+After sign-in, a verified Owner with zero workspaces goes to first-workspace creation (BR-AUTH-004). Otherwise the workspace they opened most recently opens; there is no workspace-selection step. Creating, opening or switching to a workspace counts as opening it, so every workspace has a last-opened time from the moment it is created. *(F-02 discovery, Owner 2026-09-27; selection step removed after research, Owner 2026-09-27.)*
+
+### BR-WS-007 — Workspaces are not archived or deleted in MVP
+An Owner can create and edit workspaces only. Archiving and deleting are out of MVP scope. *(F-02 discovery, Owner 2026-09-27.)*
+
 ---
 
 ## Communication (MSG)

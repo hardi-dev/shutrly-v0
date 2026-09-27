@@ -399,6 +399,7 @@
     "component/sidebar/padding-y": "component.sidebar.padding-y",
     "component/sidebar/rail/gap": "component.sidebar.rail.gap",
     "component/sidebar/rail/width": "component.sidebar.rail.width",
+    "component/sidebar/width": "component.sidebar.width",
     "component/sidebar/workspace/background": "component.sidebar.workspace.background",
     "component/sidebar/workspace/border": "component.sidebar.workspace.border",
     "component/sidebar/workspace/mark": "component.sidebar.workspace.mark",
@@ -490,7 +491,12 @@
     "size/bottom-nav-cta": "size.bottom-nav-cta",
     "size/content-max": "size.content-max",
     "size/content-narrow": "size.content-narrow",
+    "size/editorial-card": "size.editorial-card",
+    "size/mark-lg": "size.mark-lg",
+    "size/mark-md": "size.mark-md",
+    "size/mark-sm": "size.mark-sm",
     "size/rail": "size.rail",
+    "size/sidebar": "size.sidebar",
     "space/0-5": "space.0-5",
     "space/1": "space.1",
     "space/1-5": "space.1-5",
@@ -508,10 +514,10 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 487,
+    "total": 493,
     "primitive": 61,
     "semantic": 54,
-    "component": 315,
+    "component": 316,
     "themed": 58
   },
   "transforms": {

@@ -110,6 +110,11 @@ NUM = {  # number tokens: path -> (value, description)
  "size.content-narrow":(720,"Centered single-column content width inside Page Content; Owner approved 2026-09-26 from Auth Profile"),
  "size.auth-panel":(600,"Auth split editorial panel width (Owner approved 2026-09-27)"),
  "size.auth-form":(420,"Auth form column width (Owner approved 2026-09-27)"),
+ "size.sidebar":(252,"Desktop sidebar width (Owner approved 2026-09-27)"),
+ "size.mark-sm":(14,"Small workspace mark size (Owner approved 2026-09-27)"),
+ "size.mark-md":(20,"Medium workspace mark size (Owner approved 2026-09-27)"),
+ "size.mark-lg":(22,"Large workspace mark size (Owner approved 2026-09-27)"),
+ "size.editorial-card":(360,"Editorial preview card width (Owner approved 2026-09-27)"),
  "radius.2xs":(2,"Bars"),"radius.xs":(4,"Kbd, delta, checkbox"),"radius.sm":(8,"Nav item, input"),"radius.md":(12,"Tile, toast"),
  "radius.lg":(16,"App panel, day cell"),"radius.xl":(24,"Sheet"),"radius.full":(999,"Pill"),
  "opacity.disabled":(0.4,""),"opacity.hover-overlay":(0.06,""),"opacity.status-tint":(0.16,"Dark status backgrounds"),"opacity.scrim":(0.5,""),
@@ -405,6 +410,7 @@ add("bottom-nav.cta.icon","color",SC("action.on-primary"))
 add("bottom-nav.cta.ring","color",SC("surface.panel"))         # 4 px ring separating the raised CTA from content
 add("bottom-nav.cta.size","number",SP("size.bottom-nav-cta"))  # 54; Owner approved 2026-09-28
 # Sidebar aliases (Owner 2026-09-26: promote the layout region to component tokens; values unchanged)
+add("sidebar.width","number",SP("size.sidebar"))
 add("sidebar.padding-y","number",SP("space.2"))                # 8
 add("sidebar.padding-x","number",SP("space.3"))                # 12
 add("sidebar.gap","number",SP("space.3"))                      # sections 12

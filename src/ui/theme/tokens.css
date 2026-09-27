@@ -136,6 +136,11 @@
   --size-content-narrow: 720px;
   --size-auth-panel: 600px;
   --size-auth-form: 420px;
+  --size-sidebar: 252px;
+  --size-mark-sm: 14px;
+  --size-mark-md: 20px;
+  --size-mark-lg: 22px;
+  --size-editorial-card: 360px;
   --radius-2xs: 2px;
   --radius-xs: 4px;
   --radius-sm: 8px;
@@ -470,6 +475,7 @@
   --component-bottom-nav-cta-icon: var(--color-semantic-action-on-primary);
   --component-bottom-nav-cta-ring: var(--color-semantic-surface-panel);
   --component-bottom-nav-cta-size: var(--size-bottom-nav-cta);
+  --component-sidebar-width: var(--size-sidebar);
   --component-sidebar-padding-y: var(--space-2);
   --component-sidebar-padding-x: var(--space-3);
   --component-sidebar-gap: var(--space-3);

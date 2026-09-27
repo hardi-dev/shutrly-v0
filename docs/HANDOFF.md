@@ -1,24 +1,33 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-27 (F-00 Foundation DONE; F-01 Auth DONE; F-02 Workspace DESIGNED) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-09-27 (F-00 Foundation DONE; F-01 Auth DONE; F-02 Workspace PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `main`.
 
-## Current handoff — resume here: plan F-02 Workspace
+## Current handoff — resume here: build F-02 Workspace
 
-**F-02 Workspace is DESIGNED** (Owner approved on 2026-09-27). Read in this order: [spec.md](features/workspace/spec.md), [acceptance-criteria.md](features/workspace/acceptance-criteria.md) (AC-WS-001…025; 010 deprecated), and [design.md](features/workspace/design.md).
-- **Pencil:** [workspace.pen](features/workspace/workspace.pen) imports the library as `G:`. It holds 32 frames: desktop at x 0 and mobile at x 1520, one state per row going down, plus the local component `UTew4` Editorial preview. The exploration is in `exploration.pen` › board 08 (`Etl3k`); the Owner chose option D (`bEbHx`).
-- **Owner decisions on 2026-09-27:**
-  - BR-WS-004…007: no logo, a name-only onboarding form, no archive or delete.
-  - **No Select workspace step.** Sign-in opens the most recently opened workspace (BR-WS-006 amended after research; AC-WS-010 deprecated).
-  - F-02 builds the App Shell code for desktop, tablet and mobile.
-  - **A-7:** the full library navigation is shown.
-  - **SPEC GAP-F02-1 = (c):** unbuilt destinations open a *Segera hadir* page (AC-WS-025).
-- **Component status** (design.md › Component usage): only Button, Text Field, Icon and Alert (info/danger) exist in code. Fourteen library components still have to be built: App Shell, Sidebar, Tablet rail, Mobile App Shell, Bottom Nav, Nav Item, Textarea, Menu and Menu Item, Modal, Bottom Sheet and Sheet Item. Alert needs a Success tone, and `EditorialPanel` needs a headline slot.
-- **Before building (Owner):**
-  - Export the HTML for each frame into `docs/features/workspace/exports/` (design.md › HTML exports).
-  - Optionally run `/sdv:sync-pencil` first to close token drift F-6 (T1–T4 aren't in Pencil).
-- **Library findings for `/sdv:verify-design-system`:** the Mobile App Shell's Overlay has a fixed 375 × 812 size, and Sheet Item has no selected variant.
-- **Next:** `/sdv:plan-feature workspace`.
+**F-02 Workspace is PLANNED** (2026-09-27): [technical-design.md](features/workspace/technical-design.md), status DRAFT until the Owner approves. It has 12 iterations in two batches:
+- **Batch A (iterations 1–4)** builds the design-system components that aren't in code yet: icon names, Alert success, IconButton, Avatar, CountBadge, Tooltip, Textarea, nav items, Bottom Nav, Menu, Modal, Bottom Sheet, App Panel, Sidebar, rail, Mobile App Shell and App Shell. It also moves the split layout and editorial panel into `src/ui/patterns`.
+- **Batch B (iterations 5–12)** builds the workspace feature: domain and `workspace` table (migration `0001`, applied by the Owner), application, adapter and composition, onboarding, the owner shell and pages, the switcher and create flow, settings, and E2E.
+- **New ADR-015 (Accepted 2026-09-27):**
+  - URL-scoped routes `/w/[workspaceId]` with English slugs.
+  - Resolution order: F-01 gate → 0 workspaces go to onboarding → *not found*.
+  - Verify and touch are separate: `verifyWorkspace` reads only and runs in every page and action; `touchLastOpened` is conditional.
+  - Switching is a POST.
+  - Owner 2026-09-27: CONFLICT-ADR015-1 resolved as option (b). The first page entered from outside a workspace counts as opening it, except *Segera hadir*. Slugs are English.
+- **Owner decisions made on 2026-09-27:**
+  - ADR-015 is **Accepted**.
+  - GAP-F02-2: the tablet Expand overlay is built per nav-rail.md (Iteration 4).
+  - T5: `size.sidebar` 252, plus `size.mark-md` 20 and `size.mark-lg` 22 (Iteration 4).
+  - GAP-F02-3: the preview card uses no literals. The shadow uses `elevation.2`; new tokens are `size.editorial-card` 360 and `size.mark-sm` 14. The Owner rebinds `UTew4` in Pencil before the Iteration 8 exports.
+- **Owner actions still pending:**
+  - `/sdv:sync-pencil` after the Iteration 4 token task. This also closes F-6.
+  - The `UTew4` rebind before Iteration 8.
+- **Exports: done 2026-09-27 via Pencil MCP.**
+  - 16 library component pages in `docs/design-system/exports/`.
+  - 24 workspace frames in `docs/features/workspace/exports/`.
+  - The 8 onboarding frames are still pending: they wait for the `UTew4` rebind (Iteration 8).
+- **technical-design.md: APPROVED** (Owner 2026-09-27).
+- **Next:** `/sdv:build-feature workspace 1`.
 
 **F-01 Auth is DONE** (verified 2026-09-27; [verification-report.md](features/auth/verification-report.md)). It has non-blocking follow-ups F-5…F-8 and ship blockers S-1…S-6 (CI and deploy, the real Google smoke test, the D-3 copy review, licensed mosaic photos, the rate-limit purge schedule, and F-02).
 

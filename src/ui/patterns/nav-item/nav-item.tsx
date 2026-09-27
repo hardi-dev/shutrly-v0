@@ -11,7 +11,6 @@ const BASE = [
   "rounded-(--component-nav-item-radius) px-(--component-nav-item-padding-x)",
   "py-(--component-nav-item-padding-y) text-(--component-nav-item-text)",
   "outline-none transition-colors",
-  "hover:bg-(--component-nav-item-background-hover)",
   "focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
 ];
 
@@ -39,6 +38,7 @@ export function NavItem({
       aria-current={isActive ? "page" : undefined}
       className={cn(
         BASE,
+        !isActive && "hover:bg-(--component-nav-item-background-hover)",
         isActive &&
           "bg-(--component-nav-item-background-active) text-(--component-nav-item-text-active)",
         className,

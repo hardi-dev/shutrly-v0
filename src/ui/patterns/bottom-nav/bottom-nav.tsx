@@ -24,7 +24,7 @@ export function BottomNav({ items, ctaLabel, onCtaPress, className }: Readonly<B
         className={cn(
           "flex w-full items-start justify-between px-(--component-bottom-nav-padding-x)",
           "pt-(--component-bottom-nav-padding-top)",
-          "pb-(--component-bottom-nav-padding-bottom)",
+          "pb-(--component-bottom-nav-padding-top)",
         )}
       >
         {items.slice(0, 2).map((item) => (

@@ -13,8 +13,9 @@ describe("EditorialPanel (Z5xhk)", () => {
     expect(panel?.querySelector("img")).toHaveAttribute("alt", "");
   });
 
-  it("AC-AUTH-023 keeps the headline as text", () => {
-    const { container } = render(<EditorialPanel />);
+  it("AC-AUTH-023 renders the supplied headline and panel copy as text", () => {
+    const { container } = render(<EditorialPanel>Headline</EditorialPanel>);
+    expect(container.textContent).toContain("Headline");
     expect(container.textContent).toContain(EDITORIAL_PANEL_COPY.body);
   });
 });

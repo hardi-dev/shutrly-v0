@@ -91,7 +91,7 @@ export function Textarea({
         readOnly={isReadOnly}
         rows={3}
         onChange={handleChange}
-        className={TEXTAREA}
+        className={cn(TEXTAREA)}
       />
       <TextareaDescription errorMessage={errorMessage} helperText={helperText} />
     </TextField>

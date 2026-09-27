@@ -27,9 +27,9 @@ describe("Alert (C24)", () => {
     expect(container.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
   });
 
-  it("C24 renders the success tone with its success token classes", () => {
-    render(<Alert tone="success" title="Tersimpan" />);
-    const alert = screen.getByText("Tersimpan").closest("[data-tone]");
+  it("AC-AUTH-023 live success feedback uses role=status and success tokens", () => {
+    render(<Alert tone="success" title="Tersimpan" live />);
+    const alert = screen.getByRole("status");
 
     expect(alert).toHaveAttribute("data-tone", "success");
     expect(alert).toHaveClass(

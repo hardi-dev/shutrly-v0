@@ -27,7 +27,7 @@ describe("Alert (C24)", () => {
     expect(container.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
   });
 
-  it("renders the success tone with its success token classes", () => {
+  it("C24 renders the success tone with its success token classes", () => {
     render(<Alert tone="success" title="Tersimpan" />);
     const alert = screen.getByText("Tersimpan").closest("[data-tone]");
 

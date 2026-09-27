@@ -54,7 +54,7 @@ The F-00 build instructions below are kept for reference.
 
 ## Historical plan for F-01 Auth (revised 2026-09-27)
 
-- **Status:** PLANNED. On 2026-09-27, [plan.md](features/auth/plan.md) (33 tasks, 0–32) and [technical-design.md](features/auth/technical-design.md) were **rewritten for coding rules v2.0** and the implemented F-00 (R-9 resolved). The code blocks were verified in a scratch worktree, and every task was replayed on a clean checkout:
+- **Status:** IMPLEMENTED LOCALLY; verification pending. On 2026-09-27, [plan.md](features/auth/plan.md) (33 tasks, 0–32) and [technical-design.md](features/auth/technical-design.md) were **rewritten for coding rules v2.0** and the implemented F-00 (R-9 resolved). The code blocks were verified in a scratch worktree, and every task was replayed on a clean checkout:
   - typecheck, lint and `next build` pass;
   - 208 unit/DOM tests pass;
   - the migration was generated and reviewed.
@@ -114,7 +114,7 @@ The historical session notes and plans below predate this current handoff; use t
 |---|---|---|
 | Project bootstrap (product, domain, architecture, ADR-001…012, constitution, coding rules) | DONE (2026-09-25); coding rules v2.0 on 2026-09-27 | Authoritative tree under `docs/`; `_source/` is historical. Folder architecture finalized 2026-09-26 in `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`. |
 | F-00 Foundation | DONE (verified 2026-09-27) | [verification-report.md](features/foundation/verification-report.md): all 16 ACs pass. Non-blocking follow-ups F-1…F-4. |
-| F-01 Auth | PLANNED (revised 2026-09-27) | Design approved (`auth.pen`); UI language Indonesian. `plan.md` has 33 tasks, rewritten for coding rules v2.0 and replay-verified. ADR-013 proposed. Blocked on the Task 0 decisions, F-00 verification, the token gaps and the HTML exports. |
+| F-01 Auth | IMPLEMENTED LOCALLY (verification pending) | Design approved (`auth.pen`); UI language Indonesian. `plan.md` has 33 tasks, rewritten for coding rules v2.0 and replay-verified. Fidelity automation was removed by Owner decision and recorded as D-2. |
 | Design system — exploration | APPROVED (2026-09-26) | Direction **S / Studio Lime**, curated by the Owner from legacy frames. |
 | Design system — tokens | PERSISTED (2026-09-26) | **479 tokens** (61 primitive · 54 semantic · 312 component · scales), `mode: light \| dark`. Repository payload checksum `c8b47514`; full Pencil checksum check remains. |
 | Design system — token canvas | PARTIAL UPDATE | Cover count and board 06 Alert labels updated; board 08 still needs the approved 720 px layout example. |

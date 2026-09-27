@@ -266,7 +266,7 @@ Each iteration is done only when the quality gate in [coding-rules.md](../../cod
 
 ### Iteration 7 — Screens (tasks 27–30)
 - [ ] Register and verification, login and unavailable, recovery, profile.
-- **Done when:** every screen passes its fidelity pass against its export.
+- **Done when:** every screen has a manual fidelity review against its export, with remaining differences recorded as deviations.
 
 ### Iteration 8 — Journey verification (tasks 31–32)
 - [x] J-01 journeys, axe, logging audit, deviations and docs.

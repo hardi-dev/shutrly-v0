@@ -10,18 +10,13 @@ import {
   createCapturingEmailSender,
   isEmailCaptureEnabled,
 } from "@/adapters/email/capturing-email-sender/capturing-email-sender";
+import { createWorkspaceDestination } from "@/composition/workspace/workspace-destination/workspace-destination";
 import { LinkOutbox } from "@/features/auth/application/link-outbox/link-outbox";
 import type { AuthEmailPort } from "@/features/auth/application/ports/auth-email/auth-email.port";
-import type { WorkspaceDestinationPort } from "@/features/auth/application/ports/workspace-destination/workspace-destination.port";
 import type { AppEnv } from "@/shared/env/app-env.types";
 
 import { withRequestDb } from "../../request-db/request-db";
 import type { AuthScope } from "./auth-scope.types";
-
-// SPEC GAP-2: F-02 replaces this stub with the real workspace resolver.
-const onboardingUntilWorkspaceExists: WorkspaceDestinationPort = {
-  resolve: () => Promise.resolve("ONBOARDING"),
-};
 
 function emailSender(env: AppEnv): AuthEmailPort {
   if (isEmailCaptureEnabled(env)) return createCapturingEmailSender();
@@ -52,7 +47,7 @@ export function withAuthScope<T>(work: (scope: AuthScope) => Promise<T>): Promis
       accounts,
       rateLimiter: createNeonRateLimiter(db),
       outbox,
-      destination: onboardingUntilWorkspaceExists,
+      destination: createWorkspaceDestination(db),
       waitUntil: (promise) => {
         rc.waitUntil(promise);
       },

@@ -13,4 +13,5 @@ export interface AccountSectionsProps {
   account: AccountView;
   updateName: FormAction<UpdateDisplayNameInput>;
   changePassword: FormAction<ChangePasswordInput>;
+  passwordChanged?: boolean;
 }

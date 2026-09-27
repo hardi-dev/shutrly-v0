@@ -1,6 +1,6 @@
 # Technical Design — F-01 Auth & Account
 
-Status: APPROVED (Owner 2026-09-27): revised for coding rules v2.0 and the implemented F-00, and every open decision is answered.
+Status: IMPLEMENTED (local verification 2026-09-27): revised for coding rules v2.0 and the implemented F-00, with the remaining review items recorded below.
 
 ## Context
 
@@ -152,7 +152,7 @@ Application flows (one use case each; see [diagrams/sequence/](diagrams/sequence
 **Visual truth is `auth.pen`**, implemented from **HTML exports of each frame** (Owner request, 2026-09-27; plan › *Pixel-perfect UI*):
 - The Owner exports each frame to `docs/features/auth/exports/`.
 - Components follow the export's structure and spacing, mapped to tokens. Missing tokens are reported as DESIGN TOKEN GAPs.
-- Playwright compares every exported state with its route (`auth-fidelity.spec.ts`).
+- HTML exports remain the visual source of truth. The automated pixel-fidelity test was removed by Owner decision after its known baseline mismatches were recorded under Deviations.
 
 | Unit | Location | Notes |
 |---|---|---|
@@ -216,7 +216,7 @@ Errors never carry passwords, tokens, URLs, cookies, OAuth codes or provider tok
 
 - **Unit (Vitest):** domain, use cases over in-memory fakes (`tests/support/auth`), adapters without I/O, composition helpers, the Proxy, and every form and screen (DOM).
 - **Integration:** the real adapters and Better Auth on the shared non-production Neon database. Every test uses its own unique emails and IPs.
-- **E2E (Playwright):** captured email links, axe on every auth screen, and pixel fidelity against the HTML exports.
+- **E2E (Playwright):** captured email links, journeys, and axe on every auth screen. Fidelity is reviewed manually against the HTML exports.
 
 | AC | Level | Plan task |
 |---|---|---|
@@ -234,7 +234,7 @@ Errors never carry passwords, tokens, URLs, cookies, OAuth codes or provider tok
 | AC-AUTH-024–029, 031 | unit (guard, Google error, start) + integration (Google callback against the real endpoint) + E2E (cancel) | 17, 19, 28, 31 |
 | AC-AUTH-030 | unit (login, reset, account-sections) | 15, 16, 30 |
 
-Every test title starts with its `AC-AUTH-*`/`BR-AUTH-*` ID. Visual fidelity is checked in each UI task (fidelity pass) and automatically in `auth-fidelity.spec.ts`, at 1440 and 390.
+Every test title starts with its `AC-AUTH-*`/`BR-AUTH-*` ID. Visual fidelity was checked during each UI task against the 1440 and 390 HTML exports; the automated snapshot test was removed by Owner decision and its differences remain recorded below.
 
 ## Implementation Iterations
 
@@ -269,8 +269,8 @@ Each iteration is done only when the quality gate in [coding-rules.md](../../cod
 - **Done when:** every screen passes its fidelity pass against its export.
 
 ### Iteration 8 — Journey verification (tasks 31–32)
-- [ ] J-01 journeys, axe, pixel fidelity, logging audit, deviations and docs.
-- **Done when:** all suites are green; ready for `/sdv:verify-feature auth`.
+- [x] J-01 journeys, axe, logging audit, deviations and docs.
+- **Done when:** functional and accessibility suites are green; visual differences are explicitly recorded; ready for `/sdv:verify-feature auth`.
 
 ## Risks / Open Questions
 
@@ -304,4 +304,6 @@ Each iteration is done only when the quality gate in [coding-rules.md](../../cod
 
 ## Deviations
 
-None yet. Implementation records every fidelity difference and plan deviation here (plan Task 32).
+- **D-2 — Automated fidelity E2E removed (Owner 2026-09-27).** `tests/e2e/auth/auth-fidelity.spec.ts` and its snapshots were removed at the Owner's request because the exported HTML and rendered routes still differ. The last run had 24/35 E2E tests passing and 11 fidelity failures: `login-amp4Y`, `login-IOC5i`, `register-m3QGM`, `register-UryLp`, `forgot-password-o9WtCo`, `forgot-password-e091S`, `reset-sent-NkvJG`, `invalid-reset-link-x5ds7`, `invalid-reset-link-Hf3VK`, `account-unavailable-kXr5x`, and `account-unavailable-FFue5`. Differences ranged from 2% to 8% of pixels. No threshold was loosened; HTML exports remain available for manual review.
+- **D-3 — Non-Pencil copy.** Indonesian validation, processing, password-visibility, profile-save, resend, and auth-error strings, plus auth email templates, are not drawn in Pencil and remain implementation copy pending Owner review.
+- **D-4 — E2E worker count.** Playwright is intentionally single-worker because concurrent Better Auth scrypt operations saturated the local CPU and caused the profile change-password journey to exceed its timeout; the isolated journey passes without changing the production hashing configuration.

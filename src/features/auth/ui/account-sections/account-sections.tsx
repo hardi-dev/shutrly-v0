@@ -16,6 +16,7 @@ export function AccountSections({
   account,
   updateName,
   changePassword,
+  passwordChanged = false,
 }: Readonly<AccountSectionsProps>) {
   return (
     <div className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-6)">
@@ -24,7 +25,7 @@ export function AccountSections({
       </AccountSection>
       {account.hasPassword ? (
         <AccountSection title={COPY.passwordTitle} lead={COPY.passwordLead}>
-          <ChangePasswordForm action={changePassword} />
+          <ChangePasswordForm action={changePassword} initialDone={passwordChanged} />
         </AccountSection>
       ) : (
         <Alert tone="info" title={COPY.googleOnlyTitle} body={COPY.googleOnlyBody} />

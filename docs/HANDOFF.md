@@ -1,9 +1,15 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-27 (F-00 Foundation DONE; F-01 Auth planned and approved, next to build) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-09-27 (F-00 Foundation DONE; F-01 Auth implemented, verification next) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `main`.
 
-## Current handoff — resume here: build F-01 Auth
+## Current handoff — resume here: verify F-01 Auth
+
+F-01 Auth is implemented locally through Task 32. Functional verification is green: 209 unit tests, 38 integration tests, and 24/24 non-fidelity E2E tests passed in the latest runs. The automated fidelity E2E test was removed at the Owner's request after 11/35 snapshot comparisons failed; the deviation is recorded in `docs/features/auth/technical-design.md`.
+
+**Next:** `/sdv:verify-feature auth`. Do not call F-01 shipped yet: the verification should review the recorded fidelity deviation, the real Google scope check, and the non-Pencil copy review. CI and Cloudflare deployment remain prerequisites before `/sdv:ship`.
+
+The sections below retain the historical build notes for context.
 
 **F-00 Foundation is DONE** (verified 2026-09-27; [verification-report.md](features/foundation/verification-report.md)). None of its follow-ups blocks F-01:
 - F-1: commit the missing lint test cases.
@@ -11,7 +17,7 @@ Branch: `main`.
 - F-3: decide the two token gaps (label line height, ring/border widths).
 - F-4: add the TextField trailing error icon (D-1).
 
-**Next:** `/sdv:build-feature auth 1`, following [features/auth/plan.md](features/auth/plan.md). Its technical design is APPROVED and every Owner decision is recorded. The Owner still has to fill in `GOOGLE_*`, `RESEND_API_KEY` and `AUTH_EMAIL_FROM` in `.dev.vars` and `.env.test`. See *Next after F-00: F-01 Auth* below.
+**Historical next step:** `/sdv:build-feature auth 1`, following [features/auth/plan.md](features/auth/plan.md). This has since been completed through Task 32.
 
 The F-00 build instructions below are kept for reference.
 
@@ -46,7 +52,7 @@ The F-00 build instructions below are kept for reference.
 - **Coding rules v2.0:** the Owner's standard from the earlier shutrly repo, adapted to this architecture. It covers boundaries, SonarJS, import sorting, `server-only`, the `.types.ts` / `.schema.ts` / `.copy.ts` siblings, no `as`, JSDoc, and a Prettier pre-commit hook. The rules the file does not adopt, and why, are listed at its end.
 - **Unit folders:** every F-00 unit lives in its own folder, e.g. `src/adapters/db/client/client.ts` and `src/composition/request-db/request-db.ts`. Only Next- and Drizzle-fixed files are exempt.
 
-## Next after F-00: F-01 Auth (revised 2026-09-27, don't build yet)
+## Historical plan for F-01 Auth (revised 2026-09-27)
 
 - **Status:** PLANNED. On 2026-09-27, [plan.md](features/auth/plan.md) (33 tasks, 0–32) and [technical-design.md](features/auth/technical-design.md) were **rewritten for coding rules v2.0** and the implemented F-00 (R-9 resolved). The code blocks were verified in a scratch worktree, and every task was replayed on a clean checkout:
   - typecheck, lint and `next build` pass;

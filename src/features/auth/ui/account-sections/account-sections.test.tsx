@@ -8,12 +8,13 @@ import { ACCOUNT_SECTIONS_COPY } from "./account-sections.copy";
 
 const base = { email: "alya@asterwedding.id", name: "Alya Pratama" };
 
-function renderSections(hasPassword: boolean) {
+function renderSections(hasPassword: boolean, passwordChanged = false) {
   render(
     <AccountSections
       account={{ ...base, hasPassword }}
       updateName={vi.fn()}
       changePassword={vi.fn()}
+      passwordChanged={passwordChanged}
     />,
   );
 }
@@ -28,6 +29,11 @@ describe("AccountSections (t7CXVK / TInkk)", () => {
   it("AC-AUTH-019 shows the password section for password accounts", () => {
     renderSections(true);
     expect(screen.getByLabelText(CHANGE_PASSWORD_FORM_COPY.current)).toBeInTheDocument();
+  });
+
+  it("AC-AUTH-019 shows the success state after the refreshed session redirect", () => {
+    renderSections(true, true);
+    expect(screen.getByRole("status")).toHaveTextContent(CHANGE_PASSWORD_FORM_COPY.done);
   });
 
   it("AC-AUTH-030 BR-AUTH-008 hides it for Google-only accounts", () => {

@@ -45,7 +45,7 @@ The canvas places each 1440 px desktop frame immediately left of its 390 px mobi
 3. Resolve the design-system loading-state gap and confirm final copy before implementation.
 4. Translate the frame text to Indonesian, using the strings in plan.md's `*.copy.ts` blocks (approved 2026-09-27). Export every state to HTML when implementation reaches the UI (see below).
 5. **Approved (Owner 2026-09-27):** add DESIGN TOKEN GAPs T1–T4 through the design-system pipeline before plan Task 25: `size.auth-panel` 600, `size.auth-form` 420, `font.size.hero` 44 and `space.16` 64. The editorial body text is 15 in `Z5xhk`, but no 15 token exists; the plan uses `font.size.body` (14). Adjust the frame, or add a token (technical-design.md › Risks).
-6. Confirm the copy not drawn in Pencil (`// not in Pencil` in the `*.copy.ts` files, plus the auth emails), listed after implementation (plan Task 32).
+6. Confirm the copy not drawn in Pencil: validation and error messages, processing states, password-visibility labels, profile-save messages, resend confirmation, and auth email templates. These remain listed for Owner review; they are marked `// not in Pencil` in the source.
 
 ## Inline notices (Alert)
 
@@ -98,4 +98,4 @@ Owner request, 2026-09-27: the front end is built from **HTML exports** of these
 | `profile-t7CXVK` · `profile-vEZsy` | Profile and password |
 | `profile-google-TInkk` · `profile-google-Vygzt` | Google-only profile |
 
-Also export `public/auth/editorial/mosaic.webp` (and `@2x`) from `Z5xhk`. Each UI task in [plan.md](plan.md) stops until its exports exist, then finishes with a fidelity pass against them. Playwright checks every pair pixel by pixel (`tests/e2e/auth/auth-fidelity.spec.ts`).
+Also export `public/auth/editorial/mosaic.webp` (and `@2x`) from `Z5xhk`. Each UI task in [plan.md](plan.md) stops until its exports exist, then finishes with a fidelity pass against them. The automated Playwright pixel comparison was removed by Owner decision after the remaining differences were recorded in `technical-design.md`.

@@ -1,5 +1,7 @@
 "use server";
 
+import { redirect } from "next/navigation";
+
 import { changeOwnPassword, updateProfileName } from "@/composition/auth/profile-flow/profile-flow";
 import type { AuthFailure } from "@/features/auth/application/errors/auth-errors/auth-errors.types";
 import type { ChangePasswordInput } from "@/features/auth/application/use-cases/change-password/change-password.types";
@@ -16,5 +18,6 @@ export async function changePasswordAction(
   values: ChangePasswordInput,
 ): Promise<AuthFailure | undefined> {
   const result = await changeOwnPassword(values);
-  return result.ok ? undefined : result;
+  if (result.ok) redirect("/profile?state=password-changed");
+  return result;
 }

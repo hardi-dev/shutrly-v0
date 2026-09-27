@@ -3,13 +3,15 @@ import { loadProfile } from "@/composition/auth/profile-flow/profile-flow";
 import { AccountSections } from "@/features/auth/ui/account-sections/account-sections";
 
 // t7CXVK / TInkk. The (owner) layout from F-02 supplies the App Shell (R-6).
-export default async function ProfilePage() {
+export default async function ProfilePage({ searchParams }: Readonly<PageProps<"/profile">>) {
   const account = await loadProfile();
+  const { state } = await searchParams;
   return (
     <AccountSections
       account={account}
       updateName={updateDisplayNameAction}
       changePassword={changePasswordAction}
+      passwordChanged={state === "password-changed"}
     />
   );
 }

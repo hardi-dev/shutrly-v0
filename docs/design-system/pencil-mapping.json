@@ -179,6 +179,7 @@
     "component/bottom-nav/cta/background": "component.bottom-nav.cta.background",
     "component/bottom-nav/cta/icon": "component.bottom-nav.cta.icon",
     "component/bottom-nav/cta/ring": "component.bottom-nav.cta.ring",
+    "component/bottom-nav/cta/size": "component.bottom-nav.cta.size",
     "component/bottom-nav/item/active": "component.bottom-nav.item.active",
     "component/bottom-nav/item/gap": "component.bottom-nav.item.gap",
     "component/bottom-nav/item/icon": "component.bottom-nav.item.icon",
@@ -463,6 +464,7 @@
     "font/size/body-sm": "font.size.body-sm",
     "font/size/caption": "font.size.caption",
     "font/size/display": "font.size.display",
+    "font/size/hero": "font.size.hero",
     "font/size/label": "font.size.label",
     "font/size/metric": "font.size.metric",
     "font/size/overline": "font.size.overline",
@@ -483,6 +485,9 @@
     "radius/sm": "radius.sm",
     "radius/xl": "radius.xl",
     "radius/xs": "radius.xs",
+    "size/auth-form": "size.auth-form",
+    "size/auth-panel": "size.auth-panel",
+    "size/bottom-nav-cta": "size.bottom-nav-cta",
     "size/content-max": "size.content-max",
     "size/content-narrow": "size.content-narrow",
     "size/rail": "size.rail",
@@ -491,6 +496,7 @@
     "space/1-5": "space.1-5",
     "space/10": "space.10",
     "space/12": "space.12",
+    "space/16": "space.16",
     "space/2": "space.2",
     "space/2-5": "space.2-5",
     "space/3": "space.3",
@@ -502,10 +508,10 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 481,
+    "total": 487,
     "primitive": 61,
     "semantic": 54,
-    "component": 314,
+    "component": 315,
     "themed": 58
   },
   "transforms": {

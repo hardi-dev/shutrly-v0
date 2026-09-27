@@ -103,15 +103,18 @@ S = {
 
 NUM = {  # number tokens: path -> (value, description)
  "space.0-5":(2,""),"space.1":(4,""),"space.1-5":(6,""),"space.2":(8,""),"space.2-5":(10,""),"space.3":(12,""),
- "space.4":(16,""),"space.5":(20,""),"space.6":(24,""),"space.7":(28,""),"space.8":(32,""),"space.9":(36,""),"space.10":(40,""),"space.12":(48,""),
+ "space.4":(16,""),"space.5":(20,""),"space.6":(24,""),"space.7":(28,""),"space.8":(32,""),"space.9":(36,""),"space.10":(40,""),"space.12":(48,""),"space.16":(64,"Auth editorial spacing gap (Owner approved 2026-09-27)"),
  "size.rail":(72,"Tablet icon rail width (Owner 2026-09-26, board 07 option A)"),
+ "size.bottom-nav-cta":(54,"Bottom navigation create CTA diameter (Owner approved 2026-09-28)"),
  "size.content-max":(1096,"Page content max-width: 1440 shell − 252 sidebar − 12 gutter − 2×40 content padding (layout size, not spacing)"),
  "size.content-narrow":(720,"Centered single-column content width inside Page Content; Owner approved 2026-09-26 from Auth Profile"),
+ "size.auth-panel":(600,"Auth split editorial panel width (Owner approved 2026-09-27)"),
+ "size.auth-form":(420,"Auth form column width (Owner approved 2026-09-27)"),
  "radius.2xs":(2,"Bars"),"radius.xs":(4,"Kbd, delta, checkbox"),"radius.sm":(8,"Nav item, input"),"radius.md":(12,"Tile, toast"),
  "radius.lg":(16,"App panel, day cell"),"radius.xl":(24,"Sheet"),"radius.full":(999,"Pill"),
  "opacity.disabled":(0.4,""),"opacity.hover-overlay":(0.06,""),"opacity.status-tint":(0.16,"Dark status backgrounds"),"opacity.scrim":(0.5,""),
  "elevation.1.offset-y":(4,""),"elevation.1.blur":(16,""),"elevation.2.offset-y":(16,""),"elevation.2.blur":(40,""),
- "font.size.display":(34,""),"font.size.metric":(26,""),"font.size.title":(18,""),"font.size.subtitle":(16,""),"font.size.body":(14,""),
+ "font.size.display":(34,""),"font.size.hero":(44,"Auth editorial headline size (Owner approved 2026-09-27)"),"font.size.metric":(26,""),"font.size.title":(18,""),"font.size.subtitle":(16,""),"font.size.body":(14,""),
  "font.size.body-sm":(13,""),"font.size.label":(12,""),"font.size.caption":(11,""),"font.size.overline":(10,""),
  "font.letter-spacing.display":(-1,""),"font.letter-spacing.metric":(-0.6,""),"font.letter-spacing.title":(-0.4,""),
  "font.letter-spacing.overline":(0.6,""),"font.line-height.tight":(1.1,"Observed on display"),"font.line-height.body":(1.5,"Observed on long copy"),
@@ -400,6 +403,7 @@ add("bottom-nav.item.active","color",SC("action.primary"),SC("status.info.fg")) 
 add("bottom-nav.cta.background","color",SC("action.primary"))
 add("bottom-nav.cta.icon","color",SC("action.on-primary"))
 add("bottom-nav.cta.ring","color",SC("surface.panel"))         # 4 px ring separating the raised CTA from content
+add("bottom-nav.cta.size","number",SP("size.bottom-nav-cta"))  # 54; Owner approved 2026-09-28
 # Sidebar aliases (Owner 2026-09-26: promote the layout region to component tokens; values unchanged)
 add("sidebar.padding-y","number",SP("space.2"))                # 8
 add("sidebar.padding-x","number",SP("space.3"))                # 12

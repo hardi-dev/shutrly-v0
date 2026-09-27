@@ -11,7 +11,7 @@ describe("Textarea (C04)", () => {
     const textarea = screen.getByRole("textbox", { name: "Catatan" });
     expect(textarea).toHaveAttribute("rows", "3");
     expect(textarea).toHaveClass(
-      "min-h-24",
+      "min-h-(--component-textarea-min-height)",
       "border-(--component-input-border)",
       "bg-(--component-input-background)",
     );

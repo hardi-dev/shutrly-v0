@@ -108,6 +108,7 @@ NUM = {  # number tokens: path -> (value, description)
  "size.bottom-nav-cta":(54,"Bottom navigation create CTA diameter (Owner approved 2026-09-28)"),
  "size.content-max":(1096,"Page content max-width: 1440 shell − 252 sidebar − 12 gutter − 2×40 content padding (layout size, not spacing)"),
  "size.content-narrow":(720,"Centered single-column content width inside Page Content; Owner approved 2026-09-26 from Auth Profile"),
+ "size.textarea-min-height":(96,"Textarea default minimum height (C04 spec; Owner approved 2026-09-28)"),
  "size.auth-panel":(600,"Auth split editorial panel width (Owner approved 2026-09-27)"),
  "size.auth-form":(420,"Auth form column width (Owner approved 2026-09-27)"),
  "size.sidebar":(252,"Desktop sidebar width (Owner approved 2026-09-27)"),
@@ -267,6 +268,7 @@ add("segmented.radius","number",SP("radius.full"))
 add("segmented.item.text-hover","color",SC("text.secondary"))
 add("input.search.background","color",SC("surface.subtle"))   # search field fill (legacy)
 add("input.padding-y","number",SP("space.3"))                  # textarea only (single-line input is 40 px, centred)
+add("textarea.min-height","number",SP("size.textarea-min-height")) # C04 default 96 px height
 add("stepper.background","color",SC("surface.panel"))
 add("stepper.border","color",SC("border.input"))
 add("stepper.value","color",SC("text.primary"))

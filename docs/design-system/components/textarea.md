@@ -34,7 +34,7 @@ The same as Input: hover, focus (2 px plus glow), error (2 px) and disabled.
 
 ## Token dependencies
 
-`input.background` / `-disabled`, `input.border` / `-hover` / `-focus` / `-error` / `-disabled`, `input.text`, `input.placeholder`, `input.text-disabled`, `input.padding-y` (12, **new**), `input.padding-x` (12) and `input.radius`.
+`input.background` / `-disabled`, `input.border` / `-hover` / `-focus` / `-error` / `-disabled`, `input.text`, `input.placeholder`, `input.text-disabled`, `input.padding-y` (12, **new**), `input.padding-x` (12), `input.radius` and `textarea.min-height` (96).
 
 ## Usage-rule compliance
 

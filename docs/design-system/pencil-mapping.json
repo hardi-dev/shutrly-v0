@@ -445,6 +445,7 @@
     "component/table/skeleton": "component.table.skeleton",
     "component/table/toolbar/padding-x": "component.table.toolbar.padding-x",
     "component/table/toolbar/padding-y": "component.table.toolbar.padding-y",
+    "component/textarea/min-height": "component.textarea.min-height",
     "component/tooltip/background": "component.tooltip.background",
     "component/tooltip/padding-x": "component.tooltip.padding-x",
     "component/tooltip/padding-y": "component.tooltip.padding-y",
@@ -497,6 +498,7 @@
     "size/mark-sm": "size.mark-sm",
     "size/rail": "size.rail",
     "size/sidebar": "size.sidebar",
+    "size/textarea-min-height": "size.textarea-min-height",
     "space/0-5": "space.0-5",
     "space/1": "space.1",
     "space/1-5": "space.1-5",
@@ -514,10 +516,10 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 493,
+    "total": 495,
     "primitive": 61,
     "semantic": 54,
-    "component": 316,
+    "component": 317,
     "themed": 58
   },
   "transforms": {

@@ -134,6 +134,7 @@
   --size-bottom-nav-cta: 54px;
   --size-content-max: 1096px;
   --size-content-narrow: 720px;
+  --size-textarea-min-height: 96px;
   --size-auth-panel: 600px;
   --size-auth-form: 420px;
   --size-sidebar: 252px;
@@ -337,6 +338,7 @@
   --component-segmented-padding: var(--space-1);
   --component-segmented-gap: var(--space-1);
   --component-segmented-radius: var(--radius-full);
+  --component-textarea-min-height: var(--size-textarea-min-height);
   --component-stepper-background: var(--color-semantic-surface-panel);
   --component-stepper-border: var(--color-semantic-border-input);
   --component-stepper-value: var(--color-semantic-text-primary);

@@ -19,4 +19,5 @@ export interface SidebarProps {
   onCollapse?: () => void;
   onExpand?: () => void;
   onLogout?: () => void;
+  workspaceSwitcher?: ReactNode;
 }

@@ -11,6 +11,6 @@ export interface BottomNavData {
 export interface BottomNavProps {
   items: readonly [BottomNavData, BottomNavData, BottomNavData, BottomNavData];
   ctaLabel: string;
-  onCtaPress: () => void;
+  onCtaPress?: () => void;
   className?: string;
 }

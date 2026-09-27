@@ -19,6 +19,7 @@ export function Sidebar({
   onCollapse,
   onExpand,
   onLogout,
+  workspaceSwitcher,
 }: Readonly<SidebarProps>) {
   return (
     <NavItemCompactContext.Provider value={isCompact}>
@@ -32,7 +33,7 @@ export function Sidebar({
       >
         <SidebarLogo isCompact={isCompact} onCollapse={onCollapse} onExpand={onExpand} />
         {!isCompact ? <div className="h-px bg-(--component-sidebar-divider)" /> : null}
-        <WorkspaceSwitcher workspace={workspace} isCompact={isCompact} />
+        {workspaceSwitcher ?? <WorkspaceSwitcher workspace={workspace} isCompact={isCompact} />}
         {isCompact ? <div className="h-px w-full bg-(--component-sidebar-divider)" /> : null}
         <nav
           aria-label={SIDEBAR_COPY.navigationLabel}

@@ -2,6 +2,7 @@ import type { Ref } from "react";
 
 export interface TextareaProps {
   label: string;
+  name?: string;
   optional?: boolean;
   helperText?: string;
   errorMessage?: string;

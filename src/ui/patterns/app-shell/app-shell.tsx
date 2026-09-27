@@ -24,6 +24,7 @@ export function AppShell({
   mobileBottomNav,
   mobileSheet,
   isMobileOverlayOpen = false,
+  workspaceSwitcher,
 }: Readonly<AppShellProps>) {
   const [isDesktopSidebarCollapsed, setIsDesktopSidebarCollapsed] = useState(false);
   const [isTabletSidebarOpen, setIsTabletSidebarOpen] = useState(false);
@@ -57,6 +58,7 @@ export function AppShell({
         isCompact={isDesktopSidebarCollapsed}
         onCollapse={handleCollapseDesktopSidebar}
         onExpand={handleExpandDesktopSidebar}
+        workspaceSwitcher={workspaceSwitcher}
       />
       <TabletRail
         workspace={workspace}
@@ -64,6 +66,7 @@ export function AppShell({
         nav={nav}
         navBottom={navBottom}
         onExpand={handleOpenTabletSidebar}
+        workspaceSwitcher={workspaceSwitcher}
       />
       <DesktopContent id="app-shell-content" title={title} panelActions={panelActions}>
         {children}
@@ -84,6 +87,7 @@ export function AppShell({
         nav={nav}
         navBottom={navBottom}
         onCollapse={handleCloseTabletSidebar}
+        workspaceSwitcher={workspaceSwitcher}
       />
     </div>
   );
@@ -97,10 +101,12 @@ function DesktopSidebar({
   isCompact,
   onCollapse,
   onExpand,
+  workspaceSwitcher,
 }: Readonly<Pick<AppShellProps, "workspace" | "account" | "nav" | "navBottom">> & {
   isCompact: boolean;
   onCollapse: () => void;
   onExpand: () => void;
+  workspaceSwitcher: AppShellProps["workspaceSwitcher"];
 }) {
   return (
     <div className="hidden xl:flex">
@@ -110,6 +116,7 @@ function DesktopSidebar({
         isCompact={isCompact}
         onExpand={onExpand}
         onCollapse={onCollapse}
+        workspaceSwitcher={workspaceSwitcher}
         navBottom={navBottom}
       >
         {nav}
@@ -124,8 +131,10 @@ function TabletRail({
   nav,
   navBottom,
   onExpand,
+  workspaceSwitcher,
 }: Readonly<Pick<AppShellProps, "workspace" | "account" | "nav" | "navBottom">> & {
   onExpand: () => void;
+  workspaceSwitcher: AppShellProps["workspaceSwitcher"];
 }) {
   return (
     <div className="hidden md:flex xl:hidden">
@@ -135,6 +144,7 @@ function TabletRail({
         isCompact
         onExpand={onExpand}
         navBottom={navBottom}
+        workspaceSwitcher={workspaceSwitcher}
       >
         {nav}
       </Sidebar>
@@ -196,6 +206,7 @@ function TabletSidebarOverlay({
   nav,
   navBottom,
   onCollapse,
+  workspaceSwitcher,
 }: Readonly<{
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
@@ -204,6 +215,7 @@ function TabletSidebarOverlay({
   nav: AppShellProps["nav"];
   navBottom: AppShellProps["navBottom"];
   onCollapse: () => void;
+  workspaceSwitcher: AppShellProps["workspaceSwitcher"];
 }>) {
   return (
     <ModalOverlay
@@ -219,6 +231,7 @@ function TabletSidebarOverlay({
             account={account}
             onCollapse={onCollapse}
             navBottom={navBottom}
+            workspaceSwitcher={workspaceSwitcher}
           >
             {nav}
           </Sidebar>

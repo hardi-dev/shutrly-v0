@@ -20,4 +20,9 @@ describe("SplitLayout", () => {
     const { container } = render(<SplitLayout>x</SplitLayout>);
     expect(container.querySelector('[data-slot="editorial"]')).toHaveClass("hidden", "lg:block");
   });
+
+  it("keeps the editorial headline valid inside the panel typography wrapper", () => {
+    const { container } = render(<SplitLayout>Headline</SplitLayout>);
+    expect(container.querySelector("p p")).toBeNull();
+  });
 });

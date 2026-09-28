@@ -26,9 +26,9 @@ export function SplitLayout({ children }: Readonly<PropsWithChildren>) {
       </main>
       <div data-slot="editorial" className="hidden lg:block">
         <EditorialPanel>
-          <p className="text-(length:--font-size-hero) leading-(--font-line-height-tight) font-bold whitespace-pre-line text-(--color-semantic-text-inverse)">
+          <span className="text-(length:--font-size-hero) leading-(--font-line-height-tight) font-bold whitespace-pre-line text-(--color-semantic-text-inverse)">
             {SPLIT_LAYOUT_COPY.headline}
-          </p>
+          </span>
         </EditorialPanel>
       </div>
     </div>

@@ -21,6 +21,7 @@ export interface ButtonProps {
   isDisabled?: boolean;
   onPress?: () => void;
   className?: string;
+  "aria-label"?: string;
   iconLeading?: ButtonIconName;
   iconTrailing?: ButtonIconName;
   children: ReactNode;

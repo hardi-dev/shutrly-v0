@@ -418,7 +418,7 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 - [x] OwnerNav config + active matching; OwnerShell (Sidebar, rail, mobile, MoreSheet); `w/[workspaceId]/layout.tsx`
 - [x] Dashboard (AC-WS-023, `enterWorkspace`), `[section]` Segera hadir (AC-WS-025; allow-list, `verifyWorkspace` only), `w/not-found.tsx` (AC-WS-012)
 - [ ] DOM/unit test: every page under `/w/[workspaceId]` calls the resolver itself (not only the layout)
-- [ ] `profile/layout.tsx`: F-01 Profile inside the shell (AC-WS-001, 021)
+- [x] `profile/layout.tsx`: F-01 Profile inside the shell (AC-WS-001, 021)
 - [ ] Verify at build start (R-2) that `notFound()` from the `[workspaceId]` layout reaches `w/not-found.tsx` in Next 16.3
 - **Done when:** the gate is green and the pages match the exports at 1440, 1024 and 390.
 
@@ -434,14 +434,14 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 - **Done when:** the gate is green, DOM tests cover AC-WS-016/017/024, and the page matches the exports.
 
 #### Iteration 12 — Journeys and docs
-- [ ] Workspace-specific Playwright journeys and axe coverage (existing auth/foundation E2E remains green; workspace routes need dedicated fixtures).
+- [x] Workspace-specific Playwright journeys and axe coverage (3 journeys passed, including axe at 1440/1024/390).
 - [x] Log audit (no contact data in workspace logs).
 - [x] Record deviations and update this file, feature-map, and HANDOFF.
 - **Done when:** unit, integration and E2E are green; ready for `/sdv:verify-feature workspace`.
 
 ## Risks / Open Questions
 
-- **Implementation note (2026-09-28):** Batch B application, routes, adapter, composition, onboarding, shell, switcher, create flow, and settings are implemented and verified by unit, integration, build, and existing E2E gates. Dedicated workspace Playwright fixtures/visual comparisons remain the Iteration 12 follow-up.
+- **Implementation note (2026-09-28):** Batch B application, routes, adapter, composition, onboarding, shell, profile, switcher, create flow, and settings are implemented. Dedicated workspace Playwright journeys and axe coverage pass; the remaining resolver-per-page DOM test and Pencil visual comparison are follow-ups.
 
 - **ADR-015 — ACCEPTED (Owner 2026-09-27).** CONFLICT-ADR015-1 was resolved as option (b), so BR-WS-006 is unchanged. Route slugs are English.
 - **GAP-F02-2 — Tablet Expand overlay. DECIDED (Owner 2026-09-27): build it** per nav-rail.md › Rules: the full Sidebar over the panel, never pushing it; Esc or an outside click closes it.

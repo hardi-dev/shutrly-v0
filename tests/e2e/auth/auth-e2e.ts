@@ -39,7 +39,12 @@ export async function register(page: Page, email: string): Promise<void> {
   await page.getByLabel(REGISTER_FORM_COPY.email).fill(email);
   await page.getByRole("textbox", { name: REGISTER_FORM_COPY.password }).fill(PASSWORD);
   await page.getByRole("button", { name: REGISTER_FORM_COPY.submit }).click();
-  await expect(page).toHaveURL(/\/verify$/);
+  try {
+    await expect(page).toHaveURL(/\/verify$/);
+  } catch (error) {
+    const alerts = await page.getByRole("alert").allTextContents();
+    throw new Error(`${String(error)}\nRegistration alerts: ${alerts.join(" | ")}`);
+  }
 }
 
 export async function registerAndVerify(page: Page, email: string): Promise<void> {

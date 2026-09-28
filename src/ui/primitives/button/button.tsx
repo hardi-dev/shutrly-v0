@@ -57,6 +57,7 @@ export function Button({
   isDisabled,
   onPress,
   className,
+  "aria-label": ariaLabel,
   iconLeading,
   iconTrailing,
   children,
@@ -66,6 +67,7 @@ export function Button({
       type={type}
       isDisabled={isDisabled}
       onPress={onPress}
+      aria-label={ariaLabel}
       data-variant={variant}
       data-size={size}
       className={cn(BASE, SIZES[size], VARIANTS[variant], className)}

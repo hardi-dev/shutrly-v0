@@ -1,15 +1,15 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-28 (F-02 Batch B implementation complete; workspace E2E follow-up remains) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-09-28 (F-02 Batch B implementation and workspace E2E complete) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `codex/f02-workspace-batch-a`.
 
 ## Current handoff — resume here: workspace E2E and final visual verification
 
-**F-02 Workspace is APPROVED; Batch A and the Batch B implementation are complete** (2026-09-28): [technical-design.md](features/workspace/technical-design.md) remains the implementation source of truth. It has 12 iterations in two batches:
+**F-02 Workspace is APPROVED; Batch A, Batch B implementation, and dedicated workspace E2E are complete** (2026-09-28): [technical-design.md](features/workspace/technical-design.md) remains the implementation source of truth. It has 12 iterations in two batches:
 - **Batch A (iterations 1–4) DONE:** design-system primitives and patterns, navigation, overlays, Sidebar/rail, Mobile App Shell, App Shell, token usage validation, and Storybook preview framing.
-- **Batch B (iterations 5–11) IMPLEMENTED:** workspace domain/schema, application, adapter/composition, onboarding, owner shell/pages, switcher/create flow, and settings. Iteration 12 still needs dedicated workspace Playwright journeys and visual comparison.
+- **Batch B (iterations 5–11) IMPLEMENTED:** workspace domain/schema, application, adapter/composition, onboarding, owner shell/pages, profile shell, switcher/create flow, and settings. Iteration 12 dedicated workspace journeys and axe coverage pass.
 
-**Next room starting point:** add the dedicated workspace Playwright journeys in Iteration 12. Migration `0001_workspace.sql` was applied successfully with explicit Owner authorization.
+**Next room starting point:** optional resolver-per-page DOM coverage and Pencil visual comparison. Migration `0001_workspace.sql` was applied successfully with explicit Owner authorization.
 
 **Batch A commits:** `d24a7fc` CSS token usage validation and App Panel background fix; `fc0fb62` official Textarea min-height token; `eaff80b` darker Storybook preview frame; `821cf4c` saved `design-system.lib.pen`.
 

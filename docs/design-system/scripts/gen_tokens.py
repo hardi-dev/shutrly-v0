@@ -59,7 +59,7 @@ S = {
  "border.control-hover":  ("neutral.600","neutral.400","Checkbox/radio outline · hover (Owner 2026-09-26)"),
  "text.primary":          ("neutral.900","neutral.50","Headings, body, values"),
  "text.secondary":        ("neutral.600","neutral.300","Secondary copy, labels"),
- "text.muted":            ("neutral.500","neutral.400","Helper, placeholder, column heads, icons"),
+ "text.muted":            ("neutral.600","neutral.400","Helper, placeholder, column heads, icons"),
  "text.disabled":         ("neutral.400","neutral.500","Disabled only (fails AA as text by design)"),
  "text.inverse":          ("neutral.0","neutral.900","Text on surface.inverse"),
  "action.primary":        ("blue.500","blue.500","Primary action, active nav (user: same blue both modes)"),

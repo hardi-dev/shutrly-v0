@@ -71,11 +71,11 @@
   --color-semantic-border-subtle: var(--color-primitive-neutral-100);
   --color-semantic-border-input: var(--color-primitive-neutral-300);
   --color-semantic-border-input-hover: var(--color-primitive-neutral-400);
-  --color-semantic-border-control: var(--color-primitive-neutral-500);
+  --color-semantic-border-control: var(--color-primitive-neutral-600);
   --color-semantic-border-control-hover: var(--color-primitive-neutral-600);
   --color-semantic-text-primary: var(--color-primitive-neutral-900);
   --color-semantic-text-secondary: var(--color-primitive-neutral-600);
-  --color-semantic-text-muted: var(--color-primitive-neutral-500);
+  --color-semantic-text-muted: var(--color-primitive-neutral-600);
   --color-semantic-text-disabled: var(--color-primitive-neutral-400);
   --color-semantic-text-inverse: var(--color-primitive-neutral-0);
   --color-semantic-action-primary: var(--color-primitive-blue-500);

@@ -66,6 +66,8 @@ export function Textarea({
   className,
   isDisabled,
   isReadOnly,
+  value,
+  defaultValue,
   ...props
 }: Readonly<TextareaProps>) {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => onChange?.(event.target.value);
@@ -74,6 +76,7 @@ export function Textarea({
       isInvalid={Boolean(errorMessage)}
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
+      defaultValue={value === undefined ? defaultValue : undefined}
       className={cn("flex w-full flex-col gap-(--component-input-gap)", className)}
     >
       <Label className="text-(length:--font-size-label) text-(--component-input-label)">
@@ -87,6 +90,7 @@ export function Textarea({
       <AriaTextArea
         {...props}
         ref={textareaRef}
+        {...(value !== undefined ? { value } : {})}
         disabled={isDisabled}
         readOnly={isReadOnly}
         rows={3}

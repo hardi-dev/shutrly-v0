@@ -7,6 +7,7 @@ export interface WorkspaceSwitcherItem {
 export interface WorkspaceSwitcherProps {
   currentName: string;
   workspaces: readonly WorkspaceSwitcherItem[];
+  isCompact?: boolean;
   onSwitch: (workspaceId: string) => Promise<void>;
   onCreate: (formData: FormData) => Promise<void>;
 }

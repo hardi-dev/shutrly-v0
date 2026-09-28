@@ -14,5 +14,5 @@ export interface AppShellProps {
   mobileBottomNav: BottomNavProps;
   mobileSheet?: ReactNode;
   isMobileOverlayOpen?: boolean;
-  workspaceSwitcher?: ReactNode;
+  workspaceSwitcher?: ReactNode | ((isCompact: boolean) => ReactNode);
 }

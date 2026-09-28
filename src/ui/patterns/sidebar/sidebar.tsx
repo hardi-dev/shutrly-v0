@@ -6,7 +6,12 @@ import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { NavItemCompactContext } from "../nav-item/nav-item-context";
 import { SIDEBAR_COPY } from "./sidebar.copy";
-import type { SidebarAccount, SidebarProps, SidebarWorkspace } from "./sidebar.types";
+import type {
+  SidebarAccount,
+  SidebarProps,
+  SidebarWorkspace,
+  SidebarWorkspaceTriggerProps,
+} from "./sidebar.types";
 
 /** Renders the expanded sidebar or its compact rail mode (C29/C37). */
 // eslint-disable-next-line max-lines-per-function -- coordinates expanded and compact navigation regions
@@ -33,7 +38,9 @@ export function Sidebar({
       >
         <SidebarLogo isCompact={isCompact} onCollapse={onCollapse} onExpand={onExpand} />
         {!isCompact ? <div className="h-px bg-(--component-sidebar-divider)" /> : null}
-        {workspaceSwitcher ?? <WorkspaceSwitcher workspace={workspace} isCompact={isCompact} />}
+        {resolveWorkspaceSwitcher(workspaceSwitcher, isCompact) ?? (
+          <WorkspaceSwitcher workspace={workspace} isCompact={isCompact} />
+        )}
         {isCompact ? <div className="h-px w-full bg-(--component-sidebar-divider)" /> : null}
         <nav
           aria-label={SIDEBAR_COPY.navigationLabel}
@@ -122,15 +129,22 @@ function WorkspaceSwitcher({
   workspace,
   isCompact,
 }: Readonly<{ workspace: SidebarWorkspace; isCompact: boolean }>) {
+  return <SidebarWorkspaceTrigger workspaceName={workspace.name} isCompact={isCompact} />;
+}
+
+export function SidebarWorkspaceTrigger({
+  workspaceName,
+  isCompact = false,
+}: Readonly<SidebarWorkspaceTriggerProps>) {
   return (
     <AriaButton
       type="button"
       aria-haspopup="menu"
-      aria-label={workspace.name}
+      aria-label={workspaceName}
       className={
         isCompact
-          ? "flex size-(--space-10) items-center justify-center rounded-(--component-sidebar-workspace-radius) border border-(--component-sidebar-workspace-border) bg-(--component-sidebar-workspace-background) outline-none"
-          : "flex items-center gap-(--space-2) rounded-(--component-sidebar-workspace-radius) border border-(--component-sidebar-workspace-border) bg-(--component-sidebar-workspace-background) px-(--component-sidebar-padding-x) py-(--component-sidebar-padding-y) text-left outline-none data-hovered:bg-(--color-semantic-surface-sunken)"
+          ? "flex size-(--space-10) items-center justify-center rounded-(--component-sidebar-workspace-radius) border border-(--component-sidebar-workspace-border) bg-(--component-sidebar-workspace-background) outline-none focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
+          : "flex w-full items-center gap-(--space-2) rounded-(--component-sidebar-workspace-radius) border border-(--component-sidebar-workspace-border) bg-(--component-sidebar-workspace-background) px-(--component-sidebar-padding-x) py-(--component-sidebar-padding-y) text-left outline-none data-hovered:bg-(--color-semantic-surface-sunken) focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
       }
     >
       {isCompact ? (
@@ -143,19 +157,36 @@ function WorkspaceSwitcher({
         />
       ) : (
         <>
+          <span className="flex size-(--size-mark-md) shrink-0 items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
+            <Icon
+              name="camera"
+              size="sm"
+              aria-hidden="true"
+              data-icon="camera"
+              className="text-(--color-semantic-accent-on-highlight)"
+            />
+          </span>
           <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-(--color-semantic-text-primary)">
-            {workspace.name}
+            {workspaceName}
           </span>
           <Icon
             name="chevrons-up-down"
             size="sm"
             aria-hidden="true"
+            data-icon="chevrons-up-down"
             className="text-(--color-semantic-text-muted)"
           />
         </>
       )}
     </AriaButton>
   );
+}
+
+function resolveWorkspaceSwitcher(
+  workspaceSwitcher: SidebarProps["workspaceSwitcher"],
+  isCompact: boolean,
+) {
+  return typeof workspaceSwitcher === "function" ? workspaceSwitcher(isCompact) : workspaceSwitcher;
 }
 
 function SidebarAccount({

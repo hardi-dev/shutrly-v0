@@ -53,6 +53,15 @@ export function OwnerShell({
     setIsMobileMenuOpen(false);
     setIsCreateOpen(true);
   };
+  const renderWorkspaceSwitcher = (isCompact: boolean) => (
+    <WorkspaceSwitcher
+      currentName={workspaceName}
+      workspaces={workspaces}
+      isCompact={isCompact}
+      onSwitch={onSwitch}
+      onCreate={onCreate}
+    />
+  );
 
   return (
     <AppShell
@@ -60,14 +69,7 @@ export function OwnerShell({
       workspace={{ name: workspaceName }}
       account={{ name: accountName, email: accountEmail, initials: initials(accountName) }}
       nav={<OwnerNav workspaceId={workspaceId} pathname={pathname} />}
-      workspaceSwitcher={
-        <WorkspaceSwitcher
-          currentName={workspaceName}
-          workspaces={workspaces}
-          onSwitch={onSwitch}
-          onCreate={onCreate}
-        />
-      }
+      workspaceSwitcher={renderWorkspaceSwitcher}
       mobileBottomNav={{
         items: mobileItems,
         ctaLabel: OWNER_NAV_COPY.create,

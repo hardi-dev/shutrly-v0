@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Menu } from "@/ui/patterns/menu/menu";
 import { MenuItem } from "@/ui/patterns/menu/menu-item";
 import { MenuTrigger as WorkspaceMenuTrigger } from "@/ui/patterns/menu/menu-trigger";
-import { Button } from "@/ui/primitives/button/button";
+import { SidebarWorkspaceTrigger } from "@/ui/patterns/sidebar/sidebar";
 
 import { CreateWorkspaceDialog } from "../create-workspace-dialog/create-workspace-dialog";
 import { WORKSPACE_SWITCHER_COPY } from "./workspace-switcher.copy";
@@ -15,6 +15,7 @@ import type { WorkspaceSwitcherProps } from "./workspace-switcher.types";
 export function WorkspaceSwitcher({
   currentName,
   workspaces,
+  isCompact = false,
   onSwitch,
   onCreate,
 }: Readonly<WorkspaceSwitcherProps>) {
@@ -25,11 +26,7 @@ export function WorkspaceSwitcher({
   return (
     <>
       <WorkspaceMenuTrigger label={WORKSPACE_SWITCHER_COPY.trigger}>
-        <Button variant="secondary" iconTrailing="chevron-down">
-          <span className="min-w-0 flex-1 truncate text-(--color-semantic-text-primary)">
-            {currentName}
-          </span>
-        </Button>
+        <SidebarWorkspaceTrigger workspaceName={currentName} isCompact={isCompact} />
         <Menu aria-label={WORKSPACE_SWITCHER_COPY.menuLabel}>
           {workspaces.map((workspace) => (
             <WorkspaceMenuItem key={workspace.id} workspace={workspace} onSwitch={onSwitch} />

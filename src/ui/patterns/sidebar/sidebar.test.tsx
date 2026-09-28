@@ -22,7 +22,7 @@ describe("Sidebar (C29)", () => {
     );
     expect(
       screen.getByRole("button", { name: "Studio Lime" }).querySelector('svg[data-icon="camera"]'),
-    ).toBeNull();
+    ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Proyek" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByText("Hardi Ansari")).toBeInTheDocument();
     expect(screen.getByText("hardi@example.com")).toBeInTheDocument();

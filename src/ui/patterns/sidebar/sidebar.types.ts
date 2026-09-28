@@ -19,5 +19,10 @@ export interface SidebarProps {
   onCollapse?: () => void;
   onExpand?: () => void;
   onLogout?: () => void;
-  workspaceSwitcher?: ReactNode;
+  workspaceSwitcher?: ReactNode | ((isCompact: boolean) => ReactNode);
+}
+
+export interface SidebarWorkspaceTriggerProps {
+  workspaceName: string;
+  isCompact?: boolean;
 }

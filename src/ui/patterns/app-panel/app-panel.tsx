@@ -1,25 +1,28 @@
+import { PageHeader } from "../page-header/page-header";
 import type { AppPanelProps, PageContentProps } from "./app-panel.types";
 
 /** Renders the white working surface and page-level header (C28). */
-export function AppPanel({ title, actions, children }: Readonly<AppPanelProps>) {
-  const titleId = `app-panel-title-${title.toLowerCase().replaceAll(" ", "-")}`;
-
+export function AppPanel({
+  title,
+  parent = "Workspace",
+  subtitle,
+  utilities,
+  actions,
+  children,
+}: Readonly<AppPanelProps>) {
   return (
     <main
-      aria-labelledby={titleId}
+      aria-label={title}
       className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-(--component-panel-app-radius) border border-(--component-panel-app-border) bg-(--component-panel-app-background)"
     >
-      <header className="flex h-[72px] shrink-0 items-center justify-between gap-(--component-panel-app-header-gap) border-b border-(--component-panel-app-border) px-(--component-panel-app-header-padding-x)">
-        <h1
-          id={titleId}
-          className="text-(--component-panel-app-title) text-[18px] font-bold tracking-[-0.4px]"
-        >
-          {title}
-        </h1>
-        {actions ? (
-          <div className="flex items-center gap-(--component-panel-app-header-gap)">{actions}</div>
-        ) : null}
-      </header>
+      <PageHeader
+        parent={parent}
+        current={title}
+        title={title}
+        subtitle={subtitle}
+        utilities={utilities}
+        action={actions}
+      />
       {children}
     </main>
   );

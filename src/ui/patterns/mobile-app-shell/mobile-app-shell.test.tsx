@@ -5,12 +5,13 @@ import { MobileAppShell } from "./mobile-app-shell";
 
 describe("MobileAppShell (C35)", () => {
   it("renders the skip link, app bar, content main and bottom navigation", () => {
-    render(
+    const { container } = render(
       <MobileAppShell title="Dasbor" bottomNav={<nav aria-label="Navigasi bawah">Nav</nav>}>
         <p>Konten mobile</p>
       </MobileAppShell>,
     );
 
+    expect(container.firstElementChild).toHaveClass("w-full");
     expect(screen.getByRole("link", { name: "Langsung ke konten" })).toHaveAttribute(
       "href",
       "#mobile-app-content",

@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 
 import { Alert } from "./alert";
 
@@ -35,6 +36,35 @@ describe("Alert (C24)", () => {
     expect(alert).toHaveClass(
       "bg-(--component-alert-success-background)",
       "border-(--component-alert-success-border)",
+    );
+  });
+
+  it("renders a dismiss control in the top-right when onClose is provided", async () => {
+    const onClose = vi.fn();
+    const user = userEvent.setup();
+
+    render(<Alert tone="info" title="Tersimpan" onClose={onClose} closeLabel="Tutup" />);
+
+    const closeButton = screen.getByRole("button", { name: "Tutup" });
+    expect(closeButton).toHaveClass("size-(--space-8)");
+
+    await user.click(closeButton);
+    expect(onClose).toHaveBeenCalledOnce();
+  });
+
+  it("supports warning and highlight tones from the Alert token set", () => {
+    render(
+      <>
+        <Alert tone="warning" title="Perlu perhatian" />
+        <Alert tone="highlight" title="Info pilihan" />
+      </>,
+    );
+
+    expect(screen.getByText("Perlu perhatian")).toHaveClass(
+      "text-(--component-alert-warning-title)",
+    );
+    expect(screen.getByText("Info pilihan")).toHaveClass(
+      "text-(--component-alert-highlight-title)",
     );
   });
 });

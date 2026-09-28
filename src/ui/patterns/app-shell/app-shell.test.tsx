@@ -23,10 +23,16 @@ const props = {
 
 describe("AppShell (C30/C37)", () => {
   it("renders the skip link and responsive desktop, tablet and mobile shell regions", () => {
-    render(
+    const { container } = render(
       <AppShell {...props}>
         <p>Konten workspace</p>
       </AppShell>,
+    );
+
+    expect(container.firstElementChild).toHaveClass(
+      "md:pt-(--space-3)",
+      "md:pr-(--space-3)",
+      "md:pb-(--space-3)",
     );
 
     expect(screen.getAllByRole("link", { name: "Langsung ke konten" })[0]).toHaveAttribute(

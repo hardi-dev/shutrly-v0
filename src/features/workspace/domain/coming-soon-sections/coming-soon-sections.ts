@@ -7,6 +7,8 @@ export const COMING_SOON_SECTIONS = [
   "message-templates",
   "client-sources",
   "new-project",
+  "search",
+  "notifications",
 ] as const;
 
 export type ComingSoonSection = (typeof COMING_SOON_SECTIONS)[number];

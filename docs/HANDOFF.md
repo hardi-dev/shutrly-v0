@@ -1,15 +1,68 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-28 (F-02 Batch B implementation and workspace E2E complete) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `codex/f02-workspace-batch-a`.
+Last updated: 2026-09-29 (F-17 IMPLEMENTED — verify next; F-03 paused) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `codex/message-templates-shell-v3`.
 
-## Current handoff — resume here: workspace E2E and final visual verification
+## Current handoff — verify F-17 App Shell revamp
 
-**F-02 Workspace is APPROVED; Batch A, Batch B implementation, and dedicated workspace E2E are complete** (2026-09-28): [technical-design.md](features/workspace/technical-design.md) remains the implementation source of truth. It has 12 iterations in two batches:
+**State (2026-09-29):** F-17 `app-shell-revamp` is **IMPLEMENTED locally**. Run `/sdv:verify-feature app-shell-revamp` next. The working tree contains pre-existing Owner and agent changes; preserve unrelated files.
+
+**Implement from, in this order:**
+1. [plan.md](features/app-shell-revamp/plan.md): 14 TDD tasks, pseudo code, one commit per task. This is the execution checklist.
+2. [technical-design.md](features/app-shell-revamp/technical-design.md): components, error handling, AC → test mapping, and 9 iterations (T1–T3 = iteration 1).
+3. [spec.md](features/app-shell-revamp/spec.md) and [acceptance-criteria.md](features/app-shell-revamp/acceptance-criteria.md): AC-SHELL-001…014.
+4. [design.md](features/app-shell-revamp/design.md) and the **HTML exports** in `features/app-shell-revamp/exports/` (31 frames, `<state>-<frameId>.html`). UI must match the exports; the fidelity pass may change only class names and nesting.
+5. [token-usage.md](design-system/token-usage.md) **rules v3.1 APPROVED 2026-09-29**:
+   - N1: nav active = `action.primary` + `on-primary`, semibold label; hover = the `surface.panel` pill with `nav.item.icon-hover`;
+   - H1: phone page title `font.size.heading` 26;
+   - C1: selected check `action.primary`.
+
+**Design-system state:**
+- Tokens: 531, checksum `594f560b`. `tokens.json` is regenerated from `scripts/gen_tokens.py`. `src/ui/theme/tokens.css` is **not yet regenerated**; that is plan Task 1 (`pnpm tokens:css`).
+- The library (`design-system.lib.pen`, saved 02:07) holds the promoted components:
+  - new: Workspace Pill `K06oq`, Mobile Header `o8T8zb`, Compact Bar `J3Ppgp`, Toast/Danger `C3PCyx`, Menu/List `I3q8f`, Count Badge/Danger `HoAYC` (C14 merged, code values: caption 11/semibold, padding 2/8, `99+`);
+  - updated: C22, C30, C32, C33, C34, C35, C37, C40, C02.
+
+  Component specs carry an *F-17 update — PROMOTED* section; `registry.json` has 50 entries.
+- `app-shell-revamp.pen` (saved 02:13) is fully rebound to the library.
+- `/sdv:verify-design-system` was **skipped** (Owner, token budget), so `verification-report.md` is stale.
+
+**Owner decisions baked into the spec (2026-09-29):**
+- Tablet keeps the rail (v3 styling, `chevrons-up-down` switcher, Toast bottom-right).
+- Phone switcher = the header pill only.
+- Phone option A: Bottom Nav Dasbor · Proyek · + · Klien · **Invoice**; the header **Menu** button opens the menu sheet (no switcher, no Invoice); the CTA goes to Proyek *Segera hadir*.
+- Cari and Notifikasi are visible, open *Segera hadir* (sections `search`, `notifications`), and show a danger unread badge when the count is > 0.
+- Failed switch = Toast/Danger with *Coba lagi*. The code `Toast` must gain an optional action.
+- Switcher: the same content on every layout (no icons, dividers, check on the current workspace, primary *Buat workspace* CTA).
+- Sub-page Compact Bar has an optional Actions slot; Back goes to the hierarchical parent.
+- Collapse is remembered per browser.
+
+**Code facts found during planning:**
+- `switchWorkspaceAction` redirects on success. The client must re-throw redirect errors and toast only real failures. Check the API in `node_modules/next/dist/docs/` first (AGENTS.md).
+- `IconButton` has no badge prop yet.
+- Sidebar collapse is `useState` only.
+- The rail is inline in `app-shell.tsx`; `sidebar-rail/` and `nav-rail-item/` are empty folders.
+- The mobile shell still has search and **info** icons, the *Lainnya* tab, and a CTA that opens a menu.
+
+**Hard stops:**
+- Never run `pnpm db:migrate` (none needed).
+- Never read or edit `.pen` files outside Pencil MCP.
+- Don't touch `message-templates.pen`, `workspace.pen` or `auth.pen`. Those consumer rebinds are deferred; their C35 frames show the new header with the default title, and that is known.
+- Accepted known failures: the 12 Auth/Foundation tests and the mosaic build blocker.
+
+**Owner to-do:** press ⌘S on `exploration.pen` (the decision-record entry *F-17 PROMOTION* is unsaved).
+
+**After the build:** plan Task 14 (write-back), then `/sdv:verify-feature app-shell-revamp`. F-03 Message templates stays SPECIFIED, with its design paused until F-17 ships.
+
+**F-02 impact:** F-17 supersedes AC-WS-021, the mobile part of AC-WS-011, and parts of A-7 (notes are in the F-02 spec and AC).
+
+**Shell-v3 design-system verification (2026-09-28):** rules v3 are Owner-approved (`ya`). The generated payload and saved `design-system.lib.pen` contain 527 variables (64 primitive, 54 semantic, 345 component), checksum `99143acb`. C28 App Panel, C29 Sidebar, C30 App Shell and C35 Mobile App Shell were retargeted, and C40 Page Header, C41 Group and C42 List Card were added with specs and registry entries. `exploration.pen`, `workspace.pen`, `auth.pen` and `message-templates.pen` were closed and reopened after the library save; all expose the new linked components, and the three feature consumers each expose all 527 variables with 0 broken targeted references. See [verification-report.md](design-system/verification-report.md).
+
+**F-02 Workspace is DONE** (Owner 2026-09-28): implementation, dedicated workspace E2E and documentation write-back are complete. [technical-design.md](features/workspace/technical-design.md) remains the implementation record. It has 12 iterations in two batches:
 - **Batch A (iterations 1–4) DONE:** design-system primitives and patterns, navigation, overlays, Sidebar/rail, Mobile App Shell, App Shell, token usage validation, and Storybook preview framing.
-- **Batch B (iterations 5–11) IMPLEMENTED:** workspace domain/schema, application, adapter/composition, onboarding, owner shell/pages, profile shell, switcher/create flow, and settings. Iteration 12 dedicated workspace journeys and axe coverage pass.
+- **Batch B (iterations 5–12) DONE:** workspace domain/schema, application, adapter/composition, onboarding, owner shell/pages, profile shell, switcher/create flow, settings, dedicated workspace journeys and axe coverage.
 
-**Next room starting point:** optional resolver-per-page DOM coverage and Pencil visual comparison. Migration `0001_workspace.sql` was applied successfully with explicit Owner authorization.
+**Feature verification (2026-09-28):** [workspace verification report](features/workspace/verification-report.md) is **COMPLETE — no blocking findings**. Typecheck, 305 unit tests, 38 integration tests, all three dedicated Workspace Playwright journeys, Prettier/ESLint, token validation, `git diff --check`, and the production build pass. The only remaining F-02 items are non-blocking: two duplicate local Pencil icon aliases, a route-source regression test for future route-tree changes, and a current Pencil MCP canvas-traversal limitation.
 
 **Batch A commits:** `d24a7fc` CSS token usage validation and App Panel background fix; `fc0fb62` official Textarea min-height token; `eaff80b` darker Storybook preview frame; `821cf4c` saved `design-system.lib.pen`.
 
@@ -17,7 +70,7 @@ Branch: `codex/f02-workspace-batch-a`.
 
 **Accepted global blockers:** the 12 unrelated Auth/Foundation test failures remain accepted for now. The build blocker caused by missing `public/auth/editorial/mosaic@2x.webp` also remains accepted pending the Owner's asset decision; do not hide or overwrite these failures.
 
-**Owner action still pending:** `/sdv:sync-pencil` after the Iteration 4 token work. This should be completed before relying on Pencil variable verification in Batch B.
+**Pencil disk-save evidence:** `docs/design-system/design-system.lib.pen` — 4,299,374 bytes, 2026-09-28 23:03:59; `docs/features/workspace/workspace.pen` — 455,660 bytes, 2026-09-28 18:53:02.
 - **New ADR-015 (Accepted 2026-09-27):**
   - URL-scoped routes `/w/[workspaceId]` with English slugs.
   - Resolution order: F-01 gate → 0 workspaces go to onboarding → *not found*.

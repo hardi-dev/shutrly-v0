@@ -9,4 +9,5 @@ export interface IconButtonProps {
   onPress?: () => void;
   isDisabled?: boolean;
   className?: string;
+  badgeCount?: number;
 }

@@ -1,5 +1,4 @@
-import { IconButton } from "@/ui/primitives/icon-button/icon-button";
-
+import { MobileHeader } from "../mobile-header/mobile-header";
 import { MOBILE_APP_SHELL_COPY } from "./mobile-app-shell.copy";
 import type { MobileAppShellProps } from "./mobile-app-shell.types";
 
@@ -11,22 +10,21 @@ export function MobileAppShell({
   actions,
   sheet,
   isOverlayOpen = false,
+  workspace = "Workspace",
+  utilities,
+  onWorkspacePress,
 }: Readonly<MobileAppShellProps>) {
   return (
-    <div className="flex min-h-dvh flex-col bg-(--color-semantic-surface-canvas)">
+    <div className="flex w-full min-h-dvh flex-col bg-(--color-semantic-surface-canvas)">
       <a href="#mobile-app-content" className="sr-only focus:not-sr-only">
         {MOBILE_APP_SHELL_COPY.skip}
       </a>
-      <header className="flex h-[106px] shrink-0 flex-col justify-end border-b border-(--color-semantic-border-subtle) bg-(--color-semantic-surface-panel)">
-        <div className="flex h-[52px] items-center gap-(--space-1) px-(--space-4)">
-          <h1 className="flex-1 text-(--color-semantic-text-primary) text-[18px] font-bold">
-            {title}
-          </h1>
-          <IconButton icon="search" size="md" aria-label={MOBILE_APP_SHELL_COPY.search} />
-          <IconButton icon="info" size="md" aria-label={MOBILE_APP_SHELL_COPY.notifications} />
-          {actions}
-        </div>
-      </header>
+      <MobileHeader
+        workspace={workspace}
+        title={title}
+        utilities={utilities ?? actions}
+        onWorkspacePress={onWorkspacePress}
+      />
       <main
         id="mobile-app-content"
         inert={isOverlayOpen || undefined}

@@ -37,7 +37,7 @@ describe("flattenTokens", () => {
 
   it("flattens the canonical token payload", () => {
     const records = flattenTokens(tokens);
-    expect(records).toHaveLength(495);
+    expect(records).toHaveLength(531);
     expect(records.find((record) => record.path === "color.semantic.surface.canvas")).toBeDefined();
   });
 });

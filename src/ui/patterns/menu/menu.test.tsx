@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
@@ -36,6 +36,8 @@ describe("Menu (C10)", () => {
 
     await user.keyboard("{Escape}");
     expect(screen.queryByRole("menu")).toBeNull();
-    expect(screen.getByRole("button", { name: "Tindakan" })).toHaveFocus();
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Tindakan" })).toHaveFocus();
+    });
   });
 });

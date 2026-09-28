@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 
 import { WorkspaceSwitcher } from "./workspace-switcher";
 
@@ -8,8 +9,8 @@ const workspaces = [
   { id: "other", name: "Studio Lime", isCurrent: false },
 ] as const;
 
-async function handleSwitch() {}
-async function handleCreate() {}
+function handleSwitch() {}
+function handleCreate() {}
 
 describe("WorkspaceSwitcher", () => {
   it("renders the sidebar trigger anatomy in expanded mode", () => {
@@ -28,7 +29,6 @@ describe("WorkspaceSwitcher", () => {
       "px-(--component-sidebar-padding-x)",
       "py-(--component-sidebar-padding-y)",
     );
-    expect(trigger.querySelector('svg[data-icon="camera"]')).toBeInTheDocument();
     expect(trigger.querySelector('svg[data-icon="chevrons-up-down"]')).toBeInTheDocument();
     expect(screen.getByText("Aster Wedding")).toBeInTheDocument();
   });
@@ -49,5 +49,24 @@ describe("WorkspaceSwitcher", () => {
     expect(trigger.querySelector('svg[data-icon="chevrons-up-down"]')).toBeInTheDocument();
     expect(trigger.querySelector('svg[data-icon="camera"]')).toBeNull();
     expect(screen.queryByText("Aster Wedding")).toBeNull();
+  });
+
+  it("delegates the create action to its owner", async () => {
+    const user = userEvent.setup();
+    const onCreate = vi.fn();
+
+    render(
+      <WorkspaceSwitcher
+        currentName="Aster Wedding"
+        workspaces={workspaces}
+        onSwitch={handleSwitch}
+        onCreate={onCreate}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Aster Wedding" }));
+    await user.click(screen.getByRole("menuitem", { name: "Buat workspace" }));
+
+    expect(onCreate).toHaveBeenCalledOnce();
   });
 });

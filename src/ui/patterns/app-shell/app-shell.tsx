@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, Modal as AriaModal, ModalOverlay } from "react-aria-components";
 
 import { AppPanel, PageContent } from "../app-panel/app-panel";
@@ -9,6 +9,7 @@ import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
 import { Sidebar } from "../sidebar/sidebar";
 import { APP_SHELL_COPY } from "./app-shell.copy";
 import type { AppShellProps } from "./app-shell.types";
+import { readCollapsed, writeCollapsed } from "./sidebar-collapse-preference";
 
 /** Renders the responsive desktop, tablet and mobile Owner shell (C30/C35/C37). */
 // The shell coordinates all responsive regions and their shared overlay state.
@@ -17,17 +18,26 @@ export function AppShell({
   title,
   workspace,
   account,
+  onLogout,
   children,
   nav,
   navBottom,
   panelActions,
   mobileBottomNav,
   mobileSheet,
+  mobileUtilities,
+  onMobileWorkspacePress,
   isMobileOverlayOpen = false,
   workspaceSwitcher,
 }: Readonly<AppShellProps>) {
   const [isDesktopSidebarCollapsed, setIsDesktopSidebarCollapsed] = useState(false);
   const [isTabletSidebarOpen, setIsTabletSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    // Read browser-only state after hydration to avoid server/client markup drift.
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- synchronizes persisted UI state
+    setIsDesktopSidebarCollapsed(readCollapsed());
+  }, []);
 
   function handleOpenTabletSidebar() {
     setIsTabletSidebarOpen(true);
@@ -39,14 +49,16 @@ export function AppShell({
 
   function handleCollapseDesktopSidebar() {
     setIsDesktopSidebarCollapsed(true);
+    writeCollapsed(true);
   }
 
   function handleExpandDesktopSidebar() {
     setIsDesktopSidebarCollapsed(false);
+    writeCollapsed(false);
   }
 
   return (
-    <div className="flex min-h-dvh bg-(--color-semantic-surface-canvas) pt-(--space-3) pr-(--space-3) pb-(--space-3)">
+    <div className="flex min-h-dvh bg-(--color-semantic-surface-canvas) md:pt-(--space-3) md:pr-(--space-3) md:pb-(--space-3)">
       <a href="#app-shell-content" className="sr-only focus:not-sr-only">
         {APP_SHELL_COPY.skip}
       </a>
@@ -59,6 +71,7 @@ export function AppShell({
         onCollapse={handleCollapseDesktopSidebar}
         onExpand={handleExpandDesktopSidebar}
         workspaceSwitcher={workspaceSwitcher}
+        onLogout={onLogout}
       />
       <TabletRail
         workspace={workspace}
@@ -76,6 +89,9 @@ export function AppShell({
         mobileBottomNav={mobileBottomNav}
         isMobileOverlayOpen={isMobileOverlayOpen}
         mobileSheet={mobileSheet}
+        workspaceName={workspace.name}
+        mobileUtilities={mobileUtilities}
+        onMobileWorkspacePress={onMobileWorkspacePress}
       >
         {children}
       </MobileContent>
@@ -88,6 +104,7 @@ export function AppShell({
         navBottom={navBottom}
         onCollapse={handleCloseTabletSidebar}
         workspaceSwitcher={workspaceSwitcher}
+        onLogout={onLogout}
       />
     </div>
   );
@@ -102,11 +119,13 @@ function DesktopSidebar({
   onCollapse,
   onExpand,
   workspaceSwitcher,
+  onLogout,
 }: Readonly<Pick<AppShellProps, "workspace" | "account" | "nav" | "navBottom">> & {
   isCompact: boolean;
   onCollapse: () => void;
   onExpand: () => void;
   workspaceSwitcher: AppShellProps["workspaceSwitcher"];
+  onLogout?: () => void;
 }) {
   return (
     <div className="hidden xl:flex">
@@ -117,6 +136,7 @@ function DesktopSidebar({
         onExpand={onExpand}
         onCollapse={onCollapse}
         workspaceSwitcher={workspaceSwitcher}
+        onLogout={onLogout}
         navBottom={navBottom}
       >
         {nav}
@@ -178,11 +198,20 @@ function MobileContent({
   mobileBottomNav,
   isMobileOverlayOpen,
   mobileSheet,
+  workspaceName,
+  mobileUtilities,
+  onMobileWorkspacePress,
 }: Readonly<
   Pick<
     AppShellProps,
-    "title" | "children" | "mobileBottomNav" | "isMobileOverlayOpen" | "mobileSheet"
-  >
+    | "title"
+    | "children"
+    | "mobileBottomNav"
+    | "isMobileOverlayOpen"
+    | "mobileSheet"
+    | "mobileUtilities"
+    | "onMobileWorkspacePress"
+  > & { workspaceName: string }
 >) {
   return (
     <div className="flex min-w-0 flex-1 md:hidden">
@@ -191,6 +220,9 @@ function MobileContent({
         bottomNav={<BottomNavFromProps {...mobileBottomNav} />}
         isOverlayOpen={isMobileOverlayOpen}
         sheet={mobileSheet}
+        workspace={workspaceName}
+        utilities={mobileUtilities}
+        onWorkspacePress={onMobileWorkspacePress}
       >
         {children}
       </MobileAppShell>
@@ -207,6 +239,7 @@ function TabletSidebarOverlay({
   navBottom,
   onCollapse,
   workspaceSwitcher,
+  onLogout,
 }: Readonly<{
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
@@ -216,6 +249,7 @@ function TabletSidebarOverlay({
   navBottom: AppShellProps["navBottom"];
   onCollapse: () => void;
   workspaceSwitcher: AppShellProps["workspaceSwitcher"];
+  onLogout?: () => void;
 }>) {
   return (
     <ModalOverlay
@@ -232,6 +266,7 @@ function TabletSidebarOverlay({
             onCollapse={onCollapse}
             navBottom={navBottom}
             workspaceSwitcher={workspaceSwitcher}
+            onLogout={onLogout}
           >
             {nav}
           </Sidebar>

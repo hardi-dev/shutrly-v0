@@ -23,4 +23,10 @@ describe("IconButton (C02)", () => {
     expect(button).toHaveClass("size-(--space-8)");
     expect(button).toBeDisabled();
   });
+
+  it("renders a capped unread badge and extends the accessible name", () => {
+    render(<IconButton icon="info" aria-label="Notifikasi" badgeCount={120} />);
+    expect(screen.getByRole("button", { name: "Notifikasi, 99 belum dibaca" })).toBeInTheDocument();
+    expect(screen.getByText("99+")).toBeInTheDocument();
+  });
 });

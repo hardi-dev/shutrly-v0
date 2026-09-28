@@ -3,6 +3,7 @@
 import { Button as AriaButton } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
+import { CountBadge } from "@/ui/primitives/count-badge/count-badge";
 import { Icon } from "@/ui/primitives/icon/icon";
 
 import type { IconButtonProps } from "./icon-button.types";
@@ -16,10 +17,21 @@ const SIZE_CLASSES = {
  * @param props - icon, accessible name, size and button state
  * @returns the icon-only button
  */
-export function IconButton({ size = "md", className, icon, ...props }: Readonly<IconButtonProps>) {
+export function IconButton({
+  size = "md",
+  className,
+  icon,
+  badgeCount = 0,
+  ...props
+}: Readonly<IconButtonProps>) {
+  const label =
+    badgeCount > 0
+      ? `${props["aria-label"]}, ${String(Math.min(badgeCount, 99))} belum dibaca`
+      : props["aria-label"];
   return (
     <AriaButton
       {...props}
+      aria-label={label}
       type="button"
       className={cn(
         "flex shrink-0 items-center justify-center rounded-(--component-icon-button-radius)",
@@ -32,6 +44,13 @@ export function IconButton({ size = "md", className, icon, ...props }: Readonly<
       )}
     >
       <Icon name={icon} aria-hidden="true" />
+      {badgeCount > 0 ? (
+        <CountBadge
+          count={badgeCount}
+          variant="danger"
+          className="absolute left-(--space-5) top-(--space-1)"
+        />
+      ) : null}
     </AriaButton>
   );
 }

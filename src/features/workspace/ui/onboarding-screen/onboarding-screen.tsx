@@ -80,10 +80,17 @@ function BenefitsList() {
     <ul className="flex flex-col gap-(--space-4)" aria-label={ONBOARDING_COPY.benefitsLabel}>
       {ONBOARDING_COPY.benefits.map((benefit) => (
         <li key={benefit.title} className="flex gap-(--space-3)">
-          <Icon name="check" className="mt-(--space-1) text-(--color-semantic-accent-soft-fg)" />
-          <div>
-            <p className="font-semibold">{benefit.title}</p>
-            <p className="text-(--color-semantic-text-secondary)">{benefit.description}</p>
+          <div
+            data-testid="onboarding-benefit-check"
+            className="flex size-(--size-mark-md) shrink-0 items-center justify-center rounded-full bg-(--color-semantic-accent-soft)"
+          >
+            <Icon name="check" className="size-[12px] text-(--color-semantic-accent-soft-fg)" />
+          </div>
+          <div className="flex min-w-0 flex-1 flex-col gap-[2px]">
+            <p className="text-[13px] leading-normal font-semibold">{benefit.title}</p>
+            <p className="w-full text-[13px] leading-[20px] text-(--color-semantic-text-secondary)">
+              {benefit.description}
+            </p>
           </div>
         </li>
       ))}

@@ -23,4 +23,6 @@ export const ONBOARDING_COPY = {
   ],
   signedIn: "Masuk sebagai",
   account: (name: string, email: string) => `${name} · ${email}`,
+  signOut: "Keluar",
+  separator: "·",
 } as const;

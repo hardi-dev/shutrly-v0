@@ -25,4 +25,14 @@ describe("SplitLayout", () => {
     const { container } = render(<SplitLayout>Headline</SplitLayout>);
     expect(container.querySelector("p p")).toBeNull();
   });
+
+  it("accepts a feature-specific editorial panel without changing the shell", () => {
+    render(
+      <SplitLayout editorial={<div data-testid="feature-editorial">Workspace preview</div>}>
+        <h1>Workspace</h1>
+      </SplitLayout>,
+    );
+
+    expect(screen.getByTestId("feature-editorial")).toHaveTextContent("Workspace preview");
+  });
 });

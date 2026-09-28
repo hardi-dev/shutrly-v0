@@ -5,6 +5,9 @@ export const ONBOARDING_COPY = {
   namePlaceholder: "Contoh: Aster Wedding",
   submit: "Buat workspace",
   preview: "Workspace Anda",
+  previewBrand: "shutrly.",
+  previewWorkspace: "Aster Wedding",
+  previewDashboard: "Dasbor",
   benefitsLabel: "Yang kamu dapatkan",
   benefits: [
     {

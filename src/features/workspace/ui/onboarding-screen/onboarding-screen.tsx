@@ -1,3 +1,4 @@
+import { SplitLayout } from "@/ui/patterns/split-layout/split-layout";
 import { Button } from "@/ui/primitives/button/button";
 import { Icon } from "@/ui/primitives/icon/icon";
 import { Input } from "@/ui/primitives/input/input";
@@ -13,39 +14,61 @@ export function OnboardingScreen({
   signOutAction,
 }: Readonly<OnboardingScreenProps>) {
   return (
-    <main className="grid min-h-dvh bg-(--color-semantic-surface-panel) lg:grid-cols-[minmax(0,1fr)_var(--size-editorial-card)]">
-      <section className="flex flex-col justify-center p-(--space-6) lg:p-(--space-12)">
-        <div className="mx-auto flex w-full max-w-(--size-auth-form) flex-col gap-(--space-6)">
-          <SignedInRow
-            accountName={accountName}
-            accountEmail={accountEmail}
-            signOutAction={signOutAction}
+    <SplitLayout editorial={<WorkspaceEditorialPanel />}>
+      <>
+        <SignedInRow
+          accountName={accountName}
+          accountEmail={accountEmail}
+          signOutAction={signOutAction}
+        />
+        <div className="flex flex-col gap-(--space-2)">
+          <h1 className="text-(length:--font-size-display) font-bold">{ONBOARDING_COPY.title}</h1>
+          <p className="text-(--color-semantic-text-secondary)">{ONBOARDING_COPY.description}</p>
+        </div>
+        <form action={action} className="flex flex-col gap-(--space-4)">
+          <label className="flex flex-col gap-(--space-2) text-(length:--font-size-label) font-semibold">
+            {ONBOARDING_COPY.nameLabel}
+            <Input name="name" placeholder={ONBOARDING_COPY.namePlaceholder} />
+          </label>
+          <Button type="submit">{ONBOARDING_COPY.submit}</Button>
+        </form>
+        <BenefitsList />
+      </>
+    </SplitLayout>
+  );
+}
+
+function WorkspaceEditorialPanel() {
+  return (
+    <aside
+      aria-hidden="true"
+      className="relative flex h-full min-h-dvh items-end overflow-hidden bg-(--color-semantic-surface-inverse) bg-[url('/auth/editorial/mosaic.webp')] bg-cover bg-center p-(--space-16)"
+    >
+      <div className="w-full max-w-(--size-editorial-card) rounded-(--radius-lg) bg-(--color-semantic-surface-muted) p-(--space-2) shadow-[0_var(--elevation-2-offset-y)_var(--elevation-2-blur)_var(--color-semantic-elevation-2-color)]">
+        <div className="flex items-center gap-(--space-2) px-(--space-2)">
+          <span className="size-(--size-mark-sm) rounded-(--radius-xs) bg-(--color-semantic-surface-inverse)" />
+          <span className="text-(length:--font-size-title) font-bold">
+            {ONBOARDING_COPY.previewBrand}
+          </span>
+        </div>
+        <div className="my-(--space-2) h-px w-full bg-(--color-semantic-border-subtle)" />
+        <div className="flex items-center gap-(--space-2) rounded-(--radius-sm) bg-(--color-semantic-surface-panel) p-(--space-2) shadow-[inset_0_0_0_1px_var(--color-semantic-border-subtle)]">
+          <span className="flex size-(--size-mark-md) items-center justify-center rounded-(--radius-xs) bg-(--color-semantic-accent-highlight)">
+            <Icon name="camera" className="size-(--space-3) text-(--color-semantic-text-primary)" />
+          </span>
+          <span className="flex-1 text-(length:--font-size-body) font-medium">
+            {ONBOARDING_COPY.previewWorkspace}
+          </span>
+          <Icon
+            name="chevrons-up-down"
+            className="size-(--space-4) text-(--color-semantic-text-muted)"
           />
-          <div className="flex flex-col gap-(--space-2)">
-            <h1 className="text-(length:--font-size-display) font-bold">{ONBOARDING_COPY.title}</h1>
-            <p className="text-(--color-semantic-text-secondary)">{ONBOARDING_COPY.description}</p>
-          </div>
-          <form action={action} className="flex flex-col gap-(--space-4)">
-            <label className="flex flex-col gap-(--space-2) text-(length:--font-size-label) font-semibold">
-              {ONBOARDING_COPY.nameLabel}
-              <Input name="name" placeholder={ONBOARDING_COPY.namePlaceholder} />
-            </label>
-            <Button type="submit">{ONBOARDING_COPY.submit}</Button>
-          </form>
-          <BenefitsList />
         </div>
-      </section>
-      <aside className="hidden items-center justify-center bg-(--color-semantic-surface-inverse) p-(--space-6) lg:flex">
-        <div className="w-full max-w-(--size-editorial-card) rounded-(--radius-lg) bg-(--color-semantic-surface-panel) p-(--space-6) shadow-[0_var(--elevation-2-offset-y)_var(--elevation-2-blur)_var(--color-semantic-elevation-2-color)]">
-          <p className="text-(length:--font-size-label) text-(--color-semantic-text-muted)">
-            {ONBOARDING_COPY.preview}
-          </p>
-          <p className="mt-(--space-2) text-(length:--font-size-title) font-bold">
-            {ONBOARDING_COPY.title}
-          </p>
+        <div className="mt-(--space-2) rounded-(--radius-sm) bg-(--color-semantic-action-primary) px-(--space-3) py-(--space-2) text-(--color-semantic-action-on-primary) text-(length:--font-size-body) font-semibold">
+          {ONBOARDING_COPY.previewDashboard}
         </div>
-      </aside>
-    </main>
+      </div>
+    </aside>
   );
 }
 

@@ -1,10 +1,9 @@
-import type { PropsWithChildren } from "react";
-
 import { EditorialPanel } from "../editorial-panel/editorial-panel";
 import { SPLIT_LAYOUT_COPY } from "./split-layout.copy";
+import type { SplitLayoutProps } from "./split-layout.types";
 
 /** The auth frame with a responsive form column and editorial panel. */
-export function SplitLayout({ children }: Readonly<PropsWithChildren>) {
+export function SplitLayout({ children, editorial }: Readonly<SplitLayoutProps>) {
   return (
     <div className="grid min-h-dvh overflow-hidden bg-(--color-semantic-surface-panel) lg:grid-cols-[var(--size-auth-panel)_minmax(0,1fr)]">
       <main className="flex min-h-dvh flex-col p-(--space-6) lg:p-(--space-12)">
@@ -25,11 +24,13 @@ export function SplitLayout({ children }: Readonly<PropsWithChildren>) {
         </p>
       </main>
       <div data-slot="editorial" className="hidden lg:block">
-        <EditorialPanel>
-          <span className="text-(length:--font-size-hero) leading-(--font-line-height-tight) font-bold whitespace-pre-line text-(--color-semantic-text-inverse)">
-            {SPLIT_LAYOUT_COPY.headline}
-          </span>
-        </EditorialPanel>
+        {editorial ?? (
+          <EditorialPanel>
+            <span className="text-(length:--font-size-hero) leading-(--font-line-height-tight) font-bold whitespace-pre-line text-(--color-semantic-text-inverse)">
+              {SPLIT_LAYOUT_COPY.headline}
+            </span>
+          </EditorialPanel>
+        )}
       </div>
     </div>
   );

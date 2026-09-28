@@ -17,6 +17,9 @@ describe("OnboardingScreen", () => {
 
     expect(screen.getByText("Rina · rina@example.com")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Keluar" })).toBeInTheDocument();
+    expect(screen.getAllByText("shutrly.")).toHaveLength(2);
+    expect(screen.getByText("© 2026 Shutrly")).toBeInTheDocument();
+    expect(screen.getByText("Aster Wedding")).toBeInTheDocument();
   });
 
   it("renders benefit checks as the exported lime circles", () => {

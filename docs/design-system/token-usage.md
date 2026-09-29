@@ -227,3 +227,7 @@ Only `action.primary` and `accent.highlight` are candidates for per-workspace ov
 
 ---
 Research basis: [Atlassian design tokens](https://atlassian.design/foundations/design-tokens) (choose by meaning, not visual match), [Primer colour usage](https://primer.style/product/getting-started/foundations/color-usage/) (base tokens never direct; functional and component layers), and [Carbon colour layering](https://carbondesignsystem.com/elements/color/usage/) (ordered neutral layers with role-stable tokens). Spacing basis remains Atlassian spacing and EightShapes “Space in Design Systems”. v3.1 amendment (2026-09-29): [Primer NavList](https://primer.style/product/components/nav-list/) (`aria-current="page"` marks the current item) and [WCAG 2.1 SC 1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG21/Understanding/non-text-contrast.html) (3:1 for state indicators and icons).
+
+### F-17 validation amendment (2026-09-29)
+
+- **Muted text on muted surfaces:** `text.muted` must not carry text on `surface.muted` (3.8:1). Use `text.secondary`. `component.nav.group-label` now aliases `text.secondary`; tokens 531, checksum `ee680c2a`.

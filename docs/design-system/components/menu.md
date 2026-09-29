@@ -77,6 +77,10 @@ Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-ap
 - A footer can hold a primary Button MD (the workspace switcher's *Buat workspace*).
 - This needs a Menu variant, instead of today's instance padding override (SP5 exception).
 
+## F-17 validation update — PROMOTED 2026-09-29
+
+D-2/D-3 (Owner 2026-09-29): **Menu/List** `I3q8f` rows use the Bottom Sheet row anatomy so the workspace switcher reads the same on desktop, tablet and phone: 52 px, `sheet.item.padding-x` / `sheet.item.gap`, a full-width top border `sheet.item.border`, label `font.size.body` medium (semibold when selected), check `sheet.item.check`, no description. The group label aligns to `sheet.item.padding-x`. Code: `MenuItem layout="row"`, `MenuCtaItem`, `MenuSection`.
+
 ## Implementation references
 
 - Pencil: `C10 — Menu` (`AgR78`)

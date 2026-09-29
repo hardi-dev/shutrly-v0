@@ -17,11 +17,7 @@ Branch: `codex/message-templates-shell-v3`.
 
 **Read for verification:** [spec.md](features/app-shell-revamp/spec.md), [acceptance-criteria.md](features/app-shell-revamp/acceptance-criteria.md) (AC-SHELL-001…014), [design.md](features/app-shell-revamp/design.md) and `features/app-shell-revamp/exports/`, [technical-design.md](features/app-shell-revamp/technical-design.md), rules [token-usage.md](design-system/token-usage.md) v3.1.
 
-**Open Owner items:**
-- Brand mark: the exports show an aperture mark; code keeps the lime camera mark shared with the auth screens.
-- Press ⌘S on `exploration.pen` (the *F-17 PROMOTION* decision entry is unsaved), then commit it.
-- Promote D-5 (Sidebar group label and account email on `text.secondary`) and D-2/D-3 (switcher row anatomy, 14 px rows) to the library at the next `/sdv:save-design-system`; `/sdv:verify-design-system` is still skipped, so `verification-report.md` is stale.
-- Consumer rebinds of `workspace.pen` and `auth.pen` are deferred; `message-templates.pen` is skipped.
+**Owner follow-ups (2026-09-29):** brand mark follows the export (aperture); `exploration.pen` committed (`4ff625d`); D-2, D-3 and D-5 promoted to `design-system.lib.pen` (Menu/List row anatomy, Sheet Item 14 px, `component.nav.group-label` → `text.secondary`; tokens 531, checksum `ee680c2a`). **Press ⌘S on `design-system.lib.pen`** so the library save can be committed. Still deferred: `/sdv:verify-design-system`, rebinding `workspace.pen` / `auth.pen`, `message-templates.pen`.
 
 **Hard stops:** never run `pnpm db:migrate`; never read or edit `.pen` files outside Pencil MCP. Accepted known failures: the 12 Auth/Foundation tests and the mosaic build blocker (the build passed on 2026-09-29).
 

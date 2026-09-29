@@ -72,6 +72,10 @@ Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-ap
 - Sheet Item/Selected gets a `semibold` label and a check in a new `component.sheet.item.check` → `action.primary`, to match Menu Item/Selected (DESIGN TOKEN GAP).
 - The switcher sheet lists workspaces without icons and ends with a Button Primary LG *Buat workspace*.
 
+## F-17 validation update — PROMOTED 2026-09-29
+
+D-3 (Owner 2026-09-29): the Sheet Item label (`elAPX` on `_SheetItem/Base`) is `font.size.body` 14 medium, matching Sidebar Nav Item labels (was `font.size.subtitle` 16). Selected rows are semibold with the `sheet.item.check` mark.
+
 ## Implementation references
 
 - Pencil: `C32 — Bottom sheet` (`m6YUOs`); tokens on board 06 › *Sheet*

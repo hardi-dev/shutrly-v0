@@ -114,9 +114,9 @@ Recorded after browser validation at 1440, 1024 and 390 px; details in [technica
 
 - Switcher rows use the phone sheet row anatomy on every layout (Owner request), at `font.size.body` 14 like Sidebar nav items.
 - Phone top bar: `space.4` top padding plus the safe-area inset.
-- Sidebar group label and account email use `text.secondary` on `surface.muted` (contrast; `text.muted` is 3.8:1). Promote to the library at the next `/sdv:save-design-system`.
+- Sidebar group label and account email use `text.secondary` on `surface.muted` (contrast; `text.muted` is 3.8:1). Promoted to the library 2026-09-29.
 - Rail is the Sidebar compact mode in code (no separate rail unit).
-- Open: the brand mark (export aperture vs. code lime camera) awaits an Owner decision.
+- Brand mark follows the export (aperture), Owner 2026-09-29.
 
 ## Approval
 

@@ -181,7 +181,7 @@ add("calendar.day.number","color",SC("text.primary"))
 add("calendar.day.dot","color",SC("action.primary"))
 add("calendar.day.dot-selected","color",SC("accent.on-inverse"))   # visible on inverse cell in both modes
 add("nav.item.background-hover","color",SC("surface.panel"))   # N1 hover = former active pill (was surface.muted = invisible on the sidebar)
-add("nav.group-label","color",SC("text.muted"))                     # legacy #A1A1AA darkened for AA
+add("nav.group-label","color",SC("text.secondary"))                 # F-17 D-5: text.muted on surface.muted is 3.8:1 (fails AA)
 add("metric.tile.label","color",SC("text.secondary"))
 add("metric.tile.value","color",SC("text.primary"))
 add("metric.spark.gap","number",SP("space.1"))                      # 3 → 4

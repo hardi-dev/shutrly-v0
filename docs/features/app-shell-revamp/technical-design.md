@@ -186,9 +186,9 @@ Each iteration goes through plan → test first → implement → verify (gate +
 - **D-2 Switcher rows:** desktop and tablet switcher rows use the phone sheet row anatomy (52 px, full-width dividers, `sheet.item.*` tokens) via `MenuItem layout="row"` — Owner request.
 - **D-3 Row type size:** switcher and menu-sheet rows use `font.size.body` 14 medium, matching Sidebar nav items, instead of 16 — Owner request.
 - **D-4 Phone top bar:** top padding is `space.4` plus the safe-area inset (the export's status bar is device chrome) — Owner request.
-- **D-5 Contrast:** the Sidebar group label and account email use `text.secondary` instead of `text.muted`; `text.muted` on `surface.muted` is 3.8:1 and fails AC-SHELL-012. The design library should adopt this at the next `/sdv:save-design-system`.
+- **D-5 Contrast:** the Sidebar group label and account email use `text.secondary` instead of `text.muted`; `text.muted` on `surface.muted` is 3.8:1 and fails AC-SHELL-012. Promoted to the library 2026-09-29 (`component.nav.group-label` → `text.secondary`, checksum `ee680c2a`).
 - **D-6 Menu CTA padding:** the switcher's *Buat workspace* CTA uses `space.4` horizontal padding so the label stays on one line at 228 px.
-- **Open (Owner):** the export shows an aperture brand mark; code keeps the existing lime camera mark shared with auth screens.
+- **Brand mark:** code now follows the export (aperture Mark on `sidebar.logo`), Owner 2026-09-29.
 
 ## Risks / open questions
 

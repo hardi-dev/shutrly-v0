@@ -216,7 +216,7 @@
   --component-nav-count-padding-y: var(--space-0-5);
   --component-nav-count-padding-x: var(--space-2);
   --component-nav-count-radius: var(--radius-full);
-  --component-nav-group-label: var(--color-semantic-text-muted);
+  --component-nav-group-label: var(--color-semantic-text-secondary);
   --component-chip-stage-shooting-background: var(--color-semantic-accent-soft);
   --component-chip-stage-shooting-text: var(--color-semantic-accent-soft-fg);
   --component-chip-stage-scheduled-background: var(--color-semantic-status-info-bg);

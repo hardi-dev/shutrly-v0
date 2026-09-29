@@ -55,6 +55,14 @@ Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-ap
 - Active and hover Nav Items change through C22.
 - The switcher Menu has the same content as the phone sheet: no icons, dividers, and a primary *Buat workspace* button.
 
+## F-17 validation update — PROMOTED 2026-09-29
+
+From the F-17 browser validation (D-5, Owner-approved): on the `surface.muted` Sidebar, `text.muted` is 3.8:1 and fails AA for the 10 px group label and the 11 px account email.
+
+- `component.nav.group-label` now aliases `text.secondary` (was `text.muted`); tokens stay 531, checksum `ee680c2a`.
+- The Account email (`pMF7b`) binds `text.secondary`.
+- Logo row: aperture Mark 22 px on `component.sidebar.logo` with the wordmark (`font.size.title` bold); the lime camera tile is retired in code.
+
 ## Implementation references
 
 - Pencil: `C29 — Sidebar` (`nSDgz`)

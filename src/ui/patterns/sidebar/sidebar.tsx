@@ -210,7 +210,7 @@ export function SidebarNavGroup({
       ) : null}
       {!isCompact && label ? (
         <div className="flex w-full items-start px-(--component-nav-item-padding-x) py-(--space-1)">
-          <span className="text-(length:--font-size-overline) font-bold tracking-(--font-letter-spacing-overline) text-(--color-semantic-text-secondary)">
+          <span className="text-(length:--font-size-overline) font-bold tracking-(--font-letter-spacing-overline) text-(--component-nav-group-label)">
             {label}
           </span>
         </div>

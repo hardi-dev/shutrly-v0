@@ -46,6 +46,12 @@ Replace(<shell>/SpGXb/uzabE, {type:"ref", ref:"x1Mgr3", descendants:{Tz5za:{icon
 - The keyboard and scroll states aren't drawn.
 - Item and CTA sizes are literal, because Pencil can't bind size.
 
+## F-17 update — PROMOTED 2026-09-29
+
+Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-approved design; rules v3.1). Library (`lymtg`): tab `wTYuN` renamed *Tab Invoice* (`receipt`). Details: [F-17 design.md](../../features/app-shell-revamp/design.md).
+
+- Tabs become Dasbor · Proyek · **+** · Klien · **Invoice**; *Lainnya* is removed (option A, Owner 2026-09-29).
+
 ## Implementation references
 
 - Pencil: `C34 — Bottom nav` (`QifL8`); tokens on board 06 › *Bottom nav*

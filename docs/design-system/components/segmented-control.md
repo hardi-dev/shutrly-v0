@@ -3,7 +3,7 @@
 ## Status and approval
 
 - Lifecycle: `APPROVED` 2026-09-26 (Owner: "approved" — review of C02–C26). Previously `PROPOSED` (tier 2, 2026-09-26)
-- Direction/token approval: `APPROVED` (existing `segmented.*`, amended to whole steps on 2026-09-26)
+- Direction/token approval: `APPROVED` (existing `segmented.*`, amended to whole steps on 2026-09-26 and shell v3 track on 2026-09-28)
 - Pencil library: `design-system.lib.pen` › **C23 — Segmented control** (`GD7cE`)
 - Evidence: legacy Frame 1 › Timeline Head › Segmented (Hari / Minggu / Bulan)
 
@@ -15,7 +15,7 @@ Switches between 2–4 views of the same content. Changes are instant; there's n
 
 A single component, `Segmented Control` (`uMP5H`), with no variant axes: state lives in its items.
 
-- The track is the root: fill `segmented.track` → `surface.sunken`, padding `segmented.padding` (4), radius `segmented.radius` (full).
+- The track is the root: fill `segmented.track` → `surface.muted`, padding `segmented.padding` (4), radius `segmented.radius` (full).
 - `Items` (`ULzG1`) is a **slot** with gap `segmented.gap` (4). It accepts Segmented Item variants `NcbI1` (active), `AptHz` (default), `BrUPr` (hover) and `u7e89` (focus).
 - Default content is Hari (active), Minggu, Bulan.
 

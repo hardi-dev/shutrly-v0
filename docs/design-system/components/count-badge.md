@@ -67,6 +67,12 @@ The tokens live under `nav.count` because nav items are the badge's first consum
 - **Use for:** neutral totals next to a label.
 - **Don't use for:** unread or alert counts, such as the notification bell. Those need a separate danger-toned badge, which is a future component that needs its own component tokens.
 
+## F-17 update — PROMOTED 2026-09-29
+
+Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-approved design; rules v3.1). Library: Danger variant = `HoAYC` *Count Badge/Danger* (see above). Details: [F-17 design.md](../../features/app-shell-revamp/design.md).
+
+- Danger variant: this absorbs Notification Badge C14, as the code `CountBadge` already does. See notification-badge.md.
+
 ## Implementation references
 
 - Pencil: `C13 — Count badge` (`PVg5y`)

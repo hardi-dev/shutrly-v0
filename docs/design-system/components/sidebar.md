@@ -7,7 +7,7 @@ and turns the logo into the expand control.
 ## Status and approval
 
 - Lifecycle: `APPROVED` 2026-09-26 (tier 3, Owner review)
-- Direction/token approval: `APPROVED` tokens. It adds no new tokens: the sidebar is a **layout region**, so it binds semantic and scale tokens per the board 08 layout map (padding 8·12, section gap 12), following G3's "screens and layouts" clause. The Owner may promote these to `sidebar.*` component aliases.
+- Direction/token approval: `APPROVED`, amended by shell v3 on 2026-09-28: the root is L1 `surface.muted`, dividers use `border.input`, and the workspace switcher has no decorative mark.
 - Pencil library: `design-system.lib.pen` › **C29 — Sidebar** (`nSDgz`)
 - Evidence: legacy dashboard › Sidebar
 
@@ -15,10 +15,10 @@ and turns the logo into the expand control.
 
 | # | Part | Tokens / nested |
 |---|---|---|
-| 1 | Root | No fill (canvas shows through); vertical; gap `space.3`; padding `space.2` / `space.3` |
+| 1 | Root | `surface.muted` (L1 shell); vertical; gap `space.3`; padding `space.2` / `space.3` |
 | 2 | Logo row | padding-x `space.2`. Mark (aperture 22) and wordmark (title 18/700) in `text.primary`, then collapse (Icon Button/Ghost/SM `panel-left`) |
-| 3 | Divider | 1 px `border.default` |
-| 4 | Workspace switcher | `surface.panel` + `border.default`, `radius.sm`, padding 8/12 (legacy 9/10 → 8/12, aligned with nav items), gap 8. Name (body 14/500, text `Workspace` `rAUNw`); chevrons in `text.muted`. Compact mode keeps only the switch icon. |
+| 3 | Divider | 1 px `sidebar.divider` → `border.input` |
+| 4 | Workspace switcher | `sidebar.workspace.background/border/radius` (`surface.panel` / `border.default` / `radius.sm`), padding 8/12, gap 8. It contains the Name (`Workspace` `rAUNw`) and muted chevrons only—no decorative workspace mark. Compact rail keeps its dedicated workspace icon control. |
 | 5 | Nav | slot `tilEo`: groups gap 12, items gap 4 (Nav Item, Nav Group Label) |
 | 6 | Spacer | the one allowed flexible spacer (SP7) |
 | 7 | Nav bottom | slot `pRu41`: settings-type destinations |
@@ -41,12 +41,19 @@ and turns the logo into the expand control.
 
 ## Tokens (added 2026-09-26)
 
-The Owner promoted the layout region to component aliases. The values didn't change: `sidebar.padding-y/-x` (8 / 12), `sidebar.gap` (12), `sidebar.logo` (`text.primary`), `sidebar.divider` (`border.default`), `sidebar.workspace.background/border/radius/mark` (`surface.panel` / `border.default` / `radius.sm` / `accent.highlight`) and `sidebar.account.gap` (10). The Bottom Sheet/Menu logo, workspace switcher and account bind the same aliases.
+The Owner promoted the layout region to component aliases. Shell v3 keeps `sidebar.padding-y/-x` (8 / 12), `sidebar.gap` (12), `sidebar.logo` (`text.primary`), `sidebar.workspace.background/border/radius` (`surface.panel` / `border.default` / `radius.sm`) and `sidebar.account.gap` (10), while retargeting `sidebar.divider` to `border.input`. `sidebar.workspace.mark` remains in the token set for compatibility but is not rendered by the v3 switcher. Bottom Sheet/Menu uses the same mark-free switcher.
 
 ## Gaps
 
 - Compact mode is the `Sidebar/Rail` layout (C37) rendered by this component.
   Mobile uses the Bottom Nav + Menu sheet (C34/C32) instead of a drawer.
+
+## F-17 update — PROMOTED 2026-09-29
+
+Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-approved design; rules v3.1). Library: via Nav Item tokens and `CInVy` (label semibold). Details: [F-17 design.md](../../features/app-shell-revamp/design.md).
+
+- Active and hover Nav Items change through C22.
+- The switcher Menu has the same content as the phone sheet: no icons, dividers, and a primary *Buat workspace* button.
 
 ## Implementation references
 

@@ -14,18 +14,21 @@ The Owner app screen template. Every Owner screen starts from an instance of thi
 
 | Part | ID | Notes |
 |---|---|---|
-| Root | `y9uBJl` | `surface.canvas`; padding `space.3` on the top, right and bottom, and 0 on the left (the sidebar sits flush left) |
+| Root | `y9uBJl` | `surface.muted` (L1 shell); padding `space.3` on the top, right and bottom, and 0 on the left (the sidebar sits flush left) |
 | Sidebar | `fNszT` | Nested C29; expanded or compact 72 px rail mode, height fill |
 | Panel | `Sw0yD` | Nested C28, width and height fill (1176 × 936) |
 | Overlay | `fwm7P` | Boolean, **off** by default. Absolute, 1440 × 960, `modal.scrim`; centres the Modal slot. |
 | Modal | `hnTfu` (slot) | Accepts Modal/SM·MD·LG (C31); default Modal/MD `nRbAO`. |
+| Toast | `VJpuD` (slot) | Boolean, **off** by default. Absolute 1440 × 960, bottom-right stack for transient feedback; accepts `Toast/Success` (C39). It is independent of Overlay and does not make the page inert. |
 
 To make a screen, insert an instance, then:
-- set `Sw0yD/nrRBd` (title);
-- replace `Sw0yD/uR9Ye` (actions), and fill the content with `Replace(<shell>/Sw0yD/d2hCuQ/bBehO, {type:"frame", name:"Container", width:1096, layout:"vertical", gap:"$component/panel/app/content/gap"})` (Page Content's container, max-width 1096 centred);
+- set the nested Page Header text (`Sw0yD/MST3f/EPpbd`, `Hh5tj`, `HsrFT`, `i8XPWU`) and replace its `U9JxE` Actions slot;
+- fill the content with `Replace(<shell>/Sw0yD/d2hCuQ/bBehO, {type:"frame", name:"Container", width:1096, layout:"vertical", gap:"$component/panel/app/content/gap"})` (Page Content's container, max-width 1096 centred);
 - make the current page's Nav item Active by replacing items in `fNszT/tilEo`.
 
 To show a modal: `Update(<shell>, {descendants:{fwm7P:{enabled:true}}})`, then fill `<shell>/fwm7P/hnTfu/nRbAO/c5Prsw` (Body) and `…/I7e8yh` (Actions), or replace `…/hnTfu/nRbAO` with another Modal size. C30's *Modal overlay* exhibit shows a delete confirm.
+
+To show transient feedback: enable `VJpuD` and fill its Toast slot. Toast is not a modal, so it never shares or replaces `fwm7P`.
 
 The gutter, panel insets and the 1096 content max-width are owned by the template (SP5). The master shows an empty Page Content; the dark example (`TXZxf`) shows the dashboard.
 
@@ -50,6 +53,13 @@ The gutter, panel insets and the 1096 content max-width are owned by the templat
 
 - Tablet (`md` through `lg`): use the compact Sidebar rail + panel. Below `md`: use the Mobile App Shell (C35).
 - On the canvas the Overlay is absolute and can't fill, so a resized shell instance also overrides `fwm7P` width and height. In code it is `position: fixed; inset: 0`.
+
+## F-17 update — PROMOTED 2026-09-29
+
+Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-approved design; rules v3.1). Library: Toast layer `VJpuD` padding → `space.6`; Toast slots accept `Toast/Success` `QCuMb` and `Toast/Danger` `C3PCyx`. Details: [F-17 design.md](../../features/app-shell-revamp/design.md).
+
+- The Toast layer `VJpuD` pads with a literal 24; it should use `space.6`.
+- Page Header breadcrumb utilities come through C40, and the Nav active/hover change comes through C22.
 
 ## Implementation references
 

@@ -16,10 +16,12 @@ pnpm storybook
 
 Open [http://localhost:6006/](http://localhost:6006/).
 
-Available initial entries:
+Available entries include:
 
-- **Primitives / Button** — primary, secondary, disabled, and combined variant examples.
-- **Primitives / TextField** — empty, filled, helper, invalid, read-only, and password examples.
+- **Primitives** — Avatar, Button (including pending/loading), Count Badge, Icon Button, Input,
+  Text Field, Textarea and Tooltip.
+- **Patterns** — Alert, App Panel, App Shell, Bottom Nav, Bottom Sheet, Empty State, Menu,
+  Mobile App Shell, Modal, Nav Item, Sheet Item, Sidebar and Toast.
 - **Design System / Tokens** — searchable token table with category filtering, light/dark values,
   aliases, CSS custom-property names, and color swatches.
 

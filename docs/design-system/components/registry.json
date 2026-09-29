@@ -1,2695 +1,3193 @@
 {
- "$description": "Library component registry (hand-maintained). Merged into pencil-mapping.json › components by scripts/gen_tokens.py. pen.dev drops `metadata` on instances, so variant axes live here + in each component's `context`.",
- "button": {
-  "status": "APPROVED 2026-09-26 (pilot pattern)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C01 — Button",
-   "id": "Q12x0F"
-  },
-  "spec": "docs/design-system/components/button.md",
-  "base": {
-   "name": "_Button/Base",
-   "id": "s93Zz0",
-   "private": true
-  },
-  "axes": {
-   "type": [
-    "primary",
-    "secondary",
-    "danger"
-   ],
-   "size": [
-    "md",
-    "lg"
-   ],
-   "state": [
-    "default",
-    "hover",
-    "focus",
-    "disabled"
-   ]
-  },
-  "props": {
-   "iconLeading": {
-    "kind": "boolean",
-    "layer": "Icon leading",
-    "default": false
-   },
-   "iconLeadingName": {
-    "kind": "instance-swap",
-    "layer": "Icon leading",
-    "default": "plus"
-   },
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "default": "Simpan"
-   },
-   "iconTrailing": {
-    "kind": "boolean",
-    "layer": "Icon trailing",
-    "default": false
-   },
-   "iconTrailingName": {
-    "kind": "instance-swap",
-    "layer": "Icon trailing",
-    "default": "chevron-down"
-   }
-  },
-  "layers": {
-   "Icon leading": "fMNO1",
-   "Label": "xnhuK",
-   "Icon trailing": "z3xApy"
-  },
-  "variants": {
-   "primary/md/default": "Q49yf7",
-   "primary/md/hover": "G4eW8p",
-   "primary/md/focus": "hEMFc",
-   "primary/md/disabled": "lBKcT",
-   "primary/lg/default": "aBT7T",
-   "primary/lg/hover": "Ye7Xm",
-   "primary/lg/focus": "p9KLdp",
-   "primary/lg/disabled": "V8sGx",
-   "secondary/md/default": "JmfmZ",
-   "secondary/md/hover": "p7DaJb",
-   "secondary/md/focus": "UCgbC",
-   "secondary/md/disabled": "iQ7e5",
-   "secondary/lg/default": "c3U6N",
-   "secondary/lg/hover": "ZuSbE",
-   "secondary/lg/focus": "fg9QG",
-   "secondary/lg/disabled": "nqNHl",
-   "danger/md/default": "z3mR7",
-   "danger/md/hover": "v3T5p",
-   "danger/md/focus": "KPQep",
-   "danger/md/disabled": "dHTCl",
-   "danger/lg/default": "ZDOwL",
-   "danger/lg/hover": "n90hA",
-   "danger/lg/focus": "haHU6",
-   "danger/lg/disabled": "UFc5r"
-  },
-  "tokens": [
-   "component.button.*",
-   "color.semantic.focus.ring",
-   "color.semantic.focus.glow",
-   "opacity.disabled"
-  ],
-  "gaps": [
-   "GAP-02: loading state"
-  ]
- },
- "stage-chip": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C12 — Stage chip",
-   "id": "uofHz"
-  },
-  "spec": "docs/design-system/components/stage-chip.md",
-  "base": {
-   "name": "_StageChip/Base",
-   "id": "oL43h",
-   "private": true
-  },
-  "axes": {
-   "stage": [
-    "awaiting-deposit",
-    "scheduled",
-    "shooting",
-    "editing",
-    "delivered"
-   ]
-  },
-  "props": {},
-  "layers": {
-   "Dot": "L9XA7y",
-   "Label": "SD1o7"
-  },
-  "variants": {
-   "awaiting-deposit": "i9SFm",
-   "scheduled": "LQGDd",
-   "shooting": "w9aTAe",
-   "editing": "ZVQLe",
-   "delivered": "wAja0"
-  },
-  "tokens": [
-   "component.chip.stage.*"
-  ],
-  "gaps": []
- },
- "count-badge": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C13 — Count badge",
-   "id": "PVg5y"
-  },
-  "spec": "docs/design-system/components/count-badge.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "count": {
-    "kind": "text",
-    "layer": "Count",
-    "default": "12"
-   }
-  },
-  "layers": {
-   "Count": "BTnxI"
-  },
-  "variants": {
-   "default": "dQmPx"
-  },
-  "tokens": [
-   "component.nav.count.*"
-  ],
-  "gaps": [
-   "future: danger/unread badge needs its own component tokens"
-  ]
- },
- "checkbox": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C05 — Checkbox",
-   "id": "Ismz6"
-  },
-  "spec": "docs/design-system/components/checkbox.md",
-  "base": {
-   "name": "_Checkbox/Base",
-   "id": "vHs9u",
-   "private": true
-  },
-  "axes": {
-   "value": [
-    "unchecked",
-    "checked",
-    "mixed"
-   ],
-   "state": [
-    "default",
-    "hover",
-    "focus",
-    "disabled"
-   ]
-  },
-  "props": {
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "default": "WhatsApp"
-   }
-  },
-  "layers": {
-   "Box": "H419S",
-   "Mark": "Iqg2P",
-   "Label": "bnoVV"
-  },
-  "variants": {
-   "unchecked/default": "n8NmOH",
-   "unchecked/hover": "rozLy",
-   "unchecked/focus": "E7y0r",
-   "unchecked/disabled": "EALFb",
-   "checked/default": "H41tQ",
-   "checked/hover": "XmGFb",
-   "checked/focus": "pWYVC",
-   "checked/disabled": "ygHiA",
-   "mixed/default": "KHGFT",
-   "mixed/hover": "W8g3u",
-   "mixed/focus": "gUWnC",
-   "mixed/disabled": "f7qzGp"
-  },
-  "tokens": [
-   "component.checkbox.*",
-   "color.semantic.focus.ring",
-   "color.semantic.focus.glow",
-   "opacity.disabled"
-  ],
-  "gaps": []
- },
- "radio": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C06 — Radio",
-   "id": "v16e9b"
-  },
-  "spec": "docs/design-system/components/radio.md",
-  "base": {
-   "name": "_Radio/Base",
-   "id": "QK374",
-   "private": true
-  },
-  "axes": {
-   "value": [
-    "unselected",
-    "selected"
-   ],
-   "state": [
-    "default",
-    "hover",
-    "focus",
-    "disabled"
-   ]
-  },
-  "props": {
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "default": "Edited"
-   }
-  },
-  "layers": {
-   "Dot": "i9SvB",
-   "Label": "dK1OA"
-  },
-  "variants": {
-   "unselected/default": "Imyla",
-   "unselected/hover": "x3hzlO",
-   "unselected/focus": "UkSaY",
-   "unselected/disabled": "u3UCo",
-   "selected/default": "SSy18",
-   "selected/hover": "YAti1",
-   "selected/focus": "xI8Gg",
-   "selected/disabled": "lOBiD"
-  },
-  "tokens": [
-   "component.checkbox.* (shared)",
-   "color.semantic.focus.*",
-   "opacity.disabled"
-  ],
-  "gaps": [
-   "selected focus: single-stroke ellipse — ring offset in code"
-  ]
- },
- "switch": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C07 — Switch",
-   "id": "PEqub"
-  },
-  "spec": "docs/design-system/components/switch.md",
-  "base": {
-   "name": "_Switch/Base",
-   "id": "i26Za",
-   "private": true
-  },
-  "axes": {
-   "value": [
-    "off",
-    "on"
-   ],
-   "state": [
-    "default",
-    "hover",
-    "focus",
-    "disabled"
-   ]
-  },
-  "props": {
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "default": "Izinkan unduhan"
-   }
-  },
-  "layers": {
-   "Label": "oq6nY",
-   "Track": "nyXXN",
-   "Knob": "KiRAj"
-  },
-  "variants": {
-   "off/default": "oSTqI",
-   "off/hover": "bOH3M",
-   "off/focus": "RqUsV",
-   "off/disabled": "i8Ddp",
-   "on/default": "zSBcA",
-   "on/hover": "E6JzR",
-   "on/focus": "TQqH5",
-   "on/disabled": "HU4S7"
-  },
-  "tokens": [
-   "component.switch.*",
-   "color.semantic.focus.*",
-   "opacity.disabled"
-  ],
-  "gaps": [
-   "GAP-02: loading"
-  ]
- },
- "input": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C03 — Input",
-   "id": "YcyAG"
-  },
-  "spec": "docs/design-system/components/input.md",
-  "base": {
-   "name": "_Input/Base",
-   "id": "kWK5j",
-   "private": true
-  },
-  "axes": {
-   "type": [
-    "default",
-    "search"
-   ],
-   "state": [
-    "default",
-    "hover",
-    "focus",
-    "error",
-    "disabled"
-   ]
-  },
-  "props": {
-   "iconLeading": {
-    "kind": "boolean",
-    "layer": "Icon leading",
-    "default": false
-   },
-   "prefix": {
-    "kind": "boolean+text",
-    "layer": "Prefix",
-    "default": false
-   },
-   "filled": {
-    "kind": "boolean",
-    "layers": [
-     "Placeholder",
-     "Value"
-    ],
-    "default": false
-   },
-   "iconTrailing": {
-    "kind": "boolean",
-    "layer": "Icon trailing",
-    "default": false
-   },
-   "shortcut": {
-    "kind": "boolean",
-    "layer": "Shortcut",
-    "nested": "kbd",
-    "default": false
-   }
-  },
-  "layers": {
-   "Icon leading": "VnKAn",
-   "Prefix": "MePi8",
-   "Placeholder": "tvTDd",
-   "Value": "CykHo",
-   "Icon trailing": "Qp2xi",
-   "Shortcut": "UFzsV"
-  },
-  "variants": {
-   "default/default": "lJ39W",
-   "default/hover": "J0Hpih",
-   "default/focus": "Hx4Lp",
-   "default/error": "XCIEx",
-   "default/disabled": "KibRB",
-   "search/default": "vmSeU",
-   "search/hover": "pRtA5",
-   "search/focus": "rzXbh"
-  },
-  "tokens": [
-   "component.input.*",
-   "color.semantic.focus.glow"
-  ],
-  "gaps": [
-   "GAP-06 accepted: border.input < 3:1"
-  ]
- },
- "textarea": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C04 — Textarea",
-   "id": "ACpOE"
-  },
-  "spec": "docs/design-system/components/textarea.md",
-  "base": {
-   "name": "_Textarea/Base",
-   "id": "C4DyK",
-   "private": true
-  },
-  "axes": {
-   "state": [
-    "default",
-    "hover",
-    "focus",
-    "error",
-    "disabled"
-   ]
-  },
-  "props": {
-   "filled": {
-    "kind": "boolean",
-    "layers": [
-     "Placeholder",
-     "Value"
-    ],
-    "default": false
-   }
-  },
-  "layers": {
-   "Placeholder": "q9O7ef",
-   "Value": "B90I4"
-  },
-  "variants": {
-   "default": "t7L0yL",
-   "hover": "i6bud",
-   "focus": "FXGl1",
-   "error": "XyHPI",
-   "disabled": "zVBG4"
-  },
-  "tokens": [
-   "component.input.*"
-  ],
-  "gaps": []
- },
- "segmented-item": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C11 — Segmented item",
-   "id": "JU4XC"
-  },
-  "spec": "docs/design-system/components/segmented-item.md",
-  "base": {
-   "name": "_SegmentedItem/Base",
-   "id": "k0HnIZ",
-   "private": true
-  },
-  "axes": {
-   "state": [
-    "active",
-    "default",
-    "hover",
-    "focus"
-   ],
-   "size": [
-    "md",
-    "lg"
-   ]
-  },
-  "props": {
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "default": "Minggu"
-   }
-  },
-  "layers": {
-   "Label": "FnOrw"
-  },
-  "variants": {
-   "active": "NcbI1",
-   "default": "AptHz",
-   "hover": "BrUPr",
-   "focus": "u7e89",
-   "lg/active": "a17zLE",
-   "lg/default": "SaNob",
-   "lg/hover": "OD6NY",
-   "lg/focus": "w3GDB"
-  },
-  "tokens": [
-   "component.segmented.*"
-  ],
-  "gaps": []
- },
- "metric-delta": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C15 — Metric delta",
-   "id": "I7T5uL"
-  },
-  "spec": "docs/design-system/components/metric-delta.md",
-  "base": {
-   "name": "_MetricDelta/Base",
-   "id": "Y5oibW",
-   "private": true
-  },
-  "axes": {
-   "tone": [
-    "positive",
-    "warning"
-   ]
-  },
-  "props": {
-   "value": {
-    "kind": "text",
-    "layer": "Value",
-    "default": "+12,4%"
-   }
-  },
-  "layers": {
-   "Value": "GqwpL"
-  },
-  "variants": {
-   "positive": "x7rlD",
-   "warning": "GU07z"
-  },
-  "tokens": [
-   "component.metric.delta.*"
-  ],
-  "gaps": [
-   "no negative tone (DESIGN TOKEN GAP if needed)"
-  ]
- },
- "stepper": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C08 — Stepper",
-   "id": "vWyiP"
-  },
-  "spec": "docs/design-system/components/stepper.md",
-  "base": {
-   "name": "_Stepper/Base",
-   "id": "G5nIg",
-   "private": true
-  },
-  "axes": {
-   "state": [
-    "default",
-    "focus",
-    "at-minimum",
-    "disabled"
-   ]
-  },
-  "props": {
-   "value": {
-    "kind": "text",
-    "layer": "Value",
-    "default": "2"
-   }
-  },
-  "layers": {
-   "Decrement": "eDLhv",
-   "Value": "VcrsX",
-   "Increment": "Ezlnc"
-  },
-  "variants": {
-   "default": "mNfw5",
-   "focus": "LIq8i",
-   "at-minimum": "wOE8e",
-   "disabled": "ylYb6"
-  },
-  "tokens": [
-   "component.stepper.*"
-  ],
-  "gaps": [
-   "hover per step button shown as preview only"
-  ]
- },
- "avatar": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C16 — Avatar",
-   "id": "fSpXU"
-  },
-  "spec": "docs/design-system/components/avatar.md",
-  "base": {
-   "name": "_Avatar/Base",
-   "id": "V05sI",
-   "private": true
-  },
-  "axes": {
-   "size": [
-    "sm",
-    "md",
-    "lg"
-   ]
-  },
-  "props": {
-   "initials": {
-    "kind": "text",
-    "layer": "Initials",
-    "default": "DS"
-   }
-  },
-  "layers": {
-   "Initials": "DloPs"
-  },
-  "variants": {
-   "sm": "PO3yR",
-   "md": "N7uFQ",
-   "lg": "IVuIw"
-  },
-  "tokens": [
-   "component.avatar.*"
-  ],
-  "gaps": [
-   "photo avatar out of scope"
-  ]
- },
- "icon-button": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26 · size SM (ghost) added tier 2 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C02 — Icon button",
-   "id": "l3eUy"
-  },
-  "spec": "docs/design-system/components/icon-button.md",
-  "base": {
-   "name": "_IconButton/Base",
-   "id": "s4zsCg",
-   "private": true
-  },
-  "axes": {
-   "style": [
-    "outline",
-    "ghost"
-   ],
-   "size": [
-    "md",
-    "sm"
-   ],
-   "state": [
-    "default",
-    "hover",
-    "focus",
-    "disabled"
-   ]
-  },
-  "props": {
-   "icon": {
-    "kind": "instance-swap",
-    "layer": "Icon",
-    "default": "bell"
-   },
-   "badge": {
-    "kind": "boolean",
-    "layer": "Badge",
-    "nested": "notification-badge",
-    "default": false
-   }
-  },
-  "layers": {
-   "Icon": "wSyzB",
-   "Badge": "w1Fg4G"
-  },
-  "variants": {
-   "outline/md/default": "m9dUlL",
-   "outline/md/hover": "q55i4",
-   "outline/md/focus": "z8x6cH",
-   "outline/md/disabled": "cSqu0",
-   "ghost/md/default": "qY0Em",
-   "ghost/md/hover": "sDBli",
-   "ghost/md/focus": "RXlcJ",
-   "ghost/md/disabled": "V85La",
-   "ghost/sm/default": "VA96y",
-   "ghost/sm/hover": "zl5JW",
-   "ghost/sm/focus": "j1Kf3I",
-   "ghost/sm/disabled": "Zyrkn"
-  },
-  "tokens": [
-   "component.icon-button.*"
-  ],
-  "gaps": [
-   "outline SM deferred until needed"
-  ]
- },
- "notification-badge": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C14 — Notification badge",
-   "id": "uKgTV"
-  },
-  "spec": "docs/design-system/components/notification-badge.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "count": {
-    "kind": "text",
-    "layer": "Count",
-    "default": "3"
-   }
-  },
-  "layers": {
-   "Count": "hnJrZ"
-  },
-  "variants": {
-   "default": "HoAYC"
-  },
-  "tokens": [
-   "component.badge.danger.*"
-  ],
-  "gaps": []
- },
- "kbd": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C17 — Kbd",
-   "id": "HV6UQ"
-  },
-  "spec": "docs/design-system/components/kbd.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "keys": {
-    "kind": "text",
-    "layer": "Keys",
-    "default": "⌘K"
-   }
-  },
-  "layers": {
-   "Keys": "Xmo7V"
-  },
-  "variants": {
-   "default": "UdwCn"
-  },
-  "tokens": [
-   "component.kbd.*"
-  ],
-  "gaps": []
- },
- "menu-item": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1c, no legacy evidence) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C09 — Menu item",
-   "id": "TbrWC"
-  },
-  "spec": "docs/design-system/components/menu-item.md",
-  "base": {
-   "name": "_MenuItem/Base",
-   "id": "mf83F",
-   "private": true
-  },
-  "axes": {
-   "type": [
-    "default",
-    "destructive"
-   ],
-   "state": [
-    "default",
-    "hover",
-    "selected",
-    "disabled"
-   ]
-  },
-  "props": {
-   "icon": {
-    "kind": "boolean",
-    "layer": "Icon",
-    "default": false
-   },
-   "description": {
-    "kind": "boolean+text",
-    "layer": "Description",
-    "default": false
-   },
-   "check": {
-    "kind": "boolean",
-    "layer": "Check",
-    "default": false
-   },
-   "checkbox": {
-    "kind": "boolean+instance-swap",
-    "layer": "Checkbox",
-    "nested": "checkbox",
-    "default": false
-   },
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "default": "Prewedding"
-   }
-  },
-  "layers": {
-   "Checkbox": "iWymw",
-   "Icon": "FL9Kk",
-   "Text": "Z6qIYH",
-   "Label": "vHwtA",
-   "Description": "leQSn",
-   "Check": "baOu6"
-  },
-  "variants": {
-   "default/default": "iSqRB",
-   "default/hover": "mCgnL",
-   "default/selected": "qKcfI",
-   "default/disabled": "e0gYs",
-   "destructive/default": "Amnm5",
-   "destructive/hover": "nRGEe"
-  },
-  "tokens": [
-   "component.menu.item.*"
-  ],
-  "gaps": [
-   "no legacy evidence"
-  ]
- },
- "menu": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1c, no legacy evidence) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C10 — Menu",
-   "id": "AgR78"
-  },
-  "spec": "docs/design-system/components/menu.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "items": {
-    "kind": "slot",
-    "layer": "Items",
-    "id": "JoK1p",
-    "recommended": [
-     "iSqRB",
-     "qKcfI",
-     "e0gYs",
-     "Amnm5",
-     "z7QON",
-     "yNxME"
-    ],
-    "fill": "Replace(instance+'/JoK1p', …)"
-   }
-  },
-  "layers": {
-   "Items": "JoK1p"
-  },
-  "variants": {
-   "default": "g6dKmz"
-  },
-  "related": {
-   "menu-divider": "z7QON",
-   "menu-group-label": {
-    "id": "yNxME",
-    "layers": {
-     "Label": "n0wAh6"
-    }
-   }
-  },
-  "tokens": [
-   "component.menu.*",
-   "color.semantic.elevation.1.color",
-   "elevation.1.*"
-  ],
-  "gaps": [
-   "no legacy evidence",
-   "Pencil: Get visitor may throw inside replaced instance slots — skipChildren on refs"
-  ]
- },
- "text-field": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C18 — Text field",
-   "id": "P42vwq"
-  },
-  "spec": "docs/design-system/components/text-field.md",
-  "base": {
-   "name": "_TextField/Base",
-   "id": "TFmAG",
-   "private": true
-  },
-  "axes": {
-   "state": [
-    "default",
-    "hover",
-    "focus",
-    "error",
-    "disabled"
-   ]
-  },
-  "props": {
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "default": "Email klien"
-   },
-   "optional": {
-    "kind": "boolean",
-    "layer": "Optional",
-    "default": false
-   },
-   "helper": {
-    "kind": "text",
-    "layer": "Helper",
-    "default": "Tautan galeri dikirim ke email ini."
-   },
-   "message": {
-    "kind": "boolean",
-    "layer": "Message",
-    "default": true
-   },
-   "input": {
-    "kind": "nested",
-    "layer": "Input",
-    "ref": "input/default/default",
-    "paths": "Input/<layer> e.g. c67yIW/tvTDd (Placeholder), c67yIW/CykHo (Value)"
-   }
-  },
-  "layers": {
-   "Label row": "OjQDs",
-   "Label": "Gmk0c",
-   "Optional": "RsEBb",
-   "Input": "c67yIW",
-   "Message": "i0umVC",
-   "Message icon": "I0aOa6",
-   "Helper": "uh4XA"
-  },
-  "variants": {
-   "default": "HHNPk",
-   "hover": "Feq2q",
-   "focus": "mZcc4",
-   "error": "AVpMa",
-   "disabled": "Q64HTj"
-  },
-  "nested": [
-   "input"
-  ],
-  "tokens": [
-   "component.input.*"
-  ],
-  "gaps": [
-   "state variants re-apply Input/<State> overrides on one stable nested Input (replacing the nested ref would change its id per variant)"
-  ]
- },
- "select": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C19 — Select",
-   "id": "epNyK"
-  },
-  "spec": "docs/design-system/components/select.md",
-  "base": {
-   "name": "_Select/Base",
-   "id": "R1MZh",
-   "private": true
-  },
-  "axes": {
-   "state": [
-    "default",
-    "hover",
-    "open",
-    "error",
-    "disabled"
-   ]
-  },
-  "props": {
-   "field": {
-    "kind": "nested",
-    "layer": "Field",
-    "ref": "text-field/default",
-    "paths": "Et1pR/Gmk0c label, Et1pR/c67yIW/tvTDd placeholder, Et1pR/c67yIW/CykHo value, Et1pR/uh4XA helper"
-   },
-   "menu": {
-    "kind": "nested+slot",
-    "layer": "Menu",
-    "ref": "menu",
-    "fill": "Replace(instance+'/xGHsR/JoK1p', …)",
-    "position": "absolute y 65 (4 px below the Input)"
-   }
-  },
-  "layers": {
-   "Field": "Et1pR",
-   "Menu": "xGHsR"
-  },
-  "variants": {
-   "default": "Wc7hd",
-   "hover": "v7bysV",
-   "open": "b5dem",
-   "error": "A6bXr",
-   "disabled": "umHpv"
-  },
-  "nested": [
-   "text-field",
-   "menu",
-   "menu-item"
-  ],
-  "tokens": [
-   "component.input.*",
-   "component.menu.*",
-   "elevation.1.*"
-  ],
-  "gaps": [
-   "menu y offset assumes the label row is on (15 px); hide the label → move the menu to y 44",
-   "combobox (search in menu) not built"
-  ]
- },
- "multi-select": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C20 — Multi-select",
-   "id": "A56Q5"
-  },
-  "spec": "docs/design-system/components/multi-select.md",
-  "base": {
-   "name": "_MultiSelect/Base",
-   "id": "K1H9l",
-   "private": true,
-   "ref_of": "_Select/Base"
-  },
-  "axes": {
-   "state": [
-    "default",
-    "hover",
-    "open",
-    "error",
-    "disabled"
-   ]
-  },
-  "props": {
-   "field": {
-    "kind": "nested",
-    "layer": "Field",
-    "paths": "same as select (Et1pR/…)"
-   },
-   "items": {
-    "kind": "slot (replaced in base)",
-    "layer": "Items",
-    "id": "xthKF",
-    "items": {
-     "Group label": "jELyt",
-     "WhatsApp": "JDxlW",
-     "Email": "CC64P",
-     "SMS": "nr0AY",
-     "Instagram DM": "B23y4"
+  "$description": "Library component registry (hand-maintained). Merged into pencil-mapping.json › components by scripts/gen_tokens.py. pen.dev drops `metadata` on instances, so variant axes live here + in each component's `context`.",
+  "page-header": {
+    "status": "APPROVED 2026-09-28 (Owner: ya; shell v3)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C40 — Page header",
+      "id": "Re3nY"
     },
-    "toggle": "Replace(<item>/iWymw, {type:'ref', ref: checkbox checked/default})"
-   }
-  },
-  "layers": {
-   "Field": "Et1pR",
-   "Menu": "xGHsR",
-   "Items": "xthKF"
-  },
-  "variants": {
-   "default": "X8ErE9",
-   "hover": "nvFx0",
-   "open": "q4NjNG",
-   "error": "ny8DD",
-   "disabled": "h1Cq6"
-  },
-  "nested": [
-   "select",
-   "menu-item",
-   "checkbox",
-   "menu-group-label"
-  ],
-  "tokens": [
-   "component.input.*",
-   "component.menu.*",
-   "component.checkbox.*"
-  ],
-  "gaps": [
-   "trigger overflow '+N' is a code behaviour"
-  ]
- },
- "action-menu": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C21 — Action menu",
-   "id": "TWp5Y"
-  },
-  "spec": "docs/design-system/components/action-menu.md",
-  "base": {
-   "name": "_ActionMenu/Base",
-   "id": "B7K1d",
-   "private": true
-  },
-  "axes": {
-   "size": [
-    "md",
-    "sm"
-   ],
-   "state": [
-    "closed",
-    "open"
-   ]
-  },
-  "props": {
-   "trigger": {
-    "kind": "nested",
-    "layer": "Trigger",
-    "ref": "icon-button/ghost/md/default",
-    "icon": "ellipsis"
-   },
-   "items": {
-    "kind": "slot (replaced in base)",
-    "layer": "Items",
-    "id": "c8fWyJ",
-    "fill": "Replace(instance+'/RCAAJ/JoK1p', …)"
-   }
-  },
-  "layers": {
-   "Trigger": "m4ka0s",
-   "Menu": "RCAAJ",
-   "Items": "c8fWyJ"
-  },
-  "variants": {
-   "md/closed": "rXttF",
-   "md/open": "tQSj1",
-   "sm/closed": "tgN4c",
-   "sm/open": "M3v1E5"
-  },
-  "nested": [
-   "icon-button",
-   "menu",
-   "menu-item",
-   "menu-divider"
-  ],
-  "tokens": [
-   "component.icon-button.*",
-   "component.menu.*",
-   "elevation.1.*"
-  ],
-  "gaps": [
-   "menu x offset is fixed per size (MD −200, SM −208) for a 240 menu"
-  ]
- },
- "nav-item": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C22 — Nav item",
-   "id": "UZTgh"
-  },
-  "spec": "docs/design-system/components/nav-item.md",
-  "base": {
-   "name": "_NavItem/Base",
-   "id": "cvsvP",
-   "private": true
-  },
-  "axes": {
-   "state": [
-    "default",
-    "hover",
-    "active",
-    "focus"
-   ]
-  },
-  "props": {
-   "icon": {
-    "kind": "instance-swap",
-    "layer": "Icon",
-    "default": "folder-kanban"
-   },
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "default": "Proyek"
-   },
-   "count": {
-    "kind": "boolean",
-    "layer": "Count",
-    "nested": "count-badge",
-    "default": false,
-    "text": "E6JiYt/BTnxI"
-   }
-  },
-  "layers": {
-   "Icon": "MpR9k",
-   "Label": "m6S2m",
-   "Count": "E6JiYt"
-  },
-  "variants": {
-   "default": "K0UQ06",
-   "hover": "Ijxgm",
-   "active": "CInVy",
-   "focus": "XBgH6"
-  },
-  "nested": [
-   "count-badge"
-  ],
-  "tokens": [
-   "component.nav.*"
-  ],
-  "gaps": [
-   "nav.count.* should become count-badge.* if the badge spreads (open)",
-   "label truncation is a code behaviour"
-  ],
-  "related": {
-   "nav-group-label": {
-    "id": "Rjoxp",
+    "spec": "docs/design-system/components/page-header.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "parent": {
+        "kind": "text",
+        "layer": "Parent",
+        "id": "EPpbd"
+      },
+      "current": {
+        "kind": "text",
+        "layer": "Current",
+        "id": "Hh5tj"
+      },
+      "title": {
+        "kind": "text",
+        "layer": "Title",
+        "id": "HsrFT"
+      },
+      "subtitle": {
+        "kind": "boolean+text",
+        "layer": "Subtitle",
+        "id": "i8XPWU",
+        "default": true
+      },
+      "actions": {
+        "kind": "slot",
+        "layer": "Actions",
+        "id": "U9JxE",
+        "recommended": [
+          "Q49yf7",
+          "JmfmZ",
+          "m9dUlL"
+        ]
+      }
+    },
     "layers": {
-     "Label": "p1hGy"
+      "Breadcrumb bar": "rvmSQ",
+      "Parent": "EPpbd",
+      "Current": "Hh5tj",
+      "Hero": "bdFTT",
+      "Heading": "ami8m",
+      "Title": "HsrFT",
+      "Subtitle": "i8XPWU",
+      "Actions": "U9JxE"
+    },
+    "variants": {
+      "default": "ImEDW"
+    },
+    "nested": [
+      "button",
+      "icon-button"
+    ],
+    "tokens": [
+      "component.page-header.*"
+    ],
+    "gaps": [
+      "breadcrumb bar height 52 is literal (Pencil cannot bind height)"
+    ],
+    "slots": {
+      "utilities": {
+        "id": "u6PNZ",
+        "accepts": [
+          "qY0Em",
+          "m9dUlL"
+        ],
+        "default": [
+          "Search",
+          "Notifications"
+        ]
+      }
+    },
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): breadcrumb bar rvmSQ gains Spacer j3A5m + Utilities slot u6PNZ (Cari, Notifikasi); right inset panel.app.header.padding-x."
+    ]
+  },
+  "group": {
+    "status": "APPROVED 2026-09-28 (Owner: ya; message-template v3)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C41 — Group",
+      "id": "FdLTt"
+    },
+    "spec": "docs/design-system/components/group.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "title": {
+        "kind": "text",
+        "layer": "Title",
+        "id": "Z2fQ4Y"
+      },
+      "content": {
+        "kind": "slot",
+        "layer": "Content",
+        "id": "R7Fxz",
+        "recommended": [
+          "swIYb"
+        ]
+      }
+    },
+    "layers": {
+      "Section title": "mw4YO",
+      "Title": "Z2fQ4Y",
+      "Content": "R7Fxz"
+    },
+    "variants": {
+      "default": "tEPBr"
+    },
+    "nested": [
+      "list-card"
+    ],
+    "tokens": [
+      "component.group.*"
+    ],
+    "gaps": []
+  },
+  "list-card": {
+    "status": "APPROVED 2026-09-28 (Owner: ya; message-template v3)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C42 — List card",
+      "id": "twUcY"
+    },
+    "spec": "docs/design-system/components/list-card.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "items": {
+        "kind": "slot",
+        "layer": "Items",
+        "id": "A1hw5",
+        "recommended": [
+          "uJwfh",
+          "XhLSK"
+        ],
+        "fill": "Replace(instance+'/A1hw5', {type:'frame', name:'Items', width:'fill_container', layout:'vertical'})"
+      }
+    },
+    "layers": {
+      "Items": "A1hw5"
+    },
+    "variants": {
+      "default": "swIYb"
+    },
+    "nested": [],
+    "tokens": [
+      "component.list-card.*",
+      "size.list-row"
+    ],
+    "gaps": [
+      "row height is a literal 44 in Pencil because width/height cannot bind variables"
+    ],
+    "related": {
+      "list-card-item": {
+        "base": {
+          "name": "_ListCardItem/Base",
+          "id": "LBknS",
+          "private": true
+        },
+        "variants": {
+          "default": "uJwfh",
+          "last": "XhLSK"
+        },
+        "layers": {
+          "Icon wrap": "XUpib",
+          "Icon": "iD6nb",
+          "Title": "HhRDD",
+          "Meta": "NAcrj",
+          "Chevron": "j06tV"
+        }
+      }
+    }
+  },
+  "empty-state": {
+    "status": "APPROVED 2026-09-28 (Owner approved Empty State as C38)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C38 — Empty state",
+      "id": "n2bAJ"
+    },
+    "spec": "docs/design-system/components/empty-state.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "icon": {
+        "kind": "icon",
+        "layer": "Icon",
+        "default": "camera"
+      },
+      "title": {
+        "kind": "text",
+        "layer": "Title",
+        "default": "Workspace ini masih kosong"
+      },
+      "body": {
+        "kind": "text",
+        "layer": "Body",
+        "default": "Mulai dengan melengkapi branding: nama brand, kontak, dan prefiks invoice yang akan dilihat klien."
+      },
+      "action": {
+        "kind": "optional-node",
+        "layer": "Complete branding button",
+        "default": true
+      }
+    },
+    "layers": {
+      "Icon wrap": "HFN6r",
+      "Icon": "zOUao",
+      "Title": "c8Y4Ky",
+      "Body": "FCyNB",
+      "Complete branding button": "SzhQW"
+    },
+    "variants": {
+      "default": "H43gDN"
     },
     "tokens": [
-     "component.nav.group-label",
-     "component.nav.item.padding-x",
-     "space.1"
+      "color.semantic.surface.subtle",
+      "color.semantic.border.default",
+      "color.semantic.accent.soft",
+      "color.semantic.accent.soft-fg",
+      "color.semantic.text.primary",
+      "color.semantic.text.secondary",
+      "space.1",
+      "space.4",
+      "space.12",
+      "radius.md"
+    ],
+    "gaps": []
+  },
+  "toast": {
+    "status": "APPROVED 2026-09-28 (Owner approved global feedback pattern)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C39 — Toast",
+      "id": "GE357"
+    },
+    "spec": "docs/design-system/components/toast.md",
+    "base": null,
+    "axes": {
+      "tone": [
+        "success"
+      ]
+    },
+    "props": {
+      "title": {
+        "kind": "text",
+        "layer": "Title",
+        "default": "Perubahan tersimpan"
+      },
+      "body": {
+        "kind": "optional-node",
+        "layer": "Body",
+        "default": true
+      },
+      "close": {
+        "kind": "boolean",
+        "layer": "Close align",
+        "default": true
+      }
+    },
+    "layers": {
+      "Title": "m0dqT6",
+      "Body": "fhch4",
+      "Close align": "IXhZl"
+    },
+    "variants": {
+      "success": "QCuMb",
+      "danger": "C3PCyx"
+    },
+    "tokens": [
+      "component.alert.*",
+      "color.semantic.elevation.1.*"
+    ],
+    "gaps": [],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): adds Toast/Danger C3PCyx (Alert/Danger + elevation.1, Close on, optional Action e.g. 'Coba lagi')."
     ]
-   }
+  },
+  "button": {
+    "status": "APPROVED 2026-09-26 (pilot pattern)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C01 — Button",
+      "id": "Q12x0F"
+    },
+    "spec": "docs/design-system/components/button.md",
+    "base": {
+      "name": "_Button/Base",
+      "id": "s93Zz0",
+      "private": true
+    },
+    "axes": {
+      "type": [
+        "primary",
+        "secondary",
+        "danger"
+      ],
+      "size": [
+        "md",
+        "lg"
+      ],
+      "state": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "loading"
+      ]
+    },
+    "props": {
+      "iconLeading": {
+        "kind": "boolean",
+        "layer": "Icon leading",
+        "default": false
+      },
+      "iconLeadingName": {
+        "kind": "instance-swap",
+        "layer": "Icon leading",
+        "default": "plus"
+      },
+      "pending": {
+        "kind": "boolean",
+        "layer": "Pending indicator",
+        "default": false
+      },
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "default": "Simpan"
+      },
+      "iconTrailing": {
+        "kind": "boolean",
+        "layer": "Icon trailing",
+        "default": false
+      },
+      "iconTrailingName": {
+        "kind": "instance-swap",
+        "layer": "Icon trailing",
+        "default": "chevron-down"
+      }
+    },
+    "layers": {
+      "Icon leading": "fMNO1",
+      "Pending indicator": "FjXPZ",
+      "Label": "xnhuK",
+      "Icon trailing": "z3xApy"
+    },
+    "variants": {
+      "primary/md/default": "Q49yf7",
+      "primary/md/hover": "G4eW8p",
+      "primary/md/focus": "hEMFc",
+      "primary/md/disabled": "lBKcT",
+      "primary/md/loading": "rv68E",
+      "primary/lg/default": "aBT7T",
+      "primary/lg/hover": "Ye7Xm",
+      "primary/lg/focus": "p9KLdp",
+      "primary/lg/disabled": "V8sGx",
+      "primary/lg/loading": "Ok5W9",
+      "secondary/md/default": "JmfmZ",
+      "secondary/md/hover": "p7DaJb",
+      "secondary/md/focus": "UCgbC",
+      "secondary/md/disabled": "iQ7e5",
+      "secondary/md/loading": "IfUAI",
+      "secondary/lg/default": "c3U6N",
+      "secondary/lg/hover": "ZuSbE",
+      "secondary/lg/focus": "fg9QG",
+      "secondary/lg/disabled": "nqNHl",
+      "secondary/lg/loading": "y0jkmp",
+      "danger/md/default": "z3mR7",
+      "danger/md/hover": "v3T5p",
+      "danger/md/focus": "KPQep",
+      "danger/md/disabled": "dHTCl",
+      "danger/md/loading": "imOnr",
+      "danger/lg/default": "ZDOwL",
+      "danger/lg/hover": "n90hA",
+      "danger/lg/focus": "haHU6",
+      "danger/lg/disabled": "UFc5r",
+      "danger/lg/loading": "oqaiZ"
+    },
+    "tokens": [
+      "component.button.*",
+      "color.semantic.focus.ring",
+      "color.semantic.focus.glow",
+      "opacity.disabled"
+    ],
+    "gaps": []
+  },
+  "stage-chip": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C12 — Stage chip",
+      "id": "uofHz"
+    },
+    "spec": "docs/design-system/components/stage-chip.md",
+    "base": {
+      "name": "_StageChip/Base",
+      "id": "oL43h",
+      "private": true
+    },
+    "axes": {
+      "stage": [
+        "awaiting-deposit",
+        "scheduled",
+        "shooting",
+        "editing",
+        "delivered"
+      ]
+    },
+    "props": {},
+    "layers": {
+      "Dot": "L9XA7y",
+      "Label": "SD1o7"
+    },
+    "variants": {
+      "awaiting-deposit": "i9SFm",
+      "scheduled": "LQGDd",
+      "shooting": "w9aTAe",
+      "editing": "ZVQLe",
+      "delivered": "wAja0"
+    },
+    "tokens": [
+      "component.chip.stage.*"
+    ],
+    "gaps": []
+  },
+  "count-badge": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C13 — Count badge",
+      "id": "PVg5y"
+    },
+    "spec": "docs/design-system/components/count-badge.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "count": {
+        "kind": "text",
+        "layer": "Count",
+        "default": "12"
+      }
+    },
+    "layers": {
+      "Count": "BTnxI"
+    },
+    "variants": {
+      "default": "dQmPx",
+      "danger": "HoAYC"
+    },
+    "tokens": [
+      "component.nav.count.*",
+      "component.badge.danger.*"
+    ],
+    "gaps": [
+      "future: danger/unread badge needs its own component tokens"
+    ],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): adds variant danger = HoAYC (merged from notification-badge; caption 11/semibold, badge.danger.* colours, padding 2/8, 99+ cap — follows code CountBadge)."
+    ]
+  },
+  "checkbox": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C05 — Checkbox",
+      "id": "Ismz6"
+    },
+    "spec": "docs/design-system/components/checkbox.md",
+    "base": {
+      "name": "_Checkbox/Base",
+      "id": "vHs9u",
+      "private": true
+    },
+    "axes": {
+      "value": [
+        "unchecked",
+        "checked",
+        "mixed"
+      ],
+      "state": [
+        "default",
+        "hover",
+        "focus",
+        "disabled"
+      ]
+    },
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "default": "WhatsApp"
+      }
+    },
+    "layers": {
+      "Box": "H419S",
+      "Mark": "Iqg2P",
+      "Label": "bnoVV"
+    },
+    "variants": {
+      "unchecked/default": "n8NmOH",
+      "unchecked/hover": "rozLy",
+      "unchecked/focus": "E7y0r",
+      "unchecked/disabled": "EALFb",
+      "checked/default": "H41tQ",
+      "checked/hover": "XmGFb",
+      "checked/focus": "pWYVC",
+      "checked/disabled": "ygHiA",
+      "mixed/default": "KHGFT",
+      "mixed/hover": "W8g3u",
+      "mixed/focus": "gUWnC",
+      "mixed/disabled": "f7qzGp"
+    },
+    "tokens": [
+      "component.checkbox.*",
+      "color.semantic.focus.ring",
+      "color.semantic.focus.glow",
+      "opacity.disabled"
+    ],
+    "gaps": []
+  },
+  "radio": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C06 — Radio",
+      "id": "v16e9b"
+    },
+    "spec": "docs/design-system/components/radio.md",
+    "base": {
+      "name": "_Radio/Base",
+      "id": "QK374",
+      "private": true
+    },
+    "axes": {
+      "value": [
+        "unselected",
+        "selected"
+      ],
+      "state": [
+        "default",
+        "hover",
+        "focus",
+        "disabled"
+      ]
+    },
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "default": "Edited"
+      }
+    },
+    "layers": {
+      "Dot": "i9SvB",
+      "Label": "dK1OA"
+    },
+    "variants": {
+      "unselected/default": "Imyla",
+      "unselected/hover": "x3hzlO",
+      "unselected/focus": "UkSaY",
+      "unselected/disabled": "u3UCo",
+      "selected/default": "SSy18",
+      "selected/hover": "YAti1",
+      "selected/focus": "xI8Gg",
+      "selected/disabled": "lOBiD"
+    },
+    "tokens": [
+      "component.checkbox.* (shared)",
+      "color.semantic.focus.*",
+      "opacity.disabled"
+    ],
+    "gaps": [
+      "selected focus: single-stroke ellipse — ring offset in code"
+    ]
+  },
+  "switch": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C07 — Switch",
+      "id": "PEqub"
+    },
+    "spec": "docs/design-system/components/switch.md",
+    "base": {
+      "name": "_Switch/Base",
+      "id": "i26Za",
+      "private": true
+    },
+    "axes": {
+      "value": [
+        "off",
+        "on"
+      ],
+      "state": [
+        "default",
+        "hover",
+        "focus",
+        "disabled"
+      ]
+    },
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "default": "Izinkan unduhan"
+      }
+    },
+    "layers": {
+      "Label": "oq6nY",
+      "Track": "nyXXN",
+      "Knob": "KiRAj"
+    },
+    "variants": {
+      "off/default": "oSTqI",
+      "off/hover": "bOH3M",
+      "off/focus": "RqUsV",
+      "off/disabled": "i8Ddp",
+      "on/default": "zSBcA",
+      "on/hover": "E6JzR",
+      "on/focus": "TQqH5",
+      "on/disabled": "HU4S7"
+    },
+    "tokens": [
+      "component.switch.*",
+      "color.semantic.focus.*",
+      "opacity.disabled"
+    ],
+    "gaps": [
+      "GAP-02: loading"
+    ]
+  },
+  "input": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C03 — Input",
+      "id": "YcyAG"
+    },
+    "spec": "docs/design-system/components/input.md",
+    "base": {
+      "name": "_Input/Base",
+      "id": "kWK5j",
+      "private": true
+    },
+    "axes": {
+      "type": [
+        "default",
+        "search"
+      ],
+      "state": [
+        "default",
+        "hover",
+        "focus",
+        "error",
+        "disabled"
+      ]
+    },
+    "props": {
+      "iconLeading": {
+        "kind": "boolean",
+        "layer": "Icon leading",
+        "default": false
+      },
+      "prefix": {
+        "kind": "boolean+text",
+        "layer": "Prefix",
+        "default": false
+      },
+      "filled": {
+        "kind": "boolean",
+        "layers": [
+          "Placeholder",
+          "Value"
+        ],
+        "default": false
+      },
+      "iconTrailing": {
+        "kind": "boolean",
+        "layer": "Icon trailing",
+        "default": false
+      },
+      "shortcut": {
+        "kind": "boolean",
+        "layer": "Shortcut",
+        "nested": "kbd",
+        "default": false
+      }
+    },
+    "layers": {
+      "Icon leading": "VnKAn",
+      "Prefix": "MePi8",
+      "Placeholder": "tvTDd",
+      "Value": "CykHo",
+      "Icon trailing": "Qp2xi",
+      "Shortcut": "UFzsV"
+    },
+    "variants": {
+      "default/default": "lJ39W",
+      "default/hover": "J0Hpih",
+      "default/focus": "Hx4Lp",
+      "default/error": "XCIEx",
+      "default/disabled": "KibRB",
+      "search/default": "vmSeU",
+      "search/hover": "pRtA5",
+      "search/focus": "rzXbh"
+    },
+    "tokens": [
+      "component.input.*",
+      "color.semantic.focus.glow"
+    ],
+    "gaps": [
+      "GAP-06 accepted: border.input < 3:1"
+    ]
+  },
+  "textarea": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C04 — Textarea",
+      "id": "ACpOE"
+    },
+    "spec": "docs/design-system/components/textarea.md",
+    "base": {
+      "name": "_Textarea/Base",
+      "id": "C4DyK",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "default",
+        "hover",
+        "focus",
+        "error",
+        "disabled"
+      ]
+    },
+    "props": {
+      "filled": {
+        "kind": "boolean",
+        "layers": [
+          "Placeholder",
+          "Value"
+        ],
+        "default": false
+      }
+    },
+    "layers": {
+      "Placeholder": "q9O7ef",
+      "Value": "B90I4"
+    },
+    "variants": {
+      "default": "t7L0yL",
+      "hover": "i6bud",
+      "focus": "FXGl1",
+      "error": "XyHPI",
+      "disabled": "zVBG4"
+    },
+    "tokens": [
+      "component.input.*"
+    ],
+    "gaps": []
+  },
+  "segmented-item": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C11 — Segmented item",
+      "id": "JU4XC"
+    },
+    "spec": "docs/design-system/components/segmented-item.md",
+    "base": {
+      "name": "_SegmentedItem/Base",
+      "id": "k0HnIZ",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "active",
+        "default",
+        "hover",
+        "focus"
+      ],
+      "size": [
+        "md",
+        "lg"
+      ]
+    },
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "default": "Minggu"
+      }
+    },
+    "layers": {
+      "Label": "FnOrw"
+    },
+    "variants": {
+      "active": "NcbI1",
+      "default": "AptHz",
+      "hover": "BrUPr",
+      "focus": "u7e89",
+      "lg/active": "a17zLE",
+      "lg/default": "SaNob",
+      "lg/hover": "OD6NY",
+      "lg/focus": "w3GDB"
+    },
+    "tokens": [
+      "component.segmented.*"
+    ],
+    "gaps": []
+  },
+  "metric-delta": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C15 — Metric delta",
+      "id": "I7T5uL"
+    },
+    "spec": "docs/design-system/components/metric-delta.md",
+    "base": {
+      "name": "_MetricDelta/Base",
+      "id": "Y5oibW",
+      "private": true
+    },
+    "axes": {
+      "tone": [
+        "positive",
+        "warning"
+      ]
+    },
+    "props": {
+      "value": {
+        "kind": "text",
+        "layer": "Value",
+        "default": "+12,4%"
+      }
+    },
+    "layers": {
+      "Value": "GqwpL"
+    },
+    "variants": {
+      "positive": "x7rlD",
+      "warning": "GU07z"
+    },
+    "tokens": [
+      "component.metric.delta.*"
+    ],
+    "gaps": [
+      "no negative tone (DESIGN TOKEN GAP if needed)"
+    ]
+  },
+  "stepper": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C08 — Stepper",
+      "id": "vWyiP"
+    },
+    "spec": "docs/design-system/components/stepper.md",
+    "base": {
+      "name": "_Stepper/Base",
+      "id": "G5nIg",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "default",
+        "focus",
+        "at-minimum",
+        "disabled"
+      ]
+    },
+    "props": {
+      "value": {
+        "kind": "text",
+        "layer": "Value",
+        "default": "2"
+      }
+    },
+    "layers": {
+      "Decrement": "eDLhv",
+      "Value": "VcrsX",
+      "Increment": "Ezlnc"
+    },
+    "variants": {
+      "default": "mNfw5",
+      "focus": "LIq8i",
+      "at-minimum": "wOE8e",
+      "disabled": "ylYb6"
+    },
+    "tokens": [
+      "component.stepper.*"
+    ],
+    "gaps": [
+      "hover per step button shown as preview only"
+    ]
+  },
+  "avatar": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C16 — Avatar",
+      "id": "fSpXU"
+    },
+    "spec": "docs/design-system/components/avatar.md",
+    "base": {
+      "name": "_Avatar/Base",
+      "id": "V05sI",
+      "private": true
+    },
+    "axes": {
+      "size": [
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    "props": {
+      "initials": {
+        "kind": "text",
+        "layer": "Initials",
+        "default": "DS"
+      }
+    },
+    "layers": {
+      "Initials": "DloPs"
+    },
+    "variants": {
+      "sm": "PO3yR",
+      "md": "N7uFQ",
+      "lg": "IVuIw"
+    },
+    "tokens": [
+      "component.avatar.*"
+    ],
+    "gaps": [
+      "photo avatar out of scope"
+    ]
+  },
+  "icon-button": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26 · size SM (ghost) added tier 2 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C02 — Icon button",
+      "id": "l3eUy"
+    },
+    "spec": "docs/design-system/components/icon-button.md",
+    "base": {
+      "name": "_IconButton/Base",
+      "id": "s4zsCg",
+      "private": true
+    },
+    "axes": {
+      "style": [
+        "outline",
+        "ghost"
+      ],
+      "size": [
+        "md",
+        "sm"
+      ],
+      "state": [
+        "default",
+        "hover",
+        "focus",
+        "disabled"
+      ]
+    },
+    "props": {
+      "icon": {
+        "kind": "instance-swap",
+        "layer": "Icon",
+        "default": "bell"
+      },
+      "badge": {
+        "kind": "boolean",
+        "layer": "Badge",
+        "nested": "notification-badge",
+        "default": false
+      }
+    },
+    "layers": {
+      "Icon": "wSyzB",
+      "Badge": "w1Fg4G"
+    },
+    "variants": {
+      "outline/md/default": "m9dUlL",
+      "outline/md/hover": "q55i4",
+      "outline/md/focus": "z8x6cH",
+      "outline/md/disabled": "cSqu0",
+      "ghost/md/default": "qY0Em",
+      "ghost/md/hover": "sDBli",
+      "ghost/md/focus": "RXlcJ",
+      "ghost/md/disabled": "V85La",
+      "ghost/sm/default": "VA96y",
+      "ghost/sm/hover": "zl5JW",
+      "ghost/sm/focus": "j1Kf3I",
+      "ghost/sm/disabled": "Zyrkn"
+    },
+    "tokens": [
+      "component.icon-button.*"
+    ],
+    "gaps": [
+      "outline SM deferred until needed"
+    ],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): MD variants: Badge offset x 20 / y 4 (base 24/−4 fits SM)."
+    ]
+  },
+  "notification-badge": {
+    "status": "MERGED into count-badge (variant danger) 2026-09-29 — node HoAYC renamed 'Count Badge/Danger'; entry kept for compatibility",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C14 — Notification badge",
+      "id": "uKgTV"
+    },
+    "spec": "docs/design-system/components/notification-badge.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "count": {
+        "kind": "text",
+        "layer": "Count",
+        "default": "3"
+      }
+    },
+    "layers": {
+      "Count": "hnJrZ"
+    },
+    "variants": {
+      "default": "HoAYC"
+    },
+    "tokens": [
+      "component.badge.danger.*"
+    ],
+    "gaps": []
+  },
+  "kbd": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C17 — Kbd",
+      "id": "HV6UQ"
+    },
+    "spec": "docs/design-system/components/kbd.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "keys": {
+        "kind": "text",
+        "layer": "Keys",
+        "default": "⌘K"
+      }
+    },
+    "layers": {
+      "Keys": "Xmo7V"
+    },
+    "variants": {
+      "default": "UdwCn"
+    },
+    "tokens": [
+      "component.kbd.*"
+    ],
+    "gaps": []
+  },
+  "menu-item": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1c, no legacy evidence) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C09 — Menu item",
+      "id": "TbrWC"
+    },
+    "spec": "docs/design-system/components/menu-item.md",
+    "base": {
+      "name": "_MenuItem/Base",
+      "id": "mf83F",
+      "private": true
+    },
+    "axes": {
+      "type": [
+        "default",
+        "destructive"
+      ],
+      "state": [
+        "default",
+        "hover",
+        "selected",
+        "disabled"
+      ]
+    },
+    "props": {
+      "icon": {
+        "kind": "boolean",
+        "layer": "Icon",
+        "default": false
+      },
+      "description": {
+        "kind": "boolean+text",
+        "layer": "Description",
+        "default": false
+      },
+      "check": {
+        "kind": "boolean",
+        "layer": "Check",
+        "default": false
+      },
+      "checkbox": {
+        "kind": "boolean+instance-swap",
+        "layer": "Checkbox",
+        "nested": "checkbox",
+        "default": false
+      },
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "default": "Prewedding"
+      }
+    },
+    "layers": {
+      "Checkbox": "iWymw",
+      "Icon": "FL9Kk",
+      "Text": "Z6qIYH",
+      "Label": "vHwtA",
+      "Description": "leQSn",
+      "Check": "baOu6"
+    },
+    "variants": {
+      "default/default": "iSqRB",
+      "default/hover": "mCgnL",
+      "default/selected": "qKcfI",
+      "default/disabled": "e0gYs",
+      "destructive/default": "Amnm5",
+      "destructive/hover": "nRGEe"
+    },
+    "tokens": [
+      "component.menu.item.*"
+    ],
+    "gaps": [
+      "no legacy evidence"
+    ]
+  },
+  "menu": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1c, no legacy evidence) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C10 — Menu",
+      "id": "AgR78"
+    },
+    "spec": "docs/design-system/components/menu.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "items": {
+        "kind": "slot",
+        "layer": "Items",
+        "id": "JoK1p",
+        "recommended": [
+          "iSqRB",
+          "qKcfI",
+          "e0gYs",
+          "Amnm5",
+          "z7QON",
+          "yNxME"
+        ],
+        "fill": "Replace(instance+'/JoK1p', …)"
+      }
+    },
+    "layers": {
+      "Items": "JoK1p"
+    },
+    "variants": {
+      "default": "g6dKmz",
+      "list": "I3q8f"
+    },
+    "related": {
+      "menu-divider": "z7QON",
+      "menu-group-label": {
+        "id": "yNxME",
+        "layers": {
+          "Label": "n0wAh6"
+        }
+      }
+    },
+    "tokens": [
+      "component.menu.*",
+      "color.semantic.elevation.1.color",
+      "elevation.1.*"
+    ],
+    "gaps": [
+      "no legacy evidence",
+      "Pencil: Get visitor may throw inside replaced instance slots — skipChildren on refs"
+    ],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): adds Menu/List I3q8f (horizontal padding 0; Menu Divider between items; footer may hold a primary Button MD)."
+    ]
+  },
+  "text-field": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C18 — Text field",
+      "id": "P42vwq"
+    },
+    "spec": "docs/design-system/components/text-field.md",
+    "base": {
+      "name": "_TextField/Base",
+      "id": "TFmAG",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "default",
+        "hover",
+        "focus",
+        "error",
+        "disabled"
+      ]
+    },
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "default": "Email klien"
+      },
+      "optional": {
+        "kind": "boolean",
+        "layer": "Optional",
+        "default": false
+      },
+      "helper": {
+        "kind": "text",
+        "layer": "Helper",
+        "default": "Tautan galeri dikirim ke email ini."
+      },
+      "message": {
+        "kind": "boolean",
+        "layer": "Message",
+        "default": true
+      },
+      "input": {
+        "kind": "nested",
+        "layer": "Input",
+        "ref": "input/default/default",
+        "paths": "Input/<layer> e.g. c67yIW/tvTDd (Placeholder), c67yIW/CykHo (Value)"
+      }
+    },
+    "layers": {
+      "Label row": "OjQDs",
+      "Label": "Gmk0c",
+      "Optional": "RsEBb",
+      "Input": "c67yIW",
+      "Message": "i0umVC",
+      "Message icon": "I0aOa6",
+      "Helper": "uh4XA"
+    },
+    "variants": {
+      "default": "HHNPk",
+      "hover": "Feq2q",
+      "focus": "mZcc4",
+      "error": "AVpMa",
+      "disabled": "Q64HTj"
+    },
+    "nested": [
+      "input"
+    ],
+    "tokens": [
+      "component.input.*"
+    ],
+    "gaps": [
+      "state variants re-apply Input/<State> overrides on one stable nested Input (replacing the nested ref would change its id per variant)"
+    ]
+  },
+  "select": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C19 — Select",
+      "id": "epNyK"
+    },
+    "spec": "docs/design-system/components/select.md",
+    "base": {
+      "name": "_Select/Base",
+      "id": "R1MZh",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "default",
+        "hover",
+        "open",
+        "error",
+        "disabled"
+      ]
+    },
+    "props": {
+      "field": {
+        "kind": "nested",
+        "layer": "Field",
+        "ref": "text-field/default",
+        "paths": "Et1pR/Gmk0c label, Et1pR/c67yIW/tvTDd placeholder, Et1pR/c67yIW/CykHo value, Et1pR/uh4XA helper"
+      },
+      "menu": {
+        "kind": "nested+slot",
+        "layer": "Menu",
+        "ref": "menu",
+        "fill": "Replace(instance+'/xGHsR/JoK1p', …)",
+        "position": "absolute y 65 (4 px below the Input)"
+      }
+    },
+    "layers": {
+      "Field": "Et1pR",
+      "Menu": "xGHsR"
+    },
+    "variants": {
+      "default": "Wc7hd",
+      "hover": "v7bysV",
+      "open": "b5dem",
+      "error": "A6bXr",
+      "disabled": "umHpv"
+    },
+    "nested": [
+      "text-field",
+      "menu",
+      "menu-item"
+    ],
+    "tokens": [
+      "component.input.*",
+      "component.menu.*",
+      "elevation.1.*"
+    ],
+    "gaps": [
+      "menu y offset assumes the label row is on (15 px); hide the label → move the menu to y 44",
+      "combobox (search in menu) not built"
+    ]
+  },
+  "multi-select": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C20 — Multi-select",
+      "id": "A56Q5"
+    },
+    "spec": "docs/design-system/components/multi-select.md",
+    "base": {
+      "name": "_MultiSelect/Base",
+      "id": "K1H9l",
+      "private": true,
+      "ref_of": "_Select/Base"
+    },
+    "axes": {
+      "state": [
+        "default",
+        "hover",
+        "open",
+        "error",
+        "disabled"
+      ]
+    },
+    "props": {
+      "field": {
+        "kind": "nested",
+        "layer": "Field",
+        "paths": "same as select (Et1pR/…)"
+      },
+      "items": {
+        "kind": "slot (replaced in base)",
+        "layer": "Items",
+        "id": "xthKF",
+        "items": {
+          "Group label": "jELyt",
+          "WhatsApp": "JDxlW",
+          "Email": "CC64P",
+          "SMS": "nr0AY",
+          "Instagram DM": "B23y4"
+        },
+        "toggle": "Replace(<item>/iWymw, {type:'ref', ref: checkbox checked/default})"
+      }
+    },
+    "layers": {
+      "Field": "Et1pR",
+      "Menu": "xGHsR",
+      "Items": "xthKF"
+    },
+    "variants": {
+      "default": "X8ErE9",
+      "hover": "nvFx0",
+      "open": "q4NjNG",
+      "error": "ny8DD",
+      "disabled": "h1Cq6"
+    },
+    "nested": [
+      "select",
+      "menu-item",
+      "checkbox",
+      "menu-group-label"
+    ],
+    "tokens": [
+      "component.input.*",
+      "component.menu.*",
+      "component.checkbox.*"
+    ],
+    "gaps": [
+      "trigger overflow '+N' is a code behaviour"
+    ]
+  },
+  "action-menu": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C21 — Action menu",
+      "id": "TWp5Y"
+    },
+    "spec": "docs/design-system/components/action-menu.md",
+    "base": {
+      "name": "_ActionMenu/Base",
+      "id": "B7K1d",
+      "private": true
+    },
+    "axes": {
+      "size": [
+        "md",
+        "sm"
+      ],
+      "state": [
+        "closed",
+        "open"
+      ]
+    },
+    "props": {
+      "trigger": {
+        "kind": "nested",
+        "layer": "Trigger",
+        "ref": "icon-button/ghost/md/default",
+        "icon": "ellipsis"
+      },
+      "items": {
+        "kind": "slot (replaced in base)",
+        "layer": "Items",
+        "id": "c8fWyJ",
+        "fill": "Replace(instance+'/RCAAJ/JoK1p', …)"
+      }
+    },
+    "layers": {
+      "Trigger": "m4ka0s",
+      "Menu": "RCAAJ",
+      "Items": "c8fWyJ"
+    },
+    "variants": {
+      "md/closed": "rXttF",
+      "md/open": "tQSj1",
+      "sm/closed": "tgN4c",
+      "sm/open": "M3v1E5"
+    },
+    "nested": [
+      "icon-button",
+      "menu",
+      "menu-item",
+      "menu-divider"
+    ],
+    "tokens": [
+      "component.icon-button.*",
+      "component.menu.*",
+      "elevation.1.*"
+    ],
+    "gaps": [
+      "menu x offset is fixed per size (MD −200, SM −208) for a 240 menu"
+    ]
+  },
+  "nav-item": {
+    "status": "APPROVED 2026-09-28 (shell v3 amendment; Owner: ya)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C22 — Nav item",
+      "id": "UZTgh"
+    },
+    "spec": "docs/design-system/components/nav-item.md",
+    "base": {
+      "name": "_NavItem/Base",
+      "id": "cvsvP",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "default",
+        "hover",
+        "active",
+        "focus"
+      ]
+    },
+    "props": {
+      "icon": {
+        "kind": "instance-swap",
+        "layer": "Icon",
+        "default": "folder-kanban"
+      },
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "default": "Proyek"
+      },
+      "count": {
+        "kind": "boolean",
+        "layer": "Count",
+        "nested": "count-badge",
+        "default": false,
+        "text": "E6JiYt/BTnxI"
+      }
+    },
+    "layers": {
+      "Icon": "MpR9k",
+      "Label": "m6S2m",
+      "Count": "E6JiYt"
+    },
+    "variants": {
+      "default": "K0UQ06",
+      "hover": "Ijxgm",
+      "active": "CInVy",
+      "focus": "XBgH6"
+    },
+    "nested": [
+      "count-badge"
+    ],
+    "tokens": [
+      "component.nav.*"
+    ],
+    "gaps": [
+      "nav.count.* should become count-badge.* if the badge spreads (open)",
+      "label truncation is a code behaviour"
+    ],
+    "related": {
+      "nav-group-label": {
+        "id": "Rjoxp",
+        "layers": {
+          "Label": "p1hGy"
+        },
+        "tokens": [
+          "component.nav.group-label",
+          "component.nav.item.padding-x",
+          "space.1"
+        ]
+      }
+    },
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Active: nav.item.* now action.primary / action.on-primary, label semibold; Hover: background surface.panel, icon nav.item.icon-hover (→ accent.soft-fg). Rules v3.1 N1."
+    ]
+  },
+  "segmented-control": {
+    "status": "APPROVED 2026-09-28 (shell v3 track amendment; Owner: ya)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C23 — Segmented control",
+      "id": "GD7cE"
+    },
+    "spec": "docs/design-system/components/segmented-control.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "items": {
+        "kind": "slot",
+        "layer": "Items",
+        "id": "ULzG1",
+        "recommended": [
+          "NcbI1",
+          "AptHz",
+          "BrUPr",
+          "u7e89"
+        ],
+        "default": [
+          "Hari (active)",
+          "Minggu",
+          "Bulan"
+        ],
+        "fill": "Replace(instance+'/ULzG1', …)"
+      }
+    },
+    "layers": {
+      "Items": "ULzG1"
+    },
+    "variants": {
+      "default": "uMP5H",
+      "lg": "WadoU"
+    },
+    "nested": [
+      "segmented-item"
+    ],
+    "tokens": [
+      "component.segmented.*"
+    ],
+    "gaps": [
+      "LG size for the client gallery (≥ 44 px) not built"
+    ]
+  },
+  "alert": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C24 — Alert",
+      "id": "NFr0T"
+    },
+    "spec": "docs/design-system/components/alert.md",
+    "base": {
+      "name": "_Alert/Base",
+      "id": "B50hT",
+      "private": true
+    },
+    "axes": {
+      "tone": [
+        "success",
+        "info",
+        "warning",
+        "danger",
+        "highlight"
+      ]
+    },
+    "props": {
+      "title": {
+        "kind": "text",
+        "layer": "Title"
+      },
+      "body": {
+        "kind": "boolean+text",
+        "layer": "Body",
+        "default": true
+      },
+      "action": {
+        "kind": "boolean+text",
+        "layer": "Action",
+        "default": false
+      },
+      "icon": {
+        "kind": "instance-swap",
+        "layer": "Icon",
+        "note": "fixed per tone"
+      },
+      "close": {
+        "kind": "boolean+nested",
+        "layer": "Close align",
+        "default": false,
+        "ref": "icon-button/ghost/sm/default",
+        "icon": "x"
+      }
+    },
+    "layers": {
+      "Icon": "k7lq2",
+      "Title": "m0dqT6",
+      "Body": "fhch4",
+      "Action": "M54Ca",
+      "Close": "F4Fv5K",
+      "Close align": "IXhZl"
+    },
+    "variants": {
+      "success": "E4PkTw",
+      "info": "S5bhVn",
+      "warning": "pt1q7",
+      "danger": "F3GrC5",
+      "highlight": "ef21N"
+    },
+    "nested": [
+      "icon-button"
+    ],
+    "tokens": [
+      "component.alert.*"
+    ],
+    "gaps": []
+  },
+  "calendar-day": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C25 — Calendar day",
+      "id": "J3EsT8"
+    },
+    "spec": "docs/design-system/components/calendar-day.md",
+    "base": {
+      "name": "_CalendarDay/Base",
+      "id": "RmXbc",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "default",
+        "selected",
+        "focus"
+      ]
+    },
+    "props": {
+      "day": {
+        "kind": "text",
+        "layer": "Day",
+        "default": "Sen"
+      },
+      "date": {
+        "kind": "text",
+        "layer": "Date",
+        "default": "22"
+      },
+      "dots": {
+        "kind": "boolean",
+        "layers": [
+          "Dot 1",
+          "Dot 2",
+          "Dot 3"
+        ],
+        "default": [
+          true,
+          false,
+          false
+        ]
+      }
+    },
+    "layers": {
+      "Day": "gotez",
+      "Date": "BYi8t",
+      "Dots": "gBNhF",
+      "Dot 1": "zB5te",
+      "Dot 2": "Z0m2o9",
+      "Dot 3": "onKaK"
+    },
+    "variants": {
+      "default": "v87EDR",
+      "selected": "Hbsc8",
+      "focus": "qTeQQ",
+      "hover": "k6Pzsk"
+    },
+    "nested": [],
+    "tokens": [
+      "component.calendar.day.*",
+      "space.1"
+    ],
+    "gaps": [
+      "no hover state/token",
+      "dots gap binds space.1 (no component alias)",
+      "date weight 800 in legacy → 700 (weights ≤ 700 rule)"
+    ]
+  },
+  "metric-tile": {
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C26 — Metric tile",
+      "id": "w2pc7t"
+    },
+    "spec": "docs/design-system/components/metric-tile.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "default": "Pendapatan"
+      },
+      "value": {
+        "kind": "text",
+        "layer": "Value",
+        "default": "Rp 18,4 jt"
+      },
+      "delta": {
+        "kind": "boolean+nested",
+        "layer": "Delta",
+        "ref": "metric-delta/positive",
+        "default": true,
+        "swap": "Replace(instance+'/MbBqV', {type:'ref', ref:'GU07z'})"
+      },
+      "spark": {
+        "kind": "boolean",
+        "layer": "Spark",
+        "default": true
+      }
+    },
+    "layers": {
+      "Label": "Wtx9f",
+      "Delta": "MbBqV",
+      "Value": "CXKcw",
+      "Spark": "dUbG4"
+    },
+    "variants": {
+      "default": "AJT5R"
+    },
+    "nested": [
+      "metric-delta"
+    ],
+    "tokens": [
+      "component.metric.*",
+      "space.2"
+    ],
+    "gaps": [
+      "tabular figures (DESIGN TOKEN GAP)",
+      "no negative (red) delta tone",
+      "Head/Value-row min gap binds space.2"
+    ]
+  },
+  "table": {
+    "status": "APPROVED (tier 3) 2026-09-26",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C27 — Table",
+      "id": "zWcpb"
+    },
+    "spec": "docs/design-system/components/table.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "title": {
+        "kind": "text",
+        "layer": "Title",
+        "id": "ycT8w"
+      },
+      "subtitle": {
+        "kind": "boolean+text",
+        "layer": "Subtitle",
+        "id": "aIKsB",
+        "default": true
+      },
+      "filter": {
+        "kind": "boolean+nested",
+        "layer": "Filter",
+        "id": "YTJjx",
+        "ref": "segmented-control",
+        "default": true
+      },
+      "rows": {
+        "kind": "slot",
+        "layer": "Rows",
+        "id": "cYo5t",
+        "recommended": [
+          "r7YZY",
+          "XlPZD"
+        ],
+        "note": "last row strokeWidth {bottom:0}"
+      },
+      "count": {
+        "kind": "text",
+        "layer": "Count",
+        "id": "X0Kcc"
+      },
+      "link": {
+        "kind": "boolean+text",
+        "layer": "Link",
+        "id": "QTddd",
+        "default": true
+      }
+    },
+    "layers": {
+      "Title": "ycT8w",
+      "Subtitle": "aIKsB",
+      "Filter": "YTJjx",
+      "Header": "KZSJQ",
+      "Rows": "cYo5t",
+      "Count": "X0Kcc",
+      "Link": "QTddd"
+    },
+    "variants": {
+      "default": "FCsTI",
+      "header-cell/sorted": "UD38Q",
+      "header-cell/select": "h0RSa",
+      "cell/select": "xbQwc",
+      "cell/selected": "whHzE",
+      "row/selected": "bd9LK",
+      "row/skeleton": "eFemy",
+      "empty-state": "w0HQb"
+    },
+    "related": {
+      "table-cell": {
+        "base": {
+          "name": "_TableCell/Base",
+          "id": "Nm9LJ",
+          "private": true
+        },
+        "axes": {
+          "type": [
+            "text",
+            "strong",
+            "client",
+            "stage",
+            "actions"
+          ]
+        },
+        "variants": {
+          "text": "f0oyj",
+          "strong": "f7pbaS",
+          "client": "lVDvO",
+          "stage": "rS9BY",
+          "actions": "C1MRI"
+        },
+        "layers": {
+          "Avatar": "cTnMA",
+          "Text": "qlRSm",
+          "Primary": "Q4FlPn",
+          "Secondary": "m3GsQx",
+          "Stage": "T67o9d",
+          "Actions": "EUP7g"
+        },
+        "notes": "width per column; swap stage via Replace(<cell>/T67o9d, {type:'ref', ref: Stage Chip/<Stage>, enabled:true})"
+      },
+      "table-header-cell": {
+        "id": "T3MFWw",
+        "layers": {
+          "Label": "t55nF"
+        }
+      },
+      "table-header-row": {
+        "id": "oOFk7",
+        "slot": {
+          "Cells": "mxhia"
+        }
+      },
+      "table-row": {
+        "base": {
+          "name": "_TableRow/Base",
+          "id": "Y1wn7",
+          "private": true
+        },
+        "axes": {
+          "state": [
+            "default",
+            "hover"
+          ]
+        },
+        "variants": {
+          "default": "r7YZY",
+          "hover": "XlPZD"
+        },
+        "slot": {
+          "Cells": "GoLkn"
+        }
+      }
+    },
+    "nested": [
+      "segmented-control",
+      "avatar",
+      "stage-chip",
+      "action-menu"
+    ],
+    "tokens": [
+      "component.table.*"
+    ],
+    "gaps": [
+      "footer count/title/subtitle bind semantic text tokens (no component alias)",
+      "legacy dark filter pills replaced by Segmented control (Owner 2026-09-26)",
+      "no pagination (GAP-02)"
+    ]
+  },
+  "page-content": {
+    "status": "APPROVED (tier 3) 2026-09-26",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C28 — App panel",
+      "id": "yepgE"
+    },
+    "spec": "docs/design-system/components/app-panel.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "container": {
+        "kind": "slot",
+        "layer": "Container",
+        "id": "bBehO",
+        "recommended": [
+          "FCsTI",
+          "AJT5R",
+          "uMP5H",
+          "HHNPk",
+          "Q49yf7",
+          "aBT7T",
+          "E4PkTw"
+        ],
+        "fill": "Replace(instance+'/bBehO', {type:'frame', name:'Container', width:1096, layout:'vertical', gap:'$component/panel/app/content/gap'})"
+      }
+    },
+    "layers": {
+      "Container": "bBehO",
+      "Hint": "Wnclu"
+    },
+    "variants": {
+      "default": "B4HAVd"
+    },
+    "nested": [],
+    "tokens": [
+      "component.panel.app.content.padding-y",
+      "component.panel.app.content.padding-x",
+      "component.panel.app.content.gap",
+      "component.panel.app.content.max-width"
+    ],
+    "gaps": [
+      "Pencil has no max-width and can't bind width: Container is a literal 1096 (= panel.app.content.max-width); code uses max-width 1096px + width 100%"
+    ]
+  },
+  "app-panel": {
+    "status": "APPROVED 2026-09-28 (shell v3 amendment; Owner: ya)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C28 — App panel",
+      "id": "yepgE"
+    },
+    "spec": "docs/design-system/components/app-panel.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "parent": {
+        "kind": "text",
+        "layer": "Page Header/Parent",
+        "path": "MST3f/EPpbd"
+      },
+      "current": {
+        "kind": "text",
+        "layer": "Page Header/Current",
+        "path": "MST3f/Hh5tj"
+      },
+      "title": {
+        "kind": "text",
+        "layer": "Page Header/Title",
+        "path": "MST3f/HsrFT"
+      },
+      "subtitle": {
+        "kind": "boolean+text",
+        "layer": "Page Header/Subtitle",
+        "path": "MST3f/i8XPWU",
+        "default": true
+      },
+      "actions": {
+        "kind": "slot",
+        "layer": "Page Header/Actions",
+        "path": "MST3f/U9JxE",
+        "recommended": [
+          "vmSeU",
+          "m9dUlL",
+          "Q49yf7",
+          "JmfmZ"
+        ]
+      },
+      "content": {
+        "kind": "slot",
+        "layer": "Content",
+        "id": "C5QYo",
+        "recommended": [
+          "B4HAVd"
+        ],
+        "default": "d2hCuQ (Page Content instance)",
+        "fill": "Replace(instance+'/C5QYo/d2hCuQ/bBehO', {type:'frame', name:'Container', width:1096, layout:'vertical', gap:'$component/panel/app/content/gap'}) then Insert the sections"
+      }
+    },
+    "layers": {
+      "Page Header": "MST3f",
+      "Page Header.Parent": "EPpbd",
+      "Page Header.Current": "Hh5tj",
+      "Page Header.Title": "HsrFT",
+      "Page Header.Subtitle": "i8XPWU",
+      "Page Header.Actions": "U9JxE",
+      "Content": "C5QYo",
+      "Page Content": "d2hCuQ"
+    },
+    "variants": {
+      "default": "UmVJD"
+    },
+    "nested": [
+      "page-header",
+      "page-content"
+    ],
+    "tokens": [
+      "component.panel.app.*"
+    ],
+    "gaps": [
+      "slot fill only works on top-level instances: Pencil can't replace a slot inside an instance nested in another master",
+      "breakpoints not specified"
+    ]
+  },
+  "sidebar": {
+    "status": "APPROVED 2026-09-28 (shell v3 amendment; Owner: ya)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C29 — Sidebar",
+      "id": "nSDgz"
+    },
+    "spec": "docs/design-system/components/sidebar.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "workspace": {
+        "kind": "text",
+        "layer": "Workspace",
+        "id": "rAUNw"
+      },
+      "name": {
+        "kind": "text",
+        "layer": "Name",
+        "id": "EpYE1"
+      },
+      "email": {
+        "kind": "text",
+        "layer": "Email",
+        "id": "pMF7b"
+      },
+      "initials": {
+        "kind": "text",
+        "layer": "Avatar/Initials",
+        "path": "aXcVC/DloPs"
+      },
+      "nav": {
+        "kind": "slot",
+        "layer": "Nav",
+        "id": "tilEo",
+        "recommended": [
+          "K0UQ06",
+          "Ijxgm",
+          "CInVy",
+          "XBgH6",
+          "Rjoxp"
+        ]
+      },
+      "navBottom": {
+        "kind": "slot",
+        "layer": "Nav bottom",
+        "id": "pRu41",
+        "recommended": [
+          "K0UQ06",
+          "Ijxgm",
+          "CInVy",
+          "XBgH6"
+        ]
+      }
+    },
+    "layers": {
+      "Workspace": "rAUNw",
+      "Nav": "tilEo",
+      "Nav bottom": "pRu41",
+      "Avatar": "aXcVC",
+      "Name": "EpYE1",
+      "Email": "pMF7b",
+      "rail.Nav": "r1Gq4",
+      "rail.Nav bottom": "A4gKt"
+    },
+    "variants": {
+      "default": "vB50q",
+      "rail": "JRUY0"
+    },
+    "nested": [
+      "nav-item",
+      "nav-group-label",
+      "avatar",
+      "icon-button"
+    ],
+    "tokens": [
+      "component.sidebar.*",
+      "component.nav.*"
+    ],
+    "gaps": [
+      "workspace mark token is retained for compatibility but the v3 expanded switcher does not render a mark",
+      "collapsed / drawer modes not built",
+      "height drawn at 936; fills the shell"
+    ],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Active/hover Nav Items change via nav tokens (rules v3.1 N1)."
+    ]
+  },
+  "app-shell": {
+    "status": "APPROVED 2026-09-28 (shell v3 amendment; Owner: ya)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C30 — App shell",
+      "id": "f7qs8Z"
+    },
+    "spec": "docs/design-system/components/app-shell.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "sidebar": {
+        "kind": "nested",
+        "layer": "Sidebar",
+        "id": "fNszT",
+        "ref": "sidebar"
+      },
+      "panel": {
+        "kind": "nested",
+        "layer": "Panel",
+        "id": "Sw0yD",
+        "ref": "app-panel"
+      },
+      "overlay": {
+        "kind": "boolean",
+        "layer": "Overlay",
+        "id": "fwm7P",
+        "default": false
+      },
+      "modal": {
+        "kind": "slot",
+        "layer": "Modal",
+        "id": "hnTfu",
+        "recommended": [
+          "cdSbf",
+          "f8ym9",
+          "yAPhv"
+        ],
+        "default": "nRbAO (Modal/MD)"
+      },
+      "toast": {
+        "kind": "slot",
+        "layer": "Toast",
+        "id": "VJpuD",
+        "recommended": [
+          "QCuMb"
+        ],
+        "default": false
+      }
+    },
+    "layers": {
+      "Sidebar": "fNszT",
+      "Panel": "Sw0yD",
+      "Overlay": "fwm7P",
+      "Modal": "hnTfu",
+      "Toast": "VJpuD",
+      "tablet.Rail": "f4EPF6",
+      "tablet.Panel": "QhPny",
+      "tablet.Overlay": "bbU0M",
+      "tablet.Modal": "o14Rz"
+    },
+    "variants": {
+      "default": "y9uBJl",
+      "tablet": "lQnS8"
+    },
+    "nested": [
+      "sidebar",
+      "app-panel",
+      "modal",
+      "toast"
+    ],
+    "tokens": [
+      "color.semantic.surface.muted",
+      "space.3",
+      "component.modal.scrim"
+    ],
+    "gaps": [
+      "1440 × 960 only; breakpoints future"
+    ],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Toast layer VJpuD padding space.6; Toast slots accept Toast/Success and Toast/Danger."
+    ]
+  },
+  "modal": {
+    "status": "APPROVED (tier 4) 2026-09-26",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C31 — Modal",
+      "id": "ukLqT"
+    },
+    "spec": "docs/design-system/components/modal.md",
+    "base": {
+      "name": "_Modal/Base",
+      "id": "G9VQuU",
+      "private": true
+    },
+    "axes": {
+      "size": [
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    "props": {
+      "title": {
+        "kind": "text",
+        "layer": "Title",
+        "id": "V8uAA",
+        "default": "Judul modal"
+      },
+      "description": {
+        "kind": "boolean",
+        "layer": "Description",
+        "id": "PPg3y",
+        "default": true
+      },
+      "close": {
+        "kind": "boolean",
+        "layer": "Close",
+        "id": "M80T4e",
+        "default": true
+      },
+      "body": {
+        "kind": "slot",
+        "layer": "Body",
+        "id": "c5Prsw",
+        "recommended": [
+          "HHNPk",
+          "Wc7hd",
+          "X8ErE9",
+          "t7L0yL",
+          "n8NmOH",
+          "Imyla",
+          "oSTqI",
+          "FCsTI",
+          "E4PkTw"
+        ],
+        "fill": "Replace(instance+'/c5Prsw', {type:'frame', name:'Body', layout:'vertical', width:'fill_container', padding:'$component/modal/body/padding', gap:'$component/modal/body/gap'})"
+      },
+      "actions": {
+        "kind": "slot",
+        "layer": "Actions",
+        "id": "I7e8yh",
+        "recommended": [
+          "JmfmZ",
+          "Q49yf7",
+          "z3mR7"
+        ],
+        "fill": "Replace(instance+'/I7e8yh', {type:'frame', name:'Actions', gap:'$component/modal/footer/gap', alignItems:'center'})"
+      }
+    },
+    "layers": {
+      "Header": "VpbJF",
+      "Heading": "fOsAM",
+      "Title": "V8uAA",
+      "Description": "PPg3y",
+      "Close": "M80T4e",
+      "Body": "c5Prsw",
+      "Footer": "Pp1eX",
+      "Actions": "I7e8yh"
+    },
+    "variants": {
+      "sm": "cdSbf",
+      "md": "f8ym9",
+      "lg": "yAPhv"
+    },
+    "nested": [
+      "icon-button",
+      "button"
+    ],
+    "tokens": [
+      "component.modal.*",
+      "component.button.danger.*",
+      "color.semantic.overlay.scrim",
+      "elevation.2"
+    ],
+    "gaps": [
+      "widths 400/560/720 are literal (Pencil can't bind width)",
+      "no max-height / scrolling body spec yet",
+      "no legacy evidence (exploration board 04, option A)"
+    ]
+  },
+  "sheet-item": {
+    "status": "APPROVED (tier 4) 2026-09-26",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C32 — Bottom sheet",
+      "id": "m6YUOs"
+    },
+    "spec": "docs/design-system/components/bottom-sheet.md",
+    "base": {
+      "name": "_SheetItem/Base",
+      "id": "hHxAm",
+      "private": true
+    },
+    "axes": {
+      "tone": [
+        "default",
+        "destructive",
+        "selected"
+      ]
+    },
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "id": "elAPX",
+        "default": "Unduh foto"
+      },
+      "icon": {
+        "kind": "instance-swap",
+        "layer": "Icon",
+        "id": "MLkPM",
+        "default": "download"
+      },
+      "count": {
+        "kind": "boolean",
+        "layer": "Count",
+        "id": "bZ2Ux",
+        "default": false,
+        "nested": "count-badge (set Count/BTnxI)"
+      },
+      "selected": {
+        "kind": "boolean",
+        "layer": "Selected mark",
+        "id": "W5pLC",
+        "default": false
+      }
+    },
+    "layers": {
+      "Icon": "MLkPM",
+      "Label": "elAPX",
+      "Count": "bZ2Ux",
+      "Selected mark": "W5pLC"
+    },
+    "variants": {
+      "default": "FRtU1",
+      "destructive": "FAObX",
+      "selected": "E7RrIj"
+    },
+    "nested": [
+      "count-badge"
+    ],
+    "tokens": [
+      "component.sheet.item.*",
+      "component.sheet.background"
+    ],
+    "gaps": [
+      "height 52 literal (Pencil can't bind height)"
+    ],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Sheet Item/Selected E7RrIj: label semibold; check = component.sheet.item.check (→ action.primary), rules v3.1 C1."
+    ]
+  },
+  "bottom-sheet": {
+    "status": "APPROVED (tier 4) 2026-09-26",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C32 — Bottom sheet",
+      "id": "m6YUOs"
+    },
+    "spec": "docs/design-system/components/bottom-sheet.md",
+    "base": null,
+    "axes": {
+      "type": [
+        "actions",
+        "form",
+        "menu"
+      ]
+    },
+    "props": {
+      "actions.title": {
+        "kind": "text",
+        "layer": "Title",
+        "id": "bEyU3"
+      },
+      "actions.meta": {
+        "kind": "boolean",
+        "layer": "Meta",
+        "id": "GyfP0",
+        "default": true
+      },
+      "actions.items": {
+        "kind": "slot",
+        "layer": "Items",
+        "id": "CLpYz",
+        "recommended": [
+          "FRtU1",
+          "FAObX",
+          "E7RrIj"
+        ],
+        "fill": "Replace(instance+'/CLpYz', {type:'frame', name:'Items', layout:'vertical', width:'fill_container'})"
+      },
+      "form.title": {
+        "kind": "text",
+        "layer": "Title",
+        "id": "di5Wv"
+      },
+      "form.description": {
+        "kind": "boolean",
+        "layer": "Description",
+        "id": "fmisv",
+        "default": true
+      },
+      "form.close": {
+        "kind": "boolean",
+        "layer": "Close",
+        "id": "P9kIA4",
+        "default": true
+      },
+      "form.body": {
+        "kind": "slot",
+        "layer": "Body",
+        "id": "XCxn4",
+        "recommended": [
+          "HHNPk",
+          "Wc7hd",
+          "Imyla",
+          "SSy18",
+          "n8NmOH",
+          "oSTqI",
+          "t7L0yL"
+        ],
+        "fill": "Replace(instance+'/XCxn4', {type:'frame', name:'Body', layout:'vertical', width:'fill_container', padding:['$component/sheet/body/padding-y','$component/sheet/body/padding-x'], gap:'$component/sheet/body/gap'})"
+      },
+      "form.actions": {
+        "kind": "slot",
+        "layer": "Actions",
+        "id": "x5l7Wq",
+        "recommended": [
+          "aBT7T",
+          "c3U6N",
+          "ZDOwL"
+        ],
+        "fill": "Replace(instance+'/x5l7Wq', {type:'frame', name:'Actions', layout:'vertical', width:'fill_container', gap:'$component/sheet/body/gap'}) then LG buttons width fill_container"
+      },
+      "menu.items": {
+        "kind": "slot",
+        "layer": "Items",
+        "id": "MfblZ",
+        "recommended": [
+          "FRtU1",
+          "FAObX",
+          "E7RrIj",
+          "Rjoxp"
+        ]
+      },
+      "menu.close": {
+        "kind": "boolean",
+        "layer": "Close",
+        "id": "mt8sl",
+        "default": true
+      }
+    },
+    "layers": {
+      "actions": {
+        "Grabber": "YgWu7",
+        "Header": "IVFxg",
+        "Items": "CLpYz",
+        "Safe area": "Rjdpx"
+      },
+      "form": {
+        "Grabber": "b3NPP",
+        "Header": "N45tz",
+        "Heading": "ZkmI0",
+        "Close": "P9kIA4",
+        "Body": "XCxn4",
+        "Footer": "M5rKks",
+        "Actions": "x5l7Wq",
+        "Safe area": "VoKRV"
+      },
+      "menu": {
+        "Grabber": "H8E1Yj",
+        "Header": "VsQBD",
+        "Workspace switcher": "Gf9J9",
+        "Items": "MfblZ",
+        "Account": "OnXpV",
+        "Log out": "JVVIR",
+        "Safe area": "TF9Tw",
+        "Logo": "o5FI3",
+        "Close": "mt8sl",
+        "Workspace": "yurxA"
+      }
+    },
+    "variants": {
+      "actions": "U0wHw",
+      "form": "vSBbR",
+      "menu": "oWJw2"
+    },
+    "nested": [
+      "avatar",
+      "button",
+      "count-badge",
+      "icon-button",
+      "nav-group-label",
+      "radio",
+      "sheet-item"
+    ],
+    "tokens": [
+      "component.sheet.*",
+      "elevation.2"
+    ],
+    "gaps": [
+      "width 375 = design frame; code 100% of viewport (max 560 on tablet)",
+      "upward shadow offset −8 is literal (elevation offsets are positive)",
+      "no mobile shell yet (GAP-04): shown on a phone placeholder",
+      "max-height 90% / scrolling body documented, not drawn"
+    ],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Bottom Sheet/Menu oWJw2: workspace row yurxA and Invoice HdCxv disabled."
+    ]
+  },
+  "mobile-shell": {
+    "status": "APPROVED (tier 4) 2026-09-26",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C33 — Mobile shell",
+      "id": "rmpdk"
+    },
+    "spec": "docs/design-system/components/mobile-shell.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "title": {
+        "kind": "text",
+        "layer": "Title",
+        "id": "YDCza",
+        "default": "Galeri"
+      },
+      "back": {
+        "kind": "boolean",
+        "layer": "Back",
+        "id": "A7FVe",
+        "default": true
+      },
+      "action": {
+        "kind": "boolean",
+        "layer": "Action",
+        "id": "iYuut",
+        "default": true
+      },
+      "content": {
+        "kind": "slot",
+        "layer": "Content",
+        "id": "JOcL3",
+        "recommended": [
+          "AJT5R",
+          "FCsTI",
+          "HHNPk",
+          "uMP5H",
+          "aBT7T",
+          "E4PkTw"
+        ],
+        "fill": "Replace(instance+'/JOcL3', {type:'frame', name:'Content', layout:'vertical', width:'fill_container', height:'fill_container', padding:'$space/4', gap:'$space/3'})"
+      },
+      "overlay": {
+        "kind": "boolean",
+        "layer": "Overlay",
+        "id": "uTdi7",
+        "default": false
+      },
+      "sheet": {
+        "kind": "slot",
+        "layer": "Sheet",
+        "id": "gc8dt",
+        "recommended": [
+          "U0wHw",
+          "vSBbR"
+        ],
+        "default": "OxGbt (Bottom Sheet/Actions)"
+      }
+    },
+    "layers": {
+      "Status bar": "gcvMh",
+      "App bar": "ombNI",
+      "Back": "A7FVe",
+      "Title": "YDCza",
+      "Action": "iYuut",
+      "Content": "JOcL3",
+      "Safe area": "c6tsWc",
+      "Overlay": "uTdi7",
+      "Sheet": "gc8dt"
+    },
+    "variants": {
+      "default": "XHlWT"
+    },
+    "nested": [
+      "icon-button",
+      "bottom-sheet",
+      "compact-bar",
+      "bottom-nav"
+    ],
+    "tokens": [
+      "color.semantic.surface.muted",
+      "color.semantic.border.subtle",
+      "space.1",
+      "space.2",
+      "space.3",
+      "space.4",
+      "component.sheet.scrim"
+    ],
+    "gaps": [
+      "no bottom navigation",
+      "tablet/Owner breakpoints unspecified",
+      "status bar/home indicator are device context only"
+    ],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): root surface.muted; App bar children disabled, Compact Bar GaeSf (J3Ppgp) inserted; Content JOcL3 = canvas sheet; Safe area off; Bottom Nav F4VJ1u added (stays on sub-pages)."
+    ]
+  },
+  "bottom-nav-item": {
+    "status": "APPROVED (tier 4) 2026-09-26",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C34 — Bottom nav",
+      "id": "QifL8"
+    },
+    "spec": "docs/design-system/components/bottom-nav.md",
+    "base": {
+      "name": "_BottomNavItem/Base",
+      "id": "D0lDq",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "default",
+        "active"
+      ]
+    },
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "id": "sJlqM"
+      },
+      "icon": {
+        "kind": "instance-swap",
+        "layer": "Icon",
+        "id": "Tz5za"
+      },
+      "badge": {
+        "kind": "boolean",
+        "layer": "Badge",
+        "id": "qSiIY",
+        "default": false,
+        "nested": "notification-badge (Count hnJrZ)"
+      }
+    },
+    "layers": {
+      "Icon wrap": "ktiaG",
+      "Icon": "Tz5za",
+      "Badge": "qSiIY",
+      "Label": "sJlqM"
+    },
+    "variants": {
+      "default": "x1Mgr3",
+      "active": "bKADv"
+    },
+    "nested": [
+      "notification-badge"
+    ],
+    "tokens": [
+      "component.bottom-nav.item.*"
+    ],
+    "gaps": []
+  },
+  "bottom-nav-cta": {
+    "status": "APPROVED (tier 4) 2026-09-26",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C34 — Bottom nav",
+      "id": "QifL8"
+    },
+    "spec": "docs/design-system/components/bottom-nav.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "icon": {
+        "kind": "instance-swap",
+        "layer": "Icon",
+        "id": "nCt5A",
+        "default": "plus"
+      }
+    },
+    "layers": {
+      "Icon": "nCt5A"
+    },
+    "variants": {
+      "default": "tLfnG"
+    },
+    "nested": [],
+    "tokens": [
+      "component.bottom-nav.cta.*",
+      "elevation.1"
+    ],
+    "gaps": [
+      "54 size literal"
+    ]
+  },
+  "bottom-nav": {
+    "status": "APPROVED (tier 4) 2026-09-26",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C34 — Bottom nav",
+      "id": "QifL8"
+    },
+    "spec": "docs/design-system/components/bottom-nav.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "items": {
+        "kind": "slot",
+        "layer": "Items",
+        "id": "gZgRf",
+        "recommended": [
+          "x1Mgr3",
+          "bKADv",
+          "tLfnG"
+        ]
+      }
+    },
+    "layers": {
+      "Items": "gZgRf",
+      "Tab Dasbor": "uzabE",
+      "Tab Proyek": "Ryjdm",
+      "CTA slot": "suEnL",
+      "CTA": "Iir7g",
+      "Tab Klien": "YChMw",
+      "Tab Lainnya": "wTYuN",
+      "Safe area": "bOGkI"
+    },
+    "variants": {
+      "default": "lymtg"
+    },
+    "nested": [
+      "bottom-nav-item",
+      "bottom-nav-cta"
+    ],
+    "tokens": [
+      "component.bottom-nav.*"
+    ],
+    "gaps": [
+      "no hide-on-scroll / keyboard state drawn"
+    ],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): tab wTYuN: Lainnya → Invoice (receipt); menu reached via the Mobile Header Menu button (option A)."
+    ]
+  },
+  "mobile-app-shell": {
+    "status": "APPROVED 2026-09-28 (shell v3 amendment; Owner: ya)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C35 — Mobile app shell",
+      "id": "u8w6u"
+    },
+    "spec": "docs/design-system/components/mobile-app-shell.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "title": {
+        "kind": "text",
+        "layer": "Title",
+        "id": "jlmjH",
+        "default": "Dasbor"
+      },
+      "content": {
+        "kind": "slot",
+        "layer": "Content",
+        "id": "HvRky",
+        "recommended": [
+          "AJT5R",
+          "FCsTI",
+          "HHNPk",
+          "uMP5H",
+          "aBT7T",
+          "E4PkTw"
+        ],
+        "fill": "Replace(instance+'/HvRky', {type:'frame', name:'Content', layout:'vertical', width:'fill_container', height:'fill_container', padding:'$space/4', gap:'$space/4'})"
+      },
+      "bottomNav": {
+        "kind": "nested",
+        "layer": "Bottom Nav",
+        "id": "SpGXb",
+        "ref": "bottom-nav"
+      },
+      "overlay": {
+        "kind": "boolean",
+        "layer": "Overlay",
+        "id": "Ey5pi",
+        "default": false
+      },
+      "sheet": {
+        "kind": "slot",
+        "layer": "Sheet",
+        "id": "aQWCT",
+        "recommended": [
+          "oWJw2",
+          "U0wHw",
+          "vSBbR"
+        ],
+        "default": "xSveZ (Bottom Sheet/Menu)"
+      },
+      "toast": {
+        "kind": "slot",
+        "layer": "Toast",
+        "id": "U4sG8K",
+        "recommended": [
+          "QCuMb"
+        ],
+        "default": false
+      }
+    },
+    "layers": {
+      "Top": "jqblo",
+      "Status bar": "IgmBj",
+      "App bar": "nUiGs",
+      "Title": "jlmjH",
+      "Search": "oGnhL",
+      "Notifications": "x84QK",
+      "Content": "HvRky",
+      "Bottom Nav": "SpGXb",
+      "Overlay": "Ey5pi",
+      "Sheet": "aQWCT",
+      "Toast": "U4sG8K"
+    },
+    "variants": {
+      "default": "c6qPz7"
+    },
+    "nested": [
+      "icon-button",
+      "bottom-nav",
+      "bottom-sheet",
+      "toast",
+      "mobile-header",
+      "workspace-pill"
+    ],
+    "tokens": [
+      "color.semantic.surface.canvas",
+      "color.semantic.surface.panel",
+      "color.semantic.border.subtle",
+      "space.1",
+      "space.2",
+      "space.4",
+      "component.sheet.scrim"
+    ],
+    "gaps": [
+      "tablet 768–1279 unspecified",
+      "sub-pages use C33 (back + title)"
+    ],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): root surface.muted; Top border off; App bar nUiGs disabled; Mobile Header n0MP5 (o8T8zb) added; Content HvRky = surface.canvas sheet with top corners panel.app.radius, padding space.5/space.4; Toast layer top padding 62 (status bar + space.2)."
+    ]
+  },
+  "combobox": {
+    "status": "PROPOSED 2026-09-26 (open question resolved)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C36 — Combobox",
+      "id": "wDOnD"
+    },
+    "spec": "docs/design-system/components/combobox.md",
+    "base": {
+      "name": "_Combobox/Base",
+      "id": "lhmhP",
+      "private": true,
+      "ref": "_Select/Base R1MZh"
+    },
+    "axes": {
+      "state": [
+        "default",
+        "open",
+        "disabled"
+      ]
+    },
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Et1pR/Gmk0c"
+      },
+      "placeholder": {
+        "kind": "text",
+        "layer": "Et1pR/c67yIW/tvTDd"
+      },
+      "query": {
+        "kind": "text",
+        "layer": "Et1pR/c67yIW/CykHo"
+      },
+      "helper": {
+        "kind": "text",
+        "layer": "Et1pR/uh4XA"
+      },
+      "items": {
+        "kind": "slot",
+        "layer": "Menu/Items",
+        "id": "Ly5N6",
+        "path": "xGHsR/Ly5N6",
+        "recommended": [
+          "iSqRB",
+          "mCgnL",
+          "qKcfI",
+          "z7QON",
+          "yNxME"
+        ]
+      }
+    },
+    "variants": {
+      "default": "CiTrY",
+      "open": "LN80X",
+      "disabled": "CGRMW"
+    },
+    "nested": [
+      "select",
+      "text-field",
+      "menu",
+      "menu-item"
+    ],
+    "tokens": [
+      "component.menu.*",
+      "component.menu.item.text-action",
+      "component.input.*"
+    ],
+    "gaps": [
+      "Error/Hover states follow Select (not drawn)"
+    ]
+  },
+  "tooltip": {
+    "status": "PROPOSED 2026-09-26",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C37 — Nav rail & tablet shell",
+      "id": "jNOvR"
+    },
+    "spec": "docs/design-system/components/nav-rail.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "id": "WLS9S"
+      }
+    },
+    "layers": {
+      "Label": "WLS9S"
+    },
+    "variants": {
+      "default": "OYkds"
+    },
+    "nested": [],
+    "tokens": [
+      "component.tooltip.*",
+      "elevation.1"
+    ],
+    "gaps": []
+  },
+  "nav-rail-item": {
+    "status": "PROPOSED 2026-09-26",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C37 — Nav rail & tablet shell",
+      "id": "jNOvR"
+    },
+    "spec": "docs/design-system/components/nav-rail.md",
+    "base": {
+      "name": "_NavRailItem/Base",
+      "id": "xhCvp",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "default",
+        "hover",
+        "active",
+        "focus"
+      ]
+    },
+    "props": {
+      "icon": {
+        "kind": "instance-swap",
+        "layer": "Icon",
+        "id": "r4Ryb"
+      },
+      "badge": {
+        "kind": "boolean",
+        "layer": "Badge",
+        "id": "mKYsh",
+        "default": false
+      },
+      "tooltip": {
+        "kind": "text",
+        "layer": "Tooltip/Label",
+        "path": "B1PEOz/WLS9S"
+      }
+    },
+    "layers": {
+      "Icon": "r4Ryb",
+      "Badge": "mKYsh",
+      "Tooltip": "B1PEOz"
+    },
+    "variants": {
+      "default": "odApP",
+      "hover": "GMxFW",
+      "active": "OKf00",
+      "focus": "vRX3t"
+    },
+    "nested": [
+      "notification-badge",
+      "tooltip"
+    ],
+    "tokens": [
+      "component.nav.item.*"
+    ],
+    "gaps": [],
+    "changes": [
+      "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Active via nav.item.* (action.primary); Hover icon = nav.item.icon-hover. App Shell/Tablet lQnS8: root surface.muted, Toast layer z9osf8, rail workspace control = chevrons-up-down 16 text.muted (no accent mark)."
+    ]
+  },
+  "workspace-pill": {
+    "status": "APPROVED 2026-09-29 (F-17)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "spec": "docs/design-system/components/mobile-app-shell.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "workspace": {
+        "kind": "text",
+        "layer": "Workspace",
+        "id": "t4WDgJ"
+      }
+    },
+    "variants": {
+      "default": "K06oq"
+    },
+    "tokens": [
+      "component.sidebar.workspace.*"
+    ]
+  },
+  "mobile-header": {
+    "status": "APPROVED 2026-09-29 (F-17)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "spec": "docs/design-system/components/mobile-app-shell.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "title": {
+        "kind": "text",
+        "layer": "Title",
+        "id": "K1jSfD"
+      },
+      "subtitle": {
+        "kind": "text",
+        "layer": "Subtitle",
+        "id": "EYvag"
+      }
+    },
+    "slots": {
+      "utilities": {
+        "id": "tL2Cp",
+        "accepts": [
+          "qY0Em"
+        ],
+        "default": [
+          "Search",
+          "Notifications",
+          "Menu"
+        ]
+      }
+    },
+    "variants": {
+      "default": "o8T8zb"
+    },
+    "nested": [
+      "workspace-pill",
+      "icon-button"
+    ],
+    "tokens": [
+      "color.semantic.surface.muted",
+      "component.page-header.title",
+      "component.page-header.subtitle",
+      "font.size.heading",
+      "font.letter-spacing.heading"
+    ]
+  },
+  "compact-bar": {
+    "status": "APPROVED 2026-09-29 (F-17)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "spec": "docs/design-system/components/mobile-shell.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "title": {
+        "kind": "text",
+        "layer": "Title",
+        "id": "I0gdll"
+      },
+      "parent": {
+        "kind": "text",
+        "layer": "Parent",
+        "id": "jbTiE"
+      }
+    },
+    "slots": {
+      "actions": {
+        "id": "wS30M",
+        "accepts": [
+          "iQ7e5",
+          "JmfmZ",
+          "Q49yf7",
+          "lBKcT",
+          "qY0Em"
+        ],
+        "default": []
+      }
+    },
+    "variants": {
+      "default": "J3Ppgp"
+    },
+    "nested": [
+      "icon-button"
+    ],
+    "tokens": [
+      "color.semantic.surface.muted",
+      "component.page-header.title",
+      "component.page-header.breadcrumb.text"
+    ]
   }
- },
- "segmented-control": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C23 — Segmented control",
-   "id": "GD7cE"
-  },
-  "spec": "docs/design-system/components/segmented-control.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "items": {
-    "kind": "slot",
-    "layer": "Items",
-    "id": "ULzG1",
-    "recommended": [
-     "NcbI1",
-     "AptHz",
-     "BrUPr",
-     "u7e89"
-    ],
-    "default": [
-     "Hari (active)",
-     "Minggu",
-     "Bulan"
-    ],
-    "fill": "Replace(instance+'/ULzG1', …)"
-   }
-  },
-  "layers": {
-   "Items": "ULzG1"
-  },
-  "variants": {
-   "default": "uMP5H",
-   "lg": "WadoU"
-  },
-  "nested": [
-   "segmented-item"
-  ],
-  "tokens": [
-   "component.segmented.*"
-  ],
-  "gaps": [
-   "LG size for the client gallery (≥ 44 px) not built"
-  ]
- },
- "alert": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C24 — Alert",
-   "id": "NFr0T"
-  },
-  "spec": "docs/design-system/components/alert.md",
-  "base": {
-   "name": "_Alert/Base",
-   "id": "B50hT",
-   "private": true
-  },
-  "axes": {
-   "tone": [
-    "success",
-    "info",
-    "warning",
-    "danger",
-    "highlight"
-   ]
-  },
-  "props": {
-   "title": {
-    "kind": "text",
-    "layer": "Title"
-   },
-   "body": {
-    "kind": "boolean+text",
-    "layer": "Body",
-    "default": true
-   },
-   "action": {
-    "kind": "boolean+text",
-    "layer": "Action",
-    "default": false
-   },
-   "icon": {
-    "kind": "instance-swap",
-    "layer": "Icon",
-    "note": "fixed per tone"
-   },
-   "close": {
-    "kind": "boolean+nested",
-    "layer": "Close align",
-    "default": false,
-    "ref": "icon-button/ghost/sm/default",
-    "icon": "x"
-   }
-  },
-  "layers": {
-   "Icon": "k7lq2",
-   "Title": "m0dqT6",
-   "Body": "fhch4",
-   "Action": "M54Ca",
-   "Close": "F4Fv5K",
-   "Close align": "IXhZl"
-  },
-  "variants": {
-   "success": "E4PkTw",
-   "info": "S5bhVn",
-   "warning": "pt1q7",
-   "danger": "F3GrC5",
-   "highlight": "ef21N"
-  },
-  "nested": [
-   "icon-button"
-  ],
-  "tokens": [
-   "component.alert.*"
-  ],
-  "gaps": []
- },
- "calendar-day": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C25 — Calendar day",
-   "id": "J3EsT8"
-  },
-  "spec": "docs/design-system/components/calendar-day.md",
-  "base": {
-   "name": "_CalendarDay/Base",
-   "id": "RmXbc",
-   "private": true
-  },
-  "axes": {
-   "state": [
-    "default",
-    "selected",
-    "focus"
-   ]
-  },
-  "props": {
-   "day": {
-    "kind": "text",
-    "layer": "Day",
-    "default": "Sen"
-   },
-   "date": {
-    "kind": "text",
-    "layer": "Date",
-    "default": "22"
-   },
-   "dots": {
-    "kind": "boolean",
-    "layers": [
-     "Dot 1",
-     "Dot 2",
-     "Dot 3"
-    ],
-    "default": [
-     true,
-     false,
-     false
-    ]
-   }
-  },
-  "layers": {
-   "Day": "gotez",
-   "Date": "BYi8t",
-   "Dots": "gBNhF",
-   "Dot 1": "zB5te",
-   "Dot 2": "Z0m2o9",
-   "Dot 3": "onKaK"
-  },
-  "variants": {
-   "default": "v87EDR",
-   "selected": "Hbsc8",
-   "focus": "qTeQQ",
-   "hover": "k6Pzsk"
-  },
-  "nested": [],
-  "tokens": [
-   "component.calendar.day.*",
-   "space.1"
-  ],
-  "gaps": [
-   "no hover state/token",
-   "dots gap binds space.1 (no component alias)",
-   "date weight 800 in legacy → 700 (weights ≤ 700 rule)"
-  ]
- },
- "metric-tile": {
-  "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C26 — Metric tile",
-   "id": "w2pc7t"
-  },
-  "spec": "docs/design-system/components/metric-tile.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "default": "Pendapatan"
-   },
-   "value": {
-    "kind": "text",
-    "layer": "Value",
-    "default": "Rp 18,4 jt"
-   },
-   "delta": {
-    "kind": "boolean+nested",
-    "layer": "Delta",
-    "ref": "metric-delta/positive",
-    "default": true,
-    "swap": "Replace(instance+'/MbBqV', {type:'ref', ref:'GU07z'})"
-   },
-   "spark": {
-    "kind": "boolean",
-    "layer": "Spark",
-    "default": true
-   }
-  },
-  "layers": {
-   "Label": "Wtx9f",
-   "Delta": "MbBqV",
-   "Value": "CXKcw",
-   "Spark": "dUbG4"
-  },
-  "variants": {
-   "default": "AJT5R"
-  },
-  "nested": [
-   "metric-delta"
-  ],
-  "tokens": [
-   "component.metric.*",
-   "space.2"
-  ],
-  "gaps": [
-   "tabular figures (DESIGN TOKEN GAP)",
-   "no negative (red) delta tone",
-   "Head/Value-row min gap binds space.2"
-  ]
- },
- "table": {
-  "status": "APPROVED (tier 3) 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C27 — Table",
-   "id": "zWcpb"
-  },
-  "spec": "docs/design-system/components/table.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "title": {
-    "kind": "text",
-    "layer": "Title",
-    "id": "ycT8w"
-   },
-   "subtitle": {
-    "kind": "boolean+text",
-    "layer": "Subtitle",
-    "id": "aIKsB",
-    "default": true
-   },
-   "filter": {
-    "kind": "boolean+nested",
-    "layer": "Filter",
-    "id": "YTJjx",
-    "ref": "segmented-control",
-    "default": true
-   },
-   "rows": {
-    "kind": "slot",
-    "layer": "Rows",
-    "id": "cYo5t",
-    "recommended": [
-     "r7YZY",
-     "XlPZD"
-    ],
-    "note": "last row strokeWidth {bottom:0}"
-   },
-   "count": {
-    "kind": "text",
-    "layer": "Count",
-    "id": "X0Kcc"
-   },
-   "link": {
-    "kind": "boolean+text",
-    "layer": "Link",
-    "id": "QTddd",
-    "default": true
-   }
-  },
-  "layers": {
-   "Title": "ycT8w",
-   "Subtitle": "aIKsB",
-   "Filter": "YTJjx",
-   "Header": "KZSJQ",
-   "Rows": "cYo5t",
-   "Count": "X0Kcc",
-   "Link": "QTddd"
-  },
-  "variants": {
-   "default": "FCsTI",
-   "header-cell/sorted": "UD38Q",
-   "header-cell/select": "h0RSa",
-   "cell/select": "xbQwc",
-   "cell/selected": "whHzE",
-   "row/selected": "bd9LK",
-   "row/skeleton": "eFemy",
-   "empty-state": "w0HQb"
-  },
-  "related": {
-   "table-cell": {
-    "base": {
-     "name": "_TableCell/Base",
-     "id": "Nm9LJ",
-     "private": true
-    },
-    "axes": {
-     "type": [
-      "text",
-      "strong",
-      "client",
-      "stage",
-      "actions"
-     ]
-    },
-    "variants": {
-     "text": "f0oyj",
-     "strong": "f7pbaS",
-     "client": "lVDvO",
-     "stage": "rS9BY",
-     "actions": "C1MRI"
-    },
-    "layers": {
-     "Avatar": "cTnMA",
-     "Text": "qlRSm",
-     "Primary": "Q4FlPn",
-     "Secondary": "m3GsQx",
-     "Stage": "T67o9d",
-     "Actions": "EUP7g"
-    },
-    "notes": "width per column; swap stage via Replace(<cell>/T67o9d, {type:'ref', ref: Stage Chip/<Stage>, enabled:true})"
-   },
-   "table-header-cell": {
-    "id": "T3MFWw",
-    "layers": {
-     "Label": "t55nF"
-    }
-   },
-   "table-header-row": {
-    "id": "oOFk7",
-    "slot": {
-     "Cells": "mxhia"
-    }
-   },
-   "table-row": {
-    "base": {
-     "name": "_TableRow/Base",
-     "id": "Y1wn7",
-     "private": true
-    },
-    "axes": {
-     "state": [
-      "default",
-      "hover"
-     ]
-    },
-    "variants": {
-     "default": "r7YZY",
-     "hover": "XlPZD"
-    },
-    "slot": {
-     "Cells": "GoLkn"
-    }
-   }
-  },
-  "nested": [
-   "segmented-control",
-   "avatar",
-   "stage-chip",
-   "action-menu"
-  ],
-  "tokens": [
-   "component.table.*"
-  ],
-  "gaps": [
-   "footer count/title/subtitle bind semantic text tokens (no component alias)",
-   "legacy dark filter pills replaced by Segmented control (Owner 2026-09-26)",
-   "no pagination (GAP-02)"
-  ]
- },
- "page-content": {
-  "status": "APPROVED (tier 3) 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C28 — App panel",
-   "id": "yepgE"
-  },
-  "spec": "docs/design-system/components/app-panel.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "container": {
-    "kind": "slot",
-    "layer": "Container",
-    "id": "bBehO",
-    "recommended": [
-     "FCsTI",
-     "AJT5R",
-     "uMP5H",
-     "HHNPk",
-     "Q49yf7",
-     "aBT7T",
-     "E4PkTw"
-    ],
-    "fill": "Replace(instance+'/bBehO', {type:'frame', name:'Container', width:1096, layout:'vertical', gap:'$component/panel/app/content/gap'})"
-   }
-  },
-  "layers": {
-   "Container": "bBehO",
-   "Hint": "Wnclu"
-  },
-  "variants": {
-   "default": "B4HAVd"
-  },
-  "nested": [],
-  "tokens": [
-   "component.panel.app.content.padding-y",
-   "component.panel.app.content.padding-x",
-   "component.panel.app.content.gap",
-   "component.panel.app.content.max-width"
-  ],
-  "gaps": [
-   "Pencil has no max-width and can't bind width: Container is a literal 1096 (= panel.app.content.max-width); code uses max-width 1096px + width 100%"
-  ]
- },
- "app-panel": {
-  "status": "APPROVED (tier 3) 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C28 — App panel",
-   "id": "yepgE"
-  },
-  "spec": "docs/design-system/components/app-panel.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "title": {
-    "kind": "text",
-    "layer": "Title",
-    "id": "nrRBd"
-   },
-   "actions": {
-    "kind": "slot",
-    "layer": "Actions",
-    "id": "uR9Ye",
-    "recommended": [
-     "vmSeU",
-     "m9dUlL",
-     "Q49yf7",
-     "JmfmZ"
-    ]
-   },
-   "content": {
-    "kind": "slot",
-    "layer": "Content",
-    "id": "C5QYo",
-    "recommended": [
-     "B4HAVd"
-    ],
-    "default": "d2hCuQ (Page Content instance)",
-    "fill": "Replace(instance+'/C5QYo/d2hCuQ/bBehO', {type:'frame', name:'Container', width:1096, layout:'vertical', gap:'$component/panel/app/content/gap'}) then Insert the sections"
-   }
-  },
-  "layers": {
-   "Panel header": "gmoTC",
-   "Title": "nrRBd",
-   "Actions": "uR9Ye",
-   "Content": "C5QYo",
-   "Page Content": "d2hCuQ"
-  },
-  "variants": {
-   "default": "UmVJD"
-  },
-  "nested": [
-   "input",
-   "icon-button",
-   "page-content"
-  ],
-  "tokens": [
-   "component.panel.app.*"
-  ],
-  "gaps": [
-   "header height 72 is literal (Pencil can't bind height)",
-   "slot fill only works on top-level instances: Pencil can't replace a slot inside an instance nested in another master",
-   "breakpoints not specified"
-  ]
- },
- "sidebar": {
-  "status": "APPROVED (tier 3) 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C29 — Sidebar",
-   "id": "nSDgz"
-  },
-  "spec": "docs/design-system/components/sidebar.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "workspace": {
-    "kind": "text",
-    "layer": "Workspace",
-    "id": "rAUNw"
-   },
-   "name": {
-    "kind": "text",
-    "layer": "Name",
-    "id": "EpYE1"
-   },
-   "email": {
-    "kind": "text",
-    "layer": "Email",
-    "id": "pMF7b"
-   },
-   "initials": {
-    "kind": "text",
-    "layer": "Avatar/Initials",
-    "path": "aXcVC/DloPs"
-   },
-   "nav": {
-    "kind": "slot",
-    "layer": "Nav",
-    "id": "tilEo",
-    "recommended": [
-     "K0UQ06",
-     "Ijxgm",
-     "CInVy",
-     "XBgH6",
-     "Rjoxp"
-    ]
-   },
-   "navBottom": {
-    "kind": "slot",
-    "layer": "Nav bottom",
-    "id": "pRu41",
-    "recommended": [
-     "K0UQ06",
-     "Ijxgm",
-     "CInVy",
-     "XBgH6"
-    ]
-   }
-  },
-  "layers": {
-   "Workspace": "rAUNw",
-   "Nav": "tilEo",
-   "Nav bottom": "pRu41",
-   "Avatar": "aXcVC",
-   "Name": "EpYE1",
-   "Email": "pMF7b",
-   "rail.Nav": "r1Gq4",
-   "rail.Nav bottom": "A4gKt"
-  },
-  "variants": {
-   "default": "vB50q",
-   "rail": "JRUY0"
-  },
-  "nested": [
-   "nav-item",
-   "nav-group-label",
-   "avatar",
-   "icon-button"
-  ],
-  "tokens": [
-   "component.sidebar.*",
-   "component.nav.*"
-  ],
-  "gaps": [
-   "layout region: binds semantic/scale tokens (board 08 layout map) — promote to sidebar.* tokens if the Owner wants G3 component aliases",
-   "logo mark monochrome (legacy blue) until brand rules (GAP-03)",
-   "collapsed / drawer modes not built",
-   "height drawn at 936; fills the shell"
-  ]
- },
- "app-shell": {
-  "status": "APPROVED (tier 3) 2026-09-26 (template)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C30 — App shell",
-   "id": "f7qs8Z"
-  },
-  "spec": "docs/design-system/components/app-shell.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "sidebar": {
-    "kind": "nested",
-    "layer": "Sidebar",
-    "id": "fNszT",
-    "ref": "sidebar"
-   },
-   "panel": {
-    "kind": "nested",
-    "layer": "Panel",
-    "id": "Sw0yD",
-    "ref": "app-panel"
-   },
-   "overlay": {
-    "kind": "boolean",
-    "layer": "Overlay",
-    "id": "fwm7P",
-    "default": false
-   },
-   "modal": {
-    "kind": "slot",
-    "layer": "Modal",
-    "id": "hnTfu",
-    "recommended": [
-     "cdSbf",
-     "f8ym9",
-     "yAPhv"
-    ],
-    "default": "nRbAO (Modal/MD)"
-   }
-  },
-  "layers": {
-   "Sidebar": "fNszT",
-   "Panel": "Sw0yD",
-   "Overlay": "fwm7P",
-   "Modal": "hnTfu",
-   "tablet.Rail": "f4EPF6",
-   "tablet.Panel": "QhPny",
-   "tablet.Overlay": "bbU0M",
-   "tablet.Modal": "o14Rz"
-  },
-  "variants": {
-   "default": "y9uBJl",
-   "tablet": "lQnS8"
-  },
-  "nested": [
-   "sidebar",
-   "app-panel",
-   "modal"
-  ],
-  "tokens": [
-   "color.semantic.surface.canvas",
-   "space.3",
-   "component.modal.scrim"
-  ],
-  "gaps": [
-   "1440 × 960 only; breakpoints future"
-  ]
- },
- "modal": {
-  "status": "APPROVED (tier 4) 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C31 — Modal",
-   "id": "ukLqT"
-  },
-  "spec": "docs/design-system/components/modal.md",
-  "base": {
-   "name": "_Modal/Base",
-   "id": "G9VQuU",
-   "private": true
-  },
-  "axes": {
-   "size": [
-    "sm",
-    "md",
-    "lg"
-   ]
-  },
-  "props": {
-   "title": {
-    "kind": "text",
-    "layer": "Title",
-    "id": "V8uAA",
-    "default": "Judul modal"
-   },
-   "description": {
-    "kind": "boolean",
-    "layer": "Description",
-    "id": "PPg3y",
-    "default": true
-   },
-   "close": {
-    "kind": "boolean",
-    "layer": "Close",
-    "id": "M80T4e",
-    "default": true
-   },
-   "body": {
-    "kind": "slot",
-    "layer": "Body",
-    "id": "c5Prsw",
-    "recommended": [
-     "HHNPk",
-     "Wc7hd",
-     "X8ErE9",
-     "t7L0yL",
-     "n8NmOH",
-     "Imyla",
-     "oSTqI",
-     "FCsTI",
-     "E4PkTw"
-    ],
-    "fill": "Replace(instance+'/c5Prsw', {type:'frame', name:'Body', layout:'vertical', width:'fill_container', padding:'$component/modal/body/padding', gap:'$component/modal/body/gap'})"
-   },
-   "actions": {
-    "kind": "slot",
-    "layer": "Actions",
-    "id": "I7e8yh",
-    "recommended": [
-     "JmfmZ",
-     "Q49yf7",
-     "z3mR7"
-    ],
-    "fill": "Replace(instance+'/I7e8yh', {type:'frame', name:'Actions', gap:'$component/modal/footer/gap', alignItems:'center'})"
-   }
-  },
-  "layers": {
-   "Header": "VpbJF",
-   "Heading": "fOsAM",
-   "Title": "V8uAA",
-   "Description": "PPg3y",
-   "Close": "M80T4e",
-   "Body": "c5Prsw",
-   "Footer": "Pp1eX",
-   "Actions": "I7e8yh"
-  },
-  "variants": {
-   "sm": "cdSbf",
-   "md": "f8ym9",
-   "lg": "yAPhv"
-  },
-  "nested": [
-   "icon-button",
-   "button"
-  ],
-  "tokens": [
-   "component.modal.*",
-   "component.button.danger.*",
-   "color.semantic.overlay.scrim",
-   "elevation.2"
-  ],
-  "gaps": [
-   "widths 400/560/720 are literal (Pencil can't bind width)",
-   "no max-height / scrolling body spec yet",
-   "no legacy evidence (exploration board 04, option A)"
-  ]
- },
- "sheet-item": {
-  "status": "APPROVED (tier 4) 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C32 — Bottom sheet",
-   "id": "m6YUOs"
-  },
-  "spec": "docs/design-system/components/bottom-sheet.md",
-  "base": {
-   "name": "_SheetItem/Base",
-   "id": "hHxAm",
-   "private": true
-  },
-  "axes": {
-   "tone": [
-    "default",
-    "destructive"
-   ]
-  },
-  "props": {
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "id": "elAPX",
-    "default": "Unduh foto"
-   },
-   "icon": {
-    "kind": "instance-swap",
-    "layer": "Icon",
-    "id": "MLkPM",
-    "default": "download"
-   },
-   "count": {
-    "kind": "boolean",
-    "layer": "Count",
-    "id": "bZ2Ux",
-    "default": false,
-    "nested": "count-badge (set Count/BTnxI)"
-   }
-  },
-  "layers": {
-   "Icon": "MLkPM",
-   "Label": "elAPX",
-   "Count": "bZ2Ux"
-  },
-  "variants": {
-   "default": "FRtU1",
-   "destructive": "FAObX"
-  },
-  "nested": [
-   "count-badge"
-  ],
-  "tokens": [
-   "component.sheet.item.*",
-   "component.sheet.background"
-  ],
-  "gaps": [
-   "height 52 literal (Pencil can't bind height)"
-  ]
- },
- "bottom-sheet": {
-  "status": "APPROVED (tier 4) 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C32 — Bottom sheet",
-   "id": "m6YUOs"
-  },
-  "spec": "docs/design-system/components/bottom-sheet.md",
-  "base": null,
-  "axes": {
-   "type": [
-    "actions",
-    "form",
-    "menu"
-   ]
-  },
-  "props": {
-   "actions.title": {
-    "kind": "text",
-    "layer": "Title",
-    "id": "bEyU3"
-   },
-   "actions.meta": {
-    "kind": "boolean",
-    "layer": "Meta",
-    "id": "GyfP0",
-    "default": true
-   },
-   "actions.items": {
-    "kind": "slot",
-    "layer": "Items",
-    "id": "CLpYz",
-    "recommended": [
-     "FRtU1",
-     "FAObX"
-    ],
-    "fill": "Replace(instance+'/CLpYz', {type:'frame', name:'Items', layout:'vertical', width:'fill_container'})"
-   },
-   "form.title": {
-    "kind": "text",
-    "layer": "Title",
-    "id": "di5Wv"
-   },
-   "form.description": {
-    "kind": "boolean",
-    "layer": "Description",
-    "id": "fmisv",
-    "default": true
-   },
-   "form.close": {
-    "kind": "boolean",
-    "layer": "Close",
-    "id": "P9kIA4",
-    "default": true
-   },
-   "form.body": {
-    "kind": "slot",
-    "layer": "Body",
-    "id": "XCxn4",
-    "recommended": [
-     "HHNPk",
-     "Wc7hd",
-     "Imyla",
-     "SSy18",
-     "n8NmOH",
-     "oSTqI",
-     "t7L0yL"
-    ],
-    "fill": "Replace(instance+'/XCxn4', {type:'frame', name:'Body', layout:'vertical', width:'fill_container', padding:['$component/sheet/body/padding-y','$component/sheet/body/padding-x'], gap:'$component/sheet/body/gap'})"
-   },
-   "form.actions": {
-    "kind": "slot",
-    "layer": "Actions",
-    "id": "x5l7Wq",
-    "recommended": [
-     "aBT7T",
-     "c3U6N",
-     "ZDOwL"
-    ],
-    "fill": "Replace(instance+'/x5l7Wq', {type:'frame', name:'Actions', layout:'vertical', width:'fill_container', gap:'$component/sheet/body/gap'}) then LG buttons width fill_container"
-   },
-   "menu.items": {
-    "kind": "slot",
-    "layer": "Items",
-    "id": "MfblZ",
-    "recommended": [
-     "FRtU1",
-     "FAObX",
-     "Rjoxp"
-    ]
-   },
-   "menu.close": {
-    "kind": "boolean",
-    "layer": "Close",
-    "id": "mt8sl",
-    "default": true
-   }
-  },
-  "layers": {
-   "actions": {
-    "Grabber": "YgWu7",
-    "Header": "IVFxg",
-    "Items": "CLpYz",
-    "Safe area": "Rjdpx"
-   },
-   "form": {
-    "Grabber": "b3NPP",
-    "Header": "N45tz",
-    "Heading": "ZkmI0",
-    "Close": "P9kIA4",
-    "Body": "XCxn4",
-    "Footer": "M5rKks",
-    "Actions": "x5l7Wq",
-    "Safe area": "VoKRV"
-   },
-   "menu": {
-    "Grabber": "H8E1Yj",
-    "Header": "VsQBD",
-    "Workspace switcher": "Gf9J9",
-    "Items": "MfblZ",
-    "Account": "OnXpV",
-    "Log out": "JVVIR",
-    "Safe area": "TF9Tw",
-    "Logo": "o5FI3",
-    "Close": "mt8sl",
-    "Workspace": "yurxA"
-   }
-  },
-  "variants": {
-   "actions": "U0wHw",
-   "form": "vSBbR",
-   "menu": "oWJw2"
-  },
-  "nested": [
-   "avatar",
-   "button",
-   "count-badge",
-   "icon-button",
-   "nav-group-label",
-   "radio",
-   "sheet-item"
-  ],
-  "tokens": [
-   "component.sheet.*",
-   "elevation.2"
-  ],
-  "gaps": [
-   "width 375 = design frame; code 100% of viewport (max 560 on tablet)",
-   "upward shadow offset −8 is literal (elevation offsets are positive)",
-   "no mobile shell yet (GAP-04): shown on a phone placeholder",
-   "max-height 90% / scrolling body documented, not drawn"
-  ]
- },
- "mobile-shell": {
-  "status": "APPROVED (tier 4) 2026-09-26 (template)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C33 — Mobile shell",
-   "id": "rmpdk"
-  },
-  "spec": "docs/design-system/components/mobile-shell.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "title": {
-    "kind": "text",
-    "layer": "Title",
-    "id": "YDCza",
-    "default": "Galeri"
-   },
-   "back": {
-    "kind": "boolean",
-    "layer": "Back",
-    "id": "A7FVe",
-    "default": true
-   },
-   "action": {
-    "kind": "boolean",
-    "layer": "Action",
-    "id": "iYuut",
-    "default": true
-   },
-   "content": {
-    "kind": "slot",
-    "layer": "Content",
-    "id": "JOcL3",
-    "recommended": [
-     "AJT5R",
-     "FCsTI",
-     "HHNPk",
-     "uMP5H",
-     "aBT7T",
-     "E4PkTw"
-    ],
-    "fill": "Replace(instance+'/JOcL3', {type:'frame', name:'Content', layout:'vertical', width:'fill_container', height:'fill_container', padding:'$space/4', gap:'$space/3'})"
-   },
-   "overlay": {
-    "kind": "boolean",
-    "layer": "Overlay",
-    "id": "uTdi7",
-    "default": false
-   },
-   "sheet": {
-    "kind": "slot",
-    "layer": "Sheet",
-    "id": "gc8dt",
-    "recommended": [
-     "U0wHw",
-     "vSBbR"
-    ],
-    "default": "OxGbt (Bottom Sheet/Actions)"
-   }
-  },
-  "layers": {
-   "Status bar": "gcvMh",
-   "App bar": "ombNI",
-   "Back": "A7FVe",
-   "Title": "YDCza",
-   "Action": "iYuut",
-   "Content": "JOcL3",
-   "Safe area": "c6tsWc",
-   "Overlay": "uTdi7",
-   "Sheet": "gc8dt"
-  },
-  "variants": {
-   "default": "XHlWT"
-  },
-  "nested": [
-   "icon-button",
-   "bottom-sheet"
-  ],
-  "tokens": [
-   "color.semantic.surface.panel",
-   "color.semantic.border.subtle",
-   "space.1",
-   "space.2",
-   "space.3",
-   "space.4",
-   "component.sheet.scrim"
-  ],
-  "gaps": [
-   "no bottom navigation",
-   "tablet/Owner breakpoints unspecified",
-   "status bar/home indicator are device context only"
-  ]
- },
- "bottom-nav-item": {
-  "status": "APPROVED (tier 4) 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C34 — Bottom nav",
-   "id": "QifL8"
-  },
-  "spec": "docs/design-system/components/bottom-nav.md",
-  "base": {
-   "name": "_BottomNavItem/Base",
-   "id": "D0lDq",
-   "private": true
-  },
-  "axes": {
-   "state": [
-    "default",
-    "active"
-   ]
-  },
-  "props": {
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "id": "sJlqM"
-   },
-   "icon": {
-    "kind": "instance-swap",
-    "layer": "Icon",
-    "id": "Tz5za"
-   },
-   "badge": {
-    "kind": "boolean",
-    "layer": "Badge",
-    "id": "qSiIY",
-    "default": false,
-    "nested": "notification-badge (Count hnJrZ)"
-   }
-  },
-  "layers": {
-   "Icon wrap": "ktiaG",
-   "Icon": "Tz5za",
-   "Badge": "qSiIY",
-   "Label": "sJlqM"
-  },
-  "variants": {
-   "default": "x1Mgr3",
-   "active": "bKADv"
-  },
-  "nested": [
-   "notification-badge"
-  ],
-  "tokens": [
-   "component.bottom-nav.item.*"
-  ],
-  "gaps": []
- },
- "bottom-nav-cta": {
-  "status": "APPROVED (tier 4) 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C34 — Bottom nav",
-   "id": "QifL8"
-  },
-  "spec": "docs/design-system/components/bottom-nav.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "icon": {
-    "kind": "instance-swap",
-    "layer": "Icon",
-    "id": "nCt5A",
-    "default": "plus"
-   }
-  },
-  "layers": {
-   "Icon": "nCt5A"
-  },
-  "variants": {
-   "default": "tLfnG"
-  },
-  "nested": [],
-  "tokens": [
-   "component.bottom-nav.cta.*",
-   "elevation.1"
-  ],
-  "gaps": [
-   "54 size literal"
-  ]
- },
- "bottom-nav": {
-  "status": "APPROVED (tier 4) 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C34 — Bottom nav",
-   "id": "QifL8"
-  },
-  "spec": "docs/design-system/components/bottom-nav.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "items": {
-    "kind": "slot",
-    "layer": "Items",
-    "id": "gZgRf",
-    "recommended": [
-     "x1Mgr3",
-     "bKADv",
-     "tLfnG"
-    ]
-   }
-  },
-  "layers": {
-   "Items": "gZgRf",
-   "Tab Dasbor": "uzabE",
-   "Tab Proyek": "Ryjdm",
-   "CTA slot": "suEnL",
-   "CTA": "Iir7g",
-   "Tab Klien": "YChMw",
-   "Tab Lainnya": "wTYuN",
-   "Safe area": "bOGkI"
-  },
-  "variants": {
-   "default": "lymtg"
-  },
-  "nested": [
-   "bottom-nav-item",
-   "bottom-nav-cta"
-  ],
-  "tokens": [
-   "component.bottom-nav.*"
-  ],
-  "gaps": [
-   "no hide-on-scroll / keyboard state drawn"
-  ]
- },
- "mobile-app-shell": {
-  "status": "APPROVED (tier 4) 2026-09-26 (template)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C35 — Mobile app shell",
-   "id": "u8w6u"
-  },
-  "spec": "docs/design-system/components/mobile-app-shell.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "title": {
-    "kind": "text",
-    "layer": "Title",
-    "id": "jlmjH",
-    "default": "Dasbor"
-   },
-   "content": {
-    "kind": "slot",
-    "layer": "Content",
-    "id": "HvRky",
-    "recommended": [
-     "AJT5R",
-     "FCsTI",
-     "HHNPk",
-     "uMP5H",
-     "aBT7T",
-     "E4PkTw"
-    ],
-    "fill": "Replace(instance+'/HvRky', {type:'frame', name:'Content', layout:'vertical', width:'fill_container', height:'fill_container', padding:'$space/4', gap:'$space/4'})"
-   },
-   "bottomNav": {
-    "kind": "nested",
-    "layer": "Bottom Nav",
-    "id": "SpGXb",
-    "ref": "bottom-nav"
-   },
-   "overlay": {
-    "kind": "boolean",
-    "layer": "Overlay",
-    "id": "Ey5pi",
-    "default": false
-   },
-   "sheet": {
-    "kind": "slot",
-    "layer": "Sheet",
-    "id": "aQWCT",
-    "recommended": [
-     "oWJw2",
-     "U0wHw",
-     "vSBbR"
-    ],
-    "default": "xSveZ (Bottom Sheet/Menu)"
-   }
-  },
-  "layers": {
-   "Top": "jqblo",
-   "Status bar": "IgmBj",
-   "App bar": "nUiGs",
-   "Title": "jlmjH",
-   "Search": "oGnhL",
-   "Notifications": "x84QK",
-   "Content": "HvRky",
-   "Bottom Nav": "SpGXb",
-   "Overlay": "Ey5pi",
-   "Sheet": "aQWCT"
-  },
-  "variants": {
-   "default": "c6qPz7"
-  },
-  "nested": [
-   "icon-button",
-   "bottom-nav",
-   "bottom-sheet"
-  ],
-  "tokens": [
-   "color.semantic.surface.canvas",
-   "color.semantic.surface.panel",
-   "color.semantic.border.subtle",
-   "space.1",
-   "space.2",
-   "space.4",
-   "component.sheet.scrim"
-  ],
-  "gaps": [
-   "tablet 768–1279 unspecified",
-   "sub-pages use C33 (back + title)"
-  ]
- },
- "combobox": {
-  "status": "PROPOSED 2026-09-26 (open question resolved)",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C36 — Combobox",
-   "id": "wDOnD"
-  },
-  "spec": "docs/design-system/components/combobox.md",
-  "base": {
-   "name": "_Combobox/Base",
-   "id": "lhmhP",
-   "private": true,
-   "ref": "_Select/Base R1MZh"
-  },
-  "axes": {
-   "state": [
-    "default",
-    "open",
-    "disabled"
-   ]
-  },
-  "props": {
-   "label": {
-    "kind": "text",
-    "layer": "Et1pR/Gmk0c"
-   },
-   "placeholder": {
-    "kind": "text",
-    "layer": "Et1pR/c67yIW/tvTDd"
-   },
-   "query": {
-    "kind": "text",
-    "layer": "Et1pR/c67yIW/CykHo"
-   },
-   "helper": {
-    "kind": "text",
-    "layer": "Et1pR/uh4XA"
-   },
-   "items": {
-    "kind": "slot",
-    "layer": "Menu/Items",
-    "id": "Ly5N6",
-    "path": "xGHsR/Ly5N6",
-    "recommended": [
-     "iSqRB",
-     "mCgnL",
-     "qKcfI",
-     "z7QON",
-     "yNxME"
-    ]
-   }
-  },
-  "variants": {
-   "default": "CiTrY",
-   "open": "LN80X",
-   "disabled": "CGRMW"
-  },
-  "nested": [
-   "select",
-   "text-field",
-   "menu",
-   "menu-item"
-  ],
-  "tokens": [
-   "component.menu.*",
-   "component.menu.item.text-action",
-   "component.input.*"
-  ],
-  "gaps": [
-   "Error/Hover states follow Select (not drawn)"
-  ]
- },
- "tooltip": {
-  "status": "PROPOSED 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C37 — Nav rail & tablet shell",
-   "id": "jNOvR"
-  },
-  "spec": "docs/design-system/components/nav-rail.md",
-  "base": null,
-  "axes": {},
-  "props": {
-   "label": {
-    "kind": "text",
-    "layer": "Label",
-    "id": "WLS9S"
-   }
-  },
-  "layers": {
-   "Label": "WLS9S"
-  },
-  "variants": {
-   "default": "OYkds"
-  },
-  "nested": [],
-  "tokens": [
-   "component.tooltip.*",
-   "elevation.1"
-  ],
-  "gaps": []
- },
- "nav-rail-item": {
-  "status": "PROPOSED 2026-09-26",
-  "file": "docs/design-system/design-system.lib.pen",
-  "page": {
-   "name": "C37 — Nav rail & tablet shell",
-   "id": "jNOvR"
-  },
-  "spec": "docs/design-system/components/nav-rail.md",
-  "base": {
-   "name": "_NavRailItem/Base",
-   "id": "xhCvp",
-   "private": true
-  },
-  "axes": {
-   "state": [
-    "default",
-    "hover",
-    "active",
-    "focus"
-   ]
-  },
-  "props": {
-   "icon": {
-    "kind": "instance-swap",
-    "layer": "Icon",
-    "id": "r4Ryb"
-   },
-   "badge": {
-    "kind": "boolean",
-    "layer": "Badge",
-    "id": "mKYsh",
-    "default": false
-   },
-   "tooltip": {
-    "kind": "text",
-    "layer": "Tooltip/Label",
-    "path": "B1PEOz/WLS9S"
-   }
-  },
-  "layers": {
-   "Icon": "r4Ryb",
-   "Badge": "mKYsh",
-   "Tooltip": "B1PEOz"
-  },
-  "variants": {
-   "default": "odApP",
-   "hover": "GMxFW",
-   "active": "OKf00",
-   "focus": "vRX3t"
-  },
-  "nested": [
-   "notification-badge",
-   "tooltip"
-  ],
-  "tokens": [
-   "component.nav.item.*"
-  ],
-  "gaps": []
- }
 }

@@ -75,12 +75,12 @@ pen.dev has no component sets or variant properties, so:
 - **Focus-visible:** 2 px outer `focus.ring` plus the `focus.glow` halo. pen.dev can't draw a ring *offset*; code adds `outline-offset: 2px`, so the ring stays visible against the primary blue.
 - **Pressed/active:** same as hover (token-usage §2: "hover/pressed state of the same element only").
 - **Disabled:** `opacity.disabled` (0.4) on the whole button; not focusable.
-- **Loading:** not designed (GAP-02).
+- **Loading:** uses the same type and size tokens as Disabled, retains its label, hides a supplied leading icon, and shows the decorative 16 px `Pending indicator`. It prevents a second press and uses `opacity.disabled`; the indicator rotates in code.
 - **Error / empty:** not applicable.
 
 ## Slots and content rules
 
-- No slot. The content is fixed: an optional leading icon, the label, and an optional trailing icon. At most one icon per side.
+- No slot. The content is fixed: an optional leading icon or pending indicator, the label, and an optional trailing icon. At most one icon per side.
 - The label is one line, sentence case, verb first (*Simpan*, *Kirim tautan*, *Proyek baru*). No end punctuation.
 - **Too much:** the button hugs its label and never truncates or wraps; shorten the copy instead. Tested with 5 words (*Kirim tautan galeri ke klien*).
 - **Too little:** never an empty button, and never icon-only. An icon button needs its own component (out of scope).
@@ -125,7 +125,7 @@ Heights are documented, not bound (Pencil can't bind `width`/`height`): MD 42 px
 
 - The source components live in `design-system.lib.pen` › **C01 — Button**.
 - Code icons come from the shared [Icon](icon.md) registry.
-- Screens use instances of `Button/<Type>/<Size>/Default` and change only `Label` and the `enabled` / `icon` of `Icon leading` and `Icon trailing`.
+- Screens use instances of `Button/<Type>/<Size>/Default` or `/Loading` and change only `Label` and the `enabled` / `icon` of `Icon leading` and `Icon trailing`.
 - Never instance `_Button/Base` in a screen. Never detach, and never override the fill, padding or radius of an instance.
 - Hover, focus and disabled variants are for specs and prototypes; in code they are states of one component.
 
@@ -168,15 +168,15 @@ Heights are documented, not bound (Pencil can't bind `width`/`height`): MD 42 px
 
 | Area | Result |
 |---|---|
-| Metadata | Names `Button/Type/Size/State`; `context` on all 17; `metadata` not supported on instances (the registry in `pencil-mapping.json` carries the props) |
-| Anatomy | Layer names `Icon leading`, `Label`, `Icon trailing`; icons hidden by default |
+| Metadata | Names `Button/Type/Size/State`; `context` on all variants; `metadata` not supported on instances (the registry in `pencil-mapping.json` carries the props) |
+| Anatomy | Layer names `Icon leading`, `Pending indicator`, `Label`, `Icon trailing`; icons hidden by default |
 | Colour | 100 % bound to variables; no primitives |
 | Text styles | family, size and weight bound (composite type styles are split, per `unsupported.typography`) |
 | Properties | order type → size → state; defaults primary / md / default |
 | Content | short, typical, 5-word, leading icon, icon swap, trailing chevron and trailing arrow cases pass without truncation |
 | Layout | hug width; padding and gap bound; heights 42 / 50 |
 | Composition | none (no nested components) |
-| Behaviours | hover, focus, disabled built for both types; pressed = hover; loading is a gap (GAP-02) |
+| Behaviours | hover, focus, disabled and loading built for every type and size; pressed = hover |
 
 ## Implementation references
 

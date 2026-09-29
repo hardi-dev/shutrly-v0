@@ -1,5 +1,67 @@
 # Design-system verification report
 
+- Latest run: **2026-09-28 23:11 WIB**
+- Scope: shell-v3 token artifacts, live Pencil library, shell components, boards 06 and C40-C42,
+  usage rules, exploration reload, and all three linked feature consumers.
+- Direction: S / Studio Lime — APPROVED 2026-09-26.
+- **Result: COMPLETE — no blocking findings.** Repository artifacts and the saved live library agree
+  at 527 variables. Exploration and all three feature consumers were closed and reopened after the
+  library save; every consumer exposes the new Page Header, Group and List Card imports with no broken
+  token references in the targeted scan.
+- Updates: shell-v3 usage rules, token retargeting, C28-C30/C35 shell masters, and new C40 Page Header,
+  C41 Group and C42 List Card components. The Owner approved rules v3 with `ya` on 2026-09-28.
+
+## Current verification
+
+| # | Check | Result | Evidence |
+|---|---|---|---|
+| 1–6 | DTCG structure/types/aliases/modes/layers, normalized names, mapping and payload | PASS | `validate_tokens.py` with mapping + payload: `OK`; `pnpm tokens:css` and `pnpm tokens:check` pass. Generated artifacts contain 527 tokens: 64 primitive, 54 semantic and 345 component tokens. |
+| 7 | Live Pencil variables ⇄ payload | PASS | Live library: 527 variables, FNV-1a `99143acb`, equal to the generated payload. Per-group checksums also match. |
+| 8 | Removed / extra live variables | PASS | 0 missing and 0 extra live variables in the library payload comparison. |
+| 9 | Theme axis + coverage | PASS | Live: `mode: [light, dark]`; 58 themed variables. The missing entries are non-colour values. |
+| 10–12 | Canvas variable references, raw colours, layout | PASS (sampled) | Changed component roots plus board 06 and C40-C42: 2,822 nodes, 4,731 `$` references, 0 broken references and 0 raw colours. The Pencil root visitor remains unavailable, so this is a targeted sample. |
+| 13–14 | Static labels and light/dark previews | PASS (sampled) | Desktop light, desktop dark and mobile shell screenshots were reviewed after the retarget. App Shell shows the muted shell, panel active-nav pill, canvas App Panel and the new Page Header hierarchy. |
+| 15 | Library disk save | PASS | `design-system.lib.pen`: 4,299,374 bytes, 2026-09-28 23:03:59; saved after token and component updates. |
+| 16 | Usage rules | PASS | `token-usage.md` records the approved L1-L3, B1-B2 and T1-T3 shell-v3 rules plus the accepted contrast exceptions. Board copy was updated to match. |
+| 17–18 | Component coverage, specs and reusable components | PASS | Registry/specs include Page Header, Group and List Card. Pencil lists 227 reusable library components; the six new reusable roots/variants are `ImEDW`, `tEPBr`, `LBknS`, `uJwfh`, `XhLSK` and `swIYb`. |
+| 19 | Consumer links / instances | PASS after reload | `workspace.pen` (`G:`), `auth.pen` (`a:`) and `message-templates.pen` (`F:`) each expose all 527 imported variables, including Page Header and List Card. Targeted scans found respectively 11,111 / 11,696 / 10,521 token references and 0 broken references. |
+| 20 | Exploration reload | PASS | After the library save, `exploration.pen` was closed and reopened. It exposes the six new imported reusable components and the new shell-v3 token aliases under prefix `k:`. |
+
+## Artifacts checked
+
+| Artifact | State |
+|---|---|
+| `tokens.json`, `pencil-mapping.json`, `scripts/pencil-vars.json` | 527 tokens / 527 payload variables; canonical artifacts agree at checksum `99143acb`. |
+| `design-system.lib.pen` | Saved 2026-09-28 23:03:59; 527 live variables and 227 listed reusable components. |
+| `workspace.pen` | Reloaded linked Workspace consumer; 527 imported variables and 0 broken targeted refs. Pen displayed a transient “invalid data was skipped” opening notice, but the library components, variables and scanned references resolve. |
+| `auth.pen` | Reloaded linked Auth consumer; 527 imported variables and 0 broken targeted refs. |
+| `message-templates.pen` | Reloaded linked F-03 consumer; 527 imported variables and 0 broken targeted refs. |
+| `exploration.pen` | Reloaded after the library save; new components and `k:` shell-v3 aliases are visible. |
+
+## Deviations
+
+### Pencil representation notes
+
+- Opacity variables are percent-transformed in Pencil; size values cannot be bound to width/height.
+- List Card therefore uses literal row height 44 in Pencil while code uses `size.list-row`.
+- The Canvas root visitor is currently interrupted by Pencil MCP. Per-board/component scans and
+  screenshots were used for the visual evidence above; re-run the whole-canvas scan after the MCP issue
+  is resolved.
+- `workspace.pen` showed a one-time “Some invalid data was skipped” notification on opening. The 527
+  variables, new component imports and targeted token-reference scan are clean; retain this as a
+  non-blocking Pencil serialization follow-up unless the notice repeats with visible loss.
+
+## Smallest corrective workflow
+
+1. Re-run the whole-canvas portion of `/sdv:verify-design-system` when the Pencil MCP root visitor is
+   available; the sampled board/component evidence is clean.
+2. If the Workspace opening notice repeats, inspect its skipped-data payload before saving that file.
+
+## Historical report — superseded numerical evidence
+
+> The record below is retained for history only. Its component counts and consumer-link findings predate
+> C01 loading variants, C38 Empty State, C39 Toast and the Workspace consumer.
+
 - Date: 2026-09-26 (03:15 local)
 - Scope: token files, Pencil variables/themes, library source, exploration record, consumers
 - Direction: S / Studio Lime — APPROVED by user 2026-09-26 (exploration board 03 decision record)

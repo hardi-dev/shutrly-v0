@@ -42,6 +42,18 @@ The C33 exhibits show the gallery, an actions sheet, a confirm and dark mode. C3
 - Tablet (768–1279) and the Owner-app breakpoints are not specified.
 - The status bar and home indicator are drawn only as device context.
 
+## F-17 update — PROMOTED 2026-09-29
+
+Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-approved design; rules v3.1). Library (`XHlWT`): App bar `ombNI` hosts **Compact Bar** `GaeSf` → master `J3Ppgp` (Title `I0gdll`, Parent `jbTiE`, Actions slot `wS30M`, empty by default); Content `JOcL3` sheet; Safe area off; Bottom Nav `F4VJ1u` added. Details: [F-17 design.md](../../features/app-shell-revamp/design.md).
+
+- The sub-page **Compact Bar** has:
+  - Back to the hierarchical parent;
+  - the title in `title` 18;
+  - the parent caption in `page-header.breadcrumb.text`;
+  - an optional **Actions** slot, empty by default.
+
+  The Bottom Nav stays visible on sub-pages.
+
 ## Implementation references
 
 - Pencil: `C33 — Mobile shell` (`rmpdk`); used by `C32 — Bottom sheet` › Content

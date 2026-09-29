@@ -27,6 +27,7 @@ Title, body, and action use `alert.text-gap` (2). The shared private base is `_A
 
 - Place the Alert next to the content or action it explains. Use `width: fill_container` in forms; the 360 px library specimen is an example width.
 - Alerts persist while the relevant state persists. They do not stack as floating notifications or dismiss automatically.
+- Toast composes Alert's visual treatment for transient global feedback; its queue, timing and placement are specified separately in [toast.md](toast.md).
 - Keep **Close** hidden when the message is necessary to complete the task, including verification instructions. Enable it only for optional information that can safely be dismissed.
 - Use Info for the verification email guidance. The resend button stays outside the Alert.
 

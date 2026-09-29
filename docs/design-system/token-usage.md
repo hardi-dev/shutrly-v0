@@ -1,6 +1,6 @@
 # Token usage rules — Shutrly / Studio Lime
 
-Status: APPROVED token set (2026-09-26) · Rules: APPROVED 2026-09-26 (Owner: "approve") · Amended 2026-09-26 (Owner): `space.9` = 36 added to SP1; §4.2 button padding 10/16 → 12/36, LG 12/24 → 16/48 (3:1 squish, whole steps per SP6); §4.4 checkbox/radio/switch ↔ label 10 → 8; segmented item 6/12 → 8/16, track padding/gap 2 → 4; new semantic `border.control-hover`, `control.track-off-hover`, `status.danger.on-solid`; `menu.*` (tier 1c); tier 2 (2026-09-26): SP6 list adds alert text (title ↔ body 2), 16 component tokens (`calendar.day.label/number/dot/dot-selected`, `nav.item.background-hover`, `nav.group-label`, `metric.tile.label/value`, `metric.spark.gap/radius`, `alert.<tone>.action`, `icon-button.sm.padding`); tier 3 (2026-09-26): SP6 list adds table cell avatar ↔ name (10), 13 tokens (`table.background/border/radius`, `table.toolbar.padding-y/-x`, `table.header.padding-y/border`, `table.row.background-hover`, `table.cell.text/text-strong`, `table.footer.link`, `panel.app.title`, `panel.app.header.gap`); page content (2026-09-26): `size.content-max`, `panel.app.content.max-width`; modal (2026-09-26, option A): new primitives `red.300`, `alpha.neutral-950-a50`, `alpha.black-a60`, new semantic `overlay.scrim`, `status.danger.solid-hover`, 18 `modal.*` + 3 `button.danger.*` tokens; bottom sheet (2026-09-26, A + B header): 25 `sheet.*` tokens, SP6 list adds sheet item icon ↔ label (10); bottom nav (2026-09-26, option B, padding-top 12): 12 `bottom-nav.*` tokens; open questions (2026-09-26): 10 `sidebar.*` aliases, `calendar.day.background-hover`, `segmented.item.lg.padding-y/-x`, `table.row.background-selected`, `table.header.text-sorted`, `table.skeleton`, `menu.item.text-action`; alert close optical alignment approved (§4.6); tablet rail (2026-09-26, board 07 option A): scale `size.rail` 72, `sidebar.rail.width/gap`, `tooltip.*` (5) · Source of values: [`tokens.json`](tokens.json) · Visual version: `design-system.lib.pen` › board **07 — Usage rules**
+Status: token set **PERSISTED 2026-09-28** · Rules v3: **APPROVED 2026-09-28** (Owner: "ya") · **Rules v3.1 amendment N1 · H1 · C1: APPROVED 2026-09-29** (Owner: "ok agree"; F-17) · Previous rules: APPROVED 2026-09-26 (Owner: "approve") with the amendments recorded in git history · v3 amendment: neutral surface roles L1–L3, border roles B1–B2, text roles T1–T3, and the accepted contrast exceptions below · Source of values: [`tokens.json`](tokens.json) · Visual version: `design-system.lib.pen` › boards **07 — Usage rules** and **08 — Spacing rules**
 
 These rules say *which* token to reach for, *when*, and what never to do. They apply to Pencil designs, the `components/ui` wrappers, and application code (ADR-010: Tailwind theme variables mirror these tokens).
 
@@ -31,37 +31,49 @@ These rules say *which* token to reach for, *when*, and what never to do. They a
 ## 2. Colour
 
 ### Surfaces — layer from back to front
-| Token | Use for | Don't use for |
-|---|---|---|
-| `surface.canvas` | App background behind panels (the grey around the white panel) | Anything inside a panel |
-| `surface.panel` | App panel, cards, tiles, inputs, alerts, menus | Page background |
-| `surface.subtle` | Quiet zones inside a panel: table header, search field | Primary content blocks |
-| `surface.sunken` | Segmented-control track, disabled field fill, calendar day cell | Cards |
-| `surface.muted` | Small neutral badges: nav count, avatar initials | Large areas |
-| `surface.inverse` | One emphasised element: "Berlangsung" chip, selected day, active tab pill | More than one or two items per view |
+| Role | Token | Use for | Don't use for |
+|---|---|---|---|
+| **L1 shell** | `surface.muted` | Desktop sidebar, mobile header, and segmented-control track | Cards, fields, or content regions |
+| **L2 content** | `surface.canvas` | The app panel/content plane inside the shell | Shell chrome or individual cards |
+| **L3 card** | `surface.panel` | Cards, tiles, menus, alerts, and elevated content blocks on the content plane | The whole shell or app content plane |
+| — | `surface.subtle` | Quiet regions inside L2/L3: table headers and low-emphasis grouped zones | Primary content blocks |
+| — | `surface.sunken` | Recessed controls: disabled field fill and calendar day cell | Cards or shell regions |
+| — | `surface.inverse` | One emphasised element: "Berlangsung" chip, selected day, active tab pill | More than one or two items per view |
 
-- Do: separate a panel from the canvas with `border.default`. Don't: stack panel-on-panel without a border.
+- Do: preserve the order `surface.muted` → `surface.canvas` → `surface.panel`; skip a layer only when the missing level has no structural role.
+- Do: separate an L3 card from L2 with `border.default` when their values do not create a visible edge. Don't: flatten every region onto `surface.panel`.
 - `overlay.scrim` is only the backdrop behind a Modal or Bottom Sheet (App Shell Overlay). Never use it to dim content in the page flow.
 
 ### Text
 | Token | Use for | Don't use for |
 |---|---|---|
 | `text.primary` | Titles, body, values, table names | — |
-| `text.secondary` | Supporting copy, field labels in dense tables, secondary cells | Primary headings |
-| `text.muted` | Helper text, placeholders, meta (dates, "12 min ago"), column heads, icons. ≥ 12 px | Body paragraphs or anything the user must read to act |
+| `text.secondary` | Supporting copy, field labels, secondary cells, and **all small text in the shell** | Primary headings |
+| `text.muted` | Non-essential helper text, placeholders, meta (dates, "12 min ago"), column heads, icons. ≥ 12 px | Shell labels, body paragraphs, or anything the user must read to act |
 | `text.disabled` | Disabled controls only (fails AA as text by design) | Placeholders, hints, "less important" copy |
 | `text.inverse` | Text on `surface.inverse` | Any other surface |
+
+Text hierarchy is fixed: **T1 `text.primary`** for content, **T2 `text.secondary`** for supporting and shell text, **T3 `text.muted`** only for non-essential metadata. In the shell, use T2 even at small sizes because T3 does not meet 4.5:1 on every v3 shell/canvas pairing.
 
 ### Borders
 | Token | Use for | Don't use for |
 |---|---|---|
-| `border.default` | Panel, tile, card, alert edges; dividers between panels | Row separators inside tables |
-| `border.subtle` | Row separators and hairlines inside a panel | Field outlines |
-| `border.input` / `border.input-hover` | Text fields at rest / hover (Option A; GAP-06 accepted) | Containers |
+| `border.default` | **B1** card, tile, and alert edges; standard separators between content regions | Row separators inside dense tables |
+| `border.subtle` | **B1** row separators and quiet hairlines inside L2/L3 | Field outlines or the app-panel edge |
+| `border.input` / `border.input-hover` | **B2** fields at rest / hover; `border.input` also defines the app-panel edge and sidebar divider | Ordinary card edges or table rows |
 | `border.control` / `border.control-hover` | Unchecked checkbox & radio outline (≥ 3:1) / its hover | Decorative lines |
 
+Use B2 deliberately where the shell/content boundary must remain visible in both modes. Its low-contrast resting value is an accepted exception; focus, error, selection, and hover states still use their dedicated stronger tokens.
+
 ### Action & focus
-- `action.primary` — **one primary action per view region** (e.g. "Proyek baru"), the active nav item, checked checkbox, selected radio, switch on. Label always `action.on-primary`.
+- `action.primary` — **one primary action per view region** (e.g. "Proyek baru"), checked checkbox, selected radio, and switch on. Label always `action.on-primary`. Active navigation follows N1.
+- **N1 — Active navigation (v3.1, F-17):**
+  - The active Nav Item and Nav Rail Item use an `action.primary` pill, with the icon and label in `action.on-primary` and the label in `font.weight.semibold`. This is the one allowed use of `action.primary` outside an action, an exception to *one primary per region*.
+  - **Hover** uses the former active pill: `surface.panel`, `text.primary`, and an `accent.soft-fg` icon.
+  - Never style hover like active.
+  - The Bottom Nav keeps `bottom-nav.item.active`.
+  - Tokens (on promotion): `nav.item.background-active` → `action.primary`; `nav.item.text-active` / `icon-active` → `action.on-primary`; `nav.item.background-hover` → `surface.panel`.
+- **C1 — Selected list item (v3.1, F-17):** a selected Menu Item or Sheet Item has a `semibold` label and a check in `action.primary`. For sheets this is `component.sheet.item.check` → `action.primary`, added on promotion. Don't use `text.secondary` for the check; it is too quiet and differs from Menu.
 - `action.primary-hover` — hover/pressed state of the same element only.
 - Same blue in light and dark (user decision). On dark, blue is **3.6:1** against the panel: fine for filled buttons/icons, **not** for small blue text → links on dark use `status.info.fg`.
 - Don't use `action.primary` as decoration, large background fills, or for anything that isn't interactive.
@@ -97,6 +109,7 @@ These rules say *which* token to reach for, *when*, and what never to do. They a
 |---|---|---|---|
 | display | 34 / bold / −1 / tight | Page greeting | Once per page |
 | metric | 26 / bold / −0.6 | Numbers in metric tiles | Numbers only |
+| heading *(v3.1, H1)* | 26 / bold / −0.6 / tight | Page title (`<h1>`) on compact (phone) layouts: the Mobile Header | Once per page; desktop uses display. Tokens `font.size.heading`, `font.letter-spacing.heading` (added on promotion) |
 | title | 18 / bold / −0.4 | Panel & section titles | — |
 | subtitle | 16 / bold | Card titles | — |
 | body | 14 / medium | Default UI text, nav | Default |
@@ -201,11 +214,16 @@ Allowed only inside a library component, max ±2 px, documented in the component
 
 ## 8. Accessibility (WCAG 2.1 AA, C-008)
 - Text pairs ≥ 4.5 : 1, UI boundaries & icons ≥ 3 : 1 — see contrast badges on board 02.
-- Known exceptions: `text.disabled` (disabled only); `border.input` ≈ 1.5 : 1 (GAP-06 accepted — field always has a visible label, 40 px height, 2 px focus/error borders).
+- Known exceptions: `text.disabled` (disabled only); `border.input` is **1.37:1 light / 1.81:1 dark** (expanded GAP-06 — accepted for field outlines, the app-panel edge, and the sidebar divider; fields retain a visible label, 40 px height, and 2 px focus/error borders); `text.muted` in light mode is below 4.5:1 on `surface.canvas` and `surface.muted`, so it is limited to non-essential metadata and never used for small shell text.
+- **N1 dark mode (v3.1, accepted exception):** the active `action.primary` pill against the dark Sidebar (`surface.muted`) is **2.02:1**, below the 3:1 of SC 1.4.11 (light is 4.08:1). It is accepted with these mitigations:
+  - the state is not conveyed by fill alone: the label becomes `semibold`, and the icon changes from `text.muted` to `action.on-primary`;
+  - the link carries `aria-current="page"`.
+
+  Label and icon on the pill are 5.17:1 in both modes. The C1 check `action.primary` on `surface.panel` is 5.17:1 light and 3.18:1 dark (≥ 3:1 for icons).
 - Status is never colour-only; focus ring is never removed; touch targets ≥ 44 px on the client gallery.
 
 ## 9. Workspace branding (deferred — GAP-03)
 Only `action.primary` and `accent.highlight` are candidates for per-workspace override. Until the override rules and contrast guard are defined, don't hard-code a workspace colour anywhere.
 
 ---
-Research basis: Atlassian (choose by meaning; don't match by appearance), Primer (base tokens never used directly; pair emphasis backgrounds with on-emphasis foregrounds; component tokens only when functional tokens don't fit), Carbon (never absolute values; role-based tokens + layering), Polaris (roles for status; replace hard-coded values). Spacing: Atlassian spacing (small / medium / large ranges; similarity, proximity, hierarchy, rhythm; don't separate related items), EightShapes "Space in Design Systems" (inset, squish, stretch, stack, inline, grid).
+Research basis: [Atlassian design tokens](https://atlassian.design/foundations/design-tokens) (choose by meaning, not visual match), [Primer colour usage](https://primer.style/product/getting-started/foundations/color-usage/) (base tokens never direct; functional and component layers), and [Carbon colour layering](https://carbondesignsystem.com/elements/color/usage/) (ordered neutral layers with role-stable tokens). Spacing basis remains Atlassian spacing and EightShapes “Space in Design Systems”. v3.1 amendment (2026-09-29): [Primer NavList](https://primer.style/product/components/nav-list/) (`aria-current="page"` marks the current item) and [WCAG 2.1 SC 1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG21/Understanding/non-text-contrast.html) (3:1 for state indicators and icons).

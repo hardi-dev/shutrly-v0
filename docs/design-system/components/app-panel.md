@@ -3,23 +3,21 @@
 ## Status and approval
 
 - Lifecycle: `APPROVED` 2026-09-26 (tier 3, Owner review)
-- Direction/token approval: `APPROVED`. `panel.app.title` and `panel.app.header.gap` were added on 2026-09-26. `panel.app.content.max-width` (→ `size.content-max` 1096) was added on 2026-09-26 with the Page Content extraction.
+- Direction/token approval: `APPROVED`, amended by shell v3 on 2026-09-28. `panel.app.background` now maps to `surface.canvas`, `panel.app.border` to `border.input`, and the legacy 72 px header is replaced by Page Header (C40).
 - Pencil library: `design-system.lib.pen` › **C28 — App panel** (`yepgE`)
 - Evidence: legacy dashboard › Panel
 
 ## Purpose
 
-The white working surface of every Owner page. It sits on `surface.canvas` next to the Sidebar, inside the App shell.
+The canvas working surface of every Owner page. It sits next to the muted Sidebar inside the App Shell and owns the page introduction plus content region.
 
 ## Anatomy
 
 | # | Part | Layer | Description |
 |---|---|---|---|
-| 1 | Panel | root `UmVJD` | 1176 wide in the shell (fill); `panel.app.background`, 1 px `panel.app.border`, `panel.app.radius` (16); clipped. |
-| 2 | Panel header | `gmoTC` | Height 72 (literal; Pencil can't bind height); padding-x 28 (`panel.app.header.padding-x`); bottom border `panel.app.border`; gap 12 (`panel.app.header.gap`). |
-| 3 | Title | `nrRBd` | title 18/700/−0.4, `panel.app.title`. This is the page `<h1>`. |
-| 4 | Actions | `uR9Ye` (slot) | Input/Search (300), Icon Button/Outline MD (bell with badge), and at most one Button. |
-| 5 | Content | `C5QYo` (slot) | Accepts **Page Content** (`B4HAVd`) only; no padding or gap of its own. The default is an empty Page Content instance (`d2hCuQ`). |
+| 1 | Panel | root `UmVJD` | 1176 wide in the shell (fill); `panel.app.background` → `surface.canvas`, 1 px `panel.app.border` → `border.input`, `panel.app.radius` (16); clipped. |
+| 2 | Page Header | `MST3f` | Nested Page Header (C40): breadcrumb bar plus hero title, subtitle, and Actions slot. |
+| 3 | Content | `C5QYo` (slot) | Accepts **Page Content** (`B4HAVd`) only; no padding or gap of its own. The default is an empty Page Content instance (`d2hCuQ`). |
 
 ## Page Content (`B4HAVd`)
 
@@ -52,12 +50,10 @@ Slot gotcha: a frame with `slot: []` (empty list) rejects every insert with `Can
 
 ## Accessibility
 
-- The panel is the `<main>` landmark. Its title is the page `<h1>`. Header actions come before the content in tab order.
-- Search is a `role=searchbox` with `aria-keyshortcuts="Meta+K"`. The bell has an `aria-label` that includes the unread count.
+- The panel is the `<main>` landmark. Page Header's Title is the page `<h1>` and its breadcrumb is a labelled navigation landmark. Header actions come before the content in tab order.
 
 ## Gaps
 
-- The header height (72) is literal.
 - Breakpoints aren't specified.
 - The Container width is literal 1096 (see Page Content).
 

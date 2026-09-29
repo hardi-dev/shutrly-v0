@@ -11,12 +11,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SCRATCH = Path(__file__).parent
-TODAY = "2026-09-26"
+TODAY = "2026-09-29"
 
 # ---------- primitives (status: O=observed, P=proposed; all APPROVED 2026-09-26) ----------
 P = {
- "neutral": [("0","#FFFFFF","O"),("50","#FAFAFA","O"),("100","#F4F4F5","O"),("200","#E4E4E7","O"),("300","#D4D4D8","P"),
-             ("400","#A1A1AA","O"),("500","#71717A","O"),("600","#52525B","O"),("700","#3F3F46","O"),("800","#27272A","O"),
+ "neutral": [("0","#FFFFFF","O"),("50","#FAFAFA","O"),("100","#F4F4F5","O"),("150","#F0F0F2","P"),("200","#E4E4E7","O"),("250","#DCDCE0","P"),("300","#D4D4D8","P"),
+             ("400","#A1A1AA","O"),("500","#71717A","O"),("600","#52525B","O"),("650","#484850","P"),("700","#3F3F46","O"),("800","#27272A","O"),
              ("850","#1F1F23","P"),("900","#18181B","O"),("950","#09090B","P")],
  "blue":    [("50","#EEF3FF","O"),("100","#D6DEFF","O"),("450","#8FAEFF","P"),("500","#2F5BFF","O"),("600","#1F55E0","P"),("700","#1D4ED8","O")],
  "lime":    [("50","#F4FBDF","O"),("100","#EEFBC8","O"),("300","#C6F432","O"),("400","#A3D916","O"),("500","#84CC16","O"),("800","#3F6212","O"),("900","#3F5200","O")],
@@ -45,24 +45,24 @@ def prim(ref):  # "neutral.100" or "alpha.blue-500-a25"
 
 # ---------- semantic colors: name -> (light, dark, description) ----------
 S = {
- "surface.canvas":        ("neutral.100","neutral.950","App background behind panels"),
- "surface.panel":         ("neutral.0","neutral.900","Cards, panels, inputs, toasts"),
- "surface.subtle":        ("neutral.50","neutral.850","Table header, search field, quiet areas"),
- "surface.sunken":        ("neutral.100","neutral.850","Segmented track, disabled field fill"),
- "surface.muted":         ("neutral.200","neutral.800","Count badge, avatar, chips on panel"),
+ "surface.canvas":        ("neutral.100","neutral.900","App content background (panel / sheet) — v3 L2 (Owner 2026-09-28)"),
+ "surface.panel":         ("neutral.0","neutral.850","Cards, hero, tables, inputs, toasts — v3 L3 (Owner 2026-09-28)"),
+ "surface.subtle":        ("neutral.100","neutral.900","Table header, search field, quiet areas — v3 = L2 (Owner 2026-09-28)"),
+ "surface.sunken":        ("neutral.100","neutral.900","Icon wells and disabled field fill — v3 = L2 (Owner 2026-09-28)"),
+ "surface.muted":         ("neutral.200","neutral.700","App shell (sidebar, mobile header), segmented track, count badge, avatar — v3 L1 (Owner 2026-09-28)"),
  "surface.inverse":       ("neutral.900","neutral.50","Inverse chips, selected calendar day"),
- "border.default":        ("neutral.200","neutral.800","Panel, tile, card borders"),
- "border.subtle":         ("neutral.100","neutral.850","Row separators, hairlines"),
- "border.input":          ("neutral.300","neutral.700","Text field at rest (Option A; GAP-06 accepted)"),
+ "border.default":        ("neutral.150","neutral.800","Card, tile, switcher borders — v3 B1 (Owner 2026-09-28)"),
+ "border.subtle":         ("neutral.150","neutral.800","Row separators, hairlines — v3 B1 (Owner 2026-09-28)"),
+ "border.input":          ("neutral.250","neutral.650","Form fields at rest, app-panel edge, sidebar divider — v3 B2, input option A (Owner 2026-09-28; GAP-06 accepted, 1.37:1 / 1.81:1)"),
  "border.input-hover":    ("neutral.400","neutral.500","Text field hover"),
  "border.control":        ("neutral.500","neutral.500","Checkbox/radio outline (>= 3:1)"),
  "border.control-hover":  ("neutral.600","neutral.400","Checkbox/radio outline · hover (Owner 2026-09-26)"),
- "text.primary":          ("neutral.900","neutral.50","Headings, body, values"),
+ "text.primary":          ("neutral.900","neutral.0","Headings, body, values — v3 T1 (Owner 2026-09-28)"),
  "text.secondary":        ("neutral.600","neutral.300","Secondary copy, labels"),
- "text.muted":            ("neutral.600","neutral.400","Helper, placeholder, column heads, icons"),
+ "text.muted":            ("neutral.500","neutral.400","Helper, placeholder, meta, icons — v3 T3 (Owner 2026-09-28); 4.8:1 on panel, <4.5 on canvas/shell"),
  "text.disabled":         ("neutral.400","neutral.500","Disabled only (fails AA as text by design)"),
  "text.inverse":          ("neutral.0","neutral.900","Text on surface.inverse"),
- "action.primary":        ("blue.500","blue.500","Primary action, active nav (user: same blue both modes)"),
+ "action.primary":        ("blue.500","blue.500","Primary actions (same blue in both modes)"),
  "action.primary-hover":  ("blue.600","blue.600","Primary action hover"),
  "action.on-primary":     ("neutral.0","neutral.0","Label on action.primary (4.94:1)"),
  "focus.ring":            ("blue.500","blue.500","2px focus border"),
@@ -70,7 +70,7 @@ S = {
  "control.track-off":     ("neutral.300","neutral.700","Switch off track"),
  "control.track-off-hover": ("neutral.400","neutral.600","Switch off track · hover (Owner 2026-09-26)"),
  "control.knob":          ("neutral.0","neutral.50","Switch knob"),
- "accent.highlight":      ("lime.300","lime.300","Brand lime: workspace mark, today marker"),
+ "accent.highlight":      ("lime.300","lime.300","Brand lime and today marker"),
  "accent.on-highlight":   ("neutral.900","neutral.900","Content on accent.highlight"),
  "accent.on-inverse":     ("lime.300","lime.800","Lime label on surface.inverse"),
  "accent.soft":           ("lime.50","alpha.lime-300-a12","Active timeline event, shooting stage"),
@@ -109,6 +109,7 @@ NUM = {  # number tokens: path -> (value, description)
  "size.content-max":(1096,"Page content max-width: 1440 shell − 252 sidebar − 12 gutter − 2×40 content padding (layout size, not spacing)"),
  "size.content-narrow":(720,"Centered single-column content width inside Page Content; Owner approved 2026-09-26 from Auth Profile"),
  "size.textarea-min-height":(96,"Textarea default minimum height (C04 spec; Owner approved 2026-09-28)"),
+ "size.list-row":(44,"Compact list-card row height (Owner approved 2026-09-28, message-template v3)"),
  "size.auth-panel":(600,"Auth split editorial panel width (Owner approved 2026-09-27)"),
  "size.auth-form":(420,"Auth form column width (Owner approved 2026-09-27)"),
  "size.sidebar":(252,"Desktop sidebar width (Owner approved 2026-09-27)"),
@@ -123,6 +124,7 @@ NUM = {  # number tokens: path -> (value, description)
  "font.size.display":(34,""),"font.size.hero":(44,"Auth editorial headline size (Owner approved 2026-09-27)"),"font.size.metric":(26,""),"font.size.title":(18,""),"font.size.subtitle":(16,""),"font.size.body":(14,""),
  "font.size.body-sm":(13,""),"font.size.label":(12,""),"font.size.caption":(11,""),"font.size.overline":(10,""),
  "font.letter-spacing.display":(-1,""),"font.letter-spacing.metric":(-0.6,""),"font.letter-spacing.title":(-0.4,""),
+ "font.size.heading":(26,"Phone page title (Mobile Header <h1>) — rules v3.1 H1 (Owner 2026-09-29)"),"font.letter-spacing.heading":(-0.6,"Pairs with font.size.heading — rules v3.1 H1 (Owner 2026-09-29)"),
  "font.letter-spacing.overline":(0.6,""),"font.line-height.tight":(1.1,"Observed on display"),"font.line-height.body":(1.5,"Observed on long copy"),
 }
 STR = {
@@ -146,8 +148,10 @@ add("button.secondary.text","color",SC("text.primary"))
 add("button.radius","number",SP("radius.full"))
 add("button.md.padding-x","number",SP("space.9")); add("button.md.padding-y","number",SP("space.3"))  # 12/36 = 3:1 squish (Owner 2026-09-26; was 10/16)
 add("button.lg.padding-x","number",SP("space.12")); add("button.lg.padding-y","number",SP("space.4"))  # 16/48 = 3:1 (Owner 2026-09-26; was 12/24)
-add("nav.item.background-active","color",SC("action.primary"))
-add("nav.item.text-active","color",SC("action.on-primary"))
+add("nav.item.background-active","color",SC("action.primary"))   # rules v3.1 N1 (Owner 2026-09-29; was surface.panel)
+add("nav.item.text-active","color",SC("action.on-primary"))     # N1 (was text.primary); label semibold in the component
+add("nav.item.icon-active","color",SC("action.on-primary"))     # N1 (was accent.soft-fg)
+add("nav.item.icon-hover","color",SC("accent.soft-fg"))        # N1 hover = former active pill (new 2026-09-29)
 add("nav.item.text","color",SC("text.primary"))
 add("nav.item.icon","color",SC("text.muted"))
 add("nav.item.radius","number",SP("radius.sm"))
@@ -176,7 +180,7 @@ add("calendar.day.label","color",SC("text.muted"))
 add("calendar.day.number","color",SC("text.primary"))
 add("calendar.day.dot","color",SC("action.primary"))
 add("calendar.day.dot-selected","color",SC("accent.on-inverse"))   # visible on inverse cell in both modes
-add("nav.item.background-hover","color",SC("surface.sunken"))
+add("nav.item.background-hover","color",SC("surface.panel"))   # N1 hover = former active pill (was surface.muted = invisible on the sidebar)
 add("nav.group-label","color",SC("text.muted"))                     # legacy #A1A1AA darkened for AA
 add("metric.tile.label","color",SC("text.secondary"))
 add("metric.tile.value","color",SC("text.primary"))
@@ -254,7 +258,7 @@ add("alert.text-gap","number",SP("space.0-5"))            # title↔body 2
 add("input.gap","number",SP("space.1-5"))                 # label↔field↔helper 6
 add("input.content-gap","number",SP("space.2"))           # prefix/icon↔text 8
 add("checkbox.gap","number",SP("space.2"))                # box↔label 10 → 8 (Owner 2026-09-26, whole steps)
-add("segmented.track","color",SC("surface.sunken"))
+add("segmented.track","color",SC("surface.muted"))
 add("segmented.item.background-active","color",SC("surface.panel"))
 add("segmented.item.border-active","color",SC("border.default"))
 add("segmented.item.text","color",SC("text.muted"))
@@ -294,7 +298,7 @@ add("icon-button.radius","number",SP("radius.sm"))
 add("badge.danger.background","color",SC("status.danger.solid"))
 add("badge.danger.text","color",SC("status.danger.on-solid"))
 add("badge.danger.padding-y","number",SP("space.0-5"))         # 1 → 2 (SP6 badge)
-add("badge.danger.padding-x","number",SP("space.1-5"))         # 5 → 6 (SP6 badge)
+add("badge.danger.padding-x","number",SP("space.2"))           # 8 = nav.count.padding-x; Owner 2026-09-29: badge follows code (CountBadge danger)
 add("badge.danger.radius","number",SP("radius.full"))
 add("kbd.background","color",SC("surface.panel"))
 add("kbd.border","color",SC("border.default"))
@@ -343,8 +347,8 @@ add("panel.app.header.padding-x","number",SP("space.7"))  # 28
 add("panel.app.content.padding-y","number",SP("space.7")) # 28
 add("panel.app.content.padding-x","number",SP("space.10"))# 40
 add("panel.app.content.gap","number",SP("space.7"))       # 28
-add("panel.app.background","color",SC("surface.panel"))
-add("panel.app.border","color",SC("border.default"))
+add("panel.app.background","color",SC("surface.canvas"))
+add("panel.app.border","color",SC("border.input"))
 add("panel.app.radius","number",SP("radius.lg"))
 add("panel.app.title","color",SC("text.primary"))
 add("panel.app.header.gap","number",SP("space.3"))        # title/actions 12
@@ -388,6 +392,7 @@ add("sheet.item.text","color",SC("text.primary"))
 add("sheet.item.icon","color",SC("text.secondary"))
 add("sheet.item.text-destructive","color",SC("status.danger.fg"))
 add("sheet.item.border","color",SC("border.subtle"))
+add("sheet.item.check","color",SC("action.primary"))          # rules v3.1 C1: selected check matches Menu Item (2026-09-29)
 add("sheet.item.padding-x","number",SP("space.5"))             # 20
 add("sheet.item.gap","number",SP("space.2-5"))                 # icon ↔ label 10 (14 drawn; Owner 2026-09-26: 10, SP6 amended)
 add("sheet.body.padding-y","number",SP("space.4"))             # 16
@@ -417,12 +422,40 @@ add("sidebar.padding-y","number",SP("space.2"))                # 8
 add("sidebar.padding-x","number",SP("space.3"))                # 12
 add("sidebar.gap","number",SP("space.3"))                      # sections 12
 add("sidebar.logo","color",SC("text.primary"))
-add("sidebar.divider","color",SC("border.default"))
+add("sidebar.divider","color",SC("border.input"))
 add("sidebar.workspace.background","color",SC("surface.panel"))
 add("sidebar.workspace.border","color",SC("border.default"))
 add("sidebar.workspace.radius","number",SP("radius.sm"))
 add("sidebar.workspace.mark","color",SC("accent.highlight"))
 add("sidebar.account.gap","number",SP("space.2-5"))            # avatar ↔ name 10
+# Shell/content patterns promoted from the Owner-approved v3 message-template frames (2026-09-28).
+add("page-header.background","color",SC("surface.panel"))
+add("page-header.border","color",SC("border.default"))
+add("page-header.breadcrumb.text","color",SC("text.secondary"))
+add("page-header.breadcrumb.current","color",SC("text.primary"))
+add("page-header.breadcrumb.padding-x","number",SP("space.10"))
+add("page-header.breadcrumb.gap","number",SP("space.2"))
+add("page-header.hero.padding-top","number",SP("space.5"))
+add("page-header.hero.padding-x","number",SP("space.10"))
+add("page-header.hero.padding-bottom","number",SP("space.6"))
+add("page-header.hero.gap","number",SP("space.2"))
+add("page-header.title","color",SC("text.primary"))
+add("page-header.subtitle","color",SC("text.secondary"))
+add("group.gap","number",SP("space.2"))
+add("group.title.padding-x","number",SP("space.1"))
+add("group.title.text","color",SC("text.secondary"))
+add("list-card.background","color",SC("surface.panel"))
+add("list-card.border","color",SC("border.default"))
+add("list-card.radius","number",SP("radius.md"))
+add("list-card.padding-y","number",SP("space.1"))
+add("list-card.item.border","color",SC("border.subtle"))
+add("list-card.item.padding-x","number",SP("space.3"))
+add("list-card.item.gap","number",SP("space.3"))
+add("list-card.item.height","number",SP("size.list-row"))
+add("list-card.item.icon-background","color",SC("surface.subtle"))
+add("list-card.item.icon","color",SC("text.secondary"))
+add("list-card.item.title","color",SC("text.primary"))
+add("list-card.item.meta","color",SC("text.secondary"))
 # Open questions resolved (Owner 2026-09-26, recommended defaults)
 add("calendar.day.background-hover","color",SC("surface.muted"))   # rest is surface.sunken → one step darker
 add("segmented.item.lg.padding-y","number",SP("space.3"))      # 12 (LG, mobile filters)
@@ -528,11 +561,11 @@ mapping = {
  "transforms": {"opacity/*": "Pencil value = token $value × 100 (Pencil opacity variables are percent; e.g. opacity.disabled 0.4 → 40)"},
  "library_canvas": {"boards": ["00 — Cover", "01 — Color · primitives", "02 — Color · semantic", "03 — Typography",
                                "04 — Spacing · radius · opacity", "05 — Elevation", "06 — Component tokens", "07 — Usage rules", "08 — Spacing rules"],
-                    "usage_rules": "docs/design-system/token-usage.md (APPROVED 2026-09-26)",
-                    "rules_status": "APPROVED 2026-09-26",
+                    "usage_rules": "docs/design-system/token-usage.md (APPROVED v3.1 2026-09-29)",
+                    "rules_status": "APPROVED v3.1 2026-09-29 (Owner: ok agree; v3 2026-09-28 Owner: ya)",
                     "note": "Documentation boards bind every swatch/scale to live variables; dark previews use theme mode=dark."},
  "components": {k: v for k, v in json.loads((ROOT/"components"/"registry.json").read_text()).items() if not k.startswith("$")} if (ROOT/"components"/"registry.json").exists() else {},
- "components_status": "IN PROGRESS — C01–C35 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3, 4); C36 Combobox, C37 Nav rail & tablet shell and the open-question additions PROPOSED 2026-09-26.",
+ "components_status": "APPROVED — C01–C35 approved 2026-09-26; C36 Combobox and C37 Nav rail & tablet shell retained; C38 Empty State, C39 Toast, Button loading and Sheet Item/Selected approved 2026-09-28; shell v3 amendments plus C40 Page Header, C41 Group and C42 List Card approved by Owner (ya) 2026-09-28; F-17 promotion 2026-09-29: Workspace Pill, Mobile Header, Compact Bar, Toast/Danger, Menu/List, Count Badge/Danger (C14 merged), Page Header Utilities, Nav Item active/hover (rules v3.1), Mobile App Shell / Mobile Shell / Tablet shell updates.",
  "unsupported": {
    "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.","typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",
                  "shadow": "Composite shadow split into elevation.N.offset-y / blur (number) + color.semantic.elevation.N.color (color)."},

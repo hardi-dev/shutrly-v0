@@ -3,7 +3,7 @@
   "source": {
     "exploration": "docs/design-system/exploration.pen",
     "tokens": "docs/design-system/tokens.json",
-    "status": "APPROVED 2026-09-26 (board 03 decision record) · PERSISTED 2026-09-26"
+    "status": "APPROVED 2026-09-29 (board 03 decision record) · PERSISTED 2026-09-29"
   },
   "library": {
     "file": "docs/design-system/design-system.lib.pen",
@@ -64,12 +64,15 @@
     "color/primitive/lime/900": "color.primitive.lime.900",
     "color/primitive/neutral/0": "color.primitive.neutral.0",
     "color/primitive/neutral/100": "color.primitive.neutral.100",
+    "color/primitive/neutral/150": "color.primitive.neutral.150",
     "color/primitive/neutral/200": "color.primitive.neutral.200",
+    "color/primitive/neutral/250": "color.primitive.neutral.250",
     "color/primitive/neutral/300": "color.primitive.neutral.300",
     "color/primitive/neutral/400": "color.primitive.neutral.400",
     "color/primitive/neutral/50": "color.primitive.neutral.50",
     "color/primitive/neutral/500": "color.primitive.neutral.500",
     "color/primitive/neutral/600": "color.primitive.neutral.600",
+    "color/primitive/neutral/650": "color.primitive.neutral.650",
     "color/primitive/neutral/700": "color.primitive.neutral.700",
     "color/primitive/neutral/800": "color.primitive.neutral.800",
     "color/primitive/neutral/850": "color.primitive.neutral.850",
@@ -238,6 +241,9 @@
     "component/chip/stage/scheduled/text": "component.chip.stage.scheduled.text",
     "component/chip/stage/shooting/background": "component.chip.stage.shooting.background",
     "component/chip/stage/shooting/text": "component.chip.stage.shooting.text",
+    "component/group/gap": "component.group.gap",
+    "component/group/title/padding-x": "component.group.title.padding-x",
+    "component/group/title/text": "component.group.title.text",
     "component/icon-button/background": "component.icon-button.background",
     "component/icon-button/background-hover": "component.icon-button.background-hover",
     "component/icon-button/border": "component.icon-button.border",
@@ -273,6 +279,18 @@
     "component/kbd/padding-y": "component.kbd.padding-y",
     "component/kbd/radius": "component.kbd.radius",
     "component/kbd/text": "component.kbd.text",
+    "component/list-card/background": "component.list-card.background",
+    "component/list-card/border": "component.list-card.border",
+    "component/list-card/item/border": "component.list-card.item.border",
+    "component/list-card/item/gap": "component.list-card.item.gap",
+    "component/list-card/item/height": "component.list-card.item.height",
+    "component/list-card/item/icon": "component.list-card.item.icon",
+    "component/list-card/item/icon-background": "component.list-card.item.icon-background",
+    "component/list-card/item/meta": "component.list-card.item.meta",
+    "component/list-card/item/padding-x": "component.list-card.item.padding-x",
+    "component/list-card/item/title": "component.list-card.item.title",
+    "component/list-card/padding-y": "component.list-card.padding-y",
+    "component/list-card/radius": "component.list-card.radius",
     "component/menu/background": "component.menu.background",
     "component/menu/border": "component.menu.border",
     "component/menu/divider": "component.menu.divider",
@@ -338,11 +356,25 @@
     "component/nav/item/background-hover": "component.nav.item.background-hover",
     "component/nav/item/gap": "component.nav.item.gap",
     "component/nav/item/icon": "component.nav.item.icon",
+    "component/nav/item/icon-active": "component.nav.item.icon-active",
+    "component/nav/item/icon-hover": "component.nav.item.icon-hover",
     "component/nav/item/padding-x": "component.nav.item.padding-x",
     "component/nav/item/padding-y": "component.nav.item.padding-y",
     "component/nav/item/radius": "component.nav.item.radius",
     "component/nav/item/text": "component.nav.item.text",
     "component/nav/item/text-active": "component.nav.item.text-active",
+    "component/page-header/background": "component.page-header.background",
+    "component/page-header/border": "component.page-header.border",
+    "component/page-header/breadcrumb/current": "component.page-header.breadcrumb.current",
+    "component/page-header/breadcrumb/gap": "component.page-header.breadcrumb.gap",
+    "component/page-header/breadcrumb/padding-x": "component.page-header.breadcrumb.padding-x",
+    "component/page-header/breadcrumb/text": "component.page-header.breadcrumb.text",
+    "component/page-header/hero/gap": "component.page-header.hero.gap",
+    "component/page-header/hero/padding-bottom": "component.page-header.hero.padding-bottom",
+    "component/page-header/hero/padding-top": "component.page-header.hero.padding-top",
+    "component/page-header/hero/padding-x": "component.page-header.hero.padding-x",
+    "component/page-header/subtitle": "component.page-header.subtitle",
+    "component/page-header/title": "component.page-header.title",
     "component/panel/app/background": "component.panel.app.background",
     "component/panel/app/border": "component.panel.app.border",
     "component/panel/app/content/gap": "component.panel.app.content.gap",
@@ -382,6 +414,7 @@
     "component/sheet/header/padding-y": "component.sheet.header.padding-y",
     "component/sheet/header/text-gap": "component.sheet.header.text-gap",
     "component/sheet/item/border": "component.sheet.item.border",
+    "component/sheet/item/check": "component.sheet.item.check",
     "component/sheet/item/gap": "component.sheet.item.gap",
     "component/sheet/item/icon": "component.sheet.item.icon",
     "component/sheet/item/padding-x": "component.sheet.item.padding-x",
@@ -457,6 +490,7 @@
     "elevation/2/offset-y": "elevation.2.offset-y",
     "font/family/base": "font.family.base",
     "font/letter-spacing/display": "font.letter-spacing.display",
+    "font/letter-spacing/heading": "font.letter-spacing.heading",
     "font/letter-spacing/metric": "font.letter-spacing.metric",
     "font/letter-spacing/overline": "font.letter-spacing.overline",
     "font/letter-spacing/title": "font.letter-spacing.title",
@@ -466,6 +500,7 @@
     "font/size/body-sm": "font.size.body-sm",
     "font/size/caption": "font.size.caption",
     "font/size/display": "font.size.display",
+    "font/size/heading": "font.size.heading",
     "font/size/hero": "font.size.hero",
     "font/size/label": "font.size.label",
     "font/size/metric": "font.size.metric",
@@ -493,6 +528,7 @@
     "size/content-max": "size.content-max",
     "size/content-narrow": "size.content-narrow",
     "size/editorial-card": "size.editorial-card",
+    "size/list-row": "size.list-row",
     "size/mark-lg": "size.mark-lg",
     "size/mark-md": "size.mark-md",
     "size/mark-sm": "size.mark-sm",
@@ -516,10 +552,10 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 495,
-    "primitive": 61,
+    "total": 531,
+    "primitive": 64,
     "semantic": 54,
-    "component": 317,
+    "component": 347,
     "themed": 58
   },
   "transforms": {
@@ -537,11 +573,297 @@
       "07 — Usage rules",
       "08 — Spacing rules"
     ],
-    "usage_rules": "docs/design-system/token-usage.md (APPROVED 2026-09-26)",
-    "rules_status": "APPROVED 2026-09-26",
+    "usage_rules": "docs/design-system/token-usage.md (APPROVED v3.1 2026-09-29)",
+    "rules_status": "APPROVED v3.1 2026-09-29 (Owner: ok agree; v3 2026-09-28 Owner: ya)",
     "note": "Documentation boards bind every swatch/scale to live variables; dark previews use theme mode=dark."
   },
   "components": {
+    "page-header": {
+      "status": "APPROVED 2026-09-28 (Owner: ya; shell v3)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C40 — Page header",
+        "id": "Re3nY"
+      },
+      "spec": "docs/design-system/components/page-header.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "parent": {
+          "kind": "text",
+          "layer": "Parent",
+          "id": "EPpbd"
+        },
+        "current": {
+          "kind": "text",
+          "layer": "Current",
+          "id": "Hh5tj"
+        },
+        "title": {
+          "kind": "text",
+          "layer": "Title",
+          "id": "HsrFT"
+        },
+        "subtitle": {
+          "kind": "boolean+text",
+          "layer": "Subtitle",
+          "id": "i8XPWU",
+          "default": true
+        },
+        "actions": {
+          "kind": "slot",
+          "layer": "Actions",
+          "id": "U9JxE",
+          "recommended": [
+            "Q49yf7",
+            "JmfmZ",
+            "m9dUlL"
+          ]
+        }
+      },
+      "layers": {
+        "Breadcrumb bar": "rvmSQ",
+        "Parent": "EPpbd",
+        "Current": "Hh5tj",
+        "Hero": "bdFTT",
+        "Heading": "ami8m",
+        "Title": "HsrFT",
+        "Subtitle": "i8XPWU",
+        "Actions": "U9JxE"
+      },
+      "variants": {
+        "default": "ImEDW"
+      },
+      "nested": [
+        "button",
+        "icon-button"
+      ],
+      "tokens": [
+        "component.page-header.*"
+      ],
+      "gaps": [
+        "breadcrumb bar height 52 is literal (Pencil cannot bind height)"
+      ],
+      "slots": {
+        "utilities": {
+          "id": "u6PNZ",
+          "accepts": [
+            "qY0Em",
+            "m9dUlL"
+          ],
+          "default": [
+            "Search",
+            "Notifications"
+          ]
+        }
+      },
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): breadcrumb bar rvmSQ gains Spacer j3A5m + Utilities slot u6PNZ (Cari, Notifikasi); right inset panel.app.header.padding-x."
+      ]
+    },
+    "group": {
+      "status": "APPROVED 2026-09-28 (Owner: ya; message-template v3)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C41 — Group",
+        "id": "FdLTt"
+      },
+      "spec": "docs/design-system/components/group.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "title": {
+          "kind": "text",
+          "layer": "Title",
+          "id": "Z2fQ4Y"
+        },
+        "content": {
+          "kind": "slot",
+          "layer": "Content",
+          "id": "R7Fxz",
+          "recommended": [
+            "swIYb"
+          ]
+        }
+      },
+      "layers": {
+        "Section title": "mw4YO",
+        "Title": "Z2fQ4Y",
+        "Content": "R7Fxz"
+      },
+      "variants": {
+        "default": "tEPBr"
+      },
+      "nested": [
+        "list-card"
+      ],
+      "tokens": [
+        "component.group.*"
+      ],
+      "gaps": []
+    },
+    "list-card": {
+      "status": "APPROVED 2026-09-28 (Owner: ya; message-template v3)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C42 — List card",
+        "id": "twUcY"
+      },
+      "spec": "docs/design-system/components/list-card.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "items": {
+          "kind": "slot",
+          "layer": "Items",
+          "id": "A1hw5",
+          "recommended": [
+            "uJwfh",
+            "XhLSK"
+          ],
+          "fill": "Replace(instance+'/A1hw5', {type:'frame', name:'Items', width:'fill_container', layout:'vertical'})"
+        }
+      },
+      "layers": {
+        "Items": "A1hw5"
+      },
+      "variants": {
+        "default": "swIYb"
+      },
+      "nested": [],
+      "tokens": [
+        "component.list-card.*",
+        "size.list-row"
+      ],
+      "gaps": [
+        "row height is a literal 44 in Pencil because width/height cannot bind variables"
+      ],
+      "related": {
+        "list-card-item": {
+          "base": {
+            "name": "_ListCardItem/Base",
+            "id": "LBknS",
+            "private": true
+          },
+          "variants": {
+            "default": "uJwfh",
+            "last": "XhLSK"
+          },
+          "layers": {
+            "Icon wrap": "XUpib",
+            "Icon": "iD6nb",
+            "Title": "HhRDD",
+            "Meta": "NAcrj",
+            "Chevron": "j06tV"
+          }
+        }
+      }
+    },
+    "empty-state": {
+      "status": "APPROVED 2026-09-28 (Owner approved Empty State as C38)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C38 — Empty state",
+        "id": "n2bAJ"
+      },
+      "spec": "docs/design-system/components/empty-state.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "icon": {
+          "kind": "icon",
+          "layer": "Icon",
+          "default": "camera"
+        },
+        "title": {
+          "kind": "text",
+          "layer": "Title",
+          "default": "Workspace ini masih kosong"
+        },
+        "body": {
+          "kind": "text",
+          "layer": "Body",
+          "default": "Mulai dengan melengkapi branding: nama brand, kontak, dan prefiks invoice yang akan dilihat klien."
+        },
+        "action": {
+          "kind": "optional-node",
+          "layer": "Complete branding button",
+          "default": true
+        }
+      },
+      "layers": {
+        "Icon wrap": "HFN6r",
+        "Icon": "zOUao",
+        "Title": "c8Y4Ky",
+        "Body": "FCyNB",
+        "Complete branding button": "SzhQW"
+      },
+      "variants": {
+        "default": "H43gDN"
+      },
+      "tokens": [
+        "color.semantic.surface.subtle",
+        "color.semantic.border.default",
+        "color.semantic.accent.soft",
+        "color.semantic.accent.soft-fg",
+        "color.semantic.text.primary",
+        "color.semantic.text.secondary",
+        "space.1",
+        "space.4",
+        "space.12",
+        "radius.md"
+      ],
+      "gaps": []
+    },
+    "toast": {
+      "status": "APPROVED 2026-09-28 (Owner approved global feedback pattern)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C39 — Toast",
+        "id": "GE357"
+      },
+      "spec": "docs/design-system/components/toast.md",
+      "base": null,
+      "axes": {
+        "tone": [
+          "success"
+        ]
+      },
+      "props": {
+        "title": {
+          "kind": "text",
+          "layer": "Title",
+          "default": "Perubahan tersimpan"
+        },
+        "body": {
+          "kind": "optional-node",
+          "layer": "Body",
+          "default": true
+        },
+        "close": {
+          "kind": "boolean",
+          "layer": "Close align",
+          "default": true
+        }
+      },
+      "layers": {
+        "Title": "m0dqT6",
+        "Body": "fhch4",
+        "Close align": "IXhZl"
+      },
+      "variants": {
+        "success": "QCuMb",
+        "danger": "C3PCyx"
+      },
+      "tokens": [
+        "component.alert.*",
+        "color.semantic.elevation.1.*"
+      ],
+      "gaps": [],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): adds Toast/Danger C3PCyx (Alert/Danger + elevation.1, Close on, optional Action e.g. 'Coba lagi')."
+      ]
+    },
     "button": {
       "status": "APPROVED 2026-09-26 (pilot pattern)",
       "file": "docs/design-system/design-system.lib.pen",
@@ -569,7 +891,8 @@
           "default",
           "hover",
           "focus",
-          "disabled"
+          "disabled",
+          "loading"
         ]
       },
       "props": {
@@ -582,6 +905,11 @@
           "kind": "instance-swap",
           "layer": "Icon leading",
           "default": "plus"
+        },
+        "pending": {
+          "kind": "boolean",
+          "layer": "Pending indicator",
+          "default": false
         },
         "label": {
           "kind": "text",
@@ -601,6 +929,7 @@
       },
       "layers": {
         "Icon leading": "fMNO1",
+        "Pending indicator": "FjXPZ",
         "Label": "xnhuK",
         "Icon trailing": "z3xApy"
       },
@@ -609,26 +938,32 @@
         "primary/md/hover": "G4eW8p",
         "primary/md/focus": "hEMFc",
         "primary/md/disabled": "lBKcT",
+        "primary/md/loading": "rv68E",
         "primary/lg/default": "aBT7T",
         "primary/lg/hover": "Ye7Xm",
         "primary/lg/focus": "p9KLdp",
         "primary/lg/disabled": "V8sGx",
+        "primary/lg/loading": "Ok5W9",
         "secondary/md/default": "JmfmZ",
         "secondary/md/hover": "p7DaJb",
         "secondary/md/focus": "UCgbC",
         "secondary/md/disabled": "iQ7e5",
+        "secondary/md/loading": "IfUAI",
         "secondary/lg/default": "c3U6N",
         "secondary/lg/hover": "ZuSbE",
         "secondary/lg/focus": "fg9QG",
         "secondary/lg/disabled": "nqNHl",
+        "secondary/lg/loading": "y0jkmp",
         "danger/md/default": "z3mR7",
         "danger/md/hover": "v3T5p",
         "danger/md/focus": "KPQep",
         "danger/md/disabled": "dHTCl",
+        "danger/md/loading": "imOnr",
         "danger/lg/default": "ZDOwL",
         "danger/lg/hover": "n90hA",
         "danger/lg/focus": "haHU6",
-        "danger/lg/disabled": "UFc5r"
+        "danger/lg/disabled": "UFc5r",
+        "danger/lg/loading": "oqaiZ"
       },
       "tokens": [
         "component.button.*",
@@ -636,9 +971,7 @@
         "color.semantic.focus.glow",
         "opacity.disabled"
       ],
-      "gaps": [
-        "GAP-02: loading state"
-      ]
+      "gaps": []
     },
     "stage-chip": {
       "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
@@ -700,13 +1033,18 @@
         "Count": "BTnxI"
       },
       "variants": {
-        "default": "dQmPx"
+        "default": "dQmPx",
+        "danger": "HoAYC"
       },
       "tokens": [
-        "component.nav.count.*"
+        "component.nav.count.*",
+        "component.badge.danger.*"
       ],
       "gaps": [
         "future: danger/unread badge needs its own component tokens"
+      ],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): adds variant danger = HoAYC (merged from notification-badge; caption 11/semibold, badge.danger.* colours, padding 2/8, 99+ cap — follows code CountBadge)."
       ]
     },
     "checkbox": {
@@ -1254,10 +1592,13 @@
       ],
       "gaps": [
         "outline SM deferred until needed"
+      ],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): MD variants: Badge offset x 20 / y 4 (base 24/−4 fits SM)."
       ]
     },
     "notification-badge": {
-      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1b) 2026-09-26)",
+      "status": "MERGED into count-badge (variant danger) 2026-09-29 — node HoAYC renamed 'Count Badge/Danger'; entry kept for compatibility",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C14 — Notification badge",
@@ -1418,7 +1759,8 @@
         "Items": "JoK1p"
       },
       "variants": {
-        "default": "g6dKmz"
+        "default": "g6dKmz",
+        "list": "I3q8f"
       },
       "related": {
         "menu-divider": "z7QON",
@@ -1437,6 +1779,9 @@
       "gaps": [
         "no legacy evidence",
         "Pencil: Get visitor may throw inside replaced instance slots — skipChildren on refs"
+      ],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): adds Menu/List I3q8f (horizontal padding 0; Menu Divider between items; footer may hold a primary Button MD)."
       ]
     },
     "text-field": {
@@ -1712,7 +2057,7 @@
       ]
     },
     "nav-item": {
-      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
+      "status": "APPROVED 2026-09-28 (shell v3 amendment; Owner: ya)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C22 — Nav item",
@@ -1784,10 +2129,13 @@
             "space.1"
           ]
         }
-      }
+      },
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Active: nav.item.* now action.primary / action.on-primary, label semibold; Hover: background surface.panel, icon nav.item.icon-hover (→ accent.soft-fg). Rules v3.1 N1."
+      ]
     },
     "segmented-control": {
-      "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 2) 2026-09-26)",
+      "status": "APPROVED 2026-09-28 (shell v3 track amendment; Owner: ya)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C23 — Segmented control",
@@ -2228,7 +2576,7 @@
       ]
     },
     "app-panel": {
-      "status": "APPROVED (tier 3) 2026-09-26",
+      "status": "APPROVED 2026-09-28 (shell v3 amendment; Owner: ya)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C28 — App panel",
@@ -2238,15 +2586,31 @@
       "base": null,
       "axes": {},
       "props": {
+        "parent": {
+          "kind": "text",
+          "layer": "Page Header/Parent",
+          "path": "MST3f/EPpbd"
+        },
+        "current": {
+          "kind": "text",
+          "layer": "Page Header/Current",
+          "path": "MST3f/Hh5tj"
+        },
         "title": {
           "kind": "text",
-          "layer": "Title",
-          "id": "nrRBd"
+          "layer": "Page Header/Title",
+          "path": "MST3f/HsrFT"
+        },
+        "subtitle": {
+          "kind": "boolean+text",
+          "layer": "Page Header/Subtitle",
+          "path": "MST3f/i8XPWU",
+          "default": true
         },
         "actions": {
           "kind": "slot",
-          "layer": "Actions",
-          "id": "uR9Ye",
+          "layer": "Page Header/Actions",
+          "path": "MST3f/U9JxE",
           "recommended": [
             "vmSeU",
             "m9dUlL",
@@ -2266,9 +2630,12 @@
         }
       },
       "layers": {
-        "Panel header": "gmoTC",
-        "Title": "nrRBd",
-        "Actions": "uR9Ye",
+        "Page Header": "MST3f",
+        "Page Header.Parent": "EPpbd",
+        "Page Header.Current": "Hh5tj",
+        "Page Header.Title": "HsrFT",
+        "Page Header.Subtitle": "i8XPWU",
+        "Page Header.Actions": "U9JxE",
         "Content": "C5QYo",
         "Page Content": "d2hCuQ"
       },
@@ -2276,21 +2643,19 @@
         "default": "UmVJD"
       },
       "nested": [
-        "input",
-        "icon-button",
+        "page-header",
         "page-content"
       ],
       "tokens": [
         "component.panel.app.*"
       ],
       "gaps": [
-        "header height 72 is literal (Pencil can't bind height)",
         "slot fill only works on top-level instances: Pencil can't replace a slot inside an instance nested in another master",
         "breakpoints not specified"
       ]
     },
     "sidebar": {
-      "status": "APPROVED (tier 3) 2026-09-26",
+      "status": "APPROVED 2026-09-28 (shell v3 amendment; Owner: ya)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C29 — Sidebar",
@@ -2369,14 +2734,16 @@
         "component.nav.*"
       ],
       "gaps": [
-        "layout region: binds semantic/scale tokens (board 08 layout map) — promote to sidebar.* tokens if the Owner wants G3 component aliases",
-        "logo mark monochrome (legacy blue) until brand rules (GAP-03)",
+        "workspace mark token is retained for compatibility but the v3 expanded switcher does not render a mark",
         "collapsed / drawer modes not built",
         "height drawn at 936; fills the shell"
+      ],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Active/hover Nav Items change via nav tokens (rules v3.1 N1)."
       ]
     },
     "app-shell": {
-      "status": "APPROVED (tier 3) 2026-09-26 (template)",
+      "status": "APPROVED 2026-09-28 (shell v3 amendment; Owner: ya)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C30 — App shell",
@@ -2414,6 +2781,15 @@
             "yAPhv"
           ],
           "default": "nRbAO (Modal/MD)"
+        },
+        "toast": {
+          "kind": "slot",
+          "layer": "Toast",
+          "id": "VJpuD",
+          "recommended": [
+            "QCuMb"
+          ],
+          "default": false
         }
       },
       "layers": {
@@ -2421,6 +2797,7 @@
         "Panel": "Sw0yD",
         "Overlay": "fwm7P",
         "Modal": "hnTfu",
+        "Toast": "VJpuD",
         "tablet.Rail": "f4EPF6",
         "tablet.Panel": "QhPny",
         "tablet.Overlay": "bbU0M",
@@ -2433,15 +2810,19 @@
       "nested": [
         "sidebar",
         "app-panel",
-        "modal"
+        "modal",
+        "toast"
       ],
       "tokens": [
-        "color.semantic.surface.canvas",
+        "color.semantic.surface.muted",
         "space.3",
         "component.modal.scrim"
       ],
       "gaps": [
         "1440 × 960 only; breakpoints future"
+      ],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Toast layer VJpuD padding space.6; Toast slots accept Toast/Success and Toast/Danger."
       ]
     },
     "modal": {
@@ -2559,7 +2940,8 @@
       "axes": {
         "tone": [
           "default",
-          "destructive"
+          "destructive",
+          "selected"
         ]
       },
       "props": {
@@ -2581,16 +2963,24 @@
           "id": "bZ2Ux",
           "default": false,
           "nested": "count-badge (set Count/BTnxI)"
+        },
+        "selected": {
+          "kind": "boolean",
+          "layer": "Selected mark",
+          "id": "W5pLC",
+          "default": false
         }
       },
       "layers": {
         "Icon": "MLkPM",
         "Label": "elAPX",
-        "Count": "bZ2Ux"
+        "Count": "bZ2Ux",
+        "Selected mark": "W5pLC"
       },
       "variants": {
         "default": "FRtU1",
-        "destructive": "FAObX"
+        "destructive": "FAObX",
+        "selected": "E7RrIj"
       },
       "nested": [
         "count-badge"
@@ -2601,6 +2991,9 @@
       ],
       "gaps": [
         "height 52 literal (Pencil can't bind height)"
+      ],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Sheet Item/Selected E7RrIj: label semibold; check = component.sheet.item.check (→ action.primary), rules v3.1 C1."
       ]
     },
     "bottom-sheet": {
@@ -2637,7 +3030,8 @@
           "id": "CLpYz",
           "recommended": [
             "FRtU1",
-            "FAObX"
+            "FAObX",
+            "E7RrIj"
           ],
           "fill": "Replace(instance+'/CLpYz', {type:'frame', name:'Items', layout:'vertical', width:'fill_container'})"
         },
@@ -2691,6 +3085,7 @@
           "recommended": [
             "FRtU1",
             "FAObX",
+            "E7RrIj",
             "Rjoxp"
           ]
         },
@@ -2754,10 +3149,13 @@
         "upward shadow offset −8 is literal (elevation offsets are positive)",
         "no mobile shell yet (GAP-04): shown on a phone placeholder",
         "max-height 90% / scrolling body documented, not drawn"
+      ],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Bottom Sheet/Menu oWJw2: workspace row yurxA and Invoice HdCxv disabled."
       ]
     },
     "mobile-shell": {
-      "status": "APPROVED (tier 4) 2026-09-26 (template)",
+      "status": "APPROVED (tier 4) 2026-09-26",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C33 — Mobile shell",
@@ -2832,10 +3230,12 @@
       },
       "nested": [
         "icon-button",
-        "bottom-sheet"
+        "bottom-sheet",
+        "compact-bar",
+        "bottom-nav"
       ],
       "tokens": [
-        "color.semantic.surface.panel",
+        "color.semantic.surface.muted",
         "color.semantic.border.subtle",
         "space.1",
         "space.2",
@@ -2847,6 +3247,9 @@
         "no bottom navigation",
         "tablet/Owner breakpoints unspecified",
         "status bar/home indicator are device context only"
+      ],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): root surface.muted; App bar children disabled, Compact Bar GaeSf (J3Ppgp) inserted; Content JOcL3 = canvas sheet; Safe area off; Bottom Nav F4VJ1u added (stays on sub-pages)."
       ]
     },
     "bottom-nav-item": {
@@ -2982,10 +3385,13 @@
       ],
       "gaps": [
         "no hide-on-scroll / keyboard state drawn"
+      ],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): tab wTYuN: Lainnya → Invoice (receipt); menu reached via the Mobile Header Menu button (option A)."
       ]
     },
     "mobile-app-shell": {
-      "status": "APPROVED (tier 4) 2026-09-26 (template)",
+      "status": "APPROVED 2026-09-28 (shell v3 amendment; Owner: ya)",
       "file": "docs/design-system/design-system.lib.pen",
       "page": {
         "name": "C35 — Mobile app shell",
@@ -3037,6 +3443,15 @@
             "vSBbR"
           ],
           "default": "xSveZ (Bottom Sheet/Menu)"
+        },
+        "toast": {
+          "kind": "slot",
+          "layer": "Toast",
+          "id": "U4sG8K",
+          "recommended": [
+            "QCuMb"
+          ],
+          "default": false
         }
       },
       "layers": {
@@ -3049,7 +3464,8 @@
         "Content": "HvRky",
         "Bottom Nav": "SpGXb",
         "Overlay": "Ey5pi",
-        "Sheet": "aQWCT"
+        "Sheet": "aQWCT",
+        "Toast": "U4sG8K"
       },
       "variants": {
         "default": "c6qPz7"
@@ -3057,7 +3473,10 @@
       "nested": [
         "icon-button",
         "bottom-nav",
-        "bottom-sheet"
+        "bottom-sheet",
+        "toast",
+        "mobile-header",
+        "workspace-pill"
       ],
       "tokens": [
         "color.semantic.surface.canvas",
@@ -3071,6 +3490,9 @@
       "gaps": [
         "tablet 768–1279 unspecified",
         "sub-pages use C33 (back + title)"
+      ],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): root surface.muted; Top border off; App bar nUiGs disabled; Mobile Header n0MP5 (o8T8zb) added; Content HvRky = surface.canvas sheet with top corners panel.app.radius, padding space.5/space.4; Toast layer top padding 62 (status bar + space.2)."
       ]
     },
     "combobox": {
@@ -3232,10 +3654,122 @@
       "tokens": [
         "component.nav.item.*"
       ],
-      "gaps": []
+      "gaps": [],
+      "changes": [
+        "F-17 promotion 2026-09-29 (Owner-approved design; rules v3.1): Active via nav.item.* (action.primary); Hover icon = nav.item.icon-hover. App Shell/Tablet lQnS8: root surface.muted, Toast layer z9osf8, rail workspace control = chevrons-up-down 16 text.muted (no accent mark)."
+      ]
+    },
+    "workspace-pill": {
+      "status": "APPROVED 2026-09-29 (F-17)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "spec": "docs/design-system/components/mobile-app-shell.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "workspace": {
+          "kind": "text",
+          "layer": "Workspace",
+          "id": "t4WDgJ"
+        }
+      },
+      "variants": {
+        "default": "K06oq"
+      },
+      "tokens": [
+        "component.sidebar.workspace.*"
+      ]
+    },
+    "mobile-header": {
+      "status": "APPROVED 2026-09-29 (F-17)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "spec": "docs/design-system/components/mobile-app-shell.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "title": {
+          "kind": "text",
+          "layer": "Title",
+          "id": "K1jSfD"
+        },
+        "subtitle": {
+          "kind": "text",
+          "layer": "Subtitle",
+          "id": "EYvag"
+        }
+      },
+      "slots": {
+        "utilities": {
+          "id": "tL2Cp",
+          "accepts": [
+            "qY0Em"
+          ],
+          "default": [
+            "Search",
+            "Notifications",
+            "Menu"
+          ]
+        }
+      },
+      "variants": {
+        "default": "o8T8zb"
+      },
+      "nested": [
+        "workspace-pill",
+        "icon-button"
+      ],
+      "tokens": [
+        "color.semantic.surface.muted",
+        "component.page-header.title",
+        "component.page-header.subtitle",
+        "font.size.heading",
+        "font.letter-spacing.heading"
+      ]
+    },
+    "compact-bar": {
+      "status": "APPROVED 2026-09-29 (F-17)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "spec": "docs/design-system/components/mobile-shell.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "title": {
+          "kind": "text",
+          "layer": "Title",
+          "id": "I0gdll"
+        },
+        "parent": {
+          "kind": "text",
+          "layer": "Parent",
+          "id": "jbTiE"
+        }
+      },
+      "slots": {
+        "actions": {
+          "id": "wS30M",
+          "accepts": [
+            "iQ7e5",
+            "JmfmZ",
+            "Q49yf7",
+            "lBKcT",
+            "qY0Em"
+          ],
+          "default": []
+        }
+      },
+      "variants": {
+        "default": "J3Ppgp"
+      },
+      "nested": [
+        "icon-button"
+      ],
+      "tokens": [
+        "color.semantic.surface.muted",
+        "component.page-header.title",
+        "component.page-header.breadcrumb.text"
+      ]
     }
   },
-  "components_status": "IN PROGRESS — C01–C35 APPROVED 2026-09-26 (tiers pilot, 1, 1b, 1c, 2, 3, 4); C36 Combobox, C37 Nav rail & tablet shell and the open-question additions PROPOSED 2026-09-26.",
+  "components_status": "APPROVED — C01–C35 approved 2026-09-26; C36 Combobox and C37 Nav rail & tablet shell retained; C38 Empty State, C39 Toast, Button loading and Sheet Item/Selected approved 2026-09-28; shell v3 amendments plus C40 Page Header, C41 Group and C42 List Card approved by Owner (ya) 2026-09-28; F-17 promotion 2026-09-29: Workspace Pill, Mobile Header, Compact Bar, Toast/Danger, Menu/List, Count Badge/Danger (C14 merged), Page Header Utilities, Nav Item active/hover (rules v3.1), Mobile App Shell / Mobile Shell / Tablet shell updates.",
   "unsupported": {
     "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.",
     "typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",

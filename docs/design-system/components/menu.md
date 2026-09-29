@@ -69,6 +69,14 @@ Known Pencil limitation: a `Get` visitor that walks into an instance with a repl
 - Opens on Enter, Space or ↓. Esc closes it and returns focus to the trigger; Tab closes it.
 - The panel edge is shown by the border plus the elevation, not by colour alone.
 
+## F-17 update — PROMOTED 2026-09-29
+
+Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-approved design; rules v3.1). Library: **Menu/List** `I3q8f` (padding `menu.padding` / 0). Details: [F-17 design.md](../../features/app-shell-revamp/design.md).
+
+- **List** use: horizontal padding 0, with Menu Divider between items so dividers are full width.
+- A footer can hold a primary Button MD (the workspace switcher's *Buat workspace*).
+- This needs a Menu variant, instead of today's instance padding override (SP5 exception).
+
 ## Implementation references
 
 - Pencil: `C10 — Menu` (`AgR78`)

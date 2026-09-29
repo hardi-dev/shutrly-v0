@@ -17,9 +17,10 @@ The mobile counterpart of the Modal: a sheet docked to the bottom edge over `ove
 
 | Component | ID | Structure |
 |---|---|---|
-| `_SheetItem/Base` (private) | `hHxAm` | 375 × 52; padding-x `sheet.item.padding-x` (20); gap `sheet.item.gap` (10, `space.2-5`; SP6 amended 2026-09-26); top border `sheet.item.border`. Icon `MLkPM` (lucide 20, `sheet.item.icon`); Label `elAPX` (subtitle 16 / 500, `sheet.item.text`, fill). Count `bZ2Ux`: a Count Badge, boolean (off). |
+| `_SheetItem/Base` (private) | `hHxAm` | 375 × 52; padding-x `sheet.item.padding-x` (20); gap `sheet.item.gap` (10, `space.2-5`; SP6 amended 2026-09-26); top border `sheet.item.border`. Icon `MLkPM` (lucide 20, `sheet.item.icon`); Label `elAPX` (subtitle 16 / 500, `sheet.item.text`, fill). Count `bZ2Ux`: a Count Badge, boolean (off). Selected mark `W5pLC`: decorative trailing checkmark, boolean (off). |
 | `Sheet Item/Default` | `FRtU1` | |
 | `Sheet Item/Destructive` | `FAObX` | Icon `trash-2` and label in `sheet.item.text-destructive` |
+| `Sheet Item/Selected` | `E7RrIj` | Current selection; Count off and trailing checkmark on. Used by the workspace switcher on mobile. |
 | `Bottom Sheet/Actions` | `U0wHw` | Grabber → Header, centred: Title `bEyU3` (body 14 / 600) and Meta `GyfP0` (label 12, `sheet.meta`, boolean) → **Items** slot `CLpYz` (Sheet Items) → Safe area |
 | `Bottom Sheet/Menu` | `oWJw2` | The Bottom Nav *Lainnya* menu. It **inherits the desktop Sidebar**: Grabber → Header `VsQBD` with the **Sidebar logo** (`o5FI3`: aperture mark + *shutrly* wordmark, title 18 / 700) and a round Close `mt8sl` (as in the Form sheet; the desktop collapse button has no mobile meaning) → **Items** slot `MfblZ`, which starts with the Workspace switcher (`yurxA` › `Gf9J9`, the Sidebar's, inset 20, with a separator line on top like the Sidebar divider) → Account (Avatar, name, email, Log out as Icon Button Ghost MD `JVVIR`) → Safe area. The Items slot holds Sheet Items and Nav Group Labels: Invoice (count 3) · KATALOG: Layanan, Tim · Template pesan, Sumber klien, Pengaturan. It follows the Sidebar's groups and labels exactly, and adds no labels the Sidebar lacks (Owner 2026-09-26). |
 | `Bottom Sheet/Form` | `vSBbR` | Grabber → Header, leading: Title `di5Wv` (title 18 / 700), Description `fmisv` (body-sm, boolean) and Close `P9kIA4` (Icon Button Ghost SM, round, `sheet.close.background`, boolean) → **Body** slot `XCxn4` → Footer (`sheet.footer.background`, top border `sheet.footer.border`, padding 16 / 20) with the **Actions** slot `x5l7Wq` (full-width LG Buttons) → Safe area |
@@ -62,6 +63,14 @@ The mobile counterpart of the Modal: a sheet docked to the bottom edge over `ove
 - The exhibits sit on the Mobile Shell (C33), which added the missing mobile frame from GAP-04.
 - Item height, sheet width and the upward shadow offset are literal, because Pencil can't bind size or negative offsets.
 - The max-height and scrolling states are documented but not drawn.
+
+## F-17 update — PROMOTED 2026-09-29
+
+Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-approved design; rules v3.1). Library: Bottom Sheet/Menu `oWJw2` — `yurxA` (workspace) and `HdCxv` (Invoice) disabled; Sheet Item/Selected `E7RrIj` — label semibold, check `component.sheet.item.check`. Details: [F-17 design.md](../../features/app-shell-revamp/design.md).
+
+- Bottom Sheet/Menu drops the workspace switcher row and Invoice.
+- Sheet Item/Selected gets a `semibold` label and a check in a new `component.sheet.item.check` → `action.primary`, to match Menu Item/Selected (DESIGN TOKEN GAP).
+- The switcher sheet lists workspaces without icons and ends with a Button Primary LG *Buat workspace*.
 
 ## Implementation references
 

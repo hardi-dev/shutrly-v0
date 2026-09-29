@@ -79,7 +79,7 @@ The masters never include the scrim; the App Shell Overlay owns it.
 ## Gaps
 
 - No max-height or scrolling-body spec yet. For now the body scrolls inside the modal, and the header and footer stay fixed.
-- No loading state on the confirming button (GAP-02).
+- Confirming actions use Button's approved Loading state when a submission is pending.
 - No legacy evidence.
 
 ## Implementation references

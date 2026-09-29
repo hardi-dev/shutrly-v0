@@ -41,6 +41,15 @@ The tablet layout (768–1279 px). The desktop Sidebar collapses to a 72 px icon
 - The expanded overlay state (full Sidebar over the panel) is described but not drawn.
 - The rail width and item size are literal on the canvas, because Pencil can't bind width.
 
+## F-17 update — PROMOTED 2026-09-29
+
+Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-approved design; rules v3.1). Library: `OKf00` via nav tokens; `GMxFW` icon `icon-hover`; App Shell/Tablet `lQnS8` root `surface.muted`, Toast layer `z9osf8`; rail workspace control `HbcMi`/`z3corP` = `chevrons-up-down` 16 `text.muted`. Details: [F-17 design.md](../../features/app-shell-revamp/design.md).
+
+- Active and hover change the same way as C22.
+- The workspace control uses `chevrons-up-down` 16 in `text.muted`, with no `accent.highlight` mark.
+- App Shell/Tablet root becomes `surface.muted` (v3 L1).
+- A **Toast layer** is added, bottom-right with a `space.6` inset, as on desktop.
+
 ## Implementation references
 
 - Pencil: `C37 — Nav rail & tablet shell` (`jNOvR`); tokens on board 06 › *Sidebar*, *Tooltip*

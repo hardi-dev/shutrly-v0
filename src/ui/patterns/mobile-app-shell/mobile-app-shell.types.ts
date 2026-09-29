@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 export interface MobileAppShellProps {
   workspace?: string;
   title: string;
+  subtitle?: string;
   children: ReactNode;
   bottomNav: ReactNode;
   actions?: ReactNode;

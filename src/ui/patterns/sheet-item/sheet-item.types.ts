@@ -4,8 +4,10 @@ export type SheetItemVariant = "default" | "destructive";
 
 export interface SheetItemProps {
   label: string;
-  icon: IconName;
+  icon?: IconName;
   count?: number;
+  isSelected?: boolean;
+  isDisabled?: boolean;
   variant?: SheetItemVariant;
   onPress: () => void;
 }

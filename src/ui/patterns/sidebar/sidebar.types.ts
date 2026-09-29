@@ -25,4 +25,5 @@ export interface SidebarProps {
 export interface SidebarWorkspaceTriggerProps {
   workspaceName: string;
   isCompact?: boolean;
+  onPress?: () => void;
 }

@@ -13,7 +13,7 @@ export function SettingsScreen({ action, profile, saved = false }: Readonly<Sett
       action={action}
       className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4)"
     >
-      <h1 className="text-(length:--font-size-display) font-bold">{SETTINGS_COPY.title}</h1>
+      <h2 className="text-(length:--font-size-display) font-bold">{SETTINGS_COPY.title}</h2>
       {saved ? <Alert tone="success" title={SETTINGS_COPY.saved} live /> : null}
       <Field label={SETTINGS_COPY.name} name="name" value={profile.name} />
       <Field label={SETTINGS_COPY.brandName} name="brandName" value={profile.brandName ?? ""} />

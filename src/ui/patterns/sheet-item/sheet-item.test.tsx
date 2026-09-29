@@ -35,4 +35,11 @@ describe("SheetItem (C32)", () => {
       "text-(--component-sheet-item-text-destructive)",
     );
   });
+
+  it("shows the selection check on the trailing edge", () => {
+    render(<SheetItem label="Studio Lime" isSelected onPress={handleNoop} />);
+
+    const item = screen.getByRole("button", { name: "Studio Lime" });
+    expect(item.querySelector('[data-testid="sheet-item-check"]')).toBeInTheDocument();
+  });
 });

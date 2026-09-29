@@ -5,14 +5,24 @@ import { MenuItem as AriaMenuItem } from "react-aria-components";
 import { cn } from "@/ui/cn/cn";
 import { Icon } from "@/ui/primitives/icon/icon";
 
-import type { MenuItemProps } from "./menu-item.types";
+import type { MenuItemLayout, MenuItemProps } from "./menu-item.types";
 
-function getMenuItemClassName(isDestructive: boolean, isDisabled: boolean) {
+const LAYOUT_CLASSES: Record<MenuItemLayout, string> = {
+  compact: cn(
+    "min-h-(--space-9) gap-(--component-menu-item-gap) rounded-(--component-menu-item-radius)",
+    "px-(--component-menu-item-padding-x) py-(--component-menu-item-padding-y)",
+  ),
+  row: cn(
+    "min-h-[52px] gap-(--component-sheet-item-gap) border-t border-(--component-sheet-item-border)",
+    "px-(--component-sheet-item-padding-x) text-(length:--font-size-body) font-medium",
+  ),
+};
+
+function getMenuItemClassName(isDestructive: boolean, isDisabled: boolean, layout: MenuItemLayout) {
   return ({ isFocused }: { isFocused: boolean }) =>
     cn(
-      "flex min-h-(--space-9) items-center gap-(--component-menu-item-gap)",
-      "rounded-(--component-menu-item-radius) px-(--component-menu-item-padding-x)",
-      "py-(--component-menu-item-padding-y) outline-none",
+      "flex items-center outline-none",
+      LAYOUT_CLASSES[layout],
       "text-(--component-menu-item-text)",
       isFocused &&
         (isDestructive
@@ -31,6 +41,7 @@ export function MenuItem({
   isSelected = false,
   isDisabled = false,
   variant = "default",
+  layout = "compact",
   onSelect,
 }: Readonly<MenuItemProps>) {
   const isDestructive = variant === "destructive";
@@ -41,7 +52,7 @@ export function MenuItem({
       isDisabled={isDisabled}
       onAction={onSelect}
       aria-label={description ? `${label} ${description}` : label}
-      className={getMenuItemClassName(isDestructive, isDisabled)}
+      className={getMenuItemClassName(isDestructive, isDisabled, layout)}
     >
       {icon ? <Icon name={icon} aria-hidden="true" data-testid="menu-item-icon" /> : null}
       <span className="min-w-0 flex-1">
@@ -57,7 +68,11 @@ export function MenuItem({
           name="check"
           aria-hidden="true"
           data-testid="menu-item-check"
-          className="text-(--component-menu-item-check)"
+          className={
+            layout === "row"
+              ? "text-(--component-sheet-item-check)"
+              : "text-(--component-menu-item-check)"
+          }
         />
       ) : null}
     </AriaMenuItem>

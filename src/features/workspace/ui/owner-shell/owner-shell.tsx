@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -13,9 +14,14 @@ import { Icon } from "@/ui/primitives/icon/icon";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { CreateWorkspaceDialog } from "../create-workspace-dialog/create-workspace-dialog";
-import { OwnerNav, OwnerNavBottom } from "../owner-nav/owner-nav";
+import { OwnerNav, OwnerNavBottom, resolvePageHeading } from "../owner-nav/owner-nav";
 import { OWNER_NAV_COPY } from "../owner-nav/owner-nav.copy";
-import { WorkspaceSwitcher } from "../workspace-switcher/workspace-switcher";
+import {
+  sortWorkspaces,
+  useWorkspaceSwitch,
+  WorkspaceSwitcher,
+} from "../workspace-switcher/workspace-switcher";
+import { WORKSPACE_SWITCHER_COPY } from "../workspace-switcher/workspace-switcher.copy";
 import { OWNER_SHELL_COPY } from "./owner-shell.copy";
 import type { OwnerShellProps } from "./owner-shell.types";
 
@@ -48,10 +54,15 @@ export function OwnerShell({
   logoutAction,
 }: Readonly<OwnerShellProps>) {
   const currentPathname = usePathname();
+  const heading = resolvePageHeading(currentPathname, workspaceId, workspaceName) ?? { title };
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileWorkspaceSwitcherOpen, setIsMobileWorkspaceSwitcherOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const handleLayoutChange = () => {
+    setIsMobileMenuOpen(false);
+    setIsMobileWorkspaceSwitcherOpen(false);
+  };
   const handleOpenMobileMenu = () => {
     setIsMobileMenuOpen(true);
   };
@@ -74,10 +85,6 @@ export function OwnerShell({
     mobileItem(MOBILE_ITEMS[2], workspaceId, currentPathname),
     mobileItem(MOBILE_ITEMS[3], workspaceId, currentPathname),
   ] as const;
-  const handleMobileSwitch = async (nextWorkspaceId: string) => {
-    await onSwitch(nextWorkspaceId);
-    setIsMobileWorkspaceSwitcherOpen(false);
-  };
   const handleOpenCreate = () => {
     setIsCreateOpen(true);
   };
@@ -105,12 +112,16 @@ export function OwnerShell({
   return (
     <>
       <AppShell
-        title={title}
+        title={heading.title}
+        subtitle={heading.subtitle}
         workspace={{ name: workspaceName }}
         account={{ name: accountName, email: accountEmail, initials: initials(accountName) }}
         nav={<OwnerNav workspaceId={workspaceId} pathname={currentPathname} />}
         navBottom={<OwnerNavBottom workspaceId={workspaceId} pathname={currentPathname} />}
         workspaceSwitcher={renderWorkspaceSwitcher}
+        panelUtilities={
+          <DesktopUtilities onSearch={handleOpenSearch} onNotifications={handleOpenNotifications} />
+        }
         onLogout={logoutAction ? handleLogout : undefined}
         mobileBottomNav={{
           items: mobileItems,
@@ -125,6 +136,7 @@ export function OwnerShell({
           />
         }
         onMobileWorkspacePress={handleOpenMobileWorkspaceSwitcher}
+        onLayoutChange={handleLayoutChange}
         mobileSheet={
           <>
             <MobileWorkspaceSheet
@@ -139,8 +151,9 @@ export function OwnerShell({
             <MobileWorkspaceSwitcherSheet
               isOpen={isMobileWorkspaceSwitcherOpen}
               onOpenChange={setIsMobileWorkspaceSwitcherOpen}
+              currentName={workspaceName}
               workspaces={workspaces}
-              onSwitch={handleMobileSwitch}
+              onSwitch={onSwitch}
               onCreate={handleMobileCreate}
             />
           </>
@@ -177,6 +190,9 @@ export function MobileWorkspaceSheet({
   const handleNavigate = (section: string) => () => {
     onNavigate(section);
   };
+  const handleClose = () => {
+    onOpenChange(false);
+  };
 
   return (
     <BottomSheet
@@ -187,14 +203,35 @@ export function MobileWorkspaceSheet({
       variant="menu"
     >
       <MobileSheetGroupLabel label={OWNER_NAV_COPY.catalog} />
-      {MOBILE_MENU_ITEMS.slice(1, 3).map(([section, label, icon]) => (
+      {MOBILE_MENU_ITEMS.slice(0, 2).map(([section, label, icon]) => (
         <SheetItem key={section} label={label} icon={icon} onPress={handleNavigate(section)} />
       ))}
-      {MOBILE_MENU_ITEMS.slice(3).map(([section, label, icon]) => (
+      {MOBILE_MENU_ITEMS.slice(2).map(([section, label, icon]) => (
         <SheetItem key={section} label={label} icon={icon} onPress={handleNavigate(section)} />
       ))}
-      <MobileSheetAccount name={accountName} email={accountEmail} onLogout={onLogout} />
+      <MobileSheetAccount
+        name={accountName}
+        email={accountEmail}
+        onOpenProfile={handleClose}
+        onLogout={onLogout}
+      />
     </BottomSheet>
+  );
+}
+
+function DesktopUtilities({
+  onSearch,
+  onNotifications,
+}: Readonly<{ onSearch: () => void; onNotifications: () => void }>) {
+  return (
+    <>
+      <IconButton icon="search" aria-label={OWNER_SHELL_COPY.search} onPress={onSearch} />
+      <IconButton
+        icon="bell"
+        aria-label={OWNER_SHELL_COPY.notifications}
+        onPress={onNotifications}
+      />
+    </>
   );
 }
 
@@ -207,7 +244,7 @@ function MobileUtilities({
     <>
       <IconButton icon="search" aria-label={OWNER_SHELL_COPY.search} onPress={onSearch} />
       <IconButton
-        icon="info"
+        icon="bell"
         aria-label={OWNER_SHELL_COPY.notifications}
         onPress={onNotifications}
       />
@@ -219,47 +256,64 @@ function MobileUtilities({
 export function MobileWorkspaceSwitcherSheet({
   isOpen,
   onOpenChange,
+  currentName,
   workspaces,
   onSwitch,
   onCreate,
 }: Readonly<{
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
+  currentName: string;
   workspaces: OwnerShellProps["workspaces"];
   onSwitch: (workspaceId: string) => Promise<void>;
   onCreate: () => void;
 }>) {
+  const { pendingId, selectWorkspace } = useWorkspaceSwitch(currentName, onSwitch);
+  const isPending = pendingId !== null;
+  const handleSwitch = (workspaceId: string) => () => {
+    void selectWorkspace(workspaceId).finally(() => {
+      onOpenChange(false);
+    });
+  };
+
   return (
     <BottomSheet
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      title={OWNER_SHELL_COPY.mobileWorkspaceSwitcherTitle}
+      title={WORKSPACE_SWITCHER_COPY.menuLabel}
+      meta={WORKSPACE_SWITCHER_COPY.count(workspaces.length)}
       variant="menu"
-      actions={
-        <Button variant="primary" size="lg" className="w-full" onPress={onCreate}>
-          {OWNER_SHELL_COPY.createWorkspace}
-        </Button>
-      }
+      actions={<CreateWorkspaceButton isDisabled={isPending} onPress={onCreate} />}
     >
-      {workspaces.map((workspace) => (
+      {sortWorkspaces(workspaces).map((workspace) => (
         <SheetItem
           key={workspace.id}
           label={workspace.name}
           isSelected={workspace.isCurrent}
-          onPress={handleWorkspaceSwitch(onSwitch, workspace.id)}
+          isDisabled={isPending}
+          onPress={handleSwitch(workspace.id)}
         />
       ))}
     </BottomSheet>
   );
 }
 
-function handleWorkspaceSwitch(
-  onSwitch: (workspaceId: string) => Promise<void>,
-  workspaceId: string,
-) {
-  return () => {
-    void onSwitch(workspaceId);
-  };
+function CreateWorkspaceButton({
+  isDisabled,
+  onPress,
+}: Readonly<{ isDisabled: boolean; onPress: () => void }>) {
+  return (
+    <Button
+      variant="primary"
+      size="lg"
+      className="w-full"
+      iconLeading="plus"
+      isDisabled={isDisabled}
+      onPress={onPress}
+    >
+      {WORKSPACE_SWITCHER_COPY.create}
+    </Button>
+  );
 }
 
 function MobileSheetLogo() {
@@ -291,11 +345,32 @@ function MobileSheetGroupLabel({ label }: Readonly<{ label: string }>) {
 function MobileSheetAccount({
   name,
   email,
+  onOpenProfile,
   onLogout,
-}: Readonly<{ name: string; email: string; onLogout?: () => void }>) {
+}: Readonly<{ name: string; email: string; onOpenProfile: () => void; onLogout?: () => void }>) {
   return (
     <div className="flex items-center gap-(--component-sidebar-account-gap) border-t border-(--component-sheet-item-border) px-(--component-sheet-item-padding-x) pb-(--space-1) pt-(--space-3)">
-      <Avatar initials={name} aria-label={name} />
+      <Link
+        href="/profile"
+        onClick={onOpenProfile}
+        className="flex min-w-0 flex-1 items-center gap-(--component-sidebar-account-gap) rounded-(--radius-sm) outline-none focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
+      >
+        <MobileSheetAccountText name={name} email={email} />
+      </Link>
+      <IconButton
+        icon="log-out"
+        size="sm"
+        aria-label={OWNER_SHELL_COPY.logout}
+        onPress={onLogout}
+      />
+    </div>
+  );
+}
+
+function MobileSheetAccountText({ name, email }: Readonly<{ name: string; email: string }>) {
+  return (
+    <>
+      <Avatar initials={initials(name)} aria-hidden />
       <div className="min-w-0 flex-1">
         <p className="truncate text-(length:--font-size-body-sm) font-semibold text-(--color-semantic-text-primary)">
           {name}
@@ -304,13 +379,7 @@ function MobileSheetAccount({
           {email}
         </p>
       </div>
-      <IconButton
-        icon="log-out"
-        size="sm"
-        aria-label={OWNER_SHELL_COPY.logout}
-        onPress={onLogout}
-      />
-    </div>
+    </>
   );
 }
 

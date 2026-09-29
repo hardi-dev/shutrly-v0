@@ -1,4 +1,6 @@
-/** Renders a decorative menu group separator (C10). */
+import { Separator } from "react-aria-components";
+
+/** Renders a menu group separator that stays inside the menu collection (C10). */
 export function MenuDivider() {
-  return <div role="separator" className="my-(--space-1) h-px bg-(--component-menu-divider)" />;
+  return <Separator className="my-(--space-1) h-px border-0 bg-(--component-menu-divider)" />;
 }

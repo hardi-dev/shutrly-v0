@@ -50,6 +50,8 @@ describe("Icon", () => {
         "panel-left-open",
         "log-out",
         "x",
+        "bell",
+        "chevron-left",
       ]),
     );
   });

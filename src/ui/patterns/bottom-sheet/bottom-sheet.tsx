@@ -20,6 +20,7 @@ export function BottomSheet({
   isOpen,
   onOpenChange,
   title,
+  headerLeading,
   variant = "actions",
   meta,
   description,
@@ -55,6 +56,7 @@ export function BottomSheet({
         titleId={titleId}
         descriptionId={descriptionId}
         title={title}
+        headerLeading={headerLeading}
         variant={variant}
         meta={meta}
         description={description}
@@ -68,11 +70,13 @@ export function BottomSheet({
   );
 }
 
+// eslint-disable-next-line max-lines-per-function -- coordinates the sheet structure and body spacing
 function SheetContent({
   dialogRef,
   titleId,
   descriptionId,
   title,
+  headerLeading,
   variant = "actions",
   meta,
   description,
@@ -100,15 +104,30 @@ function SheetContent({
           titleId={titleId}
           descriptionId={descriptionId}
           title={title}
+          headerLeading={headerLeading}
           variant={variant}
           meta={meta}
           description={description}
           hasClose={hasClose}
           onClose={handleClose}
         />
-        <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
+        <div
+          className={cn(
+            "min-h-0 flex-1 overflow-y-auto",
+            variant === "form" &&
+              "px-(--component-sheet-body-padding-x) py-(--component-sheet-body-padding-y)",
+          )}
+        >
+          {children}
+        </div>
         {actions ? <SheetFooter>{actions}</SheetFooter> : null}
-        <div className="h-[max(env(safe-area-inset-bottom),_34px)] shrink-0" aria-hidden="true" />
+        <div
+          className={cn(
+            "h-[env(safe-area-inset-bottom)] shrink-0",
+            actions && "bg-(--component-sheet-footer-background)",
+          )}
+          aria-hidden="true"
+        />
       </Dialog>
     </AriaModal>
   );
@@ -122,10 +141,12 @@ function SheetGrabber() {
   );
 }
 
+// eslint-disable-next-line max-lines-per-function -- coordinates the shared sheet header anatomy
 function SheetHeader({
   titleId,
   descriptionId,
   title,
+  headerLeading,
   variant,
   meta,
   description,
@@ -140,7 +161,14 @@ function SheetHeader({
       )}
     >
       <div className="min-w-0 flex-1">
-        <h2 id={titleId} className="text-(--component-sheet-title) text-[18px] font-bold">
+        {headerLeading}
+        <h2
+          id={titleId}
+          className={cn(
+            "text-(--component-sheet-title) text-[18px] font-bold",
+            headerLeading && "sr-only",
+          )}
+        >
           {title}
         </h2>
         {description ? (

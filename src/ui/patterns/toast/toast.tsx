@@ -25,13 +25,14 @@ const inMemoryToastKeys = new Set<string>();
 export const toastQueue = new ToastQueue<ToastContent>({ maxVisibleToasts: 3 });
 
 /** Adds a feedback toast to the shared React Aria queue.
+ * A toast with an action stays until dismissed so the action is never lost to a timer (WCAG 2.2.1).
  * @param content - tone, title and optional body rendered through Alert
  * @param options - timeout and close callback
  * @returns the queue key for programmatic dismissal
  */
 export function showToast(content: ToastContent, options: ToastOptions = {}) {
   return toastQueue.add(content, {
-    timeout: options.timeout ?? TOAST_DEFAULT_TIMEOUT,
+    timeout: options.timeout ?? (content.action ? undefined : TOAST_DEFAULT_TIMEOUT),
     onClose: options.onClose,
   });
 }
@@ -105,6 +106,12 @@ function ToastItem({ toast, state }: Readonly<ToastItemProps>) {
   const handleClose = () => {
     state.close(toast.key);
   };
+  const { action } = toast.content;
+  // An action supersedes the toast's message, so the toast closes before the action runs.
+  const handleAction = () => {
+    state.close(toast.key);
+    action?.onAction();
+  };
 
   return (
     <div {...toastProps} ref={toastRef} className="pointer-events-auto w-full max-w-[420px]">
@@ -117,7 +124,7 @@ function ToastItem({ toast, state }: Readonly<ToastItemProps>) {
           bodyId={descriptionProps.id}
           onClose={handleClose}
           closeLabel={toast.content.closeLabel ?? TOAST_COPY.close}
-          action={toast.content.action}
+          action={action ? { label: action.label, onAction: handleAction } : undefined}
           className="shadow-[0_4px_16px_var(--color-semantic-elevation-1-color)]"
         />
       </div>

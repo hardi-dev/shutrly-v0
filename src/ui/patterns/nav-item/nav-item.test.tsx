@@ -31,4 +31,22 @@ describe("NavItem (C22)", () => {
     expect(link).toHaveClass("size-(--space-10)", "justify-center");
     expect(screen.queryByText("Pengaturan")).toBeNull();
   });
+
+  it("keeps the label on the text token and applies the N1 active and hover styles", () => {
+    render(
+      <>
+        <NavItem href="/projects" label="Proyek" icon="folder-kanban" isActive />
+        <NavItem href="/clients" label="Klien" icon="users" />
+      </>,
+    );
+
+    expect(screen.getByRole("link", { name: "Klien" })).not.toHaveClass(
+      "text-(--component-nav-item-icon)",
+    );
+    expect(screen.getByText("Proyek")).toHaveClass("font-semibold");
+    expect(screen.getByText("Klien")).toHaveClass("font-medium");
+    expect(screen.getAllByTestId("nav-item-icon")[1]).toHaveClass(
+      "group-hover:text-(--component-nav-item-icon-hover)",
+    );
+  });
 });

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { logoutAction } from "@/app/actions/auth/login";
 import { createWorkspaceAction } from "@/app/actions/workspace/create";
 import { switchWorkspaceAction } from "@/app/actions/workspace/switch";
 import { requireOwnerOrRedirect } from "@/composition/auth/owner-guard/owner-guard";
@@ -25,11 +26,11 @@ export default async function WorkspaceLayout({
       workspaceName={verified.workspace.name}
       accountName={account.name}
       accountEmail={account.email}
-      pathname={`/w/${workspaceId}`}
       title={WORKSPACE_LAYOUT_COPY.title}
       workspaces={workspaces}
       onSwitch={switchWorkspaceAction}
       onCreate={createWorkspaceAction}
+      logoutAction={logoutAction}
     >
       {children}
     </OwnerShell>

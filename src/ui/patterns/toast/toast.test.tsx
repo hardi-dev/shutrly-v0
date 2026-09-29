@@ -1,9 +1,10 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { StrictMode } from "react";
-import { afterEach, describe, expect, it } from "vitest";
+import { act } from "react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { ToastOnMount, toastQueue, ToastRegion } from "./toast";
+import { showToast, ToastOnMount, toastQueue, ToastRegion } from "./toast";
 
 function ToastHarness() {
   return (
@@ -66,6 +67,43 @@ describe("Toast (C24 feedback)", () => {
 
     await waitFor(() => {
       expect(screen.getAllByRole("alertdialog")).toHaveLength(1);
+    });
+  });
+
+  it("keeps an actionable toast until it is dismissed", () => {
+    showToast({ tone: "info", title: "Tersimpan" });
+    showToast({
+      tone: "danger",
+      title: "Gagal pindah workspace",
+      action: { label: "Coba lagi", onAction: () => undefined },
+    });
+
+    const timeouts = toastQueue.visibleToasts.map((toast) => [toast.content.title, toast.timeout]);
+    expect(timeouts).toEqual(
+      expect.arrayContaining([
+        ["Tersimpan", 5000],
+        ["Gagal pindah workspace", undefined],
+      ]),
+    );
+  });
+
+  it("closes the toast before running its action", async () => {
+    const user = userEvent.setup();
+    const onAction = vi.fn();
+    render(<ToastRegion />);
+
+    act(() => {
+      showToast({
+        tone: "danger",
+        title: "Gagal pindah workspace",
+        action: { label: "Coba lagi", onAction },
+      });
+    });
+    await user.click(await screen.findByRole("button", { name: "Coba lagi" }));
+
+    expect(onAction).toHaveBeenCalledOnce();
+    await waitFor(() => {
+      expect(screen.queryByText("Gagal pindah workspace")).toBeNull();
     });
   });
 });

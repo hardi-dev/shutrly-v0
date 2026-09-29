@@ -3,6 +3,7 @@ import type { AppPanelProps, PageContentProps } from "./app-panel.types";
 
 /** Renders the white working surface and page-level header (C28). */
 export function AppPanel({
+  id,
   title,
   parent = "Workspace",
   subtitle,
@@ -12,8 +13,10 @@ export function AppPanel({
 }: Readonly<AppPanelProps>) {
   return (
     <main
+      id={id}
+      tabIndex={-1}
       aria-label={title}
-      className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-(--component-panel-app-radius) border border-(--component-panel-app-border) bg-(--component-panel-app-background)"
+      className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-(--component-panel-app-radius) border border-(--component-panel-app-border) bg-(--component-panel-app-background) outline-none"
     >
       <PageHeader
         parent={parent}

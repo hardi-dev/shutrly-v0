@@ -22,7 +22,7 @@ describe("Sidebar (C29)", () => {
     );
     expect(
       screen.getByRole("button", { name: "Studio Lime" }).querySelector('svg[data-icon="camera"]'),
-    ).toBeInTheDocument();
+    ).toBeNull();
     expect(screen.getByRole("link", { name: "Proyek" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByText("Hardi Ansari")).toBeInTheDocument();
     expect(screen.getByText("hardi@example.com")).toBeInTheDocument();
@@ -48,7 +48,7 @@ describe("Sidebar (C29)", () => {
     expect(onLogout).toHaveBeenCalledOnce();
   });
 
-  it("renders the compact rail mode with an expand action on the logo", () => {
+  it("renders the compact rail mode with a grouped nav and an expand control", () => {
     const onExpand = vi.fn();
     render(
       <Sidebar
@@ -68,6 +68,7 @@ describe("Sidebar (C29)", () => {
       workspaceSwitcher.querySelector('svg[data-icon="chevrons-up-down"]'),
     ).toBeInTheDocument();
     expect(workspaceSwitcher.querySelector('svg[data-icon="camera"]')).toBeNull();
+    expect(screen.getAllByTestId("sidebar-divider")[0]).toHaveClass("w-(--space-8)");
     screen.getByRole("button", { name: "Buka sidebar" }).click();
     expect(onExpand).toHaveBeenCalledOnce();
   });

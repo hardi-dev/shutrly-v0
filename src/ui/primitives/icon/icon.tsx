@@ -10,6 +10,7 @@ import type { IconProps } from "./icon.types";
 const SIZE_CLASSES = {
   sm: "size-(--component-icon-size-sm)",
   md: "size-(--component-icon-size-md)",
+  lg: "size-(--space-6)",
 } as const;
 
 /**

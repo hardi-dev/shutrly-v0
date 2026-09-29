@@ -34,7 +34,7 @@ export function IconButton({
       aria-label={label}
       type="button"
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-(--component-icon-button-radius)",
+        "relative flex shrink-0 items-center justify-center rounded-(--component-icon-button-radius)",
         "text-(--component-icon-button-icon) outline-none transition-colors",
         "hover:bg-(--component-icon-button-background-hover)",
         "focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",

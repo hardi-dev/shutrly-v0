@@ -6,6 +6,7 @@ export interface BottomSheetProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   title: string;
+  headerLeading?: ReactNode;
   variant?: BottomSheetVariant;
   meta?: string;
   description?: string;
@@ -23,6 +24,7 @@ export interface SheetHeaderProps {
   titleId: string;
   descriptionId: string;
   title: string;
+  headerLeading?: ReactNode;
   variant: BottomSheetVariant;
   meta?: string;
   description?: string;

@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { Button as AriaButton } from "react-aria-components";
 
+import { cn } from "@/ui/cn/cn";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Icon } from "@/ui/primitives/icon/icon";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
@@ -36,12 +38,14 @@ export function Sidebar({
         }
         aria-label={SIDEBAR_COPY.label}
       >
-        <SidebarLogo isCompact={isCompact} onCollapse={onCollapse} onExpand={onExpand} />
-        {!isCompact ? <div className="h-px bg-(--component-sidebar-divider)" /> : null}
+        <SidebarLogo isCompact={isCompact} onCollapse={onCollapse} />
+        {!isCompact ? (
+          <div data-testid="sidebar-divider" className="h-px bg-(--component-sidebar-divider)" />
+        ) : null}
         {resolveWorkspaceSwitcher(workspaceSwitcher, isCompact) ?? (
           <WorkspaceSwitcher workspace={workspace} isCompact={isCompact} />
         )}
-        {isCompact ? <div className="h-px w-full bg-(--component-sidebar-divider)" /> : null}
+        <SidebarDivider isCompact={isCompact} />
         <nav
           aria-label={SIDEBAR_COPY.navigationLabel}
           className={
@@ -63,42 +67,49 @@ export function Sidebar({
             </div>
           ) : null}
         </nav>
-        {isCompact ? <div className="h-px w-full bg-(--component-sidebar-divider)" /> : null}
+        <SidebarDivider isCompact={isCompact} />
+        {isCompact && onExpand ? (
+          <IconButton
+            icon="panel-left-open"
+            aria-label={SIDEBAR_COPY.expand}
+            data-sidebar-toggle=""
+            onPress={onExpand}
+          />
+        ) : null}
         <SidebarAccount account={account} isCompact={isCompact} onLogout={onLogout} />
       </aside>
     </NavItemCompactContext.Provider>
   );
 }
 
-// eslint-disable-next-line max-lines-per-function -- renders the expanded and compact logo controls
+function SidebarDivider({ isCompact }: Readonly<{ isCompact: boolean }>) {
+  return (
+    <div
+      data-testid="sidebar-divider"
+      className={cn(
+        "h-px shrink-0 bg-(--component-sidebar-divider)",
+        isCompact ? "w-(--space-8)" : "w-full",
+      )}
+    />
+  );
+}
+
 function SidebarLogo({
   isCompact,
   onCollapse,
-  onExpand,
-}: Readonly<{ isCompact: boolean; onCollapse?: () => void; onExpand?: () => void }>) {
+}: Readonly<{ isCompact: boolean; onCollapse?: () => void }>) {
   if (isCompact) {
     return (
-      <AriaButton
-        type="button"
-        aria-label={SIDEBAR_COPY.expand}
-        onPress={onExpand}
-        className="group flex size-(--size-mark-lg) items-center justify-center rounded-(--radius-xs) outline-none focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
-      >
-        <span className="flex size-full items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
+      <div className="flex size-(--space-10) shrink-0 items-center justify-center">
+        <span className="flex size-(--size-mark-lg) items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
           <Icon
             name="camera"
             size="sm"
             aria-hidden="true"
-            className="text-(--color-semantic-accent-on-highlight) group-hover:hidden group-focus-visible:hidden"
-          />
-          <Icon
-            name="panel-left-open"
-            size="sm"
-            aria-hidden="true"
-            className="hidden text-(--color-semantic-text-primary) group-hover:block group-focus-visible:block"
+            className="text-(--color-semantic-accent-on-highlight)"
           />
         </span>
-      </AriaButton>
+      </div>
     );
   }
 
@@ -119,6 +130,7 @@ function SidebarLogo({
         icon="panel-left"
         size="sm"
         aria-label={SIDEBAR_COPY.collapse}
+        data-sidebar-toggle=""
         onPress={onCollapse}
       />
     </div>
@@ -135,12 +147,14 @@ function WorkspaceSwitcher({
 export function SidebarWorkspaceTrigger({
   workspaceName,
   isCompact = false,
+  onPress,
 }: Readonly<SidebarWorkspaceTriggerProps>) {
   return (
     <AriaButton
       type="button"
       aria-haspopup="menu"
       aria-label={workspaceName}
+      onPress={onPress}
       className={
         isCompact
           ? "flex size-(--space-10) items-center justify-center rounded-(--component-sidebar-workspace-radius) border border-(--component-sidebar-workspace-border) bg-(--component-sidebar-workspace-background) outline-none focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
@@ -157,15 +171,6 @@ export function SidebarWorkspaceTrigger({
         />
       ) : (
         <>
-          <span className="flex size-(--size-mark-md) shrink-0 items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
-            <Icon
-              name="camera"
-              size="sm"
-              aria-hidden="true"
-              data-icon="camera"
-              className="text-(--color-semantic-accent-on-highlight)"
-            />
-          </span>
           <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-(--color-semantic-text-primary)">
             {workspaceName}
           </span>
@@ -179,6 +184,32 @@ export function SidebarWorkspaceTrigger({
         </>
       )}
     </AriaButton>
+  );
+}
+
+export function SidebarNavGroup({
+  label,
+  children,
+}: Readonly<{ label?: string; children: React.ReactNode }>) {
+  const isCompact = useContext(NavItemCompactContext);
+
+  return (
+    <div className={isCompact ? "contents" : "flex flex-col gap-(--space-1)"}>
+      {isCompact && label ? (
+        <div
+          data-testid="sidebar-group-divider"
+          className="h-px w-(--space-6) shrink-0 bg-(--component-sidebar-divider)"
+        />
+      ) : null}
+      {!isCompact && label ? (
+        <div className="flex w-full items-start px-(--component-nav-item-padding-x) py-(--space-1)">
+          <span className="text-(length:--font-size-overline) font-bold tracking-(--font-letter-spacing-overline) text-(--color-semantic-text-secondary)">
+            {label}
+          </span>
+        </div>
+      ) : null}
+      {children}
+    </div>
   );
 }
 
@@ -205,7 +236,7 @@ function SidebarAccount({
         <p className="truncate text-(length:--font-size-body-sm) font-semibold text-(--color-semantic-text-primary)">
           {account.name}
         </p>
-        <p className="truncate text-(length:--font-size-caption) text-(--color-semantic-text-muted)">
+        <p className="truncate text-(length:--font-size-caption) text-(--color-semantic-text-secondary)">
           {account.email}
         </p>
       </div>

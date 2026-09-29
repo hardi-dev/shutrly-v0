@@ -18,15 +18,20 @@ describe("MobileWorkspaceSwitcherSheet", () => {
       <MobileWorkspaceSwitcherSheet
         isOpen
         onOpenChange={vi.fn()}
+        currentName="Studio Lime"
         workspaces={workspaces}
         onSwitch={onSwitch}
         onCreate={vi.fn()}
       />,
     );
 
-    expect(screen.getByRole("dialog", { name: "Pilih workspace" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Studio Lime" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Aster Wedding" })).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Pindah workspace" })).toBeInTheDocument();
+    expect(screen.getByText("2 workspace")).toBeInTheDocument();
+    const names = screen
+      .getAllByRole("button")
+      .map((button) => button.getAttribute("aria-label"))
+      .filter((name) => name === "Studio Lime" || name === "Aster Wedding");
+    expect(names).toEqual(["Aster Wedding", "Studio Lime"]);
     const createButton = screen.getByRole("button", { name: "Buat workspace" });
     expect(createButton).toHaveAttribute("data-variant", "primary");
     expect(createButton.closest("footer")).toBeInTheDocument();
@@ -49,6 +54,17 @@ describe("MobileWorkspaceSheet", () => {
     );
 
     expect(screen.getByText("KATALOG")).toBeInTheDocument();
+    expect(
+      screen
+        .getAllByRole("button")
+        .map((button) => button.getAttribute("aria-label"))
+        .filter(Boolean),
+    ).toEqual(
+      expect.arrayContaining(["Layanan", "Tim", "Template pesan", "Sumber klien", "Pengaturan"]),
+    );
+    const labels = screen.getAllByRole("button").map((button) => button.textContent);
+    expect(labels.indexOf("Layanan")).toBeLessThan(labels.indexOf("Tim"));
+    expect(labels.indexOf("Tim")).toBeLessThan(labels.indexOf("Template pesan"));
     expect(screen.queryByRole("button", { name: "Studio Lime" })).toBeNull();
     expect(screen.queryByText("Invoice")).toBeNull();
     expect(screen.queryByRole("button", { name: "Buat workspace" })).toBeNull();

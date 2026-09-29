@@ -71,5 +71,11 @@ describe("BottomSheet (C32)", () => {
     expect(screen.getByText("Pilih tindakan untuk foto ini.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tutup" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Simpan" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Simpan" }).parentElement).toHaveClass(
+      "bg-(--component-sheet-footer-background)",
+    );
+    expect(
+      screen.getByRole("button", { name: "Simpan" }).closest("footer")?.nextElementSibling,
+    ).toHaveClass("h-[env(safe-area-inset-bottom)]", "bg-(--component-sheet-footer-background)");
   });
 });

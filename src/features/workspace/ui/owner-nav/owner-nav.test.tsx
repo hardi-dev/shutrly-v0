@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { OwnerNav, OwnerNavBottom, resolveActiveNav } from "./owner-nav";
+import { OwnerNav, OwnerNavBottom, resolveActiveNav, resolvePageHeading } from "./owner-nav";
 
 describe("Owner navigation", () => {
   it("keeps the catalog group between primary and bottom navigation", () => {
@@ -30,5 +30,22 @@ describe("resolveActiveNav", () => {
     ["/profile", "A", null, null],
   ])("resolves %s", (pathname, workspaceId, nav, tab) => {
     expect(resolveActiveNav(pathname, workspaceId)).toEqual({ nav, tab });
+  });
+});
+
+describe("resolvePageHeading", () => {
+  it.each([
+    ["/w/A", { title: "Dasbor", subtitle: "Ringkasan workspace Aster." }],
+    ["/w/A/projects", { title: "Proyek", subtitle: "Segera hadir." }],
+    ["/w/A/services", { title: "Layanan", subtitle: "Segera hadir." }],
+    ["/w/A/search", { title: "Pencarian", subtitle: "Segera hadir." }],
+    ["/w/A/notifications", { title: "Notifikasi", subtitle: "Segera hadir." }],
+    [
+      "/w/A/settings",
+      { title: "Pengaturan", subtitle: "Kelola identitas brand, kontak, dan invoice workspace." },
+    ],
+    ["/profile", null],
+  ])("resolves %s", (pathname, heading) => {
+    expect(resolvePageHeading(pathname, "A", "Aster")).toEqual(heading);
   });
 });

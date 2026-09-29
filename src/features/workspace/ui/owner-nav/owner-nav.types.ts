@@ -9,3 +9,8 @@ export interface ActiveNavState {
   nav: OwnerNavKey;
   tab: OwnerPhoneTab;
 }
+
+export interface PageHeading {
+  title: string;
+  subtitle?: string;
+}

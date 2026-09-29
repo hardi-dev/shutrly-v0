@@ -10,7 +10,7 @@ export function DashboardScreen({ workspaceId, workspaceName }: Readonly<Dashboa
   return (
     <div className="flex min-h-[480px] flex-col items-center justify-center gap-(--space-4) text-center">
       <p className="text-(--color-semantic-text-secondary)">{DASHBOARD_COPY.greeting}</p>
-      <h1 className="text-(length:--font-size-display) font-bold">{workspaceName}</h1>
+      <h2 className="text-(length:--font-size-display) font-bold">{workspaceName}</h2>
       <div className="max-w-(--size-content-narrow) rounded-(--radius-md) border border-(--color-semantic-border-default) bg-(--color-semantic-surface-panel) p-(--space-6)">
         <h2 className="text-(length:--font-size-title) font-bold">{DASHBOARD_COPY.emptyTitle}</h2>
         <p className="mt-(--space-2) text-(--color-semantic-text-secondary)">

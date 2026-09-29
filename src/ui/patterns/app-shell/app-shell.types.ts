@@ -5,6 +5,7 @@ import type { SidebarAccount, SidebarWorkspace } from "../sidebar/sidebar.types"
 
 export interface AppShellProps {
   title: string;
+  subtitle?: string;
   workspace: SidebarWorkspace;
   account: SidebarAccount;
   onLogout?: () => void;
@@ -12,10 +13,12 @@ export interface AppShellProps {
   nav: ReactNode;
   navBottom?: ReactNode;
   panelActions?: ReactNode;
+  panelUtilities?: ReactNode;
   mobileBottomNav: BottomNavProps;
   mobileSheet?: ReactNode;
   mobileUtilities?: ReactNode;
   onMobileWorkspacePress?: () => void;
   isMobileOverlayOpen?: boolean;
+  onLayoutChange?: () => void;
   workspaceSwitcher?: ReactNode | ((isCompact: boolean) => ReactNode);
 }

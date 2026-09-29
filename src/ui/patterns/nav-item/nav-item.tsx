@@ -28,12 +28,7 @@ export function NavItem({
   className,
 }: Readonly<NavItemProps>) {
   const compact = useContext(NavItemCompactContext) || isCompact;
-  let countLabel: string | null = null;
-  if (count && count >= 100) {
-    countLabel = "99+";
-  } else if (count) {
-    countLabel = String(count);
-  }
+  const countLabel = formatCount(count);
   const accessibleLabel = countLabel ? `${label} ${countLabel}` : label;
 
   const item = (
@@ -45,8 +40,9 @@ export function NavItem({
         compact
           ? "flex size-(--space-10) items-center justify-center rounded-(--component-nav-item-radius)"
           : BASE,
+        "group",
         !isActive && "hover:bg-(--component-nav-item-background-hover)",
-        "text-(--component-nav-item-icon) outline-none transition-colors",
+        "outline-none transition-colors",
         "focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
         isActive &&
           "bg-(--component-nav-item-background-active) text-(--component-nav-item-text-active)",
@@ -58,14 +54,33 @@ export function NavItem({
         aria-hidden="true"
         data-testid="nav-item-icon"
         className={cn(
-          "text-(--component-nav-item-icon)",
-          isActive && "text-(--component-nav-item-text-active)",
+          isActive
+            ? "text-(--component-nav-item-text-active)"
+            : "text-(--component-nav-item-icon) group-hover:text-(--component-nav-item-icon-hover)",
         )}
       />
-      {!compact ? <span className="min-w-0 flex-1 truncate">{label}</span> : null}
+      {!compact ? <NavItemLabel label={label} isActive={isActive} /> : null}
       {!compact && count ? <CountBadge count={count} /> : null}
     </AriaLink>
   );
 
   return compact ? <Tooltip label={label}>{item}</Tooltip> : item;
+}
+
+function NavItemLabel({ label, isActive }: Readonly<{ label: string; isActive: boolean }>) {
+  return (
+    <span
+      className={cn(
+        "min-w-0 flex-1 truncate text-(length:--font-size-body)",
+        isActive ? "font-semibold" : "font-medium",
+      )}
+    >
+      {label}
+    </span>
+  );
+}
+
+function formatCount(count: number | undefined): string | null {
+  if (!count) return null;
+  return count >= 100 ? "99+" : String(count);
 }

@@ -31,9 +31,12 @@ export type IconName =
   | "panel-left"
   | "panel-left-open"
   | "log-out"
-  | "x";
+  | "x"
+  | "loading-03"
+  | "bell"
+  | "chevron-left";
 
-export type IconSize = "sm" | "md";
+export type IconSize = "sm" | "md" | "lg";
 
 export interface IconProps extends Omit<HugeiconsIconProps, "icon" | "size"> {
   name: IconName;

@@ -14,9 +14,7 @@ describe("PageHeader", () => {
         action={<button type="button">Tambah</button>}
       />,
     );
-    expect(screen.getByRole("navigation", { name: "Breadcrumb" })).toHaveTextContent(
-      "Aster›Dasbor",
-    );
+    expect(screen.getByRole("navigation", { name: "Breadcrumb" })).toHaveTextContent("AsterDasbor");
     expect(screen.getByRole("heading", { name: "Dasbor" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Cari" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah" })).toBeInTheDocument();

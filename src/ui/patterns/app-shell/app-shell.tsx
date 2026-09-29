@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { Dialog, Modal as AriaModal, ModalOverlay } from "react-aria-components";
 
+import { useLayoutChange } from "@/ui/hooks/use-layout-change/use-layout-change";
+
 import { AppPanel, PageContent } from "../app-panel/app-panel";
 import { BottomNav } from "../bottom-nav/bottom-nav";
 import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
@@ -16,6 +18,7 @@ import { readCollapsed, writeCollapsed } from "./sidebar-collapse-preference";
 // eslint-disable-next-line max-lines-per-function -- coordinates all responsive regions and shared overlay state
 export function AppShell({
   title,
+  subtitle,
   workspace,
   account,
   onLogout,
@@ -23,11 +26,13 @@ export function AppShell({
   nav,
   navBottom,
   panelActions,
+  panelUtilities,
   mobileBottomNav,
   mobileSheet,
   mobileUtilities,
   onMobileWorkspacePress,
   isMobileOverlayOpen = false,
+  onLayoutChange,
   workspaceSwitcher,
 }: Readonly<AppShellProps>) {
   const [isDesktopSidebarCollapsed, setIsDesktopSidebarCollapsed] = useState(false);
@@ -38,6 +43,12 @@ export function AppShell({
     // eslint-disable-next-line react-hooks/set-state-in-effect -- synchronizes persisted UI state
     setIsDesktopSidebarCollapsed(readCollapsed());
   }, []);
+
+  useLayoutChange(() => {
+    setIsTabletSidebarOpen(false);
+    onLayoutChange?.();
+    requestAnimationFrame(focusVisibleMain);
+  });
 
   function handleOpenTabletSidebar() {
     setIsTabletSidebarOpen(true);
@@ -50,16 +61,18 @@ export function AppShell({
   function handleCollapseDesktopSidebar() {
     setIsDesktopSidebarCollapsed(true);
     writeCollapsed(true);
+    requestAnimationFrame(focusSidebarToggle);
   }
 
   function handleExpandDesktopSidebar() {
     setIsDesktopSidebarCollapsed(false);
     writeCollapsed(false);
+    requestAnimationFrame(focusSidebarToggle);
   }
 
   return (
-    <div className="flex min-h-dvh bg-(--color-semantic-surface-canvas) md:pt-(--space-3) md:pr-(--space-3) md:pb-(--space-3)">
-      <a href="#app-shell-content" className="sr-only focus:not-sr-only">
+    <div className="flex min-h-dvh bg-(--color-semantic-surface-muted) md:pt-(--space-3) md:pr-(--space-3) md:pb-(--space-3)">
+      <a href={`#${APP_SHELL_CONTENT_ID}`} className="sr-only focus:not-sr-only max-md:hidden">
         {APP_SHELL_COPY.skip}
       </a>
       <DesktopSidebar
@@ -81,11 +94,19 @@ export function AppShell({
         onExpand={handleOpenTabletSidebar}
         workspaceSwitcher={workspaceSwitcher}
       />
-      <DesktopContent id="app-shell-content" title={title} panelActions={panelActions}>
+      <DesktopContent
+        id={APP_SHELL_CONTENT_ID}
+        title={title}
+        subtitle={subtitle}
+        parent={workspace.name}
+        panelActions={panelActions}
+        panelUtilities={panelUtilities}
+      >
         {children}
       </DesktopContent>
       <MobileContent
         title={title}
+        subtitle={subtitle}
         mobileBottomNav={mobileBottomNav}
         isMobileOverlayOpen={isMobileOverlayOpen}
         mobileSheet={mobileSheet}
@@ -108,6 +129,25 @@ export function AppShell({
       />
     </div>
   );
+}
+
+const APP_SHELL_CONTENT_ID = "app-shell-content";
+
+function isVisible(element: Element | null): element is HTMLElement {
+  return element instanceof HTMLElement && element.getClientRects().length > 0;
+}
+
+/** Keeps keyboard focus on a visible element after the layout changes (AC-SHELL-011). */
+function focusVisibleMain() {
+  if (isVisible(document.activeElement) && document.activeElement !== document.body) return;
+  const main = [...document.querySelectorAll("main")].find(isVisible);
+  main?.focus({ preventScroll: true });
+}
+
+/** Moves focus to the collapse or expand control that replaced the one just pressed. */
+function focusSidebarToggle() {
+  const toggle = [...document.querySelectorAll("[data-sidebar-toggle]")].find(isVisible);
+  toggle?.focus();
 }
 
 function DesktopSidebar({
@@ -175,17 +215,30 @@ function TabletRail({
 function DesktopContent({
   id,
   title,
+  subtitle,
+  parent,
   panelActions,
+  panelUtilities,
   children,
 }: Readonly<{
   id: string;
   title: string;
+  subtitle: AppShellProps["subtitle"];
+  parent: string;
   panelActions: AppShellProps["panelActions"];
+  panelUtilities: AppShellProps["panelUtilities"];
   children: AppShellProps["children"];
 }>) {
   return (
-    <div id={id} className="hidden min-w-0 flex-1 md:flex">
-      <AppPanel title={title} actions={panelActions}>
+    <div className="hidden min-w-0 flex-1 md:flex">
+      <AppPanel
+        id={id}
+        title={title}
+        subtitle={subtitle}
+        parent={parent}
+        actions={panelActions}
+        utilities={panelUtilities}
+      >
         <PageContent>{children}</PageContent>
       </AppPanel>
     </div>
@@ -194,6 +247,7 @@ function DesktopContent({
 
 function MobileContent({
   title,
+  subtitle,
   children,
   mobileBottomNav,
   isMobileOverlayOpen,
@@ -205,6 +259,7 @@ function MobileContent({
   Pick<
     AppShellProps,
     | "title"
+    | "subtitle"
     | "children"
     | "mobileBottomNav"
     | "isMobileOverlayOpen"
@@ -217,6 +272,7 @@ function MobileContent({
     <div className="flex min-w-0 flex-1 md:hidden">
       <MobileAppShell
         title={title}
+        subtitle={subtitle}
         bottomNav={<BottomNavFromProps {...mobileBottomNav} />}
         isOverlayOpen={isMobileOverlayOpen}
         sheet={mobileSheet}

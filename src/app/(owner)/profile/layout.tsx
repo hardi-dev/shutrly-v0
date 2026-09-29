@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { logoutAction } from "@/app/actions/auth/login";
 import { createWorkspaceAction } from "@/app/actions/workspace/create";
 import { switchWorkspaceAction } from "@/app/actions/workspace/switch";
 import { requireOwnerOrRedirect } from "@/composition/auth/owner-guard/owner-guard";
@@ -19,11 +20,11 @@ export default async function ProfileLayout({ children }: Readonly<{ children: R
       workspaceName={workspace.name}
       accountName={account.name}
       accountEmail={account.email}
-      pathname="/profile"
       title={PROFILE_LAYOUT_COPY.title}
       workspaces={workspaces}
       onSwitch={switchWorkspaceAction}
       onCreate={createWorkspaceAction}
+      logoutAction={logoutAction}
     >
       {children}
     </OwnerShell>

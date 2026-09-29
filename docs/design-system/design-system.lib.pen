@@ -92953,7 +92953,7 @@
                               "type": "text",
                               "id": "pMF7b",
                               "name": "Email",
-                              "fill": "$color/semantic/text/muted",
+                              "fill": "$color/semantic/text/secondary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
                               "content": "alya@asterwedding.id",
@@ -95403,7 +95403,7 @@
                               "width": "fill_container",
                               "content": "Unduh foto",
                               "fontFamily": "$font/family/base",
-                              "fontSize": "$font/size/subtitle",
+                              "fontSize": "$font/size/body",
                               "fontWeight": "$font/weight/medium"
                             },
                             {
@@ -106048,11 +106048,109 @@
       "name": "Menu/List",
       "x": 920,
       "y": 22,
-      "context": "Menu · variant=list (F-17, Owner 2026-09-29). Horizontal padding 0 so Menu Dividers between items run full width; footer may hold a primary Button MD (workspace switcher 'Buat workspace'). Spec: docs/design-system/components/menu.md",
+      "context": "Menu · variant=list (F-17, Owner 2026-09-29). Rows use the Bottom Sheet row anatomy on every layout (D-2/D-3, Owner 2026-09-29): 52 px, sheet.item padding-x/gap, full-width top border sheet.item.border, label font.size.body medium (semibold when selected), check sheet.item.check. Footer may hold a primary Button MD (workspace switcher 'Buat workspace'). Spec: docs/design-system/components/menu.md",
       "padding": [
         "$component/menu/padding",
         0
-      ]
+      ],
+      "descendants": {
+        "U6K1aE": {
+          "padding": [
+            0,
+            "$component/sheet/item/padding-x"
+          ],
+          "height": 52,
+          "cornerRadius": 0,
+          "stroke": "$component/sheet/item/border",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": "$component/sheet/item/gap",
+          "alignItems": "center"
+        },
+        "U6K1aE/Z6qIYH": {
+          "layout": "vertical"
+        },
+        "U6K1aE/leQSn": {
+          "enabled": false,
+          "width": "fill_container(0)"
+        },
+        "U6K1aE/baOu6": {
+          "fill": "$component/sheet/item/check"
+        },
+        "Z3APHR": {
+          "padding": [
+            0,
+            "$component/sheet/item/padding-x"
+          ],
+          "height": 52,
+          "cornerRadius": 0,
+          "stroke": "$component/sheet/item/border",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": "$component/sheet/item/gap",
+          "alignItems": "center"
+        },
+        "Z3APHR/Z6qIYH": {
+          "layout": "vertical"
+        },
+        "Z3APHR/leQSn": {
+          "enabled": false,
+          "width": "fill_container(0)"
+        },
+        "Z3APHR/baOu6": {
+          "fill": "$component/sheet/item/check"
+        },
+        "OtAKF": {
+          "padding": [
+            0,
+            "$component/sheet/item/padding-x"
+          ],
+          "height": 52,
+          "cornerRadius": 0,
+          "stroke": "$component/sheet/item/border",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": "$component/sheet/item/gap",
+          "alignItems": "center"
+        },
+        "OtAKF/Z6qIYH": {
+          "layout": "vertical"
+        },
+        "OtAKF/leQSn": {
+          "enabled": false,
+          "width": "fill_container(0)"
+        },
+        "OtAKF/baOu6": {
+          "fill": "$component/sheet/item/check"
+        },
+        "YxTP2": {
+          "padding": [
+            0,
+            "$component/sheet/item/padding-x"
+          ],
+          "height": 52,
+          "cornerRadius": 0,
+          "stroke": "$component/sheet/item/border",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": "$component/sheet/item/gap",
+          "alignItems": "center"
+        },
+        "YxTP2/Z6qIYH": {
+          "layout": "vertical"
+        },
+        "YxTP2/leQSn": {
+          "enabled": false,
+          "width": "fill_container(0)"
+        },
+        "YxTP2/baOu6": {
+          "fill": "$component/sheet/item/check"
+        }
+      }
     },
     {
       "type": "frame",
@@ -108214,7 +108312,7 @@
     },
     "component/nav/group-label": {
       "type": "color",
-      "value": "$color/semantic/text/muted"
+      "value": "$color/semantic/text/secondary"
     },
     "component/metric/tile/label": {
       "type": "color",

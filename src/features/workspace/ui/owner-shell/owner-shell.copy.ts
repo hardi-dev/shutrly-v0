@@ -1,5 +1,4 @@
 export const OWNER_SHELL_COPY = {
-  brandName: "shutrly",
   mobileMenuTitle: "Lainnya",
   mobileMenuMeta: "Menu workspace",
   createWorkspace: "Buat workspace",

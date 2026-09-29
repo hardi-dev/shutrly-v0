@@ -1,6 +1,7 @@
 import {
   Add01Icon,
   Alert02Icon,
+  ApertureIcon,
   ArrowRight05Icon,
   BellIcon,
   Calendar03Icon,
@@ -73,6 +74,7 @@ export const ICON_NAMES: readonly IconName[] = [
   "loading-03",
   "bell",
   "chevron-left",
+  "aperture",
 ];
 
 export const ICON_REGISTRY: Record<IconName, IconSvgElement> = {
@@ -110,4 +112,5 @@ export const ICON_REGISTRY: Record<IconName, IconSvgElement> = {
   "loading-03": Loading03Icon,
   bell: BellIcon,
   "chevron-left": ChevronLeftIcon,
+  aperture: ApertureIcon,
 };

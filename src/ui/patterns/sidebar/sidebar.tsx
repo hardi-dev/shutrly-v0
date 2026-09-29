@@ -94,6 +94,30 @@ function SidebarDivider({ isCompact }: Readonly<{ isCompact: boolean }>) {
   );
 }
 
+/** Renders the Shutrly aperture mark from the shell exports (C29). */
+export function SidebarBrandMark() {
+  return (
+    <Icon
+      name="aperture"
+      aria-hidden="true"
+      data-icon="aperture"
+      className="size-(--size-mark-lg) shrink-0 text-(--component-sidebar-logo)"
+    />
+  );
+}
+
+/** Renders the aperture mark with the wordmark (C29 logo row, C32 menu sheet header). */
+export function SidebarBrandLogo({ className }: Readonly<{ className?: string }>) {
+  return (
+    <span className={cn("flex items-center gap-(--space-2)", className)}>
+      <SidebarBrandMark />
+      <span className="text-(length:--font-size-title) font-bold tracking-(--font-letter-spacing-title) text-(--component-sidebar-logo)">
+        {SIDEBAR_COPY.wordmark}
+      </span>
+    </span>
+  );
+}
+
 function SidebarLogo({
   isCompact,
   onCollapse,
@@ -101,31 +125,14 @@ function SidebarLogo({
   if (isCompact) {
     return (
       <div className="flex size-(--space-10) shrink-0 items-center justify-center">
-        <span className="flex size-(--size-mark-lg) items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
-          <Icon
-            name="camera"
-            size="sm"
-            aria-hidden="true"
-            className="text-(--color-semantic-accent-on-highlight)"
-          />
-        </span>
+        <SidebarBrandMark />
       </div>
     );
   }
 
   return (
     <div className="flex items-center gap-(--space-2) px-(--space-2)">
-      <div className="flex size-(--size-mark-lg) items-center justify-center rounded-(--radius-xs) bg-(--component-sidebar-workspace-mark)">
-        <Icon
-          name="camera"
-          size="sm"
-          aria-hidden="true"
-          className="text-(--color-semantic-accent-on-highlight)"
-        />
-      </div>
-      <span className="flex-1 text-(--component-sidebar-logo) text-[18px] font-bold">
-        {SIDEBAR_COPY.wordmark}
-      </span>
+      <SidebarBrandLogo className="flex-1" />
       <IconButton
         icon="panel-left"
         size="sm"

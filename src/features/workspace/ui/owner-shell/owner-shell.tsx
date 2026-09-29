@@ -8,9 +8,9 @@ import { AppShell } from "@/ui/patterns/app-shell/app-shell";
 import type { BottomNavProps } from "@/ui/patterns/bottom-nav/bottom-nav.types";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
+import { SidebarBrandLogo } from "@/ui/patterns/sidebar/sidebar";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Button } from "@/ui/primitives/button/button";
-import { Icon } from "@/ui/primitives/icon/icon";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { CreateWorkspaceDialog } from "../create-workspace-dialog/create-workspace-dialog";
@@ -317,19 +317,7 @@ function CreateWorkspaceButton({
 }
 
 function MobileSheetLogo() {
-  return (
-    <div className="flex items-center gap-(--space-2)">
-      <Icon
-        name="camera"
-        size="sm"
-        aria-hidden="true"
-        className="text-(--component-sidebar-logo)"
-      />
-      <span className="text-[18px] font-bold text-(--component-sidebar-logo)">
-        {OWNER_SHELL_COPY.brandName}
-      </span>
-    </div>
-  );
+  return <SidebarBrandLogo />;
 }
 
 function MobileSheetGroupLabel({ label }: Readonly<{ label: string }>) {

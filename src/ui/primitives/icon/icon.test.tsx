@@ -52,6 +52,7 @@ describe("Icon", () => {
         "x",
         "bell",
         "chevron-left",
+        "aperture",
       ]),
     );
   });

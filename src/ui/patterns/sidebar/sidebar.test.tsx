@@ -72,4 +72,32 @@ describe("Sidebar (C29)", () => {
     screen.getByRole("button", { name: "Buka sidebar" }).click();
     expect(onExpand).toHaveBeenCalledOnce();
   });
+
+  it("uses the aperture brand mark in the expanded and compact logo", () => {
+    const { container, rerender } = render(
+      <Sidebar
+        workspace={{ name: "Studio Lime" }}
+        account={{ name: "Hardi Ansari", email: "hardi@example.com", initials: "HA" }}
+      >
+        <span />
+      </Sidebar>,
+    );
+    expect(container.querySelector('svg[data-icon="aperture"]')).toHaveClass(
+      "size-(--size-mark-lg)",
+      "text-(--component-sidebar-logo)",
+    );
+    expect(screen.getByText("shutrly")).toBeInTheDocument();
+
+    rerender(
+      <Sidebar
+        workspace={{ name: "Studio Lime" }}
+        account={{ name: "Hardi Ansari", email: "hardi@example.com", initials: "HA" }}
+        isCompact
+      >
+        <span />
+      </Sidebar>,
+    );
+    expect(container.querySelector('svg[data-icon="aperture"]')).toBeInTheDocument();
+    expect(container.querySelector('svg[data-icon="camera"]')).toBeNull();
+  });
 });

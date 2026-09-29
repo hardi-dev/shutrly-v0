@@ -34,7 +34,8 @@ export type IconName =
   | "x"
   | "loading-03"
   | "bell"
-  | "chevron-left";
+  | "chevron-left"
+  | "aperture";
 
 export type IconSize = "sm" | "md" | "lg";
 

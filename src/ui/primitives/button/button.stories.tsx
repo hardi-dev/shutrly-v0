@@ -14,6 +14,7 @@ const meta = {
     iconLeading: { control: "select", options: [undefined, "plus", "send", "trash-2"] },
     iconTrailing: { control: "select", options: [undefined, "chevron-down", "arrow-right"] },
     isDisabled: { control: "boolean" },
+    isPending: { control: "boolean" },
   },
   parameters: {
     designSystemSpec: "docs/design-system/components/button.md",
@@ -33,6 +34,9 @@ export const Danger: StoryObj<typeof meta> = {
 };
 export const Disabled: StoryObj<typeof meta> = {
   args: { children: BUTTON_STORY_COPY.disabled, variant: "primary", isDisabled: true },
+};
+export const Loading: StoryObj<typeof meta> = {
+  args: { children: BUTTON_STORY_COPY.loading, variant: "primary", isPending: true },
 };
 export const Variants: StoryObj<typeof meta> = {
   render: () => (

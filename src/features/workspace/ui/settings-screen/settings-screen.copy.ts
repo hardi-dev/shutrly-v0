@@ -7,7 +7,9 @@ export const SETTINGS_COPY = {
   address: "Alamat",
   prefix: "Prefiks invoice",
   currency: "Mata uang",
+  currencyHelper: "Saat ini Shutrly hanya mendukung mata uang IDR.",
   save: "Simpan perubahan",
+  prefixHelper: "Format nomor invoice untuk workspace ini.",
   idr: "IDR",
   saved: "Perubahan tersimpan",
 } as const;

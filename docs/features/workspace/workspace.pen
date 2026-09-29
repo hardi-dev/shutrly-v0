@@ -4586,10 +4586,13 @@
                               "content": "Aster Wedding"
                             },
                             "G:bZ2Ux": {
-                              "enabled": true
+                              "enabled": false
                             },
                             "G:bZ2Ux/G:BTnxI": {
                               "content": "Aktif"
+                            },
+                            "G:W5pLC": {
+                              "enabled": true
                             }
                           }
                         },
@@ -9204,7 +9207,8 @@
                       "type": "ref",
                       "ref": "G:E4PkTw",
                       "name": "Saved alert",
-                      "width": "fill_container",
+                      "width": "fill_container(720)",
+                      "enabled": false,
                       "descendants": {
                         "G:m0dqT6": {
                           "content": "Perubahan tersimpan"
@@ -9710,6 +9714,12 @@
               ]
             }
           ]
+        },
+        "G:VJpuD": {
+          "enabled": true
+        },
+        "G:NdxUQ/G:fhch4": {
+          "content": "Nama di sidebar dan branding untuk klien sudah diperbarui."
         }
       }
     },
@@ -9747,7 +9757,8 @@
               "type": "ref",
               "ref": "G:E4PkTw",
               "name": "Saved alert",
-              "width": "fill_container",
+              "width": "fill_container(358)",
+              "enabled": false,
               "descendants": {
                 "G:m0dqT6": {
                   "content": "Perubahan tersimpan"
@@ -10281,6 +10292,12 @@
               "content": "Lainnya"
             }
           }
+        },
+        "G:U4sG8K": {
+          "enabled": true
+        },
+        "G:l9JQO0/G:fhch4": {
+          "content": "Nama di sidebar dan branding untuk klien sudah diperbarui."
         }
       }
     },

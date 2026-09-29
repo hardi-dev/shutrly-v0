@@ -19,6 +19,8 @@ export interface ButtonProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   isDisabled?: boolean;
+  isPending?: boolean;
+  form?: string;
   onPress?: () => void;
   className?: string;
   "aria-label"?: string;

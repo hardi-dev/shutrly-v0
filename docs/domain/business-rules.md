@@ -66,13 +66,35 @@ An Owner can create and edit workspaces only. Archiving and deleting are out of 
 The platform generates prefilled WhatsApp deep links; the Owner reviews and sends manually. No messages are sent by the system and no message history/delivery status is stored in MVP.
 
 ### BR-MSG-002 — Template types
-Templates are workspace-level with type `GALLERY_SHARE` | `INVOICE_SHARE` | `PAYMENT_REMINDER` | `FINAL_DELIVERY` | `SELECTION_REMINDER` and channel `WHATSAPP` (MVP). At most one active template per workspace/type/channel.
+Templates are workspace-level with type `GALLERY_SHARE` | `INVOICE_SHARE` | `PAYMENT_REMINDER` | `FINAL_DELIVERY` | `SELECTION_REMINDER` and channel `WHATSAPP` (MVP). At most one active template per workspace/type/channel. In MVP every workspace has **exactly one** template per type/channel, always active: the Owner edits its content or restores the default, and cannot create, delete or deactivate templates. *(F-03 discovery, Owner 2026-09-28.)*
 
 ### BR-MSG-003 — Gallery password in messages needs re-entry
 `{{galleryPassword}}` can only be resolved during a share action in which the Owner re-enters the gallery password and it verifies against the stored hash. The raw password is never stored or logged; the Owner is told the password will appear in the WhatsApp link/draft.
 
 ### BR-MSG-004 — Template output is sanitized
 Template variables are validated and output is sanitized before building the link. Generated links containing passwords are never logged.
+
+
+### BR-MSG-005 — Default templates are seeded
+Every workspace gets the platform's default content for all five types when it is created; workspaces that exist before F-03 are backfilled. Restoring a default replaces only that one template's content. *(F-03 discovery, Owner 2026-09-28.)*
+
+### BR-MSG-006 — Variables are typed per template type
+A template may use only the variables its type allows, written `{{name}}`, and must contain its type's required link variable. Unknown variables, malformed placeholders and a missing required link are rejected on save, on the server. *(F-03 discovery, Owner 2026-09-28; catalogue approved by the Owner 2026-09-28.)*
+
+| Type | Allowed variables | Required |
+|---|---|---|
+| all types | `clientName`, `projectTitle`, `brandName` | — |
+| `GALLERY_SHARE` | + `galleryUrl`, `galleryPassword` | `galleryUrl` |
+| `SELECTION_REMINDER` | + `galleryUrl` | `galleryUrl` |
+| `FINAL_DELIVERY` | + `galleryUrl`, `galleryPassword` | `galleryUrl` |
+| `INVOICE_SHARE` | + `invoiceNumber`, `invoiceTotal`, `invoiceUrl` | `invoiceUrl` |
+| `PAYMENT_REMINDER` | + `invoiceNumber`, `invoiceTotal`, `invoiceBalance`, `invoiceUrl` | `invoiceUrl` |
+
+`brandName` resolves to the workspace's client-facing name (BR-WS-004). `galleryPassword` follows BR-MSG-003.
+
+**SPEC GAP (deferred to F-14 discovery):** `dueDate` appears in the source examples, but invoices have no due date in BR-INV-*; it is added to the catalogue only if F-14 introduces one.
+
+**SPEC GAP (deferred to F-11 discovery):** a selection-deadline variable for `SELECTION_REMINDER`; selection groups have no deadline in BR-SEL-*; it is added to the catalogue only if F-11 introduces one.
 
 ---
 

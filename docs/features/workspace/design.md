@@ -1,6 +1,6 @@
 # F-02 Workspace — Visual design
 
-Status: APPROVED (Owner 2026-09-27) · Pencil source: [workspace.pen](workspace.pen) (saved 2026-09-27 23:16, 455,029 bytes) · Rules: [token-usage.md](../../design-system/token-usage.md), APPROVED 2026-09-26, so they are binding.
+Status: APPROVED (Owner 2026-09-27; implementation decisions approved 2026-09-28) · Pencil source: [workspace.pen](workspace.pen) · Rules: [token-usage.md](../../design-system/token-usage.md), APPROVED 2026-09-26, so they are binding.
 
 ## Direction
 
@@ -11,7 +11,7 @@ Status: APPROVED (Owner 2026-09-27) · Pencil source: [workspace.pen](workspace.
 
 ## Library link
 
-- `workspace.pen` imports `design-system.lib.pen` with the prefix **`G:`**: 219 reusable components, 479 variables, theme axis `G:mode` light/dark. Verified through MCP on 2026-09-27.
+- `workspace.pen` imports `design-system.lib.pen` with the prefix **`G:`** and theme axis `G:mode` light/dark. The import must be refreshed after the approved C38 Empty State, C39 Toast and shell Toast-slot changes are saved in Pencil.
 - Every field, button, alert, menu, nav item, modal, sheet and shell is a **linked instance**. Nothing is detached. States are expressed with variant refs (e.g. Text Field Default/Focus/Error/Disabled, Button Primary Default/Disabled) and `descendants` overrides.
 - There is one local reusable component: **Workspace / Editorial preview** (`UTew4`, 840 × 900, at x 2080). It contains the auth mosaic (`public/auth/editorial/mosaic@2x.webp`, including the scrim) plus a sidebar-preview card built from `component/sidebar/*` tokens and Nav Item instances. Every onboarding desktop frame uses an instance of it.
 
@@ -25,7 +25,7 @@ Status: APPROVED (Owner 2026-09-27) · Pencil source: [workspace.pen](workspace.
 | 3180 | Onboarding: server error | `JCHet` | `x0AxCg` | Alert Danger above the field; the value is kept (AC-WS-024) |
 | 4240 | Dashboard: empty state | `gCkJa` | `K6WCRa` | Greeting, empty state, Secondary "Lengkapi branding" (A-6) |
 | 5360 | Dashboard: tablet rail | `DUUnI` | — | App Shell/Tablet, 1024 × 768 |
-| 6288 | Switcher open | `Y20OZ` | `D1sDCL` | Desktop: Menu "PINDAH WORKSPACE" with the current workspace as Menu Item/Selected. Mobile: sheet "Pindah workspace" with the current workspace marked by an "Aktif" badge. Both end with "+ Buat workspace". |
+| 6288 | Switcher open | `Y20OZ` | `D1sDCL` | Desktop Menu and mobile sheet mark the current workspace with a checkmark. Both end with "+ Buat workspace". |
 | 7408 | "Lainnya" menu (mobile entry to the switcher) | — | `R5Wwrk` | Bottom Sheet/Menu: switcher, nav items, account |
 | 8528 | Create workspace: default | `uuZRc` | `eyWYY` | Modal/SM (desktop), Bottom Sheet/Form (mobile) |
 | 9648 | Create workspace: duplicate name | `IZXw3` | `qe9tC` | |
@@ -33,7 +33,7 @@ Status: APPROVED (Owner 2026-09-27) · Pencil source: [workspace.pen](workspace.
 | 11888 | "Segera hadir" (Proyek as the example) | `B9WOJ` | `PlBRK` | SPEC GAP-F02-1 option (c), AC-WS-025 |
 | 13008 | Settings: filled | `lEtZt` | `P1z3XX` | Sections Identitas brand · Kontak · Invoice in the 720 column; currency shown as a disabled field (IDR) |
 | 14488 | Settings: field errors | `RCZ3C` | `a944D` | Invalid email, prefix "A" |
-| 15968 | Settings: saved | `V3HqRv` | `hTxoz` | Alert Success "Perubahan tersimpan" |
+| 15968 | Settings: saved | `V3HqRv` | `hTxoz` | Global Toast Success "Perubahan tersimpan"; mobile top-centre, desktop bottom-right. |
 | 17448 | Settings: server error | `Qbg5K` | `HRSHO` | Alert Danger; the values are kept |
 | 18928 | Workspace not found | `JJ8Ex` | `QUMXc` | Same response for "not yours" and "doesn't exist" (A-9) |
 
@@ -41,7 +41,7 @@ Select workspace was designed and then **removed** after research: sign-in alway
 
 ## Component usage
 
-Every entry is a linked instance of `design-system.lib.pen` (prefix `G:`), except the one local component. The component specs are in [components/](../../design-system/components/). The overrides listed are the only ones applied; there are no padding overrides (SP5). The *In code?* column was checked against `src/ui` and `src/features` on 2026-09-27 (after F-01). Components marked ❌ or ⚠️ are built or extended in F-02's plan before the screens that use them.
+Every entry is a linked instance of `design-system.lib.pen` (prefix `G:`), except the one local component. The component specs are in [components/](../../design-system/components/). The overrides listed are the only ones applied; there are no padding overrides (SP5). The *In code?* column is the pre-F-02 inventory recorded on 2026-09-27; F-02 subsequently implemented the listed workspace shell, navigation, overlay and feedback units. The technical design is the current implementation record.
 
 | Library component (spec) | Variant(s) and ID | Used in | Overrides | In code? |
 |---|---|---|---|---|
@@ -60,7 +60,7 @@ Every entry is a linked instance of `design-system.lib.pen` (prefix `G:`), excep
 | **Menu Group Label** / **Menu Divider** (C10) | `G:yNxME` / `G:z7QON` | Desktop switcher | "PINDAH WORKSPACE" | ❌ No |
 | **Modal** ([modal.md](../../design-system/components/modal.md), C31) | /SM `G:cdSbf` | Create workspace (desktop) | Title and description. Body slot = the name field, with `component/modal/body/*` insets. Cancel "Batal"; Confirm swapped to Default or Disabled. | ❌ No |
 | **Bottom Sheet** ([bottom-sheet.md](../../design-system/components/bottom-sheet.md), C32) | /Form `G:vSBbR`, /Actions `G:U0wHw`, /Menu (default in Mobile App Shell) | Create workspace (mobile); switcher sheet `D1sDCL`; Lainnya `R5Wwrk` | Form: body slot with `component/sheet/body/*` insets; Confirm LG. Actions: header "Pindah workspace · 3 workspace". Menu: unbuilt items kept visible per A-7; Invoice count off; account set. | ❌ No |
-| **Sheet Item** (C32) | /Default `G:FRtU1` | Mobile switcher sheet | Icon and label; Count used as the "Aktif" badge (no selected variant, see Library findings) | ❌ No |
+| **Sheet Item** (C32) | /Selected `E7RrIj` | Mobile switcher sheet | Icon, label and trailing checkmark; Count off | ✅ Yes |
 | **Icon** ([icon.md](../../design-system/components/icon.md)) | lucide | Every screen | — | ✅ Yes: `src/ui/primitives/icon`. The registry must add the new icons: camera, chevrons-up-down, layout-grid, folder-kanban, users, receipt, package, user-round-cog, message-square-text, share-2, settings, menu, plus, check, chevron-right, search-x, panel-left, log-out, x. |
 | **Workspace / Editorial preview** (local) | `UTew4` | Onboarding desktop, 4 frames | Instance with no overrides | ⚠️ Partial: `src/features/auth/ui/editorial-panel` renders the mosaic and headline. It needs a slot to replace the headline with the sidebar-preview card, and the card itself is new. |
 
@@ -74,7 +74,7 @@ Every entry is a linked instance of `design-system.lib.pen` (prefix `G:`), excep
 
 ## Copy
 
-All UI text is Indonesian and identical on desktop and mobile (checked 2026-09-27). The deliberate differences come from the component patterns: the desktop modal has "Batal" while the mobile sheet closes with × or a swipe, and the current workspace is marked with a check (Menu Item) on desktop but an "Aktif" badge (Sheet Item) on mobile. Strings not drawn here, such as the validation messages for the empty name and phone, come from `spec.md` A-1 to A-4 and are reviewed during the build.
+All UI text is Indonesian and identical on desktop and mobile. The deliberate differences come from the component patterns: the desktop modal has "Batal" while the mobile sheet closes with × or a swipe. The current workspace is marked with a checkmark on every breakpoint. Strings not drawn here, such as the validation messages for the empty name and phone, come from `spec.md` A-1 to A-4 and are reviewed during the build.
 
 ## Token-usage compliance and exceptions
 
@@ -91,7 +91,7 @@ All UI text is Indonesian and identical on desktop and mobile (checked 2026-09-2
 
 1. **Mobile App Shell** (C35) is 375 × 812, and its **Overlay has a fixed 375 × 812 size**. In the 390 × 844 frames used by the auth and workspace screens, the Overlay has to be resized per instance, or it leaves a strip and floats the sheet. The Overlay should be `fill_container` in the master.
 2. Tokens T1–T4 aren't synced to Pencil yet (F-6). Run `/sdv:sync-pencil`.
-3. Sheet Item has no selected or check variant, so the current workspace on mobile uses the Count badge ("Aktif").
+3. The mobile switcher now uses the approved checkmark selection treatment. Its Sheet Item variant must be refreshed in `workspace.pen` after the library save gate.
 
 ## HTML exports for implementation
 

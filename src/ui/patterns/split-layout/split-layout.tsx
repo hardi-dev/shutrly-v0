@@ -17,7 +17,9 @@ export function SplitLayout({ children, editorial }: Readonly<SplitLayoutProps>)
           </span>
         </p>
         <div className="flex flex-1 flex-col items-center justify-center py-(--space-8)">
-          <div className="flex w-(--size-auth-form) flex-col gap-(--space-6)">{children}</div>
+          <div className="flex w-full max-w-(--size-auth-form) flex-col gap-(--space-6)">
+            {children}
+          </div>
         </div>
         <p className="text-(length:--font-size-label) text-(--color-semantic-text-muted)">
           {SPLIT_LAYOUT_COPY.footer}

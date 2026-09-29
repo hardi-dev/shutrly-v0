@@ -1,3 +1,8 @@
+import type { Control, FieldPath } from "react-hook-form";
+import type { z } from "zod";
+
+import type { updateWorkspaceProfileSchema } from "../../application/use-cases/update-workspace-profile/update-workspace-profile.schema";
+
 export interface SettingsProfile {
   name: string;
   brandName?: string | null;
@@ -11,12 +16,19 @@ export interface SettingsProfile {
 export interface SettingsScreenProps {
   action: (formData: FormData) => void | Promise<void>;
   profile: SettingsProfile;
-  saved?: boolean;
 }
 
-export interface SettingsFieldProps {
+export type SettingsFormValues = z.input<typeof updateWorkspaceProfileSchema>;
+
+export interface SettingsFieldControlProps {
+  control: Control<SettingsFormValues>;
   label: string;
-  name: string;
-  value: string;
+  name: FieldPath<SettingsFormValues>;
   type?: string;
+  isOptional?: boolean;
+  description?: string;
+}
+
+export interface SettingsTextareaControlProps {
+  control: Control<SettingsFormValues>;
 }

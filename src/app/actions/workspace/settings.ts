@@ -1,7 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
-
 import { saveWorkspaceProfile } from "@/composition/workspace/workspace-flow/workspace-flow";
 
 export async function saveWorkspaceSettingsAction(
@@ -16,7 +14,6 @@ export async function saveWorkspaceSettingsAction(
     address: formString(formData, "address"),
     invoicePrefix: formString(formData, "invoicePrefix"),
   });
-  redirect(`/w/${workspaceId}/settings?state=saved`);
 }
 
 function formString(formData: FormData, name: string): string {

@@ -1,10 +1,10 @@
 import { SplitLayout } from "@/ui/patterns/split-layout/split-layout";
-import { Button } from "@/ui/primitives/button/button";
 import { Icon } from "@/ui/primitives/icon/icon";
 import { Input } from "@/ui/primitives/input/input";
 
 import { ONBOARDING_COPY } from "./onboarding-screen.copy";
 import type { OnboardingScreenProps } from "./onboarding-screen.types";
+import { FormSubmitButton } from "./onboarding-submit-button";
 
 /** Renders first-workspace onboarding with a server form and editorial preview card. @param props - signed-in account and server action @returns the onboarding screen */
 export function OnboardingScreen({
@@ -30,7 +30,7 @@ export function OnboardingScreen({
             {ONBOARDING_COPY.nameLabel}
             <Input name="name" placeholder={ONBOARDING_COPY.namePlaceholder} />
           </label>
-          <Button type="submit">{ONBOARDING_COPY.submit}</Button>
+          <FormSubmitButton>{ONBOARDING_COPY.submit}</FormSubmitButton>
         </form>
         <BenefitsList />
       </>

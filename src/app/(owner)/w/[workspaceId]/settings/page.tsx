@@ -4,14 +4,9 @@ import { SettingsScreen } from "@/features/workspace/ui/settings-screen/settings
 
 export default async function SettingsPage({
   params,
-  searchParams,
-}: Readonly<{
-  params: Promise<{ workspaceId: string }>;
-  searchParams: Promise<{ state?: string }>;
-}>) {
+}: Readonly<{ params: Promise<{ workspaceId: string }> }>) {
   const { workspaceId } = await params;
-  const { state } = await searchParams;
   const { profile } = await loadWorkspaceProfile(workspaceId);
   const action = saveWorkspaceSettingsAction.bind(null, workspaceId);
-  return <SettingsScreen action={action} profile={profile} saved={state === "saved"} />;
+  return <SettingsScreen action={action} profile={profile} />;
 }

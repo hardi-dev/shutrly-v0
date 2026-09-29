@@ -93,4 +93,12 @@ describe("Input", () => {
     await user.type(input, "A");
     expect(onChange).not.toHaveBeenCalled();
   });
+
+  it("uses the disabled text token for a filled disabled value", () => {
+    render(<Input aria-label="Disabled name" value="Nama proyek" isDisabled />);
+
+    expect(screen.getByLabelText("Disabled name")).toHaveClass(
+      "data-disabled:text-(--component-input-text-disabled)",
+    );
+  });
 });

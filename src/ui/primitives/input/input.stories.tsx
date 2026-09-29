@@ -85,5 +85,10 @@ export const Invalid: StoryObj<typeof meta> = {
   },
 };
 export const Disabled: StoryObj<typeof meta> = {
-  args: { value: INPUT_STORY_COPY.value, isDisabled: true, "aria-label": "Nama proyek nonaktif" },
+  args: {
+    value: undefined,
+    placeholder: INPUT_STORY_COPY.disabledPlaceholder,
+    isDisabled: true,
+    "aria-label": "Nama proyek nonaktif",
+  },
 };

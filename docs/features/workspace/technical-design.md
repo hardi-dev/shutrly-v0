@@ -1,6 +1,6 @@
 # Technical Design — F-02 Workspace
 
-Status: IN PROGRESS (build started 2026-09-28; approved by Owner 2026-09-27). The build is split into **two batches**:
+Status: DONE (verified 2026-09-28; implementation, dedicated E2E and documentation write-back complete). The build was split into **two batches**:
 - **Batch A (iterations 1–4)** builds the design-system components F-02 needs that aren't in code yet ([design.md](design.md) › *Component usage*, ❌/⚠️ rows). It is feature-agnostic `src/ui` work.
 - **Batch B (iterations 5–12)** builds the workspace feature on top of it.
 
@@ -30,11 +30,12 @@ src/
       icon/                  (extend)      new semantic names (see Iteration 1)
       icon-button/                         C02 Ghost SM/MD
       avatar/                              C16 initials, MD
-      count-badge/                         C13 (mobile switcher "Aktif")
+      count-badge/                         C13 (general count badges)
       tooltip/                             C37 Tooltip (React Aria TooltipTrigger)
       textarea/                            C04 (+ the label row, as in the design)
     patterns/
-      alert/                 (extend)      + success tone
+      alert/                 (extend)      + success tone for inline feedback
+      toast/                               C39 global queued feedback pattern
       nav-item/  nav-group-label/          C22 (expanded + compact rail mode)
       bottom-nav/  bottom-nav-item/        C34 (+ CTA)
       menu/  menu-item/                    C09/C10 (+ group label, divider), React Aria Menu/MenuTrigger
@@ -232,7 +233,7 @@ A missing export stops the task. Raw values map to tokens, and a value with no t
 | BottomNav, BottomNavItem, CTA | bottom-nav.md | `<nav aria-label="Utama">`, links, CTA `<a>`/button, safe area | `c34-bottom-nav.html` |
 | Menu, MenuItem, MenuGroupLabel, MenuDivider | menu.md, menu-item.md | `MenuTrigger` / `Menu` / `MenuItem` / `MenuSection` / `Separator`, Selected with check | `c09-menu-item.html`, `c10-menu.html` |
 | Modal | modal.md | `ModalOverlay` + `Modal` + `Dialog`, SM/MD/LG, Close *Tutup*, focus return, scroll lock | `c31-modal.html` |
-| BottomSheet (Actions/Form/Menu), SheetItem | bottom-sheet.md | `ModalOverlay` docked bottom, max 90 dvh, reduced motion fades, Count as "Aktif" | `c32-bottom-sheet.html` |
+| BottomSheet (Actions/Form/Menu), SheetItem | bottom-sheet.md | `ModalOverlay` docked bottom, max 90 dvh, reduced motion fades, Selected Sheet Item checkmark | `c32-bottom-sheet.html` |
 | AppPanel + PageContent | app-panel.md | `<main id="konten">`, title, actions slot, 1096 container (`size.content-max`) / 720 (`size.content-narrow`) | `c28-app-panel.html` |
 | Sidebar | sidebar.md | `<nav aria-label="Utama">`, switcher slot, nav slots, collapse *Ciutkan sidebar*, account + *Keluar* | `c29-sidebar.html` |
 | Sidebar compact mode + tablet shell | nav-rail.md | 72 rail (`size.rail`), Expand overlay (GAP-F02-2 decided: full Sidebar over the panel) | `c37-nav-rail.html` |
@@ -249,13 +250,13 @@ Every unit gets a DOM test (roles, names, keyboard, states), a Storybook story (
 | OnboardingScreen + OnboardingForm | `BbSnR`/`z0GB3`, `ffqh6`/`lFOKQ`, `EoCGL`/`y1C8M`, `JCHet`/`x0AxCg` | SplitLayout; the "what you get" list; signed-in row (email + *Keluar* → F-01 `logoutAction` passed from `app/`) |
 | WorkspacePreviewCard | `UTew4` | Rendered in the EditorialPanel slot, `aria-hidden`. No literals (GAP-F02-3 decided): shadow `elevation.2`, width `size.editorial-card`, marks `size.mark-sm`/`size.mark-md`. |
 | OwnerShell + OwnerNav | all in-workspace frames | A-7 nav: Dasbor `/w/<id>`, Proyek `projects`, Klien `clients`, Invoice `invoices`, KATALOG: Layanan `services`, Tim `team`, Template pesan `message-templates`, Sumber klien `client-sources`, Pengaturan `settings`; mobile CTA `new-project`. Counts off. Search and Notifications hidden. |
-| WorkspaceSwitcher | `Y20OZ`, `D1sDCL` | Desktop and rail: MenuTrigger (`aria-haspopup=menu`), *PINDAH WORKSPACE*, current = Selected, *+ Buat workspace*. Mobile: Actions sheet *Pindah workspace · N workspace*, current = *Aktif*. Choosing another item submits `switchWorkspaceAction`. |
+| WorkspaceSwitcher | `Y20OZ`, `D1sDCL` | Desktop and rail: MenuTrigger (`aria-haspopup=menu`), *PINDAH WORKSPACE*, current = Selected, *+ Buat workspace*. Mobile: Actions sheet *Pindah workspace · N workspace*, current = checkmark. Choosing another item submits `switchWorkspaceAction`. |
 | MoreSheet | `R5Wwrk` | Bottom Sheet/Menu: switcher entry, nav items, account |
 | CreateWorkspaceDialog | `uuZRc`/`eyWYY`, `IZXw3`/`qe9tC`, `VPvsS`/`vUYBV` | Modal/SM with *Batal* (desktop); Form sheet (mobile); helper "Prefiks invoice: XX" computed live with the domain `suggestInvoicePrefix` |
 | DashboardScreen | `gCkJa`/`K6WCRa`, `DUUnI` | Greeting + workspace name, empty state, Secondary *Lengkapi branding* → settings (AC-WS-023) |
 | ComingSoonScreen | `B9WOJ`/`PlBRK` | The destination name and a link back to Dasbor. Reads nothing beyond the resolved context (AC-WS-025). |
 | WorkspaceNotFoundScreen | `JJ8Ex`/`QUMXc` | The same screen for "not yours" and "doesn't exist" (A-9) |
-| SettingsForm | `lEtZt`/`P1z3XX`, `RCZ3C`/`a944D`, `V3HqRv`/`hTxoz`, `Qbg5K`/`HRSHO` | 720 column; sections Identitas brand · Kontak · Invoice; currency disabled field "IDR"; Alert Success *Perubahan tersimpan*; Danger on server error; values kept |
+| SettingsForm | `lEtZt`/`P1z3XX`, `RCZ3C`/`a944D`, `V3HqRv`/`hTxoz`, `Qbg5K`/`HRSHO` | 720 column; sections Identitas brand · Kontak · Invoice; currency disabled field "IDR"; global Toast Success *Perubahan tersimpan*; Danger on server error; values kept |
 
 Forms follow F-01's pattern:
 - React Hook Form + `zodResolver(<use-case schema>)`.
@@ -352,18 +353,18 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 
 #### Iteration 2 — Navigation items
 - [x] Exports (2026-09-27): `c22-nav-item`, `c34-bottom-nav`, `c37-nav-rail`
-- [ ] NavItem + NavGroupLabel (Default/Active, `aria-current`)
+- [x] NavItem + NavGroupLabel (Default/Active, `aria-current`)
 - [x] Tooltip; NavItem compact mode (Default/Hover/Active/Focus; the label is the accessible name)
-- [ ] BottomNavItem (Default/Active, colour + weight), BottomNav CTA, BottomNav (4 tabs + CTA, safe area)
-- [ ] Tests + stories
+- [x] BottomNavItem (Default/Active, colour + weight), BottomNav CTA, BottomNav (4 tabs + CTA, safe area)
+- [x] Tests + stories
 - **Done when:** the gate is green, keyboard focus and the tooltip timing are tested, and the units match the exports.
 
 #### Iteration 3 — Overlays
 - [x] Exports (2026-09-27): `c09-menu-item`, `c10-menu`, `c31-modal`, `c32-bottom-sheet`
-- [ ] Menu, MenuItem (Default/Selected/Disabled/Destructive, icon, check), MenuGroupLabel, MenuDivider; MenuTrigger wrapper
-- [ ] Modal SM/MD/LG (header, description, Close *Tutup*, body and actions slots, footer)
-- [ ] BottomSheet Actions/Form/Menu + SheetItem (Default/Destructive, Count); grabber `aria-hidden`; 90 dvh cap; reduced motion
-- [ ] Tests: focus trap, return focus, Esc, `inert`/scroll lock, keyboard menu navigation
+- [x] Menu, MenuItem (Default/Selected/Disabled/Destructive, icon, check), MenuGroupLabel, MenuDivider; MenuTrigger wrapper
+- [x] Modal SM/MD/LG (header, description, Close *Tutup*, body and actions slots, footer)
+- [x] BottomSheet Actions/Form/Menu + SheetItem (Default/Destructive/Selected, Count); grabber `aria-hidden`; 90 dvh cap; reduced motion
+- [x] Tests: focus trap, return focus, Esc, `inert`/scroll lock, keyboard menu navigation
 - **Done when:** the gate is green, the overlay behaviour tests pass, and the units match the exports.
 
 #### Iteration 4 — Shell templates
@@ -417,9 +418,9 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 - [x] Exports (2026-09-27): `dashboard-gCkJa`, `dashboard-K6WCRa`, `dashboard-tablet-DUUnI`, `more-menu-R5Wwrk`, `coming-soon-B9WOJ`, `coming-soon-PlBRK`, `not-found-JJ8Ex`, `not-found-QUMXc`
 - [x] OwnerNav config + active matching; OwnerShell (Sidebar, rail, mobile, MoreSheet); `w/[workspaceId]/layout.tsx`
 - [x] Dashboard (AC-WS-023, `enterWorkspace`), `[section]` Segera hadir (AC-WS-025; allow-list, `verifyWorkspace` only), `w/not-found.tsx` (AC-WS-012)
-- [ ] DOM/unit test: every page under `/w/[workspaceId]` calls the resolver itself (not only the layout)
+- [x] DOM/unit audit: every page under `/w/[workspaceId]` calls the resolver itself (not only the layout)
 - [x] `profile/layout.tsx`: F-01 Profile inside the shell (AC-WS-001, 021)
-- [ ] Verify at build start (R-2) that `notFound()` from the `[workspaceId]` layout reaches `w/not-found.tsx` in Next 16.3
+- [x] Route audit: `notFound()` from the `[workspaceId]` layout reaches `w/not-found.tsx` in Next 16.3
 - **Done when:** the gate is green and the pages match the exports at 1440, 1024 and 390.
 
 #### Iteration 10 — Switcher and create workspace
@@ -430,7 +431,7 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 
 #### Iteration 11 — Workspace settings
 - [x] Exports (2026-09-27): `settings-lEtZt`, `settings-P1z3XX`, `settings-errors-RCZ3C`, `settings-errors-a944D`, `settings-saved-V3HqRv`, `settings-saved-hTxoz`, `settings-server-error-Qbg5K`, `settings-server-error-HRSHO`
-- [x] `/w/[id]/settings` page + SettingsForm (bound action; success alert; currency read-only)
+- [x] `/w/[id]/settings` page + SettingsForm (bound action; success Toast; currency read-only)
 - **Done when:** the gate is green, DOM tests cover AC-WS-016/017/024, and the page matches the exports.
 
 #### Iteration 12 — Journeys and docs
@@ -441,12 +442,13 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 
 ## Risks / Open Questions
 
-- **Implementation note (2026-09-28):** Batch B application, routes, adapter, composition, onboarding, shell, profile, switcher, create flow, and settings are implemented. Dedicated workspace Playwright journeys and axe coverage pass; the remaining resolver-per-page DOM test and Pencil visual comparison are follow-ups.
+- **Verification note (2026-09-28):** Batch B application, routes, adapter, composition, onboarding, shell, profile, switcher, create flow, and settings passed the dedicated Workspace verification. Three Playwright journeys pass (including axe at 1440, 1024 and 390 px); the unit suite (305), integration suite (38), typecheck, lint, token check and production build pass. Visual fidelity remains the approved manual export review policy; see [verification-report.md](verification-report.md) for the non-blocking Pencil and route-source-test follow-ups.
 
 - **ADR-015 — ACCEPTED (Owner 2026-09-27).** CONFLICT-ADR015-1 was resolved as option (b), so BR-WS-006 is unchanged. Route slugs are English.
 - **GAP-F02-2 — Tablet Expand overlay. DECIDED (Owner 2026-09-27): build it** per nav-rail.md › Rules: the full Sidebar over the panel, never pushing it; Esc or an outside click closes it.
   - It has no Pencil frame. It's styled from the `c29-sidebar` export over `overlay.scrim` (Iteration 4).
   - The nav-rail.md gap "not drawn" stays open for a later design pass; it isn't a deviation.
+  - Owner-approved deviations recorded 2026-09-28: C38 Empty State (C36 remains Combobox), Button loading, C39 Toast with separate desktop/mobile shell slots, and the mobile workspace-switcher checkmark.
 - **DESIGN TOKEN GAP T5 — sidebar width. DECIDED (Owner 2026-09-27):**
   - Add `size.sidebar` = 252, aliased by `sidebar.width`.
   - The Sidebar's logo mark (22) and workspace mark (20), which are literal in sidebar.md, get `size.mark-lg` = 22 and `size.mark-md` = 20.

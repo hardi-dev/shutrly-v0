@@ -36,6 +36,6 @@ Owner decisions:
 - a failed switch shows a danger Toast with *Coba lagi*;
 - phone option A: Invoice goes into the Bottom Nav, and a header Menu button opens the menu sheet.
 
-Badge conflict decided: follow the code (Count Badge Danger variant). Rules v3.1 APPROVED, and the library promotion PERSISTED 2026-09-29 (531 tokens, `594f560b`); `app-shell-revamp.pen` is rebound. HTML exports are done (31 frames). `/sdv:verify-design-system` was skipped at the Owner's request. Next: `/sdv:build-feature app-shell-revamp 1`.
+Badge conflict decided: follow the code (Count Badge Danger variant). Rules v3.1 APPROVED, and the library promotion PERSISTED 2026-09-29 (531 tokens, `594f560b`); `app-shell-revamp.pen` is rebound. HTML exports are done (31 frames). `/sdv:verify-design-system` was skipped at the Owner's request. Built and browser-validated at 1440/1024/390 (commits `8df6492`, `a787464`, `70ce31d`). Next: `/sdv:verify-feature app-shell-revamp`.
 
 F-03 design stays paused until the F-17 shell is approved. CI (GitHub Actions) and Cloudflare deploy must still be scheduled before the first `/sdv:ship`.

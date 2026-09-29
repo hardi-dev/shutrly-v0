@@ -123,53 +123,72 @@ Gate per iteration: `pnpm typecheck && pnpm lint && pnpm test`. From iteration 5
 Each iteration goes through plan → test first → implement → verify (gate + fidelity against exports) → one commit per task (conventional commits).
 
 1. **Tokens and primitives**
-   - [ ] `pnpm tokens:css` (531); `tokens:check` passes
-   - [ ] `IconButton` `badgeCount` (danger CountBadge, MD offset, label)
-   - [ ] `NavItem` / `NavRailItem` active (semibold) and hover (`icon-hover`)
+   - [x] `pnpm tokens:css` (531); `tokens:check` passes
+   - [x] `IconButton` `badgeCount` (danger CountBadge, MD offset, label)
+   - [x] `NavItem` / `NavRailItem` active (semibold) and hover (`icon-hover`)
    - **Done when:** unit tests pass and Storybook light and dark match the library.
 2. **Toast action and Menu/List**
-   - [ ] `ToastContent.action`
-   - [ ] `MenuList` variant (dividers, footer)
+   - [x] `ToastContent.action`
+   - [x] `MenuList` variant (dividers, footer)
    - **Done when:** tests pass and the stories match `switch-failed-CyFKd` and the `switcher-cLGAL` menu.
 3. **Page Header, App Panel and coming-soon sections**
-   - [ ] `PageHeader` pattern
-   - [ ] `AppPanel` uses it
-   - [ ] `search` / `notifications` sections with labels
+   - [x] `PageHeader` pattern
+   - [x] `AppPanel` uses it
+   - [x] `search` / `notifications` sections with labels
    - **Done when:** AC-001 and AC-013 unit tests pass and the fidelity check against `dashboard-A4o4CS` passes.
 4. **Desktop / tablet shell**
-   - [ ] Collapse preference
-   - [ ] Extract the rail (`SidebarRail`, `NavRailItem`), with the chevron workspace control and `surface.muted` root
-   - [ ] Utilities wired
+   - [x] Collapse preference
+   - [x] Rail with the chevron workspace control and `surface.muted` root — kept as `Sidebar` compact mode (deviation D-1)
+   - [x] Utilities wired
    - **Done when:** AC-002, 003 and 006 (desktop) pass and the tablet exports match.
 5. **Workspace switcher**
-   - [ ] Same content on every layout, with the primary CTA
-   - [ ] Pending state
-   - [ ] Failure Toast with retry
-   - [ ] Phone sheet from the pill
+   - [x] Same content on every layout, with the primary CTA
+   - [x] Pending state
+   - [x] Failure Toast with retry
+   - [x] Phone sheet from the pill
    - **Done when:** AC-009 and 014 pass (unit + E2E).
 6. **Phone shell**
-   - [ ] `WorkspacePill`, `MobileHeader`, `MobileAppShell` (content sheet, layers)
-   - [ ] Bottom Nav with Invoice; CTA → Proyek
-   - [ ] Menu button → menu sheet (no switcher, no Invoice)
-   - [ ] `resolveActiveNav` phone tabs
+   - [x] `WorkspacePill`, `MobileHeader`, `MobileAppShell` (content sheet, layers)
+   - [x] Bottom Nav with Invoice; CTA → Proyek
+   - [x] Menu button → menu sheet (no switcher, no Invoice)
+   - [x] `resolveActiveNav` phone tabs
    - **Done when:** AC-004, 006, 007 and 008 pass and the phone exports match.
 7. **Sub-page variant**
-   - [ ] `CompactBar` + `MobileShell` patterns, stories and the `resolveSubPageParent` type
+   - [x] `CompactBar` + `MobileShell` patterns, stories and the `resolveSubPageParent` type
    - **Done when:** AC-005 passes at story/unit level.
 8. **Responsive transitions and accessibility**
-   - [ ] Breakpoint cleanup and focus handling
-   - [ ] axe at 3 widths × 2 themes
-   - [ ] Playwright shell journeys
+   - [x] Breakpoint cleanup and focus handling
+   - [x] axe at 3 widths × 2 themes
+   - [x] Playwright shell journeys
    - **Done when:** AC-011 and 012 pass and the full gate plus `pnpm build` pass.
 9. **Write-back**
-   - [ ] Update `spec.md` if behaviour moved, `design.md` deviations, `feature-map.md` (IMPLEMENTED) and `HANDOFF.md`
+   - [x] Update `spec.md` if behaviour moved, `design.md` deviations, `feature-map.md` (IMPLEMENTED) and `HANDOFF.md`
    - [ ] Run `/sdv:verify-feature app-shell-revamp`
 
 ## Implementation record
 
-- Iterations 1–8 are implemented locally: 531-token CSS, responsive shell patterns, phone navigation, switcher retry feedback, coming-soon utilities, and compact sub-page patterns.
-- The HTML exports remain the visual source of truth; no `.pen` files were edited.
-- Final Owner verification remains `/sdv:verify-feature app-shell-revamp`.
+- **Commits:** `8df6492` (initial build), `a787464` (design-system token sync: rules v3.1, 531 tokens `594f560b`, promoted specs), `70ce31d` (breakpoint validation fixes and shell E2E).
+- **Browser validation 2026-09-29** at 1440, 1024 and 390 px, light and dark, against the HTML exports. Fixed in `70ce31d`:
+  - Page Header: breadcrumb showed "Workspace" and no utilities; every page was titled "Dasbor" with a second `h1` in the content. Now `resolvePageHeading` gives each route its nav label and subtitle, and content headings are `h2`.
+  - Switcher: missing group label, dividers and primary CTA; `MenuDivider` broke the React Aria collection so only the first item rendered. Phone sheet had no sort, pending state or failure toast.
+  - Phone: menu sheet dropped *Layanan*; Notifikasi used the info icon; header/sheet surfaces, pill radius, CTA name (*Proyek baru*), Profile link and skip-link target corrected.
+  - Rail: expand control, group divider, chevrons-up-down icon (Hugeicons `ChevronsUpDown` is an arrows alias; `UnfoldMoreIcon` is used).
+  - Nav Item: label no longer takes the icon colour; active label semibold; icon hover token (N1).
+  - Breakpoint changes close the old layout's overlays and keep focus on a visible element; collapse/expand move focus to the replacing control.
+  - Actionable toasts persist until dismissed (WCAG 2.2.1) and close before their action runs.
+  - Shell files that `8df6492` depended on but did not commit (owner layouts, Bottom Sheet `headerLeading`) are now committed.
+- **Gate (2026-09-29):** typecheck, lint, `tokens:check`, 333 unit tests, `pnpm build`, and 8 E2E (5 new `tests/e2e/app-shell-revamp`, 3 workspace) pass; axe reports no WCAG 2.1 AA violation at 3 widths × 2 themes.
+- The HTML exports remain the visual source of truth; no `.pen` file was edited by the build.
+
+### Deviations from the exports (Owner-approved 2026-09-29 unless noted)
+
+- **D-1 Rail structure:** the tablet/collapsed rail is the `Sidebar` compact mode, not separate `SidebarRail`/`NavRailItem` units. Behaviour and visuals match the exports.
+- **D-2 Switcher rows:** desktop and tablet switcher rows use the phone sheet row anatomy (52 px, full-width dividers, `sheet.item.*` tokens) via `MenuItem layout="row"` — Owner request.
+- **D-3 Row type size:** switcher and menu-sheet rows use `font.size.body` 14 medium, matching Sidebar nav items, instead of 16 — Owner request.
+- **D-4 Phone top bar:** top padding is `space.4` plus the safe-area inset (the export's status bar is device chrome) — Owner request.
+- **D-5 Contrast:** the Sidebar group label and account email use `text.secondary` instead of `text.muted`; `text.muted` on `surface.muted` is 3.8:1 and fails AC-SHELL-012. The design library should adopt this at the next `/sdv:save-design-system`.
+- **D-6 Menu CTA padding:** the switcher's *Buat workspace* CTA uses `space.4` horizontal padding so the label stays on one line at 228 px.
+- **Open (Owner):** the export shows an aperture brand mark; code keeps the existing lime camera mark shared with auth screens.
 
 ## Risks / open questions
 

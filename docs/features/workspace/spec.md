@@ -1,7 +1,7 @@
 # Feature: Workspace — onboarding, switching, branding, App Shell
 
 ID: F-02 · Slug: `workspace`
-Status: IN PROGRESS (2026-09-28) · [technical-design.md](technical-design.md)
+Status: DONE (Owner 2026-09-28) · [technical-design.md](technical-design.md)
 Journey: [J-01 Owner onboarding](../../product/user-journeys.md) · Paired with: F-01 `auth`
 
 ## Goal
@@ -79,6 +79,7 @@ Every form: idle, submitting (disabled submit), field errors, server error with 
 - **A-5 Last opened is stored on the server** (a time on each workspace), so it follows the Owner across devices and browsers. There is no selection screen: this matches Linear (last visited workspace) and Vercel (default team) rather than Slack's picker (research, Owner 2026-09-27).
 - **A-6 Dashboard:** F-02 ships the dashboard page with the workspace name and an empty state only. Metrics and widgets belong to later features.
 - **A-7 Navigation — changed by the Owner (2026-09-27):** the App Shell shows the library's full navigation, with the same items and labels as the design system: Dasbor, Proyek, Klien, Invoice, Layanan, Tim, Template pesan, Sumber klien, Pengaturan; the mobile Bottom Nav with the CTA; and the *Lainnya* sheet. Count badges are off in an empty workspace. Header Search and Notifications stay hidden: they aren't navigation, and no feature provides them yet. *Pengaturan* opens Workspace settings. See SPEC GAP-F02-1.
+  > **F-17 (`app-shell-revamp`, 2026-09-29) supersedes parts of A-7 when it ships.** On phones, Invoice becomes a Bottom Nav tab and *Lainnya* becomes a header Menu button. Header Search and Notifications are visible and open *Segera hadir*. See [F-17 spec](../app-shell-revamp/spec.md) › *Supersedes*.
 - **A-8 Sidebar collapse:** the desktop collapse button switches to the rail layout. The choice is remembered per browser only.
 - **A-9 Not found, not forbidden:** another Owner's workspace looks exactly like a nonexistent one, so IDs can't be probed.
 - **A-10 Concurrent edits:** saving branding is last-write-wins. There's no conflict warning in MVP.

@@ -148,6 +148,8 @@ Covers: BR-WS-007
 
 ## App Shell
 
+> F-17 `app-shell-revamp` (SPECIFIED 2026-09-29) supersedes AC-WS-021 and the mobile part of AC-WS-011 when it ships; see [AC-SHELL-*](../app-shell-revamp/acceptance-criteria.md).
+
 ## AC-WS-021 — App Shell wraps every owner screen
 Covers: C-008 (A-7, A-8)
 

@@ -1,0 +1,4293 @@
+{
+  "version": "2.19",
+  "children": [
+    {
+      "type": "frame",
+      "id": "Iq83I",
+      "x": 0,
+      "y": -900,
+      "name": "F-17 · Canvas helpers (local)",
+      "fill": "$A:color/semantic/surface/canvas",
+      "gap": "$A:space/12",
+      "padding": "$A:space/8",
+      "children": [
+        {
+          "type": "frame",
+          "id": "zAnx4",
+          "name": "Placeholder/Page content",
+          "context": "Neutral placeholder: page content is out of F-17 scope.",
+          "reusable": true,
+          "width": 360,
+          "height": 160,
+          "fill": "$A:color/semantic/surface/panel",
+          "cornerRadius": "$A:radius/md",
+          "stroke": "$A:color/semantic/border/default",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner",
+          "layout": "vertical",
+          "padding": "$A:space/4",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "Hdvfj",
+              "name": "Label",
+              "fill": "$A:color/semantic/text/secondary",
+              "content": "Konten halaman — di luar lingkup F-17",
+              "fontFamily": "$A:font/family/base",
+              "fontSize": "$A:font/size/body-sm",
+              "fontWeight": "$A:font/weight/regular"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "KqWRQ",
+      "type": "ref",
+      "ref": "A:c6qPz7",
+      "name": "M1 · Dasbor · top-level · light",
+      "x": 2680,
+      "y": 0,
+      "width": 390,
+      "height": 844,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:jqblo": {
+          "strokeWidth": 0
+        },
+        "A:nUiGs": {
+          "type": "frame",
+          "id": "LnNFv",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "A:n0MP5/A:K1jSfD": {
+          "content": "Dasbor"
+        },
+        "A:n0MP5/A:EYvag": {
+          "content": "Ringkasan workspace Aster Wedding."
+        },
+        "A:HvRky": {
+          "type": "frame",
+          "id": "CbIJ5",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "E6s9bS",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:SpGXb/A:uzabE/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:Ryjdm/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:YChMw/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:wTYuN": {
+          "id": "LzTZH",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "A4o4CS",
+      "type": "ref",
+      "ref": "A:y9uBJl",
+      "name": "D1 · Dasbor · desktop · light",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 960,
+      "descendants": {
+        "A:fNszT/A:llfv5": {
+          "id": "TgfDy",
+          "type": "ref",
+          "ref": "A:CInVy",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "A:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "A:m6S2m": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:fNszT/A:nHXqh/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:wwfj3/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:lz7Bj/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:P4ZpeX/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:V2Udn4/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:f1BvVe/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:I3aJo/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:E2Dl5F/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:Sw0yD/A:MST3f": {
+          "id": "M6mIhb",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Dasbor"
+            },
+            "A:HsrFT": {
+              "content": "Dasbor"
+            },
+            "A:i8XPWU": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:Sw0yD/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "L0GHFj",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "mpD4E",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "M2wNUK",
+      "type": "ref",
+      "ref": "A:lQnS8",
+      "name": "T1 · Dasbor · tablet rail · light",
+      "x": 1560,
+      "y": 0,
+      "width": 1024,
+      "height": 768,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:f4EPF6/A:HbcMi": {
+          "fill": "$A:component/sidebar/workspace/background"
+        },
+        "A:f4EPF6/A:z3corP": {
+          "icon": "chevrons-up-down",
+          "fill": "$A:color/semantic/text/muted",
+          "width": 16,
+          "height": 16
+        },
+        "A:f4EPF6/A:lngYe": {
+          "id": "TLgj1",
+          "type": "ref",
+          "ref": "A:OKf00",
+          "name": "Nav rail active",
+          "descendants": {
+            "A:r4Ryb": {
+              "icon": "layout-grid"
+            },
+            "A:mKYsh": {
+              "enabled": false
+            }
+          }
+        },
+        "A:f4EPF6/A:dqxPf/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:h5Vew/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:t9sZGC/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:x1rRy/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:cYVXp/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:OUye0/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:ycw6L/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:o6fNtV/A:mKYsh": {
+          "enabled": false
+        },
+        "A:QhPny/A:MST3f": {
+          "id": "q5pQjK",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Dasbor"
+            },
+            "A:HsrFT": {
+              "content": "Dasbor"
+            },
+            "A:i8XPWU": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:QhPny/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "vCqze",
+              "name": "Container",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "DqG8Z",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "E6Sff",
+      "type": "ref",
+      "ref": "A:y9uBJl",
+      "name": "D1d · Dasbor · desktop · dark",
+      "x": 0,
+      "y": 1100,
+      "theme": {
+        "A:mode": "dark"
+      },
+      "width": 1440,
+      "height": 960,
+      "descendants": {
+        "A:fNszT/A:llfv5": {
+          "id": "OlNix",
+          "type": "ref",
+          "ref": "A:CInVy",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "A:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "A:m6S2m": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:fNszT/A:nHXqh/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:wwfj3/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:lz7Bj/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:P4ZpeX/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:V2Udn4/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:f1BvVe/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:I3aJo/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:E2Dl5F/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:Sw0yD/A:MST3f": {
+          "id": "qRQdM",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Dasbor"
+            },
+            "A:HsrFT": {
+              "content": "Dasbor"
+            },
+            "A:i8XPWU": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:Sw0yD/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "K6WWI",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "hYoRu",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "MPQNe",
+      "type": "ref",
+      "ref": "A:lQnS8",
+      "name": "T1d · Dasbor · tablet rail · dark",
+      "x": 1560,
+      "y": 1100,
+      "theme": {
+        "A:mode": "dark"
+      },
+      "width": 1024,
+      "height": 768,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:f4EPF6/A:HbcMi": {
+          "fill": "$A:component/sidebar/workspace/background"
+        },
+        "A:f4EPF6/A:z3corP": {
+          "icon": "chevrons-up-down",
+          "fill": "$A:color/semantic/text/muted",
+          "width": 16,
+          "height": 16
+        },
+        "A:f4EPF6/A:lngYe": {
+          "id": "zWs7d",
+          "type": "ref",
+          "ref": "A:OKf00",
+          "name": "Nav rail active",
+          "descendants": {
+            "A:r4Ryb": {
+              "icon": "layout-grid"
+            },
+            "A:mKYsh": {
+              "enabled": false
+            }
+          }
+        },
+        "A:f4EPF6/A:dqxPf/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:h5Vew/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:t9sZGC/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:x1rRy/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:cYVXp/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:OUye0/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:ycw6L/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:o6fNtV/A:mKYsh": {
+          "enabled": false
+        },
+        "A:QhPny/A:MST3f": {
+          "id": "CYX9z",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Dasbor"
+            },
+            "A:HsrFT": {
+              "content": "Dasbor"
+            },
+            "A:i8XPWU": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:QhPny/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "x5EX1",
+              "name": "Container",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "G5VupB",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ZReSP",
+      "type": "ref",
+      "ref": "A:c6qPz7",
+      "name": "M1d · Dasbor · top-level · dark",
+      "x": 2680,
+      "y": 1100,
+      "theme": {
+        "A:mode": "dark"
+      },
+      "width": 390,
+      "height": 844,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:jqblo": {
+          "strokeWidth": 0
+        },
+        "A:nUiGs": {
+          "type": "frame",
+          "id": "utOEP",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "A:n0MP5/A:K1jSfD": {
+          "content": "Dasbor"
+        },
+        "A:n0MP5/A:EYvag": {
+          "content": "Ringkasan workspace Aster Wedding."
+        },
+        "A:HvRky": {
+          "type": "frame",
+          "id": "QZbv2",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "oAFjY",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:SpGXb/A:uzabE/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:Ryjdm/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:YChMw/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:wTYuN": {
+          "id": "gy317",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "yUUWI",
+      "type": "ref",
+      "ref": "A:y9uBJl",
+      "name": "D2 · Sidebar collapsed (rail inline) · desktop",
+      "x": 0,
+      "y": 2200,
+      "width": 1440,
+      "height": 960,
+      "descendants": {
+        "A:fNszT": {
+          "id": "xMWBO",
+          "type": "ref",
+          "ref": "A:JRUY0",
+          "name": "Sidebar (collapsed)",
+          "height": "fill_container",
+          "descendants": {
+            "A:HbcMi": {
+              "fill": "$A:component/sidebar/workspace/background"
+            },
+            "A:z3corP": {
+              "icon": "chevrons-up-down",
+              "fill": "$A:color/semantic/text/muted",
+              "width": 16,
+              "height": 16
+            },
+            "A:lngYe": {
+              "id": "iL7Oo",
+              "type": "ref",
+              "ref": "A:OKf00",
+              "name": "Nav rail active",
+              "descendants": {
+                "A:r4Ryb": {
+                  "icon": "layout-grid"
+                },
+                "A:mKYsh": {
+                  "enabled": false
+                }
+              }
+            },
+            "A:dqxPf/A:mKYsh": {
+              "enabled": false
+            },
+            "A:h5Vew/A:mKYsh": {
+              "enabled": false
+            },
+            "A:t9sZGC/A:mKYsh": {
+              "enabled": false
+            },
+            "A:x1rRy/A:mKYsh": {
+              "enabled": false
+            },
+            "A:cYVXp/A:mKYsh": {
+              "enabled": false
+            },
+            "A:OUye0/A:mKYsh": {
+              "enabled": false
+            },
+            "A:ycw6L/A:mKYsh": {
+              "enabled": false
+            },
+            "A:o6fNtV/A:mKYsh": {
+              "enabled": false
+            }
+          }
+        },
+        "A:Sw0yD/A:MST3f": {
+          "id": "z7wlhh",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Dasbor"
+            },
+            "A:HsrFT": {
+              "content": "Dasbor"
+            },
+            "A:i8XPWU": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:Sw0yD/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "s8jiic",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "yKX0p",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "frame",
+      "id": "M2y0m",
+      "x": 1560,
+      "y": 2200,
+      "name": "T2 · Sidebar overlay open · tablet",
+      "clip": true,
+      "width": 1024,
+      "height": 768,
+      "layout": "none",
+      "children": [
+        {
+          "id": "Y2Wz8",
+          "type": "ref",
+          "ref": "A:lQnS8",
+          "name": "Tablet shell",
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 768,
+          "fill": "$A:color/semantic/surface/muted",
+          "descendants": {
+            "A:f4EPF6/A:HbcMi": {
+              "fill": "$A:component/sidebar/workspace/background"
+            },
+            "A:f4EPF6/A:z3corP": {
+              "icon": "chevrons-up-down",
+              "fill": "$A:color/semantic/text/muted",
+              "width": 16,
+              "height": 16
+            },
+            "A:f4EPF6/A:lngYe": {
+              "id": "tSJXB",
+              "type": "ref",
+              "ref": "A:OKf00",
+              "name": "Nav rail active",
+              "descendants": {
+                "A:r4Ryb": {
+                  "icon": "layout-grid"
+                },
+                "A:mKYsh": {
+                  "enabled": false
+                }
+              }
+            },
+            "A:f4EPF6/A:dqxPf/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:h5Vew/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:t9sZGC/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:x1rRy/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:cYVXp/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:OUye0/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:ycw6L/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:o6fNtV/A:mKYsh": {
+              "enabled": false
+            },
+            "A:QhPny/A:MST3f": {
+              "id": "XZagp",
+              "type": "ref",
+              "ref": "A:ImEDW",
+              "name": "Page Header",
+              "width": "fill_container",
+              "descendants": {
+                "A:EPpbd": {
+                  "content": "Aster Wedding"
+                },
+                "A:Hh5tj": {
+                  "content": "Dasbor"
+                },
+                "A:HsrFT": {
+                  "content": "Dasbor"
+                },
+                "A:i8XPWU": {
+                  "content": "Ringkasan workspace Aster Wedding."
+                },
+                "A:ew9bb": {
+                  "enabled": false
+                }
+              }
+            },
+            "A:QhPny/A:d2hCuQ": {
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "PpyfP",
+                  "name": "Container",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$A:component/panel/app/content/gap",
+                  "children": [
+                    {
+                      "id": "Av9UF",
+                      "type": "ref",
+                      "ref": "zAnx4",
+                      "name": "Placeholder",
+                      "width": "fill_container",
+                      "height": 240
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rectangle",
+          "id": "bWdQS",
+          "x": 0,
+          "y": 0,
+          "name": "Scrim (component/modal/scrim)",
+          "fill": "$A:component/modal/scrim",
+          "width": 1024,
+          "height": 768
+        },
+        {
+          "id": "KzHOi",
+          "type": "ref",
+          "ref": "A:vB50q",
+          "name": "Sidebar (overlay)",
+          "x": 0,
+          "y": 0,
+          "height": 768,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "$A:color/semantic/elevation/2/color",
+            "offset": {
+              "x": 0,
+              "y": "$A:elevation/2/offset-y"
+            },
+            "blur": "$A:elevation/2/blur"
+          },
+          "descendants": {
+            "A:llfv5": {
+              "id": "Pqnvg",
+              "type": "ref",
+              "ref": "A:CInVy",
+              "name": "Nav Dasbor",
+              "width": "fill_container",
+              "descendants": {
+                "A:MpR9k": {
+                  "icon": "layout-grid"
+                },
+                "A:m6S2m": {
+                  "content": "Dasbor"
+                }
+              }
+            },
+            "A:nHXqh/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:wwfj3/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:lz7Bj/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:P4ZpeX/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:V2Udn4/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:f1BvVe/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:I3aJo/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:E2Dl5F/A:E6JiYt": {
+              "enabled": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "hab2s",
+      "type": "ref",
+      "ref": "A:c6qPz7",
+      "name": "M2 · Pengaturan · menu destination (no tab active)",
+      "x": 2680,
+      "y": 2200,
+      "width": 390,
+      "height": 844,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:jqblo": {
+          "strokeWidth": 0
+        },
+        "A:nUiGs": {
+          "type": "frame",
+          "id": "r0pc9y",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "A:n0MP5/A:K1jSfD": {
+          "content": "Pengaturan"
+        },
+        "A:n0MP5/A:EYvag": {
+          "content": "Kelola identitas brand, kontak, dan invoice workspace."
+        },
+        "A:HvRky": {
+          "type": "frame",
+          "id": "Pasbd",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "FFdG2",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:SpGXb/A:uzabE": {
+          "id": "EMm4E",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Dasbor",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "layout-grid"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:SpGXb/A:Ryjdm/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:YChMw/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:wTYuN": {
+          "id": "RG9gR",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "frame",
+      "id": "cLGAL",
+      "x": 0,
+      "y": 3300,
+      "name": "D3 · Switcher open · desktop",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "layout": "none",
+      "children": [
+        {
+          "id": "bmKm7",
+          "type": "ref",
+          "ref": "A:y9uBJl",
+          "name": "Shell",
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 960,
+          "descendants": {
+            "A:fNszT/A:llfv5": {
+              "id": "I3BxqD",
+              "type": "ref",
+              "ref": "A:CInVy",
+              "name": "Nav Dasbor",
+              "width": "fill_container",
+              "descendants": {
+                "A:MpR9k": {
+                  "icon": "layout-grid"
+                },
+                "A:m6S2m": {
+                  "content": "Dasbor"
+                }
+              }
+            },
+            "A:fNszT/A:nHXqh/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:wwfj3/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:lz7Bj/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:P4ZpeX/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:V2Udn4/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:f1BvVe/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:I3aJo/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:E2Dl5F/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:Sw0yD/A:MST3f": {
+              "id": "V8VHqm",
+              "type": "ref",
+              "ref": "A:ImEDW",
+              "name": "Page Header",
+              "width": "fill_container",
+              "descendants": {
+                "A:EPpbd": {
+                  "content": "Aster Wedding"
+                },
+                "A:Hh5tj": {
+                  "content": "Dasbor"
+                },
+                "A:HsrFT": {
+                  "content": "Dasbor"
+                },
+                "A:i8XPWU": {
+                  "content": "Ringkasan workspace Aster Wedding."
+                },
+                "A:ew9bb": {
+                  "enabled": false
+                }
+              }
+            },
+            "A:Sw0yD/A:d2hCuQ": {
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "IsFxM",
+                  "name": "Container",
+                  "width": 1096,
+                  "layout": "vertical",
+                  "gap": "$A:component/panel/app/content/gap",
+                  "children": [
+                    {
+                      "id": "D73nd",
+                      "type": "ref",
+                      "ref": "zAnx4",
+                      "name": "Placeholder",
+                      "width": "fill_container",
+                      "height": 240
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "rF0DH",
+          "type": "ref",
+          "ref": "A:I3q8f",
+          "name": "Workspace menu",
+          "x": 12,
+          "y": 115,
+          "width": 228,
+          "children": [
+            {
+              "type": "frame",
+              "id": "QdQq3",
+              "name": "Items",
+              "width": "fill_container",
+              "layout": "vertical",
+              "children": [
+                {
+                  "id": "EQduT",
+                  "type": "ref",
+                  "ref": "A:yNxME",
+                  "name": "Group label",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:n0wAh6": {
+                      "content": "PINDAH WORKSPACE"
+                    }
+                  }
+                },
+                {
+                  "id": "mZzi5",
+                  "type": "ref",
+                  "ref": "A:qKcfI",
+                  "name": "Item Aster Wedding",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:vHwtA": {
+                      "content": "Aster Wedding"
+                    }
+                  }
+                },
+                {
+                  "id": "HoTJq",
+                  "type": "ref",
+                  "ref": "A:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "SV7Fy",
+                  "type": "ref",
+                  "ref": "A:iSqRB",
+                  "name": "Item Lumen Studio",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:vHwtA": {
+                      "content": "Lumen Studio"
+                    }
+                  }
+                },
+                {
+                  "id": "kytmE",
+                  "type": "ref",
+                  "ref": "A:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "SAxAd",
+                  "type": "ref",
+                  "ref": "A:iSqRB",
+                  "name": "Item Rana Portrait",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:vHwtA": {
+                      "content": "Rana Portrait"
+                    }
+                  }
+                },
+                {
+                  "id": "n9QBI",
+                  "type": "ref",
+                  "ref": "A:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "type": "frame",
+                  "id": "f8vBg",
+                  "name": "Footer",
+                  "width": "fill_container",
+                  "padding": [
+                    "$A:component/menu/item/padding-y",
+                    "$A:component/menu/item/padding-x"
+                  ],
+                  "children": [
+                    {
+                      "id": "iOgr7",
+                      "type": "ref",
+                      "ref": "A:Q49yf7",
+                      "name": "CTA Buat workspace",
+                      "width": "fill_container",
+                      "descendants": {
+                        "A:fMNO1": {
+                          "enabled": true,
+                          "icon": "plus"
+                        },
+                        "A:xnhuK": {
+                          "content": "Buat workspace"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "dCizw",
+      "x": 1560,
+      "y": 3300,
+      "name": "T3 · Switcher open from rail · tablet",
+      "clip": true,
+      "width": 1024,
+      "height": 768,
+      "layout": "none",
+      "children": [
+        {
+          "id": "NnQIN",
+          "type": "ref",
+          "ref": "A:lQnS8",
+          "name": "Shell",
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 768,
+          "fill": "$A:color/semantic/surface/muted",
+          "descendants": {
+            "A:f4EPF6/A:HbcMi": {
+              "fill": "$A:component/sidebar/workspace/background"
+            },
+            "A:f4EPF6/A:z3corP": {
+              "icon": "chevrons-up-down",
+              "fill": "$A:color/semantic/text/muted",
+              "width": 16,
+              "height": 16
+            },
+            "A:f4EPF6/A:lngYe": {
+              "id": "rVGSC",
+              "type": "ref",
+              "ref": "A:OKf00",
+              "name": "Nav rail active",
+              "descendants": {
+                "A:r4Ryb": {
+                  "icon": "layout-grid"
+                },
+                "A:mKYsh": {
+                  "enabled": false
+                }
+              }
+            },
+            "A:f4EPF6/A:dqxPf/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:h5Vew/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:t9sZGC/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:x1rRy/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:cYVXp/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:OUye0/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:ycw6L/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:o6fNtV/A:mKYsh": {
+              "enabled": false
+            },
+            "A:QhPny/A:MST3f": {
+              "id": "tOYkf",
+              "type": "ref",
+              "ref": "A:ImEDW",
+              "name": "Page Header",
+              "width": "fill_container",
+              "descendants": {
+                "A:EPpbd": {
+                  "content": "Aster Wedding"
+                },
+                "A:Hh5tj": {
+                  "content": "Dasbor"
+                },
+                "A:HsrFT": {
+                  "content": "Dasbor"
+                },
+                "A:i8XPWU": {
+                  "content": "Ringkasan workspace Aster Wedding."
+                },
+                "A:ew9bb": {
+                  "enabled": false
+                }
+              }
+            },
+            "A:QhPny/A:d2hCuQ": {
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "XHSTu",
+                  "name": "Container",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$A:component/panel/app/content/gap",
+                  "children": [
+                    {
+                      "id": "zPqtG",
+                      "type": "ref",
+                      "ref": "zAnx4",
+                      "name": "Placeholder",
+                      "width": "fill_container",
+                      "height": 240
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "YZcyq",
+          "type": "ref",
+          "ref": "A:I3q8f",
+          "name": "Workspace menu",
+          "x": 64,
+          "y": 68,
+          "width": 240,
+          "children": [
+            {
+              "type": "frame",
+              "id": "R1ZG7u",
+              "name": "Items",
+              "width": "fill_container",
+              "layout": "vertical",
+              "children": [
+                {
+                  "id": "Aix1D",
+                  "type": "ref",
+                  "ref": "A:yNxME",
+                  "name": "Group label",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:n0wAh6": {
+                      "content": "PINDAH WORKSPACE"
+                    }
+                  }
+                },
+                {
+                  "id": "uTMIf",
+                  "type": "ref",
+                  "ref": "A:qKcfI",
+                  "name": "Item Aster Wedding",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:vHwtA": {
+                      "content": "Aster Wedding"
+                    }
+                  }
+                },
+                {
+                  "id": "KdwKS",
+                  "type": "ref",
+                  "ref": "A:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "l835SL",
+                  "type": "ref",
+                  "ref": "A:iSqRB",
+                  "name": "Item Lumen Studio",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:vHwtA": {
+                      "content": "Lumen Studio"
+                    }
+                  }
+                },
+                {
+                  "id": "KXcZH",
+                  "type": "ref",
+                  "ref": "A:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "TH9He",
+                  "type": "ref",
+                  "ref": "A:iSqRB",
+                  "name": "Item Rana Portrait",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:vHwtA": {
+                      "content": "Rana Portrait"
+                    }
+                  }
+                },
+                {
+                  "id": "M5vIIH",
+                  "type": "ref",
+                  "ref": "A:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "type": "frame",
+                  "id": "SxdoE",
+                  "name": "Footer",
+                  "width": "fill_container",
+                  "padding": [
+                    "$A:component/menu/item/padding-y",
+                    "$A:component/menu/item/padding-x"
+                  ],
+                  "children": [
+                    {
+                      "id": "Y5te6",
+                      "type": "ref",
+                      "ref": "A:Q49yf7",
+                      "name": "CTA Buat workspace",
+                      "width": "fill_container",
+                      "descendants": {
+                        "A:fMNO1": {
+                          "enabled": true,
+                          "icon": "plus"
+                        },
+                        "A:xnhuK": {
+                          "content": "Buat workspace"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m9ZcCs",
+      "type": "ref",
+      "ref": "A:c6qPz7",
+      "name": "M3 · Switcher sheet open · phone",
+      "x": 2680,
+      "y": 3300,
+      "width": 390,
+      "height": 844,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:jqblo": {
+          "strokeWidth": 0
+        },
+        "A:nUiGs": {
+          "type": "frame",
+          "id": "aziiZ",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "A:n0MP5/A:K1jSfD": {
+          "content": "Dasbor"
+        },
+        "A:n0MP5/A:EYvag": {
+          "content": "Ringkasan workspace Aster Wedding."
+        },
+        "A:HvRky": {
+          "type": "frame",
+          "id": "JI4O5",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "G6jHG",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:SpGXb/A:uzabE/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:Ryjdm/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:YChMw/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:wTYuN": {
+          "id": "zExfm",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        },
+        "A:Ey5pi": {
+          "enabled": true,
+          "width": 390,
+          "height": 844
+        },
+        "A:aQWCT": {
+          "children": [
+            {
+              "id": "LrmMW",
+              "type": "ref",
+              "ref": "A:U0wHw",
+              "name": "Sheet · Pindah workspace",
+              "width": "fill_container",
+              "descendants": {
+                "A:bEyU3": {
+                  "content": "Pindah workspace"
+                },
+                "A:GyfP0": {
+                  "content": "3 workspace"
+                },
+                "A:CLpYz": {
+                  "type": "frame",
+                  "id": "KFo31",
+                  "name": "Items",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "id": "wHF7w",
+                      "type": "ref",
+                      "ref": "A:FRtU1",
+                      "name": "Item Aster Wedding",
+                      "width": "fill_container",
+                      "context": "Sheet Item · tone=selected. Current selection: checkmark on the trailing edge; Count off. Text: Label. Swap: Icon (lucide name). Spec: docs/design-system/components/bottom-sheet.md",
+                      "descendants": {
+                        "A:MLkPM": {
+                          "enabled": false
+                        },
+                        "A:elAPX": {
+                          "content": "Aster Wedding",
+                          "fontWeight": "$A:font/weight/semibold"
+                        },
+                        "A:bZ2Ux": {
+                          "enabled": false
+                        },
+                        "A:W5pLC": {
+                          "enabled": true,
+                          "icon": "check",
+                          "fill": "$A:component/sheet/item/check"
+                        }
+                      }
+                    },
+                    {
+                      "id": "FUfo6",
+                      "type": "ref",
+                      "ref": "A:FRtU1",
+                      "name": "Item Lumen Studio",
+                      "width": "fill_container",
+                      "descendants": {
+                        "A:MLkPM": {
+                          "icon": "camera",
+                          "enabled": false
+                        },
+                        "A:elAPX": {
+                          "content": "Lumen Studio"
+                        },
+                        "A:W5pLC": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "O2Hxjq",
+                      "type": "ref",
+                      "ref": "A:FRtU1",
+                      "name": "Item Rana Portrait",
+                      "width": "fill_container",
+                      "descendants": {
+                        "A:MLkPM": {
+                          "icon": "camera",
+                          "enabled": false
+                        },
+                        "A:elAPX": {
+                          "content": "Rana Portrait"
+                        },
+                        "A:W5pLC": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Q7zVFW",
+                      "name": "Footer",
+                      "width": "fill_container",
+                      "padding": [
+                        "$A:component/sheet/body/padding-y",
+                        "$A:component/sheet/body/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "lmb9E",
+                          "type": "ref",
+                          "ref": "A:aBT7T",
+                          "name": "CTA Buat workspace",
+                          "width": "fill_container",
+                          "descendants": {
+                            "A:fMNO1": {
+                              "enabled": true,
+                              "icon": "plus"
+                            },
+                            "A:xnhuK": {
+                              "content": "Buat workspace"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "frame",
+      "id": "BpGfx",
+      "x": 0,
+      "y": 4400,
+      "name": "D4 · Switching (list disabled) · desktop",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "layout": "none",
+      "children": [
+        {
+          "id": "s79cKi",
+          "type": "ref",
+          "ref": "A:y9uBJl",
+          "name": "Shell",
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 960,
+          "descendants": {
+            "A:fNszT/A:llfv5": {
+              "id": "OocHo",
+              "type": "ref",
+              "ref": "A:CInVy",
+              "name": "Nav Dasbor",
+              "width": "fill_container",
+              "descendants": {
+                "A:MpR9k": {
+                  "icon": "layout-grid"
+                },
+                "A:m6S2m": {
+                  "content": "Dasbor"
+                }
+              }
+            },
+            "A:fNszT/A:nHXqh/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:wwfj3/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:lz7Bj/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:P4ZpeX/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:V2Udn4/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:f1BvVe/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:I3aJo/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:fNszT/A:E2Dl5F/A:E6JiYt": {
+              "enabled": false
+            },
+            "A:Sw0yD/A:MST3f": {
+              "id": "Xxo2Q",
+              "type": "ref",
+              "ref": "A:ImEDW",
+              "name": "Page Header",
+              "width": "fill_container",
+              "descendants": {
+                "A:EPpbd": {
+                  "content": "Aster Wedding"
+                },
+                "A:Hh5tj": {
+                  "content": "Dasbor"
+                },
+                "A:HsrFT": {
+                  "content": "Dasbor"
+                },
+                "A:i8XPWU": {
+                  "content": "Ringkasan workspace Aster Wedding."
+                },
+                "A:ew9bb": {
+                  "enabled": false
+                }
+              }
+            },
+            "A:Sw0yD/A:d2hCuQ": {
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "KlpF0",
+                  "name": "Container",
+                  "width": 1096,
+                  "layout": "vertical",
+                  "gap": "$A:component/panel/app/content/gap",
+                  "children": [
+                    {
+                      "id": "N5GxFl",
+                      "type": "ref",
+                      "ref": "zAnx4",
+                      "name": "Placeholder",
+                      "width": "fill_container",
+                      "height": 240
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "w2Mf4v",
+          "type": "ref",
+          "ref": "A:I3q8f",
+          "name": "Workspace menu",
+          "x": 12,
+          "y": 115,
+          "width": 228,
+          "children": [
+            {
+              "type": "frame",
+              "id": "AUe19",
+              "name": "Items",
+              "width": "fill_container",
+              "layout": "vertical",
+              "children": [
+                {
+                  "id": "Lz2Xi",
+                  "type": "ref",
+                  "ref": "A:yNxME",
+                  "name": "Group label",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:n0wAh6": {
+                      "content": "PINDAH WORKSPACE"
+                    }
+                  }
+                },
+                {
+                  "id": "K8vu7N",
+                  "type": "ref",
+                  "ref": "A:qKcfI",
+                  "name": "Item Aster Wedding",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:vHwtA": {
+                      "content": "Aster Wedding"
+                    }
+                  }
+                },
+                {
+                  "id": "O1bxAf",
+                  "type": "ref",
+                  "ref": "A:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "YWHBS",
+                  "type": "ref",
+                  "ref": "A:e0gYs",
+                  "name": "Item Lumen Studio",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:vHwtA": {
+                      "content": "Lumen Studio"
+                    }
+                  }
+                },
+                {
+                  "id": "z0OgWF",
+                  "type": "ref",
+                  "ref": "A:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "D9ES0q",
+                  "type": "ref",
+                  "ref": "A:e0gYs",
+                  "name": "Item Rana Portrait",
+                  "width": "fill_container",
+                  "descendants": {
+                    "A:vHwtA": {
+                      "content": "Rana Portrait"
+                    }
+                  }
+                },
+                {
+                  "id": "DX8jO",
+                  "type": "ref",
+                  "ref": "A:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "type": "frame",
+                  "id": "LKCid",
+                  "name": "Footer",
+                  "width": "fill_container",
+                  "padding": [
+                    "$A:component/menu/item/padding-y",
+                    "$A:component/menu/item/padding-x"
+                  ],
+                  "children": [
+                    {
+                      "id": "LT9Mz",
+                      "type": "ref",
+                      "ref": "A:lBKcT",
+                      "name": "CTA Buat workspace",
+                      "width": "fill_container",
+                      "descendants": {
+                        "A:fMNO1": {
+                          "enabled": true,
+                          "icon": "plus"
+                        },
+                        "A:xnhuK": {
+                          "content": "Buat workspace"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LJtJd",
+      "type": "ref",
+      "ref": "A:c6qPz7",
+      "name": "M4 · Switching (list disabled) · phone",
+      "x": 2680,
+      "y": 4400,
+      "width": 390,
+      "height": 844,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:jqblo": {
+          "strokeWidth": 0
+        },
+        "A:nUiGs": {
+          "type": "frame",
+          "id": "HnBJg",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "A:n0MP5/A:K1jSfD": {
+          "content": "Dasbor"
+        },
+        "A:n0MP5/A:EYvag": {
+          "content": "Ringkasan workspace Aster Wedding."
+        },
+        "A:HvRky": {
+          "type": "frame",
+          "id": "gFbgb",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "lDSJa",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:SpGXb/A:uzabE/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:Ryjdm/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:YChMw/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:wTYuN": {
+          "id": "HuhTq",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        },
+        "A:Ey5pi": {
+          "enabled": true,
+          "width": 390,
+          "height": 844
+        },
+        "A:aQWCT": {
+          "children": [
+            {
+              "id": "Skhns",
+              "type": "ref",
+              "ref": "A:U0wHw",
+              "name": "Sheet · Pindah workspace",
+              "width": "fill_container",
+              "descendants": {
+                "A:bEyU3": {
+                  "content": "Pindah workspace"
+                },
+                "A:GyfP0": {
+                  "content": "3 workspace"
+                },
+                "A:CLpYz": {
+                  "type": "frame",
+                  "id": "xVG47",
+                  "name": "Items",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "id": "N87LxL",
+                      "type": "ref",
+                      "ref": "A:FRtU1",
+                      "name": "Item Aster Wedding",
+                      "width": "fill_container",
+                      "context": "Sheet Item · tone=selected. Current selection: checkmark on the trailing edge; Count off. Text: Label. Swap: Icon (lucide name). Spec: docs/design-system/components/bottom-sheet.md",
+                      "descendants": {
+                        "A:MLkPM": {
+                          "enabled": false
+                        },
+                        "A:elAPX": {
+                          "content": "Aster Wedding",
+                          "fontWeight": "$A:font/weight/semibold"
+                        },
+                        "A:bZ2Ux": {
+                          "enabled": false
+                        },
+                        "A:W5pLC": {
+                          "enabled": true,
+                          "icon": "check",
+                          "fill": "$A:component/sheet/item/check"
+                        }
+                      }
+                    },
+                    {
+                      "id": "po6sp",
+                      "type": "ref",
+                      "ref": "A:FRtU1",
+                      "name": "Item Lumen Studio",
+                      "width": "fill_container",
+                      "opacity": "$A:opacity/disabled",
+                      "descendants": {
+                        "A:MLkPM": {
+                          "icon": "camera",
+                          "enabled": false
+                        },
+                        "A:elAPX": {
+                          "content": "Lumen Studio"
+                        },
+                        "A:W5pLC": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "Jn8uX",
+                      "type": "ref",
+                      "ref": "A:FRtU1",
+                      "name": "Item Rana Portrait",
+                      "width": "fill_container",
+                      "opacity": "$A:opacity/disabled",
+                      "descendants": {
+                        "A:MLkPM": {
+                          "icon": "camera",
+                          "enabled": false
+                        },
+                        "A:elAPX": {
+                          "content": "Rana Portrait"
+                        },
+                        "A:W5pLC": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "r9FNl",
+                      "name": "Footer",
+                      "width": "fill_container",
+                      "padding": [
+                        "$A:component/sheet/body/padding-y",
+                        "$A:component/sheet/body/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "saUr5",
+                          "type": "ref",
+                          "ref": "A:V8sGx",
+                          "name": "CTA Buat workspace",
+                          "width": "fill_container",
+                          "descendants": {
+                            "A:fMNO1": {
+                              "enabled": true,
+                              "icon": "plus"
+                            },
+                            "A:xnhuK": {
+                              "content": "Buat workspace"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "CyFKd",
+      "type": "ref",
+      "ref": "A:y9uBJl",
+      "name": "D5 · Switch failed (retry) · desktop",
+      "x": 0,
+      "y": 5500,
+      "width": 1440,
+      "height": 960,
+      "descendants": {
+        "A:fNszT/A:llfv5": {
+          "id": "hmHhA",
+          "type": "ref",
+          "ref": "A:CInVy",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "A:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "A:m6S2m": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:fNszT/A:nHXqh/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:wwfj3/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:lz7Bj/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:P4ZpeX/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:V2Udn4/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:f1BvVe/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:I3aJo/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:E2Dl5F/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:Sw0yD/A:MST3f": {
+          "id": "J9ARNW",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Dasbor"
+            },
+            "A:HsrFT": {
+              "content": "Dasbor"
+            },
+            "A:i8XPWU": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:Sw0yD/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "MNzlf",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "SqrH8",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        },
+        "A:VJpuD": {
+          "enabled": true,
+          "children": [
+            {
+              "id": "mMEqN",
+              "type": "ref",
+              "ref": "A:C3PCyx",
+              "name": "Toast danger",
+              "width": 420
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "jc8OC",
+      "type": "ref",
+      "ref": "A:c6qPz7",
+      "name": "M5 · Switch failed (retry) · phone",
+      "x": 2680,
+      "y": 5500,
+      "width": 390,
+      "height": 844,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:jqblo": {
+          "strokeWidth": 0
+        },
+        "A:nUiGs": {
+          "type": "frame",
+          "id": "J1ILq",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "A:n0MP5/A:K1jSfD": {
+          "content": "Dasbor"
+        },
+        "A:n0MP5/A:EYvag": {
+          "content": "Ringkasan workspace Aster Wedding."
+        },
+        "A:HvRky": {
+          "type": "frame",
+          "id": "n4W5r",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "l4VHmF",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:SpGXb/A:uzabE/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:Ryjdm/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:YChMw/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:wTYuN": {
+          "id": "cT86e",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        },
+        "A:U4sG8K": {
+          "enabled": true,
+          "width": 390,
+          "height": 844,
+          "padding": [
+            62,
+            "$A:space/4",
+            0,
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "Rmnl2",
+              "type": "ref",
+              "ref": "A:C3PCyx",
+              "name": "Toast danger",
+              "width": "fill_container"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "E9mZiW",
+      "type": "ref",
+      "ref": "A:y9uBJl",
+      "name": "D6 · Pengaturan active · desktop",
+      "x": 0,
+      "y": 6600,
+      "width": 1440,
+      "height": 960,
+      "descendants": {
+        "A:fNszT/A:llfv5": {
+          "id": "WtnRd",
+          "type": "ref",
+          "ref": "A:K0UQ06",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "A:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "A:m6S2m": {
+              "content": "Dasbor"
+            },
+            "A:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "A:fNszT/A:nHXqh/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:wwfj3/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:lz7Bj/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:P4ZpeX/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:V2Udn4/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:f1BvVe/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:I3aJo/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:E2Dl5F": {
+          "id": "QLEyO",
+          "type": "ref",
+          "ref": "A:CInVy",
+          "name": "Nav Pengaturan",
+          "width": "fill_container",
+          "descendants": {
+            "A:MpR9k": {
+              "icon": "settings"
+            },
+            "A:m6S2m": {
+              "content": "Pengaturan"
+            }
+          }
+        },
+        "A:Sw0yD/A:MST3f": {
+          "id": "RRsHL",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Pengaturan"
+            },
+            "A:HsrFT": {
+              "content": "Pengaturan"
+            },
+            "A:i8XPWU": {
+              "content": "Kelola identitas brand, kontak, dan invoice workspace."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:Sw0yD/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "Z760Gd",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "Tsyvy",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "z2gaQ",
+      "type": "ref",
+      "ref": "A:c6qPz7",
+      "name": "M6 · Menu sheet open (header Menu, no switcher, no Invoice)",
+      "x": 2680,
+      "y": 6600,
+      "width": 390,
+      "height": 844,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:jqblo": {
+          "strokeWidth": 0
+        },
+        "A:nUiGs": {
+          "type": "frame",
+          "id": "sT9EO",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "A:n0MP5/A:K1jSfD": {
+          "content": "Pengaturan"
+        },
+        "A:n0MP5/A:EYvag": {
+          "content": "Kelola identitas brand, kontak, dan invoice workspace."
+        },
+        "A:HvRky": {
+          "type": "frame",
+          "id": "o65g7j",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "mFUSh",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:SpGXb/A:uzabE": {
+          "id": "QEiiZ",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Dasbor",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "layout-grid"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:SpGXb/A:Ryjdm/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:YChMw/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:wTYuN": {
+          "id": "w7GOt",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        },
+        "A:Ey5pi": {
+          "enabled": true,
+          "width": 390,
+          "height": 844
+        },
+        "A:xSveZ/A:yurxA": {
+          "enabled": false
+        },
+        "A:xSveZ/A:HdCxv": {
+          "enabled": false
+        },
+        "A:xSveZ/A:HdCxv/A:bZ2Ux": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "id": "BwkFF",
+      "type": "ref",
+      "ref": "A:y9uBJl",
+      "name": "D7 · Segera hadir (Proyek) · desktop",
+      "x": 0,
+      "y": 7700,
+      "width": 1440,
+      "height": 960,
+      "descendants": {
+        "A:fNszT/A:llfv5": {
+          "id": "s6JPyf",
+          "type": "ref",
+          "ref": "A:K0UQ06",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "A:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "A:m6S2m": {
+              "content": "Dasbor"
+            },
+            "A:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "A:fNszT/A:nHXqh": {
+          "id": "fHAti",
+          "type": "ref",
+          "ref": "A:CInVy",
+          "name": "Nav Proyek",
+          "width": "fill_container",
+          "descendants": {
+            "A:MpR9k": {
+              "icon": "folder-kanban"
+            },
+            "A:m6S2m": {
+              "content": "Proyek"
+            }
+          }
+        },
+        "A:fNszT/A:wwfj3/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:lz7Bj/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:P4ZpeX/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:V2Udn4/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:f1BvVe/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:I3aJo/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:E2Dl5F/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:Sw0yD/A:MST3f": {
+          "id": "BautO",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Proyek"
+            },
+            "A:HsrFT": {
+              "content": "Proyek"
+            },
+            "A:i8XPWU": {
+              "content": "Segera hadir."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:Sw0yD/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "scy8V",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "hp18G",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "MkXOo",
+      "type": "ref",
+      "ref": "A:c6qPz7",
+      "name": "M7 · Segera hadir (Proyek, via CTA +) · phone",
+      "x": 2680,
+      "y": 7700,
+      "width": 390,
+      "height": 844,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:jqblo": {
+          "strokeWidth": 0
+        },
+        "A:nUiGs": {
+          "type": "frame",
+          "id": "c7T6P",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "A:n0MP5/A:K1jSfD": {
+          "content": "Proyek"
+        },
+        "A:n0MP5/A:EYvag": {
+          "content": "Segera hadir."
+        },
+        "A:HvRky": {
+          "type": "frame",
+          "id": "WUHvY",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "FUXRB",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:SpGXb/A:uzabE": {
+          "id": "nmGks",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Dasbor",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "layout-grid"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:SpGXb/A:Ryjdm": {
+          "id": "qrnzf",
+          "type": "ref",
+          "ref": "A:bKADv",
+          "name": "Tab Proyek",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "folder-kanban"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Proyek"
+            }
+          }
+        },
+        "A:SpGXb/A:YChMw/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:wTYuN": {
+          "id": "DYPEL",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "gypgM",
+      "type": "ref",
+      "ref": "A:y9uBJl",
+      "name": "D8 · Profil (no active nav) · desktop",
+      "x": 0,
+      "y": 8800,
+      "width": 1440,
+      "height": 960,
+      "descendants": {
+        "A:fNszT/A:llfv5": {
+          "id": "I0Fw7b",
+          "type": "ref",
+          "ref": "A:K0UQ06",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "A:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "A:m6S2m": {
+              "content": "Dasbor"
+            },
+            "A:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "A:fNszT/A:nHXqh/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:wwfj3/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:lz7Bj/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:P4ZpeX/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:V2Udn4/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:f1BvVe/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:I3aJo/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:E2Dl5F/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:Sw0yD/A:MST3f": {
+          "id": "nqTxQ",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Profil"
+            },
+            "A:HsrFT": {
+              "content": "Profil"
+            },
+            "A:i8XPWU": {
+              "content": "Kelola nama, email, dan kata sandi akunmu."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:Sw0yD/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "wLj4p",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "XCXYq",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "Ezws1",
+      "type": "ref",
+      "ref": "A:c6qPz7",
+      "name": "M8 · Profil (no active tab) · phone",
+      "x": 2680,
+      "y": 8800,
+      "width": 390,
+      "height": 844,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:jqblo": {
+          "strokeWidth": 0
+        },
+        "A:nUiGs": {
+          "type": "frame",
+          "id": "VUmKt",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "A:n0MP5/A:K1jSfD": {
+          "content": "Profil"
+        },
+        "A:n0MP5/A:EYvag": {
+          "content": "Kelola nama, email, dan kata sandi akunmu."
+        },
+        "A:HvRky": {
+          "type": "frame",
+          "id": "j8Ryv",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "RfxG9",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:SpGXb/A:uzabE": {
+          "id": "SwW31",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Dasbor",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "layout-grid"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:SpGXb/A:Ryjdm/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:YChMw/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:wTYuN": {
+          "id": "deFgV",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "AjndX",
+      "type": "ref",
+      "ref": "A:y9uBJl",
+      "name": "D9 · Notifications badge (unread 3) · desktop",
+      "x": 0,
+      "y": 11000,
+      "width": 1440,
+      "height": 960,
+      "descendants": {
+        "A:fNszT/A:llfv5": {
+          "id": "ZGG7w",
+          "type": "ref",
+          "ref": "A:CInVy",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "A:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "A:m6S2m": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:fNszT/A:nHXqh/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:wwfj3/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:lz7Bj/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:P4ZpeX/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:V2Udn4/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:f1BvVe/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:I3aJo/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:E2Dl5F/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:Sw0yD/A:MST3f": {
+          "id": "ZsubB",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Dasbor"
+            },
+            "A:SEgzd/A:w1Fg4G": {
+              "enabled": true
+            },
+            "A:SEgzd/A:w1Fg4G/A:hnJrZ": {
+              "content": "3"
+            },
+            "A:HsrFT": {
+              "content": "Dasbor"
+            },
+            "A:i8XPWU": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:Sw0yD/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "A410pR",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "SvvjO",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "U3O586",
+      "type": "ref",
+      "ref": "A:c6qPz7",
+      "name": "M10 · Notifications badge (unread 3) · phone",
+      "x": 2680,
+      "y": 11000,
+      "width": 390,
+      "height": 844,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:jqblo": {
+          "strokeWidth": 0
+        },
+        "A:nUiGs": {
+          "type": "frame",
+          "id": "H0HGO",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "A:n0MP5/A:K7TmN/A:w1Fg4G": {
+          "enabled": true
+        },
+        "A:n0MP5/A:K7TmN/A:w1Fg4G/A:hnJrZ": {
+          "content": "3"
+        },
+        "A:n0MP5/A:K1jSfD": {
+          "content": "Dasbor"
+        },
+        "A:n0MP5/A:EYvag": {
+          "content": "Ringkasan workspace Aster Wedding."
+        },
+        "A:HvRky": {
+          "type": "frame",
+          "id": "yCQ6g",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "NPGJy",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:SpGXb/A:uzabE/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:Ryjdm/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:YChMw/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:wTYuN": {
+          "id": "HDrkL",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "frame",
+      "id": "S32Sbc",
+      "x": 1560,
+      "y": 5500,
+      "name": "T5 · Switch failed (toast) · tablet",
+      "clip": true,
+      "width": 1024,
+      "height": 768,
+      "layout": "none",
+      "children": [
+        {
+          "id": "q92DaX",
+          "type": "ref",
+          "ref": "A:lQnS8",
+          "name": "Tablet shell",
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 768,
+          "fill": "$A:color/semantic/surface/muted",
+          "descendants": {
+            "A:f4EPF6/A:HbcMi": {
+              "fill": "$A:component/sidebar/workspace/background"
+            },
+            "A:f4EPF6/A:z3corP": {
+              "icon": "chevrons-up-down",
+              "fill": "$A:color/semantic/text/muted",
+              "width": 16,
+              "height": 16
+            },
+            "A:f4EPF6/A:lngYe": {
+              "id": "qjElv",
+              "type": "ref",
+              "ref": "A:OKf00",
+              "name": "Nav rail active",
+              "descendants": {
+                "A:r4Ryb": {
+                  "icon": "layout-grid"
+                },
+                "A:mKYsh": {
+                  "enabled": false
+                }
+              }
+            },
+            "A:f4EPF6/A:dqxPf/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:h5Vew/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:t9sZGC/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:x1rRy/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:cYVXp/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:OUye0/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:ycw6L/A:mKYsh": {
+              "enabled": false
+            },
+            "A:f4EPF6/A:o6fNtV/A:mKYsh": {
+              "enabled": false
+            },
+            "A:QhPny/A:MST3f": {
+              "id": "cr50G",
+              "type": "ref",
+              "ref": "A:ImEDW",
+              "name": "Page Header",
+              "width": "fill_container",
+              "descendants": {
+                "A:EPpbd": {
+                  "content": "Aster Wedding"
+                },
+                "A:Hh5tj": {
+                  "content": "Dasbor"
+                },
+                "A:HsrFT": {
+                  "content": "Dasbor"
+                },
+                "A:i8XPWU": {
+                  "content": "Ringkasan workspace Aster Wedding."
+                },
+                "A:ew9bb": {
+                  "enabled": false
+                }
+              }
+            },
+            "A:QhPny/A:d2hCuQ": {
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "MAJfB",
+                  "name": "Container",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$A:component/panel/app/content/gap",
+                  "children": [
+                    {
+                      "id": "S3eZhV",
+                      "type": "ref",
+                      "ref": "zAnx4",
+                      "name": "Placeholder",
+                      "width": "fill_container",
+                      "height": 240
+                    }
+                  ]
+                }
+              ]
+            },
+            "A:z9osf8": {
+              "enabled": true,
+              "children": [
+                {
+                  "id": "RAHH8",
+                  "type": "ref",
+                  "ref": "A:C3PCyx",
+                  "name": "Toast danger",
+                  "width": 420
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "V8au9F",
+      "type": "ref",
+      "ref": "A:y9uBJl",
+      "name": "D10 · Modal layer: Buat workspace · desktop",
+      "x": 0,
+      "y": 12100,
+      "width": 1440,
+      "height": 960,
+      "descendants": {
+        "A:fNszT/A:llfv5": {
+          "id": "ywK4i",
+          "type": "ref",
+          "ref": "A:CInVy",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "A:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "A:m6S2m": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:fNszT/A:nHXqh/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:wwfj3/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:lz7Bj/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:P4ZpeX/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:V2Udn4/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:f1BvVe/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:I3aJo/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:fNszT/A:E2Dl5F/A:E6JiYt": {
+          "enabled": false
+        },
+        "A:Sw0yD/A:MST3f": {
+          "id": "agauh",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Dasbor"
+            },
+            "A:HsrFT": {
+              "content": "Dasbor"
+            },
+            "A:i8XPWU": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:Sw0yD/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "YFjTs",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "JFDE5",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        },
+        "A:fwm7P": {
+          "enabled": true
+        },
+        "A:hnTfu": {
+          "children": [
+            {
+              "id": "HIZdI",
+              "type": "ref",
+              "ref": "A:cdSbf",
+              "name": "Create workspace modal",
+              "descendants": {
+                "A:V8uAA": {
+                  "content": "Buat workspace"
+                },
+                "A:PPg3y": {
+                  "content": "Satu workspace untuk satu brand. Klien, proyek, dan invoice-nya terpisah."
+                },
+                "A:c5Prsw": {
+                  "type": "frame",
+                  "id": "QtfHA",
+                  "name": "Body",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$A:component/modal/body/gap",
+                  "padding": "$A:component/modal/body/padding",
+                  "children": [
+                    {
+                      "id": "uhF2n",
+                      "type": "ref",
+                      "ref": "A:HHNPk",
+                      "name": "Workspace name field",
+                      "width": "fill_container",
+                      "descendants": {
+                        "A:Gmk0c": {
+                          "content": "Nama workspace"
+                        },
+                        "A:RsEBb": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:VnKAn": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:MePi8": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:tvTDd": {
+                          "enabled": true,
+                          "content": "mis. Aster Family"
+                        },
+                        "A:c67yIW/A:CykHo": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:Qp2xi": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:UFzsV": {
+                          "enabled": false
+                        },
+                        "A:i0umVC": {
+                          "enabled": true
+                        },
+                        "A:I0aOa6": {
+                          "enabled": false
+                        },
+                        "A:uh4XA": {
+                          "content": "Prefiks invoice dibuat dari nama; bisa diubah nanti."
+                        }
+                      }
+                    }
+                  ]
+                },
+                "A:kBv0h/A:xnhuK": {
+                  "content": "Batal"
+                },
+                "A:N6Nu59/A:xnhuK": {
+                  "content": "Buat workspace"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "BfARN",
+      "type": "ref",
+      "ref": "A:lQnS8",
+      "name": "T6 · Modal layer: Buat workspace · tablet",
+      "x": 1560,
+      "y": 12100,
+      "width": 1024,
+      "height": 768,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:f4EPF6/A:HbcMi": {
+          "fill": "$A:component/sidebar/workspace/background"
+        },
+        "A:f4EPF6/A:z3corP": {
+          "icon": "chevrons-up-down",
+          "fill": "$A:color/semantic/text/muted",
+          "width": 16,
+          "height": 16
+        },
+        "A:f4EPF6/A:lngYe": {
+          "id": "k0O6dJ",
+          "type": "ref",
+          "ref": "A:OKf00",
+          "name": "Nav rail active",
+          "descendants": {
+            "A:r4Ryb": {
+              "icon": "layout-grid"
+            },
+            "A:mKYsh": {
+              "enabled": false
+            }
+          }
+        },
+        "A:f4EPF6/A:dqxPf/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:h5Vew/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:t9sZGC/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:x1rRy/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:cYVXp/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:OUye0/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:ycw6L/A:mKYsh": {
+          "enabled": false
+        },
+        "A:f4EPF6/A:o6fNtV/A:mKYsh": {
+          "enabled": false
+        },
+        "A:QhPny/A:MST3f": {
+          "id": "JxwuG",
+          "type": "ref",
+          "ref": "A:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "A:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "A:Hh5tj": {
+              "content": "Dasbor"
+            },
+            "A:HsrFT": {
+              "content": "Dasbor"
+            },
+            "A:i8XPWU": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "A:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "A:QhPny/A:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "Vu0Om",
+              "name": "Container",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$A:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "jErpK",
+                  "type": "ref",
+                  "ref": "zAnx4",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        },
+        "A:bbU0M": {
+          "enabled": true
+        },
+        "A:o14Rz": {
+          "children": [
+            {
+              "id": "I4zUR0",
+              "type": "ref",
+              "ref": "A:cdSbf",
+              "name": "Create workspace modal",
+              "descendants": {
+                "A:V8uAA": {
+                  "content": "Buat workspace"
+                },
+                "A:PPg3y": {
+                  "content": "Satu workspace untuk satu brand. Klien, proyek, dan invoice-nya terpisah."
+                },
+                "A:c5Prsw": {
+                  "type": "frame",
+                  "id": "edz8D",
+                  "name": "Body",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$A:component/modal/body/gap",
+                  "padding": "$A:component/modal/body/padding",
+                  "children": [
+                    {
+                      "id": "YskpQ",
+                      "type": "ref",
+                      "ref": "A:HHNPk",
+                      "name": "Workspace name field",
+                      "width": "fill_container",
+                      "descendants": {
+                        "A:Gmk0c": {
+                          "content": "Nama workspace"
+                        },
+                        "A:RsEBb": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:VnKAn": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:MePi8": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:tvTDd": {
+                          "enabled": true,
+                          "content": "mis. Aster Family"
+                        },
+                        "A:c67yIW/A:CykHo": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:Qp2xi": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:UFzsV": {
+                          "enabled": false
+                        },
+                        "A:i0umVC": {
+                          "enabled": true
+                        },
+                        "A:I0aOa6": {
+                          "enabled": false
+                        },
+                        "A:uh4XA": {
+                          "content": "Prefiks invoice dibuat dari nama; bisa diubah nanti."
+                        }
+                      }
+                    }
+                  ]
+                },
+                "A:kBv0h/A:xnhuK": {
+                  "content": "Batal"
+                },
+                "A:N6Nu59/A:xnhuK": {
+                  "content": "Buat workspace"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "XqPGA",
+      "type": "ref",
+      "ref": "A:c6qPz7",
+      "name": "M11 · Sheet layer: Buat workspace · phone",
+      "x": 2680,
+      "y": 12100,
+      "width": 390,
+      "height": 844,
+      "fill": "$A:color/semantic/surface/muted",
+      "descendants": {
+        "A:jqblo": {
+          "strokeWidth": 0
+        },
+        "A:nUiGs": {
+          "type": "frame",
+          "id": "Nqnzg",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "A:n0MP5/A:K1jSfD": {
+          "content": "Dasbor"
+        },
+        "A:n0MP5/A:EYvag": {
+          "content": "Ringkasan workspace Aster Wedding."
+        },
+        "A:HvRky": {
+          "type": "frame",
+          "id": "tL3wZ",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "ecSaT",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:SpGXb/A:uzabE/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:Ryjdm/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:YChMw/A:qSiIY": {
+          "enabled": false
+        },
+        "A:SpGXb/A:wTYuN": {
+          "id": "B46cXY",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        },
+        "A:Ey5pi": {
+          "enabled": true,
+          "width": 390,
+          "height": 844
+        },
+        "A:aQWCT": {
+          "children": [
+            {
+              "id": "BayEs",
+              "type": "ref",
+              "ref": "A:vSBbR",
+              "name": "Create workspace sheet",
+              "width": "fill_container",
+              "descendants": {
+                "A:di5Wv": {
+                  "content": "Buat workspace"
+                },
+                "A:fmisv": {
+                  "content": "Satu workspace untuk satu brand. Klien, proyek, dan invoice-nya terpisah."
+                },
+                "A:XCxn4": {
+                  "type": "frame",
+                  "id": "nqJA8",
+                  "name": "Body",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$A:component/sheet/body/gap",
+                  "padding": [
+                    "$A:component/sheet/body/padding-y",
+                    "$A:component/sheet/body/padding-x"
+                  ],
+                  "children": [
+                    {
+                      "id": "DH3Fd",
+                      "type": "ref",
+                      "ref": "A:HHNPk",
+                      "name": "Workspace name field",
+                      "width": "fill_container",
+                      "descendants": {
+                        "A:Gmk0c": {
+                          "content": "Nama workspace"
+                        },
+                        "A:RsEBb": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:VnKAn": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:MePi8": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:tvTDd": {
+                          "enabled": true,
+                          "content": "mis. Aster Family"
+                        },
+                        "A:c67yIW/A:CykHo": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:Qp2xi": {
+                          "enabled": false
+                        },
+                        "A:c67yIW/A:UFzsV": {
+                          "enabled": false
+                        },
+                        "A:i0umVC": {
+                          "enabled": true
+                        },
+                        "A:I0aOa6": {
+                          "enabled": false
+                        },
+                        "A:uh4XA": {
+                          "content": "Prefiks invoice dibuat dari nama; bisa diubah nanti."
+                        }
+                      }
+                    }
+                  ]
+                },
+                "A:O3xBi": {
+                  "width": "fill_container"
+                },
+                "A:O3xBi/A:xnhuK": {
+                  "content": "Buat workspace"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "CPIWh",
+      "type": "ref",
+      "ref": "A:XHlWT",
+      "name": "M9 · Sub-page (compact bar) · phone · light",
+      "x": 2680,
+      "y": 9900,
+      "width": 390,
+      "height": 844,
+      "descendants": {
+        "A:GaeSf/A:I0gdll": {
+          "content": "Bagikan gallery"
+        },
+        "A:GaeSf/A:jbTiE": {
+          "content": "Template pesan"
+        },
+        "A:GaeSf/A:wS30M": {
+          "type": "frame",
+          "id": "a3EdN",
+          "name": "Actions",
+          "gap": "$A:space/2",
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "BkbmA",
+              "type": "ref",
+              "ref": "A:iQ7e5",
+              "name": "Action",
+              "descendants": {
+                "A:xnhuK": {
+                  "content": "Simpan"
+                }
+              }
+            }
+          ]
+        },
+        "A:JOcL3": {
+          "type": "frame",
+          "id": "X6egN",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "KwdLc",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:F4VJ1u/A:uzabE": {
+          "id": "LDKSw",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Dasbor",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "layout-grid"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:F4VJ1u/A:Ryjdm": {
+          "id": "Uq1CG",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Proyek",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "folder-kanban"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Proyek"
+            }
+          }
+        },
+        "A:F4VJ1u/A:YChMw": {
+          "id": "Sxqtp",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Klien",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "users"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Klien"
+            }
+          }
+        },
+        "A:F4VJ1u/A:wTYuN": {
+          "id": "Hl6Fu",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "jLxYm",
+      "type": "ref",
+      "ref": "A:XHlWT",
+      "name": "M9d · Sub-page (compact bar) · phone · dark",
+      "x": 3170,
+      "y": 9900,
+      "width": 390,
+      "height": 844,
+      "theme": {
+        "A:mode": "dark"
+      },
+      "descendants": {
+        "A:GaeSf/A:I0gdll": {
+          "content": "Bagikan gallery"
+        },
+        "A:GaeSf/A:jbTiE": {
+          "content": "Template pesan"
+        },
+        "A:GaeSf/A:wS30M": {
+          "type": "frame",
+          "id": "Bi7LV",
+          "name": "Actions",
+          "gap": "$A:space/2",
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "O91cX",
+              "type": "ref",
+              "ref": "A:iQ7e5",
+              "name": "Action",
+              "descendants": {
+                "A:xnhuK": {
+                  "content": "Simpan"
+                }
+              }
+            }
+          ]
+        },
+        "A:JOcL3": {
+          "type": "frame",
+          "id": "HONAe",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "utefZ",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:F4VJ1u/A:uzabE": {
+          "id": "K119DE",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Dasbor",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "layout-grid"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:F4VJ1u/A:Ryjdm": {
+          "id": "CQXE4",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Proyek",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "folder-kanban"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Proyek"
+            }
+          }
+        },
+        "A:F4VJ1u/A:YChMw": {
+          "id": "J3jSy",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Klien",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "users"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Klien"
+            }
+          }
+        },
+        "A:F4VJ1u/A:wTYuN": {
+          "id": "Jchrv",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "b7VW9",
+      "type": "ref",
+      "ref": "A:XHlWT",
+      "name": "M12 · Sub-page without action (Detail klien) · phone",
+      "x": 3660,
+      "y": 9900,
+      "width": 390,
+      "height": 844,
+      "descendants": {
+        "A:GaeSf/A:I0gdll": {
+          "content": "Rina & Dimas"
+        },
+        "A:GaeSf/A:jbTiE": {
+          "content": "Klien"
+        },
+        "A:JOcL3": {
+          "type": "frame",
+          "id": "A5u6Br",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$A:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$A:component/panel/app/radius",
+            "$A:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$A:space/4",
+          "padding": [
+            "$A:space/5",
+            "$A:space/4"
+          ],
+          "children": [
+            {
+              "id": "Bz2L8",
+              "type": "ref",
+              "ref": "zAnx4",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "A:F4VJ1u/A:uzabE": {
+          "id": "HzVt8",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Dasbor",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "layout-grid"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "A:F4VJ1u/A:Ryjdm": {
+          "id": "aroZV",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Proyek",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "folder-kanban"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Proyek"
+            }
+          }
+        },
+        "A:F4VJ1u/A:YChMw": {
+          "id": "mvype",
+          "type": "ref",
+          "ref": "A:bKADv",
+          "name": "Tab Klien",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "users"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Klien"
+            }
+          }
+        },
+        "A:F4VJ1u/A:wTYuN": {
+          "id": "EOtHm",
+          "type": "ref",
+          "ref": "A:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "A:Tz5za": {
+              "icon": "receipt"
+            },
+            "A:qSiIY": {
+              "enabled": false
+            },
+            "A:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "variables": {
+    "font/size/heading": {
+      "type": "number",
+      "value": 26
+    },
+    "font/letter-spacing/heading": {
+      "type": "number",
+      "value": -0.6
+    }
+  },
+  "imports": {
+    "A": "../../design-system/design-system.lib.pen"
+  },
+  "fileToken": "33c55eed-4698-4732-85f8-2f9905c302f6"
+}

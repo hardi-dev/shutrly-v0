@@ -31,13 +31,42 @@ Status: APPROVED (Owner 2026-09-27) · Pencil source: [workspace.pen](workspace.
 | 9648 | Create workspace: duplicate name | `IZXw3` | `qe9tC` | |
 | 10768 | Create workspace: processing | `VPvsS` | `vUYBV` | "Membuat workspace…", helper "Prefiks invoice: AF" |
 | 11888 | "Segera hadir" (Proyek as the example) | `B9WOJ` | `PlBRK` | SPEC GAP-F02-1 option (c), AC-WS-025 |
-| 13008 | Settings: filled | `lEtZt` | `P1z3XX` | Sections Identitas brand · Kontak · Invoice in the 720 column; currency shown as a disabled field (IDR) |
-| 14488 | Settings: field errors | `RCZ3C` | `a944D` | Invalid email, prefix "A" |
-| 15968 | Settings: saved | `V3HqRv` | `hTxoz` | Alert Success "Perubahan tersimpan" |
-| 17448 | Settings: server error | `Qbg5K` | `HRSHO` | Alert Danger; the values are kept |
-| 18928 | Workspace not found | `JJ8Ex` | `QUMXc` | Same response for "not yours" and "doesn't exist" (A-9) |
+| 13008 | Settings: filled | `EjWRU` | `NurYs` | **v3 redesign (2026-10-01).** Page Header "Aster Wedding › Pengaturan", title *Pengaturan*; one card per section (Identitas brand · Kontak · Invoice) in the 720 column; currency is a disabled field (IDR) |
+| 14488 | Settings: field errors | `h8USKA` | `cNB0a` | Text Field/Error on the email ("halo@aster") and the prefix ("A") |
+| 15968 | Settings: saved | `bMevr` | `qTVht` | **Toast/Success** "Perubahan tersimpan" (replaces the inline Alert, Owner 2026-10-01) |
+
+| 17448 | Settings: server error | `NRt4P` | `QbNc2` | Inline Alert/Danger above the first card; the values are kept |
+| 19048 | Workspace not found | `JJ8Ex` | `QUMXc` | Same response for "not yours" and "doesn't exist" (A-9) |
 
 Select workspace was designed and then **removed** after research: sign-in always opens the most recently opened workspace (BR-WS-006 amended, AC-WS-010 deprecated, Owner 2026-09-27).
+
+## Settings v3 redesign (2026-10-01)
+
+The Settings frames were rebuilt on Shell v3 (F-17) and rules v3.1. The old frames `lEtZt`, `P1z3XX`, `RCZ3C`, `a944D`, `V3HqRv`, `hTxoz`, `Qbg5K` and `HRSHO` were replaced. The *Not found* row moved to y 19048 to make room for the taller frames.
+
+- **Desktop (App Shell C30):**
+  - Page Header C40: breadcrumb Parent is the workspace, Current is *Pengaturan*; title *Pengaturan*; subtitle "Atur identitas brand, kontak, dan format invoice workspace ini.";
+  - the hero action is **off**, so the one primary action per region is the form's *Simpan perubahan*;
+  - the Pengaturan Nav Item is active (N1).
+- **Mobile (Mobile App Shell C35):**
+  - **Mobile Header** (`G:o8T8zb`), as on the implemented Dasbor: Workspace Pill *Aster Wedding*; Cari · Notifikasi · Menu; title *Pengaturan* (heading 26); subtitle "Identitas brand, kontak, dan invoice.". Instances: `NIY9k`, `nWDi7`, `MnkZZ`, `GudxL`. The Owner tried the Compact Bar on 2026-10-01 and reverted it, because Pengaturan is a menu destination (F-17 S-A4), not a sub-page.
+  - Content is the canvas sheet, as on Dasbor: `surface.canvas` with top corners `panel.app.radius` and padding `space.5`/`space.4`;
+  - no Bottom Nav tab is active, because Pengaturan is a menu destination (F-17 S-A4);
+  - the fifth tab is *Invoice*.
+- **Layout:**
+  - centered narrow content, a 720 column (`size.content-narrow`);
+  - desktop sections are separated by `panel.app.content.gap` (28); mobile content uses `space.6` between cards and `space.4` padding;
+  - the actions row is trailing on desktop and full width (Button LG) on mobile.
+- **Section Card** (library C43, promoted from this design on 2026-10-01; spec [section-card.md](../../design-system/components/section-card.md)):
+  - desktop uses `G:rHONT` Section Card/Default; mobile uses `G:lYGAJ` Section Card/Compact;
+  - Title and Description are overridden per section (Identitas brand · Kontak · Invoice); the Actions slot stays empty;
+  - the Content slot is filled with the fields, using `section-card.content.gap` and `section-card.content.padding` (Compact: `compact.content.padding`);
+  - field order and spacing are unchanged: `space.4` between fields (SP4); label → field stays `input.gap` inside the Text Field.
+- **Feedback:**
+  - Saved: Toast/Success in the App Shell toast layer. It is transient, so it confirms the save without moving the form.
+  - Server error: inline Alert/Danger. It persists and asks the Owner to retry (alert.md: inline, no timer).
+  - Field errors: Text Field/Error. The server's field errors map onto their fields.
+- **Code impact:** the implemented settings page (F-02 Iteration 11) still uses the old flat sections and the Success alert. The section cards and the toast feedback are a follow-up build task, and need new HTML exports.
 
 ## Component usage
 
@@ -54,7 +83,7 @@ Every entry is a linked instance of `design-system.lib.pen` (prefix `G:`), excep
 | **Text Field** ([text-field.md](../../design-system/components/text-field.md), C18) | /Default `G:HHNPk`, /Focus `G:mZcc4`, /Error `G:AVpMa`, /Disabled `G:Q64HTj` | Onboarding, create workspace, settings (name, brand name, email, phone, prefix, currency) | Label, value or placeholder, "(opsional)", helper or error text. The leading icon, prefix and shortcut are off. | ✅ Yes: `src/ui/primitives/text-field` (Default, Focus, Error, Disabled/read-only, helper, optional). Missing: the trailing error icon (F-00 D-1 / F-4). |
 | **Textarea** ([textarea.md](../../design-system/components/textarea.md), C04) | /Default `G:t7L0yL` | Settings address | Value on, placeholder off, height 96. The label is a separate text row using the `component/input/label` and `input/helper` tokens, because the Textarea has no label. | ❌ No |
 | **Button** ([button.md](../../design-system/components/button.md), C01) | Primary/MD/Default `G:Q49yf7`, Primary/MD/Disabled `G:lBKcT`, Primary/LG/Default `G:aBT7T`, Primary/LG/Disabled `G:V8sGx`, Secondary/MD/Default `G:JmfmZ` | Primary MD: onboarding, desktop save and create. Primary LG: mobile sheet and settings actions. Secondary: "Lengkapi branding", "Kembali ke Dasbor". | Label; Disabled = processing ("Membuat workspace…") | ✅ Yes: `src/ui/primitives/button` (primary/secondary/danger × md/lg; Disabled through `isDisabled`) |
-| **Alert** ([alert.md](../../design-system/components/alert.md), C24) | /Danger `G:F3GrC5`, /Success `G:E4PkTw` | Onboarding server error, settings saved and server error | Title and body. Action off; Close off. | ⚠️ Partial: `src/ui/patterns/alert` has only the `info` and `danger` tones. **Success must be added** for settings saved. |
+| **Alert** ([alert.md](../../design-system/components/alert.md), C24) | /Danger `G:F3GrC5` (/Success `G:E4PkTw` no longer used in settings since 2026-10-01) | Onboarding server error, settings server error | Title and body. Action off; Close off. | ⚠️ Partial: `src/ui/patterns/alert` has only the `info` and `danger` tones. **Success must be added** for settings saved. |
 | **Menu** ([menu.md](../../design-system/components/menu.md), C10) | `G:g6dKmz` | Desktop switcher `Y20OZ` | Items slot filled | ❌ No |
 | **Menu Item** ([menu-item.md](../../design-system/components/menu-item.md), C09) | /Default `G:iSqRB`, /Selected `G:qKcfI` | Desktop switcher | Icon camera or plus; label. Selected = current workspace. | ❌ No |
 | **Menu Group Label** / **Menu Divider** (C10) | `G:yNxME` / `G:z7QON` | Desktop switcher | "PINDAH WORKSPACE" | ❌ No |
@@ -63,6 +92,10 @@ Every entry is a linked instance of `design-system.lib.pen` (prefix `G:`), excep
 | **Sheet Item** (C32) | /Default `G:FRtU1` | Mobile switcher sheet | Icon and label; Count used as the "Aktif" badge (no selected variant, see Library findings) | ❌ No |
 | **Icon** ([icon.md](../../design-system/components/icon.md)) | lucide | Every screen | — | ✅ Yes: `src/ui/primitives/icon`. The registry must add the new icons: camera, chevrons-up-down, layout-grid, folder-kanban, users, receipt, package, user-round-cog, message-square-text, share-2, settings, menu, plus, check, chevron-right, search-x, panel-left, log-out, x. |
 | **Workspace / Editorial preview** (local) | `UTew4` | Onboarding desktop, 4 frames | Instance with no overrides | ⚠️ Partial: `src/features/auth/ui/editorial-panel` renders the mosaic and headline. It needs a slot to replace the headline with the sidebar-preview card, and the card itself is new. |
+| **Page Header** ([page-header.md](../../design-system/components/page-header.md), C40), nested in App Shell | — | Settings (desktop) | Parent, Current, Title, Subtitle; Actions off | Shell v3 (F-17) |
+| **Mobile Header** (C35, `G:o8T8zb`), nested | — | Settings (mobile) | Workspace pill, Title, Subtitle | Shell v3 (F-17) |
+| **Section Card** ([section-card.md](../../design-system/components/section-card.md), C43) | /Default `G:rHONT`, /Compact `G:lYGAJ` | Settings (desktop, mobile), 3 per frame | Title, Description; Content slot filled with the fields | ❌ No: new 2026-10-01 |
+| **Toast/Success** (App Shell / Mobile App Shell toast layer) | — | Settings saved | Layer enabled; body "Nama di sidebar dan branding untuk klien sudah diperbarui."; on mobile the layer is resized to 390 × 844 (canvas only) | Shell v3 (F-17) |
 
 ## Navigation (A-7 as changed by the Owner)
 
@@ -85,6 +118,7 @@ All UI text is Indonesian and identical on desktop and mobile (checked 2026-09-2
 | **G4: no hard-coded values** | **Exceptions:** (1) The onboarding widths 600/420 and the editorial padding 64 are literal because `size/auth-panel`, `size/auth-form` and `space/16` are in `tokens.json` but not yet in the Pencil variables. This is drift F-6 from the F-01 verification, and `auth.pen` has the same exception. (2) In the preview card, the card width 360 and the logo mark 14 and workspace mark 20 sizes are literal, because Pencil can't bind sizes. The code uses `size.editorial-card`, `size.mark-sm` and `size.mark-md` (GAP-F02-3). The shadow is bound to `elevation.2` (2026-09-27). (3) Mobile frames override the Overlay to 390 × 844 (see Library findings). |
 | G5: foreground/background pairing | Pass (library components; `accent/soft` with `accent/soft-fg`) |
 | SP1–SP11: spacing and insets | Pass after the 2026-09-27 fix: the modal and sheet bodies use `component/modal/body/*` and `component/sheet/body/*`; mobile content uses gap `space/4` as the library slot does; the settings column follows the centered 720 layout (`size/content-narrow`). |
+| Settings v3 (2026-10-01) | G1–G3 pass: the sections are Section Card (C43) instances bound to `component.section-card.*`; the other library instances keep their component tokens. G4 exception: the width of the 720 column is a literal, because Pencil can't bind sizes; the code uses `size.content-narrow` (layout rule). SP1–SP4 and SP9 pass: 16 fields < 20–24 card insets < 28 sections; card padding (24) ≤ panel padding (28/40). Elevation §6: the cards are flat. |
 | SP5: no padding overrides on linked instances | Pass. Only content slots are filled, and sizes are only resized to fit the frame. |
 
 ## Library findings (for `/sdv:verify-design-system`)
@@ -98,5 +132,7 @@ All UI text is Indonesian and identical on desktop and mobile (checked 2026-09-2
 Before each UI task in `plan.md`, the Owner exports the frames above to `docs/features/workspace/exports/<state>-<frameId>.html`, desktop and mobile (AGENTS.md). For example: `onboarding-BbSnR`, `onboarding-z0GB3`, `dashboard-gCkJa`, `dashboard-tablet-DUUnI`, `switcher-Y20OZ`, `switcher-D1sDCL`, `more-menu-R5Wwrk`, `create-workspace-uuZRc`, `create-workspace-eyWYY`, `coming-soon-B9WOJ`, `settings-lEtZt`, `settings-P1z3XX`, `not-found-JJ8Ex`, plus every state row. The editorial image already exists (`public/auth/editorial/mosaic*.webp`).
 
 ## Approval
+
+- **Settings v3 redesign (2026-10-01): APPROVED** (Owner chose "Approve, roll out"; saved state = Toast/Success). Saved to disk: 487,589 bytes, 2026-10-01 00:15:19. Pending: Owner modifications, then HTML exports of the new settings frames.
 
 - **APPROVED**: Owner, 2026-09-27 ("design approved & saved"). The feature is `DESIGNED`.

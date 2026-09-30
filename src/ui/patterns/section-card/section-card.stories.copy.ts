@@ -1,0 +1,25 @@
+export const SECTION_CARD_STORY_COPY = {
+  title: "Identitas brand",
+  description: "Nama dan brand yang dilihat klien di galeri dan invoice.",
+  nameLabel: "Nama workspace",
+  nameValue: "Aster Wedding",
+  brandLabel: "Nama brand",
+  brandValue: "Aster Wedding Studio",
+  brandHelper: "Kosongkan untuk memakai nama workspace.",
+  listTitle: "Template pesan",
+  listDescription: "Pesan otomatis yang dikirim ke klien.",
+  listRows: [
+    ["Konfirmasi jadwal", "2 variabel"],
+    ["Pengingat pelunasan", "1 variabel"],
+    ["Bagikan gallery", "3 variabel"],
+  ],
+  tableTitle: "Proyek aktif",
+  tableDescription: "Proyek yang sedang berjalan di workspace ini.",
+  tableRows: [
+    ["Dimas & Sari", "Prewedding", "Rp 4.800.000"],
+    ["Bayu Tirta", "Produk", "Rp 2.500.000"],
+    ["Rina & Adi", "Pernikahan", "Rp 18.000.000"],
+  ],
+  action: "Ekspor",
+  noHeaderLabel: "Proyek aktif",
+} as const;

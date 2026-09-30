@@ -21,7 +21,7 @@ Available entries include:
 - **Primitives** — Avatar, Button (including pending/loading), Count Badge, Icon Button, Input,
   Text Field, Textarea and Tooltip.
 - **Patterns** — Alert, App Panel, App Shell, Bottom Nav, Bottom Sheet, Empty State, Menu,
-  Mobile App Shell, Modal, Nav Item, Sheet Item, Sidebar and Toast.
+  Mobile App Shell, Modal, Nav Item, Section Card, Sheet Item, Sidebar and Toast.
 - **Design System / Tokens** — searchable token table with category filtering, light/dark values,
   aliases, CSS custom-property names, and color swatches.
 

@@ -7,7 +7,7 @@ Branch: `codex/message-templates-shell-v3`.
 
 - New library component **C43 Section Card**, with tokens `component.section-card.*`. The total is 549 tokens, checksum `373a3591`. See [section-card.md](design-system/components/section-card.md).
 - The Settings v3 design, exports and code are on branch `feat/section-card-settings`; see [workspace plan.md](features/workspace/plan.md) and the [implementation record](features/workspace/technical-design.md#settings-v3-implementation-record-2026-10-01).
-- The fixes D-S1 (ToastRegion mounted) and D-S2 (stale E2E selector) are recorded there.
+- The unmerged WIP backup `backup/wip-2026-09-30` (Empty State, Button pending state, create-workspace dialog, dashboard toast, toast region, message-templates docs) is merged into this work (Owner 2026-10-01). D-S1 (toasts) and D-S2 (stale E2E selector) are recorded in the implementation record.
 - Next: `/sdv:verify-design-system`, then `/sdv:verify-feature workspace`.
 
 ## Current handoff — verify F-17 App Shell revamp

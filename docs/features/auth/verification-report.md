@@ -113,4 +113,4 @@ Test titles start with their AC ID. The counts are the test files that reference
 - **S-3:** the Owner reviews the D-3 copy.
 - **S-4 (R-5):** replace the Unsplash placeholder photos in the editorial mosaic with licensed photos.
 - **S-5 (R-1):** schedule `auth:purge-rate-limits`.
-- **S-6:** J-01 can't complete end-to-end until F-02 exists. `WorkspaceDestinationPort` is still the stub (always `ONBOARDING`), `/onboarding/workspace` doesn't exist yet, and `/profile` has no App Shell (R-6). Shipping auth alone would send new Owners to a missing page.
+- ~~**S-6:** J-01 can't complete end-to-end until F-02 exists.~~ **Resolved 2026-09-28:** F-02 implements `WorkspaceDestinationPort`, `/onboarding/workspace` and the `/profile` App Shell. Dedicated workspace E2E covers the continuation.

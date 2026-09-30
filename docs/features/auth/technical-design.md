@@ -156,8 +156,8 @@ Application flows (one use case each; see [diagrams/sequence/](diagrams/sequence
 
 | Unit | Location | Notes |
 |---|---|---|
-| `AuthSplitLayout` | `features/auth/ui/auth-split-layout` | Server component. Brand, form column (`size.auth-panel`), form (`size.auth-form`), footer. `EditorialPanel` appears from `lg`; mobile has one column. |
-| `EditorialPanel` | `features/auth/ui/editorial-panel` | The `Z5xhk` mosaic is an exported image (`public/auth/editorial/mosaic.webp`), with its scrim. The headline is live text. `aria-hidden`, `alt=""`. Licensed photos only (R-5). |
+| `AuthSplitLayout` | `src/ui/patterns/split-layout` | Server component. Brand, form column (`size.auth-panel`), form (`size.auth-form`), footer. `EditorialPanel` appears from `lg`; mobile has one column. Moved in F-02 so both features can consume it without cross-feature imports. |
+| `EditorialPanel` | `src/ui/patterns/editorial-panel` | The `Z5xhk` mosaic is an exported image (`public/auth/editorial/mosaic.webp`), with its scrim. The headline is live text. `aria-hidden`, `alt=""`. Licensed photos only (R-5). Moved in F-02 with unchanged auth output. |
 | `Alert` | `src/ui/patterns/alert` | C24: Info/Danger, Close off. `role=status`/`alert` only when live. |
 | Screens | `features/auth/ui/<state>-screen` | One per Pencil state (login, register, verify-pending, invalid-verify-link, forgot-password, reset-sent, reset-password, invalid-reset-link, account-unavailable), plus `account-sections` for Profile. |
 | Forms | `features/auth/ui/*-form` | `"use client"`. `useAuthForm` binds React Hook Form to the use case's schema. `ControlledTextField` is built on `useController`. A server field error goes to `setError`; anything else becomes a focused `AuthErrorAlert` (AC-023). |

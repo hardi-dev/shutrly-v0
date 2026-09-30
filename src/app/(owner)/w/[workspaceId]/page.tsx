@@ -3,8 +3,19 @@ import { DashboardScreen } from "@/features/workspace/ui/dashboard-screen/dashbo
 
 export default async function DashboardPage({
   params,
-}: Readonly<{ params: Promise<{ workspaceId: string }> }>) {
+  searchParams,
+}: Readonly<{
+  params: Promise<{ workspaceId: string }>;
+  searchParams: Promise<{ state?: string }>;
+}>) {
   const { workspaceId } = await params;
+  const { state } = await searchParams;
   const { workspace } = await enterWorkspace(workspaceId);
-  return <DashboardScreen workspaceId={workspaceId} workspaceName={workspace.name} />;
+  return (
+    <DashboardScreen
+      workspaceId={workspaceId}
+      workspaceName={workspace.name}
+      created={state === "created"}
+    />
+  );
 }

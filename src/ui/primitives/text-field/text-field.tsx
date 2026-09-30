@@ -97,8 +97,8 @@ function TextFieldInput({
       prefix={prefix}
       iconLeading={iconLeading}
       iconLeadingAction={iconLeadingAction}
-      iconTrailing={iconTrailing}
-      iconTrailingAction={iconTrailingAction}
+      iconTrailing={isInvalid ? "circle-alert" : iconTrailing}
+      iconTrailingAction={isInvalid ? undefined : iconTrailingAction}
       shortcut={shortcut}
     />
   );

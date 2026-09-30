@@ -9,7 +9,6 @@ import { AppPanel, PageContent } from "../app-panel/app-panel";
 import { BottomNav } from "../bottom-nav/bottom-nav";
 import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
 import { Sidebar } from "../sidebar/sidebar";
-import { ToastRegion } from "../toast/toast";
 import { APP_SHELL_COPY } from "./app-shell.copy";
 import type { AppShellProps } from "./app-shell.types";
 import { readCollapsed, writeCollapsed } from "./sidebar-collapse-preference";
@@ -76,8 +75,6 @@ export function AppShell({
       <a href={`#${APP_SHELL_CONTENT_ID}`} className="sr-only focus:not-sr-only max-md:hidden">
         {APP_SHELL_COPY.skip}
       </a>
-      {/* The shell owns the toast layer (C35/C30 Toast), so feature toasts render on every owner page. */}
-      <ToastRegion />
       <DesktopSidebar
         workspace={workspace}
         account={account}

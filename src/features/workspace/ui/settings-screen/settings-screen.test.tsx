@@ -4,8 +4,9 @@ import { describe, expect, it, vi } from "vitest";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
+import { WORKSPACE_FIELD_ERROR_COPY as SETTINGS_FIELD_ERROR_COPY } from "../workspace-field-error/workspace-field-error.copy";
 import { SettingsScreen } from "./settings-screen";
-import { SETTINGS_COPY, SETTINGS_FIELD_ERROR_COPY } from "./settings-screen.copy";
+import { SETTINGS_COPY } from "./settings-screen.copy";
 
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
 

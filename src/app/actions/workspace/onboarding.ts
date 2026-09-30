@@ -6,7 +6,7 @@ import { createOwnerFirstWorkspace } from "@/composition/workspace/owner-workspa
 
 export async function createFirstWorkspaceAction(formData: FormData): Promise<void> {
   const result = await createOwnerFirstWorkspace({ name: formString(formData, "name") });
-  redirect(`/w/${result.id}`);
+  redirect(`/w/${result.id}?state=created`);
 }
 
 function formString(formData: FormData, name: string): string {

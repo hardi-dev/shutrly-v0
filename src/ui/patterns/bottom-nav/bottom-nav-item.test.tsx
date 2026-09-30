@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 
 import { BottomNavItem } from "./bottom-nav-item";
 
@@ -22,5 +23,17 @@ describe("BottomNavItem (C34)", () => {
       "bg-(--component-badge-danger-background)",
       "text-(--component-badge-danger-text)",
     );
+  });
+
+  it("supports action tabs without navigating", async () => {
+    const onPress = vi.fn();
+    const user = userEvent.setup();
+
+    render(<BottomNavItem href="#" label="Lainnya" icon="menu" onPress={onPress} />);
+
+    const button = screen.getByRole("button", { name: "Lainnya" });
+    await user.click(button);
+
+    expect(onPress).toHaveBeenCalledOnce();
   });
 });

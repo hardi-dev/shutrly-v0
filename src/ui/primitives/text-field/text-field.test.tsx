@@ -80,6 +80,7 @@ describe("TextField", () => {
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toHaveAccessibleDescription("Masukkan email yang valid");
     expect(screen.queryByText("Kami kirim tautan ke email ini.")).toBeNull();
+    expect(screen.getByTestId("input-icon-trailing")).toBeInTheDocument();
   });
 
   it("AC-FND-014 reports string values and blur", async () => {

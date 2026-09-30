@@ -16,6 +16,7 @@ const BASE = [
   "data-focus-visible:outline-2 data-focus-visible:outline-offset-2",
   "data-focus-visible:outline-(--color-semantic-focus-ring)",
   "data-disabled:cursor-not-allowed data-disabled:opacity-(--opacity-disabled)",
+  "data-pending:cursor-not-allowed data-pending:opacity-(--opacity-disabled)",
 ];
 
 const SIZES: Record<ButtonSize, string[]> = {
@@ -55,6 +56,8 @@ export function Button({
   variant = "primary",
   size = "md",
   isDisabled,
+  isPending = false,
+  form,
   onPress,
   className,
   "aria-label": ariaLabel,
@@ -66,17 +69,43 @@ export function Button({
     <AriaButton
       type={type}
       isDisabled={isDisabled}
+      isPending={isPending}
+      form={form}
       onPress={onPress}
       aria-label={ariaLabel}
       data-variant={variant}
       data-size={size}
       className={cn(BASE, SIZES[size], VARIANTS[variant], className)}
     >
-      {iconLeading ? <ButtonIcon name={iconLeading} side="leading" /> : null}
+      <ButtonLeadingIcon isPending={isPending} iconLeading={iconLeading} />
       {children}
       {iconTrailing ? <ButtonIcon name={iconTrailing} side="trailing" /> : null}
     </AriaButton>
   );
+}
+
+function ButtonLoadingIcon() {
+  return (
+    <Icon
+      name="loading-03"
+      data-testid="button-icon-loading"
+      aria-hidden="true"
+      className="animate-spin"
+    />
+  );
+}
+
+function ButtonLeadingIcon({
+  isPending,
+  iconLeading,
+}: Readonly<Pick<ButtonProps, "isPending" | "iconLeading">>) {
+  if (isPending) {
+    return <ButtonLoadingIcon />;
+  }
+  if (!iconLeading) {
+    return null;
+  }
+  return <ButtonIcon name={iconLeading} side="leading" />;
 }
 
 function ButtonIcon({ name, side }: Readonly<ButtonIconProps>) {

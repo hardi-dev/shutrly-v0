@@ -1,4 +1,4 @@
-import { Link as AriaLink } from "react-aria-components";
+import { Button as AriaButton, Link as AriaLink } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
 import { CountBadge } from "@/ui/primitives/count-badge/count-badge";
@@ -13,20 +13,18 @@ export function BottomNavItem({
   icon,
   count,
   isActive = false,
+  onPress,
   className,
 }: Readonly<BottomNavItemProps>) {
-  return (
-    <AriaLink
-      href={href}
-      aria-current={isActive ? "page" : undefined}
-      className={cn(
-        "flex min-h-(--space-12) w-(--space-16) flex-col items-center justify-center gap-(--component-bottom-nav-item-gap)",
-        "rounded-(--component-nav-item-radius) text-(--component-bottom-nav-item-text)",
-        "outline-none transition-colors focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
-        isActive && "font-semibold text-(--component-bottom-nav-item-active)",
-        className,
-      )}
-    >
+  const sharedClassName = cn(
+    "flex min-h-(--space-12) w-(--space-16) flex-col items-center justify-center gap-(--component-bottom-nav-item-gap)",
+    "rounded-(--component-nav-item-radius) text-(--component-bottom-nav-item-text)",
+    "outline-none transition-colors focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
+    isActive && "font-semibold text-(--component-bottom-nav-item-active)",
+    className,
+  );
+  const content = (
+    <>
       <span className="relative flex size-(--space-7) items-center justify-center">
         <Icon
           name={icon}
@@ -45,6 +43,16 @@ export function BottomNavItem({
         ) : null}
       </span>
       <span className="text-(length:--font-size-caption)">{label}</span>
+    </>
+  );
+
+  return onPress ? (
+    <AriaButton type="button" aria-label={label} onPress={onPress} className={sharedClassName}>
+      {content}
+    </AriaButton>
+  ) : (
+    <AriaLink href={href} aria-current={isActive ? "page" : undefined} className={sharedClassName}>
+      {content}
     </AriaLink>
   );
 }

@@ -80,6 +80,25 @@ describe("Button", () => {
     expect(onPress).not.toHaveBeenCalled();
   });
 
+  it("renders a pending state with the loading icon and blocks press events", async () => {
+    const user = userEvent.setup();
+    const onPress = vi.fn();
+    render(
+      <Button isPending onPress={onPress}>
+        Simpan
+      </Button>,
+    );
+
+    const button = screen.getByRole("button", { name: "Simpan" });
+    expect(button).toHaveAttribute("data-pending");
+    expect(button).toHaveAttribute("aria-disabled", "true");
+    expect(button).toHaveClass("data-pending:opacity-(--opacity-disabled)");
+    expect(screen.getByTestId("button-icon-loading")).toBeInTheDocument();
+
+    await user.click(button);
+    expect(onPress).not.toHaveBeenCalled();
+  });
+
   it("AC-FND-013 marks keyboard focus for the visible focus ring", async () => {
     const user = userEvent.setup();
     render(<Button>Simpan</Button>);

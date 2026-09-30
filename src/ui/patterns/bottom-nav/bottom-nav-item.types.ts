@@ -6,5 +6,6 @@ export interface BottomNavItemProps {
   icon: IconName;
   count?: number;
   isActive?: boolean;
+  onPress?: () => void;
   className?: string;
 }

@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 import type { FieldPath } from "react-hook-form";
 import { useController } from "react-hook-form";
 
-import { workspaceFieldErrorKeySchema } from "@/features/workspace/application/schemas/workspace-fields/workspace-fields.schema";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { showToast } from "@/ui/patterns/toast/toast";
@@ -14,7 +13,8 @@ import { Textarea } from "@/ui/primitives/textarea/textarea";
 
 import { useSettingsForm } from "../use-settings-form/use-settings-form";
 import type { SettingsForm } from "../use-settings-form/use-settings-form.types";
-import { SETTINGS_COPY as COPY, SETTINGS_FIELD_ERROR_COPY } from "./settings-screen.copy";
+import { workspaceFieldErrorText as errorText } from "../workspace-field-error/workspace-field-error";
+import { SETTINGS_COPY as COPY } from "./settings-screen.copy";
 import type {
   SettingsControl as Control,
   SettingsFieldProps,
@@ -24,11 +24,6 @@ import type {
 
 function ignoreEdit(): void {
   // The currency is read-only (IDR only, BR-CUR-001): there is nothing to update.
-}
-
-function errorText(message: string | undefined): string | undefined {
-  const key = workspaceFieldErrorKeySchema.safeParse(message);
-  return key.success ? SETTINGS_FIELD_ERROR_COPY[key.data] : undefined;
 }
 
 function showSavedToast(): void {

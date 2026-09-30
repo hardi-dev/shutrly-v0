@@ -71,8 +71,7 @@ export function AppShell({
   }
 
   return (
-    // From md up the shell is viewport-high so the Sidebar stays put and only the panel scrolls (F-17 S-A3).
-    <div className="flex min-h-dvh bg-(--color-semantic-surface-muted) md:h-dvh md:pt-(--space-3) md:pr-(--space-3) md:pb-(--space-3)">
+    <div className="flex min-h-dvh bg-(--color-semantic-surface-muted) md:pt-(--space-3) md:pr-(--space-3) md:pb-(--space-3)">
       <a href={`#${APP_SHELL_CONTENT_ID}`} className="sr-only focus:not-sr-only max-md:hidden">
         {APP_SHELL_COPY.skip}
       </a>
@@ -169,7 +168,8 @@ function DesktopSidebar({
   onLogout?: () => void;
 }) {
   return (
-    <div className="hidden xl:flex">
+    // The Sidebar stays pinned while the page (header and content) scrolls.
+    <div className="hidden xl:flex sticky top-(--space-3) h-[calc(100dvh-var(--space-3)*2)] self-start">
       <Sidebar
         workspace={workspace}
         account={account}
@@ -198,7 +198,7 @@ function TabletRail({
   workspaceSwitcher: AppShellProps["workspaceSwitcher"];
 }) {
   return (
-    <div className="hidden md:flex xl:hidden">
+    <div className="hidden md:flex xl:hidden sticky top-(--space-3) h-[calc(100dvh-var(--space-3)*2)] self-start">
       <Sidebar
         workspace={workspace}
         account={account}

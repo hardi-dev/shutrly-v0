@@ -439,6 +439,27 @@ Each iteration runs **plan → implement → test → verify → commit**, with 
 - [x] Record deviations and update this file, feature-map, and HANDOFF.
 - **Done when:** unit, integration and E2E are green; ready for `/sdv:verify-feature workspace`.
 
+## Settings v3 implementation record (2026-10-01)
+
+Executed from [plan.md](plan.md) on branch `feat/section-card-settings`. Tasks 3 and 4 share one commit, because the new action signature and the screen only compile together (coding rules › Git: no commit breaks the build).
+
+- **Section Card:** `src/ui/patterns/section-card` implements C43. The content modes are `padded`, `flush` and `bleed`; with no title, `aria-label` names the region. Compact insets apply below `md`.
+- **Validation:**
+  - `updateWorkspaceProfileFieldsSchema` now carries the A-1 to A-4 rules as stable field-error keys, shared by the form (UX) and the use case (C-004).
+  - `updateWorkspaceProfile` returns `{ ok }` or a `VALIDATION_FAILED` / `DUPLICATE_NAME` failure with `fieldErrors`. It throws only `NOT_FOUND` (A-9).
+- **Server action:** `saveWorkspaceSettingsAction(workspaceId, values)` returns the failure, or revalidates `/w/[workspaceId]` (layout) so the Sidebar shows the new name (AC-WS-016). The `?state=saved` redirect is gone.
+- **UI states:**
+  - field errors appear on their fields, with focus on the first;
+  - a failed request shows the inline Alert/Danger and keeps the values (AC-WS-024);
+  - success shows Toast/Success.
+- **Deviations:**
+  - **D-S1:** the App Shell didn't mount `ToastRegion`, so no toast was visible anywhere, including the F-17 switch failure. `ToastRegion` is now mounted in `AppShell`.
+  - **D-S2:** the workspace E2E looked up the Sidebar switcher by "Pilih workspace", but since `7c38512` the button is named after the workspace. The test now uses the saved name, which also proves AC-WS-016.
+  - **D-S3:** the save button is LG with MD padding from `md` up, matching both exports with one button.
+- **Known, not changed:**
+  - The Textarea primitive renders its optional marker as "Opsional", while the export and TextField use "(opsional)".
+  - The App Shell renders page content twice (desktop and mobile), so the settings form exists twice in the DOM, one copy hidden.
+
 ## Risks / Open Questions
 
 - **Implementation note (2026-09-28):** Batch B application, routes, adapter, composition, onboarding, shell, profile, switcher, create flow, and settings are implemented. Dedicated workspace Playwright journeys and axe coverage pass; the remaining resolver-per-page DOM test and Pencil visual comparison are follow-ups.

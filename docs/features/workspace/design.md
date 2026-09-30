@@ -66,7 +66,7 @@ The Settings frames were rebuilt on Shell v3 (F-17) and rules v3.1. The old fram
   - Saved: Toast/Success in the App Shell toast layer. It is transient, so it confirms the save without moving the form.
   - Server error: inline Alert/Danger. It persists and asks the Owner to retry (alert.md: inline, no timer).
   - Field errors: Text Field/Error. The server's field errors map onto their fields.
-- **Code impact:** the implemented settings page (F-02 Iteration 11) still uses the old flat sections and the Success alert. The section cards and the toast feedback are a follow-up build task, and need new HTML exports.
+- **Code (2026-10-01):** built from the exports `settings-*-{EjWRU,NurYs,h8USKA,cNB0a,bMevr,qTVht,NRt4P,QbNc2}.html` per [plan.md](plan.md): `src/ui/patterns/section-card` and `src/features/workspace/ui/settings-screen`. It was checked in the browser at 1440 and 390 px against the export measurements.
 
 ## Component usage
 
@@ -94,7 +94,7 @@ Every entry is a linked instance of `design-system.lib.pen` (prefix `G:`), excep
 | **Workspace / Editorial preview** (local) | `UTew4` | Onboarding desktop, 4 frames | Instance with no overrides | ⚠️ Partial: `src/features/auth/ui/editorial-panel` renders the mosaic and headline. It needs a slot to replace the headline with the sidebar-preview card, and the card itself is new. |
 | **Page Header** ([page-header.md](../../design-system/components/page-header.md), C40), nested in App Shell | — | Settings (desktop) | Parent, Current, Title, Subtitle; Actions off | Shell v3 (F-17) |
 | **Mobile Header** (C35, `G:o8T8zb`), nested | — | Settings (mobile) | Workspace pill, Title, Subtitle | Shell v3 (F-17) |
-| **Section Card** ([section-card.md](../../design-system/components/section-card.md), C43) | /Default `G:rHONT`, /Compact `G:lYGAJ` | Settings (desktop, mobile), 3 per frame | Title, Description; Content slot filled with the fields | ❌ No: new 2026-10-01 |
+| **Section Card** ([section-card.md](../../design-system/components/section-card.md), C43) | /Default `G:rHONT`, /Compact `G:lYGAJ` | Settings (desktop, mobile), 3 per frame | Title, Description; Content slot filled with the fields | ✅ Yes: `src/ui/patterns/section-card` (2026-10-01) |
 | **Toast/Success** (App Shell / Mobile App Shell toast layer) | — | Settings saved | Layer enabled; body "Nama di sidebar dan branding untuk klien sudah diperbarui."; on mobile the layer is resized to 390 × 844 (canvas only) | Shell v3 (F-17) |
 
 ## Navigation (A-7 as changed by the Owner)

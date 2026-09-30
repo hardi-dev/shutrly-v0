@@ -32,7 +32,8 @@ test("AC-WS-002 AC-WS-007 AC-WS-016 workspace onboarding, settings and create fl
   await page.locator('input[name="contactEmail"]:visible').fill("studio@example.com");
   await page.getByRole("button", { name: SETTINGS_COPY.save }).click();
   await expect(page.getByText(SETTINGS_COPY.saved, { exact: true }).first()).toBeVisible();
-  await page.getByRole("button", { name: WORKSPACE_SWITCHER_COPY.trigger }).click();
+  // The Sidebar switcher is named after the current workspace, so it proves the rename (AC-WS-016).
+  await page.getByRole("button", { name: "Aster Wedding Studio", exact: true }).click();
   await page.getByRole("menuitem", { name: WORKSPACE_SWITCHER_COPY.create }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();

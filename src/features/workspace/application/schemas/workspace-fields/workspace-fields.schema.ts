@@ -35,3 +35,14 @@ export const updateWorkspaceProfileFieldsSchema = z.object({
   address: workspaceAddressFieldSchema,
   invoicePrefix: invoicePrefixFieldSchema,
 });
+
+export const workspaceFieldErrorKeySchema = z.enum([
+  "name.required",
+  "name.tooLong",
+  "name.duplicate",
+  "brandName.tooLong",
+  "email.invalid",
+  "phone.invalid",
+  "address.tooLong",
+  "prefix.invalid",
+]);

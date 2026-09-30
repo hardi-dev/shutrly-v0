@@ -13,6 +13,6 @@ export const OWNER_NAV_COPY = {
   search: "Pencarian",
   notifications: "Notifikasi",
   dashboardSubtitle: (workspaceName: string) => `Ringkasan workspace ${workspaceName}.`,
-  settingsSubtitle: "Kelola identitas brand, kontak, dan invoice workspace.",
+  settingsSubtitle: "Atur identitas brand, kontak, dan format invoice workspace ini.",
   comingSoonSubtitle: "Segera hadir.",
 } as const;

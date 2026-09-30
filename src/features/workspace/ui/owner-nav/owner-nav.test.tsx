@@ -42,7 +42,10 @@ describe("resolvePageHeading", () => {
     ["/w/A/notifications", { title: "Notifikasi", subtitle: "Segera hadir." }],
     [
       "/w/A/settings",
-      { title: "Pengaturan", subtitle: "Kelola identitas brand, kontak, dan invoice workspace." },
+      {
+        title: "Pengaturan",
+        subtitle: "Atur identitas brand, kontak, dan format invoice workspace ini.",
+      },
     ],
     ["/profile", null],
   ])("resolves %s", (pathname, heading) => {

@@ -1,3 +1,11 @@
+import type { Control } from "react-hook-form";
+
+import type {
+  UpdateWorkspaceProfileFailure,
+  UpdateWorkspaceProfileField,
+  UpdateWorkspaceProfileInput,
+} from "@/features/workspace/application/use-cases/update-workspace-profile/update-workspace-profile.types";
+
 export interface SettingsProfile {
   name: string;
   brandName?: string | null;
@@ -8,15 +16,23 @@ export interface SettingsProfile {
   currency: string;
 }
 
+export type SettingsValues = UpdateWorkspaceProfileInput;
+
+export type SettingsAction = (
+  values: SettingsValues,
+) => Promise<UpdateWorkspaceProfileFailure | undefined>;
+
 export interface SettingsScreenProps {
-  action: (formData: FormData) => void | Promise<void>;
+  action: SettingsAction;
   profile: SettingsProfile;
-  saved?: boolean;
 }
 
 export interface SettingsFieldProps {
+  name: UpdateWorkspaceProfileField;
   label: string;
-  name: string;
-  value: string;
-  type?: string;
+  type?: "text" | "email" | "tel";
+  isOptional?: boolean;
+  description?: string;
 }
+
+export type SettingsControl = Control<SettingsValues, unknown, SettingsValues>;

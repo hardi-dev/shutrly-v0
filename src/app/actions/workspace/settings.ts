@@ -1,25 +1,20 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 import { saveWorkspaceProfile } from "@/composition/workspace/workspace-flow/workspace-flow";
+import type {
+  UpdateWorkspaceProfileFailure,
+  UpdateWorkspaceProfileInput,
+} from "@/features/workspace/application/use-cases/update-workspace-profile/update-workspace-profile.types";
 
 export async function saveWorkspaceSettingsAction(
   workspaceId: string,
-  formData: FormData,
-): Promise<void> {
-  await saveWorkspaceProfile(workspaceId, {
-    name: formString(formData, "name"),
-    brandName: formString(formData, "brandName"),
-    contactEmail: formString(formData, "contactEmail"),
-    phone: formString(formData, "phone"),
-    address: formString(formData, "address"),
-    invoicePrefix: formString(formData, "invoicePrefix"),
-  });
-  redirect(`/w/${workspaceId}/settings?state=saved`);
-}
-
-function formString(formData: FormData, name: string): string {
-  const value = formData.get(name);
-  return typeof value === "string" ? value : "";
+  values: UpdateWorkspaceProfileInput,
+): Promise<UpdateWorkspaceProfileFailure | undefined> {
+  const result = await saveWorkspaceProfile(workspaceId, values);
+  if (!result.ok) return result;
+  // The Sidebar and switcher read the name in the workspace layout (AC-WS-016).
+  revalidatePath("/w/[workspaceId]", "layout");
+  return undefined;
 }

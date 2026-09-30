@@ -104365,7 +104365,8 @@
                                   "lineHeight": 1.5,
                                   "textAlign": "center",
                                   "fontFamily": "$font/family/base",
-                                  "fontSize": "$font/size/body-sm"
+                                  "fontSize": "$font/size/body-sm",
+                                  "fontWeight": "normal"
                                 }
                               ]
                             },
@@ -105347,6 +105348,7 @@
               "content": "PATTERN  ·  C40  ·  NAVIGATION  ·  PAGE HEADER",
               "fontFamily": "IBM Plex Mono",
               "fontSize": 12,
+              "fontWeight": "normal",
               "letterSpacing": 0.6
             },
             {
@@ -105369,7 +105371,8 @@
               "content": "A two-tier page introduction: breadcrumb context above a hero row with page title, supporting copy, and page-level actions.",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
-              "fontSize": 16
+              "fontSize": 16,
+              "fontWeight": "normal"
             }
           ]
         },
@@ -105551,7 +105554,8 @@
                               "width": "fill_container",
                               "content": "Kelola pesan yang digunakan ulang saat berkomunikasi dengan klien.",
                               "fontFamily": "$font/family/base",
-                              "fontSize": 14
+                              "fontSize": 14,
+                              "fontWeight": "normal"
                             }
                           ]
                         },
@@ -105635,6 +105639,7 @@
               "content": "PATTERN  ·  C41  ·  CONTENT  ·  GROUP",
               "fontFamily": "IBM Plex Mono",
               "fontSize": 12,
+              "fontWeight": "normal",
               "letterSpacing": 0.6
             },
             {
@@ -105657,7 +105662,8 @@
               "content": "A compact section wrapper that keeps a small section title and its content together with a consistent eight-pixel rhythm.",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
-              "fontSize": 16
+              "fontSize": 16,
+              "fontWeight": "normal"
             }
           ]
         },
@@ -105790,6 +105796,7 @@
               "content": "PATTERN  ·  C42  ·  CONTENT  ·  LIST CARD",
               "fontFamily": "IBM Plex Mono",
               "fontSize": 12,
+              "fontWeight": "normal",
               "letterSpacing": 0.6
             },
             {
@@ -105812,7 +105819,8 @@
               "content": "A bordered card for compact destination or settings rows. Rows are 44 pixels high, use a quiet icon well, and separate siblings with a one-pixel hairline.",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
-              "fontSize": 16
+              "fontSize": 16,
+              "fontWeight": "normal"
             }
           ]
         },
@@ -105906,7 +105914,8 @@
                       "fill": "$component/list-card/item/meta",
                       "content": "3 variabel",
                       "fontFamily": "$font/family/base",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "icon",
@@ -106397,6 +106406,2582 @@
           "alignItems": "center"
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "d8Dpw",
+      "x": 9978,
+      "y": 24442,
+      "name": "C43 — Section card",
+      "theme": {
+        "mode": "light"
+      },
+      "width": 1440,
+      "fill": "$color/semantic/surface/panel",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 64,
+      "children": [
+        {
+          "type": "frame",
+          "id": "iZuRm",
+          "name": "Header",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            0,
+            0,
+            32,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "ENiZE",
+              "name": "Overline",
+              "fill": "$color/semantic/text/muted",
+              "content": "PATTERN  ·  C43  ·  LAYOUT  ·  SECTION CARD",
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 0.6
+            },
+            {
+              "type": "text",
+              "id": "R95rS",
+              "name": "Title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Section card",
+              "fontFamily": "$font/family/base",
+              "fontSize": 44,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "GPAlY",
+              "name": "Description",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 880,
+              "content": "A titled card that groups related content on a page: form fields, a list, a table or an empty state. The header can carry one control on the right, such as a Segmented Control for view tabs, and can be turned off. Default is for desktop and tablet; Compact is for phones; Flush is for lists.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Lmae5",
+          "name": "Exhibit — Component set",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "z18PL",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Component set",
+              "fontFamily": "$font/family/base",
+              "fontSize": "$font/size/title",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "eOky2",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Name = Section Card/<Density>[/Flush | /No header] · private base _SectionCard/Base. Density: Default (desktop, tablet) · Compact (phone). Content: padded (fields, toggles, empty state) · Flush (list rows). No header: Content only, for a card the page heading already names. Text: Title, Description. Slots: Actions (header, right; empty by default) · Content. Specimen widths 720 / 358; instances fill their column.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "Ac3v7",
+              "name": "Set grid",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "stroke": "$color/semantic/border/default",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 32,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "xVkyr",
+                  "name": "Row",
+                  "gap": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "g28VIx",
+                      "name": "Cell _SectionCard/Base · private",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "XN4f0",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "_SectionCard/Base · private",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "qWBIt",
+                          "name": "_SectionCard/Base",
+                          "context": "Section Card · titled card for any grouped content (C43, Owner 2026-10-01; renamed from Form Section). Header: Title (subtitle 16/bold) + Description (body-sm). Slot Content accepts fields, List Card, Table, Empty State, Alert, Metric Tile, Segmented Control, Switch, Checkbox, Radio. Variants: Default (desktop/tablet insets), Compact (phone). Spec: docs/design-system/components/section-card.md",
+                          "reusable": true,
+                          "clip": true,
+                          "width": 720,
+                          "fill": "$component/section-card/background",
+                          "cornerRadius": "$component/section-card/radius",
+                          "stroke": "$component/section-card/border",
+                          "strokeWidth": 1,
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "P6BlE",
+                              "name": "Header",
+                              "width": "fill_container",
+                              "stroke": "$component/section-card/header/border",
+                              "strokeWidth": {
+                                "bottom": 1
+                              },
+                              "gap": "$component/section-card/header/actions-gap",
+                              "padding": [
+                                "$component/section-card/header/padding-y",
+                                "$component/section-card/header/padding-x"
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "KVDyd",
+                                  "name": "Heading",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": "$component/section-card/header/gap",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "BXWnC",
+                                      "name": "Title",
+                                      "fill": "$component/section-card/title",
+                                      "content": "Identitas brand",
+                                      "fontFamily": "$font/family/base",
+                                      "fontSize": "$font/size/subtitle",
+                                      "fontWeight": "$font/weight/bold"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "nHCW8",
+                                      "name": "Description",
+                                      "fill": "$component/section-card/description",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Nama dan brand yang dilihat klien di galeri dan invoice.",
+                                      "lineHeight": "$font/line-height/body",
+                                      "fontFamily": "$font/family/base",
+                                      "fontSize": "$font/size/body-sm",
+                                      "fontWeight": "$font/weight/regular"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "QcKHK",
+                                  "name": "Actions",
+                                  "slot": [
+                                    "uMP5H",
+                                    "WadoU",
+                                    "JmfmZ",
+                                    "c3U6N",
+                                    "Q49yf7",
+                                    "qY0Em",
+                                    "m9dUlL",
+                                    "rXttF"
+                                  ],
+                                  "width": "fit_content(0)",
+                                  "height": "fit_content(0)",
+                                  "gap": "$space/2",
+                                  "alignItems": "center"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "DElnV",
+                              "name": "Content",
+                              "slot": [
+                                "HHNPk",
+                                "mZcc4",
+                                "AVpMa",
+                                "Q64HTj",
+                                "t7L0yL",
+                                "XyHPI",
+                                "zVBG4",
+                                "Wc7hd",
+                                "A6bXr",
+                                "umHpv",
+                                "oOFk7",
+                                "r7YZY",
+                                "XlPZD",
+                                "bd9LK",
+                                "eFemy",
+                                "uJwfh",
+                                "XhLSK",
+                                "H43gDN",
+                                "E4PkTw",
+                                "S5bhVn",
+                                "pt1q7",
+                                "F3GrC5",
+                                "ef21N",
+                                "AJT5R",
+                                "uMP5H",
+                                "zSBcA",
+                                "oSTqI",
+                                "H41tQ",
+                                "n8NmOH",
+                                "SSy18",
+                                "Imyla"
+                              ],
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$component/section-card/content/gap",
+                              "padding": "$component/section-card/content/padding",
+                              "children": [
+                                {
+                                  "id": "p1K1kc",
+                                  "type": "ref",
+                                  "ref": "HHNPk",
+                                  "name": "Nama workspace field",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Gmk0c": {
+                                      "content": "Nama workspace"
+                                    },
+                                    "c67yIW/tvTDd": {
+                                      "enabled": false
+                                    },
+                                    "c67yIW/CykHo": {
+                                      "enabled": true,
+                                      "content": "Aster Wedding"
+                                    },
+                                    "i0umVC": {
+                                      "enabled": false
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "K0SZfH",
+                                  "type": "ref",
+                                  "ref": "HHNPk",
+                                  "name": "Nama brand field",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Gmk0c": {
+                                      "content": "Nama brand"
+                                    },
+                                    "RsEBb": {
+                                      "enabled": true
+                                    },
+                                    "c67yIW/tvTDd": {
+                                      "enabled": false
+                                    },
+                                    "c67yIW/CykHo": {
+                                      "enabled": true,
+                                      "content": "Aster Wedding Studio"
+                                    },
+                                    "uh4XA": {
+                                      "content": "Kosongkan untuk memakai nama workspace."
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "k9LxcJ",
+                  "name": "Row",
+                  "gap": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "gghwy",
+                      "name": "Cell Default",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Y9gxn",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Default",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "rHONT",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "qWBIt",
+                          "name": "Section Card/Default",
+                          "width": 720
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "B1Jive",
+                      "name": "Cell Compact",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "N1BByZ",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Compact",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "lYGAJ",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "qWBIt",
+                          "name": "Section Card/Compact",
+                          "width": 358,
+                          "descendants": {
+                            "P6BlE": {
+                              "padding": [
+                                "$component/section-card/compact/header/padding-y",
+                                "$component/section-card/compact/header/padding-x"
+                              ]
+                            },
+                            "DElnV": {
+                              "padding": "$component/section-card/compact/content/padding"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Q8GdXw",
+                  "name": "Row",
+                  "gap": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "sHVi8",
+                      "name": "Cell Default/Flush",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "MS8TZ",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Default/Flush",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "G8WO8q",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "qWBIt",
+                          "name": "Section Card/Default/Flush",
+                          "width": 720,
+                          "descendants": {
+                            "BXWnC": {
+                              "content": "Template pesan"
+                            },
+                            "nHCW8": {
+                              "content": "Pesan otomatis yang dikirim ke klien."
+                            },
+                            "DElnV": {
+                              "type": "frame",
+                              "id": "f60zS",
+                              "name": "Content",
+                              "slot": [
+                                "uJwfh",
+                                "XhLSK"
+                              ],
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "padding": [
+                                "$component/section-card/flush/padding-y",
+                                "$component/section-card/flush/padding-x"
+                              ],
+                              "children": [
+                                {
+                                  "id": "KJVfL",
+                                  "type": "ref",
+                                  "ref": "uJwfh",
+                                  "name": "Row Konfirmasi jadwal",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "HhRDD": {
+                                      "content": "Konfirmasi jadwal"
+                                    },
+                                    "NAcrj": {
+                                      "content": "2 variabel"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "e7uUH0",
+                                  "type": "ref",
+                                  "ref": "uJwfh",
+                                  "name": "Row Pengingat pelunasan",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "HhRDD": {
+                                      "content": "Pengingat pelunasan"
+                                    },
+                                    "NAcrj": {
+                                      "content": "1 variabel"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "MBoNA",
+                                  "type": "ref",
+                                  "ref": "XhLSK",
+                                  "name": "Row Bagikan gallery",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "HhRDD": {
+                                      "content": "Bagikan gallery"
+                                    },
+                                    "NAcrj": {
+                                      "content": "3 variabel"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "CjwZj",
+                      "name": "Cell Compact/Flush",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pl4nW",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Compact/Flush",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "Q82mo",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "qWBIt",
+                          "name": "Section Card/Compact/Flush",
+                          "width": 358,
+                          "descendants": {
+                            "P6BlE": {
+                              "padding": [
+                                "$component/section-card/compact/header/padding-y",
+                                "$component/section-card/compact/header/padding-x"
+                              ]
+                            },
+                            "BXWnC": {
+                              "content": "Template pesan"
+                            },
+                            "nHCW8": {
+                              "content": "Pesan otomatis yang dikirim ke klien."
+                            },
+                            "DElnV": {
+                              "type": "frame",
+                              "id": "AdZ4y",
+                              "name": "Content",
+                              "slot": [
+                                "uJwfh",
+                                "XhLSK"
+                              ],
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "padding": [
+                                "$component/section-card/flush/padding-y",
+                                "$component/section-card/compact/flush/padding-x"
+                              ],
+                              "children": [
+                                {
+                                  "id": "v0cat",
+                                  "type": "ref",
+                                  "ref": "uJwfh",
+                                  "name": "Row Konfirmasi jadwal",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "HhRDD": {
+                                      "content": "Konfirmasi jadwal"
+                                    },
+                                    "NAcrj": {
+                                      "content": "2 variabel"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "JkvKf",
+                                  "type": "ref",
+                                  "ref": "uJwfh",
+                                  "name": "Row Pengingat pelunasan",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "HhRDD": {
+                                      "content": "Pengingat pelunasan"
+                                    },
+                                    "NAcrj": {
+                                      "content": "1 variabel"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "dw2Pw",
+                                  "type": "ref",
+                                  "ref": "XhLSK",
+                                  "name": "Row Bagikan gallery",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "HhRDD": {
+                                      "content": "Bagikan gallery"
+                                    },
+                                    "NAcrj": {
+                                      "content": "3 variabel"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "URzve",
+                  "name": "Row",
+                  "gap": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "xFxH5",
+                      "name": "Cell Default/No header",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "LIiK2",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Default/No header",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "B19wQC",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "qWBIt",
+                          "name": "Section Card/Default/No header",
+                          "width": 720,
+                          "descendants": {
+                            "P6BlE": {
+                              "enabled": false
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "H9ZPdE",
+                      "name": "Cell Compact/No header",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "YH2fc",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Compact/No header",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "id": "uBGFy",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "qWBIt",
+                          "name": "Section Card/Compact/No header",
+                          "width": 358,
+                          "descendants": {
+                            "P6BlE": {
+                              "enabled": false
+                            },
+                            "DElnV": {
+                              "padding": "$component/section-card/compact/content/padding"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "x9mNd",
+          "name": "Exhibit — Configurations",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "DXBlN",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Wri1B",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Configurations",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "R23TM",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Actions slot (header, right): one Segmented Control for view tabs, or one Secondary / Icon button. It is empty by default and aligns to the header centre. No header: use the /No header variants when the page heading already names the content; the card keeps its border and Content insets.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "C2kl6",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 24,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "t9s57",
+                  "name": "Case",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "FXG2H",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "HEADER ACTIONS · SEGMENTED CONTROL",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "LcKBl",
+                      "type": "ref",
+                      "ref": "rHONT",
+                      "name": "Section Card · Header actions",
+                      "width": "fill_container",
+                      "descendants": {
+                        "BXWnC": {
+                          "content": "Semua proyek"
+                        },
+                        "nHCW8": {
+                          "content": "Saring proyek berdasarkan tahap pekerjaan."
+                        },
+                        "QcKHK": {
+                          "type": "frame",
+                          "id": "fhCJG",
+                          "name": "Actions",
+                          "gap": "$space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "p2p3Q",
+                              "type": "ref",
+                              "ref": "uMP5H",
+                              "name": "Tabs",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "K8Hjf",
+                                  "name": "Items",
+                                  "gap": "$component/segmented/gap",
+                                  "children": [
+                                    {
+                                      "id": "L38E3",
+                                      "type": "ref",
+                                      "ref": "NcbI1",
+                                      "name": "Item Semua",
+                                      "descendants": {
+                                        "FnOrw": {
+                                          "content": "Semua"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "F6F73",
+                                      "type": "ref",
+                                      "ref": "AptHz",
+                                      "name": "Item Jadwal",
+                                      "descendants": {
+                                        "FnOrw": {
+                                          "content": "Jadwal"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "h8e3Rt",
+                                      "type": "ref",
+                                      "ref": "AptHz",
+                                      "name": "Item Edit",
+                                      "descendants": {
+                                        "FnOrw": {
+                                          "content": "Edit"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "p436Z",
+                                      "type": "ref",
+                                      "ref": "AptHz",
+                                      "name": "Item Selesai",
+                                      "descendants": {
+                                        "FnOrw": {
+                                          "content": "Selesai"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "DElnV": {
+                          "type": "frame",
+                          "id": "nU590",
+                          "name": "Content",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "id": "MdE0S",
+                              "type": "ref",
+                              "ref": "oOFk7",
+                              "width": "fill_container",
+                              "name": "Header"
+                            },
+                            {
+                              "id": "utnga",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Dimas & Sari",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "VhNgB",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "ghohI",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "DS"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Dinar & Sari"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "U05Ki",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Prewedding"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "bpnYv",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Sab, 28 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "boT58",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "mepsx",
+                                          "type": "ref",
+                                          "ref": "w9aTAe",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "G9TnZX",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 4.800.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "esWNa",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "p1Rd7",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Kopi Tuku",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "OnhKl",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "p6Iwj",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "BT"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Bayu Tirta"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "Q0Lej",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Produk"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "vlp2B",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Sen, 30 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "FFKr5",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "sGPeV",
+                                          "type": "ref",
+                                          "ref": "LQGDd",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "g0wTA",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 2.500.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "b1YiZT",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "a3lkW",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Rina & Adi",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "jGO4N",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "O9R9k",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "RA"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Rina & Adi"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "Kk5VQ",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Pernikahan"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "Go58H",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "14 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "oYIof",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "o4qRc",
+                                          "type": "ref",
+                                          "ref": "ZVQLe",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "UNfZ7",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 18.000.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "OkD7y",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "RDZnR",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Keluarga Wijaya",
+                              "strokeWidth": 0,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "PWBEQ",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "wES5z",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "KW"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Keluarga Wijaya"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "sag1b",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Keluarga"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "q0IiR",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "15 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "OUuZz",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "C6cFdX",
+                                          "type": "ref",
+                                          "ref": "i9SFm",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "PvaX4",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 2.800.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "rIzEI",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ncMov",
+                  "name": "Case",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "TRduQ",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "NO HEADER · TABLE (see Default/No header)",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "KwkAv",
+                      "type": "ref",
+                      "ref": "rHONT",
+                      "name": "Section Card · Header off",
+                      "width": "fill_container",
+                      "descendants": {
+                        "P6BlE": {
+                          "enabled": false
+                        },
+                        "BXWnC": {
+                          "content": "Proyek aktif"
+                        },
+                        "nHCW8": {
+                          "content": "Proyek yang sedang berjalan di workspace ini."
+                        },
+                        "DElnV": {
+                          "type": "frame",
+                          "id": "UykbC",
+                          "name": "Content",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "id": "ULNSM",
+                              "type": "ref",
+                              "ref": "oOFk7",
+                              "width": "fill_container",
+                              "name": "Header"
+                            },
+                            {
+                              "id": "xYJOX",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Dimas & Sari",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "c9p4CB",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "J6u92",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "DS"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Dinar & Sari"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "qYeiT",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Prewedding"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "VCEmq",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Sab, 28 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "sIq7p",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "GxH8M",
+                                          "type": "ref",
+                                          "ref": "w9aTAe",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "EHpH0",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 4.800.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "TTgaB",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "z52usg",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Kopi Tuku",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "EIt78",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "SlMPD",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "BT"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Bayu Tirta"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "p1AQO",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Produk"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "Q73jH",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Sen, 30 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "TWSVU",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "Q60KR8",
+                                          "type": "ref",
+                                          "ref": "LQGDd",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "R52SHI",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 2.500.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "sVKSP",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "dUIcX",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Rina & Adi",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "a8wdd",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "mhufA",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "RA"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Rina & Adi"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "On2Iu",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Pernikahan"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "dUWQw",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "14 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "Ck6dx",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "P84UoL",
+                                          "type": "ref",
+                                          "ref": "ZVQLe",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "O7zqv",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 18.000.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "gSAET",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "BViN5",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Keluarga Wijaya",
+                              "strokeWidth": 0,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "u5mdr",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "o9B2E",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "KW"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Keluarga Wijaya"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "HktLq",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Keluarga"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "HGygm",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "15 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "ytnKS",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "oz5ua",
+                                          "type": "ref",
+                                          "ref": "i9SFm",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "ZflMR",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 2.800.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "QBIG3",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Z6s52",
+          "name": "Exhibit — Content",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "XzymF",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "h2CbPc",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Content",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "nOUpe",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Padded Content holds fields, toggles, alerts or an Empty State. Tables sit edge to edge: Table Header Row + Table Rows, never the whole Table card. Lists use a Flush variant with List Card Item rows. One kind of content per card.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "RROEQ",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 24,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "u8gooP",
+                  "name": "Case",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "DnfSi",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "EMPTY STATE · PADDED",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "miFTZ",
+                      "type": "ref",
+                      "ref": "rHONT",
+                      "name": "Section Card · Empty State",
+                      "width": "fill_container",
+                      "descendants": {
+                        "BXWnC": {
+                          "content": "Sumber klien"
+                        },
+                        "nHCW8": {
+                          "content": "Dari mana klien menemukan studiomu."
+                        },
+                        "DElnV": {
+                          "type": "frame",
+                          "id": "b6MA9G",
+                          "name": "Content",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$component/section-card/content/gap",
+                          "padding": "$component/section-card/content/padding",
+                          "children": [
+                            {
+                              "id": "cPdKW",
+                              "type": "ref",
+                              "ref": "H43gDN",
+                              "name": "Empty State",
+                              "width": "fill_container"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "GHgwY",
+                  "name": "Case",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "EaC82",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "TABLE · EDGE TO EDGE",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "I81ygA",
+                      "type": "ref",
+                      "ref": "rHONT",
+                      "name": "Section Card · Table",
+                      "width": "fill_container",
+                      "descendants": {
+                        "BXWnC": {
+                          "content": "Proyek aktif"
+                        },
+                        "nHCW8": {
+                          "content": "Proyek yang sedang berjalan di workspace ini."
+                        },
+                        "DElnV": {
+                          "type": "frame",
+                          "id": "qxpT5",
+                          "name": "Content",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "id": "O8aO7i",
+                              "type": "ref",
+                              "ref": "oOFk7",
+                              "width": "fill_container",
+                              "name": "Header"
+                            },
+                            {
+                              "id": "pqTgM",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Dimas & Sari",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "ZAziZ",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "scVse",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "DS"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Dinar & Sari"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "ASJ19",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Prewedding"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "i9Y7r",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Sab, 28 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "s2oggP",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "V9WEE",
+                                          "type": "ref",
+                                          "ref": "w9aTAe",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "B2NPIB",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 4.800.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "Sw8Ur",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "c4oYwV",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Kopi Tuku",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "NuTN0",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "g5byo",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "BT"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Bayu Tirta"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "gItiJ",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Produk"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "zggZi",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Sen, 30 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "MMUAV",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "IPpsY",
+                                          "type": "ref",
+                                          "ref": "LQGDd",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "lLyRu",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 2.500.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "cvlKK",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "qpim8",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Rina & Adi",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "K5XRDK",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "XrwJx",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "RA"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Rina & Adi"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "g7dfe3",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Pernikahan"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "Ib6R2",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "14 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "mJ8Sn",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "Pfz66",
+                                          "type": "ref",
+                                          "ref": "ZVQLe",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "rNNmL",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 18.000.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "zTZSU",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "r46p4",
+                              "type": "ref",
+                              "ref": "r7YZY",
+                              "width": "fill_container",
+                              "name": "Row Keluarga Wijaya",
+                              "strokeWidth": 0,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "KnIU1",
+                                  "name": "Cells",
+                                  "width": "fill_container",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "L5JWmj",
+                                      "type": "ref",
+                                      "ref": "lVDvO",
+                                      "name": "Klien",
+                                      "width": "fill_container",
+                                      "descendants": {
+                                        "cTnMA/DloPs": {
+                                          "content": "KW"
+                                        },
+                                        "Q4FlPn": {
+                                          "content": "Keluarga Wijaya"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "NirfI",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Jenis",
+                                      "width": 130,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Keluarga"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "tipRS",
+                                      "type": "ref",
+                                      "ref": "f0oyj",
+                                      "name": "Tanggal",
+                                      "width": 120,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "15 Sep"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "F66IId",
+                                      "name": "Tahap",
+                                      "width": 130,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "id": "rvX34",
+                                          "type": "ref",
+                                          "ref": "i9SFm",
+                                          "name": "Stage"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": "K1GptT",
+                                      "type": "ref",
+                                      "ref": "f7pbaS",
+                                      "name": "Nilai",
+                                      "width": 110,
+                                      "descendants": {
+                                        "Q4FlPn": {
+                                          "content": "Rp 2.800.000"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "S1TuIO",
+                                      "type": "ref",
+                                      "ref": "C1MRI",
+                                      "name": "Aksi",
+                                      "width": 32,
+                                      "justifyContent": "end"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ZGtS7",
+          "name": "Exhibit — Modes",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "BeMew",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ohQHg",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Modes",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "tM03g",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Light and dark bind the same component tokens: surface.panel card on the surface.canvas plane, border.default edge, border.subtle header divider, text.primary title and text.secondary description.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "s1fx95",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "c8qOtm",
+                  "name": "Mode light",
+                  "theme": {
+                    "mode": "light"
+                  },
+                  "width": "fill_container",
+                  "fill": "$color/semantic/surface/canvas",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 20,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "crPOz",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "LIGHT",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "Vitrv",
+                      "type": "ref",
+                      "ref": "rHONT",
+                      "name": "Section Card/Default · light",
+                      "width": "fill_container"
+                    },
+                    {
+                      "id": "zXOpy",
+                      "type": "ref",
+                      "ref": "lYGAJ",
+                      "name": "Section Card/Compact · light",
+                      "width": 358
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "L9qgp",
+                  "name": "Mode dark",
+                  "theme": {
+                    "mode": "dark"
+                  },
+                  "width": "fill_container",
+                  "fill": "$color/semantic/surface/canvas",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 20,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "S52CZ",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "DARK",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "LMmSU",
+                      "type": "ref",
+                      "ref": "rHONT",
+                      "name": "Section Card/Default · dark",
+                      "width": "fill_container"
+                    },
+                    {
+                      "id": "Q9mZf",
+                      "type": "ref",
+                      "ref": "lYGAJ",
+                      "name": "Section Card/Compact · dark",
+                      "width": 358
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "j7hfzC",
+          "name": "Exhibit — Usage",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "YQvUE",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ISyi9",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Usage",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "oOmrC",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Stack cards in one column: the centered 720 column for settings and forms, the full container for tables and lists.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "u5gkMS",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "gBvpc",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Do: separate cards with panel.app.content.gap (28) on desktop and space.6 (24) on phones.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "TYrki",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Do: keep page actions (Simpan perubahan) outside the cards; page-level inline alerts sit above the first card.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "s8bCO",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Do: put at most one control in the header Actions slot — a Segmented Control for view tabs or one Secondary / Icon button.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "TXtQh",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Don't: nest Section Cards, nest a whole Table or List Card, add elevation, or override header / content insets (SP5).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "nDMWe",
+          "name": "Exhibit — Accessibility",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "eTn6r",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "VqyDM",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Accessibility",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "i0zyu",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "WCAG 2.1 AA (C-008).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "oM7Ad",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "l58VYg",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Render as <section aria-labelledby> pointing to the Title (<h2> under the page <h1>); Description may be aria-describedby.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "ld0Oh",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  A header Segmented Control acts as tabs for the Content: role=tablist, aria-controls the Content region.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "WjsQg",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  With the header off, give the section an accessible name (aria-label) or rely on the page heading when it is the only section.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "vMlKy",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Content components keep their own semantics — labels, errors, list and table roles, focus rings.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "themes": {
@@ -106757,6 +109342,10 @@
         }
       ]
     },
+    "color/primitive/neutral/150": {
+      "type": "color",
+      "value": "#F0F0F2"
+    },
     "color/semantic/border/subtle": {
       "type": "color",
       "value": [
@@ -106790,6 +109379,14 @@
           }
         }
       ]
+    },
+    "color/primitive/neutral/250": {
+      "type": "color",
+      "value": "#DCDCE0"
+    },
+    "color/primitive/neutral/650": {
+      "type": "color",
+      "value": "#484850"
     },
     "color/semantic/border/input-hover": {
       "type": "color",
@@ -109140,18 +111737,6 @@
       "type": "number",
       "value": "$size/sidebar"
     },
-    "color/primitive/neutral/150": {
-      "type": "color",
-      "value": "#F0F0F2"
-    },
-    "color/primitive/neutral/250": {
-      "type": "color",
-      "value": "#DCDCE0"
-    },
-    "color/primitive/neutral/650": {
-      "type": "color",
-      "value": "#484850"
-    },
     "size/list-row": {
       "type": "number",
       "value": 44
@@ -109283,6 +111868,78 @@
     "component/sheet/item/check": {
       "type": "color",
       "value": "$color/semantic/action/primary"
+    },
+    "component/section-card/background": {
+      "type": "color",
+      "value": "$color/semantic/surface/panel"
+    },
+    "component/section-card/border": {
+      "type": "color",
+      "value": "$color/semantic/border/default"
+    },
+    "component/section-card/radius": {
+      "type": "number",
+      "value": "$radius/md"
+    },
+    "component/section-card/header/padding-x": {
+      "type": "number",
+      "value": "$space/6"
+    },
+    "component/section-card/header/padding-y": {
+      "type": "number",
+      "value": "$space/5"
+    },
+    "component/section-card/header/gap": {
+      "type": "number",
+      "value": "$space/1"
+    },
+    "component/section-card/header/border": {
+      "type": "color",
+      "value": "$color/semantic/border/subtle"
+    },
+    "component/section-card/title": {
+      "type": "color",
+      "value": "$color/semantic/text/primary"
+    },
+    "component/section-card/description": {
+      "type": "color",
+      "value": "$color/semantic/text/secondary"
+    },
+    "component/section-card/compact/header/padding-x": {
+      "type": "number",
+      "value": "$space/4"
+    },
+    "component/section-card/compact/header/padding-y": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/section-card/content/padding": {
+      "type": "number",
+      "value": "$space/6"
+    },
+    "component/section-card/content/gap": {
+      "type": "number",
+      "value": "$space/4"
+    },
+    "component/section-card/compact/content/padding": {
+      "type": "number",
+      "value": "$space/4"
+    },
+    "component/section-card/flush/padding-x": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/section-card/flush/padding-y": {
+      "type": "number",
+      "value": "$space/1"
+    },
+    "component/section-card/compact/flush/padding-x": {
+      "type": "number",
+      "value": "$space/1"
+    },
+    "component/section-card/header/actions-gap": {
+      "type": "number",
+      "value": "$space/4"
     }
   },
   "fileToken": "a25701b4-4c5b-41fc-8af0-91535884d9bf"

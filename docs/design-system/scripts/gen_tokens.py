@@ -456,6 +456,25 @@ add("list-card.item.icon-background","color",SC("surface.subtle"))
 add("list-card.item.icon","color",SC("text.secondary"))
 add("list-card.item.title","color",SC("text.primary"))
 add("list-card.item.meta","color",SC("text.secondary"))
+# C43 Section Card (Owner 2026-10-01; renamed from Form Section same day, versatile Content slot): titled card; Compact = phone insets
+add("section-card.background","color",SC("surface.panel"))
+add("section-card.border","color",SC("border.default"))
+add("section-card.radius","number",SP("radius.md"))
+add("section-card.header.padding-x","number",SP("space.6"))
+add("section-card.header.padding-y","number",SP("space.5"))
+add("section-card.header.gap","number",SP("space.1"))
+add("section-card.header.border","color",SC("border.subtle"))
+add("section-card.header.actions-gap","number",SP("space.4"))    # heading block ↔ Actions slot (Segmented Control, button)
+add("section-card.title","color",SC("text.primary"))
+add("section-card.description","color",SC("text.secondary"))
+add("section-card.content.padding","number",SP("space.6"))
+add("section-card.content.gap","number",SP("space.4"))
+add("section-card.compact.header.padding-x","number",SP("space.4"))
+add("section-card.compact.header.padding-y","number",SP("space.3"))
+add("section-card.compact.content.padding","number",SP("space.4"))
+add("section-card.flush.padding-x","number",SP("space.3"))          # Flush: list rows (12 inset) + 12 = header 24
+add("section-card.flush.padding-y","number",SP("space.1"))
+add("section-card.compact.flush.padding-x","number",SP("space.1"))  # Compact Flush: 12 + 4 = header 16
 # Open questions resolved (Owner 2026-09-26, recommended defaults)
 add("calendar.day.background-hover","color",SC("surface.muted"))   # rest is surface.sunken → one step darker
 add("segmented.item.lg.padding-y","number",SP("space.3"))      # 12 (LG, mobile filters)
@@ -565,7 +584,7 @@ mapping = {
                     "rules_status": "APPROVED v3.1 2026-09-29 (Owner: ok agree; v3 2026-09-28 Owner: ya)",
                     "note": "Documentation boards bind every swatch/scale to live variables; dark previews use theme mode=dark."},
  "components": {k: v for k, v in json.loads((ROOT/"components"/"registry.json").read_text()).items() if not k.startswith("$")} if (ROOT/"components"/"registry.json").exists() else {},
- "components_status": "APPROVED — C01–C35 approved 2026-09-26; C36 Combobox and C37 Nav rail & tablet shell retained; C38 Empty State, C39 Toast, Button loading and Sheet Item/Selected approved 2026-09-28; shell v3 amendments plus C40 Page Header, C41 Group and C42 List Card approved by Owner (ya) 2026-09-28; F-17 promotion 2026-09-29: Workspace Pill, Mobile Header, Compact Bar, Toast/Danger, Menu/List, Count Badge/Danger (C14 merged), Page Header Utilities, Nav Item active/hover (rules v3.1), Mobile App Shell / Mobile Shell / Tablet shell updates.",
+ "components_status": "APPROVED — C01–C35 approved 2026-09-26; C36 Combobox and C37 Nav rail & tablet shell retained; C38 Empty State, C39 Toast, Button loading and Sheet Item/Selected approved 2026-09-28; shell v3 amendments plus C40 Page Header, C41 Group and C42 List Card approved by Owner (ya) 2026-09-28; F-17 promotion 2026-09-29: Workspace Pill, Mobile Header, Compact Bar, Toast/Danger, Menu/List, Count Badge/Danger (C14 merged), Page Header Utilities, Nav Item active/hover (rules v3.1), Mobile App Shell / Mobile Shell / Tablet shell updates; C43 Section Card approved by Owner 2026-10-01 (F-02 settings v3; renamed from Form Section, versatile slot).",
  "unsupported": {
    "size-binding": "Pencil width/height cannot bind to number variables; spacing is applied via padding/gap bindings.","typography": "Composite text styles are not Pencil variables; components bind family/size/weight/letter-spacing separately.",
                  "shadow": "Composite shadow split into elevation.N.offset-y / blur (number) + color.semantic.elevation.N.color (color)."},

@@ -3189,5 +3189,131 @@
       "component.page-header.title",
       "component.page-header.breadcrumb.text"
     ]
+  },
+  "section-card": {
+    "status": "APPROVED 2026-10-01 (Owner; renamed from Form Section same day, versatile Content slot; F-02 settings v3)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C43 — Section card",
+      "id": "d8Dpw"
+    },
+    "spec": "docs/design-system/components/section-card.md",
+    "base": {
+      "name": "_SectionCard/Base",
+      "id": "qWBIt",
+      "private": true
+    },
+    "axes": {
+      "density": [
+        "default",
+        "compact"
+      ],
+      "content": [
+        "padded",
+        "flush"
+      ],
+      "header": [
+        "on",
+        "off"
+      ]
+    },
+    "props": {
+      "title": {
+        "kind": "text",
+        "layer": "Title",
+        "id": "BXWnC"
+      },
+      "description": {
+        "kind": "text",
+        "layer": "Description",
+        "id": "nHCW8"
+      },
+      "content": {
+        "kind": "slot",
+        "layer": "Content",
+        "id": "DElnV",
+        "recommended": [
+          "HHNPk",
+          "AVpMa",
+          "Q64HTj",
+          "t7L0yL",
+          "Wc7hd",
+          "oOFk7",
+          "r7YZY",
+          "H43gDN",
+          "F3GrC5",
+          "AJT5R",
+          "zSBcA"
+        ],
+        "fill": "Replace(instance+'/DElnV', {type:'frame', name:'Content', width:'fill_container', layout:'vertical', gap:'$component/section-card/content/gap', padding:'$component/section-card/content/padding'})",
+        "flush_accepts": [
+          "uJwfh",
+          "XhLSK"
+        ],
+        "table_accepts": [
+          "oOFk7",
+          "r7YZY",
+          "XlPZD",
+          "bd9LK",
+          "eFemy",
+          "uMP5H"
+        ]
+      },
+      "header": {
+        "kind": "boolean",
+        "layer": "Header",
+        "id": "P6BlE",
+        "default": true
+      },
+      "actions": {
+        "kind": "slot",
+        "layer": "Actions",
+        "id": "QcKHK",
+        "recommended": [
+          "uMP5H",
+          "JmfmZ",
+          "qY0Em",
+          "rXttF"
+        ],
+        "default": [],
+        "fill": "Replace(instance+'/QcKHK', {type:'frame', name:'Actions', gap:'$space/2', alignItems:'center'})"
+      }
+    },
+    "layers": {
+      "Header": "P6BlE",
+      "Heading": "KVDyd",
+      "Title": "BXWnC",
+      "Description": "nHCW8",
+      "Actions": "QcKHK",
+      "Content": "DElnV"
+    },
+    "variants": {
+      "default": "rHONT",
+      "compact": "lYGAJ",
+      "default-flush": "G8WO8q",
+      "compact-flush": "Q82mo",
+      "default-no-header": "B19wQC",
+      "compact-no-header": "uBGFy"
+    },
+    "nested": [
+      "list-card-item"
+    ],
+    "tokens": [
+      "component.section-card.*",
+      "font.size.subtitle",
+      "font.size.body-sm",
+      "space.2"
+    ],
+    "gaps": [
+      "width is a literal (720 in the centered narrow column; 358 on a 390 phone) because width cannot bind variables",
+      "a filled Content slot is a replacement frame, so it must restate content gap/padding tokens (compact.content.padding on Compact)",
+      "table rows keep table.row.padding-x (20) against the header's 24; accepted so row dividers/hover stay full-bleed"
+    ],
+    "examples": {
+      "empty-state": "miFTZ",
+      "table": "I81ygA",
+      "header-actions-tabs-table": "LcKBl",
+      "header-off": "KwkAv"
+    }
   }
 }

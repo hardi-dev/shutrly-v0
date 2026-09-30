@@ -1,6 +1,6 @@
 # Handoff — Shutrly
 
-Last updated: 2026-09-29 (F-17 IMPLEMENTED — verify next; F-03 paused) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-01 (F-00, F-01, F-02 and F-17 DONE; F-03 next) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `codex/message-templates-shell-v3`.
 
 ## Update 2026-10-01 — Section Card and Settings v3
@@ -8,9 +8,9 @@ Branch: `codex/message-templates-shell-v3`.
 - New library component **C43 Section Card**, with tokens `component.section-card.*`. The total is 549 tokens, checksum `373a3591`. See [section-card.md](design-system/components/section-card.md).
 - The Settings v3 design, exports and code are on branch `feat/section-card-settings`; see [workspace plan.md](features/workspace/plan.md) and the [implementation record](features/workspace/technical-design.md#settings-v3-implementation-record-2026-10-01).
 - The unmerged WIP backup `backup/wip-2026-09-30` (Empty State, Button pending state, create-workspace dialog, dashboard toast, toast region, message-templates docs) is merged into this work (Owner 2026-10-01). D-S1 (toasts) and D-S2 (stale E2E selector) are recorded in the implementation record.
-- Next: `/sdv:verify-design-system`, then `/sdv:verify-feature workspace`.
+- F-00, F-01, F-02 and F-17 are DONE (Owner 2026-10-01). Next: F-03 Message templates (SPECIFIED) → `/sdv:design-feature message-templates`.
 
-## Current handoff — verify F-17 App Shell revamp
+## Previous handoff — F-17 App Shell revamp (now DONE, 2026-10-01)
 
 **State (2026-09-29):** F-17 `app-shell-revamp` is **IMPLEMENTED, browser-validated and committed**. Run `/sdv:verify-feature app-shell-revamp` next. The working tree still holds pre-existing Owner and agent changes (F-02 screens, primitives, auth docs, `.pen` files); preserve them.
 

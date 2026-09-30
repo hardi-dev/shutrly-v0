@@ -1,7 +1,7 @@
 # Feature: Auth & Account
 
 ID: F-01 · Slug: `auth`
-Status: MODELED (2026-09-26)
+Status: DONE (verified 2026-09-27, [verification-report.md](verification-report.md))
 Journey: [J-01 Owner onboarding](../../product/user-journeys.md) · Paired with: F-02 `workspace`
 
 ## Goal

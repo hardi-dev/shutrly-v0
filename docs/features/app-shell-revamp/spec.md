@@ -1,7 +1,7 @@
 # Feature: App Shell revamp — desktop, tablet and mobile navigation
 
 ID: F-17 · Slug: `app-shell-revamp`
-Status: PLANNED (2026-09-29) · Design: [design.md](design.md) · Plan: [technical-design.md](technical-design.md)
+Status: DONE (2026-10-01) · Design: [design.md](design.md) · Plan: [technical-design.md](technical-design.md)
 Journey: [J-01 Owner onboarding](../../product/user-journeys.md) · Builds on: F-02 `workspace` (DONE)
 
 ## Goal

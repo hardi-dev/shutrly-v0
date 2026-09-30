@@ -20,3 +20,7 @@ Full component pages exported from `design-system.lib.pen` through Pencil MCP `E
 - `c28-app-panel`, `c29-sidebar`, `c30-app-shell`, `c35-mobile-app-shell`
 
 These files are generated snapshots: never edit them by hand. Re-export a page after its Pencil component changes.
+
+## Pencil page exports (2026-10-01)
+
+- `c43-section-card`: C43 Section Card page (component set, configurations, content, modes, usage and accessibility), exported for the Settings v3 build.

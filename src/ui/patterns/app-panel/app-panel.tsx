@@ -34,7 +34,7 @@ export function AppPanel({
 /** Constrains page sections inside the App Panel content region (C28). */
 export function PageContent({ children }: Readonly<PageContentProps>) {
   return (
-    <div className="w-full flex-1 overflow-y-auto px-(--component-panel-app-content-padding-x) py-(--component-panel-app-content-padding-y)">
+    <div className="min-h-0 w-full flex-1 overflow-y-auto px-(--component-panel-app-content-padding-x) py-(--component-panel-app-content-padding-y)">
       <div className="mx-auto flex w-full max-w-[1096px] flex-col gap-(--component-panel-app-content-gap)">
         {children}
       </div>

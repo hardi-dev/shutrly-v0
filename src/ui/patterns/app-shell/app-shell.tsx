@@ -71,7 +71,8 @@ export function AppShell({
   }
 
   return (
-    <div className="flex min-h-dvh bg-(--color-semantic-surface-muted) md:pt-(--space-3) md:pr-(--space-3) md:pb-(--space-3)">
+    // From md up the shell is viewport-high so the Sidebar stays put and only the panel scrolls (F-17 S-A3).
+    <div className="flex min-h-dvh bg-(--color-semantic-surface-muted) md:h-dvh md:pt-(--space-3) md:pr-(--space-3) md:pb-(--space-3)">
       <a href={`#${APP_SHELL_CONTENT_ID}`} className="sr-only focus:not-sr-only max-md:hidden">
         {APP_SHELL_COPY.skip}
       </a>

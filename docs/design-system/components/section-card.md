@@ -72,6 +72,8 @@ To fill it: `Replace(instance+'/DElnV', {type:'frame', name:'Content', width:'fi
 
 ## Implementation references
 
+- Code: `src/ui/patterns/section-card/` — `SectionCard` with `title`, `description`, `actions`, `content` (`padded` · `flush` · `bleed` for table rows) and `aria-label` (no header). Compact insets apply below `md` (768 px), Default from `md` up.
+
 - Tokens: `component.section-card.*`, 18 tokens: background, border, radius, header.{padding-x, padding-y, gap, border, actions-gap}, title, description, content.{padding, gap}, flush.{padding-x, padding-y}, compact.header.{padding-x, padding-y}, compact.content.padding and compact.flush.padding-x. Total 549 tokens, checksum `373a3591`.
 - Consumers: F-02 Workspace settings (`docs/features/workspace/design.md` › Settings v3).
 - Gap: the width is a literal in Pencil (720 / 358). The code uses `width: 100%` inside its column (`size.content-narrow` for settings).

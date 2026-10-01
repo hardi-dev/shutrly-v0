@@ -110522,7 +110522,7 @@
     },
     "component/segmented/item/text": {
       "type": "color",
-      "value": "$color/semantic/text/muted"
+      "value": "$color/semantic/text/secondary"
     },
     "component/segmented/item/text-active": {
       "type": "color",
@@ -110697,7 +110697,7 @@
     },
     "component/segmented/item/text-hover": {
       "type": "color",
-      "value": "$color/semantic/text/secondary"
+      "value": "$color/semantic/text/primary"
     },
     "component/stepper/background": {
       "type": "color",

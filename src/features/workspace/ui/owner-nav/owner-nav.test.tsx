@@ -35,6 +35,19 @@ describe("Owner navigation", () => {
     );
     expect(screen.getByRole("link", { name: "Dasbor" })).not.toHaveAttribute("aria-current");
   });
+
+  it("AC-SRC-004 exposes Sumber foto with the folder-open route", () => {
+    render(<OwnerNavBottom workspaceId="ws" pathname="/w/ws/photo-sources" />);
+
+    expect(screen.getByRole("link", { name: "Sumber foto" })).toHaveAttribute(
+      "href",
+      "/w/ws/photo-sources",
+    );
+    expect(screen.getByRole("link", { name: "Sumber foto" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+  });
 });
 
 describe("resolveActiveNav", () => {
@@ -68,6 +81,7 @@ describe("resolvePageHeading", () => {
       "/w/A/message-templates",
       { title: "Template pesan", subtitle: OWNER_NAV_COPY.messageTemplatesSubtitle },
     ],
+    ["/w/A/photo-sources", { title: "Sumber foto", subtitle: OWNER_NAV_COPY.photoSourcesSubtitle }],
     ["/profile", null],
   ])("resolves %s", (pathname, heading) => {
     expect(resolvePageHeading(pathname, "A", "Aster")).toEqual(heading);

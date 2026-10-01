@@ -377,11 +377,11 @@ Types: `OptionCardOption { value: string; title: string; description?: string; i
 
 **Files:** create `src/ui/patterns/page-actions/*`; modify `src/features/workspace/ui/owner-shell/owner-shell.tsx` (+ test).
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
   - `page-actions.test.tsx`: renders `<div id={PAGE_ACTIONS_ID} />` and `<PageActions><button>Tambah sumber</button></PageActions>`, then expects the button inside that div after mount.
   - `owner-shell.test.tsx`: the desktop panel contains `#owner-page-actions`.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
 
 ```tsx
 // page-actions.tsx
@@ -950,7 +950,7 @@ export const SOURCE_COPY = {
 
 The toast bodies for renamed, activated and deleted aren't in the frames; they use the source name: ``${name} sudah diperbarui.`` etc. Record them as "not in Pencil" in the copy file, as F-02 did.
 
-- [ ] **Step 4:** gate → PASS. Commit `feat(gallery): add the sumber foto route and navigation`.
+- [x] **Step 4:** gate → PASS. Commit `feat(gallery): add the sumber foto route and navigation`.
 
 ### Task 11: Sumber foto screen
 

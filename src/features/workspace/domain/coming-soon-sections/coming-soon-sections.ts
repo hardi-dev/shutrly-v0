@@ -4,7 +4,6 @@ export const COMING_SOON_SECTIONS = [
   "invoices",
   "services",
   "team",
-  "client-sources",
   "new-project",
   "search",
   "notifications",

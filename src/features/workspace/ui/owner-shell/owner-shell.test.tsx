@@ -66,7 +66,7 @@ describe("MobileWorkspaceSheet", () => {
         .map((button) => button.getAttribute("aria-label"))
         .filter(Boolean),
     ).toEqual(
-      expect.arrayContaining(["Layanan", "Tim", "Template pesan", "Sumber klien", "Pengaturan"]),
+      expect.arrayContaining(["Layanan", "Tim", "Template pesan", "Sumber foto", "Pengaturan"]),
     );
     const labels = screen.getAllByRole("button").map((button) => button.textContent);
     expect(labels.indexOf("Layanan")).toBeLessThan(labels.indexOf("Tim"));

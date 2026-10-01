@@ -7,7 +7,7 @@ export const OWNER_NAV_COPY = {
   team: "Tim",
   catalog: "KATALOG",
   messageTemplates: "Template pesan",
-  clientSources: "Sumber klien",
+  photoSources: "Sumber foto",
   settings: "Pengaturan",
   create: "Proyek baru",
   search: "Pencarian",
@@ -16,5 +16,7 @@ export const OWNER_NAV_COPY = {
   settingsSubtitle: "Atur identitas brand, kontak, dan format invoice workspace ini.",
   messageTemplatesSubtitle:
     "Pesan WhatsApp untuk klien. Kamu tetap mengirimnya sendiri dari WhatsApp.",
+  photoSourcesSubtitle:
+    "Tempat foto gallery-mu disimpan. Shutrly hanya membaca, tidak pernah mengubah isinya.",
   comingSoonSubtitle: "Segera hadir.",
 } as const;

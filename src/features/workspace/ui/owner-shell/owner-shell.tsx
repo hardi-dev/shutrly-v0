@@ -37,7 +37,7 @@ const MOBILE_MENU_ITEMS = [
   ["services", OWNER_NAV_COPY.services, "package"],
   ["team", OWNER_NAV_COPY.team, "user-round-cog"],
   ["message-templates", OWNER_NAV_COPY.messageTemplates, "message-square-text"],
-  ["client-sources", OWNER_NAV_COPY.clientSources, "share-2"],
+  ["photo-sources", OWNER_NAV_COPY.photoSources, "folder-open"],
   ["settings", OWNER_NAV_COPY.settings, "settings"],
 ] as const;
 

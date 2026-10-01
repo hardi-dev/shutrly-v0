@@ -647,7 +647,7 @@ describe("workspace source backfill migration", () => {
 
 **Files:** create the port, errors, schemas and use cases, plus `tests/support/gallery/fake-workspace-source-repository.ts`.
 
-- [ ] **Step 1: Port.**
+- [x] **Step 1: Port.**
 
 ```ts
 import "server-only";
@@ -680,7 +680,7 @@ export interface WorkspaceSourceRepositoryPort {
 }
 ```
 
-- [ ] **Step 2: Schemas** (`*.schema.ts`, no `server-only`):
+- [x] **Step 2: Schemas** (`*.schema.ts`, no `server-only`):
 
 ```ts
 // source-name.schema.ts
@@ -710,13 +710,13 @@ export const addSourceSchema = sourceNameSchema.extend({
 - AC-SRC-007: `addSourceSchema` rejects `provider: "DROPBOX"` with `PROVIDER_UNAVAILABLE`;
 - AC-SRC-008: empty and 61-character names.
 
-- [ ] **Step 3: Errors.** `SourceConfigError extends DomainError` with `SourceConfigErrorCode = "NOT_FOUND" | "SAVE_FAILED"`, the same shape as `MessageTemplateError`.
-- [ ] **Step 4: Fake repository.** Mirror `FakeMessageTemplateRepository`:
+- [x] **Step 3: Errors.** `SourceConfigError extends DomainError` with `SourceConfigErrorCode = "NOT_FOUND" | "SAVE_FAILED"`, the same shape as `MessageTemplateError`.
+- [x] **Step 4: Fake repository.** Mirror `FakeMessageTemplateRepository`:
   - rows hold `workspaceId`, `id`, `provider`, `displayName`, `isActive`, `configData`, `updatedBy`;
   - `create` and `rename` return `NAME_TAKEN` when `sourceNameKey` matches another row in the same workspace;
   - `delete` returns `IN_USE` for IDs in a public `inUse: Set<string>`;
   - `seedDefault` inserts only when the workspace has no rows.
-- [ ] **Step 5: Failing use-case tests.** One test file per use case, named by AC:
+- [x] **Step 5: Failing use-case tests.** One test file per use case, named by AC:
   - `add-workspace-source.test.ts`:
     - AC-SRC-006: `"  Google Drive Arsip "` is stored trimmed, active, with `configData` `{}` and `updatedBy` `owner_1`;
     - AC-SRC-007: `provider: "DROPBOX"` → `{ ok:false, code:"VALIDATION_FAILED", fieldErrors:{ provider:"PROVIDER_UNAVAILABLE" } }`;
@@ -730,7 +730,7 @@ export const addSourceSchema = sourceNameSchema.extend({
   - `delete-workspace-source.test.ts`: AC-SRC-012 deletes; AC-SRC-013 `inUse` → `{ ok:false, code:"IN_USE" }` and the row stays; AC-SRC-015 unknown → `NOT_FOUND`.
   - `list-workspace-sources.test.ts`: AC-SRC-003 sorted order.
   - `seed-default-source.test.ts`: AC-SRC-001 one *Google Drive*; calling it twice still gives one row.
-- [ ] **Step 6:** run → FAIL. **Step 7: Implement** the use cases. Result types:
+- [x] **Step 6:** run → FAIL. **Step 7: Implement** the use cases. Result types:
 
 ```ts
 export type SourceFieldErrorKey = "EMPTY" | "TOO_LONG" | "NAME_TAKEN" | "PROVIDER_UNAVAILABLE";
@@ -751,7 +751,7 @@ The use cases:
 
 `listWorkspaceSources` returns `sortSources(await repository.listForWorkspace(context))`.
 
-- [ ] **Step 8:** gate → PASS. Commit `feat(gallery): add workspace source use cases`.
+- [x] **Step 8:** gate → PASS. Commit `feat(gallery): add workspace source use cases`.
 
 ### Task 8: Drizzle repository and integration tests
 

@@ -88,7 +88,7 @@ Screenshots of the running app were compared with `list-L9tLQ`, `list-m3crcH`, `
 - **V1:** list rows are about 6 px taller than the export. The export uses the browser's default line height (about 1.2); the tokens have only `tight` 1.1 and `body` 1.5.
 - **DESIGN TOKEN GAP:** skeleton bar widths (`w-36`, `w-52`); possibly a `List Card Item/Two-line` library variant (design.md).
 - **Design-system change:** `component.segmented.item.text` / `-hover` were darkened (Owner 2026-10-01). Every Segmented Control is affected.
-- **Unrelated failure:** `tests/e2e/auth/auth-profile.spec.ts` fails because `/profile` redirects owners without a workspace to onboarding (since `70ce31d`, F-17). Not caused by F-03; spun off as a separate task.
+- **Unrelated failure:** `tests/e2e/auth/auth-profile.spec.ts` fails because `/profile` redirects owners without a workspace to onboarding (since `70ce31d`, F-17). Not caused by F-03. **Fixed 2026-10-01:** the spec (workspace spec, BR-AUTH-004) confirms the redirect is intended, so the test now creates a workspace first and scopes its locators to the visible tree. Full `pnpm e2e`: 34/34 pass.
 
 ## Advisory (no action required for DONE)
 

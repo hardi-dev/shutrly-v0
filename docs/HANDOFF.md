@@ -11,9 +11,9 @@ Branch: `codex/message-templates-shell-v3`.
 - **Build:** all 14 tasks are committed (`399cbd1`…`bd4c6e3` plus the Task 14 commit). `pnpm typecheck`, `pnpm lint`, `pnpm test` (445) and `pnpm build` pass. See the [implementation record](features/message-templates/technical-design.md#implementation-record-2026-10-01).
 - **Verified (2026-10-01):** migrations 0002/0003 are applied; integration 44/44 and F-03 E2E 3/3 pass; the browser fidelity check is done.
   - The Segmented text token was darkened for AA contrast; `design-system.lib.pen` needs ⌘S in Pen.
-  - Known unrelated failure: `auth-profile.spec.ts` (profile redirects to onboarding since `70ce31d`), spun off as a separate task.
+  - `auth-profile.spec.ts` is fixed: the test now creates a workspace first, as BR-AUTH-004 requires, and scopes its locators to the visible desktop tree. The full E2E suite passes, 34/34.
 - **Verified:** [verification-report.md](features/message-templates/verification-report.md) passes with nothing blocking; F-03 is DONE.
-- **Next:** `/sdv:ship`. The open follow-up is the `auth-profile.spec.ts` failure (separate task).
+- **Next:** `/sdv:ship`, once CI and the Cloudflare deploy are set up.
 
 ## Update 2026-10-01 — Section Card and Settings v3
 

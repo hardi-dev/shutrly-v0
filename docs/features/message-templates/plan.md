@@ -3694,7 +3694,7 @@ Build from every `exports/editor-*.html`:
   - `showToast`, `Modal`, `BottomSheet`, `SheetItem`, `Button`, `SectionCard`, `useMobileViewport`.
 - Produces: `TemplateEditorScreen({ editor, action })`; `useTemplateForm(options): TemplateForm`; `useUnsavedChangesGuard(isDirty): UnsavedChangesGuard`; `internalHrefOf(event, origin, currentPath): string | null`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `use-unsaved-changes-guard/internal-href.test.tsx`:
 
@@ -3883,7 +3883,7 @@ describe("TemplateEditorScreen", () => {
 Run: `pnpm vitest run src/features/communications/ui/template-editor-screen src/features/communications/ui/use-unsaved-changes-guard`
 Expected: FAIL — modules not found.
 
-- [ ] **Step 2: Implement the unsaved-changes guard**
+- [x] **Step 2: Implement the unsaved-changes guard**
 
 `use-unsaved-changes-guard/use-unsaved-changes-guard.types.ts`:
 
@@ -3993,7 +3993,7 @@ export function useUnsavedChangesGuard(isDirty: boolean): UnsavedChangesGuard {
 }
 ```
 
-- [ ] **Step 3: Implement the form hook**
+- [x] **Step 3: Implement the form hook**
 
 `use-template-form/use-template-form.types.ts`:
 
@@ -4122,7 +4122,7 @@ export function useTemplateForm(options: TemplateFormOptions): TemplateForm {
 
 If the hook goes over 50 lines, move `insertVariable` into a module-level `insertAtCaret(form, element, name)` helper in the same file.
 
-- [ ] **Step 4: Implement the dialog**
+- [x] **Step 4: Implement the dialog**
 
 `unsaved-changes-dialog/unsaved-changes-dialog.copy.ts`:
 
@@ -4220,7 +4220,7 @@ export function UnsavedChangesDialog({
 
 If `Modal` requires non-empty `children`, render the description as its body instead of `description` (follow `create-workspace-dialog.tsx`).
 
-- [ ] **Step 5: Implement the screen**
+- [x] **Step 5: Implement the screen**
 
 `template-editor-screen/template-editor-screen.copy.ts`:
 
@@ -4493,7 +4493,7 @@ Notes for the implementer:
 - `textareaRef` is a `RefObject` that the hook owns. If the lint forbids assigning `.current`, have the hook return a callback ref `setTextarea(element)` instead, and call it from `setRef`.
 - Run `pnpm format` before the gate, so Prettier reflows the long lines above.
 
-- [ ] **Step 6: Add the route**
+- [x] **Step 6: Add the route**
 
 `src/app/(owner)/w/[workspaceId]/message-templates/[templateType]/page.tsx`:
 
@@ -4512,6 +4512,15 @@ export default async function MessageTemplateEditorPage({
 }
 ```
 
+> Build note (2026-10-01):
+> - The destructive Modal exposes `role="alertdialog"`, so the AC-MSG-014 test queries `alertdialog`.
+> - The form hook returns a callback ref `setTextarea` instead of `textareaRef`, since React Compiler lint forbids assigning `.current` in the screen.
+> - `insertAtCaret` and `setContent` are module-level helpers (50-line limit), and the toast mock is typed so the retry assertion uses `toMatchObject`.
+> - Unit tests pass. The **browser checks (Step 7) are pending** until migrations 0002/0003 are applied.
+> - Two export gaps were found, beyond class names and nesting, so they're left for the Owner:
+>   - **D-M4:** the textarea is about 236 px tall (`rows` 10) against 280 px in the export (300 px on phones; `rows` 12/13 would match);
+>   - the phone Segmented Control is content-width, while the export has a fixed 180 px track with equal tabs.
+
 - [ ] **Step 7: Run the tests and check the page in the browser**
 
 Run: `pnpm vitest run src/features/communications`
@@ -4522,7 +4531,7 @@ Then, in the `dev` preview:
 - check the phone Compact Bar: back goes to the list, the title is *Bagikan gallery*, the caption is *Template pesan*;
 - check that the Edit/Pratinjau tabs, the danger toast with *Coba lagi* (block the request in devtools to trigger it) and the unsaved-changes Modal and Sheet all work.
 
-- [ ] **Step 8: Gate and commit**
+- [x] **Step 8: Gate and commit**
 
 ```bash
 pnpm format && pnpm typecheck && pnpm lint && pnpm test

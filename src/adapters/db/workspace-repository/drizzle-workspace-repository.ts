@@ -8,7 +8,7 @@ import { asOwnerUserId } from "@/features/workspace/domain/owner-user-id/owner-u
 import { normaliseWorkspaceProfile } from "@/features/workspace/domain/workspace-profile/workspace-profile";
 import { workspaceIdSchema } from "@/shared/workspace-context/workspace-context.schema";
 
-import type { Db } from "../client/client.types";
+import type { DbExecutor } from "../client/client.types";
 import { workspace } from "../schema/workspace/workspace";
 
 const DUPLICATE_KEY = "23505";
@@ -38,7 +38,7 @@ function toRecord(row: typeof workspace.$inferSelect) {
 
 /** Creates the Drizzle workspace repository with all owner queries scoped to the workspace contract. @param db - the request-scoped Drizzle database @returns the workspace repository port */
 // eslint-disable-next-line max-lines-per-function -- the repository exposes the complete workspace port
-export function createDrizzleWorkspaceRepository(db: Db): WorkspaceRepositoryPort {
+export function createDrizzleWorkspaceRepository(db: DbExecutor): WorkspaceRepositoryPort {
   return {
     async countForOwner(owner) {
       const rows = await db

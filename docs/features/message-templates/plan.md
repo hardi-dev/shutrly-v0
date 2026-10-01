@@ -956,7 +956,7 @@ git commit -m "feat(communications): add the default whatsapp templates" -m "Co-
   - Drizzle table `messageTemplate`, with columns `id`, `workspaceId`, `type`, `channel`, `content`, `updatedBy`, `createdAt`, `updatedAt`;
   - `type DbExecutor`, which both `Db` and a `db.transaction` callback's `tx` satisfy (ADR-016).
 
-- [ ] **Step 1: Add `DbExecutor`**
+- [x] **Step 1: Add `DbExecutor`**
 
 `src/adapters/db/client/client.types.ts` (whole file):
 
@@ -989,7 +989,7 @@ In `drizzle-workspace-repository.ts`, change the import to `import type { DbExec
 Run: `pnpm typecheck`
 Expected: PASS. If `NeonQueryResultHKT` is not exported from `drizzle-orm/neon-serverless` in 0.45.3, import it from `drizzle-orm/neon-serverless/session`, and record that in the commit message.
 
-- [ ] **Step 2: Write the failing backfill test**
+- [x] **Step 2: Write the failing backfill test**
 
 `tests/config/message-template-backfill.test.ts`:
 
@@ -1020,7 +1020,7 @@ describe("message template backfill migration", () => {
 Run: `pnpm vitest run tests/config/message-template-backfill.test.ts`
 Expected: FAIL — `ENOENT … 0003_message_template_backfill.sql`.
 
-- [ ] **Step 3: Add the table**
+- [x] **Step 3: Add the table**
 
 `src/adapters/db/schema/communications/message-template.ts`:
 
@@ -1063,7 +1063,7 @@ Append to `src/adapters/db/schema/index.ts`:
 export * from "./communications/message-template";
 ```
 
-- [ ] **Step 4: Generate migration 0002 and review it**
+- [x] **Step 4: Generate migration 0002 and review it**
 
 Run: `pnpm db:generate --name message_template`
 Expected: `drizzle/0002_message_template.sql` with:
@@ -1074,7 +1074,7 @@ Expected: `drizzle/0002_message_template.sql` with:
 
 Review it; never edit an applied migration.
 
-- [ ] **Step 5: Create migration 0003 (backfill)**
+- [x] **Step 5: Create migration 0003 (backfill)**
 
 Run: `pnpm drizzle-kit generate --custom --name message_template_backfill`
 Expected: an empty `drizzle/0003_message_template_backfill.sql`, plus a journal entry.
@@ -1128,12 +1128,12 @@ ON CONFLICT ("workspace_id", "type", "channel") DO NOTHING;
 
 If the Owner changed a default in Task 4, use the changed text here.
 
-- [ ] **Step 6: Run the tests and confirm they pass**
+- [x] **Step 6: Run the tests and confirm they pass**
 
 Run: `pnpm vitest run tests/config/message-template-backfill.test.ts src/adapters/db`
 Expected: PASS. That includes the existing `_conventions/tenant.test.ts` and `client.test.ts`.
 
-- [ ] **Step 7: Gate and commit**
+- [x] **Step 7: Gate and commit**
 
 ```bash
 pnpm typecheck && pnpm lint && pnpm test

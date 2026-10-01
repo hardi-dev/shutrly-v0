@@ -416,7 +416,7 @@ In `OwnerShell`, pass `panelActions={<div id={PAGE_ACTIONS_ID} className="flex i
 
 **Files:** create the four `features/gallery/domain/*` units.
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
 
 ```ts
 // source-name.test.ts
@@ -985,13 +985,13 @@ The toast bodies for renamed, activated and deleted aren't in the frames; they u
     - AC-SRC-014: the action rejects → Toast/Danger *Perubahan belum tersimpan* with *Coba lagi*; the dialog stays open with the typed name; *Coba lagi* resubmits;
     - while saving, the confirm button is pending, labelled *Menambahkan…*.
   - `rename-source-dialog.test.tsx`: AC-SRC-010 prefilled name, save → action with the trimmed name and toast *Nama sumber diperbarui*; NAME_TAKEN field error; empty error.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement** following `CreateWorkspaceDialog` (Modal on desktop, `BottomSheet variant="form"` on phones, `useMobileViewport`) and `exports/add-*`, `rename-*`:
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement** following `CreateWorkspaceDialog` (Modal on desktop, `BottomSheet variant="form"` on phones, `useMobileViewport`) and `exports/add-*`, `rename-*`:
   - **Add:** `size="md"`, title/description from copy. Body: `OptionCardGroup` (label *Provider*; options from `SOURCE_PROVIDERS` × `PROVIDER_COPY`; non-available ones get `isDisabled` and `badge: SOURCE_COPY.comingSoon`), then `TextField` *Nama sumber* (placeholder, helper, `errorMessage`), then `<Alert tone="warning" title={warningTitle} body={warningBodyShort} />`. Actions: *Batal* (secondary) and the submit button (`isPending`, label switches to *Menambahkan…*). On phones, one LG full-width submit.
   - **Rename:** `size="sm"`, one `TextField` prefilled; actions *Batal* and *Simpan* (*Menyimpan…* while pending).
   - **Forms:** RHF + `zodResolver(addSourceSchema | sourceNameSchema)`. A server `fieldErrors` result goes to `form.setError(field, { message: key })` and the field gets focus.
   - **`useSourceMutations(workspaceId)`:** returns `add`, `rename`, `setActive` and `remove`. Each wraps the bound action, shows the success toast, and on rejection shows the danger toast with `action: { label: retry, onAction: retry }` and rethrows nothing (F-03's `handleFailed` pattern).
-- [ ] **Step 4:** gate → PASS. Commit `feat(gallery): add source add and rename dialogs`.
+- [x] **Step 4:** gate → PASS. Commit `feat(gallery): add source add and rename dialogs`.
 
 ### Task 13: Row actions, deactivate and delete
 

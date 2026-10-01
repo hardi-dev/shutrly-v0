@@ -33,4 +33,19 @@ describe("Textarea (C04)", () => {
     await user.type(screen.getByRole("textbox", { name: "Catatan" }), "Halo");
     expect(onChange).toHaveBeenLastCalledWith("Halo");
   });
+
+  it("hides the label visually but keeps it as the accessible name", () => {
+    render(<Textarea label="Isi pesan" isLabelHidden />);
+
+    expect(screen.getByRole("textbox", { name: "Isi pesan" })).toBeInTheDocument();
+    expect(screen.getByText("Isi pesan")).toHaveClass("sr-only");
+  });
+
+  it("shows a trailing meta beside the helper and honours rows", () => {
+    render(<Textarea label="Isi" helperText="Bantuan" trailingMeta="12 / 2.000" rows={10} />);
+
+    expect(screen.getByRole("textbox", { name: "Isi" })).toHaveAttribute("rows", "10");
+    expect(screen.getByText("12 / 2.000")).toBeInTheDocument();
+    expect(screen.getByText("Bantuan")).toBeInTheDocument();
+  });
 });

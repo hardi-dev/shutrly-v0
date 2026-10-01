@@ -2393,7 +2393,7 @@ git commit -m "feat(communications): wire template loading, saving and seeding o
   - Textarea props `isLabelHidden?: boolean`, `rows?: number` (default 3), `trailingMeta?: string`;
   - `SegmentedControl({ label, options, selectedId, onChange, className })`, with `SegmentedOption { id: string; label: string }`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Add to the `it("registers the workspace semantic icon names")` list in `icon.test.tsx`: `"image"`, `"hourglass"`, `"package-check"`, `"wallet"`, `"rotate-ccw"`, `"braces"`, `"pencil"`.
 
@@ -2462,7 +2462,7 @@ Expected: FAIL — missing icon names, unknown props and a missing module.
 
 > If react-aria-components 1.21 renders `ToggleButtonGroup` (single selection) as `role="toolbar"` with `aria-pressed` buttons rather than radios, change the test queries to `toolbar` / `button` + `aria-pressed`. Keep the behaviour assertions.
 
-- [ ] **Step 2: Add the icons**
+- [x] **Step 2: Add the icons**
 
 `icon.types.ts`: append to the `IconName` union:
 
@@ -2493,7 +2493,7 @@ Expected: FAIL — missing icon names, unknown props and a missing module.
 
 `button.types.ts`: `ButtonIconName = Extract<IconName, "plus" | "send" | "chevron-down" | "arrow-right" | "trash-2" | "rotate-ccw">`.
 
-- [ ] **Step 3: Extend the Textarea**
+- [x] **Step 3: Extend the Textarea**
 
 `textarea.types.ts`: add `isLabelHidden?: boolean;`, `rows?: number;` and `trailingMeta?: string;`.
 
@@ -2518,7 +2518,7 @@ In `textarea.tsx`:
 
 If the component goes over 50 lines, move the description row into a named `TextareaFooter` component in the same file.
 
-- [ ] **Step 4: Build the Segmented Control (C23)**
+- [x] **Step 4: Build the Segmented Control (C23)**
 
 `segmented-control.types.ts`:
 
@@ -2644,12 +2644,14 @@ export default meta;
 export const Default: StoryObj<typeof meta> = {};
 ```
 
-- [ ] **Step 5: Run the tests and confirm they pass**
+- [x] **Step 5: Run the tests and confirm they pass**
 
 Run: `pnpm vitest run src/ui`
 Expected: PASS.
 
-- [ ] **Step 6: Gate and commit**
+> Build note (2026-10-01): the Textarea footer and label moved into the named `TextareaFooter` and `TextareaLabel` helpers to stay within 50 lines per function. The RAC group exposes radios as planned.
+
+- [x] **Step 6: Gate and commit**
 
 ```bash
 pnpm typecheck && pnpm lint

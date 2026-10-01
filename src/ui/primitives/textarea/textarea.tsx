@@ -28,6 +28,24 @@ const TEXTAREA = [
   "data-disabled:text-(--component-input-text-disabled)",
 ];
 
+function TextareaFooter({
+  errorMessage,
+  helperText,
+  trailingMeta,
+}: Readonly<Pick<TextareaProps, "errorMessage" | "helperText" | "trailingMeta">>): ReactNode {
+  if (!trailingMeta) {
+    return <TextareaDescription errorMessage={errorMessage} helperText={helperText} />;
+  }
+  return (
+    <div className="flex items-start justify-between gap-(--space-3)">
+      <TextareaDescription errorMessage={errorMessage} helperText={helperText} />
+      <span className="ml-auto shrink-0 text-(length:--font-size-label) text-(--component-input-helper)">
+        {trailingMeta}
+      </span>
+    </div>
+  );
+}
+
 function TextareaDescription({
   errorMessage,
   helperText,
@@ -52,6 +70,28 @@ function TextareaDescription({
   return null;
 }
 
+function TextareaLabel({
+  label,
+  optional,
+  isLabelHidden,
+}: Readonly<Pick<TextareaProps, "label" | "optional" | "isLabelHidden">>) {
+  return (
+    <Label
+      className={cn(
+        "text-(length:--font-size-label) text-(--component-input-label)",
+        isLabelHidden && "sr-only",
+      )}
+    >
+      {label}
+      {optional ? (
+        <span className="ml-(--space-1) text-(--component-input-helper)">
+          {TEXTAREA_COPY.optional}
+        </span>
+      ) : null}
+    </Label>
+  );
+}
+
 /** Renders a labelled, token-backed React Aria textarea field.
  * @param props - label, messages, value and textarea state
  * @returns the textarea field
@@ -68,6 +108,9 @@ export function Textarea({
   isReadOnly,
   value,
   defaultValue,
+  isLabelHidden = false,
+  rows = 3,
+  trailingMeta,
   ...props
 }: Readonly<TextareaProps>) {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => onChange?.(event.target.value);
@@ -79,25 +122,22 @@ export function Textarea({
       defaultValue={value === undefined ? defaultValue : undefined}
       className={cn("flex w-full flex-col gap-(--component-input-gap)", className)}
     >
-      <Label className="text-(length:--font-size-label) text-(--component-input-label)">
-        {label}
-        {optional ? (
-          <span className="ml-(--space-1) text-(--component-input-helper)">
-            {TEXTAREA_COPY.optional}
-          </span>
-        ) : null}
-      </Label>
+      <TextareaLabel label={label} optional={optional} isLabelHidden={isLabelHidden} />
       <AriaTextArea
         {...props}
         ref={textareaRef}
         {...(value !== undefined ? { value } : {})}
         disabled={isDisabled}
         readOnly={isReadOnly}
-        rows={3}
+        rows={rows}
         onChange={handleChange}
         className={cn(TEXTAREA)}
       />
-      <TextareaDescription errorMessage={errorMessage} helperText={helperText} />
+      <TextareaFooter
+        errorMessage={errorMessage}
+        helperText={helperText}
+        trailingMeta={trailingMeta}
+      />
     </TextField>
   );
 }

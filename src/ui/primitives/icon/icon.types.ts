@@ -35,7 +35,14 @@ export type IconName =
   | "loading-03"
   | "bell"
   | "chevron-left"
-  | "aperture";
+  | "aperture"
+  | "image"
+  | "hourglass"
+  | "package-check"
+  | "wallet"
+  | "rotate-ccw"
+  | "braces"
+  | "pencil";
 
 export type IconSize = "sm" | "md" | "lg";
 

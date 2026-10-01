@@ -14,4 +14,7 @@ export interface TextareaProps {
   isReadOnly?: boolean;
   className?: string;
   textareaRef?: Ref<HTMLTextAreaElement>;
+  isLabelHidden?: boolean;
+  rows?: number;
+  trailingMeta?: string;
 }

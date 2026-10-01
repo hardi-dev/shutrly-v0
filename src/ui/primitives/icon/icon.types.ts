@@ -42,7 +42,16 @@ export type IconName =
   | "wallet"
   | "rotate-ccw"
   | "braces"
-  | "pencil";
+  | "pencil"
+  | "hard-drive"
+  | "folder-open"
+  | "folder"
+  | "power"
+  | "dropbox"
+  | "cloud"
+  | "database"
+  | "link"
+  | "more-horizontal";
 
 export type IconSize = "sm" | "md" | "lg";
 

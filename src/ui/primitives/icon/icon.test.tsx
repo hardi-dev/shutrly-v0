@@ -60,6 +60,15 @@ describe("Icon", () => {
         "bell",
         "chevron-left",
         "aperture",
+        "hard-drive",
+        "folder-open",
+        "folder",
+        "power",
+        "dropbox",
+        "cloud",
+        "database",
+        "link",
+        "more-horizontal",
       ]),
     );
   });

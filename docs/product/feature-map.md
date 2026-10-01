@@ -38,4 +38,4 @@ Owner decisions:
 
 Badge conflict decided: follow the code (Count Badge Danger variant). Rules v3.1 APPROVED, and the library promotion PERSISTED 2026-09-29 (531 tokens, `594f560b`); `app-shell-revamp.pen` is rebound. HTML exports are done (31 frames). `/sdv:verify-design-system` was skipped at the Owner's request. Built and browser-validated at 1440/1024/390 (commits `8df6492`, `a787464`, `70ce31d`). Next: `/sdv:verify-feature app-shell-revamp`.
 
-F-03 is designed and planned (2026-10-01); next is `/sdv:build-feature message-templates 1`. CI (GitHub Actions) and Cloudflare deploy must still be scheduled before the first `/sdv:ship`.
+F-03 is built and verified (DONE 2026-10-01; see `features/message-templates/verification-report.md`). CI (GitHub Actions) and Cloudflare deploy must still be scheduled before the first `/sdv:ship`.

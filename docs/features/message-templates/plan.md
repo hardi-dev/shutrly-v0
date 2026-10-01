@@ -3258,7 +3258,7 @@ Build from `exports/editor-byw9B.html`, `editor-unknown-variable-sgWML.html`, `e
   - `renderPreview(type, content, brandName): string | null`, `previewHasPasswordNote(type): boolean`;
   - `MessagePreview({ text, showsPasswordNote })`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `template-problem-text.test.ts`:
 
@@ -3379,7 +3379,7 @@ describe("MessagePreview", () => {
 Run: `pnpm vitest run src/features/communications/ui`
 Expected: FAIL — modules not found.
 
-- [ ] **Step 2: Implement the problem text**
+- [x] **Step 2: Implement the problem text**
 
 `template-problem-text.copy.ts`:
 
@@ -3440,7 +3440,7 @@ export function templateProblemText(type: TemplateType, key: string | undefined)
 }
 ```
 
-- [ ] **Step 3: Implement the variable chip**
+- [x] **Step 3: Implement the variable chip**
 
 `variable-chip.types.ts`:
 
@@ -3524,7 +3524,7 @@ export function VariableChip({ name, isRequired, onInsert }: Readonly<VariableCh
 }
 ```
 
-- [ ] **Step 4: Implement the preview**
+- [x] **Step 4: Implement the preview**
 
 `message-preview.copy.ts`:
 
@@ -3654,12 +3654,16 @@ export function MessagePreview({ text, showsPasswordNote }: Readonly<MessagePrev
 }
 ```
 
-- [ ] **Step 5: Run the tests and confirm they pass**
+- [x] **Step 5: Run the tests and confirm they pass**
 
 Run: `pnpm vitest run src/features/communications/ui`
 Expected: PASS.
 
-- [ ] **Step 6: Gate and commit**
+> Build note (2026-10-01): fidelity fixes against `editor-byw9B.html`, changing only class names:
+> - the preview message is `font-size-body` with the body line height, and the bubble gap is `space-1`;
+> - the required chip's icon and *wajib* mark inherit the accent foreground colour, and the chip label is medium weight.
+
+- [x] **Step 6: Gate and commit**
 
 ```bash
 pnpm typecheck && pnpm lint

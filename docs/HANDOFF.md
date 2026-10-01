@@ -11,9 +11,7 @@ Branch: `codex/message-templates-shell-v3`.
 - **Build:** all 14 tasks are committed (`399cbd1`…`bd4c6e3` plus the Task 14 commit). `pnpm typecheck`, `pnpm lint`, `pnpm test` (445) and `pnpm build` pass. See the [implementation record](features/message-templates/technical-design.md#implementation-record-2026-10-01).
 - **Blocking — Owner action:** apply migrations `0002_message_template` and `0003_message_template_backfill` with `pnpm db:migrate`. The agent's attempt was blocked by the permission classifier. **Until then, creating a workspace fails**, because seeding writes to `message_template` in the creation transaction.
 - **Then run:** `pnpm test:integration`, `pnpm e2e tests/e2e/message-templates`, and the browser fidelity checks against the exports (plan Tasks 7, 11, 13, 14).
-- **Owner review:**
-  - the four draft default messages (Task 4, A-10);
-  - deviation D-M4: textarea height and phone tab width differ from the exports.
+- **Done at the Owner's request:** the four default messages were rewritten (A-10), and D-M4 is fixed (textarea height, equal-width Edit/Pratinjau tabs).
 - **Next:** after those, `/sdv:verify-feature message-templates`.
 
 ## Update 2026-10-01 — Section Card and Settings v3

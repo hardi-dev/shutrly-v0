@@ -147,7 +147,8 @@ function ContentField({ template, type, isMobile }: Readonly<EditorPartProps>) {
       label={COPY.contentLabel}
       isLabelHidden
       name={field.name}
-      rows={isMobile ? 8 : 10}
+      // 13 / 12 lines of 21 px ≈ the 300 / 280 px textarea in v8MaG / byw9B (D-M4).
+      rows={isMobile ? 13 : 12}
       value={field.value}
       onChange={field.onChange}
       textareaRef={setRef}

@@ -8,12 +8,13 @@ import { cn } from "@/ui/cn/cn";
 import type { SegmentedControlProps } from "./segmented-control.types";
 
 const TRACK = [
-  "inline-flex items-center gap-(--component-segmented-gap) rounded-(--component-segmented-radius)",
+  // Equal-width items, sized to the widest label (C23; message-templates v8MaG).
+  "inline-grid grid-flow-col auto-cols-fr items-center gap-(--component-segmented-gap) rounded-(--component-segmented-radius)",
   "bg-(--component-segmented-track) p-(--component-segmented-padding)",
 ];
 
 const ITEM = [
-  "rounded-(--component-segmented-radius) px-(--component-segmented-item-padding-x) py-(--component-segmented-item-padding-y)",
+  "text-center rounded-(--component-segmented-radius) px-(--component-segmented-item-padding-x) py-(--component-segmented-item-padding-y)",
   "text-(length:--font-size-body-sm) font-medium text-(--component-segmented-item-text) outline-none",
   "data-hovered:text-(--component-segmented-item-text-hover)",
   "data-selected:bg-(--component-segmented-item-background-active) data-selected:text-(--component-segmented-item-text-active)",

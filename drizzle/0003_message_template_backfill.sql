@@ -12,27 +12,32 @@ Gallery untuk {{projectTitle}} dari {{brandName}} sudah bisa dibuka:
 Password: {{galleryPassword}}
 
 Silakan pilih foto favoritmu. Terima kasih!$$),
-  ('SELECTION_REMINDER', $$Halo {{clientName}}, pengingat dari {{brandName}}: pilihan foto untuk {{projectTitle}} belum selesai.
+  ('SELECTION_REMINDER', $$Halo {{clientName}},
 
-Lanjutkan memilih di sini:
+Pengingat dari {{brandName}}: pilihan foto untuk {{projectTitle}} belum selesai. Lanjutkan memilih di sini:
 {{galleryUrl}}
 
 Terima kasih!$$),
-  ('FINAL_DELIVERY', $$Halo {{clientName}}, foto akhir {{projectTitle}} sudah siap diunduh di gallery yang sama:
+  ('FINAL_DELIVERY', $$Halo {{clientName}},
+
+Foto akhir {{projectTitle}} dari {{brandName}} sudah siap diunduh:
 {{galleryUrl}}
 
 Password: {{galleryPassword}}
 
-Terima kasih sudah memercayakan momenmu kepada {{brandName}}!$$),
-  ('INVOICE_SHARE', $$Halo {{clientName}}, invoice {{invoiceNumber}} untuk {{projectTitle}} sudah terbit.
+Terima kasih sudah memercayakan momenmu kepada kami!$$),
+  ('INVOICE_SHARE', $$Halo {{clientName}},
 
+Invoice {{invoiceNumber}} untuk {{projectTitle}} dari {{brandName}} sudah terbit.
 Total: {{invoiceTotal}}
-Lihat invoice di sini:
+
+Lihat dan bayar invoice di sini:
 {{invoiceUrl}}
 
-Terima kasih,
-{{brandName}}$$),
-  ('PAYMENT_REMINDER', $$Halo {{clientName}}, pengingat dari {{brandName}}: invoice {{invoiceNumber}} masih memiliki sisa tagihan {{invoiceBalance}}.
+Terima kasih!$$),
+  ('PAYMENT_REMINDER', $$Halo {{clientName}},
+
+Pengingat dari {{brandName}}: invoice {{invoiceNumber}} untuk {{projectTitle}} masih memiliki sisa tagihan {{invoiceBalance}}.
 
 Detail dan pembayaran:
 {{invoiceUrl}}

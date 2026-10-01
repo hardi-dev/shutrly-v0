@@ -215,7 +215,7 @@ All 14 tasks were built test-first, under the Owner's goal "build all task". One
 **Not run yet:** `pnpm test:integration`, `pnpm e2e tests/e2e/message-templates` and the browser fidelity checks (Tasks 7, 11, 13, 14). Migrations 0002/0003 are not applied: the agent was blocked from running `pnpm db:migrate`. **Until they're applied, creating a workspace fails**, because seeding writes to `message_template` in the creation transaction.
 
 **Owner open items:**
-- Task 4: review the four draft default messages (A-10). Change `default-templates.ts` and `0003_message_template_backfill.sql` together; the config test keeps them equal.
+- Task 4 (done 2026-10-01): the four draft defaults were rewritten to follow the approved *Bagikan gallery* pattern (greeting, body, link on its own line, thanks). The Owner asked for this: "fix it for me based on your recommendation". `default-templates.ts` and `0003_message_template_backfill.sql` were changed together, before the migration was applied.
 - Apply migrations 0002/0003, then run `pnpm test:integration`, `pnpm e2e tests/e2e/message-templates` and the browser checks.
 
 ### Deviations
@@ -223,7 +223,10 @@ All 14 tasks were built test-first, under the Owner's goal "build all task". One
 - **D-M1:** phones show the same list subtitle as desktop (one shell subtitle).
 - **D-M2:** browser back/forward isn't guarded; in-app links, reload and close are.
 - **D-M3:** the editor uses a 5:3 flex split instead of a 400 px preview column (no width token).
-- **D-M4 (build):** the textarea is `rows` 10 (desktop) / 8 (phone), about 236 / 194 px, against 280 / 300 px in the exports. The phone Segmented Control is content-width; the export has a fixed 180 px track with equal tabs. Both are beyond a class-name fidelity fix and are left for the Owner.
+- **D-M4 (build, resolved 2026-10-01 at the Owner's request):**
+  - the textarea is `rows` 12 (desktop) / 13 (phone), about 278 / 299 px against 280 / 300 px in the exports;
+  - the Segmented Control gives equal-width items (`grid-flow-col auto-cols-fr`), sized to the widest label;
+  - left open: the export's fixed 180 px track, because there's no size token for it.
 
 Build-time adjustments with no change in behaviour, also noted in `plan.md`:
 - lint fixes in Tasks 2, 6, 7 and 9;

@@ -33,4 +33,15 @@ describe("SegmentedControl (C23)", () => {
     await user.click(screen.getByRole("radio", { name: "Pratinjau" }));
     expect(onChange).toHaveBeenCalledWith("preview");
   });
+
+  it("gives every option the same width", () => {
+    render(
+      <SegmentedControl label="Tampilan" options={OPTIONS} selectedId="edit" onChange={vi.fn()} />,
+    );
+
+    expect(screen.getByRole("radiogroup", { name: "Tampilan" })).toHaveClass(
+      "grid-flow-col",
+      "auto-cols-fr",
+    );
+  });
 });

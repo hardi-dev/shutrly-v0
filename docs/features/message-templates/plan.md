@@ -926,7 +926,7 @@ export const DEFAULT_TEMPLATE_CONTENT: Readonly<Record<TemplateType, string>> = 
 Run: `pnpm vitest run src/features/communications/domain`
 Expected: PASS (all domain tests).
 
-> Build note (2026-10-01): built under the Owner's goal "build all task" with the drafts as written. **Owner copy review is still open** — edit `default-templates.ts` and `0003_message_template_backfill.sql` together (the config test keeps them equal).
+> Build note (2026-10-01): built under the Owner's goal "build all task" with the drafts as written. The copy review was closed on 2026-10-01: at the Owner's request ("fix it for me based on your recommendation"), the four drafts were rewritten in the approved *Bagikan gallery* pattern, in both files.
 
 - [x] **Step 5: Owner copy review, then gate and commit**
 
@@ -4517,7 +4517,7 @@ export default async function MessageTemplateEditorPage({
 > - The form hook returns a callback ref `setTextarea` instead of `textareaRef`, since React Compiler lint forbids assigning `.current` in the screen.
 > - `insertAtCaret` and `setContent` are module-level helpers (50-line limit), and the toast mock is typed so the retry assertion uses `toMatchObject`.
 > - Unit tests pass. The **browser checks (Step 7) are pending** until migrations 0002/0003 are applied.
-> - Two export gaps were found, beyond class names and nesting, so they're left for the Owner:
+> - Two export gaps were found, beyond class names and nesting. **Both were fixed at the Owner's request on 2026-10-01:** `rows` became 13/12, and the Segmented Control got equal-width items:
 >   - **D-M4:** the textarea is about 236 px tall (`rows` 10) against 280 px in the export (300 px on phones; `rows` 12/13 would match);
 >   - the phone Segmented Control is content-width, while the export has a fixed 180 px track with equal tabs.
 

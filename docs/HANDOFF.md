@@ -11,8 +11,8 @@ Branch: `codex/message-templates-shell-v3`.
 - **Owner checkpoints:**
   - Task 4: review the four draft default messages (A-10);
   - after Task 5: apply migrations `0002_message_template` and `0003_message_template_backfill` (agents never run `pnpm db:migrate`).
-- **Progress:** Task 1 done (template types and variable catalogue). Plan checkboxes in `plan.md` track the rest.
-- **Next:** `/sdv:build-feature message-templates 2`.
+- **Progress:** Tasks 1–2 done (template types, variable catalogue, content rules). Plan checkboxes in `plan.md` track the rest.
+- **Next:** `/sdv:build-feature message-templates 3`.
 
 ## Update 2026-10-01 — Section Card and Settings v3
 

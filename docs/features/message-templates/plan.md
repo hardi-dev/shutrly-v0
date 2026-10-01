@@ -413,7 +413,7 @@ git commit -m "feat(communications): add template types and variable catalogue" 
   - `toProblemKey(problem): string` (`"EMPTY"` or `"UNKNOWN_VARIABLE:invoiceUrl"`), `parseProblemKey(key: string): TemplateContentProblem | null`, `problemKeyFor(type, input: unknown): string`;
   - `type TemplateProblemCode`, `type TemplateContentProblem`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 `template-content.test.ts`:
 
@@ -510,12 +510,12 @@ describe("template content", () => {
 });
 ```
 
-- [ ] **Step 2: Run the test and confirm it fails**
+- [x] **Step 2: Run the test and confirm it fails**
 
 Run: `pnpm vitest run src/features/communications/domain/template-content`
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 `template-content.types.ts`:
 
@@ -569,7 +569,7 @@ export function normaliseTemplateContent(raw: string): string {
  * @returns the trimmed length
  */
 export function templateContentLength(raw: string): number {
-  return [...normaliseTemplateContent(raw)].length;
+  return Array.from(normaliseTemplateContent(raw)).length;
 }
 
 /**
@@ -578,7 +578,7 @@ export function templateContentLength(raw: string): number {
  * @returns the placeholder names
  */
 export function placeholdersIn(content: string): string[] {
-  return Array.from(content.matchAll(PLACEHOLDER_PATTERN), (match) => match[1] ?? "");
+  return Array.from(content.matchAll(PLACEHOLDER_PATTERN), (match) => match[1]);
 }
 
 /**
@@ -639,12 +639,14 @@ export function problemKeyFor(type: TemplateType, input: unknown): string {
 }
 ```
 
-- [ ] **Step 4: Run the test and confirm it passes**
+- [x] **Step 4: Run the test and confirm it passes**
 
 Run: `pnpm vitest run src/features/communications/domain/template-content`
 Expected: PASS.
 
-- [ ] **Step 5: Gate and commit**
+> Build note (2026-10-01): two lint fixes with no change in behaviour: `Array.from` instead of a string spread (`no-misused-spread`), and no `?? ""` on `match[1]` (`no-unnecessary-condition`).
+
+- [x] **Step 5: Gate and commit**
 
 ```bash
 pnpm typecheck && pnpm lint

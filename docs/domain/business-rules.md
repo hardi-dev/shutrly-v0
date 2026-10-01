@@ -112,11 +112,13 @@ The platform API key is a server secret, never stored in `configData`/gallery da
 ### BR-SRC-004 — Public-link warning
 During source setup the Owner is warned that anyone holding the direct Drive link bypasses gallery token and password.
 
-### BR-SRC-005 — One Google Drive configuration per workspace
-In MVP every workspace has exactly one `GOOGLE_DRIVE` `WorkspaceSourceConfig`, active, named *Google Drive*, with empty `configData`. It is created with the workspace and backfilled for workspaces that exist before F-04. Owners cannot add, rename, deactivate or delete it. *(F-04 discovery, Owner 2026-10-01.)*
+### BR-SRC-005 — Workspace sources are Owner-managed
+A workspace has zero or more `WorkspaceSourceConfig`s. Each has a provider, a display name (1–60 characters after trimming, unique per workspace ignoring case), `configData` and `isActive`. In MVP only `GOOGLE_DRIVE` can be added, with empty `configData`; other providers (Dropbox, OneDrive, S3, Custom URL) are shown as coming soon and cannot be added. Every workspace starts with one active Google Drive source named *Google Drive*: it is created with the workspace and backfilled for workspaces that exist before F-04. The Owner may add, rename, deactivate, reactivate and delete sources. *(F-04 discovery, Owner 2026-10-01.)*
 
-### BR-SRC-006 — Link check reads, never stores
-The Owner may check a Drive folder link before using it. The check reads only public metadata through the provider interface, classifies files as BR-GAL-007 does, and stores nothing: no link, no folder ID, no counts. *(F-04 discovery, Owner 2026-10-01.)*
+### BR-SRC-006 — Inactive and deleted sources
+An inactive source keeps its data but cannot be chosen for a new gallery source. A source can be deleted only while no gallery source refers to it; otherwise the Owner deactivates it instead. *(F-04 discovery, Owner 2026-10-01.)*
+
+**SPEC GAP (deferred to F-09 discovery):** whether gallery sources under a deactivated workspace source keep syncing and count as *active* for BR-GAL-004.
 
 ---
 

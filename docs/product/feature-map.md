@@ -10,7 +10,7 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-01 | Auth & account (register, verify, login, reset, profile) | `auth` | BR-AUTH-* | J-01 | DONE (verified 2026-09-27; ship needs F-02) |
 | F-02 | Workspace onboarding & switching, branding, App Shell / Sidebar code (Owner 2026-09-26) | `workspace` | BR-WS-*, BR-AUTH-004 | J-01 | DONE (2026-09-28; Settings v3 with Section Card, 2026-10-01) |
 | F-03 | Message templates | `message-templates` | BR-MSG-001..006 | — | DONE (2026-10-01) |
-| F-04 | Source configuration (Google Drive): seeded Drive config, setup guide, public-link warning, link checker; nav *Sumber foto* (Owner 2026-10-01) | `source-config` | BR-SRC-001..006, BR-GAL-007 | — | SPECIFIED (2026-10-01) |
+| F-04 | Source configuration: Owner-managed photo sources (Google Drive in MVP, other providers coming soon), seeded *Google Drive*, setup guide and public-link warning; nav *Sumber foto* (Owner 2026-10-01) | `source-config` | BR-SRC-001..006 | — | SPECIFIED (2026-10-01) |
 | F-05 | Service catalog (categories, item definitions, services, items, booking fields) | `catalog` | BR-CAT-* | J-02 | TODO |
 | F-06 | Clients | `clients` | BR-WS-002 | J-03 | TODO |
 | F-07 | Project creation from service + snapshots | `projects` | BR-PRJ-*, BR-CAT-003 | J-03 | TODO |
@@ -40,4 +40,4 @@ Badge conflict decided: follow the code (Count Badge Danger variant). Rules v3.1
 
 F-03 is built and verified (DONE 2026-10-01; see `features/message-templates/verification-report.md`). CI (GitHub Actions) and Cloudflare deploy must still be scheduled before the first `/sdv:ship`.
 
-**F-04 Source configuration** — SPECIFIED 2026-10-01 ([spec.md](../features/source-config/spec.md), AC-SRC-001…018). Owner decisions: one auto-seeded Google Drive config per workspace (BR-SRC-005); a link checker that stores nothing (BR-SRC-006); the nav slot *Sumber klien* becomes *Sumber foto*. New ship blocker: a production Google Cloud API key restricted to the Drive API. Next: `/sdv:model-feature source-config` or `/sdv:design-feature source-config`.
+**F-04 Source configuration** — SPECIFIED 2026-10-01, rescoped the same day ([spec.md](../features/source-config/spec.md), AC-SRC-001…017). Owner decisions: Owners manage a list of sources (add, rename, deactivate, delete; BR-SRC-005/006); only Google Drive can be added, and Dropbox, OneDrive, S3 and Custom URL show as *Segera hadir*; every workspace is seeded with *Google Drive*; the link checker is dropped; the nav slot *Sumber klien* becomes *Sumber foto* with the `folder-open` icon. Next: `/sdv:design-feature source-config`.

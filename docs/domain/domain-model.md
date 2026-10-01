@@ -8,7 +8,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25). Business-oriented; pe
 - **User (Owner)** — authenticated internal account; owns workspaces.
 - **Workspace** — one brand/business; the tenant boundary. Holds branding (name, brand name, contact — no logo in MVP), invoice prefix, default currency (BR-WS-004).
 - **MessageTemplate** — reusable, typed WhatsApp message with `{{variables}}`.
-- **WorkspaceSourceConfig** — provider configuration (MVP: exactly one Google Drive config per workspace, BR-SRC-005).
+- **WorkspaceSourceConfig** — an Owner-managed photo source provider configuration (MVP: Google Drive only; seeded once per workspace, BR-SRC-005).
 
 **Catalog (templates)**
 - **ServiceCategory** — grouping of services (Wedding, Family…).

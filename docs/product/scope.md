@@ -6,7 +6,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25)
 - Owner account: register, verify email (link), login/logout, Google sign-in (identity only, auto-linked by email), forgot/reset/change password, update profile (display name only). Transactional auth emails sent by the platform to the Owner.
 - Multiple Workspaces (brands) per Owner; branding (name, brand name, contact email/phone/address — no logo), invoice prefix, default currency (IDR). Create, edit and switch only.
 - Workspace message templates (WhatsApp channel) and source configuration (Google Drive).
-- Service catalog: categories, reusable item definitions, services with item values (`NUMBER`/`RANGE`), service-specific booking fields.
+- Service catalog: categories, reusable item definitions (four seeded per workspace), services with item values (`NUMBER`/`RANGE`), service-specific booking fields; archive/unarchive, delete only when unreferenced (F-05, Owner 2026-10-02).
 - Clients.
 - Projects created from a service, with immutable item and booking-field snapshots, customizable deal, sessions, team members (freelancers without login) and assignments.
 - One private Gallery per Project backed by one or more public Google Drive folder links; idempotent metadata sync.
@@ -30,7 +30,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25)
 - Payment gateway, payment proof upload, refunds, overpayment.
 - Coupons, percentage or per-line discounts.
 - Currencies other than IDR, exchange rates, mixed-currency invoices, automatic tax.
-- Package item value types other than `NUMBER` and `RANGE`.
+- Package item value types other than `NUMBER` and `RANGE`; selection types other than `EDIT` and `PRINT`; a draft/publish step for services (Owner 2026-10-02).
 - Automatic Project completion from payment or delivery.
 
 ## Constraints

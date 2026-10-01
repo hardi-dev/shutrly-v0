@@ -3,6 +3,12 @@
 Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `codex/message-templates-shell-v3`.
 
+## Update 2026-10-02 — F-05 Service catalog SPECIFIED
+
+- **Spec:** [spec.md](features/catalog/spec.md) and [acceptance-criteria.md](features/catalog/acceptance-criteria.md) (AC-CAT-001…023). New rules BR-CAT-007…011 (selection types `EDIT`/`PRINT`, active/archived/delete lifecycle, names, fixed definition type once used, four seeded item definitions); scope and domain model updated.
+- **Owner decisions:** *Layanan* tabs (Layanan · Kategori · Item paket); no draft/publish; seed item definitions only.
+- **Next for F-05:** `/sdv:design-feature catalog` (optionally `/sdv:model-feature catalog` first). F-04 build continues separately on `feat/source-config` (tasks 1–4 committed).
+
 ## Current handoff — F-04 Source configuration PLANNED (2026-10-02)
 
 - **Spec (rescoped by the Owner 2026-10-01):** Owner-managed photo sources. Only Google Drive can be added; Dropbox, OneDrive, Amazon S3 and Custom URL show as *Segera hadir*. Every workspace is seeded with *Google Drive* (BR-SRC-005/006). Rename, deactivate/reactivate and delete; no link checker. Nav *Sumber klien* → **Sumber foto** (`folder-open`, route `photo-sources`). See [spec.md](features/source-config/spec.md), AC-SRC-001…017.

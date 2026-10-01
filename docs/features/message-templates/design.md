@@ -60,3 +60,13 @@ The new frames sit to the right of the earlier set: desktop at x 3200, mobile at
 ## Approval
 
 APPROVED 2026-10-01. `message-templates.pen` saved by the Owner; the v3 frames were exported to `exports/` (`list-*`, `list-loading-*`, `editor-*`). Planned in [plan.md](plan.md) / [technical-design.md](technical-design.md).
+
+## In code (2026-10-01)
+
+The v3 frames are implemented in `src/features/communications/ui/`:
+- list `template-list-screen`, loading `template-list-skeleton`;
+- editor `template-editor-screen`, `variable-chip`, `message-preview`, `unsaved-changes-dialog`;
+- Segmented Control `src/ui/patterns/segmented-control`;
+- the sub-page Compact Bar through `OwnerShell.subPages`.
+
+The browser fidelity check is pending until the migrations are applied (see technical-design › Implementation record, D-M4).

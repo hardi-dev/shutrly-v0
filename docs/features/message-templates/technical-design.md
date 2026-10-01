@@ -1,6 +1,6 @@
 # Technical Design — F-03 Message templates
 
-Status: PLANNED (2026-10-01) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md) (v3 frames) · Plan: [plan.md](plan.md)
+Status: IMPLEMENTED, verification pending (2026-10-01) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md) (v3 frames) · Plan: [plan.md](plan.md)
 
 ## Context
 
@@ -176,7 +176,7 @@ Layout:
 
 ## Implementation Iterations
 
-See [plan.md](plan.md). There are 14 tasks, test-first, one commit each. Progress is ticked in the plan; done: Tasks 1–2 (2026-10-01). The Owner checkpoints are:
+See [plan.md](plan.md). There are 14 tasks, test-first, one commit each. Progress is ticked in the plan; all 14 tasks are built (2026-10-01). See the implementation record below. The Owner checkpoints are:
 - Task 4: review the default copy, A-10;
 - Task 5: apply migrations 0002 and 0003 before the integration tests in Task 7.
 
@@ -188,3 +188,63 @@ See [plan.md](plan.md). There are 14 tasks, test-first, one commit each. Progres
 - **Mobile subtitle:** the frames show a shorter list subtitle on phones; the shell has one subtitle for both (same as Settings v3). Recorded as D-M1.
 - **Preview column width:** no token for the 400 px column; the editor uses a 5:3 flex split (D-M3).
 - **Two-line list rows** are local (list-card tokens), pending a possible library *List Card Item/Two-line* variant.
+
+## Implementation record (2026-10-01)
+
+All 14 tasks were built test-first, under the Owner's goal "build all task". One commit per task:
+
+| Task | Commit |
+|---|---|
+| 1 Template types and variable catalogue | `399cbd1` |
+| 2 Content rules | `fb6d232` |
+| 3 Renderer for F-15 | `3a79fa8` |
+| 4 Default templates | `075cbe8` |
+| 5 `message_template` table, migrations 0002/0003 | `024a118` |
+| 6 Application layer | `b6a372c` |
+| 7 Drizzle repository + integration tests | `515aa8d` |
+| 8 Composition, seeding in the creation transaction, save action | `bd539aa` |
+| 9 Segmented Control, icons, Textarea options | `dc75b1d` |
+| 10 Shell sub-pages | `facb8d0` |
+| 11 Template list | `b2f9109` |
+| 12 Variable chips, field errors, preview | `a93aac7` |
+| 13 Editor, unsaved-changes guard, route | `bd4c6e3` |
+| 14 E2E spec and this record | (this commit) |
+
+**Checks run:** `pnpm typecheck`, `pnpm lint`, `pnpm test` (445 tests) and `pnpm build` pass.
+
+**Not run yet:** `pnpm test:integration`, `pnpm e2e tests/e2e/message-templates` and the browser fidelity checks (Tasks 7, 11, 13, 14). Migrations 0002/0003 are not applied: the agent was blocked from running `pnpm db:migrate`. **Until they're applied, creating a workspace fails**, because seeding writes to `message_template` in the creation transaction.
+
+**Owner open items:**
+- Task 4: review the four draft default messages (A-10). Change `default-templates.ts` and `0003_message_template_backfill.sql` together; the config test keeps them equal.
+- Apply migrations 0002/0003, then run `pnpm test:integration`, `pnpm e2e tests/e2e/message-templates` and the browser checks.
+
+### Deviations
+
+- **D-M1:** phones show the same list subtitle as desktop (one shell subtitle).
+- **D-M2:** browser back/forward isn't guarded; in-app links, reload and close are.
+- **D-M3:** the editor uses a 5:3 flex split instead of a 400 px preview column (no width token).
+- **D-M4 (build):** the textarea is `rows` 10 (desktop) / 8 (phone), about 236 / 194 px, against 280 / 300 px in the exports. The phone Segmented Control is content-width; the export has a fixed 180 px track with equal tabs. Both are beyond a class-name fidelity fix and are left for the Owner.
+
+Build-time adjustments with no change in behaviour, also noted in `plan.md`:
+- lint fixes in Tasks 2, 6, 7 and 9;
+- the destructive Modal is an `alertdialog`, so tests query that role;
+- the form hook exposes a callback ref `setTextarea`;
+- the integration test brands workspace names.
+
+### AC → test map (as built)
+
+| AC | Tests |
+|---|---|
+| AC-MSG-001 | `seed-default-templates.test.ts`; integration rollback (`message-template-repository.test.ts`); E2E journey |
+| AC-MSG-002 | `tests/config/message-template-backfill.test.ts`; integration idempotent seed |
+| AC-MSG-003 | integration 23505 duplicate |
+| AC-MSG-004 | `list-message-templates.test.ts`, `template-list-screen.test.tsx`, `owner-nav.test.tsx`; E2E |
+| AC-MSG-005, -006 | `template-editor-screen.test.tsx`, `variable-chip.test.tsx`, `message-preview.test.tsx`; E2E |
+| AC-MSG-007 | `update-message-template.test.ts`, `message-template-flow.test.ts`, `message-templates.test.ts` (action); E2E |
+| AC-MSG-008…011 | `template-content.test.ts`, `update-message-template.test.ts`, `template-problem-text.test.ts`, editor tests |
+| AC-MSG-012 | `message-template-flow.test.ts`, editor retry-toast test |
+| AC-MSG-013, -014 | editor tests, `internal-href.test.tsx`; E2E |
+| AC-MSG-015 | `get-message-template.test.ts`, integration isolation; E2E |
+| AC-MSG-016…018 | `render-template.test.ts` |
+| AC-MSG-019 | `render-template.test.ts`, `message-template-flow.test.ts` |
+| AC-MSG-020 | `message-preview.test.tsx`; E2E axe at 1440 / 390 px |

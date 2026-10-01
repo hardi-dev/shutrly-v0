@@ -4549,7 +4549,7 @@ Requires migrations 0002 and 0003 applied to the E2E database.
 - Create: `tests/e2e/message-templates/message-templates.spec.ts`
 - Modify: `docs/features/message-templates/technical-design.md` (Implementation record), `design.md` (*In code?*), `spec.md` (Status), `docs/product/feature-map.md` (F-03), `docs/HANDOFF.md`
 
-- [ ] **Step 1: Write the E2E spec**
+- [x] **Step 1: Write the E2E spec**
 
 `tests/e2e/message-templates/message-templates.spec.ts`:
 
@@ -4657,6 +4657,11 @@ Expected: PASS (3 tests).
 - The shell renders the page twice (desktop and phone trees). If a locator matches two elements, scope it to the visible tree with `.locator("visible=true")` / `:visible`.
 - `WORKSPACE_NOT_FOUND_COPY.title` is the copy key the F-02 not-found screen uses. Check it, and adjust the key name if it differs.
 
+> Build note (2026-10-01):
+> - The unsaved-changes dialog is queried as `alertdialog`.
+> - typecheck, lint, test and build pass.
+> - `test:integration` and `e2e` are **pending** until migrations 0002/0003 are applied.
+
 - [ ] **Step 2: Run the full gate**
 
 ```bash
@@ -4665,7 +4670,7 @@ pnpm typecheck && pnpm lint && pnpm test && pnpm test:integration && pnpm e2e &&
 
 Expected: everything passes, including the existing workspace and app-shell E2E (the *Segera hadir* list no longer includes `message-templates`).
 
-- [ ] **Step 3: Write back the docs**
+- [x] **Step 3: Write back the docs**
 
 - `technical-design.md`:
   - add `## Implementation record (<date>)` with the commits per task;
@@ -4676,7 +4681,7 @@ Expected: everything passes, including the existing workspace and app-shell E2E 
 - `docs/product/feature-map.md`: F-03 matches the spec status.
 - `docs/HANDOFF.md`: F-03 state and the next step (`/sdv:verify-feature message-templates`).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add tests/e2e/message-templates docs

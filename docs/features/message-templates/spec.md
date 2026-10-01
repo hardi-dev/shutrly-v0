@@ -1,7 +1,7 @@
 # Feature: Message templates
 
 ID: F-03 · Slug: `message-templates`
-Status: IN PROGRESS (2026-10-01, Task 2/14; planned 2026-10-01, designed 2026-10-01, specified 2026-09-28) · Journeys: none directly; feeds J-04…J-07 through F-15
+Status: IMPLEMENTED, verification pending (2026-10-01, 14/14 tasks; planned 2026-10-01, designed 2026-10-01, specified 2026-09-28) · Journeys: none directly; feeds J-04…J-07 through F-15
 Consumer: F-15 `whatsapp-share`
 
 ## Goal

@@ -1,6 +1,6 @@
 # Technical Design — F-03 Message templates
 
-Status: IMPLEMENTED, verification pending (2026-10-01) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md) (v3 frames) · Plan: [plan.md](plan.md)
+Status: DONE (2026-10-01; see [verification-report.md](verification-report.md)) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md) (v3 frames) · Plan: [plan.md](plan.md)
 
 ## Context
 

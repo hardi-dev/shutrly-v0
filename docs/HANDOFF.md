@@ -1,9 +1,9 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-01 (F-00, F-01, F-02 and F-17 DONE; F-03 IMPLEMENTED, verification pending) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-01 (F-00, F-01, F-02 and F-17 DONE; F-03 DONE) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `codex/message-templates-shell-v3`.
 
-## Current handoff — F-03 Message templates IMPLEMENTED, verification pending (2026-10-01)
+## Current handoff — F-03 Message templates DONE (2026-10-01)
 
 - **Design v3 APPROVED:** 22 new frames in `message-templates.pen` (desktop x 3200, phone x 4760), based on `exploration.pen` Option G and library C43 Section Card. The old frames are kept for reference. Exports: `features/message-templates/exports/`. See [design.md](features/message-templates/design.md).
 - **Spec changes (Owner):** the list rows show the label and the purpose line (no excerpt; A-5, AC-MSG-004/007); a failed save shows a danger toast with *Coba lagi* (AC-MSG-012).
@@ -12,7 +12,8 @@ Branch: `codex/message-templates-shell-v3`.
 - **Verified (2026-10-01):** migrations 0002/0003 are applied; integration 44/44 and F-03 E2E 3/3 pass; the browser fidelity check is done.
   - The Segmented text token was darkened for AA contrast; `design-system.lib.pen` needs ⌘S in Pen.
   - Known unrelated failure: `auth-profile.spec.ts` (profile redirects to onboarding since `70ce31d`), spun off as a separate task.
-- **Next:** `/sdv:verify-feature message-templates`.
+- **Verified:** [verification-report.md](features/message-templates/verification-report.md) passes with nothing blocking; F-03 is DONE.
+- **Next:** `/sdv:ship`. The open follow-up is the `auth-profile.spec.ts` failure (separate task).
 
 ## Update 2026-10-01 — Section Card and Settings v3
 

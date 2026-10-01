@@ -9,7 +9,7 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-00 | Foundation: repo scaffold, Drizzle base schema conventions, error model, workspace-scoping helpers, local quality gate (CI + deploy deferred, Owner 2026-09-26) | `foundation` | BR-WS-002, BR-WS-003 | — | DONE (verified 2026-09-27) |
 | F-01 | Auth & account (register, verify, login, reset, profile) | `auth` | BR-AUTH-* | J-01 | DONE (verified 2026-09-27; ship needs F-02) |
 | F-02 | Workspace onboarding & switching, branding, App Shell / Sidebar code (Owner 2026-09-26) | `workspace` | BR-WS-*, BR-AUTH-004 | J-01 | DONE (2026-09-28; Settings v3 with Section Card, 2026-10-01) |
-| F-03 | Message templates | `message-templates` | BR-MSG-001..006 | — | SPECIFIED (2026-09-28) |
+| F-03 | Message templates | `message-templates` | BR-MSG-001..006 | — | PLANNED (2026-10-01) |
 | F-04 | Source configuration (Google Drive) | `source-config` | BR-SRC-001 | — | TODO |
 | F-05 | Service catalog (categories, item definitions, services, items, booking fields) | `catalog` | BR-CAT-* | J-02 | TODO |
 | F-06 | Clients | `clients` | BR-WS-002 | J-03 | TODO |
@@ -38,4 +38,4 @@ Owner decisions:
 
 Badge conflict decided: follow the code (Count Badge Danger variant). Rules v3.1 APPROVED, and the library promotion PERSISTED 2026-09-29 (531 tokens, `594f560b`); `app-shell-revamp.pen` is rebound. HTML exports are done (31 frames). `/sdv:verify-design-system` was skipped at the Owner's request. Built and browser-validated at 1440/1024/390 (commits `8df6492`, `a787464`, `70ce31d`). Next: `/sdv:verify-feature app-shell-revamp`.
 
-F-03 design stays paused until the F-17 shell is approved. CI (GitHub Actions) and Cloudflare deploy must still be scheduled before the first `/sdv:ship`.
+F-03 is designed and planned (2026-10-01); next is `/sdv:build-feature message-templates 1`. CI (GitHub Actions) and Cloudflare deploy must still be scheduled before the first `/sdv:ship`.

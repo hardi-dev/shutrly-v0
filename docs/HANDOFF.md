@@ -1,14 +1,24 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-01 (F-00, F-01, F-02 and F-17 DONE; F-03 next) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-01 (F-00, F-01, F-02 and F-17 DONE; F-03 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `codex/message-templates-shell-v3`.
+
+## Current handoff — F-03 Message templates PLANNED (2026-10-01)
+
+- **Design v3 APPROVED:** 22 new frames in `message-templates.pen` (desktop x 3200, phone x 4760), based on `exploration.pen` Option G and library C43 Section Card. The old frames are kept for reference. Exports: `features/message-templates/exports/`. See [design.md](features/message-templates/design.md).
+- **Spec changes (Owner):** the list rows show the label and the purpose line (no excerpt; A-5, AC-MSG-004/007); a failed save shows a danger toast with *Coba lagi* (AC-MSG-012).
+- **Plan:** [technical-design.md](features/message-templates/technical-design.md) and [plan.md](features/message-templates/plan.md), 14 test-first tasks. There's a new `src/features/communications` feature. **ADR-016** (Accepted) has workspace creation and template seeding share one transaction, opened in composition.
+- **Owner checkpoints:**
+  - Task 4: review the four draft default messages (A-10);
+  - after Task 5: apply migrations `0002_message_template` and `0003_message_template_backfill` (agents never run `pnpm db:migrate`).
+- **Next:** `/sdv:build-feature message-templates 1`.
 
 ## Update 2026-10-01 — Section Card and Settings v3
 
 - New library component **C43 Section Card**, with tokens `component.section-card.*`. The total is 549 tokens, checksum `373a3591`. See [section-card.md](design-system/components/section-card.md).
 - The Settings v3 design, exports and code are on branch `feat/section-card-settings`; see [workspace plan.md](features/workspace/plan.md) and the [implementation record](features/workspace/technical-design.md#settings-v3-implementation-record-2026-10-01).
 - The unmerged WIP backup `backup/wip-2026-09-30` (Empty State, Button pending state, create-workspace dialog, dashboard toast, toast region, message-templates docs) is merged into this work (Owner 2026-10-01). D-S1 (toasts) and D-S2 (stale E2E selector) are recorded in the implementation record.
-- F-00, F-01, F-02 and F-17 are DONE (Owner 2026-10-01). Next: F-03 Message templates (SPECIFIED) → `/sdv:design-feature message-templates`.
+- F-00, F-01, F-02 and F-17 are DONE (Owner 2026-10-01). F-03 was then designed and planned (see above).
 
 ## Previous handoff — F-17 App Shell revamp (now DONE, 2026-10-01)
 

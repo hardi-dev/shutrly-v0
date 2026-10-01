@@ -32,7 +32,7 @@ Covers: BR-MSG-002, BR-WS-003 (A-5)
 
 **Given** an Owner in their workspace
 **When** they open *Template pesan*
-**Then** they see the five types in the order Bagikan gallery, Pengingat seleksi, Hasil akhir, Bagikan invoice, Pengingat pembayaran, each with its excerpt; the nav item *Template pesan* is active and no *Segera hadir* placeholder is shown.
+**Then** they see the five types grouped under *Gallery* (Bagikan gallery, Pengingat seleksi, Hasil akhir) and *Invoice* (Bagikan invoice, Pengingat pembayaran), each with its purpose line; the nav item *Template pesan* is active and no *Segera hadir* placeholder is shown.
 
 ## AC-MSG-005 — Editor shows allowed variables and preview
 Covers: BR-MSG-003, BR-MSG-006 (A-6)
@@ -53,7 +53,7 @@ Covers: BR-MSG-004, BR-MSG-006 (A-1, A-9)
 
 **Given** the `INVOICE_SHARE` editor
 **When** the Owner saves `Halo {{clientName}}, invoice {{invoiceNumber}}: {{invoiceUrl}}`
-**Then** the content is stored for that type only, `updatedAt`/`updatedBy` are set, a success toast is shown, and the list excerpt shows the new first line.
+**Then** the content is stored for that type only, `updatedAt`/`updatedBy` are set, and a success toast is shown.
 
 ## Validation (server-enforced)
 
@@ -90,7 +90,7 @@ Covers: C-007
 
 **Given** a valid save that fails with an unexpected server error
 **When** the Owner sees the error
-**Then** the stored content is unchanged, the editor keeps their text, and they can retry.
+**Then** the stored content is unchanged, a danger toast explains the failure with *Coba lagi*, the editor keeps their text, and they can retry.
 
 ## Restore default & unsaved changes
 

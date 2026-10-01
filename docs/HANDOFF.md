@@ -1,9 +1,16 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-01 (F-00, F-01, F-02 and F-17 DONE; F-03 DONE) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 DESIGNED) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `codex/message-templates-shell-v3`.
 
-## Current handoff — F-03 Message templates DONE (2026-10-01)
+## Current handoff — F-04 Source configuration DESIGNED (2026-10-02)
+
+- **Spec (rescoped by the Owner 2026-10-01):** Owner-managed photo sources. Only Google Drive can be added; Dropbox, OneDrive, Amazon S3 and Custom URL show as *Segera hadir*. Every workspace is seeded with *Google Drive* (BR-SRC-005/006). Rename, deactivate/reactivate and delete; no link checker. Nav *Sumber klien* → **Sumber foto** (`folder-open`, route `photo-sources`). See [spec.md](features/source-config/spec.md), AC-SRC-001…017.
+- **Design APPROVED (2026-10-02):** 24 frames in `source-config.pen` (library import prefix `W:`), exports in `features/source-config/exports/`. See [design.md](features/source-config/design.md).
+- **Library promotion (Owner 2026-10-01):** C12 generalised to **Status Chip** (Stage Chip kept as presets), **List Card Item/Two-line + Skeleton** (C42), new **C44 Option Card**. 36 tokens added: 585 total, checksum `284a052f` (library = repository). Specs: `status-chip.md`, `option-card.md`, `list-card.md`. None of these exist in code yet; the F-04 plan builds them first.
+- **Next:** `/sdv:plan-feature source-config`.
+
+## Previous handoff — F-03 Message templates DONE (2026-10-01)
 
 - **Design v3 APPROVED:** 22 new frames in `message-templates.pen` (desktop x 3200, phone x 4760), based on `exploration.pen` Option G and library C43 Section Card. The old frames are kept for reference. Exports: `features/message-templates/exports/`. See [design.md](features/message-templates/design.md).
 - **Spec changes (Owner):** the list rows show the label and the purpose line (no excerpt; A-5, AC-MSG-004/007); a failed save shows a danger toast with *Coba lagi* (AC-MSG-012).

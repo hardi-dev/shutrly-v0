@@ -788,13 +788,13 @@ function pgCode(error: unknown): string | undefined {
 
 **Files:** create `composition/gallery/source-config-scope/*`, `composition/gallery/source-config-flow/*` and `app/actions/gallery/photo-sources.ts`; modify `composition/workspace/workspace-creation-scope/*` and `owner-workspace.ts`.
 
-- [ ] **Step 1: Failing flow test** `source-config-flow.test.ts`. Mock the logger, `next/navigation`, `owner-guard`, `verifyOwnerWorkspace` and the scope, as in `message-template-flow.test.ts`:
+- [x] **Step 1: Failing flow test** `source-config-flow.test.ts`. Mock the logger, `next/navigation`, `owner-guard`, `verifyOwnerWorkspace` and the scope, as in `message-template-flow.test.ts`:
   - AC-SRC-006: `addPhotoSource("ws-1", { provider:"GOOGLE_DRIVE", displayName:"Arsip" })` calls `create` with the verified context and editor `owner_1`;
   - AC-SRC-015: `renamePhotoSource("ws-1", "not-a-uuid", …)` → `notFound`;
   - AC-SRC-015: the port's `NOT_FOUND` → `notFound`;
   - AC-SRC-014 / AC-SRC-016: the port throws `Error("db down")` → `SourceConfigError("SAVE_FAILED")`, and the logger was called with exactly `("source_config.save_failed", { workspaceId: "ws-1", sourceId: <id>, operation: "rename" })`.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
   - `withSourceConfigScope(work)` returns `withRequestDb((db) => work({ sources: createDrizzleWorkspaceSourceRepository(db) }))`.
   - `source-config-flow.ts` exports `loadPhotoSources(rawId)` → `{ sources: PhotoSourceView[] }`, where `PhotoSourceView = { id, displayName, provider, isActive }`. It also exports `addPhotoSource`, `renamePhotoSource`, `setPhotoSourceActive` and `deletePhotoSource`, following `saveMessageTemplate`:
 
@@ -846,8 +846,8 @@ export async function deleteSourceAction(workspaceId: string, sourceId: string):
 }
 ```
 
-- [ ] **Step 4:** Extend the creation integration test (Task 8, AC-SRC-001) to go through `withWorkspaceCreationScope` if the harness allows; otherwise keep the `db.transaction` version.
-- [ ] **Step 5:** gate + integration → PASS. Commit `feat(gallery): wire photo sources and seed the default source`.
+- [x] **Step 4:** Extend the creation integration test (Task 8, AC-SRC-001) to go through `withWorkspaceCreationScope` if the harness allows; otherwise keep the `db.transaction` version.
+- [x] **Step 5:** gate + integration → PASS. Commit `feat(gallery): wire photo sources and seed the default source`.
 
 ### Task 10: Navigation and route
 

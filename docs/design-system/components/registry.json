@@ -158,7 +158,8 @@
       "size.list-row"
     ],
     "gaps": [
-      "row height is a literal 44 in Pencil because width/height cannot bind variables"
+      "row height is a literal 44 in Pencil because width/height cannot bind variables",
+      "two-line icon well 36 and skeleton bar sizes are literals (size-binding)"
     ],
     "related": {
       "list-card-item": {
@@ -178,6 +179,41 @@
           "Meta": "NAcrj",
           "Chevron": "j06tV"
         }
+      },
+      "list-card-item-two-line": {
+        "base": {
+          "name": "_ListCardItem/TwoLine/Base",
+          "id": "hl0Fg",
+          "private": true
+        },
+        "variants": {
+          "default": "PV6HB",
+          "last": "Bf3eg"
+        },
+        "layers": {
+          "Icon wrap": "Icon wrap",
+          "Icon": "Icon",
+          "Text": "Text",
+          "Title": "Title",
+          "Meta": "Meta",
+          "Trailing": "Trailing (slot: Chevron | Status Chip | Action Menu SM)"
+        },
+        "status": "APPROVED 2026-10-01 (F-04)"
+      },
+      "list-card-item-skeleton": {
+        "base": {
+          "name": "_ListCardItem/Skeleton/Base",
+          "id": "V5cGdN",
+          "private": true
+        },
+        "variants": {
+          "default": "ksPQI",
+          "last": "KKvqb"
+        },
+        "layers": {
+          "Trailing bar": "Trailing bar (boolean)"
+        },
+        "status": "APPROVED 2026-10-01 (F-04)"
       }
     }
   },
@@ -395,42 +431,66 @@
     ],
     "gaps": []
   },
-  "stage-chip": {
-    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1) 2026-09-26)",
+  "status-chip": {
+    "status": "APPROVED 2026-10-01 (Owner: generalise C12 to Status Chip; tokens approved \"approve token\"; F-04)",
     "file": "docs/design-system/design-system.lib.pen",
     "page": {
-      "name": "C12 — Stage chip",
+      "name": "C12 — Status chip",
       "id": "uofHz"
     },
-    "spec": "docs/design-system/components/stage-chip.md",
+    "spec": "docs/design-system/components/status-chip.md",
     "base": {
-      "name": "_StageChip/Base",
+      "name": "_StatusChip/Base",
       "id": "oL43h",
       "private": true
     },
     "axes": {
-      "stage": [
-        "awaiting-deposit",
-        "scheduled",
-        "shooting",
-        "editing",
-        "delivered"
+      "tone": [
+        "success",
+        "info",
+        "warning",
+        "danger",
+        "accent",
+        "neutral"
       ]
     },
-    "props": {},
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "id": "SD1o7"
+      },
+      "dot": {
+        "kind": "boolean",
+        "layer": "Dot",
+        "id": "L9XA7y",
+        "default": true
+      }
+    },
     "layers": {
       "Dot": "L9XA7y",
       "Label": "SD1o7"
     },
     "variants": {
-      "awaiting-deposit": "i9SFm",
-      "scheduled": "LQGDd",
-      "shooting": "w9aTAe",
-      "editing": "ZVQLe",
-      "delivered": "wAja0"
+      "success": "GyfYn",
+      "info": "D7LAk7",
+      "warning": "g26Cg6",
+      "danger": "l0akB",
+      "accent": "h4md7",
+      "neutral": "w7OAR"
+    },
+    "presets": {
+      "stage": {
+        "awaiting-deposit": "i9SFm",
+        "scheduled": "LQGDd",
+        "shooting": "w9aTAe",
+        "editing": "ZVQLe",
+        "delivered": "wAja0"
+      }
     },
     "tokens": [
-      "component.chip.stage.*"
+      "component.chip.status.*",
+      "component.chip.stage.* (presets)"
     ],
     "gaps": []
   },
@@ -1940,7 +2000,7 @@
     "nested": [
       "segmented-control",
       "avatar",
-      "stage-chip",
+      "status-chip",
       "action-menu"
     ],
     "tokens": [
@@ -3315,5 +3375,77 @@
       "header-actions-tabs-table": "LcKBl",
       "header-off": "KwkAv"
     }
+  },
+  "option-card": {
+    "status": "APPROVED 2026-10-01 (Owner: \"kerjakan ketiganya sekaligus\"; tokens approved; F-04)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C44 — Option card",
+      "id": "y0Pj2o"
+    },
+    "spec": "docs/design-system/components/option-card.md",
+    "base": {
+      "name": "_OptionCard/Base",
+      "id": "wl20h",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "default",
+        "hover",
+        "focus",
+        "selected",
+        "disabled"
+      ]
+    },
+    "props": {
+      "title": {
+        "kind": "text",
+        "layer": "Title"
+      },
+      "description": {
+        "kind": "text",
+        "layer": "Description"
+      },
+      "icon": {
+        "kind": "icon",
+        "layer": "Icon"
+      },
+      "trailing": {
+        "kind": "slot",
+        "layer": "Trailing",
+        "recommended": [
+          "w7OAR",
+          "GyfYn"
+        ],
+        "default": false
+      }
+    },
+    "layers": {
+      "Radio": "Radio (C06 instance)",
+      "Icon": "Icon",
+      "Text": "Text",
+      "Title": "Title",
+      "Description": "Description",
+      "Trailing": "Trailing"
+    },
+    "variants": {
+      "default": "mtP8i",
+      "hover": "Gnak3",
+      "focus": "xZvS4",
+      "selected": "K1BPO",
+      "disabled": "AwKEK"
+    },
+    "nested": [
+      "radio",
+      "status-chip"
+    ],
+    "tokens": [
+      "component.option-card.*"
+    ],
+    "gaps": [
+      "focus glow not drawn (Pencil shadow has no spread); focus = 2 px border-selected + Radio focus ring",
+      "icon size 18 literal (size-binding)"
+    ]
   }
 }

@@ -1,5 +1,5 @@
 {
-  "version": "2.19",
+  "version": "2.20",
   "children": [
     {
       "type": "frame",
@@ -64237,7 +64237,7 @@
       "id": "uofHz",
       "x": 4620,
       "y": 9359,
-      "name": "C12 — Stage chip",
+      "name": "C12 — Status chip",
       "width": 1440,
       "fill": "$color/semantic/surface/panel",
       "layout": "vertical",
@@ -64278,7 +64278,7 @@
               "id": "vDOjA",
               "name": "Title",
               "fill": "$color/semantic/text/primary",
-              "content": "Stage chip",
+              "content": "Status chip",
               "fontFamily": "$font/family/base",
               "fontSize": 44,
               "fontWeight": "700",
@@ -64291,7 +64291,7 @@
               "fill": "$color/semantic/text/secondary",
               "textGrowth": "fixed-width",
               "width": 880,
-              "content": "Shows a project's production stage in tables, cards and the timeline. Fixed mapping of stage → colour (token-usage §2 Status). Non-interactive; always dot + label, never colour alone.",
+              "content": "Short status label with a tone: active/inactive, sync state, invoice status, coming soon. Tone axis (success · info · warning · danger · accent · neutral), free label text, optional dot. Stage Chip/* are presets with a fixed stage label (token-usage §2 Status). Non-interactive; meaning is always in the label, never colour-only.",
               "lineHeight": 1.5,
               "fontFamily": "$font/family/base",
               "fontSize": 16,
@@ -64322,7 +64322,9 @@
               "id": "JOBjf",
               "name": "Exhibit note",
               "fill": "$color/semantic/text/secondary",
-              "content": "Source components. Name = Stage Chip/<Stage> · private base _StageChip/Base holds structure; every variant is an instance of it. One axis: stage (workflow order).",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Source components. Private base _StatusChip/Base (was _StageChip/Base, same id). Status Chip/<Tone>: label is editable, Dot can be hidden. Stage Chip/<Stage>: presets with a fixed label, kept for project stages.",
               "fontFamily": "$font/family/base",
               "fontSize": 13,
               "fontWeight": "normal"
@@ -64338,6 +64340,419 @@
               "layout": "vertical",
               "padding": 24,
               "children": [
+                {
+                  "type": "frame",
+                  "id": "nX9AL",
+                  "name": "Row _StatusChip/Base (private)",
+                  "height": 56,
+                  "stroke": "$color/semantic/border/subtle",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "A7Z3K",
+                      "name": "Row label",
+                      "fill": "$color/semantic/text/muted",
+                      "textGrowth": "fixed-width",
+                      "width": 180,
+                      "content": "_StatusChip/Base (private)",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "mFY2b",
+                      "name": "Cell base",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "oL43h",
+                          "name": "_StatusChip/Base",
+                          "context": "PRIVATE base for every Status Chip and Stage Chip preset — do not instance in screens. Tone via fill + Dot/Label fill; Label is text; Dot is optional.",
+                          "reusable": true,
+                          "metadata": {
+                            "type": "component",
+                            "component": "stage-chip",
+                            "role": "base"
+                          },
+                          "fill": "$component/chip/status/neutral/background",
+                          "cornerRadius": "$component/chip/status/radius",
+                          "gap": "$component/chip/status/gap",
+                          "padding": [
+                            "$component/chip/status/padding-y",
+                            "$component/chip/status/padding-x"
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "L9XA7y",
+                              "name": "Dot",
+                              "fill": "$component/chip/status/neutral/text",
+                              "width": 6,
+                              "height": 6
+                            },
+                            {
+                              "type": "text",
+                              "id": "SD1o7",
+                              "name": "Label",
+                              "fill": "$component/chip/status/neutral/text",
+                              "content": "Status",
+                              "fontFamily": "$font/family/base",
+                              "fontSize": "$font/size/caption",
+                              "fontWeight": "$font/weight/semibold"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "RNRj1",
+                  "name": "Row TONE →",
+                  "height": 40,
+                  "stroke": "$color/semantic/border/subtle",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "C5j7T",
+                      "name": "Row label",
+                      "fill": "$color/semantic/text/muted",
+                      "textGrowth": "fixed-width",
+                      "width": 180,
+                      "content": "TONE →",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "PnR1n",
+                      "name": "Cell danger",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "thffL",
+                          "name": "Col label",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "DANGER",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "cwtuz",
+                      "name": "Cell info",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "CYS7T",
+                          "name": "Col label",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "INFO",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "v0WsD",
+                      "name": "Cell accent",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "e26GQU",
+                          "name": "Col label",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "ACCENT",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ZaxqK",
+                      "name": "Cell warning",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "firBV",
+                          "name": "Col label",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "WARNING",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "hebMd",
+                      "name": "Cell success",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "j40YO",
+                          "name": "Col label",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "SUCCESS",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "gZSrK",
+                      "name": "Cell neutral",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "laqh9",
+                          "name": "Col label",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "NEUTRAL",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "RuFKM",
+                  "name": "Row Status Chip",
+                  "height": 56,
+                  "stroke": "$color/semantic/border/subtle",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "g723d",
+                      "name": "Row label",
+                      "fill": "$color/semantic/text/muted",
+                      "textGrowth": "fixed-width",
+                      "width": 180,
+                      "content": "Status Chip",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "HZDPv",
+                      "name": "Cell danger",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "l0akB",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "oL43h",
+                          "name": "Status Chip/Danger",
+                          "fill": "$component/chip/status/danger/background",
+                          "context": "Status Chip · tone=danger. Label: short status text (id-ID), never colour-only. Dot: optional (on by default). Spec: docs/design-system/components/status-chip.md",
+                          "descendants": {
+                            "L9XA7y": {
+                              "fill": "$component/chip/status/danger/text"
+                            },
+                            "SD1o7": {
+                              "fill": "$component/chip/status/danger/text",
+                              "content": "Gagal"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "uRCAu",
+                      "name": "Cell info",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "D7LAk7",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "oL43h",
+                          "name": "Status Chip/Info",
+                          "fill": "$component/chip/status/info/background",
+                          "context": "Status Chip · tone=info. Label: short status text (id-ID), never colour-only. Dot: optional (on by default). Spec: docs/design-system/components/status-chip.md",
+                          "descendants": {
+                            "L9XA7y": {
+                              "fill": "$component/chip/status/info/text"
+                            },
+                            "SD1o7": {
+                              "fill": "$component/chip/status/info/text",
+                              "content": "Info"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "W8qif1",
+                      "name": "Cell accent",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "h4md7",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "oL43h",
+                          "name": "Status Chip/Accent",
+                          "fill": "$component/chip/status/accent/background",
+                          "context": "Status Chip · tone=accent. Label: short status text (id-ID), never colour-only. Dot: optional (on by default). Spec: docs/design-system/components/status-chip.md",
+                          "descendants": {
+                            "L9XA7y": {
+                              "fill": "$component/chip/status/accent/text"
+                            },
+                            "SD1o7": {
+                              "fill": "$component/chip/status/accent/text",
+                              "content": "Berjalan"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "kPJpB",
+                      "name": "Cell warning",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "g26Cg6",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "oL43h",
+                          "name": "Status Chip/Warning",
+                          "fill": "$component/chip/status/warning/background",
+                          "context": "Status Chip · tone=warning. Label: short status text (id-ID), never colour-only. Dot: optional (on by default). Spec: docs/design-system/components/status-chip.md",
+                          "descendants": {
+                            "L9XA7y": {
+                              "fill": "$component/chip/status/warning/text"
+                            },
+                            "SD1o7": {
+                              "fill": "$component/chip/status/warning/text",
+                              "content": "Perlu cek"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Z39zj",
+                      "name": "Cell success",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "GyfYn",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "oL43h",
+                          "name": "Status Chip/Success",
+                          "fill": "$component/chip/status/success/background",
+                          "context": "Status Chip · tone=success. Label: short status text (id-ID), never colour-only. Dot: optional (on by default). Spec: docs/design-system/components/status-chip.md",
+                          "descendants": {
+                            "L9XA7y": {
+                              "fill": "$component/chip/status/success/text"
+                            },
+                            "SD1o7": {
+                              "fill": "$component/chip/status/success/text",
+                              "content": "Aktif"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "CDtoR",
+                      "name": "Cell neutral",
+                      "width": 170,
+                      "height": "fill_container",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "w7OAR",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "oL43h",
+                          "name": "Status Chip/Neutral",
+                          "fill": "$component/chip/status/neutral/background",
+                          "context": "Status Chip · tone=neutral. Label: short status text (id-ID), never colour-only. Dot: optional (on by default). Spec: docs/design-system/components/status-chip.md",
+                          "descendants": {
+                            "L9XA7y": {
+                              "fill": "$component/chip/status/neutral/text"
+                            },
+                            "SD1o7": {
+                              "fill": "$component/chip/status/neutral/text",
+                              "content": "Nonaktif"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
                 {
                   "type": "frame",
                   "id": "mCXFe",
@@ -64465,81 +64880,6 @@
                 },
                 {
                   "type": "frame",
-                  "id": "nX9AL",
-                  "name": "Row _StageChip/Base (private)",
-                  "height": 56,
-                  "stroke": "$color/semantic/border/subtle",
-                  "strokeWidth": {
-                    "bottom": 1
-                  },
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "A7Z3K",
-                      "name": "Row label",
-                      "fill": "$color/semantic/text/muted",
-                      "textGrowth": "fixed-width",
-                      "width": 180,
-                      "content": "_StageChip/Base (private)",
-                      "fontFamily": "IBM Plex Mono",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
-                    },
-                    {
-                      "type": "frame",
-                      "id": "mFY2b",
-                      "name": "Cell base",
-                      "width": 170,
-                      "height": "fill_container",
-                      "alignItems": "center",
-                      "children": [
-                        {
-                          "type": "frame",
-                          "id": "oL43h",
-                          "name": "_StageChip/Base",
-                          "context": "PRIVATE base for all Stage Chip variants — do not instance in screens.",
-                          "reusable": true,
-                          "metadata": {
-                            "type": "component",
-                            "component": "stage-chip",
-                            "role": "base"
-                          },
-                          "fill": "$component/chip/stage/scheduled/background",
-                          "cornerRadius": "$component/chip/stage/radius",
-                          "gap": "$component/chip/stage/gap",
-                          "padding": [
-                            "$component/chip/stage/padding-y",
-                            "$component/chip/stage/padding-x"
-                          ],
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "ellipse",
-                              "id": "L9XA7y",
-                              "name": "Dot",
-                              "fill": "$component/chip/stage/scheduled/text",
-                              "width": 6,
-                              "height": 6
-                            },
-                            {
-                              "type": "text",
-                              "id": "SD1o7",
-                              "name": "Label",
-                              "fill": "$component/chip/stage/scheduled/text",
-                              "content": "Dijadwalkan",
-                              "fontFamily": "$font/family/base",
-                              "fontSize": "$font/size/caption",
-                              "fontWeight": "$font/weight/semibold"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
                   "id": "NTFSH",
                   "name": "Row Stage Chip",
                   "height": 56,
@@ -64576,7 +64916,7 @@
                           "ref": "oL43h",
                           "name": "Stage Chip/Menunggu DP",
                           "fill": "$component/chip/stage/awaiting-deposit/background",
-                          "context": "Stage Chip · stage=awaiting-deposit (danger). Label fixed to the stage name \"Menunggu DP\"; do not edit. Spec: docs/design-system/components/stage-chip.md",
+                          "context": "Stage Chip (Status Chip preset, tone=danger) · stage=awaiting-deposit (danger). Label fixed to the stage name \"Menunggu DP\"; do not edit. Spec: docs/design-system/components/status-chip.md",
                           "descendants": {
                             "L9XA7y": {
                               "fill": "$component/chip/stage/awaiting-deposit/text"
@@ -64604,7 +64944,7 @@
                           "ref": "oL43h",
                           "name": "Stage Chip/Dijadwalkan",
                           "fill": "$component/chip/stage/scheduled/background",
-                          "context": "Stage Chip · stage=scheduled (info). Label fixed to the stage name \"Dijadwalkan\"; do not edit. Spec: docs/design-system/components/stage-chip.md",
+                          "context": "Stage Chip (Status Chip preset, tone=info) · stage=scheduled (info). Label fixed to the stage name \"Dijadwalkan\"; do not edit. Spec: docs/design-system/components/status-chip.md",
                           "descendants": {
                             "L9XA7y": {
                               "fill": "$component/chip/stage/scheduled/text"
@@ -64632,7 +64972,7 @@
                           "ref": "oL43h",
                           "name": "Stage Chip/Pemotretan",
                           "fill": "$component/chip/stage/shooting/background",
-                          "context": "Stage Chip · stage=shooting (accent.soft). Label fixed to the stage name \"Pemotretan\"; do not edit. Spec: docs/design-system/components/stage-chip.md",
+                          "context": "Stage Chip (Status Chip preset, tone=accent) · stage=shooting (accent.soft). Label fixed to the stage name \"Pemotretan\"; do not edit. Spec: docs/design-system/components/status-chip.md",
                           "descendants": {
                             "L9XA7y": {
                               "fill": "$component/chip/stage/shooting/text"
@@ -64660,7 +65000,7 @@
                           "ref": "oL43h",
                           "name": "Stage Chip/Editing",
                           "fill": "$component/chip/stage/editing/background",
-                          "context": "Stage Chip · stage=editing (warning). Label fixed to the stage name \"Editing\"; do not edit. Spec: docs/design-system/components/stage-chip.md",
+                          "context": "Stage Chip (Status Chip preset, tone=warning) · stage=editing (warning). Label fixed to the stage name \"Editing\"; do not edit. Spec: docs/design-system/components/status-chip.md",
                           "descendants": {
                             "L9XA7y": {
                               "fill": "$component/chip/stage/editing/text"
@@ -64688,7 +65028,7 @@
                           "ref": "oL43h",
                           "name": "Stage Chip/Terkirim",
                           "fill": "$component/chip/stage/delivered/background",
-                          "context": "Stage Chip · stage=delivered (success). Label fixed to the stage name \"Terkirim\"; do not edit. Spec: docs/design-system/components/stage-chip.md",
+                          "context": "Stage Chip (Status Chip preset, tone=success) · stage=delivered (success). Label fixed to the stage name \"Terkirim\"; do not edit. Spec: docs/design-system/components/status-chip.md",
                           "descendants": {
                             "L9XA7y": {
                               "fill": "$component/chip/stage/delivered/text"
@@ -64749,7 +65089,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Label = the stage name, fixed per variant (id-ID). Never free text, never truncated — the longest (Menunggu DP) fits the 130 px table Tahap column. One chip per row/card.",
+                  "content": "Status Chip: label is short status text (id-ID, 1–2 words), never truncated. Hide the Dot only where the chip marks availability rather than state (e.g. Segera hadir). Stage Chip presets: label fixed to the stage name, never edited; the longest (Menunggu DP) fits the 130 px Tahap column.",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -65041,6 +65381,32 @@
                       "type": "ref",
                       "ref": "wAja0",
                       "name": "Instance"
+                    },
+                    {
+                      "id": "nMRcG",
+                      "type": "ref",
+                      "ref": "GyfYn",
+                      "name": "Status Chip/Success"
+                    },
+                    {
+                      "id": "nVbZY",
+                      "type": "ref",
+                      "ref": "w7OAR",
+                      "name": "Status Chip/Neutral"
+                    },
+                    {
+                      "id": "E9VPu",
+                      "type": "ref",
+                      "ref": "w7OAR",
+                      "name": "Status Chip/Neutral no dot",
+                      "descendants": {
+                        "L9XA7y": {
+                          "enabled": false
+                        },
+                        "SD1o7": {
+                          "content": "Segera hadir"
+                        }
+                      }
                     }
                   ]
                 },
@@ -65099,6 +65465,32 @@
                       "type": "ref",
                       "ref": "wAja0",
                       "name": "Instance"
+                    },
+                    {
+                      "id": "p7DAxh",
+                      "type": "ref",
+                      "ref": "GyfYn",
+                      "name": "Status Chip/Success"
+                    },
+                    {
+                      "id": "xmzoo",
+                      "type": "ref",
+                      "ref": "w7OAR",
+                      "name": "Status Chip/Neutral"
+                    },
+                    {
+                      "id": "x3ABJ",
+                      "type": "ref",
+                      "ref": "w7OAR",
+                      "name": "Status Chip/Neutral no dot",
+                      "descendants": {
+                        "L9XA7y": {
+                          "enabled": false
+                        },
+                        "SD1o7": {
+                          "content": "Segera hadir"
+                        }
+                      }
                     }
                   ]
                 }
@@ -65148,7 +65540,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Fixed mapping (§2 Status): Menunggu DP → danger · Dijadwalkan → info · Pemotretan → accent.soft · Editing → warning · Terkirim → success. Stage chips mean workflow stage only.",
+                  "content": "Tone by meaning (§2 Status): success = active/done · info = scheduled/in progress info · warning = needs attention · danger = failed/overdue · accent = in production · neutral = inactive/unavailable. Stage presets: Menunggu DP → danger · Dijadwalkan → info · Pemotretan → accent · Editing → warning · Terkirim → success.",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -92871,14 +93263,14 @@
                           "id": "I3aJo",
                           "type": "ref",
                           "ref": "K0UQ06",
-                          "name": "Nav Sumber klien",
+                          "name": "Nav Sumber foto",
                           "width": "fill_container",
                           "descendants": {
                             "MpR9k": {
-                              "icon": "share-2"
+                              "icon": "folder-open"
                             },
                             "m6S2m": {
-                              "content": "Sumber klien"
+                              "content": "Sumber foto"
                             }
                           }
                         },
@@ -96237,14 +96629,14 @@
                                   "id": "r1bhQ",
                                   "type": "ref",
                                   "ref": "FRtU1",
-                                  "name": "Item Sumber klien",
+                                  "name": "Item Sumber foto",
                                   "width": "fill_container",
                                   "descendants": {
                                     "MLkPM": {
-                                      "icon": "share-2"
+                                      "icon": "folder-open"
                                     },
                                     "elAPX": {
-                                      "content": "Sumber klien"
+                                      "content": "Sumber foto"
                                     }
                                   }
                                 },
@@ -103460,13 +103852,13 @@
                               "id": "ycw6L",
                               "type": "ref",
                               "ref": "odApP",
-                              "name": "Nav Sumber klien",
+                              "name": "Nav Sumber foto",
                               "descendants": {
                                 "r4Ryb": {
-                                  "icon": "share-2"
+                                  "icon": "folder-open"
                                 },
                                 "B1PEOz/WLS9S": {
-                                  "content": "Sumber klien"
+                                  "content": "Sumber foto"
                                 }
                               }
                             },
@@ -105759,7 +106151,7 @@
       "type": "frame",
       "id": "twUcY",
       "x": 9978,
-      "y": 23632,
+      "y": 23917,
       "name": "C42 — List card",
       "theme": {
         "mode": "light"
@@ -106004,6 +106396,375 @@
                           "width": "fill_container"
                         }
                       ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "BudiQ",
+          "name": "Exhibit — Two-line rows and skeleton",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "TQEpC",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Two-line rows and skeleton (F-03, F-04)",
+              "fontFamily": "$font/family/base",
+              "fontSize": 18,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "MpqKY",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 880,
+              "content": "Two-line rows: title + one meta line, padding-y list-card.item.padding-y (12), 36 icon well. Trailing slot: Chevron (whole row is a link) OR Status Chip and/or Action Menu SM (row itself not interactive). Skeleton mirrors the row for loading lists.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "urU6F",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 24,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "hl0Fg",
+                  "name": "_ListCardItem/TwoLine/Base",
+                  "context": "List Card Item Two-line · private base. Text: Title, Meta. Swap: Icon. Slot: Trailing (Chevron | Status Chip | Action Menu SM).",
+                  "reusable": true,
+                  "metadata": {
+                    "type": "component",
+                    "component": "list-card",
+                    "role": "base",
+                    "variant": "two-line"
+                  },
+                  "width": 640,
+                  "stroke": "$component/list-card/item/border",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "gap": "$component/list-card/item/gap",
+                  "padding": [
+                    "$component/list-card/item/padding-y",
+                    "$component/list-card/item/padding-x"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "c4tOj9",
+                      "name": "Icon wrap",
+                      "width": 36,
+                      "height": 36,
+                      "fill": "$component/list-card/item/icon-background",
+                      "cornerRadius": "$component/list-card/item/icon-radius",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "wDTkG",
+                          "name": "Icon",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "images",
+                          "library": "lucide",
+                          "fill": "$component/list-card/item/icon"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "cPGEA",
+                      "name": "Text",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$component/list-card/item/text-gap",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "O7pUR",
+                          "name": "Title",
+                          "fill": "$component/list-card/item/title",
+                          "content": "Bagikan gallery",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": "$font/size/body",
+                          "fontWeight": "$font/weight/semibold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "k9OCFf",
+                          "name": "Meta",
+                          "fill": "$component/list-card/item/meta",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Dikirim saat gallery siap dipilih klien.",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": "$font/size/body-sm",
+                          "fontWeight": "$font/weight/regular"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "zUF3j",
+                      "name": "Trailing",
+                      "slot": [
+                        "GyfYn",
+                        "w7OAR",
+                        "tgN4c"
+                      ],
+                      "gap": "$space/2",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "V2KFp7",
+                          "name": "Chevron",
+                          "width": 16,
+                          "height": 16,
+                          "icon": "chevron-right",
+                          "library": "lucide",
+                          "fill": "$component/list-card/item/meta"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "PV6HB",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "hl0Fg",
+                  "name": "List Card Item/Two-line",
+                  "context": "List Card Item · two-line · separator on. Text: Title, Meta. Swap: Icon. Slot: Trailing. Spec: docs/design-system/components/list-card.md"
+                },
+                {
+                  "id": "Bf3eg",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "hl0Fg",
+                  "name": "List Card Item/Two-line/Last",
+                  "strokeWidth": 0,
+                  "context": "List Card Item · two-line · last row, separator off. Spec: docs/design-system/components/list-card.md"
+                },
+                {
+                  "type": "frame",
+                  "id": "V5cGdN",
+                  "name": "_ListCardItem/Skeleton/Base",
+                  "context": "List Card Item Skeleton · private base. Mirrors the two-line row while a list loads. Trailing bar optional.",
+                  "reusable": true,
+                  "metadata": {
+                    "type": "component",
+                    "component": "list-card",
+                    "role": "base",
+                    "variant": "skeleton"
+                  },
+                  "width": 640,
+                  "stroke": "$component/list-card/item/border",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "gap": "$component/list-card/item/gap",
+                  "padding": [
+                    "$component/list-card/item/padding-y",
+                    "$component/list-card/item/padding-x"
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Uig6M",
+                      "name": "Icon placeholder",
+                      "width": 36,
+                      "height": 36,
+                      "fill": "$component/list-card/item/skeleton",
+                      "cornerRadius": "$component/list-card/item/icon-radius"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "mqEcw",
+                      "name": "Text",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$space/2",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Ytczp",
+                          "name": "Title bar",
+                          "width": 160,
+                          "height": 12,
+                          "fill": "$component/list-card/item/skeleton",
+                          "cornerRadius": "$component/list-card/item/skeleton-radius"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "oLtqQ",
+                          "name": "Meta bar",
+                          "width": 96,
+                          "height": 10,
+                          "fill": "$component/list-card/item/skeleton",
+                          "cornerRadius": "$component/list-card/item/skeleton-radius"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "MEQHp",
+                      "name": "Trailing bar",
+                      "width": 56,
+                      "height": 20,
+                      "fill": "$component/list-card/item/skeleton",
+                      "cornerRadius": "$component/list-card/item/skeleton-radius"
+                    }
+                  ]
+                },
+                {
+                  "id": "ksPQI",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "V5cGdN",
+                  "name": "List Card Item/Skeleton",
+                  "context": "List Card Item · skeleton · separator on. Boolean: Trailing bar. Spec: docs/design-system/components/list-card.md"
+                },
+                {
+                  "id": "KKvqb",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "V5cGdN",
+                  "name": "List Card Item/Skeleton/Last",
+                  "strokeWidth": 0,
+                  "context": "List Card Item · skeleton · last row. Spec: docs/design-system/components/list-card.md"
+                },
+                {
+                  "type": "frame",
+                  "id": "N9yt64",
+                  "name": "In context — sources",
+                  "clip": true,
+                  "width": 640,
+                  "fill": "$component/list-card/background",
+                  "cornerRadius": "$component/list-card/radius",
+                  "stroke": "$component/list-card/border",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "id": "U8KtpU",
+                      "type": "ref",
+                      "ref": "PV6HB",
+                      "name": "Row Google Drive Utama",
+                      "width": "fill_container",
+                      "descendants": {
+                        "wDTkG": {
+                          "icon": "hard-drive"
+                        },
+                        "O7pUR": {
+                          "content": "Google Drive Utama"
+                        },
+                        "k9OCFf": {
+                          "content": "Google Drive"
+                        },
+                        "zUF3j": {
+                          "children": [
+                            {
+                              "id": "oZCeF",
+                              "type": "ref",
+                              "ref": "GyfYn",
+                              "name": "Status"
+                            },
+                            {
+                              "id": "GFPrP",
+                              "type": "ref",
+                              "ref": "tgN4c",
+                              "name": "Row actions"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "id": "G59BO",
+                      "type": "ref",
+                      "ref": "Bf3eg",
+                      "name": "Row Arsip 2024",
+                      "width": "fill_container",
+                      "descendants": {
+                        "wDTkG": {
+                          "icon": "hard-drive"
+                        },
+                        "O7pUR": {
+                          "content": "Arsip 2024"
+                        },
+                        "k9OCFf": {
+                          "content": "Google Drive"
+                        },
+                        "zUF3j": {
+                          "children": [
+                            {
+                              "id": "X9Df7",
+                              "type": "ref",
+                              "ref": "w7OAR",
+                              "name": "Status"
+                            },
+                            {
+                              "id": "tGaRD",
+                              "type": "ref",
+                              "ref": "tgN4c",
+                              "name": "Row actions"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "S41Spp",
+                  "name": "In context — loading",
+                  "clip": true,
+                  "width": 640,
+                  "fill": "$component/list-card/background",
+                  "cornerRadius": "$component/list-card/radius",
+                  "stroke": "$component/list-card/border",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "id": "TdzQE",
+                      "type": "ref",
+                      "ref": "ksPQI",
+                      "name": "Skeleton 1",
+                      "width": "fill_container"
+                    },
+                    {
+                      "id": "XdjTZ",
+                      "type": "ref",
+                      "ref": "KKvqb",
+                      "name": "Skeleton 2",
+                      "width": "fill_container"
                     }
                   ]
                 }
@@ -106411,7 +107172,7 @@
       "type": "frame",
       "id": "d8Dpw",
       "x": 9978,
-      "y": 24442,
+      "y": 26061,
       "name": "C43 — Section card",
       "theme": {
         "mode": "light"
@@ -108972,6 +109733,744 @@
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
                   "content": "•  Content components keep their own semantics — labels, errors, list and table roles, focus rings.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "y0Pj2o",
+      "x": 11618,
+      "y": 24442,
+      "name": "C44 — Option card",
+      "theme": {
+        "mode": "light"
+      },
+      "width": 1440,
+      "fill": "$color/semantic/surface/panel",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 64,
+      "children": [
+        {
+          "type": "frame",
+          "id": "n7tT2",
+          "name": "Header",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            0,
+            0,
+            32,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "Xipmd",
+              "name": "Overline",
+              "fill": "$color/semantic/text/muted",
+              "content": "COMPONENT  ·  C44  ·  INPUT  ·  OPTION CARD",
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 0.6
+            },
+            {
+              "type": "text",
+              "id": "LEG73",
+              "name": "Title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Option card",
+              "fontFamily": "$font/family/base",
+              "fontSize": 44,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "Br2ZC",
+              "name": "Description",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 880,
+              "content": "A radio choice shown as a card: radio, icon, title and an optional description. Use for a short single-choice list where each option needs a sentence (provider, package, source). Options stack one per line. Disabled options can carry a Status Chip (e.g. Segera hadir).",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "D1Dccf",
+          "name": "Exhibit — Component set",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "pMYtu",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Component set",
+              "fontFamily": "$font/family/base",
+              "fontSize": 18,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "b06hOm",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "wl20h",
+                  "name": "_OptionCard/Base",
+                  "context": "Option Card · private base. Text: Title, Description. Swap: Icon, Radio. Slot: Trailing (Status Chip), off by default.",
+                  "reusable": true,
+                  "metadata": {
+                    "type": "component",
+                    "component": "option-card",
+                    "role": "base"
+                  },
+                  "width": 480,
+                  "fill": "$component/option-card/background",
+                  "cornerRadius": "$component/option-card/radius",
+                  "stroke": "$component/option-card/border",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "gap": "$component/option-card/gap",
+                  "padding": "$component/option-card/padding",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "id": "zIE7G",
+                      "type": "ref",
+                      "ref": "Imyla",
+                      "name": "Radio",
+                      "descendants": {
+                        "dK1OA": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "type": "icon",
+                      "id": "JPbOd",
+                      "name": "Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "hard-drive",
+                      "library": "lucide",
+                      "fill": "$component/option-card/icon"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "IOwxT",
+                      "name": "Text",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$component/option-card/text-gap",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nLLux",
+                          "name": "Title",
+                          "fill": "$component/option-card/title",
+                          "content": "Google Drive",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": "$font/size/body",
+                          "fontWeight": "$font/weight/semibold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "ZcZfK",
+                          "name": "Description",
+                          "fill": "$component/option-card/description",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Folder yang dibagikan lewat link, hanya dibaca.",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": "$font/size/body-sm",
+                          "fontWeight": "$font/weight/regular"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "sVhei",
+                      "x": 0,
+                      "y": 0,
+                      "name": "Trailing",
+                      "enabled": false,
+                      "slot": [
+                        "w7OAR",
+                        "GyfYn"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "I4c863",
+                          "type": "ref",
+                          "ref": "w7OAR",
+                          "name": "Status",
+                          "descendants": {
+                            "L9XA7y": {
+                              "enabled": false
+                            },
+                            "SD1o7": {
+                              "content": "Segera hadir"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "mtP8i",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "wl20h",
+                  "name": "Option Card/Default",
+                  "context": "Option Card · state=default. Spec: docs/design-system/components/option-card.md"
+                },
+                {
+                  "id": "Gnak3",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "wl20h",
+                  "name": "Option Card/Hover",
+                  "context": "Option Card · state=hover. Spec: docs/design-system/components/option-card.md",
+                  "stroke": "$component/option-card/border-hover",
+                  "descendants": {
+                    "zIE7G": {
+                      "id": "KnXth",
+                      "type": "ref",
+                      "ref": "x3hzlO",
+                      "name": "Radio",
+                      "descendants": {
+                        "dK1OA": {
+                          "enabled": false
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "xZvS4",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "wl20h",
+                  "name": "Option Card/Focus",
+                  "context": "Option Card · state=focus. Spec: docs/design-system/components/option-card.md",
+                  "stroke": "$component/option-card/border-selected",
+                  "strokeWidth": 2,
+                  "descendants": {
+                    "zIE7G": {
+                      "id": "wKp2d",
+                      "type": "ref",
+                      "ref": "UkSaY",
+                      "name": "Radio",
+                      "descendants": {
+                        "dK1OA": {
+                          "enabled": false
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "K1BPO",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "wl20h",
+                  "name": "Option Card/Selected",
+                  "context": "Option Card · state=selected. Spec: docs/design-system/components/option-card.md",
+                  "stroke": "$component/option-card/border-selected",
+                  "strokeWidth": 2,
+                  "descendants": {
+                    "zIE7G": {
+                      "id": "OZM7l",
+                      "type": "ref",
+                      "ref": "SSy18",
+                      "name": "Radio",
+                      "descendants": {
+                        "dK1OA": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    "JPbOd": {
+                      "fill": "$component/option-card/title"
+                    }
+                  }
+                },
+                {
+                  "id": "AwKEK",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "wl20h",
+                  "name": "Option Card/Disabled",
+                  "context": "Option Card · state=disabled. Spec: docs/design-system/components/option-card.md",
+                  "fill": "$component/option-card/background-disabled",
+                  "stroke": "$component/option-card/border-disabled",
+                  "descendants": {
+                    "zIE7G": {
+                      "id": "cvyUE",
+                      "type": "ref",
+                      "ref": "u3UCo",
+                      "name": "Radio",
+                      "descendants": {
+                        "dK1OA": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    "JPbOd": {
+                      "icon": "box",
+                      "fill": "$component/option-card/icon-disabled"
+                    },
+                    "nLLux": {
+                      "content": "Dropbox",
+                      "fill": "$component/option-card/title-disabled"
+                    },
+                    "ZcZfK": {
+                      "enabled": false
+                    },
+                    "sVhei": {
+                      "enabled": true
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "XTjf8",
+          "name": "Exhibit — In context",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "dI9qE",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "qk3sY",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "In context",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "japTn",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Tambah sumber (F-04): one Selected option, the rest Disabled with Status Chip/Neutral no dot \"Segera hadir\". Options stack one per line on desktop and phones (Owner 2026-10-01). Width fills the dialog body.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "QmfOi",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "SzAgt",
+                  "name": "Provider choice light",
+                  "theme": {
+                    "mode": "light"
+                  },
+                  "width": "fill_container",
+                  "fill": "$color/semantic/surface/panel",
+                  "cornerRadius": "$radius/sm",
+                  "layout": "vertical",
+                  "gap": "$space/2",
+                  "padding": 20,
+                  "children": [
+                    {
+                      "id": "j62xtY",
+                      "type": "ref",
+                      "ref": "K1BPO",
+                      "name": "Google Drive",
+                      "width": "fill_container"
+                    },
+                    {
+                      "id": "Uf4kb",
+                      "type": "ref",
+                      "ref": "AwKEK",
+                      "name": "Dropbox",
+                      "width": "fill_container",
+                      "descendants": {
+                        "JPbOd": {
+                          "icon": "box"
+                        },
+                        "nLLux": {
+                          "content": "Dropbox"
+                        }
+                      }
+                    },
+                    {
+                      "id": "VW9Ij",
+                      "type": "ref",
+                      "ref": "AwKEK",
+                      "name": "OneDrive",
+                      "width": "fill_container",
+                      "descendants": {
+                        "JPbOd": {
+                          "icon": "cloud"
+                        },
+                        "nLLux": {
+                          "content": "OneDrive"
+                        }
+                      }
+                    },
+                    {
+                      "id": "Tr1Ce",
+                      "type": "ref",
+                      "ref": "AwKEK",
+                      "name": "Amazon S3",
+                      "width": "fill_container",
+                      "descendants": {
+                        "JPbOd": {
+                          "icon": "database"
+                        },
+                        "nLLux": {
+                          "content": "Amazon S3"
+                        }
+                      }
+                    },
+                    {
+                      "id": "QBHLl",
+                      "type": "ref",
+                      "ref": "AwKEK",
+                      "name": "Custom URL",
+                      "width": "fill_container",
+                      "descendants": {
+                        "JPbOd": {
+                          "icon": "link"
+                        },
+                        "nLLux": {
+                          "content": "Custom URL"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "MhkDE",
+          "name": "Exhibit — Modes",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "Zr972",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "VPEFu",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Modes",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "hPu2J",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Same components under theme mode = dark.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "OwJQZ",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "LYheN",
+                  "name": "Provider choice dark",
+                  "theme": {
+                    "mode": "dark"
+                  },
+                  "width": "fill_container",
+                  "fill": "$color/semantic/surface/panel",
+                  "cornerRadius": "$radius/sm",
+                  "layout": "vertical",
+                  "gap": "$space/2",
+                  "padding": 20,
+                  "children": [
+                    {
+                      "id": "VPCKj",
+                      "type": "ref",
+                      "ref": "K1BPO",
+                      "name": "Google Drive",
+                      "width": "fill_container"
+                    },
+                    {
+                      "id": "N9AtF",
+                      "type": "ref",
+                      "ref": "AwKEK",
+                      "name": "Dropbox",
+                      "width": "fill_container",
+                      "descendants": {
+                        "JPbOd": {
+                          "icon": "box"
+                        },
+                        "nLLux": {
+                          "content": "Dropbox"
+                        }
+                      }
+                    },
+                    {
+                      "id": "kxAAB",
+                      "type": "ref",
+                      "ref": "AwKEK",
+                      "name": "OneDrive",
+                      "width": "fill_container",
+                      "descendants": {
+                        "JPbOd": {
+                          "icon": "cloud"
+                        },
+                        "nLLux": {
+                          "content": "OneDrive"
+                        }
+                      }
+                    },
+                    {
+                      "id": "q1WgQl",
+                      "type": "ref",
+                      "ref": "AwKEK",
+                      "name": "Amazon S3",
+                      "width": "fill_container",
+                      "descendants": {
+                        "JPbOd": {
+                          "icon": "database"
+                        },
+                        "nLLux": {
+                          "content": "Amazon S3"
+                        }
+                      }
+                    },
+                    {
+                      "id": "RfU8N",
+                      "type": "ref",
+                      "ref": "AwKEK",
+                      "name": "Custom URL",
+                      "width": "fill_container",
+                      "descendants": {
+                        "JPbOd": {
+                          "icon": "link"
+                        },
+                        "nLLux": {
+                          "content": "Custom URL"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "qUTrQ",
+          "name": "Exhibit — Accessibility",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "LUIFz",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "XuFbd",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Accessibility",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "nRcVw",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "WCAG 2.1 AA (C-008).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "N0hr26",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "FUiLQ",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Implement as a radio group: the card is the label of its radio; arrow keys move between options, Space selects.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "JDlOv",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Disabled options are aria-disabled and skipped by arrow keys; the Status Chip text is part of the accessible name (e.g. \"Dropbox, segera hadir\").",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "W8lgPy",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Selected is shown by the filled radio and the 2 px border, never colour alone.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "VvBQw",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Focus: 2 px option-card.border-selected plus the Radio focus ring.",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -111940,6 +113439,150 @@
     "component/section-card/header/actions-gap": {
       "type": "number",
       "value": "$space/4"
+    },
+    "component/chip/status/success/background": {
+      "type": "color",
+      "value": "$color/semantic/status/success/bg"
+    },
+    "component/chip/status/success/text": {
+      "type": "color",
+      "value": "$color/semantic/status/success/fg"
+    },
+    "component/chip/status/info/background": {
+      "type": "color",
+      "value": "$color/semantic/status/info/bg"
+    },
+    "component/chip/status/info/text": {
+      "type": "color",
+      "value": "$color/semantic/status/info/fg"
+    },
+    "component/chip/status/warning/background": {
+      "type": "color",
+      "value": "$color/semantic/status/warning/bg"
+    },
+    "component/chip/status/warning/text": {
+      "type": "color",
+      "value": "$color/semantic/status/warning/fg"
+    },
+    "component/chip/status/danger/background": {
+      "type": "color",
+      "value": "$color/semantic/status/danger/bg"
+    },
+    "component/chip/status/danger/text": {
+      "type": "color",
+      "value": "$color/semantic/status/danger/fg"
+    },
+    "component/chip/status/accent/background": {
+      "type": "color",
+      "value": "$color/semantic/accent/soft"
+    },
+    "component/chip/status/accent/text": {
+      "type": "color",
+      "value": "$color/semantic/accent/soft-fg"
+    },
+    "component/chip/status/neutral/background": {
+      "type": "color",
+      "value": "$color/semantic/surface/muted"
+    },
+    "component/chip/status/neutral/text": {
+      "type": "color",
+      "value": "$color/semantic/text/secondary"
+    },
+    "component/chip/status/padding-y": {
+      "type": "number",
+      "value": "$space/0-5"
+    },
+    "component/chip/status/padding-x": {
+      "type": "number",
+      "value": "$space/2"
+    },
+    "component/chip/status/gap": {
+      "type": "number",
+      "value": "$space/1-5"
+    },
+    "component/chip/status/radius": {
+      "type": "number",
+      "value": "$radius/full"
+    },
+    "component/list-card/item/padding-y": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/list-card/item/text-gap": {
+      "type": "number",
+      "value": "$space/0-5"
+    },
+    "component/list-card/item/icon-radius": {
+      "type": "number",
+      "value": "$radius/md"
+    },
+    "component/list-card/item/skeleton": {
+      "type": "color",
+      "value": "$color/semantic/surface/muted"
+    },
+    "component/list-card/item/skeleton-radius": {
+      "type": "number",
+      "value": "$radius/xs"
+    },
+    "component/option-card/background": {
+      "type": "color",
+      "value": "$color/semantic/surface/panel"
+    },
+    "component/option-card/background-disabled": {
+      "type": "color",
+      "value": "$color/semantic/surface/subtle"
+    },
+    "component/option-card/border": {
+      "type": "color",
+      "value": "$color/semantic/border/default"
+    },
+    "component/option-card/border-hover": {
+      "type": "color",
+      "value": "$color/semantic/border/input-hover"
+    },
+    "component/option-card/border-selected": {
+      "type": "color",
+      "value": "$color/semantic/focus/ring"
+    },
+    "component/option-card/border-disabled": {
+      "type": "color",
+      "value": "$color/semantic/border/subtle"
+    },
+    "component/option-card/title": {
+      "type": "color",
+      "value": "$color/semantic/text/primary"
+    },
+    "component/option-card/title-disabled": {
+      "type": "color",
+      "value": "$color/semantic/text/muted"
+    },
+    "component/option-card/description": {
+      "type": "color",
+      "value": "$color/semantic/text/secondary"
+    },
+    "component/option-card/icon": {
+      "type": "color",
+      "value": "$color/semantic/text/secondary"
+    },
+    "component/option-card/icon-disabled": {
+      "type": "color",
+      "value": "$color/semantic/text/disabled"
+    },
+    "component/option-card/padding": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/option-card/gap": {
+      "type": "number",
+      "value": "$space/3"
+    },
+    "component/option-card/text-gap": {
+      "type": "number",
+      "value": "$space/0-5"
+    },
+    "component/option-card/radius": {
+      "type": "number",
+      "value": "$radius/md"
     }
   },
   "fileToken": "a25701b4-4c5b-41fc-8af0-91535884d9bf"

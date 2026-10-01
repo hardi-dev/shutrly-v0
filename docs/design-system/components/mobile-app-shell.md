@@ -39,7 +39,7 @@ The C35 exhibits show Dasbor (greeting plus a 2 × 2 grid of Metric Tiles), *Lai
 | Dasbor, Proyek (12), Klien | Bottom Nav tabs |
 | Invoice (3) | Menu sheet |
 | KATALOG: Layanan, Tim | Menu sheet, same group label |
-| Template pesan, Sumber klien, Pengaturan | Menu sheet, unlabelled group (as in the Sidebar) |
+| Template pesan, Sumber foto, Pengaturan | Menu sheet, unlabelled group (as in the Sidebar) |
 | Logo row (mark + wordmark) | Menu sheet header, with a round Close instead of Collapse |
 | Workspace switcher | Menu sheet, first entry of the list, with a separator line on top and no decorative mark |
 | Account + Log out | Menu sheet footer |

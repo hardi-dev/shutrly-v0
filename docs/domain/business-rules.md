@@ -112,6 +112,12 @@ The platform API key is a server secret, never stored in `configData`/gallery da
 ### BR-SRC-004 — Public-link warning
 During source setup the Owner is warned that anyone holding the direct Drive link bypasses gallery token and password.
 
+### BR-SRC-005 — One Google Drive configuration per workspace
+In MVP every workspace has exactly one `GOOGLE_DRIVE` `WorkspaceSourceConfig`, active, named *Google Drive*, with empty `configData`. It is created with the workspace and backfilled for workspaces that exist before F-04. Owners cannot add, rename, deactivate or delete it. *(F-04 discovery, Owner 2026-10-01.)*
+
+### BR-SRC-006 — Link check reads, never stores
+The Owner may check a Drive folder link before using it. The check reads only public metadata through the provider interface, classifies files as BR-GAL-007 does, and stores nothing: no link, no folder ID, no counts. *(F-04 discovery, Owner 2026-10-01.)*
+
 ---
 
 ## Catalog (CAT)

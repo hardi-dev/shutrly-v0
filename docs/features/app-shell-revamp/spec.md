@@ -83,6 +83,8 @@ No new server data. The only persisted preference is the per-browser collapse st
 - **Menu sheet (phone), opened by the header Menu button (formerly *Lainnya*):**
   - header: logo row with a round Close;
   - navigation: the KATALOG group (Layanan, Tim); then Template pesan, Sumber klien, Pengaturan. Invoice is now a Bottom Nav tab;
+
+    *Changed by F-04 (Owner 2026-10-01): *Sumber klien* is renamed *Sumber foto*, route `photo-sources`; see [source-config spec A-1](../source-config/spec.md).*
   - footer: Account (links to Profile) and Keluar.
 
   Choosing an item navigates and closes the sheet.

@@ -2849,7 +2849,7 @@ The `(list)` route group keeps the list's `loading.tsx` from wrapping the editor
   - `messageTemplatesHref(workspaceId)`, `messageTemplateHref(workspaceId, type)`, `messageTemplateSubPages(workspaceId): readonly TemplateSubPage[]`;
   - `TemplateListScreen({ workspaceId, types })`, `TemplateListSkeleton()`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `template-sub-pages.test.ts`:
 
@@ -2915,7 +2915,7 @@ describe("TemplateListScreen", () => {
 Run: `pnpm vitest run src/features/communications/ui`
 Expected: FAIL — modules not found.
 
-- [ ] **Step 2: Implement the copy and sub-pages**
+- [x] **Step 2: Implement the copy and sub-pages**
 
 `template-copy/template-copy.copy.ts`:
 
@@ -3010,7 +3010,7 @@ export function messageTemplateSubPages(workspaceId: string): readonly TemplateS
 }
 ```
 
-- [ ] **Step 3: Implement the list and the skeleton**
+- [x] **Step 3: Implement the list and the skeleton**
 
 `template-list-screen/template-list-screen.types.ts`:
 
@@ -3189,7 +3189,7 @@ export function TemplateListSkeleton() {
 
 `SkeletonRows` uses an inline props literal; if the lint flags it, move `SkeletonRowsProps { count: number }` to a `template-list-skeleton.types.ts`. `w-36` / `w-52` are skeleton bar widths that have no token (they're placeholders, not content). If `pnpm lint` or review flags them, report them as a `DESIGN TOKEN GAP`, matching the export's 140 / 200 px bars.
 
-- [ ] **Step 4: Add the routes and the sub-page headings**
+- [x] **Step 4: Add the routes and the sub-page headings**
 
 `src/app/(owner)/w/[workspaceId]/message-templates/(list)/page.tsx`:
 
@@ -3220,6 +3220,8 @@ In `src/app/(owner)/w/[workspaceId]/layout.tsx`:
 - add `import { messageTemplateSubPages } from "@/features/communications/ui/template-sub-pages/template-sub-pages";`;
 - pass `subPages={messageTemplateSubPages(workspaceId)}` to `<OwnerShell>`.
 
+> Build note (2026-10-01): unit tests pass; row and card insets checked against `list-L9tLQ.html` (12 px row padding, 28 px card gap). The browser check (Step 5, second half) is **pending** until migrations 0002/0003 are applied.
+
 - [ ] **Step 5: Run the tests and check the page in the browser**
 
 Run: `pnpm vitest run src/features/communications/ui`
@@ -3230,7 +3232,7 @@ Then use the `dev` preview (`.claude/launch.json`):
 - compare it with `exports/list-L9tLQ.html` at 1440 px and `list-m3crcH.html` at 390 px;
 - check that *Template pesan* is active in the Sidebar, no Bottom Nav tab is active, and there's no *Segera hadir*.
 
-- [ ] **Step 6: Gate and commit**
+- [x] **Step 6: Gate and commit**
 
 ```bash
 pnpm typecheck && pnpm lint && pnpm test

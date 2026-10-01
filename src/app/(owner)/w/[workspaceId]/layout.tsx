@@ -6,6 +6,7 @@ import { switchWorkspaceAction } from "@/app/actions/workspace/switch";
 import { requireOwnerOrRedirect } from "@/composition/auth/owner-guard/owner-guard";
 import { verifyOwnerWorkspace } from "@/composition/workspace/owner-workspace/owner-workspace";
 import { loadWorkspaceSwitcher } from "@/composition/workspace/workspace-flow/workspace-flow";
+import { messageTemplateSubPages } from "@/features/communications/ui/template-sub-pages/template-sub-pages";
 import { OwnerShell } from "@/features/workspace/ui/owner-shell/owner-shell";
 
 import { WORKSPACE_LAYOUT_COPY } from "./layout.copy";
@@ -31,6 +32,7 @@ export default async function WorkspaceLayout({
       onSwitch={switchWorkspaceAction}
       onCreate={createWorkspaceAction}
       logoutAction={logoutAction}
+      subPages={messageTemplateSubPages(workspaceId)}
     >
       {children}
     </OwnerShell>

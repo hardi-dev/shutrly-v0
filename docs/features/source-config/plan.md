@@ -856,12 +856,12 @@ export async function deleteSourceAction(workspaceId: string, sourceId: string):
 - modify `tests/e2e/app-shell-revamp/app-shell-revamp.spec.ts`;
 - create `app/(owner)/w/[workspaceId]/photo-sources/{page,loading}.tsx` and `features/gallery/ui/source-copy/source-copy.copy.ts`.
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
   - `owner-nav.test.tsx`, AC-SRC-004: the bottom nav has *Sumber foto* linking to `/w/ws/photo-sources` with the `folder-open` icon, and active on that path; `resolvePageHeading` for `/w/ws/photo-sources` gives *Sumber foto* and the subtitle below.
   - `owner-shell.test.tsx`: the menu sheet labels contain *Sumber foto*, not *Sumber klien*.
   - `coming-soon-sections.test.ts`: `isComingSoonSection("client-sources") === false`.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
   - **Copy:** `photoSources: "Sumber foto"` replaces `clientSources`, and `photoSourcesSubtitle: "Tempat foto gallery-mu disimpan. Shutrly hanya membaca, tidak pernah mengubah isinya."` is added.
   - **Nav entries:** `["photo-sources", OWNER_NAV_COPY.photoSources, "folder-open"]` replaces the old entry in `OwnerNavBottom` and `MOBILE_MENU_ITEMS`. Update the icon union.
   - **Sections:** remove `client-sources` from `SECTION_TITLES` and `COMING_SOON_SECTIONS`; add a `photo-sources` heading branch like `message-templates`.
@@ -1009,7 +1009,7 @@ The toast bodies for renamed, activated and deleted aren't in the frames; they u
   - **Desktop:** `MenuTrigger` + `Menu` + `MenuItem` (existing C10 code), per `exports/list-row-menu-UPlrT.html`.
   - **Phone:** `BottomSheet variant="actions"` + `SheetItem` (`row-actions-sheet-J0kFv`).
   - **Delete confirmation:** `Modal size="sm" isDestructive` with a `Button variant="danger"` (`delete-confirm-YAP3e`), or `BottomSheet variant="actions"` with a destructive `SheetItem` *Hapus sumber* and *Batal* (`delete-confirm-q5h45`).
-- [ ] **Step 4:** gate → PASS. Commit `feat(gallery): add source row actions and delete confirmation`.
+- [x] **Step 4:** gate → PASS. Commit `feat(gallery): add source row actions and delete confirmation`.
 
 ### Task 14: E2E, fidelity and implementation record
 

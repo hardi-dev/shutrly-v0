@@ -9,6 +9,8 @@ import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 
 import { AddSourceDialog } from "../add-source-dialog/add-source-dialog";
+import { DeleteSourceDialog } from "../delete-source-dialog/delete-source-dialog";
+import { RenameSourceDialog } from "../rename-source-dialog/rename-source-dialog";
 import { SetupGuideCard } from "../setup-guide-card/setup-guide-card";
 import { SOURCE_COPY } from "../source-copy/source-copy.copy";
 import { PhotoSourceRow } from "../source-row/source-row";
@@ -17,10 +19,25 @@ import type { PhotoSourcesScreenProps } from "./photo-sources-screen.types";
 // eslint-disable-next-line max-lines-per-function -- coordinates the source list, guide and dialog state
 export function PhotoSourcesScreen({ workspaceId, sources, actions }: PhotoSourcesScreenProps) {
   const isMobile = useMobileViewport();
-  const [dialog, setDialog] = useState<"add" | null>(null);
+  const [dialog, setDialog] = useState<
+    | { readonly kind: "add" }
+    | {
+        readonly kind: "rename" | "delete";
+        readonly source: PhotoSourcesScreenProps["sources"][number];
+      }
+    | null
+  >(null);
 
   function openAddDialog(): void {
-    setDialog("add");
+    setDialog({ kind: "add" });
+  }
+
+  function openRenameDialog(source: PhotoSourcesScreenProps["sources"][number]): void {
+    setDialog({ kind: "rename", source });
+  }
+
+  function openDeleteDialog(source: PhotoSourcesScreenProps["sources"][number]): void {
+    setDialog({ kind: "delete", source });
   }
 
   function closeDialog(isOpen: boolean): void {
@@ -58,6 +75,10 @@ export function PhotoSourcesScreen({ workspaceId, sources, actions }: PhotoSourc
                 key={source.id}
                 source={source}
                 isLast={index === sources.length - 1}
+                workspaceId={workspaceId}
+                actions={actions}
+                onRename={openRenameDialog}
+                onDelete={openDeleteDialog}
               />
             ))}
           </ul>
@@ -71,12 +92,30 @@ export function PhotoSourcesScreen({ workspaceId, sources, actions }: PhotoSourc
         )}
       </SectionCard>
       <SetupGuideCard isMobile={isMobile} />
-      {actions && dialog === "add" ? (
+      {actions && dialog?.kind === "add" ? (
         <AddSourceDialog
           isOpen
           workspaceId={workspaceId}
           onOpenChange={closeDialog}
           action={actions.add}
+        />
+      ) : null}
+      {actions && dialog?.kind === "rename" ? (
+        <RenameSourceDialog
+          isOpen
+          workspaceId={workspaceId}
+          source={dialog.source}
+          onOpenChange={closeDialog}
+          action={actions.rename}
+        />
+      ) : null}
+      {actions && dialog?.kind === "delete" ? (
+        <DeleteSourceDialog
+          isOpen
+          workspaceId={workspaceId}
+          source={dialog.source}
+          onOpenChange={closeDialog}
+          action={actions.remove}
         />
       ) : null}
     </main>

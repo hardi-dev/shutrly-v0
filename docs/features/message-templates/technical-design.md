@@ -176,7 +176,7 @@ Layout:
 
 ## Implementation Iterations
 
-See [plan.md](plan.md). There are 14 tasks, test-first, one commit each. The Owner checkpoints are:
+See [plan.md](plan.md). There are 14 tasks, test-first, one commit each. Progress is ticked in the plan; done: Task 1 (2026-10-01). The Owner checkpoints are:
 - Task 4: review the default copy, A-10;
 - Task 5: apply migrations 0002 and 0003 before the integration tests in Task 7.
 

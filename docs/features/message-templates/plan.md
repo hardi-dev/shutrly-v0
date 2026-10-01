@@ -122,7 +122,7 @@ Modified:
   - `isTemplateType(value: string): value is TemplateType`, `templateGroupOf(type): TemplateGroup`, `templateSlugOf(type): string`, `templateTypeFromSlug(slug: string): TemplateType | null`;
   - `TEMPLATE_VARIABLES`, `type TemplateVariable`, `allowedVariables(type): readonly TemplateVariable[]`, `requiredVariable(type): TemplateVariable`, `isTemplateVariable(name: string): name is TemplateVariable`, `isAllowedVariable(type, name: string): boolean`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `src/features/communications/domain/template-type/template-type.test.ts`:
 
@@ -228,12 +228,12 @@ describe("variable catalogue", () => {
 });
 ```
 
-- [ ] **Step 2: Run the tests and confirm they fail**
+- [x] **Step 2: Run the tests and confirm they fail**
 
 Run: `pnpm vitest run src/features/communications/domain`
 Expected: FAIL — `Cannot find module './template-type'` / `'./variable-catalogue'`.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 `template-type.types.ts`:
 
@@ -384,12 +384,12 @@ export function isAllowedVariable(type: TemplateType, name: string): boolean {
 }
 ```
 
-- [ ] **Step 4: Run the tests and confirm they pass**
+- [x] **Step 4: Run the tests and confirm they pass**
 
 Run: `pnpm vitest run src/features/communications/domain`
 Expected: PASS (8 tests).
 
-- [ ] **Step 5: Gate and commit**
+- [x] **Step 5: Gate and commit**
 
 ```bash
 pnpm typecheck && pnpm lint

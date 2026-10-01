@@ -1,9 +1,9 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-01 (F-00, F-01, F-02 and F-17 DONE; F-03 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-01 (F-00, F-01, F-02 and F-17 DONE; F-03 IN PROGRESS) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `codex/message-templates-shell-v3`.
 
-## Current handoff — F-03 Message templates PLANNED (2026-10-01)
+## Current handoff — F-03 Message templates IN PROGRESS (2026-10-01)
 
 - **Design v3 APPROVED:** 22 new frames in `message-templates.pen` (desktop x 3200, phone x 4760), based on `exploration.pen` Option G and library C43 Section Card. The old frames are kept for reference. Exports: `features/message-templates/exports/`. See [design.md](features/message-templates/design.md).
 - **Spec changes (Owner):** the list rows show the label and the purpose line (no excerpt; A-5, AC-MSG-004/007); a failed save shows a danger toast with *Coba lagi* (AC-MSG-012).
@@ -11,7 +11,8 @@ Branch: `codex/message-templates-shell-v3`.
 - **Owner checkpoints:**
   - Task 4: review the four draft default messages (A-10);
   - after Task 5: apply migrations `0002_message_template` and `0003_message_template_backfill` (agents never run `pnpm db:migrate`).
-- **Next:** `/sdv:build-feature message-templates 1`.
+- **Progress:** Task 1 done (template types and variable catalogue). Plan checkboxes in `plan.md` track the rest.
+- **Next:** `/sdv:build-feature message-templates 2`.
 
 ## Update 2026-10-01 — Section Card and Settings v3
 

@@ -1710,7 +1710,7 @@ Requires the Owner to have applied migrations 0002 and 0003 to the test database
 - Consumes: `MessageTemplateRepositoryPort` (Task 6), `messageTemplate` table and `DbExecutor` (Task 5), `isTemplateType`.
 - Produces: `createDrizzleMessageTemplateRepository(db: DbExecutor): MessageTemplateRepositoryPort`.
 
-- [ ] **Step 1: Write the failing integration test**
+- [x] **Step 1: Write the failing integration test**
 
 `tests/integration/communications/message-template-repository.test.ts`:
 
@@ -1726,7 +1726,9 @@ import { messageTemplate } from "@/adapters/db/schema/communications/message-tem
 import { workspace } from "@/adapters/db/schema/workspace/workspace";
 import { createDrizzleWorkspaceRepository } from "@/adapters/db/workspace-repository/drizzle-workspace-repository";
 import { seedDefaultTemplates } from "@/features/communications/application/use-cases/seed-default-templates/seed-default-templates";
+import { normaliseInvoicePrefix } from "@/features/workspace/domain/invoice-prefix/invoice-prefix";
 import { asOwnerUserId } from "@/features/workspace/domain/owner-user-id/owner-user-id";
+import { normaliseWorkspaceName } from "@/features/workspace/domain/workspace-name/workspace-name";
 import { asWorkspaceId } from "@/shared/workspace-context/workspace-context";
 
 import { openTestDb } from "../helpers/test-db";
@@ -1778,7 +1780,7 @@ describe("Drizzle message template repository", () => {
         type: "GALLERY_SHARE",
         content: "{{galleryUrl}}",
       }),
-    ).rejects.toMatchObject({ cause: expect.objectContaining({ code: "23505" }) });
+    ).rejects.toMatchObject({ cause: { code: "23505" } });
   });
 
   it("AC-MSG-007 A-9 updates one type, its editor and time", async () => {
@@ -1828,8 +1830,8 @@ describe("Drizzle message template repository", () => {
     await expect(
       db.transaction(async (tx) => {
         const created = await createDrizzleWorkspaceRepository(tx).create(asOwnerUserId(ownerId), {
-          name,
-          invoicePrefix: "RB",
+          name: normaliseWorkspaceName(name),
+          invoicePrefix: normaliseInvoicePrefix("RB"),
           currency: "IDR",
         });
         if (!created.ok) throw new Error("unexpected duplicate");
@@ -1859,7 +1861,7 @@ describe("Drizzle message template repository", () => {
 Run: `pnpm test:integration tests/integration/communications`
 Expected: FAIL — `drizzle-message-template-repository` not found.
 
-- [ ] **Step 2: Implement**
+- [x] **Step 2: Implement**
 
 `src/adapters/db/message-template-repository/drizzle-message-template-repository.ts`:
 
@@ -1950,12 +1952,14 @@ export function createDrizzleMessageTemplateRepository(
 }
 ```
 
+> Build note (2026-10-01): the test brands the workspace name and prefix (`normaliseWorkspaceName`, `normaliseInvoicePrefix`) and matches `{ cause: { code: "23505" } }` (lint `no-unsafe-assignment`). Step 3 is **pending**: migrations 0002/0003 are not applied yet (the agent was blocked from running `pnpm db:migrate`).
+
 - [ ] **Step 3: Run the integration tests and confirm they pass**
 
 Run: `pnpm test:integration tests/integration/communications`
 Expected: PASS (6 tests). If the duplicate test's error shape differs (Neon may put `code` on the error itself rather than on `cause`), change that assertion to `.rejects.toMatchObject({ code: "23505" })`, and keep the 23505 check.
 
-- [ ] **Step 4: Gate and commit**
+- [x] **Step 4: Gate and commit**
 
 ```bash
 pnpm typecheck && pnpm lint && pnpm test

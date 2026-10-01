@@ -757,7 +757,7 @@ The use cases:
 
 **Files:** create `src/adapters/db/workspace-source-repository/drizzle-workspace-source-repository.ts` and `tests/integration/gallery/workspace-source-repository.test.ts`.
 
-- [ ] **Step 1: Failing integration tests.** Use the same harness as the F-03 integration test (`openTestDb`, `seedOwner`, `seedWorkspace`):
+- [x] **Step 1: Failing integration tests.** Use the same harness as the F-03 integration test (`openTestDb`, `seedOwner`, `seedWorkspace`):
   - AC-SRC-002: `seedDefaultSource` twice → 1 row, `GOOGLE_DRIVE` / *Google Drive* / active / `config_data = {}`;
   - AC-SRC-009: `create` *GOOGLE DRIVE* after the seed → `NAME_TAKEN`; another workspace may use *Google Drive*;
   - AC-SRC-011: `setActive` false then true;
@@ -765,8 +765,8 @@ The use cases:
   - AC-SRC-015: `rename`, `setActive` and `delete` with another workspace's context → `NOT_FOUND` / false, and nothing changes;
   - AC-SRC-016: a created source has `config_data = '{}'::jsonb`;
   - AC-SRC-001 (ADR-016): a `db.transaction` that seeds templates and the source, then throws, leaves no source row.
-- [ ] **Step 2:** `pnpm test:integration tests/integration/gallery` → FAIL.
-- [ ] **Step 3: Implement.** Mirror `createDrizzleMessageTemplateRepository`:
+- [x] **Step 2:** `pnpm test:integration tests/integration/gallery` → FAIL.
+- [x] **Step 3: Implement.** Mirror `createDrizzleMessageTemplateRepository`:
   - **Scope:** every statement filters `eq(workspaceSourceConfig.workspaceId, context.workspaceId)`, and `id` where needed.
   - **Write mapping:** `create` and `rename` catch a unique violation and return `NAME_TAKEN`; `delete` catches an FK violation and returns `IN_USE`. Drizzle wraps driver errors, so read the code from `error.code` or `error.cause.code`:
 
@@ -781,8 +781,8 @@ function pgCode(error: unknown): string | undefined {
   - **Updates and deletes:** use `.returning({ id })`; an empty result means `NOT_FOUND` / false. `updatedAt: new Date()` is set on rename and setActive.
   - **`seedDefault`:** `insert … select … where not exists` through `sql`, or check-then-insert inside the caller's transaction, with `onConflictDoNothing()`.
   - **Reads:** `listForWorkspace` maps rows with `isSourceProvider` and skips unknown providers, never guessing.
-- [ ] **Step 4: AC-SRC-013 unit test** `drizzle-workspace-source-repository.test.ts` with a stub executor whose `delete().where().returning()` rejects `{ cause: { code: "23503" } }` → `IN_USE`.
-- [ ] **Step 5:** gate + `pnpm test:integration` → PASS. Commit `feat(gallery): add drizzle workspace source repository`.
+- [x] **Step 4: AC-SRC-013 unit test** `drizzle-workspace-source-repository.test.ts` with a stub executor whose `delete().where().returning()` rejects `{ cause: { code: "23503" } }` → `IN_USE`.
+- [x] **Step 5:** gate + `pnpm test:integration` → PASS. Commit `feat(gallery): add drizzle workspace source repository`.
 
 ### Task 9: Composition and server actions
 

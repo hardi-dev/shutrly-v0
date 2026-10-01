@@ -1987,7 +1987,7 @@ git commit -m "feat(db): add the drizzle message template repository" -m "Co-Aut
   - `saveMessageTemplateAction(workspaceId: string, slug: string, values: MessageTemplateContentInput): Promise<UpdateMessageTemplateFailure | undefined>`;
   - `withWorkspaceCreationScope(work)`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `src/composition/communications/message-template-flow/message-template-flow.test.ts`:
 
@@ -2100,7 +2100,7 @@ describe("saveMessageTemplateAction", () => {
 Run: `pnpm vitest run src/composition/communications src/app/actions/communications`
 Expected: FAIL — modules not found.
 
-- [ ] **Step 2: Implement the scopes**
+- [x] **Step 2: Implement the scopes**
 
 `src/composition/communications/message-template-scope/message-template-scope.types.ts`:
 
@@ -2211,7 +2211,7 @@ export async function createOwnerWorkspace(input: CreateWorkspaceInput) {
 }
 ```
 
-- [ ] **Step 3: Implement the flow**
+- [x] **Step 3: Implement the flow**
 
 `src/composition/communications/message-template-flow/message-template-flow.types.ts`:
 
@@ -2363,12 +2363,14 @@ export async function saveMessageTemplateAction(
 }
 ```
 
-- [ ] **Step 4: Run the tests and confirm they pass**
+- [x] **Step 4: Run the tests and confirm they pass**
 
 Run: `pnpm vitest run src/composition src/app/actions`
 Expected: PASS, including the existing workspace action tests.
 
-- [ ] **Step 5: Gate and commit**
+> Build note (2026-10-01): unit gate green; `pnpm test:integration` pending until migrations 0002/0003 are applied. Until then, creating a workspace fails, because seeding writes to `message_template`.
+
+- [x] **Step 5: Gate and commit**
 
 ```bash
 pnpm typecheck && pnpm lint && pnpm test && pnpm test:integration

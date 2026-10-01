@@ -2,6 +2,7 @@ import "server-only";
 
 import { notFound, redirect } from "next/navigation";
 
+import { seedDefaultTemplates } from "@/features/communications/application/use-cases/seed-default-templates/seed-default-templates";
 import { createFirstWorkspace } from "@/features/workspace/application/use-cases/create-first-workspace/create-first-workspace";
 import type { CreateFirstWorkspaceInput } from "@/features/workspace/application/use-cases/create-first-workspace/create-first-workspace.types";
 import { createWorkspace } from "@/features/workspace/application/use-cases/create-workspace/create-workspace";
@@ -14,6 +15,7 @@ import type { VerifiedWorkspace } from "@/features/workspace/application/use-cas
 import { asOwnerUserId } from "@/features/workspace/domain/owner-user-id/owner-user-id";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
+import { withWorkspaceCreationScope } from "../workspace-creation-scope/workspace-creation-scope";
 import { withWorkspaceScope } from "./../workspace-scope/workspace-scope";
 
 /** Resolves the owner's home destination in the mandated gate, zero-workspace, last-opened order. @returns the last-opened workspace or redirects to onboarding */
@@ -70,18 +72,22 @@ export async function enterWorkspace(rawId: string): Promise<VerifiedWorkspace> 
   return verified;
 }
 
-/** Creates an owner's first workspace through the workspace scope. @param input - onboarding input @returns the created workspace ID */
+/** Creates an owner's first workspace with its default templates in one transaction (ADR-016). @param input - onboarding input @returns the created workspace ID */
 export async function createOwnerFirstWorkspace(input: CreateFirstWorkspaceInput) {
   const account = await requireOwnerOrRedirect();
-  return withWorkspaceScope(({ repository }) =>
-    createFirstWorkspace(repository, asOwnerUserId(account.id), input),
-  );
+  return withWorkspaceCreationScope(async ({ repository, templates }) => {
+    const created = await createFirstWorkspace(repository, asOwnerUserId(account.id), input);
+    await seedDefaultTemplates(templates, { workspaceId: created.id });
+    return created;
+  });
 }
 
-/** Creates an additional owner workspace through the workspace scope. @param input - create input @returns the created workspace ID */
+/** Creates an additional owner workspace with its default templates in one transaction (ADR-016). @param input - create input @returns the created workspace ID */
 export async function createOwnerWorkspace(input: CreateWorkspaceInput) {
   const account = await requireOwnerOrRedirect();
-  return withWorkspaceScope(({ repository }) =>
-    createWorkspace(repository, asOwnerUserId(account.id), input),
-  );
+  return withWorkspaceCreationScope(async ({ repository, templates }) => {
+    const created = await createWorkspace(repository, asOwnerUserId(account.id), input);
+    await seedDefaultTemplates(templates, { workspaceId: created.id });
+    return created;
+  });
 }

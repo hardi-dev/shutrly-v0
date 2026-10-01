@@ -669,7 +669,7 @@ git commit -m "feat(communications): validate template content and placeholders"
   - `class RenderTemplateError extends DomainError` with `code: RenderTemplateErrorCode` (`"INVALID_CONTENT" | "VARIABLE_NOT_ALLOWED" | "MISSING_VALUE"`);
   - `type TemplateValues = Partial<Readonly<Record<TemplateVariable, string>>>`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 `render-template.test.ts`:
 
@@ -738,12 +738,12 @@ describe("sanitiseTemplateValue", () => {
 });
 ```
 
-- [ ] **Step 2: Run the test and confirm it fails**
+- [x] **Step 2: Run the test and confirm it fails**
 
 Run: `pnpm vitest run src/features/communications/domain/render-template`
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 `render-template.types.ts`:
 
@@ -836,12 +836,12 @@ export function renderTemplate(
 }
 ```
 
-- [ ] **Step 4: Run the test and confirm it passes**
+- [x] **Step 4: Run the test and confirm it passes**
 
 Run: `pnpm vitest run src/features/communications/domain/render-template`
 Expected: PASS.
 
-- [ ] **Step 5: Gate and commit**
+- [x] **Step 5: Gate and commit**
 
 ```bash
 pnpm typecheck && pnpm lint
@@ -862,7 +862,7 @@ git commit -m "feat(communications): add the sanitising template renderer for wh
 
 > **STOP before Task 5:** show the Owner the five defaults below (A-10). `GALLERY_SHARE` is the approved copy from the design (`exports/editor-byw9B.html`); the other four are drafts. Migration 0003 copies the final strings, so change them here first.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 `default-templates.test.ts`:
 
@@ -892,12 +892,12 @@ describe("default templates", () => {
 });
 ```
 
-- [ ] **Step 2: Run the test and confirm it fails**
+- [x] **Step 2: Run the test and confirm it fails**
 
 Run: `pnpm vitest run src/features/communications/domain/default-templates`
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 `default-templates.ts`:
 
@@ -921,12 +921,14 @@ export const DEFAULT_TEMPLATE_CONTENT: Readonly<Record<TemplateType, string>> = 
 };
 ```
 
-- [ ] **Step 4: Run the test and confirm it passes**
+- [x] **Step 4: Run the test and confirm it passes**
 
 Run: `pnpm vitest run src/features/communications/domain`
 Expected: PASS (all domain tests).
 
-- [ ] **Step 5: Owner copy review, then gate and commit**
+> Build note (2026-10-01): built under the Owner's goal "build all task" with the drafts as written. **Owner copy review is still open** — edit `default-templates.ts` and `0003_message_template_backfill.sql` together (the config test keeps them equal).
+
+- [x] **Step 5: Owner copy review, then gate and commit**
 
 Ask the Owner to approve or edit the four draft defaults. Apply the edits, re-run Step 4, then:
 

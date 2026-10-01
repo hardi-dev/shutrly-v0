@@ -1,47 +1,62 @@
+"use client";
+
+import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
+import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
+import { PageActions } from "@/ui/patterns/page-actions/page-actions";
+import { SectionCard } from "@/ui/patterns/section-card/section-card";
+import { Button } from "@/ui/primitives/button/button";
+
+import { SetupGuideCard } from "../setup-guide-card/setup-guide-card";
 import { SOURCE_COPY } from "../source-copy/source-copy.copy";
-import { PROVIDER_COPY } from "../source-copy/source-copy.copy";
+import { PhotoSourceRow } from "../source-row/source-row";
 import type { PhotoSourcesScreenProps } from "./photo-sources-screen.types";
 
 export function PhotoSourcesScreen({ sources }: PhotoSourcesScreenProps) {
+  const isMobile = useMobileViewport();
+  const addButton = (
+    <Button variant="secondary" iconLeading="plus">
+      {SOURCE_COPY.add}
+    </Button>
+  );
+
   return (
     <main
       id="photo-sources-content"
-      className="mx-auto flex w-full max-w-[720px] flex-col gap-(--space-6)"
+      className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)"
     >
-      <section className="rounded-(--component-section-card-radius) bg-(--component-section-card-background) p-(--space-6)">
-        <div className="flex items-start justify-between gap-(--space-4)">
-          <div>
-            <h2 className="text-(length:--font-size-heading-sm) font-semibold">
-              {SOURCE_COPY.listTitle}
-            </h2>
-            <p className="mt-(--space-1) text-(--color-semantic-text-secondary)">
-              {SOURCE_COPY.listDescription}
-            </p>
-          </div>
-          <button type="button">{SOURCE_COPY.add}</button>
-        </div>
-        <ul className="mt-(--space-5) divide-y divide-(--color-semantic-border-subtle)">
-          {sources.map((source) => (
-            <li key={source.id} className="flex items-center justify-between py-(--space-4)">
-              <div>
-                <p className="font-medium">{source.displayName}</p>
-                <p className="text-(--color-semantic-text-secondary)">
-                  {PROVIDER_COPY[source.provider].title}
-                </p>
-              </div>
-              <span>{source.isActive ? SOURCE_COPY.active : SOURCE_COPY.inactive}</span>
-            </li>
-          ))}
-          {sources.length === 0 ? (
-            <li className="py-(--space-8) text-center">
-              <p className="font-medium">{SOURCE_COPY.emptyTitle}</p>
-              <p className="mt-(--space-1) text-(--color-semantic-text-secondary)">
-                {SOURCE_COPY.emptyBody}
-              </p>
-            </li>
-          ) : null}
-        </ul>
-      </section>
+      {!isMobile ? <PageActions>{addButton}</PageActions> : null}
+      <SectionCard
+        title={SOURCE_COPY.listTitle}
+        description={isMobile ? SOURCE_COPY.listDescriptionMobile : SOURCE_COPY.listDescription}
+        content="flush"
+        actions={
+          isMobile ? (
+            <Button variant="secondary" iconLeading="plus">
+              {SOURCE_COPY.addShort}
+            </Button>
+          ) : undefined
+        }
+      >
+        {sources.length > 0 ? (
+          <ul aria-label={SOURCE_COPY.listTitle}>
+            {sources.map((source, index) => (
+              <PhotoSourceRow
+                key={source.id}
+                source={source}
+                isLast={index === sources.length - 1}
+              />
+            ))}
+          </ul>
+        ) : (
+          <EmptyState
+            icon="folder-open"
+            title={SOURCE_COPY.emptyTitle}
+            body={SOURCE_COPY.emptyBody}
+            action={addButton}
+          />
+        )}
+      </SectionCard>
+      <SetupGuideCard isMobile={isMobile} />
     </main>
   );
 }

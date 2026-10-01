@@ -41,6 +41,7 @@ export const SOURCE_COPY = {
   treeRootMeta: "foto proof langsung di sini",
   treeEdited: "hasil edit, ditambahkan nanti",
   treePrint: "file cetak, ditambahkan nanti",
+  folderTreeLabel: "Contoh struktur folder",
   warningTitle: "Tautan Drive bisa melewati password gallery",
   warningBody:
     "Siapa pun yang memegang tautan folder Drive bisa membuka fotonya langsung, tanpa link gallery dan password. Ke klien, bagikan hanya link gallery dari Shutrly.",

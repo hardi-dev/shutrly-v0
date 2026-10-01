@@ -956,13 +956,13 @@ The toast bodies for renamed, activated and deleted aren't in the frames; they u
 
 **Files:** create `photo-sources-screen`, `source-row`, `setup-guide-card`, `photo-sources-skeleton`, `source-name-error`.
 
-- [ ] **Step 1: Failing tests** (`photo-sources-screen.test.tsx`, render inside `ToastRegion` like F-03's editor test):
+- [x] **Step 1: Failing tests** (`photo-sources-screen.test.tsx`, render inside `ToastRegion` like F-03's editor test):
   - AC-SRC-003: with three sources (two active, one inactive), the rows appear in that order. Rows show *Aktif* / *Nonaktif* chips, *Google Drive* meta and a row-actions button named *Aksi untuk Google Drive Utama*. The guide shows four steps and the warning title.
   - AC-SRC-005: with no sources, the empty state *Belum ada sumber foto* has a *Tambah sumber* button, and the guide still renders.
   - The desktop *Tambah sumber* renders through `PageActions` (mock `useMobileViewport` → false). On phones (true), *Tambah* sits in the card header.
   - `source-name-error.test.ts`: every key maps to `SOURCE_COPY.nameErrors`.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement** from `exports/list-populated-q4btAK.html`, `list-populated-w4uSN.html`, `list-empty-*` and `list-loading-*`:
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement** from `exports/list-populated-q4btAK.html`, `list-populated-w4uSN.html`, `list-empty-*` and `list-loading-*`:
   - **Card:** `SectionCard content="flush"`, title `SOURCE_COPY.listTitle`, description desktop/mobile. On phones, the `actions` slot holds `<Button variant="secondary" iconLeading="plus">{SOURCE_COPY.addShort}</Button>`.
   - **Rows:** `<ul>` of `SourceRow` → `ListCardItem icon="hard-drive" title meta={PROVIDER_COPY[provider].title} trailing={<><StatusChip …/><SourceRowActions …/></>} isLast`.
   - **Empty:** `EmptyState icon="folder-open"` inside the card's padded content when `sources.length === 0`.
@@ -970,7 +970,7 @@ The toast bodies for renamed, activated and deleted aren't in the frames; they u
   - **`PhotoSourcesSkeleton`:** the same cards with three `ListCardItemSkeleton`s (the last with `isLast`) and the guide card shape.
   - **Layout:** a centred `max-w-[720px]` column on desktop, the `gap-(--component-panel-app-content-gap)` stack used by F-03's list.
   - **Dialogs:** the screen owns their state (`useState<{ kind: "add" } | { kind: "rename" | "delete"; source } | null>`), so Tasks 12–13 plug in.
-- [ ] **Step 4:** gate → PASS. Commit `feat(gallery): add the sumber foto list screen`.
+- [x] **Step 4:** gate → PASS. Commit `feat(gallery): add the sumber foto list screen`.
 
 ### Task 12: Add and rename dialogs
 

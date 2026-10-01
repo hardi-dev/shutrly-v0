@@ -212,11 +212,25 @@ All 14 tasks were built test-first, under the Owner's goal "build all task". One
 
 **Checks run:** `pnpm typecheck`, `pnpm lint`, `pnpm test` (445 tests) and `pnpm build` pass.
 
-**Not run yet:** `pnpm test:integration`, `pnpm e2e tests/e2e/message-templates` and the browser fidelity checks (Tasks 7, 11, 13, 14). Migrations 0002/0003 are not applied: the agent was blocked from running `pnpm db:migrate`. **Until they're applied, creating a workspace fails**, because seeding writes to `message_template` in the creation transaction.
+**Verification run (2026-10-01, after the Owner approved `pnpm db:migrate`; 0002/0003 applied):**
+- `pnpm test:integration`: 44/44 pass, including the 6 new repository tests.
+- `pnpm e2e tests/e2e/message-templates`: 3/3 pass.
+  - AC-MSG-020 axe first failed on `color-contrast`: the unselected Segmented item was 3.8:1 light / 4.05:1 dark. That's fixed by the design-system change below.
+- Full `pnpm e2e`: only `auth-profile.spec.ts` (AC-AUTH-019/020) fails, and that failure predates F-03.
+  - Since `70ce31d`, `/profile` redirects owners without a workspace to onboarding. It's spun off as a separate task.
+  - The workspace and app-shell suites pass with seeding in the creation transaction.
+- Browser fidelity: screenshots of the list and the editor at 1440 / 390 px were compared with `list-L9tLQ`, `list-m3crcH`, `editor-byw9B` and `editor-v8MaG`. Fixes:
+  - the restore icon is now `RotateCcwIcon`, matching Lucide `rotate-ccw` in the export;
+  - *Sisipkan variabel* is semibold.
+  - Remaining: list rows are about 6 px taller, because the export uses the browser's default line height and the tokens have only 1.1 or 1.5. D-M1 subtitle on phones, as recorded.
 
-**Owner open items:**
+**Design-system change (Owner 2026-10-01, chose "Darker resting text"):**
+- `component.segmented.item.text` → `text.secondary` (6.09:1 light / 7.1:1 dark), and `-hover` → `text.primary`.
+- Updated in `tokens.json`, `tokens.css` and the `design-system.lib.pen` variables (via Pencil; the Owner saves with ⌘S).
+
+**Owner open items (all closed 2026-10-01):**
 - Task 4 (done 2026-10-01): the four draft defaults were rewritten to follow the approved *Bagikan gallery* pattern (greeting, body, link on its own line, thanks). The Owner asked for this: "fix it for me based on your recommendation". `default-templates.ts` and `0003_message_template_backfill.sql` were changed together, before the migration was applied.
-- Apply migrations 0002/0003, then run `pnpm test:integration`, `pnpm e2e tests/e2e/message-templates` and the browser checks.
+- Migrations 0002/0003 applied, and the integration, E2E and browser checks run (see above).
 
 ### Deviations
 

@@ -163,7 +163,7 @@ function VariableList({ template, type, isMobile }: Readonly<EditorPartProps>) {
   const required = requiredVariable(type);
   return (
     <div className="flex flex-col gap-(--space-2)">
-      <p className="text-(length:--font-size-label) text-(--component-input-label)">
+      <p className="text-(length:--font-size-label) font-semibold text-(--component-input-label)">
         {COPY.variablesTitle}
       </p>
       <div className="flex flex-wrap gap-(--space-2)">

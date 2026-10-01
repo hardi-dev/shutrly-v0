@@ -336,11 +336,11 @@
   --component-segmented-track: var(--color-semantic-surface-muted);
   --component-segmented-item-background-active: var(--color-semantic-surface-panel);
   --component-segmented-item-border-active: var(--color-semantic-border-default);
-  --component-segmented-item-text: var(--color-semantic-text-muted);
+  --component-segmented-item-text: var(--color-semantic-text-secondary);
   --component-segmented-item-text-active: var(--color-semantic-text-primary);
   --component-segmented-item-padding-y: var(--space-2);
   --component-segmented-item-padding-x: var(--space-4);
-  --component-segmented-item-text-hover: var(--color-semantic-text-secondary);
+  --component-segmented-item-text-hover: var(--color-semantic-text-primary);
   --component-segmented-item-lg-padding-y: var(--space-3);
   --component-segmented-item-lg-padding-x: var(--space-5);
   --component-segmented-padding: var(--space-1);

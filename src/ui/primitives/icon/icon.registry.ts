@@ -28,7 +28,7 @@ import {
   PanelLeftOpenFreeIcons,
   PencilEdit02Icon,
   ReceiptFreeIcons,
-  RotateLeft01Icon,
+  RotateCcwIcon,
   Search01Icon,
   SearchXFreeIcons,
   SentIcon,
@@ -131,7 +131,7 @@ export const ICON_REGISTRY: Record<IconName, IconSvgElement> = {
   hourglass: HourglassIcon,
   "package-check": PackageCheckIcon,
   wallet: Wallet01Icon,
-  "rotate-ccw": RotateLeft01Icon,
+  "rotate-ccw": RotateCcwIcon,
   braces: BracesIcon,
   pencil: PencilEdit02Icon,
 };

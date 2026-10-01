@@ -9,10 +9,10 @@ Branch: `codex/message-templates-shell-v3`.
 - **Spec changes (Owner):** the list rows show the label and the purpose line (no excerpt; A-5, AC-MSG-004/007); a failed save shows a danger toast with *Coba lagi* (AC-MSG-012).
 - **Plan:** [technical-design.md](features/message-templates/technical-design.md) and [plan.md](features/message-templates/plan.md), 14 test-first tasks. There's a new `src/features/communications` feature. **ADR-016** (Accepted) has workspace creation and template seeding share one transaction, opened in composition.
 - **Build:** all 14 tasks are committed (`399cbd1`…`bd4c6e3` plus the Task 14 commit). `pnpm typecheck`, `pnpm lint`, `pnpm test` (445) and `pnpm build` pass. See the [implementation record](features/message-templates/technical-design.md#implementation-record-2026-10-01).
-- **Blocking — Owner action:** apply migrations `0002_message_template` and `0003_message_template_backfill` with `pnpm db:migrate`. The agent's attempt was blocked by the permission classifier. **Until then, creating a workspace fails**, because seeding writes to `message_template` in the creation transaction.
-- **Then run:** `pnpm test:integration`, `pnpm e2e tests/e2e/message-templates`, and the browser fidelity checks against the exports (plan Tasks 7, 11, 13, 14).
-- **Done at the Owner's request:** the four default messages were rewritten (A-10), and D-M4 is fixed (textarea height, equal-width Edit/Pratinjau tabs).
-- **Next:** after those, `/sdv:verify-feature message-templates`.
+- **Verified (2026-10-01):** migrations 0002/0003 are applied; integration 44/44 and F-03 E2E 3/3 pass; the browser fidelity check is done.
+  - The Segmented text token was darkened for AA contrast; `design-system.lib.pen` needs ⌘S in Pen.
+  - Known unrelated failure: `auth-profile.spec.ts` (profile redirects to onboarding since `70ce31d`), spun off as a separate task.
+- **Next:** `/sdv:verify-feature message-templates`.
 
 ## Update 2026-10-01 — Section Card and Settings v3
 

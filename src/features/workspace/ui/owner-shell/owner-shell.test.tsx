@@ -2,7 +2,13 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { MobileWorkspaceSheet, MobileWorkspaceSwitcherSheet } from "./owner-shell";
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/w/A/message-templates/gallery-share",
+  useRouter: () => ({ push: vi.fn() }),
+}));
+
+const { MobileWorkspaceSheet, MobileWorkspaceSwitcherSheet, OwnerShell } =
+  await import("./owner-shell");
 
 const workspaces = [
   { id: "workspace-1", name: "Studio Lime", isCurrent: true },
@@ -68,5 +74,41 @@ describe("MobileWorkspaceSheet", () => {
     expect(screen.queryByRole("button", { name: "Studio Lime" })).toBeNull();
     expect(screen.queryByText("Invoice")).toBeNull();
     expect(screen.queryByRole("button", { name: "Buat workspace" })).toBeNull();
+  });
+});
+
+describe("OwnerShell sub-pages", () => {
+  it("F-17 a matching sub-page sets the heading and the parent", () => {
+    render(
+      <OwnerShell
+        workspaceId="A"
+        workspaceName="Aster Wedding"
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        title="Aster Wedding"
+        workspaces={workspaces}
+        onSwitch={vi.fn()}
+        onCreate={vi.fn()}
+        subPages={[
+          {
+            path: "/w/A/message-templates/gallery-share",
+            title: "Bagikan gallery",
+            subtitle: "Dikirim saat gallery siap dipilih klien.",
+            parent: { label: "Template pesan", href: "/w/A/message-templates" },
+          },
+        ]}
+      >
+        <p>isi</p>
+      </OwnerShell>,
+    );
+
+    // Desktop and phone trees both render the heading.
+    expect(
+      screen.getAllByRole("heading", { level: 1, name: "Bagikan gallery" }).length,
+    ).toBeGreaterThan(0);
+    expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute(
+      "href",
+      "/w/A/message-templates",
+    );
   });
 });

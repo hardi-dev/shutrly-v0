@@ -41,4 +41,14 @@ describe("MobileAppShell (C35)", () => {
     ).toHaveAttribute("inert");
     expect(screen.getByText("Sheet")).toBeInTheDocument();
   });
+
+  it("F-17 sub-page: a header replaces the Mobile Header", () => {
+    render(
+      <MobileAppShell title="Bagikan gallery" bottomNav={<nav />} header={<header>Compact</header>}>
+        <p>isi</p>
+      </MobileAppShell>,
+    );
+    expect(screen.getByText("Compact")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /workspace/i })).not.toBeInTheDocument();
+  });
 });

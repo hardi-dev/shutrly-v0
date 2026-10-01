@@ -11,4 +11,6 @@ export interface MobileAppShellProps {
   isOverlayOpen?: boolean;
   utilities?: ReactNode;
   onWorkspacePress?: () => void;
+  /** Replaces the Mobile Header, e.g. with a Compact Bar on a sub-page (F-17). */
+  header?: ReactNode;
 }

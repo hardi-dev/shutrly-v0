@@ -14,19 +14,22 @@ export function MobileAppShell({
   workspace = "Workspace",
   utilities,
   onWorkspacePress,
+  header,
 }: Readonly<MobileAppShellProps>) {
   return (
     <div className="flex w-full min-h-dvh flex-col bg-(--color-semantic-surface-muted)">
       <a href="#mobile-app-content" className="sr-only focus:not-sr-only">
         {MOBILE_APP_SHELL_COPY.skip}
       </a>
-      <MobileHeader
-        workspace={workspace}
-        title={title}
-        subtitle={subtitle}
-        utilities={utilities ?? actions}
-        onWorkspacePress={onWorkspacePress}
-      />
+      {header ?? (
+        <MobileHeader
+          workspace={workspace}
+          title={title}
+          subtitle={subtitle}
+          utilities={utilities ?? actions}
+          onWorkspacePress={onWorkspacePress}
+        />
+      )}
       <main
         id="mobile-app-content"
         tabIndex={-1}

@@ -52,9 +52,12 @@ export function OwnerShell({
   onSwitch,
   onCreate,
   logoutAction,
+  subPages,
 }: Readonly<OwnerShellProps>) {
   const currentPathname = usePathname();
-  const heading = resolvePageHeading(currentPathname, workspaceId, workspaceName) ?? { title };
+  const subPage = subPages?.find((page) => page.path === currentPathname);
+  const heading = subPage ??
+    resolvePageHeading(currentPathname, workspaceId, workspaceName) ?? { title };
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileWorkspaceSwitcherOpen, setIsMobileWorkspaceSwitcherOpen] = useState(false);
@@ -115,6 +118,7 @@ export function OwnerShell({
         title={heading.title}
         subtitle={heading.subtitle}
         workspace={{ name: workspaceName }}
+        subPage={subPage ? { parent: subPage.parent } : undefined}
         account={{ name: accountName, email: accountEmail, initials: initials(accountName) }}
         nav={<OwnerNav workspaceId={workspaceId} pathname={currentPathname} />}
         navBottom={<OwnerNavBottom workspaceId={workspaceId} pathname={currentPathname} />}

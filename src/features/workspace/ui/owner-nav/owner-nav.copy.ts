@@ -14,5 +14,7 @@ export const OWNER_NAV_COPY = {
   notifications: "Notifikasi",
   dashboardSubtitle: (workspaceName: string) => `Ringkasan workspace ${workspaceName}.`,
   settingsSubtitle: "Atur identitas brand, kontak, dan format invoice workspace ini.",
+  messageTemplatesSubtitle:
+    "Pesan WhatsApp untuk klien. Kamu tetap mengirimnya sendiri dari WhatsApp.",
   comingSoonSubtitle: "Segera hadir.",
 } as const;

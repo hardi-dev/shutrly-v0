@@ -1,7 +1,12 @@
 import type { ReactNode } from "react";
 
 import type { BottomNavProps } from "../bottom-nav/bottom-nav.types";
+import type { CompactBarProps } from "../compact-bar/compact-bar.types";
 import type { SidebarAccount, SidebarWorkspace } from "../sidebar/sidebar.types";
+
+export interface AppShellSubPage {
+  parent: CompactBarProps["parent"];
+}
 
 export interface AppShellProps {
   title: string;
@@ -21,4 +26,5 @@ export interface AppShellProps {
   isMobileOverlayOpen?: boolean;
   onLayoutChange?: () => void;
   workspaceSwitcher?: ReactNode | ((isCompact: boolean) => ReactNode);
+  subPage?: AppShellSubPage;
 }

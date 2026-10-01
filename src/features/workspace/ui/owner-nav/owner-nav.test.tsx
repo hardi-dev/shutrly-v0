@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { OwnerNav, OwnerNavBottom, resolveActiveNav, resolvePageHeading } from "./owner-nav";
+import { OWNER_NAV_COPY } from "./owner-nav.copy";
 
 describe("Owner navigation", () => {
   it("keeps the catalog group between primary and bottom navigation", () => {
@@ -17,6 +18,22 @@ describe("Owner navigation", () => {
     expect(screen.getByRole("link", { name: "Klien" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("link", { name: "Layanan" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Template pesan" })).toBeInTheDocument();
+  });
+
+  it("AC-MSG-004 keeps Template pesan active on a template editor route", () => {
+    const pathname = "/w/A/message-templates/gallery-share";
+    render(
+      <>
+        <OwnerNav workspaceId="A" pathname={pathname} />
+        <OwnerNavBottom workspaceId="A" pathname={pathname} />
+      </>,
+    );
+
+    expect(screen.getByRole("link", { name: "Template pesan" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    expect(screen.getByRole("link", { name: "Dasbor" })).not.toHaveAttribute("aria-current");
   });
 });
 
@@ -46,6 +63,10 @@ describe("resolvePageHeading", () => {
         title: "Pengaturan",
         subtitle: "Atur identitas brand, kontak, dan format invoice workspace ini.",
       },
+    ],
+    [
+      "/w/A/message-templates",
+      { title: "Template pesan", subtitle: OWNER_NAV_COPY.messageTemplatesSubtitle },
     ],
     ["/profile", null],
   ])("resolves %s", (pathname, heading) => {

@@ -2677,7 +2677,7 @@ git commit -m "feat(ui): add segmented control, template icons and textarea coun
   - `OwnerShellProps.subPages?: readonly OwnerSubPage[]` with `{ path: string; title: string; subtitle?: string; parent: { label: string; href: string } }`;
   - nav items stay active on their nested routes.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `mobile-app-shell.test.tsx`, a new case:
 
@@ -2725,7 +2725,7 @@ git commit -m "feat(ui): add segmented control, template icons and textarea coun
 Run: `pnpm vitest run src/ui/patterns/mobile-app-shell src/ui/patterns/app-shell src/features/workspace/ui`
 Expected: FAIL.
 
-- [ ] **Step 2: Implement the shells**
+- [x] **Step 2: Implement the shells**
 
 `mobile-app-shell.types.ts`: add `header?: ReactNode;`.
 
@@ -2763,7 +2763,7 @@ and add `subPage?: AppShellSubPage;` to `AppShellProps`.
 
 The existing `eslint-disable max-lines-per-function` on `AppShell` already covers the extra prop.
 
-- [ ] **Step 3: Implement the Owner shell and nav**
+- [x] **Step 3: Implement the Owner shell and nav**
 
 `owner-shell.types.ts`:
 
@@ -2812,12 +2812,14 @@ function isCurrentSection(pathname: string, href: string, section: string): bool
 
 `coming-soon-sections.ts`: delete the `"message-templates",` line (AC-MSG-004: no *Segera hadir*).
 
-- [ ] **Step 4: Run the tests and confirm they pass**
+- [x] **Step 4: Run the tests and confirm they pass**
 
 Run: `pnpm vitest run src/ui src/features/workspace`
 Expected: PASS.
 
-- [ ] **Step 5: Gate and commit**
+> Build note (2026-10-01): the OwnerShell test mocks `next/navigation` and uses `getAllByRole` for the h1, because the desktop and phone trees both render it.
+
+- [x] **Step 5: Gate and commit**
 
 ```bash
 pnpm typecheck && pnpm lint && pnpm test

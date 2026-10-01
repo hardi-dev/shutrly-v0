@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { Dialog, Modal as AriaModal, ModalOverlay } from "react-aria-components";
 
@@ -7,6 +8,7 @@ import { useLayoutChange } from "@/ui/hooks/use-layout-change/use-layout-change"
 
 import { AppPanel, PageContent } from "../app-panel/app-panel";
 import { BottomNav } from "../bottom-nav/bottom-nav";
+import { CompactBar } from "../compact-bar/compact-bar";
 import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
 import { Sidebar } from "../sidebar/sidebar";
 import { APP_SHELL_COPY } from "./app-shell.copy";
@@ -34,6 +36,7 @@ export function AppShell({
   isMobileOverlayOpen = false,
   onLayoutChange,
   workspaceSwitcher,
+  subPage,
 }: Readonly<AppShellProps>) {
   const [isDesktopSidebarCollapsed, setIsDesktopSidebarCollapsed] = useState(false);
   const [isTabletSidebarOpen, setIsTabletSidebarOpen] = useState(false);
@@ -98,7 +101,7 @@ export function AppShell({
         id={APP_SHELL_CONTENT_ID}
         title={title}
         subtitle={subtitle}
-        parent={workspace.name}
+        parent={subPage?.parent.label ?? workspace.name}
         panelActions={panelActions}
         panelUtilities={panelUtilities}
       >
@@ -113,6 +116,7 @@ export function AppShell({
         workspaceName={workspace.name}
         mobileUtilities={mobileUtilities}
         onMobileWorkspacePress={onMobileWorkspacePress}
+        header={subPage ? <CompactBar title={title} parent={subPage.parent} /> : undefined}
       >
         {children}
       </MobileContent>
@@ -256,6 +260,7 @@ function MobileContent({
   workspaceName,
   mobileUtilities,
   onMobileWorkspacePress,
+  header,
 }: Readonly<
   Pick<
     AppShellProps,
@@ -267,7 +272,7 @@ function MobileContent({
     | "mobileSheet"
     | "mobileUtilities"
     | "onMobileWorkspacePress"
-  > & { workspaceName: string }
+  > & { workspaceName: string; header?: ReactNode }
 >) {
   return (
     <div className="flex min-w-0 flex-1 md:hidden">
@@ -280,6 +285,7 @@ function MobileContent({
         workspace={workspaceName}
         utilities={mobileUtilities}
         onWorkspacePress={onMobileWorkspacePress}
+        header={header}
       >
         {children}
       </MobileAppShell>

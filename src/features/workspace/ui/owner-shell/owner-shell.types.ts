@@ -1,5 +1,12 @@
 import type { ReactNode } from "react";
 
+export interface OwnerSubPage {
+  path: string;
+  title: string;
+  subtitle?: string;
+  parent: { label: string; href: string };
+}
+
 export interface OwnerShellProps {
   workspaceId: string;
   workspaceName: string;
@@ -11,4 +18,5 @@ export interface OwnerShellProps {
   onSwitch: (workspaceId: string) => Promise<void>;
   onCreate: (formData: FormData) => Promise<void>;
   logoutAction?: () => Promise<void>;
+  subPages?: readonly OwnerSubPage[];
 }

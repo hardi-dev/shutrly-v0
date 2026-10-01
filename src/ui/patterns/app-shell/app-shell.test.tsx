@@ -68,4 +68,21 @@ describe("AppShell (C30/C37)", () => {
     await user.click(screen.getByRole("button", { name: "Ciutkan sidebar" }));
     expect(queryByRole("dialog", { name: "Navigasi utama" })).toBeNull();
   });
+
+  it("F-17 sub-page: breadcrumb parent and a Compact Bar back link to the parent", () => {
+    render(
+      <AppShell
+        {...props}
+        title="Bagikan gallery"
+        subPage={{ parent: { label: "Template pesan", href: "/w/A/message-templates" } }}
+      >
+        <p>isi</p>
+      </AppShell>,
+    );
+    expect(screen.getAllByText("Template pesan").length).toBeGreaterThan(0);
+    expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute(
+      "href",
+      "/w/A/message-templates",
+    );
+  });
 });

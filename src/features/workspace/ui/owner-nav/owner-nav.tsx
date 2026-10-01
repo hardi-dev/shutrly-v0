@@ -84,6 +84,12 @@ export function resolvePageHeading(
   if (section === "settings") {
     return { title: OWNER_NAV_COPY.settings, subtitle: OWNER_NAV_COPY.settingsSubtitle };
   }
+  if (section === "message-templates") {
+    return {
+      title: OWNER_NAV_COPY.messageTemplates,
+      subtitle: OWNER_NAV_COPY.messageTemplatesSubtitle,
+    };
+  }
   const title = SECTION_TITLES[section];
   return title ? { title, subtitle: OWNER_NAV_COPY.comingSoonSubtitle } : null;
 }
@@ -130,9 +136,20 @@ function OwnerNavItems({
   return items.map(([section, label, icon]) => {
     const href = workspaceHref(workspaceId, section);
     return (
-      <NavItem key={href} href={href} label={label} icon={icon} isActive={pathname === href} />
+      <NavItem
+        key={href}
+        href={href}
+        label={label}
+        icon={icon}
+        isActive={isCurrentSection(pathname, href, section)}
+      />
     );
   });
+}
+
+/** A section stays active on its nested routes (e.g. a template editor); the Dashboard does not. */
+function isCurrentSection(pathname: string, href: string, section: string): boolean {
+  return pathname === href || (section.length > 0 && pathname.startsWith(`${href}/`));
 }
 
 function workspaceHref(workspaceId: string, section: string): string {

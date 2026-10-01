@@ -1166,7 +1166,7 @@ git commit -m "feat(db): add the message_template table with a default backfill"
   - `seedDefaultTemplates(repository, context)`;
   - `FakeMessageTemplateRepository`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `application/schemas/message-template-content/message-template-content.schema.test.ts`:
 
@@ -1228,10 +1228,9 @@ export class FakeMessageTemplateRepository implements MessageTemplateRepositoryP
     const index = this.rows.findIndex(
       (row) => row.workspaceId === context.workspaceId && row.type === update.type,
     );
-    const row = this.rows[index];
-    if (!row) return false;
+    if (index === -1) return false;
     this.rows[index] = {
-      ...row,
+      ...this.rows[index],
       content: update.content,
       updatedBy: update.editorUserId,
       updatedAt: new Date(),
@@ -1411,12 +1410,12 @@ describe("updateMessageTemplate", () => {
 });
 ```
 
-- [ ] **Step 2: Run the tests and confirm they fail**
+- [x] **Step 2: Run the tests and confirm they fail**
 
 Run: `pnpm vitest run src/features/communications/application`
 Expected: FAIL — modules not found.
 
-- [ ] **Step 3: Implement the errors, port and schema**
+- [x] **Step 3: Implement the errors, port and schema**
 
 `errors/message-template-errors/message-template-errors.types.ts`:
 
@@ -1525,7 +1524,7 @@ import type { messageTemplateContentSchema } from "./message-template-content.sc
 export type MessageTemplateContentInput = z.input<ReturnType<typeof messageTemplateContentSchema>>;
 ```
 
-- [ ] **Step 4: Implement the use cases**
+- [x] **Step 4: Implement the use cases**
 
 `use-cases/list-message-templates/list-message-templates.ts`:
 
@@ -1684,12 +1683,12 @@ export async function seedDefaultTemplates(
 }
 ```
 
-- [ ] **Step 5: Run the tests and confirm they pass**
+- [x] **Step 5: Run the tests and confirm they pass**
 
 Run: `pnpm vitest run src/features/communications`
 Expected: PASS.
 
-- [ ] **Step 6: Gate and commit**
+- [x] **Step 6: Gate and commit**
 
 ```bash
 pnpm typecheck && pnpm lint

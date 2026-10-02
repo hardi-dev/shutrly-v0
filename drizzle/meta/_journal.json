@@ -29,6 +29,20 @@
       "when": 1790826731751,
       "tag": "0003_message_template_backfill",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1790877091828,
+      "tag": "0004_workspace_source_config",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1790877102131,
+      "tag": "0005_workspace_source_config_backfill",
+      "breakpoints": true
     }
   ]
 }

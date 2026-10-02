@@ -7,6 +7,7 @@ import { useState } from "react";
 import { AppShell } from "@/ui/patterns/app-shell/app-shell";
 import type { BottomNavProps } from "@/ui/patterns/bottom-nav/bottom-nav.types";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
+import { PAGE_ACTIONS_ID } from "@/ui/patterns/page-actions/page-actions";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { SidebarBrandLogo } from "@/ui/patterns/sidebar/sidebar";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
@@ -36,7 +37,7 @@ const MOBILE_MENU_ITEMS = [
   ["services", OWNER_NAV_COPY.services, "package"],
   ["team", OWNER_NAV_COPY.team, "user-round-cog"],
   ["message-templates", OWNER_NAV_COPY.messageTemplates, "message-square-text"],
-  ["client-sources", OWNER_NAV_COPY.clientSources, "share-2"],
+  ["photo-sources", OWNER_NAV_COPY.photoSources, "folder-open"],
   ["settings", OWNER_NAV_COPY.settings, "settings"],
 ] as const;
 
@@ -126,6 +127,7 @@ export function OwnerShell({
         panelUtilities={
           <DesktopUtilities onSearch={handleOpenSearch} onNotifications={handleOpenNotifications} />
         }
+        panelActions={<div id={PAGE_ACTIONS_ID} className="flex items-center gap-(--space-2)" />}
         onLogout={logoutAction ? handleLogout : undefined}
         mobileBottomNav={{
           items: mobileItems,

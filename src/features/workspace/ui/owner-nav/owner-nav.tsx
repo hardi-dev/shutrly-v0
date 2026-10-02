@@ -54,7 +54,7 @@ const SECTION_TITLES: Readonly<Record<string, string>> = {
   services: OWNER_NAV_COPY.services,
   team: OWNER_NAV_COPY.team,
   "message-templates": OWNER_NAV_COPY.messageTemplates,
-  "client-sources": OWNER_NAV_COPY.clientSources,
+  "photo-sources": OWNER_NAV_COPY.photoSources,
   "new-project": OWNER_NAV_COPY.create,
   search: OWNER_NAV_COPY.search,
   notifications: OWNER_NAV_COPY.notifications,
@@ -90,6 +90,9 @@ export function resolvePageHeading(
       subtitle: OWNER_NAV_COPY.messageTemplatesSubtitle,
     };
   }
+  if (section === "photo-sources") {
+    return { title: OWNER_NAV_COPY.photoSources, subtitle: OWNER_NAV_COPY.photoSourcesSubtitle };
+  }
   const title = SECTION_TITLES[section];
   return title ? { title, subtitle: OWNER_NAV_COPY.comingSoonSubtitle } : null;
 }
@@ -102,7 +105,7 @@ export function OwnerNavBottom({ workspaceId, pathname }: Readonly<OwnerNavProps
         pathname={pathname}
         items={[
           ["message-templates", OWNER_NAV_COPY.messageTemplates, "message-square-text"],
-          ["client-sources", OWNER_NAV_COPY.clientSources, "share-2"],
+          ["photo-sources", OWNER_NAV_COPY.photoSources, "folder-open"],
           ["settings", OWNER_NAV_COPY.settings, "settings"],
         ]}
       />
@@ -122,12 +125,12 @@ function OwnerNavItems({
     string,
     (
       | "folder-kanban"
+      | "folder-open"
       | "layout-grid"
       | "message-square-text"
       | "package"
       | "receipt"
       | "settings"
-      | "share-2"
       | "user-round-cog"
       | "users"
     ),

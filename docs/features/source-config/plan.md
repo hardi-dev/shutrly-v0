@@ -87,7 +87,7 @@ tests/e2e/photo-sources/photo-sources.spec.ts
 
 **Files:** `src/ui/primitives/icon/icon.{types,registry}.ts`, `icon.test.tsx`; create `src/ui/primitives/status-chip/*`.
 
-- [ ] **Step 1: Failing tests.** Add the nine names to the list in `icon.test.tsx`, then create `status-chip.test.tsx`:
+- [x] **Step 1: Failing tests.** Add the nine names to the list in `icon.test.tsx`, then create `status-chip.test.tsx`:
 
 ```tsx
 import { render, screen } from "@testing-library/react";
@@ -112,8 +112,8 @@ describe("StatusChip (C12)", () => {
 });
 ```
 
-- [ ] **Step 2:** `pnpm test src/ui/primitives` → FAIL.
-- [ ] **Step 3: Icons.** Add to `IconName` and the registry (Hugeicons exports):
+- [x] **Step 2:** `pnpm test src/ui/primitives` → FAIL.
+- [x] **Step 3: Icons.** Add to `IconName` and the registry (Hugeicons exports):
 
 | Name | Hugeicons export |
 |---|---|
@@ -127,7 +127,7 @@ describe("StatusChip (C12)", () => {
 | `link` | `Link01Icon` |
 | `more-horizontal` | `MoreHorizontalIcon` |
 
-- [ ] **Step 4: StatusChip.**
+- [x] **Step 4: StatusChip.**
 
 ```ts
 // status-chip.types.ts
@@ -183,15 +183,15 @@ export function StatusChip({ tone, label, hasDot = true, className }: Readonly<S
 
 The dot is 6 px (`size-1.5`). Sizes can't bind in Pencil; record a DESIGN TOKEN GAP note in the implementation record if lint flags it.
 
-- [ ] **Step 5: Story** `status-chip.stories.tsx`: title `Primitives/Status Chip`, `designSystemSpec: "docs/design-system/components/status-chip.md"`, one story per tone plus `NoDot` (*Segera hadir*). Story strings come from `status-chip.stories.copy.ts`.
-- [ ] **Step 6:** `pnpm typecheck && pnpm lint && pnpm test` → PASS.
-- [ ] **Step 7:** Commit `feat(ui): add status chip and source icons`.
+- [x] **Step 5: Story** `status-chip.stories.tsx`: title `Primitives/Status Chip`, `designSystemSpec: "docs/design-system/components/status-chip.md"`, one story per tone plus `NoDot` (*Segera hadir*). Story strings come from `status-chip.stories.copy.ts`.
+- [x] **Step 6:** `pnpm typecheck && pnpm lint && pnpm test` → PASS.
+- [x] **Step 7:** Commit `feat(ui): add status chip and source icons`.
 
 ### Task 2: ListCardItem and ListCardItemSkeleton
 
 **Files:** create `src/ui/patterns/list-card-item/*`.
 
-- [ ] **Step 1: Failing test** `list-card-item.test.tsx`:
+- [x] **Step 1: Failing test** `list-card-item.test.tsx`:
 
 ```tsx
 import { render, screen } from "@testing-library/react";
@@ -231,8 +231,8 @@ describe("ListCardItem (C42 two-line)", () => {
 });
 ```
 
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
 
 ```ts
 // list-card-item.types.ts
@@ -314,14 +314,14 @@ export function ListCardItem({ icon, title, meta, trailing, href, isLast = false
 
 Bar sizes are literals, the same DESIGN TOKEN GAP as F-03's skeleton.
 
-- [ ] **Step 4: Stories** `Patterns/List Card Item`: `TwoLine`, `WithStatusAndMenu`, `Link`, `Skeleton`, each inside a `<ul>` list card frame.
-- [ ] **Step 5:** gate → PASS. Commit `feat(ui): add two-line list card item and skeleton`.
+- [x] **Step 4: Stories** `Patterns/List Card Item`: `TwoLine`, `WithStatusAndMenu`, `Link`, `Skeleton`, each inside a `<ul>` list card frame.
+- [x] **Step 5:** gate → PASS. Commit `feat(ui): add two-line list card item and skeleton`.
 
 ### Task 3: Radio and OptionCardGroup
 
 **Files:** create `src/ui/patterns/option-card/*`. The Radio is part of the group; C06 has no standalone code consumer yet.
 
-- [ ] **Step 1: Failing test** `option-card-group.test.tsx`:
+- [x] **Step 1: Failing test** `option-card-group.test.tsx`:
 
 ```tsx
 import { render, screen } from "@testing-library/react";
@@ -349,8 +349,8 @@ describe("OptionCardGroup (C44)", () => {
 });
 ```
 
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement** with `RadioGroup` and `Radio` from `react-aria-components`. Each `Radio` renders the card. The class map follows `option-card.md`:
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement** with `RadioGroup` and `Radio` from `react-aria-components`. Each `Radio` renders the card. The class map follows `option-card.md`:
 
 | State | Classes |
 |---|---|
@@ -370,18 +370,18 @@ To keep the badge in the accessible name, put it inside the `Radio`'s content.
 
 Types: `OptionCardOption { value: string; title: string; description?: string; icon: IconName; isDisabled?: boolean; badge?: string }` and `OptionCardGroupProps { label: string; options: readonly OptionCardOption[]; value: string; onChange: (value: string) => void; isLabelVisible?: boolean }`.
 
-- [ ] **Step 4: Story** `Patterns/Option Card`: `ProviderChoice` (the F-04 list) and `AllEnabled`.
-- [ ] **Step 5:** gate → PASS. Commit `feat(ui): add option card group`.
+- [x] **Step 4: Story** `Patterns/Option Card`: `ProviderChoice` (the F-04 list) and `AllEnabled`.
+- [x] **Step 5:** gate → PASS. Commit `feat(ui): add option card group`.
 
 ### Task 4: Page-actions slot
 
 **Files:** create `src/ui/patterns/page-actions/*`; modify `src/features/workspace/ui/owner-shell/owner-shell.tsx` (+ test).
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
   - `page-actions.test.tsx`: renders `<div id={PAGE_ACTIONS_ID} />` and `<PageActions><button>Tambah sumber</button></PageActions>`, then expects the button inside that div after mount.
   - `owner-shell.test.tsx`: the desktop panel contains `#owner-page-actions`.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
 
 ```tsx
 // page-actions.tsx
@@ -410,13 +410,13 @@ export function PageActions({ children }: Readonly<PageActionsProps>) {
 
 In `OwnerShell`, pass `panelActions={<div id={PAGE_ACTIONS_ID} className="flex items-center gap-(--space-2)" />}` to `AppShell`.
 
-- [ ] **Step 4:** gate → PASS. Commit `feat(ui): add a page actions slot to the owner shell`.
+- [x] **Step 4:** gate → PASS. Commit `feat(ui): add a page actions slot to the owner shell`.
 
 ### Task 5: Domain
 
 **Files:** create the four `features/gallery/domain/*` units.
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
 
 ```ts
 // source-name.test.ts
@@ -481,8 +481,8 @@ describe("sortSources (A-3)", () => {
 
 `default-source.test.ts` expects `DEFAULT_SOURCE` to equal `{ provider: "GOOGLE_DRIVE", displayName: "Google Drive" }`, and `findSourceNameProblem(DEFAULT_SOURCE.displayName)` to be null.
 
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
 
 ```ts
 // source-provider.types.ts
@@ -561,13 +561,13 @@ export function sortSources<T extends { readonly displayName: string; readonly i
 
 `default-source.ts`: `export const DEFAULT_SOURCE = { provider: "GOOGLE_DRIVE", displayName: "Google Drive" } as const satisfies { provider: AvailableSourceProvider; displayName: string };`. If lint forbids `as const`, use a typed `Readonly` object instead.
 
-- [ ] **Step 4:** gate → PASS. Commit `feat(gallery): add source provider and name rules`.
+- [x] **Step 4:** gate → PASS. Commit `feat(gallery): add source provider and name rules`.
 
 ### Task 6: Schema and migrations (Owner checkpoint)
 
 **Files:** create `src/adapters/db/schema/gallery/workspace-source-config.ts`; modify `schema/index.ts`; generate `drizzle/0004_*`, `0005_*`; create `tests/config/workspace-source-backfill.test.ts`.
 
-- [ ] **Step 1: Table.**
+- [x] **Step 1: Table.**
 
 ```ts
 import { sql } from "drizzle-orm";
@@ -605,8 +605,8 @@ export const workspaceSourceConfig = pgTable(
 
 Export it from `schema/index.ts`.
 
-- [ ] **Step 2:** `pnpm db:generate --name workspace_source_config`. Review the SQL: the table, the four constraints and the expression index.
-- [ ] **Step 3:** `pnpm drizzle-kit generate --custom --name workspace_source_config_backfill`, then paste the backfill into the generated file:
+- [x] **Step 2:** `pnpm db:generate --name workspace_source_config`. Review the SQL: the table, the four constraints and the expression index.
+- [x] **Step 3:** `pnpm drizzle-kit generate --custom --name workspace_source_config_backfill`, then paste the backfill into the generated file:
 
 ```sql
 INSERT INTO "workspace_source_config" ("workspace_id", "provider", "display_name")
@@ -615,7 +615,7 @@ WHERE NOT EXISTS (SELECT 1 FROM "workspace_source_config" s WHERE s."workspace_i
 ON CONFLICT DO NOTHING;
 ```
 
-- [ ] **Step 4: Config test.**
+- [x] **Step 4: Config test.**
 
 ```ts
 import { readdirSync, readFileSync } from "node:fs";
@@ -640,14 +640,14 @@ describe("workspace source backfill migration", () => {
 });
 ```
 
-- [ ] **Step 5:** gate → PASS. Commit `feat(gallery): add workspace source config table and backfill`.
-- [ ] **Step 6: STOP — Owner checkpoint.** Ask the Owner to review 0004/0005 and apply them, or to approve this specific `pnpm db:migrate` run. Don't start Task 8 until they are applied.
+- [x] **Step 5:** gate → PASS. Commit `feat(gallery): add workspace source config table and backfill`.
+- [x] **Step 6: STOP — Owner checkpoint.** Ask the Owner to review 0004/0005 and apply them, or to approve this specific `pnpm db:migrate` run. Don't start Task 8 until they are applied.
 
 ### Task 7: Application layer
 
 **Files:** create the port, errors, schemas and use cases, plus `tests/support/gallery/fake-workspace-source-repository.ts`.
 
-- [ ] **Step 1: Port.**
+- [x] **Step 1: Port.**
 
 ```ts
 import "server-only";
@@ -680,7 +680,7 @@ export interface WorkspaceSourceRepositoryPort {
 }
 ```
 
-- [ ] **Step 2: Schemas** (`*.schema.ts`, no `server-only`):
+- [x] **Step 2: Schemas** (`*.schema.ts`, no `server-only`):
 
 ```ts
 // source-name.schema.ts
@@ -710,13 +710,13 @@ export const addSourceSchema = sourceNameSchema.extend({
 - AC-SRC-007: `addSourceSchema` rejects `provider: "DROPBOX"` with `PROVIDER_UNAVAILABLE`;
 - AC-SRC-008: empty and 61-character names.
 
-- [ ] **Step 3: Errors.** `SourceConfigError extends DomainError` with `SourceConfigErrorCode = "NOT_FOUND" | "SAVE_FAILED"`, the same shape as `MessageTemplateError`.
-- [ ] **Step 4: Fake repository.** Mirror `FakeMessageTemplateRepository`:
+- [x] **Step 3: Errors.** `SourceConfigError extends DomainError` with `SourceConfigErrorCode = "NOT_FOUND" | "SAVE_FAILED"`, the same shape as `MessageTemplateError`.
+- [x] **Step 4: Fake repository.** Mirror `FakeMessageTemplateRepository`:
   - rows hold `workspaceId`, `id`, `provider`, `displayName`, `isActive`, `configData`, `updatedBy`;
   - `create` and `rename` return `NAME_TAKEN` when `sourceNameKey` matches another row in the same workspace;
   - `delete` returns `IN_USE` for IDs in a public `inUse: Set<string>`;
   - `seedDefault` inserts only when the workspace has no rows.
-- [ ] **Step 5: Failing use-case tests.** One test file per use case, named by AC:
+- [x] **Step 5: Failing use-case tests.** One test file per use case, named by AC:
   - `add-workspace-source.test.ts`:
     - AC-SRC-006: `"  Google Drive Arsip "` is stored trimmed, active, with `configData` `{}` and `updatedBy` `owner_1`;
     - AC-SRC-007: `provider: "DROPBOX"` → `{ ok:false, code:"VALIDATION_FAILED", fieldErrors:{ provider:"PROVIDER_UNAVAILABLE" } }`;
@@ -730,7 +730,7 @@ export const addSourceSchema = sourceNameSchema.extend({
   - `delete-workspace-source.test.ts`: AC-SRC-012 deletes; AC-SRC-013 `inUse` → `{ ok:false, code:"IN_USE" }` and the row stays; AC-SRC-015 unknown → `NOT_FOUND`.
   - `list-workspace-sources.test.ts`: AC-SRC-003 sorted order.
   - `seed-default-source.test.ts`: AC-SRC-001 one *Google Drive*; calling it twice still gives one row.
-- [ ] **Step 6:** run → FAIL. **Step 7: Implement** the use cases. Result types:
+- [x] **Step 6:** run → FAIL. **Step 7: Implement** the use cases. Result types:
 
 ```ts
 export type SourceFieldErrorKey = "EMPTY" | "TOO_LONG" | "NAME_TAKEN" | "PROVIDER_UNAVAILABLE";
@@ -751,13 +751,13 @@ The use cases:
 
 `listWorkspaceSources` returns `sortSources(await repository.listForWorkspace(context))`.
 
-- [ ] **Step 8:** gate → PASS. Commit `feat(gallery): add workspace source use cases`.
+- [x] **Step 8:** gate → PASS. Commit `feat(gallery): add workspace source use cases`.
 
 ### Task 8: Drizzle repository and integration tests
 
 **Files:** create `src/adapters/db/workspace-source-repository/drizzle-workspace-source-repository.ts` and `tests/integration/gallery/workspace-source-repository.test.ts`.
 
-- [ ] **Step 1: Failing integration tests.** Use the same harness as the F-03 integration test (`openTestDb`, `seedOwner`, `seedWorkspace`):
+- [x] **Step 1: Failing integration tests.** Use the same harness as the F-03 integration test (`openTestDb`, `seedOwner`, `seedWorkspace`):
   - AC-SRC-002: `seedDefaultSource` twice → 1 row, `GOOGLE_DRIVE` / *Google Drive* / active / `config_data = {}`;
   - AC-SRC-009: `create` *GOOGLE DRIVE* after the seed → `NAME_TAKEN`; another workspace may use *Google Drive*;
   - AC-SRC-011: `setActive` false then true;
@@ -765,8 +765,8 @@ The use cases:
   - AC-SRC-015: `rename`, `setActive` and `delete` with another workspace's context → `NOT_FOUND` / false, and nothing changes;
   - AC-SRC-016: a created source has `config_data = '{}'::jsonb`;
   - AC-SRC-001 (ADR-016): a `db.transaction` that seeds templates and the source, then throws, leaves no source row.
-- [ ] **Step 2:** `pnpm test:integration tests/integration/gallery` → FAIL.
-- [ ] **Step 3: Implement.** Mirror `createDrizzleMessageTemplateRepository`:
+- [x] **Step 2:** `pnpm test:integration tests/integration/gallery` → FAIL.
+- [x] **Step 3: Implement.** Mirror `createDrizzleMessageTemplateRepository`:
   - **Scope:** every statement filters `eq(workspaceSourceConfig.workspaceId, context.workspaceId)`, and `id` where needed.
   - **Write mapping:** `create` and `rename` catch a unique violation and return `NAME_TAKEN`; `delete` catches an FK violation and returns `IN_USE`. Drizzle wraps driver errors, so read the code from `error.code` or `error.cause.code`:
 
@@ -781,20 +781,20 @@ function pgCode(error: unknown): string | undefined {
   - **Updates and deletes:** use `.returning({ id })`; an empty result means `NOT_FOUND` / false. `updatedAt: new Date()` is set on rename and setActive.
   - **`seedDefault`:** `insert … select … where not exists` through `sql`, or check-then-insert inside the caller's transaction, with `onConflictDoNothing()`.
   - **Reads:** `listForWorkspace` maps rows with `isSourceProvider` and skips unknown providers, never guessing.
-- [ ] **Step 4: AC-SRC-013 unit test** `drizzle-workspace-source-repository.test.ts` with a stub executor whose `delete().where().returning()` rejects `{ cause: { code: "23503" } }` → `IN_USE`.
-- [ ] **Step 5:** gate + `pnpm test:integration` → PASS. Commit `feat(gallery): add drizzle workspace source repository`.
+- [x] **Step 4: AC-SRC-013 unit test** `drizzle-workspace-source-repository.test.ts` with a stub executor whose `delete().where().returning()` rejects `{ cause: { code: "23503" } }` → `IN_USE`.
+- [x] **Step 5:** gate + `pnpm test:integration` → PASS. Commit `feat(gallery): add drizzle workspace source repository`.
 
 ### Task 9: Composition and server actions
 
 **Files:** create `composition/gallery/source-config-scope/*`, `composition/gallery/source-config-flow/*` and `app/actions/gallery/photo-sources.ts`; modify `composition/workspace/workspace-creation-scope/*` and `owner-workspace.ts`.
 
-- [ ] **Step 1: Failing flow test** `source-config-flow.test.ts`. Mock the logger, `next/navigation`, `owner-guard`, `verifyOwnerWorkspace` and the scope, as in `message-template-flow.test.ts`:
+- [x] **Step 1: Failing flow test** `source-config-flow.test.ts`. Mock the logger, `next/navigation`, `owner-guard`, `verifyOwnerWorkspace` and the scope, as in `message-template-flow.test.ts`:
   - AC-SRC-006: `addPhotoSource("ws-1", { provider:"GOOGLE_DRIVE", displayName:"Arsip" })` calls `create` with the verified context and editor `owner_1`;
   - AC-SRC-015: `renamePhotoSource("ws-1", "not-a-uuid", …)` → `notFound`;
   - AC-SRC-015: the port's `NOT_FOUND` → `notFound`;
   - AC-SRC-014 / AC-SRC-016: the port throws `Error("db down")` → `SourceConfigError("SAVE_FAILED")`, and the logger was called with exactly `("source_config.save_failed", { workspaceId: "ws-1", sourceId: <id>, operation: "rename" })`.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
   - `withSourceConfigScope(work)` returns `withRequestDb((db) => work({ sources: createDrizzleWorkspaceSourceRepository(db) }))`.
   - `source-config-flow.ts` exports `loadPhotoSources(rawId)` → `{ sources: PhotoSourceView[] }`, where `PhotoSourceView = { id, displayName, provider, isActive }`. It also exports `addPhotoSource`, `renamePhotoSource`, `setPhotoSourceActive` and `deletePhotoSource`, following `saveMessageTemplate`:
 
@@ -846,8 +846,8 @@ export async function deleteSourceAction(workspaceId: string, sourceId: string):
 }
 ```
 
-- [ ] **Step 4:** Extend the creation integration test (Task 8, AC-SRC-001) to go through `withWorkspaceCreationScope` if the harness allows; otherwise keep the `db.transaction` version.
-- [ ] **Step 5:** gate + integration → PASS. Commit `feat(gallery): wire photo sources and seed the default source`.
+- [x] **Step 4:** Extend the creation integration test (Task 8, AC-SRC-001) to go through `withWorkspaceCreationScope` if the harness allows; otherwise keep the `db.transaction` version.
+- [x] **Step 5:** gate + integration → PASS. Commit `feat(gallery): wire photo sources and seed the default source`.
 
 ### Task 10: Navigation and route
 
@@ -856,12 +856,12 @@ export async function deleteSourceAction(workspaceId: string, sourceId: string):
 - modify `tests/e2e/app-shell-revamp/app-shell-revamp.spec.ts`;
 - create `app/(owner)/w/[workspaceId]/photo-sources/{page,loading}.tsx` and `features/gallery/ui/source-copy/source-copy.copy.ts`.
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
   - `owner-nav.test.tsx`, AC-SRC-004: the bottom nav has *Sumber foto* linking to `/w/ws/photo-sources` with the `folder-open` icon, and active on that path; `resolvePageHeading` for `/w/ws/photo-sources` gives *Sumber foto* and the subtitle below.
   - `owner-shell.test.tsx`: the menu sheet labels contain *Sumber foto*, not *Sumber klien*.
   - `coming-soon-sections.test.ts`: `isComingSoonSection("client-sources") === false`.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
   - **Copy:** `photoSources: "Sumber foto"` replaces `clientSources`, and `photoSourcesSubtitle: "Tempat foto gallery-mu disimpan. Shutrly hanya membaca, tidak pernah mengubah isinya."` is added.
   - **Nav entries:** `["photo-sources", OWNER_NAV_COPY.photoSources, "folder-open"]` replaces the old entry in `OwnerNavBottom` and `MOBILE_MENU_ITEMS`. Update the icon union.
   - **Sections:** remove `client-sources` from `SECTION_TITLES` and `COMING_SOON_SECTIONS`; add a `photo-sources` heading branch like `message-templates`.
@@ -950,19 +950,19 @@ export const SOURCE_COPY = {
 
 The toast bodies for renamed, activated and deleted aren't in the frames; they use the source name: ``${name} sudah diperbarui.`` etc. Record them as "not in Pencil" in the copy file, as F-02 did.
 
-- [ ] **Step 4:** gate → PASS. Commit `feat(gallery): add the sumber foto route and navigation`.
+- [x] **Step 4:** gate → PASS. Commit `feat(gallery): add the sumber foto route and navigation`.
 
 ### Task 11: Sumber foto screen
 
 **Files:** create `photo-sources-screen`, `source-row`, `setup-guide-card`, `photo-sources-skeleton`, `source-name-error`.
 
-- [ ] **Step 1: Failing tests** (`photo-sources-screen.test.tsx`, render inside `ToastRegion` like F-03's editor test):
+- [x] **Step 1: Failing tests** (`photo-sources-screen.test.tsx`, render inside `ToastRegion` like F-03's editor test):
   - AC-SRC-003: with three sources (two active, one inactive), the rows appear in that order. Rows show *Aktif* / *Nonaktif* chips, *Google Drive* meta and a row-actions button named *Aksi untuk Google Drive Utama*. The guide shows four steps and the warning title.
   - AC-SRC-005: with no sources, the empty state *Belum ada sumber foto* has a *Tambah sumber* button, and the guide still renders.
   - The desktop *Tambah sumber* renders through `PageActions` (mock `useMobileViewport` → false). On phones (true), *Tambah* sits in the card header.
   - `source-name-error.test.ts`: every key maps to `SOURCE_COPY.nameErrors`.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement** from `exports/list-populated-q4btAK.html`, `list-populated-w4uSN.html`, `list-empty-*` and `list-loading-*`:
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement** from `exports/list-populated-q4btAK.html`, `list-populated-w4uSN.html`, `list-empty-*` and `list-loading-*`:
   - **Card:** `SectionCard content="flush"`, title `SOURCE_COPY.listTitle`, description desktop/mobile. On phones, the `actions` slot holds `<Button variant="secondary" iconLeading="plus">{SOURCE_COPY.addShort}</Button>`.
   - **Rows:** `<ul>` of `SourceRow` → `ListCardItem icon="hard-drive" title meta={PROVIDER_COPY[provider].title} trailing={<><StatusChip …/><SourceRowActions …/></>} isLast`.
   - **Empty:** `EmptyState icon="folder-open"` inside the card's padded content when `sources.length === 0`.
@@ -970,13 +970,13 @@ The toast bodies for renamed, activated and deleted aren't in the frames; they u
   - **`PhotoSourcesSkeleton`:** the same cards with three `ListCardItemSkeleton`s (the last with `isLast`) and the guide card shape.
   - **Layout:** a centred `max-w-[720px]` column on desktop, the `gap-(--component-panel-app-content-gap)` stack used by F-03's list.
   - **Dialogs:** the screen owns their state (`useState<{ kind: "add" } | { kind: "rename" | "delete"; source } | null>`), so Tasks 12–13 plug in.
-- [ ] **Step 4:** gate → PASS. Commit `feat(gallery): add the sumber foto list screen`.
+- [x] **Step 4:** gate → PASS. Commit `feat(gallery): add the sumber foto list screen`.
 
 ### Task 12: Add and rename dialogs
 
 **Files:** create `add-source-dialog`, `rename-source-dialog`, `use-source-mutations` (add and rename parts).
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
   - `add-source-dialog.test.tsx`:
     - AC-SRC-006: type *Google Drive Arsip*, submit → the action is called with `("ws-1", { provider:"GOOGLE_DRIVE", displayName:"Google Drive Arsip" })`, the dialog closes, and the toast reads *Sumber ditambahkan*;
     - AC-SRC-007: the provider group shows Dropbox, OneDrive, Amazon S3 and Custom URL disabled with *Segera hadir*;
@@ -985,37 +985,37 @@ The toast bodies for renamed, activated and deleted aren't in the frames; they u
     - AC-SRC-014: the action rejects → Toast/Danger *Perubahan belum tersimpan* with *Coba lagi*; the dialog stays open with the typed name; *Coba lagi* resubmits;
     - while saving, the confirm button is pending, labelled *Menambahkan…*.
   - `rename-source-dialog.test.tsx`: AC-SRC-010 prefilled name, save → action with the trimmed name and toast *Nama sumber diperbarui*; NAME_TAKEN field error; empty error.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement** following `CreateWorkspaceDialog` (Modal on desktop, `BottomSheet variant="form"` on phones, `useMobileViewport`) and `exports/add-*`, `rename-*`:
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement** following `CreateWorkspaceDialog` (Modal on desktop, `BottomSheet variant="form"` on phones, `useMobileViewport`) and `exports/add-*`, `rename-*`:
   - **Add:** `size="md"`, title/description from copy. Body: `OptionCardGroup` (label *Provider*; options from `SOURCE_PROVIDERS` × `PROVIDER_COPY`; non-available ones get `isDisabled` and `badge: SOURCE_COPY.comingSoon`), then `TextField` *Nama sumber* (placeholder, helper, `errorMessage`), then `<Alert tone="warning" title={warningTitle} body={warningBodyShort} />`. Actions: *Batal* (secondary) and the submit button (`isPending`, label switches to *Menambahkan…*). On phones, one LG full-width submit.
   - **Rename:** `size="sm"`, one `TextField` prefilled; actions *Batal* and *Simpan* (*Menyimpan…* while pending).
   - **Forms:** RHF + `zodResolver(addSourceSchema | sourceNameSchema)`. A server `fieldErrors` result goes to `form.setError(field, { message: key })` and the field gets focus.
   - **`useSourceMutations(workspaceId)`:** returns `add`, `rename`, `setActive` and `remove`. Each wraps the bound action, shows the success toast, and on rejection shows the danger toast with `action: { label: retry, onAction: retry }` and rethrows nothing (F-03's `handleFailed` pattern).
-- [ ] **Step 4:** gate → PASS. Commit `feat(gallery): add source add and rename dialogs`.
+- [x] **Step 4:** gate → PASS. Commit `feat(gallery): add source add and rename dialogs`.
 
 ### Task 13: Row actions, deactivate and delete
 
 **Files:** create `source-row-actions` and `delete-source-dialog`; extend `use-source-mutations`.
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
   - `source-row-actions.test.tsx`:
     - desktop: the ⋯ button (`IconButton icon="more-horizontal" size="sm"`, `aria-label` *Aksi untuk {name}*) opens a `Menu` with *Ganti nama*, *Nonaktifkan*, a divider, and *Hapus* (destructive);
     - an inactive source shows *Aktifkan* instead;
     - phone: the same items in `BottomSheet variant="actions"`, with the title set to the name and the meta *Google Drive · Aktif*;
     - AC-SRC-011: *Nonaktifkan* calls `setSourceActiveAction(ws, id, false)` with no confirmation dialog. The toast *Sumber dinonaktifkan* has *Batalkan*, which calls `setSourceActiveAction(ws, id, true)`.
   - `delete-source-dialog.test.tsx`: AC-SRC-012 *Hapus* opens *Hapus sumber "Arsip 2024"?*; *Batal* closes without a call; *Hapus sumber* calls the action and shows *Sumber dihapus*. AC-SRC-013: an `IN_USE` result shows `SOURCE_COPY.inUse` in a danger toast and keeps the row.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
   - **Desktop:** `MenuTrigger` + `Menu` + `MenuItem` (existing C10 code), per `exports/list-row-menu-UPlrT.html`.
   - **Phone:** `BottomSheet variant="actions"` + `SheetItem` (`row-actions-sheet-J0kFv`).
   - **Delete confirmation:** `Modal size="sm" isDestructive` with a `Button variant="danger"` (`delete-confirm-YAP3e`), or `BottomSheet variant="actions"` with a destructive `SheetItem` *Hapus sumber* and *Batal* (`delete-confirm-q5h45`).
-- [ ] **Step 4:** gate → PASS. Commit `feat(gallery): add source row actions and delete confirmation`.
+- [x] **Step 4:** gate → PASS. Commit `feat(gallery): add source row actions and delete confirmation`.
 
 ### Task 14: E2E, fidelity and implementation record
 
 **Files:** create `tests/e2e/photo-sources/photo-sources.spec.ts`; modify `technical-design.md` (implementation record), `spec.md`, `feature-map.md`, `HANDOFF.md`.
 
-- [ ] **Step 1: E2E journeys.** Use F-03's helpers: `registerAndVerify`, onboarding, and scoping to `#app-shell-content` / `#mobile-app-content`.
+- [x] **Step 1: E2E journeys.** Use F-03's helpers: `registerAndVerify`, onboarding, and scoping to `#app-shell-content` / `#mobile-app-content`.
   1. **AC-SRC-001/003/004:**
      - a new workspace's *Sumber foto* (via the nav, icon item *Sumber foto*) shows *Google Drive · Aktif*, the guide and the warning;
      - the nav item is `aria-current`;
@@ -1028,7 +1028,7 @@ The toast bodies for renamed, activated and deleted aren't in the frames; they u
      - delete both → empty state.
   3. **AC-SRC-015:** a second owner opening the first owner's `/w/<id>/photo-sources` sees *Workspace tidak ditemukan*.
   4. **AC-SRC-017:** axe (wcag2a/2aa/21a/21aa) at 1440 and 390 px on the list, the open add dialog, and the delete confirmation → 0 violations; the keyboard reaches ⋯ → menu → *Ganti nama* → dialog → Esc returns focus.
-- [ ] **Step 2:** `pnpm e2e tests/e2e/photo-sources` → PASS; full `pnpm e2e` → PASS.
-- [ ] **Step 3: Browser fidelity.** Run `pnpm dev` and compare 1440 / 390 px with the 24 exports. Fix class names and nesting only.
-- [ ] **Step 4: Implementation record** in `technical-design.md`: commits, deviations (expected: page-action flash, skeleton literals, focus glow), and the AC → test map. Set the feature status to IN PROGRESS → ready for `/sdv:verify-feature source-config`. Update `HANDOFF.md`.
-- [ ] **Step 5:** gate → PASS. Commit `test(gallery): add photo sources journeys and record the build`.
+- [x] **Step 2:** `pnpm e2e tests/e2e/photo-sources` → PASS; full `pnpm e2e` → PASS.
+- [x] **Step 3: Browser fidelity.** Run `pnpm dev` and compare 1440 / 390 px with the 24 exports. Fix class names and nesting only.
+- [x] **Step 4: Implementation record** in `technical-design.md`: commits, deviations (expected: page-action flash, skeleton literals, focus glow), and the AC → test map. Set the feature status to IN PROGRESS → ready for `/sdv:verify-feature source-config`. Update `HANDOFF.md`.
+- [x] **Step 5:** gate → PASS. Commit `test(gallery): add photo sources journeys and record the build`.

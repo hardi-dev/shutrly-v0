@@ -131,7 +131,7 @@ test("AC-SHELL-007 AC-SHELL-008 AC-SHELL-013 phone menu, CTA and utilities", asy
     OWNER_NAV_COPY.services,
     OWNER_NAV_COPY.team,
     OWNER_NAV_COPY.messageTemplates,
-    OWNER_NAV_COPY.clientSources,
+    OWNER_NAV_COPY.photoSources,
     OWNER_NAV_COPY.settings,
   ]);
   await expect(sheet.getByText(OWNER_NAV_COPY.invoices)).toHaveCount(0);

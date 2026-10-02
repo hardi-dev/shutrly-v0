@@ -1080,12 +1080,12 @@ export interface ServiceRepositoryPort {
 
 **Files:** create the `services/**` route files, `ui/catalog-copy/catalog-copy.copy.ts`, `ui/catalog-tabs-bar/*`, `ui/catalog-skeletons/*`, `ui/definition-icon/*`, `ui/catalog-field-error/*`.
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
   - `catalog-tabs-bar.test.tsx`: on phones (mock `useMobileViewport` → true) a full-width Segmented Control *Bagian layanan* with Layanan · Kategori · Item paket; selecting *Kategori* pushes `/w/ws/services/categories`; on desktop it renders nothing.
   - `definition-icon.test.ts`: EDIT → `image`, PRINT → `printer`, RANGE → `move-horizontal`, otherwise `hash` (TD-D-1).
   - `catalog-field-error.test.ts`: every field-error key used by Tasks 7–8 maps to a `CATALOG_COPY.errors` string.
 - [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 3: Implement.**
   - Pages: `services/page.tsx` → `loadServices` → `<ServicesScreen …/>`; `categories/page.tsx`, `items/page.tsx`, `[serviceId]/page.tsx` likewise. Until Tasks 12–14 land, the screens may be minimal lists. `loading.tsx` per route renders the matching skeleton (`layanan-loading-m603dh`).
   - `catalog-copy.copy.ts` — strings from the frames:
 

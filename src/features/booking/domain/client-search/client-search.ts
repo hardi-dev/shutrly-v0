@@ -2,6 +2,8 @@ import { WHATSAPP_SEPARATORS } from "../whatsapp-number/whatsapp-number";
 
 /** TD-A-1: longer queries are ignored. */
 export const CLIENT_SEARCH_MAX_LENGTH = 100;
+/** A-4: wait briefly before replacing the query URL. */
+export const CLIENT_SEARCH_DEBOUNCE_MS = 300;
 const NUMBER_LIKE = /^\+?\d+$/;
 
 /**

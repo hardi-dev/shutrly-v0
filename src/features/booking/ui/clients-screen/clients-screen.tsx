@@ -11,6 +11,7 @@ import { Button } from "@/ui/primitives/button/button";
 import { CLIENT_COPY } from "../client-copy/client-copy.copy";
 import { ClientDialog } from "../client-dialog/client-dialog";
 import { ClientList } from "../client-list/client-list";
+import { ClientSearchField } from "../client-search-field/client-search-field";
 import { ClientsEmptyState } from "../clients-empty-state/clients-empty-state";
 import { ClientsTable } from "../clients-table/clients-table";
 import { ClientsTabsBar } from "../clients-tabs-bar/clients-tabs-bar";
@@ -28,6 +29,7 @@ export function ClientsScreen({
   status,
   count,
   rows,
+  q = "",
   addAction,
   updateAction,
   setArchivedAction,
@@ -63,6 +65,7 @@ export function ClientsScreen({
       desktopAddAction={actions.desktop}
       mobileAddAction={actions.mobile}
       emptyState={emptyState}
+      q={q}
       updateAction={updateAction}
       openEdit={openEdit}
       addAction={addAction}
@@ -94,6 +97,7 @@ function ClientScreenContent({
   desktopAddAction,
   mobileAddAction,
   emptyState,
+  q,
   updateAction,
   openEdit,
   addAction,
@@ -107,6 +111,7 @@ function ClientScreenContent({
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)">
       <PageActions>{desktopAddAction}</PageActions>
       {isMobile ? <ClientsTabsBar workspaceId={workspaceId} status={status} /> : null}
+      <ClientSearchField workspaceId={workspaceId} status={status} q={q} resultCount={rows.length} />
       {isMobile ? (
         <ClientList
           status={status}

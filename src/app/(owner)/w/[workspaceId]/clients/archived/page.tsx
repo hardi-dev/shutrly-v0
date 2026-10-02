@@ -19,6 +19,7 @@ export default async function ArchivedClientsPage({
       status={data.status}
       count={data.count}
       rows={data.page.items}
+      q={data.q}
       updateAction={updateClientAction}
       setArchivedAction={setClientArchivedAction}
       deleteAction={deleteClientAction}

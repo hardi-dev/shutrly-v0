@@ -20,6 +20,7 @@ export default async function ClientsPage({
       status={data.status}
       count={data.count}
       rows={data.page.items}
+      q={data.q}
       addAction={addClientAction}
       updateAction={updateClientAction}
       setArchivedAction={setClientArchivedAction}

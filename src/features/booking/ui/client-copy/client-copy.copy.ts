@@ -10,6 +10,12 @@ export const PLATFORM_COPY = {
 } as const;
 export const CLIENT_COPY = {
   listTitle: "Daftar klien",
+  searchLabel: "Cari klien",
+  searchPlaceholder: "Cari nama atau nomor WhatsApp",
+  clearSearch: "Hapus pencarian",
+  searchResultCount: (count: number) => `${String(count)} klien cocok`,
+  noMatchTitle: "Tidak ada klien yang cocok",
+  noMatchBody: "Coba nama lain, atau ketik sebagian nomor WhatsApp.",
   noWhatsapp: "Belum ada nomor WhatsApp",
   noSocialLinks: "—",
   tabsLabel: "Status klien",

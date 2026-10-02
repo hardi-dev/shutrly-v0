@@ -10,6 +10,7 @@ export interface ClientsScreenProps {
   readonly status: ClientStatus;
   readonly count: number;
   readonly rows: readonly ClientRecord[];
+  readonly q?: string;
   readonly addAction?: (
     workspaceId: string,
     values: ClientInput,
@@ -32,6 +33,7 @@ export interface ClientScreenContentProps {
   readonly desktopAddAction: ReactNode;
   readonly mobileAddAction: ReactNode;
   readonly emptyState: ReactNode;
+  readonly q: string;
   readonly updateAction: ClientsScreenProps["updateAction"];
   readonly openEdit: (client: ClientsScreenProps["rows"][number]) => void;
   readonly addAction: ClientsScreenProps["addAction"];

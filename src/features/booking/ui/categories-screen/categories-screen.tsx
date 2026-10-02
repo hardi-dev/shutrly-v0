@@ -182,6 +182,7 @@ function CategoryDialogs(props: Readonly<CategoryDialogsProps>) {
     <>
       {addAction && renameAction ? (
         <CategoryDialog
+          key={editing?.id ?? "new-category"}
           isOpen={isDialogOpen}
           workspaceId={workspaceId}
           category={editing}

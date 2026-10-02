@@ -42,6 +42,7 @@ export function ServicesScreen(props: Readonly<ServicesScreenProps>) {
         workspaceId={workspaceId}
         categories={categories}
         addServiceAction={addServiceAction}
+        addCategoryAction={props.addCategoryAction}
         updateAction={props.updateServiceInfoAction}
         dialogs={dialogs}
         setActiveAction={props.setActiveAction}
@@ -99,6 +100,7 @@ function ServiceDialogs({
   workspaceId,
   categories,
   addServiceAction,
+  addCategoryAction,
   updateAction,
   dialogs,
   setActiveAction,
@@ -107,6 +109,7 @@ function ServiceDialogs({
   readonly workspaceId: string;
   readonly categories: ServicesScreenProps["categories"];
   readonly addServiceAction: ServicesScreenProps["addServiceAction"];
+  readonly addCategoryAction: ServicesScreenProps["addCategoryAction"];
   readonly updateAction: ServicesScreenProps["updateServiceInfoAction"];
   readonly dialogs: ReturnType<typeof useServiceDialogs>;
   readonly setActiveAction: ServicesScreenProps["setActiveAction"];
@@ -117,6 +120,7 @@ function ServiceDialogs({
     <>
       {addServiceAction && (updateAction || !dialogs.editing) ? (
         <AddServiceDialog
+          key={dialogs.editing?.id ?? "new-service"}
           isOpen={dialogs.isDialogOpen}
           onOpenChange={dialogs.setIsDialogOpen}
           workspaceId={workspaceId}
@@ -124,6 +128,7 @@ function ServiceDialogs({
           service={dialogs.editing}
           action={addServiceAction}
           updateAction={updateAction}
+          addCategoryAction={addCategoryAction}
         />
       ) : null}
       {dialogs.deleting && setActiveAction && removeAction ? (

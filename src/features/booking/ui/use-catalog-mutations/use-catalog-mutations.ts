@@ -45,6 +45,7 @@ async function runWriteMutation(mutation: WriteMutation): Promise<MutationResult
       tone: "danger",
       title: CATALOG_COPY.serverErrorTitle,
       body: CATALOG_COPY.serverErrorBody,
+      action: { label: CATALOG_COPY.retry, onAction: () => void runWriteMutation(mutation) },
     });
     return undefined;
   }

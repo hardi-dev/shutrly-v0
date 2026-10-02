@@ -1,8 +1,14 @@
 import {
   addBookingFieldAction,
   addServiceItemAction,
+  moveBookingFieldAction,
+  moveServiceItemAction,
+  removeBookingFieldAction,
+  removeServiceItemAction,
   setCatalogActiveAction,
+  updateBookingFieldAction,
   updateServiceInfoAction,
+  updateServiceItemAction,
 } from "@/app/actions/booking/catalog";
 import {
   loadCategories,
@@ -33,7 +39,13 @@ export default async function ServiceDetailPage({
         updateServiceInfoAction={updateServiceInfoAction}
         definitions={[...definitions.selection, ...definitions.other]}
         addItemAction={addServiceItemAction}
+        updateItemAction={updateServiceItemAction}
+        removeItemAction={removeServiceItemAction}
+        moveItemAction={moveServiceItemAction}
         addFieldAction={addBookingFieldAction}
+        updateFieldAction={updateBookingFieldAction}
+        removeFieldAction={removeBookingFieldAction}
+        moveFieldAction={moveBookingFieldAction}
       />
     </>
   );

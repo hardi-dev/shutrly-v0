@@ -12,6 +12,7 @@ describe("addCategory", () => {
     const repository = new FakeCategoryRepository();
     expect(await addCategory(repository, context, "user", { name: "  Wisuda  " })).toEqual({
       ok: true,
+      categoryId: repository.rows[0]?.id,
     });
     expect(await addCategory(repository, context, "user", { name: "wisuda" })).toEqual({
       ok: false,

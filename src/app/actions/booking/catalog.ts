@@ -30,7 +30,7 @@ function revalidateCatalog(): void {
 export async function addCategoryAction(workspaceId: string, values: unknown) {
   const result = await addCatalogCategory(workspaceId, values);
   if (result.ok) revalidateCatalog();
-  return result.ok ? undefined : result;
+  return result;
 }
 
 export async function renameCategoryAction(

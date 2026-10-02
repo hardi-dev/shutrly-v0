@@ -7,16 +7,19 @@ import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-vie
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
 import { Select } from "@/ui/patterns/select/select";
+import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogFieldError } from "../catalog-field-error/catalog-field-error";
+import { showCatalogSaveFailure } from "../catalog-save-feedback/catalog-save-feedback";
 import type {
   ResponsiveItemDialogProps,
   ServiceItemDialogProps,
   ServiceItemFieldsProps,
   ServiceItemSubmitArgs,
+  ServiceItemValueState,
 } from "./service-item-dialog.types";
 
 function noop(): void {}
@@ -29,10 +32,18 @@ export function ServiceItemDialog(props: Readonly<ServiceItemDialogProps>) {
   }
   const save = (
     <Button onPress={handleSubmit} isPending={form.pending}>
-      {CATALOG_COPY.add}
+      {props.item ? CATALOG_COPY.save : CATALOG_COPY.add}
     </Button>
   );
-  return <ResponsiveItemDialog {...props} content={content} save={save} />;
+  return (
+    <ResponsiveItemDialog
+      {...props}
+      content={content}
+      save={save}
+      title={props.item ? CATALOG_COPY.editItemValue : CATALOG_COPY.addItemTitle}
+      description={CATALOG_COPY.addItemDescription}
+    />
+  );
 }
 
 function useServiceItemForm({
@@ -40,31 +51,49 @@ function useServiceItemForm({
   serviceId,
   items,
   definitions,
+  item,
   onOpenChange,
   action,
+  updateAction,
 }: Readonly<ServiceItemDialogProps>) {
-  const [definitionId, setDefinitionId] = useState<string | null>(null);
-  const [value, setValue] = useState("");
-  const [minimum, setMinimum] = useState("");
-  const [maximum, setMaximum] = useState("");
+  const state = useServiceItemValues(item);
   const [error, setError] = useState<string | undefined>();
   const [pending, setPending] = useState(false);
   async function submit(): Promise<void> {
     await submitServiceItem({
       workspaceId,
       serviceId,
-      definitionId,
+      definitionId: state.definitionId,
+      item,
       definitions,
-      value,
-      minimum,
-      maximum,
+      value: state.value,
+      minimum: state.minimum,
+      maximum: state.maximum,
       action,
+      updateAction,
       onOpenChange,
       setError,
       setPending,
     });
   }
-  const used = new Set(items.map((item) => item.definitionId));
+  const used = new Set(
+    items.filter((entry) => entry.id !== item?.id).map((entry) => entry.definitionId),
+  );
+  return {
+    ...state,
+    error,
+    pending,
+    submit,
+    used,
+    isEditing: Boolean(item),
+  };
+}
+
+function useServiceItemValues(item: ServiceItemDialogProps["item"]): ServiceItemValueState {
+  const [definitionId, setDefinitionId] = useState<string | null>(item?.definitionId ?? null);
+  const [value, setValue] = useState(item?.value.type === "NUMBER" ? item.value.value : "");
+  const [minimum, setMinimum] = useState(item?.value.type === "RANGE" ? item.value.min : "");
+  const [maximum, setMaximum] = useState(item?.value.type === "RANGE" ? item.value.max : "");
   return {
     definitionId,
     setDefinitionId,
@@ -74,26 +103,25 @@ function useServiceItemForm({
     setMinimum,
     maximum,
     setMaximum,
-    error,
-    pending,
-    submit,
-    used,
   };
 }
 
-async function submitServiceItem({
-  workspaceId,
-  serviceId,
-  definitionId,
-  definitions,
-  value,
-  minimum,
-  maximum,
-  action,
-  onOpenChange,
-  setError,
-  setPending,
-}: ServiceItemSubmitArgs): Promise<void> {
+async function submitServiceItem(args: ServiceItemSubmitArgs): Promise<void> {
+  const {
+    workspaceId,
+    serviceId,
+    definitionId,
+    item,
+    definitions,
+    value,
+    minimum,
+    maximum,
+    action,
+    updateAction,
+    onOpenChange,
+    setError,
+    setPending,
+  } = args;
   const definition = definitions.find((item) => item.id === definitionId);
   if (!definitionId || !definition) {
     setError("NOT_FOUND");
@@ -106,7 +134,10 @@ async function submitServiceItem({
       definition.valueType === "RANGE"
         ? { type: "RANGE", min: minimum, max: maximum }
         : { type: "NUMBER", value };
-    const result = await action(workspaceId, serviceId, { definitionId, value: packageValue });
+    const result =
+      item && updateAction
+        ? await updateAction(workspaceId, serviceId, item.id, { value: packageValue })
+        : await action(workspaceId, serviceId, { definitionId, value: packageValue });
     if (result?.ok === false) {
       setError(
         result.fieldErrors.definitionId ??
@@ -117,8 +148,9 @@ async function submitServiceItem({
       return;
     }
     onOpenChange(false);
+    showToast({ tone: "success", title: CATALOG_COPY.savedToast });
   } catch {
-    setError("SAVE_FAILED");
+    showCatalogSaveFailure({ setError, retry: () => void submitServiceItem(args) });
   } finally {
     setPending(false);
   }
@@ -136,6 +168,7 @@ function ServiceItemFields({
   setMaximum,
   error,
   used,
+  isEditing,
 }: Readonly<ServiceItemFieldsProps>) {
   const definition = definitions.find((item) => item.id === definitionId);
   const options = definitions
@@ -147,6 +180,7 @@ function ServiceItemFields({
         label={CATALOG_COPY.itemPicker}
         value={definitionId}
         options={options}
+        isDisabled={isEditing}
         onChange={setDefinitionId}
         placeholder={CATALOG_COPY.itemPicker}
         errorMessage={
@@ -220,6 +254,8 @@ function ResponsiveItemDialog({
   onOpenChange,
   content,
   save,
+  title,
+  description,
 }: Readonly<ResponsiveItemDialogProps>) {
   const mobile = useMobileViewport();
   if (mobile)
@@ -227,8 +263,8 @@ function ResponsiveItemDialog({
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        title={CATALOG_COPY.addItemTitle}
-        description={CATALOG_COPY.addItemDescription}
+        title={title}
+        description={description}
         variant="form"
         actions={save}
       >
@@ -242,8 +278,8 @@ function ResponsiveItemDialog({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      title={CATALOG_COPY.addItemTitle}
-      description={CATALOG_COPY.addItemDescription}
+      title={title}
+      description={description}
       size="sm"
       actions={
         <>

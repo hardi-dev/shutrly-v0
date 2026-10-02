@@ -111,6 +111,7 @@ function DefinitionDialogs({
     <>
       {addAction ? (
         <ItemDefinitionDialog
+          key={dialogs.editing?.id ?? "new-definition"}
           isOpen={dialogs.isDialogOpen}
           onOpenChange={dialogs.setIsDialogOpen}
           workspaceId={workspaceId}

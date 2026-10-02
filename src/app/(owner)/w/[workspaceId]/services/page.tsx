@@ -1,4 +1,5 @@
 import {
+  addCategoryAction,
   addServiceAction,
   deleteCatalogEntryAction,
   setCatalogActiveAction,
@@ -20,6 +21,7 @@ export default async function ServicesPage({
       groups={groups}
       categories={categories}
       addServiceAction={addServiceAction}
+      addCategoryAction={addCategoryAction}
       updateServiceInfoAction={updateServiceInfoAction}
       setActiveAction={setCatalogActiveAction}
       removeAction={deleteCatalogEntryAction}

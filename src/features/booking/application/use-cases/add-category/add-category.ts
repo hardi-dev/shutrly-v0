@@ -23,5 +23,5 @@ export async function addCategory(
   );
   return result.status === "NAME_TAKEN"
     ? { ok: false, code: "VALIDATION_FAILED", fieldErrors: { name: "NAME_TAKEN" } }
-    : { ok: true };
+    : { ok: true, categoryId: result.id };
 }

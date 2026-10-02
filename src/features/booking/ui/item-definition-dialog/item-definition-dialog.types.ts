@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type { ItemDefinitionRecord } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
 import type { CatalogWriteResult } from "@/features/booking/application/use-cases/catalog-results/catalog-results.types";
 
@@ -52,4 +54,3 @@ export interface ItemDefinitionSubmitArgs {
   readonly setError: (value: string | undefined) => void;
   readonly setPending: (value: boolean) => void;
 }
-import type { ReactNode } from "react";

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import type { CategoryRecord } from "@/features/booking/application/ports/category-repository/category-repository.port";
+import type { CatalogWriteResult } from "@/features/booking/application/use-cases/catalog-results/catalog-results.types";
 import type { ServiceDetailView } from "@/features/booking/application/use-cases/service-results/service-results.types";
 import type { ServiceWriteResult } from "@/features/booking/application/use-cases/service-results/service-results.types";
 
@@ -16,6 +17,10 @@ export interface AddServiceDialogProps {
     serviceId: string,
     values: unknown,
   ) => Promise<ServiceWriteResult | undefined>;
+  readonly addCategoryAction?: (
+    workspaceId: string,
+    values: unknown,
+  ) => Promise<CatalogWriteResult | undefined>;
 }
 
 export interface AddServiceFieldsProps {
@@ -27,6 +32,7 @@ export interface AddServiceFieldsProps {
   readonly basePrice: string;
   readonly onBasePriceChange: (value: string) => void;
   readonly error?: string;
+  readonly onAddCategory?: () => void;
 }
 
 export interface ResponsiveServiceDialogProps {

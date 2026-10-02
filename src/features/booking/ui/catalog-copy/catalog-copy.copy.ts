@@ -4,8 +4,16 @@ export const CATALOG_COPY = {
   editServiceTitle: "Ubah layanan",
   editServiceDescription: "Perbarui nama, kategori, atau harga dasar layanan.",
   addCategory: "Tambah kategori",
+  addCategoryInline: "+ Kategori baru",
   addItem: "Tambah item",
   addField: "Tambah field",
+  editItemValue: "Ubah nilai",
+  editField: "Ubah field",
+  removeItem: "Hapus dari layanan",
+  removeField: "Hapus field",
+  removeItemTitle: (name: string) => `Hapus ${name} dari layanan?`,
+  removeFieldTitle: (name: string) => `Hapus field “${name}”?`,
+  removeDescription: "Tindakan ini tidak bisa dibatalkan.",
   add: "Tambah",
   edit: "Ubah",
   rename: "Ganti nama",
@@ -78,6 +86,7 @@ export const CATALOG_COPY = {
   savedToast: "Perubahan tersimpan",
   serverErrorTitle: "Perubahan belum tersimpan",
   serverErrorBody: "Periksa koneksi lalu coba lagi.",
+  retry: "Coba lagi",
   deletedToast: "Dihapus",
   status: "Status",
   itemsTitle: "Item paket",
@@ -112,6 +121,16 @@ export const CATALOG_COPY = {
   fieldType: "Tipe",
   options: "Pilihan",
   addOption: "Pisahkan pilihan dengan koma.",
+  addOptionButton: "Tambah pilihan",
+  option: "Pilihan",
+  optionLabel: (index: number) => `Pilihan ${String(index)}`,
+  removeOption: (name: string) => `Hapus pilihan ${name || "baru"}`,
+  optionError: (code: string) => {
+    if (code === "OPTION_DUPLICATE") return "Pilihan ini sudah ada.";
+    if (code === "OPTION_EMPTY") return "Isi pilihan.";
+    if (code === "OPTION_TOO_LONG") return "Maksimal 60 karakter.";
+    return undefined;
+  },
   requiredSwitch: "Wajib diisi",
   addFieldTitle: "Tambah field booking",
   fieldDialogDescription: "Diisi saat membuat proyek dari layanan ini.",
@@ -148,4 +167,5 @@ export const CATALOG_COPY = {
     TOO_MANY_OPTIONS: "Maksimal 50 pilihan.",
     SAVE_FAILED: "Perubahan belum tersimpan.",
   },
+  lockedDefinitionDescription: "Tipe dan pilihan terkunci karena item ini sudah dipakai layanan.",
 } as const;

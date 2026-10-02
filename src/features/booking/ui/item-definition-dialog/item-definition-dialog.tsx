@@ -7,12 +7,14 @@ import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
 import { Select } from "@/ui/patterns/select/select";
 import type { SelectOption } from "@/ui/patterns/select/select.types";
+import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 import { Switch } from "@/ui/primitives/switch/switch";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogFieldError } from "../catalog-field-error/catalog-field-error";
+import { showCatalogSaveFailure } from "../catalog-save-feedback/catalog-save-feedback";
 import type {
   ItemDefinitionDialogProps,
   ItemDefinitionFieldsProps,
@@ -114,20 +116,21 @@ function useItemDefinitionForm(props: Readonly<ItemDefinitionDialogProps>) {
   };
 }
 
-async function submitItemDefinition({
-  workspaceId,
-  definition,
-  name,
-  valueType,
-  unit,
-  selectionRequired,
-  selectionType,
-  updateAction,
-  action,
-  onOpenChange,
-  setError,
-  setPending,
-}: ItemDefinitionSubmitArgs): Promise<void> {
+async function submitItemDefinition(args: ItemDefinitionSubmitArgs): Promise<void> {
+  const {
+    workspaceId,
+    definition,
+    name,
+    valueType,
+    unit,
+    selectionRequired,
+    selectionType,
+    updateAction,
+    action,
+    onOpenChange,
+    setError,
+    setPending,
+  } = args;
   setPending(true);
   setError(undefined);
   try {
@@ -149,8 +152,9 @@ async function submitItemDefinition({
       return;
     }
     onOpenChange(false);
+    showToast({ tone: "success", title: CATALOG_COPY.savedToast });
   } catch {
-    setError("SAVE_FAILED");
+    showCatalogSaveFailure({ setError, retry: () => void submitItemDefinition(args) });
   } finally {
     setPending(false);
   }
@@ -232,6 +236,7 @@ function DefinitionTypeFields({
         label={CATALOG_COPY.valueType}
         value={valueType}
         isDisabled={locked || selectionRequired}
+        description={locked ? CATALOG_COPY.lockedDefinitionDescription : undefined}
         options={VALUE_OPTIONS}
         onChange={changeValueType}
       />

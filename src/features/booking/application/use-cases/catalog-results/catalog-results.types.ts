@@ -4,6 +4,7 @@ export interface CatalogValidationFailure {
   readonly fieldErrors: Readonly<Partial<Record<string, string>>>;
 }
 
-export type CatalogWriteResult = { readonly ok: true } | CatalogValidationFailure;
+export type CatalogWriteResult =
+  { readonly ok: true; readonly categoryId?: string } | CatalogValidationFailure;
 export type CatalogDeleteResult =
   { readonly ok: true } | { readonly ok: false; readonly code: "IN_USE" };

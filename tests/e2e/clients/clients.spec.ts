@@ -8,7 +8,9 @@ import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
 test.setTimeout(90_000);
 test.describe.configure({ retries: 2 });
 
-test("AC-CLI-001 AC-CLI-002 AC-CLI-003 adds a client from an empty list", async ({ page }) => {
+test("AC-CLI-001 AC-CLI-002 AC-CLI-003 AC-CLI-010 AC-CLI-012 adds and edits a client", async ({
+  page,
+}) => {
   await registerAndVerify(page, uniqueEmail("clients"));
   await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Clients Studio");
   await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
@@ -37,4 +39,26 @@ test("AC-CLI-001 AC-CLI-002 AC-CLI-003 adds a client from an empty list", async 
   await expect(clientsMain.getByText("1 klien aktif")).toBeVisible();
   await page.reload();
   await expect(clientTable.getByText("+62 812-3456-7890")).toBeVisible();
+
+  await page.getByRole("button", { name: CLIENT_COPY.addClient }).first().click();
+  const duplicateDialog = page
+    .getByRole("dialog", { name: CLIENT_COPY.dialogTitle })
+    .filter({ visible: true });
+  await duplicateDialog.getByRole("textbox", { name: CLIENT_COPY.name }).fill("Budi");
+  await duplicateDialog
+    .getByRole("textbox", { name: CLIENT_COPY.whatsappNumber })
+    .fill("0812 3456 7890");
+  await duplicateDialog.getByRole("button", { name: CLIENT_COPY.save }).click();
+  await expect(duplicateDialog.getByText("Nomor ini sudah dipakai Rina Wedding")).toBeVisible();
+
+  await page.keyboard.press("Escape");
+  await expect(duplicateDialog).toBeHidden();
+  await clientTable.getByText("Rina Wedding").click();
+  const editDialog = page
+    .getByRole("dialog", { name: CLIENT_COPY.editDialogTitle })
+    .filter({ visible: true });
+  await editDialog.getByRole("textbox", { name: CLIENT_COPY.name }).fill("Rina & Dimas");
+  await editDialog.getByRole("button", { name: CLIENT_COPY.saveEdit }).click();
+  await expect(editDialog).toBeHidden();
+  await expect(clientTable.getByText("Rina & Dimas")).toBeVisible();
 });

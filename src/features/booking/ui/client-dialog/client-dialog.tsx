@@ -91,7 +91,15 @@ function useClientDialogForm(props: Readonly<ClientDialogProps>) {
   useEffect(() => {
     if (props.isOpen) {
       form.reset(clientFormValues(props.client));
+      form.clearErrors();
+      const clearHolder = window.setTimeout(() => {
+        setNumberHolder(undefined);
+      });
+      return () => {
+        window.clearTimeout(clearHolder);
+      };
     }
+    return undefined;
   }, [form, props.client, props.isOpen]);
   async function submit(): Promise<void> {
     if (!(await form.trigger())) return;

@@ -1,7 +1,7 @@
 "use client";
-/* eslint-disable max-len, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression -- responsive action groups share callbacks */
+/* eslint-disable max-lines-per-function, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression -- responsive action groups share callbacks */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   formatWhatsappNumber,
@@ -25,6 +25,7 @@ export function ClientRowActions(props: Readonly<ClientRowActionsProps>) {
   const [isOpen, setIsOpen] = useState(false);
   const actionLabel = CLIENT_COPY.rowActions(props.client.name);
   const archive = props.status === "ACTIVE";
+  useRestoreActionFocus(actionLabel, props.client.id);
   function closeThen(action: () => void): void {
     setIsOpen(false);
     action();
@@ -63,10 +64,35 @@ export function ClientRowActions(props: Readonly<ClientRowActionsProps>) {
     );
   return (
     <MenuTrigger label={actionLabel}>
-      <IconButton icon="more-horizontal" size="sm" aria-label={actionLabel} />
+      <IconButton
+        data-client-row-action={props.client.id}
+        icon="more-horizontal"
+        size="sm"
+        aria-label={actionLabel}
+      />
       <Menu aria-label={actionLabel}>{items}</Menu>
     </MenuTrigger>
   );
+}
+
+function useRestoreActionFocus(actionLabel: string, clientId: string): void {
+  useEffect(() => {
+    function restoreFocus(event: KeyboardEvent): void {
+      const matchingMenuIsOpen = Array.from(document.querySelectorAll("[role=menu]")).some(
+        (menu) => menu.getAttribute("aria-label") === actionLabel,
+      );
+      if (event.key !== "Escape" || !matchingMenuIsOpen) return;
+      window.setTimeout(() => {
+        document
+          .querySelector<HTMLButtonElement>(`[data-client-row-action="${clientId}"]`)
+          ?.focus();
+      });
+    }
+    document.addEventListener("keydown", restoreFocus, true);
+    return () => {
+      document.removeEventListener("keydown", restoreFocus, true);
+    };
+  }, [actionLabel, clientId]);
 }
 
 function DesktopItems({
@@ -140,4 +166,4 @@ function MobileItems({
     </>
   );
 }
-/* eslint-enable max-len, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression -- end responsive action groups */
+/* eslint-enable max-lines-per-function, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression -- end responsive action groups */

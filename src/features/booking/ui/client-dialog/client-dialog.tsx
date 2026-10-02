@@ -131,10 +131,13 @@ function clientFormValues(client: ClientDialogProps["client"]): ClientInput {
   return {
     name: client.name,
     whatsappNumber: client.whatsappNumber ? formatWhatsappNumber(client.whatsappNumber) : "",
-    socialLinks: client.socialLinks.map((link) => ({
-      platform: link.platform,
-      value: link.value.startsWith("https://") ? link.value : `@${link.value}`,
-    })),
+    socialLinks:
+      client.socialLinks.length > 0
+        ? client.socialLinks.map((link) => ({
+            platform: link.platform,
+            value: link.value.startsWith("https://") ? link.value : `@${link.value}`,
+          }))
+        : DEFAULT_VALUES.socialLinks.map((link) => ({ ...link })),
   };
 }
 

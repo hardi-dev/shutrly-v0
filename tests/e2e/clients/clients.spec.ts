@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
 
@@ -10,6 +11,14 @@ import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
 
 test.setTimeout(90_000);
 test.describe.configure({ retries: 2 });
+
+const axeTags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
+
+async function expectClientsA11y(page: Page): Promise<void> {
+  await expect(page.locator("[data-entering], [data-exiting]")).toHaveCount(0);
+  const results = await new AxeBuilder({ page }).withTags(axeTags).analyze();
+  expect(results.violations).toEqual([]);
+}
 
 async function openWorkspace(page: Page, label: string): Promise<string> {
   await registerAndVerify(page, uniqueEmail(label));
@@ -30,7 +39,11 @@ async function addClient(
   page: Page,
   values: Readonly<{ name: string; whatsappNumber?: string; instagram?: string; tiktok?: string }>,
 ): Promise<void> {
-  await page.getByRole("button", { name: CLIENT_COPY.addClient }).first().click();
+  const mobile = page.viewportSize()?.width === 390;
+  await page
+    .getByRole("button", { name: mobile ? CLIENT_COPY.add : CLIENT_COPY.addClient })
+    .first()
+    .click();
   const dialog = page
     .getByRole("dialog", { name: CLIENT_COPY.dialogTitle })
     .filter({ visible: true });
@@ -207,3 +220,92 @@ test("AC-CLI-018 prevents a second owner opening another workspace clients", asy
     await other.close();
   }
 });
+
+for (const viewport of [
+  { name: "desktop light", width: 1440, height: 900, colorScheme: "light" },
+  { name: "desktop dark", width: 1440, height: 900, colorScheme: "dark" },
+  { name: "phone light", width: 390, height: 844, colorScheme: "light" },
+  { name: "phone dark", width: 390, height: 844, colorScheme: "dark" },
+] as const) {
+  test(`AC-CLI-020 client states have no axe violations on ${viewport.name}`, async ({ page }) => {
+    test.setTimeout(120_000);
+    const workspaceId = await openWorkspace(page, `clients-a11y-${viewport.name}`);
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.emulateMedia({ colorScheme: viewport.colorScheme });
+
+    await openClients(page, workspaceId);
+    await expectClientsA11y(page);
+
+    await openClients(page, workspaceId, true);
+    await expectClientsA11y(page);
+
+    await openClients(page, workspaceId);
+    const clientName = `Rina ${viewport.colorScheme}`;
+    await addClient(page, { name: clientName });
+    await expectClientsA11y(page);
+
+    const search = page.getByRole("searchbox", { name: CLIENT_COPY.searchLabel });
+    await search.fill("zzz");
+    await expect(page.getByRole("heading", { name: CLIENT_COPY.noMatchTitle })).toBeVisible();
+    await expectClientsA11y(page);
+    await page.getByRole("button", { name: CLIENT_COPY.clearSearch }).click();
+
+    await openActions(page, clientName);
+    await expectClientsA11y(page);
+    await pressRowAction(page, viewport.width === 390, CLIENT_COPY.edit);
+    const editDialog = page
+      .getByRole("dialog", { name: CLIENT_COPY.editDialogTitle })
+      .filter({ visible: true });
+    await expect(editDialog).toBeVisible();
+    await expectClientsA11y(page);
+    await page.keyboard.press("Escape");
+    await expect(editDialog).toBeHidden();
+
+    await openActions(page, clientName);
+    await pressRowAction(page, viewport.width === 390, CLIENT_COPY.delete);
+    const deleteDialog = page
+      .getByRole(viewport.width === 390 ? "dialog" : "alertdialog", {
+        name: CLIENT_COPY.deleteTitle(clientName),
+      })
+      .filter({ visible: true });
+    await expect(deleteDialog).toBeVisible();
+    await expectClientsA11y(page);
+    await page.keyboard.press("Escape");
+    await expect(deleteDialog).toBeHidden();
+  });
+}
+
+test("AC-CLI-020 supports keyboard row, action-menu, and social-row paths", async ({ page }) => {
+  const workspaceId = await openWorkspace(page, "clients-keyboard");
+  await openClients(page, workspaceId);
+  await addClient(page, { name: "Rina Keyboard" });
+
+  const table = page.getByRole("grid", { name: CLIENT_COPY.listTitle });
+  const row = table.getByRole("row", { name: /Rina Keyboard/ });
+  await row.focus();
+  await page.keyboard.press("Enter");
+  const dialog = page
+    .getByRole("dialog", { name: CLIENT_COPY.editDialogTitle })
+    .filter({ visible: true });
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole("button", { name: CLIENT_COPY.addSocialLink }).click();
+  await dialog
+    .getByRole("button", { name: CLIENT_COPY.removeSocialLinkField("Instagram", 2) })
+    .click();
+  await expect(
+    dialog.getByRole("textbox", { name: CLIENT_COPY.socialValueField("Instagram", 1) }),
+  ).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(row).toBeFocused();
+
+  const actions = page.getByRole("button", { name: CLIENT_COPY.rowActions("Rina Keyboard") });
+  await actions.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("menuitem", { name: CLIENT_COPY.edit })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(actions).toBeFocused();
+});
+
+async function pressRowAction(page: Page, mobile: boolean, label: string): Promise<void> {
+  await page.getByRole(mobile ? "button" : "menuitem", { name: label }).click();
+}

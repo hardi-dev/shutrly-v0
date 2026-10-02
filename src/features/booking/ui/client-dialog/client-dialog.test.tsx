@@ -104,4 +104,31 @@ describe("ClientDialog", () => {
     });
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
+
+  it("AC-CLI-011 adds an Instagram row when an edited client has no social links", async () => {
+    useMobileViewport.mockReturnValue(false);
+    render(
+      <ClientDialog
+        isOpen
+        workspaceId="x"
+        mode="edit"
+        client={{
+          id: "rina",
+          name: "Rina Wedding",
+          whatsappNumber: null,
+          socialLinks: [],
+          isArchived: false,
+        }}
+        onOpenChange={vi.fn()}
+        onSubmit={vi.fn()}
+      />,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Tambah media sosial" }));
+
+    expect(screen.getByRole("button", { name: "Platform media sosial 1" })).toHaveTextContent(
+      "Instagram",
+    );
+    expect(screen.getByRole("textbox", { name: "Akun Instagram 1" })).toBeInTheDocument();
+  });
 });

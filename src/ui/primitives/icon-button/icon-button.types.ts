@@ -11,4 +11,5 @@ export interface IconButtonProps {
   isDisabled?: boolean;
   className?: string;
   badgeCount?: number;
+  "data-client-row-action"?: string;
 }

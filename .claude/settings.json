@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "shutrly": {
+      "source": {
+        "source": "directory",
+        "path": "./"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "sdv@shutrly": true
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "sdv",
+  "version": "1.4.1",
+  "description": "Spec-driven vibe coding: progressive spec-driven workflow for AI-assisted software delivery using constitution, coding rules, UML, Pencil design, technical design, implementation iterations, verification, and shipping.",
+  "skills": "./skills/",
+  "commands": "./commands/"
+}

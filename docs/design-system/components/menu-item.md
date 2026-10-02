@@ -51,6 +51,18 @@ The private base is `_MenuItem/Base` (`mf83F`), with layers `Checkbox` `iWymw`, 
 | Spacing | `menu.item.padding-y` / `-x` → 8 / 12; `menu.item.gap` → 8 |
 | Radius | `menu.item.radius` → `radius.sm` (≤ menu `radius.md`, SP9) |
 
+## Rich — APPROVED 2026-10-02 (F-05)
+
+Named variants for rich single-choice options, for when each option needs an explanation (Select menus and phone pickers; F-05 *Tipe nilai*, *Jenis pilihan*):
+
+| Component | ID | Content |
+|---|---|---|
+| `Menu Item/Rich/Default` | `WWqyy` | Icon on, Label, Description on |
+| `Menu Item/Rich/Hover` | `w5XzS` | As Default, fill `component.menu.item.background-hover` |
+| `Menu Item/Rich/Selected` | `WngMO` | As Default, Label semibold, Check on |
+
+They use the existing `component.menu.item.*` tokens, so no tokens are new. In a closed Select, show the chosen option's icon as the input's leading icon. On phones, the same items sit in a Bottom Sheet/Form picker with a *Pilih* action.
+
 ## Accessibility
 
 - Use `role=option` (listbox) or `menuitem` / `menuitemcheckbox` (menu). `aria-selected` / `aria-checked` carries the state, not the colour of the check.

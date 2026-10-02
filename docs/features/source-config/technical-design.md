@@ -1,6 +1,6 @@
 # Technical Design — F-04 Source configuration
 
-Status: PLANNED (2026-10-02) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md) (24 frames, `exports/`) · Plan: [plan.md](plan.md)
+Status: IN PROGRESS (2026-10-02) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md) (24 frames, `exports/`) · Plan: [plan.md](plan.md)
 
 ## Context
 
@@ -242,3 +242,30 @@ See [plan.md](plan.md): 14 tasks, test-first, one commit each. Owner checkpoints
 - **AC-SRC-013** can only be proven against a real FK once F-09 adds `gallery_source`. Until then the mapping is unit-tested, and F-09 adds the integration test.
 - **F-03 rows** stay local in this feature. Moving `template-list-screen` to `ListCardItem` is a separate follow-up.
 - **Inactive rows** are not dimmed: the library row has no inactive state, and the chip carries the meaning (design.md).
+
+## Implementation record (2026-10-02)
+
+F-04 is implemented on branch `feat/source-config` and is ready for `/sdv:verify-feature source-config` after the Owner reviews the verification evidence. The 14 tasks were completed test-first with one conventional commit per task:
+
+`31c4256`, `9c68055`, `9816f18`, `d4e61d4`, `2da0044`, `807040c`, `c15b827`, `0d899dc`, `1862435`, `95fbf36`, `a0ec47c`, `c6d2740`, `b4f77df`, followed by the Task 14 record commit.
+
+### Deviations and implementation notes
+
+- The Owner shell renders desktop and phone trees at the same time. `PageActions` now claims the shared portal target once, while the E2E selectors scope assertions to the visible tree. This prevents duplicate page actions without changing the export layout.
+- The page-action portal still appears after hydration, so the expected one-frame action flash remains accepted.
+- The loading skeleton uses token-backed classes plus the export's fixed shape and height literals; no new design token was introduced for the one-off skeleton geometry.
+- The option-card focus glow uses the existing semantic focus-glow token. Shared Modal, BottomSheet and OptionCard text styles use semantic text tokens so the settled dialogs meet WCAG AA contrast; the E2E axe journey waits for the 300 ms entrance animation to settle before analysis.
+- AC-SRC-013's repository `IN_USE` mapping is unit-tested with the planned executor error shape. The real foreign-key integration assertion remains deferred until F-09 adds `gallery_source`.
+- The Owner applied migrations 0004 and 0005. The agent did not run `pnpm db:migrate`.
+
+### AC → verification map
+
+| Acceptance criteria | Evidence |
+|---|---|
+| AC-SRC-001…004 | Workspace creation/backfill integration tests; source screen tests; navigation and legacy-route E2E journey |
+| AC-SRC-005…012 | Domain/application/UI tests; source lifecycle E2E journey covering add, duplicate, rename, deactivate/undo and delete-to-empty |
+| AC-SRC-013…016 | Repository/application/composition tests, including tenant scoping, generic failure mapping and `{}` config data |
+| AC-SRC-015 | Cross-owner E2E journey resolves the foreign workspace URL as not found |
+| AC-SRC-017 | Playwright + axe at 1440 px and 390 px, plus keyboard menu → rename → Escape focus return |
+
+The final verification gate is recorded in the Task 14 commit and includes typecheck, lint, unit tests, integration tests, the full E2E suite and the production build.

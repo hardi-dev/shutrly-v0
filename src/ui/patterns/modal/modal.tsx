@@ -127,14 +127,14 @@ function ModalHeader({
       <div className="flex min-w-0 flex-1 flex-col gap-(--component-modal-header-text-gap)">
         <h2
           id={titleId}
-          className="text-(--component-modal-title) text-[18px] font-bold tracking-[-0.4px]"
+          className="text-(--color-semantic-text-primary) text-[18px] font-bold tracking-[-0.4px]"
         >
           {title}
         </h2>
         {description ? (
           <p
             id={descriptionId}
-            className="text-(length:--font-size-body-sm) leading-[20px] text-(--component-modal-description)"
+            className="text-(length:--font-size-body-sm) leading-[20px] text-(--color-semantic-text-secondary)"
           >
             {description}
           </p>

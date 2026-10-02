@@ -34,11 +34,11 @@ function OptionCard({ option }: Readonly<OptionCardProps>) {
           className="size-[18px] text-(--component-option-card-icon) group-data-disabled:text-(--component-option-card-icon-disabled)"
         />
         <span className="flex min-w-0 flex-1 flex-col gap-(--component-option-card-text-gap)">
-          <span className="text-(length:--font-size-body) font-semibold text-(--component-option-card-title) group-data-disabled:text-(--component-option-card-title-disabled)">
+          <span className="text-(length:--font-size-body) font-semibold text-(--color-semantic-text-primary) group-data-disabled:text-(--component-option-card-title-disabled)">
             {option.title}
           </span>
           {option.description ? (
-            <span className="text-(length:--font-size-body-sm) text-(--component-option-card-description) group-data-disabled:hidden">
+            <span className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary) group-data-disabled:hidden">
               {option.description}
             </span>
           ) : null}
@@ -71,7 +71,9 @@ export function OptionCardGroup({
       onChange={handleChange}
       className="flex flex-col gap-(--space-2)"
     >
-      <span className={cn(!isLabelVisible && "sr-only")}>{label}</span>
+      <span className={cn("text-(--color-semantic-text-primary)", !isLabelVisible && "sr-only")}>
+        {label}
+      </span>
       {options.map((option) => (
         <OptionCard key={option.value} option={option} />
       ))}

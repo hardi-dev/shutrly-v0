@@ -165,7 +165,7 @@ function SheetHeader({
         <h2
           id={titleId}
           className={cn(
-            "text-(--component-sheet-title) text-[18px] font-bold",
+            "text-(--color-semantic-text-primary) text-[18px] font-bold",
             headerLeading && "sr-only",
           )}
         >
@@ -174,7 +174,7 @@ function SheetHeader({
         {description ? (
           <p
             id={descriptionId}
-            className="mt-(--component-sheet-header-text-gap) text-(length:--font-size-body-sm) leading-[20px] text-(--component-sheet-description)"
+            className="mt-(--component-sheet-header-text-gap) text-(length:--font-size-body-sm) leading-[20px] text-(--color-semantic-text-secondary)"
           >
             {description}
           </p>

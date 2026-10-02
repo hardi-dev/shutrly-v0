@@ -38,6 +38,7 @@ export function ServiceItemDialog(props: Readonly<ServiceItemDialogProps>) {
   return (
     <ResponsiveItemDialog
       {...props}
+      onOpenChange={form.handleOpenChange}
       content={content}
       save={save}
       title={props.item ? CATALOG_COPY.editItemValue : CATALOG_COPY.addItemTitle}
@@ -59,6 +60,13 @@ function useServiceItemForm({
   const state = useServiceItemValues(item);
   const [error, setError] = useState<string | undefined>();
   const [pending, setPending] = useState(false);
+  function handleOpenChange(isOpen: boolean): void {
+    if (!isOpen) {
+      state.reset();
+      setError(undefined);
+    }
+    onOpenChange(isOpen);
+  }
   async function submit(): Promise<void> {
     await submitServiceItem({
       workspaceId,
@@ -71,7 +79,7 @@ function useServiceItemForm({
       maximum: state.maximum,
       action,
       updateAction,
-      onOpenChange,
+      onOpenChange: handleOpenChange,
       setError,
       setPending,
     });
@@ -84,19 +92,31 @@ function useServiceItemForm({
     error,
     pending,
     submit,
+    handleOpenChange,
     used,
     isEditing: Boolean(item),
   };
 }
 
 function useServiceItemValues(item: ServiceItemDialogProps["item"]): ServiceItemValueState {
-  const [definitionId, setDefinitionId] = useState<string | null>(item?.definitionId ?? null);
-  const [value, setValue] = useState(item?.value.type === "NUMBER" ? item.value.value : "");
-  const [minimum, setMinimum] = useState(item?.value.type === "RANGE" ? item.value.min : "");
-  const [maximum, setMaximum] = useState(item?.value.type === "RANGE" ? item.value.max : "");
+  const initialDefinitionId = item?.definitionId ?? null;
+  const initialValue = item?.value.type === "NUMBER" ? item.value.value : "";
+  const initialMinimum = item?.value.type === "RANGE" ? item.value.min : "";
+  const initialMaximum = item?.value.type === "RANGE" ? item.value.max : "";
+  const [definitionId, setDefinitionId] = useState<string | null>(initialDefinitionId);
+  const [value, setValue] = useState(initialValue);
+  const [minimum, setMinimum] = useState(initialMinimum);
+  const [maximum, setMaximum] = useState(initialMaximum);
+  function reset(): void {
+    setDefinitionId(initialDefinitionId);
+    setValue(initialValue);
+    setMinimum(initialMinimum);
+    setMaximum(initialMaximum);
+  }
   return {
     definitionId,
     setDefinitionId,
+    reset,
     value,
     setValue,
     minimum,

@@ -64,6 +64,7 @@ export interface ServiceItemSubmitArgs {
 export interface ServiceItemValueState {
   readonly definitionId: string | null;
   readonly setDefinitionId: (value: string | null) => void;
+  readonly reset: () => void;
   readonly value: string;
   readonly setValue: (value: string) => void;
   readonly minimum: string;

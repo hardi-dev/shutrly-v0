@@ -32,6 +32,7 @@ export interface CatalogActionSurfaceProps {
 export interface MobileCatalogActionsProps extends CatalogActionSurfaceProps {
   readonly isOpen: boolean;
   readonly setIsOpen: (isOpen: boolean) => void;
+  readonly triggerId: string;
 }
 
 export interface CatalogSheetItemsProps {

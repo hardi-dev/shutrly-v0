@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
@@ -21,12 +21,22 @@ import type {
   RowActionHandlers,
 } from "./catalog-row-actions.types";
 
+// The next dialog opens once the action sheet has finished its 300ms exit and
+// returned focus, so it captures the row trigger rather than <body>.
+const SHEET_HANDOFF_DELAY_MS = 400;
+
 export function CatalogRowActions(props: Readonly<CatalogRowActionsProps>) {
   const isMobile = useMobileViewport();
+  const triggerId = useId();
   const [isOpen, setIsOpen] = useState(false);
-  const handlers = useRowActionHandlers(props, () => {
-    setIsOpen(false);
-  });
+  const handlers = useRowActionHandlers(
+    props,
+    () => {
+      setIsOpen(false);
+    },
+    triggerId,
+    isMobile,
+  );
   if (isMobile) {
     return (
       <MobileCatalogActions
@@ -34,17 +44,32 @@ export function CatalogRowActions(props: Readonly<CatalogRowActionsProps>) {
         handlers={handlers}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        triggerId={triggerId}
       />
     );
   }
-  return <DesktopCatalogActions props={props} handlers={handlers} />;
+  return <DesktopCatalogActions props={props} handlers={handlers} triggerId={triggerId} />;
 }
 
 function useRowActionHandlers(
   props: Readonly<CatalogRowActionsProps>,
   close: () => void,
+  triggerId: string,
+  isMobile: boolean,
 ): RowActionHandlers {
   const { isActive, kind, onEdit, onRename, onDelete } = props;
+  function closeThen(callback?: () => void): void {
+    close();
+    if (callback) {
+      window.setTimeout(
+        () => {
+          document.getElementById(triggerId)?.focus();
+          callback();
+        },
+        isMobile ? SHEET_HANDOFF_DELAY_MS : 0,
+      );
+    }
+  }
   async function active(): Promise<void> {
     const nextActive = !isActive;
     await props.setActiveAction(props.workspaceId, kind, props.id, nextActive);
@@ -62,20 +87,17 @@ function useRowActionHandlers(
   return {
     actionLabel: isActive ? CATALOG_COPY.archive : CATALOG_COPY.unarchive,
     onEdit: () => {
-      close();
-      onEdit?.();
+      closeThen(onEdit);
     },
     onRename: () => {
-      close();
-      onRename?.();
+      closeThen(onRename);
     },
     onActive: () => {
       close();
       void active();
     },
     onDelete: () => {
-      close();
-      onDelete?.();
+      closeThen(onDelete);
     },
   };
 }
@@ -85,6 +107,7 @@ function MobileCatalogActions({
   handlers,
   isOpen,
   setIsOpen,
+  triggerId,
 }: Readonly<MobileCatalogActionsProps>) {
   function handleOpen(): void {
     setIsOpen(true);
@@ -93,6 +116,7 @@ function MobileCatalogActions({
   return (
     <>
       <IconButton
+        id={triggerId}
         icon="more-horizontal"
         size="sm"
         aria-label={CATALOG_COPY.rowActions(props.name)}
@@ -131,11 +155,15 @@ function CatalogSheetItems({ kind, handlers }: Readonly<CatalogSheetItemsProps>)
   );
 }
 
-function DesktopCatalogActions({ props, handlers }: Readonly<CatalogActionSurfaceProps>) {
+function DesktopCatalogActions({
+  props,
+  handlers,
+  triggerId,
+}: Readonly<CatalogActionSurfaceProps & { triggerId: string }>) {
   const label = CATALOG_COPY.rowActions(props.name);
   return (
     <MenuTrigger label={label}>
-      <IconButton icon="more-horizontal" size="sm" aria-label={label} />
+      <IconButton id={triggerId} icon="more-horizontal" size="sm" aria-label={label} />
       <Menu aria-label={label}>
         {props.kind === "service" || props.kind === "definition" ? (
           <MenuItem label={CATALOG_COPY.edit} icon="pencil" onSelect={handlers.onEdit} />

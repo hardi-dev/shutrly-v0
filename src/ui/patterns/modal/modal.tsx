@@ -4,6 +4,7 @@ import { type ReactNode, useId, useLayoutEffect, useRef } from "react";
 import { Dialog, Modal as AriaModal, ModalOverlay } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
+import { useRestoreFocus } from "@/ui/hooks/use-restore-focus/use-restore-focus";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { MODAL_COPY } from "./modal.copy";
@@ -29,18 +30,12 @@ export function Modal({
   const titleId = useId();
   const descriptionId = useId();
   const dialogRef = useRef<HTMLElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
+  useRestoreFocus(isOpen);
 
   useLayoutEffect(() => {
     if (isOpen) {
-      previousFocusRef.current =
-        document.activeElement instanceof HTMLElement ? document.activeElement : null;
       dialogRef.current?.setAttribute("aria-modal", "true");
-      return;
     }
-
-    previousFocusRef.current?.focus();
-    previousFocusRef.current = null;
   }, [isOpen]);
 
   return (

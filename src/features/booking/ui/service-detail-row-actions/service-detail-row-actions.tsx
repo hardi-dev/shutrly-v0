@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
@@ -19,13 +19,18 @@ import type {
   ServiceDetailRowActionsProps,
 } from "./service-detail-row-actions.types";
 
+// The next dialog opens once the action sheet has finished its 300ms exit and
+// returned focus, so it captures the row trigger rather than <body>.
+const SHEET_HANDOFF_DELAY_MS = 400;
+
 export function ServiceDetailRowActions(props: Readonly<ServiceDetailRowActionsProps>) {
   const mobile = useMobileViewport();
+  const triggerId = useId();
   const [isOpen, setIsOpen] = useState(false);
   function close(): void {
     setIsOpen(false);
   }
-  const handlers = useDetailActionHandlers(props, close);
+  const handlers = useDetailActionHandlers(props, close, triggerId, mobile);
   if (mobile)
     return (
       <MobileDetailActions
@@ -33,35 +38,44 @@ export function ServiceDetailRowActions(props: Readonly<ServiceDetailRowActionsP
         handlers={handlers}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        triggerId={triggerId}
       />
     );
-  return <DesktopDetailActions props={props} handlers={handlers} />;
+  return <DesktopDetailActions props={props} handlers={handlers} triggerId={triggerId} />;
 }
 
 function useDetailActionHandlers(
   props: Readonly<ServiceDetailRowActionsProps>,
   close: () => void,
+  triggerId: string,
+  isMobile: boolean,
 ): DetailActionHandlers {
   const editLabel = props.kind === "item" ? CATALOG_COPY.editItemValue : CATALOG_COPY.editField;
   const deleteLabel = props.kind === "item" ? CATALOG_COPY.removeItem : CATALOG_COPY.removeField;
+  function closeThen(callback: () => void): void {
+    close();
+    window.setTimeout(
+      () => {
+        document.getElementById(triggerId)?.focus();
+        callback();
+      },
+      isMobile ? SHEET_HANDOFF_DELAY_MS : 0,
+    );
+  }
   return {
     editLabel,
     deleteLabel,
     onEdit: () => {
-      close();
-      props.onEdit();
+      closeThen(props.onEdit);
     },
     onMoveUp: () => {
-      close();
-      props.onMoveUp();
+      closeThen(props.onMoveUp);
     },
     onMoveDown: () => {
-      close();
-      props.onMoveDown();
+      closeThen(props.onMoveDown);
     },
     onDelete: () => {
-      close();
-      props.onDelete();
+      closeThen(props.onDelete);
     },
   };
 }
@@ -71,6 +85,7 @@ function MobileDetailActions({
   handlers,
   isOpen,
   setIsOpen,
+  triggerId,
 }: Readonly<MobileDetailActionsProps>) {
   function open(): void {
     setIsOpen(true);
@@ -78,6 +93,7 @@ function MobileDetailActions({
   return (
     <>
       <IconButton
+        id={triggerId}
         icon="more-horizontal"
         size="sm"
         aria-label={CATALOG_COPY.rowActions(props.name)}
@@ -114,11 +130,15 @@ function MobileDetailActions({
   );
 }
 
-function DesktopDetailActions({ props, handlers }: Readonly<DetailActionSurfaceProps>) {
+function DesktopDetailActions({
+  props,
+  handlers,
+  triggerId,
+}: Readonly<DetailActionSurfaceProps & { triggerId: string }>) {
   const label = CATALOG_COPY.rowActions(props.name);
   return (
     <MenuTrigger label={label}>
-      <IconButton icon="more-horizontal" size="sm" aria-label={label} />
+      <IconButton id={triggerId} icon="more-horizontal" size="sm" aria-label={label} />
       <Menu aria-label={label}>
         <MenuItem label={handlers.editLabel} icon="pencil" onSelect={handlers.onEdit} />
         <MenuItem

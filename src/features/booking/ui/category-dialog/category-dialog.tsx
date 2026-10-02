@@ -70,7 +70,9 @@ function useCategoryDialogForm(props: Readonly<CategoryDialogProps>): CategoryDi
       showToast({ tone: "success", title: CATALOG_COPY.savedToast });
     } catch {
       showCatalogSaveFailure({
-        setError: (message) => { form.setError("name", { type: "server", message }); },
+        setError: (message) => {
+          form.setError("name", { type: "server", message });
+        },
         retry: () => {
           void submit();
         },

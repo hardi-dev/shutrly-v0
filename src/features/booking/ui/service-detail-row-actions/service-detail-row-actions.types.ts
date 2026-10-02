@@ -29,4 +29,5 @@ export interface DetailActionSurfaceProps {
 export interface MobileDetailActionsProps extends DetailActionSurfaceProps {
   readonly isOpen: boolean;
   readonly setIsOpen: (open: boolean) => void;
+  readonly triggerId: string;
 }

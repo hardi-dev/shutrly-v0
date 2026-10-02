@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { describe, expect, it } from "vitest";
@@ -58,7 +58,9 @@ describe("BottomSheet (C32)", () => {
 
     await user.keyboard("{Escape}");
     expect(screen.queryByRole("dialog")).toBeNull();
-    expect(trigger).toHaveFocus();
+    await waitFor(() => {
+      expect(trigger).toHaveFocus();
+    });
   });
 
   it("renders a form sheet with description, close control and footer actions", async () => {

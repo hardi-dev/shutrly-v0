@@ -19,4 +19,21 @@ describe("PageHeader", () => {
     expect(screen.getByRole("button", { name: "Cari" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah" })).toBeInTheDocument();
   });
+
+  it("renders route tabs below the hero while keeping the header track", () => {
+    render(
+      <PageHeader
+        parent="Aster"
+        current="Layanan"
+        title="Layanan"
+        tabs={{
+          label: "Bagian layanan",
+          tabs: [{ href: "/services", label: "Layanan", isActive: true }],
+        }}
+      />,
+    );
+
+    expect(screen.getByRole("navigation", { name: "Bagian layanan" })).toBeInTheDocument();
+    expect(screen.getByRole("banner")).toHaveClass("border-b");
+  });
 });

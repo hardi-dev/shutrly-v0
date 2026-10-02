@@ -50,4 +50,20 @@ describe("EmptyState", () => {
     expect(screen.getByTestId("empty-state-icon-wrap")).toHaveClass(background);
     expect(screen.getByTestId("empty-state-icon")).toHaveClass(foreground);
   });
+
+  it("renders without its own surface inside a card", () => {
+    render(
+      <EmptyState
+        icon="camera"
+        placement="in-card"
+        title="Belum ada layanan"
+        body="Tambahkan layanan untuk memulai."
+      />,
+    );
+
+    const emptyState = screen.getByTestId("empty-state");
+    expect(emptyState).toHaveClass("px-0", "py-(--component-empty-state-in-card-padding-y)");
+    expect(emptyState).not.toHaveClass("border", "bg-(--color-semantic-surface-subtle)");
+    expect(emptyState.querySelector("p")).toHaveClass("w-full");
+  });
 });

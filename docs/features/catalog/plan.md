@@ -201,7 +201,7 @@ describe("Select (C19 + Menu Item/Rich)", () => {
 
 **Files:** create `src/ui/patterns/tabs/*`; modify `page-header`, `app-shell`, `segmented-control`, `empty-state` (+ tests, stories).
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
 
 ```tsx
 // tabs.test.tsx
@@ -230,15 +230,15 @@ describe("Tabs (C45)", () => {
   - `page-header.test.tsx`: with `tabs`, the header renders the `Tabs` under the hero and keeps one bottom border.
   - `segmented-control.test.tsx`: with `isFullWidth`, the root and every item have `w-full` / `flex-1` and labels are centred.
   - `empty-state.test.tsx`: `placement="in-card"` drops the surface and border classes and makes the body full width.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
   - **`Tabs`** (`tabs.md`): `<nav aria-label>` + `<ul class="flex gap-(--component-tabs-gap)">`; each item a Next `Link`, `py-(--component-tabs-item-padding-y)`, label body; inactive `text-(--component-tabs-item-text) font-medium hover:text-(--component-tabs-item-text-hover)`; active `aria-current="page"`, `text-(--component-tabs-item-text-active) font-bold`, `border-b-2 border-(--component-tabs-item-indicator)`; focus-visible outline `(--component-tabs-item-focus)` with `rounded-(--component-tabs-item-radius)`. Variant `hasTrack` adds the standalone `border-b border-(--component-tabs-track)` (default true; Page Header passes false). Types: `TabLink { href; label; isActive }`, `TabsProps { label; tabs: readonly TabLink[]; hasTrack?: boolean }`.
   - **`PageHeader`:** new optional `tabs?: { label: string; tabs: readonly TabLink[] }`. Render below the hero in a row padded `px-(--component-page-header-tabs-padding-x)`, `Tabs hasTrack={false}`; the header's existing bottom border is the track (Page Header/Tabs `NPQ7d`).
   - **`AppShell`:** pass a new `panelTabs` prop to `PageHeader` (desktop tree only).
   - **`SegmentedControl`:** `isFullWidth?: boolean` → root `w-full`, items `flex-1 justify-center text-center` (Segmented Control/Full width `iIcai`).
   - **`EmptyState`:** `placement?: "standalone" | "in-card"`; `in-card` → no `bg`/`border`, padding `py-(--component-empty-state-in-card-padding-y) px-0`, body `w-full` (Empty State/In card `E9A74J`).
-- [ ] **Step 4: Stories:** `Patterns/Tabs` (`Standalone`, `InHeader` via PageHeader), Segmented `FullWidth`, Empty State `InCard` inside a Section Card.
-- [ ] **Step 5:** gate → PASS. Commit `feat(ui): add tabs, header tabs, full-width segmented control and in-card empty state`.
+- [x] **Step 4: Stories:** `Patterns/Tabs` (`Standalone`, `InHeader` via PageHeader), Segmented `FullWidth`, Empty State `InCard` inside a Section Card.
+- [x] **Step 5:** gate → PASS. Commit `feat(ui): add tabs, header tabs, full-width segmented control and in-card empty state`.
 
 ### Task 4: Owner shell for the catalog
 

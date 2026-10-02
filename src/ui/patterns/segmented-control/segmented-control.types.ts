@@ -8,5 +8,6 @@ export interface SegmentedControlProps {
   options: readonly SegmentedOption[];
   selectedId: string;
   onChange: (id: string) => void;
+  isFullWidth?: boolean;
   className?: string;
 }

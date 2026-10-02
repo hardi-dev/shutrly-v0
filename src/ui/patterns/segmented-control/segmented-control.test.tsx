@@ -44,4 +44,23 @@ describe("SegmentedControl (C23)", () => {
       "auto-cols-fr",
     );
   });
+
+  it("renders a full-width centered variant", () => {
+    render(
+      <SegmentedControl
+        label="Bagian layanan"
+        options={OPTIONS}
+        selectedId="edit"
+        onChange={vi.fn()}
+        isFullWidth
+      />,
+    );
+
+    expect(screen.getByRole("radiogroup", { name: "Bagian layanan" })).toHaveClass("w-full");
+    expect(screen.getByRole("radio", { name: "Edit" })).toHaveClass(
+      "w-full",
+      "flex-1",
+      "justify-center",
+    );
+  });
 });

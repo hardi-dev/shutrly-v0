@@ -9,6 +9,7 @@ export function AppPanel({
   subtitle,
   utilities,
   actions,
+  tabs,
   children,
 }: Readonly<AppPanelProps>) {
   return (
@@ -25,6 +26,7 @@ export function AppPanel({
         subtitle={subtitle}
         utilities={utilities}
         action={actions}
+        tabs={tabs}
       />
       {children}
     </main>

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import type { BottomNavProps } from "../bottom-nav/bottom-nav.types";
 import type { CompactBarProps } from "../compact-bar/compact-bar.types";
+import type { PageHeaderProps } from "../page-header/page-header.types";
 import type { SidebarAccount, SidebarWorkspace } from "../sidebar/sidebar.types";
 
 export interface AppShellSubPage {
@@ -19,6 +20,7 @@ export interface AppShellProps {
   navBottom?: ReactNode;
   panelActions?: ReactNode;
   panelUtilities?: ReactNode;
+  panelTabs?: NonNullable<PageHeaderProps["tabs"]>;
   mobileBottomNav: BottomNavProps;
   mobileSheet?: ReactNode;
   mobileUtilities?: ReactNode;

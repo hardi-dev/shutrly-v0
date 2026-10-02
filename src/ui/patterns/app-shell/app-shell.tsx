@@ -29,6 +29,7 @@ export function AppShell({
   navBottom,
   panelActions,
   panelUtilities,
+  panelTabs,
   mobileBottomNav,
   mobileSheet,
   mobileUtilities,
@@ -104,6 +105,7 @@ export function AppShell({
         parent={subPage?.parent.label ?? workspace.name}
         panelActions={panelActions}
         panelUtilities={panelUtilities}
+        panelTabs={panelTabs}
       >
         {children}
       </DesktopContent>
@@ -224,6 +226,7 @@ function DesktopContent({
   parent,
   panelActions,
   panelUtilities,
+  panelTabs,
   children,
 }: Readonly<{
   id: string;
@@ -232,6 +235,7 @@ function DesktopContent({
   parent: string;
   panelActions: AppShellProps["panelActions"];
   panelUtilities: AppShellProps["panelUtilities"];
+  panelTabs: AppShellProps["panelTabs"];
   children: AppShellProps["children"];
 }>) {
   return (
@@ -243,6 +247,7 @@ function DesktopContent({
         parent={parent}
         actions={panelActions}
         utilities={panelUtilities}
+        tabs={panelTabs}
       >
         <PageContent>{children}</PageContent>
       </AppPanel>

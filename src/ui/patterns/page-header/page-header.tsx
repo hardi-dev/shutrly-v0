@@ -1,5 +1,6 @@
 import { Icon } from "@/ui/primitives/icon/icon";
 
+import { Tabs } from "../tabs/tabs";
 import { PAGE_HEADER_COPY } from "./page-header.copy";
 import type { PageHeaderProps } from "./page-header.types";
 
@@ -11,6 +12,7 @@ export function PageHeader({
   subtitle,
   action,
   utilities,
+  tabs,
 }: Readonly<PageHeaderProps>) {
   return (
     <header className="shrink-0 border-b border-(--component-page-header-border) bg-(--component-page-header-background)">
@@ -43,6 +45,11 @@ export function PageHeader({
         </div>
         {action ? <div className="flex shrink-0 items-center gap-(--space-2)">{action}</div> : null}
       </div>
+      {tabs ? (
+        <div className="px-(--component-page-header-tabs-padding-x)">
+          <Tabs label={tabs.label} tabs={tabs.tabs} hasTrack={false} />
+        </div>
+      ) : null}
     </header>
   );
 }

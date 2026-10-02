@@ -146,7 +146,7 @@ If an export name differs in `@hugeicons/core-free-icons` 4.3.5, pick the closes
 
 **Files:** create `src/ui/patterns/select/*`.
 
-- [ ] **Step 1: Failing test** `select.test.tsx`:
+- [x] **Step 1: Failing test** `select.test.tsx`:
 
 ```tsx
 import { render, screen, within } from "@testing-library/react";
@@ -187,15 +187,15 @@ describe("Select (C19 + Menu Item/Rich)", () => {
 });
 ```
 
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement** with React Aria `Select`, `Button`, `SelectValue`, `Popover`, `ListBox`, `ListBoxItem`, styled per `select.md` and `menu-item.md`:
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement** with React Aria `Select`, `Button`, `SelectValue`, `Popover`, `ListBox`, `ListBoxItem`, styled per `select.md` and `menu-item.md`:
   - Field: Label (`text-(length:--font-size-label) font-semibold text-(--component-input-label)`), trigger shaped like Input (border, radius, padding tokens; focus `border-(--component-input-border-focus)` + glow; invalid `border-(--component-input-border-error)`), leading icon of the selected option (`text-(--component-input-text)`), `chevron-down`, helper/error message like `TextField`.
   - Options (`select-option.tsx`): Menu Item/Rich when `description` or `icon` is set (icon 16, label body medium, description label size `text-(--component-menu-item-description)`, check on selected with semibold label), otherwise Menu Item/Default. Hover/focus `data-focused:bg-(--component-menu-item-background-hover)`.
   - Desktop: `Popover` (menu tokens, `elevation/1`), width = trigger width.
   - Phone (`useMobileViewport()`): the trigger opens `BottomSheet variant="form"` titled with the label (and `pickerDescription`), whose body is the same `ListBox`, plus a full-width *Pilih* button that commits the highlighted option (`select.copy.ts`: `pick: "Pilih"`).
   - Types: `SelectOption { id: string; label: string; description?: string; icon?: IconName; isDisabled?: boolean }`; `SelectProps { label: string; options: readonly SelectOption[]; value: string | null; onChange: (id: string) => void; placeholder?: string; description?: string; errorMessage?: string; isDisabled?: boolean; isOptional?: boolean; pickerDescription?: string; name?: string }`.
-- [ ] **Step 4: Story** `Patterns/Select`: `Default`, `RichOptions` (Tipe nilai), `Disabled`, `Error`.
-- [ ] **Step 5:** gate → PASS. Commit `feat(ui): add select with rich options`.
+- [x] **Step 4: Story** `Patterns/Select`: `Default`, `RichOptions` (Tipe nilai), `Disabled`, `Error`.
+- [x] **Step 5:** gate → PASS. Commit `feat(ui): add select with rich options`.
 
 ### Task 3: Tabs, header tabs, full-width segmented control, in-card empty state
 

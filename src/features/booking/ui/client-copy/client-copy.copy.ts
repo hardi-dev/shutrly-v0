@@ -72,6 +72,7 @@ export const CLIENT_COPY = {
   saving: "Menyimpan…",
   addedTitle: "Klien ditambahkan",
   addedBody: (name: string) => `${name} siap dipilih saat membuat proyek.`,
+  savedTitle: "Perubahan disimpan",
   serverErrorTitle: "Perubahan belum tersimpan",
   serverErrorBody: "Terjadi kendala di server. Data klienmu tidak berubah.",
   retry: "Coba lagi",

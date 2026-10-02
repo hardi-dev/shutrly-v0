@@ -218,7 +218,9 @@ function ClientAddDialog({
     values: Parameters<NonNullable<ClientsScreenProps["addAction"]>>[1],
   ) {
     if (editing && updateAction)
-      return mutations.run(values.name, () => updateAction(id, editing.id, values));
+      return mutations.run(values.name, () => updateAction(id, editing.id, values), {
+        title: CLIENT_COPY.savedTitle,
+      });
     if (addAction) return mutations.run(values.name, () => addAction(id, values));
     return Promise.resolve({ ok: true } as const);
   }

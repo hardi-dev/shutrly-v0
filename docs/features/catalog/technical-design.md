@@ -1,6 +1,6 @@
 # Technical Design — F-05 Service catalog
 
-Status: PLANNED (2026-10-02) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md) (40 frames, `exports/`) · Plan: [plan.md](plan.md)
+Status: IN PROGRESS (2026-10-02) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md) (40 frames, `exports/`) · Plan: [plan.md](plan.md)
 
 ## Context
 
@@ -297,6 +297,18 @@ See [plan.md](plan.md): 15 tasks, test-first, one commit each. Task 6 applies mi
 13. Item paket tab: list and item-definition dialog (Selects, Switch, lock)
 14. Service detail: info, items, booking fields, reorder, archive/unarchive/delete, phone sheets
 15. E2E + axe, browser fidelity, implementation record
+
+## Implementation record — 2026-10-02
+
+The catalog implementation is on `feat/catalog` in worktree `shutrly-v01-catalog`.
+
+- Commits through the current checkpoint: `6013223` (shared catalog icons and Switch), `88a17fb` (rich Select), `2b2f643` (tabs and Empty State), `5ebb169` (owner shell routing), `d1a904b` (domain rules), `79d4a34` (schema and backfill), `2c83f5e` (category and definition use cases), `00555be` (service/item/field use cases), `106a552` (Drizzle repositories), `0e9e216` (composition and seeding), `d441ebb` (routes and skeletons), `9027d2f` (mutation primitives), `3a06af6` (price normalization), `47d85e2` (catalog screens), `737cd00` (catalog management actions), and `0406eb3` (detail editing, reorder/remove dialogs, inline category creation, and E2E journey).
+- Implemented UI coverage includes the three catalog tabs, empty state, category/service/definition lifecycle actions, service detail item and booking-field forms, typed option editing, responsive desktop menu/phone sheet actions, accessible removal confirmation, and save-failure retry feedback. No ESLint rule was disabled in the catalog changes.
+- Passing local evidence: `eslint src`, `tsc --noEmit --pretty false --incremental false`, targeted booking/UI tests (40 files, 63 tests), production `next build`, and Prettier checks for the changed catalog paths.
+- Full unit suite result: 648 of 649 tests passed. The remaining failure is the pre-existing token-count assertion in `src/ui/explorer/tokens/token-data.test.ts`, which expects 585 records while the checked-in token payload currently produces 596.
+- Integration result: blocked before fixture setup because the Neon WebSocket to the configured pooler closes while inserting the test user; all five booking repository tests fail at that external connection boundary.
+- E2E result: the catalog journey was added at `tests/e2e/catalog/catalog.spec.ts`, but the authenticated browser run renders the existing *Segera hadir* screen at `/services` instead of the catalog page. The production build recognizes all four catalog routes, so this needs a follow-up route/runtime investigation before marking AC-CAT-003/004/009/010 verified.
+- Open design decisions remain TD-D-1 (type-derived row icons) and TD-D-2 (value-plus-unit item summaries), both implemented as the low-risk options already described above.
 
 ## Risks / Open Questions
 

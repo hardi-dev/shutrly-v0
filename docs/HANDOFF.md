@@ -3,6 +3,13 @@
 Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 IN PROGRESS) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/catalog` (F-05; `main` merged in after F-04's PR #1).
 
+## Current handoff — F-05 Service catalog IN PROGRESS (2026-10-02)
+
+- Work only in `/Users/hardiansa/Documents/work/personal/Coding/shutrly-v01-catalog`; do not touch the primary `shutrly-v01` checkout.
+- Checkpoint `0406eb3` contains the catalog management flows, service-detail editing/reorder/remove, responsive actions, inline category creation, and the catalog E2E journey. Catalog changes contain no ESLint rule-disabling directives.
+- `eslint src`, TypeScript, production build, and booking/UI tests pass. The full unit suite has one unrelated token-count failure (`585` expected vs `596` actual). Integration tests are blocked by the configured Neon pooler's WebSocket closing during fixture setup. The authenticated catalog E2E currently renders *Segera hadir* at `/services`; production route generation recognizes the catalog routes, so investigate this runtime mismatch next.
+- Do not run `pnpm db:migrate`; do not read or edit `.pen` files. Next safe work: diagnose the `/services` runtime selection, then rerun the catalog E2E and integration suite before updating F-05 to DONE.
+
 ## Update 2026-10-02 — F-05 Service catalog PLANNED
 
 - **Plan:** [technical-design.md](features/catalog/technical-design.md) + [plan.md](features/catalog/plan.md), 15 tasks: (1) icons + Switch, (2) Select with rich options, (3) Tabs + header tabs + full-width Segmented + in-card Empty State, (4) owner shell tabs and heading override, (5) domain, (6) schema + migrations 0006/0007 — applied by the agent to the non-production DB (Owner 2026-10-02 allows `pnpm db:migrate` during development), (7) categories + definitions use cases, (8) services/items/fields use cases, (9) Drizzle repositories + integration, (10) composition + creation seeding + actions, (11) routes/copy/skeletons, (12) Layanan + Kategori tabs, (13) Item paket tab, (14) service detail, (15) E2E + record. New bounded context `src/features/booking`. No new ADR.

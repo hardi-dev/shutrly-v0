@@ -36,8 +36,8 @@ export interface ClientScreenContentProps {
   readonly desktopAddAction: ReactNode;
   readonly mobileAddAction: ReactNode;
   readonly emptyState: ReactNode;
-  readonly q: string;
   readonly footer: ReactNode;
+  readonly search: ReactNode;
   readonly updateAction: ClientsScreenProps["updateAction"];
   readonly openEdit: (client: ClientsScreenProps["rows"][number]) => void;
   readonly addAction: ClientsScreenProps["addAction"];

@@ -43,6 +43,9 @@ export function ClientsScreen({
   const [editing, setEditing] = useState<ClientsScreenProps["rows"][number] | undefined>();
   const [deleting, setDeleting] = useState<ClientsScreenProps["rows"][number] | null>(null);
   const pager = useClientPager(workspaceId, status, q, rows, initialPage, loadMoreAction);
+  const search = (
+    <ClientSearchField workspaceId={workspaceId} status={status} q={q} resultCount={pager.rows.length} />
+  );
   function openDialog(): void {
     setEditing(undefined);
     setIsDialogOpen(true);
@@ -69,8 +72,8 @@ export function ClientsScreen({
       desktopAddAction={actions.desktop}
       mobileAddAction={actions.mobile}
       emptyState={emptyState}
-      q={q}
       footer={pager.hasMore ? <LoadMoreButton isLoading={pager.isLoading} onLoadMore={pager.loadMore} /> : null}
+      search={search}
       updateAction={updateAction}
       openEdit={openEdit}
       addAction={addAction}
@@ -119,8 +122,8 @@ function ClientScreenContent({
   desktopAddAction,
   mobileAddAction,
   emptyState,
-  q,
   footer,
+  search,
   updateAction,
   openEdit,
   addAction,
@@ -134,7 +137,7 @@ function ClientScreenContent({
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)">
       <PageActions>{desktopAddAction}</PageActions>
       {isMobile ? <ClientsTabsBar workspaceId={workspaceId} status={status} /> : null}
-      <ClientSearchField workspaceId={workspaceId} status={status} q={q} resultCount={rows.length} />
+      {isMobile ? search : null}
       {isMobile ? (
         <ClientList
           status={status}
@@ -153,6 +156,7 @@ function ClientScreenContent({
           count={count}
           rows={rows}
           emptyState={emptyState}
+          search={search}
           onRowAction={updateAction ? openEdit : undefined}
           onArchive={(client) => archiveClient(client, true, setArchivedAction, workspaceId)}
           onRestore={(client) => archiveClient(client, false, setArchivedAction, workspaceId)}

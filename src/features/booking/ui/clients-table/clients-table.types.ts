@@ -6,6 +6,7 @@ export interface ClientsTableProps {
   readonly count: number;
   readonly rows: readonly ClientRecord[];
   readonly emptyState: ReactNode;
+  readonly search?: ReactNode;
   readonly onRowAction?: (client: ClientRecord) => void;
   readonly onArchive?: (client: ClientRecord) => void;
   readonly onRestore?: (client: ClientRecord) => void;

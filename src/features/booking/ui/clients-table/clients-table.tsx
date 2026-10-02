@@ -24,6 +24,7 @@ export function ClientsTable({
   count,
   rows,
   emptyState,
+  search,
   onRowAction,
   onArchive,
   onRestore,
@@ -31,7 +32,12 @@ export function ClientsTable({
 }: Readonly<ClientsTableProps>) {
   const description = CLIENT_COPY.count(status, count);
   return (
-    <SectionCard title={CLIENT_COPY.listTitle} description={description} content="bleed">
+    <SectionCard
+      title={CLIENT_COPY.listTitle}
+      description={description}
+      actions={search}
+      content="bleed"
+    >
       {rows.length === 0 ? (
         <div className="p-(--space-4)">{emptyState}</div>
       ) : (

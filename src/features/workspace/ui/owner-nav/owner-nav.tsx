@@ -43,6 +43,7 @@ export function resolveActiveNav(pathname: string, workspaceId: string): ActiveN
   if (section === "projects") return { nav: "projects", tab: "projects" };
   if (section === "clients") return { nav: "clients", tab: "clients" };
   if (section === "invoices") return { nav: "invoices", tab: "invoices" };
+  if (section === "services") return { nav: "services", tab: null };
   if (section === "settings") return { nav: "settings", tab: null };
   return { nav: null, tab: null };
 }
@@ -93,8 +94,44 @@ export function resolvePageHeading(
   if (section === "photo-sources") {
     return { title: OWNER_NAV_COPY.photoSources, subtitle: OWNER_NAV_COPY.photoSourcesSubtitle };
   }
+  if (section === "services") return resolveServicesHeading(pathname, prefix, workspaceName);
   const title = SECTION_TITLES[section];
   return title ? { title, subtitle: OWNER_NAV_COPY.comingSoonSubtitle } : null;
+}
+
+function resolveServicesHeading(
+  pathname: string,
+  prefix: string,
+  workspaceName: string,
+): PageHeading {
+  const servicesPrefix = `${prefix}/services`;
+  const rest = pathname.slice(servicesPrefix.length).split("/").filter(Boolean).join("/");
+  const tabs = [
+    { href: servicesPrefix, label: OWNER_NAV_COPY.serviceTabs.services, isActive: rest === "" },
+    {
+      href: `${servicesPrefix}/categories`,
+      label: OWNER_NAV_COPY.serviceTabs.categories,
+      isActive: rest === "categories",
+    },
+    {
+      href: `${servicesPrefix}/items`,
+      label: OWNER_NAV_COPY.serviceTabs.items,
+      isActive: rest === "items",
+    },
+  ] as const;
+  const activeTab = tabs.find((tab) => tab.isActive);
+  if (!activeTab)
+    return { title: OWNER_NAV_COPY.services, subtitle: OWNER_NAV_COPY.servicesSubtitle };
+  return {
+    title: activeTab.label,
+    subtitle: OWNER_NAV_COPY.servicesSubtitle,
+    breadcrumbs: [
+      { label: workspaceName, href: prefix },
+      ...(rest === "" ? [] : [{ label: OWNER_NAV_COPY.services, href: servicesPrefix }]),
+      { label: activeTab.label },
+    ],
+    tabs: { label: OWNER_NAV_COPY.servicesTabsLabel, tabs },
+  };
 }
 
 export function OwnerNavBottom({ workspaceId, pathname }: Readonly<OwnerNavProps>) {

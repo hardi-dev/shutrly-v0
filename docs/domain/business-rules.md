@@ -142,6 +142,21 @@ A service uses each item definition at most once.
 ### BR-CAT-006 — Booking field keys are unique per service
 Booking field types: `TEXT` | `NUMBER` | `DATE` | `BOOLEAN` | `SELECT` | `TEXTAREA`. Booking fields are independent from package item value types.
 
+### BR-CAT-007 — Selection types
+A definition has a `selectionType` exactly when `selectionRequired = true`. In MVP the only selection types are `EDIT` and `PRINT`; others (album, frame, custom) are added only when their selection behavior is specified (BR-SEL-003). *(F-05 discovery, Owner 2026-10-02.)*
+
+### BR-CAT-008 — Catalog lifecycle: active, archived, deleted
+Categories, item definitions and services are created active. The Owner may archive and unarchive them at any time; archived records keep their data but are not offered for new services, new service items or new projects, and existing services keep using them until changed. A record may be deleted only while nothing refers to it: a category with no services, a definition used by no service and no snapshot, a service from which no project was created. Otherwise it can only be archived (BR-CAT-004). There is no draft or publish step. *(F-05 discovery, Owner 2026-10-02.)*
+
+### BR-CAT-009 — Catalog names
+Category, item-definition and service names are 1–60 characters after trimming and unique per workspace among records of the same kind, ignoring case, archived records included. A booking field's name is unique within its service, ignoring case. *(F-05 discovery, 2026-10-02.)*
+
+### BR-CAT-010 — Definition type is fixed once used
+A definition's `valueType`, `selectionRequired` and `selectionType` cannot change while any service item uses it; its name and unit can. This keeps every stored service-item value valid (BR-CAT-001, BR-CAT-002). *(F-05 discovery, 2026-10-02.)*
+
+### BR-CAT-011 — Seeded item definitions
+Every workspace starts with active item definitions *Foto edit* (`NUMBER`, unit *foto*, selection `EDIT`), *Foto cetak* (`NUMBER`, unit *lembar*, selection `PRINT`), *Jumlah orang* (`RANGE`, unit *orang*) and *Durasi pemotretan* (`NUMBER`, unit *jam*). They are created with the workspace and backfilled for workspaces that exist before F-05; the backfill skips a workspace that already has a definition with the same name. They are ordinary definitions: the Owner may edit, archive or delete them. No categories or services are seeded. *(F-05 discovery, Owner 2026-10-02.)*
+
 ---
 
 ## Client (CLI)
@@ -251,7 +266,7 @@ Each project item with `selectionRequired = true` yields one selection group wit
 
 ### BR-SEL-003 — Usage
 Usage for quantity-based groups (e.g. `PRINT`) = sum of selection quantities; otherwise = count of selections. Usage may never exceed `effectiveLimit`.
-**SPEC GAP (deferred to F-11 discovery):** exact rule deciding quantity-based vs count-based per `selectionType` (only EDIT→count and PRINT→sum are stated; ALBUM, FRAME, custom types unspecified).
+**SPEC GAP (deferred to F-11 discovery):** exact rule deciding quantity-based vs count-based per `selectionType` (only EDIT→count and PRINT→sum are stated; ALBUM, FRAME, custom types unspecified). F-05 limits MVP selection types to `EDIT` and `PRINT` (BR-CAT-007), so the gap only matters when a new type is added.
 
 ### BR-SEL-004 — Only proof photos are selectable
 A selection references a `PROOF` photo from the gallery of the group's own project. One row per `(group, photo)`; quantity > 0. A photo may be selected in several groups.

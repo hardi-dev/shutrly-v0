@@ -1,7 +1,7 @@
 {
   "$description": "Library component registry (hand-maintained). Merged into pencil-mapping.json › components by scripts/gen_tokens.py. pen.dev drops `metadata` on instances, so variant axes live here + in each component's `context`.",
   "page-header": {
-    "status": "APPROVED 2026-09-28 (Owner: ya; shell v3)",
+    "status": "APPROVED 2026-09-28 (Owner: ya; shell v3) · Tabs variant APPROVED 2026-10-02 (Owner: \"follow your suggestion\"; F-05 promotion)",
     "file": "docs/design-system/design-system.lib.pen",
     "page": {
       "name": "C40 — Page header",
@@ -41,6 +41,16 @@
           "JmfmZ",
           "m9dUlL"
         ]
+      },
+      "tabs": {
+        "kind": "boolean+slot",
+        "layer": "Tabs",
+        "id": "Iu4gK",
+        "default": false,
+        "recommended": [
+          "WbyBE",
+          "M43F7D"
+        ]
       }
     },
     "layers": {
@@ -51,17 +61,21 @@
       "Heading": "ami8m",
       "Title": "HsrFT",
       "Subtitle": "i8XPWU",
-      "Actions": "U9JxE"
+      "Actions": "U9JxE",
+      "Tabs": "Iu4gK"
     },
     "variants": {
-      "default": "ImEDW"
+      "default": "ImEDW",
+      "tabs": "NPQ7d"
     },
     "nested": [
       "button",
       "icon-button"
     ],
     "tokens": [
-      "component.page-header.*"
+      "component.page-header.*",
+      "component.page-header.tabs.padding-x",
+      "component.tabs.*"
     ],
     "gaps": [
       "breadcrumb bar height 52 is literal (Pencil cannot bind height)"
@@ -125,7 +139,7 @@
     "gaps": []
   },
   "list-card": {
-    "status": "APPROVED 2026-09-28 (Owner: ya; message-template v3)",
+    "status": "APPROVED 2026-09-28 (Owner: ya; message-template v3) · Two-line Trailing amendment (value text + reorder buttons) APPROVED 2026-10-02 (Owner: \"follow your suggestion\"; F-05 promotion)",
     "file": "docs/design-system/design-system.lib.pen",
     "page": {
       "name": "C42 — List card",
@@ -218,7 +232,7 @@
     }
   },
   "empty-state": {
-    "status": "APPROVED 2026-09-28 (Owner approved Empty State as C38)",
+    "status": "APPROVED 2026-09-28 (Owner approved Empty State as C38) · In card variant APPROVED 2026-10-02 (Owner: \"follow your suggestion\"; F-05 promotion)",
     "file": "docs/design-system/design-system.lib.pen",
     "page": {
       "name": "C38 — Empty state",
@@ -257,7 +271,8 @@
       "Complete branding button": "SzhQW"
     },
     "variants": {
-      "default": "H43gDN"
+      "default": "H43gDN",
+      "in-card": "E9A74J"
     },
     "tokens": [
       "color.semantic.surface.subtle",
@@ -269,7 +284,8 @@
       "space.1",
       "space.4",
       "space.12",
-      "radius.md"
+      "radius.md",
+      "component.empty-state.in-card.padding-y"
     ],
     "gaps": []
   },
@@ -1136,7 +1152,7 @@
     "gaps": []
   },
   "menu-item": {
-    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1c, no legacy evidence) 2026-09-26)",
+    "status": "APPROVED 2026-09-26 (Owner review; was PROPOSED (tier 1c, no legacy evidence) 2026-09-26) · Rich variants APPROVED 2026-10-02 (Owner: \"ikuti saranmu\"; F-05)",
     "file": "docs/design-system/design-system.lib.pen",
     "page": {
       "name": "C09 — Menu item",
@@ -1202,7 +1218,10 @@
       "default/selected": "qKcfI",
       "default/disabled": "e0gYs",
       "destructive/default": "Amnm5",
-      "destructive/hover": "nRGEe"
+      "destructive/hover": "nRGEe",
+      "rich-default": "WWqyy",
+      "rich-hover": "w5XzS",
+      "rich-selected": "WngMO"
     },
     "tokens": [
       "component.menu.item.*"
@@ -1617,7 +1636,7 @@
     ]
   },
   "segmented-control": {
-    "status": "APPROVED 2026-09-28 (shell v3 track amendment; Owner: ya)",
+    "status": "APPROVED 2026-09-28 (shell v3 track amendment; Owner: ya) · Full width variant APPROVED 2026-10-02 (Owner: \"follow your suggestion\"; F-05 promotion)",
     "file": "docs/design-system/design-system.lib.pen",
     "page": {
       "name": "C23 — Segmented control",
@@ -1650,7 +1669,8 @@
     },
     "variants": {
       "default": "uMP5H",
-      "lg": "WadoU"
+      "lg": "WadoU",
+      "full-width": "iIcai"
     },
     "nested": [
       "segmented-item"
@@ -3446,6 +3466,64 @@
     "gaps": [
       "focus glow not drawn (Pencil shadow has no spread); focus = 2 px border-selected + Radio focus ring",
       "icon size 18 literal (size-binding)"
+    ]
+  },
+  "tabs": {
+    "status": "APPROVED 2026-10-02 (Owner: \"follow your suggestion\"; F-05 promotion)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C45 — Tabs",
+      "id": "Pu7zm"
+    },
+    "spec": "docs/design-system/components/tabs.md",
+    "base": {
+      "name": "_Tab/Base",
+      "id": "siG3p",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "default",
+        "hover",
+        "active",
+        "focus"
+      ]
+    },
+    "props": {
+      "label": {
+        "kind": "text",
+        "layer": "Label",
+        "id": "DnAdt"
+      },
+      "items": {
+        "kind": "slot",
+        "layer": "Items",
+        "id": "RLhnh",
+        "on": "Tabs (NSzy3)",
+        "recommended": [
+          "WbyBE",
+          "M43F7D"
+        ],
+        "fill": "Replace(instance+'/RLhnh', {type:'frame', name:'Items', gap:'$component/tabs/gap'})"
+      }
+    },
+    "layers": {
+      "Label": "DnAdt",
+      "Items": "RLhnh"
+    },
+    "variants": {
+      "default": "M43F7D",
+      "hover": "WLfdt",
+      "active": "WbyBE",
+      "focus": "DLhzi",
+      "tabs": "NSzy3"
+    },
+    "nested": [],
+    "tokens": [
+      "component.tabs.*"
+    ],
+    "gaps": [
+      "active underline and focus outline widths are literal strokes (2 px), like input border-error; no border-width tokens"
     ]
   }
 }

@@ -39,6 +39,13 @@ Promoted to `design-system.lib.pen` by `/sdv:save-design-system` (F-17, Owner-ap
 
 - The breadcrumb bar gets an optional **Utilities** slot at its end (Icon Button Ghost MD: Cari, Notifikasi). Its right inset is `panel.app.header.padding-x`.
 
+## Tabs variant — APPROVED 2026-10-02 (F-05)
+
+- The base `ImEDW` has a **Tabs** row (`Iu4gK`) under the Hero: boolean, **off** by default, so existing instances are unchanged. It is a slot of Tab/* (C45), gap `component.tabs.gap`, side inset `component.page-header.tabs.padding-x` (40, = hero padding-x), so the tabs start under the title.
+- **`Page Header/Tabs`** (`NPQ7d`) is the variant with the row on: Tab/Active plus Tab/Default. The active underline sits on the header's bottom border, which acts as the track.
+- Use it for pages with sibling views (F-05 *Layanan*: Layanan · Kategori · Item paket). The primary action in Actions follows the active tab. On phones, use Segmented Control/Full width in the content instead.
+- Spec of the tabs: [tabs.md](tabs.md).
+
 ## Implementation references
 
 - Tokens: `component.page-header.*`

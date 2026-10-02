@@ -1,8 +1,33 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-06 SPECIFIED) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `claude/beautiful-mendel-5h68lp` (F-04 `feat/source-config` is merged into `main` via PR #1).
+Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 IN PROGRESS; F-05 catalog implementation complete, PR #3) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `feat/catalog` (F-05; `main` merged in after F-04's PR #1).
 
+## Current handoff — F-05 Service catalog READY TO MERGE (2026-10-02)
+
+- Work only in `/Users/hardiansa/Documents/work/personal/Coding/shutrly-v01-catalog`; do not touch the primary `shutrly-v01` checkout.
+- Checkpoint `a877540` contains the catalog implementation, the requested follow-up refinements, and the technical-design writeback. Catalog changes contain no ESLint rule-disabling directives.
+- Full Vitest passes (221 files, 674 tests), ESLint, Prettier, route type generation, TypeScript through the production build, token validation, `git diff --check`, and the isolated authenticated catalog E2E pass. Integration tests remain blocked by the configured Neon pooler's WebSocket closing during fixture setup. The pnpm wrapper lifecycle is also blocked in this environment by ignored dependency build scripts; direct quality gates passed without changing that policy.
+- Do not run `pnpm db:migrate`; do not read or edit `.pen` files. PR #3 is ready to merge into `main`; afterward run `/sdv:verify-feature catalog` if the Owner wants the formal verification record.
+
+## Update 2026-10-02 — F-05 Service catalog PLANNED
+
+- **Plan:** [technical-design.md](features/catalog/technical-design.md) + [plan.md](features/catalog/plan.md), 15 tasks: (1) icons + Switch, (2) Select with rich options, (3) Tabs + header tabs + full-width Segmented + in-card Empty State, (4) owner shell tabs and heading override, (5) domain, (6) schema + migrations 0006/0007 — applied by the agent to the non-production DB (Owner 2026-10-02 allows `pnpm db:migrate` during development), (7) categories + definitions use cases, (8) services/items/fields use cases, (9) Drizzle repositories + integration, (10) composition + creation seeding + actions, (11) routes/copy/skeletons, (12) Layanan + Kategori tabs, (13) Item paket tab, (14) service detail, (15) E2E + record. New bounded context `src/features/booking`. No new ADR.
+- **To confirm with the Owner:** TD-D-1 (row icons derived from type) and TD-D-2 (item summary = value + unit) in technical-design.md.
+- **Next:** `/sdv:build-feature catalog 1`.
+
+## Update 2026-10-02 — F-05 Service catalog DESIGNED
+
+- **Design APPROVED (Owner 2026-10-02):** 40 frames in `catalog.pen` (26 desktop, 14 phone), exports in `features/catalog/exports/`. Direction Option A2 from `exploration.pen` board 12. See [design.md](features/catalog/design.md).
+- **Library promotion PERSISTED:** C45 Tabs, Page Header/Tabs, Segmented Control/Full width, Empty State/In card, Menu Item/Rich, List Card trailing amendment; 596 tokens, checksum `986ecbcb`; `src/ui/theme/tokens.css` regenerated.
+- **Follow-up:** migrate `catalog.pen` from its local pieces to the promoted components; its `v:` import still resolves the old library (suspected link to the main-checkout copy), see design.md.
+- **Next:** `/sdv:plan-feature catalog`.
+
+## Update 2026-10-02 — F-05 Service catalog SPECIFIED
+
+- **Spec:** [spec.md](features/catalog/spec.md) and [acceptance-criteria.md](features/catalog/acceptance-criteria.md) (AC-CAT-001…023). New rules BR-CAT-007…011 (selection types `EDIT`/`PRINT`, active/archived/delete lifecycle, names, fixed definition type once used, four seeded item definitions); scope and domain model updated.
+- **Owner decisions:** *Layanan* tabs (Layanan · Kategori · Item paket); no draft/publish; seed item definitions only.
+- **Next for F-05:** `/sdv:design-feature catalog` (optionally `/sdv:model-feature catalog` first). F-04 was built on `feat/source-config` and merged to `main` (PR #1).
 ## Current handoff — F-06 Clients SPECIFIED (2026-10-02)
 
 - **Order:** the Owner chose F-06 next, ahead of F-05 Catalog and before `/sdv:verify-feature source-config` (still outstanding; F-04 stays IN PROGRESS until it is verified).
@@ -128,7 +153,7 @@ The F-00 build instructions below are kept for reference.
 - **Any test or command fails in a way the plan's notes don't cover.** The known cases are R-3 (Vitest projects key), R-5 (two `typescript-eslint` copies) and the notes under Tasks 9 and 10.
 - **Neon WebSocket fails under `pnpm preview` / workerd** (Task 17, R-4). This is an ADR-008/009 risk and needs an Owner decision.
 - **The code would need to break the architecture or the coding rules.** Report it as a deviation; don't bend the rules.
-- **Never run `pnpm db:migrate`.** Only the Owner applies migrations, by hand from a clean `main` (tech-stack interim rule). F-00 has no migrations anyway.
+- ~~**Never run `pnpm db:migrate`.**~~ Superseded 2026-10-02: agents may apply committed, reviewed migrations to the non-production database during development (tech-stack.md › Deployment). F-00 has no migrations anyway.
 
 ### When all 18 tasks are done
 - Task 18 updated `technical-design.md` (status IMPLEMENTED), `docs/product/feature-map.md` (F-00 IN PROGRESS), the F-01 contract paths, and this handoff.

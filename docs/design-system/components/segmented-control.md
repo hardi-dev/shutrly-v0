@@ -47,6 +47,10 @@ Insert(f, {type:"ref", ref:"NcbI1", descendants:{FnOrw:{content:"Minggu"}}})
 
 `Segmented Control/LG` (`WadoU`) is used for mobile filters (44 px targets). Its Items slot holds `Segmented Item/LG/*` (Active `a17zLE`, Default `SaNob`, Hover `OD6NY`, Focus `w3GDB`): padding `segmented.item.lg.padding-y/-x` (12 / 20) with a body 14 label.
 
+## Full width — APPROVED 2026-10-02 (F-05)
+
+`Segmented Control/Full width` (`iIcai`): the Items slot fills the control's width, each item is `fill_container` with a centred label, and the tokens are unchanged. Use it on phones as view tabs, as the first item in the content (F-05 *Layanan*: Layanan · Kategori · Item paket). Set the instance width (`fill_container` in layouts). Desktop pages use C45 Tabs in Page Header/Tabs instead.
+
 ## Gaps
 
 

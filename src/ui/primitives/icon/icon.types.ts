@@ -51,7 +51,21 @@ export type IconName =
   | "cloud"
   | "database"
   | "link"
-  | "more-horizontal";
+  | "more-horizontal"
+  | "printer"
+  | "clock"
+  | "book-open"
+  | "hash"
+  | "move-horizontal"
+  | "arrow-up"
+  | "arrow-down"
+  | "archive"
+  | "archive-restore"
+  | "lock"
+  | "type"
+  | "align-left"
+  | "toggle-left"
+  | "list";
 
 export type IconSize = "sm" | "md" | "lg";
 

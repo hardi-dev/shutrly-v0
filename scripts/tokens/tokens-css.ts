@@ -8,8 +8,10 @@ const TARGET = "src/ui/theme/tokens.css";
 const CSS_SOURCE_EXTENSIONS = /\.(?:css|scss|sass|less|ts|tsx|js|jsx|mjs|cjs|html|astro|vue)$/;
 const CSS_SOURCE_ROOTS = ["src/", ".storybook/", "docs/design-system/exports/"];
 const TEST_FILE = /(?:\.test|\.spec)\.[^.]+$/;
-// Next/font injects this custom property on the <html> element at runtime.
-const EXTERNAL_CSS_VARIABLES = new Set(["--font-sans-loaded"]);
+// These custom properties are supplied by runtime integrations rather than the
+// design-token stylesheet: Next/font injects the font flag and React Aria
+// supplies the trigger width for popovers.
+const EXTERNAL_CSS_VARIABLES = new Set(["--font-sans-loaded", "--trigger-width"]);
 const { css, count } = buildTokensCss(JSON.parse(readFileSync(SOURCE, "utf8")));
 const knownVariables = new Set([
   ...[...css.matchAll(/^[ \t]*(--[a-z0-9-]+):/gim)].map((match) => match[1]),

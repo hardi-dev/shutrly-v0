@@ -36,6 +36,15 @@ Approved by the Owner with the `component.list-card.item.*` additions (`padding-
 
 **Trailing slot:** either a Chevron (the whole row is a link, as in F-03), or a Status Chip and/or Action Menu SM (the row itself is not interactive, as in F-04). Never both a link row and a button inside it.
 
+**Trailing amendment — APPROVED 2026-10-02 (F-05).** In non-interactive rows, Trailing may also hold, in this order:
+
+1. a Status Chip;
+2. a **value text**, such as a price or an amount (body, semibold, `component.list-card.item.title`);
+3. **Naikkan / Turunkan** reorder buttons (Icon Button Ghost SM, `arrow-up` / `arrow-down`) for ordered lists;
+4. the Action Menu SM.
+
+On phones, reordering moves into the row menu. See the *Trailing: value + reorder* exhibit on C42 (`jZ1ur`).
+
 ## Rules
 
 - Use two or more rows. A single destination should be a standalone button or link.

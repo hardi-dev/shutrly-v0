@@ -7,5 +7,6 @@ export interface EmptyStateProps {
   iconTone?: "accent" | "primary" | "danger";
   title: string;
   body: string;
+  placement?: "standalone" | "in-card";
   action?: ReactNode;
 }

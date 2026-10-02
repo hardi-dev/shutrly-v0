@@ -1,3 +1,4 @@
+import { cn } from "@/ui/cn/cn";
 import { Icon } from "@/ui/primitives/icon/icon";
 
 import type { EmptyStateProps } from "./empty-state.types";
@@ -22,6 +23,7 @@ export function EmptyState({
   iconTone = "accent",
   title,
   body,
+  placement = "standalone",
   action,
 }: Readonly<EmptyStateProps>) {
   const tone = ICON_TONE_CLASSES[iconTone];
@@ -29,7 +31,12 @@ export function EmptyState({
   return (
     <section
       data-testid="empty-state"
-      className="flex w-full flex-col items-center gap-(--space-4) rounded-(--radius-md) border border-(--color-semantic-border-default) bg-(--color-semantic-surface-subtle) p-(--space-12) text-center"
+      className={cn(
+        "flex w-full flex-col items-center gap-(--space-4) rounded-(--radius-md) text-center",
+        placement === "standalone" &&
+          "border border-(--color-semantic-border-default) bg-(--color-semantic-surface-subtle) p-(--space-12)",
+        placement === "in-card" && "px-0 py-(--component-empty-state-in-card-padding-y)",
+      )}
     >
       <div
         data-testid="empty-state-icon-wrap"

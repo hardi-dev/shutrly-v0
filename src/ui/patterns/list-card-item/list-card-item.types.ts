@@ -6,7 +6,7 @@ export interface ListCardItemProps {
   icon: IconName;
   title: string;
   meta: string;
-  /** Status Chip and/or a row-actions button. Not allowed together with href (list-card.md). */
+  /** Status Chip and/or a row-actions button. When href is set, actions render beside the link. */
   trailing?: ReactNode;
   href?: string;
   isLast?: boolean;

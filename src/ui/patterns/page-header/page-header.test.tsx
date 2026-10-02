@@ -19,4 +19,45 @@ describe("PageHeader", () => {
     expect(screen.getByRole("button", { name: "Cari" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah" })).toBeInTheDocument();
   });
+
+  it("renders route tabs below the hero while keeping the header track", () => {
+    render(
+      <PageHeader
+        parent="Aster"
+        current="Layanan"
+        title="Layanan"
+        tabs={{
+          label: "Bagian layanan",
+          tabs: [{ href: "/services", label: "Layanan", isActive: true }],
+        }}
+      />,
+    );
+
+    expect(screen.getByRole("navigation", { name: "Bagian layanan" })).toBeInTheDocument();
+    expect(screen.getByRole("banner")).toHaveClass("border-b");
+  });
+
+  it("renders linked ancestors in a reusable breadcrumb trail", () => {
+    render(
+      <PageHeader
+        parent="Aster"
+        current="Kategori"
+        breadcrumbs={[
+          { label: "Aster", href: "/w/A" },
+          { label: "Layanan", href: "/w/A/services" },
+          { label: "Kategori" },
+        ]}
+        title="Kategori"
+      />,
+    );
+
+    expect(screen.getByRole("link", { name: "Aster" })).toHaveAttribute("href", "/w/A");
+    expect(screen.getByRole("link", { name: "Layanan" })).toHaveAttribute("href", "/w/A/services");
+    expect(screen.getByRole("navigation", { name: "Breadcrumb" })).toHaveTextContent(
+      "AsterLayananKategori",
+    );
+    expect(
+      screen.getAllByText("Kategori").find((element) => element.getAttribute("aria-current")),
+    ).toHaveAttribute("aria-current", "page");
+  });
 });

@@ -12,6 +12,10 @@ Start with [docs/HANDOFF.md](docs/HANDOFF.md) › _Current handoff_. It says wha
   - Never run `pnpm db:migrate`; only the Owner applies migrations.
   - Never read or edit `.pen` files directly; they're edited only through the Pencil tool.
 - **Machine note:** `head` on this machine isn't coreutils; use `sed -n '1,20p'`.
+- **Workflow commands (`sdv` plugin, vendored in `plugins/sdv/`):**
+  - Claude Code loads it from `.claude/settings.json` (marketplace `shutrly`, plugin `sdv@shutrly`) once the folder is trusted, so `/sdv:<command>` works directly.
+  - Codex finds the skills `spec-driven-vibe-coding` and `sdv-design-tokens-system` in `.agents/skills/` (symlinks into the plugin). Codex has no `/sdv:*` commands: when asked to run `/sdv:<command> <args>`, read `plugins/sdv/commands/<command>.md`, use `<args>` for `$ARGUMENTS`, and follow it with the skill it names.
+  - Update the plugin by replacing `plugins/sdv/` with the new release; don't edit it in place.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

@@ -1,9 +1,21 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 IN PROGRESS) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `feat/source-config`.
+Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-06 SPECIFIED) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `claude/beautiful-mendel-5h68lp` (F-04 `feat/source-config` is merged into `main` via PR #1).
 
-## Current handoff — F-04 Source configuration IN PROGRESS (2026-10-02)
+## Current handoff — F-06 Clients SPECIFIED (2026-10-02)
+
+- **Order:** the Owner chose F-06 next, ahead of F-05 Catalog and before `/sdv:verify-feature source-config` (still outstanding; F-04 stays IN PROGRESS until it is verified).
+- **Spec:** [spec.md](features/clients/spec.md) and [acceptance-criteria.md](features/clients/acceptance-criteria.md), AC-CLI-001…020. New business rules **BR-CLI-001..003** in `domain/business-rules.md` (Owner discovery 2026-10-02), and the Client line in `domain/domain-model.md` is updated.
+- **Owner decisions (2026-10-02):**
+  - fields: name, WhatsApp number, and social-media links the Owner can add and remove, with an *Instagram* row prefilled on the add form; no phone, email, address or notes;
+  - the WhatsApp number is optional and normalized (`0812…`, `+62 812…`, `812…` → `62812…`);
+  - the number is unique per workspace across active and archived clients, blocked by the database;
+  - clients are archived and restored; delete is allowed only while no project refers to the client.
+- **Assumptions to confirm in design review:** A-2 platform list (Instagram, TikTok, Facebook, YouTube, X, Lainnya), A-5 paging (30 + *Muat lebih banyak*), A-6 *Buka WhatsApp* plain chat link, no client detail page in F-06 (A-1).
+- **Next:** `/sdv:design-feature clients` in Pencil (the frame list is in the spec's last section), then the technical design and plan. Pencil isn't available in cloud sessions, so the design step needs the Owner's machine.
+
+## Previous handoff — F-04 Source configuration IN PROGRESS (2026-10-02)
 
 - **Spec (rescoped by the Owner 2026-10-01):** Owner-managed photo sources. Only Google Drive can be added; Dropbox, OneDrive, Amazon S3 and Custom URL show as *Segera hadir*. Every workspace is seeded with *Google Drive* (BR-SRC-005/006). Rename, deactivate/reactivate and delete; no link checker. Nav *Sumber klien* → **Sumber foto** (`folder-open`, route `photo-sources`). See [spec.md](features/source-config/spec.md), AC-SRC-001…017.
 - **Design APPROVED (2026-10-02):** 24 frames in `source-config.pen` (library import prefix `W:`), exports in `features/source-config/exports/`. See [design.md](features/source-config/design.md).

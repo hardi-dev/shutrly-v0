@@ -6,7 +6,7 @@ Branch: `feat/team-sessions` (F-08 discovery; from `feat/projects`). Earlier: `f
 ## Current handoff — F-08 Team: design in progress (2026-10-03)
 
 - **Branch:** `feat/team-sessions`, cut from `feat/projects` (assignments need F-07's sessions). Nothing here is built; F-06, then F-07, still come first.
-- **Spec:** [spec.md](features/team-sessions/spec.md) and [acceptance-criteria.md](features/team-sessions/acceptance-criteria.md). The live criteria run AC-TEAM-001…026; 012, 016–019 and 025 are removed.
+- **Spec:** [spec.md](features/team-sessions/spec.md) and [acceptance-criteria.md](features/team-sessions/acceptance-criteria.md). The live criteria run AC-TEAM-001…027; 012, 016–019, 024 and 025 are removed.
 - **Scope cut (Owner 2026-10-03): no money in F-08.**
   - Rates, fees per assignment and paid / unpaid tracking moved to a new TODO, F-18 *Team fees* (`team-fees`). BR-TEAM-007 is deprecated.
   - The member detail page is gone too; members are edited in a dialog, as in F-06.

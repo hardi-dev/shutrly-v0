@@ -8921,21 +8921,36 @@
                   "padding": "$m:component/modal/body/padding",
                   "children": [
                     {
-                      "id": "d5iKY",
+                      "id": "oTzMG",
                       "type": "ref",
-                      "ref": "m:S5bhVn",
-                      "name": "Alert",
+                      "ref": "m:H43gDN",
+                      "name": "Empty",
                       "width": "fill_container",
                       "descendants": {
-                        "m:m0dqT6": {
+                        "m:zOUao": {
+                          "icon": "users"
+                        },
+                        "m:c8Y4Ky": {
                           "content": "Belum ada anggota tim aktif"
                         },
-                        "m:fhch4": {
-                          "content": "Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini."
+                        "m:FCyNB": {
+                          "content": "Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini.",
+                          "width": "fill_container"
                         },
-                        "m:M54Ca": {
-                          "enabled": true,
-                          "content": "Buka Tim"
+                        "m:SzhQW": {
+                          "id": "xQH74",
+                          "type": "ref",
+                          "ref": "m:JmfmZ",
+                          "name": "Action",
+                          "descendants": {
+                            "m:fMNO1": {
+                              "enabled": true,
+                              "icon": "user-round-cog"
+                            },
+                            "m:xnhuK": {
+                              "content": "Buka Tim"
+                            }
+                          }
                         }
                       }
                     }
@@ -9735,21 +9750,36 @@
                   ],
                   "children": [
                     {
-                      "id": "KyvEJ",
+                      "id": "lUZQa",
                       "type": "ref",
-                      "ref": "m:S5bhVn",
-                      "name": "Alert",
+                      "ref": "m:H43gDN",
+                      "name": "Empty",
                       "width": "fill_container",
                       "descendants": {
-                        "m:m0dqT6": {
+                        "m:zOUao": {
+                          "icon": "users"
+                        },
+                        "m:c8Y4Ky": {
                           "content": "Belum ada anggota tim aktif"
                         },
-                        "m:fhch4": {
-                          "content": "Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini."
+                        "m:FCyNB": {
+                          "content": "Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini.",
+                          "width": "fill_container"
                         },
-                        "m:M54Ca": {
-                          "enabled": true,
-                          "content": "Buka Tim"
+                        "m:SzhQW": {
+                          "id": "vPnRv",
+                          "type": "ref",
+                          "ref": "m:JmfmZ",
+                          "name": "Action",
+                          "descendants": {
+                            "m:fMNO1": {
+                              "enabled": true,
+                              "icon": "user-round-cog"
+                            },
+                            "m:xnhuK": {
+                              "content": "Buka Tim"
+                            }
+                          }
                         }
                       }
                     }

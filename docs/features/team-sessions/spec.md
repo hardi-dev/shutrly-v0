@@ -24,7 +24,7 @@ As a photographer (Owner), I want to record which freelancers work each session 
 | Tim › *Peran* | role names, each with how many members use it · *Tambah peran* · per role: *Ubah*, *Hapus* |
 | Project detail › *Jadwal* (extends F-07) | per session, after its text and before ⋯: an avatar group of its team (at most 3 initials avatars, then *+n*) that opens *Atur tim*, or, with no team, an Icon Button/Ghost/SM `user-plus` that opens the Penugasan form directly. The session ⋯ menu gains, before F-07's *Ubah sesi* / *Hapus sesi*: *Tambah tim* (no team yet; opens the Penugasan form) or *Atur tim* (has a team; opens the list) (Owner 2026-10-03, design) |
 | *Atur tim* (dialog on desktop, sheet on phones) | title *Tim · {session}*, the session's date, times and location · the session's assignments: avatar, member name, role, and an Icon Button/Ghost/SM `trash-2` in the danger colour (*Hapus dari sesi*, Owner 2026-10-03) · *Tambah anggota* · *Selesai* (desktop; closes). It has no empty state: it only opens for a session with a team, and removing the last assignment closes it (Owner 2026-10-03) |
-| Penugasan form (add only) | member (active members not on the session yet) · role (one of the member's roles). The session is the one *Atur tim* was opened for (A-12) |
+| Penugasan form (add only) | title *Tambah anggota · {session}* · member (active members not on the session yet) · role (one of the member's roles) · *Batal* / *Tambah*. There is no session field: it is the session the form was opened from, either the `user-plus` button, ⋯ › *Tambah tim*, or *Atur tim* › *Tambah anggota* (A-12) |
 
 Field rules: BR-TEAM-004 (member), BR-TEAM-005 (roles), BR-TEAM-006 (assignment).
 
@@ -63,10 +63,10 @@ Field rules: BR-TEAM-004 (member), BR-TEAM-005 (roles), BR-TEAM-006 (assignment)
 - **Session and project interplay (BR-TEAM-006):**
   - deleting a session that has a team asks for confirmation naming the count (*Sesi ini punya 2 anggota tim. Penugasan mereka ikut terhapus.*);
   - deleting a draft project whose sessions have a team adds *Penugasan tim ikut terhapus.* to the *Hapus draf* confirmation;
-  - cancelling a project keeps its assignments, read-only.
+  - cancelling a project keeps its assignments, read-only: avatar groups still open *Atur tim*, which shows the note *Proyek dibatalkan, tim tidak bisa diubah.*, no `trash-2` buttons and only *Tutup*; sessions without a team show no `user-plus` button, and the session ⋯ menu is gone (as in F-07).
 - **No members yet:**
   - *Aktif* shows *Belum ada anggota tim* with *Tambah anggota*, and an empty *Arsip* shows *Belum ada anggota yang diarsipkan*.
-  - With no active members, the Penugasan form shows *Belum ada anggota tim aktif* with *Buka Tim*, and *Tambah* is disabled.
+  - With no active members, the Penugasan form shows an Empty State (the same pattern as F-07's empty project list): *Belum ada anggota tim aktif*, *Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini.* and *Buka Tim*. *Tambah* is disabled.
 - **No team yet:**
   - the session shows the `user-plus` Icon Button, and its ⋯ menu offers *Tambah tim*; both open the Penugasan form;
   - there is no empty *Atur tim* (Owner 2026-10-03);
@@ -95,9 +95,9 @@ Field rules: BR-TEAM-004 (member), BR-TEAM-005 (roles), BR-TEAM-006 (assignment)
   - *Jadwal* sessions with an avatar group (1–3, and *+n*) and with the `user-plus` button;
   - the session ⋯ menu with *Tambah tim* (no team) or *Atur tim* (team);
   - the session delete confirmation with a team;
-  - a cancelled project (avatar groups only, *Atur tim* read-only).
-- *Atur tim*: populated (each row with `trash-2`), cancelled (read-only, no *Tambah anggota*, no `trash-2`). No empty state.
-- Penugasan form: add, no active members, server error.
+  - a cancelled project (avatar groups only, no `user-plus` and no session ⋯; *Atur tim* read-only with *Tutup*).
+- *Atur tim*: populated (each row with `trash-2`), cancelled (read-only note, no *Tambah anggota*, no `trash-2`, only *Tutup*). No empty state.
+- Penugasan form: add, no active members (Empty State, *Tambah* disabled), server error.
 - Toasts:
   - members: added, saved, archived (*Batalkan*), restored, deleted;
   - roles: added, saved, deleted;
@@ -137,6 +137,7 @@ Field rules: BR-TEAM-004 (member), BR-TEAM-005 (roles), BR-TEAM-006 (assignment)
 - **A-12 Atur tim (Owner 2026-10-03, design):** the team of one session is managed in *Atur tim*.
   - It opens from the session's avatar group or ⋯ › *Atur tim*, only when the session has a team. A session without a team opens the Penugasan form directly, from the `user-plus` button or ⋯ › *Tambah tim*.
   - Every add and removal saves at once with a toast; *Selesai* only closes.
+  - Saving the Penugasan form returns to *Atur tim* (with the new row) when it was opened from there, and closes when it was opened from the `user-plus` button or ⋯ › *Tambah tim*.
   - The Penugasan form has no session field. An assignment is never edited or moved; remove it and add it again.
   - On desktop each avatar has a tooltip *{name} · {role}*.
 - Removed with the money cut (Owner 2026-10-03): A-6 (rate and unpaid total), A-10 (rate units), A-11 (money off the project page).

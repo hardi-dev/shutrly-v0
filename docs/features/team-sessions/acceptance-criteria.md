@@ -159,7 +159,7 @@ Covers: BR-TEAM-006 (A-4, A-12)
 **When** the Owner:
 1. opens *Atur tim* from *Resepsi*'s avatar group;
 2. selects the `trash-2` button on Dimas's row and confirms *Hapus Dimas dari Resepsi?*;
-3. selects *Tambah anggota* and adds *Dimas Pratama* as *Fotografer*;
+3. selects *Tambah anggota* and adds *Dimas Pratama* as *Fotografer* (the form returns to *Atur tim* after saving);
 4. removes *Dimas*, then *Sari*.
 
 **Then**:
@@ -177,8 +177,8 @@ Covers: BR-TEAM-006, BR-PRJ-010
 **Given** a `CANCELLED` project with *Dimas Pratama* on *Wisuda*
 **When** the Owner views the project, and a stale tab tries to add or remove an assignment
 **Then**:
-- the avatar group still shows;
-- *Atur tim* is read-only, with no *Tambah anggota* and no `trash-2` buttons, and its note reads *Proyek dibatalkan, tim tidak bisa diubah.*;
+- the avatar group still shows and opens *Atur tim*; a session without a team shows no `user-plus` button, and no session has a ⋯ menu;
+- *Atur tim* is read-only, with no *Tambah anggota* and no `trash-2` buttons, only *Tutup*, and its note reads *Proyek dibatalkan, tim tidak bisa diubah.*;
 - the stale writes are rejected with *Proyek dibatalkan; tim tidak bisa diubah.*
 
 ## ~~AC-TEAM-016 — Mark a fee paid~~
@@ -225,6 +225,16 @@ Covers: BR-TEAM-006 (A-4, A-12)
 - the avatar group and ⋯ › *Atur tim* open *Atur tim*; the `user-plus` button and ⋯ › *Tambah tim* on *Foto keluarga* open the Penugasan form;
 - *Atur tim* lists the four members with their roles, in that order;
 - on desktop, hovering *DP* shows *Dimas Pratama · Fotografer*.
+
+## AC-TEAM-027 — No active members
+Covers: BR-TEAM-004, BR-TEAM-006, C-007
+
+**Given** a workspace whose members are all archived, and a `BOOKED` project whose session *Wisuda* has no team
+**When** the Owner selects the `user-plus` button on *Wisuda*
+**Then**:
+- the form *Tambah anggota · Wisuda* shows the Empty State *Belum ada anggota tim aktif* with *Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini.* and *Buka Tim*, the same pattern as F-07's empty project list;
+- *Tambah* is disabled;
+- *Buka Tim* opens *Tim* › *Anggota*.
 
 ## Security
 

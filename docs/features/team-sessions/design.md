@@ -45,7 +45,7 @@ Rows stack top to bottom with 160 between them. Desktop frames are at x 0 (1440 
 | Session ⋯, session without a team (*Tambah tim*) | `v0fmfB` | `gbaf4` | AC-TEAM-011 |
 | *Atur tim*, populated (`trash-2` rows) | `dnXdG` | `HhdMX` | AC-TEAM-014, 026 |
 | Penugasan form *Tambah anggota · Wisuda* (Anggota, Peran) | `K5CBQ6` | `X06qm5` | AC-TEAM-011, 013 |
-| Penugasan form, no active members (Alert/Info + *Buka Tim*, *Tambah* disabled) | `v04DP` | `QINZH` | spec › No members yet |
+| Penugasan form, no active members: Empty State `m:H43gDN` (`users`, *Belum ada anggota tim aktif*, Secondary *Buka Tim* `user-round-cog`), the same pattern as F-07 *Proyek / List / Empty Aktif* (`tHeNM`); *Tambah* disabled | `v04DP` | `QINZH` | spec › No members yet |
 | *Hapus dari sesi* confirm (Modal SM, Danger / Bottom Sheet/Actions) | `uJjME` | `HUoRy` | AC-TEAM-014 |
 | *Hapus sesi* with a team (*Sesi ini punya 2 anggota tim…*) | `HCBUs` | `VrrVd` | AC-TEAM-020 |
 | Cancelled project, *Atur tim* read-only | `aspbw` | `vCcGo` | AC-TEAM-015 |
@@ -69,7 +69,7 @@ Rows stack top to bottom with 160 between them. Desktop frames are at x 0 (1440 
   - Action Menu SM `m:tgN4c` / SM Open `m:M3v1E5`, Menu `m:g6dKmz`, Menu Item, Menu Divider;
   - Modal MD `m:f8ym9` / SM `m:cdSbf`, Bottom Sheet/Form `m:vSBbR` / Actions `m:U0wHw`, Sheet Item Default / Destructive;
   - Select `m:Wc7hd` (override paths go through `m:Et1pR/…`; input parts through `m:c67yIW/…`);
-  - Alert/Info `m:S5bhVn`, Empty State `m:H43gDN`;
+  - Empty State `m:H43gDN`;
   - Buttons Primary / Secondary / Danger and their LG and Disabled variants;
   - Status Chip Info / Neutral;
   - Toast/Success `m:QCuMb`.

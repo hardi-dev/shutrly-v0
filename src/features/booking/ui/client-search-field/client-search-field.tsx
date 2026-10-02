@@ -31,16 +31,20 @@ export function ClientSearchField({
   function clear(): void { setValue(""); router.replace(pathname); }
   return (
     <>
-      <Input
-        variant="search"
-        aria-label={CLIENT_COPY.searchLabel}
-        placeholder={CLIENT_COPY.searchPlaceholder}
-        value={value}
-        onChange={setValue}
-        iconLeading="search"
-        iconTrailing={value ? "x" : undefined}
-        iconTrailingAction={value ? { label: CLIENT_COPY.clearSearch, onPress: clear } : undefined}
-      />
+      <div className="w-full md:w-[320px]">
+        <Input
+          variant="search"
+          aria-label={CLIENT_COPY.searchLabel}
+          placeholder={CLIENT_COPY.searchPlaceholder}
+          value={value}
+          onChange={setValue}
+          iconLeading="search"
+          iconTrailing={value ? "x" : undefined}
+          iconTrailingAction={
+            value ? { label: CLIENT_COPY.clearSearch, onPress: clear } : undefined
+          }
+        />
+      </div>
       <p className="sr-only" aria-live="polite">
         {value ? CLIENT_COPY.searchResultCount(resultCount) : ""}
       </p>

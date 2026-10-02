@@ -1032,7 +1032,7 @@ export interface ServiceRepositoryPort {
 
 **Files:** create `src/adapters/db/catalog-repository/*` and `tests/integration/booking/*`.
 
-- [ ] **Step 1: Failing integration tests** (`openTestDb`, own owner/workspace per test, as in `workspace-source-repository.test.ts`):
+- [x] **Step 1: Failing integration tests** (`openTestDb`, own owner/workspace per test, as in `workspace-source-repository.test.ts`):
   - `catalog-repositories.test.ts`:
     - AC-CAT-001/002: `seedDefaults` twice → 4 rows; with an existing *foto edit* → 4 rows, the existing one kept; a `db.transaction` that seeds then throws → no rows.
     - AC-CAT-019: duplicate names per kind (any case, archived included) → `NAME_TAKEN`; *Album* as a category, definition and service all succeed.
@@ -1047,7 +1047,7 @@ export interface ServiceRepositoryPort {
     - AC-CAT-020: updating a service changes only `service` (row counts of the other tables unchanged).
   - `catalog-isolation.test.ts`, AC-CAT-021: every read and write with workspace B's context on workspace A's IDs returns `NOT_FOUND`/false/empty and changes nothing; a direct insert of a `service` pointing at another workspace's category fails on the composite FK.
 - [ ] **Step 2:** `pnpm test:integration tests/integration/booking` → FAIL.
-- [ ] **Step 3: Implement** three factories over `DbExecutor` (`createDrizzleCategoryRepository(db)`, `createDrizzleItemDefinitionRepository(db)`, `createDrizzleServiceRepository(db)`), mirroring `createDrizzleWorkspaceSourceRepository`:
+- [x] **Step 3: Implement** three factories over `DbExecutor` (`createDrizzleCategoryRepository(db)`, `createDrizzleItemDefinitionRepository(db)`, `createDrizzleServiceRepository(db)`), mirroring `createDrizzleWorkspaceSourceRepository`:
   - Every statement filters `workspaceId = context.workspaceId` (and the parent ID where relevant).
   - `pg-error.ts` exports `pgCode(error)` (read `code` or `cause.code`), shared by the three files: 23505 → name/duplicate results; 23503 → `IN_USE`.
   - Counts: `list` for categories uses grouped counts of active/archived services; definitions use `count(service_item)`.
@@ -1056,7 +1056,7 @@ export interface ServiceRepositoryPort {
   - `moveItem` / `moveField`: `db.transaction`: lock the service row `FOR UPDATE`, read the ordered siblings, swap the two `sort_order` values.
   - `addField`: `db.transaction`: read the service's keys, `uniqueFieldKey(fieldKeyFromName(name), keys)`, insert; map 23505 on the name index to `NAME_TAKEN` (retry once on a key collision).
   - Reads parse JSONB with the domain shapes (`packageValueSchema` / options array) and skip rows that fail, never guessing.
-- [ ] **Step 4:** unit test `drizzle-service-repository.test.ts` with a stub executor rejecting `{ cause: { code: "23503" } }` on delete → `IN_USE` (F-07 projects).
+- [x] **Step 4:** unit test `drizzle-service-repository.test.ts` with a stub executor rejecting `{ cause: { code: "23503" } }` on delete → `IN_USE` (F-07 projects).
 - [ ] **Step 5:** gate + `pnpm test:integration` → PASS. Commit `feat(booking): add drizzle catalog repositories`.
 
 ### Task 10: Composition, creation seeding and server actions

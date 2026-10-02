@@ -20,6 +20,7 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 - Styling: Tailwind CSS v4, tokens as CSS variables mirrored from Pencil ([ADR-010](decisions/ADR-010-tailwind-react-aria.md))
 - Components: React Aria Components, wrapped in `src/ui/primitives/*` and `src/ui/patterns/*` ([ADR-010](decisions/ADR-010-tailwind-react-aria.md))
 - Design source: Pencil
+- Dates and times: `@internationalized/date` (React Aria's date library, pinned) for `DateField` / `TimeField` (F-07 D-12)
 - Local explorer: Storybook 10.6.0 with `@storybook/nextjs-vite`, Controls, Docs, and a11y; local-only via `pnpm storybook` ([ADR-014](decisions/ADR-014-local-storybook-component-explorer.md))
 
 ## Backend

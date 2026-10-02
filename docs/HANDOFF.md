@@ -1,16 +1,19 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED; F-07 DESIGNED) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED; F-07 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` is merged into `feat/clients` at `fe1d6f0`).
 
-## Current handoff — F-07 Projects DESIGNED (2026-10-02)
+## Current handoff — F-07 Projects PLANNED (2026-10-02)
 
-- **Design APPROVED (Owner 2026-10-02):**
-  - 94 frames in `projects.pen` (library prefix `H:`);
-  - 92 HTML exports in `features/projects/exports/`;
-  - see [design.md](features/projects/design.md). [design-handoff.md](features/projects/design-handoff.md) records the Pencil conventions and the review decisions.
-- **Gallery link (Owner 2026-10-02):** the Drive folder link stays in F-09. F-07 adds no gallery section.
-- **Next:** `/sdv:plan-feature projects`.
+- **Plan:** [technical-design.md](features/projects/technical-design.md) (decisions D-1…D-16) and [plan.md](features/projects/plan.md), 20 test-first tasks.
+  - **Tables:** `project`, `project_item`, `project_field_value` and `project_session` in the `booking` context, migration **0009**.
+  - **Writes:** every write locks the project row and decides from the stored status; status actions send a step, never a status.
+  - **List:** sorted by each project's shown session (A-12), with keyset paging.
+  - **Token:** 256-bit, written once and never selected by F-07.
+- **Base:** F-06 Clients is planned but **not built**. Task 1 stops until F-06 is built and merged into `feat/projects`.
+- **Owner check:** technical-design.md › D-5 reads AC-PRJ-008's *"none for Ukuran toga"* as *no value*. A metadata row is still stored, so the detail can show the field as empty and edit it later.
+- **New dependency:** `@internationalized/date` (React Aria's date library), recorded in tech-stack.md.
+- **Next:** build F-06 (`/sdv:build-feature clients 1`), then `/sdv:build-feature projects 1`.
 
 - **Branch:** `feat/projects`, cut from `feat/clients` because projects need the client table. Merge F-06 to `main` first, or rebase this branch once it lands.
 - **Spec:** [spec.md](features/projects/spec.md), [acceptance-criteria.md](features/projects/acceptance-criteria.md) (AC-PRJ-001…026).

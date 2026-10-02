@@ -310,6 +310,18 @@ The catalog implementation is on `feat/catalog` in worktree `shutrly-v01-catalog
 - E2E result: the authenticated catalog journey at `tests/e2e/catalog/catalog.spec.ts` passes on the catalog worktree's isolated server (1/1). The earlier *Segera hadir* result came from an already-running server in the primary checkout on port 3000; the catalog route and production build are correct. The journey now scopes responsive duplicate content to visible locators and waits for the inline category dialog to close before saving the service.
 - Open design decisions remain TD-D-1 (type-derived row icons) and TD-D-2 (value-plus-unit item summaries), both implemented as the low-risk options already described above.
 
+### Implementation record — owner-requested follow-up refinements — 2026-10-02
+
+The following refinements were requested after the initial F-05 implementation and are recorded here because they extend the original spec/design detail without changing the catalog domain rules or acceptance criteria:
+
+- **Mobile catalog actions:** the phone tabs for *Layanan*, *Kategori* and *Item paket* now receive their page action and render the full-width primary button directly below the tabs. Mobile content spacing uses `--space-4`; desktop keeps `--component-panel-app-content-gap`. Loading skeletons use the same responsive spacing.
+- **Mobile pickers:** all catalog `Select` controls use the existing C32 Bottom Sheet with `SheetItem` rows on phones, matching the workspace switcher: full-width 52px rows, separators, trailing selection check, optional icon/description, and a footer *Pilih* action. Selection remains pending until *Pilih*; desktop continues to use the C19 rich popover.
+- **Shared pattern extension:** `SheetItem` accepts an optional description so rich catalog picker options can reuse the same bottom-sheet row anatomy without duplicating a feature-local pattern.
+- **Destructive confirmations:** the shared `Modal` omits the body wrapper when `isDestructive`, so destructive confirmations render title/description and actions without an empty content region. This is a cross-cutting UI refinement, not a catalog domain rule.
+- **Catalog interaction polish:** post-checkpoint fixes also cover form reset after successful saves/close, missing form placeholders, the `Rp` price prefix, full-row detail links without a chevron when a trailing action exists, reusable global breadcrumbs, and mobile focus return after action sheets.
+
+These changes are covered by the targeted catalog/UI tests, including the mobile picker selection flow and responsive page-action placement. No ESLint rule was disabled.
+
 ## Risks / Open Questions
 
 - **TD-D-1, TD-D-2:** icon and summary deviations above; confirm or the plan switches to an `icon` column / name-based summary.

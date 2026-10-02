@@ -11,8 +11,12 @@ const notFound = vi.fn(() => {
 vi.mock("@/shared/logging/logger", () => ({ logger }));
 vi.mock("next/navigation", () => ({ notFound }));
 vi.mock("@/features/booking/application/use-cases/add-client/add-client", () => ({ addClient }));
-vi.mock("@/features/booking/application/use-cases/count-clients/count-clients", () => ({ countClients }));
-vi.mock("@/features/booking/application/use-cases/list-clients/list-clients", () => ({ listClients }));
+vi.mock("@/features/booking/application/use-cases/count-clients/count-clients", () => ({
+  countClients,
+}));
+vi.mock("@/features/booking/application/use-cases/list-clients/list-clients", () => ({
+  listClients,
+}));
 vi.mock("../../auth/owner-guard/owner-guard", () => ({
   requireOwnerOrRedirect: vi.fn().mockResolvedValue({ id: "owner" }),
 }));
@@ -23,7 +27,8 @@ vi.mock("../client-scope/client-scope", () => ({
   withClientScope: (work: (scope: unknown) => Promise<unknown>) => work({ clients: {} }),
 }));
 
-const { ClientError } = await import("@/features/booking/application/errors/client-errors/client-errors");
+const { ClientError } =
+  await import("@/features/booking/application/errors/client-errors/client-errors");
 const { addWorkspaceClient, loadClients } = await import("./client-flow");
 
 describe("client-flow", () => {
@@ -52,10 +57,14 @@ describe("client-flow", () => {
     countClients.mockResolvedValue(0);
     const data = await loadClients("ws-1", "ACTIVE", "a".repeat(101));
     expect(data.q).toBe("");
-    expect(listClients).toHaveBeenCalledWith({}, { workspaceId: "ws-1" }, {
-      status: "ACTIVE",
-      q: "",
-      afterId: null,
-    });
+    expect(listClients).toHaveBeenCalledWith(
+      {},
+      { workspaceId: "ws-1" },
+      {
+        status: "ACTIVE",
+        q: "",
+        afterId: null,
+      },
+    );
   });
 });

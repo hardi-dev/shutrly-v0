@@ -18,8 +18,7 @@ export const CLIENT_COPY = {
   add: "Tambah",
   addClient: "Tambah klien",
   emptyActiveTitle: "Belum ada klien aktif",
-  emptyActiveBody:
-    "Tambahkan orang yang memesan sesi foto, lalu pilih mereka saat membuat proyek.",
+  emptyActiveBody: "Tambahkan orang yang memesan sesi foto, lalu pilih mereka saat membuat proyek.",
   emptyArchivedTitle: "Belum ada klien di arsip",
   emptyArchivedBody: "Klien yang kamu arsipkan muncul di sini dan bisa dipulihkan kapan saja.",
   dialogTitle: "Tambah klien",
@@ -27,8 +26,7 @@ export const CLIENT_COPY = {
   name: "Nama klien",
   namePlaceholder: "Contoh: Rina Wedding",
   whatsappNumber: "Nomor WhatsApp",
-  whatsappDescription:
-    "Contoh: 0812 3456 7890. Nomor luar negeri diawali + dan kode negara.",
+  whatsappDescription: "Contoh: 0812 3456 7890. Nomor luar negeri diawali + dan kode negara.",
   socialLinks: "Media sosial",
   socialLinksOptional: "opsional",
   socialLinksLabel: "Media sosial (opsional)",

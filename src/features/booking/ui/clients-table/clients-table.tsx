@@ -35,10 +35,7 @@ export function ClientsTable({ status, count, rows, emptyState }: Readonly<Clien
   );
 }
 
-function renderCell(
-  row: ClientsTableProps["rows"][number],
-  columnId: string,
-): ReactNode {
+function renderCell(row: ClientsTableProps["rows"][number], columnId: string): ReactNode {
   if (columnId === "name") return <ClientNameCell name={row.name} />;
   if (columnId === "whatsapp") return <span>{whatsappLabel(row.whatsappNumber)}</span>;
   if (columnId === "social") return <SocialLinksCell links={row.socialLinks} />;
@@ -54,7 +51,9 @@ function ClientNameCell({ name }: Readonly<{ name: string }>) {
   );
 }
 
-function SocialLinksCell({ links }: Readonly<{ links: ClientsTableProps["rows"][number]["socialLinks"] }>) {
+function SocialLinksCell({
+  links,
+}: Readonly<{ links: ClientsTableProps["rows"][number]["socialLinks"] }>) {
   const first = links.at(0);
   if (!first)
     return <span className="text-(--color-semantic-text-muted)">{CLIENT_COPY.noSocialLinks}</span>;
@@ -62,7 +61,12 @@ function SocialLinksCell({ links }: Readonly<{ links: ClientsTableProps["rows"][
   return (
     <span className="flex min-w-0 items-center gap-(--space-1-5)">
       {isSocialUrl(first.value) ? (
-        <a href={first.value} target="_blank" rel="noopener noreferrer" className="truncate hover:underline">
+        <a
+          href={first.value}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="truncate hover:underline"
+        >
           {label}
         </a>
       ) : (

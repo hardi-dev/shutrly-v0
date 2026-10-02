@@ -13,14 +13,7 @@ describe("ClientDialog", () => {
     useMobileViewport.mockReturnValue(false);
     const submit = vi.fn().mockResolvedValue(undefined);
     const onOpenChange = vi.fn();
-    render(
-      <ClientDialog
-        isOpen
-        workspaceId="x"
-        onOpenChange={onOpenChange}
-        onSubmit={submit}
-      />,
-    );
+    render(<ClientDialog isOpen workspaceId="x" onOpenChange={onOpenChange} onSubmit={submit} />);
 
     await userEvent.type(screen.getByLabelText("Nama klien"), " Rina Wedding ");
     await userEvent.type(screen.getByLabelText("Nomor WhatsApp"), "0812-3456-7890");

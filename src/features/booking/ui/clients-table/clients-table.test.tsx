@@ -55,7 +55,9 @@ describe("ClientsTable", () => {
   });
 
   it("AC-CLI-003 renders the external empty state instead of the table", () => {
-    render(<ClientsTable status="ACTIVE" count={0} rows={[]} emptyState={<p>Belum ada klien</p>} />);
+    render(
+      <ClientsTable status="ACTIVE" count={0} rows={[]} emptyState={<p>Belum ada klien</p>} />,
+    );
     expect(screen.getByText("Belum ada klien")).toBeInTheDocument();
     expect(screen.queryByRole("grid")).not.toBeInTheDocument();
   });

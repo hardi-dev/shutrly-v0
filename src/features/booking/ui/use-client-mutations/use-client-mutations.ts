@@ -11,7 +11,11 @@ async function runClientMutation(name: string, call: ClientMutationCall) {
   try {
     const result = await call();
     if (result?.ok === false) return result;
-    showToast({ tone: "success", title: CLIENT_COPY.addedTitle, body: CLIENT_COPY.addedBody(name) });
+    showToast({
+      tone: "success",
+      title: CLIENT_COPY.addedTitle,
+      body: CLIENT_COPY.addedBody(name),
+    });
     return result;
   } catch (error) {
     showToast({

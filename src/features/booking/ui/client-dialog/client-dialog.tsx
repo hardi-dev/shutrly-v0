@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 import { useController, useForm } from "react-hook-form";
 
 import { clientInputSchema } from "@/features/booking/application/schemas/client-input/client-input.schema";
-import type { ClientFields, ClientInput } from "@/features/booking/application/schemas/client-input/client-input.types";
+import type {
+  ClientFields,
+  ClientInput,
+} from "@/features/booking/application/schemas/client-input/client-input.types";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";

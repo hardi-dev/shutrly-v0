@@ -80,7 +80,10 @@ function ClientAddDialog({
   const mutations = useClientMutations();
   if (!addAction) return null;
   const submitAction = addAction;
-  function submitClient(id: string, values: Parameters<NonNullable<ClientsScreenProps["addAction"]>>[1]) {
+  function submitClient(
+    id: string,
+    values: Parameters<NonNullable<ClientsScreenProps["addAction"]>>[1],
+  ) {
     return mutations.run(values.name, () => submitAction(id, values));
   }
   return (

@@ -14,7 +14,9 @@ export function ClientsTabsBar({ workspaceId, status }: Readonly<ClientsTabsBarP
   const isMobile = useMobileViewport();
   if (!isMobile) return null;
   function handleChange(next: string): void {
-    router.push(next === "ACTIVE" ? `/w/${workspaceId}/clients` : `/w/${workspaceId}/clients/archived`);
+    router.push(
+      next === "ACTIVE" ? `/w/${workspaceId}/clients` : `/w/${workspaceId}/clients/archived`,
+    );
   }
   return (
     <SegmentedControl

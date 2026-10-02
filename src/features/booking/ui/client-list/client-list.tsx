@@ -15,7 +15,11 @@ export function ClientList({ status, count, rows, action, emptyState }: Readonly
       actions={action}
       content="flush"
     >
-      {rows.length === 0 ? <div className="px-(--space-4)">{emptyState}</div> : <ClientRows rows={rows} />}
+      {rows.length === 0 ? (
+        <div className="px-(--space-4)">{emptyState}</div>
+      ) : (
+        <ClientRows rows={rows} />
+      )}
     </SectionCard>
   );
 }

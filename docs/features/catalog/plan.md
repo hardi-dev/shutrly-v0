@@ -1063,12 +1063,12 @@ export interface ServiceRepositoryPort {
 
 **Files:** create `composition/booking/catalog-scope/*`, `composition/booking/catalog-flow/*`, `app/actions/booking/catalog.ts`; modify `workspace-creation-scope.{ts,types.ts}` and `owner-workspace.ts`.
 
-- [ ] **Step 1: Failing flow test** `catalog-flow.test.ts` (mock the logger, `next/navigation`, `owner-guard`, `verifyOwnerWorkspace` and the scope, as in `source-config-flow.test.ts`):
+- [x] **Step 1: Failing flow test** `catalog-flow.test.ts` (mock the logger, `next/navigation`, `owner-guard`, `verifyOwnerWorkspace` and the scope, as in `source-config-flow.test.ts`):
   - AC-CAT-010: `addCatalogService("ws-1", { name:"Wisuda Basic", categoryId, basePrice:"750.000" })` calls `create` with the verified context, amount `"750000"` and editor `owner_1`;
   - AC-CAT-021: a malformed service ID → `notFound`; the port's `NOT_FOUND` → `notFound`;
   - AC-CAT-022: the port throws `Error("db down")` → `CatalogError("SAVE_FAILED")`, logger called with exactly `("catalog.save_failed", { workspaceId:"ws-1", entity:"service", entityId:<id>, operation:"update_info" })`.
 - [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 3: Implement.**
   - `withCatalogScope(work)` → `withRequestDb((db) => work({ categories, itemDefinitions, services }))`.
   - `catalog-flow.ts` exports the four loaders (`loadServices`, `loadCategories`, `loadItemDefinitions`, `loadServiceDetail`) returning view models (IDs, names, `isActive`, labels already formatted: `priceLabel`, `summary`, `metaLabel`, usage/count labels are built in the UI from numbers), plus one entry per action, all following `source-config-flow.ts`.
   - `WorkspaceCreationScope` gains `itemDefinitions` (`createDrizzleItemDefinitionRepository(tx)`); both create flows call `seedDefaultItemDefinitions(itemDefinitions, { workspaceId: created.id })` after `seedDefaultSource`.

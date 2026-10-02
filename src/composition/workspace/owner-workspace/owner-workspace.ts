@@ -2,6 +2,7 @@ import "server-only";
 
 import { notFound, redirect } from "next/navigation";
 
+import { seedDefaultItemDefinitions } from "@/features/booking/application/use-cases/seed-default-item-definitions/seed-default-item-definitions";
 import { seedDefaultTemplates } from "@/features/communications/application/use-cases/seed-default-templates/seed-default-templates";
 import { seedDefaultSource } from "@/features/gallery/application/use-cases/seed-default-source/seed-default-source";
 import { createFirstWorkspace } from "@/features/workspace/application/use-cases/create-first-workspace/create-first-workspace";
@@ -76,10 +77,11 @@ export async function enterWorkspace(rawId: string): Promise<VerifiedWorkspace> 
 /** Creates an owner's first workspace with its default templates in one transaction (ADR-016). @param input - onboarding input @returns the created workspace ID */
 export async function createOwnerFirstWorkspace(input: CreateFirstWorkspaceInput) {
   const account = await requireOwnerOrRedirect();
-  return withWorkspaceCreationScope(async ({ repository, templates, sources }) => {
+  return withWorkspaceCreationScope(async ({ repository, templates, sources, itemDefinitions }) => {
     const created = await createFirstWorkspace(repository, asOwnerUserId(account.id), input);
     await seedDefaultTemplates(templates, { workspaceId: created.id });
     await seedDefaultSource(sources, { workspaceId: created.id });
+    await seedDefaultItemDefinitions(itemDefinitions, { workspaceId: created.id });
     return created;
   });
 }
@@ -87,10 +89,11 @@ export async function createOwnerFirstWorkspace(input: CreateFirstWorkspaceInput
 /** Creates an additional owner workspace with its default templates in one transaction (ADR-016). @param input - create input @returns the created workspace ID */
 export async function createOwnerWorkspace(input: CreateWorkspaceInput) {
   const account = await requireOwnerOrRedirect();
-  return withWorkspaceCreationScope(async ({ repository, templates, sources }) => {
+  return withWorkspaceCreationScope(async ({ repository, templates, sources, itemDefinitions }) => {
     const created = await createWorkspace(repository, asOwnerUserId(account.id), input);
     await seedDefaultTemplates(templates, { workspaceId: created.id });
     await seedDefaultSource(sources, { workspaceId: created.id });
+    await seedDefaultItemDefinitions(itemDefinitions, { workspaceId: created.id });
     return created;
   });
 }

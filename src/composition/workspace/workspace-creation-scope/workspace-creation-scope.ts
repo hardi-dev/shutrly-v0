@@ -1,5 +1,6 @@
 import "server-only";
 
+import { createDrizzleItemDefinitionRepository } from "@/adapters/db/catalog-repository/drizzle-item-definition-repository";
 import { createDrizzleMessageTemplateRepository } from "@/adapters/db/message-template-repository/drizzle-message-template-repository";
 import { createDrizzleWorkspaceRepository } from "@/adapters/db/workspace-repository/drizzle-workspace-repository";
 import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-source-repository/drizzle-workspace-source-repository";
@@ -22,6 +23,7 @@ export function withWorkspaceCreationScope<T>(
         repository: createDrizzleWorkspaceRepository(tx),
         templates: createDrizzleMessageTemplateRepository(tx),
         sources: createDrizzleWorkspaceSourceRepository(tx),
+        itemDefinitions: createDrizzleItemDefinitionRepository(tx),
       }),
     ),
   );

@@ -48,6 +48,12 @@ describe("Owner navigation", () => {
       "page",
     );
   });
+
+  it("AC-CAT-003 keeps Layanan active on nested catalog routes", () => {
+    render(<OwnerNav workspaceId="ws" pathname="/w/ws/services/9b6e" />);
+
+    expect(screen.getByRole("link", { name: "Layanan" })).toHaveAttribute("aria-current", "page");
+  });
 });
 
 describe("resolveActiveNav", () => {
@@ -55,6 +61,7 @@ describe("resolveActiveNav", () => {
     ["/w/A", "A", "dashboard", "dashboard"],
     ["/w/A/projects", "A", "projects", "projects"],
     ["/w/A/invoices", "A", "invoices", "invoices"],
+    ["/w/A/services", "A", "services", null],
     ["/w/A/settings", "A", "settings", null],
     ["/w/A/search", "A", null, null],
     ["/profile", "A", null, null],
@@ -67,7 +74,37 @@ describe("resolvePageHeading", () => {
   it.each([
     ["/w/A", { title: "Dasbor", subtitle: "Ringkasan workspace Aster." }],
     ["/w/A/projects", { title: "Proyek", subtitle: "Segera hadir." }],
-    ["/w/A/services", { title: "Layanan", subtitle: "Segera hadir." }],
+    [
+      "/w/A/services",
+      {
+        title: "Layanan",
+        subtitle: OWNER_NAV_COPY.servicesSubtitle,
+        tabs: {
+          label: OWNER_NAV_COPY.servicesTabsLabel,
+          tabs: [
+            { href: "/w/A/services", label: "Layanan", isActive: true },
+            { href: "/w/A/services/categories", label: "Kategori", isActive: false },
+            { href: "/w/A/services/items", label: "Item paket", isActive: false },
+          ],
+        },
+      },
+    ],
+    [
+      "/w/A/services/items",
+      {
+        title: "Item paket",
+        subtitle: OWNER_NAV_COPY.servicesSubtitle,
+        tabs: {
+          label: OWNER_NAV_COPY.servicesTabsLabel,
+          tabs: [
+            { href: "/w/A/services", label: "Layanan", isActive: false },
+            { href: "/w/A/services/categories", label: "Kategori", isActive: false },
+            { href: "/w/A/services/items", label: "Item paket", isActive: true },
+          ],
+        },
+      },
+    ],
+    ["/w/A/services/9b6e", { title: "Layanan", subtitle: OWNER_NAV_COPY.servicesSubtitle }],
     ["/w/A/search", { title: "Pencarian", subtitle: "Segera hadir." }],
     ["/w/A/notifications", { title: "Notifikasi", subtitle: "Segera hadir." }],
     [

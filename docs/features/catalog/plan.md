@@ -244,7 +244,7 @@ describe("Tabs (C45)", () => {
 
 **Files:** modify `coming-soon-sections.ts`, `owner-nav.tsx` (+ `.types.ts`, `.copy.ts`), `owner-shell.tsx` (+ `.types.ts`), their tests; create `features/workspace/ui/page-heading-override/*`.
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
   - `coming-soon-sections.test.ts`: AC-CAT-003 `isComingSoonSection("services") === false`.
   - `owner-nav.test.tsx`:
     - `resolvePageHeading("/w/ws/services", "ws", …)` → title *Layanan*, subtitle *Paket yang kamu jual. Proyek baru menyalin isi paket saat dibuat.*, tabs Layanan (active) · Kategori · Item paket with hrefs `/w/ws/services`, `/services/categories`, `/services/items`;
@@ -252,13 +252,13 @@ describe("Tabs (C45)", () => {
     - `/w/ws/services/<uuid>` → no tabs (the detail page overrides the heading);
     - the sidebar *Layanan* item stays active on every `/services/**` path.
   - `owner-shell.test.tsx`: a child rendering `<PageHeadingOverride title="Wisuda Basic" parent={{ label: "Layanan", href: "/w/ws/services" }} />` replaces the header title and shows the Compact Bar parent on phones.
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
   - Remove `"services"` from `COMING_SOON_SECTIONS` (a static `services/` route now exists, ADR-015).
   - `PageHeading` gains `tabs?: { label: string; tabs: readonly TabLink[] }`. Copy: `servicesSubtitle`, `servicesTabsLabel: "Bagian layanan"`, `serviceTabs: { services: "Layanan", categories: "Kategori", items: "Item paket" }` (from frames; the label is `// not in Pencil`).
   - `resolvePageHeading`: for section `services`, return tabs only when the rest of the path is `""`, `"categories"` or `"items"`.
   - `PageHeadingOverride` (client): a context provider in `OwnerShell` (`useState<OwnerSubPage | null>`), a child component that sets it in `useEffect` and clears it on unmount. `OwnerShell` resolves `override ?? subPage ?? resolvePageHeading(...)`; tabs go to `AppShell panelTabs`.
-- [ ] **Step 4:** gate → PASS. Commit `feat(workspace): route catalog tabs and dynamic headings through the owner shell`.
+- [x] **Step 4:** gate → PASS. Commit `feat(workspace): route catalog tabs and dynamic headings through the owner shell`.
 
 ### Task 5: Domain
 

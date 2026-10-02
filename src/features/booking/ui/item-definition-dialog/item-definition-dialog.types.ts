@@ -3,6 +3,9 @@ import type { ReactNode } from "react";
 import type { ItemDefinitionRecord } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
 import type { CatalogWriteResult } from "@/features/booking/application/use-cases/catalog-results/catalog-results.types";
 
+export type ItemDefinitionSelectionType = "EDIT" | "PRINT";
+export type ItemDefinitionSelectionValue = ItemDefinitionSelectionType | null;
+
 export interface ItemDefinitionDialogProps {
   readonly isOpen: boolean;
   readonly workspaceId: string;
@@ -28,10 +31,24 @@ export interface ItemDefinitionFieldsProps {
   readonly setUnit: (value: string) => void;
   readonly selectionRequired: boolean;
   readonly setSelectionRequired: (value: boolean) => void;
-  readonly selectionType: "EDIT" | "PRINT" | null;
-  readonly setSelectionType: (value: "EDIT" | "PRINT") => void;
+  readonly selectionType: ItemDefinitionSelectionValue;
+  readonly setSelectionType: (value: ItemDefinitionSelectionType) => void;
   readonly locked: boolean;
   readonly error?: string;
+}
+
+export interface ItemDefinitionValueState {
+  readonly name: string;
+  readonly setName: (value: string) => void;
+  readonly valueType: "NUMBER" | "RANGE";
+  readonly setValueType: (value: "NUMBER" | "RANGE") => void;
+  readonly unit: string;
+  readonly setUnit: (value: string) => void;
+  readonly selectionRequired: boolean;
+  readonly setSelectionRequired: (value: boolean) => void;
+  readonly selectionType: ItemDefinitionSelectionValue;
+  readonly setSelectionType: (value: ItemDefinitionFieldsProps["selectionType"]) => void;
+  readonly reset: () => void;
 }
 
 export interface ResponsiveItemDefinitionDialogProps extends ItemDefinitionDialogProps {

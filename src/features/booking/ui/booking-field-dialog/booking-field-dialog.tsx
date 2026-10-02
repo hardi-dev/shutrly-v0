@@ -19,6 +19,7 @@ import { OptionListEditor } from "../option-list-editor/option-list-editor";
 import type {
   BookingFieldDialogProps,
   BookingFieldFieldsProps,
+  BookingFieldSubmitArgs,
   BookingFieldValueState,
   ResponsiveFieldDialogProps,
 } from "./booking-field-dialog.types";
@@ -32,6 +33,20 @@ const FIELD_TYPE_OPTIONS: readonly { readonly id: FieldType; readonly label: str
   { id: "SELECT", label: "Pilihan" },
 ];
 function noop(): void {}
+
+function createOpenChangeHandler(
+  reset: () => void,
+  clearErrors: () => void,
+  onOpenChange: (isOpen: boolean) => void,
+): (isOpen: boolean) => void {
+  return function handleOpenChange(isOpen: boolean): void {
+    if (!isOpen) {
+      reset();
+      clearErrors();
+    }
+    onOpenChange(isOpen);
+  };
+}
 
 export function BookingFieldDialog(props: Readonly<BookingFieldDialogProps>) {
   const form = useBookingFieldForm(props);
@@ -47,6 +62,7 @@ export function BookingFieldDialog(props: Readonly<BookingFieldDialogProps>) {
   return (
     <ResponsiveFieldDialog
       {...props}
+      onOpenChange={form.handleOpenChange}
       content={content}
       save={save}
       title={props.field ? CATALOG_COPY.editField : CATALOG_COPY.addFieldTitle}
@@ -67,33 +83,27 @@ function useBookingFieldForm({
   const [error, setError] = useState<string | undefined>();
   const [optionErrors, setOptionErrors] = useState<Readonly<Record<number, string>>>({});
   const [pending, setPending] = useState(false);
+  const handleOpenChange = createOpenChangeHandler(
+    state.reset,
+    () => {
+      setError(undefined);
+      setOptionErrors({});
+    },
+    onOpenChange,
+  );
   async function submit(): Promise<void> {
-    setPending(true);
-    setError(undefined);
-    setOptionErrors({});
-    try {
-      const values = {
-        name: state.name,
-        fieldType: state.fieldType,
-        isRequired: state.required,
-        options: state.fieldType === "SELECT" ? state.options : null,
-      };
-      const result =
-        field && updateAction
-          ? await updateAction(workspaceId, serviceId, field.id, values)
-          : await action(workspaceId, serviceId, values);
-      if (result?.ok === false) {
-        setOptionErrors(parseOptionErrors(result.fieldErrors));
-        setError(result.fieldErrors.name ?? result.fieldErrors.options);
-        return;
-      }
-      onOpenChange(false);
-      showToast({ tone: "success", title: CATALOG_COPY.savedToast });
-    } catch {
-      showCatalogSaveFailure({ setError, retry: () => void submit() });
-    } finally {
-      setPending(false);
-    }
+    await submitBookingField({
+      workspaceId,
+      serviceId,
+      field,
+      action,
+      updateAction,
+      state,
+      onOpenChange: handleOpenChange,
+      setError,
+      setOptionErrors,
+      setPending,
+    });
   }
   return {
     ...state,
@@ -101,15 +111,77 @@ function useBookingFieldForm({
     optionErrors,
     pending,
     submit,
+    handleOpenChange,
   };
 }
 
+async function submitBookingField(args: BookingFieldSubmitArgs): Promise<void> {
+  const {
+    workspaceId,
+    serviceId,
+    field,
+    action,
+    updateAction,
+    state,
+    onOpenChange,
+    setError,
+    setOptionErrors,
+    setPending,
+  } = args;
+  setPending(true);
+  setError(undefined);
+  setOptionErrors({});
+  try {
+    const values = {
+      name: state.name,
+      fieldType: state.fieldType,
+      isRequired: state.required,
+      options: state.fieldType === "SELECT" ? state.options : null,
+    };
+    const result =
+      field && updateAction
+        ? await updateAction(workspaceId, serviceId, field.id, values)
+        : await action(workspaceId, serviceId, values);
+    if (result?.ok === false) {
+      setOptionErrors(parseOptionErrors(result.fieldErrors));
+      setError(result.fieldErrors.name ?? result.fieldErrors.options);
+      return;
+    }
+    onOpenChange(false);
+    showToast({ tone: "success", title: CATALOG_COPY.savedToast });
+  } catch {
+    showCatalogSaveFailure({ setError, retry: () => void submitBookingField(args) });
+  } finally {
+    setPending(false);
+  }
+}
+
 function useBookingFieldValues(field: BookingFieldDialogProps["field"]): BookingFieldValueState {
-  const [name, setName] = useState(field?.name ?? "");
-  const [fieldType, setFieldType] = useState<FieldType>(field?.fieldType ?? "TEXT");
-  const [required, setRequired] = useState(field?.isRequired ?? false);
-  const [options, setOptions] = useState<readonly string[]>(field?.options ?? []);
-  return { name, setName, fieldType, setFieldType, required, setRequired, options, setOptions };
+  const initialName = field?.name ?? "";
+  const initialFieldType = field?.fieldType ?? "TEXT";
+  const initialRequired = field?.isRequired ?? false;
+  const initialOptions = field?.options ?? [];
+  const [name, setName] = useState(initialName);
+  const [fieldType, setFieldType] = useState<FieldType>(initialFieldType);
+  const [required, setRequired] = useState(initialRequired);
+  const [options, setOptions] = useState<readonly string[]>(initialOptions);
+  function reset(): void {
+    setName(initialName);
+    setFieldType(initialFieldType);
+    setRequired(initialRequired);
+    setOptions(initialOptions);
+  }
+  return {
+    name,
+    setName,
+    reset,
+    fieldType,
+    setFieldType,
+    required,
+    setRequired,
+    options,
+    setOptions,
+  };
 }
 
 function parseOptionErrors(

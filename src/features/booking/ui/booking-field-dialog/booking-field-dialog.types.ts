@@ -46,10 +46,24 @@ export interface ResponsiveFieldDialogProps extends BookingFieldDialogProps {
 export interface BookingFieldValueState {
   readonly name: string;
   readonly setName: (value: string) => void;
+  readonly reset: () => void;
   readonly fieldType: FieldType;
   readonly setFieldType: (value: FieldType) => void;
   readonly required: boolean;
   readonly setRequired: (value: boolean) => void;
   readonly options: readonly string[];
   readonly setOptions: (value: readonly string[]) => void;
+}
+
+export interface BookingFieldSubmitArgs {
+  readonly workspaceId: string;
+  readonly serviceId: string;
+  readonly field?: BookingFieldRecord;
+  readonly action: BookingFieldDialogProps["action"];
+  readonly updateAction: BookingFieldDialogProps["updateAction"];
+  readonly state: BookingFieldValueState;
+  readonly onOpenChange: (isOpen: boolean) => void;
+  readonly setError: (value: string | undefined) => void;
+  readonly setOptionErrors: (value: Readonly<Record<number, string>>) => void;
+  readonly setPending: (value: boolean) => void;
 }

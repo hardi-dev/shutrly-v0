@@ -19,6 +19,7 @@ import type {
   ItemDefinitionDialogProps,
   ItemDefinitionFieldsProps,
   ItemDefinitionSubmitArgs,
+  ItemDefinitionValueState,
   ResponsiveItemDefinitionDialogProps,
 } from "./item-definition-dialog.types";
 
@@ -66,37 +67,74 @@ export function ItemDefinitionDialog(props: Readonly<ItemDefinitionDialogProps>)
   const title = props.definition
     ? CATALOG_COPY.definitionDialogEditTitle
     : CATALOG_COPY.definitionDialogAddTitle;
-  return <ResponsiveItemDefinitionDialog {...props} title={title} content={content} save={save} />;
+  return (
+    <ResponsiveItemDefinitionDialog
+      {...props}
+      onOpenChange={form.handleOpenChange}
+      title={title}
+      content={content}
+      save={save}
+    />
+  );
 }
 
 function useItemDefinitionForm(props: Readonly<ItemDefinitionDialogProps>) {
   const { workspaceId, definition, onOpenChange, action, updateAction } = props;
-  const [name, setName] = useState(definition?.name ?? "");
-  const [valueType, setValueType] = useState<"NUMBER" | "RANGE">(definition?.valueType ?? "NUMBER");
-  const [unit, setUnit] = useState(definition?.unit ?? "");
-  const [selectionRequired, setSelectionRequired] = useState(
-    definition?.selectionRequired ?? false,
-  );
-  const [selectionType, setSelectionType] = useState<"EDIT" | "PRINT" | null>(
-    definition?.selectionType ?? null,
-  );
+  const state = useItemDefinitionValues(definition);
   const [error, setError] = useState<string | undefined>();
   const [pending, setPending] = useState(false);
+  const handleOpenChange = createOpenChangeHandler(
+    state.reset,
+    () => {
+      setError(undefined);
+    },
+    onOpenChange,
+  );
   async function submit(): Promise<void> {
     await submitItemDefinition({
       workspaceId,
       definition,
-      name,
-      valueType,
-      unit,
-      selectionRequired,
-      selectionType,
+      name: state.name,
+      valueType: state.valueType,
+      unit: state.unit,
+      selectionRequired: state.selectionRequired,
+      selectionType: state.selectionType,
       updateAction,
       action,
-      onOpenChange,
+      onOpenChange: handleOpenChange,
       setError,
       setPending,
     });
+  }
+  return {
+    ...state,
+    locked: Boolean(definition?.usageCount),
+    error,
+    pending,
+    submit,
+    handleOpenChange,
+  };
+}
+
+function useItemDefinitionValues(
+  definition: ItemDefinitionDialogProps["definition"],
+): ItemDefinitionValueState {
+  const initialName = definition?.name ?? "";
+  const initialValueType = definition?.valueType ?? "NUMBER";
+  const initialUnit = definition?.unit ?? "";
+  const initialSelectionRequired = definition?.selectionRequired ?? false;
+  const initialSelectionType = definition?.selectionType ?? null;
+  const [name, setName] = useState(initialName);
+  const [valueType, setValueType] = useState<"NUMBER" | "RANGE">(initialValueType);
+  const [unit, setUnit] = useState(initialUnit);
+  const [selectionRequired, setSelectionRequired] = useState(initialSelectionRequired);
+  const [selectionType, setSelectionType] = useState<"EDIT" | "PRINT" | null>(initialSelectionType);
+  function reset(): void {
+    setName(initialName);
+    setValueType(initialValueType);
+    setUnit(initialUnit);
+    setSelectionRequired(initialSelectionRequired);
+    setSelectionType(initialSelectionType);
   }
   return {
     name,
@@ -109,10 +147,21 @@ function useItemDefinitionForm(props: Readonly<ItemDefinitionDialogProps>) {
     setSelectionRequired,
     selectionType,
     setSelectionType,
-    locked: Boolean(definition?.usageCount),
-    error,
-    pending,
-    submit,
+    reset,
+  };
+}
+
+function createOpenChangeHandler(
+  reset: () => void,
+  clearErrors: () => void,
+  onOpenChange: (isOpen: boolean) => void,
+): (isOpen: boolean) => void {
+  return function handleOpenChange(isOpen: boolean): void {
+    if (!isOpen) {
+      reset();
+      clearErrors();
+    }
+    onOpenChange(isOpen);
   };
 }
 

@@ -14,7 +14,7 @@ Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` 
 ### Design (approved 2026-10-02)
 
 
-- **Design APPROVED (Owner 2026-10-02):** 37 frames in [clients.pen](features/clients/clients.pen) (library prefix `Y:`), exports in `features/clients/exports/`, see [design.md](features/clients/design.md).
+- **Design APPROVED (Owner 2026-10-02):** 40 frames in [clients.pen](features/clients/clients.pen) (library prefix `Y:`), exports in `features/clients/exports/`, see [design.md](features/clients/design.md).
   - Tabs as in F-05: C45 underline tabs in the Page Header on desktop, Segmented Control/Full width on phones.
   - The desktop table sits in the centred 720 column; its toolbar shows *Daftar klien* with the client count (new A-10, AC-CLI-021) and the search on the right.
 - **Library:** F-05's promotion commit `2dc3da6` is merged into this branch (`4d2ee7e`). The F-06 token `color.semantic.surface.panel-subtle` (neutral 50 / 800, table header; Owner option C) sits on top: 597 tokens, checksum `d09d3751`; library = repository.

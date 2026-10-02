@@ -16,7 +16,7 @@
 **Tech Stack:** Next.js 16 (App Router, server actions), React 19, Zod 4, React Hook Form + `zodResolver`, Drizzle 0.45 on Neon serverless, Tailwind v4 token utilities, react-aria-components (only inside `src/ui`), Hugeicons, Vitest (unit, dom, integration), Playwright + axe, Storybook.
 
 **Sources:**
-- design: [design.md](design.md) and `exports/*.html` (37 frames);
+- design: [design.md](design.md) and `exports/*.html` (40 frames);
 - technical design: [technical-design.md](technical-design.md) (decisions D-1…D-8);
 - component specs: `docs/design-system/components/{table,tabs,page-header,segmented-control,section-card,list-card,select,empty-state,menu,modal,bottom-sheet}.md`.
 
@@ -147,7 +147,7 @@ export interface DataTableProps<Row extends { readonly id: string }> {
   readonly rows: readonly Row[];
   readonly renderCell: (row: Row, columnId: string) => ReactNode;
   readonly onRowAction?: (row: Row) => void;
-  /** Replaces header and rows when there are no rows (Table Empty State). */
+  /** Replaces header and rows when there are no rows (the caller passes an Empty State). */
   readonly emptyState?: ReactNode;
   readonly footer?: ReactNode;
 }
@@ -233,7 +233,7 @@ describe("DataTable (C27)", () => {
   - **Structure:** `<section>` card (Table card tokens). Inside: the toolbar row (the Title group on the left, `toolbar.actions` on the right, `justify-between`), then the React Aria `Table` (`aria-label={label}`, `onRowAction` mapped by key), then the optional footer (centred, top border `table.border`).
   - **Columns:** a fixed `width` becomes an inline `style={{ width }}` (literal sizes, design.md); the fill column gets `flex-1`. `isLabelHidden` keeps the header accessible and renders it visually empty.
   - **Rows:** padding `table.row.padding-*`, bottom border `table.row.border` except on the last row; row hover only when `onRowAction` is set.
-  - **Empty:** when `rows` is empty and `emptyState` is given, render it in the card body and skip the header (design.md › Layout).
+  - **Empty:** when `rows` is empty and `emptyState` is given, render it in the card body inside `space-4` padding and skip the header and footer (design.md › Layout).
   - **Skeleton:** `DataTableSkeleton` renders the same card, the header row and `rowCount` rows of skeleton bars (`surface.sunken` bars, the export's shape).
   - Copy comes from props only, so no `.copy.ts` is needed. The story copy lives in `.stories.copy.ts`.
 - [ ] **Step 5: Story** `Patterns/DataTable` with *Populated*, *Empty* and *Loading*, using the client rows from the export.
@@ -1144,7 +1144,7 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
     - toolbar title *Daftar klien*, subtitle the count, actions `ClientSearchField` (320);
     - `onRowAction` → edit;
     - the actions cell holds `ClientRowActions` (Task 13; until then an empty cell).
-  - **`ClientsEmptyState`** uses `EmptyState placement="in-card"`:
+  - **`ClientsEmptyState`** uses the standalone `EmptyState` (tinted box, accent icon) on both desktop and phone, as the frames draw it (design.md › Layout, Owner 2026-10-02). Desktop places it through `DataTable`'s `emptyState`; phones place it in the Section Card body with `space-4` padding:
     - `users` + *Tambah klien* for *Aktif*;
     - `archive` for *Arsip*;
     - `search-x` + *Hapus pencarian* for no match.
@@ -1215,7 +1215,7 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
 
 ### Task 13: Row actions, archive, restore and delete
 
-**Files:** create `ui/client-row-actions`, `ui/delete-client-dialog` and `ui/use-client-mutations` (+ tests); wire them into `ClientsTable`, `ClientList` and `ClientsScreen`. Build from `list-row-menu-desktop-uTkvt`, `row-actions-sheet-mobile-cVBpx`, `list-archived-*`, `delete-*` and `toast-*`.
+**Files:** create `ui/client-row-actions`, `ui/delete-client-dialog` and `ui/use-client-mutations` (+ tests); extend `src/ui/patterns/sheet-item` with `isDisabled` and `isPending` (pending = disabled + `loading-03` spinner icon, `opacity.disabled`; + test and story); wire them into `ClientsTable`, `ClientList` and `ClientsScreen`. Build from `list-row-menu-desktop-uTkvt`, `row-actions-sheet-mobile-cVBpx`, `list-archived-*` (including `list-archived-row-menu-desktop-sfgdK` and `list-archived-row-actions-sheet-mobile-Ttcj1`), `delete-*` and `toast-*`.
 
 - [ ] **Step 1: Failing tests.**
   - `client-row-actions.test.tsx`:
@@ -1224,7 +1224,7 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
     - *Hapus* opens the delete dialog;
     - phones show the Bottom Sheet/Actions titled with the name and the meta.
   - `delete-client-dialog.test.tsx`:
-    - AC-CLI-014: *Hapus klien "Rina"?* with the description; *Batal* calls nothing; confirm shows *Menghapus…*, then toasts *Klien dihapus* and closes;
+    - AC-CLI-014: *Hapus klien "Rina"?* with the description; *Batal* calls nothing; confirm shows *Menghapus…* (desktop: Danger button pending; phone: the sheet stays open, the item reads *Menghapus…* with a spinner and both items are disabled), then toasts *Klien dihapus* and closes;
     - AC-CLI-015: an `IN_USE` result switches to the blocked state: Alert/Danger *Klien ini punya proyek. Arsipkan saja.*, *Hapus klien* disabled, *Batal* → *Tutup*. On phones the sheet title carries the message and the only action is *Tutup*.
   - `use-client-mutations.test.ts`: AC-CLI-017 every action that throws shows the danger toast with *Coba lagi*, and *Coba lagi* repeats the same call.
 - [ ] **Step 2:** run → FAIL.

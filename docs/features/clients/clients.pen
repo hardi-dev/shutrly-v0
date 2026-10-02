@@ -749,8 +749,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / List / Row menu / Desktop",
-      "x": 1540,
-      "y": 0,
+      "x": 0,
+      "y": 1340,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -1482,8 +1482,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / List / Loading more / Desktop",
-      "x": 3080,
-      "y": 0,
+      "x": 0,
+      "y": 9628,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -2189,8 +2189,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / List / Loading / Desktop",
-      "x": 4620,
-      "y": 0,
+      "x": 0,
+      "y": 8444,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -2498,9 +2498,9 @@
       "id": "sfgdK",
       "type": "ref",
       "ref": "Y:y9uBJl",
-      "name": "Klien / List / Archived / Desktop",
+      "name": "Klien / List / Archived / Row menu / Desktop",
       "x": 0,
-      "y": 1300,
+      "y": 3708,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -2802,8 +2802,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / List / Empty / Desktop",
-      "x": 1540,
-      "y": 1300,
+      "x": 0,
+      "y": 4892,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -2981,37 +2981,48 @@
                     "Y:cYo5t": {
                       "children": [
                         {
-                          "id": "L7JpNB",
-                          "type": "ref",
-                          "ref": "Y:w0HQb",
-                          "name": "Empty",
+                          "type": "frame",
+                          "id": "s9SOQ4",
+                          "name": "Empty content",
                           "width": "fill_container",
-                          "descendants": {
-                            "Y:QtZgS": {
-                              "icon": "users"
-                            },
-                            "Y:rCTR4": {
-                              "content": "Belum ada klien"
-                            },
-                            "Y:I9eRVV": {
-                              "content": "Tambahkan orang yang memesan sesi foto, lalu pilih mereka saat membuat proyek."
-                            },
-                            "Y:J0Ouy": {
-                              "id": "QOX10",
+                          "layout": "vertical",
+                          "padding": "$Y:space/4",
+                          "children": [
+                            {
+                              "id": "crDwM",
                               "type": "ref",
-                              "ref": "Y:JmfmZ",
-                              "name": "Add client",
+                              "ref": "Y:H43gDN",
+                              "name": "Empty",
+                              "width": "fill_container",
                               "descendants": {
-                                "Y:fMNO1": {
-                                  "enabled": true,
-                                  "icon": "plus"
+                                "Y:zOUao": {
+                                  "icon": "users"
                                 },
-                                "Y:xnhuK": {
-                                  "content": "Tambah klien"
+                                "Y:c8Y4Ky": {
+                                  "content": "Belum ada klien"
+                                },
+                                "Y:FCyNB": {
+                                  "content": "Tambahkan orang yang memesan sesi foto, lalu pilih mereka saat membuat proyek.",
+                                  "width": "fill_container"
+                                },
+                                "Y:SzhQW": {
+                                  "id": "JnhZ7",
+                                  "type": "ref",
+                                  "ref": "Y:JmfmZ",
+                                  "name": "Add client",
+                                  "descendants": {
+                                    "Y:fMNO1": {
+                                      "enabled": true,
+                                      "icon": "plus"
+                                    },
+                                    "Y:xnhuK": {
+                                      "content": "Tambah klien"
+                                    }
+                                  }
                                 }
                               }
                             }
-                          }
+                          ]
                         }
                       ]
                     },
@@ -3031,8 +3042,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / List / Empty archived / Desktop",
-      "x": 3080,
-      "y": 1300,
+      "x": 0,
+      "y": 6076,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -3210,25 +3221,36 @@
                     "Y:cYo5t": {
                       "children": [
                         {
-                          "id": "j4Eh9k",
-                          "type": "ref",
-                          "ref": "Y:w0HQb",
-                          "name": "Empty",
+                          "type": "frame",
+                          "id": "MwIMn",
+                          "name": "Empty content",
                           "width": "fill_container",
-                          "descendants": {
-                            "Y:QtZgS": {
-                              "icon": "archive"
-                            },
-                            "Y:rCTR4": {
-                              "content": "Belum ada klien yang diarsipkan"
-                            },
-                            "Y:I9eRVV": {
-                              "content": "Klien yang kamu arsipkan muncul di sini dan bisa dipulihkan kapan saja."
-                            },
-                            "Y:xRWEs": {
-                              "enabled": false
+                          "layout": "vertical",
+                          "padding": "$Y:space/4",
+                          "children": [
+                            {
+                              "id": "jyV1D",
+                              "type": "ref",
+                              "ref": "Y:H43gDN",
+                              "name": "Empty",
+                              "width": "fill_container",
+                              "descendants": {
+                                "Y:zOUao": {
+                                  "icon": "archive"
+                                },
+                                "Y:c8Y4Ky": {
+                                  "content": "Belum ada klien yang diarsipkan"
+                                },
+                                "Y:FCyNB": {
+                                  "content": "Klien yang kamu arsipkan muncul di sini dan bisa dipulihkan kapan saja.",
+                                  "width": "fill_container"
+                                },
+                                "Y:SzhQW": {
+                                  "enabled": false
+                                }
+                              }
                             }
-                          }
+                          ]
                         }
                       ]
                     },
@@ -3248,8 +3270,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / List / No match / Desktop",
-      "x": 4620,
-      "y": 1300,
+      "x": 0,
+      "y": 7260,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -3435,33 +3457,44 @@
                     "Y:cYo5t": {
                       "children": [
                         {
-                          "id": "b0twB",
-                          "type": "ref",
-                          "ref": "Y:w0HQb",
-                          "name": "Empty",
+                          "type": "frame",
+                          "id": "D2MQNa",
+                          "name": "Empty content",
                           "width": "fill_container",
-                          "descendants": {
-                            "Y:QtZgS": {
-                              "icon": "search-x"
-                            },
-                            "Y:rCTR4": {
-                              "content": "Tidak ada klien yang cocok"
-                            },
-                            "Y:I9eRVV": {
-                              "content": "Coba nama lain, atau ketik sebagian nomor WhatsApp."
-                            },
-                            "Y:J0Ouy": {
-                              "id": "X3iS08",
+                          "layout": "vertical",
+                          "padding": "$Y:space/4",
+                          "children": [
+                            {
+                              "id": "Y83XGk",
                               "type": "ref",
-                              "ref": "Y:JmfmZ",
-                              "name": "Clear search",
+                              "ref": "Y:H43gDN",
+                              "name": "Empty",
+                              "width": "fill_container",
                               "descendants": {
-                                "Y:xnhuK": {
-                                  "content": "Hapus pencarian"
+                                "Y:zOUao": {
+                                  "icon": "search-x"
+                                },
+                                "Y:c8Y4Ky": {
+                                  "content": "Tidak ada klien yang cocok"
+                                },
+                                "Y:FCyNB": {
+                                  "content": "Coba nama lain, atau ketik sebagian nomor WhatsApp.",
+                                  "width": "fill_container"
+                                },
+                                "Y:SzhQW": {
+                                  "id": "F6PvIi",
+                                  "type": "ref",
+                                  "ref": "Y:JmfmZ",
+                                  "name": "Clear search",
+                                  "descendants": {
+                                    "Y:xnhuK": {
+                                      "content": "Hapus pencarian"
+                                    }
+                                  }
                                 }
                               }
                             }
-                          }
+                          ]
                         }
                       ]
                     },
@@ -3481,8 +3514,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / List / Populated / Mobile",
-      "x": 0,
-      "y": 2600,
+      "x": 1560,
+      "y": 0,
       "width": 390,
       "height": 1180,
       "descendants": {
@@ -3927,8 +3960,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / List / Archived / Mobile",
-      "x": 470,
-      "y": 2600,
+      "x": 1560,
+      "y": 2524,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -4165,8 +4198,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / List / Empty / Mobile",
-      "x": 940,
-      "y": 2600,
+      "x": 1560,
+      "y": 4892,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -4406,8 +4439,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / List / Empty archived / Mobile",
-      "x": 1410,
-      "y": 2600,
+      "x": 1560,
+      "y": 6076,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -4635,8 +4668,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / List / No match / Mobile",
-      "x": 1880,
-      "y": 2600,
+      "x": 1560,
+      "y": 7260,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -4901,8 +4934,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / List / Loading / Mobile",
-      "x": 2350,
-      "y": 2600,
+      "x": 1560,
+      "y": 8444,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -5147,8 +5180,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / List / Loading more / Mobile",
-      "x": 2820,
-      "y": 2600,
+      "x": 1560,
+      "y": 9628,
       "height": 1180,
       "width": 390,
       "descendants": {
@@ -5597,7 +5630,7 @@
       "ref": "Y:y9uBJl",
       "name": "Klien / Add / Default / Desktop",
       "x": 0,
-      "y": 3900,
+      "y": 10968,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -6551,8 +6584,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / Edit / Several rows / Desktop",
-      "x": 1540,
-      "y": 3900,
+      "x": 0,
+      "y": 12152,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -7634,8 +7667,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / Add / Field errors / Desktop",
-      "x": 3080,
-      "y": 3900,
+      "x": 0,
+      "y": 13336,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -8653,8 +8686,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / Add / Number taken / Desktop",
-      "x": 4620,
-      "y": 3900,
+      "x": 0,
+      "y": 14520,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -9608,8 +9641,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / Add / Saving / Desktop",
-      "x": 6160,
-      "y": 3900,
+      "x": 0,
+      "y": 15704,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -10631,7 +10664,7 @@
       "ref": "Y:y9uBJl",
       "name": "Klien / Delete confirm / Desktop",
       "x": 0,
-      "y": 5200,
+      "y": 16888,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -11410,8 +11443,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / Delete / Deleting / Desktop",
-      "x": 1540,
-      "y": 5200,
+      "x": 0,
+      "y": 18072,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -12193,8 +12226,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / Delete / Blocked / Desktop",
-      "x": 3080,
-      "y": 5200,
+      "x": 0,
+      "y": 19256,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -12994,8 +13027,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / Toast / Added / Desktop",
-      "x": 4620,
-      "y": 5200,
+      "x": 0,
+      "y": 20440,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -13743,8 +13776,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / Toast / Archived / Desktop",
-      "x": 6160,
-      "y": 5200,
+      "x": 0,
+      "y": 21624,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -14497,8 +14530,8 @@
       "type": "ref",
       "ref": "Y:y9uBJl",
       "name": "Klien / Toast / Server error / Desktop",
-      "x": 7700,
-      "y": 5200,
+      "x": 0,
+      "y": 22808,
       "height": 1024,
       "descendants": {
         "Y:fNszT/Y:rAUNw": {
@@ -15260,8 +15293,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / Row actions sheet / Mobile",
-      "x": 0,
-      "y": 6500,
+      "x": 1560,
+      "y": 1340,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -15794,8 +15827,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / Add / Default / Mobile",
-      "x": 470,
-      "y": 6500,
+      "x": 1560,
+      "y": 10968,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -16472,8 +16505,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / Edit / Several rows / Mobile",
-      "x": 940,
-      "y": 6500,
+      "x": 1560,
+      "y": 12152,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -17300,8 +17333,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / Add / Field errors / Mobile",
-      "x": 1410,
-      "y": 6500,
+      "x": 1560,
+      "y": 13336,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -18053,8 +18086,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / Add / Number taken (archived) / Mobile",
-      "x": 1880,
-      "y": 6500,
+      "x": 1560,
+      "y": 14520,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -18731,8 +18764,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / Add / Saving / Mobile",
-      "x": 2350,
-      "y": 6500,
+      "x": 1560,
+      "y": 15704,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -19412,8 +19445,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / Delete confirm / Mobile",
-      "x": 2820,
-      "y": 6500,
+      "x": 1560,
+      "y": 16888,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -19916,8 +19949,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / Delete / Blocked / Mobile",
-      "x": 3290,
-      "y": 6500,
+      "x": 1560,
+      "y": 19256,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -20405,8 +20438,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / Toast / Added / Mobile",
-      "x": 3760,
-      "y": 6500,
+      "x": 1560,
+      "y": 20440,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -20862,8 +20895,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / Toast / Archived / Mobile",
-      "x": 4230,
-      "y": 6500,
+      "x": 1560,
+      "y": 21624,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -21324,8 +21357,8 @@
       "type": "ref",
       "ref": "Y:c6qPz7",
       "name": "Klien / Toast / Server error / Mobile",
-      "x": 4700,
-      "y": 6500,
+      "x": 1560,
+      "y": 22808,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -21783,6 +21816,1142 @@
                 "Y:M54Ca": {
                   "enabled": true,
                   "content": "Coba lagi"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "LYK6l",
+      "type": "ref",
+      "ref": "Y:y9uBJl",
+      "name": "Klien / List / Archived / Desktop",
+      "x": 0,
+      "y": 2524,
+      "height": 1024,
+      "descendants": {
+        "Y:fNszT/Y:rAUNw": {
+          "content": "Aster Wedding"
+        },
+        "Y:fNszT/Y:llfv5": {
+          "id": "SBShK",
+          "type": "ref",
+          "ref": "Y:K0UQ06",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "Y:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "Y:m6S2m": {
+              "content": "Dasbor"
+            },
+            "Y:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "Y:fNszT/Y:nHXqh/Y:E6JiYt": {
+          "enabled": false
+        },
+        "Y:fNszT/Y:wwfj3": {
+          "id": "tTvOV",
+          "type": "ref",
+          "ref": "Y:CInVy",
+          "name": "Nav Klien",
+          "width": "fill_container",
+          "descendants": {
+            "Y:MpR9k": {
+              "icon": "users"
+            },
+            "Y:m6S2m": {
+              "content": "Klien"
+            },
+            "Y:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "Y:fNszT/Y:lz7Bj/Y:E6JiYt": {
+          "enabled": false
+        },
+        "Y:fNszT/Y:f1BvVe/Y:E6JiYt": {
+          "enabled": false
+        },
+        "Y:fNszT/Y:E2Dl5F/Y:E6JiYt": {
+          "enabled": false
+        },
+        "Y:fNszT/Y:aXcVC/Y:DloPs": {
+          "content": "RS"
+        },
+        "Y:fNszT/Y:EpYE1": {
+          "content": "Rina Saputri"
+        },
+        "Y:fNszT/Y:pMF7b": {
+          "content": "rina@asterstudio.id"
+        },
+        "Y:Sw0yD/Y:MST3f/Y:EPpbd": {
+          "content": "Aster Wedding"
+        },
+        "Y:Sw0yD/Y:MST3f/Y:Hh5tj": {
+          "content": "Klien"
+        },
+        "Y:Sw0yD/Y:MST3f/Y:HsrFT": {
+          "content": "Klien"
+        },
+        "Y:Sw0yD/Y:MST3f/Y:i8XPWU": {
+          "content": "Orang yang memesan sesi foto. Pilih mereka saat membuat proyek."
+        },
+        "Y:Sw0yD/Y:MST3f/Y:ew9bb/Y:fMNO1": {
+          "enabled": true,
+          "icon": "plus"
+        },
+        "Y:Sw0yD/Y:MST3f/Y:ew9bb/Y:xnhuK": {
+          "content": "Tambah klien"
+        },
+        "Y:Sw0yD/Y:MST3f/Y:Iu4gK": {
+          "enabled": true
+        },
+        "Y:Sw0yD/Y:MST3f/Y:aga8t": {
+          "id": "x44gHs",
+          "type": "ref",
+          "ref": "Y:M43F7D",
+          "name": "Tab Aktif",
+          "descendants": {
+            "Y:DnAdt": {
+              "content": "Aktif"
+            }
+          }
+        },
+        "Y:Sw0yD/Y:MST3f/Y:ngkYY": {
+          "id": "t8kZJt",
+          "type": "ref",
+          "ref": "Y:WbyBE",
+          "name": "Tab Arsip",
+          "descendants": {
+            "Y:DnAdt": {
+              "content": "Arsip"
+            }
+          }
+        },
+        "Y:Sw0yD/Y:MST3f/Y:BVhm4": {
+          "enabled": false
+        },
+        "Y:Sw0yD/Y:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "k4lNN",
+              "name": "Container",
+              "width": 720,
+              "layout": "vertical",
+              "gap": "$Y:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "A9ZX4Z",
+                  "type": "ref",
+                  "ref": "Y:FCsTI",
+                  "name": "Clients table",
+                  "width": "fill_container",
+                  "descendants": {
+                    "Y:l2kM4c": {
+                      "type": "frame",
+                      "id": "VifI8",
+                      "name": "Title group",
+                      "layout": "vertical",
+                      "gap": "$Y:space/0-5",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "rjQ5e",
+                          "name": "Title",
+                          "fill": "$Y:color/semantic/text/primary",
+                          "content": "Daftar klien",
+                          "fontFamily": "$Y:font/family/base",
+                          "fontSize": "$Y:font/size/subtitle",
+                          "fontWeight": "$Y:font/weight/bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "TIPLv",
+                          "name": "Subtitle",
+                          "fill": "$Y:color/semantic/text/muted",
+                          "content": "1 klien diarsipkan",
+                          "fontFamily": "$Y:font/family/base",
+                          "fontSize": "$Y:font/size/label",
+                          "fontWeight": "$Y:font/weight/regular"
+                        }
+                      ]
+                    },
+                    "Y:YTJjx": {
+                      "id": "e08AH",
+                      "type": "ref",
+                      "ref": "Y:lJ39W",
+                      "name": "Search",
+                      "width": 320,
+                      "descendants": {
+                        "Y:VnKAn": {
+                          "enabled": true,
+                          "icon": "search"
+                        },
+                        "Y:tvTDd": {
+                          "content": "Cari nama atau nomor WhatsApp"
+                        }
+                      }
+                    },
+                    "Y:KZSJQ/Y:C5y6u/Y:t55nF": {
+                      "content": "KLIEN"
+                    },
+                    "Y:KZSJQ/Y:Y2XaQ2": {
+                      "width": 184
+                    },
+                    "Y:KZSJQ/Y:Y2XaQ2/Y:t55nF": {
+                      "content": "WHATSAPP"
+                    },
+                    "Y:KZSJQ/Y:PFWJs": {
+                      "width": 240
+                    },
+                    "Y:KZSJQ/Y:PFWJs/Y:t55nF": {
+                      "content": "MEDIA SOSIAL"
+                    },
+                    "Y:KZSJQ/Y:n2lKF": {
+                      "enabled": false
+                    },
+                    "Y:KZSJQ/Y:d4I6b": {
+                      "enabled": false
+                    },
+                    "Y:cYo5t": {
+                      "children": [
+                        {
+                          "id": "JJGMa",
+                          "type": "ref",
+                          "ref": "Y:r7YZY",
+                          "name": "Row Budi",
+                          "width": "fill_container",
+                          "strokeWidth": 0,
+                          "descendants": {
+                            "Y:GoLkn": {
+                              "children": [
+                                {
+                                  "id": "dLvZv",
+                                  "type": "ref",
+                                  "ref": "Y:lVDvO",
+                                  "name": "Klien",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "Y:cTnMA/Y:DloPs": {
+                                      "content": "BU"
+                                    },
+                                    "Y:Q4FlPn": {
+                                      "content": "Budi"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "MvNpd",
+                                  "type": "ref",
+                                  "ref": "Y:f0oyj",
+                                  "name": "WhatsApp",
+                                  "width": 184,
+                                  "descendants": {
+                                    "Y:Q4FlPn": {
+                                      "content": "+62 898-7654-3210"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "OiViW",
+                                  "type": "ref",
+                                  "ref": "Y:f0oyj",
+                                  "name": "Media sosial",
+                                  "width": 240,
+                                  "descendants": {
+                                    "Y:Q4FlPn": {
+                                      "content": "Instagram · @budi.foto"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "K13R6",
+                                  "type": "ref",
+                                  "ref": "Y:C1MRI",
+                                  "name": "Aksi",
+                                  "width": 32
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "Y:S43GJ": {
+                      "enabled": false
+                    }
+                  }
+                },
+                {
+                  "id": "zLobH",
+                  "type": "ref",
+                  "ref": "Y:M3v1E5",
+                  "name": "Row actions (open)",
+                  "layoutPosition": "absolute",
+                  "x": 668,
+                  "y": 113,
+                  "enabled": false,
+                  "descendants": {
+                    "Y:RCAAJ/Y:OaxSj/Y:vHwtA": {
+                      "content": "Ubah"
+                    },
+                    "Y:RCAAJ/Y:iByST/Y:FL9Kk": {
+                      "icon": "message-circle"
+                    },
+                    "Y:RCAAJ/Y:iByST/Y:vHwtA": {
+                      "content": "Buka WhatsApp"
+                    },
+                    "Y:RCAAJ/Y:DO3q4/Y:FL9Kk": {
+                      "icon": "archive-restore"
+                    },
+                    "Y:RCAAJ/Y:DO3q4/Y:vHwtA": {
+                      "content": "Pulihkan"
+                    },
+                    "Y:RCAAJ/Y:p854z0/Y:vHwtA": {
+                      "content": "Hapus"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "Ttcj1",
+      "type": "ref",
+      "ref": "Y:c6qPz7",
+      "name": "Klien / List / Archived / Row actions sheet / Mobile",
+      "x": 1560,
+      "y": 3708,
+      "height": 844,
+      "width": 390,
+      "descendants": {
+        "Y:jlmjH": {
+          "content": "Klien"
+        },
+        "Y:oGnhL": {
+          "enabled": false
+        },
+        "Y:x84QK": {
+          "enabled": false
+        },
+        "Y:n0MP5": {
+          "id": "bJktP",
+          "type": "ref",
+          "ref": "Y:o8T8zb",
+          "name": "Mobile Header",
+          "width": "fill_container",
+          "descendants": {
+            "Y:K1jSfD": {
+              "content": "Klien"
+            },
+            "Y:EYvag": {
+              "content": "Orang yang memesan sesi foto."
+            }
+          }
+        },
+        "Y:HvRky": {
+          "type": "frame",
+          "id": "Kp1kf",
+          "name": "Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$Y:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$Y:component/panel/app/radius",
+            "$Y:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$Y:space/4",
+          "padding": [
+            "$Y:space/5",
+            "$Y:space/4"
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "bcMve",
+              "name": "Controls",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$Y:space/3",
+              "children": [
+                {
+                  "id": "K8RwfT",
+                  "type": "ref",
+                  "ref": "Y:iIcai",
+                  "name": "Filter",
+                  "width": "fill_container",
+                  "descendants": {
+                    "Y:IS17O": {
+                      "children": [
+                        {
+                          "id": "CMZHy",
+                          "type": "ref",
+                          "ref": "Y:AptHz",
+                          "name": "Item Aktif",
+                          "width": "fill_container",
+                          "justifyContent": "center",
+                          "descendants": {
+                            "Y:FnOrw": {
+                              "content": "Aktif"
+                            }
+                          }
+                        },
+                        {
+                          "id": "Ey3u0",
+                          "type": "ref",
+                          "ref": "Y:NcbI1",
+                          "name": "Item Arsip",
+                          "width": "fill_container",
+                          "justifyContent": "center",
+                          "descendants": {
+                            "Y:FnOrw": {
+                              "content": "Arsip"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "B2hqZJ",
+                  "type": "ref",
+                  "ref": "Y:lJ39W",
+                  "name": "Search",
+                  "width": "fill_container",
+                  "descendants": {
+                    "Y:VnKAn": {
+                      "enabled": true,
+                      "icon": "search"
+                    },
+                    "Y:tvTDd": {
+                      "content": "Cari nama atau nomor"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "lD3S6",
+              "type": "ref",
+              "ref": "Y:Q82mo",
+              "name": "Clients card",
+              "width": "fill_container",
+              "descendants": {
+                "Y:BXWnC": {
+                  "content": "Daftar klien"
+                },
+                "Y:nHCW8": {
+                  "content": "1 klien diarsipkan"
+                },
+                "Y:QcKHK": {
+                  "children": [
+                    {
+                      "id": "d1I1aq",
+                      "type": "ref",
+                      "ref": "Y:JmfmZ",
+                      "name": "Tambah klien",
+                      "descendants": {
+                        "Y:fMNO1": {
+                          "enabled": true,
+                          "icon": "plus"
+                        },
+                        "Y:xnhuK": {
+                          "content": "Tambah"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "Y:AdZ4y": {
+                  "type": "frame",
+                  "id": "vaDID",
+                  "name": "Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "padding": [
+                    "$Y:component/section-card/flush/padding-y",
+                    "$Y:component/section-card/compact/flush/padding-x"
+                  ],
+                  "children": [
+                    {
+                      "id": "u3ZGG",
+                      "type": "ref",
+                      "ref": "Y:Bf3eg",
+                      "name": "Row Budi",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:wDTkG": {
+                          "icon": "user"
+                        },
+                        "Y:O7pUR": {
+                          "content": "Budi"
+                        },
+                        "Y:k9OCFf": {
+                          "content": "+62 898-7654-3210 · @budi.foto"
+                        },
+                        "Y:zUF3j": {
+                          "children": [
+                            {
+                              "id": "i3v3eI",
+                              "type": "ref",
+                              "ref": "Y:tgN4c",
+                              "name": "Row actions"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Y:SpGXb/Y:gZgRf": {
+          "justifyContent": "space_between"
+        },
+        "Y:SpGXb/Y:uzabE": {
+          "id": "YbHZa",
+          "type": "ref",
+          "ref": "Y:x1Mgr3",
+          "name": "Tab Dasbor",
+          "descendants": {
+            "Y:Tz5za": {
+              "icon": "layout-grid"
+            },
+            "Y:qSiIY": {
+              "enabled": false
+            },
+            "Y:sJlqM": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "Y:SpGXb/Y:Ryjdm/Y:qSiIY": {
+          "enabled": false
+        },
+        "Y:SpGXb/Y:YChMw": {
+          "id": "POWcn",
+          "type": "ref",
+          "ref": "Y:bKADv",
+          "name": "Tab Klien",
+          "descendants": {
+            "Y:Tz5za": {
+              "icon": "users"
+            },
+            "Y:qSiIY": {
+              "enabled": false
+            },
+            "Y:sJlqM": {
+              "content": "Klien"
+            }
+          }
+        },
+        "Y:Ey5pi": {
+          "enabled": true,
+          "width": 390,
+          "height": 844
+        },
+        "Y:aQWCT": {
+          "children": [
+            {
+              "id": "c0FYgn",
+              "type": "ref",
+              "ref": "Y:U0wHw",
+              "name": "Actions sheet",
+              "width": "fill_container",
+              "descendants": {
+                "Y:bEyU3": {
+                  "content": "Budi"
+                },
+                "Y:GyfP0": {
+                  "content": "+62 898-7654-3210 · @budi.foto"
+                },
+                "Y:CLpYz": {
+                  "children": [
+                    {
+                      "id": "Wubas",
+                      "type": "ref",
+                      "ref": "Y:FRtU1",
+                      "name": "Ubah",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:MLkPM": {
+                          "icon": "pencil"
+                        },
+                        "Y:elAPX": {
+                          "content": "Ubah"
+                        }
+                      }
+                    },
+                    {
+                      "id": "uSpdN",
+                      "type": "ref",
+                      "ref": "Y:FRtU1",
+                      "name": "Buka WhatsApp",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:MLkPM": {
+                          "icon": "message-circle"
+                        },
+                        "Y:elAPX": {
+                          "content": "Buka WhatsApp"
+                        }
+                      }
+                    },
+                    {
+                      "id": "f1pU2s",
+                      "type": "ref",
+                      "ref": "Y:FRtU1",
+                      "name": "Pulihkan",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:MLkPM": {
+                          "icon": "archive-restore"
+                        },
+                        "Y:elAPX": {
+                          "content": "Pulihkan"
+                        }
+                      }
+                    },
+                    {
+                      "id": "HUPFS",
+                      "type": "ref",
+                      "ref": "Y:FAObX",
+                      "name": "Hapus",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:MLkPM": {
+                          "icon": "trash-2"
+                        },
+                        "Y:elAPX": {
+                          "content": "Hapus"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "G2IVO",
+      "type": "ref",
+      "ref": "Y:c6qPz7",
+      "name": "Klien / Delete / Deleting / Mobile",
+      "x": 1560,
+      "y": 18072,
+      "height": 844,
+      "width": 390,
+      "descendants": {
+        "Y:jlmjH": {
+          "content": "Klien"
+        },
+        "Y:oGnhL": {
+          "enabled": false
+        },
+        "Y:x84QK": {
+          "enabled": false
+        },
+        "Y:n0MP5": {
+          "id": "oJxTW",
+          "type": "ref",
+          "ref": "Y:o8T8zb",
+          "name": "Mobile Header",
+          "width": "fill_container",
+          "descendants": {
+            "Y:K1jSfD": {
+              "content": "Klien"
+            },
+            "Y:EYvag": {
+              "content": "Orang yang memesan sesi foto."
+            }
+          }
+        },
+        "Y:HvRky": {
+          "type": "frame",
+          "id": "wOeBh",
+          "name": "Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$Y:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$Y:component/panel/app/radius",
+            "$Y:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$Y:space/4",
+          "padding": [
+            "$Y:space/5",
+            "$Y:space/4"
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "EePwJ",
+              "name": "Controls",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$Y:space/3",
+              "children": [
+                {
+                  "id": "DN3CL",
+                  "type": "ref",
+                  "ref": "Y:iIcai",
+                  "name": "Filter",
+                  "width": "fill_container",
+                  "descendants": {
+                    "Y:IS17O": {
+                      "children": [
+                        {
+                          "id": "i8Asc",
+                          "type": "ref",
+                          "ref": "Y:NcbI1",
+                          "name": "Item Aktif",
+                          "width": "fill_container",
+                          "justifyContent": "center",
+                          "descendants": {
+                            "Y:FnOrw": {
+                              "content": "Aktif"
+                            }
+                          }
+                        },
+                        {
+                          "id": "u1zad8",
+                          "type": "ref",
+                          "ref": "Y:AptHz",
+                          "name": "Item Arsip",
+                          "width": "fill_container",
+                          "justifyContent": "center",
+                          "descendants": {
+                            "Y:FnOrw": {
+                              "content": "Arsip"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "ufecz",
+                  "type": "ref",
+                  "ref": "Y:lJ39W",
+                  "name": "Search",
+                  "width": "fill_container",
+                  "descendants": {
+                    "Y:VnKAn": {
+                      "enabled": true,
+                      "icon": "search"
+                    },
+                    "Y:tvTDd": {
+                      "content": "Cari nama atau nomor"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "k7kZd",
+              "type": "ref",
+              "ref": "Y:Q82mo",
+              "name": "Clients card",
+              "width": "fill_container",
+              "descendants": {
+                "Y:BXWnC": {
+                  "content": "Daftar klien"
+                },
+                "Y:nHCW8": {
+                  "content": "38 klien aktif"
+                },
+                "Y:QcKHK": {
+                  "children": [
+                    {
+                      "id": "RtKhF",
+                      "type": "ref",
+                      "ref": "Y:JmfmZ",
+                      "name": "Tambah klien",
+                      "descendants": {
+                        "Y:fMNO1": {
+                          "enabled": true,
+                          "icon": "plus"
+                        },
+                        "Y:xnhuK": {
+                          "content": "Tambah"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "Y:AdZ4y": {
+                  "type": "frame",
+                  "id": "WYSSR",
+                  "name": "Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "padding": [
+                    "$Y:component/section-card/flush/padding-y",
+                    "$Y:component/section-card/compact/flush/padding-x"
+                  ],
+                  "children": [
+                    {
+                      "id": "lOdhY",
+                      "type": "ref",
+                      "ref": "Y:PV6HB",
+                      "name": "Row ade",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:wDTkG": {
+                          "icon": "user"
+                        },
+                        "Y:O7pUR": {
+                          "content": "Ade Kurnia"
+                        },
+                        "Y:k9OCFf": {
+                          "content": "Belum ada nomor WhatsApp"
+                        },
+                        "Y:zUF3j": {
+                          "children": [
+                            {
+                              "id": "Hw8Hy",
+                              "type": "ref",
+                              "ref": "Y:tgN4c",
+                              "name": "Row actions"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "id": "Td53h",
+                      "type": "ref",
+                      "ref": "Y:PV6HB",
+                      "name": "Row Anisa Putri",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:wDTkG": {
+                          "icon": "user"
+                        },
+                        "Y:O7pUR": {
+                          "content": "Anisa Putri"
+                        },
+                        "Y:k9OCFf": {
+                          "content": "+62 813-2200-4512 · @anisaputri"
+                        },
+                        "Y:zUF3j": {
+                          "children": [
+                            {
+                              "id": "ICEBr",
+                              "type": "ref",
+                              "ref": "Y:tgN4c",
+                              "name": "Row actions"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "id": "EkrC5",
+                      "type": "ref",
+                      "ref": "Y:PV6HB",
+                      "name": "Row Bayu & Laras",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:wDTkG": {
+                          "icon": "user"
+                        },
+                        "Y:O7pUR": {
+                          "content": "Bayu & Laras"
+                        },
+                        "Y:k9OCFf": {
+                          "content": "+62 857-1123-9087 · tiktok.com/@bayularas"
+                        },
+                        "Y:zUF3j": {
+                          "children": [
+                            {
+                              "id": "jgGzw",
+                              "type": "ref",
+                              "ref": "Y:tgN4c",
+                              "name": "Row actions"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "id": "iaezy",
+                      "type": "ref",
+                      "ref": "Y:PV6HB",
+                      "name": "Row Dimas & Sari",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:wDTkG": {
+                          "icon": "user"
+                        },
+                        "Y:O7pUR": {
+                          "content": "Dimas & Sari"
+                        },
+                        "Y:k9OCFf": {
+                          "content": "+62 811-7788-2301 · @dimassari.wed"
+                        },
+                        "Y:zUF3j": {
+                          "children": [
+                            {
+                              "id": "dRLAh",
+                              "type": "ref",
+                              "ref": "Y:tgN4c",
+                              "name": "Row actions"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "id": "C1fbrf",
+                      "type": "ref",
+                      "ref": "Y:PV6HB",
+                      "name": "Row Keluarga Wijaya",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:wDTkG": {
+                          "icon": "user"
+                        },
+                        "Y:O7pUR": {
+                          "content": "Keluarga Wijaya"
+                        },
+                        "Y:k9OCFf": {
+                          "content": "+62 821-4455-0098"
+                        },
+                        "Y:zUF3j": {
+                          "children": [
+                            {
+                              "id": "FoHJT",
+                              "type": "ref",
+                              "ref": "Y:tgN4c",
+                              "name": "Row actions"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "id": "G2Esaf",
+                      "type": "ref",
+                      "ref": "Y:PV6HB",
+                      "name": "Row Maya Nugroho",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:wDTkG": {
+                          "icon": "user"
+                        },
+                        "Y:O7pUR": {
+                          "content": "Maya Nugroho"
+                        },
+                        "Y:k9OCFf": {
+                          "content": "+14155550100 · @mayanug"
+                        },
+                        "Y:zUF3j": {
+                          "children": [
+                            {
+                              "id": "l339G",
+                              "type": "ref",
+                              "ref": "Y:tgN4c",
+                              "name": "Row actions"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "id": "LHFTU",
+                      "type": "ref",
+                      "ref": "Y:PV6HB",
+                      "name": "Row Rina",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:wDTkG": {
+                          "icon": "user"
+                        },
+                        "Y:O7pUR": {
+                          "content": "Rina"
+                        },
+                        "Y:k9OCFf": {
+                          "content": "+62 812-3456-7890 · @rina.wed"
+                        },
+                        "Y:zUF3j": {
+                          "children": [
+                            {
+                              "id": "D6hrSr",
+                              "type": "ref",
+                              "ref": "Y:tgN4c",
+                              "name": "Row actions"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "id": "XQPot",
+                      "type": "ref",
+                      "ref": "Y:Bf3eg",
+                      "name": "Row Rizky & Tania",
+                      "width": "fill_container",
+                      "descendants": {
+                        "Y:wDTkG": {
+                          "icon": "user"
+                        },
+                        "Y:O7pUR": {
+                          "content": "Rizky & Tania"
+                        },
+                        "Y:k9OCFf": {
+                          "content": "+62 878-9012-3344 · facebook.com/rizkytania"
+                        },
+                        "Y:zUF3j": {
+                          "children": [
+                            {
+                              "id": "X3F32B",
+                              "type": "ref",
+                              "ref": "Y:tgN4c",
+                              "name": "Row actions"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": "jmqL6",
+              "type": "ref",
+              "ref": "Y:JmfmZ",
+              "name": "Load more",
+              "width": "fill_container",
+              "descendants": {
+                "Y:xnhuK": {
+                  "content": "Muat lebih banyak"
+                }
+              }
+            }
+          ]
+        },
+        "Y:SpGXb/Y:gZgRf": {
+          "justifyContent": "space_between"
+        },
+        "Y:SpGXb/Y:uzabE": {
+          "id": "BVLWz",
+          "type": "ref",
+          "ref": "Y:x1Mgr3",
+          "name": "Tab Dasbor",
+          "descendants": {
+            "Y:Tz5za": {
+              "icon": "layout-grid"
+            },
+            "Y:qSiIY": {
+              "enabled": false
+            },
+            "Y:sJlqM": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "Y:SpGXb/Y:Ryjdm/Y:qSiIY": {
+          "enabled": false
+        },
+        "Y:SpGXb/Y:YChMw": {
+          "id": "auRLy",
+          "type": "ref",
+          "ref": "Y:bKADv",
+          "name": "Tab Klien",
+          "descendants": {
+            "Y:Tz5za": {
+              "icon": "users"
+            },
+            "Y:qSiIY": {
+              "enabled": false
+            },
+            "Y:sJlqM": {
+              "content": "Klien"
+            }
+          }
+        },
+        "Y:Ey5pi": {
+          "enabled": true,
+          "width": 390,
+          "height": 844
+        },
+        "Y:aQWCT": {
+          "children": [
+            {
+              "id": "gqOIZ",
+              "type": "ref",
+              "ref": "Y:U0wHw",
+              "name": "Actions sheet",
+              "width": "fill_container",
+              "descendants": {
+                "Y:bEyU3": {
+                  "content": "Hapus klien \"Rina\"?"
+                },
+                "Y:GyfP0": {
+                  "content": "Nama, nomor WhatsApp, dan media sosialnya dihapus permanen."
+                },
+                "Y:CLpYz": {
+                  "children": [
+                    {
+                      "id": "QqnRf",
+                      "type": "ref",
+                      "ref": "Y:FAObX",
+                      "name": "Hapus klien (pending)",
+                      "width": "fill_container",
+                      "opacity": "$Y:opacity/disabled",
+                      "descendants": {
+                        "Y:MLkPM": {
+                          "icon": "loader-circle"
+                        },
+                        "Y:elAPX": {
+                          "content": "Menghapus…"
+                        }
+                      }
+                    },
+                    {
+                      "id": "aHejI",
+                      "type": "ref",
+                      "ref": "Y:FRtU1",
+                      "name": "Batal (disabled)",
+                      "width": "fill_container",
+                      "opacity": "$Y:opacity/disabled",
+                      "descendants": {
+                        "Y:MLkPM": {
+                          "icon": "x"
+                        },
+                        "Y:elAPX": {
+                          "content": "Batal"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }

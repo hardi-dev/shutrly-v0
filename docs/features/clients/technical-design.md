@@ -1,6 +1,6 @@
 # Technical Design — F-06 Clients
 
-Status: PLANNED (2026-10-02) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-CLI-001…021) · Design: [design.md](design.md) (37 frames, `exports/`) · Plan: [plan.md](plan.md)
+Status: PLANNED (2026-10-02) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-CLI-001…021) · Design: [design.md](design.md) (40 frames, `exports/`) · Plan: [plan.md](plan.md)
 
 ## Context
 
@@ -11,7 +11,7 @@ Each workspace keeps a list of clients: the people who book shoots. A client has
 - `pg-error`;
 - `Tabs` and the Page Header tabs;
 - the owner-shell section tabs;
-- `SegmentedControl isFullWidth`, `Select`, and `EmptyState placement="in-card"`;
+- `SegmentedControl isFullWidth` and `Select`;
 - the `archive` and `archive-restore` icons;
 - migrations 0006/0007.
 
@@ -67,6 +67,7 @@ Shared changes:
 | Icons `message-circle`, `user` | `ui/primitives/icon` | Hugeicons `MessageCircleIcon`, `UserIcon` |
 | `Input` trailing `x` | `ui/primitives/input` | `"x"` joins `InputIconName`, for the clear-search action (no-match frames) |
 | `DataTable` + skeleton rows | `ui/patterns/data-table` | New, C27 Table: card, toolbar (title, subtitle, actions), header row, rows, footer, empty slot |
+| `SheetItem` `isDisabled` / `isPending` | `ui/patterns/sheet-item` | Disabled and pending states (design.md › phone deleting, component gap); pending shows the spinner icon |
 | `AppShell` `mobileSubtitle` | `ui/patterns/app-shell` | Optional; the Mobile Header uses it when given (D-8) |
 | Clients section | `features/workspace/domain/coming-soon-sections`, `features/workspace/ui/owner-nav` | `clients` leaves the coming-soon list. `resolvePageHeading` returns *Klien*, both subtitles and the *Aktif · Arsip* tabs; the nav item stays active on `/clients/archived`. |
 
@@ -178,8 +179,8 @@ Built from `exports/` ([design.md](design.md)):
 | `ClientList` (Section Card Compact/Flush, List Card Item/Two-line rows, *Tambah*) | `features/booking/ui/client-list` | `list-*-mobile-*` |
 | `ClientSearchField` (debounced `?q=`, clear button, live result announcement) | `features/booking/ui/client-search-field` | toolbar and phone controls |
 | `ClientsTabsBar` (phone Segmented Control/Full width → route) | `features/booking/ui/clients-tabs-bar` | phone frames |
-| `ClientsEmptyState` (*Aktif*, *Arsip*, no match with *Hapus pencarian*) | `features/booking/ui/clients-empty-state` | `list-empty-*`, `list-no-match-*` |
-| `ClientRowActions` (desktop Menu / phone Bottom Sheet: *Ubah*, *Buka WhatsApp*, *Arsipkan* / *Pulihkan*, *Hapus*) | `features/booking/ui/client-row-actions` | `list-row-menu-desktop-uTkvt`, `row-actions-sheet-mobile-cVBpx`, `list-archived-*` |
+| `ClientsEmptyState`: the standalone Empty State on desktop and phone (*Aktif*, *Arsip*, no match with *Hapus pencarian*) | `features/booking/ui/clients-empty-state` | `list-empty-*`, `list-no-match-*` |
+| `ClientRowActions` (desktop Menu / phone Bottom Sheet: *Ubah*, *Buka WhatsApp*, *Arsipkan* / *Pulihkan*, *Hapus*) | `features/booking/ui/client-row-actions` | `list-row-menu-desktop-uTkvt`, `row-actions-sheet-mobile-cVBpx`, `list-archived-row-menu-desktop-sfgdK`, `list-archived-row-actions-sheet-mobile-Ttcj1` |
 | `ClientDialog` (Modal MD / full-height Bottom Sheet/Form; add and edit) | `features/booking/ui/client-dialog` | `add-*`, `edit-*` |
 | `SocialLinksEditor` (rows: Select + TextField + remove; *Tambah media sosial*, disabled at 10) | `features/booking/ui/social-links-editor` | dialog body |
 | `DeleteClientDialog` (Modal SM danger / Bottom Sheet/Actions; deleting; blocked) | `features/booking/ui/delete-client-dialog` | `delete-*` |

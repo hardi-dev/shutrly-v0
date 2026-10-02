@@ -39,6 +39,8 @@ export interface ClientScreenContentProps {
   readonly editing: ClientsScreenProps["rows"][number] | undefined;
   readonly onOpenChange: (isOpen: boolean) => void;
   readonly setArchivedAction: ClientsScreenProps["setArchivedAction"];
+  readonly deleteAction: ClientsScreenProps["deleteAction"];
+  readonly openDelete: (client: ClientRecord) => void;
 }
 
 export interface ClientAddDialogProps {

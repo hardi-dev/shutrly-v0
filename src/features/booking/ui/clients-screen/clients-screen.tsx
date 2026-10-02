@@ -14,6 +14,7 @@ import { ClientList } from "../client-list/client-list";
 import { ClientsEmptyState } from "../clients-empty-state/clients-empty-state";
 import { ClientsTable } from "../clients-table/clients-table";
 import { ClientsTabsBar } from "../clients-tabs-bar/clients-tabs-bar";
+import { DeleteClientDialog } from "../delete-client-dialog/delete-client-dialog";
 import { useClientMutations } from "../use-client-mutations/use-client-mutations";
 import type {
   ClientAddDialogProps,
@@ -30,10 +31,12 @@ export function ClientsScreen({
   addAction,
   updateAction,
   setArchivedAction,
+  deleteAction,
 }: Readonly<ClientsScreenProps>) {
   const isMobile = useMobileViewport();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editing, setEditing] = useState<ClientsScreenProps["rows"][number] | undefined>();
+  const [deleting, setDeleting] = useState<ClientsScreenProps["rows"][number] | null>(null);
   function openDialog(): void {
     setEditing(undefined);
     setIsDialogOpen(true);
@@ -42,12 +45,16 @@ export function ClientsScreen({
     setEditing(client);
     setIsDialogOpen(true);
   }
+  function closeDeleteDialog(isOpen: boolean): void {
+    if (!isOpen) setDeleting(null);
+  }
   const actions = createAddActions(addAction, openDialog);
   const emptyState = (
     <ClientsEmptyState status={status} action={isMobile ? actions.mobile : undefined} />
   );
   return (
-    <ClientScreenContent
+    <>
+      <ClientScreenContent
       workspaceId={workspaceId}
       status={status}
       count={count}
@@ -63,7 +70,18 @@ export function ClientsScreen({
       editing={editing}
       onOpenChange={setIsDialogOpen}
       setArchivedAction={setArchivedAction}
-    />
+      deleteAction={deleteAction}
+      openDelete={setDeleting}
+      />
+      {deleteAction ? (
+        <DeleteClientDialog
+          client={deleting}
+          workspaceId={workspaceId}
+          action={deleteAction}
+          onOpenChange={closeDeleteDialog}
+        />
+      ) : null}
+    </>
   );
 }
 
@@ -83,6 +101,7 @@ function ClientScreenContent({
   editing,
   onOpenChange,
   setArchivedAction,
+  openDelete,
 }: Readonly<ClientScreenContentProps>) {
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)">
@@ -98,7 +117,7 @@ function ClientScreenContent({
           onEdit={openEdit}
           onArchive={(client) => archiveClient(client, true, setArchivedAction, workspaceId)}
           onRestore={(client) => archiveClient(client, false, setArchivedAction, workspaceId)}
-          onDelete={noop}
+          onDelete={openDelete}
         />
       ) : (
         <ClientsTable
@@ -109,7 +128,7 @@ function ClientScreenContent({
           onRowAction={updateAction ? openEdit : undefined}
           onArchive={(client) => archiveClient(client, true, setArchivedAction, workspaceId)}
           onRestore={(client) => archiveClient(client, false, setArchivedAction, workspaceId)}
-          onDelete={noop}
+          onDelete={openDelete}
         />
       )}
       <ClientAddDialog
@@ -123,8 +142,6 @@ function ClientScreenContent({
     </main>
   );
 }
-
-function noop(): void {}
 
 function archiveClient(
   client: ClientsScreenProps["rows"][number],

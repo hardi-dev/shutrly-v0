@@ -13,121 +13,143 @@ import { showToast } from "@/ui/patterns/toast/toast";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
-import type { CatalogRowActionsProps } from "./catalog-row-actions.types";
+import type {
+  CatalogActionSurfaceProps,
+  CatalogRowActionsProps,
+  CatalogSheetItemsProps,
+  MobileCatalogActionsProps,
+  RowActionHandlers,
+} from "./catalog-row-actions.types";
 
-// eslint-disable-next-line max-lines-per-function -- mirrors one catalog action set on desktop and phone
-export function CatalogRowActions({
-  workspaceId,
-  kind,
-  id,
-  name,
-  isActive,
-  meta,
-  onEdit,
-  onRename,
-  onDelete,
-  setActiveAction,
-}: Readonly<CatalogRowActionsProps>) {
+export function CatalogRowActions(props: Readonly<CatalogRowActionsProps>) {
   const isMobile = useMobileViewport();
   const [isOpen, setIsOpen] = useState(false);
-  const actionLabel = isActive ? CATALOG_COPY.archive : CATALOG_COPY.unarchive;
+  const handlers = useRowActionHandlers(props, () => {
+    setIsOpen(false);
+  });
+  if (isMobile) {
+    return (
+      <MobileCatalogActions
+        props={props}
+        handlers={handlers}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
+    );
+  }
+  return <DesktopCatalogActions props={props} handlers={handlers} />;
+}
 
-  async function handleActive(): Promise<void> {
+function useRowActionHandlers(
+  props: Readonly<CatalogRowActionsProps>,
+  close: () => void,
+): RowActionHandlers {
+  const { isActive, kind, onEdit, onRename, onDelete } = props;
+  async function active(): Promise<void> {
     const nextActive = !isActive;
-    await setActiveAction(workspaceId, kind, id, nextActive);
+    await props.setActiveAction(props.workspaceId, kind, props.id, nextActive);
     showToast({
       tone: "success",
       title: nextActive ? CATALOG_COPY.unarchivedToast : CATALOG_COPY.archivedToast(kind),
       action: {
         label: CATALOG_COPY.undo,
-        onAction: () => void setActiveAction(workspaceId, kind, id, !nextActive),
+        onAction: () => {
+          void props.setActiveAction(props.workspaceId, kind, props.id, !nextActive);
+        },
       },
     });
   }
+  return {
+    actionLabel: isActive ? CATALOG_COPY.archive : CATALOG_COPY.unarchive,
+    onEdit: () => {
+      close();
+      onEdit?.();
+    },
+    onRename: () => {
+      close();
+      onRename?.();
+    },
+    onActive: () => {
+      close();
+      void active();
+    },
+    onDelete: () => {
+      close();
+      onDelete?.();
+    },
+  };
+}
 
-  function closeAnd(callback?: () => void): void {
-    setIsOpen(false);
-    callback?.();
-  }
-
-  function handleEdit(): void {
-    closeAnd(onEdit);
-  }
-
-  function handleRename(): void {
-    closeAnd(onRename);
-  }
-
-  function handleActivePress(): void {
-    setIsOpen(false);
-    void handleActive();
-  }
-
-  function handleDelete(): void {
-    closeAnd(onDelete);
-  }
-
+function MobileCatalogActions({
+  props,
+  handlers,
+  isOpen,
+  setIsOpen,
+}: Readonly<MobileCatalogActionsProps>) {
   function handleOpen(): void {
     setIsOpen(true);
   }
 
-  const phoneItems = (
+  return (
     <>
-      {kind === "service" ? (
-        <SheetItem label={CATALOG_COPY.edit} icon="pencil" onPress={handleEdit} />
+      <IconButton
+        icon="more-horizontal"
+        size="sm"
+        aria-label={CATALOG_COPY.rowActions(props.name)}
+        onPress={handleOpen}
+      />
+      <BottomSheet
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        title={props.name}
+        meta={props.meta}
+        variant="actions"
+      >
+        <CatalogSheetItems kind={props.kind} handlers={handlers} />
+      </BottomSheet>
+    </>
+  );
+}
+
+function CatalogSheetItems({ kind, handlers }: Readonly<CatalogSheetItemsProps>) {
+  return (
+    <>
+      {kind === "service" || kind === "definition" ? (
+        <SheetItem label={CATALOG_COPY.edit} icon="pencil" onPress={handlers.onEdit} />
       ) : null}
       {kind === "category" ? (
-        <SheetItem label={CATALOG_COPY.rename} icon="pencil" onPress={handleRename} />
+        <SheetItem label={CATALOG_COPY.rename} icon="pencil" onPress={handlers.onRename} />
       ) : null}
-      <SheetItem label={actionLabel} icon="power" onPress={handleActivePress} />
+      <SheetItem label={handlers.actionLabel} icon="power" onPress={handlers.onActive} />
       <SheetItem
         label={CATALOG_COPY.delete}
         icon="trash-2"
         variant="destructive"
-        onPress={handleDelete}
+        onPress={handlers.onDelete}
       />
     </>
   );
+}
 
-  if (isMobile) {
-    return (
-      <>
-        <IconButton
-          icon="more-horizontal"
-          size="sm"
-          aria-label={CATALOG_COPY.rowActions(name)}
-          onPress={handleOpen}
-        />
-        <BottomSheet
-          isOpen={isOpen}
-          onOpenChange={setIsOpen}
-          title={name}
-          meta={meta}
-          variant="actions"
-        >
-          {phoneItems}
-        </BottomSheet>
-      </>
-    );
-  }
-
+function DesktopCatalogActions({ props, handlers }: Readonly<CatalogActionSurfaceProps>) {
+  const label = CATALOG_COPY.rowActions(props.name);
   return (
-    <MenuTrigger label={CATALOG_COPY.rowActions(name)}>
-      <IconButton icon="more-horizontal" size="sm" aria-label={CATALOG_COPY.rowActions(name)} />
-      <Menu aria-label={CATALOG_COPY.rowActions(name)}>
-        {kind === "service" ? (
-          <MenuItem label={CATALOG_COPY.edit} icon="pencil" onSelect={handleEdit} />
+    <MenuTrigger label={label}>
+      <IconButton icon="more-horizontal" size="sm" aria-label={label} />
+      <Menu aria-label={label}>
+        {props.kind === "service" || props.kind === "definition" ? (
+          <MenuItem label={CATALOG_COPY.edit} icon="pencil" onSelect={handlers.onEdit} />
         ) : null}
-        {kind === "category" ? (
-          <MenuItem label={CATALOG_COPY.rename} icon="pencil" onSelect={handleRename} />
+        {props.kind === "category" ? (
+          <MenuItem label={CATALOG_COPY.rename} icon="pencil" onSelect={handlers.onRename} />
         ) : null}
-        <MenuItem label={actionLabel} icon="power" onSelect={handleActivePress} />
+        <MenuItem label={handlers.actionLabel} icon="power" onSelect={handlers.onActive} />
         <MenuDivider />
         <MenuItem
           label={CATALOG_COPY.delete}
           icon="trash-2"
           variant="destructive"
-          onSelect={handleDelete}
+          onSelect={handlers.onDelete}
         />
       </Menu>
     </MenuTrigger>

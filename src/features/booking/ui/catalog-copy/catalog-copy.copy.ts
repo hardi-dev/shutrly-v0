@@ -1,6 +1,8 @@
 export const CATALOG_COPY = {
   tabsLabel: "Bagian layanan",
   addService: "Tambah layanan",
+  editServiceTitle: "Ubah layanan",
+  editServiceDescription: "Perbarui nama, kategori, atau harga dasar layanan.",
   addCategory: "Tambah kategori",
   addItem: "Tambah item",
   addField: "Tambah field",
@@ -25,6 +27,7 @@ export const CATALOG_COPY = {
   categoriesDescription: "Mengelompokkan layanan di tab Layanan.",
   categoryMeta: (count: number) => `${String(count)} layanan`,
   categoryUsage: (count: number) => `${String(count)} layanan`,
+  serviceUsage: (count: number) => `${String(count)} item paket`,
   selectionGroupTitle: "Dipilih klien",
   selectionGroupDescription: "Jadi jatah pilihan foto klien di gallery. Selalu angka bulat.",
   otherGroupTitle: "Item lainnya",
@@ -39,6 +42,7 @@ export const CATALOG_COPY = {
     [valueType, unit, usage > 0 ? `dipakai di ${String(usage)} layanan` : "belum dipakai"]
       .filter(Boolean)
       .join(" · "),
+  definitionUsage: (count: number) => `${String(count)} layanan memakai item ini`,
   nameItem: "Nama item",
   valueTypeDescriptions: {
     NUMBER: "Satu nilai, mis. 25 foto atau 2 jam.",
@@ -96,10 +100,21 @@ export const CATALOG_COPY = {
   },
   fieldMeta: (type: string, isRequired: boolean, options: readonly string[] | null) => {
     const requirement = isRequired ? "Wajib" : "Opsional";
-    return options
-      ? `${type}: ${options.join(", ")} · ${requirement}`
-      : `${type} · ${requirement}`;
+    return options ? `${type}: ${options.join(", ")} · ${requirement}` : `${type} · ${requirement}`;
   },
+  addItemTitle: "Tambah item paket",
+  addItemDescription: "Tambahkan isi paket ke layanan ini.",
+  itemPicker: "Item paket",
+  value: "Nilai",
+  minimum: "Minimum",
+  maximum: "Maksimum",
+  fieldName: "Nama field",
+  fieldType: "Tipe",
+  options: "Pilihan",
+  addOption: "Pisahkan pilihan dengan koma.",
+  requiredSwitch: "Wajib diisi",
+  addFieldTitle: "Tambah field booking",
+  fieldDialogDescription: "Diisi saat membuat proyek dari layanan ini.",
   deleteTitle: (name: string) => `Hapus kategori “${name}”?`,
   deleteAllowedBody: "Belum dipakai di mana pun. Tindakan ini tidak bisa dibatalkan.",
   deleteBlockedTitle: "Tidak bisa dihapus",

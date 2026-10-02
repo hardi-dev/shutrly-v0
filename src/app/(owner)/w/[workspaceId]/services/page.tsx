@@ -1,4 +1,9 @@
-import { addServiceAction } from "@/app/actions/booking/catalog";
+import {
+  addServiceAction,
+  deleteCatalogEntryAction,
+  setCatalogActiveAction,
+  updateServiceInfoAction,
+} from "@/app/actions/booking/catalog";
 import { loadServices } from "@/composition/booking/catalog-flow/catalog-flow";
 import { loadCategories } from "@/composition/booking/catalog-flow/catalog-flow";
 import { ServicesScreen } from "@/features/booking/ui/services-screen/services-screen";
@@ -15,6 +20,9 @@ export default async function ServicesPage({
       groups={groups}
       categories={categories}
       addServiceAction={addServiceAction}
+      updateServiceInfoAction={updateServiceInfoAction}
+      setActiveAction={setCatalogActiveAction}
+      removeAction={deleteCatalogEntryAction}
     />
   );
 }

@@ -14,43 +14,57 @@ import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogFieldError } from "../catalog-field-error/catalog-field-error";
-import type { CategoryDialogProps } from "./category-dialog.types";
+import type {
+  CategoryDialogController,
+  CategoryDialogFormProps,
+  CategoryDialogFormValues,
+  CategoryDialogProps,
+  ResponsiveCategoryDialogProps,
+} from "./category-dialog.types";
 
 const FORM_ID = "catalog-category-form";
 
-// eslint-disable-next-line max-lines-per-function -- coordinates the shared responsive form shells
-export function CategoryDialog({
-  isOpen,
-  workspaceId,
-  category,
-  onOpenChange,
-  action,
-  renameAction,
-}: Readonly<CategoryDialogProps>) {
-  const isMobile = useMobileViewport();
-  const [isPending, setIsPending] = useState(false);
-  const form = useForm<{ name: string }>({
+export function CategoryDialog(props: Readonly<CategoryDialogProps>) {
+  const { form, isPending, handleSubmit } = useCategoryDialogForm(props);
+  const title = props.category
+    ? CATALOG_COPY.categoryDialogRenameTitle
+    : CATALOG_COPY.categoryDialogAddTitle;
+  const content = <CategoryDialogForm form={form} onSubmit={handleSubmit} />;
+  const save = <CategorySaveButton isPending={isPending} />;
+  return (
+    <ResponsiveCategoryDialog
+      {...props}
+      title={title}
+      content={content}
+      save={save}
+      isPending={isPending}
+    />
+  );
+}
+
+function useCategoryDialogForm(props: Readonly<CategoryDialogProps>): CategoryDialogController {
+  const form = useForm<CategoryDialogFormValues>({
     resolver: zodResolver(catalogNameSchema),
-    defaultValues: { name: category?.name ?? "" },
+    defaultValues: { name: props.category?.name ?? "" },
     shouldFocusError: true,
   });
-  const { field, fieldState } = useController({ control: form.control, name: "name" });
+  const [isPending, setIsPending] = useState(false);
 
   async function submit(): Promise<void> {
     if (!(await form.trigger())) return;
-    const values = { name: form.getValues("name").trim() };
     setIsPending(true);
     try {
+      const values = { name: form.getValues("name").trim() };
       const result =
-        category && renameAction
-          ? await renameAction(workspaceId, category.id, values)
-          : await action(workspaceId, values);
+        props.category && props.renameAction
+          ? await props.renameAction(props.workspaceId, props.category.id, values)
+          : await props.action(props.workspaceId, values);
       if (result?.ok === false) {
-        const errorKey = result.fieldErrors.name;
-        if (errorKey) form.setError("name", { type: "server", message: errorKey });
+        const message = result.fieldErrors.name;
+        if (message) form.setError("name", { type: "server", message });
         return;
       }
-      onOpenChange(false);
+      props.onOpenChange(false);
     } finally {
       setIsPending(false);
     }
@@ -60,13 +74,26 @@ export function CategoryDialog({
     event.preventDefault();
     void submit();
   }
+  return { form, isPending, handleSubmit };
+}
 
-  function handleCancel(): void {
-    onOpenChange(false);
-  }
+function CategorySaveButton({ isPending }: Readonly<{ readonly isPending: boolean }>) {
+  return (
+    <Button
+      type="submit"
+      form={FORM_ID}
+      isPending={isPending}
+      size={useMobileViewport() ? "lg" : "md"}
+    >
+      {CATALOG_COPY.save}
+    </Button>
+  );
+}
 
-  const content = (
-    <form id={FORM_ID} noValidate onSubmit={handleSubmit} className="flex flex-col gap-(--space-4)">
+function CategoryDialogForm({ form, onSubmit }: Readonly<CategoryDialogFormProps>) {
+  const { field, fieldState } = useController({ control: form.control, name: "name" });
+  return (
+    <form id={FORM_ID} noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-4)">
       <TextField
         label={CATALOG_COPY.nameCategory}
         name={field.name}
@@ -80,19 +107,23 @@ export function CategoryDialog({
       <CatalogFieldError errorKey={fieldState.error?.message} />
     </form>
   );
-  const save = (
-    <Button type="submit" form={FORM_ID} isPending={isPending} size={isMobile ? "lg" : "md"}>
-      {CATALOG_COPY.save}
-    </Button>
-  );
-  if (isMobile)
+}
+
+function ResponsiveCategoryDialog({
+  isOpen,
+  onOpenChange,
+  title,
+  content,
+  save,
+  isPending,
+}: Readonly<ResponsiveCategoryDialogProps>) {
+  const mobile = useMobileViewport();
+  if (mobile) {
     return (
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        title={
-          category ? CATALOG_COPY.categoryDialogRenameTitle : CATALOG_COPY.categoryDialogAddTitle
-        }
+        title={title}
         description={CATALOG_COPY.categoryDialogDescription}
         variant="form"
         actions={save}
@@ -100,18 +131,22 @@ export function CategoryDialog({
         {content}
       </BottomSheet>
     );
+  }
+
+  function cancel(): void {
+    onOpenChange(false);
+  }
+
   return (
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      title={
-        category ? CATALOG_COPY.categoryDialogRenameTitle : CATALOG_COPY.categoryDialogAddTitle
-      }
+      title={title}
       description={CATALOG_COPY.categoryDialogDescription}
       size="sm"
       actions={
         <>
-          <Button variant="secondary" onPress={handleCancel} isDisabled={isPending}>
+          <Button variant="secondary" onPress={cancel} isDisabled={isPending}>
             {CATALOG_COPY.cancel}
           </Button>
           {save}

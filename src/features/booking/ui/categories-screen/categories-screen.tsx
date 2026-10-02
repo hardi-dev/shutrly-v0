@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable max-lines-per-function, no-restricted-syntax -- coordinates the catalog dialogs and row actions */
 
 import { useState } from "react";
 
@@ -8,35 +7,22 @@ import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
-import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogRowActions } from "../catalog-row-actions/catalog-row-actions";
 import { CatalogTabsBar } from "../catalog-tabs-bar/catalog-tabs-bar";
 import { CategoryDialog } from "../category-dialog/category-dialog";
 import { DeleteCatalogDialog } from "../delete-catalog-dialog/delete-catalog-dialog";
-import type { CategoriesScreenProps } from "./categories-screen.types";
+import type { CategoriesScreenProps, CategoryDialogsProps } from "./categories-screen.types";
 
-export function CategoriesScreen({
-  workspaceId,
-  categories,
-  addAction,
-  renameAction,
-  setActiveAction,
-  removeAction,
-}: Readonly<CategoriesScreenProps>) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editing, setEditing] = useState<CategoryRecord | undefined>();
-  const [deleting, setDeleting] = useState<CategoryRecord | undefined>();
-  const openAdd = () => {
-    setEditing(undefined);
-    setIsDialogOpen(true);
-  };
+export function CategoriesScreen(props: Readonly<CategoriesScreenProps>) {
+  const { workspaceId, categories, addAction, renameAction, setActiveAction, removeAction } = props;
+  const dialogs = useCategoryDialogs();
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)">
       <CatalogTabsBar workspaceId={workspaceId} activeTab="categories" />
       <PageActions>
-        <Button iconLeading="plus" onPress={openAdd}>
+        <Button iconLeading="plus" onPress={dialogs.openAdd}>
           {CATALOG_COPY.addCategory}
         </Button>
       </PageActions>
@@ -45,43 +31,155 @@ export function CategoriesScreen({
         description={CATALOG_COPY.categoriesDescription}
         content="flush"
       >
-        <ul aria-label={CATALOG_COPY.categoriesTitle}>
-          {categories.map((category, index) => (
-            <ListCardItem
-              key={category.id}
-              icon="folder"
-              title={category.name}
-              meta={CATALOG_COPY.categoryMeta(category.serviceCount)}
-              isLast={index === categories.length - 1}
-              trailing={
-                <span className="flex items-center gap-(--space-2)">
-                  {!category.isActive ? (
-                    <StatusChip tone="neutral" label={CATALOG_COPY.archived} hasDot={false} />
-                  ) : null}
-                  {setActiveAction && removeAction ? (
-                    <CatalogRowActions
-                      workspaceId={workspaceId}
-                      kind="category"
-                      id={category.id}
-                      name={category.name}
-                      isActive={category.isActive}
-                      meta={CATALOG_COPY.categoryMeta(category.serviceCount)}
-                      onRename={() => {
-                        setEditing(category);
-                        setIsDialogOpen(true);
-                      }}
-                      onDelete={() => {
-                        setDeleting(category);
-                      }}
-                      setActiveAction={setActiveAction}
-                    />
-                  ) : null}
-                </span>
-              }
-            />
-          ))}
-        </ul>
+        <CategoryRows
+          workspaceId={workspaceId}
+          categories={categories}
+          setActiveAction={setActiveAction}
+          removeAction={removeAction}
+          onRename={dialogs.openRename}
+          onDelete={dialogs.openDelete}
+        />
       </SectionCard>
+      <CategoryDialogs
+        workspaceId={workspaceId}
+        isDialogOpen={dialogs.isDialogOpen}
+        setIsDialogOpen={dialogs.setIsDialogOpen}
+        editing={dialogs.editing}
+        addAction={addAction}
+        renameAction={renameAction}
+        deleting={dialogs.deleting}
+        removeAction={removeAction}
+        setActiveAction={setActiveAction}
+        closeDelete={dialogs.closeDelete}
+      />
+    </main>
+  );
+}
+
+function useCategoryDialogs() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editing, setEditing] = useState<CategoryRecord | undefined>();
+  const [deleting, setDeleting] = useState<CategoryRecord | undefined>();
+  function openAdd(): void {
+    setEditing(undefined);
+    setIsDialogOpen(true);
+  }
+  function openRename(category: CategoryRecord): void {
+    setEditing(category);
+    setIsDialogOpen(true);
+  }
+  function openDelete(category: CategoryRecord): void {
+    setDeleting(category);
+  }
+  function closeDelete(open: boolean): void {
+    if (!open) setDeleting(undefined);
+  }
+  return {
+    isDialogOpen,
+    setIsDialogOpen,
+    editing,
+    deleting,
+    openAdd,
+    openRename,
+    openDelete,
+    closeDelete,
+  };
+}
+
+function CategoryRows({
+  workspaceId,
+  categories,
+  setActiveAction,
+  removeAction,
+  onRename,
+  onDelete,
+}: Readonly<
+  CategoriesScreenProps & {
+    readonly onRename: (category: CategoryRecord) => void;
+    readonly onDelete: (category: CategoryRecord) => void;
+  }
+>) {
+  return (
+    <ul aria-label={CATALOG_COPY.categoriesTitle}>
+      {categories.map((category, index) => (
+        <CategoryRow
+          key={category.id}
+          workspaceId={workspaceId}
+          category={category}
+          isLast={index === categories.length - 1}
+          setActiveAction={setActiveAction}
+          removeAction={removeAction}
+          onRename={onRename}
+          onDelete={onDelete}
+        />
+      ))}
+    </ul>
+  );
+}
+
+function CategoryRow({
+  workspaceId,
+  category,
+  isLast,
+  setActiveAction,
+  removeAction,
+  onRename,
+  onDelete,
+}: Readonly<{
+  readonly workspaceId: string;
+  readonly category: CategoryRecord;
+  readonly isLast: boolean;
+  readonly setActiveAction: CategoriesScreenProps["setActiveAction"];
+  readonly removeAction: CategoriesScreenProps["removeAction"];
+  readonly onRename: (category: CategoryRecord) => void;
+  readonly onDelete: (category: CategoryRecord) => void;
+}>) {
+  function handleRename(): void {
+    onRename(category);
+  }
+  function handleDelete(): void {
+    onDelete(category);
+  }
+  return (
+    <ListCardItem
+      icon="folder"
+      title={category.name}
+      meta={CATALOG_COPY.categoryMeta(category.serviceCount)}
+      isLast={isLast}
+      trailing={
+        setActiveAction && removeAction ? (
+          <CatalogRowActions
+            workspaceId={workspaceId}
+            kind="category"
+            id={category.id}
+            name={category.name}
+            isActive={category.isActive}
+            meta={CATALOG_COPY.categoryMeta(category.serviceCount)}
+            onRename={handleRename}
+            onDelete={handleDelete}
+            setActiveAction={setActiveAction}
+          />
+        ) : undefined
+      }
+    />
+  );
+}
+
+function CategoryDialogs(props: Readonly<CategoryDialogsProps>) {
+  const {
+    workspaceId,
+    isDialogOpen,
+    setIsDialogOpen,
+    editing,
+    addAction,
+    renameAction,
+    deleting,
+    removeAction,
+    setActiveAction,
+    closeDelete,
+  } = props;
+  return (
+    <>
       {addAction && renameAction ? (
         <CategoryDialog
           isOpen={isDialogOpen}
@@ -100,14 +198,11 @@ export function CategoriesScreen({
           entry={deleting}
           isInUse={deleting.serviceCount > 0}
           usage={CATALOG_COPY.categoryUsage(deleting.serviceCount)}
-          onOpenChange={(open) => {
-            if (!open) setDeleting(undefined);
-          }}
+          onOpenChange={closeDelete}
           removeAction={removeAction}
           setActiveAction={setActiveAction}
         />
       ) : null}
-    </main>
+    </>
   );
 }
-/* eslint-enable max-lines-per-function, no-restricted-syntax -- end catalog dialog coordinator */

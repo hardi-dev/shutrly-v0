@@ -12,6 +12,7 @@ import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 
 type MutationResult = CatalogWriteResult | undefined;
 type CatalogMutationKind = "category" | "definition" | "service";
+type WriteMutation = () => Promise<MutationResult>;
 
 export interface CatalogMutationActions {
   readonly addCategory: (workspaceId: string, values: unknown) => Promise<MutationResult>;
@@ -33,47 +34,34 @@ export interface CatalogMutationActions {
   ) => Promise<CatalogDeleteResult>;
 }
 
-// eslint-disable-next-line max-lines-per-function -- groups the catalog operations under one workspace scope
+async function runWriteMutation(mutation: WriteMutation): Promise<MutationResult> {
+  try {
+    const result = await mutation();
+    if (result?.ok === false) return result;
+    showToast({ tone: "success", title: CATALOG_COPY.savedToast });
+    return result;
+  } catch {
+    showToast({
+      tone: "danger",
+      title: CATALOG_COPY.serverErrorTitle,
+      body: CATALOG_COPY.serverErrorBody,
+    });
+    return undefined;
+  }
+}
+
 export function useCatalogMutations(workspaceId: string, actions: CatalogMutationActions) {
   const addCategory = useCallback(
-    async (values: unknown): Promise<MutationResult> => {
-      try {
-        const result: MutationResult = await actions.addCategory(workspaceId, values);
-        if (result?.ok === false) return result;
-        showToast({ tone: "success", title: CATALOG_COPY.savedToast });
-        return result;
-      } catch {
-        showToast({
-          tone: "danger",
-          title: CATALOG_COPY.serverErrorTitle,
-          body: CATALOG_COPY.serverErrorBody,
-        });
-        return undefined;
-      }
-    },
+    (values: unknown): Promise<MutationResult> =>
+      runWriteMutation(() => actions.addCategory(workspaceId, values)),
     [actions, workspaceId],
   );
 
   const renameCategory = useCallback(
     async (categoryId: string, values: unknown): Promise<MutationResult> => {
-      if (!actions.renameCategory) return undefined;
-      try {
-        const result: MutationResult = await actions.renameCategory(
-          workspaceId,
-          categoryId,
-          values,
-        );
-        if (result?.ok === false) return result;
-        showToast({ tone: "success", title: CATALOG_COPY.savedToast });
-        return result;
-      } catch {
-        showToast({
-          tone: "danger",
-          title: CATALOG_COPY.serverErrorTitle,
-          body: CATALOG_COPY.serverErrorBody,
-        });
-        return undefined;
-      }
+      const rename = actions.renameCategory;
+      if (!rename) return undefined;
+      return runWriteMutation(() => rename(workspaceId, categoryId, values));
     },
     [actions, workspaceId],
   );

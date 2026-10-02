@@ -10,88 +10,91 @@ import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
-import type { DeleteCatalogDialogProps } from "./delete-catalog-dialog.types";
+import type {
+  DeleteCatalogDialogProps,
+  DeleteDialogState,
+  DeleteDialogSurfaceProps,
+} from "./delete-catalog-dialog.types";
 
-// eslint-disable-next-line max-lines-per-function -- coordinates destructive confirmation and archive fallback
-export function DeleteCatalogDialog({
-  isOpen,
-  workspaceId,
-  kind,
-  entry,
-  isInUse,
-  usage,
-  onOpenChange,
-  removeAction,
-  setActiveAction,
-}: Readonly<DeleteCatalogDialogProps>) {
-  const isMobile = useMobileViewport();
+export function DeleteCatalogDialog(props: Readonly<DeleteCatalogDialogProps>) {
+  const mobile = useMobileViewport();
+  const state = useDeleteDialogState(props);
+  if (mobile) return <MobileDeleteDialog props={props} state={state} />;
+  return <DesktopDeleteDialog props={props} state={state} />;
+}
+
+function useDeleteDialogState(props: Readonly<DeleteCatalogDialogProps>): DeleteDialogState {
   const [isPending, setIsPending] = useState(false);
-
-  async function handleDelete(): Promise<void> {
+  const { entry, isInUse, usage } = props;
+  async function deleteEntry(): Promise<void> {
     setIsPending(true);
     try {
       if (isInUse) {
-        await setActiveAction(workspaceId, kind, entry.id, false);
-        onOpenChange(false);
+        await props.setActiveAction(props.workspaceId, props.kind, entry.id, false);
+        props.onOpenChange(false);
         return;
       }
-      const result = await removeAction(workspaceId, kind, entry.id);
+      const result = await props.removeAction(props.workspaceId, props.kind, entry.id);
       if (!result.ok) return;
       showToast({ tone: "success", title: CATALOG_COPY.deletedToast });
-      onOpenChange(false);
+      props.onOpenChange(false);
     } finally {
       setIsPending(false);
     }
   }
-
-  function handleCancel(): void {
-    onOpenChange(false);
-  }
-
-  function handleActionPress(): void {
-    void handleDelete();
-  }
-
-  const title = CATALOG_COPY.deleteTitle(entry.name);
-  const actionLabel = isInUse ? CATALOG_COPY.archive : CATALOG_COPY.deleteConfirm;
   let description: string = CATALOG_COPY.deleteAllowedBody;
   if (isInUse) description = CATALOG_COPY.deleteBlockedBody(entry.name);
   else if (usage) description = `${description} ${usage}`;
+  return {
+    isPending,
+    title: isInUse ? CATALOG_COPY.deleteBlockedTitle : CATALOG_COPY.deleteTitle(entry.name),
+    description,
+    actionLabel: isInUse ? CATALOG_COPY.archive : CATALOG_COPY.deleteConfirm,
+    onAction: () => {
+      void deleteEntry();
+    },
+    onCancel: () => {
+      props.onOpenChange(false);
+    },
+  };
+}
 
-  if (isMobile) {
-    return (
-      <BottomSheet
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        title={isInUse ? CATALOG_COPY.deleteBlockedTitle : title}
-        description={description}
-        variant="actions"
-      >
-        <SheetItem
-          label={actionLabel}
-          icon={isInUse ? "archive" : "trash-2"}
-          variant="destructive"
-          onPress={handleActionPress}
-        />
-        <SheetItem label={CATALOG_COPY.cancel} onPress={handleCancel} />
-      </BottomSheet>
-    );
-  }
+function MobileDeleteDialog({ props, state }: Readonly<DeleteDialogSurfaceProps>) {
+  return (
+    <BottomSheet
+      isOpen={props.isOpen}
+      onOpenChange={props.onOpenChange}
+      title={state.title}
+      description={state.description}
+      variant="actions"
+    >
+      <SheetItem
+        label={state.actionLabel}
+        icon={props.isInUse ? "archive" : "trash-2"}
+        variant="destructive"
+        onPress={state.onAction}
+      />
+      <SheetItem label={CATALOG_COPY.cancel} onPress={state.onCancel} />
+    </BottomSheet>
+  );
+}
+
+function DesktopDeleteDialog({ props, state }: Readonly<DeleteDialogSurfaceProps>) {
   return (
     <Modal
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      title={isInUse ? CATALOG_COPY.deleteBlockedTitle : title}
-      description={description}
+      isOpen={props.isOpen}
+      onOpenChange={props.onOpenChange}
+      title={state.title}
+      description={state.description}
       size="sm"
       isDestructive
       actions={
         <>
-          <Button variant="secondary" onPress={handleCancel} isDisabled={isPending}>
+          <Button variant="secondary" onPress={state.onCancel} isDisabled={state.isPending}>
             {CATALOG_COPY.cancel}
           </Button>
-          <Button variant="danger" onPress={handleActionPress} isPending={isPending}>
-            {actionLabel}
+          <Button variant="danger" onPress={state.onAction} isPending={state.isPending}>
+            {state.actionLabel}
           </Button>
         </>
       }

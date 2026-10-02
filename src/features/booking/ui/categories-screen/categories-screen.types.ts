@@ -28,3 +28,16 @@ export interface CategoriesScreenProps {
     id: string,
   ) => Promise<CatalogDeleteResult>;
 }
+
+export interface CategoryDialogsProps {
+  readonly workspaceId: string;
+  readonly isDialogOpen: boolean;
+  readonly setIsDialogOpen: (open: boolean) => void;
+  readonly editing?: CategoryRecord;
+  readonly addAction: CategoriesScreenProps["addAction"];
+  readonly renameAction: CategoriesScreenProps["renameAction"];
+  readonly deleting?: CategoryRecord;
+  readonly removeAction: CategoriesScreenProps["removeAction"];
+  readonly setActiveAction: CategoriesScreenProps["setActiveAction"];
+  readonly closeDelete: (open: boolean) => void;
+}

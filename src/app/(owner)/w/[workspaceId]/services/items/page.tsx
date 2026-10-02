@@ -1,4 +1,9 @@
-import { addItemDefinitionAction, updateItemDefinitionAction } from "@/app/actions/booking/catalog";
+import {
+  addItemDefinitionAction,
+  deleteCatalogEntryAction,
+  setCatalogActiveAction,
+  updateItemDefinitionAction,
+} from "@/app/actions/booking/catalog";
 import { loadItemDefinitions } from "@/composition/booking/catalog-flow/catalog-flow";
 import { ItemDefinitionsScreen } from "@/features/booking/ui/item-definitions-screen/item-definitions-screen";
 
@@ -13,6 +18,8 @@ export default async function ItemsPage({
       definitions={definitions}
       addAction={addItemDefinitionAction}
       updateAction={updateItemDefinitionAction}
+      setActiveAction={setCatalogActiveAction}
+      removeAction={deleteCatalogEntryAction}
     />
   );
 }

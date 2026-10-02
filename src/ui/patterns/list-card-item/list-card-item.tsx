@@ -59,15 +59,20 @@ export function ListCardItem({
   return (
     <li className={cn(!isLast && "border-b border-(--component-list-card-item-border)")}>
       {href ? (
-        <Link
-          href={href}
-          className={cn(
-            LIST_CARD_ROW,
-            "outline-none focus-visible:bg-(--component-list-card-item-icon-background)",
-          )}
-        >
-          <ListCardBody icon={icon} title={title} meta={meta} trailing={trailing} href={href} />
-        </Link>
+        <div className={cn(LIST_CARD_ROW)}>
+          <Link
+            href={href}
+            className={cn(
+              "min-w-0 flex-1",
+              "outline-none focus-visible:bg-(--component-list-card-item-icon-background)",
+            )}
+          >
+            <ListCardBody icon={icon} title={title} meta={meta} trailing={trailing} href={href} />
+          </Link>
+          {trailing ? (
+            <span className="flex shrink-0 items-center gap-(--space-2)">{trailing}</span>
+          ) : null}
+        </div>
       ) : (
         <div className={cn(LIST_CARD_ROW)}>
           <ListCardBody icon={icon} title={title} meta={meta} trailing={trailing} />

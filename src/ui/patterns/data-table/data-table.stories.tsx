@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
+import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
+import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Input } from "@/ui/primitives/input/input";
 
 import { DataTable } from "./data-table";
-import { DataTableSkeleton } from "./data-table-skeleton";
 import { DATA_TABLE_STORY_COPY as COPY } from "./data-table.stories.copy";
 import type { DataTableProps } from "./data-table.types";
+import { DataTableSkeleton } from "./data-table-skeleton";
 
 const columns = [
   { id: "name", label: COPY.columns.name },
@@ -28,7 +30,6 @@ const meta = {
   tags: ["autodocs"],
   args: {
     label: COPY.label,
-    toolbar: { title: COPY.title, subtitle: COPY.subtitle, actions: <Search /> },
     columns,
     rows: COPY.rows,
     renderCell,
@@ -47,31 +48,34 @@ export default meta;
 
 export const Populated: StoryObj<typeof meta> = {
   render: () => (
-    <DataTable
-      label={COPY.label}
-      toolbar={{ title: COPY.title, subtitle: COPY.subtitle, actions: <Search /> }}
-      columns={columns}
-      rows={COPY.rows}
-      renderCell={renderCell}
-    />
+    <SectionCard
+      title={COPY.title}
+      description={COPY.subtitle}
+      actions={<Search />}
+      content="bleed"
+    >
+      <DataTable label={COPY.label} columns={columns} rows={COPY.rows} renderCell={renderCell} />
+    </SectionCard>
   ),
 };
 
 export const Empty: StoryObj<typeof meta> = {
   render: () => (
-    <DataTable
-      label={COPY.label}
-      toolbar={{ title: COPY.title, subtitle: "0 klien aktif" }}
-      columns={columns}
-      rows={[]}
-      renderCell={renderCell}
-      emptyState={<p>{COPY.empty}</p>}
-    />
+    <SectionCard title={COPY.title} description={COPY.zeroActive}>
+      <EmptyState
+        placement="in-card"
+        icon="users"
+        title={COPY.empty}
+        body={COPY.emptyDescription}
+      />
+    </SectionCard>
   ),
 };
 
 export const Loading: StoryObj<typeof meta> = {
   render: () => (
-    <DataTableSkeleton toolbar={{ title: COPY.title }} columns={columns} rowCount={5} />
+    <SectionCard title={COPY.title} content="bleed">
+      <DataTableSkeleton label={COPY.label} columns={columns} rowCount={5} />
+    </SectionCard>
   ),
 };

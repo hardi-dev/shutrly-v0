@@ -9,26 +9,20 @@ export type DataTableColumn = FieldNameProps & {
   readonly width?: number;
 };
 
-export interface DataTableToolbar {
-  readonly title: string;
-  readonly subtitle?: string;
-  readonly actions?: ReactNode;
-}
-
 export interface DataTableProps<Row extends { readonly id: string }> {
   readonly label: string;
-  readonly toolbar: DataTableToolbar;
   readonly columns: readonly DataTableColumn[];
   readonly rows: readonly Row[];
   readonly renderCell: (row: Row, columnId: string) => ReactNode;
   readonly onRowAction?: (row: Row) => void;
-  /** Replaces the header and rows when there are no rows. */
-  readonly emptyState?: ReactNode;
-  readonly footer?: ReactNode;
 }
 
 export interface DataTableSkeletonProps {
-  readonly toolbar: DataTableToolbar;
+  readonly label: string;
   readonly columns: readonly DataTableColumn[];
   readonly rowCount: number;
+}
+
+export interface SkeletonRow {
+  readonly id: string;
 }

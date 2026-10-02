@@ -2,6 +2,9 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
+import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
+import { SectionCard } from "@/ui/patterns/section-card/section-card";
+
 import { DataTable } from "./data-table";
 import { DataTableSkeleton } from "./data-table-skeleton";
 
@@ -16,23 +19,22 @@ const rows = [
 ];
 
 function renderCell(row: (typeof rows)[number], columnId: string) {
-  return columnId === "actions" ? null : row[columnId === "name" ? "name" : "phone"];
+  if (columnId === "actions") return null;
+  if (columnId === "name") return row.name;
+  return row.phone;
 }
 
 describe("DataTable (C27)", () => {
-  it("AC-CLI-001 renders the toolbar, column headers and one row per item", () => {
+  it("AC-CLI-001 renders only the table inside a SectionCard that owns the heading and search", () => {
     render(
-      <DataTable
-        label="Daftar klien"
-        toolbar={{
-          title: "Daftar klien",
-          subtitle: "38 klien aktif",
-          actions: <input aria-label="Cari" />,
-        }}
-        columns={columns}
-        rows={rows}
-        renderCell={renderCell}
-      />,
+      <SectionCard
+        title="Daftar klien"
+        description="38 klien aktif"
+        actions={<input aria-label="Cari" />}
+        content="bleed"
+      >
+        <DataTable label="Daftar klien" columns={columns} rows={rows} renderCell={renderCell} />
+      </SectionCard>,
     );
     const table = screen.getByRole("grid", { name: "Daftar klien" });
     expect(
@@ -51,7 +53,6 @@ describe("DataTable (C27)", () => {
     render(
       <DataTable
         label="Daftar klien"
-        toolbar={{ title: "Daftar klien" }}
         columns={columns}
         rows={rows}
         renderCell={renderCell}
@@ -64,25 +65,23 @@ describe("DataTable (C27)", () => {
     expect(onRowAction).toHaveBeenLastCalledWith(rows[0]);
   });
 
-  it("AC-CLI-003 shows the empty state instead of header and rows", () => {
+  it("allows a consumer to compose an empty state in SectionCard without DataTable", () => {
     render(
-      <DataTable
-        label="Daftar klien"
-        toolbar={{ title: "Daftar klien" }}
-        columns={columns}
-        rows={[]}
-        renderCell={renderCell}
-        emptyState={<p>Belum ada klien</p>}
-      />,
+      <SectionCard title="Daftar klien">
+        <EmptyState
+          placement="in-card"
+          icon="users"
+          title="Belum ada klien"
+          body="Tambahkan klien untuk mulai mengelola informasi kontak mereka."
+        />
+      </SectionCard>,
     );
-    expect(screen.getByText("Belum ada klien")).toBeVisible();
-    expect(screen.queryByRole("columnheader")).toBeNull();
+    expect(screen.getByTestId("empty-state")).toBeVisible();
+    expect(screen.queryByRole("grid", { name: "Daftar klien" })).toBeNull();
   });
 
   it("renders skeleton rows with the header for the loading state", () => {
-    render(
-      <DataTableSkeleton toolbar={{ title: "Daftar klien" }} columns={columns} rowCount={5} />,
-    );
+    render(<DataTableSkeleton label="Daftar klien" columns={columns} rowCount={5} />);
     expect(screen.getAllByTestId("data-table-skeleton-row")).toHaveLength(5);
     expect(screen.getByText("KLIEN")).toBeVisible();
   });

@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 
 const useMobileViewport = vi.fn();
 
-vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
+vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn(), replace: vi.fn() }) }));
 vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({ useMobileViewport }));
 
 const { ClientsScreen } = await import("./clients-screen");
@@ -53,5 +53,11 @@ describe("ClientsScreen", () => {
     );
     await userEvent.click(screen.getByText("Rina"));
     expect(screen.getByRole("dialog", { name: "Ubah klien" })).toBeInTheDocument();
+  });
+
+  it("AC-CLI-004 renders the no-match state for a query with no rows", () => {
+    useMobileViewport.mockReturnValue(false);
+    render(<ClientsScreen {...props} rows={[]} count={1} q="zzz" />);
+    expect(screen.getByRole("heading", { name: "Tidak ada klien yang cocok" })).toBeVisible();
   });
 });

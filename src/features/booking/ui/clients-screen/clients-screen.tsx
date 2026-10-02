@@ -4,6 +4,7 @@
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
+import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
@@ -58,7 +59,14 @@ export function ClientsScreen({
     if (!isOpen) setDeleting(null);
   }
   const actions = createAddActions(addAction, openDialog);
-  const emptyState = (
+  const emptyState = q ? (
+    <EmptyState
+      placement="in-card"
+      icon="search-x"
+      title={CLIENT_COPY.noMatchTitle}
+      body={CLIENT_COPY.noMatchBody}
+    />
+  ) : (
     <ClientsEmptyState status={status} action={isMobile ? actions.mobile : undefined} />
   );
   return (

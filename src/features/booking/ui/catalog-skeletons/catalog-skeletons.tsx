@@ -16,7 +16,7 @@ export function CatalogSkeleton({ variant }: Readonly<CatalogSkeletonProps>) {
     <main
       aria-busy="true"
       data-testid={`catalog-${variant}-skeleton`}
-      className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)"
+      className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)"
     >
       <SectionCard title={TITLES[variant]} content="flush">
         <ul>

@@ -18,6 +18,10 @@ describe("CategoriesScreen", () => {
       screen.getByText("Buat kategori seperti Wisuda atau Wedding untuk mengelompokkan layanan."),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah kategori" })).toBeInTheDocument();
+    expect(screen.getByRole("main")).toHaveClass(
+      "gap-(--space-4)",
+      "md:gap-(--component-panel-app-content-gap)",
+    );
   });
 
   it("shows an archived chip for inactive categories", () => {

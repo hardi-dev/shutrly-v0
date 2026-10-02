@@ -30,14 +30,15 @@ export function ItemDefinitionsScreen({
   removeAction,
 }: Readonly<ItemDefinitionsScreenProps>) {
   const dialogs = useItemDefinitionDialogs();
+  const addButton = (
+    <Button iconLeading="plus" onPress={dialogs.openAdd}>
+      {CATALOG_COPY.addItem}
+    </Button>
+  );
   return (
-    <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)">
-      <CatalogTabsBar workspaceId={workspaceId} activeTab="items" />
-      <PageActions>
-        <Button iconLeading="plus" onPress={dialogs.openAdd}>
-          {CATALOG_COPY.addItem}
-        </Button>
-      </PageActions>
+    <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)">
+      <CatalogTabsBar workspaceId={workspaceId} activeTab="items" action={addButton} />
+      <PageActions>{addButton}</PageActions>
       <DefinitionGroups
         definitions={definitions}
         workspaceId={workspaceId}

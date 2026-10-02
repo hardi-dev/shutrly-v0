@@ -23,6 +23,10 @@ describe("ServicesScreen", () => {
     expect(screen.getAllByTestId("empty-state")).toHaveLength(2);
     expect(screen.getAllByRole("heading", { name: "Belum ada layanan" })).toHaveLength(2);
     expect(screen.getAllByRole("button", { name: "Tambah layanan" })).toHaveLength(2);
+    expect(screen.getByRole("main")).toHaveClass(
+      "gap-(--space-4)",
+      "md:gap-(--component-panel-app-content-gap)",
+    );
   });
 
   it("shows an archived chip on an archived category section", () => {

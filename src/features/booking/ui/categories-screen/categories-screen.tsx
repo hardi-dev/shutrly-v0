@@ -27,8 +27,8 @@ export function CategoriesScreen(props: Readonly<CategoriesScreenProps>) {
     </Button>
   );
   return (
-    <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)">
-      <CatalogTabsBar workspaceId={workspaceId} activeTab="categories" />
+    <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)">
+      <CatalogTabsBar workspaceId={workspaceId} activeTab="categories" action={addButton} />
       <PageActions>{addButton}</PageActions>
       <SectionCard
         title={CATALOG_COPY.categoriesTitle}

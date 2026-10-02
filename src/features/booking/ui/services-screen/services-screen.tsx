@@ -27,8 +27,8 @@ export function ServicesScreen(props: Readonly<ServicesScreenProps>) {
     </Button>
   );
   return (
-    <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)">
-      <CatalogTabsBar workspaceId={workspaceId} activeTab="services" />
+    <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)">
+      <CatalogTabsBar workspaceId={workspaceId} activeTab="services" action={addButton} />
       <PageActions>{addButton}</PageActions>
       <ServiceGroups
         groups={groups}

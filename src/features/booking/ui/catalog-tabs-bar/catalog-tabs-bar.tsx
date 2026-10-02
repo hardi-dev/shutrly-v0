@@ -8,7 +8,7 @@ import { SegmentedControl } from "@/ui/patterns/segmented-control/segmented-cont
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import type { CatalogTabsBarProps } from "./catalog-tabs-bar.types";
 
-export function CatalogTabsBar({ workspaceId, activeTab }: Readonly<CatalogTabsBarProps>) {
+export function CatalogTabsBar({ workspaceId, activeTab, action }: Readonly<CatalogTabsBarProps>) {
   const router = useRouter();
   const isMobile = useMobileViewport();
   if (!isMobile) return null;
@@ -24,7 +24,7 @@ export function CatalogTabsBar({ workspaceId, activeTab }: Readonly<CatalogTabsB
     router.push(`/w/${workspaceId}/services${suffix}`);
   }
 
-  return (
+  const tabs = (
     <SegmentedControl
       label={CATALOG_COPY.tabsLabel}
       options={options}
@@ -32,5 +32,12 @@ export function CatalogTabsBar({ workspaceId, activeTab }: Readonly<CatalogTabsB
       onChange={handleChange}
       isFullWidth
     />
+  );
+  if (!action) return tabs;
+  return (
+    <div className="flex w-full flex-col gap-(--space-4)">
+      {tabs}
+      <div className="w-full [&>button]:w-full">{action}</div>
+    </div>
   );
 }

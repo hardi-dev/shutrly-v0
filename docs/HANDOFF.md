@@ -6,9 +6,9 @@ Branch: `feat/catalog` (F-05; `main` merged in after F-04's PR #1).
 ## Current handoff — F-05 Service catalog IN PROGRESS (2026-10-02)
 
 - Work only in `/Users/hardiansa/Documents/work/personal/Coding/shutrly-v01-catalog`; do not touch the primary `shutrly-v01` checkout.
-- Checkpoint `0406eb3` contains the catalog management flows, service-detail editing/reorder/remove, responsive actions, inline category creation, and the catalog E2E journey. Catalog changes contain no ESLint rule-disabling directives.
-- `eslint src`, TypeScript, production build, and booking/UI tests pass. The full unit suite has one unrelated token-count failure (`585` expected vs `596` actual). Integration tests are blocked by the configured Neon pooler's WebSocket closing during fixture setup. The authenticated catalog E2E currently renders *Segera hadir* at `/services`; production route generation recognizes the catalog routes, so investigate this runtime mismatch next.
-- Do not run `pnpm db:migrate`; do not read or edit `.pen` files. Next safe work: diagnose the `/services` runtime selection, then rerun the catalog E2E and integration suite before updating F-05 to DONE.
+- Checkpoint `0406eb3` contains the catalog management flows, service-detail editing/reorder/remove, responsive actions, inline category creation, and the catalog E2E journey; `4fc9571` adds category save feedback and retry handling. Catalog changes contain no ESLint rule-disabling directives.
+- `eslint src`, TypeScript, production build, booking/UI tests, and the isolated authenticated catalog E2E pass. The full unit suite has one unrelated token-count failure (`585` expected vs `596` actual). Integration tests are blocked by the configured Neon pooler's WebSocket closing during fixture setup. The earlier E2E *Segera hadir* result was caused by the already-running primary-checkout server on port 3000, not the catalog route.
+- Do not run `pnpm db:migrate`; do not read or edit `.pen` files. Next safe work: rerun the final verification suite from the catalog worktree, keep the token-count and Neon issues recorded, then run `/sdv:verify-feature catalog` when Owner review is ready.
 
 ## Update 2026-10-02 — F-05 Service catalog PLANNED
 

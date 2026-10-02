@@ -18,22 +18,35 @@ test("AC-CAT-003 AC-CAT-004 AC-CAT-009 AC-CAT-010 creates a service from an empt
 
   await page.getByRole("link", { name: "Layanan", exact: true }).first().click();
   await expect(page).toHaveURL(/\/services$/);
-  await expect(page.getByText(CATALOG_COPY.servicesEmptyTitle)).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: CATALOG_COPY.servicesEmptyTitle, exact: true }).first(),
+  ).toBeVisible();
 
-  await page.getByRole("button", { name: CATALOG_COPY.addService }).click();
-  const serviceDialog = page.getByRole("dialog", { name: CATALOG_COPY.addServiceTitle });
+  await page
+    .getByRole("button", { name: CATALOG_COPY.addService })
+    .filter({ visible: true })
+    .first()
+    .click();
+  const serviceDialog = page
+    .getByRole("dialog", { name: CATALOG_COPY.addServiceTitle })
+    .filter({ visible: true })
+    .first();
   await serviceDialog.getByRole("button", { name: CATALOG_COPY.addCategoryInline }).click();
 
-  const categoryDialog = page.getByRole("dialog", { name: CATALOG_COPY.categoryDialogAddTitle });
+  const categoryDialog = page
+    .getByRole("dialog", { name: CATALOG_COPY.categoryDialogAddTitle })
+    .filter({ visible: true })
+    .first();
   await categoryDialog.getByRole("textbox", { name: CATALOG_COPY.nameCategory }).fill("Wisuda");
   await categoryDialog.getByRole("button", { name: CATALOG_COPY.save }).click();
+  await expect(categoryDialog).toBeHidden();
 
   await serviceDialog.getByRole("textbox", { name: CATALOG_COPY.nameService }).fill("Wisuda Basic");
   await serviceDialog.getByRole("textbox", { name: CATALOG_COPY.basePrice }).fill("750000");
   await serviceDialog.getByRole("button", { name: CATALOG_COPY.save }).click();
 
   await expect(page).toHaveURL(/\/services\/[0-9a-f-]+$/);
-  await expect(page.getByRole("heading", { name: "Wisuda Basic" })).toBeVisible();
-  await expect(page.getByText(CATALOG_COPY.itemsTitle)).toBeVisible();
-  await expect(page.getByText(CATALOG_COPY.fieldsTitle)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Wisuda Basic" }).first()).toBeVisible();
+  await expect(page.getByText(CATALOG_COPY.itemsTitle).first()).toBeVisible();
+  await expect(page.getByText(CATALOG_COPY.fieldsTitle).first()).toBeVisible();
 });

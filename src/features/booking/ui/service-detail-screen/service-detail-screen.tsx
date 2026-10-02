@@ -11,8 +11,8 @@ import { AddServiceDialog } from "../add-service-dialog/add-service-dialog";
 import { BookingFieldDialog } from "../booking-field-dialog/booking-field-dialog";
 import { BookingFieldsCard } from "../booking-fields-card/booking-fields-card";
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
-import { ServiceInfoCard } from "../service-info-card/service-info-card";
 import { ServiceDetailDeleteDialog } from "../service-detail-delete-dialog/service-detail-delete-dialog";
+import { ServiceInfoCard } from "../service-info-card/service-info-card";
 import { ServiceItemDialog } from "../service-item-dialog/service-item-dialog";
 import { ServiceItemsCard } from "../service-items-card/service-items-card";
 import type {

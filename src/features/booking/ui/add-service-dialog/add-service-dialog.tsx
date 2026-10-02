@@ -36,23 +36,18 @@ export function AddServiceDialog({
 }: Readonly<AddServiceDialogProps>) {
   const form = useAddServiceForm({ workspaceId, service, onOpenChange, action, updateAction });
   const inlineCategory = useInlineCategory({
-    workspaceId,
     categories,
     addCategoryAction,
     onCategoryChange: form.onCategoryChange,
   });
   const content = (
-    <AddServiceFields
+    <ServiceFieldsContent
       categories={inlineCategory.categories}
       onAddCategory={addCategoryAction ? inlineCategory.open : undefined}
-      {...form}
+      form={form}
     />
   );
-  const save = (
-    <Button onPress={form.handleSubmit} isPending={form.isPending}>
-      {CATALOG_COPY.save}
-    </Button>
-  );
+  const save = <ServiceSaveButton form={form} />;
   return (
     <>
       <ResponsiveServiceDialog
@@ -67,7 +62,7 @@ export function AddServiceDialog({
         }
       />
       {addCategoryAction ? (
-        <CategoryDialog
+        <InlineCategoryDialog
           isOpen={inlineCategory.isOpen}
           workspaceId={workspaceId}
           onOpenChange={inlineCategory.setIsOpen}
@@ -78,13 +73,44 @@ export function AddServiceDialog({
   );
 }
 
+function ServiceFieldsContent({
+  categories,
+  onAddCategory,
+  form,
+}: Readonly<{
+  readonly categories: AddServiceDialogProps["categories"];
+  readonly onAddCategory?: () => void;
+  readonly form: ReturnType<typeof useAddServiceForm>;
+}>) {
+  return <AddServiceFields categories={categories} onAddCategory={onAddCategory} {...form} />;
+}
+
+function ServiceSaveButton({
+  form,
+}: Readonly<{ readonly form: ReturnType<typeof useAddServiceForm> }>) {
+  return (
+    <Button onPress={form.handleSubmit} isPending={form.isPending}>
+      {CATALOG_COPY.save}
+    </Button>
+  );
+}
+
+function InlineCategoryDialog(
+  props: Readonly<{
+    readonly isOpen: boolean;
+    readonly workspaceId: string;
+    readonly onOpenChange: (isOpen: boolean) => void;
+    readonly action: NonNullable<AddServiceDialogProps["addCategoryAction"]>;
+  }>,
+) {
+  return <CategoryDialog {...props} />;
+}
+
 function useInlineCategory({
-  workspaceId,
   categories,
   addCategoryAction,
   onCategoryChange,
 }: Readonly<{
-  readonly workspaceId: string;
   readonly categories: readonly AddServiceDialogProps["categories"][number][];
   readonly addCategoryAction: AddServiceDialogProps["addCategoryAction"];
   readonly onCategoryChange: (value: string) => void;
@@ -106,7 +132,10 @@ function useInlineCategory({
     }
     return result;
   }
-  return { categories: localCategories, isOpen, setIsOpen, open: () => setIsOpen(true), create };
+  function open(): void {
+    setIsOpen(true);
+  }
+  return { categories: localCategories, isOpen, setIsOpen, open, create };
 }
 
 function readCategoryName(values: unknown): string | undefined {

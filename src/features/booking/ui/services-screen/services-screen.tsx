@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { useState } from "react";
 
 import type { ServiceListItem } from "@/features/booking/application/use-cases/service-results/service-results.types";
@@ -115,11 +115,10 @@ function ServiceDialogs({
   readonly setActiveAction: ServicesScreenProps["setActiveAction"];
   readonly removeAction: ServicesScreenProps["removeAction"];
 }>) {
-  if (!categories) return null;
-  return (
+  return categories ? (
     <>
       {addServiceAction && (updateAction || !dialogs.editing) ? (
-        <AddServiceDialog
+        <ServiceDialog
           key={dialogs.editing?.id ?? "new-service"}
           isOpen={dialogs.isDialogOpen}
           onOpenChange={dialogs.setIsDialogOpen}
@@ -132,7 +131,7 @@ function ServiceDialogs({
         />
       ) : null}
       {dialogs.deleting && setActiveAction && removeAction ? (
-        <DeleteCatalogDialog
+        <ServiceDeleteDialog
           isOpen
           workspaceId={workspaceId}
           kind="service"
@@ -145,7 +144,15 @@ function ServiceDialogs({
         />
       ) : null}
     </>
-  );
+  ) : null;
+}
+
+function ServiceDialog(props: ComponentProps<typeof AddServiceDialog>) {
+  return <AddServiceDialog {...props} />;
+}
+
+function ServiceDeleteDialog(props: ComponentProps<typeof DeleteCatalogDialog>) {
+  return <DeleteCatalogDialog {...props} />;
 }
 
 function useServiceDialogs() {

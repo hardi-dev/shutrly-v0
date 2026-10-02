@@ -126,7 +126,7 @@ WHERE NOT EXISTS (
 ON CONFLICT DO NOTHING;
 ```
 
-A config test checks the SQL against `DEFAULT_ITEM_DEFINITIONS`. **The Owner applies migrations** (the agent may run `pnpm db:migrate` only with per-action approval).
+A config test checks the SQL against `DEFAULT_ITEM_DEFINITIONS`. The agent applies 0006/0007 with `pnpm db:migrate` against the shared non-production database after committing them (tech-stack.md › Deployment, Owner 2026-10-02); both are additive.
 
 ## Server / API Interface
 
@@ -280,16 +280,14 @@ Built from `exports/` ([design.md](design.md)); copy in `features/booking/ui/cat
 
 ## Implementation Iterations
 
-See [plan.md](plan.md): 15 tasks, test-first, one commit each. Owner checkpoints:
-- Task 6: review migrations 0006/0007 and apply them before Task 9's integration tests.
-- Task 15: browser check against the exports.
+See [plan.md](plan.md): 15 tasks, test-first, one commit each. Task 6 applies migrations 0006/0007 to the non-production database (agent, reported). Owner checkpoint: Task 15 browser check against the exports.
 
 1. Icons + `Switch` (+ story)
 2. `Select` with rich options and the phone picker (+ story)
 3. `Tabs`, `PageHeader`/`AppShell` tabs, `SegmentedControl` full width, `EmptyState` in card (+ stories)
 4. Owner shell: services leaves coming soon, route-driven header tabs, heading override, nav active state
 5. Domain units
-6. Schema + migrations 0006/0007 + backfill config test — **Owner applies**
+6. Schema + migrations 0006/0007 + backfill config test, applied to the non-production database
 7. Application: categories and item definitions (+ seed) with fake repositories
 8. Application: services, service items, booking fields
 9. Drizzle repositories + integration tests

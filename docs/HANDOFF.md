@@ -5,7 +5,7 @@ Branch: `feat/catalog` (F-05; `main` merged in after F-04's PR #1).
 
 ## Update 2026-10-02 — F-05 Service catalog PLANNED
 
-- **Plan:** [technical-design.md](features/catalog/technical-design.md) + [plan.md](features/catalog/plan.md), 15 tasks: (1) icons + Switch, (2) Select with rich options, (3) Tabs + header tabs + full-width Segmented + in-card Empty State, (4) owner shell tabs and heading override, (5) domain, (6) schema + migrations 0006/0007 — **Owner applies**, (7) categories + definitions use cases, (8) services/items/fields use cases, (9) Drizzle repositories + integration, (10) composition + creation seeding + actions, (11) routes/copy/skeletons, (12) Layanan + Kategori tabs, (13) Item paket tab, (14) service detail, (15) E2E + record. New bounded context `src/features/booking`. No new ADR.
+- **Plan:** [technical-design.md](features/catalog/technical-design.md) + [plan.md](features/catalog/plan.md), 15 tasks: (1) icons + Switch, (2) Select with rich options, (3) Tabs + header tabs + full-width Segmented + in-card Empty State, (4) owner shell tabs and heading override, (5) domain, (6) schema + migrations 0006/0007 — applied by the agent to the non-production DB (Owner 2026-10-02 allows `pnpm db:migrate` during development), (7) categories + definitions use cases, (8) services/items/fields use cases, (9) Drizzle repositories + integration, (10) composition + creation seeding + actions, (11) routes/copy/skeletons, (12) Layanan + Kategori tabs, (13) Item paket tab, (14) service detail, (15) E2E + record. New bounded context `src/features/booking`. No new ADR.
 - **To confirm with the Owner:** TD-D-1 (row icons derived from type) and TD-D-2 (item summary = value + unit) in technical-design.md.
 - **Next:** `/sdv:build-feature catalog 1`.
 
@@ -135,7 +135,7 @@ The F-00 build instructions below are kept for reference.
 - **Any test or command fails in a way the plan's notes don't cover.** The known cases are R-3 (Vitest projects key), R-5 (two `typescript-eslint` copies) and the notes under Tasks 9 and 10.
 - **Neon WebSocket fails under `pnpm preview` / workerd** (Task 17, R-4). This is an ADR-008/009 risk and needs an Owner decision.
 - **The code would need to break the architecture or the coding rules.** Report it as a deviation; don't bend the rules.
-- **Never run `pnpm db:migrate`.** Only the Owner applies migrations, by hand from a clean `main` (tech-stack interim rule). F-00 has no migrations anyway.
+- ~~**Never run `pnpm db:migrate`.**~~ Superseded 2026-10-02: agents may apply committed, reviewed migrations to the non-production database during development (tech-stack.md › Deployment). F-00 has no migrations anyway.
 
 ### When all 18 tasks are done
 - Task 18 updated `technical-design.md` (status IMPLEMENTED), `docs/product/feature-map.md` (F-00 IN PROGRESS), the F-01 contract paths, and this handoff.

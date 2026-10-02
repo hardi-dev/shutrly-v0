@@ -28,7 +28,7 @@ Every task's requirements implicitly include this section. They are the same as 
 - **Money (ADR-007, C-105):** amounts are digit strings; never `Number()` arithmetic on money. Display through `formatIdr`.
 - **Copy:** Indonesian strings in this plan come from the frames; strings not drawn carry `// not in Pencil`.
 - **Logging:** `catalog.save_failed` with `{ workspaceId, entity, entityId?, operation }` only, never names or values.
-- **Migrations:** generated with drizzle-kit and committed. The agent runs `pnpm db:migrate` only after the Owner approves that specific run.
+- **Migrations:** generated with drizzle-kit, reviewed and committed, then applied by the agent with `pnpm db:migrate` against the shared non-production database (`.dev.vars`), per `docs/architecture/tech-stack.md` › Deployment (Owner 2026-10-02). Report each run.
 - **Tests:** names start with the `AC-CAT-*` / `BR-CAT-*` IDs they cover.
 - **Quality gate per task:** `pnpm typecheck`, `pnpm lint` and `pnpm test` pass. From Task 9 on, `pnpm test:integration` also passes, once migrations 0006/0007 are applied.
 - **Commits:** one per task; conventional, lowercase, with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
@@ -665,7 +665,7 @@ export function sortCatalogEntries<T extends { readonly name: string; readonly i
 
 - [ ] **Step 4:** gate → PASS. Commit `feat(booking): add catalog domain rules`.
 
-### Task 6: Schema and migrations (Owner checkpoint)
+### Task 6: Schema and migrations
 
 **Files:** create `src/adapters/db/schema/booking/catalog.ts`; modify `schema/index.ts`; generate `drizzle/0006_*`, `0007_*`; create `tests/config/item-definition-backfill.test.ts`.
 
@@ -807,7 +807,7 @@ export const serviceFieldDefinition = pgTable(
   - AC-CAT-002 BR-CAT-011: for each `DEFAULT_ITEM_DEFINITIONS` entry the SQL contains `('<name>','<valueType>',<'unit'>,<true|false>,<'TYPE'|NULL>)`;
   - AC-CAT-002 idempotent: contains `WHERE NOT EXISTS`, `lower(s."name") = lower(d.name)` and `ON CONFLICT DO NOTHING`.
 - [ ] **Step 5:** gate → PASS. Commit `feat(booking): add service catalog tables and definition backfill`.
-- [ ] **Step 6: STOP — Owner checkpoint.** Ask the Owner to review 0006/0007 and apply them, or to approve this specific `pnpm db:migrate` run. Don't start Task 9 until they are applied.
+- [ ] **Step 6: Apply.** After the commit, run `pnpm db:migrate` (non-production database from `.dev.vars`). Confirm with a quick check that the five tables exist and that every existing workspace has the four default definitions; report the output. 0006/0007 only add tables and rows, so other branches on the shared database are unaffected.
 
 ### Task 7: Application — categories and item definitions
 

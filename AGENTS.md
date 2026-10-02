@@ -9,7 +9,7 @@ Start with [docs/HANDOFF.md](docs/HANDOFF.md) › _Current handoff_. It says wha
 - **Commits:** conventional commits in English, lowercase, no trailing period.
 - **Hard stops:**
   - Never commit secrets. `.dev.vars` and `.env.test` are git-ignored and non-production only.
-  - Never run `pnpm db:migrate`; only the Owner applies migrations.
+  - `pnpm db:migrate` runs only against the shared **non-production** database from `.dev.vars`, and only for a migration you generated, reviewed and committed (Owner 2026-10-02, see `docs/architecture/tech-stack.md` › Deployment). Keep migrations safe for other branches on that database (no drops or renames of columns they use), and report each run. Never run migrations against production.
   - Never read or edit `.pen` files directly; they're edited only through the Pencil tool.
 - **Machine note:** `head` on this machine isn't coreutils; use `sed -n '1,20p'`.
 

@@ -4,17 +4,81 @@ Use this template to write `docs/features/<slug>/plan.md` (or `plan-2.md` beside
 
 **Goal of the template:** a model that has never seen the conversation can build the whole feature in one session, without guessing and without revisions. Everything it would otherwise have to invent (types, SQL, copy, file paths, the pattern to copy, what each state shows) is written in the plan.
 
-**Worked example:** [features/projects/plan-2.md](../features/projects/plan-2.md) (F-07 Projects).
+**Worked example:** [features/projects/plan-2.md](../features/projects/plan-2.md) (F-07 Projects). When an instruction below is unclear, open the same section there.
 
-**Before writing the plan, these must exist and be approved:**
-- `spec.md` and `acceptance-criteria.md`, with stable `AC-<AREA>-NNN` IDs;
-- `design.md` with the Pencil frames, and `exports/` with **one frame per HTML file** (frames at least 40 px apart on the canvas, or exports leak into each other);
-- `technical-design.md` with numbered decisions (D-1…D-n) and the AC → test map.
+---
 
-**How to use it:**
-- Copy everything below the line into the feature folder and replace each `{placeholder}`.
-- Delete a section only when it has nothing to say for this feature. Never leave a placeholder or an empty table.
-- Text in `> Guidance:` blocks is for the plan author. Delete it from the finished plan.
+## Instructions for the plan author
+
+> ✎ **Delete this whole section, and every `> ✎` block below, when the plan is finished.** Find leftovers with:
+> ```bash
+> grep -n '✎\|{[a-zA-Z]' docs/features/<slug>/plan.md
+> ```
+
+### 1. Check the inputs first
+
+Don't start the plan until all of these exist and are approved. If one is missing, run the sdv stage that makes it.
+
+| Input | Must contain | Made by |
+|---|---|---|
+| `spec.md` | flows, business-rule refs, out of scope, assumptions (`A-n`) | `/sdv:discover-feature` |
+| `acceptance-criteria.md` | stable `AC-<AREA>-NNN` IDs and the shared test fixture | `/sdv:discover-feature` |
+| `design.md` | frame table (state → frame ID per device), Copy, rule exceptions, APPROVED | `/sdv:design-feature` |
+| `exports/*.html` | **one frame per file**, named `<state>-<desktop\|mobile>-<frameId>.html` | Pencil `Export` |
+| `technical-design.md` | decisions `D-1…D-n`, DB tables, API table, AC → test map | `/sdv:plan-feature` |
+
+**Check the exports before you rely on them.** Open a few files and make sure each holds only its own frame. Frames that touch or overlap on the canvas leak into each other's export. Keep at least 40 px between frames, and re-export if needed.
+
+### 2. Gather facts, don't recall them
+
+Every path, prop, function name and limit in the plan must come from reading the repo **today**, not from memory or from another plan.
+- Open each file you will list in *Existing code to follow*, and write what it does now, including what it can't do yet (for example "`CompactBar` takes `actions`, but `AppShell` doesn't pass any"). Each limit becomes an *extend* row in Slice 0 and an additive step in a later slice.
+- For a base feature that is only planned (not built), take its unit names from its plan, say so in **Base**, and let Slice 0 check them.
+- Look for routing traps: a new folder can stop a catch-all route (`[section]`) from matching, and a shell button may still point to an old URL. Give each trap a step.
+- List the existing domain helpers (money, quantity, dates, formatting) by name in Global Constraints, so the builder reuses them.
+
+### 3. Decide the slices
+
+- **One screen per slice**, built end to end (domain → application → repository → action → UI → tests).
+- **Order:** start with the screen that **creates** the data, then the screen that shows one record, then the list. Each slice then has real data to show.
+- **Split a big screen** into a main-path slice early and a "the rest" slice later (F-07: Slice 1 *Proyek baru* main path, Slice 7 the rest). The later slice can reuse dialogs built in between.
+- **Overlays belong to the page they open on** (S1a, S2b…). An overlay used on two pages is built in the first slice that needs it and reused later.
+- **Schema:** put all tables in Slice 1 (one migration), unless a table is clearly independent.
+- **Placeholders:** if a slice links to a page that a later slice builds, it adds a temporary page so the app still works, and names the slice that replaces it.
+- **Slice 0** always checks the base and writes the component inventory. **The last slice** always closes: E2E, accessibility, fidelity, gate and record.
+
+### 4. Level of detail
+
+Write until the builder has nothing left to decide. The test: could a model with only this file, the exports and the repo write the code with no question? If not, add the missing fact.
+
+| Write out in full | Point to instead |
+|---|---|
+| TypeScript types for every record, input and result | JSX: point to the export and name the behaviour to test |
+| Rule code: status tables, validation schemas, sorting / selection rules, menu builders | Styling: the export plus the token rules |
+| SQL with paging, locking, `LATERAL` or escaping | Simple CRUD queries: name the table, filter and order |
+| Every user-facing string, per breakpoint when they differ | Patterns that exist: the file to copy from |
+| Exact fixture values and expected outputs in tests | |
+
+- Code you write must pass the repo's lint as written: no `as` casts, no disabled rules, named constants instead of literals.
+- Give every rule a source ID (`BR-*`, `AC-*`, `D-*`, `A-*`) next to it.
+- Never decide a product question in the plan. If the spec doesn't say, stop and report a `SPEC GAP` to the Owner, then record the answer in the owning document first.
+
+### 5. Copy
+
+- Take every string from the export first, then design.md › Copy, then the spec.
+- A string that isn't drawn anywhere (an error that has no frame, a pending label, a toast for a path that has no frame) is written in the plan with `// not in Pencil`. List these for the Owner to review when you hand the plan over.
+- When desktop and phone exports show different text, write both variants.
+- Use the exact formats from the exports (dates, money, phone numbers), and write one example of each.
+
+### 6. Fill the sections
+
+Each section below carries its own `> ✎` instructions. Fill them top to bottom; the later sections (slices) refer back to the shared ones (contracts, fixtures, copy).
+
+### 7. Check, then hand over
+
+- Run *Checks before committing the plan* at the end of this file, and fix every miss.
+- Delete this section and every `> ✎` block.
+- Commit `docs(<slug>): plan f-<nn> <slug> as slices`, then report to the Owner: the slice list, the `// not in Pencil` strings, and anything taken from an unbuilt base feature.
 
 ---
 
@@ -22,9 +86,13 @@ Use this template to write `docs/features/<slug>/plan.md` (or `plan-2.md` beside
 
 > **For agentic workers:** REQUIRED SUB-SKILL: use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans. Steps use checkbox (`- [ ]`) syntax. In this repo, `/sdv:build-feature {slug} <slice>` runs one slice; each **step** inside it is one commit.
 
+> ✎ If this plan sits beside a layered `plan.md`, add one line: "This is an alternative to plan.md … Build from **one** of them, not both."
+
 **Goal:** {one sentence: who does what}.
 - **{Screen A}:** {what it does}.
 - **{Screen B}:** {what it does}.
+
+> ✎ One bullet per page, in plain words, with the key behaviour (for example "saved in one transaction as a draft or as booked"). Take it from spec › Goal and Main Flow.
 
 **Approach:** each slice delivers one screen end to end:
 - domain → application → repository → action → UI → tests;
@@ -33,13 +101,13 @@ Use this template to write `docs/features/<slug>/plan.md` (or `plan-2.md` beside
 
 The slice order is {Screen A} → {Screen B} → … Each step inside a slice is one commit.
 
-> Guidance: start with the screen that **creates** the data. Later screens (detail, list) then have real data to show. Put all tables in Slice 1 (one migration) unless a table is clearly independent.
-
 **Architecture:**
 - {bounded context and folders, e.g. `src/features/<context>/{domain,application,ui}`}.
 - {tables and ports, and the migration number}.
 - {the concurrency / consistency rule from the technical design, with its D-number}.
 - Composition verifies the workspace and wires the routes and actions.
+
+> ✎ Four or five bullets, each naming a decision from technical-design.md with its D-number. Check the next free migration number in `drizzle/` (and in any base feature's plan).
 
 **Tech Stack:** {copy from `docs/architecture/tech-stack.md`, only what this feature uses}.
 
@@ -49,11 +117,15 @@ The slice order is {Screen A} → {Screen B} → … Each step inside a slice is
 - spec: [spec.md](spec.md) and [acceptance-criteria.md](acceptance-criteria.md) (AC-{AREA}-001…{nnn});
 - component specs in `docs/design-system/components/`.
 
-**Base:** {earlier features that must be built and merged first, and the exact units this plan uses from them by name: tables, migrations, ports, use cases, components, helpers}. If a base feature is only planned, say so; Slice 0 checks it.
+**Base:** {earlier features that must be built and merged first, and the exact units this plan uses from them by name: tables, migrations, ports, use cases, components, helpers}.
+
+> ✎ List every unit from another feature that a slice uses, by its exact name. If the base feature is only planned, write "Its plan is ready but not implemented yet". Slice 0.1 checks each of these names.
 
 ## Global Constraints
 
 Every step's requirements implicitly include this section.
+
+> ✎ Keep the generic bullets as they are. Fill the feature-specific ones (constants, money, secrets, copy variants, dates). Anything a builder must apply in more than one slice goes here, not in a slice.
 
 - **Reuse first.** Before building any UI unit, the agent:
   1. searches `src/ui/primitives`, `src/ui/patterns`, `src/features/<context>/ui` and the Storybook stories;
@@ -68,6 +140,8 @@ Every step's requirements implicitly include this section.
   |---|---|---|
   | `{NAME}` | {value} | {BR / AC / D id} |
 
+  > ✎ Every number a rule uses: max lengths, page sizes, limits, time zones. Take them from the spec, BRs and technical design. The builder imports these constants; tests use them too.
+
 - **Money / dates / time zone:** {format and type rules, with the ADR, e.g. whole IDR strings; *Rp 750.000* with a space}.
 - **Secrets and logging:** {what is never selected, returned, logged or rendered; the exact log event name and its allowed keys}.
 - **Copy:** from the frames and design.md › Copy, in `{slug}-copy`. Strings not drawn carry `// not in Pencil`.
@@ -76,6 +150,8 @@ Every step's requirements implicitly include this section.
   | Key | Desktop | Phone |
   |---|---|---|
   | `{key}` | {text} | {text} |
+
+  > ✎ Find these by comparing each desktop export with its phone export (button labels like *Proyek baru* / *Baru*, shortened subtitles, *Tambah item* / *Tambah*).
 
 - **Date display:** {which surface shows which format, taken from the exports}.
 - **UI steps:**
@@ -93,11 +169,19 @@ Every step's requirements implicitly include this section.
 
 ## File Structure
 
-> Guidance: list every file to create or change, grouped by layer, with one line on its job. Each slice then lists the subset it creates. If a layered plan already has this list, link to it instead.
+> ✎ List every file to create or change, grouped by layer (domain, application, adapters, composition, app, ui, tests), with one line on its job. Follow the folder rules in `docs/architecture/overview.md`: one folder per unit with a co-located test. Each slice then lists the subset it creates. If a layered plan already has this list, link to it instead.
 
 ## Screens
 
 {Feature} has {n} pages plus the overlays that open on them. Each overlay belongs to the page it opens on. Every state is one export per device (`exports/<state>-<desktop|mobile>-<id>.html`).
+
+> ✎ How to fill the table:
+> - **One row per page (S1, S2…) and one per overlay (S1a, S1b…).** An overlay is any modal, sheet, menu or dialog. Number overlays under the page they open on.
+> - **Route / where it opens:** the URL for pages; for overlays, the trigger (`S1 › filter button`) and the component variant on each device (`Modal MD / Bottom Sheet Form`).
+> - **Layout:** desktop and phone shells, header, content column, which bars show or hide. Read it from the export, not the spec.
+> - **States:** the export file names, with `*` for the device pair (`new-sesi-form-*`).
+> - **Built in:** link to the slice, using the heading's anchor. A row built in two slices lists both.
+> - After the table, write the navigation between screens, then the frames that are in the `.pen` but are not screens (boards, notes) and why they aren't built.
 
 | # | Screen | Route / where it opens | Layout | States (exports) | Built in |
 |---|---|---|---|---|---|
@@ -111,9 +195,9 @@ Every step's requirements implicitly include this section.
 
 **Not a screen of its own:** {boards or frames in the `.pen` that are not built or exported, and why}.
 
-> Guidance: every export file must appear in exactly one slice's state table. Check it with a script before committing (see *Checks before committing the plan*).
-
 ## How to run this plan in one session
+
+> ✎ Keep this section as it is. Change only the document names if the feature has others to read first.
 
 - **Before the first slice:**
   - read this file whole, then [technical-design.md](technical-design.md) › Decisions, [design.md](design.md) › Frames and Copy, and `docs/coding-rules.md`;
@@ -136,6 +220,12 @@ Every step's requirements implicitly include this section.
 
 Copy these patterns instead of inventing new ones. The paths exist on `{branch}` today{, except the {base feature} ones, which exist after Slice 0}.
 
+> ✎ How to fill the table:
+> - Find the closest feature that already does the same thing (F-05 catalog was the model for F-07) and list one row per pattern the builder will repeat.
+> - **Open every file** before you list it, and confirm the path with `ls`. Write the exact shape in *Notes*: function names, arguments, what is returned, what is revalidated.
+> - Write limits too ("today it pushes `/projects`; Slice 1 changes it"). Each limit needs a step that fixes it.
+> - Add rows for the shell pieces the feature touches (nav, coming-soon lists, create buttons).
+
 | Need | Follow | Notes |
 |---|---|---|
 | Server actions | `{path}` | {the exact shape: directive, revalidate call, return value} |
@@ -151,11 +241,15 @@ Copy these patterns instead of inventing new ones. The paths exist on `{branch}`
 | Integration seeding | `{path}` | {helper names} |
 | E2E setup + axe | `{path}` | {helper names} |
 
-> Guidance: open each file before listing it. Write what the code does **today**, including its limits (for example "takes `actions`, but the shell doesn't pass any"). These limits become *extend* rows in Slice 0 and additive steps in later slices.
-
 ## Shared contracts
 
 Each slice creates the types it needs, with exactly these shapes. Exported types go in sibling `.types.ts` files (coding rules). {ID, date, time and money conventions.}
+
+> ✎ How to fill:
+> - Write every type that crosses a layer: domain value types, port records and inputs, use-case results, error keys and codes. Mark each with its file and the slice that creates it ("Slice 1; grows in 2, 5").
+> - Use `readonly` fields and string unions, and comment each field whose format isn't obvious (`// YYYY-MM-DD`).
+> - Then write the tables every slice shares: field error copy (every path × key, with exact copy), status labels and tones, action buttons. Mark copy not drawn with `// not in Pencil`.
+> - If two slices would otherwise each define the same thing, it belongs here.
 
 ```ts
 // {path}/{unit}.types.ts (Slice {n})
@@ -200,13 +294,15 @@ export type {Failure} =
 - **{Entity}:** …;
 - **{Scenario} ({AC id})**, with `today = "{YYYY-MM-DD}"`: {rows and the expected order}.
 
+> ✎ Copy the shared fixture from acceptance-criteria.md and add the exact values a test needs (IDs, dates, prices, phone numbers, the expected order). Fix "today" to one date so date rules are testable. Use the same names as the exports where possible (*Rina*, *Wisuda Basic*), so screenshots and tests match.
+
 ## AC index
 
 | AC | Slice.step |
 |---|---|
 | {001, 002} | {1.1, 1.3} |
 
-> Guidance: every AC in `acceptance-criteria.md` appears here at least once. An AC that is only verified manually still points to the step that records it.
+> ✎ Every AC in acceptance-criteria.md appears here at least once. When an AC is split across slices, list every step and say which half each covers ("1.3 (draft), 2.1 (confirm)"). Fill this after the slices are written, then check it against the steps' AC references.
 
 ## Slice template
 
@@ -223,6 +319,8 @@ Every slice below has the same parts:
 ## Slice 0: Check the base
 
 Screens: none. This slice checks the base and inventories the components.
+
+> ✎ Fill 0.1 with one check per unit listed in **Base** (file exists, function exported). Fill 0.3 with every component the exports use, and with the limits you found in *Existing code to follow* as "expected results".
 
 - [ ] **0.1 Check that {base feature} is in this branch.** All of these must hold:
   - `{file}` exists;
@@ -247,6 +345,8 @@ Screens: none. This slice checks the base and inventories the components.
 
 **Requires:** {earlier slices and the units it reuses from them}.
 
+> ✎ Repeat this block once per slice. Name the slice after its screen ("*Proyek baru* — the main path", "Detail — read and status steps"). Under **Requires**, name the units from earlier slices by their exact names.
+
 ### Screen overview
 
 | | |
@@ -263,6 +363,13 @@ Screens: none. This slice checks the base and inventories the components.
 
 {Page heading on desktop and the phone bar: breadcrumb, title, subtitle, parent.}
 
+> ✎ How to fill the state table:
+> - **One row per export pair.** Open both HTML files and write what they show: the component and its variant (*Modal MD*, *Select/Error*, *Button Primary Loading*), and **every visible string in italics**: labels, placeholders, helpers, empty states, button text, toasts.
+> - Write the differences between desktop and phone in the same cell.
+> - States the spec needs but nobody drew (an error with no frame, a race condition) get a row with `—` and the exact behaviour and copy, marked `// not in Pencil`.
+> - Name the pending state of every button that submits (*Membuat proyek…*), and what is disabled meanwhile.
+> - After the table, write the page heading: breadcrumb, title, subtitle on desktop, and title and parent in the phone bar.
+
 ### Backend
 
 | File | Content |
@@ -275,9 +382,11 @@ Screens: none. This slice checks the base and inventories the components.
 | `app/actions/{context}/{slug}.ts` | {action names, what they revalidate, what they return} |
 | `app/(owner)/…/page.tsx` | {what the page loads and renders} |
 
+> ✎ One row per file this slice creates or changes, in layer order. Write the signature (arguments and return type, using the Shared contracts names), not a description. For each validation, list the error keys it returns and when. Name the lock and the transaction for every write. For each action, say what it revalidates and what it returns on success and failure. For changes to a base feature, say "additive" and which existing tests change.
+
 ### Rule code
 
-> Guidance: write out code only where a rule could be read two ways: status tables, validation schemas, selection/sorting rules, menu builders, SQL with paging or locking, migration-critical schema. Each block names its file and the AC / BR / D it implements. Code must pass lint as written (no `as` casts, no disabled rules).
+> ✎ Write out code only where a rule could be read two ways: status tables, validation schemas, selection and sorting rules, menu builders, SQL with paging or locking, migration-critical schema, algorithms with ordered steps. Each block names its file and the AC / BR / D it implements. Code must pass lint as written (no `as` casts, no disabled rules). For an algorithm, numbered steps in prose are fine; say which error code each step returns.
 
 ```ts
 // {path}/{unit}.ts ({AC / BR / D ids})
@@ -289,6 +398,8 @@ Screens: none. This slice checks the base and inventories the components.
 - **Feature units:**
   - `{unit}`: {props with types, what it renders, callbacks};
   - `{unit}`: ….
+
+> ✎ Under **Reuse**, name every existing unit the exports use, and for each extension the exact prop, its type, and a test that the old use is unchanged. Under **Feature units**, give each new unit its props with types and its callbacks. A dialog reused by a later slice gets a callback-only contract (no actions inside), so the later slice can wire it differently.
 
 ### Steps
 
@@ -303,11 +414,20 @@ Screens: none. This slice checks the base and inventories the components.
 
 **Done check:** {what to do in the browser and what must appear, with exact copy}; the gate passes.
 
+> ✎ How to cut steps:
+> - The usual order is domain → schema → use case + repository → action + page → UI. Each step is one commit that passes the gate on its own.
+> - **Tests first** lists every test file and the cases in it, with exact inputs and outputs: a table row, a fixture value, a copy string. "Test the validation" is not enough; "101-char name → `TOO_LONG`" is.
+> - Each step names the ACs it covers, which must match the AC index.
+> - A step that touches the DB says so, so the builder adds `pnpm test:integration`. The schema step says to run and report `pnpm db:migrate`.
+> - The **Done check** is something a person can do in the browser, with the exact text that must appear.
+
 ---
 
 ## Slice {last}: Close
 
 Screens: all, end to end.
+
+> ✎ Fill the journey table with one row per AC group that crosses screens. List every surface and open overlay for axe, and the keyboard-only paths (pickers, date fields, menus, dialog focus return).
 
 - [ ] **{n}.1 E2E journeys.** Complete `tests/e2e/{slug}/{slug}.spec.ts`. Every journey is one `test(...)` named with its AC IDs:
 
@@ -330,14 +450,15 @@ Screens: all, end to end.
 
 ## Checks before committing the plan
 
-> Guidance: run these before you commit the plan, and fix every miss.
+> ✎ Run these, fix every miss, then delete this section too.
 
-- **Exports:** every `exports/*.html` file appears in exactly one slice's state table, and every export ID in the plan exists as a file.
+- **Exports:** every `exports/*.html` file appears in a slice's state table, and every export ID in the plan exists as a file.
   ```bash
   cd docs/features/{slug} && for f in exports/*.html; do name=$(basename "$f" .html); id=${name##*-}; grep -q "$id" plan.md || echo "unused: $name"; done
   ```
-- **ACs:** every `AC-{AREA}-*` in `acceptance-criteria.md` appears in the AC index.
+- **ACs:** every `AC-{AREA}-*` in `acceptance-criteria.md` appears in the AC index, and every step's AC references match the index.
 - **Paths:** every path in *Existing code to follow* exists today (or belongs to a base feature that Slice 0 checks).
 - **Copy:** every user-facing string is in an export, design.md › Copy, or marked `// not in Pencil`. List the `// not in Pencil` strings for the Owner to review.
-- **Placeholders:** no `{…}` and no `> Guidance:` block is left.
+- **Placeholders:** no `{…}` and no `> ✎` block is left.
 - **Code:** the rule code passes the repo's lint rules as written.
+- **One-session test:** read one slice as if you were the builder, with only this file, the exports and the repo. Every question you would ask is a missing fact; add it.

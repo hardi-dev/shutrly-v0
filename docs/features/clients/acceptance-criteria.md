@@ -39,6 +39,13 @@ Covers: A-5
 **When** the Owner opens *Klien* and selects *Muat lebih banyak* twice
 **Then** 30, then 60, then 65 clients are shown in name order with no duplicates or gaps, and *Muat lebih banyak* disappears once all are shown.
 
+## AC-CLI-021 — Client count
+Covers: BR-WS-003 (A-5, A-10)
+
+**Given** a workspace with 38 active clients, among them *Rina*, and 1 archived client
+**When** the Owner opens *Klien*, selects *Arsip*, returns to *Aktif*, searches *RIN*, clears the search, archives *Rina*, and then adds a client
+**Then** the list card shows the title *Daftar klien* (not the page title *Klien*) with the subtitle *38 klien aktif*, although only 30 rows are loaded. *Arsip* shows *1 klien diarsipkan*. While searching, the subtitle stays *38 klien aktif*. After *Rina* is archived it shows *37 klien aktif* (and *Arsip* *2 klien diarsipkan*); after the new client is added it shows *38 klien aktif*. A workspace with no clients shows *0 klien aktif*. The subtitle is hidden while the list loads, and another workspace's clients are never counted.
+
 ## Add & edit
 
 ## AC-CLI-006 — Add a client

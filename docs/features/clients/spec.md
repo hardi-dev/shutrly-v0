@@ -1,7 +1,7 @@
 # Feature: Clients
 
 ID: F-06 · Slug: `clients`
-Status: SPECIFIED (2026-10-02, Owner discovery the same day) · Journeys: J-03 (*Create / pick client*)
+Status: DESIGNED (2026-10-02; specified the same day, design approved by the Owner) · Journeys: J-03 (*Create / pick client*)
 Consumer: F-07 `projects` (a project belongs to one active client; the client picker), F-15 `whatsapp-share` (the client's WhatsApp number)
 
 ## Goal
@@ -18,13 +18,13 @@ As a photographer (Owner), I want to keep my clients' names, WhatsApp numbers an
 ## Inputs
 | Screen | Fields |
 |---|---|
-| Klien (list) | search (name or WhatsApp number) · filter *Aktif* / *Arsip* · per client: *Ubah*, *Buka WhatsApp* (when it has a number), *Arsipkan* / *Pulihkan*, *Hapus* · page action *Tambah klien* |
+| Klien (list) | search (name or WhatsApp number) · filter *Aktif* / *Arsip* · list title *Daftar klien* with the client count of the selected filter (A-10) · per client: *Ubah*, *Buka WhatsApp* (when it has a number), *Arsipkan* / *Pulihkan*, *Hapus* · page action *Tambah klien* |
 | Tambah klien / Ubah klien | name · WhatsApp number · social-media links: 0–10 rows of platform + handle or URL; the add form starts with one empty *Instagram* row; *Tambah media sosial* adds a row, each row can be removed |
 
 Field rules: BR-CLI-001 (name, social links) and BR-CLI-002 (WhatsApp number). There are no phone, email, address or notes fields (Owner 2026-10-02).
 
 ## Main Flow — add a client
-1. Owner opens *Klien*. The server verifies the workspace and lists its active clients by name (A-3). Each row shows the name, the formatted WhatsApp number (or *Belum ada nomor WhatsApp*) and the first social link.
+1. Owner opens *Klien*. The server verifies the workspace and lists its active clients by name (A-3). Each row shows the name, the formatted WhatsApp number (or *Belum ada nomor WhatsApp*) and the first social link. Above the rows, *Daftar klien* shows how many active clients the workspace has (A-10).
 2. Owner selects *Tambah klien*. A dialog (a full-height sheet on phone) shows the name field, the WhatsApp field with the hint *Contoh: 0812 3456 7890*, and one empty *Instagram* row under *Media sosial*.
 3. Owner fills in the name, optionally the number and the Instagram handle, and may add rows (for example *TikTok*) or remove the Instagram row.
 4. Owner confirms. The server validates every field (BR-CLI-001/002), normalizes the number, drops social rows left empty, creates an active client, and records who and when.
@@ -68,11 +68,12 @@ Field rules: BR-CLI-001 (name, social links) and BR-CLI-002 (WhatsApp number). T
 - **A-2 Social platforms:** *Instagram*, *TikTok*, *Facebook*, *YouTube*, *X* and *Lainnya* (other), in that order. A value is a handle (a leading `@` is dropped when stored, and shown back with `@`) or an `https://` URL. URLs are shown as links that open in a new tab (`rel="noopener noreferrer"`); handles are plain text. Rows keep the order the Owner entered.
 - **A-3 List order:** by name, ignoring case; ties by creation time.
 - **A-4 Search:** server-side, over the selected filter, at least 1 character, debounced; the query is kept in the URL (`?q=`) so reload and back keep it. Digits match the stored number after the same normalization as BR-CLI-002 (a leading `0` or `+62` becomes `62`).
-- **A-5 Paging:** 30 per page, *Muat lebih banyak* appends the next page (keyset on name + id). No total count.
+- **A-5 Paging:** 30 per page, *Muat lebih banyak* appends the next page (keyset on name + id). The total is shown separately (A-10).
 - **A-6 *Buka WhatsApp*:** a plain chat link without text; it is not a template message, so BR-MSG-001/C-106 are unaffected. The link is never logged.
 - **A-7 Number display:** stored as digits with the country code (`6281234567890`); shown grouped as `+62 812-3456-7890` for Indonesian numbers and `+<digits>` otherwise.
 - **A-8 Audit:** each client stores `createdAt`, `updatedAt`, `updatedBy` and `archivedAt`; no history.
 - **A-9 Concurrent edits:** last write wins, except the WhatsApp number's uniqueness, which the database enforces.
+- **A-10 Client count (Owner 2026-10-02, design review):** the list card's subtitle is the server-side count of the workspace's clients in the selected filter: *{n} klien aktif* or *{n} klien diarsipkan* (`0` when empty). It counts every client in the filter, not just the loaded pages, and ignores the search query. Adding, archiving, restoring and deleting update it. It is hidden while the list loads.
 
 ## Dependencies
 - F-02 Workspace: `WorkspaceContext`, App Shell.

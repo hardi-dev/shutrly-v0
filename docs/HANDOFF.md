@@ -1,19 +1,28 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-06 SPECIFIED) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `claude/beautiful-mendel-5h68lp` (F-04 `feat/source-config` is merged into `main` via PR #1).
+Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 in build on `feat/catalog`; F-06 DESIGNED) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `feat/clients` (F-04 is merged into `main` via PR #1; F-05's library promotion `2dc3da6` is merged into `feat/clients`).
 
-## Current handoff — F-06 Clients SPECIFIED (2026-10-02)
+## Current handoff — F-06 Clients DESIGNED (2026-10-02)
+
+- **Design APPROVED (Owner 2026-10-02):** 37 frames in [clients.pen](features/clients/clients.pen) (library prefix `Y:`), exports in `features/clients/exports/`, see [design.md](features/clients/design.md).
+  - Tabs as in F-05: C45 underline tabs in the Page Header on desktop, Segmented Control/Full width on phones.
+  - The desktop table sits in the centred 720 column; its toolbar shows *Daftar klien* with the client count (new A-10, AC-CLI-021) and the search on the right.
+- **Library:** F-05's promotion commit `2dc3da6` is merged into this branch (`4d2ee7e`). The F-06 token `color.semantic.surface.panel-subtle` (neutral 50 / 800, table header; Owner option C) sits on top: 597 tokens, checksum `d09d3751`; library = repository.
+  - When `feat/catalog` merges, `design-system.lib.pen` will differ only by this token. Re-apply it in Pencil if the merge picks catalog's file.
+- **Next:** `/sdv:plan-feature clients` (A-10 needs a per-filter count query next to the keyset paging).
+
+## Previous handoff — F-06 Clients SPECIFIED (2026-10-02)
 
 - **Order:** the Owner chose F-06 next, ahead of F-05 Catalog and before `/sdv:verify-feature source-config` (still outstanding; F-04 stays IN PROGRESS until it is verified).
-- **Spec:** [spec.md](features/clients/spec.md) and [acceptance-criteria.md](features/clients/acceptance-criteria.md), AC-CLI-001…020. New business rules **BR-CLI-001..003** in `domain/business-rules.md` (Owner discovery 2026-10-02), and the Client line in `domain/domain-model.md` is updated.
+- **Spec:** [spec.md](features/clients/spec.md) and [acceptance-criteria.md](features/clients/acceptance-criteria.md), AC-CLI-001…021. New business rules **BR-CLI-001..003** in `domain/business-rules.md` (Owner discovery 2026-10-02), and the Client line in `domain/domain-model.md` is updated.
 - **Owner decisions (2026-10-02):**
   - fields: name, WhatsApp number, and social-media links the Owner can add and remove, with an *Instagram* row prefilled on the add form; no phone, email, address or notes;
   - the WhatsApp number is optional and normalized (`0812…`, `+62 812…`, `812…` → `62812…`);
   - the number is unique per workspace across active and archived clients, blocked by the database;
   - clients are archived and restored; delete is allowed only while no project refers to the client.
 - **Assumptions to confirm in design review:** A-2 platform list (Instagram, TikTok, Facebook, YouTube, X, Lainnya), A-5 paging (30 + *Muat lebih banyak*), A-6 *Buka WhatsApp* plain chat link, no client detail page in F-06 (A-1).
-- **Next:** `/sdv:design-feature clients` in Pencil (the frame list is in the spec's last section), then the technical design and plan. Pencil isn't available in cloud sessions, so the design step needs the Owner's machine.
+- **Next (done 2026-10-02):** `/sdv:design-feature clients`.
 
 ## Update 2026-10-02 — F-05 Service catalog SPECIFIED (on `feat/catalog`)
 

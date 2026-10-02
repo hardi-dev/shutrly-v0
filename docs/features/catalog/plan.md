@@ -669,7 +669,7 @@ export function sortCatalogEntries<T extends { readonly name: string; readonly i
 
 **Files:** create `src/adapters/db/schema/booking/catalog.ts`; modify `schema/index.ts`; generate `drizzle/0006_*`, `0007_*`; create `tests/config/item-definition-backfill.test.ts`.
 
-- [ ] **Step 1: Tables.**
+- [x] **Step 1: Tables.**
 
 ```ts
 import { sql } from "drizzle-orm";
@@ -801,12 +801,12 @@ export const serviceFieldDefinition = pgTable(
 
 `tenantRef` returns a `foreignKey(...)` builder; if `.onDelete` isn't chainable on it in drizzle 0.45, add an `onDelete` parameter to `tenantRef` (default `"restrict"`, backwards compatible) in this task. Export the five tables from `schema/index.ts`.
 
-- [ ] **Step 2:** `pnpm db:generate --name service_catalog`. Review the SQL: five tables, composite FKs with the right ON DELETE, unique keys, expression indexes and all CHECKs.
-- [ ] **Step 3:** `pnpm drizzle-kit generate --custom --name item_definition_backfill`, then paste the backfill from [technical-design.md](technical-design.md#database-changes).
-- [ ] **Step 4: Config test** `tests/config/item-definition-backfill.test.ts` (same shape as `workspace-source-backfill.test.ts`):
+- [x] **Step 2:** `pnpm db:generate --name service_catalog`. Review the SQL: five tables, composite FKs with the right ON DELETE, unique keys, expression indexes and all CHECKs.
+- [x] **Step 3:** `pnpm drizzle-kit generate --custom --name item_definition_backfill`, then paste the backfill from [technical-design.md](technical-design.md#database-changes).
+- [x] **Step 4: Config test** `tests/config/item-definition-backfill.test.ts` (same shape as `workspace-source-backfill.test.ts`):
   - AC-CAT-002 BR-CAT-011: for each `DEFAULT_ITEM_DEFINITIONS` entry the SQL contains `('<name>','<valueType>',<'unit'>,<true|false>,<'TYPE'|NULL>)`;
   - AC-CAT-002 idempotent: contains `WHERE NOT EXISTS`, `lower(s."name") = lower(d.name)` and `ON CONFLICT DO NOTHING`.
-- [ ] **Step 5:** gate → PASS. Commit `feat(booking): add service catalog tables and definition backfill`.
+- [x] **Step 5:** gate → PASS. Commit `feat(booking): add service catalog tables and definition backfill`.
 - [ ] **Step 6: Apply.** After the commit, run `pnpm db:migrate` (non-production database from `.dev.vars`). Confirm with a quick check that the five tables exist and that every existing workspace has the four default definitions; report the output. 0006/0007 only add tables and rows, so other branches on the shared database are unaffected.
 
 ### Task 7: Application — categories and item definitions

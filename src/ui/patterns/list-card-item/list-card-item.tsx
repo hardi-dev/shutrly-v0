@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import { cn } from "@/ui/cn/cn";
 import { Icon } from "@/ui/primitives/icon/icon";
@@ -11,14 +12,15 @@ export const LIST_CARD_ROW = [
 ];
 
 function ListCardBody({ icon, title, meta, trailing, href }: Readonly<ListCardItemProps>) {
-  const linkIndicator = href ? (
-    <Icon
-      name="chevron-right"
-      size="sm"
-      aria-hidden="true"
-      className="text-(--component-list-card-item-meta)"
-    />
-  ) : null;
+  const linkIndicator =
+    href && !trailing ? (
+      <Icon
+        name="chevron-right"
+        size="sm"
+        aria-hidden="true"
+        className="text-(--component-list-card-item-meta)"
+      />
+    ) : null;
   const rowActions =
     !href && trailing ? (
       <span className="flex shrink-0 items-center gap-(--space-2)">{trailing}</span>
@@ -42,9 +44,33 @@ function ListCardBody({ icon, title, meta, trailing, href }: Readonly<ListCardIt
   );
 }
 
+function LinkedListCardRow({
+  href,
+  title,
+  body,
+  trailing,
+}: Readonly<{ href: string; title: string; body: ReactNode; trailing: ReactNode }>) {
+  return (
+    <div className={cn(LIST_CARD_ROW, "relative")}>
+      <Link
+        href={href}
+        aria-label={title}
+        className="absolute inset-0 z-0 outline-none focus-visible:bg-(--component-list-card-item-icon-background)"
+      />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none relative z-0 flex min-w-0 flex-1 items-center gap-(--component-list-card-item-gap)"
+      >
+        {body}
+      </span>
+      <span className="relative z-10 flex shrink-0 items-center gap-(--space-2)">{trailing}</span>
+    </div>
+  );
+}
+
 /**
  * Renders a two-line List Card row: icon, title, meta and a trailing slot, or a whole-row link
- * with a chevron (C42 Two-line).
+ * with an optional chevron (C42 Two-line).
  * @param props - row content, link and position
  * @returns the list item
  */
@@ -56,28 +82,37 @@ export function ListCardItem({
   href,
   isLast = false,
 }: Readonly<ListCardItemProps>) {
+  const body = (
+    <ListCardBody icon={icon} title={title} meta={meta} trailing={trailing} href={href} />
+  );
+
+  if (href && trailing) {
+    return (
+      <li className={cn(!isLast && "border-b border-(--component-list-card-item-border)")}>
+        <LinkedListCardRow href={href} title={title} body={body} trailing={trailing} />
+      </li>
+    );
+  }
+
+  if (href) {
+    return (
+      <li className={cn(!isLast && "border-b border-(--component-list-card-item-border)")}>
+        <Link
+          href={href}
+          className={cn(
+            LIST_CARD_ROW,
+            "outline-none focus-visible:bg-(--component-list-card-item-icon-background)",
+          )}
+        >
+          {body}
+        </Link>
+      </li>
+    );
+  }
+
   return (
     <li className={cn(!isLast && "border-b border-(--component-list-card-item-border)")}>
-      {href ? (
-        <div className={cn(LIST_CARD_ROW)}>
-          <Link
-            href={href}
-            className={cn(
-              "flex min-w-0 flex-1 items-center gap-(--component-list-card-item-gap)",
-              "outline-none focus-visible:bg-(--component-list-card-item-icon-background)",
-            )}
-          >
-            <ListCardBody icon={icon} title={title} meta={meta} trailing={trailing} href={href} />
-          </Link>
-          {trailing ? (
-            <span className="flex shrink-0 items-center gap-(--space-2)">{trailing}</span>
-          ) : null}
-        </div>
-      ) : (
-        <div className={cn(LIST_CARD_ROW)}>
-          <ListCardBody icon={icon} title={title} meta={meta} trailing={trailing} />
-        </div>
-      )}
+      <div className={cn(LIST_CARD_ROW)}>{body}</div>
     </li>
   );
 }

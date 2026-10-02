@@ -41,6 +41,25 @@ describe("ListCardItem (C42 two-line)", () => {
     const link = screen.getByRole("link", { name: /Bagikan gallery/ });
     expect(link).toHaveAttribute("href", "/x");
     expect(link).toHaveClass("flex", "items-center");
+    expect(link.querySelectorAll("svg")).toHaveLength(2);
+  });
+
+  it("omits the chevron when a linked row has trailing content", () => {
+    render(
+      <ul>
+        <ListCardItem
+          icon="image"
+          title="Bagikan gallery"
+          meta="…"
+          href="/x"
+          trailing={<span>Rp 100.000</span>}
+        />
+      </ul>,
+    );
+    const link = screen.getByRole("link", { name: /Bagikan gallery/ });
+    expect(link).toHaveClass("absolute", "inset-0");
+    expect(link).toHaveAttribute("aria-label", "Bagikan gallery");
+    expect(link.querySelectorAll("svg")).toHaveLength(0);
   });
 
   it("AC-SRC-017 the skeleton is hidden from assistive technology", () => {

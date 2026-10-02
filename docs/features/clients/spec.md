@@ -24,7 +24,7 @@ As a photographer (Owner), I want to keep my clients' names, WhatsApp numbers an
 Field rules: BR-CLI-001 (name, social links) and BR-CLI-002 (WhatsApp number). There are no phone, email, address or notes fields (Owner 2026-10-02).
 
 ## Main Flow — add a client
-1. Owner opens *Klien*. The server verifies the workspace and lists its active clients by name (A-3). Each row shows the name, the formatted WhatsApp number (or *Belum ada nomor WhatsApp*) and the first social link. Above the rows, *Daftar klien* shows how many active clients the workspace has (A-10).
+1. Owner opens *Klien*. The server verifies the workspace and lists its active clients by name (A-3). Each row shows the name, the formatted WhatsApp number (or *Belum ada nomor WhatsApp*) and, on desktop, the first social link followed by a count of the rest (*+2*) when there are more; phones show only the name and number (Owner 2026-10-02, design review). Above the rows, *Daftar klien* shows how many active clients the workspace has (A-10).
 2. Owner selects *Tambah klien*. A dialog (a full-height sheet on phone) shows the name field, the WhatsApp field with the hint *Contoh: 0812 3456 7890*, and one empty *Instagram* row under *Media sosial*.
 3. Owner fills in the name, optionally the number and the Instagram handle, and may add rows (for example *TikTok*) or remove the Instagram row.
 4. Owner confirms. The server validates every field (BR-CLI-001/002), normalizes the number, drops social rows left empty, creates an active client, and records who and when.

@@ -64,7 +64,8 @@ Shared changes:
 
 | Unit | Location | Change |
 |---|---|---|
-| Icons `message-circle`, `user` | `ui/primitives/icon` | Hugeicons `MessageCircleIcon`, `UserIcon` |
+| Icon `message-circle` | `ui/primitives/icon` | Hugeicons `MessageCircleIcon` |
+| `ListCardItem` avatar leading | `ui/patterns/list-card-item` | Initials avatar instead of the icon well (design.md › component gap); icon rows keep working |
 | `Input` trailing `x` | `ui/primitives/input` | `"x"` joins `InputIconName`, for the clear-search action (no-match frames) |
 | `DataTable` + skeleton rows | `ui/patterns/data-table` | New, C27 Table: card, toolbar (title, subtitle, actions), header row, rows, footer, empty slot |
 | `SheetItem` `isDisabled` / `isPending` | `ui/patterns/sheet-item` | Disabled and pending states (design.md › phone deleting, component gap); pending shows the spinner icon |
@@ -176,7 +177,7 @@ Built from `exports/` ([design.md](design.md)):
 | `clientInitials` | `features/booking/ui/client-initials` | avatar initials (`Bayu & Laras` → `BL`) |
 | `ClientsScreen` (owns dialogs, appended pages, desktop/phone switch) | `features/booking/ui/clients-screen` | `list-*` |
 | `ClientsTable` (DataTable: toolbar *Daftar klien* + count + search, columns 184 / 240 / 32, *Muat lebih banyak* footer, empty slot) | `features/booking/ui/clients-table` | `list-*-desktop-*` |
-| `ClientList` (Section Card Compact/Flush, List Card Item/Two-line rows, *Tambah*) | `features/booking/ui/client-list` | `list-*-mobile-*` |
+| `ClientList` (Section Card Compact/Flush, List Card Item/Two-line rows with initials avatars, *Tambah*) | `features/booking/ui/client-list` | `list-*-mobile-*` |
 | `ClientSearchField` (debounced `?q=`, clear button, live result announcement) | `features/booking/ui/client-search-field` | toolbar and phone controls |
 | `ClientsTabsBar` (phone Segmented Control/Full width → route) | `features/booking/ui/clients-tabs-bar` | phone frames |
 | `ClientsEmptyState`: the standalone Empty State on desktop and phone (*Aktif*, *Arsip*, no match with *Hapus pencarian*) | `features/booking/ui/clients-empty-state` | `list-empty-*`, `list-no-match-*` |
@@ -246,7 +247,7 @@ Built from `exports/` ([design.md](design.md)):
 
 | AC | Test |
 |---|---|
-| AC-CLI-001 | unit: `ClientsTable` / `ClientList` rows, formatted number, *Belum ada nomor WhatsApp*, first link; owner-nav active on both tabs · E2E nav |
+| AC-CLI-001 | unit: `ClientsTable` / `ClientList` rows, formatted number, *Belum ada nomor WhatsApp*, desktop: first link plus *+N* for the rest; phone: number only; owner-nav active on both tabs · E2E nav |
 | AC-CLI-002 | unit: archived rows show *Pulihkan* · integration: `listPage` by status · E2E *Arsip* tab |
 | AC-CLI-003 | unit: both empty states · E2E new workspace |
 | AC-CLI-004 | unit: `parseClientSearch`; search field debounce + URL · integration: name `ILIKE` with wildcards escaped, `0812 3456` / `+62812` digits · E2E search + reload + *Hapus pencarian* |

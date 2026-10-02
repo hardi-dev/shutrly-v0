@@ -7,9 +7,9 @@ Assumption references (A-n) point to [spec.md](spec.md#assumptions-low-risk-reve
 ## AC-CLI-001 — Klien list
 Covers: BR-CLI-001, BR-CLI-002, BR-WS-003 (A-1, A-3, A-7)
 
-**Given** an Owner whose workspace has *Rina* (number `6281234567890`, Instagram `rina.wed`), *ade* (no number) and *Budi* (archived)
+**Given** an Owner whose workspace has *Rina* (number `6281234567890`, Instagram `rina.wed`, TikTok `rina`), *ade* (no number) and *Budi* (archived)
 **When** they open *Klien*
-**Then** the *Aktif* filter shows *ade* then *Rina*. *Rina*'s row shows `+62 812-3456-7890` and `@rina.wed`; *ade*'s row shows *Belum ada nomor WhatsApp*. *Budi* is not shown. The page shows *Tambah klien*, the search box and the *Aktif* / *Arsip* filter. The nav item *Klien* (icon `users`) is active, and no *Segera hadir* placeholder is shown.
+**Then** the *Aktif* filter shows *ade* then *Rina*. *Rina*'s row shows `+62 812-3456-7890` and, on desktop, only her first link `@rina.wed` followed by the count *+1* for the other link (phones show no social links in the list); *ade*'s row shows *Belum ada nomor WhatsApp*. *Budi* is not shown. The page shows *Tambah klien*, the search box and the *Aktif* / *Arsip* filter. The nav item *Klien* (icon `users`) is active, and no *Segera hadir* placeholder is shown.
 
 ## AC-CLI-002 — Archived filter
 Covers: BR-CLI-003

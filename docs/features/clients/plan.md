@@ -89,7 +89,7 @@ tests/e2e/clients/clients.spec.ts
 - [ ] **Step 1: Check the base.** Confirm F-05 is merged: `git log --oneline main | grep -i "catalog"` shows the F-05 merge, and `main` contains `src/ui/patterns/tabs/tabs.tsx` and `drizzle/0007_item_definition_backfill.sql`. **If not, stop and tell the Owner** (technical-design › Risks). Otherwise sync `feat/clients` from `main` with the ccd_host `sync_with_base_branch` tool (or `git merge main` outside an app worktree). Resolve conflicts:
   - in `docs/HANDOFF.md` and `docs/product/feature-map.md`, keep both features' text;
   - in `design-system.lib.pen`, keep this branch's file (it already has F-05's promotion plus `surface.panel-subtle`). Verify the result with `pnpm tokens:check` → 597 tokens.
-- [ ] **Step 2: Failing tests.** Add `message-circle` and `user` to the icon list in `icon.test.tsx`. In `input.test.tsx`:
+- [ ] **Step 2: Failing tests.** Add `message-circle` to the icon list in `icon.test.tsx`. In `input.test.tsx`:
 
 ```tsx
 it("AC-CLI-004 renders a trailing x action that clears the search", async () => {
@@ -111,7 +111,7 @@ it("AC-CLI-004 renders a trailing x action that clears the search", async () => 
 
 - [ ] **Step 3:** `pnpm test src/ui/primitives` → FAIL.
 - [ ] **Step 4: Implement.**
-  - Icons: `message-circle` → `MessageCircleIcon` and `user` → `UserIcon` from `@hugeicons/core-free-icons`.
+  - Icons: `message-circle` → `MessageCircleIcon` from `@hugeicons/core-free-icons`.
   - Input: add `"x"` to `InputIconName`. The existing adornment already renders an action as a labelled button; no other change.
 - [ ] **Step 5:** gate → PASS. Commit `feat(ui): add client icons and a clear action for search inputs`.
 
@@ -1121,10 +1121,10 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
 
 - [ ] **Step 1: Copy.** `CLIENT_COPY` holds every string in design.md › Copy and the frames: titles, subtitles, *Daftar klien*, `count(status, n)` (*{n} klien aktif* / *{n} klien diarsipkan*), the column labels, *Belum ada nomor WhatsApp*, the search placeholders (*Cari nama atau nomor WhatsApp* / *Cari nama atau nomor*), *Hapus pencarian*, the empty and no-match titles and bodies, *Muat lebih banyak* / *Memuat…*, the dialog strings, the field errors, the toasts and the row actions. `PLATFORM_COPY` maps each platform to *Instagram*, *TikTok*, *Facebook*, *YouTube*, *X*, *Lainnya*.
 - [ ] **Step 2: Failing tests.**
-  - `client-initials.test.ts`: the first letters of the first two words (`Bayu & Laras` → `BL`, `Ade Kurnia` → `AK`, `Keluarga Wijaya` → `KW`), otherwise the first two letters of a single word (`Budi` → `BU`), upper case. The frames draw *Rina* as `RN`, but *Budi* follows this rule. Record that as deviation D-1 in Task 14 rather than adding a special case.
+  - `client-initials.test.ts`: the first letters of the first two words (`Bayu & Laras` → `BL`, `Ade Kurnia` → `AK`, `Keluarga Wijaya` → `KW`), otherwise the first two letters of a single word (`Budi` → `BU`), upper case (`Rina` → `RI`, as the frames draw it).
   - `client-field-error.test.ts`: each `ClientFieldErrorKey` maps to its copy; `TAKEN` with a holder → *Nomor ini sudah dipakai Rina*, and *Nomor ini sudah dipakai Budi (diarsipkan)* for an archived holder.
   - `clients-table.test.tsx`:
-    - AC-CLI-001: rows show the initials avatar, the name, the formatted number or *Belum ada nomor WhatsApp*, and `Instagram · @anisaputri` or `—`;
+    - AC-CLI-001: rows show the initials avatar, the name, the formatted number or *Belum ada nomor WhatsApp*, and `Instagram · @anisaputri` or `—`; only the first link is shown, followed directly by a `CountBadge` *+1* / *+2* when the client has more links (no badge with one link); the text truncates (`min-w-0`) and the badge never shrinks;
     - URL links render as `<a target="_blank" rel="noopener noreferrer">` (A-2);
     - AC-CLI-021: the toolbar shows *Daftar klien* and *38 klien aktif*;
     - AC-CLI-003: the empty states.
@@ -1153,12 +1153,12 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
 
 ### Task 10: Phone list, tabs bar and skeletons
 
-**Files:** create `ui/client-list`, `ui/clients-tabs-bar` and `ui/clients-skeleton` (+ tests); wire `loading.tsx`. Build from `list-*-mobile-*.html` and `list-loading-*.html`.
+**Files:** create `ui/client-list`, `ui/clients-tabs-bar` and `ui/clients-skeleton` (+ tests); extend `src/ui/patterns/list-card-item` with an avatar leading (`leading` is either `{ icon }` or `{ avatarInitials }`; keep `icon` working for F-04/F-05; + test and story); wire `loading.tsx`. Build from `list-*-mobile-*.html` and `list-loading-*.html`.
 
 - [ ] **Step 1: Failing tests.**
   - `client-list.test.tsx`:
     - AC-CLI-001: a Section Card *Daftar klien* with the count as description and *Tambah* in its actions;
-    - List Card Item/Two-line rows with the `user` icon, the name, and the meta `+62 813-2200-4512 · @anisaputri` (or *Belum ada nomor WhatsApp* alone);
+    - List Card Item/Two-line rows with the initials avatar (`Avatar` MD, `clientInitials`), the name, and the meta `+62 813-2200-4512` only (or *Belum ada nomor WhatsApp*): no social links on phones (design.md);
     - the row action button carries the client's name.
   - `clients-tabs-bar.test.tsx`: AC-CLI-002 renders only on phones (`useMobileViewport` mocked); selecting *Arsip* pushes `/w/x/clients/archived` and drops `q`.
   - `clients-skeleton.test.tsx`: desktop renders `DataTableSkeleton` with five rows and no subtitle (A-10: hidden while loading); phone renders five `ListCardItemSkeleton` rows.

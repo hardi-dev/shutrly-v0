@@ -43,7 +43,7 @@ Saved, restored and deleted toasts reuse the *Added* pattern (Toast/Success) wit
   - Content: the Container is 720 wide (`size.content-narrow`), centred in Page Content, as in F-05.
 - **Klien table (desktop):** library Table.
   - Toolbar, laid out like a Section Card header (Owner 2026-10-02): the Title group on the left, with title *Daftar klien* (not the page title *Klien*) and the count as subtitle (*38 klien aktif*, *1 klien diarsipkan*, *0 klien aktif* / *0 klien diarsipkan* when empty; hidden while loading). The search field is on the right (320, *Cari nama atau nomor WhatsApp*, no shortcut). The Table's Segmented filter slot holds the search because the tabs live in the Page Header.
-  - Columns: KLIEN (Table Cell/Client: initials avatar + name, fills the rest, about 224), WHATSAPP (184, so *Belum ada nomor WhatsApp* stays on one line), MEDIA SOSIAL (240: `<Platform> · <handle or URL>`, first link only, truncated with an ellipsis in code), actions (Table Cell/Actions, 32).
+  - Columns: KLIEN (Table Cell/Client: initials avatar + name, fills the rest, about 224), WHATSAPP (184, so *Belum ada nomor WhatsApp* stays on one line), MEDIA SOSIAL (240: `<Platform> · <handle or URL>`, first link only, truncated with an ellipsis in code; when there are more links, a Count Badge `+N` sits right after the text (`space/1-5`), read as one unit; that cell is a local frame of the cell text style + Count Badge, because the Table Cell's text fills the column, Owner 2026-10-02), actions (Table Cell/Actions, 32).
   - No number: *Belum ada nomor WhatsApp* in `text.muted`; no social link: `—` in `text.muted`.
   - Footer: centred Button Secondary *Muat lebih banyak*; hidden when everything is shown. While loading the next page it uses the pending state (*Memuat…*).
   - Empty, archived-empty and no-match states use the same Empty State as phones (Owner 2026-10-02: "ikutin yg mobile"): the library **Empty State** `H43gDN` (tinted box, accent icon) in a `space/4` padded frame in the rows slot. The header row and footer are hidden.
@@ -51,15 +51,15 @@ Saved, restored and deleted toasts reuse the *Added* pattern (Toast/Success) wit
 - **Phone:**
   - Mobile App Shell with the Bottom Nav tab *Klien* active (A-1: Klien is a Bottom Nav destination).
   - Controls above the list: Segmented Control/Full width *Aktif* / *Arsip* first (items share the width, centred labels; as F-05), then the search field (full width).
-  - Section Card Compact/Flush *Daftar klien*, with the same count as its description (hidden while loading) and *Tambah* (Button Secondary, `plus`) in its Actions slot. Rows are List Card Item/Two-line: `user` icon, name, meta `number · first link`, and Action Menu SM in the Trailing slot.
+  - Section Card Compact/Flush *Daftar klien*, with the same count as its description (hidden while loading) and *Tambah* (Button Secondary, `plus`) in its Actions slot. Rows are List Card Item/Two-line with the leading Icon wrap swapped for **Avatar/MD** with the client's initials, as on desktop (Owner 2026-10-02; initials: the first letters of the first two words, or the first two letters of a one-word name: *Rina* → `RI`, *Budi* → `BU`), name, meta = the formatted number (or *Belum ada nomor WhatsApp*) only: phones show no social links in the list (Owner 2026-10-02); the row-actions sheet meta is the number too. Action Menu SM in the Trailing slot.
   - *Muat lebih banyak* is a full-width Button Secondary below the card.
 - **Row menu:** *Ubah* (`pencil`), *Buka WhatsApp* (`message-circle`, only when the client has a number), *Arsipkan* (`archive`) or *Pulihkan* (`archive-restore`) under *Arsip*, divider, *Hapus* (destructive). Desktop draws the open menu as an absolute overlay in the content container; phones use Bottom Sheet/Actions titled with the client's name and meta.
 - **Add / edit dialog:** Modal/MD on desktop; full-height Bottom Sheet/Form on phones (body scrolls, *Tambah klien* / *Simpan* pinned at the bottom, Close is the cancel).
   - *Nama klien* (Text Field), *Nomor WhatsApp (opsional)* (Text Field, helper *Contoh: 0812 3456 7890. Nomor luar negeri diawali + dan kode negara.*).
   - *Media sosial (opsional)*: rows of Select (platform) + Text Field (handle or URL, no label) + Icon Button Ghost `x` (remove), then Button Secondary *Tambah media sosial* (disabled at 10 rows). Desktop rows are one line; phone rows stack the handle under the platform line, because a select narrow enough for one line truncates the platform name.
   - Errors use Text Field/Error on the field or on the row's handle; the message sits under it.
-  - Saving: confirm button pending (*Menyimpan…*).
-- **Delete:** Modal/SM with Button Danger *Hapus klien* on desktop; Bottom Sheet/Actions with Sheet Item/Destructive and *Batal* on phones. Deleting: Danger pending (*Menghapus…*) on desktop; on phones the sheet stays open with a pending *Menghapus…* item (see Spec notes). Blocked: Alert/Danger *Klien ini punya proyek. Arsipkan saja.* in the modal body, *Hapus klien* disabled and *Batal* becomes *Tutup*; on phones the sheet title carries the message and the only action is *Tutup*.
+  - Saving: confirm button pending (*Menyimpan…*); *Batal* is disabled (Button Secondary Disabled) while saving.
+- **Delete:** Modal/SM with Button Danger *Hapus klien* on desktop; Bottom Sheet/Actions with Sheet Item/Destructive and *Batal* on phones. Deleting: Danger pending (*Menghapus…*) and *Batal* disabled on desktop; on phones the sheet stays open with a pending *Menghapus…* item (see Spec notes). Blocked: Alert/Danger *Klien ini punya proyek. Arsipkan saja.* in the modal body, *Hapus klien* disabled and *Batal* becomes *Tutup*; on phones the sheet title carries the message and the only action is *Tutup*.
 
 ## Copy
 
@@ -81,7 +81,7 @@ Screen copy is drawn in Pencil. Strings beyond the spec, for Owner review:
 
 - **Library (`Y:`), all linked instances:**
   - shells: App Shell `y9uBJl`, Mobile App Shell `c6qPz7`, Mobile Header `o8T8zb`, Nav Item (Active `CInVy`), Bottom Nav Item (Active `bKADv`);
-  - list: **Table** `FCsTI` with Table Row/Default `r7YZY`, Table Row/Skeleton `eFemy`, Table Cell/Client `lVDvO`, /Text `f0oyj`, /Actions `C1MRI`; Section Card Compact/Flush `Q82mo`; List Card Item/Two-line `PV6HB` and /Last `Bf3eg`; List Card Item/Skeleton `ksPQI` / `KKvqb`; Empty State `H43gDN`;
+  - list: Count Badge `dQmPx` (more social links); **Table** `FCsTI` with Table Row/Default `r7YZY`, Table Row/Skeleton `eFemy`, Table Cell/Client `lVDvO`, /Text `f0oyj`, /Actions `C1MRI`; Section Card Compact/Flush `Q82mo`; List Card Item/Two-line `PV6HB` and /Last `Bf3eg`; List Card Item/Skeleton `ksPQI` / `KKvqb`; Empty State `H43gDN`;
   - tabs: Page Header tabs row `Iu4gK` with Tab/Active `WbyBE` and Tab/Default `M43F7D` (C45); Segmented Control/Full width `iIcai` (Item Active `NcbI1` / Default `AptHz`);
   - controls: search field (Input/Default `lJ39W` with the `search` icon), Text Field `HHNPk` / Error `AVpMa`, Select `Wc7hd`, Icon Button Ghost MD `qY0Em`, Action Menu SM `tgN4c` / Open `M3v1E5`, Button Primary / Secondary / Danger and their pending (Disabled + *Pending indicator*) states;
   - feedback: Alert/Danger `F3GrC5`, Toast/Success `QCuMb`, Toast/Danger `C3PCyx`;
@@ -101,6 +101,15 @@ Screen copy is drawn in Pencil. Strings beyond the spec, for Owner review:
 - **Delete blocked** offers no *Arsipkan* shortcut inside the dialog; the spec only defines the message. Adding one would be new behaviour (Owner decision).
 - **Phone deleting (Owner 2026-10-02):** the confirm sheet stays open while deleting. *Hapus klien* becomes *Menghapus…* with the `loader-circle` icon, and both items are dimmed with `opacity/disabled`. This mirrors Button pending (Disabled + pending indicator). **COMPONENT GAP (non-blocking):** the library Sheet Item has no disabled or pending state, so the frame composes it locally. In code, `SheetItem` gains `isDisabled` / `isPending`; promote a Sheet Item/Pending variant if another feature needs it.
 - The platform Select's open list is the library Select/Open, with options in A-2 order (*Instagram, TikTok, Facebook, YouTube, X, Lainnya*); it is not drawn separately.
+
+## Design review (Owner 2026-10-02)
+
+- Desktop dialog and toast frames: the App Shell's absolute *Overlay* and *Toast* layers were 960 tall in 1024-tall frames, so the scrim stopped short and toasts sat too high. Both are overridden to the frame height (App Shell spec; in code they are `position: fixed; inset: 0`).
+- Sample data agrees across frames: *Rina Wedding* (added in *Saving* and *Toast / Added*) has its own number `+62 812-7788-9900` and `@rinawedding`, appears in the list after *Rina*, and the count reads *39 klien aktif*. After archiving *Rina* the count reads *37 klien aktif*.
+- Dark mode checked on the list, the phone empty state, the phone add sheet and the blocked delete: all values come from tokens; the table header (`panel-subtle` → neutral 800) stays distinct from the card.
+- Not drawn, behaviour defined in the spec or this file: a search with matching rows (the populated list, filtered), the 10th social row (*Tambah media sosial* disabled), the row menu of a client without a number (no *Buka WhatsApp*), and the saved, restored and deleted toasts (Toast/Success with the copy above).
+- Phones use initials avatars like desktop (Owner 2026-10-02): an icon was the same on every row and carried no information. **COMPONENT GAP (non-blocking):** List Card Item/Two-line has no avatar leading; the frames swap the Icon wrap per instance. In code `ListCardItem` gains an avatar leading; promote a List Card Item/Avatar variant if F-07's client picker reuses it.
+- Phone list meta is the number only (social links removed on phones, Owner 2026-10-02), so it no longer wraps.
 
 ## Approval
 

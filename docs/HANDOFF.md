@@ -1,16 +1,25 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 in build on `feat/catalog`; F-06 DESIGNED) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 in build on `feat/catalog`; F-06 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/clients` (F-04 is merged into `main` via PR #1; F-05's library promotion `2dc3da6` is merged into `feat/clients`).
 
-## Current handoff — F-06 Clients DESIGNED (2026-10-02)
+## Current handoff — F-06 Clients PLANNED (2026-10-02)
+
+- **Plan:** [technical-design.md](features/clients/technical-design.md) (decisions D-1…D-8) and [plan.md](features/clients/plan.md), 14 test-first tasks.
+  - Clients live in the `booking` context with one `client` table (social links as validated JSONB) and migration **0008**.
+  - *Aktif* / *Arsip* are routes shown as Page Header tabs; the list uses keyset paging with a count, and a new shared `DataTable` (C27).
+- **Base (Owner 2026-10-02):** the plan assumes F-05 (`feat/catalog`) is merged to `main` first. Task 1 checks this and stops if it isn't.
+- **Next:** `/sdv:build-feature clients 1` after F-05 lands.
+
+### Design (approved 2026-10-02)
+
 
 - **Design APPROVED (Owner 2026-10-02):** 37 frames in [clients.pen](features/clients/clients.pen) (library prefix `Y:`), exports in `features/clients/exports/`, see [design.md](features/clients/design.md).
   - Tabs as in F-05: C45 underline tabs in the Page Header on desktop, Segmented Control/Full width on phones.
   - The desktop table sits in the centred 720 column; its toolbar shows *Daftar klien* with the client count (new A-10, AC-CLI-021) and the search on the right.
 - **Library:** F-05's promotion commit `2dc3da6` is merged into this branch (`4d2ee7e`). The F-06 token `color.semantic.surface.panel-subtle` (neutral 50 / 800, table header; Owner option C) sits on top: 597 tokens, checksum `d09d3751`; library = repository.
   - When `feat/catalog` merges, `design-system.lib.pen` will differ only by this token. Re-apply it in Pencil if the merge picks catalog's file.
-- **Next:** `/sdv:plan-feature clients` (A-10 needs a per-filter count query next to the keyset paging).
+- **Next (done 2026-10-02):** `/sdv:plan-feature clients`.
 
 ## Previous handoff — F-06 Clients SPECIFIED (2026-10-02)
 

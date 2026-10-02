@@ -868,7 +868,7 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
   - `clientInitials(name)` (`client-initials`): the first letters of the first two words, where a word is a run of letters or digits (so `&` is skipped); one word → its first two letters; upper case;
   - `clientFieldErrorText(key, holder?)` (`client-field-error`): Shared contracts › Field error copy;
   - `ClientsScreen` (`clients-screen`, client component) `{ workspaceId, status, q, page: ClientPage, count, actions: { add } }`: owns the dialog state (`{ kind: "add" } | null` now; edit and delete later); renders `PageActions` with *Tambah klien* (desktop), the 720 column (`max-w-(--size-content-narrow) mx-auto`), and `ClientsTable` or the phone stack;
-  - `ClientsTable` (`clients-table`) `{ status, rows, count, emptyState, onRowAction? }`: `DataTable` with columns `name` *KLIEN* (fill), `whatsapp` *WHATSAPP* (184), `social` *MEDIA SOSIAL* (240), `actions` *Aksi* (32, `isLabelHidden`); the social cell is `{PLATFORM_COPY[platform]} · {socialLinkLabel(link)}` (`min-w-0 truncate`), an `<a target="_blank" rel="noopener noreferrer">` for URLs (same colour, underline on hover / focus), then `CountBadge count={links.length - 1}` (`shrink-0`, gap `space-1-5`) when there is more than one link;
+  - `ClientsTable` (`clients-table`) `{ status, rows, count, emptyState, onRowAction? }`: `DataTable` with columns `name` *KLIEN* (fill), `whatsapp` *WHATSAPP* (184), `social` *MEDIA SOSIAL* (240), `actions` (32, no `label`, `aria-label` *Aksi* `// not in Pencil`); the social cell is `{PLATFORM_COPY[platform]} · {socialLinkLabel(link)}` (`min-w-0 truncate`), an `<a target="_blank" rel="noopener noreferrer">` for URLs (same colour, underline on hover / focus), then `CountBadge count={links.length - 1}` (`shrink-0`, gap `space-1-5`) when there is more than one link;
   - `ClientList` (`client-list`) `{ rows, count, onAdd }`: `SectionCard content="flush"` title *Daftar klien*, description the count, actions *Tambah*; rows `ListCardItem avatarInitials={clientInitials(name)} title={name} meta={number or *Belum ada nomor WhatsApp*}`;
   - `ClientsTabsBar` (`clients-tabs-bar`) `{ workspaceId, status }`: phone only, `SegmentedControl isFullWidth label={OWNER_NAV_COPY.clientsTabsLabel}`; selecting pushes `/w/{id}/clients` or `/w/{id}/clients/archived` (drops `q`);
   - `ClientsEmptyState` (`clients-empty-state`) `{ kind: "ACTIVE" | "ARCHIVED" | "NO_MATCH", onAdd?, onClearSearch? }`: `EmptyState iconTone="accent"`, `users` + *Tambah klien* (phone only) / `archive` / `search-x` + *Hapus pencarian* (Slice 5);
@@ -882,13 +882,14 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
 ```ts
 import type { ReactNode } from "react";
 
-export interface DataTableColumn {
+import type { FieldNameProps } from "@/ui/primitives/text-field/text-field.types";
+
+/** A column is named by its header text, or by aria-label when the header is drawn empty (the actions column). */
+export type DataTableColumn = FieldNameProps & {
   readonly id: string;
-  readonly label: string;
   /** Fixed width in px from the frame; omit for the column that fills the rest. */
   readonly width?: number;
-  readonly isLabelHidden?: boolean;
-}
+};
 
 export interface DataTableToolbar {
   readonly title: string;
@@ -931,7 +932,7 @@ import { DataTableSkeleton } from "./data-table-skeleton";
 const columns = [
   { id: "name", label: "KLIEN" },
   { id: "phone", label: "WHATSAPP", width: 184 },
-  { id: "actions", label: "Aksi", width: 32, isLabelHidden: true },
+  { id: "actions", "aria-label": "Aksi", width: 32 },
 ] as const;
 const rows = [
   { id: "a", name: "Anisa Putri", phone: "+62 813-2200-4512" },
@@ -954,7 +955,8 @@ describe("DataTable (C27)", () => {
       />,
     );
     const table = screen.getByRole("grid", { name: "Daftar klien" });
-    expect(within(table).getAllByRole("columnheader").map((h) => h.textContent)).toEqual(["KLIEN", "WHATSAPP", "Aksi"]);
+    expect(within(table).getAllByRole("columnheader").map((h) => h.textContent)).toEqual(["KLIEN", "WHATSAPP", ""]);
+    expect(within(table).getByRole("columnheader", { name: "Aksi" })).toBeInTheDocument();
     expect(within(table).getAllByRole("row")).toHaveLength(3);
     expect(screen.getByText("38 klien aktif")).toBeVisible();
     expect(screen.getByRole("textbox", { name: "Cari" })).toBeVisible();
@@ -989,7 +991,7 @@ describe("DataTable (C27)", () => {
 
   - **Implement:**
     - **Structure:** a `<section>` card (Table card tokens). Inside: the toolbar row (the title group left, `toolbar.actions` right, `justify-between`), then the React Aria `Table` (`aria-label={label}`, `onRowAction` mapped by key), then the optional footer (centred, top border `table.border`).
-    - **Columns:** a fixed `width` becomes an inline `style={{ width }}` (literal sizes, design.md); the fill column gets `flex-1`. `isLabelHidden` keeps the header accessible and renders it visually empty.
+    - **Columns:** a fixed `width` becomes an inline `style={{ width }}` (literal sizes, design.md); the fill column gets `flex-1`. A column without `label` renders an empty header named by its `aria-label` (React Aria `Column aria-label`), the same rule as the optional field labels.
     - **Rows:** padding `table.row.padding-*`, bottom border `table.row.border` except on the last row; row hover only when `onRowAction` is set.
     - **Empty:** when `rows` is empty and `emptyState` is given, render it in the card body inside `space-4` padding and skip the header and footer.
     - **Skeleton:** the same card, the header row and `rowCount` rows of `surface.sunken` bars (the export's shape), each `data-testid="data-table-skeleton-row"`.

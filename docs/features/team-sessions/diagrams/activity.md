@@ -2,9 +2,9 @@
 
 The images are rendered from the Mermaid sources below them. After you edit a source, save it to a `.mmd` file and render it again with `npx -y @mermaid-js/mermaid-cli@11 -i <name>.mmd -o img/<name>.svg -b white`.
 
-## Save an assignment (BR-TEAM-006)
+## Add or remove an assignment (BR-TEAM-006)
 
-The prefill runs in the form. The server re-checks everything on save (C-004).
+Assignments are never edited: to change the role, remove and add again. The form only offers valid choices. The server checks everything again on save (C-004).
 
 ![Save an assignment activity diagram](img/activity-save-assignment.svg)
 
@@ -13,30 +13,22 @@ The prefill runs in the form. The server re-checks everything on save (C-004).
 
 ```mermaid
 flowchart TD
-    A[Owner picks a member in the Penugasan form] --> B{Member has a rate?}
-    B -- no --> E[Fee empty: Isi honor secara manual]
-    B -- yes --> C{Unit}
-    C -- SESSION / DAY --> F[Fee = rate]
-    C -- HOUR / MINUTE --> D{Session has start and end?}
-    D -- no --> E
-    D -- yes, HOUR --> G["Fee = rate × ceil(minutes / 60)"]
-    D -- yes, MINUTE --> H[Fee = rate × minutes]
-    E & F & G & H --> I[Owner may change role and fee, then saves]
-
-    I --> J[Server: verify workspace, lock project row]
+    A0{Session has a team?} -- no --> A1[user-plus or ⋯ › Tambah tim] --> C
+    A0 -- yes --> A2[Avatar group or ⋯ › Atur tim] --> B[Atur tim › Tambah anggota] --> C
+    C[Penugasan form: pick member and role, then save]
+    C --> J[Server: verify workspace, lock project row]
     J --> K{Project CANCELLED?}
-    K -- yes --> X1[Proyek dibatalkan; tim tidak bisa diubah.]
+    K -- yes --> X1[Proyek dibatalkan, tim tidak bisa diubah.]
     K -- no --> L{Session belongs to the project?}
     L -- no --> X2[not found]
-    L -- yes --> M{Adding, or member/role changed?}
-    M -- "edit, fee only" --> P
-    M -- yes --> N{Member active, not on session yet, holds the role?}
+    L -- yes --> N{Member active, not on the session yet, holds the role?}
     N -- no --> X3[Form error, nothing saved]
-    N -- yes --> P{Editing a PAID assignment?}
-    P -- yes --> X4[Honor sudah ditandai dibayar]
-    P -- no --> Q{Fee whole IDR ≥ 0?}
-    Q -- no --> X5[Field error]
-    Q -- yes --> R[Store the UNPAID assignment, toast]
+    N -- yes --> R[Store the assignment, toast]
+    R --> U[Unique index on session and member backs the duplicate check]
+    V[Atur tim › trash-2 on a row, confirm] --> W[Server: lock project row, not CANCELLED] --> Z[Delete the assignment, toast]
+    Z --> Z1{Last assignment of the session?}
+    Z1 -- yes --> Z2[Close Atur tim; session shows user-plus]
+    Z1 -- no --> Z3[Atur tim stays open]
 ```
 
 </details>
@@ -50,18 +42,13 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[Owner selects Hapus on a session or Hapus draf] --> B{Any assignments?}
+    A[Owner selects Hapus sesi or Hapus draf] --> B{Any assignments?}
     B -- none --> C[F-07 confirmation as is]
-    B -- unpaid only --> D[Confirmation names the team that will be removed]
+    B -- yes --> D[Confirmation adds the team count: Penugasan ikut terhapus]
     C & D --> E[Server: lock project row]
     E --> F{"Session: last one of a BOOKED-or-later project?"}
     F -- yes --> X1[Blocked, F-07 hint]
-    F -- no --> G{Any PAID assignment in scope?}
-    G -- yes --> X2[Ada honor yang sudah dibayar di sesi ini.]
-    G -- no --> H[Delete with its unpaid assignments, toast]
-    B -- some paid --> I[Hapus shown, server still decides] --> E
+    F -- no --> H[Delete with its assignments, toast; members stay in Tim]
 ```
 
 </details>
-
-The UI can't know about a payment made in another tab, so the paid check always runs on the server under the lock.

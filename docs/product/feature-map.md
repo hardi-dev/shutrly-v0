@@ -14,7 +14,7 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-05 | Service catalog (categories, item definitions, services, items, booking fields); *Layanan* with tabs, four seeded item definitions (Owner 2026-10-02) | `catalog` | BR-CAT-001..011 | J-02 | DONE (merged to `main` 2026-10-02, PR #3; verify pending) |
 | F-06 | Clients: name, WhatsApp number (normalized, unique per workspace), social-media links; search, archive, delete while unused (Owner 2026-10-02) | `clients` | BR-CLI-001..003, BR-WS-002 | J-03 | PLANNED (2026-10-02) |
 | F-07 | Project creation from service + snapshots | `projects` | BR-PRJ-*, BR-CAT-003 | J-03 | PLANNED (2026-10-02) |
-| F-08 | Team: members (WhatsApp, roles, rate), workspace roles, per-session assignments with fee and paid status; no stored session status (sessions themselves moved to F-07, Owner 2026-10-02; scope Owner 2026-10-03) | `team-sessions` | BR-TEAM-001..007 | J-03 | SPECIFIED (2026-10-03) |
+| F-08 | Team: members (WhatsApp, email, roles), workspace roles, who works which session (*Atur tim*); no fees, no stored session status (sessions themselves moved to F-07, Owner 2026-10-02; scope Owner 2026-10-03) | `team-sessions` | BR-TEAM-001..006 | J-03 | SPECIFIED (2026-10-03) |
 | F-09 | Gallery, sources, Drive sync | `gallery` | BR-GAL-*, BR-SRC-* | J-04 | TODO |
 | F-10 | Client gallery access (token, password, rate limits, media delivery) | `client-access` | BR-ACC-* | J-04 | TODO |
 | F-11 | Selection groups and client selection | `selection` | BR-SEL-* | J-04 | TODO |
@@ -24,6 +24,7 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-15 | WhatsApp sharing | `whatsapp-share` | BR-MSG-* | J-04..J-07 | TODO |
 | F-16 | Operational hardening (isolation, abuse, concurrency, provider-failure tests; backups; caching review) | `hardening` | constitution C-004..C-006 | — | TODO |
 | F-17 | App Shell revamp (desktop/mobile navigation, workspace switcher, page header, content shell, responsive transitions) | `app-shell-revamp` | BR-WS-002..003, BR-WS-006..007, C-007..008 | J-01 | DONE (2026-10-01) |
+| F-18 | Team fees: freelancer rates, a fee per assignment, paid / unpaid tracking, what the Owner still owes (split out of F-08, Owner 2026-10-03; BR-TEAM-007 deprecated until then) | `team-fees` | — | — | TODO (not scheduled) |
 
 ## Project menu (F-07 row and detail menu)
 F-07 defines one menu per project (row ⋯ on the list and the detail page menu) with a **Kirim ke klien** group (Owner 2026-10-02). Its items are named after the message template they load. Later features add their items to that menu, shown only when their condition holds; each template message shows a preview (`communications/ui/message-preview`) before opening WhatsApp (BR-MSG-001). *Chat WhatsApp* (no template) shows only when no template item applies; in F-07 that is always. Target menus: `docs/features/projects/projects.pen` › *Row menu per status / Target*.
@@ -37,13 +38,15 @@ F-07 defines one menu per project (row ⋯ on the list and the detail page menu)
 | Planned (Owner 2026-10-02, feature not yet scheduled) | *Kirim konfirmasi booking* | `DRAFT`, `BOOKED` | new type `BOOKING_CONFIRMATION`: changes BR-MSG-002 (five → six types), the F-03 catalogue and the default seed; needs its own discovery |
 
 ## Next up
-**F-08 Team** — SPECIFIED 2026-10-03 on `feat/team-sessions` (branched from `feat/projects`, since assignments need sessions) ([spec.md](../features/team-sessions/spec.md), AC-TEAM-001…025). Owner decisions:
-- each assignment puts one member on one session, with a role and a fee;
-- sessions have no stored status, and the only assignment status is the fee being paid or unpaid;
-- a member has a name, a required WhatsApp number (unique per workspace), an optional email, one or more roles from the workspace role list (*Fotografer*, *Videografer* and *Asisten* are seeded) and an optional rate per session, day, hour or minute that prefills the fee;
-- members are archived, and deleted only while unused.
+**F-08 Team** — SPECIFIED 2026-10-03 on `feat/team-sessions` (branched from `feat/projects`, since assignments need sessions) ([spec.md](../features/team-sessions/spec.md)). Owner decisions:
+- each assignment puts one member on one session, in one role;
+- sessions and assignments have no stored status;
+- no money at all: rates, fees and payment tracking moved to F-18 *Team fees* (BR-TEAM-007 deprecated);
+- a member has a name, a required WhatsApp number (unique per workspace), an optional email and one or more roles from the workspace role list (*Fotografer*, *Videografer* and *Asisten* are seeded);
+- members are archived, and deleted only while unused;
+- on the project page each session shows an avatar group (or a `user-plus` button) that opens *Atur tim*.
 
-New rules BR-TEAM-004..007; the SPEC GAP in BR-TEAM-002 is resolved. Next: `/sdv:design-feature team-sessions`.
+Rules BR-TEAM-004..006; the SPEC GAP in BR-TEAM-002 is resolved. Design in progress: `/sdv:design-feature team-sessions`.
 
 **F-07 Projects** — SPECIFIED 2026-10-02 on `feat/projects` (branched from `feat/clients`, because a project needs a client) ([spec.md](../features/projects/spec.md), AC-PRJ-001…026). Owner decisions:
 - status steps are manual, and sessions never move the status;

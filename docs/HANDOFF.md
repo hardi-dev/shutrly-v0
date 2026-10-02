@@ -1,25 +1,32 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED; F-07 PLANNED; F-08 SPECIFIED) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED; F-07 PLANNED; F-08 SPECIFIED, design in progress) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/team-sessions` (F-08 discovery; from `feat/projects`). Earlier: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` is merged into `feat/clients` at `fe1d6f0`).
 
-## Current handoff — F-08 Team SPECIFIED (2026-10-03)
+## Current handoff — F-08 Team: design in progress (2026-10-03)
 
 - **Branch:** `feat/team-sessions`, cut from `feat/projects` (assignments need F-07's sessions). Nothing here is built; F-06, then F-07, still come first.
-- **Spec:** [spec.md](features/team-sessions/spec.md), [acceptance-criteria.md](features/team-sessions/acceptance-criteria.md) (AC-TEAM-001…025).
-- **Domain updates (Owner 2026-10-03):**
-  - BR-TEAM-001 now says assignments are per session;
-  - BR-TEAM-002's SPEC GAP is resolved: no stored session status, and the only assignment status is the fee being paid or unpaid;
-  - new rules: BR-TEAM-004 (member: name, required WhatsApp, optional email, roles, optional rate per session/day/hour/minute), BR-TEAM-005 (workspace roles, three seeded), BR-TEAM-006 (assignment and fee prefill; guarded session and draft delete), BR-TEAM-007 (payment status);
-  - the domain model, glossary and scope are updated as well.
-- **Effect on F-07 (not built):** deleting a session or a draft must cascade to unpaid assignments, and is blocked while one is paid (BR-TEAM-006). Fold this into F-07's build, or into F-08's plan.
-- **Assumptions to confirm in design review:**
-  - A-1: routes and tabs, *Anggota* · *Peran*;
-  - A-2: no staffing on *Proyek baru*;
-  - A-6: unpaid total in the list;
-  - open question: a *Total honor tim* on the project.
-- **Modelled 2026-10-03:** [diagrams/](features/team-sessions/diagrams/) — assignment and member states, the save and delete activities, and the project-row lock that keeps a payment from racing a delete (AC-TEAM-024/025, BR-TEAM-006 edit rule).
-- **Next:** `/sdv:design-feature team-sessions`.
+- **Spec:** [spec.md](features/team-sessions/spec.md) and [acceptance-criteria.md](features/team-sessions/acceptance-criteria.md). The live criteria run AC-TEAM-001…026; 012, 016–019 and 025 are removed.
+- **Scope cut (Owner 2026-10-03): no money in F-08.**
+  - Rates, fees per assignment and paid / unpaid tracking moved to a new TODO, F-18 *Team fees* (`team-fees`). BR-TEAM-007 is deprecated.
+  - The member detail page is gone too; members are edited in a dialog, as in F-06.
+- **Domain (Owner 2026-10-03):**
+  - BR-TEAM-001: assignments are per session, in one role.
+  - BR-TEAM-002: sessions and assignments have no stored status.
+  - BR-TEAM-004: a member has a name, a required WhatsApp number, an optional email and roles.
+  - BR-TEAM-005: workspace roles, three of them seeded.
+  - BR-TEAM-006: a member is on a session at most once; deleting a session or a draft deletes its assignments.
+- **Design (in progress):** the record and decision log are in [design.md](features/team-sessions/design.md), and `team-sessions.pen` was saved at 04:07.
+  - *Jadwal* shows an avatar group per session (at most 3, then *+n*), or an Icon Button/Ghost/SM `user-plus`.
+  - A session without a team: `user-plus` and ⋯ › *Tambah tim* open the Penugasan form directly.
+  - A session with a team: the avatar group and ⋯ › *Atur tim* open *Atur tim*. It lists the members with a danger `trash-2` per row, with no edit and no empty state; removing the last member closes it.
+  - The library import resolves as **`m:`**, not `H:`.
+  - The project-detail part has 10 states (desktop + phone). The *Tim* pages are still to draw.
+- **Diagrams:** member state, plus the add / remove and delete activities. The sequence diagram was removed with the payment race.
+- **Next:**
+  - draw the *Tim* pages (*Anggota*, *Peran*, member dialog);
+  - write `design.md`, then the Owner saves and approves;
+  - export the HTML, then run `/sdv:plan-feature team-sessions`.
 
 ## Previous handoff — F-07 Projects PLANNED (2026-10-02)
 

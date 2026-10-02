@@ -2,7 +2,7 @@
 
 ID: F-07 · Slug: `projects`
 Status: PLANNED (2026-10-02, [technical-design.md](technical-design.md) · [plan.md](plan.md)); designed 2026-10-02 ([design.md](design.md)); specified 2026-10-02 · Journeys: J-03 (*Create / pick client → Pick service → Fill booking fields → Snapshot → Customize deal & price → Confirm → BOOKED*; sessions are F-07 since the design review, team stays F-08)
-Consumer: F-08 `team-sessions` (assignments on a project's sessions; it guards session and draft deletes, BR-TEAM-006), F-09 `gallery` (one gallery per project), F-10 `client-access` (the project token), F-11 `selection` (groups from project items), F-12 `final-delivery` (`DELIVERED`, `COMPLETED`), F-13 `add-ons`, F-14 `billing` (project currency and price), F-15 `whatsapp-share` (`{{projectTitle}}`)
+Consumer: F-08 `team-sessions` (assignments on a project's sessions; deleting a session or a draft also deletes its assignments, BR-TEAM-006), F-09 `gallery` (one gallery per project), F-10 `client-access` (the project token), F-11 `selection` (groups from project items), F-12 `final-delivery` (`DELIVERED`, `COMPLETED`), F-13 `add-ons`, F-14 `billing` (project currency and price), F-15 `whatsapp-share` (`{{projectTitle}}`)
 
 ## Goal
 The Owner books a shoot as a project: one client, one service, and the deal they agreed on. Creating a project copies the service's package items and booking fields into the project, so later catalog changes never alter it (BR-PRJ-001, BR-CAT-003). The Owner can adjust the deal until shooting starts, move the project through its working statuses by hand, and cancel or delete it when plans change.
@@ -207,7 +207,7 @@ Field rules: BR-PRJ-008 (title, notes, agreed price), BR-TEAM-003 (sessions), BR
 ## Dependencies
 - F-05 Catalog: the active services, their items, booking fields and currency, plus the delete guards for services and definitions.
 - F-06 Clients: the active clients, the client dialog for inline creation, and the delete guard.
-- F-08 Team: assignments build on the F-07 sessions. Sessions have no stored status (BR-TEAM-002), and deleting a session or a draft deletes its unpaid assignments, blocked while one is paid (BR-TEAM-006).
+- F-08 Team: assignments build on the F-07 sessions. Sessions have no stored status (BR-TEAM-002), and deleting a session or a draft also deletes its assignments (BR-TEAM-006).
 - F-08 to F-15 build on the project. F-07 adds no placeholders for their sections (team, gallery, invoices, add-ons).
 
 ## Out of Scope

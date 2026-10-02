@@ -23,9 +23,9 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25). Business-oriented; pe
 - **ProjectItem** — frozen snapshot of an agreed package benefit.
 - **ProjectFieldValue** — frozen booking input with field metadata snapshot.
 - **Session** — a shoot within a project: name, date, optional start and end time, optional location (BR-TEAM-003). A `BOOKED`-or-later project has at least one.
-- **TeamMember** — freelancer resource without login: name, WhatsApp number, optional email, one or more roles, optional rate (BR-TEAM-004).
+- **TeamMember** — freelancer resource without login: name, WhatsApp number, optional email, one or more roles (BR-TEAM-004).
 - **TeamRole** — a workspace's role name (*Fotografer*, *Videografer*, *Asisten*, …) (BR-TEAM-005).
-- **SessionAssignment** — one member on one session, with a role, a fee and the fee's payment status `UNPAID` | `PAID` (BR-TEAM-006/007). Sessions themselves have no stored status (BR-TEAM-002).
+- **SessionAssignment** — one member on one session, in one role (BR-TEAM-006). No fee and no status; sessions have no stored status either (BR-TEAM-002).
 
 **Gallery & selection**
 - **Gallery** — client-facing access boundary for a project's photos; password-protected; also the final delivery point.

@@ -16,8 +16,7 @@ Use these terms in code, UI copy, and docs. Indonesian equivalents come from the
 | Session | A shoot within a project | Sesi |
 | Team member | Freelancer resource without login | Anggota tim |
 | Team role | Workspace role name a member can take on a session | Peran |
-| Assignment | One member on one session, with role and fee | Penugasan |
-| Fee | What the Owner pays a member for an assignment | Honor |
+| Assignment | One member on one session, in one role | Penugasan |
 | Gallery | Password-protected client page for proofing + delivery | Gallery |
 | Source | External folder feeding a gallery | Sumber |
 | Proof photo | Selectable root-folder photo (`PROOF`) | Foto proof |

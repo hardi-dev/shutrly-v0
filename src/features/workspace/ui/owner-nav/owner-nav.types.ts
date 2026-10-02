@@ -17,6 +17,7 @@ export interface ActiveNavState {
 export interface PageHeading {
   title: string;
   subtitle?: string;
+  mobileSubtitle?: string;
   breadcrumbs?: readonly BreadcrumbItem[];
   tabs?: {
     readonly label: string;

@@ -94,9 +94,30 @@ export function resolvePageHeading(
   if (section === "photo-sources") {
     return { title: OWNER_NAV_COPY.photoSources, subtitle: OWNER_NAV_COPY.photoSourcesSubtitle };
   }
+  if (section === "clients") return resolveClientsHeading(pathname, prefix);
   if (section === "services") return resolveServicesHeading(pathname, prefix, workspaceName);
   const title = SECTION_TITLES[section];
   return title ? { title, subtitle: OWNER_NAV_COPY.comingSoonSubtitle } : null;
+}
+
+function resolveClientsHeading(pathname: string, prefix: string): PageHeading {
+  const archived = pathname === `${prefix}/clients/archived`;
+  return {
+    title: OWNER_NAV_COPY.clients,
+    subtitle: OWNER_NAV_COPY.clientsSubtitle,
+    mobileSubtitle: OWNER_NAV_COPY.clientsMobileSubtitle,
+    tabs: {
+      label: OWNER_NAV_COPY.clientsTabsLabel,
+      tabs: [
+        { label: OWNER_NAV_COPY.clientTabs.active, href: `${prefix}/clients`, isActive: !archived },
+        {
+          label: OWNER_NAV_COPY.clientTabs.archived,
+          href: `${prefix}/clients/archived`,
+          isActive: archived,
+        },
+      ],
+    },
+  };
 }
 
 function resolveServicesHeading(

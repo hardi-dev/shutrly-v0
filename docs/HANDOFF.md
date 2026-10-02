@@ -15,6 +15,12 @@ Branch: `claude/beautiful-mendel-5h68lp` (F-04 `feat/source-config` is merged in
 - **Assumptions to confirm in design review:** A-2 platform list (Instagram, TikTok, Facebook, YouTube, X, Lainnya), A-5 paging (30 + *Muat lebih banyak*), A-6 *Buka WhatsApp* plain chat link, no client detail page in F-06 (A-1).
 - **Next:** `/sdv:design-feature clients` in Pencil (the frame list is in the spec's last section), then the technical design and plan. Pencil isn't available in cloud sessions, so the design step needs the Owner's machine.
 
+## Update 2026-10-02 — F-05 Service catalog SPECIFIED (on `feat/catalog`)
+
+- **Spec:** [spec.md](features/catalog/spec.md) and [acceptance-criteria.md](features/catalog/acceptance-criteria.md) (AC-CAT-001…023). New rules BR-CAT-007…011 (selection types `EDIT`/`PRINT`, active/archived/delete lifecycle, names, fixed definition type once used, four seeded item definitions); scope and domain model updated.
+- **Owner decisions:** *Layanan* tabs (Layanan · Kategori · Item paket); no draft/publish; seed item definitions only.
+- **Where it lives:** F-05 is designed and being built on `feat/catalog` (worktree `shutrly-v01-catalog`). Its library promotion commit `2dc3da6` (C45 Tabs, Page Header/Tabs, Segmented Control/Full width, Empty State/In card, Menu Item/Rich; 596 tokens) is merged into `feat/clients` so F-06 can use the same tabs.
+
 ## Previous handoff — F-04 Source configuration IN PROGRESS (2026-10-02)
 
 - **Spec (rescoped by the Owner 2026-10-01):** Owner-managed photo sources. Only Google Drive can be added; Dropbox, OneDrive, Amazon S3 and Custom URL show as *Segera hadir*. Every workspace is seeded with *Google Drive* (BR-SRC-005/006). Rename, deactivate/reactivate and delete; no link checker. Nav *Sumber klien* → **Sumber foto** (`folder-open`, route `photo-sources`). See [spec.md](features/source-config/spec.md), AC-SRC-001…017.

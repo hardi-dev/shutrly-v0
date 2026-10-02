@@ -99,7 +99,7 @@
                       "id": "yfLRq",
                       "name": "Text",
                       "fill": "$color/semantic/status/success/fg",
-                      "content": "PERSISTED 2026-09-29",
+                      "content": "PERSISTED 2026-10-02",
                       "lineHeight": 1.35,
                       "fontFamily": "$font/family/base",
                       "fontSize": 12,
@@ -123,7 +123,7 @@
                       "id": "w4Y5S",
                       "name": "Text",
                       "fill": "$color/semantic/text/secondary",
-                      "content": "531 tokens",
+                      "content": "596 tokens",
                       "lineHeight": 1.35,
                       "fontFamily": "$font/family/base",
                       "fontSize": 12,
@@ -488,7 +488,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "347 component-scoped aliases",
+                  "content": "412 component-scoped aliases",
                   "lineHeight": 1.35,
                   "fontFamily": "$font/family/base",
                   "fontSize": 12,
@@ -41401,6 +41401,815 @@
                 },
                 {
                   "type": "frame",
+                  "id": "P8jA1",
+                  "name": "Component tabs",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "vopAt",
+                      "name": "Group header",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        0,
+                        0,
+                        8,
+                        0
+                      ],
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Y9PKza",
+                          "name": "Name",
+                          "fill": "$color/semantic/text/primary",
+                          "content": "Tabs",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": 18,
+                          "fontWeight": "700",
+                          "letterSpacing": -0.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "tz764",
+                          "name": "Count",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "9 tokens  ·  L / D",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Fxd5J",
+                      "name": "component/tabs/track",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "n1hXY",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "track",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "wRP5R",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "bdDks",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/track",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "z9ptad",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "jAmIb",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/track",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "p03j4",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ border/subtle",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "I6onHC",
+                      "name": "component/tabs/gap",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "AmaJY",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "gap",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "N0BcQ",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "tUaaN",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "24 px",
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "L9OWC",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/6",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "PhepO",
+                      "name": "component/tabs/item/text",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "d5SMGi",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "item/text",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "SbYYN",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "ZLP0s",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/item/text",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "LBIJn",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "HiIZs",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/item/text",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "nSiqO",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ text/muted",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jpa6Z",
+                      "name": "component/tabs/item/text-hover",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Zjvud",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "item/text-hover",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "SbATb",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "l6DCC",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/item/text-hover",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "osSwQ",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "Kq4vA",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/item/text-hover",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "PzLUt",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ text/secondary",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "AgJ4F",
+                      "name": "component/tabs/item/text-active",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ZY1zh",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "item/text-active",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "K5LM1V",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "U73sMZ",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/item/text-active",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Haooy",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "HdJLa",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/item/text-active",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "RZEHP",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ text/primary",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "B2dGU",
+                      "name": "component/tabs/item/indicator",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "qZ5d6",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "item/indicator",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "xoDN8",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "DuxFv",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/item/indicator",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "LQLpn",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "V00CU",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/item/indicator",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "P5dyaj",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ text/primary",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "txlSk",
+                      "name": "component/tabs/item/focus",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "jPqIp",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "item/focus",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "HDcJF",
+                          "name": "light",
+                          "theme": {
+                            "mode": "light"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "BF8XX",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/item/focus",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nPPLV",
+                          "name": "dark",
+                          "theme": {
+                            "mode": "dark"
+                          },
+                          "width": 44,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/panel",
+                          "cornerRadius": "$radius/xs",
+                          "stroke": "$color/semantic/border/default",
+                          "strokeWidth": 1,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "dqgvR",
+                              "name": "Swatch",
+                              "fill": "$component/tabs/item/focus",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "y5OnGx",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ focus/ring",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "A9nW3y",
+                      "name": "component/tabs/item/padding-y",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ujfpu",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "item/padding-y",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "gPjif",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "tHsrG",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "10 px",
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "E08VAU",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/2-5",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "DN1nw",
+                      "name": "component/tabs/item/radius",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "lk2r3",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "item/radius",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "BqGk4",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Qvu7y",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "4 px",
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "a1ame",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ radius/xs",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
                   "id": "geVB6",
                   "name": "Component table",
                   "width": "fill_container",
@@ -49420,7 +50229,7 @@
                           "id": "LpKWb",
                           "name": "Count",
                           "fill": "$color/semantic/text/muted",
-                          "content": "12 tokens  ·  L / D",
+                          "content": "13 tokens  ·  L / D",
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
                           "fontWeight": "normal"
@@ -50375,6 +51184,71 @@
                           "textGrowth": "fixed-width",
                           "width": 230,
                           "content": "→ space/2",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "z920yZ",
+                      "name": "component/page-header/tabs/padding-x",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "V0c2U",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "tabs/padding-x",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "akDqn",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "wQ0Vf",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "40 px",
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "z7tM1g",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/10",
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
                           "fontWeight": "normal"
@@ -51682,6 +52556,121 @@
                           "textGrowth": "fixed-width",
                           "width": 230,
                           "content": "→ size/list-row",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "epKBT",
+                  "name": "Component empty-state",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "W2ud0",
+                      "name": "Group header",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        0,
+                        0,
+                        8,
+                        0
+                      ],
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "b6GNic",
+                          "name": "Name",
+                          "fill": "$color/semantic/text/primary",
+                          "content": "Empty state",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": 18,
+                          "fontWeight": "700",
+                          "letterSpacing": -0.4
+                        },
+                        {
+                          "type": "text",
+                          "id": "syjuF",
+                          "name": "Count",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "1 token",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "d6PBmG",
+                      "name": "component/empty-state/in-card/padding-y",
+                      "width": "fill_container",
+                      "stroke": "$color/semantic/border/subtle",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "gap": 10,
+                      "padding": [
+                        7,
+                        0
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "BK9dd",
+                          "name": "Token",
+                          "fill": "$color/semantic/text/primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "in-card/padding-y",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "q1ehV",
+                          "name": "Value",
+                          "width": 98,
+                          "height": 24,
+                          "fill": "$color/semantic/surface/sunken",
+                          "cornerRadius": "$radius/xs",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "CKnX0",
+                              "name": "Num",
+                              "fill": "$color/semantic/text/primary",
+                              "content": "32 px",
+                              "fontFamily": "IBM Plex Mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "b5HBMq",
+                          "name": "Alias",
+                          "fill": "$color/semantic/text/secondary",
+                          "textGrowth": "fixed-width",
+                          "width": 230,
+                          "content": "→ space/8",
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
                           "fontWeight": "normal"
@@ -77900,6 +78889,128 @@
                       "alignItems": "center"
                     }
                   ]
+                },
+                {
+                  "type": "frame",
+                  "id": "D8KaTk",
+                  "name": "Row Rich",
+                  "gap": 24,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "xK4aA",
+                      "name": "Row label",
+                      "fill": "$color/semantic/text/muted",
+                      "textGrowth": "fixed-width",
+                      "width": 160,
+                      "content": "Rich (icon + description)",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "HbZXd",
+                      "name": "Cell Default",
+                      "width": 250,
+                      "children": [
+                        {
+                          "id": "WWqyy",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "mf83F",
+                          "name": "Menu Item/Rich/Default",
+                          "context": "Menu Item · type=rich state=default. Icon + Label + Description (one or two lines); Selected adds Check and a semibold label. For rich single-choice options in Select menus and pickers (F-05 Tipe nilai, Jenis pilihan). Text: Label, Description. Swap: Icon. Spec: docs/design-system/components/menu-item.md",
+                          "width": 240,
+                          "descendants": {
+                            "FL9Kk": {
+                              "enabled": true,
+                              "icon": "hash"
+                            },
+                            "vHwtA": {
+                              "content": "Angka"
+                            },
+                            "leQSn": {
+                              "enabled": true,
+                              "content": "Satu nilai, mis. 25 foto atau 2 jam."
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Jqs5P",
+                      "name": "Cell Hover",
+                      "width": 250,
+                      "children": [
+                        {
+                          "id": "w5XzS",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "mf83F",
+                          "name": "Menu Item/Rich/Hover",
+                          "context": "Menu Item · type=rich state=hover. Icon + Label + Description (one or two lines); Selected adds Check and a semibold label. For rich single-choice options in Select menus and pickers (F-05 Tipe nilai, Jenis pilihan). Text: Label, Description. Swap: Icon. Spec: docs/design-system/components/menu-item.md",
+                          "width": 240,
+                          "fill": "$component/menu/item/background-hover",
+                          "descendants": {
+                            "FL9Kk": {
+                              "enabled": true,
+                              "icon": "hash"
+                            },
+                            "vHwtA": {
+                              "content": "Angka"
+                            },
+                            "leQSn": {
+                              "enabled": true,
+                              "content": "Satu nilai, mis. 25 foto atau 2 jam."
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "V02tN",
+                      "name": "Cell Selected",
+                      "width": 250,
+                      "children": [
+                        {
+                          "id": "WngMO",
+                          "type": "ref",
+                          "reusable": true,
+                          "ref": "mf83F",
+                          "name": "Menu Item/Rich/Selected",
+                          "context": "Menu Item · type=rich state=selected. Icon + Label + Description (one or two lines); Selected adds Check and a semibold label. For rich single-choice options in Select menus and pickers (F-05 Tipe nilai, Jenis pilihan). Text: Label, Description. Swap: Icon. Spec: docs/design-system/components/menu-item.md",
+                          "width": 240,
+                          "descendants": {
+                            "FL9Kk": {
+                              "enabled": true,
+                              "icon": "hash"
+                            },
+                            "vHwtA": {
+                              "content": "Angka",
+                              "fontWeight": "$font/weight/semibold"
+                            },
+                            "leQSn": {
+                              "enabled": true,
+                              "content": "Satu nilai, mis. 25 foto atau 2 jam."
+                            },
+                            "baOu6": {
+                              "enabled": true
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Ikdo3",
+                      "name": "Cell Disabled",
+                      "width": 250,
+                      "height": "fit_content(0)"
+                    }
+                  ]
                 }
               ]
             }
@@ -78832,7 +79943,7 @@
                   "fill": "$color/semantic/text/secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Menu opens 4 px below its trigger, left-aligned, at least as wide as the trigger. These are previews of tier-2 composites (Select, Multi-select, Action menu).",
+                  "content": "Menu opens 4 px below its trigger, left-aligned, at least as wide as the trigger. These are previews of tier-2 composites (Select, Multi-select, Action menu). Rich options (Menu Item/Rich) add an icon and a one-line description; the chosen option's icon shows as the trigger's leading icon (F-05).",
                   "lineHeight": 1.5,
                   "fontFamily": "$font/family/base",
                   "fontSize": 13,
@@ -79146,6 +80257,104 @@
                           "name": "Caption",
                           "fill": "$color/semantic/text/muted",
                           "content": "Action menu · icons + divider + destructive (right-aligned to ⋯)",
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "wvsLY",
+                      "name": "Rich select open",
+                      "layout": "vertical",
+                      "gap": "$space/1",
+                      "children": [
+                        {
+                          "id": "U86Nam",
+                          "type": "ref",
+                          "ref": "Hx4Lp",
+                          "name": "Trigger",
+                          "width": 320,
+                          "descendants": {
+                            "VnKAn": {
+                              "enabled": true,
+                              "icon": "hash",
+                              "fill": "$component/input/text"
+                            },
+                            "tvTDd": {
+                              "enabled": false
+                            },
+                            "CykHo": {
+                              "enabled": true,
+                              "content": "Angka"
+                            },
+                            "Qp2xi": {
+                              "enabled": true,
+                              "icon": "chevron-up"
+                            }
+                          }
+                        },
+                        {
+                          "id": "BSiQ0",
+                          "type": "ref",
+                          "ref": "g6dKmz",
+                          "name": "Menu",
+                          "width": 320,
+                          "descendants": {
+                            "JoK1p": {
+                              "type": "frame",
+                              "id": "Z7ymp",
+                              "name": "Items",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "children": [
+                                {
+                                  "id": "SeyX4",
+                                  "type": "ref",
+                                  "ref": "WngMO",
+                                  "name": "Angka",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "FL9Kk": {
+                                      "icon": "hash"
+                                    },
+                                    "vHwtA": {
+                                      "content": "Angka"
+                                    },
+                                    "leQSn": {
+                                      "content": "Satu nilai, mis. 25 foto atau 2 jam."
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "yYmVw",
+                                  "type": "ref",
+                                  "ref": "w5XzS",
+                                  "name": "Rentang",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "FL9Kk": {
+                                      "icon": "move-horizontal"
+                                    },
+                                    "vHwtA": {
+                                      "content": "Rentang"
+                                    },
+                                    "leQSn": {
+                                      "content": "Nilai minimum–maksimum, mis. 1–2 orang."
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "id": "A2e9j",
+                          "name": "Caption",
+                          "fill": "$color/semantic/text/muted",
+                          "content": "Select · rich options (Menu Item/Rich: Selected, Hover)",
                           "fontFamily": "IBM Plex Mono",
                           "fontSize": 11,
                           "fontWeight": "normal"
@@ -85289,6 +86498,90 @@
                       "name": "Caption",
                       "fill": "$color/semantic/text/muted",
                       "content": "Segmented Control/LG · mobile filters",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Vs6Gt",
+                  "name": "Col Full width",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "id": "iIcai",
+                      "type": "ref",
+                      "reusable": true,
+                      "ref": "uMP5H",
+                      "name": "Segmented Control/Full width",
+                      "context": "Segmented Control · width=full. Items share the width equally with centred labels. Phone in-content view tabs (F-05: Layanan · Kategori · Item paket), first item in the content. Set the instance width (fill_container in layouts). Spec: docs/design-system/components/segmented-control.md",
+                      "width": 343,
+                      "descendants": {
+                        "ULzG1": {
+                          "type": "frame",
+                          "id": "IS17O",
+                          "name": "Items",
+                          "slot": [
+                            "NcbI1",
+                            "AptHz",
+                            "BrUPr",
+                            "u7e89"
+                          ],
+                          "width": "fill_container",
+                          "gap": "$component/segmented/gap",
+                          "children": [
+                            {
+                              "id": "uHNFl",
+                              "type": "ref",
+                              "ref": "NcbI1",
+                              "name": "Item Layanan",
+                              "width": "fill_container",
+                              "justifyContent": "center",
+                              "descendants": {
+                                "FnOrw": {
+                                  "content": "Layanan"
+                                }
+                              }
+                            },
+                            {
+                              "id": "DvaCK",
+                              "type": "ref",
+                              "ref": "AptHz",
+                              "name": "Item Kategori",
+                              "width": "fill_container",
+                              "justifyContent": "center",
+                              "descendants": {
+                                "FnOrw": {
+                                  "content": "Kategori"
+                                }
+                              }
+                            },
+                            {
+                              "id": "DUHx3",
+                              "type": "ref",
+                              "ref": "AptHz",
+                              "name": "Item Item paket",
+                              "width": "fill_container",
+                              "justifyContent": "center",
+                              "descendants": {
+                                "FnOrw": {
+                                  "content": "Item paket"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "O2S3T5",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "Segmented Control/Full width · phone view tabs",
                       "fontFamily": "IBM Plex Mono",
                       "fontSize": 11,
                       "fontWeight": "normal"
@@ -104872,6 +106165,82 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "type": "frame",
+                  "id": "EbhaB",
+                  "name": "In card",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "id": "E9A74J",
+                      "type": "ref",
+                      "reusable": true,
+                      "ref": "H43gDN",
+                      "name": "Empty State/In card",
+                      "context": "Empty State · placement=in card. No own surface or border: sits inside Section Card/*/No header (or a card Content slot) at full content width. Padding component.empty-state.in-card.padding-y vertical only; Body fills the width. Spec: docs/design-system/components/empty-state.md",
+                      "width": 672,
+                      "fill": [],
+                      "strokeWidth": 0,
+                      "padding": [
+                        "$component/empty-state/in-card/padding-y",
+                        0
+                      ],
+                      "descendants": {
+                        "zOUao": {
+                          "icon": "package"
+                        },
+                        "c8Y4Ky": {
+                          "content": "Belum ada layanan"
+                        },
+                        "FCyNB": {
+                          "content": "Buat kategori dulu, misalnya Wisuda atau Wedding, lalu tambahkan layanan dengan harga dan isi paketnya.",
+                          "width": "fill_container"
+                        },
+                        "SzhQW/xnhuK": {
+                          "content": "Tambah layanan"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "Hvu1t",
+                      "name": "Caption",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "Empty State/In card · inside Section Card/Default/No header (below)",
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "id": "A1QcsB",
+                      "type": "ref",
+                      "ref": "B19wQC",
+                      "name": "In card · context",
+                      "width": 720,
+                      "descendants": {
+                        "DElnV": {
+                          "type": "frame",
+                          "id": "ZO0Z1",
+                          "name": "Content",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "padding": "$component/section-card/content/padding",
+                          "children": [
+                            {
+                              "id": "ZfNWN",
+                              "type": "ref",
+                              "ref": "E9A74J",
+                              "name": "Empty State/In card",
+                              "width": "fill_container"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
                 }
               ]
             }
@@ -105800,7 +107169,7 @@
                   "type": "frame",
                   "id": "ImEDW",
                   "name": "Page Header",
-                  "context": "Page Header · breadcrumb bar + hero. Text: Parent, Current, Title, Subtitle. Slots: Actions (hero), Utilities (breadcrumb bar end: Cari, Notifikasi — F-17 2026-09-29). Spec: docs/design-system/components/page-header.md",
+                  "context": "Page Header · breadcrumb bar + hero. Text: Parent, Current, Title, Subtitle. Slots: Actions (hero), Utilities (breadcrumb bar end: Cari, Notifikasi — F-17 2026-09-29). Spec: docs/design-system/components/page-header.md Tabs (boolean, off by default): an underline tab row under the Hero, slot of Tab/* (C45); the active underline sits on the header's bottom border. Use variant Page Header/Tabs.",
                   "reusable": true,
                   "width": "fill_container",
                   "fill": "$component/page-header/background",
@@ -105981,8 +107350,125 @@
                           ]
                         }
                       ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Iu4gK",
+                      "x": 0,
+                      "y": 0,
+                      "name": "Tabs",
+                      "enabled": false,
+                      "slot": [
+                        "WbyBE",
+                        "M43F7D",
+                        "WLfdt",
+                        "DLhzi"
+                      ],
+                      "width": "fill_container(0)",
+                      "gap": "$component/tabs/gap",
+                      "padding": [
+                        0,
+                        "$component/page-header/tabs/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "aga8t",
+                          "type": "ref",
+                          "ref": "WbyBE",
+                          "name": "Tab 1",
+                          "descendants": {
+                            "DnAdt": {
+                              "content": "Layanan"
+                            }
+                          }
+                        },
+                        {
+                          "id": "ngkYY",
+                          "type": "ref",
+                          "ref": "M43F7D",
+                          "name": "Tab 2",
+                          "descendants": {
+                            "DnAdt": {
+                              "content": "Kategori"
+                            }
+                          }
+                        },
+                        {
+                          "id": "BVhm4",
+                          "type": "ref",
+                          "ref": "M43F7D",
+                          "name": "Tab 3",
+                          "descendants": {
+                            "DnAdt": {
+                              "content": "Item paket"
+                            }
+                          }
+                        }
+                      ]
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "VHkNG",
+          "name": "Exhibit — Tabs",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "iOfgp",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Tabs (F-05)",
+              "fontFamily": "$font/family/base",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "dEWr2",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "id": "NPQ7d",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "ImEDW",
+                  "name": "Page Header/Tabs",
+                  "context": "Page Header · tabs=on. Hero + underline tabs (C45) for pages with sibling views, e.g. Layanan · Kategori · Item paket. Fill the Tabs slot with Tab/Active (one) and Tab/Default; content below keeps its own column. Spec: docs/design-system/components/page-header.md",
+                  "width": "fill_container",
+                  "descendants": {
+                    "EPpbd": {
+                      "content": "Aster Wedding"
+                    },
+                    "Hh5tj": {
+                      "content": "Layanan"
+                    },
+                    "HsrFT": {
+                      "content": "Layanan"
+                    },
+                    "i8XPWU": {
+                      "content": "Paket yang kamu jual. Proyek baru menyalin isi paket saat dibuat."
+                    },
+                    "ew9bb/xnhuK": {
+                      "content": "Tambah layanan"
+                    },
+                    "Iu4gK": {
+                      "enabled": true
+                    }
+                  }
                 }
               ]
             }
@@ -106449,7 +107935,7 @@
                   "type": "frame",
                   "id": "hl0Fg",
                   "name": "_ListCardItem/TwoLine/Base",
-                  "context": "List Card Item Two-line · private base. Text: Title, Meta. Swap: Icon. Slot: Trailing (Chevron | Status Chip | Action Menu SM).",
+                  "context": "List Card Item Two-line · private base. Text: Title, Meta. Swap: Icon. Slot: Trailing (Chevron | Status Chip and/or value text, Naikkan/Turunkan Icon Button Ghost SM, Action Menu SM — F-05 amendment).",
                   "reusable": true,
                   "metadata": {
                     "type": "component",
@@ -106767,6 +108253,274 @@
                       "width": "fill_container"
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "jZ1ur",
+          "name": "Exhibit — Trailing: value + reorder (F-05)",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "eYux6",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Trailing: value + reorder (F-05 amendment)",
+              "fontFamily": "$font/family/base",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "IlfgG",
+              "name": "Exhibit note",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 880,
+              "content": "The Two-line Trailing slot may also hold a value or price text (body, semibold, text.primary) and, for ordered lists, Naikkan / Turunkan as Icon Button Ghost SM before the Action Menu SM. Order: Status Chip → value → reorder → menu. The row itself stays non-interactive.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "aAquA",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "padding": 24,
+              "children": [
+                {
+                  "id": "baUrR",
+                  "type": "ref",
+                  "ref": "G8WO8q",
+                  "name": "Item paket card",
+                  "width": 720,
+                  "descendants": {
+                    "BXWnC": {
+                      "content": "Item paket"
+                    },
+                    "nHCW8": {
+                      "content": "Disalin ke proyek dalam urutan ini."
+                    },
+                    "f60zS": {
+                      "type": "frame",
+                      "id": "RpvDr",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        "$component/section-card/flush/padding-y",
+                        "$component/section-card/flush/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "HXQBi",
+                          "type": "ref",
+                          "ref": "PV6HB",
+                          "name": "Row Foto edit",
+                          "width": "fill_container",
+                          "descendants": {
+                            "wDTkG": {
+                              "icon": "image"
+                            },
+                            "O7pUR": {
+                              "content": "Foto edit"
+                            },
+                            "k9OCFf": {
+                              "content": "Dipilih klien · Foto edit"
+                            },
+                            "zUF3j": {
+                              "type": "frame",
+                              "id": "ta5R4",
+                              "name": "Trailing",
+                              "gap": "$space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "g6HUb",
+                                  "name": "Value",
+                                  "fill": "$component/list-card/item/title",
+                                  "content": "25 foto",
+                                  "fontFamily": "$font/family/base",
+                                  "fontSize": "$font/size/body",
+                                  "fontWeight": "$font/weight/semibold"
+                                },
+                                {
+                                  "id": "YirKl",
+                                  "type": "ref",
+                                  "ref": "VA96y",
+                                  "name": "Naikkan",
+                                  "descendants": {
+                                    "wSyzB": {
+                                      "icon": "arrow-up"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "z2emP",
+                                  "type": "ref",
+                                  "ref": "VA96y",
+                                  "name": "Turunkan",
+                                  "descendants": {
+                                    "wSyzB": {
+                                      "icon": "arrow-down"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "uDt7c",
+                                  "type": "ref",
+                                  "ref": "tgN4c",
+                                  "name": "Menu"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "RzJiP",
+                          "type": "ref",
+                          "ref": "PV6HB",
+                          "name": "Row Foto cetak",
+                          "width": "fill_container",
+                          "descendants": {
+                            "wDTkG": {
+                              "icon": "printer"
+                            },
+                            "O7pUR": {
+                              "content": "Foto cetak"
+                            },
+                            "k9OCFf": {
+                              "content": "Dipilih klien · Foto cetak"
+                            },
+                            "zUF3j": {
+                              "type": "frame",
+                              "id": "wiMs0",
+                              "name": "Trailing",
+                              "gap": "$space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Y4meMm",
+                                  "name": "Value",
+                                  "fill": "$component/list-card/item/title",
+                                  "content": "5 lembar",
+                                  "fontFamily": "$font/family/base",
+                                  "fontSize": "$font/size/body",
+                                  "fontWeight": "$font/weight/semibold"
+                                },
+                                {
+                                  "id": "TgvUL",
+                                  "type": "ref",
+                                  "ref": "VA96y",
+                                  "name": "Naikkan",
+                                  "descendants": {
+                                    "wSyzB": {
+                                      "icon": "arrow-up"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "dzogB",
+                                  "type": "ref",
+                                  "ref": "VA96y",
+                                  "name": "Turunkan",
+                                  "descendants": {
+                                    "wSyzB": {
+                                      "icon": "arrow-down"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "jVIri",
+                                  "type": "ref",
+                                  "ref": "tgN4c",
+                                  "name": "Menu"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "O8Leo9",
+                          "type": "ref",
+                          "ref": "Bf3eg",
+                          "name": "Row Jumlah orang",
+                          "width": "fill_container",
+                          "descendants": {
+                            "wDTkG": {
+                              "icon": "users"
+                            },
+                            "O7pUR": {
+                              "content": "Jumlah orang"
+                            },
+                            "k9OCFf": {
+                              "content": "Rentang"
+                            },
+                            "zUF3j": {
+                              "type": "frame",
+                              "id": "EYmT3",
+                              "name": "Trailing",
+                              "gap": "$space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "L66axZ",
+                                  "name": "Value",
+                                  "fill": "$component/list-card/item/title",
+                                  "content": "1–2 orang",
+                                  "fontFamily": "$font/family/base",
+                                  "fontSize": "$font/size/body",
+                                  "fontWeight": "$font/weight/semibold"
+                                },
+                                {
+                                  "id": "LlKhB",
+                                  "type": "ref",
+                                  "ref": "VA96y",
+                                  "name": "Naikkan",
+                                  "descendants": {
+                                    "wSyzB": {
+                                      "icon": "arrow-up"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "vSuBj",
+                                  "type": "ref",
+                                  "ref": "VA96y",
+                                  "name": "Turunkan",
+                                  "descendants": {
+                                    "wSyzB": {
+                                      "icon": "arrow-down"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "sJ4YM",
+                                  "type": "ref",
+                                  "ref": "tgN4c",
+                                  "name": "Menu"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
                 }
               ]
             }
@@ -110481,6 +112235,634 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "Pu7zm",
+      "x": 13158,
+      "y": 24442,
+      "name": "C45 — Tabs",
+      "theme": {
+        "mode": "light"
+      },
+      "width": 1440,
+      "fill": "$color/semantic/surface/panel",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 64,
+      "children": [
+        {
+          "type": "frame",
+          "id": "XOQsf",
+          "name": "Header",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            0,
+            0,
+            32,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "N5kWp",
+              "name": "Overline",
+              "fill": "$color/semantic/text/muted",
+              "content": "COMPONENT  ·  C45  ·  NAVIGATION  ·  TABS",
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 0.6
+            },
+            {
+              "type": "text",
+              "id": "dCIHV",
+              "name": "Title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Tabs",
+              "fontFamily": "$font/family/base",
+              "fontSize": 44,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "H1cm4I",
+              "name": "Description",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 880,
+              "content": "Underline tabs that switch between sibling views of one page, e.g. Layanan · Kategori · Item paket (F-05). Desktop and tablet; on phones use Segmented Control/Full width inside the content. Attach them to the Page Header with Page Header/Tabs.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "F2xJm",
+          "name": "Exhibit — Component set",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "r7t6rV",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Component set",
+              "fontFamily": "$font/family/base",
+              "fontSize": 18,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "prLG1",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "siG3p",
+                  "name": "_Tab/Base",
+                  "context": "PRIVATE base for Tab states — do not instance in screens.",
+                  "reusable": true,
+                  "metadata": {
+                    "type": "component",
+                    "component": "tabs",
+                    "role": "base"
+                  },
+                  "padding": [
+                    "$component/tabs/item/padding-y",
+                    0
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "DnAdt",
+                      "name": "Label",
+                      "fill": "$component/tabs/item/text",
+                      "content": "Kategori",
+                      "fontFamily": "$font/family/base",
+                      "fontSize": "$font/size/body",
+                      "fontWeight": "$font/weight/medium"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "PFXzN",
+                  "name": "States",
+                  "gap": 32,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "id": "M43F7D",
+                      "type": "ref",
+                      "reusable": true,
+                      "ref": "siG3p",
+                      "name": "Tab/Default",
+                      "context": "Tab · state=default. Text: Label. Use inside Tabs (Items slot) or Page Header/Tabs. Spec: docs/design-system/components/tabs.md",
+                      "descendants": {
+                        "DnAdt": {
+                          "content": "Kategori"
+                        }
+                      }
+                    },
+                    {
+                      "id": "WLfdt",
+                      "type": "ref",
+                      "reusable": true,
+                      "ref": "siG3p",
+                      "name": "Tab/Hover",
+                      "context": "Tab · state=hover. Text: Label. Use inside Tabs (Items slot) or Page Header/Tabs. Spec: docs/design-system/components/tabs.md",
+                      "descendants": {
+                        "DnAdt": {
+                          "content": "Kategori",
+                          "fill": "$component/tabs/item/text-hover"
+                        }
+                      }
+                    },
+                    {
+                      "id": "WbyBE",
+                      "type": "ref",
+                      "reusable": true,
+                      "ref": "siG3p",
+                      "name": "Tab/Active",
+                      "context": "Tab · state=active. Text: Label. Use inside Tabs (Items slot) or Page Header/Tabs. Spec: docs/design-system/components/tabs.md",
+                      "stroke": "$component/tabs/item/indicator",
+                      "strokeWidth": {
+                        "bottom": 2
+                      },
+                      "strokeAlignment": "inner",
+                      "descendants": {
+                        "DnAdt": {
+                          "content": "Layanan",
+                          "fill": "$component/tabs/item/text-active",
+                          "fontWeight": "$font/weight/bold"
+                        }
+                      }
+                    },
+                    {
+                      "id": "DLhzi",
+                      "type": "ref",
+                      "reusable": true,
+                      "ref": "siG3p",
+                      "name": "Tab/Focus",
+                      "context": "Tab · state=focus. Text: Label. Use inside Tabs (Items slot) or Page Header/Tabs. Spec: docs/design-system/components/tabs.md",
+                      "stroke": "$component/tabs/item/focus",
+                      "strokeWidth": 2,
+                      "strokeAlignment": "outer",
+                      "cornerRadius": "$component/tabs/item/radius",
+                      "descendants": {
+                        "DnAdt": {
+                          "content": "Item paket"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "NSzy3",
+                  "name": "Tabs",
+                  "context": "Tabs · underline tab row. Slot Items: Tab/Active (one) + Tab/Default. Bottom track component.tabs.track; inside Page Header use Page Header/Tabs instead (the header border is the track). Spec: docs/design-system/components/tabs.md",
+                  "reusable": true,
+                  "metadata": {
+                    "type": "component",
+                    "component": "tabs"
+                  },
+                  "width": 720,
+                  "stroke": "$component/tabs/track",
+                  "strokeWidth": {
+                    "bottom": 1
+                  },
+                  "strokeAlignment": "inner",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "RLhnh",
+                      "name": "Items",
+                      "slot": [
+                        "WbyBE",
+                        "M43F7D",
+                        "WLfdt",
+                        "DLhzi"
+                      ],
+                      "gap": "$component/tabs/gap",
+                      "children": [
+                        {
+                          "id": "EmbAX",
+                          "type": "ref",
+                          "ref": "WbyBE",
+                          "name": "Tab Layanan",
+                          "descendants": {
+                            "DnAdt": {
+                              "content": "Layanan"
+                            }
+                          }
+                        },
+                        {
+                          "id": "qUyw2",
+                          "type": "ref",
+                          "ref": "M43F7D",
+                          "name": "Tab Kategori",
+                          "descendants": {
+                            "DnAdt": {
+                              "content": "Kategori"
+                            }
+                          }
+                        },
+                        {
+                          "id": "iBL5g",
+                          "type": "ref",
+                          "ref": "M43F7D",
+                          "name": "Tab Item paket",
+                          "descendants": {
+                            "DnAdt": {
+                              "content": "Item paket"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "fKRjW",
+          "name": "Exhibit — In context",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "rLn1b",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "uIfLy",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "In context",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "u9WZkL",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Tambah sumber (F-04): one Selected option, the rest Disabled with Status Chip/Neutral no dot \"Segera hadir\". Options stack one per line on desktop and phones (Owner 2026-10-01). Width fills the dialog body.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ZBUJt",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "qwNOn",
+                  "name": "Layanan light",
+                  "theme": {
+                    "mode": "light"
+                  },
+                  "width": "fill_container",
+                  "fill": "$color/semantic/surface/canvas",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "id": "h8dwb",
+                      "type": "ref",
+                      "ref": "NPQ7d",
+                      "name": "Page Header/Tabs",
+                      "width": "fill_container"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "G0Dj0G",
+          "name": "Exhibit — Modes",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "rhnfH",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kGEdJ",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Modes",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "xJspU",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "All four states and the Tabs row under theme mode = dark.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "MhGcy",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "IZAzf",
+                  "name": "Tabs dark",
+                  "theme": {
+                    "mode": "dark"
+                  },
+                  "width": "fill_container",
+                  "fill": "$color/semantic/surface/panel",
+                  "cornerRadius": "$radius/sm",
+                  "layout": "vertical",
+                  "gap": 20,
+                  "padding": 20,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "x1Sw1",
+                      "name": "States",
+                      "gap": 32,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "upUTy",
+                          "type": "ref",
+                          "ref": "M43F7D",
+                          "name": "Tab Default",
+                          "descendants": {
+                            "DnAdt": {
+                              "content": "Default"
+                            }
+                          }
+                        },
+                        {
+                          "id": "rahoL",
+                          "type": "ref",
+                          "ref": "WLfdt",
+                          "name": "Tab Hover",
+                          "descendants": {
+                            "DnAdt": {
+                              "content": "Hover"
+                            }
+                          }
+                        },
+                        {
+                          "id": "bCyDd",
+                          "type": "ref",
+                          "ref": "WbyBE",
+                          "name": "Tab Active",
+                          "descendants": {
+                            "DnAdt": {
+                              "content": "Active"
+                            }
+                          }
+                        },
+                        {
+                          "id": "CCTJn",
+                          "type": "ref",
+                          "ref": "DLhzi",
+                          "name": "Tab Focus",
+                          "descendants": {
+                            "DnAdt": {
+                              "content": "Focus"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "f8UesI",
+                      "type": "ref",
+                      "ref": "NSzy3",
+                      "name": "Tabs",
+                      "width": "fill_container"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "MoRqj",
+          "name": "Exhibit — Accessibility",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "top": 1
+          },
+          "gap": 40,
+          "padding": [
+            32,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "uOXic",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "K88KSs",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Accessibility",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": "$font/size/title",
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "YvCmD",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Layanan (F-05): Page Header/Tabs on desktop and tablet. The tab row starts under the title (page-header.tabs.padding-x); the active underline sits on the header border.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "wqpx7",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "uhcGG",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  role=tablist on the row, role=tab on each item, aria-selected on the active one; each tab aria-controls its panel (role=tabpanel).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "z4SLSG",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Arrow Left/Right move between tabs (roving tabindex), Home/End jump to the ends; Enter/Space activate when activation is manual.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "OTce4",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Active is shown by the 2 px underline and the bold label, never colour alone.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "kNilY",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Inactive label text.muted: 4.8:1 on surface.panel (light), above 4.5:1 dark. Focus: 2 px focus.ring outline.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "tFAXw",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  If the views are separate URLs (e.g. /services?tab=kategori), each tab is a link with aria-current=page instead.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "themes": {
@@ -113583,6 +115965,50 @@
     "component/option-card/radius": {
       "type": "number",
       "value": "$radius/md"
+    },
+    "component/tabs/track": {
+      "type": "color",
+      "value": "$color/semantic/border/subtle"
+    },
+    "component/tabs/gap": {
+      "type": "number",
+      "value": "$space/6"
+    },
+    "component/tabs/item/text": {
+      "type": "color",
+      "value": "$color/semantic/text/muted"
+    },
+    "component/tabs/item/text-hover": {
+      "type": "color",
+      "value": "$color/semantic/text/secondary"
+    },
+    "component/tabs/item/text-active": {
+      "type": "color",
+      "value": "$color/semantic/text/primary"
+    },
+    "component/tabs/item/indicator": {
+      "type": "color",
+      "value": "$color/semantic/text/primary"
+    },
+    "component/tabs/item/focus": {
+      "type": "color",
+      "value": "$color/semantic/focus/ring"
+    },
+    "component/tabs/item/padding-y": {
+      "type": "number",
+      "value": "$space/2-5"
+    },
+    "component/tabs/item/radius": {
+      "type": "number",
+      "value": "$radius/xs"
+    },
+    "component/page-header/tabs/padding-x": {
+      "type": "number",
+      "value": "$space/10"
+    },
+    "component/empty-state/in-card/padding-y": {
+      "type": "number",
+      "value": "$space/8"
     }
   },
   "fileToken": "a25701b4-4c5b-41fc-8af0-91535884d9bf"

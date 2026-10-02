@@ -62,6 +62,8 @@ Known Pencil limitation: a `Get` visitor that walks into an instance with a repl
 | Row actions | Action menu (the primary action stays a visible Button) |
 | ≥ 10 options | Add a search Input at the top (combobox, tier 2) |
 
+- **Rich options (F-05, 2026-10-02):** a Select menu may hold `Menu Item/Rich/*` (icon + label + one-line description; Selected adds a check). See the *Rich select open* composition (`wvsLY`) on C10 and [menu-item.md](menu-item.md#rich--approved-2026-10-02-f-05).
+
 ## Accessibility
 
 - **Select:** combobox or button with `aria-expanded` and `aria-controls` → listbox.

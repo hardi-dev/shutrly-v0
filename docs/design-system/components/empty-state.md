@@ -43,6 +43,16 @@ Content properties:
 | `body` | Text | Descendant content on `Body`; omit only when the title is self-explanatory. |
 | `action` | Optional node | Enable or hide the single action slot. |
 
+### In card — APPROVED 2026-10-02 (F-05)
+
+`Empty State/In card` (`E9A74J`) sits inside a Section Card (`*/No header`, or a card's Content slot) at full content width:
+
+- It has no surface or border of its own (fill none, stroke 0); the card is the only surface.
+- Padding is `component.empty-state.in-card.padding-y` (32), vertical only; the card's content padding gives the sides.
+- Body fills the width instead of the 360 specimen width, so it wraps on phones.
+
+The action, icon and text properties are unchanged. On the C38 board, *In card · context* shows it inside Section Card/Default/No header.
+
 ## Content
 
 - Keep the title concise and describe the state, not the implementation.

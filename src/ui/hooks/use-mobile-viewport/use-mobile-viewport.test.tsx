@@ -8,6 +8,11 @@ function ViewportProbe() {
   return <output>{String(isMobile)}</output>;
 }
 
+function FirstRenderProbe({ renders }: Readonly<{ renders: boolean[] }>) {
+  renders.push(useMobileViewport());
+  return null;
+}
+
 describe("useMobileViewport", () => {
   it("tracks the shared mobile breakpoint", async () => {
     vi.stubGlobal("matchMedia", () => ({
@@ -26,6 +31,24 @@ describe("useMobileViewport", () => {
     await waitFor(() => {
       expect(screen.getByRole("status")).toHaveTextContent("true");
     });
+  });
+
+  it("reports the mobile breakpoint on the first client render", () => {
+    vi.stubGlobal("matchMedia", () => ({
+      matches: true,
+      media: "(max-width: 767px)",
+      onchange: null,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    }));
+    const renders: boolean[] = [];
+
+    render(<FirstRenderProbe renders={renders} />);
+
+    expect(renders[0]).toBe(true);
   });
 
   it("stays desktop when matchMedia is unavailable", async () => {

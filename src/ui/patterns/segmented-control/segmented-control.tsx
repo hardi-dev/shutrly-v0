@@ -32,6 +32,7 @@ export function SegmentedControl({
   options,
   selectedId,
   onChange,
+  isFullWidth = false,
   className,
 }: Readonly<SegmentedControlProps>) {
   const handleSelectionChange = (keys: Set<Key>) => {
@@ -45,10 +46,14 @@ export function SegmentedControl({
       disallowEmptySelection
       selectedKeys={[selectedId]}
       onSelectionChange={handleSelectionChange}
-      className={cn(TRACK, className)}
+      className={cn(TRACK, isFullWidth && "w-full", className)}
     >
       {options.map((option) => (
-        <ToggleButton key={option.id} id={option.id} className={cn(ITEM)}>
+        <ToggleButton
+          key={option.id}
+          id={option.id}
+          className={cn(ITEM, isFullWidth && "w-full flex-1 justify-center")}
+        >
           {option.label}
         </ToggleButton>
       ))}

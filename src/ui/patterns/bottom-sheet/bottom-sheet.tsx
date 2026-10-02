@@ -4,6 +4,7 @@ import { type ReactNode, useId, useLayoutEffect, useRef } from "react";
 import { Dialog, Modal as AriaModal, ModalOverlay } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
+import { useRestoreFocus } from "@/ui/hooks/use-restore-focus/use-restore-focus";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { BOTTOM_SHEET_COPY } from "./bottom-sheet.copy";
@@ -14,6 +15,8 @@ const HEADER_ALIGNMENT = {
   form: "items-start text-left",
   menu: "items-start text-left",
 } as const;
+// Refocus the trigger only after the 300ms exit motion has unmounted the sheet.
+const FOCUS_RESTORE_DELAY_MS = 350;
 
 /** Renders a docked, focus-trapped mobile sheet with Actions, Form and Menu variants (C32). */
 export function BottomSheet({
@@ -30,18 +33,12 @@ export function BottomSheet({
   const titleId = useId();
   const descriptionId = useId();
   const dialogRef = useRef<HTMLElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
+  useRestoreFocus(isOpen, FOCUS_RESTORE_DELAY_MS);
 
   useLayoutEffect(() => {
     if (isOpen) {
-      previousFocusRef.current =
-        document.activeElement instanceof HTMLElement ? document.activeElement : null;
       dialogRef.current?.setAttribute("aria-modal", "true");
-      return;
     }
-
-    previousFocusRef.current?.focus();
-    previousFocusRef.current = null;
   }, [isOpen]);
 
   return (

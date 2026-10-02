@@ -6,9 +6,11 @@ export function AppPanel({
   id,
   title,
   parent = "Workspace",
+  breadcrumbs,
   subtitle,
   utilities,
   actions,
+  tabs,
   children,
 }: Readonly<AppPanelProps>) {
   return (
@@ -22,9 +24,11 @@ export function AppPanel({
         parent={parent}
         current={title}
         title={title}
+        breadcrumbs={breadcrumbs}
         subtitle={subtitle}
         utilities={utilities}
         action={actions}
+        tabs={tabs}
       />
       {children}
     </main>

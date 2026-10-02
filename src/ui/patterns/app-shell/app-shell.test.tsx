@@ -85,4 +85,25 @@ describe("AppShell (C30/C37)", () => {
       "/w/A/message-templates",
     );
   });
+
+  it("passes a reusable breadcrumb trail to the desktop page header", () => {
+    render(
+      <AppShell
+        {...props}
+        title="Kategori"
+        panelBreadcrumbs={[
+          { label: "Aster", href: "/w/A" },
+          { label: "Layanan", href: "/w/A/services" },
+          { label: "Kategori" },
+        ]}
+      >
+        <p>isi</p>
+      </AppShell>,
+    );
+
+    expect(screen.getAllByRole("link", { name: "Layanan" })[0]).toHaveAttribute(
+      "href",
+      "/w/A/services",
+    );
+  });
 });

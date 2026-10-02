@@ -6,7 +6,15 @@ export type ButtonVariant = "primary" | "secondary" | "danger";
 export type ButtonSize = "md" | "lg";
 export type ButtonIconName = Extract<
   IconName,
-  "plus" | "send" | "chevron-down" | "arrow-right" | "trash-2" | "rotate-ccw"
+  | "plus"
+  | "send"
+  | "chevron-down"
+  | "arrow-right"
+  | "trash-2"
+  | "rotate-ccw"
+  | "pencil"
+  | "archive"
+  | "archive-restore"
 >;
 
 export interface ButtonIconProps {

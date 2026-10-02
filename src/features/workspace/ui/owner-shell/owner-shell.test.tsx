@@ -9,6 +9,7 @@ vi.mock("next/navigation", () => ({
 
 const { MobileWorkspaceSheet, MobileWorkspaceSwitcherSheet, OwnerShell } =
   await import("./owner-shell");
+const { PageHeadingOverride } = await import("../page-heading-override/page-heading-override");
 
 const workspaces = [
   { id: "workspace-1", name: "Studio Lime", isCurrent: true },
@@ -129,5 +130,37 @@ describe("OwnerShell sub-pages", () => {
       "href",
       "/w/A/message-templates",
     );
+  });
+
+  it("AC-CAT-004 lets a service detail page replace the shell heading", () => {
+    render(
+      <OwnerShell
+        workspaceId="A"
+        workspaceName="Aster Wedding"
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        title="Aster Wedding"
+        workspaces={workspaces}
+        onSwitch={vi.fn()}
+        onCreate={vi.fn()}
+      >
+        <PageHeadingOverride
+          title="Wisuda Basic"
+          subtitle="Paket foto wisuda."
+          parent={{ label: "Layanan", href: "/w/A/services" }}
+        />
+        <p>isi</p>
+      </OwnerShell>,
+    );
+
+    expect(
+      screen.getAllByRole("heading", { level: 1, name: "Wisuda Basic" }).length,
+    ).toBeGreaterThan(0);
+    expect(
+      screen
+        .getAllByRole("link", { name: "Layanan" })
+        .find((link) => link.getAttribute("href") === "/w/A/services"),
+    ).toHaveAttribute("href", "/w/A/services");
+    expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute("href", "/w/A/services");
   });
 });

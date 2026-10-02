@@ -1,7 +1,7 @@
 # Feature: Service catalog
 
 ID: F-05 · Slug: `catalog`
-Status: SPECIFIED (2026-10-02) · Journey: J-02 Catalog setup
+Status: IN PROGRESS (2026-10-02, [technical-design.md](technical-design.md) · [plan.md](plan.md)); designed 2026-10-02 ([design.md](design.md)); specified 2026-10-02 · Journey: J-02 Catalog setup
 Consumer: F-07 `projects` (a project is created from an active service and snapshots its items and booking fields, BR-PRJ-001)
 
 ## Goal
@@ -51,7 +51,7 @@ As a photographer (Owner), I want to set up my packages once, for example *Wisud
 - **Delete** (category, definition, service): asks for confirmation (*Hapus "{name}"?*). Allowed only if nothing refers to it (BR-CAT-008): a category with no services; a definition used by no service; a service no project was created from (F-07 onward). Otherwise the dialog explains and offers *Arsipkan*.
 - **Change a service's category:** pick another active category on the Info section.
 - **New workspace:** created with the four seeded definitions in the same transaction (BR-CAT-011, ADR-016).
-- **Existing workspaces:** a data migration backfills the seeded definitions, skipping names that already exist. Only the Owner applies migrations (AGENTS.md).
+- **Existing workspaces:** a data migration backfills the seeded definitions, skipping names that already exist. It runs on the non-production database during development (AGENTS.md, tech-stack.md › Deployment).
 
 ## Lifecycle (BR-CAT-008)
 Applies to categories, item definitions and services.

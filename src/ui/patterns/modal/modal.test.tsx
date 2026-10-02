@@ -64,5 +64,6 @@ describe("Modal (C31)", () => {
     await user.click(screen.getByRole("button", { name: "Buka modal" }));
 
     expect(screen.getByRole("alertdialog", { name: "Buat workspace" })).toBeInTheDocument();
+    expect(screen.queryByText("Isi modal")).toBeNull();
   });
 });

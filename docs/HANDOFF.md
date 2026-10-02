@@ -1,15 +1,15 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 in build on `feat/catalog`; F-06 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `feat/clients` (F-04 is merged into `main` via PR #1; F-05's library promotion `2dc3da6` is merged into `feat/clients`).
+Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` is merged into `feat/clients` at `fe1d6f0`).
 
 ## Current handoff — F-06 Clients PLANNED (2026-10-02)
 
 - **Plan:** [technical-design.md](features/clients/technical-design.md) (decisions D-1…D-8) and [plan.md](features/clients/plan.md), 14 test-first tasks.
   - Clients live in the `booking` context with one `client` table (social links as validated JSONB) and migration **0008**.
   - *Aktif* / *Arsip* are routes shown as Page Header tabs; the list uses keyset paging with a count, and a new shared `DataTable` (C27).
-- **Base (Owner 2026-10-02):** the plan assumes F-05 (`feat/catalog`) is merged to `main` first. Task 1 checks this and stops if it isn't.
-- **Next:** `/sdv:build-feature clients 1` after F-05 lands.
+- **Base (Owner 2026-10-02):** the plan assumes F-05 is on `main`. It is (PR #3), and `main` is merged into `feat/clients`, so Task 1's base check passes; its sync step is already done.
+- **Next:** `/sdv:build-feature clients 1`.
 
 ### Design (approved 2026-10-02)
 
@@ -18,8 +18,33 @@ Branch: `feat/clients` (F-04 is merged into `main` via PR #1; F-05's library pro
   - Tabs as in F-05: C45 underline tabs in the Page Header on desktop, Segmented Control/Full width on phones.
   - The desktop table sits in the centred 720 column; its toolbar shows *Daftar klien* with the client count (new A-10, AC-CLI-021) and the search on the right.
 - **Library:** F-05's promotion commit `2dc3da6` is merged into this branch (`4d2ee7e`). The F-06 token `color.semantic.surface.panel-subtle` (neutral 50 / 800, table header; Owner option C) sits on top: 597 tokens, checksum `d09d3751`; library = repository.
-  - When `feat/catalog` merges, `design-system.lib.pen` will differ only by this token. Re-apply it in Pencil if the merge picks catalog's file.
+  - Merging `main` (F-05) kept this branch's `design-system.lib.pen`: `main` changed only `exploration.pen`.
 - **Next (done 2026-10-02):** `/sdv:plan-feature clients`.
+
+## Previous handoff — F-05 Service catalog merged to `main` (PR #3, 2026-10-02)
+
+- Checkpoint `a877540` contains the catalog implementation, the requested follow-up refinements, and the technical-design writeback. Catalog changes contain no ESLint rule-disabling directives.
+- Full Vitest passes (221 files, 674 tests), ESLint, Prettier, route type generation, TypeScript through the production build, token validation, `git diff --check`, and the isolated authenticated catalog E2E pass. Integration tests remain blocked by the configured Neon pooler's WebSocket closing during fixture setup. The pnpm wrapper lifecycle is also blocked in this environment by ignored dependency build scripts; direct quality gates passed without changing that policy.
+- Do not run `pnpm db:migrate`; do not read or edit `.pen` files. PR #3 is merged into `main`; next run `/sdv:verify-feature catalog` if the Owner wants the formal verification record.
+
+## Update 2026-10-02 — F-05 Service catalog PLANNED
+
+- **Plan:** [technical-design.md](features/catalog/technical-design.md) + [plan.md](features/catalog/plan.md), 15 tasks: (1) icons + Switch, (2) Select with rich options, (3) Tabs + header tabs + full-width Segmented + in-card Empty State, (4) owner shell tabs and heading override, (5) domain, (6) schema + migrations 0006/0007 — applied by the agent to the non-production DB (Owner 2026-10-02 allows `pnpm db:migrate` during development), (7) categories + definitions use cases, (8) services/items/fields use cases, (9) Drizzle repositories + integration, (10) composition + creation seeding + actions, (11) routes/copy/skeletons, (12) Layanan + Kategori tabs, (13) Item paket tab, (14) service detail, (15) E2E + record. New bounded context `src/features/booking`. No new ADR.
+- **To confirm with the Owner:** TD-D-1 (row icons derived from type) and TD-D-2 (item summary = value + unit) in technical-design.md.
+- **Next:** `/sdv:build-feature catalog 1`.
+
+## Update 2026-10-02 — F-05 Service catalog DESIGNED
+
+- **Design APPROVED (Owner 2026-10-02):** 40 frames in `catalog.pen` (26 desktop, 14 phone), exports in `features/catalog/exports/`. Direction Option A2 from `exploration.pen` board 12. See [design.md](features/catalog/design.md).
+- **Library promotion PERSISTED:** C45 Tabs, Page Header/Tabs, Segmented Control/Full width, Empty State/In card, Menu Item/Rich, List Card trailing amendment; 596 tokens, checksum `986ecbcb`; `src/ui/theme/tokens.css` regenerated.
+- **Follow-up:** migrate `catalog.pen` from its local pieces to the promoted components; its `v:` import still resolves the old library (suspected link to the main-checkout copy), see design.md.
+- **Next:** `/sdv:plan-feature catalog`.
+
+## Update 2026-10-02 — F-05 Service catalog SPECIFIED
+
+- **Spec:** [spec.md](features/catalog/spec.md) and [acceptance-criteria.md](features/catalog/acceptance-criteria.md) (AC-CAT-001…023). New rules BR-CAT-007…011 (selection types `EDIT`/`PRINT`, active/archived/delete lifecycle, names, fixed definition type once used, four seeded item definitions); scope and domain model updated.
+- **Owner decisions:** *Layanan* tabs (Layanan · Kategori · Item paket); no draft/publish; seed item definitions only.
+- **Next for F-05:** `/sdv:design-feature catalog` (optionally `/sdv:model-feature catalog` first). F-04 was built on `feat/source-config` and merged to `main` (PR #1).
 
 ## Previous handoff — F-06 Clients SPECIFIED (2026-10-02)
 
@@ -32,12 +57,6 @@ Branch: `feat/clients` (F-04 is merged into `main` via PR #1; F-05's library pro
   - clients are archived and restored; delete is allowed only while no project refers to the client.
 - **Assumptions to confirm in design review:** A-2 platform list (Instagram, TikTok, Facebook, YouTube, X, Lainnya), A-5 paging (30 + *Muat lebih banyak*), A-6 *Buka WhatsApp* plain chat link, no client detail page in F-06 (A-1).
 - **Next (done 2026-10-02):** `/sdv:design-feature clients`.
-
-## Update 2026-10-02 — F-05 Service catalog SPECIFIED (on `feat/catalog`)
-
-- **Spec:** [spec.md](features/catalog/spec.md) and [acceptance-criteria.md](features/catalog/acceptance-criteria.md) (AC-CAT-001…023). New rules BR-CAT-007…011 (selection types `EDIT`/`PRINT`, active/archived/delete lifecycle, names, fixed definition type once used, four seeded item definitions); scope and domain model updated.
-- **Owner decisions:** *Layanan* tabs (Layanan · Kategori · Item paket); no draft/publish; seed item definitions only.
-- **Where it lives:** F-05 is designed and being built on `feat/catalog` (worktree `shutrly-v01-catalog`). Its library promotion commit `2dc3da6` (C45 Tabs, Page Header/Tabs, Segmented Control/Full width, Empty State/In card, Menu Item/Rich; 596 tokens) is merged into `feat/clients` so F-06 can use the same tabs.
 
 ## Previous handoff — F-04 Source configuration IN PROGRESS (2026-10-02)
 
@@ -152,7 +171,7 @@ The F-00 build instructions below are kept for reference.
 - **Any test or command fails in a way the plan's notes don't cover.** The known cases are R-3 (Vitest projects key), R-5 (two `typescript-eslint` copies) and the notes under Tasks 9 and 10.
 - **Neon WebSocket fails under `pnpm preview` / workerd** (Task 17, R-4). This is an ADR-008/009 risk and needs an Owner decision.
 - **The code would need to break the architecture or the coding rules.** Report it as a deviation; don't bend the rules.
-- **Never run `pnpm db:migrate`.** Only the Owner applies migrations, by hand from a clean `main` (tech-stack interim rule). F-00 has no migrations anyway.
+- ~~**Never run `pnpm db:migrate`.**~~ Superseded 2026-10-02: agents may apply committed, reviewed migrations to the non-production database during development (tech-stack.md › Deployment). F-00 has no migrations anyway.
 
 ### When all 18 tasks are done
 - Task 18 updated `technical-design.md` (status IMPLEMENTED), `docs/product/feature-map.md` (F-00 IN PROGRESS), the F-01 contract paths, and this handoff.

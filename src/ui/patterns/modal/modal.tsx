@@ -4,6 +4,7 @@ import { type ReactNode, useId, useLayoutEffect, useRef } from "react";
 import { Dialog, Modal as AriaModal, ModalOverlay } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
+import { useRestoreFocus } from "@/ui/hooks/use-restore-focus/use-restore-focus";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { MODAL_COPY } from "./modal.copy";
@@ -29,18 +30,12 @@ export function Modal({
   const titleId = useId();
   const descriptionId = useId();
   const dialogRef = useRef<HTMLElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
+  useRestoreFocus(isOpen);
 
   useLayoutEffect(() => {
     if (isOpen) {
-      previousFocusRef.current =
-        document.activeElement instanceof HTMLElement ? document.activeElement : null;
       dialogRef.current?.setAttribute("aria-modal", "true");
-      return;
     }
-
-    previousFocusRef.current?.focus();
-    previousFocusRef.current = null;
   }, [isOpen]);
 
   return (
@@ -106,9 +101,11 @@ function ModalContent({
           description={description}
           onClose={handleClose}
         />
-        <div className="min-h-0 flex-1 overflow-y-auto p-(--component-modal-body-padding)">
-          <div className="flex flex-col gap-(--component-modal-body-gap)">{children}</div>
-        </div>
+        {!isDestructive ? (
+          <div className="min-h-0 flex-1 overflow-y-auto p-(--component-modal-body-padding)">
+            <div className="flex flex-col gap-(--component-modal-body-gap)">{children}</div>
+          </div>
+        ) : null}
         {actions ? <ModalFooter>{actions}</ModalFooter> : null}
       </Dialog>
     </AriaModal>

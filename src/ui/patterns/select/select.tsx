@@ -14,6 +14,7 @@ import {
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
+import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { Button } from "@/ui/primitives/button/button";
 import { Icon } from "@/ui/primitives/icon/icon";
 import { TEXT_FIELD_COPY } from "@/ui/primitives/text-field/text-field.copy";
@@ -161,30 +162,32 @@ function MobileSelectSheet({
   onPendingChange,
   onPick,
 }: Readonly<MobileSelectSheetProps>) {
+  function selectOption(optionId: string): () => void {
+    return function handleOptionPress(): void {
+      onPendingChange(new Set([optionId]));
+    };
+  }
+
   return (
     <BottomSheet
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       title={label}
       description={pickerDescription}
-      variant="form"
+      variant="menu"
       actions={<Button onPress={onPick}>{SELECT_COPY.pick}</Button>}
     >
-      <ListBox
-        aria-label={label}
-        selectionMode="single"
-        selectedKeys={pendingValue ? new Set([pendingValue]) : new Set()}
-        onSelectionChange={onPendingChange}
-        className="outline-none"
-      >
-        {options.map((option) => (
-          <SelectOptionItem
-            key={option.id}
-            option={option}
-            isSelected={option.id === pendingValue}
-          />
-        ))}
-      </ListBox>
+      {options.map((option) => (
+        <SheetItem
+          key={option.id}
+          label={option.label}
+          description={option.description}
+          icon={option.icon}
+          isDisabled={option.isDisabled}
+          isSelected={option.id === pendingValue}
+          onPress={selectOption(option.id)}
+        />
+      ))}
     </BottomSheet>
   );
 }

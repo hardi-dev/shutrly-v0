@@ -4,8 +4,12 @@ import { describe, expect, it, vi } from "vitest";
 
 import { Select } from "./select";
 
+const { useMobileViewport } = vi.hoisted(() => ({
+  useMobileViewport: vi.fn(() => false),
+}));
+
 vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
-  useMobileViewport: () => false,
+  useMobileViewport,
 }));
 
 const OPTIONS = [
@@ -24,7 +28,27 @@ const OPTIONS = [
 ];
 
 describe("Select (C19 + Menu Item/Rich)", () => {
+  it("uses bottom-sheet menu rows for mobile pickers", async () => {
+    useMobileViewport.mockReturnValue(true);
+    const onChange = vi.fn();
+    render(<Select label="Tipe nilai" options={OPTIONS} value="NUMBER" onChange={onChange} />);
+
+    await userEvent.click(screen.getByRole("button", { name: /Tipe nilai/ }));
+
+    const option = screen.getByRole("button", { name: /Angka/ });
+    expect(option).toHaveClass("min-h-[52px]");
+    expect(option).toHaveClass("border-t");
+    expect(screen.queryByRole("option", { name: /Angka/ })).not.toBeInTheDocument();
+    expect(screen.getByTestId("sheet-item-check")).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: /Rentang/ }));
+    expect(onChange).not.toHaveBeenCalled();
+    await userEvent.click(screen.getByRole("button", { name: "Pilih" }));
+    expect(onChange).toHaveBeenCalledWith("RANGE");
+  });
+
   it("AC-CAT-006 shows the chosen option with its icon and changes value", async () => {
+    useMobileViewport.mockReturnValue(false);
     const onChange = vi.fn();
     render(<Select label="Tipe nilai" options={OPTIONS} value="NUMBER" onChange={onChange} />);
     const trigger = screen.getByRole("button", { name: /Tipe nilai/ });
@@ -44,6 +68,7 @@ describe("Select (C19 + Menu Item/Rich)", () => {
   });
 
   it("AC-CAT-008 a disabled select shows its value and does not open", () => {
+    useMobileViewport.mockReturnValue(false);
     render(
       <Select label="Tipe nilai" options={OPTIONS} value="NUMBER" onChange={vi.fn()} isDisabled />,
     );
@@ -51,6 +76,7 @@ describe("Select (C19 + Menu Item/Rich)", () => {
   });
 
   it("shows a field error", () => {
+    useMobileViewport.mockReturnValue(false);
     render(
       <Select
         label="Kategori"

@@ -1,15 +1,13 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 implemented, verification pending) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` is merged into `feat/clients` at `fe1d6f0`).
 
-## Current handoff — F-06 Clients PLANNED (2026-10-02)
+## Current handoff — F-06 Clients IN PROGRESS (2026-10-03)
 
-- **Plan:** [technical-design.md](features/clients/technical-design.md) (decisions D-1…D-8) and [plan.md](features/clients/plan.md), vertical slices by screen (Slice 0–6), one commit per step.
-  - Clients live in the `booking` context with one `client` table (social links as validated JSONB) and migration **0008**.
-  - *Aktif* / *Arsip* are routes shown as Page Header tabs; the list uses keyset paging with a count, and a new shared `DataTable` (C27).
-- **Base (Owner 2026-10-02):** the plan assumes F-05 is on `main`. It is (PR #3), and `main` is merged into `feat/clients`, so Slice 0's base check passes; its sync step is already done.
-- **Next:** `/sdv:build-feature clients 1`.
+- **Build:** all six slices are implemented on `codex/clients`. The reviewed `0008_client` migration was applied to the non-production database (`migrations applied successfully!`). The responsive pages, add/edit dialog, archive/restore/delete, search and paging, browser journeys and accessibility coverage are committed through `138c48e`.
+- **Validation:** targeted unit/DOM tests, TypeScript and ESLint pass. Client journeys pass individually against the isolated worktree server. The full axe E2E re-run is pending: repeated local registrations began failing at `/register` with no alert content before the isolated scans could start. Also keep AC-CLI-015's real foreign-key integration assertion for F-07.
+- **Next:** start a fresh local server, re-run the full quality gate and `/sdv:verify-feature clients`; then mark F-06 DONE only if it passes.
 
 ### Design (approved 2026-10-02)
 

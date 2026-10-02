@@ -1,6 +1,6 @@
 # Technical Design — F-06 Clients
 
-Status: PLANNED (2026-10-02) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-CLI-001…021) · Design: [design.md](design.md) (40 frames, `exports/`) · Plan: [plan.md](plan.md)
+Status: IN PROGRESS (2026-10-03; implementation complete, verification pending) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-CLI-001…021) · Design: [design.md](design.md) (40 frames, `exports/`) · Plan: [plan.md](plan.md)
 
 ## Context
 
@@ -295,3 +295,15 @@ See [plan.md](plan.md): vertical slices by screen (Slice 0–6), test-first, one
 - **AC-CLI-015** can only be proven against a real FK once F-07 adds `project.client_id`. Until then the mapping is unit-tested, and F-07 adds the integration test.
 - **Double render:** the shell renders children in both trees. Dialogs and menus mount once per tree, and E2E selectors scope to the visible tree (F-03/F-04).
 - **Page-action flash:** the desktop *Tambah klien* is portalled after hydration (accepted in F-04).
+
+## Implementation record — 2026-10-03
+
+F-06 is implemented on `codex/clients`; formal `/sdv:verify-feature clients` remains pending.
+
+- **Commits:** `b4d1e72` through `138c48e`, including the client domain, migration `0008_client`, Drizzle repository, composition/actions/routes, responsive lists and dialogs, row lifecycle actions, search/paging, E2E journeys, and accessibility coverage.
+- **Migration:** the reviewed and committed `0008_client` migration was applied to the shared non-production database. Output: `migrations applied successfully!`.
+- **Exports/fidelity:** all 40 HTML exports were present. The implementation was compared structurally at the required desktop/phone compositions. The desktop table is intentionally a standalone React Aria `DataTable`; the Section Card owns *Daftar klien*, count, actions and search, while `EmptyState` remains a separate composition unit. Search is 320px on desktop and full width on phone; the allowed table column literals (184/240/32) and narrow 720px content column are retained.
+- **Accessibility refinements:** `IconButton` forwards a ref for React Aria triggers. A client row-menu Escape restores focus to its own action trigger; social-link focus remains on a surviving field after removal. The focused DOM tests and keyboard E2E path pass.
+- **AC map:** the test matrix above maps AC-CLI-001…021 to domain/UI/integration/E2E coverage. `tests/e2e/clients/clients.spec.ts` supplies the completed journeys for navigation, add/edit/duplicate number, archive/restore/delete, search, WhatsApp link and tenant isolation.
+- **Verification pending:** targeted unit/DOM tests, TypeScript and ESLint pass. The separate axe run first found a React Aria transient tree after repeated overlay transitions; isolated runs then hit a local registration failure at `/register` with no alert content before scans began. Re-run the full E2E/axe suite on a fresh local server before marking the feature DONE. AC-CLI-015's real-FK integration check remains F-07 work, as already documented.
+- **Follow-ups:** promote the List Card Item avatar and pending Sheet Item additions when the design-system promotion cycle resumes; resolve the existing `text.link` design-token gap.

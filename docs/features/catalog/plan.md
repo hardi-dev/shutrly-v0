@@ -925,7 +925,7 @@ Use cases parse with the schema, map the first issue per path to `fieldErrors`, 
 
 **Files:** create `service-repository.port.ts`, schemas `service-info`, `package-value-input`, `booking-field`, `move-direction`, the use cases below and `fake-service-repository.ts`.
 
-- [ ] **Step 1: Port.**
+- [x] **Step 1: Port.**
 
 ```ts
 // service-repository.port.ts
@@ -1009,13 +1009,13 @@ export interface ServiceRepositoryPort {
 }
 ```
 
-- [ ] **Step 2: Schemas.**
+- [x] **Step 2: Schemas.**
   - `serviceInfoSchema = catalogNameSchema.extend({ categoryId: z.uuid({ error: "CATEGORY_REQUIRED" }), basePrice: z.string().transform/refine via parseIdrAmount → amount, error = problem })`.
   - `packageValueInputSchema = z.discriminatedUnion("type", [ { type: "NUMBER", value: string }, { type: "RANGE", min: string, max: string } ])`; the use case parses each string with `parseQuantity`, then `findPackageValueProblem` against the definition.
   - `bookingFieldSchema = catalogNameSchema.extend({ fieldType: z.enum(FIELD_TYPES), isRequired: z.boolean(), options: z.array(z.string()).nullable() }).superRefine` (SELECT → `findOptionsProblem`, issue path `["options", index]`; non-SELECT → options must be null).
   - `moveDirectionSchema = z.enum(["UP", "DOWN"])`.
-- [ ] **Step 3: Fake** `fake-service-repository.ts`: services with items and fields in arrays; enforces name uniqueness, one item per definition, active-category/definition checks via injected fakes from Task 7, `uniqueFieldKey` for keys, keeps keys on rename, reorders by swapping neighbours; `delete` → `IN_USE` for IDs in `public projectsByService: Set<string>`.
-- [ ] **Step 4: Failing use-case tests:**
+- [x] **Step 3: Fake** `fake-service-repository.ts`: services with items and fields in arrays; enforces name uniqueness, one item per definition, active-category/definition checks via injected fakes from Task 7, `uniqueFieldKey` for keys, keeps keys on rename, reorders by swapping neighbours; `delete` → `IN_USE` for IDs in `public projectsByService: Set<string>`.
+- [x] **Step 4: Failing use-case tests:**
   - `list-services`: AC-CAT-005 grouped by category in category order, services via `sortCatalogEntries`, each with `priceLabel` (`formatIdr`) and `summary` (`summariseServiceItems`).
   - `get-service-detail`: AC-CAT-010/011/014 items and fields in `sort_order`; unknown → `NOT_FOUND`.
   - `add-service`: AC-CAT-010 *Wisuda Basic*, category, `"750.000"` → stored `"750000"`, returns `{ ok:true, serviceId }`; archived category → `fieldErrors.categoryId = "INACTIVE_REFERENCE"`; AC-CAT-019 duplicate.
@@ -1025,8 +1025,8 @@ export interface ServiceRepositoryPort {
   - `update-service-item-value`, `remove-service-item`, `move-service-item`: AC-CAT-016.
   - `add-booking-field` / `update-booking-field`: AC-CAT-014 keys `nama_kampus`, `tanggal_wisuda`, `ukuran_toga`; renaming keeps the key; AC-CAT-015 duplicate name (any case) → `name: NAME_TAKEN`; SELECT with `[]` → `options: OPTIONS_REQUIRED`; `["S","M","s"]` → `options.2: OPTION_DUPLICATE`.
   - `remove-booking-field`, `move-booking-field`: AC-CAT-016.
-- [ ] **Step 5:** run → FAIL. **Step 6: Implement.** Use cases re-read the definition (`ItemDefinitionRepositoryPort.findById`) to validate a value; unknown definition in this workspace → `fieldErrors.definitionId = "NOT_FOUND"`.
-- [ ] **Step 7:** gate → PASS. Commit `feat(booking): add service, item and booking field use cases`.
+- [x] **Step 5:** run → FAIL. **Step 6: Implement.** Use cases re-read the definition (`ItemDefinitionRepositoryPort.findById`) to validate a value; unknown definition in this workspace → `fieldErrors.definitionId = "NOT_FOUND"`.
+- [x] **Step 7:** gate → PASS. Commit `feat(booking): add service, item and booking field use cases`.
 
 ### Task 9: Drizzle repositories and integration tests
 

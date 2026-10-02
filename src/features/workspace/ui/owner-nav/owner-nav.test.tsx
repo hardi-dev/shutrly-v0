@@ -79,6 +79,7 @@ describe("resolvePageHeading", () => {
       {
         title: "Layanan",
         subtitle: OWNER_NAV_COPY.servicesSubtitle,
+        breadcrumbs: [{ label: "Aster", href: "/w/A" }, { label: "Layanan" }],
         tabs: {
           label: OWNER_NAV_COPY.servicesTabsLabel,
           tabs: [
@@ -94,6 +95,11 @@ describe("resolvePageHeading", () => {
       {
         title: "Item paket",
         subtitle: OWNER_NAV_COPY.servicesSubtitle,
+        breadcrumbs: [
+          { label: "Aster", href: "/w/A" },
+          { label: "Layanan", href: "/w/A/services" },
+          { label: "Item paket" },
+        ],
         tabs: {
           label: OWNER_NAV_COPY.servicesTabsLabel,
           tabs: [
@@ -122,5 +128,25 @@ describe("resolvePageHeading", () => {
     ["/profile", null],
   ])("resolves %s", (pathname, heading) => {
     expect(resolvePageHeading(pathname, "A", "Aster")).toEqual(heading);
+  });
+
+  it("builds the catalog hierarchy for service categories", () => {
+    expect(resolvePageHeading("/w/A/services/categories", "A", "Aster")).toMatchObject({
+      breadcrumbs: [
+        { label: "Aster", href: "/w/A" },
+        { label: "Layanan", href: "/w/A/services" },
+        { label: "Kategori" },
+      ],
+    });
+  });
+
+  it("builds the catalog hierarchy for service items", () => {
+    expect(resolvePageHeading("/w/A/services/items", "A", "Aster")).toMatchObject({
+      breadcrumbs: [
+        { label: "Aster", href: "/w/A" },
+        { label: "Layanan", href: "/w/A/services" },
+        { label: "Item paket" },
+      ],
+    });
   });
 });

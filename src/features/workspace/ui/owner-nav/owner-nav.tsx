@@ -94,12 +94,16 @@ export function resolvePageHeading(
   if (section === "photo-sources") {
     return { title: OWNER_NAV_COPY.photoSources, subtitle: OWNER_NAV_COPY.photoSourcesSubtitle };
   }
-  if (section === "services") return resolveServicesHeading(pathname, prefix);
+  if (section === "services") return resolveServicesHeading(pathname, prefix, workspaceName);
   const title = SECTION_TITLES[section];
   return title ? { title, subtitle: OWNER_NAV_COPY.comingSoonSubtitle } : null;
 }
 
-function resolveServicesHeading(pathname: string, prefix: string): PageHeading {
+function resolveServicesHeading(
+  pathname: string,
+  prefix: string,
+  workspaceName: string,
+): PageHeading {
   const servicesPrefix = `${prefix}/services`;
   const rest = pathname.slice(servicesPrefix.length).split("/").filter(Boolean).join("/");
   const tabs = [
@@ -121,6 +125,11 @@ function resolveServicesHeading(pathname: string, prefix: string): PageHeading {
   return {
     title: activeTab.label,
     subtitle: OWNER_NAV_COPY.servicesSubtitle,
+    breadcrumbs: [
+      { label: workspaceName, href: prefix },
+      ...(rest === "" ? [] : [{ label: OWNER_NAV_COPY.services, href: servicesPrefix }]),
+      { label: activeTab.label },
+    ],
     tabs: { label: OWNER_NAV_COPY.servicesTabsLabel, tabs },
   };
 }

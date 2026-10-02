@@ -156,6 +156,11 @@ describe("OwnerShell sub-pages", () => {
     expect(
       screen.getAllByRole("heading", { level: 1, name: "Wisuda Basic" }).length,
     ).toBeGreaterThan(0);
+    expect(
+      screen
+        .getAllByRole("link", { name: "Layanan" })
+        .find((link) => link.getAttribute("href") === "/w/A/services"),
+    ).toHaveAttribute("href", "/w/A/services");
     expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute("href", "/w/A/services");
   });
 });

@@ -21,6 +21,7 @@ export interface AppShellProps {
   panelActions?: ReactNode;
   panelUtilities?: ReactNode;
   panelTabs?: NonNullable<PageHeaderProps["tabs"]>;
+  panelBreadcrumbs?: NonNullable<PageHeaderProps["breadcrumbs"]>;
   mobileBottomNav: BottomNavProps;
   mobileSheet?: ReactNode;
   mobileUtilities?: ReactNode;

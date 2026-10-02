@@ -6,6 +6,7 @@ export function AppPanel({
   id,
   title,
   parent = "Workspace",
+  breadcrumbs,
   subtitle,
   utilities,
   actions,
@@ -23,6 +24,7 @@ export function AppPanel({
         parent={parent}
         current={title}
         title={title}
+        breadcrumbs={breadcrumbs}
         subtitle={subtitle}
         utilities={utilities}
         action={actions}

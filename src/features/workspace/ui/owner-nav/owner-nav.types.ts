@@ -1,3 +1,6 @@
+import type { BreadcrumbItem } from "@/ui/patterns/page-header/page-header.types";
+import type { TabLink } from "@/ui/patterns/tabs/tabs.types";
+
 export interface OwnerNavProps {
   workspaceId: string;
   pathname: string;
@@ -14,9 +17,9 @@ export interface ActiveNavState {
 export interface PageHeading {
   title: string;
   subtitle?: string;
+  breadcrumbs?: readonly BreadcrumbItem[];
   tabs?: {
     readonly label: string;
     readonly tabs: readonly TabLink[];
   };
 }
-import type { TabLink } from "@/ui/patterns/tabs/tabs.types";

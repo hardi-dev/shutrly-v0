@@ -50,6 +50,17 @@ describe("ClientsScreen", () => {
     expect(screen.getByRole("dialog", { name: "Ubah klien" })).toBeInTheDocument();
   });
 
+  it("AC-CLI-012 saves a desktop edit through the update action", async () => {
+    useMobileViewport.mockReturnValue(false);
+    const action = vi.fn().mockResolvedValue(undefined);
+    render(<ClientsScreen {...props} updateAction={action} />);
+    await userEvent.click(screen.getByText("Rina"));
+    await userEvent.clear(screen.getByLabelText("Nama klien"));
+    await userEvent.type(screen.getByLabelText("Nama klien"), "Rina Baru");
+    await userEvent.click(screen.getByRole("button", { name: "Simpan" }));
+    expect(action).toHaveBeenCalled();
+  });
+
   it("AC-CLI-004 renders the no-match state for a query with no rows", () => {
     useMobileViewport.mockReturnValue(false);
     render(<ClientsScreen {...props} rows={[]} count={1} q="zzz" />);

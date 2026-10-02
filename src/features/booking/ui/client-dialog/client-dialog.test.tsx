@@ -75,6 +75,7 @@ describe("ClientDialog", () => {
   it("AC-CLI-012 pre-fills and submits raw edit values", async () => {
     useMobileViewport.mockReturnValue(false);
     const submit = vi.fn().mockResolvedValue(undefined);
+    const onOpenChange = vi.fn();
     render(
       <ClientDialog
         isOpen
@@ -87,7 +88,7 @@ describe("ClientDialog", () => {
           socialLinks: [{ platform: "INSTAGRAM", value: "rina.wed" }],
           isArchived: false,
         }}
-        onOpenChange={vi.fn()}
+        onOpenChange={onOpenChange}
         onSubmit={submit}
       />,
     );
@@ -101,5 +102,6 @@ describe("ClientDialog", () => {
       whatsappNumber: "+62 812-3456-7890",
       socialLinks: [{ platform: "INSTAGRAM", value: "@rina.wed" }],
     });
+    expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 });

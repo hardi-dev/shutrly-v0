@@ -45,7 +45,9 @@ export function ClientsTable({
           label={CLIENT_COPY.listTitle}
           columns={COLUMNS}
           rows={rows}
-          renderCell={(row, columnId) => renderCell(row, columnId, { status, onRowAction, onArchive, onRestore, onDelete })}
+          renderCell={(row, columnId) =>
+            renderCell(row, columnId, { status, onRowAction, onArchive, onRestore, onDelete })
+          }
           onRowAction={onRowAction}
         />
       )}
@@ -53,12 +55,28 @@ export function ClientsTable({
   );
 }
 
-function renderCell(row: ClientsTableProps["rows"][number], columnId: string, actions: Pick<ClientsTableProps, "status" | "onRowAction" | "onArchive" | "onRestore" | "onDelete">): ReactNode {
+function renderCell(
+  row: ClientsTableProps["rows"][number],
+  columnId: string,
+  actions: Pick<
+    ClientsTableProps,
+    "status" | "onRowAction" | "onArchive" | "onRestore" | "onDelete"
+  >,
+): ReactNode {
   if (columnId === "name") return <ClientNameCell name={row.name} />;
   if (columnId === "whatsapp") return <span>{whatsappLabel(row.whatsappNumber)}</span>;
   if (columnId === "social") return <SocialLinksCell links={row.socialLinks} />;
   if (actions.onRowAction && actions.onArchive && actions.onRestore && actions.onDelete)
-    return <ClientRowActions client={row} status={actions.status} onEdit={() => actions.onRowAction?.(row)} onArchive={() => actions.onArchive?.(row)} onRestore={() => actions.onRestore?.(row)} onDelete={() => actions.onDelete?.(row)} />;
+    return (
+      <ClientRowActions
+        client={row}
+        status={actions.status}
+        onEdit={() => actions.onRowAction?.(row)}
+        onArchive={() => actions.onArchive?.(row)}
+        onRestore={() => actions.onRestore?.(row)}
+        onDelete={() => actions.onDelete?.(row)}
+      />
+    );
   return <span className="sr-only" />;
 }
 

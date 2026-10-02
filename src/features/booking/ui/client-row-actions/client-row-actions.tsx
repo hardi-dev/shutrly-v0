@@ -3,7 +3,10 @@
 
 import { useState } from "react";
 
-import { formatWhatsappNumber, whatsappChatUrl } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
+import {
+  formatWhatsappNumber,
+  whatsappChatUrl,
+} from "@/features/booking/domain/whatsapp-number/whatsapp-number";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Menu } from "@/ui/patterns/menu/menu";
@@ -22,29 +25,119 @@ export function ClientRowActions(props: Readonly<ClientRowActionsProps>) {
   const [isOpen, setIsOpen] = useState(false);
   const actionLabel = CLIENT_COPY.rowActions(props.client.name);
   const archive = props.status === "ACTIVE";
-  function closeThen(action: () => void): void { setIsOpen(false); action(); }
-  const items = mobile ? <MobileItems {...props} archive={archive} closeThen={closeThen} /> : <DesktopItems {...props} archive={archive} />;
-  const trigger = <IconButton icon="more-horizontal" size="sm" aria-label={actionLabel} onPress={() => setIsOpen(true)} />;
-  if (mobile) return <><>{trigger}</><BottomSheet isOpen={isOpen} onOpenChange={setIsOpen} title={props.client.name} meta={props.client.whatsappNumber ? formatWhatsappNumber(props.client.whatsappNumber) : CLIENT_COPY.noWhatsapp} variant="actions">{items}</BottomSheet></>;
-  return <MenuTrigger label={actionLabel}><IconButton icon="more-horizontal" size="sm" aria-label={actionLabel} /><Menu aria-label={actionLabel}>{items}</Menu></MenuTrigger>;
+  function closeThen(action: () => void): void {
+    setIsOpen(false);
+    action();
+  }
+  const items = mobile ? (
+    <MobileItems {...props} archive={archive} closeThen={closeThen} />
+  ) : (
+    <DesktopItems {...props} archive={archive} />
+  );
+  const trigger = (
+    <IconButton
+      icon="more-horizontal"
+      size="sm"
+      aria-label={actionLabel}
+      onPress={() => setIsOpen(true)}
+    />
+  );
+  if (mobile)
+    return (
+      <>
+        <>{trigger}</>
+        <BottomSheet
+          isOpen={isOpen}
+          onOpenChange={setIsOpen}
+          title={props.client.name}
+          meta={
+            props.client.whatsappNumber
+              ? formatWhatsappNumber(props.client.whatsappNumber)
+              : CLIENT_COPY.noWhatsapp
+          }
+          variant="actions"
+        >
+          {items}
+        </BottomSheet>
+      </>
+    );
+  return (
+    <MenuTrigger label={actionLabel}>
+      <IconButton icon="more-horizontal" size="sm" aria-label={actionLabel} />
+      <Menu aria-label={actionLabel}>{items}</Menu>
+    </MenuTrigger>
+  );
 }
 
-function DesktopItems({ client, archive, onEdit, onArchive, onRestore, onDelete }: Readonly<ClientRowActionsProps & { archive: boolean }>) {
-  return <>
-    <MenuItem label={CLIENT_COPY.edit} icon="pencil" onSelect={onEdit} />
-    {client.whatsappNumber ? <MenuItem label={CLIENT_COPY.openWhatsapp} icon="message-circle" href={whatsappChatUrl(client.whatsappNumber)} target="_blank" /> : null}
-    <MenuItem label={archive ? CLIENT_COPY.archive : CLIENT_COPY.restore} icon={archive ? "archive" : "archive-restore"} onSelect={archive ? onArchive : onRestore} />
-    <MenuDivider />
-    <MenuItem label={CLIENT_COPY.delete} icon="trash-2" variant="destructive" onSelect={onDelete} />
-  </>;
+function DesktopItems({
+  client,
+  archive,
+  onEdit,
+  onArchive,
+  onRestore,
+  onDelete,
+}: Readonly<ClientRowActionsProps & { archive: boolean }>) {
+  return (
+    <>
+      <MenuItem label={CLIENT_COPY.edit} icon="pencil" onSelect={onEdit} />
+      {client.whatsappNumber ? (
+        <MenuItem
+          label={CLIENT_COPY.openWhatsapp}
+          icon="message-circle"
+          href={whatsappChatUrl(client.whatsappNumber)}
+          target="_blank"
+        />
+      ) : null}
+      <MenuItem
+        label={archive ? CLIENT_COPY.archive : CLIENT_COPY.restore}
+        icon={archive ? "archive" : "archive-restore"}
+        onSelect={archive ? onArchive : onRestore}
+      />
+      <MenuDivider />
+      <MenuItem
+        label={CLIENT_COPY.delete}
+        icon="trash-2"
+        variant="destructive"
+        onSelect={onDelete}
+      />
+    </>
+  );
 }
 
-function MobileItems({ client, archive, onEdit, onArchive, onRestore, onDelete, closeThen }: Readonly<ClientRowActionsProps & { archive: boolean; closeThen: (action: () => void) => void }>) {
-  return <>
-    <SheetItem label={CLIENT_COPY.edit} icon="pencil" onPress={() => closeThen(onEdit)} />
-    {client.whatsappNumber ? <SheetItem label={CLIENT_COPY.openWhatsapp} icon="message-circle" href={whatsappChatUrl(client.whatsappNumber)} target="_blank" /> : null}
-    <SheetItem label={archive ? CLIENT_COPY.archive : CLIENT_COPY.restore} icon={archive ? "archive" : "archive-restore"} onPress={() => closeThen(archive ? onArchive : onRestore)} />
-    <SheetItem label={CLIENT_COPY.delete} icon="trash-2" variant="destructive" onPress={() => closeThen(onDelete)} />
-  </>;
+function MobileItems({
+  client,
+  archive,
+  onEdit,
+  onArchive,
+  onRestore,
+  onDelete,
+  closeThen,
+}: Readonly<
+  ClientRowActionsProps & { archive: boolean; closeThen: (action: () => void) => void }
+>) {
+  return (
+    <>
+      <SheetItem label={CLIENT_COPY.edit} icon="pencil" onPress={() => closeThen(onEdit)} />
+      {client.whatsappNumber ? (
+        <SheetItem
+          label={CLIENT_COPY.openWhatsapp}
+          icon="message-circle"
+          href={whatsappChatUrl(client.whatsappNumber)}
+          target="_blank"
+        />
+      ) : null}
+      <SheetItem
+        label={archive ? CLIENT_COPY.archive : CLIENT_COPY.restore}
+        icon={archive ? "archive" : "archive-restore"}
+        onPress={() => closeThen(archive ? onArchive : onRestore)}
+      />
+      <SheetItem
+        label={CLIENT_COPY.delete}
+        icon="trash-2"
+        variant="destructive"
+        onPress={() => closeThen(onDelete)}
+      />
+    </>
+  );
 }
 /* eslint-enable max-len, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression -- end responsive action groups */

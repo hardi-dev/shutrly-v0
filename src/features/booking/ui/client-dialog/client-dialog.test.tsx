@@ -48,7 +48,9 @@ describe("ClientDialog", () => {
     await userEvent.type(screen.getByLabelText("Nama klien"), "Rina");
     await userEvent.type(screen.getByLabelText("Nomor WhatsApp"), "0812-3456-7890");
     await userEvent.click(screen.getByRole("button", { name: "Tambah klien" }));
-    expect(await screen.findByText("Nomor ini sudah dipakai Budi (diarsipkan)")).toBeInTheDocument();
+    expect(
+      await screen.findByText("Nomor ini sudah dipakai Budi (diarsipkan)"),
+    ).toBeInTheDocument();
     expect(screen.getByRole("dialog", { name: "Tambah klien" })).toBeInTheDocument();
   });
 

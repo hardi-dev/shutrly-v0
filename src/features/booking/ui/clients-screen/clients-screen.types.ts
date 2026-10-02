@@ -23,7 +23,11 @@ export interface ClientsScreenProps {
     clientId: string,
     values: ClientInput,
   ) => Promise<ClientWriteResult | undefined>;
-  readonly setArchivedAction?: (workspaceId: string, clientId: string, isArchived: boolean) => Promise<void>;
+  readonly setArchivedAction?: (
+    workspaceId: string,
+    clientId: string,
+    isArchived: boolean,
+  ) => Promise<void>;
   readonly deleteAction?: (workspaceId: string, clientId: string) => Promise<DeleteClientResult>;
 }
 

@@ -22,13 +22,17 @@ export function ClientSearchField({
   useEffect(() => {
     if (value === q) return;
     const destination = value ? `${pathname}?q=${encodeURIComponent(value)}` : pathname;
-    const timer = window.setTimeout(
-      () => { router.replace(destination); },
-      CLIENT_SEARCH_DEBOUNCE_MS,
-    );
-    return () => { window.clearTimeout(timer); };
+    const timer = window.setTimeout(() => {
+      router.replace(destination);
+    }, CLIENT_SEARCH_DEBOUNCE_MS);
+    return () => {
+      window.clearTimeout(timer);
+    };
   }, [pathname, q, router, value]);
-  function clear(): void { setValue(""); router.replace(pathname); }
+  function clear(): void {
+    setValue("");
+    router.replace(pathname);
+  }
   return (
     <>
       <div className="w-full md:w-[320px]">

@@ -16,7 +16,14 @@ describe("DeleteClientDialog", () => {
     useMobileViewport.mockReturnValue(false);
     const action = vi.fn().mockResolvedValue({ ok: true });
     const onOpenChange = vi.fn();
-    render(<DeleteClientDialog client={client} workspaceId="w1" action={action} onOpenChange={onOpenChange} />);
+    render(
+      <DeleteClientDialog
+        client={client}
+        workspaceId="w1"
+        action={action}
+        onOpenChange={onOpenChange}
+      />,
+    );
     expect(screen.getByRole("alertdialog", { name: 'Hapus klien "Rina"?' })).toBeVisible();
     await userEvent.click(screen.getByRole("button", { name: "Hapus klien" }));
     expect(action).toHaveBeenCalledWith("w1", "c1");
@@ -26,7 +33,14 @@ describe("DeleteClientDialog", () => {
   it("AC-CLI-015 keeps the dialog open when a client is in use", async () => {
     useMobileViewport.mockReturnValue(false);
     const action = vi.fn().mockResolvedValue({ ok: false, code: "IN_USE" });
-    render(<DeleteClientDialog client={client} workspaceId="w1" action={action} onOpenChange={vi.fn()} />);
+    render(
+      <DeleteClientDialog
+        client={client}
+        workspaceId="w1"
+        action={action}
+        onOpenChange={vi.fn()}
+      />,
+    );
     await userEvent.click(screen.getByRole("button", { name: "Hapus klien" }));
     expect(await screen.findByText("Klien ini punya proyek. Arsipkan saja.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Hapus klien" })).toBeDisabled();

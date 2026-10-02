@@ -45,7 +45,12 @@ export function ClientsScreen({
   const [deleting, setDeleting] = useState<ClientsScreenProps["rows"][number] | null>(null);
   const pager = useClientPager(workspaceId, status, q, rows, initialPage, loadMoreAction);
   const search = (
-    <ClientSearchField workspaceId={workspaceId} status={status} q={q} resultCount={pager.rows.length} />
+    <ClientSearchField
+      workspaceId={workspaceId}
+      status={status}
+      q={q}
+      resultCount={pager.rows.length}
+    />
   );
   function openDialog(): void {
     setEditing(undefined);
@@ -72,25 +77,29 @@ export function ClientsScreen({
   return (
     <>
       <ClientScreenContent
-      workspaceId={workspaceId}
-      status={status}
-      count={count}
-      rows={pager.rows}
-      isMobile={isMobile}
-      desktopAddAction={actions.desktop}
-      mobileAddAction={actions.mobile}
-      emptyState={emptyState}
-      footer={pager.hasMore ? <LoadMoreButton isLoading={pager.isLoading} onLoadMore={pager.loadMore} /> : null}
-      search={search}
-      updateAction={updateAction}
-      openEdit={openEdit}
-      addAction={addAction}
-      isDialogOpen={isDialogOpen}
-      editing={editing}
-      onOpenChange={setIsDialogOpen}
-      setArchivedAction={setArchivedAction}
-      deleteAction={deleteAction}
-      openDelete={setDeleting}
+        workspaceId={workspaceId}
+        status={status}
+        count={count}
+        rows={pager.rows}
+        isMobile={isMobile}
+        desktopAddAction={actions.desktop}
+        mobileAddAction={actions.mobile}
+        emptyState={emptyState}
+        footer={
+          pager.hasMore ? (
+            <LoadMoreButton isLoading={pager.isLoading} onLoadMore={pager.loadMore} />
+          ) : null
+        }
+        search={search}
+        updateAction={updateAction}
+        openEdit={openEdit}
+        addAction={addAction}
+        isDialogOpen={isDialogOpen}
+        editing={editing}
+        onOpenChange={setIsDialogOpen}
+        setArchivedAction={setArchivedAction}
+        deleteAction={deleteAction}
+        openDelete={setDeleting}
       />
       {deleteAction ? (
         <DeleteClientDialog
@@ -104,9 +113,18 @@ export function ClientsScreen({
   );
 }
 
-function LoadMoreButton({ isLoading, onLoadMore }: Readonly<{ isLoading: boolean; onLoadMore: () => Promise<void> }>) {
-  function handleLoadMore(): void { void onLoadMore(); }
-  return <Button variant="secondary" isPending={isLoading} onPress={handleLoadMore}>{isLoading ? CLIENT_COPY.loadingMore : CLIENT_COPY.loadMore}</Button>;
+function LoadMoreButton({
+  isLoading,
+  onLoadMore,
+}: Readonly<{ isLoading: boolean; onLoadMore: () => Promise<void> }>) {
+  function handleLoadMore(): void {
+    void onLoadMore();
+  }
+  return (
+    <Button variant="secondary" isPending={isLoading} onPress={handleLoadMore}>
+      {isLoading ? CLIENT_COPY.loadingMore : CLIENT_COPY.loadMore}
+    </Button>
+  );
 }
 
 function useClientPager(
@@ -197,7 +215,10 @@ function archiveClient(
       title: isArchived ? CLIENT_COPY.archivedTitle : CLIENT_COPY.restoredTitle,
       body: isArchived ? CLIENT_COPY.archivedBody(client.name) : undefined,
       action: isArchived
-        ? { label: CLIENT_COPY.undo, onAction: () => archiveClient(client, false, action, workspaceId) }
+        ? {
+            label: CLIENT_COPY.undo,
+            onAction: () => archiveClient(client, false, action, workspaceId),
+          }
         : undefined,
     });
   });

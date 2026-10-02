@@ -45,12 +45,7 @@ describe("ClientsScreen", () => {
 
   it("AC-CLI-012 opens the edit dialog when a desktop row is selected", async () => {
     useMobileViewport.mockReturnValue(false);
-    render(
-      <ClientsScreen
-        {...props}
-        updateAction={updateAction}
-      />,
-    );
+    render(<ClientsScreen {...props} updateAction={updateAction} />);
     await userEvent.click(screen.getByText("Rina"));
     expect(screen.getByRole("dialog", { name: "Ubah klien" })).toBeInTheDocument();
   });

@@ -9,7 +9,17 @@ import { ClientRowActions } from "../client-row-actions/client-row-actions";
 import type { ClientListProps } from "./client-list.types";
 
 /** Renders the compact phone-only client list. */
-export function ClientList({ status, count, rows, action, emptyState, onEdit, onArchive, onRestore, onDelete }: Readonly<ClientListProps>) {
+export function ClientList({
+  status,
+  count,
+  rows,
+  action,
+  emptyState,
+  onEdit,
+  onArchive,
+  onRestore,
+  onDelete,
+}: Readonly<ClientListProps>) {
   return (
     <SectionCard
       title={CLIENT_COPY.listTitle}
@@ -20,13 +30,29 @@ export function ClientList({ status, count, rows, action, emptyState, onEdit, on
       {rows.length === 0 ? (
         <div className="px-(--space-4)">{emptyState}</div>
       ) : (
-        <ClientRows rows={rows} status={status} onEdit={onEdit} onArchive={onArchive} onRestore={onRestore} onDelete={onDelete} />
+        <ClientRows
+          rows={rows}
+          status={status}
+          onEdit={onEdit}
+          onArchive={onArchive}
+          onRestore={onRestore}
+          onDelete={onDelete}
+        />
       )}
     </SectionCard>
   );
 }
 
-function ClientRows({ rows, status, onEdit, onArchive, onRestore, onDelete }: Readonly<Pick<ClientListProps, "rows" | "status" | "onEdit" | "onArchive" | "onRestore" | "onDelete">>) {
+function ClientRows({
+  rows,
+  status,
+  onEdit,
+  onArchive,
+  onRestore,
+  onDelete,
+}: Readonly<
+  Pick<ClientListProps, "rows" | "status" | "onEdit" | "onArchive" | "onRestore" | "onDelete">
+>) {
   return (
     <ul aria-label={CLIENT_COPY.listTitle}>
       {rows.map((row, index) => (
@@ -38,7 +64,18 @@ function ClientRows({ rows, status, onEdit, onArchive, onRestore, onDelete }: Re
             row.whatsappNumber ? formatWhatsappNumber(row.whatsappNumber) : CLIENT_COPY.noWhatsapp
           }
           isLast={index === rows.length - 1}
-          trailing={onEdit && onArchive && onRestore && onDelete ? <ClientRowActions client={row} status={status} onEdit={() => onEdit(row)} onArchive={() => onArchive(row)} onRestore={() => onRestore(row)} onDelete={() => onDelete(row)} /> : undefined}
+          trailing={
+            onEdit && onArchive && onRestore && onDelete ? (
+              <ClientRowActions
+                client={row}
+                status={status}
+                onEdit={() => onEdit(row)}
+                onArchive={() => onArchive(row)}
+                onRestore={() => onRestore(row)}
+                onDelete={() => onDelete(row)}
+              />
+            ) : undefined
+          }
         />
       ))}
     </ul>

@@ -9,7 +9,11 @@ import type { UseLoadMoreClientsProps } from "./use-load-more-clients.types";
 
 /** Appends the next keyset page while preserving already rendered client rows. */
 export function useLoadMoreClients({
-  workspaceId, status, q, initial, action,
+  workspaceId,
+  status,
+  q,
+  initial,
+  action,
 }: Readonly<UseLoadMoreClientsProps>) {
   const [page, setPage] = useState(initial);
   const [loading, setLoading] = useState(false);
@@ -19,9 +23,15 @@ export function useLoadMoreClients({
     try {
       const next = await action(workspaceId, { status, q, afterId: page.nextCursor });
       setPage({ items: [...page.items, ...next.items], nextCursor: next.nextCursor });
+    } catch {
+      showToast({
+        tone: "danger",
+        title: CLIENT_COPY.serverErrorTitle,
+        body: CLIENT_COPY.serverErrorBody,
+      });
+    } finally {
+      setLoading(false);
     }
-    catch { showToast({ tone: "danger", title: CLIENT_COPY.serverErrorTitle, body: CLIENT_COPY.serverErrorBody }); }
-    finally { setLoading(false); }
   }
   return { rows: page.items, hasMore: page.nextCursor !== null, isLoading: loading, loadMore };
 }

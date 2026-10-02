@@ -34,7 +34,8 @@ export const CLIENT_COPY = {
   deleting: "Menghapus…",
   close: "Tutup",
   deleteTitle: (name: string) => `Hapus klien "${name}"?`,
-  deleteDescription: "Nama, nomor WhatsApp, dan media sosialnya dihapus permanen. Nomornya bisa dipakai klien lain.",
+  deleteDescription:
+    "Nama, nomor WhatsApp, dan media sosialnya dihapus permanen. Nomornya bisa dipakai klien lain.",
   deleteBlockedTitle: "Klien ini punya proyek. Arsipkan saja.",
   deleteBlockedBody: (name: string) => `${name} tidak dihapus.`,
   rowActions: (name: string) => `Aksi untuk ${name}`,
@@ -64,8 +65,7 @@ export const CLIENT_COPY = {
   removeSocialLink: "Hapus media sosial",
   socialPlatformField: (index: number) => `Platform media sosial ${String(index)}`,
   socialValueField: (platform: string, index: number) => `Akun ${platform} ${String(index)}`,
-  removeSocialLinkField: (platform: string, index: number) =>
-    `Hapus ${platform} ${String(index)}`,
+  removeSocialLinkField: (platform: string, index: number) => `Hapus ${platform} ${String(index)}`,
   cancel: "Batal",
   save: "Tambah klien",
   saveEdit: "Simpan",

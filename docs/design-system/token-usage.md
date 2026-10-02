@@ -1,6 +1,6 @@
 # Token usage rules — Shutrly / Studio Lime
 
-Status: token set **PERSISTED 2026-09-28** · Rules v3: **APPROVED 2026-09-28** (Owner: "ya") · **Rules v3.1 amendment N1 · H1 · C1: APPROVED 2026-09-29** (Owner: "ok agree"; F-17) · Previous rules: APPROVED 2026-09-26 (Owner: "approve") with the amendments recorded in git history · v3 amendment: neutral surface roles L1–L3, border roles B1–B2, text roles T1–T3, and the accepted contrast exceptions below · Source of values: [`tokens.json`](tokens.json) · Visual version: `design-system.lib.pen` › boards **07 — Usage rules** and **08 — Spacing rules**
+Status: token set **PERSISTED 2026-09-28** · Rules v3: **APPROVED 2026-09-28** (Owner: "ya") · **Rules v3.1 amendment N1 · H1 · C1: APPROVED 2026-09-29** (Owner: "ok agree"; F-17) · **F-06 amendment `surface.panel-subtle` (table header): APPROVED 2026-10-02** (Owner chose option C · new token neutral 50 / 800; with the F-05 library merged: 597 tokens, checksum `d09d3751`) · Previous rules: APPROVED 2026-09-26 (Owner: "approve") with the amendments recorded in git history · v3 amendment: neutral surface roles L1–L3, border roles B1–B2, text roles T1–T3, and the accepted contrast exceptions below · Source of values: [`tokens.json`](tokens.json) · Visual version: `design-system.lib.pen` › boards **07 — Usage rules** and **08 — Spacing rules**
 
 These rules say *which* token to reach for, *when*, and what never to do. They apply to Pencil designs, the `components/ui` wrappers, and application code (ADR-010: Tailwind theme variables mirror these tokens).
 
@@ -36,7 +36,8 @@ These rules say *which* token to reach for, *when*, and what never to do. They a
 | **L1 shell** | `surface.muted` | Desktop sidebar, mobile header, and segmented-control track | Cards, fields, or content regions |
 | **L2 content** | `surface.canvas` | The app panel/content plane inside the shell | Shell chrome or individual cards |
 | **L3 card** | `surface.panel` | Cards, tiles, menus, alerts, and elevated content blocks on the content plane | The whole shell or app content plane |
-| — | `surface.subtle` | Quiet regions inside L2/L3: table headers and low-emphasis grouped zones | Primary content blocks |
+| — | `surface.subtle` | Quiet regions inside L2/L3: low-emphasis grouped zones, search field, modal/sheet footers | Primary content blocks |
+| — | `surface.panel-subtle` *(F-06, 2026-10-02)* | A quiet zone inside an L3 card that must stay visibly different from the L2 canvas: the table header row | Anything outside a card; tinting whole cards |
 | — | `surface.sunken` | Recessed controls: disabled field fill and calendar day cell | Cards or shell regions |
 | — | `surface.inverse` | One emphasised element: "Berlangsung" chip, selected day, active tab pill | More than one or two items per view |
 

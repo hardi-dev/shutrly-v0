@@ -22,7 +22,7 @@ A data table presented as a card, used for dashboard lists and list pages. It's 
 | `Table Cell/Stage` | `rS9BY` | Stage chip. Swap the stage with `Replace(<cell>/T67o9d, {type:"ref", ref:<Stage Chip/…>, name:"Stage", enabled:true})` |
 | `Table Cell/Actions` | `C1MRI` | Action menu SM, width 32, aligned right |
 | `Table Header Cell` | `T3MFWw` | overline in `table.header.text`; text `Label` `t55nF` |
-| `Table Header Row` | `oOFk7` | `table.header.background`; `table.header.border` top and bottom; padding 8/20; slot `Cells` `mxhia` |
+| `Table Header Row` | `oOFk7` | `table.header.background` (→ `surface.panel-subtle` since 2026-10-02, F-06; was `surface.subtle`, which equals the canvas); `table.header.border` top and bottom; padding 8/20; slot `Cells` `mxhia` |
 | `_TableRow/Base` (private) | `Y1wn7` | padding 12/20 (`table.row.padding-*`); bottom border `table.row.border`; slot `Cells` `GoLkn` |
 | `Table Row/Default` · `/Hover` | `r7YZY` · `XlPZD` | Hover uses `table.row.background-hover` (clickable rows only) |
 | `Table` | `FCsTI` | The card: `table.background`, 1 px `table.border`, `table.radius` (16), clipped. It holds the Toolbar, Header, Rows and Footer, described below. |

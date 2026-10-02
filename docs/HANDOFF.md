@@ -3,6 +3,12 @@
 Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 IN PROGRESS) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/catalog` (F-05; `main` merged in after F-04's PR #1).
 
+## Update 2026-10-02 — F-05 Service catalog PLANNED
+
+- **Plan:** [technical-design.md](features/catalog/technical-design.md) + [plan.md](features/catalog/plan.md), 15 tasks: (1) icons + Switch, (2) Select with rich options, (3) Tabs + header tabs + full-width Segmented + in-card Empty State, (4) owner shell tabs and heading override, (5) domain, (6) schema + migrations 0006/0007 — **Owner applies**, (7) categories + definitions use cases, (8) services/items/fields use cases, (9) Drizzle repositories + integration, (10) composition + creation seeding + actions, (11) routes/copy/skeletons, (12) Layanan + Kategori tabs, (13) Item paket tab, (14) service detail, (15) E2E + record. New bounded context `src/features/booking`. No new ADR.
+- **To confirm with the Owner:** TD-D-1 (row icons derived from type) and TD-D-2 (item summary = value + unit) in technical-design.md.
+- **Next:** `/sdv:build-feature catalog 1`.
+
 ## Update 2026-10-02 — F-05 Service catalog DESIGNED
 
 - **Design APPROVED (Owner 2026-10-02):** 40 frames in `catalog.pen` (26 desktop, 14 phone), exports in `features/catalog/exports/`. Direction Option A2 from `exploration.pen` board 12. See [design.md](features/catalog/design.md).

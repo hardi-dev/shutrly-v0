@@ -87,6 +87,7 @@ function ServiceGroups({
           key={group.categoryId}
           workspaceId={workspaceId}
           group={group}
+          addButton={addButton}
           setActiveAction={setActiveAction}
           onEdit={onEdit}
           onDelete={onDelete}
@@ -188,21 +189,34 @@ function useServiceDialogs() {
 function ServiceGroupCard({
   workspaceId,
   group,
+  addButton,
   setActiveAction,
   onEdit,
   onDelete,
 }: Readonly<{
   readonly workspaceId: string;
   readonly group: ServicesScreenProps["groups"][number];
+  readonly addButton: ReactNode;
   readonly setActiveAction: ServicesScreenProps["setActiveAction"];
   readonly onEdit: (service: ServiceListItem) => void;
   readonly onDelete: (service: ServiceListItem) => void;
 }>) {
+  if (group.services.length === 0) {
+    return (
+      <EmptyServiceGroup
+        categoryName={group.categoryName}
+        isActive={group.isActive}
+        addButton={addButton}
+      />
+    );
+  }
+
   return (
     <SectionCard
       title={group.categoryName}
       content="flush"
       description={CATALOG_COPY.categoryMeta(group.services.length)}
+      actions={categoryStatusChip(group.isActive)}
     >
       <ul aria-label={group.categoryName}>
         {group.services.map((service, index) => (
@@ -218,6 +232,39 @@ function ServiceGroupCard({
         ))}
       </ul>
     </SectionCard>
+  );
+}
+
+function EmptyServiceGroup({
+  categoryName,
+  isActive,
+  addButton,
+}: Readonly<{
+  readonly categoryName: string;
+  readonly isActive: boolean;
+  readonly addButton: ReactNode;
+}>) {
+  return (
+    <SectionCard
+      title={categoryName}
+      content="flush"
+      description={CATALOG_COPY.categoryMeta(0)}
+      actions={categoryStatusChip(isActive)}
+    >
+      <EmptyState
+        placement="in-card"
+        icon="package"
+        title={CATALOG_COPY.servicesEmptyTitle}
+        body={CATALOG_COPY.categoryServicesEmptyBody}
+        action={addButton}
+      />
+    </SectionCard>
+  );
+}
+
+function categoryStatusChip(isActive: boolean): ReactNode {
+  return isActive ? null : (
+    <StatusChip tone="neutral" label={CATALOG_COPY.archived} hasDot={false} />
   );
 }
 

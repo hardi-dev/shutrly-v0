@@ -24,6 +24,16 @@ import type {
 
 function noop(): void {}
 
+function createDialogOpenChangeHandler(onOpenChange: (isOpen: boolean) => void, close: () => void) {
+  return function handleOpenChange(nextIsOpen: boolean): void {
+    if (nextIsOpen) {
+      onOpenChange(true);
+      return;
+    }
+    close();
+  };
+}
+
 export function AddServiceDialog({
   isOpen,
   workspaceId,
@@ -35,6 +45,7 @@ export function AddServiceDialog({
   addCategoryAction,
 }: Readonly<AddServiceDialogProps>) {
   const form = useAddServiceForm({ workspaceId, service, onOpenChange, action, updateAction });
+  const handleOpenChange = createDialogOpenChangeHandler(onOpenChange, form.close);
   const inlineCategory = useInlineCategory({
     categories,
     addCategoryAction,
@@ -52,7 +63,7 @@ export function AddServiceDialog({
     <>
       <ResponsiveServiceDialog
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
+        onOpenChange={handleOpenChange}
         onClose={form.close}
         content={content}
         save={save}
@@ -158,6 +169,7 @@ function useAddServiceForm({
   const [error, setError] = useState<string | undefined>();
   const [isPending, setIsPending] = useState(false);
   function close(): void {
+    values.reset();
     onOpenChange(false);
     setError(undefined);
   }
@@ -192,9 +204,17 @@ function useAddServiceForm({
 }
 
 function useAddServiceValues(service: AddServiceDialogProps["service"]) {
-  const [name, setName] = useState(service?.name ?? "");
-  const [categoryId, setCategoryId] = useState<string | null>(service?.categoryId ?? null);
-  const [basePrice, setBasePrice] = useState(service?.basePrice ?? "");
+  const initialName = service?.name ?? "";
+  const initialCategoryId = service?.categoryId ?? null;
+  const initialBasePrice = service?.basePrice ?? "";
+  const [name, setName] = useState(initialName);
+  const [categoryId, setCategoryId] = useState<string | null>(initialCategoryId);
+  const [basePrice, setBasePrice] = useState(initialBasePrice);
+  function reset(): void {
+    setName(initialName);
+    setCategoryId(initialCategoryId);
+    setBasePrice(initialBasePrice);
+  }
   return {
     name,
     onNameChange: setName,
@@ -202,6 +222,7 @@ function useAddServiceValues(service: AddServiceDialogProps["service"]) {
     onCategoryChange: setCategoryId,
     basePrice,
     onBasePriceChange: setBasePrice,
+    reset,
   };
 }
 
@@ -258,13 +279,7 @@ function AddServiceFields({
     .map((category) => ({ id: category.id, label: category.name }));
   return (
     <div className="flex flex-col gap-(--space-4)">
-      <TextField
-        label={CATALOG_COPY.nameService}
-        name="name"
-        onBlur={noop}
-        value={name}
-        onChange={onNameChange}
-      />
+      <ServiceNameField name={name} onNameChange={onNameChange} />
       <Select
         label={CATALOG_COPY.category}
         options={options}
@@ -280,16 +295,43 @@ function AddServiceFields({
           {CATALOG_COPY.addCategoryInline}
         </Button>
       ) : null}
-      <TextField
-        label={CATALOG_COPY.basePrice}
-        name="basePrice"
-        onBlur={noop}
-        value={basePrice}
-        onChange={onBasePriceChange}
-        description={CATALOG_COPY.basePriceHelp}
-      />
+      <ServicePriceField basePrice={basePrice} onBasePriceChange={onBasePriceChange} />
       <CatalogFieldError errorKey={error} />
     </div>
+  );
+}
+
+function ServiceNameField({
+  name,
+  onNameChange,
+}: Pick<AddServiceFieldsProps, "name" | "onNameChange">) {
+  return (
+    <TextField
+      label={CATALOG_COPY.nameService}
+      name="name"
+      onBlur={noop}
+      placeholder={CATALOG_COPY.nameServicePlaceholder}
+      value={name}
+      onChange={onNameChange}
+    />
+  );
+}
+
+function ServicePriceField({
+  basePrice,
+  onBasePriceChange,
+}: Pick<AddServiceFieldsProps, "basePrice" | "onBasePriceChange">) {
+  return (
+    <TextField
+      label={CATALOG_COPY.basePrice}
+      name="basePrice"
+      onBlur={noop}
+      placeholder={CATALOG_COPY.basePricePlaceholder}
+      prefix={CATALOG_COPY.currencyPrefix}
+      value={basePrice}
+      onChange={onBasePriceChange}
+      description={CATALOG_COPY.basePriceHelp}
+    />
   );
 }
 

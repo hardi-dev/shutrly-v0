@@ -1,12 +1,15 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useState } from "react";
 
 import type { CategoryRecord } from "@/features/booking/application/ports/category-repository/category-repository.port";
+import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
+import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogRowActions } from "../catalog-row-actions/catalog-row-actions";
@@ -18,14 +21,15 @@ import type { CategoriesScreenProps, CategoryDialogsProps } from "./categories-s
 export function CategoriesScreen(props: Readonly<CategoriesScreenProps>) {
   const { workspaceId, categories, addAction, renameAction, setActiveAction, removeAction } = props;
   const dialogs = useCategoryDialogs();
+  const addButton = (
+    <Button iconLeading="plus" onPress={dialogs.openAdd}>
+      {CATALOG_COPY.addCategory}
+    </Button>
+  );
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)">
       <CatalogTabsBar workspaceId={workspaceId} activeTab="categories" />
-      <PageActions>
-        <Button iconLeading="plus" onPress={dialogs.openAdd}>
-          {CATALOG_COPY.addCategory}
-        </Button>
-      </PageActions>
+      <PageActions>{addButton}</PageActions>
       <SectionCard
         title={CATALOG_COPY.categoriesTitle}
         description={CATALOG_COPY.categoriesDescription}
@@ -34,6 +38,7 @@ export function CategoriesScreen(props: Readonly<CategoriesScreenProps>) {
         <CategoryRows
           workspaceId={workspaceId}
           categories={categories}
+          addButton={addButton}
           setActiveAction={setActiveAction}
           removeAction={removeAction}
           onRename={dialogs.openRename}
@@ -89,16 +94,30 @@ function useCategoryDialogs() {
 function CategoryRows({
   workspaceId,
   categories,
+  addButton,
   setActiveAction,
   removeAction,
   onRename,
   onDelete,
 }: Readonly<
   CategoriesScreenProps & {
+    readonly addButton: ReactNode;
     readonly onRename: (category: CategoryRecord) => void;
     readonly onDelete: (category: CategoryRecord) => void;
   }
 >) {
+  if (categories.length === 0) {
+    return (
+      <EmptyState
+        placement="in-card"
+        icon="folder"
+        title={CATALOG_COPY.categoriesEmptyTitle}
+        body={CATALOG_COPY.categoriesEmptyBody}
+        action={addButton}
+      />
+    );
+  }
+
   return (
     <ul aria-label={CATALOG_COPY.categoriesTitle}>
       {categories.map((category, index) => (
@@ -147,21 +166,61 @@ function CategoryRow({
       meta={CATALOG_COPY.categoryMeta(category.serviceCount)}
       isLast={isLast}
       trailing={
-        setActiveAction && removeAction ? (
-          <CatalogRowActions
+        !category.isActive || (setActiveAction && removeAction) ? (
+          <CategoryRowTrailing
             workspaceId={workspaceId}
-            kind="category"
-            id={category.id}
-            name={category.name}
-            isActive={category.isActive}
-            meta={CATALOG_COPY.categoryMeta(category.serviceCount)}
+            category={category}
+            setActiveAction={setActiveAction}
+            removeAction={removeAction}
             onRename={handleRename}
             onDelete={handleDelete}
-            setActiveAction={setActiveAction}
           />
         ) : undefined
       }
     />
+  );
+}
+
+function CategoryRowTrailing({
+  workspaceId,
+  category,
+  setActiveAction,
+  removeAction,
+  onRename,
+  onDelete,
+}: Readonly<{
+  readonly workspaceId: string;
+  readonly category: CategoryRecord;
+  readonly setActiveAction: CategoriesScreenProps["setActiveAction"];
+  readonly removeAction: CategoriesScreenProps["removeAction"];
+  readonly onRename: (category: CategoryRecord) => void;
+  readonly onDelete: (category: CategoryRecord) => void;
+}>) {
+  function handleRename(): void {
+    onRename(category);
+  }
+  function handleDelete(): void {
+    onDelete(category);
+  }
+  return (
+    <span className="flex items-center gap-(--space-2)">
+      {!category.isActive ? (
+        <StatusChip tone="neutral" label={CATALOG_COPY.archived} hasDot={false} />
+      ) : null}
+      {setActiveAction && removeAction ? (
+        <CatalogRowActions
+          workspaceId={workspaceId}
+          kind="category"
+          id={category.id}
+          name={category.name}
+          isActive={category.isActive}
+          meta={CATALOG_COPY.categoryMeta(category.serviceCount)}
+          onRename={handleRename}
+          onDelete={handleDelete}
+          setActiveAction={setActiveAction}
+        />
+      ) : null}
+    </span>
   );
 }
 

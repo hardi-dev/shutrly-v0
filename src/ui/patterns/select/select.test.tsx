@@ -29,8 +29,12 @@ describe("Select (C19 + Menu Item/Rich)", () => {
     render(<Select label="Tipe nilai" options={OPTIONS} value="NUMBER" onChange={onChange} />);
     const trigger = screen.getByRole("button", { name: /Tipe nilai/ });
     expect(trigger).toHaveTextContent("Angka");
+    expect(trigger.querySelector('[class*="component-menu-item-check"]')).toBeNull();
     await userEvent.click(trigger);
     const listbox = screen.getByRole("listbox");
+    const popover = listbox.parentElement;
+    expect(popover).toHaveClass("w-(--trigger-width)");
+    expect(popover).not.toHaveClass("min-w-full");
     expect(within(listbox).getByRole("option", { name: /Angka.*Satu nilai/ })).toHaveAttribute(
       "aria-selected",
       "true",

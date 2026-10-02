@@ -18,7 +18,7 @@ export function Tabs({ label, tabs, hasTrack = true }: Readonly<TabsProps>) {
               href={tab.href}
               aria-current={tab.isActive ? "page" : undefined}
               className={cn(
-                "block rounded-(--component-tabs-item-radius) py-(--component-tabs-item-padding-y)",
+                "block rounded-none py-(--component-tabs-item-padding-y)",
                 "text-(--component-tabs-item-text) text-(length:--font-size-body) font-medium",
                 "hover:text-(--component-tabs-item-text-hover)",
                 "focus-visible:outline-2 focus-visible:outline-(--component-tabs-item-focus)",

@@ -19,6 +19,7 @@ export interface ServiceListItem extends ServiceSummaryRecord {
 export interface ServiceListGroup {
   readonly categoryId: string;
   readonly categoryName: string;
+  readonly isActive: boolean;
   readonly services: readonly ServiceListItem[];
 }
 

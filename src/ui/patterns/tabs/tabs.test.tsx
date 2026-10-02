@@ -17,4 +17,11 @@ describe("Tabs (C45)", () => {
     expect(screen.getByRole("link", { name: "Layanan" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("link", { name: "Kategori" })).not.toHaveAttribute("aria-current");
   });
+
+  it("keeps desktop catalog tabs square instead of rounded", () => {
+    render(<Tabs label="Bagian layanan" tabs={TABS} />);
+    const activeTab = screen.getByRole("link", { name: "Layanan" });
+    expect(activeTab).toHaveClass("rounded-none");
+    expect(activeTab).not.toHaveClass("rounded-(--component-tabs-item-radius)");
+  });
 });

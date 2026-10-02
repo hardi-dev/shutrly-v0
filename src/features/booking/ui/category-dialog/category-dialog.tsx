@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { SyntheticEvent } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useController, useForm } from "react-hook-form";
 
 import { catalogNameSchema } from "@/features/booking/application/schemas/catalog-name/catalog-name.schema";
@@ -51,6 +51,11 @@ function useCategoryDialogForm(props: Readonly<CategoryDialogProps>): CategoryDi
     shouldFocusError: true,
   });
   const [isPending, setIsPending] = useState(false);
+  useEffect(() => {
+    if (props.isOpen) {
+      form.reset({ name: props.category?.name ?? "" });
+    }
+  }, [form, props.category?.name, props.isOpen]);
 
   async function submit(): Promise<void> {
     if (!(await form.trigger())) return;

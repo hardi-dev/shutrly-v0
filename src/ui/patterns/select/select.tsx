@@ -57,14 +57,18 @@ function DesktopSelect({ options, value, onChange, ...props }: Readonly<SelectPr
         {selectedOption?.icon ? (
           <Icon name={selectedOption.icon} aria-hidden="true" size="sm" />
         ) : null}
-        <SelectValue className="min-w-0 flex-1 truncate text-left" />
+        <SelectValue className="min-w-0 flex-1 truncate text-left">
+          {({ defaultChildren, isPlaceholder, selectedText }) =>
+            isPlaceholder ? defaultChildren : selectedText
+          }
+        </SelectValue>
         <Icon name="chevron-down" aria-hidden="true" size="sm" />
       </AriaButton>
       <SelectMessages {...props} />
       <Popover
         placement="bottom start"
         offset={4}
-        className="min-w-full rounded-(--component-menu-radius) border border-(--component-menu-border) bg-(--component-menu-background) p-(--component-menu-padding) shadow-[0_var(--elevation-1-offset-y)_var(--elevation-1-blur)_var(--color-semantic-elevation-1-color)]"
+        className="w-(--trigger-width) rounded-(--component-menu-radius) border border-(--component-menu-border) bg-(--component-menu-background) p-(--component-menu-padding) shadow-[0_var(--elevation-1-offset-y)_var(--elevation-1-blur)_var(--color-semantic-elevation-1-color)]"
       >
         <ListBox aria-label={props.label} className="outline-none">
           {options.map((option) => (

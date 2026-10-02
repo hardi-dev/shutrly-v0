@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { whatsappNumberSchema } from "@/features/booking/domain/whatsapp-number/whatsapp-number.schema";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { FakeClientRepository } from "../../../../../../tests/support/booking/fake-client-repository";
@@ -22,7 +23,7 @@ describe("addClient", () => {
     ).toEqual({ ok: true });
     expect(repository.rows[0]).toMatchObject({
       name: "Rina Wedding",
-      whatsappNumber: "6281234567890",
+      whatsappNumber: whatsappNumberSchema.parse("6281234567890"),
       updatedBy: "user-a",
       socialLinks: [
         { platform: "INSTAGRAM", value: "rina.wed" },
@@ -61,5 +62,28 @@ describe("addClient", () => {
       }),
     ).resolves.toMatchObject({ fieldErrors: { "socialLinks.0.platform": "UNKNOWN_PLATFORM" } });
     expect(repository.rows).toHaveLength(0);
+  });
+
+  it("AC-CLI-010 reports an archived holder for a duplicate number", async () => {
+    const repository = new FakeClientRepository();
+    await repository.create(context, {
+      name: "Budi",
+      whatsappNumber: whatsappNumberSchema.parse("6281234567890"),
+      socialLinks: [],
+      editorUserId: "user",
+    });
+    const budi = repository.rows[0];
+    repository.rows[0] = { ...budi, isArchived: true };
+
+    await expect(
+      addClient(repository, context, "user", {
+        name: "Rina",
+        whatsappNumber: "0812 3456 7890",
+        socialLinks: [],
+      }),
+    ).resolves.toMatchObject({
+      fieldErrors: { whatsappNumber: "TAKEN" },
+      numberHolder: { name: "Budi", isArchived: true },
+    });
   });
 });

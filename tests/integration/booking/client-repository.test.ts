@@ -118,4 +118,31 @@ describe("Drizzle client repository", () => {
     expect(await clients.count(context, "ACTIVE")).toBe(1);
     expect(await clients.count(context, "ARCHIVED")).toBe(1);
   });
+
+  it("AC-CLI-010 reports a same-workspace number holder without leaking another workspace", async () => {
+    const context = await seedWorkspace();
+    const other = await seedWorkspace();
+    const clients = createDrizzleClientRepository(db);
+    const duplicate = whatsappNumberSchema.parse("6281234567890");
+    await clients.create(context, {
+      name: "Rina",
+      whatsappNumber: duplicate,
+      socialLinks: [],
+      editorUserId: context.ownerId,
+    });
+    await clients.create(other, {
+      name: "Other",
+      whatsappNumber: duplicate,
+      socialLinks: [],
+      editorUserId: other.ownerId,
+    });
+    await expect(
+      clients.create(context, {
+        name: "Budi",
+        whatsappNumber: duplicate,
+        socialLinks: [],
+        editorUserId: context.ownerId,
+      }),
+    ).resolves.toEqual({ status: "NUMBER_TAKEN", holder: { name: "Rina", isArchived: false } });
+  });
 });

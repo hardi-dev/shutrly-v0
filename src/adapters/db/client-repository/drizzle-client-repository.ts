@@ -3,6 +3,7 @@ import "server-only";
 import { and, asc, eq, isNotNull, isNull, like, or, sql } from "drizzle-orm";
 
 import type {
+  ClientChange,
   ClientPageQuery,
   ClientRecord,
   ClientRepositoryPort,
@@ -10,10 +11,12 @@ import type {
 import { socialLinksSchema } from "@/features/booking/domain/social-link/social-link.schema";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
+import { pgCode } from "../catalog-repository/pg-error";
 import type { DbExecutor } from "../client/client.types";
 import { client } from "../schema/booking/client";
 
 const LIKE_SPECIAL = /[\\%_]/g;
+const DUPLICATE_KEY = "23505";
 
 function searchCondition(query: ClientPageQuery) {
   if (!query.search) return undefined;
@@ -81,15 +84,36 @@ export function createDrizzleClientRepository(db: DbExecutor): ClientRepositoryP
         .where(and(eq(client.workspaceId, context.workspaceId), archived));
       return rows.at(0)?.count ?? 0;
     },
-    async create(context, change) {
-      await db.insert(client).values({
-        workspaceId: context.workspaceId,
-        name: change.name,
-        whatsappNumber: change.whatsappNumber,
-        socialLinks: change.socialLinks,
-        updatedBy: change.editorUserId,
-      });
-      return { status: "CREATED" } as const;
-    },
+    create: (context, change) => createClient(db, context, change),
   };
+}
+
+async function createClient(db: DbExecutor, context: WorkspaceContext, change: ClientChange) {
+  try {
+    await db.insert(client).values({
+      workspaceId: context.workspaceId,
+      name: change.name,
+      whatsappNumber: change.whatsappNumber,
+      socialLinks: change.socialLinks,
+      updatedBy: change.editorUserId,
+    });
+    return { status: "CREATED" } as const;
+  } catch (error) {
+    if (pgCode(error) !== DUPLICATE_KEY || change.whatsappNumber === null) throw error;
+    const holder = await findNumberHolder(db, context, change.whatsappNumber);
+    if (!holder) throw error;
+    return { status: "NUMBER_TAKEN", holder } as const;
+  }
+}
+
+async function findNumberHolder(db: DbExecutor, context: WorkspaceContext, whatsappNumber: string) {
+  const rows = await db
+    .select({ name: client.name, archivedAt: client.archivedAt })
+    .from(client)
+    .where(
+      and(eq(client.workspaceId, context.workspaceId), eq(client.whatsappNumber, whatsappNumber)),
+    )
+    .limit(1);
+  const holder = rows.at(0);
+  return holder ? { name: holder.name, isArchived: holder.archivedAt !== null } : undefined;
 }

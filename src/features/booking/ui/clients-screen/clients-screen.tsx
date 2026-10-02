@@ -17,6 +17,7 @@ import { ClientsTable } from "../clients-table/clients-table";
 import { ClientsTabsBar } from "../clients-tabs-bar/clients-tabs-bar";
 import { DeleteClientDialog } from "../delete-client-dialog/delete-client-dialog";
 import { useClientMutations } from "../use-client-mutations/use-client-mutations";
+import { useLoadMoreClients } from "../use-load-more-clients/use-load-more-clients";
 import type {
   ClientAddDialogProps,
   ClientScreenContentProps,
@@ -30,6 +31,8 @@ export function ClientsScreen({
   count,
   rows,
   q = "",
+  initialPage,
+  loadMoreAction,
   addAction,
   updateAction,
   setArchivedAction,
@@ -39,6 +42,7 @@ export function ClientsScreen({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editing, setEditing] = useState<ClientsScreenProps["rows"][number] | undefined>();
   const [deleting, setDeleting] = useState<ClientsScreenProps["rows"][number] | null>(null);
+  const pager = useClientPager(workspaceId, status, q, rows, initialPage, loadMoreAction);
   function openDialog(): void {
     setEditing(undefined);
     setIsDialogOpen(true);
@@ -60,12 +64,13 @@ export function ClientsScreen({
       workspaceId={workspaceId}
       status={status}
       count={count}
-      rows={rows}
+      rows={pager.rows}
       isMobile={isMobile}
       desktopAddAction={actions.desktop}
       mobileAddAction={actions.mobile}
       emptyState={emptyState}
       q={q}
+      footer={pager.hasMore ? <LoadMoreButton isLoading={pager.isLoading} onLoadMore={pager.loadMore} /> : null}
       updateAction={updateAction}
       openEdit={openEdit}
       addAction={addAction}
@@ -88,6 +93,23 @@ export function ClientsScreen({
   );
 }
 
+function LoadMoreButton({ isLoading, onLoadMore }: Readonly<{ isLoading: boolean; onLoadMore: () => Promise<void> }>) {
+  function handleLoadMore(): void { void onLoadMore(); }
+  return <Button variant="secondary" isPending={isLoading} onPress={handleLoadMore}>{isLoading ? CLIENT_COPY.loadingMore : CLIENT_COPY.loadMore}</Button>;
+}
+
+function useClientPager(
+  workspaceId: string,
+  status: ClientsScreenProps["status"],
+  q: string,
+  rows: ClientsScreenProps["rows"],
+  initialPage: ClientsScreenProps["initialPage"],
+  action: ClientsScreenProps["loadMoreAction"],
+) {
+  const fallback = initialPage ?? { items: rows, nextCursor: null };
+  return useLoadMoreClients({ workspaceId, status, q, initial: fallback, action });
+}
+
 function ClientScreenContent({
   workspaceId,
   status,
@@ -98,6 +120,7 @@ function ClientScreenContent({
   mobileAddAction,
   emptyState,
   q,
+  footer,
   updateAction,
   openEdit,
   addAction,
@@ -144,6 +167,7 @@ function ClientScreenContent({
         workspaceId={workspaceId}
         onOpenChange={onOpenChange}
       />
+      {footer}
     </main>
   );
 }

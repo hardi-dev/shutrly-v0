@@ -2,6 +2,7 @@
 import type { ClientRecord } from "@/features/booking/application/ports/client-repository/client-repository.port";
 import type { ClientInput } from "@/features/booking/application/schemas/client-input/client-input.types";
 import type { ClientWriteResult } from "@/features/booking/application/use-cases/client-results/client-results.types";
+import type { ClientPage } from "@/features/booking/application/use-cases/client-results/client-results.types";
 import type { DeleteClientResult } from "@/features/booking/application/use-cases/delete-client/delete-client.types";
 import type { ClientStatus } from "@/features/booking/domain/client-list/client-list.types";
 
@@ -11,6 +12,8 @@ export interface ClientsScreenProps {
   readonly count: number;
   readonly rows: readonly ClientRecord[];
   readonly q?: string;
+  readonly initialPage?: ClientPage;
+  readonly loadMoreAction?: (workspaceId: string, query: unknown) => Promise<ClientPage>;
   readonly addAction?: (
     workspaceId: string,
     values: ClientInput,
@@ -34,6 +37,7 @@ export interface ClientScreenContentProps {
   readonly mobileAddAction: ReactNode;
   readonly emptyState: ReactNode;
   readonly q: string;
+  readonly footer: ReactNode;
   readonly updateAction: ClientsScreenProps["updateAction"];
   readonly openEdit: (client: ClientsScreenProps["rows"][number]) => void;
   readonly addAction: ClientsScreenProps["addAction"];

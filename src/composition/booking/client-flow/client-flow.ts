@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { ClientError } from "@/features/booking/application/errors/client-errors/client-errors";
 import { clientIdSchema } from "@/features/booking/application/schemas/client-id/client-id.schema";
+import { clientListQuerySchema } from "@/features/booking/application/schemas/client-list-query/client-list-query.schema";
 import { addClient } from "@/features/booking/application/use-cases/add-client/add-client";
 import { countClients } from "@/features/booking/application/use-cases/count-clients/count-clients";
 import { deleteClient } from "@/features/booking/application/use-cases/delete-client/delete-client";
@@ -108,5 +109,18 @@ export async function deleteWorkspaceClient(rawWorkspaceId: string, rawClientId:
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "delete");
+  }
+}
+
+export async function loadMoreClients(rawWorkspaceId: string, rawQuery: unknown) {
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const parsed = clientListQuerySchema.safeParse(rawQuery);
+  if (!parsed.success) notFound();
+  try {
+    return await withClientScope(({ clients }) =>
+      listClients(clients, verified.context, parsed.data),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "list");
   }
 }

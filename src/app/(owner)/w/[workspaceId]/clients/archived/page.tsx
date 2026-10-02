@@ -1,5 +1,6 @@
 import {
   deleteClientAction,
+  loadMoreClientsAction,
   setClientArchivedAction,
   updateClientAction,
 } from "@/app/actions/booking/clients";
@@ -20,6 +21,8 @@ export default async function ArchivedClientsPage({
       count={data.count}
       rows={data.page.items}
       q={data.q}
+      initialPage={data.page}
+      loadMoreAction={loadMoreClientsAction}
       updateAction={updateClientAction}
       setArchivedAction={setClientArchivedAction}
       deleteAction={deleteClientAction}

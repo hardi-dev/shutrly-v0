@@ -16,6 +16,8 @@ export const CLIENT_COPY = {
   searchResultCount: (count: number) => `${String(count)} klien cocok`,
   noMatchTitle: "Tidak ada klien yang cocok",
   noMatchBody: "Coba nama lain, atau ketik sebagian nomor WhatsApp.",
+  loadMore: "Muat lebih banyak",
+  loadingMore: "Memuat…",
   noWhatsapp: "Belum ada nomor WhatsApp",
   noSocialLinks: "—",
   tabsLabel: "Status klien",

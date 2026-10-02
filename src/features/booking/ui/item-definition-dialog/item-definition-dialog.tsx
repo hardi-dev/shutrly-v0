@@ -229,6 +229,7 @@ function ItemDefinitionFields({
         label={CATALOG_COPY.nameItem}
         name="name"
         onBlur={noop}
+        placeholder={CATALOG_COPY.nameItemPlaceholder}
         value={name}
         onChange={setName}
         errorMessage={error === "NAME_TAKEN" ? CATALOG_COPY.errors.NAME_TAKEN : undefined}
@@ -237,6 +238,7 @@ function ItemDefinitionFields({
         label={CATALOG_COPY.unit}
         name="unit"
         onBlur={noop}
+        placeholder={CATALOG_COPY.unitPlaceholder}
         value={unit}
         onChange={setUnit}
         isOptional

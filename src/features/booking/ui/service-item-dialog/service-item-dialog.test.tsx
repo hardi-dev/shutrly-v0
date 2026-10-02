@@ -25,7 +25,23 @@ const DEFINITION: ItemDefinitionRecord = {
   selectionType: "EDIT",
 };
 
-function AddItemHarness({ action }: { readonly action: ServiceItemDialogProps["action"] }) {
+const RANGE_DEFINITION: ItemDefinitionRecord = {
+  ...DEFINITION,
+  id: "definition-range",
+  name: "Jumlah orang",
+  unit: "orang",
+  valueType: "RANGE",
+  selectionRequired: false,
+  selectionType: null,
+};
+
+function AddItemHarness({
+  action,
+  definitions = [DEFINITION],
+}: {
+  readonly action: ServiceItemDialogProps["action"];
+  readonly definitions?: readonly ItemDefinitionRecord[];
+}) {
   const [isOpen, setIsOpen] = useState(true);
   function open(): void {
     setIsOpen(true);
@@ -40,7 +56,7 @@ function AddItemHarness({ action }: { readonly action: ServiceItemDialogProps["a
         onOpenChange={setIsOpen}
         workspaceId="workspace-1"
         serviceId="service-1"
-        definitions={[DEFINITION]}
+        definitions={definitions}
         items={[]}
         action={action}
       />
@@ -57,6 +73,10 @@ describe("ServiceItemDialog", () => {
     await user.click(screen.getByRole("button", { name: /Item paket/ }));
     const listbox = await screen.findByRole("listbox");
     await user.click(within(listbox).getByRole("option", { name: /Foto edit/ }));
+    expect(screen.getByRole("textbox", { name: "Nilai" })).toHaveAttribute(
+      "placeholder",
+      "Contoh: 25",
+    );
     await user.type(screen.getByRole("textbox", { name: "Nilai" }), "25");
     await user.click(screen.getByRole("button", { name: "Tambah" }));
 
@@ -68,5 +88,25 @@ describe("ServiceItemDialog", () => {
     await user.click(screen.getByRole("button", { name: "Buka tambah item" }));
     expect(screen.getByRole("button", { name: /Item paket/ })).toHaveTextContent("Item paket");
     expect(screen.getByRole("textbox", { name: "Nilai" })).toHaveValue("");
+  });
+
+  it("shows placeholders for a range value", async () => {
+    const user = userEvent.setup();
+    const action: ServiceItemDialogProps["action"] = vi.fn().mockResolvedValue({ ok: true });
+    render(<AddItemHarness action={action} definitions={[RANGE_DEFINITION]} />);
+
+    await user.click(screen.getByRole("button", { name: /Item paket/ }));
+    await user.click(
+      within(await screen.findByRole("listbox")).getByRole("option", { name: /Jumlah orang/ }),
+    );
+
+    expect(screen.getByRole("textbox", { name: "Minimum" })).toHaveAttribute(
+      "placeholder",
+      "Contoh: 1",
+    );
+    expect(screen.getByRole("textbox", { name: "Maksimum" })).toHaveAttribute(
+      "placeholder",
+      "Contoh: 2",
+    );
   });
 });

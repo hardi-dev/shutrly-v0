@@ -42,6 +42,14 @@ describe("ItemDefinitionDialog", () => {
     const action: ItemDefinitionDialogProps["action"] = vi.fn().mockResolvedValue({ ok: true });
     render(<AddDefinitionHarness action={action} />);
 
+    expect(screen.getByRole("textbox", { name: "Nama item" })).toHaveAttribute(
+      "placeholder",
+      "Contoh: Jumlah orang",
+    );
+    expect(screen.getByRole("textbox", { name: "Satuan" })).toHaveAttribute(
+      "placeholder",
+      "Contoh: orang",
+    );
     await user.type(screen.getByRole("textbox", { name: "Nama item" }), "Jumlah orang");
     await user.type(screen.getByRole("textbox", { name: "Satuan" }), "orang");
     await user.click(screen.getByRole("button", { name: /Tipe nilai/ }));

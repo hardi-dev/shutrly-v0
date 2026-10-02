@@ -60,6 +60,7 @@ function OptionInput({
       <TextField
         label={CATALOG_COPY.optionLabel(index + 1)}
         name={`option-${String(index)}`}
+        placeholder={CATALOG_COPY.optionPlaceholder}
         value={option}
         onChange={change}
         onBlur={noop}

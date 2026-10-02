@@ -47,6 +47,10 @@ describe("BookingFieldDialog", () => {
     await user.click(screen.getByRole("button", { name: /Tipe/ }));
     await user.click(screen.getByRole("option", { name: "Pilihan" }));
     await user.click(screen.getByRole("button", { name: "Tambah pilihan" }));
+    expect(screen.getByRole("textbox", { name: "Pilihan 1" })).toHaveAttribute(
+      "placeholder",
+      "Contoh: Kampus A",
+    );
     await user.type(screen.getByRole("textbox", { name: "Pilihan 1" }), "Kampus A");
     await user.click(screen.getByRole("switch", { name: "Wajib diisi" }));
     await user.click(screen.getByRole("button", { name: "Tambah" }));

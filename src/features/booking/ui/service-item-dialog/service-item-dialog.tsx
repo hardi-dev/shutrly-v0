@@ -245,6 +245,7 @@ function PackageValueFields({
           label={CATALOG_COPY.minimum}
           name="minimum"
           onBlur={noop}
+          placeholder={CATALOG_COPY.minimumPlaceholder}
           value={minimum}
           onChange={setMinimum}
         />
@@ -252,6 +253,7 @@ function PackageValueFields({
           label={CATALOG_COPY.maximum}
           name="maximum"
           onBlur={noop}
+          placeholder={CATALOG_COPY.maximumPlaceholder}
           value={maximum}
           onChange={setMaximum}
         />
@@ -262,6 +264,7 @@ function PackageValueFields({
       label={CATALOG_COPY.value}
       name="value"
       onBlur={noop}
+      placeholder={CATALOG_COPY.valuePlaceholder}
       value={value}
       onChange={setValue}
       description={definition?.unit ?? undefined}

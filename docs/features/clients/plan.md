@@ -29,7 +29,7 @@ Every task's requirements implicitly include this section. They are the same as 
 - **Boundaries (lint):** `features/booking` never imports another feature, nor the reverse. The client code never imports catalog modules except shared booking files named in this plan (`pg-error`).
 - **Rule values (named constants, never literals):**
   - `CLIENT_NAME_MAX_LENGTH = 100` (code points, after trim); names are not unique (BR-CLI-001);
-  - `WHATSAPP_DIGITS_MIN = 10`, `WHATSAPP_DIGITS_MAX = 15`; no leading `0`, no `620…` (BR-CLI-002);
+  - `WHATSAPP_NUMBER_PATTERN = /^(?!620)[1-9]\d{9,14}$/`: 10–15 digits, no leading `0`, no `620…` (BR-CLI-002); the DB check repeats it;
   - `SOCIAL_PLATFORMS = ["INSTAGRAM", "TIKTOK", "FACEBOOK", "YOUTUBE", "X", "OTHER"]` (A-2 order), `SOCIAL_LINK_MAX_COUNT = 10`, `SOCIAL_VALUE_MAX_LENGTH = 200` (BR-CLI-001);
   - `CLIENT_PAGE_SIZE = 30` (A-5); `CLIENT_SEARCH_MAX_LENGTH = 100` (TD-A-1).
 - **Copy:** the Indonesian strings come from the frames and design.md › Copy. Strings not drawn carry `// not in Pencil`.
@@ -42,7 +42,7 @@ Every task's requirements implicitly include this section. They are the same as 
 ## File Structure
 
 ```text
-src/ui/primitives/icon/                        registry + types: message-circle, user
+src/ui/primitives/icon/                        registry + types: message-circle
 src/ui/primitives/input/                       InputIconName + "x"
 src/ui/patterns/data-table/                    data-table.tsx · data-table-skeleton.tsx · .types.ts · .test.tsx · .stories.tsx (+ .stories.copy.ts)
 src/ui/patterns/app-shell/                     + mobileSubtitle
@@ -50,18 +50,16 @@ src/features/workspace/domain/coming-soon-sections/   − "clients"
 src/features/workspace/ui/owner-nav/           + clients heading, subtitles and Aktif · Arsip tabs
 src/features/workspace/ui/owner-shell/         passes mobileSubtitle
 src/features/booking/
-  domain/client-name/                          client-name.ts · .types.ts · .test.ts
-  domain/whatsapp-number/                      whatsapp-number.ts · .types.ts · .test.ts
-  domain/social-link/                          social-link.ts · .types.ts · .test.ts
-  domain/client-input/                         client-input.ts · .types.ts · .test.ts
-  domain/client-search/                        client-search.ts · .types.ts · .test.ts
-  domain/client-list/                          client-list.ts · .types.ts · .test.ts
+  domain/client-name/                          client-name.schema.ts · .test.ts
+  domain/whatsapp-number/                      whatsapp-number.schema.ts · whatsapp-number.ts · .types.ts · .test.ts
+  domain/social-link/                          social-link.schema.ts · social-link.ts · .types.ts · .test.ts
+  domain/client-search/                        client-search.schema.ts · .types.ts · .test.ts
+  domain/client-list/                          client-list.schema.ts · client-list.ts · .types.ts · .test.ts
   application/errors/client-errors/            client-errors.ts · .types.ts
   application/ports/client-repository/         client-repository.port.ts
   application/schemas/client-input/            client-input.schema.ts · .types.ts
   application/schemas/client-id/               client-id.schema.ts
   application/schemas/client-list-query/       client-list-query.schema.ts · .types.ts
-  application/schemas/social-links/            social-links.schema.ts
   application/schemas/client-schemas.test.ts
   application/use-cases/client-results/        client-results.ts · .types.ts
   application/use-cases/{list-clients,count-clients,add-client,update-client,set-client-archived,delete-client}/
@@ -86,9 +84,11 @@ tests/e2e/clients/clients.spec.ts
 
 **Files:** `src/ui/primitives/icon/icon.{types,registry}.ts` + `icon.test.tsx`; `src/ui/primitives/input/input.types.ts` + `input.test.tsx`.
 
-- [ ] **Step 1: Check the base.** Confirm F-05 is merged: `git log --oneline main | grep -i "catalog"` shows the F-05 merge, and `main` contains `src/ui/patterns/tabs/tabs.tsx` and `drizzle/0007_item_definition_backfill.sql`. **If not, stop and tell the Owner** (technical-design › Risks). Otherwise sync `feat/clients` from `main` with the ccd_host `sync_with_base_branch` tool (or `git merge main` outside an app worktree). Resolve conflicts:
-  - in `docs/HANDOFF.md` and `docs/product/feature-map.md`, keep both features' text;
-  - in `design-system.lib.pen`, keep this branch's file (it already has F-05's promotion plus `surface.panel-subtle`). Verify the result with `pnpm tokens:check` → 597 tokens.
+- [ ] **Step 1: Check the base.** F-05 reached `main` and was merged into `feat/clients` on 2026-10-02 (`7ac6cdf`). Confirm only:
+  - `src/ui/patterns/tabs/tabs.tsx` and `drizzle/0007_item_definition_backfill.sql` exist;
+  - `pnpm tokens:check` reports 597 tokens.
+
+  If `main` has moved since, sync it first with the ccd_host `sync_with_base_branch` tool (or `git merge main` outside an app worktree). In `docs/HANDOFF.md` and `docs/product/feature-map.md`, keep both features' text. In `design-system.lib.pen`, keep this branch's file.
 - [ ] **Step 2: Failing tests.** Add `message-circle` to the icon list in `icon.test.tsx`. In `input.test.tsx`:
 
 ```tsx
@@ -241,26 +241,30 @@ describe("DataTable (C27)", () => {
 
 ### Task 3: Domain
 
-**Files:** create the six domain units under `src/features/booking/domain/`.
+**Files:** create five domain units under `src/features/booking/domain/`: `client-name`, `whatsapp-number`, `social-link`, `client-search` and `client-list`.
 
-- [ ] **Step 1: Failing tests.**
+The rules are Zod schemas (`*.schema.ts`), as in `workspace/domain/{workspace-name,invoice-prefix}`. Zod is allowed in the domain (lint bans only framework, React Aria, backend and runtime packages there). Each schema both normalises and validates. Its error message is the field-error key the UI maps to copy (`EMPTY`, `TOO_LONG`, `INVALID`, `INVALID_URL`, `UNKNOWN_PLATFORM`, `TOO_MANY`, `DUPLICATE`). Types derive with `z.input` / `z.output` in `.types.ts`. Plain functions remain only for display (`formatWhatsappNumber`, `whatsappChatUrl`, `socialLinkLabel`) and for shared normalisation.
+
+- [ ] **Step 1: Failing tests.** A small helper keeps the tests short. It reads the first issue's message, or the parsed data.
 
 ```ts
 // client-name/client-name.test.ts
 import { describe, expect, it } from "vitest";
 
-import { CLIENT_NAME_MAX_LENGTH, findClientNameProblem, normaliseClientName } from "./client-name";
+import { CLIENT_NAME_MAX_LENGTH, clientNameSchema } from "./client-name.schema";
+
+const issue = (raw: string) => clientNameSchema.safeParse(raw).error?.issues[0]?.message;
 
 describe("client name (BR-CLI-001)", () => {
-  it("AC-CLI-008 rejects empty and over-long names after trimming", () => {
-    expect(findClientNameProblem("   ")).toBe("EMPTY");
-    expect(findClientNameProblem("a".repeat(CLIENT_NAME_MAX_LENGTH + 1))).toBe("TOO_LONG");
-    expect(findClientNameProblem(` ${"a".repeat(CLIENT_NAME_MAX_LENGTH)} `)).toBeNull();
-    expect(findClientNameProblem("😀".repeat(CLIENT_NAME_MAX_LENGTH))).toBeNull();
+  it("AC-CLI-008 rejects empty and over-long names after trimming, counting code points", () => {
+    expect(issue("   ")).toBe("EMPTY");
+    expect(issue("a".repeat(CLIENT_NAME_MAX_LENGTH + 1))).toBe("TOO_LONG");
+    expect(issue(` ${"a".repeat(CLIENT_NAME_MAX_LENGTH)} `)).toBeUndefined();
+    expect(issue("😀".repeat(CLIENT_NAME_MAX_LENGTH))).toBeUndefined();
   });
 
   it("AC-CLI-006 trims the stored name", () => {
-    expect(normaliseClientName("  Rina Wedding ")).toBe("Rina Wedding");
+    expect(clientNameSchema.parse("  Rina Wedding ")).toBe("Rina Wedding");
   });
 });
 ```
@@ -269,7 +273,8 @@ describe("client name (BR-CLI-001)", () => {
 // whatsapp-number/whatsapp-number.test.ts
 import { describe, expect, it } from "vitest";
 
-import { formatWhatsappNumber, parseWhatsappNumber, whatsappChatUrl } from "./whatsapp-number";
+import { formatWhatsappNumber, whatsappChatUrl } from "./whatsapp-number";
+import { optionalWhatsappNumberSchema, whatsappNumberSchema } from "./whatsapp-number.schema";
 
 describe("WhatsApp number (BR-CLI-002)", () => {
   it.each([
@@ -279,25 +284,34 @@ describe("WhatsApp number (BR-CLI-002)", () => {
     "812 3456 7890",
     "(0812) 3456-7890",
   ])("AC-CLI-009 normalizes %s to 6281234567890", (raw) => {
-    expect(parseWhatsappNumber(raw)).toEqual({ kind: "VALID", digits: "6281234567890" });
+    expect(whatsappNumberSchema.parse(raw)).toBe("6281234567890");
   });
 
   it("AC-CLI-009 keeps a foreign number with its country code", () => {
-    expect(parseWhatsappNumber("+1 415 555 0100")).toEqual({ kind: "VALID", digits: "14155550100" });
+    expect(whatsappNumberSchema.parse("+1 415 555 0100")).toBe("14155550100");
   });
 
-  it.each(["0812", "abc", "+62 812 3456 7890 1234 5", "00812345678"])("AC-CLI-009 rejects %s", (raw) => {
-    expect(parseWhatsappNumber(raw)).toEqual({ kind: "INVALID" });
-  });
+  it.each(["0812", "abc", "+62 812 3456 7890 1234 5", "00812345678", "620812345678", "+0812345678"])(
+    "AC-CLI-009 rejects %s",
+    (raw) => {
+      expect(whatsappNumberSchema.safeParse(raw).error?.issues[0]?.message).toBe("INVALID");
+    },
+  );
 
   it("AC-CLI-007 treats a blank field as no number", () => {
-    expect(parseWhatsappNumber("  ")).toEqual({ kind: "EMPTY" });
+    expect(optionalWhatsappNumberSchema.parse("  ")).toBeNull();
+    expect(optionalWhatsappNumberSchema.parse(" - ")).toBeNull();
+    expect(optionalWhatsappNumberSchema.parse("0812-3456-7890")).toBe("6281234567890");
   });
 
   it("AC-CLI-001 formats Indonesian and foreign numbers (A-7)", () => {
     expect(formatWhatsappNumber("6281234567890")).toBe("+62 812-3456-7890");
     expect(formatWhatsappNumber("6281322004512")).toBe("+62 813-2200-4512");
     expect(formatWhatsappNumber("14155550100")).toBe("+14155550100");
+  });
+
+  it("AC-CLI-012 parses its own display form back to the stored number", () => {
+    expect(whatsappNumberSchema.parse(formatWhatsappNumber("6281234567890"))).toBe("6281234567890");
   });
 
   it("AC-CLI-016 builds a plain chat link without text (A-6)", () => {
@@ -310,36 +324,55 @@ describe("WhatsApp number (BR-CLI-002)", () => {
 // social-link/social-link.test.ts
 import { describe, expect, it } from "vitest";
 
-import {
-  findDuplicateSocialRows,
-  findSocialValueProblem,
-  normaliseSocialValue,
-  SOCIAL_VALUE_MAX_LENGTH,
-  socialLinkLabel,
-} from "./social-link";
+import { socialLinkLabel } from "./social-link";
+import { SOCIAL_LINK_MAX_COUNT, SOCIAL_VALUE_MAX_LENGTH, socialLinkRowsSchema, socialValueSchema } from "./social-link.schema";
+
+const valueIssue = (raw: string) => socialValueSchema.safeParse(raw).error?.issues[0]?.message;
+const rowIssues = (rows: readonly { platform: string; value: string }[]) =>
+  socialLinkRowsSchema.safeParse(rows).error?.issues.map((i) => ({ path: i.path, message: i.message }));
 
 describe("social links (BR-CLI-001, A-2)", () => {
   it("AC-CLI-006 drops a leading @ from handles and keeps URLs", () => {
-    expect(normaliseSocialValue("  @rina.wed ")).toBe("rina.wed");
-    expect(normaliseSocialValue("https://www.tiktok.com/@rina")).toBe("https://www.tiktok.com/@rina");
+    expect(socialValueSchema.parse("  @rina.wed ")).toBe("rina.wed");
+    expect(socialValueSchema.parse("https://www.tiktok.com/@rina")).toBe("https://www.tiktok.com/@rina");
   });
 
-  it("AC-CLI-011 rejects over-long values, non-https URLs and a bare @", () => {
-    expect(findSocialValueProblem("a".repeat(SOCIAL_VALUE_MAX_LENGTH + 1))).toBe("TOO_LONG");
-    expect(findSocialValueProblem("http://instagram.com/rina")).toBe("INVALID_URL");
-    expect(findSocialValueProblem("@")).toBe("EMPTY");
-    expect(findSocialValueProblem("rina.wed")).toBeNull();
+  it("AC-CLI-011 rejects a bare @, non-https URLs and over-long values", () => {
+    expect(valueIssue("@")).toBe("EMPTY");
+    expect(valueIssue("http://instagram.com/rina")).toBe("INVALID_URL");
+    expect(valueIssue("a".repeat(SOCIAL_VALUE_MAX_LENGTH + 1))).toBe("TOO_LONG");
+    expect(valueIssue("rina.wed")).toBeUndefined();
+  });
+
+  it("AC-CLI-006 AC-CLI-007 drops blank rows and keeps the Owner's order", () => {
+    expect(
+      socialLinkRowsSchema.parse([
+        { platform: "INSTAGRAM", value: "@rina.wed" },
+        { platform: "FACEBOOK", value: "  " },
+        { platform: "TIKTOK", value: "https://www.tiktok.com/@rina" },
+      ]),
+    ).toEqual([
+      { platform: "INSTAGRAM", value: "rina.wed" },
+      { platform: "TIKTOK", value: "https://www.tiktok.com/@rina" },
+    ]);
   });
 
   it("AC-CLI-011 flags later rows with the same platform and value, ignoring case and @", () => {
-    const rows = [
-      { platform: "INSTAGRAM", value: "@rina.wed" },
-      { platform: "TIKTOK", value: "rina.wed" },
-      { platform: "INSTAGRAM", value: "RINA.WED" },
-      { platform: "INSTAGRAM", value: "" },
-      { platform: "INSTAGRAM", value: "" },
-    ];
-    expect(findDuplicateSocialRows(rows)).toEqual([2]);
+    expect(
+      rowIssues([
+        { platform: "INSTAGRAM", value: "@rina.wed" },
+        { platform: "TIKTOK", value: "rina.wed" },
+        { platform: "INSTAGRAM", value: "RINA.WED" },
+        { platform: "INSTAGRAM", value: "" },
+        { platform: "INSTAGRAM", value: "" },
+      ]),
+    ).toEqual([{ path: [2, "value"], message: "DUPLICATE" }]);
+  });
+
+  it("AC-CLI-011 rejects an unknown platform and more than ten rows", () => {
+    expect(rowIssues([{ platform: "MYSPACE", value: "rina" }])).toEqual([{ path: [0, "platform"], message: "UNKNOWN_PLATFORM" }]);
+    const rows = Array.from({ length: SOCIAL_LINK_MAX_COUNT + 1 }, (_, i) => ({ platform: "OTHER", value: `akun${i}` }));
+    expect(rowIssues(rows)).toEqual([{ path: [], message: "TOO_MANY" }]);
   });
 
   it("AC-CLI-001 labels handles with @ and URLs without the scheme", () => {
@@ -350,71 +383,14 @@ describe("social links (BR-CLI-001, A-2)", () => {
 ```
 
 ```ts
-// client-input/client-input.test.ts
-import { describe, expect, it } from "vitest";
-
-import { findClientInputProblems, normaliseClientInput } from "./client-input";
-
-const base = { name: "Rina", whatsappNumber: "", socialLinks: [] };
-
-describe("client input (BR-CLI-001/002)", () => {
-  it("AC-CLI-008 AC-CLI-009 AC-CLI-011 reports every problem with its path", () => {
-    expect(
-      findClientInputProblems({
-        name: " ",
-        whatsappNumber: "0812",
-        socialLinks: [
-          { platform: "INSTAGRAM", value: "@rina.wed" },
-          { platform: "INSTAGRAM", value: "RINA.WED" },
-          { platform: "MYSPACE", value: "rina" },
-        ],
-      }),
-    ).toEqual([
-      { path: ["name"], code: "EMPTY" },
-      { path: ["whatsappNumber"], code: "INVALID" },
-      { path: ["socialLinks", 1, "value"], code: "DUPLICATE" },
-      { path: ["socialLinks", 2, "platform"], code: "UNKNOWN_PLATFORM" },
-    ]);
-  });
-
-  it("AC-CLI-011 refuses more than ten rows", () => {
-    const socialLinks = Array.from({ length: 11 }, (_, i) => ({ platform: "OTHER", value: `akun${i}` }));
-    expect(findClientInputProblems({ ...base, socialLinks })).toEqual([{ path: ["socialLinks"], code: "TOO_MANY" }]);
-  });
-
-  it("AC-CLI-006 AC-CLI-007 normalizes the record and drops empty rows", () => {
-    expect(
-      normaliseClientInput({
-        name: "  Rina Wedding ",
-        whatsappNumber: "0812-3456-7890",
-        socialLinks: [
-          { platform: "INSTAGRAM", value: "@rina.wed" },
-          { platform: "FACEBOOK", value: "  " },
-          { platform: "TIKTOK", value: "https://www.tiktok.com/@rina" },
-        ],
-      }),
-    ).toEqual({
-      name: "Rina Wedding",
-      whatsappNumber: "6281234567890",
-      socialLinks: [
-        { platform: "INSTAGRAM", value: "rina.wed" },
-        { platform: "TIKTOK", value: "https://www.tiktok.com/@rina" },
-      ],
-    });
-    expect(normaliseClientInput({ ...base, name: "ade" })).toEqual({ name: "ade", whatsappNumber: null, socialLinks: [] });
-  });
-});
-```
-
-```ts
 // client-search/client-search.test.ts
 import { describe, expect, it } from "vitest";
 
-import { CLIENT_SEARCH_MAX_LENGTH, parseClientSearch } from "./client-search";
+import { CLIENT_SEARCH_MAX_LENGTH, clientSearchSchema } from "./client-search.schema";
 
 describe("client search (A-4)", () => {
   it("AC-CLI-004 searches names by text", () => {
-    expect(parseClientSearch(" RIN ")).toEqual({ text: "RIN", digits: null });
+    expect(clientSearchSchema.parse(" RIN ")).toEqual({ text: "RIN", digits: null });
   });
 
   it.each([
@@ -422,12 +398,12 @@ describe("client search (A-4)", () => {
     ["+62812", "62812"],
     ["812", "812"],
   ])("AC-CLI-004 normalizes the digits in %s", (raw, digits) => {
-    expect(parseClientSearch(raw)?.digits).toBe(digits);
+    expect(clientSearchSchema.parse(raw).digits).toBe(digits);
   });
 
-  it("ignores blank and over-long queries (TD-A-1)", () => {
-    expect(parseClientSearch("  ")).toBeNull();
-    expect(parseClientSearch("a".repeat(CLIENT_SEARCH_MAX_LENGTH + 1))).toBeNull();
+  it("fails on blank and over-long queries, which the use case lists unfiltered (TD-A-1)", () => {
+    expect(clientSearchSchema.safeParse("  ").success).toBe(false);
+    expect(clientSearchSchema.safeParse("a".repeat(CLIENT_SEARCH_MAX_LENGTH + 1)).success).toBe(false);
   });
 });
 ```
@@ -436,101 +412,91 @@ describe("client search (A-4)", () => {
 // client-list/client-list.test.ts
 import { describe, expect, it } from "vitest";
 
-import { CLIENT_PAGE_SIZE, isClientStatus } from "./client-list";
+import { CLIENT_PAGE_SIZE } from "./client-list";
+import { clientStatusSchema } from "./client-list.schema";
 
 describe("client list", () => {
   it("AC-CLI-005 pages 30 clients at a time (A-5)", () => {
     expect(CLIENT_PAGE_SIZE).toBe(30);
   });
 
-  it("AC-CLI-002 knows the two list statuses", () => {
-    expect(isClientStatus("ACTIVE")).toBe(true);
-    expect(isClientStatus("ARCHIVED")).toBe(true);
-    expect(isClientStatus("DELETED")).toBe(false);
+  it("AC-CLI-002 accepts only the two list statuses", () => {
+    expect(clientStatusSchema.safeParse("ACTIVE").success).toBe(true);
+    expect(clientStatusSchema.safeParse("ARCHIVED").success).toBe(true);
+    expect(clientStatusSchema.safeParse("DELETED").success).toBe(false);
   });
 });
 ```
 
 - [ ] **Step 2:** `pnpm test src/features/booking/domain` → FAIL.
-- [ ] **Step 3: Implement.** Types go in each unit's `.types.ts`; each exported function gets JSDoc naming its rule.
+- [ ] **Step 3: Implement.** Each exported schema and function gets JSDoc naming its rule.
 
 ```ts
-// client-name/client-name.types.ts
-export type ClientNameProblem = "EMPTY" | "TOO_LONG";
+// client-name/client-name.schema.ts
+import { z } from "zod";
 
-// client-name/client-name.ts
-import type { ClientNameProblem } from "./client-name.types";
-
-/** BR-CLI-001: a client name is 1–100 characters after trimming. */
+/** BR-CLI-001: a client name is 1–100 characters after trimming; names are not unique. */
 export const CLIENT_NAME_MAX_LENGTH = 100;
 
-/**
- * Trims a client name the way it is stored (BR-CLI-001).
- * @param raw - the name as typed
- * @returns the trimmed name
- */
-export function normaliseClientName(raw: string): string {
-  return raw.trim();
-}
+const fitsNameLength = (name: string) => [...name].length <= CLIENT_NAME_MAX_LENGTH;
 
-/**
- * Finds why a client name breaks BR-CLI-001, counting code points.
- * @param raw - the name as typed
- * @returns the problem, or null when the name is valid
- */
-export function findClientNameProblem(raw: string): ClientNameProblem | null {
-  const name = normaliseClientName(raw);
-  if (name.length === 0) return "EMPTY";
-  return [...name].length > CLIENT_NAME_MAX_LENGTH ? "TOO_LONG" : null;
-}
+/** BR-CLI-001: the trimmed name, counted in code points so emoji count once. */
+export const clientNameSchema = z
+  .string()
+  .trim()
+  .min(1, { error: "EMPTY" })
+  .refine(fitsNameLength, { error: "TOO_LONG" });
 ```
 
 ```ts
 // whatsapp-number/whatsapp-number.types.ts
-export type WhatsappNumberParse =
-  | { readonly kind: "EMPTY" }
-  | { readonly kind: "VALID"; readonly digits: string }
-  | { readonly kind: "INVALID" };
+import type { z } from "zod";
 
-// whatsapp-number/whatsapp-number.ts
-import type { WhatsappNumberParse } from "./whatsapp-number.types";
+import type { whatsappNumberSchema } from "./whatsapp-number.schema";
 
-/** BR-CLI-002: a stored number has 10–15 digits including the country code. */
-export const WHATSAPP_DIGITS_MIN = 10;
-export const WHATSAPP_DIGITS_MAX = 15;
-const INDONESIA = "62";
-const SEPARATORS = /[\s\-.()]/g;
-const DIGITS_ONLY = /^\d+$/;
+export type WhatsappNumber = z.output<typeof whatsappNumberSchema>;
 
+// whatsapp-number/whatsapp-number.schema.ts
+import { z } from "zod";
+
+/** BR-CLI-002: the separators removed before anything else. */
+export const WHATSAPP_SEPARATORS = /[\s\-.()]/g;
+/** BR-CLI-002: 10–15 digits with the country code, no leading 0, no 0 right after 62. The DB check repeats it. */
+export const WHATSAPP_NUMBER_PATTERN = /^(?!620)[1-9]\d{9,14}$/;
+
+const stripSeparators = (raw: string) => raw.replace(WHATSAPP_SEPARATORS, "");
+
+/**
+ * Applies only the first matching prefix step of BR-CLI-002.
+ * @param value - the number without separators
+ * @returns the number with its country code
+ */
 function applyPrefixStep(value: string): string {
   if (value.startsWith("+")) return value.slice(1);
-  if (value.startsWith("0")) return `${INDONESIA}${value.slice(1)}`;
-  if (value.startsWith("8")) return `${INDONESIA}${value}`;
+  if (value.startsWith("0")) return `62${value.slice(1)}`;
+  if (value.startsWith("8")) return `62${value}`;
   return value;
 }
 
-/**
- * Normalizes a typed WhatsApp number with BR-CLI-002's steps, applying only the first prefix step that matches.
- * @param raw - the number as typed
- * @returns EMPTY for a blank field, VALID with the stored digits, or INVALID
- */
-export function parseWhatsappNumber(raw: string): WhatsappNumberParse {
-  const stripped = raw.replace(SEPARATORS, "");
-  if (stripped.length === 0) return { kind: "EMPTY" };
-  const digits = applyPrefixStep(stripped);
-  const isValid =
-    DIGITS_ONLY.test(digits) &&
-    digits.length >= WHATSAPP_DIGITS_MIN &&
-    digits.length <= WHATSAPP_DIGITS_MAX &&
-    !digits.startsWith("0") &&
-    !digits.startsWith(`${INDONESIA}0`);
-  return isValid ? { kind: "VALID", digits } : { kind: "INVALID" };
-}
+/** BR-CLI-002: a typed number, normalised to the stored digits, or the issue `INVALID`. */
+export const whatsappNumberSchema = z
+  .string()
+  .transform((raw) => applyPrefixStep(stripSeparators(raw)))
+  .pipe(z.string().regex(WHATSAPP_NUMBER_PATTERN, { error: "INVALID" }).brand<"WhatsappNumber">());
+
+/** BR-CLI-002: the form field, where a blank (after removing separators) means no number. */
+export const optionalWhatsappNumberSchema = z
+  .string()
+  .transform((raw) => (stripSeparators(raw) === "" ? null : raw))
+  .pipe(whatsappNumberSchema.nullable());
+
+// whatsapp-number/whatsapp-number.ts
+const INDONESIA = "62";
 
 /**
  * Shows a stored number as `+62 812-3456-7890` for Indonesia and `+<digits>` otherwise (A-7).
  * @param digits - the stored number
- * @returns the display form
+ * @returns the display form, which whatsappNumberSchema parses back to the same digits
  */
 export function formatWhatsappNumber(digits: string): string {
   if (!digits.startsWith(INDONESIA)) return `+${digits}`;
@@ -551,35 +517,20 @@ export function whatsappChatUrl(digits: string): string {
 
 ```ts
 // social-link/social-link.types.ts
-import type { SOCIAL_PLATFORMS } from "./social-link";
+import type { z } from "zod";
 
-export type SocialPlatform = (typeof SOCIAL_PLATFORMS)[number];
-export interface SocialLink {
-  readonly platform: SocialPlatform;
-  readonly value: string;
-}
-export interface SocialLinkInput {
-  readonly platform: string;
-  readonly value: string;
-}
-export type SocialValueProblem = "EMPTY" | "TOO_LONG" | "INVALID_URL";
+import type { socialLinkSchema, socialPlatformSchema } from "./social-link.schema";
+
+export type SocialPlatform = z.output<typeof socialPlatformSchema>;
+export type SocialLink = z.output<typeof socialLinkSchema>;
 
 // social-link/social-link.ts
-import type { SocialLink, SocialLinkInput, SocialPlatform, SocialValueProblem } from "./social-link.types";
+import type { SocialLink } from "./social-link.types";
 
 /** A-2: platforms in display order. */
 export const SOCIAL_PLATFORMS = ["INSTAGRAM", "TIKTOK", "FACEBOOK", "YOUTUBE", "X", "OTHER"] as const;
-/** BR-CLI-001: at most ten links, each value 1–200 characters. */
-export const SOCIAL_LINK_MAX_COUNT = 10;
-export const SOCIAL_VALUE_MAX_LENGTH = 200;
 const HTTPS = /^https:\/\//i;
-const ANY_SCHEME = /^[a-z][a-z0-9+.-]*:\/\//i;
 const URL_PREFIX = /^https:\/\/(www\.)?/i;
-
-/** @param value - a platform from untrusted input @returns whether it is one of SOCIAL_PLATFORMS */
-export function isSocialPlatform(value: string): value is SocialPlatform {
-  return SOCIAL_PLATFORMS.some((platform) => platform === value);
-}
 
 /** @param value - a social value @returns whether it is an https URL rather than a handle */
 export function isSocialUrl(value: string): boolean {
@@ -596,40 +547,6 @@ export function normaliseSocialValue(raw: string): string {
   return isSocialUrl(value) ? value : value.replace(/^@/, "");
 }
 
-/** @param raw - a social value @returns the key used for duplicate checks: normalised, lower case */
-export function socialValueKey(raw: string): string {
-  return normaliseSocialValue(raw).toLowerCase();
-}
-
-/**
- * Finds why a non-blank social value breaks BR-CLI-001.
- * @param raw - the value as typed
- * @returns the problem, or null when valid
- */
-export function findSocialValueProblem(raw: string): SocialValueProblem | null {
-  const value = normaliseSocialValue(raw);
-  if (value.length === 0) return "EMPTY";
-  if (ANY_SCHEME.test(value) && !isSocialUrl(value)) return "INVALID_URL";
-  return [...value].length > SOCIAL_VALUE_MAX_LENGTH ? "TOO_LONG" : null;
-}
-
-/**
- * Finds rows that repeat an earlier row's platform and value, ignoring case and a leading `@`; blank rows never count.
- * @param rows - the rows in the Owner's order
- * @returns the indexes of the later duplicates
- */
-export function findDuplicateSocialRows(rows: readonly SocialLinkInput[]): readonly number[] {
-  const seen = new Set<string>();
-  const duplicates: number[] = [];
-  for (const [index, row] of rows.entries()) {
-    if (row.value.trim() === "") continue;
-    const key = `${row.platform}|${socialValueKey(row.value)}`;
-    if (seen.has(key)) duplicates.push(index);
-    else seen.add(key);
-  }
-  return duplicates;
-}
-
 /**
  * Labels a link for lists: `@handle`, or the URL without `https://` and `www.`.
  * @param link - a stored link
@@ -638,155 +555,140 @@ export function findDuplicateSocialRows(rows: readonly SocialLinkInput[]): reado
 export function socialLinkLabel(link: SocialLink): string {
   return isSocialUrl(link.value) ? link.value.replace(URL_PREFIX, "") : `@${link.value}`;
 }
-```
 
-```ts
-// client-input/client-input.types.ts
-import type { ClientNameProblem } from "../client-name/client-name.types";
-import type { SocialLink, SocialLinkInput, SocialValueProblem } from "../social-link/social-link.types";
+// social-link/social-link.schema.ts
+import { z } from "zod";
 
-export interface ClientInput {
-  readonly name: string;
-  readonly whatsappNumber: string;
-  readonly socialLinks: readonly SocialLinkInput[];
-}
-export interface ClientFields {
-  readonly name: string;
-  readonly whatsappNumber: string | null;
-  readonly socialLinks: readonly SocialLink[];
-}
-export type ClientInputProblemCode =
-  | ClientNameProblem
-  | SocialValueProblem
-  | "INVALID"
-  | "DUPLICATE"
-  | "UNKNOWN_PLATFORM"
-  | "TOO_MANY";
-export interface ClientInputProblem {
-  readonly path: readonly (string | number)[];
-  readonly code: ClientInputProblemCode;
-}
+import { isSocialUrl, normaliseSocialValue, SOCIAL_PLATFORMS } from "./social-link";
 
-// client-input/client-input.ts
-import { findClientNameProblem, normaliseClientName } from "../client-name/client-name";
-import {
-  findDuplicateSocialRows,
-  findSocialValueProblem,
-  isSocialPlatform,
-  normaliseSocialValue,
-  SOCIAL_LINK_MAX_COUNT,
-} from "../social-link/social-link";
-import type { SocialLink, SocialLinkInput } from "../social-link/social-link.types";
-import { parseWhatsappNumber } from "../whatsapp-number/whatsapp-number";
-import type { ClientFields, ClientInput, ClientInputProblem } from "./client-input.types";
+/** BR-CLI-001: at most ten links, each value 1–200 characters. */
+export const SOCIAL_LINK_MAX_COUNT = 10;
+export const SOCIAL_VALUE_MAX_LENGTH = 200;
+const ANY_SCHEME = /^[a-z][a-z0-9+.-]*:\/\//i;
 
-function findSocialRowProblems(rows: readonly SocialLinkInput[]): ClientInputProblem[] {
-  const problems: ClientInputProblem[] = [];
-  const duplicates = new Set(findDuplicateSocialRows(rows));
-  for (const [index, row] of rows.entries()) {
-    if (!isSocialPlatform(row.platform)) {
-      problems.push({ path: ["socialLinks", index, "platform"], code: "UNKNOWN_PLATFORM" });
-    }
-    if (row.value.trim() === "") continue;
-    const valueProblem = duplicates.has(index) ? "DUPLICATE" : findSocialValueProblem(row.value);
-    if (valueProblem) problems.push({ path: ["socialLinks", index, "value"], code: valueProblem });
-  }
-  return problems;
-}
+const isHandleOrHttps = (value: string) => isSocialUrl(value) || !ANY_SCHEME.test(value);
+const fitsValueLength = (value: string) => [...value].length <= SOCIAL_VALUE_MAX_LENGTH;
 
-/**
- * Collects every BR-CLI-001/002 problem in a client form at once, each with its field path.
- * @param input - the form values, social rows in the Owner's order
- * @returns the problems; empty when the input is valid
- */
-export function findClientInputProblems(input: ClientInput): readonly ClientInputProblem[] {
-  const problems: ClientInputProblem[] = [];
-  const nameProblem = findClientNameProblem(input.name);
-  if (nameProblem) problems.push({ path: ["name"], code: nameProblem });
-  if (parseWhatsappNumber(input.whatsappNumber).kind === "INVALID") {
-    problems.push({ path: ["whatsappNumber"], code: "INVALID" });
-  }
-  if (input.socialLinks.length > SOCIAL_LINK_MAX_COUNT) {
-    problems.push({ path: ["socialLinks"], code: "TOO_MANY" });
-  }
-  return [...problems, ...findSocialRowProblems(input.socialLinks)];
-}
-
-function toSocialLinks(rows: readonly SocialLinkInput[]): readonly SocialLink[] {
-  return rows.flatMap((row) =>
-    row.value.trim() !== "" && isSocialPlatform(row.platform)
-      ? [{ platform: row.platform, value: normaliseSocialValue(row.value) }]
-      : [],
+/** BR-CLI-001: a handle (stored without `@`) or an https URL, 1–200 characters. */
+export const socialValueSchema = z
+  .string()
+  .transform(normaliseSocialValue)
+  .pipe(
+    z
+      .string()
+      .min(1, { error: "EMPTY" })
+      .refine(isHandleOrHttps, { error: "INVALID_URL" })
+      .refine(fitsValueLength, { error: "TOO_LONG" }),
   );
-}
+
+/** A-2: one of the six platforms. */
+export const socialPlatformSchema = z.enum(SOCIAL_PLATFORMS, { error: "UNKNOWN_PLATFORM" });
+
+/** One stored link. */
+export const socialLinkSchema = z.object({ platform: socialPlatformSchema, value: socialValueSchema });
+
+/** BR-CLI-001: the stored links; it also validates the JSONB column on read (D-2). */
+export const socialLinksSchema = z.array(socialLinkSchema).max(SOCIAL_LINK_MAX_COUNT, { error: "TOO_MANY" });
+
+/** A form row. A blank value is a row the Owner left empty, and it is dropped. */
+const socialLinkRowSchema = z.object({
+  platform: socialPlatformSchema,
+  value: z
+    .string()
+    .transform((raw) => (raw.trim() === "" ? null : raw))
+    .pipe(socialValueSchema.nullable()),
+});
+
+type SocialLinkRow = z.output<typeof socialLinkRowSchema>;
 
 /**
- * Turns valid form values into the stored client fields: trimmed name, digits or null, links without blank rows.
- * @param input - form values that passed findClientInputProblems
- * @returns the fields to store
+ * Flags each later row that repeats an earlier row's platform and value (BR-CLI-001). Values are
+ * already normalised, so the comparison ignores `@` and case only.
+ * @param rows - the parsed rows in the Owner's order
+ * @param context - the refinement context that receives the issues
  */
-export function normaliseClientInput(input: ClientInput): ClientFields {
-  const number = parseWhatsappNumber(input.whatsappNumber);
-  return {
-    name: normaliseClientName(input.name),
-    whatsappNumber: number.kind === "VALID" ? number.digits : null,
-    socialLinks: toSocialLinks(input.socialLinks),
-  };
+function addDuplicateIssues(rows: readonly SocialLinkRow[], context: z.RefinementCtx): void {
+  const seen = new Set<string>();
+  for (const [index, row] of rows.entries()) {
+    if (row.value === null) continue;
+    const key = `${row.platform}|${row.value.toLowerCase()}`;
+    if (seen.has(key)) context.addIssue({ code: "custom", path: [index, "value"], message: "DUPLICATE" });
+    else seen.add(key);
+  }
 }
+
+const dropBlankRows = (rows: readonly SocialLinkRow[]) =>
+  rows.flatMap((row) => (row.value === null ? [] : [{ platform: row.platform, value: row.value }]));
+
+/** BR-CLI-001: the form's rows, at most ten, no duplicates, blank rows dropped, order kept. */
+export const socialLinkRowsSchema = z
+  .array(socialLinkRowSchema)
+  .max(SOCIAL_LINK_MAX_COUNT, { error: "TOO_MANY" })
+  .superRefine(addDuplicateIssues)
+  .transform(dropBlankRows);
 ```
+
+Zod skips a refinement while the array already has issues, so a duplicate is reported only once every row parses. The dialog shows row errors first, then duplicates; the tests cover them separately.
 
 ```ts
 // client-search/client-search.types.ts
-export interface ClientSearch {
-  readonly text: string;
-  readonly digits: string | null;
-}
+import type { z } from "zod";
 
-// client-search/client-search.ts
-import type { ClientSearch } from "./client-search.types";
+import type { clientSearchSchema } from "./client-search.schema";
+
+export type ClientSearch = z.output<typeof clientSearchSchema>;
+
+// client-search/client-search.schema.ts
+import { z } from "zod";
+
+import { WHATSAPP_SEPARATORS } from "../whatsapp-number/whatsapp-number.schema";
 
 /** TD-A-1: longer queries are ignored. */
 export const CLIENT_SEARCH_MAX_LENGTH = 100;
-const SEPARATORS = /[\s\-.()]/g;
 const NUMBER_LIKE = /^\+?\d+$/;
 
+/**
+ * Reads the digits of a number-like query with BR-CLI-002's leading-0 step, so `0812…` matches `62812…` (A-4, D-7).
+ * @param text - the trimmed query
+ * @returns the digits, or null when the query is not number-like
+ */
 function searchDigits(text: string): string | null {
-  const stripped = text.replace(SEPARATORS, "");
+  const stripped = text.replace(WHATSAPP_SEPARATORS, "");
   if (!NUMBER_LIKE.test(stripped)) return null;
   const digits = stripped.replace(/^\+/, "");
   return digits.startsWith("0") ? `62${digits.slice(1)}` : digits;
 }
 
-/**
- * Reads a search query: names match the text; number-like queries also match stored numbers after BR-CLI-002's prefix step (A-4).
- * @param raw - the `?q=` value
- * @returns the search, or null when blank or too long
- */
-export function parseClientSearch(raw: string): ClientSearch | null {
-  const text = raw.trim();
-  if (text.length === 0 || [...text].length > CLIENT_SEARCH_MAX_LENGTH) return null;
-  return { text, digits: searchDigits(text) };
-}
+/** A-4: a search over names (text) and numbers (digits); blank or over-long queries fail and the list is unfiltered. */
+export const clientSearchSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(CLIENT_SEARCH_MAX_LENGTH)
+  .transform((text) => ({ text, digits: searchDigits(text) }));
 ```
 
 ```ts
-// client-list/client-list.types.ts
-import type { CLIENT_STATUSES } from "./client-list";
-
-export type ClientStatus = (typeof CLIENT_STATUSES)[number];
-
 // client-list/client-list.ts
-import type { ClientStatus } from "./client-list.types";
-
 /** BR-CLI-003: the list shows active or archived clients. */
 export const CLIENT_STATUSES = ["ACTIVE", "ARCHIVED"] as const;
 /** A-5: clients load 30 at a time. */
 export const CLIENT_PAGE_SIZE = 30;
 
-/** @param value - untrusted status @returns whether it is a ClientStatus */
-export function isClientStatus(value: string): value is ClientStatus {
-  return CLIENT_STATUSES.some((status) => status === value);
-}
+// client-list/client-list.schema.ts
+import { z } from "zod";
+
+import { CLIENT_STATUSES } from "./client-list";
+
+/** BR-CLI-003: an untrusted list status. */
+export const clientStatusSchema = z.enum(CLIENT_STATUSES);
+
+// client-list/client-list.types.ts
+import type { z } from "zod";
+
+import type { clientStatusSchema } from "./client-list.schema";
+
+export type ClientStatus = z.output<typeof clientStatusSchema>;
 ```
 
 - [ ] **Step 4:** gate → PASS. Commit `feat(booking): add client domain rules`.
@@ -800,11 +702,12 @@ export function isClientStatus(value: string): value is ClientStatus {
 ```ts
 import "server-only";
 
-import type { ClientFields } from "@/features/booking/domain/client-input/client-input.types";
 import type { ClientStatus } from "@/features/booking/domain/client-list/client-list.types";
 import type { ClientSearch } from "@/features/booking/domain/client-search/client-search.types";
 import type { SocialLink } from "@/features/booking/domain/social-link/social-link.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
+
+import type { ClientFields } from "../../schemas/client-input/client-input.types";
 
 export interface ClientRecord {
   readonly id: string;
@@ -850,37 +753,31 @@ export interface ClientRepositoryPort {
 }
 ```
 
-- [ ] **Step 2: Schemas** (`*.schema.ts`, no `server-only`; input types via `z.input` / `z.output` in `.types.ts`):
+- [ ] **Step 2: Schemas** (`*.schema.ts`, no `server-only`; types via `z.input` / `z.output` in `.types.ts`). They compose the domain schemas from Task 3 and add no rules of their own. The stored social links are read with the domain's `socialLinksSchema` (D-2), so there is no separate JSONB schema here.
 
 ```ts
-// social-links/social-links.schema.ts — validates JSONB on read (D-2)
+// client-input/client-input.schema.ts — shared by the dialog (zodResolver) and the use cases
 import { z } from "zod";
 
-import { SOCIAL_LINK_MAX_COUNT, SOCIAL_PLATFORMS } from "@/features/booking/domain/social-link/social-link";
+import { clientNameSchema } from "@/features/booking/domain/client-name/client-name.schema";
+import { socialLinkRowsSchema } from "@/features/booking/domain/social-link/social-link.schema";
+import { optionalWhatsappNumberSchema } from "@/features/booking/domain/whatsapp-number/whatsapp-number.schema";
 
-export const storedSocialLinksSchema = z
-  .array(z.object({ platform: z.enum(SOCIAL_PLATFORMS), value: z.string().min(1) }))
-  .max(SOCIAL_LINK_MAX_COUNT);
-```
+export const clientInputSchema = z.object({
+  name: clientNameSchema,
+  whatsappNumber: optionalWhatsappNumberSchema,
+  socialLinks: socialLinkRowsSchema,
+});
 
-```ts
-// client-input/client-input.schema.ts
-import { z } from "zod";
+// client-input/client-input.types.ts
+import type { z } from "zod";
 
-import { findClientInputProblems, normaliseClientInput } from "@/features/booking/domain/client-input/client-input";
+import type { clientInputSchema } from "./client-input.schema";
 
-export const clientInputSchema = z
-  .object({
-    name: z.string(),
-    whatsappNumber: z.string(),
-    socialLinks: z.array(z.object({ platform: z.string(), value: z.string() })),
-  })
-  .superRefine((input, context) =>
-    findClientInputProblems(input).forEach((problem) =>
-      context.addIssue({ code: "custom", path: [...problem.path], message: problem.code }),
-    ),
-  )
-  .transform((input) => normaliseClientInput(input));
+/** The form values: raw strings, social rows in the Owner's order. */
+export type ClientInput = z.input<typeof clientInputSchema>;
+/** The stored fields: trimmed name, WhatsappNumber or null, links without blank rows. */
+export type ClientFields = z.output<typeof clientInputSchema>;
 ```
 
 ```ts
@@ -894,20 +791,20 @@ export const clientIdSchema = z.uuid();
 // client-list-query/client-list-query.schema.ts
 import { z } from "zod";
 
-import { CLIENT_STATUSES } from "@/features/booking/domain/client-list/client-list";
-import { CLIENT_SEARCH_MAX_LENGTH } from "@/features/booking/domain/client-search/client-search";
+import { clientStatusSchema } from "@/features/booking/domain/client-list/client-list.schema";
 
+// q is not length-checked here: an over-long query lists unfiltered (TD-A-1), the same as the first page.
 export const clientListQuerySchema = z.object({
-  status: z.enum(CLIENT_STATUSES),
-  q: z.string().max(CLIENT_SEARCH_MAX_LENGTH).default(""),
+  status: clientStatusSchema,
+  q: z.string().default(""),
   afterId: z.uuid().nullable().default(null),
 });
 ```
 
 `client-schemas.test.ts`:
-- AC-CLI-008/009/011: `clientInputSchema.safeParse(...)` reports issues with paths `["name"]`, `["whatsappNumber"]`, `["socialLinks", 1, "value"]` and messages equal to the domain codes;
-- AC-CLI-006: a valid parse outputs the normalised fields;
-- `clientListQuerySchema` rejects `status: "DELETED"` and a non-uuid `afterId`.
+- AC-CLI-008/009/011: one `clientInputSchema.safeParse` with an empty name, `0812` and an `MYSPACE` row reports all three issues at once, with paths `["name"]`, `["whatsappNumber"]` and `["socialLinks", 0, "platform"]` and messages `EMPTY`, `INVALID` and `UNKNOWN_PLATFORM`;
+- AC-CLI-006: a valid parse outputs the normalised fields (`name` trimmed, `whatsappNumber: "6281234567890"`, links without `@` and without blank rows); with a blank number it outputs `whatsappNumber: null`;
+- `clientListQuerySchema` rejects `status: "DELETED"` and a non-uuid `afterId`, and keeps a 101-character `q`.
 
 - [ ] **Step 3: Errors.** `ClientError extends DomainError` with `ClientErrorCode = "NOT_FOUND" | "SAVE_FAILED"`, the same shape as `CatalogError`.
 - [ ] **Step 4: Results** (`client-results.types.ts` + `client-results.ts`):
@@ -915,8 +812,11 @@ export const clientListQuerySchema = z.object({
 ```ts
 import type { ClientRecord, NumberHolder } from "../../ports/client-repository/client-repository.port";
 
-export type ClientFieldErrorKey =
-  | "EMPTY" | "TOO_LONG" | "INVALID" | "TAKEN" | "INVALID_URL" | "DUPLICATE" | "UNKNOWN_PLATFORM" | "TOO_MANY";
+import type { CLIENT_FIELD_ERROR_KEYS } from "./client-results";
+
+// client-results.ts: export const CLIENT_FIELD_ERROR_KEYS =
+//   ["EMPTY", "TOO_LONG", "INVALID", "TAKEN", "INVALID_URL", "DUPLICATE", "UNKNOWN_PLATFORM", "TOO_MANY"] as const;
+export type ClientFieldErrorKey = (typeof CLIENT_FIELD_ERROR_KEYS)[number];
 export interface ClientValidationFailure {
   readonly ok: false;
   readonly code: "VALIDATION_FAILED";
@@ -932,7 +832,7 @@ export interface ClientPage {
 }
 ```
 
-`client-results.ts` (server-only) exports `validationFailure(issues)`, which maps every issue to `fieldErrors[path.join(".")] = message`, and `numberTaken(holder)` → `{ ok:false, code:"VALIDATION_FAILED", fieldErrors:{ whatsappNumber:"TAKEN" }, numberHolder: holder }`.
+`client-results.ts` (server-only) exports `validationFailure(issues)`. It maps every issue to `fieldErrors[path.join(".")]`, reading the message with `z.enum(CLIENT_FIELD_ERROR_KEYS).catch("INVALID")`: Zod's own messages (a wrong type from a bypassed form) are not keys, and become `INVALID`. It also exports and `numberTaken(holder)` → `{ ok:false, code:"VALIDATION_FAILED", fieldErrors:{ whatsappNumber:"TAKEN" }, numberHolder: holder }`.
 
 - [ ] **Step 5: Fake repository** `tests/support/booking/fake-client-repository.ts`, mirroring `FakeCategoryRepository`:
   - public `rows` hold `workspaceId`, `id`, `name`, `whatsappNumber`, `socialLinks`, `archivedAt`, `updatedBy`, `createdAt` (an increasing counter);
@@ -962,7 +862,7 @@ export interface ClientPage {
   - `count-clients.test.ts`: AC-CLI-021 counts per status, ignoring other workspaces.
 - [ ] **Step 7:** run → FAIL. **Step 8: Implement:**
   - `addClient(repository, context, editorUserId, input)` and `updateClient(repository, context, id, editorUserId, input)` parse with `clientInputSchema`, return `validationFailure(parsed.error.issues)` on failure, and call the port with `{ ...parsed.data, editorUserId }`. They map `NUMBER_TAKEN` → `numberTaken(holder)` and `NOT_FOUND` → `throw new ClientError("NOT_FOUND")`.
-  - `listClients(repository, context, query: ClientListQuery)` builds `{ status, search: parseClientSearch(query.q), afterId: query.afterId, limit: CLIENT_PAGE_SIZE + 1 }`. It returns `{ items: rows.slice(0, CLIENT_PAGE_SIZE), nextCursor: rows.length > CLIENT_PAGE_SIZE ? rows[CLIENT_PAGE_SIZE - 1].id : null }`, reading the cursor with `.at()` (no `!`).
+  - `listClients(repository, context, query: ClientListQuery)` builds `{ status, search: clientSearchSchema.safeParse(query.q).data ?? null, afterId: query.afterId, limit: CLIENT_PAGE_SIZE + 1 }`. It returns `{ items: rows.slice(0, CLIENT_PAGE_SIZE), nextCursor: rows.length > CLIENT_PAGE_SIZE ? rows[CLIENT_PAGE_SIZE - 1].id : null }`, reading the cursor with `.at()` (no `!`).
   - `countClients`, `setClientArchived` and `deleteClient` follow the technical design's table.
 - [ ] **Step 9:** gate → PASS. Commit `feat(booking): add client use cases`.
 
@@ -1038,7 +938,7 @@ export const client = pgTable(
 - [ ] **Step 2: Failing unit test** (`drizzle-client-repository.test.ts`): AC-CLI-015 — `delete` maps an executor error with `code: "23503"` (also nested in `cause`) to `IN_USE`, using `pgCode` from `adapters/db/catalog-repository/pg-error`.
 - [ ] **Step 3:** `pnpm test:integration tests/integration/booking/client-repository.test.ts` → FAIL.
 - [ ] **Step 4: Implement** `createDrizzleClientRepository(db: DbExecutor): ClientRepositoryPort`:
-  - **Columns:** select `id, name, whatsappNumber, socialLinks, archivedAt`. Map to `ClientRecord`, parsing `socialLinks` with `storedSocialLinksSchema.parse` (a malformed row throws: it is a bug).
+  - **Columns:** select `id, name, whatsappNumber, socialLinks, archivedAt`. Map to `ClientRecord`, parsing `socialLinks` with the domain's `socialLinksSchema.parse` (a malformed row throws: it is a bug).
   - **Status:** `ACTIVE` → `isNull(client.archivedAt)`, `ARCHIVED` → `isNotNull(client.archivedAt)`.
   - **Search (D-7):**
 
@@ -1121,7 +1021,7 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
 
 - [ ] **Step 1: Copy.** `CLIENT_COPY` holds every string in design.md › Copy and the frames: titles, subtitles, *Daftar klien*, `count(status, n)` (*{n} klien aktif* / *{n} klien diarsipkan*), the column labels, *Belum ada nomor WhatsApp*, the search placeholders (*Cari nama atau nomor WhatsApp* / *Cari nama atau nomor*), *Hapus pencarian*, the empty and no-match titles and bodies, *Muat lebih banyak* / *Memuat…*, the dialog strings, the field errors, the toasts and the row actions. `PLATFORM_COPY` maps each platform to *Instagram*, *TikTok*, *Facebook*, *YouTube*, *X*, *Lainnya*.
 - [ ] **Step 2: Failing tests.**
-  - `client-initials.test.ts`: the first letters of the first two words (`Bayu & Laras` → `BL`, `Ade Kurnia` → `AK`, `Keluarga Wijaya` → `KW`), otherwise the first two letters of a single word (`Budi` → `BU`), upper case (`Rina` → `RI`, as the frames draw it).
+  - `client-initials.test.ts`: the first letters of the first two words, where a word is a run of letters or digits so `&` is skipped (`Bayu & Laras` → `BL`, `Ade Kurnia` → `AK`, `Keluarga Wijaya` → `KW`), otherwise the first two letters of a single word (`Budi` → `BU`), upper case (`Rina` → `RI`, as the frames draw it).
   - `client-field-error.test.ts`: each `ClientFieldErrorKey` maps to its copy; `TAKEN` with a holder → *Nomor ini sudah dipakai Rina*, and *Nomor ini sudah dipakai Budi (diarsipkan)* for an archived holder.
   - `clients-table.test.tsx`:
     - AC-CLI-001: rows show the initials avatar, the name, the formatted number or *Belum ada nomor WhatsApp*, and `Instagram · @anisaputri` or `—`; only the first link is shown, followed directly by a `CountBadge` *+1* / *+2* when the client has more links (no badge with one link); the text truncates (`min-w-0`) and the badge never shrinks;
@@ -1204,7 +1104,7 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
     - the submit button shows *Menyimpan…* while pending.
 - [ ] **Step 2:** run → FAIL.
 - [ ] **Step 3: Implement.**
-  - **Form:** `useForm({ resolver: zodResolver(clientInputSchema), defaultValues })`. The default values for add are `{ name:"", whatsappNumber:"", socialLinks:[{ platform:"INSTAGRAM", value:"" }] }`. For edit they are the record with handles prefixed by `@` and the number as `formatWhatsappNumber` (empty when null).
+  - **Form:** `useForm<ClientInput, unknown, ClientFields>({ resolver: zodResolver(clientInputSchema), defaultValues })`. The submit handler sends `form.getValues()` (the raw `ClientInput`) to the action, never the resolver's output: the output is already normalised (`whatsappNumber: null`, links without blank rows), and the server must parse the same raw shape again (C-004). The default values for add are `{ name:"", whatsappNumber:"", socialLinks:[{ platform:"INSTAGRAM", value:"" }] }`. For edit they are the record with handles prefixed by `@` and the number as `formatWhatsappNumber` (empty when null).
   - **Rows:** `useFieldArray` for `socialLinks`. Each row is a `SocialLinkRow` component (no inline handlers): a `Select` with options from `SOCIAL_PLATFORMS` + `PLATFORM_COPY`, a `TextField` with the label visually hidden, and an `IconButton` ghost `x`.
   - **Server errors:** set them with `form.setError(path, { type:"server", message: key })` for each `fieldErrors` entry; the number message uses the holder.
   - **Layout:**
@@ -1215,7 +1115,7 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
 
 ### Task 13: Row actions, archive, restore and delete
 
-**Files:** create `ui/client-row-actions`, `ui/delete-client-dialog` and `ui/use-client-mutations` (+ tests); extend `src/ui/patterns/sheet-item` with `isDisabled` and `isPending` (pending = disabled + `loading-03` spinner icon, `opacity.disabled`; + test and story); wire them into `ClientsTable`, `ClientList` and `ClientsScreen`. Build from `list-row-menu-desktop-uTkvt`, `row-actions-sheet-mobile-cVBpx`, `list-archived-*` (including `list-archived-row-menu-desktop-sfgdK` and `list-archived-row-actions-sheet-mobile-Ttcj1`), `delete-*` and `toast-*`.
+**Files:** create `ui/client-row-actions`, `ui/delete-client-dialog` and `ui/use-client-mutations` (+ tests); extend `src/ui/patterns/sheet-item` with `isPending` (it already has `isDisabled`; pending = disabled + `loading-03` spinner icon, `opacity.disabled`; + test and story); wire them into `ClientsTable`, `ClientList` and `ClientsScreen`. Build from `list-row-menu-desktop-uTkvt`, `row-actions-sheet-mobile-cVBpx`, `list-archived-*` (including `list-archived-row-menu-desktop-sfgdK` and `list-archived-row-actions-sheet-mobile-Ttcj1`), `delete-*` and `toast-*`.
 
 - [ ] **Step 1: Failing tests.**
   - `client-row-actions.test.tsx`:

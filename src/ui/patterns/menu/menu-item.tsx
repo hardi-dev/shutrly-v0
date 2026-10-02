@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable max-len -- semantic action item content is kept adjacent to its React Aria wrapper */
 
 import { MenuItem as AriaMenuItem } from "react-aria-components";
 
@@ -42,9 +43,24 @@ export function MenuItem({
   isDisabled = false,
   variant = "default",
   layout = "compact",
+  href,
+  target,
   onSelect,
 }: Readonly<MenuItemProps>) {
   const isDestructive = variant === "destructive";
+  if (href)
+    return (
+      <a
+        href={href}
+        target={target}
+        rel={target === "_blank" ? "noopener noreferrer" : undefined}
+        role="menuitem"
+        aria-label={description ? `${label} ${description}` : label}
+        className={getMenuItemClassName(isDestructive, isDisabled, layout)({ isFocused: false })}
+      >
+        <MenuItemContent label={label} description={description} icon={icon} isSelected={isSelected} layout={layout} />
+      </a>
+    );
 
   return (
     <AriaMenuItem
@@ -54,27 +70,16 @@ export function MenuItem({
       aria-label={description ? `${label} ${description}` : label}
       className={getMenuItemClassName(isDestructive, isDisabled, layout)}
     >
-      {icon ? <Icon name={icon} aria-hidden="true" data-testid="menu-item-icon" /> : null}
-      <span className="min-w-0 flex-1">
-        <span className={cn("block", isSelected && "font-semibold")}>{label}</span>
-        {description ? (
-          <span className="block text-(length:--font-size-label) text-(--component-menu-item-description)">
-            {description}
-          </span>
-        ) : null}
-      </span>
-      {isSelected ? (
-        <Icon
-          name="check"
-          aria-hidden="true"
-          data-testid="menu-item-check"
-          className={
-            layout === "row"
-              ? "text-(--component-sheet-item-check)"
-              : "text-(--component-menu-item-check)"
-          }
-        />
-      ) : null}
+      <MenuItemContent label={label} description={description} icon={icon} isSelected={isSelected} layout={layout} />
     </AriaMenuItem>
   );
 }
+
+function MenuItemContent({ label, description, icon, isSelected, layout }: Readonly<Pick<MenuItemProps, "label" | "description" | "icon" | "isSelected" | "layout">>) {
+  return <>
+    {icon ? <Icon name={icon} aria-hidden="true" data-testid="menu-item-icon" /> : null}
+    <span className="min-w-0 flex-1"><span className={cn("block", isSelected && "font-semibold")}>{label}</span>{description ? <span className="block text-(length:--font-size-label) text-(--component-menu-item-description)">{description}</span> : null}</span>
+    {isSelected ? <Icon name="check" aria-hidden="true" data-testid="menu-item-check" className={layout === "row" ? "text-(--component-sheet-item-check)" : "text-(--component-menu-item-check)"} /> : null}
+  </>;
+}
+/* eslint-enable max-len -- end adjacent item content */

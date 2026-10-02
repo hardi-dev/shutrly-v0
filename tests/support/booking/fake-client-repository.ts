@@ -16,6 +16,7 @@ interface StoredClient extends ClientRecord {
 
 export class FakeClientRepository implements ClientRepositoryPort {
   readonly rows: StoredClient[] = [];
+  readonly inUse = new Set<string>();
   lastListQuery: ClientPageQuery | undefined;
   private createdAt = 0;
 
@@ -107,6 +108,32 @@ export class FakeClientRepository implements ClientRepositoryPort {
       updatedBy: change.editorUserId,
     };
     return "UPDATED" as const;
+  }
+
+  async setArchived(
+    context: WorkspaceContext,
+    change: import("@/features/booking/application/ports/client-repository/client-repository.port").ArchiveChange,
+  ) {
+    const row = this.rows.find(
+      (candidate) => candidate.workspaceId === context.workspaceId && candidate.id === change.id,
+    );
+    if (!row) return false;
+    this.rows[this.rows.indexOf(row)] = {
+      ...row,
+      isArchived: change.isArchived,
+      updatedBy: change.editorUserId,
+    };
+    return true;
+  }
+
+  async delete(context: WorkspaceContext, id: string) {
+    const row = this.rows.find(
+      (candidate) => candidate.workspaceId === context.workspaceId && candidate.id === id,
+    );
+    if (!row) return "NOT_FOUND" as const;
+    if (this.inUse.has(id)) return "IN_USE" as const;
+    this.rows.splice(this.rows.indexOf(row), 1);
+    return "DELETED" as const;
   }
 }
 

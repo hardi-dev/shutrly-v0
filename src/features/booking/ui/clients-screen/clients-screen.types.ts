@@ -1,6 +1,8 @@
+/* eslint-disable max-len -- action signature is intentionally explicit at the screen boundary */
 import type { ClientRecord } from "@/features/booking/application/ports/client-repository/client-repository.port";
 import type { ClientInput } from "@/features/booking/application/schemas/client-input/client-input.types";
 import type { ClientWriteResult } from "@/features/booking/application/use-cases/client-results/client-results.types";
+import type { DeleteClientResult } from "@/features/booking/application/use-cases/delete-client/delete-client.types";
 import type { ClientStatus } from "@/features/booking/domain/client-list/client-list.types";
 
 export interface ClientsScreenProps {
@@ -17,6 +19,8 @@ export interface ClientsScreenProps {
     clientId: string,
     values: ClientInput,
   ) => Promise<ClientWriteResult | undefined>;
+  readonly setArchivedAction?: (workspaceId: string, clientId: string, isArchived: boolean) => Promise<void>;
+  readonly deleteAction?: (workspaceId: string, clientId: string) => Promise<DeleteClientResult>;
 }
 
 export interface ClientScreenContentProps {
@@ -34,6 +38,7 @@ export interface ClientScreenContentProps {
   readonly isDialogOpen: boolean;
   readonly editing: ClientsScreenProps["rows"][number] | undefined;
   readonly onOpenChange: (isOpen: boolean) => void;
+  readonly setArchivedAction: ClientsScreenProps["setArchivedAction"];
 }
 
 export interface ClientAddDialogProps {
@@ -44,4 +49,5 @@ export interface ClientAddDialogProps {
   readonly workspaceId: string;
   readonly onOpenChange: (isOpen: boolean) => void;
 }
+/* eslint-enable max-len -- end explicit action signature */
 import type { ReactNode } from "react";

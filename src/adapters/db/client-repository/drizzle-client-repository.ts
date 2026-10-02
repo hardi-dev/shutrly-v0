@@ -17,6 +17,7 @@ import { client } from "../schema/booking/client";
 
 const LIKE_SPECIAL = /[\\%_]/g;
 const DUPLICATE_KEY = "23505";
+const FOREIGN_KEY = "23503";
 
 function searchCondition(query: ClientPageQuery) {
   if (!query.search) return undefined;
@@ -86,7 +87,39 @@ export function createDrizzleClientRepository(db: DbExecutor): ClientRepositoryP
     },
     create: (context, change) => createClient(db, context, change),
     update: (context, id, change) => updateClient(db, context, id, change),
+    setArchived: (context, change) => setClientArchived(db, context, change),
+    delete: (context, id) => deleteClient(db, context, id),
   };
+}
+
+async function setClientArchived(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  change: import("@/features/booking/application/ports/client-repository/client-repository.port").ArchiveChange,
+) {
+  const rows = await db
+    .update(client)
+    .set({
+      archivedAt: change.isArchived ? new Date() : null,
+      updatedBy: change.editorUserId,
+      updatedAt: new Date(),
+    })
+    .where(and(eq(client.workspaceId, context.workspaceId), eq(client.id, change.id)))
+    .returning({ id: client.id });
+  return rows.length > 0;
+}
+
+async function deleteClient(db: DbExecutor, context: WorkspaceContext, id: string) {
+  try {
+    const rows = await db
+      .delete(client)
+      .where(and(eq(client.workspaceId, context.workspaceId), eq(client.id, id)))
+      .returning({ id: client.id });
+    return rows.length > 0 ? ("DELETED" as const) : ("NOT_FOUND" as const);
+  } catch (error) {
+    if (pgCode(error) === FOREIGN_KEY) return "IN_USE" as const;
+    throw error;
+  }
 }
 
 async function updateClient(

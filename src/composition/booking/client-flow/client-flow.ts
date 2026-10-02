@@ -6,7 +6,9 @@ import { ClientError } from "@/features/booking/application/errors/client-errors
 import { clientIdSchema } from "@/features/booking/application/schemas/client-id/client-id.schema";
 import { addClient } from "@/features/booking/application/use-cases/add-client/add-client";
 import { countClients } from "@/features/booking/application/use-cases/count-clients/count-clients";
+import { deleteClient } from "@/features/booking/application/use-cases/delete-client/delete-client";
 import { listClients } from "@/features/booking/application/use-cases/list-clients/list-clients";
+import { setClientArchived } from "@/features/booking/application/use-cases/set-client-archived/set-client-archived";
 import { updateClient } from "@/features/booking/application/use-cases/update-client/update-client";
 import type { ClientStatus } from "@/features/booking/domain/client-list/client-list.types";
 import { clientSearchSchema } from "@/features/booking/domain/client-search/client-search.schema";
@@ -76,5 +78,35 @@ export async function updateWorkspaceClient(
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "update");
+  }
+}
+
+export async function setWorkspaceClientArchived(
+  rawWorkspaceId: string,
+  rawClientId: string,
+  isArchived: boolean,
+): Promise<void> {
+  const clientId = idOrNotFound(rawClientId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    await withClientScope(({ clients }) =>
+      setClientArchived(clients, verified.context, account.id, clientId, isArchived),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, isArchived ? "archive" : "restore");
+  }
+}
+
+export async function deleteWorkspaceClient(rawWorkspaceId: string, rawClientId: string) {
+  const clientId = idOrNotFound(rawClientId);
+  await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withClientScope(({ clients }) =>
+      deleteClient(clients, verified.context, clientId),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "delete");
   }
 }

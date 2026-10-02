@@ -32,6 +32,12 @@ export interface NumberHolder {
   readonly isArchived: boolean;
 }
 
+export interface ArchiveChange {
+  readonly id: string;
+  readonly isArchived: boolean;
+  readonly editorUserId: string;
+}
+
 export type NumberTaken = { readonly status: "NUMBER_TAKEN"; readonly holder: NumberHolder };
 
 /** Every call is scoped by the verified workspace (C-101). */
@@ -50,4 +56,6 @@ export interface ClientRepositoryPort {
     id: string,
     change: ClientChange,
   ) => Promise<"UPDATED" | "NOT_FOUND" | NumberTaken>;
+  readonly setArchived: (context: WorkspaceContext, change: ArchiveChange) => Promise<boolean>;
+  readonly delete: (context: WorkspaceContext, id: string) => Promise<"DELETED" | "IN_USE" | "NOT_FOUND">;
 }

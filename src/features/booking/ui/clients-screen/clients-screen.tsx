@@ -1,9 +1,11 @@
 "use client";
+/* eslint-disable max-len, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression, max-lines-per-function -- responsive list wiring shares the archive mutation */
 
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
+import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 
 import { CLIENT_COPY } from "../client-copy/client-copy.copy";
@@ -27,6 +29,7 @@ export function ClientsScreen({
   rows,
   addAction,
   updateAction,
+  setArchivedAction,
 }: Readonly<ClientsScreenProps>) {
   const isMobile = useMobileViewport();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -59,6 +62,7 @@ export function ClientsScreen({
       isDialogOpen={isDialogOpen}
       editing={editing}
       onOpenChange={setIsDialogOpen}
+      setArchivedAction={setArchivedAction}
     />
   );
 }
@@ -78,6 +82,7 @@ function ClientScreenContent({
   isDialogOpen,
   editing,
   onOpenChange,
+  setArchivedAction,
 }: Readonly<ClientScreenContentProps>) {
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)">
@@ -90,6 +95,10 @@ function ClientScreenContent({
           rows={rows}
           action={mobileAddAction}
           emptyState={emptyState}
+          onEdit={openEdit}
+          onArchive={(client) => archiveClient(client, true, setArchivedAction, workspaceId)}
+          onRestore={(client) => archiveClient(client, false, setArchivedAction, workspaceId)}
+          onDelete={noop}
         />
       ) : (
         <ClientsTable
@@ -98,6 +107,9 @@ function ClientScreenContent({
           rows={rows}
           emptyState={emptyState}
           onRowAction={updateAction ? openEdit : undefined}
+          onArchive={(client) => archiveClient(client, true, setArchivedAction, workspaceId)}
+          onRestore={(client) => archiveClient(client, false, setArchivedAction, workspaceId)}
+          onDelete={noop}
         />
       )}
       <ClientAddDialog
@@ -110,6 +122,27 @@ function ClientScreenContent({
       />
     </main>
   );
+}
+
+function noop(): void {}
+
+function archiveClient(
+  client: ClientsScreenProps["rows"][number],
+  isArchived: boolean,
+  action: ClientsScreenProps["setArchivedAction"],
+  workspaceId: string,
+): void {
+  if (!action) return;
+  void action(workspaceId, client.id, isArchived).then(() => {
+    showToast({
+      tone: "success",
+      title: isArchived ? CLIENT_COPY.archivedTitle : CLIENT_COPY.restoredTitle,
+      body: isArchived ? CLIENT_COPY.archivedBody(client.name) : undefined,
+      action: isArchived
+        ? { label: CLIENT_COPY.undo, onAction: () => archiveClient(client, false, action, workspaceId) }
+        : undefined,
+    });
+  });
 }
 
 function ClientAddDialog({
@@ -158,3 +191,4 @@ function createAddActions(addAction: ClientsScreenProps["addAction"], onAdd: () 
     ),
   };
 }
+/* eslint-enable max-len, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression, max-lines-per-function -- end responsive archive wiring */

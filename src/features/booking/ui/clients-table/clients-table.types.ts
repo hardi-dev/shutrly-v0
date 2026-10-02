@@ -7,5 +7,8 @@ export interface ClientsTableProps {
   readonly rows: readonly ClientRecord[];
   readonly emptyState: ReactNode;
   readonly onRowAction?: (client: ClientRecord) => void;
+  readonly onArchive?: (client: ClientRecord) => void;
+  readonly onRestore?: (client: ClientRecord) => void;
+  readonly onDelete?: (client: ClientRecord) => void;
 }
 import type { ReactNode } from "react";

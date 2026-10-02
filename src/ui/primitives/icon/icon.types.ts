@@ -22,6 +22,7 @@ export type IconName =
   | "package"
   | "user-round-cog"
   | "message-square-text"
+  | "message-circle"
   | "share-2"
   | "settings"
   | "menu"

@@ -1,3 +1,8 @@
+import {
+  deleteClientAction,
+  setClientArchivedAction,
+  updateClientAction,
+} from "@/app/actions/booking/clients";
 import { loadClients } from "@/composition/booking/client-flow/client-flow";
 import { ClientsScreen } from "@/features/booking/ui/clients-screen/clients-screen";
 
@@ -14,6 +19,9 @@ export default async function ArchivedClientsPage({
       status={data.status}
       count={data.count}
       rows={data.page.items}
+      updateAction={updateClientAction}
+      setArchivedAction={setClientArchivedAction}
+      deleteAction={deleteClientAction}
     />
   );
 }

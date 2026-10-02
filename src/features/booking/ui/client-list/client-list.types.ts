@@ -7,5 +7,9 @@ export interface ClientListProps {
   readonly rows: readonly ClientRecord[];
   readonly action?: ReactNode;
   readonly emptyState: ReactNode;
+  readonly onEdit?: (client: ClientRecord) => void;
+  readonly onArchive?: (client: ClientRecord) => void;
+  readonly onRestore?: (client: ClientRecord) => void;
+  readonly onDelete?: (client: ClientRecord) => void;
 }
 import type { ReactNode } from "react";

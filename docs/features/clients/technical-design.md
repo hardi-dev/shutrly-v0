@@ -114,15 +114,15 @@ There is no backfill. The agent generates 0008, reviews it, commits it and appli
 
 ## Domain / Application Logic
 
-**Domain (`features/booking/domain`, pure):**
+**Domain (`features/booking/domain`, pure):** the rules are Zod schemas (`*.schema.ts`), as in `workspace/domain`. Each one normalises and validates, and its issue message is the field-error key. Plain functions are kept only for display.
 
 | Unit | Responsibility |
 |---|---|
-| `client-name` | `CLIENT_NAME_MAX_LENGTH = 100`. `normaliseClientName` (trim). `findClientNameProblem` → `EMPTY` \| `TOO_LONG` \| null, counting code points. |
-| `whatsapp-number` | `WHATSAPP_DIGITS_MIN = 10`, `WHATSAPP_DIGITS_MAX = 15`. `parseWhatsappNumber(raw)` → `{ kind:"EMPTY" }` \| `{ kind:"VALID", digits }` \| `{ kind:"INVALID" }`, applying BR-CLI-002 steps in order. `formatWhatsappNumber(digits)` → `+62 812-3456-7890` or `+<digits>` (A-7). `whatsappChatUrl(digits)` → `https://wa.me/<digits>` (A-6). |
-| `social-link` | `SOCIAL_PLATFORMS` (A-2 order), `SOCIAL_LINK_MAX_COUNT = 10`, `SOCIAL_VALUE_MAX_LENGTH = 200`. `isSocialUrl`. `normaliseSocialValue` (trim; drops one leading `@` from a handle). `socialValueKey` (normalised, lower case). `findSocialValueProblem` → `TOO_LONG` \| `INVALID_URL` \| null. `findDuplicateSocialRows(rows)` → indexes of later duplicates. `socialLinkLabel` (`@handle`, or the URL without `https://` and `www.`). |
-| `client-search` | `CLIENT_SEARCH_MAX_LENGTH = 100` (TD-A-1). `parseClientSearch(q)` → `{ text, digits }`: `digits` is null unless the query holds a digit, and is prefix-normalized as in D-7. |
-| `client-page` | `CLIENT_PAGE_SIZE = 30` (A-5). |
+| `client-name` | `CLIENT_NAME_MAX_LENGTH = 100`. `clientNameSchema`: trim, then `EMPTY` / `TOO_LONG` counting code points. |
+| `whatsapp-number` | `WHATSAPP_SEPARATORS`, `WHATSAPP_NUMBER_PATTERN` (`^(?!620)[1-9]\d{9,14}$`, repeated by the DB check). `whatsappNumberSchema`: strip separators, apply the first matching BR-CLI-002 prefix step, check the pattern (`INVALID`), and brand the result `WhatsappNumber`. `optionalWhatsappNumberSchema`: blank → `null`. `formatWhatsappNumber(digits)` → `+62 812-3456-7890` or `+<digits>` (A-7), which parses back to the same digits. `whatsappChatUrl(digits)` → `https://wa.me/<digits>` (A-6). |
+| `social-link` | `SOCIAL_PLATFORMS` (A-2 order), `SOCIAL_LINK_MAX_COUNT = 10`, `SOCIAL_VALUE_MAX_LENGTH = 200`. `socialValueSchema`: trim, drop one leading `@` from a handle, then `EMPTY` / `INVALID_URL` / `TOO_LONG`. `socialPlatformSchema` (`UNKNOWN_PLATFORM`). `socialLinksSchema`: the stored array, also used to read the JSONB column. `socialLinkRowsSchema`: the form rows (`TOO_MANY`, `DUPLICATE` on later repeats ignoring case and `@`, blank rows dropped, order kept). `socialLinkLabel` (`@handle`, or the URL without `https://` and `www.`). |
+| `client-search` | `CLIENT_SEARCH_MAX_LENGTH = 100` (TD-A-1). `clientSearchSchema` → `{ text, digits }`. `digits` is null unless the query is number-like, and is prefix-normalized as in D-7. A blank or over-long query fails, and the list is then unfiltered. |
+| `client-list` | `CLIENT_STATUSES`, `clientStatusSchema`, `CLIENT_PAGE_SIZE = 30` (A-5). |
 
 **Application (`features/booking/application`):**
 
@@ -141,12 +141,12 @@ There is no backfill. The agent generates 0008, reviews it, commits it and appli
 
   | Schema | Shape and rules |
   |---|---|
-  | `clientInputSchema` | `{ name, whatsappNumber, socialLinks: [{ platform, value }] }`. Rows with an empty value are allowed and dropped by the transform. The output is normalised (trimmed name, digits or null, links without `@`). Every problem is reported at once, each with its path (`name`, `whatsappNumber`, `socialLinks.N.value`, `socialLinks.N.platform`, `socialLinks`). |
+  | `clientInputSchema` | `z.object` of the domain schemas: `{ name: clientNameSchema, whatsappNumber: optionalWhatsappNumberSchema, socialLinks: socialLinkRowsSchema }`. The output is normalised (trimmed name, `WhatsappNumber` or null, links without `@` and without blank rows). Field problems are reported together, each with its path (`name`, `whatsappNumber`, `socialLinks.N.value`, `socialLinks.N.platform`, `socialLinks`). Duplicate rows are reported once every row parses. |
   | `clientIdSchema` | uuid |
-  | `clientListQuerySchema` | `{ status, q, afterId: uuid \| null }` |
+  | `clientListQuerySchema` | `{ status, q, afterId: uuid \| null }`. `q` has no length check: an over-long query lists unfiltered (TD-A-1). |
 
 - **Errors:** `ClientError` with codes `NOT_FOUND` and `SAVE_FAILED`. Codes only, never names or numbers (C-103).
-- **Results:** `ClientValidationFailure` is `{ ok:false, code:"VALIDATION_FAILED", fieldErrors: Record<path, ClientFieldErrorKey>, numberHolder?: { name, isArchived } }`. The keys are `EMPTY`, `TOO_LONG`, `INVALID`, `TAKEN`, `INVALID_URL`, `DUPLICATE`, `UNKNOWN_PLATFORM` and `TOO_MANY`.
+- **Results:** `ClientValidationFailure` is `{ ok:false, code:"VALIDATION_FAILED", fieldErrors: Record<path, ClientFieldErrorKey>, numberHolder?: { name, isArchived } }`. The keys are `EMPTY`, `TOO_LONG`, `INVALID`, `TAKEN`, `INVALID_URL`, `DUPLICATE`, `UNKNOWN_PLATFORM` and `TOO_MANY`; any other Zod message (a wrong type from a bypassed form) becomes `INVALID`.
 - **Use cases:**
 
   | Use case | Behaviour |
@@ -250,11 +250,11 @@ Built from `exports/` ([design.md](design.md)):
 | AC-CLI-001 | unit: `ClientsTable` / `ClientList` rows, formatted number, *Belum ada nomor WhatsApp*, desktop: first link plus *+N* for the rest; phone: number only; owner-nav active on both tabs · E2E nav |
 | AC-CLI-002 | unit: archived rows show *Pulihkan* · integration: `listPage` by status · E2E *Arsip* tab |
 | AC-CLI-003 | unit: both empty states · E2E new workspace |
-| AC-CLI-004 | unit: `parseClientSearch`; search field debounce + URL · integration: name `ILIKE` with wildcards escaped, `0812 3456` / `+62812` digits · E2E search + reload + *Hapus pencarian* |
+| AC-CLI-004 | unit: `clientSearchSchema`; search field debounce + URL · integration: name `ILIKE` with wildcards escaped, `0812 3456` / `+62812` digits · E2E search + reload + *Hapus pencarian* |
 | AC-CLI-005 | integration: 65 rows → 30 / 60 / 65, no duplicates, in order · unit: `useLoadMoreClients` append + reset |
 | AC-CLI-006 / 007 | unit: `addClient` stores normalised record and order; empty row dropped · dialog test · E2E add |
-| AC-CLI-008 | unit: `findClientNameProblem`; schema; use case bypassing the form |
-| AC-CLI-009 | unit: `parseWhatsappNumber` table of every spec example |
+| AC-CLI-008 | unit: `clientNameSchema`; `clientInputSchema`; use case bypassing the form |
+| AC-CLI-009 | unit: `whatsappNumberSchema` table of every spec example |
 | AC-CLI-010 | integration: active and archived holders, concurrent `Promise.all` creates → one row, another workspace allowed, own number kept · E2E message |
 | AC-CLI-011 | unit: social rules, duplicate (`@rina.wed` vs `RINA.WED`), 11th row, unknown platform via the action; editor disables add at 10, focus after remove |
 | AC-CLI-012 | unit: `updateClient` stores the whole record · E2E edit |

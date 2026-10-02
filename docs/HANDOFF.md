@@ -3,6 +3,13 @@
 Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `codex/message-templates-shell-v3`.
 
+## Update 2026-10-02 — F-05 Service catalog DESIGNED
+
+- **Design APPROVED (Owner 2026-10-02):** 40 frames in `catalog.pen` (26 desktop, 14 phone), exports in `features/catalog/exports/`. Direction Option A2 from `exploration.pen` board 12. See [design.md](features/catalog/design.md).
+- **Library promotion PERSISTED:** C45 Tabs, Page Header/Tabs, Segmented Control/Full width, Empty State/In card, Menu Item/Rich, List Card trailing amendment; 596 tokens, checksum `986ecbcb`; `src/ui/theme/tokens.css` regenerated.
+- **Follow-up:** migrate `catalog.pen` from its local pieces to the promoted components; its `v:` import still resolves the old library (suspected link to the main-checkout copy), see design.md.
+- **Next:** `/sdv:plan-feature catalog`.
+
 ## Update 2026-10-02 — F-05 Service catalog SPECIFIED
 
 - **Spec:** [spec.md](features/catalog/spec.md) and [acceptance-criteria.md](features/catalog/acceptance-criteria.md) (AC-CAT-001…023). New rules BR-CAT-007…011 (selection types `EDIT`/`PRINT`, active/archived/delete lifecycle, names, fixed definition type once used, four seeded item definitions); scope and domain model updated.

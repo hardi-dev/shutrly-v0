@@ -1,7 +1,7 @@
 # Feature: Service catalog
 
 ID: F-05 · Slug: `catalog`
-Status: SPECIFIED (2026-10-02) · Journey: J-02 Catalog setup
+Status: DESIGNED (2026-10-02, [design.md](design.md)); specified 2026-10-02 · Journey: J-02 Catalog setup
 Consumer: F-07 `projects` (a project is created from an active service and snapshots its items and booking fields, BR-PRJ-001)
 
 ## Goal

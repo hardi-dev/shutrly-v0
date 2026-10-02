@@ -10,10 +10,10 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-01 | Auth & account (register, verify, login, reset, profile) | `auth` | BR-AUTH-* | J-01 | DONE (verified 2026-09-27; ship needs F-02) |
 | F-02 | Workspace onboarding & switching, branding, App Shell / Sidebar code (Owner 2026-09-26) | `workspace` | BR-WS-*, BR-AUTH-004 | J-01 | DONE (2026-09-28; Settings v3 with Section Card, 2026-10-01) |
 | F-03 | Message templates | `message-templates` | BR-MSG-001..006 | — | DONE (2026-10-01) |
-| F-04 | Source configuration: Owner-managed photo sources (Google Drive in MVP, other providers coming soon), seeded *Google Drive*, setup guide and public-link warning; nav *Sumber foto* (Owner 2026-10-01) | `source-config` | BR-SRC-001..006 | — | IN PROGRESS (2026-10-02) |
-| F-05 | Service catalog (categories, item definitions, services, items, booking fields); *Layanan* with tabs, four seeded item definitions (Owner 2026-10-02) | `catalog` | BR-CAT-001..011 | J-02 | IN PROGRESS (2026-10-02) |
+| F-04 | Source configuration: Owner-managed photo sources (Google Drive in MVP, other providers coming soon), seeded *Google Drive*, setup guide and public-link warning; nav *Sumber foto* (Owner 2026-10-01) | `source-config` | BR-SRC-001..006 | — | DONE (merged to `main` 2026-10-02, PR #1; verify pending) |
+| F-05 | Service catalog (categories, item definitions, services, items, booking fields); *Layanan* with tabs, four seeded item definitions (Owner 2026-10-02) | `catalog` | BR-CAT-001..011 | J-02 | DONE (merged to `main` 2026-10-02, PR #3; verify pending) |
 | F-06 | Clients: name, WhatsApp number (normalized, unique per workspace), social-media links; search, archive, delete while unused (Owner 2026-10-02) | `clients` | BR-CLI-001..003, BR-WS-002 | J-03 | PLANNED (2026-10-02) |
-| F-07 | Project creation from service + snapshots | `projects` | BR-PRJ-*, BR-CAT-003 | J-03 | TODO |
+| F-07 | Project creation from service + snapshots | `projects` | BR-PRJ-*, BR-CAT-003 | J-03 | SPECIFIED (2026-10-02) |
 | F-08 | Sessions, team members, assignments | `team-sessions` | BR-TEAM-* | J-03 | TODO |
 | F-09 | Gallery, sources, Drive sync | `gallery` | BR-GAL-*, BR-SRC-* | J-04 | TODO |
 | F-10 | Client gallery access (token, password, rate limits, media delivery) | `client-access` | BR-ACC-* | J-04 | TODO |
@@ -26,22 +26,21 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-17 | App Shell revamp (desktop/mobile navigation, workspace switcher, page header, content shell, responsive transitions) | `app-shell-revamp` | BR-WS-002..003, BR-WS-006..007, C-007..008 | J-01 | DONE (2026-10-01) |
 
 ## Next up
-**F-17 App Shell revamp** — DONE 2026-10-01 (implemented 2026-09-29; sticky Sidebar fix 2026-10-01) ([technical-design.md](../features/app-shell-revamp/technical-design.md), 9 iterations; design approved 2026-09-29, [design.md](../features/app-shell-revamp/design.md)).
+**F-07 Projects** — SPECIFIED 2026-10-02 on `feat/projects` (branched from `feat/clients`, because a project needs a client) ([spec.md](../features/projects/spec.md), AC-PRJ-001…026). Owner decisions:
+- status steps are manual, and sessions never move the status;
+- a project is created directly as `BOOKED` or saved as a `DRAFT`, and required booking fields apply to both;
+- while `DRAFT`/`BOOKED`, the deal (price, item values, add/remove items, booking values) stays editable;
+- only drafts are deleted, and other projects are cancelled;
+- final delivery may move `BOOKED`, `SHOOTING` or `POST_PROCESSING` to `DELIVERED`;
+- the fields are title (default *{service} — {client}*), event date and internal notes, with inline client creation.
 
-Owner decisions:
-- tablet keeps the rail in v3 styling;
-- the phone switcher is the header pill only;
-- the sub-page compact bar is in scope, with an optional Actions slot;
-- Search and Notifications are visible and open *Segera hadir*, with a danger unread badge;
-- a failed switch shows a danger Toast with *Coba lagi*;
-- phone option A: Invoice goes into the Bottom Nav, and a header Menu button opens the menu sheet.
+New rules BR-PRJ-008..010; BR-PRJ-004's gap is resolved and BR-DEL-003 updated. Next: `/sdv:design-feature projects`.
 
-Badge conflict decided: follow the code (Count Badge Danger variant). Rules v3.1 APPROVED, and the library promotion PERSISTED 2026-09-29 (531 tokens, `594f560b`); `app-shell-revamp.pen` is rebound. HTML exports are done (31 frames). `/sdv:verify-design-system` was skipped at the Owner's request. Built and browser-validated at 1440/1024/390 (commits `8df6492`, `a787464`, `70ce31d`). Next: `/sdv:verify-feature app-shell-revamp`.
+**F-06 Clients** — PLANNED 2026-10-02 ([spec.md](../features/clients/spec.md), AC-CLI-001…021). Design approved (40 frames + exports, [design.md](../features/clients/design.md)); [technical-design.md](../features/clients/technical-design.md) and [plan.md](../features/clients/plan.md) list 14 test-first tasks (booking context, migration 0008). Pushed on `feat/clients`. Next: `/sdv:build-feature clients 1`.
 
-F-03 is built and verified (DONE 2026-10-01; see `features/message-templates/verification-report.md`). CI (GitHub Actions) and Cloudflare deploy must still be scheduled before the first `/sdv:ship`.
+**Verification still owed** — each of these is built and merged to `main`, but has no verification report yet:
+- F-04 Source configuration (PR #1, [spec.md](../features/source-config/spec.md), AC-SRC-001…017): `/sdv:verify-feature source-config`.
+- F-05 Service catalog (PR #3, [spec.md](../features/catalog/spec.md), AC-CAT-001…023; [implementation record](../features/catalog/technical-design.md#implementation-record--2026-10-02)): Neon integration was blocked by pooler connectivity. `/sdv:verify-feature catalog`.
+- F-17 App Shell revamp (DONE 2026-10-01, [design.md](../features/app-shell-revamp/design.md)): `/sdv:verify-feature app-shell-revamp`.
 
-**F-04 Source configuration** — IN PROGRESS 2026-10-02 ([spec.md](../features/source-config/spec.md), AC-SRC-001…017). Owner decisions: Owners manage a list of sources (add, rename, deactivate, delete; BR-SRC-005/006); only Google Drive can be added, and Dropbox, OneDrive, S3 and Custom URL show as *Segera hadir*; every workspace is seeded with *Google Drive*; the link checker is dropped; the nav slot *Sumber klien* becomes *Sumber foto* with the `folder-open` icon. Designed and approved 2026-10-02 ([design.md](../features/source-config/design.md), 24 frames + exports); promoted Status Chip (C12), List Card Item Two-line/Skeleton (C42) and Option Card (C44) to the library (585 tokens, `284a052f`). All 14 test-first tasks are implemented on `feat/source-config`, with migrations 0004/0005 applied by the Owner. Next: `/sdv:verify-feature source-config`.
-
-**F-05 Service catalog** — IN PROGRESS 2026-10-02 ([spec.md](../features/catalog/spec.md), AC-CAT-001…023). The three catalog tabs, lifecycle actions, service detail forms, inline category creation, accessible reorder/remove actions and save retry feedback are implemented on `feat/catalog`; see [technical-design.md](../features/catalog/technical-design.md#implementation-record--2026-10-02). The isolated authenticated catalog E2E passes. Full local unit coverage has one unrelated token-count failure, and Neon integration remains blocked by pooler connectivity. Next: resolve the remaining verification blockers, then run `/sdv:verify-feature catalog`.
-
-**F-06 Clients** — PLANNED 2026-10-02 ([spec.md](../features/clients/spec.md), AC-CLI-001…021). Picked ahead of F-05 by the Owner; planned on the F-05 base. Owner decisions: fields are name, WhatsApp number and social-media links (add/remove rows, Instagram prefilled; no phone or email); the WhatsApp number is optional, normalized to `62…` and unique per workspace (blocked, database-enforced); clients are archived, and deleted only while no project refers to them (BR-CLI-001..003). Design approved 2026-10-02 ([design.md](../features/clients/design.md), 40 frames + exports): tabs as F-05, list in the 720 column with a client count (A-10, AC-CLI-021), new token `surface.panel-subtle` for the table header (597 tokens, `d09d3751`). Planned 2026-10-02: [technical-design.md](../features/clients/technical-design.md) and [plan.md](../features/clients/plan.md), 14 test-first tasks on the F-05 base (booking context, migration 0008). F-05 reached `main` on 2026-10-02 and is merged into `feat/clients`. Next: `/sdv:build-feature clients 1`.
+**Before the first `/sdv:ship`:** schedule CI (GitHub Actions) and the Cloudflare deploy.

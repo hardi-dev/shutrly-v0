@@ -185,7 +185,7 @@ Each project gets one cryptographically random, unique, high-entropy client acce
 
 ### BR-PRJ-004 — Project lifecycle
 `DRAFT → BOOKED → SHOOTING → POST_PROCESSING → DELIVERED → COMPLETED`; `DRAFT | BOOKED | SHOOTING → CANCELLED` (cancel from `SHOOTING` requires an audit reason). `CANCELLED` is terminal in MVP.
-**SPEC GAP (deferred to F-07 discovery):** whether `BOOKED → SHOOTING` and `SHOOTING → POST_PROCESSING` are manual Owner actions or derived from sessions; from which states final delivery may move a project to `DELIVERED` (see BR-DEL-003).
+`DRAFT → BOOKED`, `BOOKED → SHOOTING` and `SHOOTING → POST_PROCESSING` are manual Owner actions, one step forward at a time; sessions never move a project's status. Publishing final delivery moves a `BOOKED`, `SHOOTING` or `POST_PROCESSING` project to `DELIVERED` (BR-DEL-003). No transition goes backwards. *(F-07 discovery, Owner 2026-10-02.)*
 
 ### BR-PRJ-005 — Completion is manual
 Only the Owner can move a `DELIVERED` project to `COMPLETED`, recording actor and timestamp. Outstanding invoice balances are shown as a warning but never block completion.
@@ -195,6 +195,15 @@ Invoice or payment state never changes project status automatically.
 
 ### BR-PRJ-007 — Currency snapshot
 A project snapshots its service's currency; all project prices, add-ons, and invoices use that currency.
+
+### BR-PRJ-008 — Project record
+A project belongs to one workspace, one client and one service of that workspace (BR-WS-002). It is created from an active service for an active client (BR-CAT-008, BR-CLI-003); archiving either later leaves the project unchanged. It has a title (1–100 characters after trimming, not unique), an optional event date, optional internal notes (at most 2000 characters, never shown to the client) and an agreed price (whole IDR, ≥ 0) that starts at the service's base price. The Owner creates it either as `DRAFT` or directly as `BOOKED`; both require valid required booking fields (BR-PRJ-002). *(F-07 discovery, Owner 2026-10-02.)*
+
+### BR-PRJ-009 — The deal is editable until shooting starts
+While a project is `DRAFT` or `BOOKED`, the Owner may change its agreed price, the values of its project items, its booking-field values, and add or remove project items. An added item is snapshotted from an active item definition that the project doesn't use yet (one item per definition per project), with values valid under BR-CAT-001/002. Edited booking values must stay valid for the snapshotted field type; required fields stay required. Field metadata (key, name, type, options) never changes. From `SHOOTING` onwards the deal is read-only; later changes go through add-ons (BR-ADD-*) or invoices. Edits never touch the service template (BR-CAT-003). *(F-07 discovery, Owner 2026-10-02.)*
+
+### BR-PRJ-010 — Deleting and cancelling projects
+A `DRAFT` project can be deleted permanently, with its snapshots. Any other project is never deleted: `BOOKED` and `SHOOTING` projects are cancelled instead (BR-PRJ-004), recording actor and timestamp (BR-AUD-001). *(F-07 discovery, Owner 2026-10-02.)*
 
 ---
 
@@ -291,7 +300,7 @@ Final delivery uses the existing gallery link and password. No separate delivery
 `EDITED`/`PRINT` files are hidden from clients until final delivery is published. They are never selectable and never count toward limits.
 
 ### BR-DEL-003 — Publishing final delivery
-Requires at least one synced `EDITED` or `PRINT` file; records `finalDeliveryPublishedAt` and moves the project to `DELIVERED` (never to `COMPLETED`).
+Requires at least one synced `EDITED` or `PRINT` file and a project in `BOOKED`, `SHOOTING` or `POST_PROCESSING` (BR-PRJ-004); records `finalDeliveryPublishedAt` and moves the project to `DELIVERED` (never to `COMPLETED`).
 
 ### BR-DEL-004 — Independent finished files
 Each finished file is an independent download with no link to its original proof photo; no inference from names/paths.

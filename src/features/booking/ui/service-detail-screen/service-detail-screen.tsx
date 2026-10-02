@@ -1,46 +1,61 @@
-import { SectionCard } from "@/ui/patterns/section-card/section-card";
+"use client";
+/* eslint-disable no-restricted-syntax -- responsive detail actions */
 
+import { useState } from "react";
+
+import { Alert } from "@/ui/patterns/alert/alert";
+import { PageActions } from "@/ui/patterns/page-actions/page-actions";
+import { Button } from "@/ui/primitives/button/button";
+
+import { BookingFieldsCard } from "../booking-fields-card/booking-fields-card";
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
+import { ServiceInfoCard } from "../service-info-card/service-info-card";
+import { ServiceItemsCard } from "../service-items-card/service-items-card";
 import type { ServiceDetailScreenProps } from "./service-detail-screen.types";
 
-export function ServiceDetailScreen({ service }: Readonly<ServiceDetailScreenProps>) {
+export function ServiceDetailScreen({
+  service,
+  workspaceId,
+  setActiveAction,
+}: Readonly<ServiceDetailScreenProps>) {
+  const [pending, setPending] = useState(false);
+
+  async function toggleActive(): Promise<void> {
+    if (!workspaceId || !setActiveAction) return;
+    setPending(true);
+    try {
+      await setActiveAction(workspaceId, "service", service.id, !service.isActive);
+    } finally {
+      setPending(false);
+    }
+  }
+
   return (
     <>
+      {setActiveAction ? (
+        <PageActions>
+          <Button
+            variant={service.isActive ? "secondary" : "primary"}
+            onPress={() => void toggleActive()}
+            isPending={pending}
+          >
+            {service.isActive ? CATALOG_COPY.archive : CATALOG_COPY.unarchive}
+          </Button>
+        </PageActions>
+      ) : null}
       <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)">
-        <SectionCard title={CATALOG_COPY.itemsTitle} content="flush">
-          <ul>
-            {service.items.map((item, index) => (
-              <li
-                key={item.id}
-                className="px-(--component-list-card-item-padding-x) py-(--component-list-card-item-padding-y)"
-              >
-                {item.definitionName}
-                {CATALOG_COPY.itemValueSeparator}
-                {formatItemValue(item.value)}
-                {index === service.items.length - 1 ? null : <span aria-hidden="true" />}
-              </li>
-            ))}
-          </ul>
-        </SectionCard>
-        <SectionCard title={CATALOG_COPY.fieldsTitle} content="flush">
-          <ul>
-            {service.fields.map((field) => (
-              <li
-                key={field.id}
-                className="px-(--component-list-card-item-padding-x) py-(--component-list-card-item-padding-y)"
-              >
-                {field.name}
-              </li>
-            ))}
-          </ul>
-        </SectionCard>
+        {!service.isActive ? (
+          <Alert
+            tone="warning"
+            title={CATALOG_COPY.archivedBannerTitle}
+            body={CATALOG_COPY.archivedBannerBody}
+          />
+        ) : null}
+        <ServiceInfoCard service={service} />
+        <ServiceItemsCard service={service} />
+        <BookingFieldsCard service={service} />
       </main>
     </>
   );
 }
-
-function formatItemValue(
-  value: ServiceDetailScreenProps["service"]["items"][number]["value"],
-): string {
-  return value.type === "NUMBER" ? value.value : `${value.min}-${value.max}`;
-}
+/* eslint-enable no-restricted-syntax -- end responsive detail actions */

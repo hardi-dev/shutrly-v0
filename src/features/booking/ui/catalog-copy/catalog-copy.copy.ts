@@ -11,6 +11,9 @@ export const CATALOG_COPY = {
   unarchive: "Aktifkan",
   delete: "Hapus",
   archived: "Diarsipkan",
+  archivedBannerTitle: "Layanan ini diarsipkan",
+  archivedBannerBody:
+    "Tidak bisa dipilih untuk proyek baru. Proyek yang sudah dibuat tidak berubah.",
   active: "Aktif",
   rowActions: (name: string) => `Aksi untuk ${name}`,
   moveUp: "Naikkan",
@@ -21,17 +24,32 @@ export const CATALOG_COPY = {
   categoriesTitle: "Kategori",
   categoriesDescription: "Mengelompokkan layanan di tab Layanan.",
   categoryMeta: (count: number) => `${String(count)} layanan`,
+  categoryUsage: (count: number) => `${String(count)} layanan`,
   selectionGroupTitle: "Dipilih klien",
   selectionGroupDescription: "Jadi jatah pilihan foto klien di gallery. Selalu angka bulat.",
   otherGroupTitle: "Item lainnya",
   otherGroupDescription: "Keterangan paket yang tidak dipilih klien.",
   valueTypes: { NUMBER: "Angka", RANGE: "Rentang" },
   selectionTypes: { EDIT: "Foto edit", PRINT: "Foto cetak" },
+  selectionTypeDescriptions: {
+    EDIT: "Klien memilih foto untuk diedit. Dihitung per foto.",
+    PRINT: "Klien memilih foto dan jumlah cetaknya.",
+  },
   definitionMeta: (valueType: string, unit: string | null, usage: number) =>
     [valueType, unit, usage > 0 ? `dipakai di ${String(usage)} layanan` : "belum dipakai"]
       .filter(Boolean)
       .join(" · "),
   nameItem: "Nama item",
+  valueTypeDescriptions: {
+    NUMBER: "Satu nilai, mis. 25 foto atau 2 jam.",
+    RANGE: "Nilai minimum–maksimum, mis. 1–2 orang.",
+  },
+  unitHelp: "Ditulis setelah nilai, mis. 2 buah.",
+  selectionSwitch: "Dipakai untuk pilihan foto klien",
+  selectionType: "Jenis pilihan",
+  definitionDialogAddTitle: "Tambah item paket",
+  definitionDialogEditTitle: "Ubah item paket",
+  definitionDialogDescription: "Dipakai ulang di semua layanan workspace ini.",
   valueType: "Tipe nilai",
   unit: "Satuan",
   category: "Kategori",
@@ -42,7 +60,11 @@ export const CATALOG_COPY = {
   categoryDialogDescription: "Mis. Wisuda, Wedding, Keluarga.",
   nameCategoryPlaceholder: "Contoh: Prewedding",
   nameService: "Nama layanan",
+  addServiceTitle: "Tambah layanan",
+  addServiceDescription: "Isi paket dan field booking diatur setelah layanan dibuat.",
+  nameServicePlaceholder: "Contoh: Wisuda Basic",
   basePrice: "Harga dasar",
+  basePriceHelp: "Dalam rupiah, tanpa desimal.",
   save: "Simpan",
   cancel: "Batal",
   pick: "Pilih",
@@ -55,7 +77,29 @@ export const CATALOG_COPY = {
   deletedToast: "Dihapus",
   status: "Status",
   itemsTitle: "Item paket",
+  itemsDescription: "Disalin ke proyek dalam urutan ini.",
+  itemsEmpty:
+    "Belum ada item paket. Tambahkan isi paket, misalnya Foto edit 25 atau Jumlah orang 1–2.",
   fieldsTitle: "Field booking",
+  fieldsDescription: "Diisi saat membuat proyek dari layanan ini.",
+  fieldsEmpty:
+    "Belum ada field booking. Tambahkan kalau proyek butuh info tambahan, misalnya Nama kampus.",
+  infoTitle: "Info layanan",
+  infoDescription: "Nama, kategori dan harga dasar.",
+  fieldTypes: {
+    TEXT: "Teks",
+    TEXTAREA: "Teks panjang",
+    NUMBER: "Angka",
+    DATE: "Tanggal",
+    BOOLEAN: "Ya/Tidak",
+    SELECT: "Pilihan",
+  },
+  fieldMeta: (type: string, isRequired: boolean, options: readonly string[] | null) => {
+    const requirement = isRequired ? "Wajib" : "Opsional";
+    return options
+      ? `${type}: ${options.join(", ")} · ${requirement}`
+      : `${type} · ${requirement}`;
+  },
   deleteTitle: (name: string) => `Hapus kategori “${name}”?`,
   deleteAllowedBody: "Belum dipakai di mana pun. Tindakan ini tidak bisa dibatalkan.",
   deleteBlockedTitle: "Tidak bisa dihapus",
@@ -87,5 +131,6 @@ export const CATALOG_COPY = {
     OPTION_TOO_LONG: "Maksimal 60 karakter.",
     OPTION_DUPLICATE: "Pilihan ini sudah ada.",
     TOO_MANY_OPTIONS: "Maksimal 50 pilihan.",
+    SAVE_FAILED: "Perubahan belum tersimpan.",
   },
 } as const;

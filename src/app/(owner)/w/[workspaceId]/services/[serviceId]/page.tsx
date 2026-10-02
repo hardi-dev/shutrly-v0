@@ -1,3 +1,4 @@
+import { setCatalogActiveAction } from "@/app/actions/booking/catalog";
 import { loadServiceDetail } from "@/composition/booking/catalog-flow/catalog-flow";
 import { ServiceDetailScreen } from "@/features/booking/ui/service-detail-screen/service-detail-screen";
 import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
@@ -13,7 +14,11 @@ export default async function ServiceDetailPage({
         title={service.name}
         parent={{ label: "Layanan", href: `/w/${workspaceId}/services` }}
       />
-      <ServiceDetailScreen service={service} />
+      <ServiceDetailScreen
+        service={service}
+        workspaceId={workspaceId}
+        setActiveAction={setCatalogActiveAction}
+      />
     </>
   );
 }

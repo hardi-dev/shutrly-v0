@@ -1,10 +1,12 @@
+import type { ItemDefinitionRecord } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
 import type { CatalogWriteResult } from "@/features/booking/application/use-cases/catalog-results/catalog-results.types";
-import type { ItemDefinitionGroups } from "@/features/booking/application/use-cases/list-item-definitions/list-item-definitions.types";
 
-export interface ItemDefinitionsScreenProps {
+export interface ItemDefinitionDialogProps {
+  readonly isOpen: boolean;
   readonly workspaceId: string;
-  readonly definitions: ItemDefinitionGroups;
-  readonly addAction?: (
+  readonly definition?: ItemDefinitionRecord;
+  readonly onOpenChange: (isOpen: boolean) => void;
+  readonly action: (
     workspaceId: string,
     values: unknown,
   ) => Promise<CatalogWriteResult | undefined>;

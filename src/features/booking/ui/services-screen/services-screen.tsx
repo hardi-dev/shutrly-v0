@@ -1,3 +1,8 @@
+"use client";
+/* eslint-disable no-restricted-syntax -- dialog trigger is colocated with the service list */
+
+import { useState } from "react";
+
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
@@ -5,13 +10,29 @@ import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
+import { AddServiceDialog } from "../add-service-dialog/add-service-dialog";
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogTabsBar } from "../catalog-tabs-bar/catalog-tabs-bar";
 import type { ServicesScreenProps } from "./services-screen.types";
 
 // eslint-disable-next-line max-lines-per-function -- coordinates the route-level empty and populated states
-export function ServicesScreen({ workspaceId, groups }: Readonly<ServicesScreenProps>) {
-  const addButton = <Button iconLeading="plus">{CATALOG_COPY.addService}</Button>;
+export function ServicesScreen({
+  workspaceId,
+  groups,
+  categories = [],
+  addServiceAction,
+}: Readonly<ServicesScreenProps>) {
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const addButton = (
+    <Button
+      iconLeading="plus"
+      onPress={() => {
+        setIsAddOpen(true);
+      }}
+    >
+      {CATALOG_COPY.addService}
+    </Button>
+  );
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)">
       <CatalogTabsBar workspaceId={workspaceId} activeTab="services" />
@@ -59,6 +80,16 @@ export function ServicesScreen({ workspaceId, groups }: Readonly<ServicesScreenP
           </SectionCard>
         ))
       )}
+      {addServiceAction ? (
+        <AddServiceDialog
+          isOpen={isAddOpen}
+          onOpenChange={setIsAddOpen}
+          workspaceId={workspaceId}
+          categories={categories}
+          action={addServiceAction}
+        />
+      ) : null}
     </main>
   );
 }
+/* eslint-enable no-restricted-syntax -- end colocated dialog trigger */

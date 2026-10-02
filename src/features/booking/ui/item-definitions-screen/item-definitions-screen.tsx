@@ -1,3 +1,8 @@
+"use client";
+/* eslint-disable no-restricted-syntax -- dialog trigger is colocated with the item list */
+
+import { useState } from "react";
+
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -7,30 +12,54 @@ import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogTabsBar } from "../catalog-tabs-bar/catalog-tabs-bar";
 import { definitionIcon } from "../definition-icon/definition-icon";
+import { ItemDefinitionDialog } from "../item-definition-dialog/item-definition-dialog";
 import type { ItemDefinitionsScreenProps } from "./item-definitions-screen.types";
 
 function labelForType(valueType: "NUMBER" | "RANGE"): string {
   return CATALOG_COPY.valueTypes[valueType];
 }
-
 export function ItemDefinitionsScreen({
   workspaceId,
   definitions,
+  addAction,
+  updateAction,
 }: Readonly<ItemDefinitionsScreenProps>) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | undefined>();
+  const allDefinitions = [...definitions.selection, ...definitions.other];
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)">
       <CatalogTabsBar workspaceId={workspaceId} activeTab="items" />
       <PageActions>
-        <Button iconLeading="plus">{CATALOG_COPY.addItem}</Button>
+        <Button
+          iconLeading="plus"
+          onPress={() => {
+            setEditingId(undefined);
+            setIsDialogOpen(true);
+          }}
+        >
+          {CATALOG_COPY.addItem}
+        </Button>
       </PageActions>
       <DefinitionGroup
         title={CATALOG_COPY.selectionGroupTitle}
         definitions={definitions.selection}
       />
       <DefinitionGroup title={CATALOG_COPY.otherGroupTitle} definitions={definitions.other} />
+      {addAction ? (
+        <ItemDefinitionDialog
+          isOpen={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
+          workspaceId={workspaceId}
+          definition={allDefinitions.find((item) => item.id === editingId)}
+          action={addAction}
+          updateAction={updateAction}
+        />
+      ) : null}
     </main>
   );
 }
+/* eslint-enable no-restricted-syntax -- end colocated dialog trigger */
 
 function DefinitionGroup({
   title,

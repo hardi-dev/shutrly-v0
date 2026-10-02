@@ -89,4 +89,36 @@ describe("Select (C19 + Menu Item/Rich)", () => {
     );
     expect(screen.getByText("Pilih kategori.")).toBeInTheDocument();
   });
+
+  it("uses an aria-label without rendering a label on desktop", async () => {
+    useMobileViewport.mockReturnValue(false);
+    const { container } = render(
+      <Select
+        aria-label="Jenis nilai"
+        options={OPTIONS}
+        value={null}
+        onChange={vi.fn()}
+        errorMessage="Pilih jenis nilai"
+      />,
+    );
+
+    const trigger = screen.getByRole("button", { name: "Jenis nilai" });
+    expect(
+      container.querySelector('[class*="font-semibold"][class*="component-input-label"]'),
+    ).toBeNull();
+    expect(trigger).toHaveAccessibleDescription("Pilih jenis nilai");
+    await userEvent.click(trigger);
+    expect(screen.getByRole("listbox", { name: /Jenis nilai/ })).toHaveAttribute(
+      "aria-label",
+      "Jenis nilai",
+    );
+  });
+
+  it("uses the aria-label for the mobile trigger and sheet", async () => {
+    useMobileViewport.mockReturnValue(true);
+    render(<Select aria-label="Jenis nilai" options={OPTIONS} value={null} onChange={vi.fn()} />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Jenis nilai" }));
+    expect(screen.getByRole("dialog", { name: "Jenis nilai" })).toBeInTheDocument();
+  });
 });

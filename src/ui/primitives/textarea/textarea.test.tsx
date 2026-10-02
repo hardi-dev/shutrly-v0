@@ -21,6 +21,9 @@ describe("Textarea (C04)", () => {
   it("associates an error message and disables input", () => {
     render(<Textarea label="Catatan" errorMessage="Wajib diisi" isDisabled />);
 
+    expect(screen.getByRole("textbox", { name: "Catatan" })).toHaveAccessibleErrorMessage(
+      "Wajib diisi",
+    );
     expect(screen.getByRole("textbox", { name: "Catatan" })).toBeDisabled();
     expect(screen.getByText("Wajib diisi")).toBeInTheDocument();
   });
@@ -34,11 +37,14 @@ describe("Textarea (C04)", () => {
     expect(onChange).toHaveBeenLastCalledWith("Halo");
   });
 
-  it("hides the label visually but keeps it as the accessible name", () => {
-    render(<Textarea label="Isi pesan" isLabelHidden />);
+  it("uses an aria-label without rendering a label", () => {
+    const { container } = render(<Textarea aria-label="Isi pesan" errorMessage="Wajib diisi" />);
 
     expect(screen.getByRole("textbox", { name: "Isi pesan" })).toBeInTheDocument();
-    expect(screen.getByText("Isi pesan")).toHaveClass("sr-only");
+    expect(screen.getByRole("textbox", { name: "Isi pesan" })).toHaveAccessibleErrorMessage(
+      "Wajib diisi",
+    );
+    expect(container.querySelector("label")).toBeNull();
   });
 
   it("shows a trailing meta beside the helper and honours rows", () => {

@@ -21,6 +21,7 @@ import { readCollapsed, writeCollapsed } from "./sidebar-collapse-preference";
 export function AppShell({
   title,
   subtitle,
+  mobileSubtitle,
   workspace,
   account,
   onLogout,
@@ -114,6 +115,7 @@ export function AppShell({
       <MobileContent
         title={title}
         subtitle={subtitle}
+        mobileSubtitle={mobileSubtitle}
         mobileBottomNav={mobileBottomNav}
         isMobileOverlayOpen={isMobileOverlayOpen}
         mobileSheet={mobileSheet}
@@ -263,6 +265,7 @@ function DesktopContent({
 function MobileContent({
   title,
   subtitle,
+  mobileSubtitle,
   children,
   mobileBottomNav,
   isMobileOverlayOpen,
@@ -276,6 +279,7 @@ function MobileContent({
     AppShellProps,
     | "title"
     | "subtitle"
+    | "mobileSubtitle"
     | "children"
     | "mobileBottomNav"
     | "isMobileOverlayOpen"
@@ -288,7 +292,7 @@ function MobileContent({
     <div className="flex min-w-0 flex-1 md:hidden">
       <MobileAppShell
         title={title}
-        subtitle={subtitle}
+        subtitle={mobileSubtitle ?? subtitle}
         bottomNav={<BottomNavFromProps {...mobileBottomNav} />}
         isOverlayOpen={isMobileOverlayOpen}
         sheet={mobileSheet}

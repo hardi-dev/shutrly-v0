@@ -29,4 +29,7 @@ export type TextFieldProps = FieldNameProps & {
   readonly inputRef?: Ref<HTMLInputElement>;
 };
 
-export type TextFieldContentProps = TextFieldProps & { readonly isInvalid: boolean };
+export type TextFieldContentProps = TextFieldProps & {
+  readonly isInvalid: boolean;
+  readonly errorMessageId: string;
+};

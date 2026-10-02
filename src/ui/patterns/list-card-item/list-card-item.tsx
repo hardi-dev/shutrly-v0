@@ -63,7 +63,7 @@ export function ListCardItem({
           <Link
             href={href}
             className={cn(
-              "min-w-0 flex-1",
+              "flex min-w-0 flex-1 items-center gap-(--component-list-card-item-gap)",
               "outline-none focus-visible:bg-(--component-list-card-item-icon-background)",
             )}
           >

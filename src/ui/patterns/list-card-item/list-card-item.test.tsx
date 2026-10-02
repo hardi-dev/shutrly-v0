@@ -38,7 +38,9 @@ describe("ListCardItem (C42 two-line)", () => {
         <ListCardItem icon="image" title="Bagikan gallery" meta="…" href="/x" />
       </ul>,
     );
-    expect(screen.getByRole("link", { name: /Bagikan gallery/ })).toHaveAttribute("href", "/x");
+    const link = screen.getByRole("link", { name: /Bagikan gallery/ });
+    expect(link).toHaveAttribute("href", "/x");
+    expect(link).toHaveClass("flex", "items-center");
   });
 
   it("AC-SRC-017 the skeleton is hidden from assistive technology", () => {

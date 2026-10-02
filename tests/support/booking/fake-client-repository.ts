@@ -78,6 +78,36 @@ export class FakeClientRepository implements ClientRepositoryPort {
     });
     return { status: "CREATED" } as const;
   }
+
+  async update(context: WorkspaceContext, id: string, change: ClientChange) {
+    const row = this.rows.find(
+      (candidate) => candidate.workspaceId === context.workspaceId && candidate.id === id,
+    );
+    if (!row) return "NOT_FOUND" as const;
+    const holder =
+      change.whatsappNumber === null
+        ? undefined
+        : this.rows.find(
+            (candidate) =>
+              candidate.workspaceId === context.workspaceId &&
+              candidate.id !== id &&
+              candidate.whatsappNumber === change.whatsappNumber,
+          );
+    if (holder)
+      return {
+        status: "NUMBER_TAKEN",
+        holder: { name: holder.name, isArchived: holder.isArchived },
+      } as const;
+    const index = this.rows.indexOf(row);
+    this.rows[index] = {
+      ...row,
+      name: change.name,
+      whatsappNumber: change.whatsappNumber,
+      socialLinks: change.socialLinks,
+      updatedBy: change.editorUserId,
+    };
+    return "UPDATED" as const;
+  }
 }
 
 /* eslint-enable @typescript-eslint/require-await -- restore lint coverage after async fake methods */

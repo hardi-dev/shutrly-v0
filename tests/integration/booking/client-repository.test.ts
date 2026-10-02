@@ -145,4 +145,36 @@ describe("Drizzle client repository", () => {
       }),
     ).resolves.toEqual({ status: "NUMBER_TAKEN", holder: { name: "Rina", isArchived: false } });
   });
+
+  it("AC-CLI-012 updates a scoped client and leaves another workspace untouched", async () => {
+    const context = await seedWorkspace();
+    const other = await seedWorkspace();
+    const clients = createDrizzleClientRepository(db);
+    await clients.create(context, {
+      name: "Rina",
+      whatsappNumber: whatsappNumberSchema.parse("6281234567890"),
+      socialLinks: [],
+      editorUserId: context.ownerId,
+    });
+    const row = (
+      await clients.listPage(context, { status: "ACTIVE", search: null, afterId: null, limit: 1 })
+    ).at(0);
+    if (!row) throw new Error("client fixture");
+    await expect(
+      clients.update(context, row.id, {
+        name: "Rina Wedding",
+        whatsappNumber: whatsappNumberSchema.parse("6281234567890"),
+        socialLinks: [],
+        editorUserId: context.ownerId,
+      }),
+    ).resolves.toBe("UPDATED");
+    await expect(
+      clients.update(other, row.id, {
+        name: "Should not update",
+        whatsappNumber: null,
+        socialLinks: [],
+        editorUserId: other.ownerId,
+      }),
+    ).resolves.toBe("NOT_FOUND");
+  });
 });

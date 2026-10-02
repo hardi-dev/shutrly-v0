@@ -3,9 +3,11 @@ import "server-only";
 import { notFound } from "next/navigation";
 
 import { ClientError } from "@/features/booking/application/errors/client-errors/client-errors";
+import { clientIdSchema } from "@/features/booking/application/schemas/client-id/client-id.schema";
 import { addClient } from "@/features/booking/application/use-cases/add-client/add-client";
 import { countClients } from "@/features/booking/application/use-cases/count-clients/count-clients";
 import { listClients } from "@/features/booking/application/use-cases/list-clients/list-clients";
+import { updateClient } from "@/features/booking/application/use-cases/update-client/update-client";
 import type { ClientStatus } from "@/features/booking/domain/client-list/client-list.types";
 import { clientSearchSchema } from "@/features/booking/domain/client-search/client-search.schema";
 import { DomainError } from "@/shared/errors/domain-error";
@@ -21,6 +23,12 @@ function saveError(error: unknown, workspaceId: string, operation: string): neve
   if (!(error instanceof DomainError))
     logger.error("client.save_failed", { workspaceId, operation });
   throw new ClientError("SAVE_FAILED");
+}
+
+function idOrNotFound(rawId: string): string {
+  const parsed = clientIdSchema.safeParse(rawId);
+  if (!parsed.success) notFound();
+  return parsed.data;
 }
 
 export async function loadClients(
@@ -51,5 +59,22 @@ export async function addWorkspaceClient(rawWorkspaceId: string, values: unknown
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "add");
+  }
+}
+
+export async function updateWorkspaceClient(
+  rawWorkspaceId: string,
+  rawClientId: string,
+  values: unknown,
+) {
+  const clientId = idOrNotFound(rawClientId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withClientScope(({ clients }) =>
+      updateClient(clients, verified.context, clientId, account.id, values),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "update");
   }
 }

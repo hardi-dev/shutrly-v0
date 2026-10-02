@@ -85,7 +85,35 @@ export function createDrizzleClientRepository(db: DbExecutor): ClientRepositoryP
       return rows.at(0)?.count ?? 0;
     },
     create: (context, change) => createClient(db, context, change),
+    update: (context, id, change) => updateClient(db, context, id, change),
   };
+}
+
+async function updateClient(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  id: string,
+  change: ClientChange,
+) {
+  try {
+    const rows = await db
+      .update(client)
+      .set({
+        name: change.name,
+        whatsappNumber: change.whatsappNumber,
+        socialLinks: change.socialLinks,
+        updatedBy: change.editorUserId,
+        updatedAt: new Date(),
+      })
+      .where(and(eq(client.workspaceId, context.workspaceId), eq(client.id, id)))
+      .returning({ id: client.id });
+    return rows.length > 0 ? ("UPDATED" as const) : ("NOT_FOUND" as const);
+  } catch (error) {
+    if (pgCode(error) !== DUPLICATE_KEY || change.whatsappNumber === null) throw error;
+    const holder = await findNumberHolder(db, context, change.whatsappNumber);
+    if (!holder) throw error;
+    return { status: "NUMBER_TAKEN", holder } as const;
+  }
 }
 
 async function createClient(db: DbExecutor, context: WorkspaceContext, change: ClientChange) {

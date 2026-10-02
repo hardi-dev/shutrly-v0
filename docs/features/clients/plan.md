@@ -102,8 +102,10 @@ Every step's requirements implicitly include this section. They are F-05's Globa
 ```text
 src/ui/primitives/icon/                        registry + types: message-circle                       (Slice 3)
 src/ui/primitives/input/                       InputIconName + "x"                                   (Slice 5)
-src/ui/primitives/input/                       + aria-describedby                                    (Slice 1)
-src/ui/patterns/select/                        + isLabelHidden                                       (Slice 1)
+src/ui/primitives/text-field/                  label optional (+ FieldNameProps)                     (Slice 1)
+src/ui/patterns/select/                        label optional                                        (Slice 1)
+src/ui/primitives/textarea/                    label optional, isLabelHidden removed                 (Slice 1)
+src/features/communications/ui/template-editor-screen/   Textarea caller migrated to aria-label     (Slice 1)
 src/ui/patterns/data-table/                    data-table.tsx · data-table-skeleton.tsx · .types.ts · .test.tsx · .stories.tsx (+ .stories.copy.ts)  (Slice 1)
 src/ui/patterns/list-card-item/                + avatar leading                                      (Slice 1)
 src/ui/patterns/menu/                          MenuItem + href / target                              (Slice 3)
@@ -193,9 +195,7 @@ Copy these patterns instead of inventing new ones. Every path exists on `feat/cl
 | Desktop vs phone tree | `src/ui/hooks/use-mobile-viewport/use-mobile-viewport.ts` | `useMobileViewport()` picks one tree; tests mock it (`service-item-dialog.test.tsx`) |
 | Dialog with form, desktop + phone | `src/features/booking/ui/service-item-dialog/service-item-dialog.tsx` | Modal on desktop, Bottom Sheet/Form on phones, RHF + `zodResolver` |
 | Row actions + delete dialog | `src/features/gallery/ui/source-row-actions/`, `src/features/gallery/ui/delete-source-dialog/` | Menu on desktop, Bottom Sheet/Actions on phones; delete with pending and blocked states |
-| Unlabelled input | `src/ui/primitives/input/input.tsx` | the bare C03 field with no label: name it with `aria-label`, mark errors with `isInvalid`. The social row's value uses it instead of `TextField` |
-| Hidden select label | `src/ui/primitives/textarea/textarea.tsx` | `isLabelHidden` renders the label with `sr-only`; copy it to `Select` (Slice 1) |
-| Field error line | `src/ui/primitives/text-field/text-field.tsx` › `FieldError` | the `MESSAGE` classes, `circle-alert` (`sm`) and `text-(--component-input-error-text)`; the social row renders the same line under its `Input` |
+| Field label | `src/ui/primitives/text-field/text-field.tsx`, `src/ui/patterns/select/select.tsx`, `src/ui/primitives/textarea/textarea.tsx` | today `label` is required and always rendered (`Textarea` can hide it with `isLabelHidden`, used once in `template-editor-screen.tsx`). `Select` also uses `label` as the ListBox `aria-label` and the phone sheet title. Slice 1 makes `label` optional on all three |
 | Fakes for use-case tests | `tests/support/booking/fake-category-repository.ts` | a class with public `rows`, implementing the port in memory |
 | Integration seeding | `tests/integration/booking/catalog-repositories.test.ts` › `seedWorkspace` | `openTestDb()` from `tests/integration/helpers/test-db.ts`, a unique user + workspace per test |
 | E2E setup + axe | `tests/e2e/catalog/catalog.spec.ts` | `registerAndVerify` / `uniqueEmail` from `tests/e2e/auth/auth-e2e.ts`, `createWorkspace`, `expectCatalogA11y` (wait until `[data-entering], [data-exiting]` count is 0) |
@@ -203,8 +203,7 @@ Copy these patterns instead of inventing new ones. Every path exists on `feat/cl
 **What the shared units can't do yet** (each becomes an *extend* row in Slice 0 and a step below):
 - `Input`: `InputIconName` has no `"x"` (Slice 5).
 - `Icon`: no `message-circle` (Slice 3). `users`, `archive`, `archive-restore`, `search-x`, `pencil`, `trash-2`, `x`, `loading-03`, `more-horizontal` exist.
-- `Select`: no hidden label (Slice 1). `TextField` always shows its label, so the social value uses `Input` instead.
-- `Input`: no `aria-describedby` to link an error line (Slice 1).
+- `TextField`, `Select`, `Textarea`: `label` is required and always rendered; the social row needs fields with no visible label (Slice 1).
 - `ListCardItem`: `icon` is required; no avatar leading (Slice 1).
 - `MenuItem`: no `href`; `onSelect` is required (Slice 3).
 - `SheetItem`: `isDisabled` exists; no `href` (Slice 3) and no `isPending` (Slice 4).
@@ -848,8 +847,18 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
 ### Components
 
 - **Reuse (inventory first):**
-  - `Select` gains `isLabelHidden?: boolean` (additive; the label renders with `sr-only`, copied from `Textarea`). Existing callers are unchanged.
-  - `Input` gains `"aria-describedby"?: string`, passed to the input element (additive). The social value field is a bare `Input` (no label exists to hide), named with `aria-label`.
+  - **Optional field labels** on `TextField`, `Select` and `Textarea`. The props take `FieldNameProps` (exported from `text-field.types.ts`) instead of `label: string`:
+
+    ```ts
+    /** A field is named by its visible label, or, when no label is drawn, by aria-label. */
+    export type FieldNameProps =
+      | { readonly label: string; readonly "aria-label"?: never }
+      | { readonly label?: never; readonly "aria-label": string };
+    ```
+
+    - With `label`: unchanged (the label and the optional marker render as today).
+    - Without `label`: no `<Label>` element and no optional marker are rendered, and `aria-label` goes on the React Aria field. `Select` uses `label ?? aria-label` for the ListBox `aria-label` and the phone sheet title. Description and `errorMessage` still render and stay linked (React Aria `Text slot="description"` / `FieldError`).
+    - `Textarea` drops `isLabelHidden`; its one caller (`template-editor-screen.tsx`) passes `aria-label={COPY.contentLabel}` instead of `label` + `isLabelHidden`. Every other caller is unchanged.
   - `ListCardItem` gains an avatar leading: `icon?: IconName` becomes optional and `avatarInitials?: string` is added; exactly one is given (a dev-time `throw` when both or neither, covered by a test). The avatar is `Avatar size="md" aria-hidden`. F-04/F-05 rows that pass `icon` are unchanged. Update the story with an *Avatar* variant.
   - `AppShell` gains `mobileSubtitle?: string`; the Mobile Header shows `mobileSubtitle ?? subtitle`.
   - `PageActions`, `SectionCard content="flush"`, `EmptyState`, `Avatar`, `CountBadge`, `SegmentedControl isFullWidth`, `Modal size="md"`, `BottomSheet variant="form"`, `Button`, `IconButton`.
@@ -865,7 +874,7 @@ function afterCondition(context: WorkspaceContext, afterId: string | null): SQL 
   - `ClientsEmptyState` (`clients-empty-state`) `{ kind: "ACTIVE" | "ARCHIVED" | "NO_MATCH", onAdd?, onClearSearch? }`: `EmptyState iconTone="accent"`, `users` + *Tambah klien* (phone only) / `archive` / `search-x` + *Hapus pencarian* (Slice 5);
   - `ClientsSkeleton` (`clients-skeleton`): desktop `DataTableSkeleton` (toolbar title only, `CLIENT_SKELETON_ROWS` rows); phone the tabs bar, a search-shaped bar and `ListCardItemSkeleton` × 5;
   - `ClientDialog` (`client-dialog`) `{ mode: "add", isOpen, onOpenChange, onSubmit: (values: ClientInput) => Promise<ClientWriteResult | undefined> }` (edit mode in Slice 2): Modal MD on desktop, full-height `BottomSheet variant="form"` on phones;
-  - `SocialLinksEditor` (`social-links-editor`) `{ control, errors }`: `useFieldArray` rows; each row is a `SocialLinkRow` component (no inline handlers): `Select isLabelHidden` (options `SOCIAL_PLATFORMS` + `PLATFORM_COPY`, width 148 on desktop), `Input` (`aria-label`, `placeholder` per breakpoint, `isInvalid` when the row has an error, `aria-describedby` → the row's error line), `IconButton` ghost `x`; the error line copies `TextField`'s `FieldError` markup; *Tambah media sosial* appends `{ platform: "INSTAGRAM", value: "" }`;
+  - `SocialLinksEditor` (`social-links-editor`) `{ control, errors }`: `useFieldArray` rows; each row is a `SocialLinkRow` component (no inline handlers): `Select` without `label` (`aria-label`; options `SOCIAL_PLATFORMS` + `PLATFORM_COPY`, width 148 on desktop), `TextField` without `label` (`aria-label`, `placeholder` per breakpoint, `errorMessage` for the row's error), `IconButton` ghost `x`; *Tambah media sosial* appends `{ platform: "INSTAGRAM", value: "" }`;
   - `useClientMutations` (`use-client-mutations`): `run(kind, call)` shows the success toast for `kind`, or the danger toast with *Coba lagi* that repeats `call`.
 
 **DataTable types** (`data-table.types.ts`):
@@ -987,14 +996,14 @@ describe("DataTable (C27)", () => {
     - Read `docs/design-system/components/table.md` and the table in `list-populated-desktop-UiKLP.html`. Copy comes from props only; story copy lives in `.stories.copy.ts`.
   - **Story** `Patterns/DataTable`: *Populated*, *Empty*, *Loading*, with the export rows (Test fixtures › Stories).
   - Commit `feat(ui): add the data table pattern`.
-- [ ] **1.2 Select hidden label, input error link, avatar rows and the mobile subtitle.**
+- [ ] **1.2 Optional field labels, avatar rows and the mobile subtitle.**
   - **Tests first:**
-    - `select.test.tsx`: with `isLabelHidden` the select keeps its accessible name and the label has `sr-only`;
-    - `input.test.tsx`: `aria-describedby` reaches the input element;
+    - `text-field.test.tsx`, `select.test.tsx`, `textarea.test.tsx`: with `label` nothing changes; with only `aria-label` no label element renders, the field's accessible name is the `aria-label`, and an `errorMessage` is still linked (`toHaveAccessibleErrorMessage`); `Select` without `label` names its ListBox and phone sheet with the `aria-label`;
+    - `template-editor-screen.test.tsx` still passes with the migrated `Textarea`;
     - `list-card-item.test.tsx`: `avatarInitials="RI"` renders the avatar and no icon well; `icon` still works;
     - `app-shell.test.tsx`: the mobile header shows `mobileSubtitle` when given, otherwise `subtitle`.
   - **Implement** the three additive props (Components › Reuse). Update the ListCardItem story.
-  - Commit `feat(ui): extend select, input, list rows and the mobile subtitle`.
+  - Commit `feat(ui): make field labels optional and add avatar rows and a mobile subtitle`.
 - [ ] **1.3 Domain rules.**
   - **Tests first** (a small helper reads the first issue's message, or the parsed data):
 
@@ -1276,7 +1285,7 @@ describe("client list", () => {
     - `use-client-mutations.test.ts`: `run("added", call)` toasts the added copy with the name; a throw toasts the danger copy, and *Coba lagi* calls `call` again.
   - **Implement:**
     - **Form:** `useForm<ClientInput, unknown, ClientFields>({ resolver: zodResolver(clientInputSchema), defaultValues: { name: "", whatsappNumber: "", socialLinks: [{ platform: "INSTAGRAM", value: "" }] } })`. Submit sends `form.getValues()` (the raw `ClientInput`), never the resolver's output: the server parses the same raw shape again (C-004).
-    - **Errors:** each `TextField`'s `errorMessage` is `clientFieldErrorText(error.message)`; a row error sets the row's `Input` `isInvalid` and fills its error line.
+    - **Errors:** each field's `errorMessage` is `clientFieldErrorText(error.message)`; a row error goes on the row's value `TextField`.
     - `ClientsScreen` opens the dialog from *Tambah klien* / *Tambah* / the empty state, and passes `onSubmit = (values) => mutations.run("added", () => actions.add(workspaceId, values))`.
   - **Compare** with the four export pairs.
   - **E2E** (`tests/e2e/clients/clients.spec.ts`): a new workspace → *Klien* is active and the *Aktif* empty state shows → *Arsip* shows its empty state → add *Rina Wedding* with `0812-3456-7890` → the row with *+62 812-3456-7890* and *1 klien aktif*.
@@ -1328,7 +1337,7 @@ This slice adds the server-side *number taken* rule, the row rules in the editor
   - *Tambah media sosial* is disabled at `SOCIAL_LINK_MAX_COUNT` rows;
   - remove moves focus to the next row's value, else the previous row's value, else *Tambah media sosial*;
   - accessible names per row N (1-based): *Platform media sosial N*, *Akun {platform} N*, *Hapus {platform} N* (`// not in Pencil`);
-  - a row error renders in the row's error line under the `Input` (`isInvalid`) and is linked with `aria-describedby`.
+  - a row error renders under the row's value `TextField` (its `errorMessage`, linked by React Aria).
 - **`ClientsScreen`:** dialog state adds `{ kind: "edit", client }`; desktop `onRowAction` opens it; `onSubmit` → `mutations.run("saved", () => actions.update(workspaceId, client.id, values))`.
 
 ### Steps
@@ -1351,7 +1360,7 @@ This slice adds the server-side *number taken* rule, the row rules in the editor
   - **Precondition:** open `add-field-errors-*`, `add-number-taken-*`.
   - **Tests first:**
     - `client-dialog.test.tsx`: AC-CLI-008/009 client-side errors appear before any call; AC-CLI-010 a result with `TAKEN` + holder sets *Nomor ini sudah dipakai Budi (diarsipkan)* on the number and keeps the dialog open; AC-CLI-011 `@rina.wed` + `RINA.WED` → *Akun ini sudah ada di daftar.* on the second row;
-    - `social-links-editor.test.tsx`: AC-CLI-011 disabled at 10 rows; the focus moves after remove; AC-CLI-020 the row names; the error is linked with `aria-describedby`.
+    - `social-links-editor.test.tsx`: AC-CLI-011 disabled at 10 rows; the focus moves after remove; AC-CLI-020 the row names; the row error is the value field's accessible error message (`toHaveAccessibleErrorMessage`).
   - **Implement** (Components).
   - **Compare** with the two export pairs.
   - Commit `feat(booking): show client field errors`.

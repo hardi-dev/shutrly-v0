@@ -18,7 +18,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25). Business-oriented; pe
 - **ServiceFieldDefinition** — extra booking input a service needs (Campus Name, Graduation Date).
 
 **Engagement**
-- **Client** — customer record; never logs in.
+- **Client** — customer record: name, optional WhatsApp number, social-media links; never logs in; archived rather than deleted once it has projects (BR-CLI-001..003).
 - **Project** — one engagement for one client; operational aggregate; owns the client access token and agreed price.
 - **ProjectItem** — frozen snapshot of an agreed package benefit.
 - **ProjectFieldValue** — frozen booking input with field metadata snapshot.

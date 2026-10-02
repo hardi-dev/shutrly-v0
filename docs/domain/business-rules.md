@@ -159,6 +159,19 @@ Every workspace starts with active item definitions *Foto edit* (`NUMBER`, unit 
 
 ---
 
+## Client (CLI)
+
+### BR-CLI-001 — Client record
+A client belongs to one workspace and never logs in (BR-AUTH-001). It has a name (1–100 characters after trimming; not unique), an optional WhatsApp number (BR-CLI-002) and 0–10 social-media links. Each link has a platform (`INSTAGRAM`, `TIKTOK`, `FACEBOOK`, `YOUTUBE`, `X`, `OTHER`) and a value: a handle (stored without a leading `@`) or an `https://` URL, 1–200 characters after trimming. A client can't have the same platform and value twice (ignoring case and a leading `@`); links keep the Owner's order. There are no phone, email or address fields in MVP. *(F-06 discovery, Owner 2026-10-02.)*
+
+### BR-CLI-002 — WhatsApp number
+The WhatsApp number is optional. It is normalized before validation: spaces, `-`, `.` and parentheses are removed; then only the first matching step applies: a leading `+` is dropped, otherwise a leading `0` becomes `62`, otherwise a leading `8` gets `62` in front. The result must be 10–15 digits, must not start with `0`, and must not continue with `0` after a leading `62`. It is stored in that form (country code, digits only), which is what WhatsApp deep links need (BR-MSG-001). A number is unique per workspace across active and archived clients, enforced by the database; another workspace may use the same number. *(F-06 discovery, Owner 2026-10-02.)*
+
+### BR-CLI-003 — Archived and deleted clients
+The Owner may archive a client and restore it. An archived client keeps its data and its projects but can't be chosen for a new project. A client can be deleted only while no project refers to it; otherwise the Owner archives it instead. *(F-06 discovery, Owner 2026-10-02.)*
+
+---
+
 ## Project (PRJ)
 
 ### BR-PRJ-001 — Snapshot on creation

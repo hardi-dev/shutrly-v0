@@ -2,3 +2,4 @@ docs/
 drizzle/
 pnpm-lock.yaml
 src/ui/theme/tokens.css
+plugins/

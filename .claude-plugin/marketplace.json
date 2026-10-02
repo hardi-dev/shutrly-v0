@@ -1,0 +1,14 @@
+{
+  "name": "shutrly",
+  "description": "Project-local plugins for Shutrly (read by Claude Code and Codex)",
+  "owner": {
+    "name": "Shutrly"
+  },
+  "plugins": [
+    {
+      "name": "sdv",
+      "source": "./plugins/sdv",
+      "description": "Spec-driven vibe coding: /sdv:* workflow commands and the spec-driven-vibe-coding and sdv-design-tokens-system skills"
+    }
+  ]
+}

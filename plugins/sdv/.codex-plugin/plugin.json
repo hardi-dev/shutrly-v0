@@ -1,0 +1,35 @@
+{
+  "name": "sdv",
+  "version": "1.4.1",
+  "description": "Spec-driven vibe coding: progressive spec-driven workflow for AI-assisted software delivery using constitution, coding rules, UML, Pencil design, technical design, implementation iterations, verification, and shipping.",
+  "author": {
+    "name": "SDV Plugin Maintainers"
+  },
+  "keywords": [
+    "spec-driven development",
+    "project planning",
+    "software delivery",
+    "design systems",
+    "Pencil"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Spec-Driven Vibe Coding",
+    "shortDescription": "Progressive specs, design, implementation, and verification",
+    "longDescription": "Guide AI-assisted software work from product discovery through domain modeling, Pencil design, technical planning, implementation, verification, and shipping.",
+    "developerName": "SDV Plugin Maintainers",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Planning",
+      "Design",
+      "Coding",
+      "Verification"
+    ],
+    "defaultPrompt": [
+      "Bootstrap this project with a spec-driven workflow.",
+      "Plan this feature before implementation.",
+      "Verify this feature against its approved artifacts."
+    ],
+    "brandColor": "#4F46E5"
+  }
+}

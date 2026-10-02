@@ -1,14 +1,14 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 IN PROGRESS) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 IN PROGRESS; F-05 catalog implementation complete, PR #3) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/catalog` (F-05; `main` merged in after F-04's PR #1).
 
-## Current handoff — F-05 Service catalog IN PROGRESS (2026-10-02)
+## Current handoff — F-05 Service catalog READY TO MERGE (2026-10-02)
 
 - Work only in `/Users/hardiansa/Documents/work/personal/Coding/shutrly-v01-catalog`; do not touch the primary `shutrly-v01` checkout.
-- Checkpoint `0406eb3` contains the catalog management flows, service-detail editing/reorder/remove, responsive actions, inline category creation, and the catalog E2E journey; `4fc9571` adds category save feedback and retry handling. Catalog changes contain no ESLint rule-disabling directives.
-- `eslint src`, TypeScript, production build, booking/UI tests, and the isolated authenticated catalog E2E pass. The full unit suite has one unrelated token-count failure (`585` expected vs `596` actual). Integration tests are blocked by the configured Neon pooler's WebSocket closing during fixture setup. The earlier E2E *Segera hadir* result was caused by the already-running primary-checkout server on port 3000, not the catalog route.
-- Do not run `pnpm db:migrate`; do not read or edit `.pen` files. Next safe work: rerun the final verification suite from the catalog worktree, keep the token-count and Neon issues recorded, then run `/sdv:verify-feature catalog` when Owner review is ready.
+- Checkpoint `a877540` contains the catalog implementation, the requested follow-up refinements, and the technical-design writeback. Catalog changes contain no ESLint rule-disabling directives.
+- Full Vitest passes (221 files, 674 tests), ESLint, Prettier, route type generation, TypeScript through the production build, token validation, `git diff --check`, and the isolated authenticated catalog E2E pass. Integration tests remain blocked by the configured Neon pooler's WebSocket closing during fixture setup. The pnpm wrapper lifecycle is also blocked in this environment by ignored dependency build scripts; direct quality gates passed without changing that policy.
+- Do not run `pnpm db:migrate`; do not read or edit `.pen` files. PR #3 is ready to merge into `main`; afterward run `/sdv:verify-feature catalog` if the Owner wants the formal verification record.
 
 ## Update 2026-10-02 — F-05 Service catalog PLANNED
 
@@ -28,8 +28,19 @@ Branch: `feat/catalog` (F-05; `main` merged in after F-04's PR #1).
 - **Spec:** [spec.md](features/catalog/spec.md) and [acceptance-criteria.md](features/catalog/acceptance-criteria.md) (AC-CAT-001…023). New rules BR-CAT-007…011 (selection types `EDIT`/`PRINT`, active/archived/delete lifecycle, names, fixed definition type once used, four seeded item definitions); scope and domain model updated.
 - **Owner decisions:** *Layanan* tabs (Layanan · Kategori · Item paket); no draft/publish; seed item definitions only.
 - **Next for F-05:** `/sdv:design-feature catalog` (optionally `/sdv:model-feature catalog` first). F-04 was built on `feat/source-config` and merged to `main` (PR #1).
+## Current handoff — F-06 Clients SPECIFIED (2026-10-02)
 
-## Current handoff — F-04 Source configuration IN PROGRESS (2026-10-02)
+- **Order:** the Owner chose F-06 next, ahead of F-05 Catalog and before `/sdv:verify-feature source-config` (still outstanding; F-04 stays IN PROGRESS until it is verified).
+- **Spec:** [spec.md](features/clients/spec.md) and [acceptance-criteria.md](features/clients/acceptance-criteria.md), AC-CLI-001…020. New business rules **BR-CLI-001..003** in `domain/business-rules.md` (Owner discovery 2026-10-02), and the Client line in `domain/domain-model.md` is updated.
+- **Owner decisions (2026-10-02):**
+  - fields: name, WhatsApp number, and social-media links the Owner can add and remove, with an *Instagram* row prefilled on the add form; no phone, email, address or notes;
+  - the WhatsApp number is optional and normalized (`0812…`, `+62 812…`, `812…` → `62812…`);
+  - the number is unique per workspace across active and archived clients, blocked by the database;
+  - clients are archived and restored; delete is allowed only while no project refers to the client.
+- **Assumptions to confirm in design review:** A-2 platform list (Instagram, TikTok, Facebook, YouTube, X, Lainnya), A-5 paging (30 + *Muat lebih banyak*), A-6 *Buka WhatsApp* plain chat link, no client detail page in F-06 (A-1).
+- **Next:** `/sdv:design-feature clients` in Pencil (the frame list is in the spec's last section), then the technical design and plan. Pencil isn't available in cloud sessions, so the design step needs the Owner's machine.
+
+## Previous handoff — F-04 Source configuration IN PROGRESS (2026-10-02)
 
 - **Spec (rescoped by the Owner 2026-10-01):** Owner-managed photo sources. Only Google Drive can be added; Dropbox, OneDrive, Amazon S3 and Custom URL show as *Segera hadir*. Every workspace is seeded with *Google Drive* (BR-SRC-005/006). Rename, deactivate/reactivate and delete; no link checker. Nav *Sumber klien* → **Sumber foto** (`folder-open`, route `photo-sources`). See [spec.md](features/source-config/spec.md), AC-SRC-001…017.
 - **Design APPROVED (2026-10-02):** 24 frames in `source-config.pen` (library import prefix `W:`), exports in `features/source-config/exports/`. See [design.md](features/source-config/design.md).

@@ -1,8 +1,8 @@
 # Feature: Projects
 
 ID: F-07 · Slug: `projects`
-Status: SPECIFIED (2026-10-02) · Journeys: J-03 (*Create / pick client → Pick service → Fill booking fields → Snapshot → Customize deal & price → Confirm → BOOKED*; sessions and team are F-08)
-Consumer: F-08 `team-sessions` (sessions and assignments on a project), F-09 `gallery` (one gallery per project), F-10 `client-access` (the project token), F-11 `selection` (groups from project items), F-12 `final-delivery` (`DELIVERED`, `COMPLETED`), F-13 `add-ons`, F-14 `billing` (project currency and price), F-15 `whatsapp-share` (`{{projectTitle}}`)
+Status: SPECIFIED (2026-10-02) · Journeys: J-03 (*Create / pick client → Pick service → Fill booking fields → Snapshot → Customize deal & price → Confirm → BOOKED*; sessions are F-07 since the design review, team stays F-08)
+Consumer: F-08 `team-sessions` (assignments on a project's sessions, session status), F-09 `gallery` (one gallery per project), F-10 `client-access` (the project token), F-11 `selection` (groups from project items), F-12 `final-delivery` (`DELIVERED`, `COMPLETED`), F-13 `add-ons`, F-14 `billing` (project currency and price), F-15 `whatsapp-share` (`{{projectTitle}}`)
 
 ## Goal
 The Owner books a shoot as a project: one client, one service, and the deal they agreed on. Creating a project copies the service's package items and booking fields into the project, so later catalog changes never alter it (BR-PRJ-001, BR-CAT-003). The Owner can adjust the deal until shooting starts, move the project through its working statuses by hand, and cancel or delete it when plans change.
@@ -20,33 +20,38 @@ As a photographer (Owner), I want to create a project for a client from one of m
 ## Inputs
 | Screen | Fields |
 |---|---|
-| Proyek (list) | search (title or client name) · tabs *Berjalan* / *Selesai* / *Dibatalkan* (A-4) · filter button → *Filter proyek* (A-11) · list title *Daftar proyek* with the count of the selected filter · per project: title, client, service, event date (*Acara*), status and a row menu (⋯) · page action *Proyek baru* |
-| Proyek baru | client (active clients, searchable; *Tambah klien baru* opens the F-06 client dialog) · service (active services, grouped by category) · title (prefilled, A-2) · event date (optional) · agreed price (prefilled with the service's base price) · the service's booking fields, in its order · internal notes (optional) · read-only summary of the service's package items · actions *Simpan draf* and *Buat proyek* |
-| Project detail | header: title, status, client, event date · status action (A-5) · menu: the row-menu items for its status (*Chat WhatsApp*, *Batalkan proyek* / *Hapus draf*) · **Info:** client, service (origin), event date, agreed price, notes · **Item paket:** snapshotted items (name, value, unit, selection type) · **Field booking:** snapshotted fields and their values |
-| Ubah info | title · event date · agreed price · notes (agreed price only while the deal is editable, BR-PRJ-009) |
+| Proyek (list) | search (title or client name) · tabs *Berjalan* / *Selesai* / *Dibatalkan* (A-4) · filter button → *Filter proyek* (A-11) · list title *Daftar proyek* with the count of the selected filter · per project: title, client, service, schedule (*Acara*, A-12), status and a row menu (⋯) · page action *Proyek baru* |
+| Proyek baru | client (active clients, searchable; *Tambah klien baru* opens the F-06 client dialog) · service (active services, grouped by category) · title (prefilled, A-2) · sessions (*Jadwal*, at least one for *Buat proyek*) · agreed price (prefilled with the service's base price) · the service's booking fields, in its order · internal notes (optional) · *Isi paket*: the service's package items, editable before saving (value, remove, *Tambah item*; BR-PRJ-001, BR-PRJ-009) · actions *Simpan draf* and *Buat proyek* |
+| Project detail | header: title, status, client, next session (A-12) · status action (A-5) · menu: the row-menu items for its status (*Chat WhatsApp*, *Batalkan proyek* / *Hapus draf*) · **Info:** client, service (origin), agreed price, notes · **Jadwal:** sessions with *Tambah sesi*, *Ubah*, *Hapus* · **Item paket:** snapshotted items (name, value, unit, selection type) · **Field booking:** snapshotted fields and their values |
+| Ubah info | title · agreed price · notes (agreed price only while the deal is editable, BR-PRJ-009) |
 | Item paket form | add: definition (active, not yet in the project) and value · edit: value only (`NUMBER` one number, `RANGE` min and max) |
 | Field booking form | the snapshotted fields with their stored values, edited by type |
 | Batalkan proyek | reason (required from `SHOOTING`, optional otherwise) |
+| Sesi form (add / edit) | name · date · start time (optional) · end time (optional) · location (optional) (BR-TEAM-003) |
 
-Field rules: BR-PRJ-008 (title, event date, notes, agreed price), BR-PRJ-002 (booking fields), BR-CAT-001/002 (item values), A-3 (booking-field value rules).
+Field rules: BR-PRJ-008 (title, notes, agreed price), BR-TEAM-003 (sessions), BR-PRJ-002 (booking fields), BR-CAT-001/002 (item values), A-3 (booking-field value rules).
 
 ## Main Flow — book a project
 1. Owner selects *Proyek baru* (create action or the list's page action). The server verifies the workspace and loads its active clients and active services.
 2. Owner picks a client. If the client is new, *Tambah klien baru* opens the F-06 client dialog; on save the new client is selected.
-3. Owner picks a service. The form shows the service's booking fields in order, prefills the title (A-2) and the agreed price, and summarises its package items.
-4. Owner fills in the booking fields, optionally the event date and notes, and adjusts the title or price.
-5. Owner selects *Buat proyek*. In one transaction the server checks that the client and service are still active and belong to the workspace, validates every input (BR-PRJ-002, BR-PRJ-008), creates the project in `BOOKED`, copies every service item into project items and every booking field (metadata and value) into project field values in the service's order (BR-PRJ-001), snapshots the service currency (BR-PRJ-007), generates the client access token (BR-PRJ-003), and records who created it and when.
+3. Owner picks a service. The form shows the service's booking fields in order, prefills the title (A-2) and the agreed price, and lists its package items in *Isi paket*. The Owner may change an item's value, remove an item or add one from an active definition the list doesn't hold yet, with the same rules and dialogs as on the detail page; choosing another service resets the list, after confirmation if it was changed (*Ganti layanan? Perubahan isi paket akan hilang.*).
+4. Owner adds at least one session (*Tambah sesi*: name, date, optional times and location), fills in the booking fields and optionally the notes, and adjusts the title or price.
+5. Owner selects *Buat proyek*. In one transaction the server checks that the client and service are still active and belong to the workspace, validates every input (BR-PRJ-002, BR-PRJ-008, BR-TEAM-003), creates the project in `BOOKED` with its sessions, copies the package items as listed in the form (the service's items with the Owner's changes) into project items and every booking field (metadata and value) into project field values in the service's order (BR-PRJ-001), snapshots the service currency (BR-PRJ-007), generates the client access token (BR-PRJ-003), and records who created it and when.
 6. The project detail page opens with a success toast.
 
 ## Alternative Flows
-- **Save as draft:** *Simpan draf* does the same as step 5 with status `DRAFT`. Required booking fields are still required (BR-PRJ-002, Owner 2026-10-02). On a draft, *Konfirmasi booking* moves it to `BOOKED`.
+- **Save as draft:** *Simpan draf* does the same as step 5 with status `DRAFT`. Required booking fields are still required (BR-PRJ-002, Owner 2026-10-02); sessions are optional. On a draft, *Konfirmasi booking* moves it to `BOOKED`, which needs at least one session: without one it shows *Tambahkan minimal satu sesi sebelum konfirmasi booking.* and opens *Tambah sesi*.
 - **Edit the deal (`DRAFT` or `BOOKED`, BR-PRJ-009):**
-  - *Ubah info* changes the title, event date, agreed price and notes.
+  - *Ubah info* changes the title, agreed price and notes.
   - On an item, *Ubah nilai* changes its value. *Hapus* removes the item after confirmation.
   - *Tambah item* snapshots an active definition the project doesn't use yet, with a value.
   - *Ubah field booking* edits the values. Required fields stay required, and the field names, types and options never change.
   - Nothing touches the service.
-- **After shooting starts:** from `SHOOTING` on, the deal is read-only. Only title, event date and notes can still change (A-6).
+- **After shooting starts:** from `SHOOTING` on, the deal is read-only. Only title, notes and sessions can still change (A-6).
+- **Sessions (BR-TEAM-003, Owner 2026-10-02):**
+  - On *Proyek baru*, the *Jadwal* card lists the sessions being added; *Tambah sesi* opens the session form (modal on desktop, sheet on phones), each row has *Ubah* and *Hapus*, and nothing is stored until the project is saved.
+  - On the detail page, *Jadwal* lists the stored sessions in order (BR-TEAM-003); adding, editing and deleting save immediately with a toast, in every status except `CANCELLED`.
+  - The last session of a `BOOKED`-or-later project can't be deleted: *Hapus* is disabled with the hint *Proyek yang sudah dibooking butuh minimal satu sesi.*
 - **Advance status (BR-PRJ-004):** the header shows the next manual step: *Konfirmasi booking* (`DRAFT → BOOKED`), *Mulai pemotretan* (`BOOKED → SHOOTING`), *Selesai pemotretan* (`SHOOTING → POST_PROCESSING`). Each is one click with no confirmation, followed by a toast. Later statuses come from F-12.
 - **Cancel (`BOOKED` or `SHOOTING`, BR-PRJ-010):** *Batalkan proyek* asks for confirmation, with a reason that is required from `SHOOTING`. The project becomes `CANCELLED`, recording actor, time and reason (BR-AUD-001). It moves to *Dibatalkan* and becomes read-only.
 - **Row menu (⋯) on the list (Owner 2026-10-02):** every row has a menu built from the next step for its status, *Ubah info*, a *Kirim ke klien* group, and the destructive action. The detail page's menu offers the same items. The link to the detail page is the whole text of the *Proyek* cell (title and *client · service*); the rest of the row isn't a link.
@@ -70,11 +75,11 @@ Field rules: BR-PRJ-008 (title, event date, notes, agreed price), BR-PRJ-002 (bo
   - No match shows *Tidak ada proyek yang cocok* with *Hapus pencarian*.
 - **Filter (A-11, Owner 2026-10-02):** the icon button next to the search opens *Filter proyek*, a modal on desktop and a bottom sheet on phones. It holds:
   - **Status:** a dropdown with a checkbox per status (Multi-select), only on *Berjalan* (*Draf*, *Dibooking*, *Pemotretan*, *Pascaproduksi*, *Terkirim*);
-  - **Tanggal acara:** *Dari* and *Sampai* dates, plus *Sertakan proyek tanpa tanggal*;
+  - **Jadwal:** *Dari* and *Sampai* dates, matching projects with any session in the range, plus *Sertakan proyek tanpa jadwal*;
   - **Layanan:** several services, archived ones included;
   - **Klien:** one client.
 
-  *Terapkan* applies the filters together with the search inside the selected tab; *Reset* clears them. While filters are active, the button shows a red counter with the number of active filter groups (Status, Tanggal acara, Layanan, Klien). There is no text label and no chip row.
+  *Terapkan* applies the filters together with the search inside the selected tab; *Reset* clears them. While filters are active, the button shows a red counter with the number of active filter groups (Status, Jadwal, Layanan, Klien). There is no text label and no chip row.
 - **No projects yet:**
   - *Berjalan* shows *Belum ada proyek* with *Proyek baru*.
   - *Selesai* shows *Belum ada proyek yang selesai*.
@@ -93,6 +98,8 @@ Field rules: BR-PRJ-008 (title, event date, notes, agreed price), BR-PRJ-002 (bo
 ## Error Cases
 - **Missing or invalid input:** each of the following gives a field error and saves nothing:
   - no client or no service chosen;
+  - *Buat proyek* with no session → *Tambahkan minimal satu sesi.* on the *Jadwal* card (drafts may have none);
+  - a session without a name or date, a name over 100 characters, a location over 200 characters, an end time without a start time, or an end time not after the start time → field error in the session form;
   - a title empty (after trim) or longer than 100 characters;
   - notes longer than 2000 characters;
   - a price that is negative, fractional or above 999.999.999.999 (BR-PRJ-008, BR-CUR-003).
@@ -116,14 +123,17 @@ Field rules: BR-PRJ-008 (title, event date, notes, agreed price), BR-PRJ-002 (bo
   - no active service;
   - field errors;
   - inactive client or service;
+  - no session yet, and sessions added;
+  - the session form (add, edit, field errors);
   - submitting, showing the pending state on the pressed button;
   - server error.
 - **Detail:**
   - one state per status: `DRAFT`, `BOOKED`, `SHOOTING` (deal read-only), `POST_PROCESSING`, and `CANCELLED` (banner with reason, read-only);
   - no items, no booking fields;
+  - sessions, with the last one not deletable from `BOOKED`;
   - status action pending.
 - **Dialogs:**
-  - *Ubah info*, *Tambah item*, *Ubah nilai*, *Ubah field booking*, *Batalkan proyek* and *Hapus draf*;
+  - *Ubah info*, *Tambah sesi* / *Ubah sesi*, *Hapus sesi*, *Tambah item*, *Ubah nilai*, *Ubah field booking*, *Batalkan proyek* and *Hapus draf*;
   - each has idle, field error and submitting states.
 - **Toasts:** created, draft saved, saved, status changed, cancelled, draft deleted, server error.
 
@@ -136,6 +146,7 @@ Field rules: BR-PRJ-008 (title, event date, notes, agreed price), BR-PRJ-002 (bo
 - BR-PRJ-008 — project record
 - BR-PRJ-009 — deal editable while `DRAFT` / `BOOKED`
 - BR-PRJ-010 — delete drafts, cancel the rest
+- BR-TEAM-002, BR-TEAM-003 — sessions belong to the project; session record
 - BR-CAT-001, BR-CAT-002 — item values; BR-CAT-003 — templates affect only the future; BR-CAT-008 — archived templates not offered, referenced ones not deleted
 - BR-CLI-003 — archived clients not offered; clients with projects not deleted
 - BR-CUR-001, BR-CUR-003 — IDR, exact money
@@ -163,9 +174,9 @@ Field rules: BR-PRJ-008 (title, event date, notes, agreed price), BR-PRJ-002 (bo
 - **A-4 List:**
   - *Berjalan* is `DRAFT` … `DELIVERED`, *Selesai* is `COMPLETED`, and *Dibatalkan* is `CANCELLED`;
   - order (Owner 2026-10-02):
-    - *Berjalan* is by event date, earliest first;
-    - *Selesai* and *Dibatalkan* are by event date, latest first;
-    - in every filter, projects without a date come last, and ties go by creation time, newest first;
+    - *Berjalan* is by the date of the project's shown session (A-12), earliest first;
+    - *Selesai* and *Dibatalkan* are by that date, latest first;
+    - in every filter, projects without a session come last, and ties go by creation time, newest first;
   - 30 per page, keyset paging, and the count ignores the search, as in F-06 (A-5, A-10);
   - the query is kept in the URL (`?q=`).
 - **A-11 Filter parameters:**
@@ -174,8 +185,12 @@ Field rules: BR-PRJ-008 (title, event date, notes, agreed price), BR-PRJ-002 (bo
   - *Dari* after *Sampai* is a field error on *Sampai*;
   - the list count stays the tab total, as for the search;
   - no match shows the same *Tidak ada proyek yang cocok* state, with *Hapus pencarian* also clearing the filters.
+- **A-12 Shown session (*Acara*):**
+  - the list's *Acara* cell and the detail header show the project's next session: the earliest one dated today or later, or, when all are past, the latest one;
+  - the cell shows *{weekday}, {date} · {start time}* (no time when there is none) and the location below; when the project has more sessions, *· +{n} sesi* follows the location (or the date when there is no location);
+  - a project without sessions shows *Belum ada jadwal* in muted text.
 - **A-5 Status labels:** *Draf*, *Dibooking*, *Pemotretan*, *Pascaproduksi*, *Terkirim*, *Selesai*, *Dibatalkan*, shown with the Status Chip.
-- **A-6 Title, date and notes:**
+- **A-6 Title, notes and sessions:**
   - these aren't part of the deal, so they stay editable in every status except `CANCELLED`;
   - the agreed price follows BR-PRJ-009.
 - **A-7 Item order:** project items and field values keep the service's order. An added item goes last. There is no reordering in F-07.
@@ -192,12 +207,12 @@ Field rules: BR-PRJ-008 (title, event date, notes, agreed price), BR-PRJ-002 (bo
 ## Dependencies
 - F-05 Catalog: the active services, their items, booking fields and currency, plus the delete guards for services and definitions.
 - F-06 Clients: the active clients, the client dialog for inline creation, and the delete guard.
-- F-08 Sessions: the list's *Acara* cell is drawn with two lines, *{weekday}, {date} · {time}* and the location below. Time and location belong to sessions, not to the project (Owner 2026-10-02), so F-07 shows only the event date and F-08 fills in the time and location of the project's next session.
-- F-08 to F-15 build on the project. F-07 adds no placeholders for their sections (sessions, team, gallery, invoices, add-ons).
+- F-08 Team: assignments and session status build on the F-07 sessions.
+- F-08 to F-15 build on the project. F-07 adds no placeholders for their sections (team, gallery, invoices, add-ons).
 
 ## Out of Scope
 - **Owned by later features:**
-  - sessions, team assignments (F-08);
+  - team assignments and session status (F-08);
   - gallery and sources (F-09);
   - token display and rotation, client links (F-10);
   - selection groups (F-11);

@@ -14,7 +14,7 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-05 | Service catalog (categories, item definitions, services, items, booking fields); *Layanan* with tabs, four seeded item definitions (Owner 2026-10-02) | `catalog` | BR-CAT-001..011 | J-02 | DONE (merged to `main` 2026-10-02, PR #3; verify pending) |
 | F-06 | Clients: name, WhatsApp number (normalized, unique per workspace), social-media links; search, archive, delete while unused (Owner 2026-10-02) | `clients` | BR-CLI-001..003, BR-WS-002 | J-03 | PLANNED (2026-10-02) |
 | F-07 | Project creation from service + snapshots | `projects` | BR-PRJ-*, BR-CAT-003 | J-03 | SPECIFIED (2026-10-02) |
-| F-08 | Sessions, team members, assignments | `team-sessions` | BR-TEAM-* | J-03 | TODO |
+| F-08 | Team members, assignments, session status (sessions themselves moved to F-07, Owner 2026-10-02) | `team-sessions` | BR-TEAM-001, BR-TEAM-002 | J-03 | TODO |
 | F-09 | Gallery, sources, Drive sync | `gallery` | BR-GAL-*, BR-SRC-* | J-04 | TODO |
 | F-10 | Client gallery access (token, password, rate limits, media delivery) | `client-access` | BR-ACC-* | J-04 | TODO |
 | F-11 | Selection groups and client selection | `selection` | BR-SEL-* | J-04 | TODO |
@@ -43,7 +43,8 @@ F-07 defines one menu per project (row ⋯ on the list and the detail page menu)
 - while `DRAFT`/`BOOKED`, the deal (price, item values, add/remove items, booking values) stays editable;
 - only drafts are deleted, and other projects are cancelled;
 - final delivery may move `BOOKED`, `SHOOTING` or `POST_PROCESSING` to `DELIVERED`;
-- the fields are title (default *{service} — {client}*), event date and internal notes, with inline client creation.
+- the fields are title (default *{service} — {client}*) and internal notes, with inline client creation;
+- sessions (name, date, times, location) are part of F-07 and replace the event date; `BOOKED` needs at least one (BR-TEAM-003, design review 2026-10-02).
 
 New rules BR-PRJ-008..010; BR-PRJ-004's gap is resolved and BR-DEL-003 updated. Next: `/sdv:design-feature projects`.
 

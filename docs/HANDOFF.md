@@ -3,7 +3,10 @@
 Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED; F-07 SPECIFIED) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` is merged into `feat/clients` at `fe1d6f0`).
 
-## Current handoff — F-07 Projects SPECIFIED (2026-10-02)
+## Current handoff — F-07 Projects DESIGN IN PROGRESS (2026-10-02)
+
+- **Continue the design from [docs/features/projects/design-handoff.md](features/projects/design-handoff.md)**: Pencil conventions (library prefix `H:`), frame index, Owner decisions from the design review (sessions moved into F-07, editable package at creation, row menu, filter), open questions and remaining states.
+
 
 - **Branch:** `feat/projects`, cut from `feat/clients` because projects need the client table. Merge F-06 to `main` first, or rebase this branch once it lands.
 - **Spec:** [spec.md](features/projects/spec.md), [acceptance-criteria.md](features/projects/acceptance-criteria.md) (AC-PRJ-001…026).
@@ -14,7 +17,7 @@ Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` 
   - A-4: filters *Berjalan*/*Selesai*/*Dibatalkan*, ordered by event date;
   - A-5: status labels;
   - A-1: routes `/projects`, `/projects/new`, `/projects/[id]`.
-- **Next:** `/sdv:design-feature projects`. F-06 build (`/sdv:build-feature clients 1`) is still pending on `feat/clients`.
+- **Next:** continue `/sdv:design-feature projects` from the design handoff. F-06 build (`/sdv:build-feature clients 1`) is still pending on `feat/clients`.
 
 ## Previous handoff — F-06 Clients PLANNED (2026-10-02)
 

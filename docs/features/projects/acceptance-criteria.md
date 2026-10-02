@@ -14,16 +14,16 @@ Shared fixture, used unless an AC says otherwise. The Owner's workspace has:
 ## AC-PRJ-001 — Proyek list
 Covers: BR-PRJ-004, BR-WS-003 (A-1, A-4, A-5)
 
-**Given** projects *Wisuda Rina* (`BOOKED`, event 2026-11-10), *Wisuda Sari* (`DRAFT`, no date), *Prewed Dewi* (`SHOOTING`, event 2026-10-20), *Family Tono* (`COMPLETED`) and *Wisuda Andi* (`CANCELLED`)
+**Given** today is 2026-10-02 and projects *Wisuda Rina* (`BOOKED`, session *Wisuda* 2026-11-10 07.30 at *Balairung UI, Depok*), *Wisuda Sari* (`DRAFT`, no session), *Prewed Dewi* (`SHOOTING`, sessions 2026-10-20 06.00 and 2026-10-21), *Family Tono* (`COMPLETED`) and *Wisuda Andi* (`CANCELLED`)
 **When** the Owner opens *Proyek*
-**Then** *Berjalan* shows *Prewed Dewi*, *Wisuda Rina*, *Wisuda Sari* in that order. Each row shows the title, client, service, event date and status chip (*Pemotretan*, *Dibooking*, *Draf*). *Daftar proyek* shows *3 proyek berjalan*. The nav item *Proyek* is active and no *Segera hadir* placeholder is shown.
+**Then** *Berjalan* shows *Prewed Dewi*, *Wisuda Rina*, *Wisuda Sari* in that order. Each row shows the title, client, service, the next session (*Sel, 10 Nov 2026 · 07.30* / *Balairung UI, Depok*; *Prewed Dewi* shows *· +1 sesi*; *Wisuda Sari* shows *Belum ada jadwal*) and status chip (*Pemotretan*, *Dibooking*, *Draf*). *Daftar proyek* shows *3 proyek berjalan*. The nav item *Proyek* is active and no *Segera hadir* placeholder is shown.
 
 ## AC-PRJ-002 — Filters
 Covers: BR-PRJ-004 (A-4)
 
 **Given** the projects from AC-PRJ-001
 **When** the Owner selects *Selesai*, then *Dibatalkan*
-**Then** *Selesai* shows only *Family Tono*, and *Dibatalkan* shows only *Wisuda Andi*, each with its count. With several projects, *Selesai* and *Dibatalkan* list the latest event date first, and projects without a date last (A-4).
+**Then** *Selesai* shows only *Family Tono*, and *Dibatalkan* shows only *Wisuda Andi*, each with its count. With several projects, *Selesai* and *Dibatalkan* list the latest session date first, and projects without a session last (A-4, A-12).
 
 ## AC-PRJ-003 — Empty lists
 Covers: C-007
@@ -63,7 +63,7 @@ Covers: BR-PRJ-008 (A-2)
 **Then** these change together:
 - the title becomes *Wisuda Basic — Rina*;
 - the agreed price becomes 750.000;
-- the package summary lists *Foto edit 25 foto* and *Jumlah orang 1–3 orang*;
+- *Isi paket* lists *Foto edit 25 foto* and *Jumlah orang 1–3 orang*, each with *Ubah nilai* and *Hapus*, plus *Tambah item*;
 - *Nama kampus*, *Tanggal wisuda* and *Ukuran toga* appear in that order, the first two marked required.
 
 Then the Owner edits the title and picks another client. The edited title is kept.
@@ -71,12 +71,13 @@ Then the Owner edits the title and picks another client. The edited title is kep
 ## AC-PRJ-008 — Book a project
 Covers: BR-PRJ-001, BR-PRJ-002, BR-PRJ-003, BR-PRJ-007, BR-PRJ-008, C-005
 
-**Given** the form from AC-PRJ-007 with *Nama kampus* *UI*, *Tanggal wisuda* 2026-11-10, *Ukuran toga* empty, event date 2026-11-10 and price 700.000
+**Given** the form from AC-PRJ-007 with *Nama kampus* *UI*, *Tanggal wisuda* 2026-11-10, *Ukuran toga* empty, one session *Wisuda* on 2026-11-10 07.30–10.00 at *Balairung UI, Depok*, and price 700.000
 **When** the Owner selects *Buat proyek*
 **Then** one transaction does all of the following:
 - creates the project in `BOOKED` with currency `IDR` and a unique token of at least 128 bits of entropy;
 - creates project items *Foto edit* (`NUMBER` 25, *foto*, selection `EDIT`) and *Jumlah orang* (`RANGE` 1–3, *orang*);
-- creates field values for *Nama kampus* and *Tanggal wisuda* with their key, name and type, and none for *Ukuran toga*.
+- creates field values for *Nama kampus* and *Tanggal wisuda* with their key, name and type, and none for *Ukuran toga*;
+- creates the session *Wisuda* with its date, times and location.
 
 The detail page opens with a toast. The token appears in no response, page or log.
 
@@ -175,7 +176,7 @@ Covers: BR-PRJ-009 (A-6)
 
 **Given** the project from AC-PRJ-008
 **When** the Owner selects *Mulai pemotretan*
-**Then** the status becomes *Pemotretan*. The price, item and booking-field actions are gone, while *Ubah info* still edits the title, event date and notes. A deal edit sent directly is rejected with *Proyek sudah dalam pemotretan. Detail paket tidak bisa diubah lagi.*
+**Then** the status becomes *Pemotretan*. The price, item and booking-field actions are gone, while *Ubah info* still edits the title and notes, and sessions can still be added, edited and deleted. A deal edit sent directly is rejected with *Proyek sudah dalam pemotretan. Detail paket tidak bisa diubah lagi.*
 
 ## AC-PRJ-019 — Deal edit races with a status move
 Covers: BR-PRJ-009, C-005 (A-9)
@@ -262,5 +263,25 @@ Covers: BR-PRJ-004, BR-PRJ-010, BR-MSG-001, BR-CLI-002 (A-10)
 Covers: A-11
 
 **Given** the projects from AC-PRJ-001
-**When** the Owner opens *Filter proyek*, ticks *Dibooking* and *Pemotretan*, sets *Tanggal acara* from 1 Okt 2026 to 30 Nov 2026, and selects *Terapkan*
+**When** the Owner opens *Filter proyek*, ticks *Dibooking* and *Pemotretan*, sets *Jadwal* from 1 Okt 2026 to 30 Nov 2026, and selects *Terapkan*
 **Then** *Berjalan* shows only *Prewed Dewi* and *Wisuda Rina*, and the filter button shows a red counter *2*. The filters stay in the URL after a reload. *Reset* clears them and removes the counter. *Sampai* before *Dari* shows a field error and applies nothing.
+
+## AC-PRJ-029 — Sessions
+Covers: BR-TEAM-002, BR-TEAM-003, BR-PRJ-004, BR-PRJ-008
+
+**Given** *Proyek baru* filled in as in AC-PRJ-007
+**When** the Owner selects *Buat proyek* with no session, then *Simpan draf* with no session
+**Then** *Buat proyek* shows *Tambahkan minimal satu sesi.* and creates nothing; *Simpan draf* creates the draft without sessions. On that draft, *Konfirmasi booking* shows *Tambahkan minimal satu sesi sebelum konfirmasi booking.*, opens *Tambah sesi*, and leaves it `DRAFT`.
+
+**And when** the Owner adds sessions in the session form
+**Then** each of these is a field error and nothing is added: no name, no date, a name of 101 characters, a location of 201 characters, an end time without a start time, an end time of 07.00 with a start time of 07.30. Valid sessions are listed by date, then start time, sessions without a time first.
+
+**And given** a `BOOKED` project with one session
+**Then** that session's *Hapus* is disabled with *Proyek yang sudah dibooking butuh minimal satu sesi.*, and a delete request sent directly is rejected. With two sessions either can be deleted. A `CANCELLED` project's sessions can't be changed.
+
+## AC-PRJ-030 — Adjust the package before saving
+Covers: BR-PRJ-001, BR-PRJ-009, BR-CAT-001, BR-CAT-002
+
+**Given** the form from AC-PRJ-007
+**When** the Owner changes *Foto edit* to 30, removes *Jumlah orang*, adds *Foto cetak* 10 and selects *Buat proyek*
+**Then** the project's items are *Foto edit* 30 and *Foto cetak* 10, and *Wisuda Basic* is unchanged. Invalid values are rejected with the AC-PRJ-017 errors. Picking another service afterwards asks *Ganti layanan? Perubahan isi paket akan hilang.* and, on confirm, lists the new service's items.

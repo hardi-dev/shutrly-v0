@@ -1,7 +1,7 @@
 # Feature: Projects
 
 ID: F-07 · Slug: `projects`
-Status: SPECIFIED (2026-10-02) · Journeys: J-03 (*Create / pick client → Pick service → Fill booking fields → Snapshot → Customize deal & price → Confirm → BOOKED*; sessions are F-07 since the design review, team stays F-08)
+Status: DESIGNED (2026-10-02, [design.md](design.md)); specified 2026-10-02 · Journeys: J-03 (*Create / pick client → Pick service → Fill booking fields → Snapshot → Customize deal & price → Confirm → BOOKED*; sessions are F-07 since the design review, team stays F-08)
 Consumer: F-08 `team-sessions` (assignments on a project's sessions, session status), F-09 `gallery` (one gallery per project), F-10 `client-access` (the project token), F-11 `selection` (groups from project items), F-12 `final-delivery` (`DELIVERED`, `COMPLETED`), F-13 `add-ons`, F-14 `billing` (project currency and price), F-15 `whatsapp-share` (`{{projectTitle}}`)
 
 ## Goal
@@ -119,7 +119,7 @@ Field rules: BR-PRJ-008 (title, notes, agreed price), BR-TEAM-003 (sessions), BR
 - **Proyek baru:**
   - before a service is chosen;
   - a service with booking fields;
-  - a service with no booking fields and no items;
+  - a service with no booking fields and no items (the *Field booking* card is hidden, here and on the detail page; Owner 2026-10-02);
   - no active service;
   - field errors;
   - inactive client or service;
@@ -231,8 +231,4 @@ Field rules: BR-PRJ-008 (title, notes, agreed price), BR-TEAM-003 (sessions), BR
 ## Open Questions / SPEC GAPS
 - Not blocking: A-4 (filters and order) and A-2 (default title) are the assumptions most likely to change in design review.
 - **F-11:** once selection groups exist, it must decide what removing or changing a selection item does to an existing group. Under BR-PRJ-009 that is only possible while the project is `DRAFT`/`BOOKED`, before groups exist in practice.
-- **For design:** `/sdv:design-feature projects` needs desktop and phone frames, exported as HTML (AGENTS.md):
-  - the list: populated, the three empty states, no match, loading, loading more;
-  - *Proyek baru*: before a service is chosen, filled, no active service, field errors, inline client dialog, submitting;
-  - the detail in each status;
-  - the dialogs and toasts.
+- **Design:** APPROVED 2026-10-02, 94 frames in `projects.pen`; see [design.md](design.md).

@@ -1,8 +1,8 @@
-# F-07 Projects — design handoff (in progress)
+# F-07 Projects — design handoff (closed)
 
 Read this before you continue `/sdv:design-feature projects`. It records where the design stands, every Owner decision taken during the design review, and how the Pencil file is built, so another agent can continue without the original conversation.
 
-Status: **DESIGN IN PROGRESS** (2026-10-02). The list screens are done and reviewed. *Proyek baru* is in review, with one state drawn. Nothing is approved yet; there is no `design.md`, and the feature map still says SPECIFIED.
+Status: **APPROVED 2026-10-02**: exported, and F-07 is `DESIGNED`. This file is kept as the record of how the Pencil file is built. Earlier status: all states drawn, in review. There are 94 frames: the list, *Proyek baru*, the detail in every status, the dialogs and the toasts. [design.md](design.md) is written and holds the frame index, copy and rule exceptions. What's left: the Owner's approval, ⌘S, the exports and the status change (see *Remaining work*).
 
 ## Read first
 - [spec.md](spec.md) and [acceptance-criteria.md](acceptance-criteria.md): AC-PRJ-001…030. Both are updated with every decision below.
@@ -37,24 +37,10 @@ Status: **DESIGN IN PROGRESS** (2026-10-02). The list screens are done and revie
 | Modal MD · Bottom Sheet Form / Actions · Sheet Item / destructive | `H:f8ym9` · `H:vSBbR` / `H:U0wHw` · `H:FRtU1` / `H:FAObX` |
 | Empty State · Checkbox checked / unchecked | `H:H43gDN` · `H:H41tQ` / `H:n8NmOH` |
 
-### Frames (desktop at x 0, phone at x 1560; rows 1184 apart)
-| y | State | Desktop | Phone |
-|---|---|---|---|
-| 0 | List / Berjalan | `sn4a4` | `liVLL` |
-| 1184 | List / Filter aktif (red counter 2) | `KLoPc` | `VJ6Li` |
-| 2368 | Filter modal / sheet | `e1VJF` | `ITvcM` |
-| 3552 | Row menu open on *Wisuda Basic — Rina* | `E3eVH` | `EWFc5` |
-| 4736 | List / Selesai | `u0Ck6F` | `gY8l7` |
-| 5920 | List / Dibatalkan | `o2T7OP` | `H3gsoo` |
-| 7104 | Empty Berjalan | `tHeNM` | `V4TEva` |
-| 8288 | Empty Selesai | `O4N4XM` | `CyTsk` |
-| 9472 | Empty Dibatalkan | `fXKf8` | `GCYv0` |
-| 10656 | No match (*andra*) | `Q5PE55` | `RVzmE` |
-| 11840 | Loading | `v1y9at` | `dE780` |
-| 13024 | Loading more (desktop 1100 tall, phone 1360) | `rJ0pj` | `ijrVe` |
-| 14544 | Board: *Row menu per status / Target* (desktop menus, x 0) | `H0Gs4u` | — |
-| 15284 | Board: *Row menu per status / Target / Mobile* (sheets, x 0) | — | `eKgbh` |
-| 0 (x 2400 / 3960) | **Proyek baru / Terisi** (in review) | `QeT50` | `l64V5` |
+### Frames
+The full frame index is in [design.md](design.md) › *Frames*.
+- **Columns:** list at x 0 / 1560; *Proyek baru* at x 2400 / 3960; detail at x 4800 / 6360.
+- **Ids:** list/dialog/toast frames start from `QeT50`/`l64V5` (*Proyek baru*) and `X5y4S3`/`hLX50` (detail *Dibooking*).
 
 ## Owner decisions taken in the design review (all recorded in spec/AC/domain)
 1. **Status chip tones:** *Draf* neutral · *Dibooking* info · *Pemotretan* accent · *Pascaproduksi* warning · *Terkirim* success · *Selesai* success without a dot · *Dibatalkan* neutral.
@@ -100,35 +86,20 @@ Status: **DESIGN IN PROGRESS** (2026-10-02). The list screens are done and revie
 
     Then *Simpan draf* (secondary) and *Buat proyek* (primary), right-aligned under the form on desktop and half-width each in the phone action bar. Required fields are not marked; optional ones show *(opsional)*.
 
+## Decisions in the second pass (Owner 2026-10-02)
+- The detail direction is kept for every status:
+  - desktop Page Header: title + Status Chip, a meta line with the next session, the step button and ⋯;
+  - phone: Compact Bar with ⋯, and the step button in a sticky bar;
+  - cards: *Info* (facts), *Isi paket*, *Jadwal* and *Field booking*.
+- No *Field booking* card when the service has no booking fields.
+- *Selesai pemotretan* uses `circle-check-big`.
+- On desktop, the *Proyek baru* actions sit only under the form.
+
 ## Open questions for the Owner
-- *Selesai pemotretan* icon: `camera-off`, or `circle-check-big` / `flag`?
-- Desktop *Proyek baru*: keep the actions only under the form, or also in the Page Header?
-- Copy to confirm: the empty-state bodies, the filter modal description *Berlaku untuk tab Berjalan.*, and *Ganti layanan? …*.
+- Copy to confirm: the extra copy in design.md › *Copy* (empty-state bodies, filter description *Berlaku untuk tab Berjalan.*, *Ganti layanan? …*, toasts).
 
 ## Remaining work (in order)
-1. **Proyek baru states** (desktop + phone):
-   - before a service is chosen;
-   - client picker open with *Tambah klien baru*, and the inline F-06 client dialog;
-   - service with no items and no booking fields;
-   - no active service (*Belum ada layanan aktif* + link *Layanan*);
-   - **session form** (Modal / Sheet: add, edit, field errors) and *Jadwal* empty with the *Tambahkan minimal satu sesi.* error;
-   - item dialogs (*Tambah item*, *Ubah nilai*, *Hapus*);
-   - field errors;
-   - inactive client or service;
-   - submitting (pending button);
-   - toast server error;
-   - the *Ganti layanan?* confirm.
-2. **Project detail** (`/projects/[id]`, desktop App Shell; phone Compact Bar):
-   - the header with title, status chip, client, next session, status step button and ⋯ menu;
-   - the cards *Info*, *Isi paket*, *Jadwal* and *Field booking*;
-   - one frame per status (`DRAFT`, `BOOKED`, `SHOOTING` with the deal read-only, `POST_PROCESSING`, `CANCELLED` with a banner and reason);
-   - no items or fields;
-   - status action pending.
-3. **Dialogs:** *Ubah info*, *Ubah field booking*, *Batalkan proyek* (reason required from `SHOOTING`), *Hapus draf*, *Hapus sesi*, deal-locked error.
-4. **Toasts:** created, draft saved, saved, status changed, cancelled, draft deleted, server error.
-5. **Close the design stage:**
-   - Scan for raw colours and clipped nodes.
-   - Write `design.md` (frame table, layout, copy, components and tokens, rule exceptions: the SP5 table column gap, the local sheet group label, the red badge on the filter button).
-   - Get the Owner's approval.
-   - Export every frame to `exports/` with `Export([id],"html-tailwind",path)` (file name `<state>-<device>-<id>.html`).
-   - Set F-07 to `DESIGNED`, update `docs/HANDOFF.md`, and recommend `/sdv:plan-feature projects`.
+1. The Owner reviews and approves the design (design.md › *Approval*).
+2. The Owner saves `projects.pen` (⌘S); check the size and mtime before committing.
+3. Export the 92 state frames to `exports/` with `Export([id],"html-tailwind",path)` (file name `<state>-<device>-<id>.html`; skip the boards `H0Gs4u` and `eKgbh`).
+4. Set F-07 to `DESIGNED` in the feature map, update `docs/HANDOFF.md`, and recommend `/sdv:plan-feature projects`.

@@ -87,7 +87,7 @@ tests/e2e/catalog/catalog.spec.ts
 
 **Files:** `src/ui/primitives/icon/icon.{types,registry}.ts` + `icon.test.tsx`; create `src/ui/primitives/switch/*`.
 
-- [ ] **Step 1: Failing tests.** Add the new names to the list in `icon.test.tsx`. Create `switch.test.tsx`:
+- [x] **Step 1: Failing tests.** Add the new names to the list in `icon.test.tsx`. Create `switch.test.tsx`:
 
 ```tsx
 import { render, screen } from "@testing-library/react";
@@ -116,8 +116,8 @@ describe("Switch (C07)", () => {
 });
 ```
 
-- [ ] **Step 2:** `pnpm test src/ui/primitives` → FAIL.
-- [ ] **Step 3: Icons.** Add to `IconName` and the registry:
+- [x] **Step 2:** `pnpm test src/ui/primitives` → FAIL.
+- [x] **Step 3: Icons.** Add to `IconName` and the registry:
 
 | Name | Hugeicons export |
 |---|---|
@@ -138,9 +138,9 @@ describe("Switch (C07)", () => {
 
 If an export name differs in `@hugeicons/core-free-icons` 4.3.5, pick the closest glyph and note it in the implementation record.
 
-- [ ] **Step 4: Switch** with React Aria `Switch`, per `switch.md`: label left (`flex-1`, body, medium, `text-(--component-switch-label)`), track 36×20 (`rounded-full`, `bg-(--component-switch-track-off)`, `data-selected:bg-(--component-switch-track-on)`), knob 16 px (`bg-(--component-switch-knob)`, translates on select), focus ring `data-focus-visible:outline-(--color-semantic-focus-ring)`, disabled `data-disabled:opacity-(--opacity-disabled)`. Props: `label`, `isSelected`, `onChange`, `isDisabled?`, `description?`, `className?`.
-- [ ] **Step 5: Story** `Primitives/Switch`: Off, On, Disabled On (strings in `switch.stories.copy.ts`).
-- [ ] **Step 6:** gate → PASS. Commit `feat(ui): add switch and catalog icons`.
+- [x] **Step 4: Switch** with React Aria `Switch`, per `switch.md`: label left (`flex-1`, body, medium, `text-(--component-switch-label)`), track 36×20 (`rounded-full`, `bg-(--component-switch-track-off)`, `data-selected:bg-(--component-switch-track-on)`), knob 16 px (`bg-(--component-switch-knob)`, translates on select), focus ring `data-focus-visible:outline-(--color-semantic-focus-ring)`, disabled `data-disabled:opacity-(--opacity-disabled)`. Props: `label`, `isSelected`, `onChange`, `isDisabled?`, `description?`, `className?`.
+- [x] **Step 5: Story** `Primitives/Switch`: Off, On, Disabled On (strings in `switch.stories.copy.ts`).
+- [x] **Step 6:** gate → PASS. Commit `feat(ui): add switch and catalog icons`.
 
 ### Task 2: Select with rich options
 

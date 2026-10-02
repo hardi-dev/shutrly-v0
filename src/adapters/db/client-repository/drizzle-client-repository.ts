@@ -1,0 +1,95 @@
+import "server-only";
+
+import { and, asc, eq, isNotNull, isNull, like, or, sql } from "drizzle-orm";
+
+import type {
+  ClientPageQuery,
+  ClientRecord,
+  ClientRepositoryPort,
+} from "@/features/booking/application/ports/client-repository/client-repository.port";
+import { socialLinksSchema } from "@/features/booking/domain/social-link/social-link.schema";
+import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
+
+import type { DbExecutor } from "../client/client.types";
+import { client } from "../schema/booking/client";
+
+const LIKE_SPECIAL = /[\\%_]/g;
+
+function searchCondition(query: ClientPageQuery) {
+  if (!query.search) return undefined;
+  const escaped = query.search.text.replace(LIKE_SPECIAL, (character) => `\\${character}`);
+  const nameQuery = `%${escaped}%`;
+  const nameMatch = sql`${client.name} ilike ${nameQuery} escape '\\'`;
+  return query.search.digits
+    ? or(nameMatch, like(client.whatsappNumber, `%${query.search.digits}%`))
+    : nameMatch;
+}
+
+function afterCondition(context: WorkspaceContext, afterId: string | null) {
+  if (!afterId) return undefined;
+  return sql`(lower(${client.name}), ${client.createdAt}, ${client.id}) > (select lower(c.name), c.created_at, c.id from client c where c.workspace_id = ${context.workspaceId} and c.id = ${afterId})`;
+}
+
+function toRecord(row: {
+  id: string;
+  name: string;
+  whatsappNumber: string | null;
+  socialLinks: unknown;
+  archivedAt: Date | null;
+}): ClientRecord {
+  return {
+    id: row.id,
+    name: row.name,
+    whatsappNumber: row.whatsappNumber,
+    socialLinks: socialLinksSchema.parse(row.socialLinks),
+    isArchived: row.archivedAt !== null,
+  };
+}
+
+export function createDrizzleClientRepository(db: DbExecutor): ClientRepositoryPort {
+  return {
+    async listPage(context, query) {
+      const status =
+        query.status === "ACTIVE" ? isNull(client.archivedAt) : isNotNull(client.archivedAt);
+      const rows = await db
+        .select({
+          id: client.id,
+          name: client.name,
+          whatsappNumber: client.whatsappNumber,
+          socialLinks: client.socialLinks,
+          archivedAt: client.archivedAt,
+        })
+        .from(client)
+        .where(
+          and(
+            eq(client.workspaceId, context.workspaceId),
+            status,
+            searchCondition(query),
+            afterCondition(context, query.afterId),
+          ),
+        )
+        .orderBy(sql`lower(${client.name})`, asc(client.createdAt), asc(client.id))
+        .limit(query.limit);
+      return rows.map(toRecord);
+    },
+    async count(context, status) {
+      const archived =
+        status === "ACTIVE" ? isNull(client.archivedAt) : isNotNull(client.archivedAt);
+      const rows = await db
+        .select({ count: sql<number>`count(*)::int` })
+        .from(client)
+        .where(and(eq(client.workspaceId, context.workspaceId), archived));
+      return rows.at(0)?.count ?? 0;
+    },
+    async create(context, change) {
+      await db.insert(client).values({
+        workspaceId: context.workspaceId,
+        name: change.name,
+        whatsappNumber: change.whatsappNumber,
+        socialLinks: change.socialLinks,
+        updatedBy: change.editorUserId,
+      });
+      return { status: "CREATED" } as const;
+    },
+  };
+}

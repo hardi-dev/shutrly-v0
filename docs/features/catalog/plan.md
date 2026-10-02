@@ -813,7 +813,7 @@ export const serviceFieldDefinition = pgTable(
 
 **Files:** create the errors, the two ports, schemas `catalog-name`, `item-definition`, `catalog-id`, use cases below, and `tests/support/booking/fake-{category,item-definition}-repository.ts`.
 
-- [ ] **Step 1: Ports.**
+- [x] **Step 1: Ports.**
 
 ```ts
 // category-repository.port.ts
@@ -888,14 +888,14 @@ export interface ItemDefinitionRepositoryPort {
 
 (Move shared contract types such as `ActiveChange` to `ports/catalog-shared/catalog-shared.port.ts` if the boundaries lint prefers it.)
 
-- [ ] **Step 2: Schemas** (`*.schema.ts`, no `server-only`):
+- [x] **Step 2: Schemas** (`*.schema.ts`, no `server-only`):
   - `catalogNameSchema = z.object({ name: z.string().refine(…findCatalogNameProblem…) })` (error message = the problem key, same pattern as `sourceNameSchema`);
   - `itemDefinitionSchema = catalogNameSchema.extend({ valueType: z.enum(VALUE_TYPES), unit: z.string().transform(trim → null when empty).refine(≤ UNIT_MAX_LENGTH, "UNIT_TOO_LONG"), selectionRequired: z.boolean(), selectionType: z.enum(SELECTION_TYPES).nullable() }).superRefine(findDefinitionTypeProblem → issue on "selectionType" or "valueType")`;
   - `catalogIdSchema = z.uuid()`.
   Schema tests: AC-CAT-007 RANGE + selection → `valueType: SELECTION_NEEDS_NUMBER`; selection without type → `selectionType: SELECTION_TYPE_REQUIRED`; AC-CAT-019 empty name.
-- [ ] **Step 3: Errors.** `CatalogError extends DomainError`, codes `NOT_FOUND` \| `SAVE_FAILED` (same shape as `SourceConfigError`).
-- [ ] **Step 4: Fakes.** Mirror `fake-workspace-source-repository.ts`: in-memory rows per workspace; `NAME_TAKEN` by `catalogNameKey`; categories carry a public `servicesByCategory: Map<string, { active: number; archived: number }>`; definitions carry `usage: Map<string, number>` that drives `usageCount`, `LOCKED` (type change with usage > 0) and `IN_USE` (delete with usage > 0); `seedDefaults` skips existing names.
-- [ ] **Step 5: Failing use-case tests** (one file per use case):
+- [x] **Step 3: Errors.** `CatalogError extends DomainError`, codes `NOT_FOUND` \| `SAVE_FAILED` (same shape as `SourceConfigError`).
+- [x] **Step 4: Fakes.** Mirror `fake-workspace-source-repository.ts`: in-memory rows per workspace; `NAME_TAKEN` by `catalogNameKey`; categories carry a public `servicesByCategory: Map<string, { active: number; archived: number }>`; definitions carry `usage: Map<string, number>` that drives `usageCount`, `LOCKED` (type change with usage > 0) and `IN_USE` (delete with usage > 0); `seedDefaults` skips existing names.
+- [x] **Step 5: Failing use-case tests** (one file per use case):
   - `list-categories`: AC-CAT-009 sorted, counts passed through.
   - `add-category` / `rename-category`: AC-CAT-009 trimmed; AC-CAT-019 duplicate → `fieldErrors.name = "NAME_TAKEN"`; unknown ID → throws `NOT_FOUND`.
   - `set-category-active`: AC-CAT-017 archive then unarchive; unknown → `NOT_FOUND`.
@@ -905,7 +905,7 @@ export interface ItemDefinitionRepositoryPort {
   - `update-item-definition`: AC-CAT-008 rename + unit change allowed while used; type change while used → `fieldErrors.valueType = "LOCKED"`; unused type change allowed.
   - `set-item-definition-active`, `delete-item-definition`: AC-CAT-017 / AC-CAT-018 (`IN_USE` when used).
   - `seed-default-item-definitions`: AC-CAT-001 four rows; AC-CAT-002 twice → still four, and an existing *foto edit* is kept.
-- [ ] **Step 6:** run → FAIL. **Step 7: Implement.** Result types (in `.types.ts`):
+- [x] **Step 6:** run → FAIL. **Step 7: Implement.** Result types (in `.types.ts`):
 
 ```ts
 export interface CatalogValidationFailure {
@@ -919,7 +919,7 @@ export type CatalogDeleteResult = { readonly ok: true } | { readonly ok: false; 
 
 Use cases parse with the schema, map the first issue per path to `fieldErrors`, call the port, and map `NAME_TAKEN` / `LOCKED` to field errors and `NOT_FOUND` to `CatalogError("NOT_FOUND")`.
 
-- [ ] **Step 8:** gate → PASS. Commit `feat(booking): add category and item definition use cases`.
+- [x] **Step 8:** gate → PASS. Commit `feat(booking): add category and item definition use cases`.
 
 ### Task 8: Application — services, service items, booking fields
 

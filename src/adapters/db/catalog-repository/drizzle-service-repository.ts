@@ -14,6 +14,7 @@ import {
   uniqueFieldKey,
 } from "@/features/booking/domain/booking-field/booking-field";
 import type { FieldType } from "@/features/booking/domain/booking-field/booking-field.types";
+import { canonicalIdrAmount } from "@/features/booking/domain/idr-amount/idr-amount";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
@@ -179,7 +180,8 @@ export function createDrizzleServiceRepository(db: DbExecutor): ServiceRepositor
         ),
       )
       .where(scope(context, id));
-    return rows.at(0);
+    const row = rows.at(0);
+    return row ? { ...row, basePrice: canonicalIdrAmount(row.basePrice) } : undefined;
   }
 
   return {
@@ -197,7 +199,11 @@ export function createDrizzleServiceRepository(db: DbExecutor): ServiceRepositor
         .orderBy(service.name);
       const result: ServiceSummaryRecord[] = [];
       for (const row of rows) {
-        result.push({ ...row, items: await readItems(db, context, row.id) });
+        result.push({
+          ...row,
+          basePrice: canonicalIdrAmount(row.basePrice),
+          items: await readItems(db, context, row.id),
+        });
       }
       return result;
     },

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { formatIdr, parseIdrAmount } from "./idr-amount";
+import { canonicalIdrAmount, formatIdr, parseIdrAmount } from "./idr-amount";
 
 describe("IDR amounts (BR-CUR-001, BR-CUR-003, ADR-007)", () => {
   it.each([
@@ -25,5 +25,13 @@ describe("IDR amounts (BR-CUR-001, BR-CUR-003, ADR-007)", () => {
   it("AC-CAT-005 formats whole rupiah", () => {
     expect(formatIdr("750000")).toBe("Rp 750.000");
     expect(formatIdr("12000000")).toBe("Rp 12.000.000");
+  });
+
+  it.each([
+    ["750000.000", "750000"],
+    ["0.000", "0"],
+    ["1200.500", "1200.500"],
+  ])("normalizes database value %s to %s", (raw, expected) => {
+    expect(canonicalIdrAmount(raw)).toBe(expected);
   });
 });

@@ -21,3 +21,8 @@ export function parseIdrAmount(raw: string): IdrAmountResult {
 export function formatIdr(amount: string): string {
   return `Rp ${IDR_FORMAT.format(BigInt(amount))}`;
 }
+
+/** Normalizes the fixed-scale database representation without using floating point. */
+export function canonicalIdrAmount(raw: string): string {
+  return raw.replace(/^(\d+)\.0+$/, "$1");
+}

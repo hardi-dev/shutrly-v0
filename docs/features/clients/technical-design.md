@@ -6,7 +6,7 @@ Status: PLANNED (2026-10-02) · Spec: [spec.md](spec.md) · AC: [acceptance-crit
 
 Each workspace keeps a list of clients: the people who book shoots. A client has a name, an optional WhatsApp number (normalized, unique per workspace) and 0–10 social-media links. On *Klien* the Owner adds, edits, archives, restores and deletes clients. They search by name or number, switch between *Aktif* and *Arsip*, and page through the list 30 at a time, with a count in the list title. F-07 will reference clients from projects, and F-15 will use the number. F-06 calls no external service.
 
-**Base (Owner 2026-10-02):** this plan assumes F-05 (`feat/catalog`) is finished and merged to `main` before Task 1. F-06 reuses what F-05 adds:
+**Base (Owner 2026-10-02):** this plan assumes F-05 (`feat/catalog`) is finished and merged to `main` before Slice 0. F-06 reuses what F-05 adds:
 - the `booking` context;
 - `pg-error`;
 - `Tabs` and the Page Header tabs;
@@ -270,25 +270,18 @@ Built from `exports/` ([design.md](design.md)):
 
 ## Implementation Iterations
 
-See [plan.md](plan.md): 14 tasks, test-first, one commit each.
-- **Task 1** checks that F-05 is on `main` and syncs `feat/clients` (the plan's base).
-- **Task 5** generates and applies migration 0008.
-- **Task 14** is the browser fidelity check against the exports.
+See [plan.md](plan.md): vertical slices by screen (Slice 0–6), test-first, one commit per step.
+- **Slice 0** checks that F-05 is on `main` and merged into `feat/clients`, then inventories the components.
+- **Slice 1** (step 1.5) generates and applies migration 0008.
+- **Slice 6** is the browser fidelity check against the exports.
 
-1. Sync base + icons + Input clear icon
-2. `DataTable` pattern (+ story)
-3. Domain: name, WhatsApp number, social links, search, page size
-4. Application: port, schemas, errors, results, use cases, fake repository
-5. Drizzle schema + migration 0008 (apply)
-6. Drizzle repository + integration tests
-7. Composition + server actions
-8. Navigation, routes, mobile subtitle, coming-soon removal
-9. Desktop list: table, count, search, empty and no-match states
-10. Phone list, tabs bar, skeletons
-11. Load more
-12. Client dialog + social links editor
-13. Row actions: WhatsApp, archive with undo, restore, delete (blocked), toasts
-14. E2E + axe, fidelity check, implementation record
+0. Check the base + component inventory
+1. *Klien* list and add a client: DataTable, shared extensions, domain, application, table + migration 0008, repository (list, count, create, search, keyset), composition, routes and tabs, list UI, add dialog
+2. Dialog validation and edit: number taken, update, field errors and row rules, edit dialog
+3. Row menu, archive and restore: link menu items, `setArchived`, row actions
+4. Delete: delete backend, pending sheet item, delete dialog
+5. Search and paging: search field and no match, load more
+6. Close: E2E, axe, fidelity, implementation record
 
 ## Assumptions (technical, reversible)
 
@@ -298,7 +291,7 @@ See [plan.md](plan.md): 14 tasks, test-first, one commit each.
 
 ## Risks / Open Questions
 
-- **Base dependency:** Task 1 stops if F-05 isn't on `main` yet. Running F-06 first would duplicate Tabs, Select, the shell tabs and the booking context, and clash on migration numbers.
+- **Base dependency:** Slice 0 stops if F-05 isn't on `main` yet. Running F-06 first would duplicate Tabs, Select, the shell tabs and the booking context, and clash on migration numbers.
 - **AC-CLI-015** can only be proven against a real FK once F-07 adds `project.client_id`. Until then the mapping is unit-tested, and F-07 adds the integration test.
 - **Double render:** the shell renders children in both trees. Dialogs and menus mount once per tree, and E2E selectors scope to the visible tree (F-03/F-04).
 - **Page-action flash:** the desktop *Tambah klien* is portalled after hydration (accepted in F-04).

@@ -48,22 +48,11 @@ export function MenuItem({
   onSelect,
 }: Readonly<MenuItemProps>) {
   const isDestructive = variant === "destructive";
-  if (href)
-    return (
-      <a
-        href={href}
-        target={target}
-        rel={target === "_blank" ? "noopener noreferrer" : undefined}
-        role="menuitem"
-        aria-label={description ? `${label} ${description}` : label}
-        className={getMenuItemClassName(isDestructive, isDisabled, layout)({ isFocused: false })}
-      >
-        <MenuItemContent label={label} description={description} icon={icon} isSelected={isSelected} layout={layout} />
-      </a>
-    );
-
   return (
     <AriaMenuItem
+      href={href}
+      target={target}
+      rel={target === "_blank" ? "noopener noreferrer" : undefined}
       textValue={label}
       isDisabled={isDisabled}
       onAction={onSelect}

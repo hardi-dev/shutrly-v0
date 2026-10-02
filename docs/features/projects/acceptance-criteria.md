@@ -16,7 +16,7 @@ Covers: BR-PRJ-004, BR-WS-003 (A-1, A-4, A-5)
 
 **Given** today is 2026-10-02 and projects *Wisuda Rina* (`BOOKED`, session *Wisuda* 2026-11-10 07.30 at *Balairung UI, Depok*), *Wisuda Sari* (`DRAFT`, no session), *Prewed Dewi* (`SHOOTING`, sessions 2026-10-20 06.00 and 2026-10-21), *Family Tono* (`COMPLETED`) and *Wisuda Andi* (`CANCELLED`)
 **When** the Owner opens *Proyek*
-**Then** *Berjalan* shows *Prewed Dewi*, *Wisuda Rina*, *Wisuda Sari* in that order. Each row shows the title, client, service, the next session (*Sel, 10 Nov 2026 · 07.30* / *Balairung UI, Depok*; *Prewed Dewi* shows *· +1 sesi*; *Wisuda Sari* shows *Belum ada jadwal*) and status chip (*Pemotretan*, *Dibooking*, *Draf*). *Daftar proyek* shows *3 proyek berjalan*. The nav item *Proyek* is active and no *Segera hadir* placeholder is shown.
+**Then** *Aktif* shows *Prewed Dewi*, *Wisuda Rina*, *Wisuda Sari* in that order. Each row shows the title, client, service, the next session (*Sel, 10 Nov 2026 · 07.30* / *Balairung UI, Depok*; *Prewed Dewi* shows *· +1 sesi*; *Wisuda Sari* shows *Belum ada jadwal*) and status chip (*Pemotretan*, *Dibooking*, *Draf*). *Daftar proyek* shows *3 proyek aktif*. The nav item *Proyek* is active and no *Segera hadir* placeholder is shown.
 
 ## AC-PRJ-002 — Filters
 Covers: BR-PRJ-004 (A-4)
@@ -30,7 +30,7 @@ Covers: C-007
 
 **Given** a workspace with no projects
 **When** the Owner opens *Proyek* and selects each filter
-**Then** *Berjalan* shows *Belum ada proyek* with *Proyek baru*, *Selesai* shows *Belum ada proyek yang selesai*, and *Dibatalkan* shows *Belum ada proyek yang dibatalkan*.
+**Then** *Aktif* shows *Belum ada proyek* with *Proyek baru*, *Selesai* shows *Belum ada proyek yang selesai*, and *Dibatalkan* shows *Belum ada proyek yang dibatalkan*.
 
 ## AC-PRJ-004 — Search
 Covers: A-4
@@ -42,7 +42,7 @@ Covers: A-4
 ## AC-PRJ-005 — Paging
 Covers: A-4
 
-**Given** 65 projects under *Berjalan*
+**Given** 65 projects under *Aktif*
 **When** the Owner selects *Muat lebih banyak* twice
 **Then** 30, 60, then 65 projects are shown in list order with no duplicates or gaps, and *Muat lebih banyak* disappears.
 
@@ -138,7 +138,7 @@ Covers: BR-PRJ-001, BR-PRJ-004 (A-1, A-5)
 **Then** the page shows:
 - the header: title, status *Dibooking*, *Rina* and 10 Nov 2026;
 - *Mulai pemotretan* as the next step;
-- the info: service *Wisuda Basic*, price Rp700.000 and notes;
+- the info: service *Wisuda Basic*, price Rp 700.000 and notes;
 - the snapshotted items and booking values, with *Ukuran toga* shown as empty;
 - *Batalkan proyek* in the menu.
 
@@ -147,7 +147,7 @@ Covers: BR-PRJ-001, BR-CAT-003, C-102
 
 **Given** the project from AC-PRJ-008
 **When** the Owner changes *Wisuda Basic* in the catalog: *Foto edit* to 40, *Nama kampus* renamed to *Kampus*, a new booking field, price 900.000; and archives the service
-**Then** the project still shows *Foto edit* 25, *Nama kampus*, no new field and price Rp700.000.
+**Then** the project still shows *Foto edit* 25, *Nama kampus*, no new field and price Rp 700.000.
 
 ## AC-PRJ-017 — Edit the deal while `DRAFT` or `BOOKED`
 Covers: BR-PRJ-009, BR-CAT-001, BR-CAT-002
@@ -264,7 +264,7 @@ Covers: A-11
 
 **Given** the projects from AC-PRJ-001
 **When** the Owner opens *Filter proyek*, ticks *Dibooking* and *Pemotretan*, sets *Jadwal* from 1 Okt 2026 to 30 Nov 2026, and selects *Terapkan*
-**Then** *Berjalan* shows only *Prewed Dewi* and *Wisuda Rina*, and the filter button shows a red counter *2*. The filters stay in the URL after a reload. *Reset* clears them and removes the counter. *Sampai* before *Dari* shows a field error and applies nothing.
+**Then** *Aktif* shows only *Prewed Dewi* and *Wisuda Rina*, and the filter button shows a red counter *2*. The filters stay in the URL after a reload. *Reset* clears them and removes the counter. *Sampai* before *Dari* shows a field error and applies nothing.
 
 ## AC-PRJ-029 — Sessions
 Covers: BR-TEAM-002, BR-TEAM-003, BR-PRJ-004, BR-PRJ-008

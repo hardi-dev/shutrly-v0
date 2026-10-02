@@ -20,13 +20,13 @@ Each row of the canvas is one state, with desktop on the left and its phone fram
 ### List (`/projects`)
 | State | Desktop | Phone | AC |
 |---|---|---|---|
-| *Berjalan* | `sn4a4` | `liVLL` | AC-PRJ-001 |
+| *Aktif* | `sn4a4` | `liVLL` | AC-PRJ-001 |
 | Filter active (red counter 2) | `KLoPc` | `VJ6Li` | AC-PRJ-028 |
 | *Filter proyek* (Modal MD / Bottom Sheet Form) | `e1VJF` | `ITvcM` | AC-PRJ-002, 028 |
 | Row menu open on *Wisuda Basic — Rina* | `E3eVH` | `EWFc5` | AC-PRJ-027 |
 | *Selesai* | `u0Ck6F` | `gY8l7` | AC-PRJ-002 |
 | *Dibatalkan* | `o2T7OP` | `H3gsoo` | AC-PRJ-002 |
-| Empty *Berjalan* / *Selesai* / *Dibatalkan* | `tHeNM` / `O4N4XM` / `fXKf8` | `V4TEva` / `CyTsk` / `GCYv0` | AC-PRJ-003 |
+| Empty *Aktif* / *Selesai* / *Dibatalkan* | `tHeNM` / `O4N4XM` / `fXKf8` | `V4TEva` / `CyTsk` / `GCYv0` | AC-PRJ-003 |
 | No match (*andra*) | `Q5PE55` | `RVzmE` | AC-PRJ-004 |
 | Loading | `v1y9at` | `dE780` | C-007 |
 | Loading more | `rJ0pj` | `ijrVe` | AC-PRJ-005 |
@@ -187,6 +187,16 @@ Screen copy is drawn in Pencil. The table lists copy beyond the spec, for Owner 
   - the `circle-check-big` icon for *Selesai pemotretan*;
   - the *Proyek baru* actions only under the form.
 - No blocking `SPEC GAP`.
+
+## Plan check against the design (2026-10-02)
+
+- **Exports:** six exports held a second frame, because frames touched or overlapped on the canvas:
+  - *Detail Dibooking* ↔ *Draf* (phone);
+  - *Status pending* ↔ *Sesi terakhir* (phone);
+  - the target board ↔ *Ubah nilai* (desktop).
+
+  The fix: *Draf* and *Sesi terakhir* moved down 100, and the two target boards moved to y 25200 / 25940. Every pair of frames is now at least 40 apart, and all 92 exports were regenerated with one frame each.
+- **Money format (Owner 2026-10-02):** *Rp 750.000* with a space, as F-05's `formatIdr` produces. 96 texts were updated in the frames; AC-PRJ-015/016 were updated too.
 
 ## Approval
 

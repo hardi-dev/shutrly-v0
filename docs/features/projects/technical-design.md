@@ -53,8 +53,8 @@ F-07's migration is therefore **0009**.
 | D-4 | **Create snapshot (BR-PRJ-001)** runs in one transaction:<br>1. Lock the client and service `FOR SHARE` and check that both are active in the workspace.<br>2. Load the service's booking fields.<br>3. Lock each submitted item's definition `FOR SHARE`. An item whose definition is in the service may use an archived definition; an *added* item needs an active one.<br>4. Insert the project, its items in the submitted order, one field-value row per snapshotted field, and the sessions. | The form submits the **intended item list** (`definitionId` + value). The server rebuilds every name, unit, value type and selection type from the definitions, never from the request (C-004). `FOR SHARE` makes a concurrent archive wait or fail first, so *Klien ini sudah diarsipkan* / *Layanan ini sudah tidak aktif* is exact (AC-PRJ-012). |
 | D-5 | **One `project_field_value` row per snapshotted field**, with `value` NULL when an optional field is empty. | The detail shows *Ukuran toga* as empty (AC-PRJ-015), and *Ubah field booking* needs its snapshotted options (AC-PRJ-017). AC-PRJ-008's *"none for Ukuran toga"* is read as *no value* (A-3: *an optional field left empty stores no value*). The metadata row still exists. |
 | D-6 | **The client access token** is 32 random bytes (Web Crypto `getRandomValues`, 256 bits), base64url-encoded. It is stored in `project.client_access_token` (unique, NOT NULL) and **never selected by any F-07 query.** The generator is a port (`AccessTokenGeneratorPort`) wired in composition. | BR-PRJ-003, ADR-004, C-103. F-10 resolves it and F-15 puts it in links, so it is stored retrievable, not hashed. F-07 repository projections list their columns explicitly, and a unit test asserts that no F-07 result type contains it (AC-PRJ-008). |
-| D-7 | **Tabs are routes:**<br>- `/projects` (*Berjalan*), `/projects/completed` (*Selesai*), `/projects/cancelled` (*Dibatalkan*);<br>- `/projects/new` (*Proyek baru*);<br>- `/projects/[projectId]` (detail).<br>The query and filters live in the URL: `?q=&status=BOOKED,SHOOTING&from=2026-10-01&to=2026-11-30&noSchedule=1&service=<id>,<id>&client=<id>` (A-11). | Same as F-06 D-3. Static segments win over `[projectId]`, and project IDs are UUIDs. Reload and shared links keep the filter. |
-| D-8 | **Keyset paging by the shown session (A-4, A-12).** A `LATERAL` subquery picks each project's shown session relative to `today`. The order is:<br>1. projects with a session first;<br>2. shown date, ascending on *Berjalan* and descending on *Selesai* / *Dibatalkan*;<br>3. `created_at` descending;<br>4. `id`.<br>The cursor is the last row's ID. Its sort key is recomputed inside the workspace with the same subquery. The page size is 30. | The sort depends on `today`, so it can't be stored. The cursor is an ID, as in F-06 D-4. One SQL expression (`shownSessionSql`) is used for both the order and the cursor. A pure domain function (`pickShownSession`) uses the same rule for the detail header, and both are tested against shared fixtures. |
+| D-7 | **Tabs are routes:**<br>- `/projects` (*Aktif*), `/projects/completed` (*Selesai*), `/projects/cancelled` (*Dibatalkan*);<br>- `/projects/new` (*Proyek baru*);<br>- `/projects/[projectId]` (detail).<br>The query and filters live in the URL: `?q=&status=BOOKED,SHOOTING&from=2026-10-01&to=2026-11-30&noSchedule=1&service=<id>,<id>&client=<id>` (A-11). | Same as F-06 D-3. Static segments win over `[projectId]`, and project IDs are UUIDs. Reload and shared links keep the filter. |
+| D-8 | **Keyset paging by the shown session (A-4, A-12).** A `LATERAL` subquery picks each project's shown session relative to `today`. The order is:<br>1. projects with a session first;<br>2. shown date, ascending on *Aktif* and descending on *Selesai* / *Dibatalkan*;<br>3. `created_at` descending;<br>4. `id`.<br>The cursor is the last row's ID. Its sort key is recomputed inside the workspace with the same subquery. The page size is 30. | The sort depends on `today`, so it can't be stored. The cursor is an ID, as in F-06 D-4. One SQL expression (`shownSessionSql`) is used for both the order and the cursor. A pure domain function (`pickShownSession`) uses the same rule for the detail header, and both are tested against shared fixtures. |
 | D-9 | **`today` is the date in `Asia/Jakarta`** (`PROJECT_SCHEDULE_TIME_ZONE`), computed on the server per request and passed into the domain and SQL as a `YYYY-MM-DD` string. | BR-TEAM-003 stores wall-clock times without a zone, and workspaces have no time-zone setting in MVP (IDR-only, Indonesian UI). TD-A-1 makes this reversible. |
 | D-10 | ***Proyek baru* is one client-side form** (React Hook Form) holding client, service, title, price, notes, items, sessions and field values. *Simpan draf* / *Buat proyek* call **one** server action with `mode: "DRAFT" \| "BOOKED"`. Item and session dialogs edit the form state only; nothing is stored before submit (spec › Sessions). | One transaction for everything (D-4). The form and the action share `createProjectInputSchema`. |
 | D-11 | **Client picker:** a server action `searchActiveClientsAction(q)` returns at most 8 active clients (`combobox.md`), with a debounce of 250 ms. **Inline create** uses F-06's `ClientDialog`. F-06's `addClient` result is **extended** to return the new client's `{ id, name, whatsappNumber }`, so the picker can select it (AC-PRJ-013). | The client list can grow, so it isn't sent whole. Extending F-06's result is additive: F-06's own callers ignore the new field. |
@@ -67,7 +67,7 @@ F-07's migration is therefore **0009**.
 ## Architecture
 
 ```text
-app/(owner)/w/[workspaceId]/projects/page.tsx              → Berjalan     → composition › loadProjects(…, "ACTIVE", params)
+app/(owner)/w/[workspaceId]/projects/page.tsx              → Aktif        → composition › loadProjects(…, "ACTIVE", params)
 app/(owner)/w/[workspaceId]/projects/completed/page.tsx    → Selesai
 app/(owner)/w/[workspaceId]/projects/cancelled/page.tsx    → Dibatalkan
 app/(owner)/w/[workspaceId]/projects/new/page.tsx          → loadCreateProjectOptions
@@ -90,11 +90,12 @@ Shared changes:
 | Unit | Location | Change |
 |---|---|---|
 | `Checkbox` | `ui/primitives/checkbox` | New (C05): unchecked, checked, mixed, disabled, focus |
-| `Combobox` | `ui/patterns/combobox` | New (C36): async items, group label with the count, create row, no-results row, phone sheet |
+| `Combobox` | `ui/patterns/combobox` | New (C36): async items, group label with the count, create row, no-results row; the menu opens inline under the field on phones too (export `new-pilih-klien-mobile-lJ7dl`) |
 | `MultiSelect` | `ui/patterns/multi-select` | New (C20): checkbox menu items, value summary (*Dibooking, Pemotretan*), phone sheet |
-| `DateField`, `TimeField` | `ui/patterns/date-field`, `ui/primitives/time-field` | New: Text Field look; calendar popover built from Calendar Day C25; the phone uses the same popover in a sheet |
+| `DateField`, `TimeField` | `ui/patterns/date-field`, `ui/primitives/time-field` | New: Text Field look with a trailing `calendar` / `clock` icon; `display` *10 Nov 2026* or *Sel, 10 Nov 2026* (exports); calendar popover built from Calendar Day C25 (not drawn in F-07) |
 | `Select` sections | `ui/patterns/select` | `SelectOption.section?` renders Menu Group Labels (the category) |
 | `IconButton` badge | `ui/primitives/icon-button` | `badgeCount?` renders Count Badge/Danger (design.md › filter counter gap) |
+| Money display | `features/booking/domain/idr-amount` | none: `formatIdr` (*Rp 750.000*) is reused; the F-07 frames were aligned to it (Owner 2026-10-02) |
 | `PageHeader` detail | `ui/patterns/page-header` | `titleAdornment?` (the Status Chip beside the title) and `meta?`. The actions slot already exists (design.md › Page Header gap). |
 | Icons | `ui/primitives/icon` | `list-filter`, `calendar`, `calendar-plus`, `calendar-check`, `clock`, `camera`, `circle-check-big`, `refresh-cw`, `send` (if missing) |
 | Owner shell | `features/workspace/{domain/coming-soon-sections,ui/owner-nav}` | D-16 |
@@ -179,7 +180,7 @@ Writes call `revalidatePath("/w/[workspaceId]/projects", "layout")` on success. 
 | `session` | `SESSION_NAME_MAX_LENGTH = 100`, `SESSION_LOCATION_MAX_LENGTH = 200`. `sessionInputSchema` (`EMPTY`, `TOO_LONG`, `END_WITHOUT_START`, `END_NOT_AFTER_START`; BR-TEAM-003). `compareSessions` (date, start time with nulls first, creation). `pickShownSession(sessions, today)` → `{ session, extraCount, isPast }` (A-12). `formatSessionWhen` (*Sel, 10 Nov 2026 · 07.30*) |
 | `booking-field-value` | `bookingFieldValueSchema(field)` per type (A-3): TEXT 1–200 / TEXTAREA 1–2000, trimmed; NUMBER decimal; DATE ISO date; BOOLEAN `true`/`false`; SELECT one of the snapshotted options. Blank optional → `null`; blank required → `REQUIRED`. `validateFieldValues(fields, raw)` collects every problem (coding rules › errors). |
 | `project-items` | `validateItemList(items)`: one item per definition (`DUPLICATE_DEFINITION`); each value checked with `findPackageValueProblem` (BR-CAT-001/002). Reuses `package-value`. |
-| `project-list-query` | `PROJECT_PAGE_SIZE = 30`, `PROJECT_SEARCH_MAX_LENGTH = 100`. `projectListParamsSchema` parses the URL: an invalid part is ignored, except `to < from`, which is reported (A-11). `activeFilterGroupCount(filter)` drives the red counter. The status filter is ignored outside *Berjalan*. |
+| `project-list-query` | `PROJECT_PAGE_SIZE = 30`, `PROJECT_SEARCH_MAX_LENGTH = 100`. `projectListParamsSchema` parses the URL: an invalid part is ignored, except `to < from`, which is reported (A-11). `activeFilterGroupCount(filter)` drives the red counter. The status filter is ignored outside *Aktif*. |
 | `schedule-clock` | `PROJECT_SCHEDULE_TIME_ZONE = "Asia/Jakarta"`; `todayInScheduleZone(now)` → `YYYY-MM-DD` (D-9) |
 
 **Application (`features/booking/application`):**
@@ -240,7 +241,7 @@ Built from `exports/` ([design.md](design.md)). All copy lives in `project-copy`
 | `ProjectsTable` (DataTable: *Daftar proyek* + count, search + filter button, PROYEK · ACARA · STATUS · ⋯, 16 gap) | `ui/projects-table` | `list-*-desktop-*` |
 | `ProjectList` (Compact/Flush card, rows, *Baru* Primary) | `ui/project-list` | `list-*-mobile-*` |
 | `ProjectsTabsBar`, `ProjectSearchField` | `ui/projects-tabs-bar`, `ui/project-search-field` | controls |
-| `ProjectFilterDialog` (Modal MD / Bottom Sheet Form; Status · Jadwal · Layanan · Klien; *Reset* / *Terapkan*) | `ui/project-filter-dialog` | `filter-*`, `list-filter-aktif-*` |
+| `ProjectFilterDialog` (Modal MD / Bottom Sheet Form; Status · Jadwal · Layanan · Klien; *Reset* / *Terapkan*) | `ui/project-filter-dialog` | `filter-*`, `list-filter-diterapkan-*` |
 | `ProjectsEmptyState` | `ui/projects-empty-state` | `list-empty-*`, `list-no-match-*` |
 | `ProjectStatusChip` (tone map, decision 1 in design-handoff) | `ui/project-status-chip` | all |
 | `ProjectSessionSummary` (ACARA cell / meta line) | `ui/project-session-summary` | list, detail header |
@@ -313,7 +314,7 @@ Built from `exports/` ([design.md](design.md)). All copy lives in `project-copy`
 
 | AC | Tests |
 |---|---|
-| AC-PRJ-001 | unit: `pickShownSession`, `formatSessionWhen`, table/list rows, chip tones · integration: *Berjalan* order with the AC fixture and a fixed `today` · E2E list |
+| AC-PRJ-001 | unit: `pickShownSession`, `formatSessionWhen`, table/list rows, chip tones · integration: *Aktif* order with the AC fixture and a fixed `today` · E2E list |
 | AC-PRJ-002 | integration: the *Selesai* / *Dibatalkan* order and no-session last · E2E tabs |
 | AC-PRJ-003 | unit: three empty states · E2E new workspace |
 | AC-PRJ-004 | integration: title or client name `ILIKE`, wildcards escaped, scoped to the tab · unit: search field URL · E2E |

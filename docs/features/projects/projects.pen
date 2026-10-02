@@ -5,7 +5,7 @@
       "id": "sn4a4",
       "type": "ref",
       "ref": "H:y9uBJl",
-      "name": "Proyek / List / Berjalan / Desktop",
+      "name": "Proyek / List / Aktif / Desktop",
       "x": 0,
       "y": 0,
       "height": 1024,
@@ -105,10 +105,10 @@
           "id": "HdbaC",
           "type": "ref",
           "ref": "H:WbyBE",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -173,7 +173,7 @@
                           "id": "jUjab",
                           "name": "Subtitle",
                           "fill": "$H:color/semantic/text/muted",
-                          "content": "12 proyek berjalan",
+                          "content": "12 proyek aktif",
                           "fontFamily": "$H:font/family/base",
                           "fontSize": "$H:font/size/label",
                           "fontWeight": "$H:font/weight/regular"
@@ -825,7 +825,7 @@
       "id": "liVLL",
       "type": "ref",
       "ref": "H:c6qPz7",
-      "name": "Proyek / List / Berjalan / Mobile",
+      "name": "Proyek / List / Aktif / Mobile",
       "x": 1560,
       "y": 0,
       "width": 390,
@@ -896,12 +896,12 @@
                           "id": "ZIcxX",
                           "type": "ref",
                           "ref": "H:NcbI1",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -988,7 +988,7 @@
                   "content": "Daftar proyek"
                 },
                 "H:nHCW8": {
-                  "content": "12 proyek berjalan"
+                  "content": "12 proyek aktif"
                 },
                 "H:QcKHK": {
                   "children": [
@@ -1361,7 +1361,7 @@
       "id": "KLoPc",
       "type": "ref",
       "ref": "H:y9uBJl",
-      "name": "Proyek / List / Filter aktif / Desktop",
+      "name": "Proyek / List / Filter diterapkan / Desktop",
       "x": 0,
       "y": 1184,
       "height": 1024,
@@ -1473,10 +1473,10 @@
           "id": "BuGFd",
           "type": "ref",
           "ref": "H:WbyBE",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -1541,7 +1541,7 @@
                           "id": "QQTSF",
                           "name": "Subtitle",
                           "fill": "$H:color/semantic/text/muted",
-                          "content": "12 proyek berjalan",
+                          "content": "12 proyek aktif",
                           "fontFamily": "$H:font/family/base",
                           "fontSize": "$H:font/size/label",
                           "fontWeight": "$H:font/weight/regular"
@@ -2048,10 +2048,10 @@
           "id": "E96RPx",
           "type": "ref",
           "ref": "H:WbyBE",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -2116,7 +2116,7 @@
                           "id": "IkWVb",
                           "name": "Subtitle",
                           "fill": "$H:color/semantic/text/muted",
-                          "content": "12 proyek berjalan",
+                          "content": "12 proyek aktif",
                           "fontFamily": "$H:font/family/base",
                           "fontSize": "$H:font/size/label",
                           "fontWeight": "$H:font/weight/regular"
@@ -2509,7 +2509,7 @@
                   "content": "Filter proyek"
                 },
                 "H:PPg3y": {
-                  "content": "Berlaku untuk tab Berjalan."
+                  "content": "Berlaku untuk tab Aktif."
                 },
                 "H:M80T4e/H:w1Fg4G/H:hnJrZ": {
                   "content": "2"
@@ -2701,7 +2701,7 @@
       "id": "VJ6Li",
       "type": "ref",
       "ref": "H:c6qPz7",
-      "name": "Proyek / List / Filter aktif / Mobile",
+      "name": "Proyek / List / Filter diterapkan / Mobile",
       "x": 1560,
       "y": 1184,
       "height": 844,
@@ -2787,12 +2787,12 @@
                           "id": "k0oR9s",
                           "type": "ref",
                           "ref": "H:NcbI1",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -2882,7 +2882,7 @@
                   "content": "Daftar proyek"
                 },
                 "H:nHCW8": {
-                  "content": "12 proyek berjalan"
+                  "content": "12 proyek aktif"
                 },
                 "H:QcKHK": {
                   "children": [
@@ -3221,12 +3221,12 @@
                           "id": "b8Z9o",
                           "type": "ref",
                           "ref": "H:NcbI1",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -3316,7 +3316,7 @@
                   "content": "Daftar proyek"
                 },
                 "H:nHCW8": {
-                  "content": "12 proyek berjalan"
+                  "content": "12 proyek aktif"
                 },
                 "H:QcKHK": {
                   "children": [
@@ -3572,7 +3572,7 @@
                   "content": "Filter proyek"
                 },
                 "H:fmisv": {
-                  "content": "Berlaku untuk tab Berjalan.",
+                  "content": "Berlaku untuk tab Aktif.",
                   "textGrowth": "fixed-width",
                   "width": "fill_container"
                 },
@@ -3875,10 +3875,10 @@
           "id": "Ajxrs",
           "type": "ref",
           "ref": "H:WbyBE",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -3943,7 +3943,7 @@
                           "id": "LHu1X",
                           "name": "Subtitle",
                           "fill": "$H:color/semantic/text/muted",
-                          "content": "12 proyek berjalan",
+                          "content": "12 proyek aktif",
                           "fontFamily": "$H:font/family/base",
                           "fontSize": "$H:font/size/label",
                           "fontWeight": "$H:font/weight/regular"
@@ -4811,10 +4811,10 @@
           "id": "J2Rhd",
           "type": "ref",
           "ref": "H:M43F7D",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -5335,10 +5335,10 @@
           "id": "PhKZm",
           "type": "ref",
           "ref": "H:M43F7D",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -5665,7 +5665,7 @@
       "id": "tHeNM",
       "type": "ref",
       "ref": "H:y9uBJl",
-      "name": "Proyek / List / Empty Berjalan / Desktop",
+      "name": "Proyek / List / Empty Aktif / Desktop",
       "x": 0,
       "y": 7104,
       "height": 1024,
@@ -5765,10 +5765,10 @@
           "id": "omo8y",
           "type": "ref",
           "ref": "H:WbyBE",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -5833,7 +5833,7 @@
                           "id": "U2a2QI",
                           "name": "Subtitle",
                           "fill": "$H:color/semantic/text/muted",
-                          "content": "0 proyek berjalan",
+                          "content": "0 proyek aktif",
                           "fontFamily": "$H:font/family/base",
                           "fontSize": "$H:font/size/label",
                           "fontWeight": "$H:font/weight/regular"
@@ -6089,10 +6089,10 @@
           "id": "tbC0U",
           "type": "ref",
           "ref": "H:M43F7D",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -6401,10 +6401,10 @@
           "id": "v3GLZ",
           "type": "ref",
           "ref": "H:M43F7D",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -6713,10 +6713,10 @@
           "id": "Lai6c",
           "type": "ref",
           "ref": "H:WbyBE",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -6781,7 +6781,7 @@
                           "id": "xfsf4",
                           "name": "Subtitle",
                           "fill": "$H:color/semantic/text/muted",
-                          "content": "12 proyek berjalan",
+                          "content": "12 proyek aktif",
                           "fontFamily": "$H:font/family/base",
                           "fontSize": "$H:font/size/label",
                           "fontWeight": "$H:font/weight/regular"
@@ -7041,10 +7041,10 @@
           "id": "Jz7Wc",
           "type": "ref",
           "ref": "H:WbyBE",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -7447,10 +7447,10 @@
           "id": "re15u",
           "type": "ref",
           "ref": "H:WbyBE",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -7515,7 +7515,7 @@
                           "id": "K1SW3",
                           "name": "Subtitle",
                           "fill": "$H:color/semantic/text/muted",
-                          "content": "12 proyek berjalan",
+                          "content": "12 proyek aktif",
                           "fontFamily": "$H:font/family/base",
                           "fontSize": "$H:font/size/label",
                           "fontWeight": "$H:font/weight/regular"
@@ -8471,12 +8471,12 @@
                           "id": "vui3f",
                           "type": "ref",
                           "ref": "H:NcbI1",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -8563,7 +8563,7 @@
                   "content": "Daftar proyek"
                 },
                 "H:nHCW8": {
-                  "content": "12 proyek berjalan"
+                  "content": "12 proyek aktif"
                 },
                 "H:QcKHK": {
                   "children": [
@@ -9141,12 +9141,12 @@
                           "id": "TcSBC",
                           "type": "ref",
                           "ref": "H:AptHz",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -9520,12 +9520,12 @@
                           "id": "U4qINO",
                           "type": "ref",
                           "ref": "H:AptHz",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -9778,7 +9778,7 @@
       "id": "V4TEva",
       "type": "ref",
       "ref": "H:c6qPz7",
-      "name": "Proyek / List / Empty Berjalan / Mobile",
+      "name": "Proyek / List / Empty Aktif / Mobile",
       "x": 1560,
       "y": 7104,
       "width": 390,
@@ -9849,12 +9849,12 @@
                           "id": "AhwKj",
                           "type": "ref",
                           "ref": "H:NcbI1",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -9941,7 +9941,7 @@
                   "content": "Daftar proyek"
                 },
                 "H:nHCW8": {
-                  "content": "0 proyek berjalan"
+                  "content": "0 proyek aktif"
                 },
                 "H:QcKHK": {
                   "children": [
@@ -10127,12 +10127,12 @@
                           "id": "k57wI",
                           "type": "ref",
                           "ref": "H:AptHz",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -10393,12 +10393,12 @@
                           "id": "OhhJJ",
                           "type": "ref",
                           "ref": "H:AptHz",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -10659,12 +10659,12 @@
                           "id": "PG2l7",
                           "type": "ref",
                           "ref": "H:NcbI1",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -10755,7 +10755,7 @@
                   "content": "Daftar proyek"
                 },
                 "H:nHCW8": {
-                  "content": "12 proyek berjalan"
+                  "content": "12 proyek aktif"
                 },
                 "H:QcKHK": {
                   "children": [
@@ -10941,12 +10941,12 @@
                           "id": "VWv8x",
                           "type": "ref",
                           "ref": "H:NcbI1",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -11248,12 +11248,12 @@
                           "id": "w6wl8J",
                           "type": "ref",
                           "ref": "H:NcbI1",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -11340,7 +11340,7 @@
                   "content": "Daftar proyek"
                 },
                 "H:nHCW8": {
-                  "content": "12 proyek berjalan"
+                  "content": "12 proyek aktif"
                 },
                 "H:QcKHK": {
                   "children": [
@@ -11849,7 +11849,7 @@
       "type": "frame",
       "id": "H0Gs4u",
       "x": 0,
-      "y": 14544,
+      "y": 25200,
       "name": "Proyek / Row menu per status / Target / Desktop",
       "fill": "$H:color/semantic/surface/canvas",
       "layout": "vertical",
@@ -13114,7 +13114,7 @@
       "type": "frame",
       "id": "eKgbh",
       "x": 0,
-      "y": 15284,
+      "y": 25940,
       "name": "Proyek / Row menu per status / Target / Mobile",
       "fill": "$H:color/semantic/surface/canvas",
       "layout": "vertical",
@@ -14644,7 +14644,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -14843,7 +14843,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -15290,7 +15290,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -15482,7 +15482,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -15990,7 +15990,7 @@
                               "enabled": false
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -16192,7 +16192,7 @@
                                   "enabled": false
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -16607,7 +16607,7 @@
                               "enabled": false
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -16802,7 +16802,7 @@
                               "enabled": false
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -17284,7 +17284,7 @@
                               "enabled": false
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -17486,7 +17486,7 @@
                                   "enabled": false
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -17960,7 +17960,7 @@
                               "enabled": false
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -18155,7 +18155,7 @@
                               "enabled": false
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -18688,7 +18688,7 @@
                               "enabled": false
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -18890,7 +18890,7 @@
                                   "enabled": false
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -19581,7 +19581,7 @@
                               "enabled": false
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -19776,7 +19776,7 @@
                               "enabled": false
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -20543,7 +20543,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Produk · harga dasar Rp500.000"
+                              "content": "Produk · harga dasar Rp 500.000"
                             }
                           }
                         }
@@ -20704,7 +20704,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp500.000"
+                                  "content": "Harga dasar layanan: Rp 500.000"
                                 }
                               }
                             }
@@ -21152,7 +21152,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Produk · harga dasar Rp500.000"
+                              "content": "Produk · harga dasar Rp 500.000"
                             }
                           }
                         }
@@ -21306,7 +21306,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp500.000"
+                              "content": "Harga dasar layanan: Rp 500.000"
                             }
                           }
                         },
@@ -22026,7 +22026,7 @@
                                   "enabled": false
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -22645,7 +22645,7 @@
                               "enabled": false
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -23117,7 +23117,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -23316,7 +23316,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -23958,7 +23958,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -24150,7 +24150,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -24868,7 +24868,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -25067,7 +25067,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -25709,7 +25709,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -25901,7 +25901,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -26619,7 +26619,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -26818,7 +26818,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -27270,7 +27270,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -27462,7 +27462,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -27973,7 +27973,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -28172,7 +28172,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -28705,7 +28705,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -28897,7 +28897,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -29506,7 +29506,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -29705,7 +29705,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -30248,7 +30248,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -30440,7 +30440,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -31059,7 +31059,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -31258,7 +31258,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -31741,7 +31741,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -31933,7 +31933,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -32505,7 +32505,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -32704,7 +32704,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -33179,7 +33179,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -33371,7 +33371,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -34133,7 +34133,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -34763,7 +34763,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -35269,7 +35269,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -35468,7 +35468,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -35931,7 +35931,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -36123,7 +36123,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -36645,7 +36645,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -36844,7 +36844,7 @@
                                   "enabled": true
                                 },
                                 "H:uh4XA": {
-                                  "content": "Harga dasar layanan: Rp750.000"
+                                  "content": "Harga dasar layanan: Rp 750.000"
                                 }
                               }
                             }
@@ -37311,7 +37311,7 @@
                               "enabled": true
                             },
                             "H:Et1pR/H:uh4XA": {
-                              "content": "Wisuda · harga dasar Rp750.000"
+                              "content": "Wisuda · harga dasar Rp 750.000"
                             }
                           }
                         }
@@ -37503,7 +37503,7 @@
                               "enabled": true
                             },
                             "H:uh4XA": {
-                              "content": "Harga dasar layanan: Rp750.000"
+                              "content": "Harga dasar layanan: Rp 750.000"
                             }
                           }
                         },
@@ -38158,7 +38158,7 @@
                                   "id": "CXCNM",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -38846,7 +38846,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -39344,7 +39344,7 @@
       "ref": "H:y9uBJl",
       "name": "Proyek / Detail / Draf / Desktop",
       "x": 4800,
-      "y": 1400,
+      "y": 1500,
       "height": 1200,
       "descendants": {
         "H:fNszT/H:rAUNw": {
@@ -39646,7 +39646,7 @@
                                   "id": "m6V5WA",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -40050,7 +40050,7 @@
       "ref": "H:c6qPz7",
       "name": "Proyek / Detail / Draf / Mobile",
       "x": 6360,
-      "y": 1400,
+      "y": 1500,
       "width": 390,
       "height": 1416,
       "descendants": {
@@ -40271,7 +40271,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -41008,7 +41008,7 @@
                                   "id": "gTxdY",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -41628,7 +41628,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -42345,7 +42345,7 @@
                                   "id": "AJOSz",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -42965,7 +42965,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -43685,7 +43685,7 @@
                                   "id": "Jxm20",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -44250,7 +44250,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -44942,7 +44942,7 @@
                                   "id": "b475tt",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -45630,7 +45630,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -46140,7 +46140,7 @@
       "ref": "H:y9uBJl",
       "name": "Proyek / Detail / Sesi terakhir / Desktop",
       "x": 4800,
-      "y": 9200,
+      "y": 9300,
       "height": 1092,
       "descendants": {
         "H:fNszT/H:rAUNw": {
@@ -46442,7 +46442,7 @@
                                   "id": "zlEs3",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -46887,7 +46887,7 @@
       "ref": "H:c6qPz7",
       "name": "Proyek / Detail / Sesi terakhir / Mobile",
       "x": 6360,
-      "y": 9200,
+      "y": 9300,
       "height": 844,
       "width": 390,
       "descendants": {
@@ -47108,7 +47108,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -47956,7 +47956,7 @@
                                   "id": "OttGO",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -48489,7 +48489,7 @@
                           "enabled": true
                         },
                         "H:uh4XA": {
-                          "content": "Harga dasar layanan: Rp750.000"
+                          "content": "Harga dasar layanan: Rp 750.000"
                         }
                       }
                     },
@@ -48793,7 +48793,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -49367,7 +49367,7 @@
                           "enabled": true
                         },
                         "H:uh4XA": {
-                          "content": "Harga dasar layanan: Rp750.000"
+                          "content": "Harga dasar layanan: Rp 750.000"
                         }
                       }
                     },
@@ -49759,7 +49759,7 @@
                                   "id": "zkCaR",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -50528,7 +50528,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -51426,7 +51426,7 @@
                                   "id": "nX94d",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -52237,7 +52237,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -53177,7 +53177,7 @@
                                   "id": "hQ1LY",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -53910,7 +53910,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -54764,7 +54764,7 @@
                                   "id": "SAPIx",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -55425,7 +55425,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -56228,7 +56228,7 @@
                                   "id": "RLFop",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -56952,7 +56952,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -57818,7 +57818,7 @@
                                   "id": "nrcJ5",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -58516,7 +58516,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -59329,7 +59329,7 @@
                                   "id": "LFhD0",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -59959,7 +59959,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -60704,7 +60704,7 @@
                                   "id": "cMScX",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -61344,7 +61344,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -62085,7 +62085,7 @@
                                   "id": "s48Eb",
                                   "name": "Value",
                                   "fill": "$H:color/semantic/text/primary",
-                                  "content": "Rp700.000",
+                                  "content": "Rp 700.000",
                                   "fontFamily": "$H:font/family/base",
                                   "fontSize": "$H:font/size/body",
                                   "fontWeight": "$H:font/weight/semibold"
@@ -62660,7 +62660,7 @@
                               "fill": "$H:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Rp700.000",
+                              "content": "Rp 700.000",
                               "fontFamily": "$H:font/family/base",
                               "fontSize": "$H:font/size/body",
                               "fontWeight": "$H:font/weight/semibold"
@@ -63149,10 +63149,10 @@
           "id": "gIaQe",
           "type": "ref",
           "ref": "H:WbyBE",
-          "name": "Tab Berjalan",
+          "name": "Tab Aktif",
           "descendants": {
             "H:DnAdt": {
-              "content": "Berjalan"
+              "content": "Aktif"
             }
           }
         },
@@ -63217,7 +63217,7 @@
                           "id": "bZTI3",
                           "name": "Subtitle",
                           "fill": "$H:color/semantic/text/muted",
-                          "content": "11 proyek berjalan",
+                          "content": "11 proyek aktif",
                           "fontFamily": "$H:font/family/base",
                           "fontSize": "$H:font/size/label",
                           "fontWeight": "$H:font/weight/regular"
@@ -63950,12 +63950,12 @@
                           "id": "kOL6K",
                           "type": "ref",
                           "ref": "H:NcbI1",
-                          "name": "Item Berjalan",
+                          "name": "Item Aktif",
                           "width": "fill_container",
                           "justifyContent": "center",
                           "descendants": {
                             "H:FnOrw": {
-                              "content": "Berjalan"
+                              "content": "Aktif"
                             }
                           }
                         },
@@ -64042,7 +64042,7 @@
                   "content": "Daftar proyek"
                 },
                 "H:nHCW8": {
-                  "content": "11 proyek berjalan"
+                  "content": "11 proyek aktif"
                 },
                 "H:QcKHK": {
                   "children": [

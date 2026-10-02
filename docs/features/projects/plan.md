@@ -56,6 +56,19 @@ Every task's requirements implicitly include this section. They are F-06's Globa
 - **Token (C-103, D-6):** `client_access_token` is written once on create and never appears in a select list, a result type, a log or a page.
 - **Logging:** `project.save_failed` with `{ workspaceId, projectId?, operation }` only. Never a title, note, client name, number, reason, query or `wa.me` URL.
 - **Copy:** from the frames and design.md › Copy, in `project-copy`. Strings not drawn carry `// not in Pencil`.
+- **Copy differs by breakpoint** where the exports differ. Keep both variants in `project-copy` (`…Desktop` / `…Mobile`):
+
+  | Where | Desktop | Phone |
+  |---|---|---|
+  | List page subtitle (F-06's `mobileSubtitle`) | *Setiap pemotretan yang kamu pegang, dari draf sampai selesai.* | *Pemotretan dari draf sampai selesai.* |
+  | Card buttons | *Tambah item* · *Tambah sesi* · *Ubah info* | *Tambah* · *Tambah* · *Ubah* |
+  | *Isi paket* description | *Disalin dari {layanan}. Perubahan hanya berlaku untuk proyek ini.* (create) / *Disalin dari {layanan}. Bisa diubah sampai pemotretan dimulai.* (detail) | *Dari {layanan}. Hanya untuk proyek ini.* / *Bisa diubah sampai pemotretan dimulai.* |
+  | *Jadwal* description | *Sesi pemotretan. Minimal satu sesi untuk Buat proyek.* / *Sesi pemotretan, urut tanggal.* | *Minimal satu sesi untuk Buat proyek.* / *Urut tanggal.* |
+  | *Field booking* description (detail) | *Disalin dari {layanan} saat proyek dibuat.* | *Disalin dari {layanan}.* |
+- **Money display:** `formatIdr` → *Rp 750.000*, with a space, as in F-05 (Owner 2026-10-02; the frames were updated to match).
+- **Date display** (exports):
+  - list ACARA cell, session rows and detail facts: *Sel, 10 Nov 2026* (weekday);
+  - phone list rows, the phone row sheet, and date fields for booking values and the filter: *10 Nov 2026*.
 - **UI tasks:** build from `exports/*.html`. Map every raw value to a token; a value with no token is a DESIGN TOKEN GAP: report it and never hard-code it. Compare at 1440 and 390.
 - **Migrations:** generate 0009 with drizzle-kit, review it, commit it, then run `pnpm db:migrate` against the non-production database from `.dev.vars` (AGENTS.md). Report the run.
 - **Tests:** names start with the `AC-PRJ-*` / `BR-*` IDs they cover.
@@ -265,7 +278,7 @@ export interface ProjectMenuGroups {
       - with `today = "2026-10-02"`, AC-PRJ-001's *Prewed Dewi* gives 2026-10-20 + `extraCount 1`;
       - when all sessions are past, it gives the latest one with `isPast: true`;
       - `[]` gives `null`.
-    - `formatSessionWhen` → `Sel, 10 Nov 2026 · 07.30` (no time → date only).
+    - `formatSessionWhen` → `Sel, 10 Nov 2026 · 07.30` (no time → date only); `formatSessionRange` → `Sel, 10 Nov 2026 · 06.30–07.15 · Rumah Rina, Depok` (session rows); `formatShortDate` → `10 Nov 2026` (phone rows and sheet meta).
   - **`booking-field-value`:**
     - `bookingFieldValueSchema(field)` per type (A-3), with `true`/`false` for BOOLEAN.
     - `validateFieldValues`:
@@ -502,7 +515,7 @@ export const project = pgTable("project", {
 **Files:** create `src/adapters/db/project-repository/{drizzle-project-list-reader.ts,shown-session-sql.ts,.test.ts}` and `tests/integration/booking/project-list.test.ts`.
 
 - [ ] **Step 1: Failing integration tests** with `today = "2026-10-02"` and AC-PRJ-001's five projects:
-  - AC-PRJ-001: *Berjalan* order is *Prewed Dewi*, *Wisuda Rina*, *Wisuda Sari*; the shown session and extra count are right.
+  - AC-PRJ-001: *Aktif* order is *Prewed Dewi*, *Wisuda Rina*, *Wisuda Sari*; the shown session and extra count are right.
   - AC-PRJ-002: *Selesai* / *Dibatalkan* by latest date first, no-session last.
   - AC-PRJ-004: `rina` matches the title or client name; `%` and `_` are literal; only the selected tab is searched.
   - AC-PRJ-005: 65 projects → pages of 30 / 30 / 5, with no duplicates or gaps.
@@ -554,12 +567,14 @@ export const project = pgTable("project", {
     - the create row fires `onCreate(query)`;
     - no-results label;
     - Escape closes;
-    - the phone variant opens a sheet.
+    - on phones the menu also opens **inline under the field** (export `new-pilih-klien-mobile-lJ7dl`), not in a sheet;
+    - each match shows the name with *{formatted number} · {n} proyek*, or *Belum ada nomor WhatsApp*.
   - `MultiSelect`: toggles items; the summary reads *Dibooking, Pemotretan*; *Semua status* placeholder.
-  - `DateField`: types `10/11/2026` and opens the calendar; selecting a day sets an ISO string; Calendar Day states follow C25.
+  - `DateField`: shows the value as `display="date"` → *10 Nov 2026* (booking field, filter) or `display="weekday"` → *Sel, 10 Nov 2026* (session form), with the trailing `calendar` icon. Pressing it opens the calendar; selecting a day sets an ISO string. No F-07 frame shows the open calendar, so it follows the C25 Calendar Day library export (`// not in Pencil` for its copy).
+  - `TimeField`: trailing `clock` icon; *06.30*.
   - `TimeField`: `07.30` in 24-hour time.
   - `Select` with sections renders the group labels.
-  - `IconButton` `badgeCount={2}` renders Count Badge/Danger and names it in the accessible label (*Filter, 2 aktif*).
+  - `IconButton` `badgeCount={2}` renders Count Badge/Danger and names it in the accessible label (*Filter, 2 aktif*, `// not in Pencil`).
   - `PageHeader` renders `titleAdornment` beside the title, and `meta` under it.
 - [ ] **Step 3: Implement.** Wrap the React Aria `Checkbox`, `ComboBox`, `Select` / `ListBox` (multi), `DatePicker` + `Calendar` and `TimeField`. Style through `data-*` attributes and tokens only.
 - [ ] **Step 4: Stories** for each new unit (ADR-014).
@@ -570,14 +585,18 @@ export const project = pgTable("project", {
 **Files:** create the `ui/` units `project-copy`, `project-status-chip`, `project-session-summary`, `projects-screen`, `projects-table`, `project-list`, `projects-tabs-bar`, `project-search-field`, `projects-empty-state`, `projects-skeleton`, `use-load-more-projects`; create routes `projects/{page,loading}.tsx`, `completed/`, `cancelled/`.
 
 - [ ] **Step 1: Precondition.** These exports exist:
-  - `list-berjalan-*`, `list-selesai-*`, `list-dibatalkan-*`;
+  - `list-aktif-*`, `list-selesai-*`, `list-dibatalkan-*`;
   - `list-empty-*`, `list-no-match-*`;
   - `list-loading-*`, `list-loading-more-*`.
 
   If one is missing, STOP and ask.
 - [ ] **Step 2: Failing tests:**
-  - rows show the title link (only the PROYEK cell text), *client · service*, the ACARA cell (date · time / location / *+n sesi* / *Belum ada jadwal* muted) and the chip with its tone (AC-PRJ-001);
-  - the subtitle reads *3 proyek berjalan*;
+  - **Desktop rows** (AC-PRJ-001):
+    - the PROYEK cell text is the only link; the title wraps to at most 2 lines, and *client · service* is 1 line with an ellipsis;
+    - ACARA: *Sel, 10 Nov 2026 · 07.30*, then the location, then *· +n sesi* (after the date when there is no location); *Belum ada jadwal* in muted text;
+    - STATUS: the chip with its tone.
+  - **Phone rows:** the title (1 line, ellipsis), meta *{client} · 10 Nov 2026* or *{client} · Belum ada jadwal*, the chip and ⋯ (export `list-aktif-mobile-liVLL`);
+  - the list subtitle reads *3 proyek aktif*; the page subtitle uses the desktop/phone variants;
   - the three empty states and the no-match state with *Hapus pencarian* (AC-PRJ-003, 004);
   - the load-more hook appends and resets on tab, query or filter change (AC-PRJ-005);
   - the search writes `?q=` with a debounce and keeps the filter params.
@@ -589,14 +608,15 @@ export const project = pgTable("project", {
 
 **Files:** create `ui/project-filter-dialog/*`; modify `projects-table` and `project-list` (the filter button with its badge).
 
-- [ ] **Step 1: Precondition:** exports `filter-modal-desktop-e1VJF`, `filter-sheet-mobile-ITvcM` and `list-filter-aktif-*`.
+- [ ] **Step 1: Precondition:** exports `filter-modal-desktop-e1VJF`, `filter-sheet-mobile-ITvcM` and `list-filter-diterapkan-*`.
 - [ ] **Step 2: Failing tests** (AC-PRJ-028):
   - *Terapkan* writes the URL params;
+  - button order: *Reset* then *Terapkan* in the desktop footer; *Terapkan* above *Reset*, both full width, in the phone sheet (exports);
   - *Reset* clears them;
   - the badge shows the group count;
-  - *Status* is shown only on *Berjalan*;
+  - *Status* is shown only on *Aktif*;
   - *Sampai* before *Dari* → a field error and nothing applied;
-  - the description reads *Berlaku untuk tab Berjalan.*;
+  - the description reads *Berlaku untuk tab Aktif.*;
   - the client options include archived clients with *(diarsipkan)* (TD-A-4).
 - [ ] **Step 3: Implement** (Modal MD / Bottom Sheet Form), compare, gate → PASS. Commit `feat(projects): add the project filter`.
 
@@ -608,6 +628,7 @@ export const project = pgTable("project", {
 - [ ] **Step 2: Failing tests** (AC-PRJ-022, 023, 027):
   - **Menus:** each status's menu has its groups and dividers in order; the *Kirim ke klien* label is present.
   - ***Chat WhatsApp*** is an anchor with `href = https://wa.me/<digits>`, `target="_blank"` and `rel="noopener noreferrer"`.
+  - The phone sheet is titled with the project and has the meta *{client} · 10 Nov 2026 · {status}*, followed by the local *KIRIM KE KLIEN* label.
   - ***Tambah nomor WhatsApp*** loads the client and opens F-06's `ClientDialog` in edit mode; after saving, the menu offers *Chat WhatsApp*.
   - **Steps:** a step shows its toast and refreshes; `STALE` shows *Status proyek sudah berubah* and refreshes.
   - **Cancel:** the reason is optional in BOOKED and required in SHOOTING (the error state in the export).
@@ -623,7 +644,12 @@ export const project = pgTable("project", {
 - [ ] **Step 2: Failing tests:**
   - archived clients are never offered, and the picker shows ≤ 8 matches with *Tambah klien baru “{q}”* (AC-PRJ-006);
   - the create row opens `ClientDialog` with the name prefilled; on save the new client is selected and the default title updates; cancel changes nothing (AC-PRJ-013);
-  - choosing a service sets the title (A-2), the price and the base-price helper, and lists the items and fields in order (AC-PRJ-007);
+  - the client helper shows the formatted number (*+62 812-3456-7890*);
+  - choosing a service:
+    - sets the title (A-2), with the helper *Terisi otomatis dari layanan dan klien. Bisa diubah.*;
+    - sets the price, with the helper *Harga dasar layanan: Rp 750.000*;
+    - sets the service helper to *{kategori} · harga dasar Rp 750.000*;
+    - lists the items (meta from the catalog's item summary, e.g. *25 foto · pilihan edit*) and the fields in order (AC-PRJ-007);
   - an edited title survives a client change (AC-PRJ-007);
   - changing the service after an item edit asks *Ganti layanan?*; *Batal* keeps everything, and confirm resets the items (AC-PRJ-030);
   - with no active service: Select/Disabled + Alert/Info *Buka Layanan* (→ `/services`), and both buttons are disabled (AC-PRJ-014);
@@ -643,7 +669,7 @@ export const project = pgTable("project", {
     - remove confirms (AC-PRJ-030).
   - **Session dialog:** the AC-PRJ-029 error table; sessions sorted by date, then time.
   - **Empty *Jadwal*:** Empty State/In card; *Buat proyek* with no session shows *Tambahkan minimal satu sesi.* under it.
-  - **Booking field inputs** by type: TEXT / TEXTAREA / NUMBER / DATE / BOOLEAN (radio *Ya* / *Tidak*) / SELECT; *(opsional)* marks optional ones; required ones are not marked (AC-PRJ-007, 010).
+  - **Booking field inputs** by type: TEXT / TEXTAREA / NUMBER / DATE / BOOLEAN / SELECT. The frames draw TEXT, DATE and SELECT only. TEXTAREA uses Textarea, NUMBER uses Text Field, and BOOLEAN uses a two-option radio *Ya* / *Tidak* with no default (A-3, `// not in Pencil`). *(opsional)* marks optional fields; required ones are not marked. The card description is *Dari layanan {layanan}. Semua field tanpa (opsional) wajib diisi, juga untuk draf.* (AC-PRJ-007, 010).
   - **Submit:**
     - the pressed button shows pending (*Membuat proyek…* / *Menyimpan draf…*) and the other is disabled;
     - field errors map back to the fields;
@@ -659,10 +685,10 @@ export const project = pgTable("project", {
 
 - [ ] **Step 1: Precondition:** exports `detail-dibooking-*`, `detail-draf-*`, `detail-pemotretan-*`, `detail-pascaproduksi-*`, `detail-dibatalkan-*` and `detail-status-pending-*`.
 - [ ] **Step 2: Failing tests** (AC-PRJ-015, 018, 020, 022):
-  - the header has the title, chip, meta (*Rina · Sesi berikutnya …*), step button and ⋯ (desktop), or the Compact Bar ⋯, header block and sticky step (phone);
+  - the header has the title, chip, meta (*Rina · Sesi berikutnya {when} · {location} · +n sesi*; *Sesi terakhir …* when all sessions are past; *Rina · Belum ada jadwal* with none), step button and ⋯ (desktop), or the Compact Bar ⋯, header block (chip + the same text without the client) and sticky step (phone);
   - the step icons are `calendar-check` / `camera` / `circle-check-big`;
   - no step button in POST_PROCESSING or CANCELLED;
-  - the Info facts show the price as *Rp700.000* and the notes;
+  - the Info facts show the price as *Rp 700.000* and the notes;
   - *Ukuran toga* is shown as `—` (muted);
   - SHOOTING: no *Tambah item*, item ⋯ or field *Ubah*; the description reads *Terkunci sejak pemotretan dimulai.*;
   - CANCELLED: Alert/Warning with the actor, date and reason; no edit controls; the descriptions read *Proyek dibatalkan, tidak bisa diubah.*;
@@ -690,7 +716,7 @@ export const project = pgTable("project", {
 - [ ] **Step 1: E2E journeys:**
   - create a client and a service (fixtures);
   - book a project with an edited package and a session (AC-PRJ-008, 030);
-  - see it in *Berjalan*;
+  - see it in *Aktif*;
   - search and filter, then reload (AC-PRJ-004, 028);
   - step to *Pemotretan* from the row menu (AC-PRJ-027) and to *Pascaproduksi* on the detail (AC-PRJ-020);
   - check that the deal is locked (AC-PRJ-018);

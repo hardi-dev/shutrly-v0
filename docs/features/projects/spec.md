@@ -20,7 +20,7 @@ As a photographer (Owner), I want to create a project for a client from one of m
 ## Inputs
 | Screen | Fields |
 |---|---|
-| Proyek (list) | search (title or client name) · tabs *Berjalan* / *Selesai* / *Dibatalkan* (A-4) · filter button → *Filter proyek* (A-11) · list title *Daftar proyek* with the count of the selected filter · per project: title, client, service, schedule (*Acara*, A-12), status and a row menu (⋯) · page action *Proyek baru* |
+| Proyek (list) | search (title or client name) · tabs *Aktif* / *Selesai* / *Dibatalkan* (A-4) · filter button → *Filter proyek* (A-11) · list title *Daftar proyek* with the count of the selected filter · per project: title, client, service, schedule (*Acara*, A-12), status and a row menu (⋯) · page action *Proyek baru* |
 | Proyek baru | client (active clients, searchable; *Tambah klien baru* opens the F-06 client dialog) · service (active services, grouped by category) · title (prefilled, A-2) · sessions (*Jadwal*, at least one for *Buat proyek*) · agreed price (prefilled with the service's base price) · the service's booking fields, in its order · internal notes (optional) · *Isi paket*: the service's package items, editable before saving (value, remove, *Tambah item*; BR-PRJ-001, BR-PRJ-009) · actions *Simpan draf* and *Buat proyek* |
 | Project detail | header: title, status, client, next session (A-12) · status action (A-5) · menu: the row-menu items for its status (*Chat WhatsApp*, *Batalkan proyek* / *Hapus draf*) · **Info:** client, service (origin), agreed price, notes · **Jadwal:** sessions with *Tambah sesi*, *Ubah*, *Hapus* · **Item paket:** snapshotted items (name, value, unit, selection type) · **Field booking:** snapshotted fields and their values |
 | Ubah info | title · agreed price · notes (agreed price only while the deal is editable, BR-PRJ-009) |
@@ -74,14 +74,14 @@ Field rules: BR-PRJ-008 (title, notes, agreed price), BR-TEAM-003 (sessions), BR
   - Search narrows the selected filter to projects whose title or client name contains the text, ignoring case.
   - No match shows *Tidak ada proyek yang cocok* with *Hapus pencarian*.
 - **Filter (A-11, Owner 2026-10-02):** the icon button next to the search opens *Filter proyek*, a modal on desktop and a bottom sheet on phones. It holds:
-  - **Status:** a dropdown with a checkbox per status (Multi-select), only on *Berjalan* (*Draf*, *Dibooking*, *Pemotretan*, *Pascaproduksi*, *Terkirim*);
+  - **Status:** a dropdown with a checkbox per status (Multi-select), only on *Aktif* (*Draf*, *Dibooking*, *Pemotretan*, *Pascaproduksi*, *Terkirim*);
   - **Jadwal:** *Dari* and *Sampai* dates, matching projects with any session in the range, plus *Sertakan proyek tanpa jadwal*;
   - **Layanan:** several services, archived ones included;
   - **Klien:** one client.
 
   *Terapkan* applies the filters together with the search inside the selected tab; *Reset* clears them. While filters are active, the button shows a red counter with the number of active filter groups (Status, Jadwal, Layanan, Klien). There is no text label and no chip row.
 - **No projects yet:**
-  - *Berjalan* shows *Belum ada proyek* with *Proyek baru*.
+  - *Aktif* shows *Belum ada proyek* with *Proyek baru*.
   - *Selesai* shows *Belum ada proyek yang selesai*.
   - *Dibatalkan* shows *Belum ada proyek yang dibatalkan*.
 - **No active client or service:**
@@ -172,9 +172,9 @@ Field rules: BR-PRJ-008 (title, notes, agreed price), BR-TEAM-003 (sessions), BR
   - *Pilihan* is one of the snapshotted options;
   - an optional field left empty stores no value.
 - **A-4 List:**
-  - *Berjalan* is `DRAFT` … `DELIVERED`, *Selesai* is `COMPLETED`, and *Dibatalkan* is `CANCELLED`;
+  - *Aktif* is `DRAFT` … `DELIVERED`, *Selesai* is `COMPLETED`, and *Dibatalkan* is `CANCELLED` (the tab was named *Berjalan* until the Owner renamed it *Aktif* on 2026-10-03, matching the code key `ACTIVE` and F-06's *Aktif* tab);
   - order (Owner 2026-10-02):
-    - *Berjalan* is by the date of the project's shown session (A-12), earliest first;
+    - *Aktif* is by the date of the project's shown session (A-12), earliest first;
     - *Selesai* and *Dibatalkan* are by that date, latest first;
     - in every filter, projects without a session come last, and ties go by creation time, newest first;
   - 30 per page, keyset paging, and the count ignores the search, as in F-06 (A-5, A-10);

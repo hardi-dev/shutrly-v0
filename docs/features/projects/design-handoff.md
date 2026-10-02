@@ -48,9 +48,9 @@ The full frame index is in [design.md](design.md) › *Frames*.
    - The column gap is a frame-level override (exception to SP5). Proposed library fix: `component/table/column/gap` = `space/4`.
 3. **Link:** the whole text of the PROYEK cell links to the detail page; the rest of the row is not a link.
 4. **ACARA cell (A-12):** the next session (the earliest from today, or the latest when all are past): *{weekday}, {date} · {start}* with the location below, plus *· +n sesi* when there are more. *Belum ada jadwal* in muted text when the project has none.
-5. **Sort (A-4):** *Berjalan* by the shown session's date, earliest first. *Selesai* and *Dibatalkan* latest first. Projects without a session last.
+5. **Sort (A-4):** *Aktif* by the shown session's date, earliest first. *Selesai* and *Dibatalkan* latest first. Projects without a session last.
 6. **Filter:** an Icon Button Outline (`list-filter`, no text) next to the search. A **red Count Badge** shows the number of active filter groups. It opens Modal MD on desktop and Bottom Sheet Form on phones.
-   - Fields: *Status* (Multi-select dropdown with checkboxes, only on *Berjalan*), *Jadwal* (*Dari*–*Sampai* + *Sertakan proyek tanpa jadwal*), *Layanan* (Multi-select), *Klien* (Combobox).
+   - Fields: *Status* (Multi-select dropdown with checkboxes, only on *Aktif*), *Jadwal* (*Dari*–*Sampai* + *Sertakan proyek tanpa jadwal*), *Layanan* (Multi-select), *Klien* (Combobox).
    - Buttons: *Reset* and *Terapkan*.
    - Filters are kept in the URL. There are no filter chips (variant rejected).
 7. **Token change (committed `41ea61e`):** `component.icon-button.border` → `border.input`, so it matches the search field. `tokens.css` was regenerated.
@@ -96,7 +96,7 @@ The full frame index is in [design.md](design.md) › *Frames*.
 - On desktop, the *Proyek baru* actions sit only under the form.
 
 ## Open questions for the Owner
-- Copy to confirm: the extra copy in design.md › *Copy* (empty-state bodies, filter description *Berlaku untuk tab Berjalan.*, *Ganti layanan? …*, toasts).
+- Copy to confirm: the extra copy in design.md › *Copy* (empty-state bodies, filter description *Berlaku untuk tab Aktif.*, *Ganti layanan? …*, toasts).
 
 ## Remaining work (in order)
 1. The Owner reviews and approves the design (design.md › *Approval*).

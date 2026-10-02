@@ -1,9 +1,27 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED; F-07 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` is merged into `feat/clients` at `fe1d6f0`).
+Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED; F-07 PLANNED; F-08 SPECIFIED) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `feat/team-sessions` (F-08 discovery; from `feat/projects`). Earlier: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` is merged into `feat/clients` at `fe1d6f0`).
 
-## Current handoff — F-07 Projects PLANNED (2026-10-02)
+## Current handoff — F-08 Team SPECIFIED (2026-10-03)
+
+- **Branch:** `feat/team-sessions`, cut from `feat/projects` (assignments need F-07's sessions). Nothing here is built; F-06, then F-07, still come first.
+- **Spec:** [spec.md](features/team-sessions/spec.md), [acceptance-criteria.md](features/team-sessions/acceptance-criteria.md) (AC-TEAM-001…025).
+- **Domain updates (Owner 2026-10-03):**
+  - BR-TEAM-001 now says assignments are per session;
+  - BR-TEAM-002's SPEC GAP is resolved: no stored session status, and the only assignment status is the fee being paid or unpaid;
+  - new rules: BR-TEAM-004 (member: name, required WhatsApp, optional email, roles, optional rate per session/day/hour/minute), BR-TEAM-005 (workspace roles, three seeded), BR-TEAM-006 (assignment and fee prefill; guarded session and draft delete), BR-TEAM-007 (payment status);
+  - the domain model, glossary and scope are updated as well.
+- **Effect on F-07 (not built):** deleting a session or a draft must cascade to unpaid assignments, and is blocked while one is paid (BR-TEAM-006). Fold this into F-07's build, or into F-08's plan.
+- **Assumptions to confirm in design review:**
+  - A-1: routes and tabs, *Anggota* · *Peran*;
+  - A-2: no staffing on *Proyek baru*;
+  - A-6: unpaid total in the list;
+  - open question: a *Total honor tim* on the project.
+- **Modelled 2026-10-03:** [diagrams/](features/team-sessions/diagrams/) — assignment and member states, the save and delete activities, and the project-row lock that keeps a payment from racing a delete (AC-TEAM-024/025, BR-TEAM-006 edit rule).
+- **Next:** `/sdv:design-feature team-sessions`.
+
+## Previous handoff — F-07 Projects PLANNED (2026-10-02)
 
 - **Plan:** [technical-design.md](features/projects/technical-design.md) (decisions D-1…D-16) and [plan.md](features/projects/plan.md), vertical slices by screen (Slice 0–8), one commit per step.
   - **Tables:** `project`, `project_item`, `project_field_value` and `project_session` in the `booking` context, migration **0009**.

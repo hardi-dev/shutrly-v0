@@ -28,10 +28,10 @@ Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` 
 
 ## Previous handoff — F-06 Clients PLANNED (2026-10-02)
 
-- **Plan:** [technical-design.md](features/clients/technical-design.md) (decisions D-1…D-8) and [plan.md](features/clients/plan.md), 14 test-first tasks.
+- **Plan:** [technical-design.md](features/clients/technical-design.md) (decisions D-1…D-8) and [plan.md](features/clients/plan.md), vertical slices by screen (Slice 0–6), one commit per step.
   - Clients live in the `booking` context with one `client` table (social links as validated JSONB) and migration **0008**.
   - *Aktif* / *Arsip* are routes shown as Page Header tabs; the list uses keyset paging with a count, and a new shared `DataTable` (C27).
-- **Base (Owner 2026-10-02):** the plan assumes F-05 is on `main`. It is (PR #3), and `main` is merged into `feat/clients`, so Task 1's base check passes; its sync step is already done.
+- **Base (Owner 2026-10-02):** the plan assumes F-05 is on `main`. It is (PR #3), and `main` is merged into `feat/clients`, so Slice 0's base check passes; its sync step is already done.
 - **Next:** `/sdv:build-feature clients 1`.
 
 ### Design (approved 2026-10-02)

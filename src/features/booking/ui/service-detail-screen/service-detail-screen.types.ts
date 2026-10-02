@@ -79,16 +79,19 @@ export interface ServiceDetailScreenProps {
 }
 
 export interface ServiceDetailDialogs {
+  readonly infoOpen: boolean;
   readonly itemOpen: boolean;
   readonly fieldOpen: boolean;
   readonly editingItem?: ServiceItemRecord;
   readonly editingField?: BookingFieldRecord;
   readonly deletingItem?: ServiceItemRecord;
   readonly deletingField?: BookingFieldRecord;
+  readonly openEditInfo: () => void;
   readonly openAddItem: () => void;
   readonly openEditItem: (item: ServiceItemRecord) => void;
   readonly openAddField: () => void;
   readonly openEditField: (field: BookingFieldRecord) => void;
+  readonly setInfoOpen: (open: boolean) => void;
   readonly setItemOpen: (open: boolean) => void;
   readonly setFieldOpen: (open: boolean) => void;
   readonly openDeleteItem: (item: ServiceItemRecord) => void;
@@ -101,16 +104,19 @@ export interface ServiceDetailDialogs {
 }
 
 export interface ServiceDetailDialogState {
+  readonly infoOpen: boolean;
   readonly itemOpen: boolean;
   readonly fieldOpen: boolean;
   readonly editingItem?: ServiceItemRecord;
   readonly editingField?: BookingFieldRecord;
   readonly deletingItem?: ServiceItemRecord;
   readonly deletingField?: BookingFieldRecord;
+  readonly openEditInfo: () => void;
   readonly openAddItem: () => void;
   readonly openEditItem: (item: ServiceItemRecord) => void;
   readonly openAddField: () => void;
   readonly openEditField: (field: BookingFieldRecord) => void;
+  readonly setInfoOpen: (open: boolean) => void;
   readonly setItemOpen: (open: boolean) => void;
   readonly setFieldOpen: (open: boolean) => void;
   readonly openDeleteItem: (item: ServiceItemRecord) => void;

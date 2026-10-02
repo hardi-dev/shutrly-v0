@@ -40,7 +40,12 @@ export function ServiceDetailScreen(props: Readonly<ServiceDetailScreenProps>) {
             body={CATALOG_COPY.archivedBannerBody}
           />
         ) : null}
-        <ServiceInfoCard service={service} />
+        <ServiceInfoCard
+          service={service}
+          onEdit={
+            props.updateServiceInfoAction && props.workspaceId ? dialogs.openEditInfo : undefined
+          }
+        />
         <ServiceDetailForms {...props} dialogs={dialogs} />
         <ServiceItemsCard
           {...props}
@@ -49,6 +54,7 @@ export function ServiceDetailScreen(props: Readonly<ServiceDetailScreenProps>) {
           onDelete={dialogs.openDeleteItem}
           onMoveUp={dialogs.moveItemUp}
           onMoveDown={dialogs.moveItemDown}
+          onAdd={props.addItemAction ? dialogs.openAddItem : undefined}
         />
         <BookingFieldsCard
           {...props}
@@ -57,6 +63,7 @@ export function ServiceDetailScreen(props: Readonly<ServiceDetailScreenProps>) {
           onDelete={dialogs.openDeleteField}
           onMoveUp={dialogs.moveFieldUp}
           onMoveDown={dialogs.moveFieldDown}
+          onAdd={props.addFieldAction ? dialogs.openAddField : undefined}
         />
         <ServiceDetailDeleteDialogs props={props} dialogs={dialogs} />
       </main>
@@ -69,6 +76,7 @@ function useServiceDetailDialogs(props: Readonly<ServiceDetailScreenProps>): Ser
 }
 
 function useServiceDetailDialogState(): ServiceDetailDialogState {
+  const [infoOpen, setInfoOpen] = useState(false);
   const [itemOpen, setItemOpen] = useState(false);
   const [fieldOpen, setFieldOpen] = useState(false);
   const [editingItem, setEditingItem] =
@@ -76,6 +84,9 @@ function useServiceDetailDialogState(): ServiceDetailDialogState {
   const [editingField, setEditingField] =
     useState<ServiceDetailScreenProps["service"]["fields"][number]>();
   const deleteState = useServiceDetailDeleteState();
+  function openEditInfo(): void {
+    setInfoOpen(true);
+  }
   function openAddItem(): void {
     setEditingItem(undefined);
     setItemOpen(true);
@@ -93,15 +104,18 @@ function useServiceDetailDialogState(): ServiceDetailDialogState {
     setFieldOpen(true);
   }
   return {
+    infoOpen,
     itemOpen,
     fieldOpen,
     editingItem,
     editingField,
     ...deleteState,
+    openEditInfo,
     openAddItem,
     openEditItem,
     openAddField,
     openEditField,
+    setInfoOpen,
     setItemOpen,
     setFieldOpen,
   };
@@ -152,9 +166,7 @@ function useServiceMutationHandlers(
 function ServiceDetailActions({
   service,
   workspaceId,
-  categories = [],
   setActiveAction,
-  updateServiceInfoAction,
 }: Readonly<ServiceDetailScreenProps>) {
   const { pending, toggle } = useServiceActiveToggle({
     workspaceId,
@@ -162,38 +174,19 @@ function ServiceDetailActions({
     isActive: service.isActive,
     setActiveAction,
   });
-  const [isEditOpen, setIsEditOpen] = useState(false);
   const handleToggle = (): void => {
     void toggle();
   };
-  const openEdit = (): void => {
-    setIsEditOpen(true);
-  };
   return (
     <PageActions>
-      {updateServiceInfoAction && workspaceId ? (
-        <Button variant="secondary" onPress={openEdit}>
-          {CATALOG_COPY.edit}
-        </Button>
-      ) : null}
       <Button
         variant={service.isActive ? "secondary" : "primary"}
+        iconLeading={service.isActive ? "archive" : "archive-restore"}
         onPress={handleToggle}
         isPending={pending}
       >
         {service.isActive ? CATALOG_COPY.archive : CATALOG_COPY.unarchive}
       </Button>
-      {updateServiceInfoAction && workspaceId ? (
-        <AddServiceDialog
-          isOpen={isEditOpen}
-          onOpenChange={setIsEditOpen}
-          workspaceId={workspaceId}
-          categories={categories}
-          service={service}
-          action={noopServiceAction}
-          updateAction={updateServiceInfoAction}
-        />
-      ) : null}
     </PageActions>
   );
 }
@@ -226,25 +219,27 @@ function ServiceDetailForms({
   service,
   workspaceId,
   definitions = [],
+  categories = [],
+  updateServiceInfoAction,
   addItemAction,
   updateItemAction,
   addFieldAction,
   updateFieldAction,
   dialogs,
 }: Readonly<ServiceDetailScreenProps & { readonly dialogs: ServiceDetailDialogs }>) {
-  if (!addItemAction && !addFieldAction) return null;
+  if (!updateServiceInfoAction && !addItemAction && !addFieldAction) return null;
   return (
     <>
-      <div className="flex flex-wrap gap-(--space-3)">
-        {addItemAction ? (
-          <Button onPress={dialogs.openAddItem}>{CATALOG_COPY.addItem}</Button>
-        ) : null}
-        {addFieldAction ? (
-          <Button variant="secondary" onPress={dialogs.openAddField}>
-            {CATALOG_COPY.addField}
-          </Button>
-        ) : null}
-      </div>
+      {updateServiceInfoAction && workspaceId ? (
+        <ServiceInfoFormDialog
+          isOpen={dialogs.infoOpen}
+          onOpenChange={dialogs.setInfoOpen}
+          workspaceId={workspaceId}
+          categories={categories}
+          service={service}
+          updateAction={updateServiceInfoAction}
+        />
+      ) : null}
       <ServiceDetailFormDialogs
         service={service}
         workspaceId={workspaceId}
@@ -256,6 +251,34 @@ function ServiceDetailForms({
         dialogs={dialogs}
       />
     </>
+  );
+}
+
+function ServiceInfoFormDialog({
+  isOpen,
+  onOpenChange,
+  workspaceId,
+  categories,
+  service,
+  updateAction,
+}: Readonly<{
+  readonly isOpen: boolean;
+  readonly onOpenChange: (open: boolean) => void;
+  readonly workspaceId: string;
+  readonly categories: NonNullable<ServiceDetailScreenProps["categories"]>;
+  readonly service: ServiceDetailScreenProps["service"];
+  readonly updateAction: NonNullable<ServiceDetailScreenProps["updateServiceInfoAction"]>;
+}>) {
+  return (
+    <AddServiceDialog
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      workspaceId={workspaceId}
+      categories={categories}
+      service={service}
+      action={noopServiceAction}
+      updateAction={updateAction}
+    />
   );
 }
 

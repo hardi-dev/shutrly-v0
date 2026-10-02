@@ -1,5 +1,6 @@
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
+import { Button } from "@/ui/primitives/button/button";
 
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { ServiceDetailRowActions } from "../service-detail-row-actions/service-detail-row-actions";
@@ -12,12 +13,14 @@ export function ServiceItemsCard({
   onDelete,
   onMoveUp,
   onMoveDown,
+  onAdd,
 }: Readonly<
   ServiceDetailScreenProps & {
     readonly onEdit: ServiceItemHandler;
     readonly onDelete: ServiceItemHandler;
     readonly onMoveUp: ServiceItemHandler;
     readonly onMoveDown: ServiceItemHandler;
+    readonly onAdd?: () => void;
   }
 >) {
   return (
@@ -25,6 +28,13 @@ export function ServiceItemsCard({
       title={CATALOG_COPY.itemsTitle}
       description={CATALOG_COPY.itemsDescription}
       content="flush"
+      actions={
+        onAdd ? (
+          <Button variant="secondary" iconLeading="plus" onPress={onAdd}>
+            {CATALOG_COPY.addItem}
+          </Button>
+        ) : null
+      }
     >
       {service.items.length === 0 ? (
         <EmptyItems />
@@ -50,7 +60,7 @@ export function ServiceItemsCard({
 
 function EmptyItems() {
   return (
-    <p className="px-(--component-list-card-item-padding-x) py-(--component-list-card-item-padding-y) text-(--component-list-card-item-meta)">
+    <p className="px-(--space-6) py-(--space-5) text-(--component-list-card-item-meta)">
       {CATALOG_COPY.itemsEmpty}
     </p>
   );

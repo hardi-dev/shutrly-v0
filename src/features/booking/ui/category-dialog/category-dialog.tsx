@@ -9,11 +9,13 @@ import { catalogNameSchema } from "@/features/booking/application/schemas/catalo
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
+import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogFieldError } from "../catalog-field-error/catalog-field-error";
+import { showCatalogSaveFailure } from "../catalog-save-feedback/catalog-save-feedback";
 import type {
   CategoryDialogController,
   CategoryDialogFormProps,
@@ -65,6 +67,14 @@ function useCategoryDialogForm(props: Readonly<CategoryDialogProps>): CategoryDi
         return;
       }
       props.onOpenChange(false);
+      showToast({ tone: "success", title: CATALOG_COPY.savedToast });
+    } catch {
+      showCatalogSaveFailure({
+        setError: (message) => { form.setError("name", { type: "server", message }); },
+        retry: () => {
+          void submit();
+        },
+      });
     } finally {
       setIsPending(false);
     }

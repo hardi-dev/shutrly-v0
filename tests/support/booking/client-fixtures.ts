@@ -1,3 +1,4 @@
+import { whatsappNumberSchema } from "@/features/booking/domain/whatsapp-number/whatsapp-number.schema";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { FakeClientRepository } from "./fake-client-repository";
@@ -9,7 +10,7 @@ export async function clientFixture(): Promise<FakeClientRepository> {
   const clients = new FakeClientRepository();
   await clients.create(clientContext, {
     name: "Rina",
-    whatsappNumber: "6281234567890",
+    whatsappNumber: whatsappNumberSchema.parse("6281234567890"),
     socialLinks: [
       { platform: "INSTAGRAM", value: "rina.wed" },
       { platform: "TIKTOK", value: "rina" },
@@ -24,7 +25,7 @@ export async function clientFixture(): Promise<FakeClientRepository> {
   });
   await clients.create(clientContext, {
     name: "Budi",
-    whatsappNumber: "6289876543210",
+    whatsappNumber: whatsappNumberSchema.parse("6289876543210"),
     socialLinks: [{ platform: "INSTAGRAM", value: "budi.foto" }],
     editorUserId: "owner",
   });

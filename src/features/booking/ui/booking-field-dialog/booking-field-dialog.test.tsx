@@ -39,6 +39,10 @@ describe("BookingFieldDialog", () => {
     const action: BookingFieldDialogProps["action"] = vi.fn().mockResolvedValue({ ok: true });
     render(<AddFieldHarness action={action} />);
 
+    expect(screen.getByRole("textbox", { name: "Nama field" })).toHaveAttribute(
+      "placeholder",
+      "Contoh: Nama kampus",
+    );
     await user.type(screen.getByRole("textbox", { name: "Nama field" }), "Nama kampus");
     await user.click(screen.getByRole("button", { name: /Tipe/ }));
     await user.click(screen.getByRole("option", { name: "Pilihan" }));

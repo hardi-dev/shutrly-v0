@@ -124,6 +124,7 @@ export const CATALOG_COPY = {
   minimum: "Minimum",
   maximum: "Maksimum",
   fieldName: "Nama field",
+  fieldNamePlaceholder: "Contoh: Nama kampus",
   fieldType: "Tipe",
   options: "Pilihan",
   addOption: "Pisahkan pilihan dengan koma.",

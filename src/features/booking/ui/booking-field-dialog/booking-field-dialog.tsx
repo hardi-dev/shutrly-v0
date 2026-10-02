@@ -217,6 +217,7 @@ function BookingFieldFields({
         label={CATALOG_COPY.fieldName}
         name="name"
         onBlur={noop}
+        placeholder={CATALOG_COPY.fieldNamePlaceholder}
         value={name}
         onChange={setName}
       />

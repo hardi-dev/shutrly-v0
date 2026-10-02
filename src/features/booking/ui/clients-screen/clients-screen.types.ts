@@ -1,4 +1,3 @@
-/* eslint-disable max-len -- action signature is intentionally explicit at the screen boundary */
 import type { ClientRecord } from "@/features/booking/application/ports/client-repository/client-repository.port";
 import type { ClientInput } from "@/features/booking/application/schemas/client-input/client-input.types";
 import type { ClientWriteResult } from "@/features/booking/application/use-cases/client-results/client-results.types";
@@ -61,5 +60,4 @@ export interface ClientAddDialogProps {
   readonly workspaceId: string;
   readonly onOpenChange: (isOpen: boolean) => void;
 }
-/* eslint-enable max-len -- end explicit action signature */
 import type { ReactNode } from "react";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
@@ -17,6 +17,15 @@ export function useLoadMoreClients({
 }: Readonly<UseLoadMoreClientsProps>) {
   const [page, setPage] = useState(initial);
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const reset = window.setTimeout(() => {
+      setPage(initial);
+      setLoading(false);
+    });
+    return () => {
+      window.clearTimeout(reset);
+    };
+  }, [initial]);
   async function loadMore(): Promise<void> {
     if (loading || !page.nextCursor || !action) return;
     setLoading(true);

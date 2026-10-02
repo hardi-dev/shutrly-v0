@@ -1,7 +1,7 @@
 "use client";
-/* eslint-disable max-len, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression, max-lines-per-function -- responsive list wiring shares the archive mutation */
+/* eslint-disable no-restricted-syntax, @typescript-eslint/no-confusing-void-expression, max-lines-per-function -- responsive list wiring shares the archive mutation */
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
@@ -135,7 +135,10 @@ function useClientPager(
   initialPage: ClientsScreenProps["initialPage"],
   action: ClientsScreenProps["loadMoreAction"],
 ) {
-  const fallback = initialPage ?? { items: rows, nextCursor: null };
+  const fallback = useMemo(
+    () => initialPage ?? { items: rows, nextCursor: null },
+    [initialPage, rows],
+  );
   return useLoadMoreClients({ workspaceId, status, q, initial: fallback, action });
 }
 
@@ -272,4 +275,4 @@ function createAddActions(addAction: ClientsScreenProps["addAction"], onAdd: () 
     ),
   };
 }
-/* eslint-enable max-len, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression, max-lines-per-function -- end responsive archive wiring */
+/* eslint-enable no-restricted-syntax, @typescript-eslint/no-confusing-void-expression, max-lines-per-function -- end responsive archive wiring */

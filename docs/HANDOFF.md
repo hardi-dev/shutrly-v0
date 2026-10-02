@@ -13,7 +13,7 @@ Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` 
 - **Base:** F-06 Clients is planned but **not built**. Slice 0 stops until F-06 is built and merged into `feat/projects`.
 - **Owner check:** technical-design.md › D-5 reads AC-PRJ-008's *"none for Ukuran toga"* as *no value*. A metadata row is still stored, so the detail can show the field as empty and edit it later.
 - **New dependency:** `@internationalized/date` (React Aria's date library), recorded in tech-stack.md.
-- **Next:** build F-06 (`/sdv:build-feature clients 1`), then `/sdv:build-feature projects 1`.
+- **Next:** build F-06 (`/sdv:build-feature clients 0`, Slices 0–6), then `/sdv:build-feature projects 0`.
 
 - **Branch:** `feat/projects`, cut from `feat/clients` because projects need the client table. Merge F-06 to `main` first, or rebase this branch once it lands.
 - **Spec:** [spec.md](features/projects/spec.md), [acceptance-criteria.md](features/projects/acceptance-criteria.md) (AC-PRJ-001…026).
@@ -32,7 +32,7 @@ Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` 
   - Clients live in the `booking` context with one `client` table (social links as validated JSONB) and migration **0008**.
   - *Aktif* / *Arsip* are routes shown as Page Header tabs; the list uses keyset paging with a count, and a new shared `DataTable` (C27).
 - **Base (Owner 2026-10-02):** the plan assumes F-05 is on `main`. It is (PR #3), and `main` is merged into `feat/clients`, so Slice 0's base check passes; its sync step is already done.
-- **Next:** `/sdv:build-feature clients 1`.
+- **Next:** `/sdv:build-feature clients 0`.
 
 ### Design (approved 2026-10-02)
 

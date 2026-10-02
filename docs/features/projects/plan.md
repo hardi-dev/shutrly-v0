@@ -435,7 +435,7 @@ Screens: none. This slice checks the base and inventories the components for S1�
   - `src/features/booking/domain/whatsapp-number/whatsapp-number.ts` exports `formatWhatsappNumber` and `whatsappChatUrl`;
   - `pnpm typecheck && pnpm lint && pnpm test` pass.
 
-  If any is missing, **STOP** and report: *F-06 must be built (`/sdv:build-feature clients 1…14`) and merged into `feat/projects` first.* Change nothing.
+  If any is missing, **STOP** and report: *F-06 must be built (`/sdv:build-feature clients 0…6`) and merged into `feat/projects` first.* Change nothing.
 - [ ] **0.2 Sync.** If `main` moved, use the ccd_host `sync_with_base_branch` tool (or `git merge main` outside an app worktree).
   - Keep both features' text in `docs/HANDOFF.md` and `docs/product/feature-map.md`.
   - Keep this branch's `projects.pen` and `exports/`.

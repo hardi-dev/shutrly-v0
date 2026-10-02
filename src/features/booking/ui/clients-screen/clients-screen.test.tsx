@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 const useMobileViewport = vi.fn();
@@ -7,6 +8,10 @@ vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
 vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({ useMobileViewport }));
 
 const { ClientsScreen } = await import("./clients-screen");
+
+function updateAction() {
+  return Promise.resolve(undefined);
+}
 
 describe("ClientsScreen", () => {
   const props = {
@@ -36,5 +41,17 @@ describe("ClientsScreen", () => {
     render(<ClientsScreen {...props} />);
     expect(screen.getByRole("radiogroup", { name: "Status klien" })).toBeInTheDocument();
     expect(screen.getByRole("list", { name: "Daftar klien" })).toBeInTheDocument();
+  });
+
+  it("AC-CLI-012 opens the edit dialog when a desktop row is selected", async () => {
+    useMobileViewport.mockReturnValue(false);
+    render(
+      <ClientsScreen
+        {...props}
+        updateAction={updateAction}
+      />,
+    );
+    await userEvent.click(screen.getByText("Rina"));
+    expect(screen.getByRole("dialog", { name: "Ubah klien" })).toBeInTheDocument();
   });
 });

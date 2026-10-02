@@ -5,11 +5,13 @@ import type { SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
 import { useController, useForm } from "react-hook-form";
 
+import type { NumberHolder } from "@/features/booking/application/ports/client-repository/client-repository.port";
 import { clientInputSchema } from "@/features/booking/application/schemas/client-input/client-input.schema";
 import type {
   ClientFields,
   ClientInput,
 } from "@/features/booking/application/schemas/client-input/client-input.types";
+import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
@@ -32,15 +34,22 @@ const DEFAULT_VALUES: ClientInput = {
 export function ClientDialog(props: Readonly<ClientDialogProps>) {
   const mobile = useMobileViewport();
   const controller = useClientDialogForm(props);
-  const content = <ClientForm controller={controller} isMobile={mobile} />;
-  const save = <ClientSaveButton isPending={controller.isPending} mobile={mobile} />;
+  const content = (
+    <ClientForm controller={controller} isMobile={mobile} numberHolder={controller.numberHolder} />
+  );
+  const isEditing = props.mode === "edit";
+  const save = (
+    <ClientSaveButton isPending={controller.isPending} mobile={mobile} isEditing={isEditing} />
+  );
+  const title = isEditing ? CLIENT_COPY.editDialogTitle : CLIENT_COPY.dialogTitle;
+  const description = isEditing ? CLIENT_COPY.editDialogDescription : CLIENT_COPY.dialogDescription;
   if (mobile)
     return (
       <BottomSheet
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
-        title={CLIENT_COPY.dialogTitle}
-        description={CLIENT_COPY.dialogDescription}
+        title={title}
+        description={description}
         variant="form"
         actions={save}
       >
@@ -54,8 +63,8 @@ export function ClientDialog(props: Readonly<ClientDialogProps>) {
     <Modal
       isOpen={props.isOpen}
       onOpenChange={props.onOpenChange}
-      title={CLIENT_COPY.dialogTitle}
-      description={CLIENT_COPY.dialogDescription}
+      title={title}
+      description={description}
       size="md"
       actions={
         <>
@@ -74,13 +83,16 @@ export function ClientDialog(props: Readonly<ClientDialogProps>) {
 function useClientDialogForm(props: Readonly<ClientDialogProps>) {
   const form = useForm<ClientInput, unknown, ClientFields>({
     resolver: zodResolver(clientInputSchema),
-    defaultValues: DEFAULT_VALUES,
+    defaultValues: clientFormValues(props.client),
     shouldFocusError: true,
   });
   const [isPending, setIsPending] = useState(false);
+  const [numberHolder, setNumberHolder] = useState<NumberHolder | undefined>();
   useEffect(() => {
-    if (props.isOpen) form.reset(DEFAULT_VALUES);
-  }, [form, props.isOpen]);
+    if (props.isOpen) {
+      form.reset(clientFormValues(props.client));
+    }
+  }, [form, props.client, props.isOpen]);
   async function submit(): Promise<void> {
     if (!(await form.trigger())) return;
     setIsPending(true);
@@ -88,6 +100,7 @@ function useClientDialogForm(props: Readonly<ClientDialogProps>) {
       const raw = form.getValues();
       const result = await props.onSubmit(props.workspaceId, raw);
       if (result?.ok === false) {
+        setNumberHolder(result.numberHolder);
         setServerErrors(form, result.fieldErrors);
         return;
       }
@@ -102,7 +115,19 @@ function useClientDialogForm(props: Readonly<ClientDialogProps>) {
     event.preventDefault();
     void submit();
   }
-  return { form, isPending, handleSubmit };
+  return { form, isPending, handleSubmit, numberHolder };
+}
+
+function clientFormValues(client: ClientDialogProps["client"]): ClientInput {
+  if (!client) return DEFAULT_VALUES;
+  return {
+    name: client.name,
+    whatsappNumber: client.whatsappNumber ? formatWhatsappNumber(client.whatsappNumber) : "",
+    socialLinks: client.socialLinks.map((link) => ({
+      platform: link.platform,
+      value: link.value.startsWith("https://") ? link.value : `@${link.value}`,
+    })),
+  };
 }
 
 function setServerErrors(
@@ -117,20 +142,28 @@ function setServerErrors(
 function ClientSaveButton({
   isPending,
   mobile,
-}: Readonly<{ isPending: boolean; mobile: boolean }>) {
+  isEditing,
+}: Readonly<{ isPending: boolean; mobile: boolean; isEditing: boolean }>) {
   return (
     <Button type="submit" form={FORM_ID} isPending={isPending} size={mobile ? "lg" : "md"}>
-      {CLIENT_COPY.save}
+      {saveLabel(isPending, isEditing)}
     </Button>
   );
+}
+
+function saveLabel(isPending: boolean, isEditing: boolean): string {
+  if (isPending) return CLIENT_COPY.saving;
+  return isEditing ? CLIENT_COPY.saveEdit : CLIENT_COPY.save;
 }
 
 function ClientForm({
   controller,
   isMobile,
+  numberHolder,
 }: Readonly<{
   readonly controller: ReturnType<typeof useClientDialogForm>;
   readonly isMobile: boolean;
+  readonly numberHolder: NumberHolder | undefined;
 }>) {
   const { form, isPending, handleSubmit } = controller;
   const name = useController({ control: form.control, name: "name" });
@@ -164,15 +197,35 @@ function ClientForm({
         isDisabled={isPending}
         errorMessage={
           whatsappNumber.fieldState.error?.message
-            ? whatsappErrorText(whatsappNumber.fieldState.error.message)
+            ? whatsappErrorText(whatsappNumber.fieldState.error.message, numberHolder)
             : undefined
         }
       />
-      <SocialLinksEditor control={form.control} isPending={isPending} isMobile={isMobile} />
+      <ClientSocialLinks form={form} isPending={isPending} isMobile={isMobile} />
     </form>
   );
 }
 
-function whatsappErrorText(error: string): string {
-  return error === "INVALID" ? CLIENT_COPY.invalidWhatsapp : clientFieldErrorText(error);
+function ClientSocialLinks({
+  form,
+  isPending,
+  isMobile,
+}: Readonly<{
+  form: ReturnType<typeof useForm<ClientInput, unknown, ClientFields>>;
+  isPending: boolean;
+  isMobile: boolean;
+}>) {
+  return (
+    <SocialLinksEditor
+      control={form.control}
+      isPending={isPending}
+      isMobile={isMobile}
+      setFocus={form.setFocus}
+    />
+  );
+}
+
+function whatsappErrorText(error: string, holder?: NumberHolder): string {
+  if (error === "INVALID") return CLIENT_COPY.invalidWhatsapp;
+  return clientFieldErrorText(error, holder);
 }

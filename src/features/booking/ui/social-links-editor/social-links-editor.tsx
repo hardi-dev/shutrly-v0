@@ -27,10 +27,21 @@ export function SocialLinksEditor({
   control,
   isPending,
   isMobile,
+  setFocus,
 }: Readonly<SocialLinksEditorProps>) {
   const { fields, append, remove } = useFieldArray({ control, name: "socialLinks" });
   function addRow(): void {
     append({ platform: DEFAULT_PLATFORM, value: EMPTY_SOCIAL_LINK_VALUE });
+  }
+  function focusAfterRemove(index: number, rowCount: number): void {
+    const nextIndex = index < rowCount - 1 ? index : index - 1;
+    queueMicrotask(() => {
+      if (nextIndex >= 0) {
+        setFocus(socialValuePath(nextIndex));
+        return;
+      }
+      document.getElementById("add-social-link")?.focus();
+    });
   }
   return (
     <fieldset className="flex flex-col gap-(--space-3)">
@@ -45,11 +56,14 @@ export function SocialLinksEditor({
           isPending={isPending}
           isMobile={isMobile}
           onRemove={remove}
+          onFocusAfterRemove={focusAfterRemove}
+          rowCount={fields.length}
         />
       ))}
       <Button
         variant="secondary"
         iconLeading="plus"
+        id="add-social-link"
         onPress={addRow}
         isDisabled={isPending || fields.length >= SOCIAL_LINK_MAX_COUNT}
       >
@@ -60,15 +74,16 @@ export function SocialLinksEditor({
 }
 
 function SocialLinkRow(props: Readonly<SocialLinkRowProps>) {
-  const { index, control, isPending, isMobile, onRemove } = props;
+  const { index, control, isPending, isMobile, onRemove, onFocusAfterRemove, rowCount } = props;
   const fields = useSocialLinkFields(control, index);
   function removeRow(): void {
     onRemove(index);
+    onFocusAfterRemove(index, rowCount);
   }
   return (
     <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-(--space-2) md:grid-cols-[148px_minmax(0,1fr)_auto]">
       <Select
-        aria-label={CLIENT_COPY.socialLinks}
+        aria-label={CLIENT_COPY.socialPlatformField(index + 1)}
         value={fields.platform.value}
         options={PLATFORM_OPTIONS}
         onChange={fields.platform.onChange}
@@ -76,7 +91,7 @@ function SocialLinkRow(props: Readonly<SocialLinkRowProps>) {
         errorMessage={fields.platform.error}
       />
       <TextField
-        aria-label={CLIENT_COPY.socialLinks}
+        aria-label={CLIENT_COPY.socialValueField(PLATFORM_COPY[fields.platform.value], index + 1)}
         name={fields.value.name}
         value={fields.value.value}
         onChange={fields.value.onChange}
@@ -92,7 +107,10 @@ function SocialLinkRow(props: Readonly<SocialLinkRowProps>) {
       />
       <IconButton
         icon="x"
-        aria-label={CLIENT_COPY.removeSocialLink}
+        aria-label={CLIENT_COPY.removeSocialLinkField(
+          PLATFORM_COPY[fields.platform.value],
+          index + 1,
+        )}
         onPress={removeRow}
         isDisabled={isPending}
       />

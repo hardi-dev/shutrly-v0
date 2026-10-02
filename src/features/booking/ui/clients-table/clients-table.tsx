@@ -17,7 +17,13 @@ const COLUMNS = [
 ] as const;
 
 /** Renders the desktop client table inside its owning Section Card. */
-export function ClientsTable({ status, count, rows, emptyState }: Readonly<ClientsTableProps>) {
+export function ClientsTable({
+  status,
+  count,
+  rows,
+  emptyState,
+  onRowAction,
+}: Readonly<ClientsTableProps>) {
   const description = CLIENT_COPY.count(status, count);
   return (
     <SectionCard title={CLIENT_COPY.listTitle} description={description} content="bleed">
@@ -29,6 +35,7 @@ export function ClientsTable({ status, count, rows, emptyState }: Readonly<Clien
           columns={COLUMNS}
           rows={rows}
           renderCell={renderCell}
+          onRowAction={onRowAction}
         />
       )}
     </SectionCard>

@@ -58,6 +58,7 @@ export function Button({
   isDisabled,
   isPending = false,
   form,
+  id,
   onPress,
   className,
   "aria-label": ariaLabel,
@@ -71,6 +72,7 @@ export function Button({
       isDisabled={isDisabled}
       isPending={isPending}
       form={form}
+      id={id}
       onPress={onPress}
       aria-label={ariaLabel}
       data-variant={variant}

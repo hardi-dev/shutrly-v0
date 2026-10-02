@@ -1,4 +1,4 @@
-import type { Control } from "react-hook-form";
+import type { Control, UseFormSetFocus } from "react-hook-form";
 
 import type {
   ClientFields,
@@ -9,6 +9,7 @@ export interface SocialLinksEditorProps {
   readonly control: Control<ClientInput, unknown, ClientFields>;
   readonly isPending: boolean;
   readonly isMobile: boolean;
+  readonly setFocus: UseFormSetFocus<ClientInput>;
 }
 
 export interface SocialLinkRowProps {
@@ -17,4 +18,6 @@ export interface SocialLinkRowProps {
   readonly isPending: boolean;
   readonly isMobile: boolean;
   readonly onRemove: (index: number) => void;
+  readonly onFocusAfterRemove: (index: number, rowCount: number) => void;
+  readonly rowCount: number;
 }

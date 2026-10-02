@@ -12,7 +12,7 @@ A project books one client on one service with the deal they agreed on. Creating
 
 The list has three tabs, search, a filter, keyset paging and a row menu. F-07 calls no external service. *Chat WhatsApp* is a browser-built `wa.me` link.
 
-**Base:** F-06 Clients must be **built and merged into `feat/projects`** before Task 1. Its plan is ready, but it is not implemented yet. F-07 reuses from F-06:
+**Base:** F-06 Clients must be **built and merged into `feat/projects`** before Slice 0. Its plan is ready, but it is not implemented yet. F-07 reuses from F-06:
 - the `client` table (migration 0008) and `ClientRepositoryPort`;
 - `ClientDialog` and `addClientAction` / `updateClientAction`;
 - the `DataTable` pattern;
@@ -347,10 +347,10 @@ Built from `exports/` ([design.md](design.md)). All copy lives in `project-copy`
 
 ## Implementation Iterations
 
-See [plan.md](plan.md): 20 tasks, test-first, one commit each.
-- **Task 1** stops unless F-06 is built and merged.
-- **Task 8** generates and applies migration 0009.
-- **Task 20** is the browser fidelity check against the exports.
+See [plan.md](plan.md): vertical slices by screen (Slice 0–8), test-first, one commit per step.
+- **Slice 0** stops unless F-06 is built and merged.
+- **Slice 1** (step 1.2) generates and applies migration 0009.
+- **Slice 8** is the browser fidelity check against the exports.
 
 ## Assumptions (technical, reversible)
 
@@ -362,8 +362,8 @@ See [plan.md](plan.md): 20 tasks, test-first, one commit each.
 
 ## Risks / Open Questions
 
-- **Base dependency:** F-06 is planned but not built. Task 1 stops otherwise. Building F-07 first would duplicate `client`, `DataTable` and the client dialog, and clash on migration 0008.
-- **Size:** F-07 is the largest feature so far (20 tasks). Tasks 12–19 are UI-heavy; each stops at its own exports.
-- **Date and time pickers** are new shared components (D-12). Their keyboard behaviour comes from React Aria and is checked by axe in Task 20.
+- **Base dependency:** F-06 is planned but not built. Slice 0 stops otherwise. Building F-07 first would duplicate `client`, `DataTable` and the client dialog, and clash on migration 0008.
+- **Size:** F-07 is the largest feature so far (9 slices). Slices 1–7 each end in UI steps that stop at their own exports.
+- **Date and time pickers** are new shared components (D-12). Their keyboard behaviour comes from React Aria and is checked by axe in Slice 8.
 - **List SQL complexity (D-8):** the `LATERAL` shown-session expression is shared by the order and the cursor and covered by integration tests with a fixed `today`. If it gets slow, add a partial index on `project_session (project_id, session_date)`, which already exists.
 - **D-5 reading of AC-PRJ-008:** a row exists for an empty optional field (value NULL). Reported here for the Owner. It doesn't change behaviour visible in the spec.

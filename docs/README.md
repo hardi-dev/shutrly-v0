@@ -32,7 +32,7 @@ When artifacts conflict, the higher one wins. Never silently resolve a conflict 
 | Design system | [design-system/](design-system/) | Tokens (`tokens.json`), Pencil library + exploration, usage rules, component specs, and the local Storybook explorer |
 | Guardrails | [constitution.md](constitution.md), [coding-rules.md](coding-rules.md) | Non-negotiables, conventions |
 | Features | [features/](features/) | Created only for the feature currently in work |
-| Templates | [templates/slice-plan.md](templates/slice-plan.md) | Reusable vertical-slice plan (one screen per slice), from F-07 plan-2 |
+| Templates | [templates/slice-plan.md](templates/slice-plan.md) | Reusable vertical-slice plan (one screen per slice), from the F-07 plan |
 | Source | [_source/](_source/) | Original UML draft + blueprint (historical reference) |
 
 ## About `_source/`

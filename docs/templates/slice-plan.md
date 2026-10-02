@@ -1,10 +1,10 @@
 # Slice plan template (vertical slices by screen)
 
-Use this template to write `docs/features/<slug>/plan.md` (or `plan-2.md` beside a layered plan) as **vertical slices by screen**. Each slice delivers one screen end to end and can be tried in the browser when it is done.
+Use this template to write `docs/features/<slug>/plan.md` as **vertical slices by screen**. Each slice delivers one screen end to end and can be tried in the browser when it is done.
 
 **Goal of the template:** a model that has never seen the conversation can build the whole feature in one session, without guessing and without revisions. Everything it would otherwise have to invent (types, SQL, copy, file paths, the pattern to copy, what each state shows) is written in the plan.
 
-**Worked example:** [features/projects/plan-2.md](../features/projects/plan-2.md) (F-07 Projects). When an instruction below is unclear, open the same section there.
+**Worked example:** [features/projects/plan.md](../features/projects/plan.md) (F-07 Projects). When an instruction below is unclear, open the same section there.
 
 ---
 
@@ -85,8 +85,6 @@ Each section below carries its own `> ✎` instructions. Fill them top to bottom
 # F-{nn} {Feature name} — Implementation Plan (vertical slices by screen)
 
 > **For agentic workers:** REQUIRED SUB-SKILL: use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans. Steps use checkbox (`- [ ]`) syntax. In this repo, `/sdv:build-feature {slug} <slice>` runs one slice; each **step** inside it is one commit.
-
-> ✎ If this plan sits beside a layered `plan.md`, add one line: "This is an alternative to plan.md … Build from **one** of them, not both."
 
 **Goal:** {one sentence: who does what}.
 - **{Screen A}:** {what it does}.
@@ -169,7 +167,7 @@ Every step's requirements implicitly include this section.
 
 ## File Structure
 
-> ✎ List every file to create or change, grouped by layer (domain, application, adapters, composition, app, ui, tests), with one line on its job. Follow the folder rules in `docs/architecture/overview.md`: one folder per unit with a co-located test. Each slice then lists the subset it creates. If a layered plan already has this list, link to it instead.
+> ✎ List every file to create or change, grouped by layer (domain, application, adapters, composition, app, ui, tests), with one line on its job. Follow the folder rules in `docs/architecture/overview.md`: one folder per unit with a co-located test. Each slice then lists the subset it creates.
 
 ## Screens
 

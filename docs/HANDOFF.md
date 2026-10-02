@@ -5,12 +5,12 @@ Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` 
 
 ## Current handoff — F-07 Projects PLANNED (2026-10-02)
 
-- **Plan:** [technical-design.md](features/projects/technical-design.md) (decisions D-1…D-16) and [plan.md](features/projects/plan.md), 20 test-first tasks.
+- **Plan:** [technical-design.md](features/projects/technical-design.md) (decisions D-1…D-16) and [plan.md](features/projects/plan.md), vertical slices by screen (Slice 0–8), one commit per step.
   - **Tables:** `project`, `project_item`, `project_field_value` and `project_session` in the `booking` context, migration **0009**.
   - **Writes:** every write locks the project row and decides from the stored status; status actions send a step, never a status.
   - **List:** sorted by each project's shown session (A-12), with keyset paging.
   - **Token:** 256-bit, written once and never selected by F-07.
-- **Base:** F-06 Clients is planned but **not built**. Task 1 stops until F-06 is built and merged into `feat/projects`.
+- **Base:** F-06 Clients is planned but **not built**. Slice 0 stops until F-06 is built and merged into `feat/projects`.
 - **Owner check:** technical-design.md › D-5 reads AC-PRJ-008's *"none for Ukuran toga"* as *no value*. A metadata row is still stored, so the detail can show the field as empty and edit it later.
 - **New dependency:** `@internationalized/date` (React Aria's date library), recorded in tech-stack.md.
 - **Next:** build F-06 (`/sdv:build-feature clients 1`), then `/sdv:build-feature projects 1`.

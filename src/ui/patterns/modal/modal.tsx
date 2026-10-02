@@ -101,9 +101,11 @@ function ModalContent({
           description={description}
           onClose={handleClose}
         />
-        <div className="min-h-0 flex-1 overflow-y-auto p-(--component-modal-body-padding)">
-          <div className="flex flex-col gap-(--component-modal-body-gap)">{children}</div>
-        </div>
+        {!isDestructive ? (
+          <div className="min-h-0 flex-1 overflow-y-auto p-(--component-modal-body-padding)">
+            <div className="flex flex-col gap-(--component-modal-body-gap)">{children}</div>
+          </div>
+        ) : null}
         {actions ? <ModalFooter>{actions}</ModalFooter> : null}
       </Dialog>
     </AriaModal>

@@ -390,7 +390,7 @@
   --component-avatar-radius: var(--radius-full);
   --component-icon-button-background: var(--color-semantic-surface-panel);
   --component-icon-button-background-hover: var(--color-semantic-surface-sunken);
-  --component-icon-button-border: var(--color-semantic-border-default);
+  --component-icon-button-border: var(--color-semantic-border-input);
   --component-icon-button-icon: var(--color-semantic-text-primary);
   --component-icon-button-padding: var(--space-3);
   --component-icon-button-sm-padding: var(--space-2);

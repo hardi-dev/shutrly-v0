@@ -42,7 +42,7 @@ Outline SM is deferred until a consumer needs it.
 
 ## Token dependencies
 
-- Colour: `icon-button.background` → `surface.panel`; `icon-button.background-hover` → `surface.sunken`; `icon-button.border` → `border.default`; `icon-button.icon` → `text.primary`.
+- Colour: `icon-button.background` → `surface.panel`; `icon-button.background-hover` → `surface.sunken`; `icon-button.border` → `border.input` (F-07, Owner 2026-10-02: matches the Input border so an icon button beside a field reads as one row); `icon-button.icon` → `text.primary`.
 - Spacing and shape: `icon-button.padding` → `space.3` (MD); `icon-button.sm.padding` → `space.2` (SM); `icon-button.radius` → `radius.sm`.
 - Focus: `focus.ring` + `focus.glow`. Disabled: `opacity.disabled`.
 

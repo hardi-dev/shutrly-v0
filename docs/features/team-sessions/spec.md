@@ -125,12 +125,12 @@ Field rules: BR-TEAM-004 (member), BR-TEAM-005 (roles), BR-TEAM-006 (assignment)
 ## Assumptions (low-risk, reversible — confirm or change anytime)
 - **A-1 Routes:** `/w/[workspaceId]/team` (*Anggota*, with `/team/archived` for *Arsip*) and `/team/roles` (*Peran*).
   - There is no member detail page; members are edited in a dialog, as clients are in F-06.
-  - The tabs work like F-05 *Layanan*: Page Header tabs on desktop, Segmented Control on phones.
+  - The tabs are *Aktif · Arsip · Peran* and work like F-05 *Layanan*: Page Header tabs on desktop, Segmented Control on phones. On phones a member row shows the roles as its meta; the number is reached through ⋯ › *Buka WhatsApp*.
   - *Tim* stays in the sidebar under *Katalog*, as on phones today; it isn't added to the bottom nav.
 - **A-2 Assignments only on stored projects:** the team is staffed on the project detail page. *Proyek baru* doesn't offer it, because its sessions aren't stored until the project is saved.
 - **A-3 Lists:** members are ordered by name ignoring case, with ties broken by creation time. Search is server-side over the selected filter and kept in `?q=`, with 30 per page and keyset paging. Roles are listed by name.
 - **A-4 Order of assignments:** within a session, by creation time, both in *Atur tim* and in the avatar group.
-- **A-5 Inline role creation:** creating a role from the member form is a convenience and follows the same BR-TEAM-005 validation.
+- **A-5 Inline role creation:** the Peran dropdown ends with *Tambah peran baru*. It opens the *Tambah peran* dialog on top; after saving, the new role is selected in the member form. The same BR-TEAM-005 validation applies.
 - **A-7 Undo:** *Arsipkan* applies immediately, with an undo toast.
 - **A-8 Audit:** members, roles and assignments store `createdAt`, `updatedAt` and `updatedBy`, and a member also stores `archivedAt`. There is no history.
 - **A-9 Seeding:** the three roles are created with each new workspace and backfilled by migration for existing ones, the same way F-05 seeds item definitions.

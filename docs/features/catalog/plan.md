@@ -264,7 +264,7 @@ describe("Tabs (C45)", () => {
 
 **Files:** create the eight `features/booking/domain/*` units.
 
-- [ ] **Step 1: Failing tests.**
+- [x] **Step 1: Failing tests.**
 
 ```ts
 // catalog-name.test.ts
@@ -423,8 +423,8 @@ describe("booking fields (BR-CAT-006, A-3)", () => {
   - `default-item-definitions.test.ts`: AC-CAT-001 the four definitions in order; each passes `findCatalogNameProblem` and `findDefinitionTypeProblem`.
   - `catalog-order.test.ts`: AC-CAT-005 *Wisuda Basic*, *Wisuda Plus*, then archived *Wisuda Lama*.
   - `item-summary.test.ts`: AC-CAT-005 `summariseServiceItems` of Foto edit 25 foto, Foto cetak 5 lembar, Jumlah orang 1–2 orang, Durasi 4 jam → `25 foto · 5 lembar · 1–2 orang` (max 3); an item with no unit uses the lower-cased definition name (`2 album`).
-- [ ] **Step 2:** run → FAIL.
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** run → FAIL.
+- [x] **Step 3: Implement.**
 
 ```ts
 // catalog-name.ts
@@ -663,7 +663,7 @@ export function sortCatalogEntries<T extends { readonly name: string; readonly i
 
 `item-summary.ts`: `summariseServiceItems(items: readonly SummaryItem[], max = 3): string` joins `"<formatted value> <unit ?? name.toLowerCase()>"` with ` · `, where a range renders `min–max` (en dash) and values go through `formatQuantity`. `SummaryItem = { name; unit: string | null; value: PackageValue }` in `.types.ts`.
 
-- [ ] **Step 4:** gate → PASS. Commit `feat(booking): add catalog domain rules`.
+- [x] **Step 4:** gate → PASS. Commit `feat(booking): add catalog domain rules`.
 
 ### Task 6: Schema and migrations
 

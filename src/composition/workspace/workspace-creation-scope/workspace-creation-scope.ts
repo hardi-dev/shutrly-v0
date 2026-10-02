@@ -2,6 +2,7 @@ import "server-only";
 
 import { createDrizzleMessageTemplateRepository } from "@/adapters/db/message-template-repository/drizzle-message-template-repository";
 import { createDrizzleWorkspaceRepository } from "@/adapters/db/workspace-repository/drizzle-workspace-repository";
+import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-source-repository/drizzle-workspace-source-repository";
 
 import { withRequestDb } from "../../request-db/request-db";
 import type { WorkspaceCreationScope } from "./workspace-creation-scope.types";
@@ -20,6 +21,7 @@ export function withWorkspaceCreationScope<T>(
       work({
         repository: createDrizzleWorkspaceRepository(tx),
         templates: createDrizzleMessageTemplateRepository(tx),
+        sources: createDrizzleWorkspaceSourceRepository(tx),
       }),
     ),
   );

@@ -1,15 +1,15 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `codex/message-templates-shell-v3`.
+Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 IN PROGRESS) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `feat/source-config`.
 
-## Current handoff — F-04 Source configuration PLANNED (2026-10-02)
+## Current handoff — F-04 Source configuration IN PROGRESS (2026-10-02)
 
 - **Spec (rescoped by the Owner 2026-10-01):** Owner-managed photo sources. Only Google Drive can be added; Dropbox, OneDrive, Amazon S3 and Custom URL show as *Segera hadir*. Every workspace is seeded with *Google Drive* (BR-SRC-005/006). Rename, deactivate/reactivate and delete; no link checker. Nav *Sumber klien* → **Sumber foto** (`folder-open`, route `photo-sources`). See [spec.md](features/source-config/spec.md), AC-SRC-001…017.
 - **Design APPROVED (2026-10-02):** 24 frames in `source-config.pen` (library import prefix `W:`), exports in `features/source-config/exports/`. See [design.md](features/source-config/design.md).
-- **Library promotion (Owner 2026-10-01):** C12 generalised to **Status Chip** (Stage Chip kept as presets), **List Card Item/Two-line + Skeleton** (C42), new **C44 Option Card**. 36 tokens added: 585 total, checksum `284a052f` (library = repository). Specs: `status-chip.md`, `option-card.md`, `list-card.md`. None of these exist in code yet; the F-04 plan builds them first.
-- **Plan (2026-10-02):** [technical-design.md](features/source-config/technical-design.md) + [plan.md](features/source-config/plan.md), 14 tasks: (1) icons + StatusChip, (2) ListCardItem + Skeleton, (3) OptionCardGroup, (4) page-actions slot, (5) domain, (6) schema + migrations 0004/0005 — **Owner applies**, (7) application, (8) Drizzle repo + integration, (9) composition + actions + creation seeding, (10) nav/route, (11) screen, (12) add/rename dialogs, (13) row actions/delete, (14) E2E + record. New bounded context `src/features/gallery`. No new ADR (reuses ADR-016).
-- **Next:** `/sdv:build-feature source-config 1`.
+- **Library promotion (Owner 2026-10-01):** C12 generalised to **Status Chip**, **List Card Item/Two-line + Skeleton** (C42), and **C44 Option Card**. 585 tokens, checksum `284a052f` (library = repository).
+- **Build:** all 14 tasks are committed on `feat/source-config`, including the source list, responsive dialogs, row actions, tenant-scoped persistence and E2E journeys. Migrations 0004/0005 were applied by the Owner. See [technical-design.md](features/source-config/technical-design.md#implementation-record-2026-10-02) for the implementation record and AC map.
+- **Next:** `/sdv:verify-feature source-config`.
 
 ## Previous handoff — F-03 Message templates DONE (2026-10-01)
 

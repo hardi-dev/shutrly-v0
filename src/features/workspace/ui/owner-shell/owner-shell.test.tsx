@@ -66,7 +66,7 @@ describe("MobileWorkspaceSheet", () => {
         .map((button) => button.getAttribute("aria-label"))
         .filter(Boolean),
     ).toEqual(
-      expect.arrayContaining(["Layanan", "Tim", "Template pesan", "Sumber klien", "Pengaturan"]),
+      expect.arrayContaining(["Layanan", "Tim", "Template pesan", "Sumber foto", "Pengaturan"]),
     );
     const labels = screen.getAllByRole("button").map((button) => button.textContent);
     expect(labels.indexOf("Layanan")).toBeLessThan(labels.indexOf("Tim"));
@@ -78,6 +78,25 @@ describe("MobileWorkspaceSheet", () => {
 });
 
 describe("OwnerShell sub-pages", () => {
+  it("renders the desktop page actions slot", () => {
+    render(
+      <OwnerShell
+        workspaceId="A"
+        workspaceName="Aster Wedding"
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        title="Dasbor"
+        workspaces={workspaces}
+        onSwitch={vi.fn()}
+        onCreate={vi.fn()}
+      >
+        <p>isi</p>
+      </OwnerShell>,
+    );
+
+    expect(document.querySelector("#owner-page-actions")).toBeInTheDocument();
+  });
+
   it("F-17 a matching sub-page sets the heading and the parent", () => {
     render(
       <OwnerShell

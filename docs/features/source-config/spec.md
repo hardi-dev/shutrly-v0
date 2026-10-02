@@ -1,7 +1,7 @@
 # Feature: Source configuration (photo sources)
 
 ID: F-04 · Slug: `source-config`
-Status: PLANNED (2026-10-02, [technical-design.md](technical-design.md) · [plan.md](plan.md)); designed 2026-10-02 ([design.md](design.md)); specified 2026-10-01, rescoped the same day: Owner-managed sources, no link checker · Journeys: none directly; prepares J-04 and J-06 (F-09 gallery sources)
+Status: IN PROGRESS (2026-10-02, [technical-design.md](technical-design.md) · [plan.md](plan.md)); designed 2026-10-02 ([design.md](design.md)); specified 2026-10-01, rescoped the same day: Owner-managed sources, no link checker · Journeys: none directly; prepares J-04 and J-06 (F-09 gallery sources)
 Consumer: F-09 `gallery` (a gallery source picks one active workspace source)
 
 ## Goal

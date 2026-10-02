@@ -20,9 +20,9 @@ As a photographer (Owner), I want to create a project for a client from one of m
 ## Inputs
 | Screen | Fields |
 |---|---|
-| Proyek (list) | search (title or client name) · filter *Berjalan* / *Selesai* / *Dibatalkan* (A-4) · list title *Daftar proyek* with the count of the selected filter · per project: title, client, service, event date, status · page action *Proyek baru* |
+| Proyek (list) | search (title or client name) · tabs *Berjalan* / *Selesai* / *Dibatalkan* (A-4) · filter button → *Filter proyek* (A-11) · list title *Daftar proyek* with the count of the selected filter · per project: title, client, service, event date (*Acara*), status and a row menu (⋯) · page action *Proyek baru* |
 | Proyek baru | client (active clients, searchable; *Tambah klien baru* opens the F-06 client dialog) · service (active services, grouped by category) · title (prefilled, A-2) · event date (optional) · agreed price (prefilled with the service's base price) · the service's booking fields, in its order · internal notes (optional) · read-only summary of the service's package items · actions *Simpan draf* and *Buat proyek* |
-| Project detail | header: title, status, client, event date · status action (A-5) · menu: *Batalkan proyek* / *Hapus draf* · **Info:** client, service (origin), event date, agreed price, notes · **Item paket:** snapshotted items (name, value, unit, selection type) · **Field booking:** snapshotted fields and their values |
+| Project detail | header: title, status, client, event date · status action (A-5) · menu: the row-menu items for its status (*Chat WhatsApp*, *Batalkan proyek* / *Hapus draf*) · **Info:** client, service (origin), event date, agreed price, notes · **Item paket:** snapshotted items (name, value, unit, selection type) · **Field booking:** snapshotted fields and their values |
 | Ubah info | title · event date · agreed price · notes (agreed price only while the deal is editable, BR-PRJ-009) |
 | Item paket form | add: definition (active, not yet in the project) and value · edit: value only (`NUMBER` one number, `RANGE` min and max) |
 | Field booking form | the snapshotted fields with their stored values, edited by type |
@@ -49,10 +49,32 @@ Field rules: BR-PRJ-008 (title, event date, notes, agreed price), BR-PRJ-002 (bo
 - **After shooting starts:** from `SHOOTING` on, the deal is read-only. Only title, event date and notes can still change (A-6).
 - **Advance status (BR-PRJ-004):** the header shows the next manual step: *Konfirmasi booking* (`DRAFT → BOOKED`), *Mulai pemotretan* (`BOOKED → SHOOTING`), *Selesai pemotretan* (`SHOOTING → POST_PROCESSING`). Each is one click with no confirmation, followed by a toast. Later statuses come from F-12.
 - **Cancel (`BOOKED` or `SHOOTING`, BR-PRJ-010):** *Batalkan proyek* asks for confirmation, with a reason that is required from `SHOOTING`. The project becomes `CANCELLED`, recording actor, time and reason (BR-AUD-001). It moves to *Dibatalkan* and becomes read-only.
+- **Row menu (⋯) on the list (Owner 2026-10-02):** every row has a menu built from the next step for its status, *Ubah info*, a *Kirim ke klien* group, and the destructive action. The detail page's menu offers the same items. The link to the detail page is the whole text of the *Proyek* cell (title and *client · service*); the rest of the row isn't a link.
+
+  | Status | Project | *Kirim ke klien* | Destructive |
+  |---|---|---|---|
+  | `DRAFT` | *Konfirmasi booking* · *Ubah info* | *Chat WhatsApp* | *Hapus draf* |
+  | `BOOKED` | *Mulai pemotretan* · *Ubah info* | *Chat WhatsApp* | *Batalkan proyek* |
+  | `SHOOTING` | *Selesai pemotretan* · *Ubah info* | *Chat WhatsApp* | *Batalkan proyek* |
+  | `POST_PROCESSING`, `DELIVERED` | *Ubah info* | *Chat WhatsApp* | — |
+  | `COMPLETED`, `CANCELLED` | — | *Chat WhatsApp* | — |
+
+  - **Order:** the step and *Ubah info* first; a divider, then the *Kirim ke klien* group under its label; a divider, then the destructive item.
+  - **Chat WhatsApp (BR-MSG-001):** the fallback when no message template applies to the project, which in F-07 is always. It opens a WhatsApp chat with the client's stored number (BR-CLI-002) in a new tab, with no prefilled text. Nothing is sent or stored by the app. Once later features add template items, *Chat WhatsApp* shows only when none of them applies (Owner 2026-10-02).
+  - **Client without a number:** the group holds *Tambah nomor WhatsApp* instead, which opens the F-06 *Ubah klien* dialog; after saving, the menu offers *Chat WhatsApp*.
+  - **Later features** add their template messages to this group, labelled by what the message does (*Kirim invoice*, *Kirim link galeri* …), and don't add separate menus. The target menus are drawn in `projects.pen` › *Row menu per status / Target* and listed in `feature-map.md` › Project menu.
+  - **Behaviour:** status steps, cancel and delete work exactly as on the detail page (same confirmations, errors and toasts), except that the list stays open and refreshes the row. *Ubah info* opens the same dialog.
 - **Delete a draft (BR-PRJ-010):** *Hapus draf* asks for confirmation (*Hapus draf "{title}"?*). The project and its snapshots are deleted, and the list opens with a toast.
 - **Search and filter:**
   - Search narrows the selected filter to projects whose title or client name contains the text, ignoring case.
   - No match shows *Tidak ada proyek yang cocok* with *Hapus pencarian*.
+- **Filter (A-11, Owner 2026-10-02):** the icon button next to the search opens *Filter proyek*, a modal on desktop and a bottom sheet on phones. It holds:
+  - **Status:** a dropdown with a checkbox per status (Multi-select), only on *Berjalan* (*Draf*, *Dibooking*, *Pemotretan*, *Pascaproduksi*, *Terkirim*);
+  - **Tanggal acara:** *Dari* and *Sampai* dates, plus *Sertakan proyek tanpa tanggal*;
+  - **Layanan:** several services, archived ones included;
+  - **Klien:** one client.
+
+  *Terapkan* applies the filters together with the search inside the selected tab; *Reset* clears them. While filters are active, the button shows a red counter with the number of active filter groups (Status, Tanggal acara, Layanan, Klien). There is no text label and no chip row.
 - **No projects yet:**
   - *Berjalan* shows *Belum ada proyek* with *Proyek baru*.
   - *Selesai* shows *Belum ada proyek yang selesai*.
@@ -140,9 +162,18 @@ Field rules: BR-PRJ-008 (title, event date, notes, agreed price), BR-PRJ-002 (bo
   - an optional field left empty stores no value.
 - **A-4 List:**
   - *Berjalan* is `DRAFT` … `DELIVERED`, *Selesai* is `COMPLETED`, and *Dibatalkan* is `CANCELLED`;
-  - order is by event date, nearest first and projects without a date last, then by creation time, newest first;
+  - order (Owner 2026-10-02):
+    - *Berjalan* is by event date, earliest first;
+    - *Selesai* and *Dibatalkan* are by event date, latest first;
+    - in every filter, projects without a date come last, and ties go by creation time, newest first;
   - 30 per page, keyset paging, and the count ignores the search, as in F-06 (A-5, A-10);
   - the query is kept in the URL (`?q=`).
+- **A-11 Filter parameters:**
+  - filters are kept in the URL next to `?q=`, so a reload or a shared link keeps them;
+  - a status filter on *Selesai* or *Dibatalkan* is ignored;
+  - *Dari* after *Sampai* is a field error on *Sampai*;
+  - the list count stays the tab total, as for the search;
+  - no match shows the same *Tidak ada proyek yang cocok* state, with *Hapus pencarian* also clearing the filters.
 - **A-5 Status labels:** *Draf*, *Dibooking*, *Pemotretan*, *Pascaproduksi*, *Terkirim*, *Selesai*, *Dibatalkan*, shown with the Status Chip.
 - **A-6 Title, date and notes:**
   - these aren't part of the deal, so they stay editable in every status except `CANCELLED`;
@@ -161,6 +192,7 @@ Field rules: BR-PRJ-008 (title, event date, notes, agreed price), BR-PRJ-002 (bo
 ## Dependencies
 - F-05 Catalog: the active services, their items, booking fields and currency, plus the delete guards for services and definitions.
 - F-06 Clients: the active clients, the client dialog for inline creation, and the delete guard.
+- F-08 Sessions: the list's *Acara* cell is drawn with two lines, *{weekday}, {date} · {time}* and the location below. Time and location belong to sessions, not to the project (Owner 2026-10-02), so F-07 shows only the event date and F-08 fills in the time and location of the project's next session.
 - F-08 to F-15 build on the project. F-07 adds no placeholders for their sections (sessions, team, gallery, invoices, add-ons).
 
 ## Out of Scope

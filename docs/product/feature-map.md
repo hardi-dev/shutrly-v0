@@ -25,6 +25,17 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-16 | Operational hardening (isolation, abuse, concurrency, provider-failure tests; backups; caching review) | `hardening` | constitution C-004..C-006 | — | TODO |
 | F-17 | App Shell revamp (desktop/mobile navigation, workspace switcher, page header, content shell, responsive transitions) | `app-shell-revamp` | BR-WS-002..003, BR-WS-006..007, C-007..008 | J-01 | DONE (2026-10-01) |
 
+## Project menu (F-07 row and detail menu)
+F-07 defines one menu per project (row ⋯ on the list and the detail page menu) with a **Kirim ke klien** group (Owner 2026-10-02). Its items are named after the message template they load. Later features add their items to that menu, shown only when their condition holds; each template message shows a preview (`communications/ui/message-preview`) before opening WhatsApp (BR-MSG-001). *Chat WhatsApp* (no template) shows only when no template item applies; in F-07 that is always. Target menus: `docs/features/projects/projects.pen` › *Row menu per status / Target*.
+
+| Feature | Item | Shown when | Template |
+|---|---|---|---|
+| F-10 | *Kirim link galeri* (password re-entry, BR-MSG-003) | the project has a gallery; `SHOOTING` to `COMPLETED` | `GALLERY_SHARE` |
+| F-11 | *Ingatkan pilih foto* | a selection is open | `SELECTION_REMINDER` |
+| F-12 | *Tandai selesai* (step) · *Kirim hasil akhir* | `DELIVERED` | `FINAL_DELIVERY` |
+| F-14 | *Kirim invoice* · *Ingatkan pembayaran* | an invoice exists · it has a balance | `INVOICE_SHARE` · `PAYMENT_REMINDER` |
+| Planned (Owner 2026-10-02, feature not yet scheduled) | *Kirim konfirmasi booking* | `DRAFT`, `BOOKED` | new type `BOOKING_CONFIRMATION`: changes BR-MSG-002 (five → six types), the F-03 catalogue and the default seed; needs its own discovery |
+
 ## Next up
 **F-07 Projects** — SPECIFIED 2026-10-02 on `feat/projects` (branched from `feat/clients`, because a project needs a client) ([spec.md](../features/projects/spec.md), AC-PRJ-001…026). Owner decisions:
 - status steps are manual, and sessions never move the status;

@@ -23,7 +23,7 @@ Covers: BR-PRJ-004 (A-4)
 
 **Given** the projects from AC-PRJ-001
 **When** the Owner selects *Selesai*, then *Dibatalkan*
-**Then** *Selesai* shows only *Family Tono*, and *Dibatalkan* shows only *Wisuda Andi*, each with its count.
+**Then** *Selesai* shows only *Family Tono*, and *Dibatalkan* shows only *Wisuda Andi*, each with its count. With several projects, *Selesai* and *Dibatalkan* list the latest event date first, and projects without a date last (A-4).
 
 ## AC-PRJ-003 — Empty lists
 Covers: C-007
@@ -244,3 +244,23 @@ Covers: C-007, C-008
 **Given** the list, *Proyek baru*, detail and dialogs at desktop and phone widths
 **When** they are used with the keyboard only and checked with axe
 **Then** every control is reachable and labelled, and dialogs trap and return focus. Field errors are announced. Status chips have text, not color only. There are no serious axe violations.
+
+## AC-PRJ-027 — Row menu on the list
+Covers: BR-PRJ-004, BR-PRJ-010, BR-MSG-001, BR-CLI-002 (A-10)
+
+**Given** the projects from AC-PRJ-001, where every client has a WhatsApp number except Sari's
+**When** the Owner opens the ⋯ menu of each row
+**Then** each menu matches the spec's row-menu table, with the step and *Ubah info* first, then the *Kirim ke klien* group, then the destructive item, each part separated by a divider:
+- *Wisuda Rina* (`BOOKED`): *Mulai pemotretan*, *Ubah info*, *Chat WhatsApp*, *Batalkan proyek*;
+- *Prewed Dewi* (`SHOOTING`): *Selesai pemotretan*, *Ubah info*, *Chat WhatsApp*, *Batalkan proyek*;
+- *Wisuda Sari* (`DRAFT`, client without a number): *Konfirmasi booking*, *Ubah info*, *Tambah nomor WhatsApp*, *Hapus draf*;
+- *Family Tono* (`COMPLETED`) and *Wisuda Andi* (`CANCELLED`): *Chat WhatsApp* only.
+
+*Mulai pemotretan* from *Wisuda Rina*'s menu changes its chip to *Pemotretan* with a toast, and the list stays open. A stale move shows *Status proyek sudah berubah* and refreshes the list. *Chat WhatsApp* opens `https://wa.me/<number>` for the client's stored number in a new tab. *Tambah nomor WhatsApp* opens the client dialog, and after saving a number the menu shows *Chat WhatsApp*.
+
+## AC-PRJ-028 — Filter the list
+Covers: A-11
+
+**Given** the projects from AC-PRJ-001
+**When** the Owner opens *Filter proyek*, ticks *Dibooking* and *Pemotretan*, sets *Tanggal acara* from 1 Okt 2026 to 30 Nov 2026, and selects *Terapkan*
+**Then** *Berjalan* shows only *Prewed Dewi* and *Wisuda Rina*, and the filter button shows a red counter *2*. The filters stay in the URL after a reload. *Reset* clears them and removes the counter. *Sampai* before *Dari* shows a field error and applies nothing.

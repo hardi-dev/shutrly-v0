@@ -1,7 +1,7 @@
 ---
 description: Explain the complete SDV workflow and recommend the next command
 argument-hint: "[project, feature, or question]"
-model: claude-haiku-4-5-20251001
+model: claude-sonnet-5-5
 effort: low
 ---
 

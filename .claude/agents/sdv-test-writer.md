@@ -1,7 +1,7 @@
 ---
 name: sdv-test-writer
 description: Writes unit and integration tests for one planned iteration, mapped to AC-* and BR-* IDs. Use from /sdv:build-feature for vitest unit tests (co-located x.test.ts) and tests/integration. Not for e2e.
-model: claude-haiku-4-5-20251001
+model: claude-sonnet-5-5
 tools: Read, Grep, Glob, Edit, Write, Bash
 ---
 

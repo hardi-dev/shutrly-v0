@@ -3,21 +3,31 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import type { ProjectFilter } from "@/features/booking/domain/project-list-query/project-list-filter.types";
 import { PROJECT_SEARCH_DEBOUNCE_MS } from "@/features/booking/domain/project-list-query/project-list-query";
 import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 import { Input } from "@/ui/primitives/input/input";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
-import { projectTabPath } from "./project-tab-path";
+import { projectListUrl } from "./project-tab-path";
 
 /** Updates the current project-tab URL after a short debounce; clearing it drops `?q=` (AC-PRJ-004). */
 export function ProjectSearchField({
   workspaceId,
   tab,
   q,
+  filter,
   resultCount,
-}: Readonly<{ workspaceId: string; tab: ProjectTab; q: string; resultCount: number }>) {
-  const { value, change, clear } = useProjectSearch(q, projectTabPath(workspaceId, tab));
+}: Readonly<{
+  workspaceId: string;
+  tab: ProjectTab;
+  q: string;
+  filter: ProjectFilter;
+  resultCount: number;
+}>) {
+  const { value, change, clear } = useProjectSearch(q, (text) =>
+    projectListUrl(workspaceId, tab, text, filter),
+  );
   return (
     <>
       <div className="w-full md:w-[320px]">
@@ -41,7 +51,7 @@ export function ProjectSearchField({
   );
 }
 
-function useProjectSearch(q: string, pathname: string) {
+function useProjectSearch(q: string, urlFor: (text: string) => string) {
   const router = useRouter();
   const [value, setValue] = useState(q);
   const [syncedQ, setSyncedQ] = useState(q);
@@ -62,14 +72,14 @@ function useProjectSearch(q: string, pathname: string) {
     window.clearTimeout(timer.current);
     timer.current = window.setTimeout(() => {
       timer.current = undefined;
-      router.replace(next ? `${pathname}?q=${encodeURIComponent(next)}` : pathname);
+      router.replace(urlFor(next));
     }, PROJECT_SEARCH_DEBOUNCE_MS);
   };
   const clear = () => {
     window.clearTimeout(timer.current);
     timer.current = undefined;
     setValue("");
-    router.replace(pathname);
+    router.replace(urlFor(""));
   };
   return { value, change, clear };
 }

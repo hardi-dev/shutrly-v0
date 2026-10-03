@@ -177,6 +177,15 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       .map((row) => ({ id: row.id, name: row.name, isArchived: row.isArchived }));
   }
 
+  async findFilterClient(
+    context: WorkspaceContext,
+    id: string,
+  ): Promise<FilterClientOption | null> {
+    if (context.workspaceId !== this.workspaceId) return null;
+    const found = this.clients.find((row) => row.id === id);
+    return found ? { id: found.id, name: found.name, isArchived: found.isArchived } : null;
+  }
+
   async countSessions(context: WorkspaceContext, id: string): Promise<number | null> {
     const stored = this.projects.find(
       (row) => row.id === id && row.workspaceId === context.workspaceId,

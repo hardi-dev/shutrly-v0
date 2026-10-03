@@ -1,12 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { Button } from "@/ui/primitives/button/button";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { ProjectFilterButton } from "../project-filter-button/project-filter-button";
+import { ProjectFilterDialog } from "../project-filter-dialog/project-filter-dialog";
 import { ProjectList } from "../project-list/project-list";
 import { ProjectSearchField } from "../project-search-field/project-search-field";
 import { projectTabPath } from "../project-search-field/project-tab-path";
@@ -24,31 +27,45 @@ export function ProjectsScreen(props: Readonly<ProjectsScreenProps>) {
     tab: props.tab,
     q: props.q,
     initial: props.initialPage,
+    filter: props.filter,
     action: props.loadMoreAction,
   });
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const handleOpenFilter = () => {
+    setIsFilterOpen(true);
+  };
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)">
-      <ProjectsBody {...props} rows={pager.rows} />
+      <ProjectsBody {...props} rows={pager.rows} onOpenFilter={handleOpenFilter} />
+      <ProjectFilterDialog
+        isOpen={isFilterOpen}
+        onOpenChange={setIsFilterOpen}
+        workspaceId={props.workspaceId}
+        tab={props.tab}
+        q={props.q}
+        filter={props.filter}
+        services={props.services}
+        initialClient={props.filterClient}
+        searchClientsAction={props.searchClientsAction}
+      />
       {pager.hasMore ? <LoadMore isLoading={pager.isLoading} onLoadMore={pager.loadMore} /> : null}
     </main>
   );
 }
 
 function ProjectsBody(
-  props: Readonly<ProjectsScreenProps & { rows: ProjectsScreenProps["initialPage"]["items"] }>,
+  props: Readonly<
+    ProjectsScreenProps & {
+      rows: ProjectsScreenProps["initialPage"]["items"];
+      onOpenFilter: () => void;
+    }
+  >,
 ) {
   const isMobile = useMobileViewport();
   const newButton = (label: string) => (
     <NewProjectButton workspaceId={props.workspaceId} label={label} />
   );
-  const search = (
-    <ProjectSearchField
-      workspaceId={props.workspaceId}
-      tab={props.tab}
-      q={props.q}
-      resultCount={props.rows.length}
-    />
-  );
+  const search = <ProjectsSearchRow {...props} />;
   const emptyState = <ProjectsEmpty workspaceId={props.workspaceId} tab={props.tab} q={props.q} />;
   if (isMobile) {
     return (
@@ -78,6 +95,28 @@ function ProjectsBody(
         search={search}
       />
     </>
+  );
+}
+
+function ProjectsSearchRow(
+  props: Readonly<
+    ProjectsScreenProps & {
+      rows: ProjectsScreenProps["initialPage"]["items"];
+      onOpenFilter: () => void;
+    }
+  >,
+) {
+  return (
+    <div className="flex w-full items-center gap-(--space-2)">
+      <ProjectSearchField
+        workspaceId={props.workspaceId}
+        tab={props.tab}
+        q={props.q}
+        filter={props.filter}
+        resultCount={props.rows.length}
+      />
+      <ProjectFilterButton tab={props.tab} filter={props.filter} onPress={props.onOpenFilter} />
+    </div>
   );
 }
 

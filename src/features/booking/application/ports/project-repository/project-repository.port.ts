@@ -162,6 +162,11 @@ export interface ProjectRepositoryPort {
     text: string,
     limit: number,
   ) => Promise<readonly FilterClientOption[]>;
+  /** The client named in the URL's `client` param, or null when it is not in the workspace. */
+  readonly findFilterClient: (
+    context: WorkspaceContext,
+    id: string,
+  ) => Promise<FilterClientOption | null>;
   /** Null when the project does not exist in the workspace. */
   readonly countSessions: (context: WorkspaceContext, id: string) => Promise<number | null>;
   readonly listActiveServiceOptions: (

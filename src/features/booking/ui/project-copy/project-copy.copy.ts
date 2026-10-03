@@ -1,3 +1,9 @@
+const TAB_NAME = {
+  ACTIVE: "Aktif",
+  COMPLETED: "Selesai",
+  CANCELLED: "Dibatalkan",
+} as const;
+
 const COUNT_NOUN = {
   ACTIVE: "aktif",
   COMPLETED: "selesai",
@@ -163,4 +169,25 @@ export const PROJECT_COPY = {
   loadingMore: "Memuat…",
   listSubtitleDesktop: "Setiap pemotretan yang kamu pegang, dari draf sampai selesai.",
   listSubtitleMobile: "Pemotretan dari draf sampai selesai.",
+  filterButton: "Filter",
+  filterBadgeLabel: "aktif",
+  filterTitle: "Filter proyek",
+  filterDescription: (tab: "ACTIVE" | "COMPLETED" | "CANCELLED") =>
+    `Berlaku untuk tab ${TAB_NAME[tab]}.`,
+  filterStatus: "Status",
+  filterStatusPlaceholder: "Semua status",
+  filterSchedule: "Jadwal",
+  filterFrom: "Dari",
+  filterTo: "Sampai",
+  filterDatePlaceholder: "Pilih tanggal",
+  filterNoSchedule: "Sertakan proyek tanpa jadwal",
+  filterService: "Layanan",
+  filterServicePlaceholder: "Semua layanan",
+  filterClient: "Klien",
+  filterClientPlaceholder: "Semua klien",
+  filterClientGroup: (count: number) => `KLIEN · ${String(count)} COCOK`,
+  filterArchivedClient: (name: string) => `${name} (diarsipkan)`,
+  filterToBeforeFrom: "Tanggal Sampai harus sama atau setelah Dari.",
+  filterReset: "Reset",
+  filterApply: "Terapkan",
 } as const;

@@ -125,6 +125,10 @@ export async function loadProjects(
         page: await listProjects(projectList, verified.context, query, today),
         count: await countProjects(projectList, verified.context, tab),
         services: await loadFilterServices(projects, verified.context),
+        filterClient:
+          filter.clientId === null
+            ? null
+            : await projects.findFilterClient(verified.context, filter.clientId),
       };
     });
   } catch (error) {

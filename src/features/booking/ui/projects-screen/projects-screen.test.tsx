@@ -22,6 +22,20 @@ vi.mock("@/ui/patterns/page-actions/page-actions", () => ({
   ),
 }));
 
+const FILTER_PROPS = {
+  filter: {
+    statuses: [],
+    from: null,
+    to: null,
+    includeNoSchedule: false,
+    serviceIds: [],
+    clientId: null,
+  },
+  services: [],
+  filterClient: null,
+  searchClientsAction: vi.fn(() => Promise.resolve([])),
+} as const;
+
 const WITH_SESSION: ProjectListRow = {
   id: "p1",
   title: "Wisuda Basic — Rina",
@@ -64,6 +78,7 @@ function renderScreen(
       q={overrides.q ?? ""}
       initialPage={{ items: rows, nextCursor: overrides.nextCursor ?? null }}
       loadMoreAction={loadMore}
+      {...FILTER_PROPS}
     />,
   );
   return loadMore;
@@ -104,6 +119,7 @@ describe("ProjectsScreen", () => {
         q=""
         initialPage={{ items: [], nextCursor: null }}
         loadMoreAction={vi.fn()}
+        {...FILTER_PROPS}
       />,
     );
     expect(screen.getByText("Belum ada proyek")).toBeInTheDocument();
@@ -125,7 +141,12 @@ describe("ProjectsScreen", () => {
   it("AC-PRJ-005 appends the next page when Muat lebih banyak is pressed", async () => {
     const loadMore = renderScreen([WITH_SESSION], { nextCursor: "p1" });
     await userEvent.click(screen.getByRole("button", { name: "Muat lebih banyak" }));
-    expect(loadMore).toHaveBeenCalledWith("ws", { tab: "ACTIVE", q: "", afterId: "p1" });
+    expect(loadMore).toHaveBeenCalledWith("ws", {
+      tab: "ACTIVE",
+      q: "",
+      filter: FILTER_PROPS.filter,
+      afterId: "p1",
+    });
     expect(await screen.findByRole("link", { name: "Wisuda Basic — Sari" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Wisuda Basic — Rina" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Muat lebih banyak" })).not.toBeInTheDocument();

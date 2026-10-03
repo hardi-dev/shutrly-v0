@@ -184,6 +184,20 @@ async function searchClientsForFilter(
   return rows.map((row) => ({ id: row.id, name: row.name, isArchived: row.archivedAt !== null }));
 }
 
+async function findFilterClient(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  id: string,
+): Promise<FilterClientOption | null> {
+  const row = (
+    await db
+      .select({ id: client.id, name: client.name, archivedAt: client.archivedAt })
+      .from(client)
+      .where(and(eq(client.workspaceId, context.workspaceId), eq(client.id, id)))
+  ).at(0);
+  return row ? { id: row.id, name: row.name, isArchived: row.archivedAt !== null } : null;
+}
+
 async function moveStatus(
   db: DbExecutor,
   context: WorkspaceContext,
@@ -338,6 +352,7 @@ export function createDrizzleProjectRepository(db: DbExecutor): ProjectRepositor
     moveStatus: (context, id, transition, actorId) =>
       moveStatus(db, context, id, transition, actorId),
     countSessions: (context, id) => countSessions(db, context, id),
+    findFilterClient: (context, id) => findFilterClient(db, context, id),
     listServicesForFilter: (context) => listServicesForFilter(db, context),
     searchClientsForFilter: (context, text, limit) =>
       searchClientsForFilter(db, context, text, limit),

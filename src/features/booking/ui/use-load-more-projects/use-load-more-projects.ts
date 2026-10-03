@@ -12,6 +12,7 @@ export function useLoadMoreProjects({
   workspaceId,
   tab,
   q,
+  filter,
   initial,
   action,
 }: Readonly<UseLoadMoreProjectsProps>) {
@@ -28,7 +29,7 @@ export function useLoadMoreProjects({
     if (isLoading || !page.nextCursor || !action) return;
     setIsLoading(true);
     try {
-      const next = await action(workspaceId, { tab, q, afterId: page.nextCursor });
+      const next = await action(workspaceId, { tab, q, filter, afterId: page.nextCursor });
       setPage({ items: [...page.items, ...next.items], nextCursor: next.nextCursor });
     } catch {
       showToast({

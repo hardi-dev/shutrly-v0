@@ -14,7 +14,7 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-05 | Service catalog (categories, item definitions, services, items, booking fields); *Layanan* with tabs, four seeded item definitions (Owner 2026-10-02) | `catalog` | BR-CAT-001..011 | J-02 | DONE (merged to `main` 2026-10-02, PR #3; verify pending) |
 | F-06 | Clients: name, WhatsApp number (normalized, unique per workspace), social-media links; search, archive, delete while unused (Owner 2026-10-02) | `clients` | BR-CLI-001..003, BR-WS-002 | J-03 | DONE (2026-10-03) |
 | F-07 | Project creation from service + snapshots | `projects` | BR-PRJ-*, BR-CAT-003 | J-03 | DONE (2026-10-04; Owner accepted, fidelity pass and keyboard-only a11y tests remain as follow-ups) |
-| F-08 | Team: members (WhatsApp, email, roles), workspace roles, who works which session (*Atur tim*); no fees, no stored session status (sessions themselves moved to F-07, Owner 2026-10-02; scope Owner 2026-10-03) | `team-sessions` | BR-TEAM-001..006 | J-03 | PLANNED (2026-10-04) |
+| F-08 | Team: members (WhatsApp, email, roles), workspace roles, who works which session (*Atur tim*); no fees, no stored session status (sessions themselves moved to F-07, Owner 2026-10-02; scope Owner 2026-10-03) | `team-sessions` | BR-TEAM-001..006 | J-03 | IN PROGRESS (2026-10-04) |
 | F-09 | Gallery, sources, Drive sync | `gallery` | BR-GAL-*, BR-SRC-* | J-04 | TODO |
 | F-10 | Client gallery access (token, password, rate limits, media delivery) | `client-access` | BR-ACC-* | J-04 | TODO |
 | F-11 | Selection groups and client selection | `selection` | BR-SEL-* | J-04 | TODO |
@@ -38,7 +38,7 @@ F-07 defines one menu per project (row ⋯ on the list and the detail page menu)
 | Planned (Owner 2026-10-02, feature not yet scheduled) | *Kirim konfirmasi booking* | `DRAFT`, `BOOKED` | new type `BOOKING_CONFIRMATION`: changes BR-MSG-002 (five → six types), the F-03 catalogue and the default seed; needs its own discovery |
 
 ## Next up
-**F-08 Team** — PLANNED 2026-10-04 (designed 2026-10-03) on `feat/team-sessions` (branched from `feat/projects`, since assignments need sessions) ([spec.md](../features/team-sessions/spec.md)). Owner decisions:
+**F-08 Team** — IN PROGRESS 2026-10-04 (Slice 1 built; planned 2026-10-04, designed 2026-10-03) on `feat/team-sessions` (branched from `feat/projects`, since assignments need sessions) ([spec.md](../features/team-sessions/spec.md)). Owner decisions:
 - each assignment puts one member on one session, in one role;
 - sessions and assignments have no stored status;
 - no money at all: rates, fees and payment tracking moved to F-18 *Team fees* (BR-TEAM-007 deprecated);

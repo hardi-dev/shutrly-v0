@@ -508,7 +508,7 @@ Each slice has a **Read first** list, a **Done when** check and numbered steps. 
 
 **Done when:** a new workspace and an existing one list their roles at `/team/roles`. Add, rename and delete work, with the duplicate and in-use errors. Migrations 0010/0011 are applied to non-production.
 
-- [ ] **1.1 Schema and migrations.**
+- [x] **1.1 Schema and migrations.**
   - Write `schema/booking/team.ts` as in § Rule code, plus the `project_session` unique and the export in `schema/index.ts`.
   - Run `pnpm db:generate --name team`, then `pnpm drizzle-kit generate --custom --name team_role_backfill` and paste the SQL from technical-design.md › Database Changes.
   - Review the SQL: the `project_session` unique comes before the FK that uses it, and nothing is dropped or renamed.
@@ -524,7 +524,7 @@ Each slice has a **Read first** list, a **Done when** check and numbered steps. 
   - Commit, then `pnpm db:migrate`; report the run.
   - Gate: typecheck, lint, test, test:integration.
   - Commit: `feat(team): add team tables and the role backfill migration`.
-- [ ] **1.2 Role domain and seeding.**
+- [x] **1.2 Role domain and seeding.**
   - Write `domain/team-role` (§ Rule code), `seed-default-team-roles` and `TeamRoleRepositoryPort.seedDefaults` in `drizzle-team-role-repository.ts`.
   - `withWorkspaceCreationScope` gains `teamRoles`, and both `createOwner*Workspace` functions call `seedDefaultTeamRoles`.
   - Tests:
@@ -533,20 +533,20 @@ Each slice has a **Read first** list, a **Done when** check and numbered steps. 
     - integration: `AC-TEAM-008` (a new workspace has three roles; running the backfill SQL on a workspace that has *fotografer* adds *Videografer* and *Asisten* only);
     - integration: the creation rollback still leaves no roles (ADR-016).
   - Commit: `feat(team): seed the default team roles with each workspace`.
-- [ ] **1.3 Role use cases and repository.**
+- [x] **1.3 Role use cases and repository.**
   - Write `list-team-roles`, `add-team-role`, `rename-team-role`, `delete-team-role`, `team-results`, `team-errors`, `team-role-input`, `team-ids`, and the rest of `drizzle-team-role-repository.ts` (D-10 usage count, `23505` → `DUPLICATE`, `23503` → recount).
   - Tests:
     - unit with fakes: field errors and `IN_USE` + usage;
     - integration: `AC-TEAM-009` (duplicate *videografer*; usage via a member role, and via an assignment only; delete unused);
     - integration: `AC-TEAM-022` (B's role ID through A → `NOT_FOUND`).
   - Commit: `feat(team): manage team roles`.
-- [ ] **1.4 Composition, actions, route and shell.**
+- [x] **1.4 Composition, actions, route and shell.**
   - Write `team-scope`, `team-flow` (role entries), `app/actions/booking/team.ts` (role actions) and `/team/roles/page.tsx` + `loading.tsx`.
   - `resolveTeamHeading` returns *Tim*, both subtitles and the tabs *Aktif · Arsip · Peran* (D-17); the nav stays active on `/team/*`.
   - `"team"` stays in `COMING_SOON_SECTIONS` until step 2.3. `/team` keeps the *Segera hadir* page; `/team/roles` is its own two-segment route, so `[section]` doesn't catch it.
   - Tests: unit for the heading resolver (three routes) and the action wrappers (revalidate on success).
   - Commit: `feat(team): add the team routes and shell heading`.
-- [ ] **1.5 *Peran* screen.**
+- [x] **1.5 *Peran* screen.**
   - Write `team-copy`, `team-tabs-bar`, `team-roles-screen` (desktop DataTable *Daftar peran*, phone list), `team-role-dialog`, `delete-team-role-dialog` (confirm → blocked) and the toasts.
   - Build from the exports in Read first.
   - Tests (dom):

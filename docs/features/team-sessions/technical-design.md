@@ -371,3 +371,15 @@ See [plan.md](plan.md): six vertical slices by screen, test-first, one commit pe
 - **F-07 code touched:** `findDetail`, the list SQL (`hasTeam`), `DeleteDraftDialog`, `SessionRowActions` and the *Jadwal* rows. The changes are additive, but they need F-07's tests to keep passing; each step runs them.
 - **The three-column FK** is hand-written with `foreignKey` (the helper is two-column). Review the generated SQL for the `project_session` unique constraint *before* the FK that references it.
 - **Nested dialogs:** the role dialog opens over the member dialog (A-5). React Aria supports nested modals; the Slice 2 dialog test covers focus return.
+
+## Implementation record — Slice 1 (2026-10-04)
+
+- **Built:** the four tables and migrations `0010_team` / `0011_team_role_backfill` (applied to the non-production database, additive), role seeding in the workspace-creation scope, role use cases and repository, `team-flow` and role actions, the *Tim* shell heading with *Aktif · Arsip · Peran*, and the *Peran* screen (table on desktop, list on phones, role dialog, delete confirm → blocked) at `/team/roles`.
+- **Checks:** typecheck, ESLint on `src` and `tests`, Prettier, tokens, `pnpm build` and 1109 unit tests pass. Team integration (14: schema, seeding, repository) pass. Team E2E (`tests/e2e/team`) **not verified**: port 3000 is a dev server from another checkout (`~/.codex/worktrees/clients`), so Playwright reused it and `/team/roles` returned 404. A server on another port is no use because `.dev.vars` sets `BETTER_AUTH_URL` to port 3000.
+- **Deviations:**
+  1. The *Peran* phone rows are drawn without a leading element; `ListCardItem` requires one, so they use `user-round-cog` (as F-07's deviation 5).
+  2. The `/team/roles` route files were written in step 1.5 with their screen, not in 1.4, so the build never has a page without its screen.
+  3. A `team-role-row-actions` unit was added (the plan's file list had none) for the roles ⋯ menu.
+  4. The empty roles state (*Belum ada peran*) is not drawn; its copy is marked `// not in Pencil`.
+  5. `/team` keeps *Segera hadir* with the new tabs in the header until step 2.3.
+- **Environment:** `pnpm install` was run once (F-07's `@internationalized/date`). `pnpm lint` also scans another session's `.claude/worktrees/*` and fails there, and needs `NODE_OPTIONS=--max-old-space-size=6144`; the repo's own `src` and `tests` lint clean.

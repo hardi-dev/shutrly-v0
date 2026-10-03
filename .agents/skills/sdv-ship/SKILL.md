@@ -15,4 +15,4 @@ Use the `spec-driven-vibe-coding` skill and run its **ship** workflow for: **$AR
 4. Make sure the docs describe the shipped behavior; write release notes from the skill's `release.md` template.
 5. Ask before any production deploy, push, or other outward-facing action.
 
-Finish with the completion report.
+Finish with the completion report and recommend `$sdv-handoff`.

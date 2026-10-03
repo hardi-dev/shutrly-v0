@@ -21,4 +21,4 @@ Use the `spec-driven-vibe-coding` skill and run its **verify-feature** workflow 
 4. Write `docs/features/<slug>/verification-report.md` listing pass/fail per item and every deviation explicitly, including design-system drift.
 5. Set feature status to `DONE` only if nothing blocking remains.
 
-Finish with the completion report and recommend fixes or `$sdv-ship`.
+Finish with the completion report and recommend fixes or `$sdv-ship`. If the feature is now `DONE`, also recommend `$sdv-handoff`.

@@ -7,6 +7,13 @@ export interface SelectOption {
   readonly description?: string;
   readonly icon?: IconName;
   readonly isDisabled?: boolean;
+  /** Options with the same section render under one group label (services by category). */
+  readonly section?: string;
+}
+
+export interface SelectOptionGroup {
+  readonly section: string | null;
+  readonly options: readonly SelectOption[];
 }
 
 export type SelectProps = FieldNameProps & {

@@ -121,4 +121,45 @@ describe("Select (C19 + Menu Item/Rich)", () => {
     await userEvent.click(screen.getByRole("button", { name: "Jenis nilai" }));
     expect(screen.getByRole("dialog", { name: "Jenis nilai" })).toBeInTheDocument();
   });
+
+  it("AC-PRJ-006 shows a group label per section on desktop", async () => {
+    useMobileViewport.mockReturnValue(false);
+    render(
+      <Select
+        label="Layanan"
+        options={[
+          { id: "a", label: "Wisuda Basic", section: "Wisuda" },
+          { id: "b", label: "Prewed Dua", section: "Prewed" },
+          { id: "c", label: "Wisuda Plus", section: "Wisuda" },
+        ]}
+        value={null}
+        onChange={vi.fn()}
+      />,
+    );
+    await userEvent.click(screen.getByRole("button", { name: /Layanan/ }));
+    const groups = screen.getAllByRole("group");
+    expect(groups.map((group) => group.textContent)).toEqual([
+      "WisudaWisuda BasicWisuda Plus",
+      "PrewedPrewed Dua",
+    ]);
+    expect(screen.getByRole("group", { name: "Wisuda" })).toBeInTheDocument();
+  });
+
+  it("AC-PRJ-006 shows a group label per section in the phone sheet", async () => {
+    useMobileViewport.mockReturnValue(true);
+    render(
+      <Select
+        label="Layanan"
+        options={[
+          { id: "a", label: "Wisuda Basic", section: "Wisuda" },
+          { id: "b", label: "Prewed Dua", section: "Prewed" },
+        ]}
+        value={null}
+        onChange={vi.fn()}
+      />,
+    );
+    await userEvent.click(screen.getByRole("button", { name: /Layanan/ }));
+    expect(screen.getByText("Wisuda")).toBeInTheDocument();
+    expect(screen.getByText("Prewed")).toBeInTheDocument();
+  });
 });

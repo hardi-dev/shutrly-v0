@@ -1,0 +1,154 @@
+"use client";
+
+import { parseDate } from "@internationalized/date";
+import type { DateValue } from "react-aria-components";
+import {
+  Button as AriaButton,
+  Calendar,
+  CalendarCell,
+  CalendarGrid,
+  DatePicker,
+  Dialog,
+  FieldError,
+  Heading,
+  I18nProvider,
+  Label,
+  Popover,
+} from "react-aria-components";
+
+import { cn } from "@/ui/cn/cn";
+import { Icon } from "@/ui/primitives/icon/icon";
+import { TEXT_FIELD_COPY } from "@/ui/primitives/text-field/text-field.copy";
+
+import type { DateFieldDisplay, DateFieldProps } from "./date-field.types";
+
+const LOCALE = "id-ID";
+const FIELD_MESSAGE = "text-(length:--font-size-label)";
+const FORMATS: Readonly<Record<DateFieldDisplay, Intl.DateTimeFormat>> = {
+  date: new Intl.DateTimeFormat(LOCALE, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }),
+  weekday: new Intl.DateTimeFormat(LOCALE, {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }),
+};
+const TRIGGER_CLASS =
+  "flex h-(--component-input-height) w-full items-center gap-(--space-2) rounded-(--component-input-radius) border border-(--component-input-border) bg-(--component-input-background) px-(--component-input-padding-x) text-left text-(length:--font-size-body) text-(--component-input-text) outline-none transition-colors data-hovered:border-(--component-input-border-hover) data-focus-visible:border-(--component-input-border-focus) data-focus-visible:shadow-[inset_0_0_0_1px_var(--component-input-border-focus),0_0_0_4px_var(--color-semantic-focus-glow)] data-disabled:border-(--component-input-border-disabled) data-disabled:bg-(--component-input-background-disabled) data-disabled:text-(--component-input-text-disabled)";
+const NAV_CLASS =
+  "flex size-(--space-9) items-center justify-center rounded-(--component-calendar-day-radius) text-(--component-calendar-day-number) outline-none data-hovered:bg-(--component-calendar-day-background-hover) data-focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]";
+
+/** Formats a YYYY-MM-DD date for display, e.g. "10 Nov 2026" or "Sel, 10 Nov 2026". @param value - the ISO date @param display - with or without the weekday @returns the display text */
+function formatDate(value: string, display: DateFieldDisplay): string {
+  return FORMATS[display].format(new Date(`${value}T00:00:00Z`));
+}
+
+/** Renders a text-field-looking date picker with a calendar popover (C25).
+ * @param props - controlled ISO date and field presentation options
+ * @returns the accessible date field
+ */
+export function DateField(props: Readonly<DateFieldProps>) {
+  const handleChange = (date: DateValue | null) => {
+    props.onChange(date === null ? null : date.toString());
+  };
+  return (
+    <I18nProvider locale={LOCALE}>
+      <DatePicker
+        value={props.value === null ? null : parseDate(props.value)}
+        onChange={handleChange}
+        isDisabled={props.isDisabled}
+        isInvalid={Boolean(props.errorMessage)}
+        validationBehavior="aria"
+        className="flex flex-col gap-(--component-input-gap)"
+      >
+        <DateFieldLabel label={props.label} isOptional={props.isOptional} />
+        <DateFieldTrigger {...props} />
+        {props.errorMessage ? (
+          <FieldError className={cn(FIELD_MESSAGE, "text-(--component-input-error-text)")}>
+            {props.errorMessage}
+          </FieldError>
+        ) : null}
+        <Popover
+          placement="bottom start"
+          offset={4}
+          className="rounded-(--component-menu-radius) border border-(--component-menu-border) bg-(--component-menu-background) p-(--space-3) shadow-[0_var(--elevation-1-offset-y)_var(--elevation-1-blur)_var(--color-semantic-elevation-1-color)]"
+        >
+          <Dialog className="outline-none">
+            <CalendarPanel />
+          </Dialog>
+        </Popover>
+      </DatePicker>
+    </I18nProvider>
+  );
+}
+
+function DateFieldLabel({
+  label,
+  isOptional,
+}: Readonly<Pick<DateFieldProps, "label" | "isOptional">>) {
+  return (
+    <div className="flex items-center gap-(--space-1)">
+      <Label className="text-(length:--font-size-label) font-semibold text-(--component-input-label)">
+        {label}
+      </Label>
+      {isOptional ? (
+        <span className="text-(length:--font-size-label) text-(--component-input-helper)">
+          {TEXT_FIELD_COPY.optionalSuffix}
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+function DateFieldTrigger({
+  value,
+  display,
+  placeholder,
+  errorMessage,
+}: Readonly<Pick<DateFieldProps, "value" | "display" | "placeholder" | "errorMessage">>) {
+  return (
+    <AriaButton
+      className={cn(TRIGGER_CLASS, errorMessage && "border-(--component-input-border-error)")}
+    >
+      <span
+        className={cn(
+          "min-w-0 flex-1 truncate",
+          value === null && "text-(--component-input-placeholder)",
+        )}
+      >
+        {value === null ? (placeholder ?? "") : formatDate(value, display)}
+      </span>
+      <Icon name="calendar" aria-hidden="true" className="text-(--component-input-placeholder)" />
+    </AriaButton>
+  );
+}
+
+function CalendarPanel() {
+  return (
+    <Calendar className="flex flex-col gap-(--space-2)">
+      <header className="flex items-center justify-between gap-(--space-2)">
+        <AriaButton slot="previous" className={NAV_CLASS}>
+          <Icon name="chevron-left" aria-hidden="true" size="sm" />
+        </AriaButton>
+        <Heading className="text-(length:--font-size-body) font-semibold text-(--component-calendar-day-number)" />
+        <AriaButton slot="next" className={NAV_CLASS}>
+          <Icon name="chevron-right" aria-hidden="true" size="sm" />
+        </AriaButton>
+      </header>
+      <CalendarGrid className="border-separate border-spacing-(--space-1)">
+        {(date) => (
+          <CalendarCell
+            date={date}
+            className="flex size-(--space-9) items-center justify-center rounded-(--component-calendar-day-radius) text-(length:--font-size-body) text-(--component-calendar-day-number) outline-none data-hovered:bg-(--component-calendar-day-background-hover) data-selected:bg-(--component-calendar-day-background-selected) data-selected:text-(--component-calendar-day-number-selected) data-outside-month:text-(--component-calendar-day-label) data-focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
+          />
+        )}
+      </CalendarGrid>
+    </Calendar>
+  );
+}

@@ -686,7 +686,7 @@ No log line carries member data.
 - saving shows the avatar and the toast;
 - a session with a team shows the avatar group (≤ 3 + *+n*, with desktop tooltips) and ⋯ › *Atur tim*. *Atur tim* opens in Slice 5; until then, the item and the avatar group open the Penugasan form.
 
-- [ ] **4.1 Assignment domain and add backend.**
+- [x] **4.1 Assignment domain and add backend.**
   - Write `domain/session-assignment` (§ Rule code), `assignment-input`, `add-session-assignment`, `list-assignable-members`, the repository `add` (D-4) and `listAssignable`.
   - Tests:
     - unit: `isTeamEditable`, `avatarGroup` (4 → 3 + 1), `assignableFor`;
@@ -694,7 +694,7 @@ No log line carries member data.
     - integration `AC-TEAM-013`: duplicate sequential and `Promise.all` (one `ALREADY_ASSIGNED`); *Budi* archived → `MEMBER_ARCHIVED`; *Asisten* → `ROLE_NOT_HELD`; another project's session → `NOT_FOUND`;
     - integration `AC-TEAM-022`: B's member or role → `NOT_FOUND`.
   - Commit: `feat(team): assign members to sessions`.
-- [ ] **4.2 Detail record carries the team.**
+- [x] **4.2 Detail record carries the team.**
   - `findDetail` loads `assignments` (D-13); `getProjectDetail` adds `canEditTeam`.
   - The list SQL adds `hasTeam` (`EXISTS`), and `ProjectListRow` gains it (D-14).
   - Write the flow entries `loadAssignableMembers` and `addSessionAssignmentEntry` and `app/actions/booking/session-team.ts`.
@@ -705,7 +705,7 @@ No log line carries member data.
     - integration: `hasTeam`;
     - F-07's project tests still pass.
   - Commit: `feat(team): load session teams with the project detail`.
-- [ ] **4.3 Avatars, `user-plus` and the session ⋯ item.**
+- [x] **4.3 Avatars, `user-plus` and the session ⋯ item.**
   - Write `session-team-avatars` (Avatar/SM with the `surface/panel` ring, overlap and *+n* chip as drawn; desktop Tooltip *{name} · {role}*; the group is a button opening *Atur tim*).
   - The *Jadwal* row trailing becomes: avatars or `IconButton` Ghost/SM `user-plus` (only when `canEditTeam`), then ⋯.
   - `SessionRowActions` gains an optional first item `teamAction` (*Tambah tim* `user-plus` / *Atur tim* `users`) and a divider before *Hapus sesi*, as drawn.
@@ -715,7 +715,7 @@ No log line carries member data.
     - `AC-TEAM-011`: menu items with and without a team;
     - `AC-TEAM-021`: no status control.
   - Commit: `feat(team): show session teams in the schedule`.
-- [ ] **4.4 Penugasan form and the flow host.**
+- [x] **4.4 Penugasan form and the flow host.**
   - Write `assignment-dialog`:
     - Modal MD / Bottom Sheet Form with the session header;
     - an Anggota Select of `assignableFor(...)`;

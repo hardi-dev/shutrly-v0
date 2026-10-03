@@ -397,3 +397,15 @@ See [plan.md](plan.md): six vertical slices by screen, test-first, one commit pe
   6. The search field has its own hook (`use-team-member-search`) because F-06's is private to its component.
 - **Environment:** integration tests share `tests/support/booking/team-seed.ts` (workspace, roles, project with a session, assignment).
 
+## Implementation record — Slice 4 (2026-10-04)
+
+- **Built:** the assignment rules (`isTeamEditable`, `avatarGroup`, `assignableFor`, `assignmentsBySession`), `addSessionAssignment` and `listAssignableMembers`, the Drizzle assignment repository (project row `FOR UPDATE`, member `FOR SHARE`, D-4) and `listAssignable`; `findDetail` carries `assignments`, `ProjectDetailView.canEditTeam`, the list reader `hasTeam`; the flow entries, `session-team` action and the detail page's `assignableMembers`; the *Jadwal* rows (avatar group with desktop tooltips, `user-plus`, ⋯ › *Tambah tim* / *Atur tim* with a divider before *Hapus sesi*); the Penugasan form and `SessionTeamHost` with the `sessionTeamFlow` reducer.
+- **Checks:** typecheck, ESLint on `src` and `tests`, Prettier, `pnpm build` and 1246 unit tests pass. Team integration plus F-07's `project-repository` and `project-list` (62) pass. The Slice 4 E2E (`tests/e2e/projects/session-team.spec.ts`) is written but **not run**, and the visual comparison with the exports was not possible: port 3000 is still the other checkout's dev server (PID 83066).
+- **Deviations:**
+  1. The detail page's `assignableMembers` load moved from 4.2 to 4.4 with the host that uses it.
+  2. `Button` gains the `user-round-cog` icon (the drawn *Buka Tim*); it has no `href`, so *Buka Tim* calls `router.push`.
+  3. `Atur tim` and the avatar group open the Penugasan form until Slice 5; on a cancelled project they do nothing yet.
+  4. The member field of the form has the placeholder *Pilih anggota* (`// not in Pencil`).
+  5. Reuse: `SessionTeamAvatars` is feature-local (design.md COMPONENT GAP); the avatar group is one `<button>`, which opens *Atur tim*.
+- **Open for Slice 5:** `DeleteDraftDialog` and the list row menu need `hasTeam` (D-14), already on `ProjectListRow`.
+

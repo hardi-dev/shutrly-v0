@@ -2,7 +2,7 @@
 
 Author: Owner (hardi-dev)
 Source: IDEA
-Status: DRAFT
+Status: ACCEPTED (Owner, 2026-10-04)
 
 ## Problem
 A project already exists, but the Owner has no way to attach the photos to it. Photos live in the Owner's Google Drive, and today the Owner would still share folders by hand and track what is in them in their head. Without a gallery there is nothing for a client to open (F-10), select from (F-11) or receive as final files (F-12). This feature is on the primary journey ("links a Drive folder and publishes a gallery", `docs/product/overview.md`) and is the next dependency for J-04.

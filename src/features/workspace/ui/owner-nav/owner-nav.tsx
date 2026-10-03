@@ -53,7 +53,6 @@ const SECTION_TITLES: Readonly<Record<string, string>> = {
   clients: OWNER_NAV_COPY.clients,
   invoices: OWNER_NAV_COPY.invoices,
   services: OWNER_NAV_COPY.services,
-  team: OWNER_NAV_COPY.team,
   "message-templates": OWNER_NAV_COPY.messageTemplates,
   "photo-sources": OWNER_NAV_COPY.photoSources,
   search: OWNER_NAV_COPY.search,
@@ -95,6 +94,7 @@ export function resolvePageHeading(
   }
   if (section === "clients") return resolveClientsHeading(pathname, prefix);
   if (section === "projects") return resolveProjectsHeading(pathname, prefix);
+  if (section === "team") return resolveTeamHeading(pathname, prefix);
   if (section === "services") return resolveServicesHeading(pathname, prefix, workspaceName);
   const title = SECTION_TITLES[section];
   return title ? { title, subtitle: OWNER_NAV_COPY.comingSoonSubtitle } : null;
@@ -141,6 +141,25 @@ function resolveClientsHeading(pathname: string, prefix: string): PageHeading {
           href: `${prefix}/clients/archived`,
           isActive: archived,
         },
+      ],
+    },
+  };
+}
+
+function resolveTeamHeading(pathname: string, prefix: string): PageHeading {
+  const base = `${prefix}/team`;
+  const archived = pathname === `${base}/archived`;
+  const roles = pathname === `${base}/roles`;
+  return {
+    title: OWNER_NAV_COPY.team,
+    subtitle: OWNER_NAV_COPY.teamSubtitle,
+    mobileSubtitle: OWNER_NAV_COPY.teamMobileSubtitle,
+    tabs: {
+      label: OWNER_NAV_COPY.teamTabsLabel,
+      tabs: [
+        { label: OWNER_NAV_COPY.teamTabs.active, href: base, isActive: !archived && !roles },
+        { label: OWNER_NAV_COPY.teamTabs.archived, href: `${base}/archived`, isActive: archived },
+        { label: OWNER_NAV_COPY.teamTabs.roles, href: `${base}/roles`, isActive: roles },
       ],
     },
   };

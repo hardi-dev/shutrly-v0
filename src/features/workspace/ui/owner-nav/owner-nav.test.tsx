@@ -106,6 +106,46 @@ describe("resolvePageHeading", () => {
       },
     ],
     [
+      "/w/A/team",
+      {
+        title: "Tim",
+        subtitle: "Freelancer yang kamu ajak bertugas. Pilih mereka di jadwal proyek.",
+        mobileSubtitle: "Freelancer yang kamu ajak bertugas.",
+        tabs: {
+          label: OWNER_NAV_COPY.teamTabsLabel,
+          tabs: [
+            { label: "Aktif", href: "/w/A/team", isActive: true },
+            { label: "Arsip", href: "/w/A/team/archived", isActive: false },
+            { label: "Peran", href: "/w/A/team/roles", isActive: false },
+          ],
+        },
+      },
+    ],
+    [
+      "/w/A/team/archived",
+      expect.objectContaining({
+        tabs: expect.objectContaining({
+          tabs: [
+            expect.objectContaining({ label: "Aktif", isActive: false }),
+            expect.objectContaining({ label: "Arsip", isActive: true }),
+            expect.objectContaining({ label: "Peran", isActive: false }),
+          ],
+        }) as unknown,
+      }),
+    ],
+    [
+      "/w/A/team/roles",
+      expect.objectContaining({
+        tabs: expect.objectContaining({
+          tabs: [
+            expect.objectContaining({ label: "Aktif", isActive: false }),
+            expect.objectContaining({ label: "Arsip", isActive: false }),
+            expect.objectContaining({ label: "Peran", isActive: true }),
+          ],
+        }) as unknown,
+      }),
+    ],
+    [
       "/w/A/services",
       {
         title: "Layanan",
@@ -159,6 +199,11 @@ describe("resolvePageHeading", () => {
     ["/profile", null],
   ])("resolves %s", (pathname, heading) => {
     expect(resolvePageHeading(pathname, "A", "Aster")).toEqual(heading);
+  });
+
+  it("D-17 keeps the Tim nav item active on every team route", () => {
+    render(<OwnerNav workspaceId="A" pathname="/w/A/team/roles" />);
+    expect(screen.getByRole("link", { name: "Tim" })).toHaveAttribute("aria-current", "page");
   });
 
   it("builds the catalog hierarchy for service categories", () => {

@@ -5,7 +5,7 @@ Start with [docs/HANDOFF.md](docs/HANDOFF.md) › _Current handoff_. It says wha
 - **Authority order (highest first):** `docs/constitution.md`, then product/domain rules, then architecture + ADRs (`docs/architecture/`), then `docs/coding-rules.md`, then the feature intent, spec and acceptance criteria, then the technical design, then code. Never resolve a conflict by changing a higher-authority document; report it.
 - **Architecture:** the folder architecture in `docs/architecture/overview.md` is fixed. Every unit gets its own folder with a co-located test.
 - **Plans:** implementation plans live in `docs/features/<slug>/plan.md`. Execute them task by task, test-first, with one commit per task. Copy their code verbatim.
-- **UI tasks:** build from the HTML exports of the Pencil frames (`docs/features/<slug>/exports/`). If an export is missing, stop and ask the Owner for it. The fidelity pass after the code may change only class names and element nesting.
+- **UI tasks:** build from the HTML exports of the Pencil frames (`docs/features/<slug>/exports/`). Read them through `exports/_compact/INDEX.md` (a stripped base per screen plus a diff per state, made by `python3 scripts/sdv/compact-exports.py <slug>`), not the raw files, which are 100+ KB each. If an export is missing, stop and ask the Owner for it. The fidelity pass after the code may change only class names and element nesting.
 - **Commits:** conventional commits in English, lowercase, no trailing period.
 - **Hard stops:**
   - Never commit secrets. `.dev.vars` and `.env.test` are git-ignored and non-production only.

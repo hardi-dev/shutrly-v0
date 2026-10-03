@@ -1,4 +1,9 @@
-import { loadMoreTeamMembersAction } from "@/app/actions/booking/team";
+import {
+  addTeamMemberAction,
+  addTeamRoleAction,
+  loadMoreTeamMembersAction,
+  updateTeamMemberAction,
+} from "@/app/actions/booking/team";
 import { loadTeamMembers } from "@/composition/booking/team-flow/team-flow";
 import { TeamMembersScreen } from "@/features/booking/ui/team-members-screen/team-members-screen";
 
@@ -17,6 +22,10 @@ export default async function TeamPage({
       q={data.q}
       initialPage={data.page}
       loadMoreAction={loadMoreTeamMembersAction}
+      roles={data.roles}
+      addAction={addTeamMemberAction}
+      updateAction={updateTeamMemberAction}
+      addRoleAction={addTeamRoleAction}
     />
   );
 }

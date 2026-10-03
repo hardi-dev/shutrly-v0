@@ -40,14 +40,15 @@ export function useTeamRoleForm(props: Readonly<TeamRoleDialogProps>) {
     setIsPending(true);
     try {
       const values = form.getValues();
-      const { role, workspaceId } = props;
-      const result = role
-        ? await run(() => props.renameAction(workspaceId, role.id, values), {
-            title: TEAM_COPY.roleSavedTitle,
-          })
-        : await run(() => props.addAction(workspaceId, values), {
-            title: TEAM_COPY.roleAddedTitle,
-          });
+      const { role, workspaceId, renameAction } = props;
+      const result =
+        role && renameAction
+          ? await run(() => renameAction(workspaceId, role.id, values), {
+              title: TEAM_COPY.roleSavedTitle,
+            })
+          : await run(() => props.addAction(workspaceId, values), {
+              title: TEAM_COPY.roleAddedTitle,
+            });
       if (result?.ok === false) {
         const key = result.fieldErrors.name;
         if (key) form.setError("name", { type: "server", message: key });

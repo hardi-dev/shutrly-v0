@@ -13,7 +13,8 @@ export interface TeamRoleDialogProps {
   /** Called with the new role after a successful add (the member form selects it). */
   readonly onCreated?: (role: { readonly id: string; readonly name: string }) => void;
   readonly addAction: (workspaceId: string, values: unknown) => Promise<TeamRoleWriteResult>;
-  readonly renameAction: (
+  /** Only needed in edit mode. */
+  readonly renameAction?: (
     workspaceId: string,
     roleId: string,
     values: unknown,

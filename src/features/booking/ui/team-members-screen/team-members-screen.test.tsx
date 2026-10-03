@@ -36,15 +36,22 @@ const DIMAS = {
 function setup(overrides = {}) {
   const loadMoreAction = vi.fn().mockResolvedValue({ items: [], nextCursor: null });
   render(
-    <TeamMembersScreen
-      workspaceId="ws"
-      status="ACTIVE"
-      count={2}
-      q=""
-      initialPage={{ items: [AYU, DIMAS], nextCursor: null }}
-      loadMoreAction={loadMoreAction}
-      {...overrides}
-    />,
+    <>
+      <div id="owner-page-actions" />
+      <TeamMembersScreen
+        workspaceId="ws"
+        status="ACTIVE"
+        count={2}
+        q=""
+        initialPage={{ items: [AYU, DIMAS], nextCursor: null }}
+        loadMoreAction={loadMoreAction}
+        roles={[FOTOGRAFER, VIDEOGRAFER, ASISTEN]}
+        addAction={vi.fn()}
+        updateAction={vi.fn()}
+        addRoleAction={vi.fn()}
+        {...overrides}
+      />
+    </>,
   );
   return { loadMoreAction };
 }
@@ -132,5 +139,26 @@ describe("TeamMembersScreen", () => {
       );
     });
     expect(screen.getByText("Ayu Kirana")).toBeInTheDocument();
+  });
+
+  it("AC-TEAM-004 opens the add dialog from the header button", async () => {
+    setup();
+    await userEvent.click(screen.getByRole("button", { name: "Tambah anggota" }));
+    expect(await screen.findByRole("dialog", { name: "Tambah anggota" })).toBeInTheDocument();
+  });
+
+  it("AC-TEAM-004 opens Ubah with the member's values when a row is activated", async () => {
+    setup();
+    await userEvent.click(screen.getByText("Dimas Pratama"));
+    expect(await screen.findByRole("dialog", { name: "Ubah anggota" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Nama")).toHaveValue("Dimas Pratama");
+  });
+
+  it("AC-TEAM-002 offers Tambah anggota in the phone empty state", async () => {
+    useMobileViewport.mockReturnValue(true);
+    setup({ count: 0, initialPage: { items: [], nextCursor: null } });
+    const buttons = screen.getAllByRole("button", { name: "Tambah anggota" });
+    await userEvent.click(buttons[buttons.length - 1]);
+    expect(await screen.findByRole("dialog", { name: "Tambah anggota" })).toBeInTheDocument();
   });
 });

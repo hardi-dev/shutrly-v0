@@ -71,3 +71,48 @@ test.describe("AC-TEAM-008 AC-TEAM-009 Tim › Peran", () => {
     expect(response?.status()).toBe(404);
   });
 });
+
+async function addMember(page: Page, fields: { name: string; number: string; role: string }) {
+  const mobile = page.viewportSize()?.width === 390;
+  await page
+    .getByRole("button", { name: mobile ? TEAM_COPY.addMemberShort : TEAM_COPY.addMember })
+    .first()
+    .click();
+  const dialog = page.getByRole("dialog", { name: TEAM_COPY.addMember }).filter({ visible: true });
+  await dialog.getByLabel(TEAM_COPY.memberName, { exact: true }).fill(fields.name);
+  await dialog.getByLabel(TEAM_COPY.memberWhatsapp).fill(fields.number);
+  await dialog.getByRole("button", { name: new RegExp(`^${TEAM_COPY.memberRoles}`) }).click();
+  await page.getByRole("option", { name: fields.role }).click();
+  await page.keyboard.press("Escape");
+  await dialog.getByRole("button", { name: TEAM_COPY.save }).click();
+}
+
+test.describe("AC-TEAM-001 AC-TEAM-002 AC-TEAM-003 AC-TEAM-004 Tim › Anggota", () => {
+  test("a new workspace shows the empty state, then adds, searches and rejects a taken number", async ({
+    page,
+  }) => {
+    const workspaceId = await openWorkspace(page, "team-members");
+    await page.goto(`/w/${workspaceId}/team`);
+    await expect(page.getByText(TEAM_COPY.emptyActiveTitle)).toBeVisible();
+    await expectTeamA11y(page);
+
+    await addMember(page, { name: "Rina Saputri", number: "0812 3456 7890", role: "Fotografer" });
+    await expect(page.getByText("Rina Saputri")).toBeVisible();
+    await expect(page.getByText("+62 812-3456-7890")).toBeVisible();
+    await expect(page.getByText(TEAM_COPY.membersCount("ACTIVE", 1))).toBeVisible();
+
+    await page.getByRole("searchbox", { name: TEAM_COPY.searchLabel }).first().fill("zzz");
+    await expect(page.getByText(TEAM_COPY.noMatchTitle)).toBeVisible();
+    await page.getByRole("searchbox", { name: TEAM_COPY.searchLabel }).first().fill("");
+    await expect(page.getByText("Rina Saputri")).toBeVisible();
+
+    await addMember(page, { name: "Rina Kedua", number: "0812 3456 7890", role: "Fotografer" });
+    await expect(
+      page.getByText(TEAM_COPY.memberErrors.whatsappTaken("Rina Saputri", false)),
+    ).toBeVisible();
+    await page.keyboard.press("Escape");
+
+    await page.goto(`/w/${workspaceId}/team/archived`);
+    await expect(page.getByText(TEAM_COPY.emptyArchivedTitle)).toBeVisible();
+  });
+});

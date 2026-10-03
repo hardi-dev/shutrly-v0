@@ -38,6 +38,37 @@ export const TEAM_COPY = {
   // not in Pencil: the load-more pending label
   loadingMore: "Memuat…",
 
+  // not in Pencil: the edit title and the member toasts
+  memberEditTitle: "Ubah anggota",
+  memberAddedTitle: "Anggota ditambahkan",
+  memberReadyBody: (name: string) => `${name} siap dipilih di jadwal proyek.`,
+  memberSavedTitle: "Perubahan disimpan",
+  memberDialogDescription: "Freelancer yang bisa kamu tugaskan di jadwal proyek.",
+  memberName: "Nama",
+  memberNamePlaceholder: "Nama lengkap",
+  memberWhatsapp: "Nomor WhatsApp",
+  memberWhatsappHint: "Contoh: 0812 3456 7890",
+  memberEmail: "Email",
+  memberEmailPlaceholder: "nama@email.com",
+  memberRoles: "Peran",
+  memberRolesPlaceholder: "Pilih peran",
+  memberRolesHint: "Bisa lebih dari satu. Peran baru bisa dibuat dari sini.",
+  memberRolesGroup: "PERAN",
+  createRole: "Tambah peran baru",
+  memberErrors: {
+    nameEmpty: "Isi nama anggota.",
+    // not in Pencil
+    nameTooLong: "Nama paling banyak 100 karakter.",
+    whatsappRequired: "Nomor WhatsApp wajib diisi",
+    whatsappInvalid: "Nomor WhatsApp tidak valid",
+    whatsappTaken: (name: string, isArchived: boolean) =>
+      isArchived
+        ? `Nomor ini sudah dipakai ${name} (diarsipkan).`
+        : `Nomor ini sudah dipakai ${name}.`,
+    emailInvalid: "Masukkan email yang valid.",
+    rolesRequired: "Pilih minimal satu peran.",
+  },
+
   rolesTitle: "Daftar peran",
   rolesCountDesktop: (count: number) => `${String(count)} peran · dipilih saat menambah anggota`,
   rolesCountMobile: (count: number) => `${String(count)} peran`,

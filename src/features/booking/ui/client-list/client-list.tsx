@@ -1,4 +1,4 @@
-/* eslint-disable max-len, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression -- row action callbacks are parameterized by each record */
+/* eslint-disable no-restricted-syntax, @typescript-eslint/no-confusing-void-expression -- row action callbacks are parameterized by each record */
 import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -81,4 +81,4 @@ function ClientRows({
     </ul>
   );
 }
-/* eslint-enable max-len, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression -- end row action callbacks */
+/* eslint-enable no-restricted-syntax, @typescript-eslint/no-confusing-void-expression -- end row action callbacks */

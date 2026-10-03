@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable max-len -- semantic action item content is kept adjacent to its React Aria wrapper */
 
 import { MenuItem as AriaMenuItem } from "react-aria-components";
 
@@ -103,4 +102,3 @@ function MenuItemContent({
     </>
   );
 }
-/* eslint-enable max-len -- end adjacent item content */

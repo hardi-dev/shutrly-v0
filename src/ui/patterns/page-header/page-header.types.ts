@@ -13,6 +13,10 @@ export interface PageHeaderProps {
   title: string;
   breadcrumbs?: readonly BreadcrumbItem[];
   subtitle?: string;
+  /** Sits after the title, e.g. a status chip. */
+  titleAdornment?: ReactNode;
+  /** One line under the title, in place of the subtitle. */
+  meta?: string;
   action?: ReactNode;
   utilities?: ReactNode;
   tabs?: { readonly label: string; readonly tabs: readonly TabLink[] };

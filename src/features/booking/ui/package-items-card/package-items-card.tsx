@@ -11,14 +11,16 @@ export function PackageItemsCard({
   serviceName,
   items,
   isMobile,
+  description,
 }: Readonly<PackageItemsCardProps>) {
   return (
     <SectionCard
       title={PROJECT_COPY.packageTitle}
       description={
-        isMobile
+        description ??
+        (isMobile
           ? PROJECT_COPY.packageDescriptionMobile(serviceName)
-          : PROJECT_COPY.packageDescriptionDesktop(serviceName)
+          : PROJECT_COPY.packageDescriptionDesktop(serviceName))
       }
       content="flush"
     >

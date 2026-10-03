@@ -15,6 +15,7 @@ import { SidebarBrandLogo } from "@/ui/patterns/sidebar/sidebar";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
+import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { CreateWorkspaceDialog } from "../create-workspace-dialog/create-workspace-dialog";
 import { OwnerNav, OwnerNavBottom, resolvePageHeading } from "../owner-nav/owner-nav";
@@ -140,6 +141,10 @@ export function OwnerShell({
         <AppShell
           title={heading.title}
           subtitle={heading.subtitle}
+          panelTitleAdornment={
+            headingOverride?.status ? <StatusChip {...headingOverride.status} /> : undefined
+          }
+          panelMeta={headingOverride?.meta}
           mobileSubtitle={"mobileSubtitle" in heading ? heading.mobileSubtitle : undefined}
           workspace={{ name: workspaceName }}
           subPage={shellSubPage}

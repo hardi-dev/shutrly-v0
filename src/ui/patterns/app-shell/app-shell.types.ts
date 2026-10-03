@@ -22,6 +22,8 @@ export interface AppShellProps {
   nav: ReactNode;
   navBottom?: ReactNode;
   panelActions?: ReactNode;
+  panelTitleAdornment?: ReactNode;
+  panelMeta?: string;
   panelUtilities?: ReactNode;
   panelTabs?: NonNullable<PageHeaderProps["tabs"]>;
   panelBreadcrumbs?: NonNullable<PageHeaderProps["breadcrumbs"]>;

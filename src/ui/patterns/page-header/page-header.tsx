@@ -13,6 +13,8 @@ export function PageHeader({
   title,
   breadcrumbs,
   subtitle,
+  titleAdornment,
+  meta,
   action,
   utilities,
   tabs,
@@ -39,12 +41,10 @@ export function PageHeader({
       </div>
       <div className="flex items-center justify-between gap-(--component-page-header-hero-gap) px-(--component-page-header-hero-padding-x) pb-(--component-page-header-hero-padding-bottom) pt-(--component-page-header-hero-padding-top)">
         <div className="flex min-w-0 flex-1 flex-col gap-(--space-1-5)">
-          <h1 className="text-(length:--font-size-display) font-bold tracking-(--font-letter-spacing-display) text-(--component-page-header-title)">
-            {title}
-          </h1>
-          {subtitle ? (
+          <HeaderTitle title={title} adornment={titleAdornment} />
+          {(meta ?? subtitle) ? (
             <p className="text-(length:--font-size-body) text-(--component-page-header-subtitle)">
-              {subtitle}
+              {meta ?? subtitle}
             </p>
           ) : null}
         </div>
@@ -56,6 +56,24 @@ export function PageHeader({
         </div>
       ) : null}
     </header>
+  );
+}
+
+function HeaderTitle({
+  title,
+  adornment,
+}: Readonly<{ title: string; adornment: PageHeaderProps["titleAdornment"] }>) {
+  const heading = (
+    <h1 className="text-(length:--font-size-display) font-bold tracking-(--font-letter-spacing-display) text-(--component-page-header-title)">
+      {title}
+    </h1>
+  );
+  if (!adornment) return heading;
+  return (
+    <div className="flex min-w-0 items-center gap-(--space-3)">
+      {heading}
+      {adornment}
+    </div>
   );
 }
 

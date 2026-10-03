@@ -14,6 +14,8 @@ export type IconName =
   | "info"
   | "google"
   | "camera"
+  | "calendar-check"
+  | "circle-check-big"
   | "chevrons-up-down"
   | "layout-grid"
   | "folder-kanban"

@@ -15,6 +15,9 @@ export type ButtonIconName = Extract<
   | "pencil"
   | "archive"
   | "archive-restore"
+  | "calendar-check"
+  | "camera"
+  | "circle-check-big"
 >;
 
 export interface ButtonIconProps {

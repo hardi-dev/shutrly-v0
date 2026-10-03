@@ -29,6 +29,8 @@ export function AppShell({
   nav,
   navBottom,
   panelActions,
+  panelTitleAdornment,
+  panelMeta,
   panelUtilities,
   panelTabs,
   panelBreadcrumbs,
@@ -106,6 +108,8 @@ export function AppShell({
         subtitle={subtitle}
         parent={subPage?.parent.label ?? workspace.name}
         panelActions={panelActions}
+        panelTitleAdornment={panelTitleAdornment}
+        panelMeta={panelMeta}
         panelUtilities={panelUtilities}
         panelTabs={panelTabs}
         panelBreadcrumbs={panelBreadcrumbs}
@@ -230,6 +234,8 @@ function DesktopContent({
   subtitle,
   parent,
   panelActions,
+  panelTitleAdornment,
+  panelMeta,
   panelUtilities,
   panelTabs,
   panelBreadcrumbs,
@@ -240,6 +246,8 @@ function DesktopContent({
   subtitle: AppShellProps["subtitle"];
   parent: string;
   panelActions: AppShellProps["panelActions"];
+  panelTitleAdornment: AppShellProps["panelTitleAdornment"];
+  panelMeta: AppShellProps["panelMeta"];
   panelUtilities: AppShellProps["panelUtilities"];
   panelTabs: AppShellProps["panelTabs"];
   panelBreadcrumbs: AppShellProps["panelBreadcrumbs"];
@@ -253,6 +261,8 @@ function DesktopContent({
         subtitle={subtitle}
         parent={parent}
         actions={panelActions}
+        titleAdornment={panelTitleAdornment}
+        meta={panelMeta}
         utilities={panelUtilities}
         tabs={panelTabs}
         breadcrumbs={panelBreadcrumbs}

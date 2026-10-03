@@ -1,9 +1,12 @@
+import { advanceProjectAction } from "@/app/actions/booking/projects";
 import { loadProjectDetail } from "@/composition/booking/project-flow/project-flow";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
+import { ProjectDetailScreen } from "@/features/booking/ui/project-detail-screen/project-detail-screen";
+import { projectMetaText } from "@/features/booking/ui/project-session-summary/project-session-summary";
+import { projectStatusChip } from "@/features/booking/ui/project-status-chip/project-status-props";
 import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
 import { ToastOnMount } from "@/ui/patterns/toast/toast";
 
-// Placeholder until F-07 Slice 2 builds the real detail page: it shows only the heading and the toast.
 export default async function ProjectDetailPage({
   params,
   searchParams,
@@ -19,7 +22,15 @@ export default async function ProjectDetailPage({
     <>
       <PageHeadingOverride
         title={project.title}
+        status={projectStatusChip(project.status)}
+        meta={projectMetaText(project.client.name, project.shownSession)}
         parent={{ label: PROJECT_COPY.parentLabel, href: `/w/${workspaceId}/projects` }}
+        hidesBottomNav
+      />
+      <ProjectDetailScreen
+        workspaceId={workspaceId}
+        project={project}
+        advanceAction={advanceProjectAction}
       />
       {toast ? (
         <ToastOnMount

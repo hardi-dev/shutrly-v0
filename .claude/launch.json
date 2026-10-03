@@ -4,14 +4,32 @@
     {
       "name": "dev",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000
     },
     {
       "name": "storybook",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["run", "storybook", "--no-open"],
+      "runtimeArgs": [
+        "run",
+        "storybook",
+        "--no-open"
+      ],
       "port": 6006
+    },
+    {
+      "name": "dev-clients",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--dir",
+        "/Users/hardiansa/.codex/worktrees/clients/shutrly-v01",
+        "run",
+        "dev"
+      ],
+      "port": 3000
     }
   ]
 }

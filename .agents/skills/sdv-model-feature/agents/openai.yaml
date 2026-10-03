@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv model-feature"
+  short_description: "Create activity / sequence / state diagrams for a feature — only where they reduce ambiguity"
+policy:
+  allow_implicit_invocation: false

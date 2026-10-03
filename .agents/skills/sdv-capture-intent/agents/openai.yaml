@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv capture-intent"
+  short_description: "Capture an idea, ticket, bug or incident as a reviewed intent.md before specifying the feature"
+policy:
+  allow_implicit_invocation: false

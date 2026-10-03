@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv design-rules"
+  short_description: "Write and approve token usage and spacing rules (token-usage.md + library boards 07/08) from the persisted tokens"
+policy:
+  allow_implicit_invocation: false

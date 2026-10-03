@@ -137,6 +137,8 @@ Each mode is a workflow. In Claude Code the plugin (`sdv`) exposes them as names
 
 When recommending a next step to the user, name the exact command above (with the `sdv:` prefix), never a bare `/discover-feature`-style name.
 
+In Codex there are no slash commands: each command is a generated skill named `sdv-<command>`, run as `$sdv-<command> <args>` (for example `$sdv-capture-intent clients`). When the host is Codex, name the next step as `$sdv-<command>` instead of `/sdv:<command>`.
+
 ## Templates and examples
 
 Use files in `assets/templates/` as starting points. Do not preserve unused sections just because the template contains them.

@@ -14,7 +14,9 @@ Start with [docs/HANDOFF.md](docs/HANDOFF.md) › _Current handoff_. It says wha
 - **Machine note:** `head` on this machine isn't coreutils; use `sed -n '1,20p'`.
 - **Workflow commands (`sdv`, local copy, edit freely):**
   - Skills live in `.claude/skills/` (`spec-driven-vibe-coding`, `sdv-design-tokens-system`); commands in `.claude/commands/sdv/`, so `/sdv:<command>` works directly and edits apply on the fly. The plugin is disabled in `.claude/settings.json` to avoid duplicates.
-  - Codex finds the skills in `.agents/skills/` (symlinks into `.claude/skills/`). Codex has no `/sdv:*` commands: when asked to run `/sdv:<command> <args>`, read `.claude/commands/sdv/<command>.md`, use `<args>` for `$ARGUMENTS`, and follow it with the skill it names.
+  - Codex finds the two skills in `.agents/skills/` (symlinks into `.claude/skills/`). It has no `/sdv:*` commands, so each command is a generated Codex skill: `$sdv-<command> <args>` does what `/sdv:<command> <args>` does.
+  - The commands in `.claude/commands/sdv/` are the source of truth. After editing one, run `python3 scripts/sdv/sync-codex-skills.py` and commit the regenerated `.agents/skills/sdv-*` folders (`--check` exits 1 when they are out of date). Never edit those folders by hand.
+  - The hooks in `.claude/hooks/` only run in Claude Code. In Codex the hard stops below are instructions you must follow yourself.
   - `plugins/sdv/` is the untouched upstream release, kept only to diff against when upgrading; don't edit it.
 
 # This is NOT the Next.js you know

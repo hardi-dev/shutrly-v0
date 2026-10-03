@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv ship"
+  short_description: "Ship verified work — quality gates, preview/staging, smoke test, release notes"
+policy:
+  allow_implicit_invocation: false

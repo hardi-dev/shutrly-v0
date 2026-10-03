@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv init-project"
+  short_description: "Bootstrap or adopt a project — product, domain, feature map, stack, constitution, coding rules"
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv design-feature"
+  short_description: "Derive screens and UI states, iterate the design in Pencil, and record the approved reference"
+policy:
+  allow_implicit_invocation: false

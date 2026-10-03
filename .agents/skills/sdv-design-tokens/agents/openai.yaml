@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv design-tokens"
+  short_description: "Define or review observed, expanded, and approved DTCG-compatible design tokens and their themes"
+policy:
+  allow_implicit_invocation: false

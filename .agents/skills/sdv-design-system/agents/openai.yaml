@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv design-system"
+  short_description: "Explore and refine token-based design-system directions on the pen.dev canvas"
+policy:
+  allow_implicit_invocation: false

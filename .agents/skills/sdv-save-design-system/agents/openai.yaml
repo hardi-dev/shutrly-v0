@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv save-design-system"
+  short_description: "Persist an explicitly approved Pencil exploration into tokens.json, Pencil variables, a documented token canvas, and reusable library components"
+policy:
+  allow_implicit_invocation: false

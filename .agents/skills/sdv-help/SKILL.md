@@ -21,8 +21,11 @@ Give the user a concise, project-aware guide from discovery to shipping. Inspect
 
    - `$sdv-capture-intent` writes `docs/features/<slug>/intent.md` (problem, outcome, constraints, open questions). Optional for small features. Only the Owner sets it to `ACCEPTED`.
    - `$sdv-discover-feature` reads an accepted intent and writes `spec.md` with a **Flagged Concerns** table, plus `acceptance-criteria.md`. It stops on a draft intent. The Owner resolves each `OPEN` concern before the feature counts as `SPECIFIED`.
-   - `$sdv-plan-feature` stops while any Flagged Concern is `OPEN`.
-   - `$sdv-build-feature` ends with a verify-and-fix loop (typecheck, lint, tests, e2e or screenshot diff, build as applicable) and never reports done with a failing or unrun check.
+   - `$sdv-design-feature` ends by running `python3 scripts/sdv/compact-exports.py <slug>` on the exported HTML frames. That writes `exports/_compact/` (a stripped base per screen and device, a diff per state, and `INDEX.md`), about 4x smaller than the raw exports.
+   - `$sdv-plan-feature` stops while any Flagged Concern is `OPEN`. It writes a **Read first** list into each iteration (the `AC-*` / `BR-*` IDs, design sections, coding-rules sections, and the exact export states).
+   - `$sdv-build-feature` reads only what the current iteration needs (its slice, the cited sections, the compact export base and the diffs it names), stops with a `SPEC GAP` instead of guessing, and ends with a verify-and-fix loop (typecheck, lint, tests, e2e or screenshot diff, build as applicable) and never reports done with a failing or unrun check.
+   - `$sdv-verify-feature` and `$sdv-verify-design-system` run in a fresh subagent so the review does not inherit the builder's assumptions. `$sdv-handoff` is recommended after verify and ship.
+   - Each command sets its own model and effort in its frontmatter (Opus 5.5 for discover, plan and verify; Sonnet 5.5 for the rest). Change them there; Codex ignores them.
    - In Claude Code, hooks in `.claude/hooks/guard.py` enforce the `AGENTS.md` hard stops regardless of the command (Codex does not run them, so follow the stops yourself): no direct `.pen` access, no committing `.dev.vars` or `.env*`, no production migrations. A blocked action explains itself; ask the Owner rather than working around it.
 
 2. Explain the design-system branch when visual tokens or reusable components are needed:

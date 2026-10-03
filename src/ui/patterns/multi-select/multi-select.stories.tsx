@@ -25,3 +25,14 @@ export default meta;
 
 export const Default: StoryObj<typeof meta> = {};
 export const Empty: StoryObj<typeof meta> = { args: { selectedIds: [] } };
+export const WithCreateAction: StoryObj<typeof meta> = {
+  args: {
+    selectedIds: ["BOOKED"],
+    groupLabel: COPY.group,
+    description: COPY.helper,
+    createAction: { label: COPY.create, onPress: () => undefined },
+  },
+};
+export const WithError: StoryObj<typeof meta> = {
+  args: { selectedIds: [], errorMessage: COPY.error },
+};

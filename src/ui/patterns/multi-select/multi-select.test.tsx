@@ -4,6 +4,7 @@ import { useState } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { MultiSelect } from "./multi-select";
+import type { MultiSelectProps } from "./multi-select.types";
 
 const { isMobile } = vi.hoisted(() => ({ isMobile: { value: false } }));
 vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
@@ -16,7 +17,10 @@ const OPTIONS = [
   { id: "DRAFT", label: "Draf" },
 ];
 
-function Harness({ initial = [] as string[] }: Readonly<{ initial?: string[] }>) {
+function Harness({
+  initial = [] as string[],
+  ...extra
+}: Readonly<{ initial?: string[] } & Partial<MultiSelectProps>>) {
   const [ids, setIds] = useState<string[]>(initial);
   return (
     <MultiSelect
@@ -25,6 +29,7 @@ function Harness({ initial = [] as string[] }: Readonly<{ initial?: string[] }>)
       options={OPTIONS}
       selectedIds={ids}
       onChange={setIds}
+      {...extra}
     />
   );
 }
@@ -62,5 +67,39 @@ describe("MultiSelect (C20)", () => {
     const sheet = screen.getByRole("dialog");
     await userEvent.click(within(sheet).getByRole("checkbox", { name: "Draf" }));
     expect(within(sheet).getByRole("checkbox", { name: "Draf" })).toBeChecked();
+  });
+
+  it("AC-TEAM-005 shows the helper under the trigger and an error in its place", () => {
+    const { rerender } = render(<Harness description="Bisa lebih dari satu." />);
+    const trigger = screen.getByRole("button", { name: /Status/ });
+    expect(screen.getByText("Bisa lebih dari satu.")).toBeInTheDocument();
+    expect(trigger).toHaveAccessibleDescription("Bisa lebih dari satu.");
+    rerender(
+      <Harness description="Bisa lebih dari satu." errorMessage="Pilih minimal satu peran." />,
+    );
+    expect(screen.queryByText("Bisa lebih dari satu.")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Status/ })).toHaveAccessibleDescription(
+      "Pilih minimal satu peran.",
+    );
+  });
+
+  it("AC-TEAM-010 shows the group label and a create row that closes the menu and fires", async () => {
+    const onPress = vi.fn();
+    render(<Harness groupLabel="PERAN" createAction={{ label: "Tambah peran baru", onPress }} />);
+    await userEvent.click(screen.getByRole("button", { name: /Status/ }));
+    expect(screen.getByText("PERAN")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Tambah peran baru" }));
+    expect(onPress).toHaveBeenCalledOnce();
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+  });
+
+  it("AC-TEAM-010 offers the create row in the phone sheet too", async () => {
+    isMobile.value = true;
+    const onPress = vi.fn();
+    render(<Harness createAction={{ label: "Tambah peran baru", onPress }} errorMessage="Salah" />);
+    expect(screen.getByText("Salah")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Status" }));
+    await userEvent.click(within(screen.getByRole("dialog")).getByText("Tambah peran baru"));
+    expect(onPress).toHaveBeenCalledOnce();
   });
 });

@@ -83,6 +83,7 @@ describe("Icon", () => {
         "align-left",
         "toggle-left",
         "list",
+        "user-plus",
       ]),
     );
   });

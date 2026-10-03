@@ -11,7 +11,7 @@
 **Sources:**
 - [technical-design.md](technical-design.md) (decisions D-1…D-19);
 - [spec.md](spec.md) and [acceptance-criteria.md](acceptance-criteria.md) (AC-GAL-001…031);
-- [design.md](design.md) and [exports/_compact/INDEX.md](exports/_compact/INDEX.md);
+- [design.md](design.md) and the raw HTML exports in [exports/](exports/), named `<state>-<device>-<frameId>.html` (the compact exports were removed on 2026-10-04: their stripped bases didn't render the real UI, Owner);
 - component specs in `docs/design-system/components/` (`photo-tile`, `folder-tile`, `media-viewer`, `modal`).
 
 ## Global constraints (every slice)
@@ -23,7 +23,7 @@
   - Functions of at most 50 lines; copy lives in `*.copy.ts`.
   - Prettier and `eslint --fix` per file as you go.
 - **Token rules:** `docs/design-system/token-usage.md` v3.1. Tokens only, no hex.
-- **UI fidelity:** build each screen from its compact export: the base, then only the diffs named in the slice. Open a raw export only for icon paths.
+- **UI fidelity:** build each screen from its raw exports, `exports/<state>-<device>-<frameId>.html`. Read only the states the slice names, desktop and mobile. Each file is a complete frame of 25–165 KB, so read one state at a time. There is no `_compact/`, and `compact-exports.py` must not be re-run for this feature (Owner, 2026-10-04).
 - **Secrets and logs:** never log links, the API key, passwords or ciphertext (C-103). Never use `process.env` in `src/`.
 - **Migrations:** `pnpm db:migrate` only for the reviewed and committed `0010_gallery`, against the non-production database, and report the run.
 - **Gate per slice:**
@@ -85,8 +85,8 @@
 - `src/features/booking/ui/project-detail-screen/*`, `src/app/(owner)/w/[workspaceId]/projects/[projectId]/page.tsx`.
 
 **Exports:**
-- `proyek / desktop` and `proyek / mobile`: base `proyek-detail-dibooking-belum-ada-galeri`, plus diffs `proyek-detail-draf-galeri-belum-tersedia`, `proyek-detail-dibooking-galeri-draf`, `proyek-dialog-buat-galeri`, `proyek-dialog-buat-galeri-error`, `proyek-dialog-buat-galeri-kedaluwarsa-hari`, `proyek-dialog-buat-galeri-kedaluwarsa-tanggal`;
-- `galeri / desktop` and `galeri / mobile`: diffs `galeri-draf-kosong`, `galeri-toast-galeri-dibuat`, `galeri-memuat`.
+- `proyek / desktop` and `proyek / mobile`: state `proyek-detail-dibooking-belum-ada-galeri`, plus states `proyek-detail-draf-galeri-belum-tersedia`, `proyek-detail-dibooking-galeri-draf`, `proyek-dialog-buat-galeri`, `proyek-dialog-buat-galeri-error`, `proyek-dialog-buat-galeri-kedaluwarsa-hari`, `proyek-dialog-buat-galeri-kedaluwarsa-tanggal`;
+- `galeri / desktop` and `galeri / mobile`: states `galeri-draf-kosong`, `galeri-toast-galeri-dibuat`, `galeri-memuat`.
 
 **Steps:**
 - [ ] Schema `src/adapters/db/schema/gallery/gallery.ts` (all three tables, D-1…D-3, Database Changes), exported from the schema barrel. Run `pnpm db:generate` to make `0010_gallery`, review it and commit. Then run `pnpm db:migrate` (non-production) and report it. Add integration tests for the checks and unique keys.
@@ -124,8 +124,8 @@
 - `src/features/gallery/application/ports/workspace-source-repository/*` (active sources), `src/adapters/db/rate-limiter/*`.
 
 **Exports (`galeri / desktop` and `galeri / mobile`):**
-- the base `galeri-draf-proof`;
-- the diffs:
+- the state `galeri-draf-proof`;
+- the states:
   - `galeri-dialog-tambah-folder`, `galeri-dialog-tambah-folder-link-salah`, `galeri-dialog-folder-dipakai-proyek-lain`;
   - `galeri-draf-menyinkronkan`, `galeri-draf-gagal-foto-hilang`, `galeri-menu-folder-draf`;
   - `galeri-toast-sinkronisasi-selesai`, `galeri-toast-sinkronisasi-gagal`.
@@ -166,8 +166,8 @@
 - `docs/design-system/components/photo-tile.md`.
 
 **Exports:**
-- `galeri / desktop` and `galeri / mobile`, base `galeri-draf-proof` (the *Foto* card);
-- the diff `galeri-draf-gagal-foto-hilang`.
+- `galeri / desktop` and `galeri / mobile`, state `galeri-draf-proof` (the *Foto* card);
+- the state `galeri-draf-gagal-foto-hilang`.
 
 **Steps:**
 - [ ] `src/ui/patterns/photo-tile` (Default, Missing, Skeleton) with a story and a test.
@@ -189,8 +189,8 @@
 - `features/booking/ui/use-load-more-projects`.
 
 **Exports (`semuafoto / desktop` and `semuafoto / mobile`):**
-- base `semuafoto-daftar-folder`;
-- diffs `semuafoto-isi-folder-memuat`, `semuafoto-subfolder-akad`, `semuafoto-edited-dengan-subfolder`, `semuafoto-hasil-cari`, `semuafoto-cari-tanpa-hasil`.
+- state `semuafoto-daftar-folder`;
+- states `semuafoto-isi-folder-memuat`, `semuafoto-subfolder-akad`, `semuafoto-edited-dengan-subfolder`, `semuafoto-hasil-cari`, `semuafoto-cari-tanpa-hasil`.
 
 **Steps:**
 - [ ] `src/ui/patterns/folder-tile`, and Modal `size="xl"` (with a story and test). Record it in `docs/design-system/components/modal.md`.
@@ -211,8 +211,8 @@
 - token-usage.md, the `surface.inverse` row (amended 2026-10-04).
 
 **Exports (`preview / desktop` and `preview / mobile`):**
-- desktop: base `preview-edited`, diffs `preview-proof`, `preview-hilang`;
-- mobile: base `preview-proof`, diffs `preview-edited`, `preview-hilang`.
+- desktop: state `preview-edited`, states `preview-proof`, `preview-hilang`;
+- mobile: state `preview-proof`, states `preview-edited`, `preview-hilang`.
 
 **Steps:**
 - [ ] `src/ui/patterns/media-viewer`, with dom tests for the keyboard (←/→/Home/End/Esc), focus return and the dialog label.
@@ -231,13 +231,13 @@
 - BR-GAL-003, 004, 005, 009, BR-AUD-001;
 - technical-design.md › D-1, D-2, D-18, Domain / Application Logic › Rules, Concurrency / Consistency.
 
-**Exports (`galeri / desktop` and `galeri / mobile`):** diffs
+**Exports (`galeri`, desktop and mobile):** states
 - **dialogs:** `galeri-dialog-publikasikan`, `galeri-dialog-publikasi-ditolak`, `galeri-dialog-kedaluwarsa`, `galeri-dialog-ganti-password`, `galeri-dialog-lepas-folder`, `galeri-dialog-arsipkan`, `galeri-dialog-hapus-galeri-draf`;
 - **menus:** `galeri-menu-galeri-draf`, `galeri-menu-galeri-dipublikasikan`, `galeri-menu-folder-lepas-tidak-tersedia`;
 - **states:** `galeri-dipublikasikan`, `galeri-dipublikasikan-folder-dilepas`, `galeri-kedaluwarsa`, `galeri-diarsipkan`;
 - **toasts:** `galeri-toast-dipublikasikan`, `galeri-toast-password-diganti`, `galeri-toast-diarsipkan`, `galeri-toast-dibuka-lagi`.
 
-Also `proyek / *` diffs `proyek-toast-galeri-draf-dihapus` and `proyek-detail-pemotretan-galeri-dipublikasikan-folder-gagal` (card states D, E and F).
+Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-pemotretan-galeri-dipublikasikan-folder-gagal` (card states D, E and F).
 
 **Steps:**
 - [ ] Use cases with unit tests:
@@ -267,8 +267,8 @@ Also `proyek / *` diffs `proyek-toast-galeri-draf-dihapus` and `proyek-detail-pe
 - `src/composition/booking/project-flow/project-flow.ts` (`cancelProjectEntry`), `src/features/booking/application/use-cases/cancel-project/*`, `src/composition/workspace/workspace-creation-scope/*`.
 
 **Exports:**
-- `galeri / *` diff `galeri-proyek-dibatalkan`;
-- `proyek / *` diff `proyek-detail-dibatalkan-galeri-diarsipkan`.
+- `galeri / *` state `galeri-proyek-dibatalkan`;
+- `proyek / *` state `proyek-detail-dibatalkan-galeri-diarsipkan`.
 
 **Steps:**
 - [ ] Use case `archive-gallery-of-cancelled-project`, and the composition scope `withProjectCancellationScope` (D-15). Switch `cancelProjectEntry` to it. Integration tests cover the joint commit and the rollback when the archive throws.
@@ -287,7 +287,7 @@ Also `proyek / *` diffs `proyek-toast-galeri-draf-dihapus` and `proyek-detail-pe
 **Read first:**
 - AC-GAL-025, 026; C-008;
 - technical-design.md › Testing Strategy;
-- `exports/_compact/INDEX.md` (all states).
+- every file in `exports/` (all 100 states).
 
 **Steps:**
 - [ ] Axe and keyboard E2E for each surface.

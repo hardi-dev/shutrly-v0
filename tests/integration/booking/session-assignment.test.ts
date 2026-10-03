@@ -1,5 +1,6 @@
 import {
   seedAssignment,
+  seedClientAndService,
   seedProjectWithSession,
   seedTeamRoles,
   seedTeamWorkspace,
@@ -374,5 +375,98 @@ describe("tenant isolation of the team reads", () => {
       "NOT_FOUND",
     );
     expect(await remove(first.base, first.target.projectId, crypto.randomUUID())).toBe("NOT_FOUND");
+  });
+});
+
+const SESSIONS = [
+  { name: "Akad", date: "2026-11-10", startTime: null, endTime: null, location: null },
+  { name: "Resepsi", date: "2026-11-11", startTime: null, endTime: null, location: null },
+];
+
+async function snapshotFor(
+  base: TeamSeedBase,
+  sessions: ReadonlyArray<
+    (typeof SESSIONS)[number] & { team: { memberId: string; roleId: string }[] }
+  >,
+) {
+  const { clientId, serviceId } = await seedClientAndService(db, base);
+  return createDrizzleProjectRepository(db).createSnapshot(base, {
+    status: "BOOKED",
+    clientId,
+    serviceId,
+    title: "Wisuda Rina",
+    notes: null,
+    agreedPrice: "750000",
+    accessToken: Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString("base64url"),
+    actorId: base.ownerId,
+    items: [],
+    fieldValues: {},
+    sessions,
+  });
+}
+
+describe("creating a project with a team", () => {
+  it("AC-TEAM-028 stores each session's team with the project, in one transaction", async () => {
+    const { base, roles, dimas } = await fixture();
+    const sari = await createMember(base, "Sari Lestari", "6281222222222", [roles.Asisten]);
+    const result = await snapshotFor(base, [
+      { ...SESSIONS[0], team: [{ memberId: dimas, roleId: roles.Videografer }] },
+      {
+        ...SESSIONS[1],
+        team: [
+          { memberId: sari, roleId: roles.Asisten },
+          { memberId: dimas, roleId: roles.Fotografer },
+        ],
+      },
+    ]);
+    if (result.status !== "CREATED") throw new Error("not created");
+    const detail = await createDrizzleProjectRepository(db).findDetail(base, result.id);
+    const bySession = new Map(detail?.sessions.map((s) => [s.id, s.name]));
+    const rows = (detail?.assignments ?? []).map((a) => [
+      bySession.get(a.sessionId),
+      a.memberName,
+      a.roleName,
+    ]);
+    expect(rows).toEqual([
+      ["Akad", "Dimas Pratama", "Videografer"],
+      ["Resepsi", "Sari Lestari", "Asisten"],
+      ["Resepsi", "Dimas Pratama", "Fotografer"],
+    ]);
+    expect(detail?.status).toBe("BOOKED");
+  });
+
+  it("AC-TEAM-028 refuses an archived member or a role the member lacks and writes nothing", async () => {
+    const { base, roles, dimas, target } = await fixture();
+    const archived = await createMember(base, "Budi Hartono", BUDI, [roles.Asisten]);
+    await db.update(teamMember).set({ archivedAt: new Date() }).where(eq(teamMember.id, archived));
+    expect(
+      await snapshotFor(base, [
+        { ...SESSIONS[0], team: [] },
+        { ...SESSIONS[1], team: [{ memberId: archived, roleId: roles.Asisten }] },
+      ]),
+    ).toEqual({ status: "TEAM_INVALID", sessionIndex: 1 });
+    expect(
+      await snapshotFor(base, [
+        { ...SESSIONS[0], team: [{ memberId: dimas, roleId: roles.Asisten }] },
+      ]),
+    ).toEqual({ status: "TEAM_INVALID", sessionIndex: 0 });
+    const rows = await db.select().from(project).where(eq(project.workspaceId, base.workspaceId));
+    // Only the project the fixture seeded exists: the refused creations rolled back.
+    expect(rows.map((row) => row.id)).toEqual([target.projectId]);
+  });
+
+  it("AC-TEAM-022 does not find another workspace's member or role", async () => {
+    const first = await fixture();
+    const second = await fixture();
+    expect(
+      await snapshotFor(first.base, [
+        { ...SESSIONS[0], team: [{ memberId: second.dimas, roleId: first.roles.Fotografer }] },
+      ]),
+    ).toEqual({ status: "NOT_FOUND" });
+    expect(
+      await snapshotFor(first.base, [
+        { ...SESSIONS[0], team: [{ memberId: first.dimas, roleId: second.roles.Fotografer }] },
+      ]),
+    ).toEqual({ status: "NOT_FOUND" });
   });
 });

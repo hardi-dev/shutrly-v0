@@ -6,6 +6,7 @@ import {
   assignmentsBySession,
   avatarGroup,
   firstName,
+  hasDuplicateMember,
   isTeamEditable,
   SESSION_AVATAR_MAX,
 } from "./session-assignment";
@@ -69,5 +70,13 @@ describe("firstName", () => {
     expect(firstName("Sari Lestari")).toBe("Sari");
     expect(firstName("  Dimas   Adi Pratama ")).toBe("Dimas");
     expect(firstName("Joko")).toBe("Joko");
+  });
+});
+
+describe("hasDuplicateMember", () => {
+  it("AC-TEAM-028 finds a member picked twice, whatever the role", () => {
+    expect(hasDuplicateMember([{ memberId: "a" }, { memberId: "b" }])).toBe(false);
+    expect(hasDuplicateMember([{ memberId: "a" }, { memberId: "a" }])).toBe(true);
+    expect(hasDuplicateMember([])).toBe(false);
   });
 });

@@ -47,12 +47,11 @@ export interface SeededSession {
   readonly sessionId: string;
 }
 
-/** Inserts a client, service, BOOKED project and one session, all with unique names. */
-export async function seedProjectWithSession(
+/** Inserts an active client and an active service without items or fields, with unique names. */
+export async function seedClientAndService(
   db: Db,
   base: TeamSeedBase,
-  status = "BOOKED",
-): Promise<SeededSession> {
+): Promise<{ clientId: string; serviceId: string }> {
   const suffix = crypto.randomUUID();
   const [category] = await db
     .insert(serviceCategory)
@@ -71,12 +70,22 @@ export async function seedProjectWithSession(
     .insert(client)
     .values({ workspaceId: base.workspaceId, name: `Rina ${suffix}` })
     .returning({ id: client.id });
+  return { clientId: rina.id, serviceId: svc.id };
+}
+
+/** Inserts a client, service, BOOKED project and one session, all with unique names. */
+export async function seedProjectWithSession(
+  db: Db,
+  base: TeamSeedBase,
+  status = "BOOKED",
+): Promise<SeededSession> {
+  const { clientId, serviceId } = await seedClientAndService(db, base);
   const [row] = await db
     .insert(project)
     .values({
       workspaceId: base.workspaceId,
-      clientId: rina.id,
-      serviceId: svc.id,
+      clientId,
+      serviceId,
       title: "Wisuda Rina",
       agreedPrice: "750000",
       status,

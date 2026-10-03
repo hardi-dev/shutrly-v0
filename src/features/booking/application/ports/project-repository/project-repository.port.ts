@@ -71,6 +71,11 @@ export interface ProjectDetailRecord {
   } | null;
 }
 
+/** A session of a new project with the members picked for it (AC-TEAM-028). */
+export interface NewSessionInput extends SessionInput {
+  readonly team: readonly { readonly memberId: string; readonly roleId: string }[];
+}
+
 export interface ProjectSnapshotInput {
   readonly status: "DRAFT" | "BOOKED";
   readonly clientId: string;
@@ -82,12 +87,14 @@ export interface ProjectSnapshotInput {
   readonly actorId: string;
   readonly items: readonly { readonly definitionId: string; readonly value: PackageValue }[];
   readonly fieldValues: Readonly<Record<string, BookingValue>>;
-  readonly sessions: readonly SessionInput[];
+  readonly sessions: readonly NewSessionInput[];
 }
 
 export type CreateSnapshotResult =
   | { readonly status: "CREATED"; readonly id: string }
   | { readonly status: "CLIENT_INACTIVE" | "SERVICE_INACTIVE" | "NOT_FOUND" }
+  /** A picked member is archived or no longer holds the role; `sessionIndex` is its session's position. */
+  | { readonly status: "TEAM_INVALID"; readonly sessionIndex: number }
   | {
       readonly status: "DEFINITION_INACTIVE" | "DUPLICATE_DEFINITION";
       readonly definitionId: string;

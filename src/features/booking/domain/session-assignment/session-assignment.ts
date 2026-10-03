@@ -1,6 +1,9 @@
 import type { ProjectStatus } from "../project-status/project-status.types";
 import type { AssignmentRef, AvatarGroup } from "./session-assignment.types";
 
+/** Input bound for the members picked on one session when a project is created (TD-A-4). */
+export const SESSION_TEAM_MAX = 50;
+
 /** design.md decision 3: at most three avatars, then +n. */
 export const SESSION_AVATAR_MAX = 3;
 
@@ -65,4 +68,13 @@ export function assignmentsBySession<T extends { readonly sessionId: string }>(
  */
 export function firstName(name: string): string {
   return name.trim().split(/\s+/)[0] ?? name.trim();
+}
+
+/**
+ * A member can be on a session once: a second pick of the same member is a mistake (AC-TEAM-028).
+ * @param team - the picks of one session
+ * @returns whether a member appears more than once
+ */
+export function hasDuplicateMember(team: readonly { readonly memberId: string }[]): boolean {
+  return new Set(team.map((pick) => pick.memberId)).size !== team.length;
 }

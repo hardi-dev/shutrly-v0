@@ -59,6 +59,8 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
   readonly services: FakeServiceRow[] = [];
   readonly projects: StoredProject[] = [];
   readonly workspaceId = "projects-workspace";
+  /** The position of a session whose team the fake refuses, as the database would. */
+  rejectTeamOfSession: number | null = null;
 
   async createSnapshot(
     context: WorkspaceContext,
@@ -83,6 +85,9 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       if (!definition.isActive && !inService) {
         return { status: "DEFINITION_INACTIVE", definitionId: item.definitionId };
       }
+    }
+    if (this.rejectTeamOfSession !== null) {
+      return { status: "TEAM_INVALID", sessionIndex: this.rejectTeamOfSession };
     }
     const id = `project-${String(this.projects.length + 1)}`;
     this.projects.push({

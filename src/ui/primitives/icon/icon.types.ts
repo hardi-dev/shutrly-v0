@@ -15,6 +15,7 @@ export type IconName =
   | "google"
   | "camera"
   | "calendar-check"
+  | "list-filter"
   | "circle-check-big"
   | "chevrons-up-down"
   | "layout-grid"

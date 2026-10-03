@@ -1,0 +1,345 @@
+--- base
++++ state
+@@ -1,5 +1,5 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Proyek / List / Selesai / Mobile"
++      data-pencil-name="Proyek / List / Loading / Mobile"
+       class="box-border w-[390px] h-[844px] flex flex-col gap-0 justify-start items-start bg-[#E4E4E7] [outline:1px_solid_#F0F0F2] rounded-[36px] overflow-hidden"
+     >
+@@ -168,4 +168,15 @@
+ <div
+                 data-pencil-name="Item Aktif"
++                class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 p-[8px_16px] justify-center items-start bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[999px]"
++              >
++<div
++                  data-pencil-name="Label"
++                  class="text-[12px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                >
++                  Aktif
++                </div>
++</div>
++<div
++                data-pencil-name="Item Selesai"
+                 class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 p-[8px_16px] justify-center items-start rounded-[999px]"
+               >
+@@ -173,15 +184,4 @@
+                   data-pencil-name="Label"
+                   class="text-[12px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                >
+-                  Aktif
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Item Selesai"
+-                class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 p-[8px_16px] justify-center items-start bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Label"
+-                  class="text-[12px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                 >
+                   Selesai
+@@ -249,5 +249,5 @@
+ <div
+             data-pencil-name="Header"
+-            class="[box-sizing:content-box] w-[358px] h-[67.5px] shrink-0 flex flex-row gap-[16px] p-[12px_16px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
++            class="[box-sizing:content-box] w-[358px] h-[65.5px] shrink-0 flex flex-row gap-[16px] p-[12px_16px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
+           >
+ <div
+@@ -260,10 +260,4 @@
+               >
+                 Daftar proyek
+-              </div>
+-<div
+-                data-pencil-name="Description"
+-                class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-              >
+-                3 proyek selesai
+               </div>
+ </div>
+@@ -300,175 +294,126 @@
+           >
+ <div
+-              data-pencil-name="Row Wedding Putri &amp; Andra"
++              data-pencil-name="Skeleton 1"
+               class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
+             >
+ <div
+                 data-pencil-name="Text"
+-                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-              >
+-<div
+-                  data-pencil-name="Title"
+-                  class="text-[14px]/[normal] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+-                >
+-                  Wedding Putri &amp; Andra
+-                </div>
+-<div
+-                  data-pencil-name="Meta"
+-                  class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                >
+-                  Putri &amp; Andra · 30 Agu 2026
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Trailing"
+-                class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] justify-start items-center"
+-              >
+-<div
+-                  data-pencil-name="Status"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#E8F7EE] rounded-[999px]"
+-                >
+-<div
+-                    data-pencil-name="Label"
+-                    class="text-[11px]/[normal] box-border text-[#15803D] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                  >
+-                    Selesai
+-                  </div>
+-</div>
+-<div
+-                  data-pencil-name="Row actions"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                >
+-<div
+-                    data-pencil-name="Trigger"
+-                    class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                  >
+-<svg
+-                      data-pencil-name="Icon"
+-                      data-icon-name="ellipsis"
+-                      data-icon-set="lucide"
+-                      viewBox="0 0 13.99993896484375 14"
+-                      preserveAspectRatio="xMidYMid meet"
+-                      xmlns="http://www.w3.org/2000/svg"
+-                      class="box-border w-[16px] shrink-0 h-[16px]"
+-                    >
+-</svg>
+-</div>
+-</div>
+-</div>
+-</div>
+-<div
+-              data-pencil-name="Row Family Tono"
++                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[8px] justify-start items-start"
++              >
++<div
++                  data-pencil-name="Title bar"
++                  class="box-border w-[160px] h-[12px] shrink-0 flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++                >
++</div>
++<div
++                  data-pencil-name="Meta bar"
++                  class="box-border w-[96px] h-[10px] shrink-0 flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++                >
++</div>
++</div>
++<div
++                data-pencil-name="Trailing bar"
++                class="box-border w-[56px] shrink-0 h-[20px] flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++              >
++</div>
++</div>
++<div
++              data-pencil-name="Skeleton 2"
+               class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
+             >
+ <div
+                 data-pencil-name="Text"
+-                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-              >
+-<div
+-                  data-pencil-name="Title"
+-                  class="text-[14px]/[normal] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+-                >
+-                  Family Tono
+-                </div>
+-<div
+-                  data-pencil-name="Meta"
+-                  class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                >
+-                  Keluarga Tono · 16 Agu 2026
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Trailing"
+-                class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] justify-start items-center"
+-              >
+-<div
+-                  data-pencil-name="Status"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#E8F7EE] rounded-[999px]"
+-                >
+-<div
+-                    data-pencil-name="Label"
+-                    class="text-[11px]/[normal] box-border text-[#15803D] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                  >
+-                    Selesai
+-                  </div>
+-</div>
+-<div
+-                  data-pencil-name="Row actions"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                >
+-<div
+-                    data-pencil-name="Trigger"
+-                    class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                  >
+-<svg
+-                      data-pencil-name="Icon"
+-                      data-icon-name="ellipsis"
+-                      data-icon-set="lucide"
+-                      viewBox="0 0 13.99993896484375 14"
+-                      preserveAspectRatio="xMidYMid meet"
+-                      xmlns="http://www.w3.org/2000/svg"
+-                      class="box-border w-[16px] shrink-0 h-[16px]"
+-                    >
+-</svg>
+-</div>
+-</div>
+-</div>
+-</div>
+-<div
+-              data-pencil-name="Row Wisuda Basic — Nadia"
++                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[8px] justify-start items-start"
++              >
++<div
++                  data-pencil-name="Title bar"
++                  class="box-border w-[160px] h-[12px] shrink-0 flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++                >
++</div>
++<div
++                  data-pencil-name="Meta bar"
++                  class="box-border w-[96px] h-[10px] shrink-0 flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++                >
++</div>
++</div>
++<div
++                data-pencil-name="Trailing bar"
++                class="box-border w-[56px] shrink-0 h-[20px] flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++              >
++</div>
++</div>
++<div
++              data-pencil-name="Skeleton 3"
++              class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
++            >
++<div
++                data-pencil-name="Text"
++                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[8px] justify-start items-start"
++              >
++<div
++                  data-pencil-name="Title bar"
++                  class="box-border w-[160px] h-[12px] shrink-0 flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++                >
++</div>
++<div
++                  data-pencil-name="Meta bar"
++                  class="box-border w-[96px] h-[10px] shrink-0 flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++                >
++</div>
++</div>
++<div
++                data-pencil-name="Trailing bar"
++                class="box-border w-[56px] shrink-0 h-[20px] flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++              >
++</div>
++</div>
++<div
++              data-pencil-name="Skeleton 4"
++              class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
++            >
++<div
++                data-pencil-name="Text"
++                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[8px] justify-start items-start"
++              >
++<div
++                  data-pencil-name="Title bar"
++                  class="box-border w-[160px] h-[12px] shrink-0 flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++                >
++</div>
++<div
++                  data-pencil-name="Meta bar"
++                  class="box-border w-[96px] h-[10px] shrink-0 flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++                >
++</div>
++</div>
++<div
++                data-pencil-name="Trailing bar"
++                class="box-border w-[56px] shrink-0 h-[20px] flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++              >
++</div>
++</div>
++<div
++              data-pencil-name="Skeleton 5"
+               class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center"
+             >
+ <div
+                 data-pencil-name="Text"
+-                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-              >
+-<div
+-                  data-pencil-name="Title"
+-                  class="text-[14px]/[normal] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+-                >
+-                  Wisuda Basic — Nadia
+-                </div>
+-<div
+-                  data-pencil-name="Meta"
+-                  class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                >
+-                  Nadia · 2 Agu 2026
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Trailing"
+-                class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] justify-start items-center"
+-              >
+-<div
+-                  data-pencil-name="Status"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#E8F7EE] rounded-[999px]"
+-                >
+-<div
+-                    data-pencil-name="Label"
+-                    class="text-[11px]/[normal] box-border text-[#15803D] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                  >
+-                    Selesai
+-                  </div>
+-</div>
+-<div
+-                  data-pencil-name="Row actions"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                >
+-<div
+-                    data-pencil-name="Trigger"
+-                    class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                  >
+-<svg
+-                      data-pencil-name="Icon"
+-                      data-icon-name="ellipsis"
+-                      data-icon-set="lucide"
+-                      viewBox="0 0 13.99993896484375 14"
+-                      preserveAspectRatio="xMidYMid meet"
+-                      xmlns="http://www.w3.org/2000/svg"
+-                      class="box-border w-[16px] shrink-0 h-[16px]"
+-                    >
+-</svg>
+-</div>
+-</div>
++                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[8px] justify-start items-start"
++              >
++<div
++                  data-pencil-name="Title bar"
++                  class="box-border w-[160px] h-[12px] shrink-0 flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++                >
++</div>
++<div
++                  data-pencil-name="Meta bar"
++                  class="box-border w-[96px] h-[10px] shrink-0 flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++                >
++</div>
++</div>
++<div
++                data-pencil-name="Trailing bar"
++                class="box-border w-[56px] shrink-0 h-[20px] flex flex-row gap-0 justify-start items-start bg-[#E4E4E7] rounded-[4px]"
++              >
+ </div>
+ </div>

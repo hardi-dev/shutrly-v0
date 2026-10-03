@@ -1,0 +1,214 @@
+--- base
++++ state
+@@ -1,5 +1,5 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Proyek / List / Selesai / Mobile"
++      data-pencil-name="Proyek / List / Filter diterapkan / Mobile"
+       class="box-border w-[390px] h-[844px] flex flex-col gap-0 justify-start items-start bg-[#E4E4E7] [outline:1px_solid_#F0F0F2] rounded-[36px] overflow-hidden"
+     >
+@@ -168,4 +168,15 @@
+ <div
+                 data-pencil-name="Item Aktif"
++                class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 p-[8px_16px] justify-center items-start bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[999px]"
++              >
++<div
++                  data-pencil-name="Label"
++                  class="text-[12px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                >
++                  Aktif
++                </div>
++</div>
++<div
++                data-pencil-name="Item Selesai"
+                 class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 p-[8px_16px] justify-center items-start rounded-[999px]"
+               >
+@@ -174,15 +185,4 @@
+                   class="text-[12px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                 >
+-                  Aktif
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Item Selesai"
+-                class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 p-[8px_16px] justify-center items-start bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Label"
+-                  class="text-[12px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                >
+                   Selesai
+                 </div>
+@@ -228,5 +228,5 @@
+ <div
+               data-pencil-name="Filter button"
+-              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[12px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#DCDCE0] rounded-[8px]"
++              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[12px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#DCDCE0] rounded-[8px] relative"
+             >
+ <svg
+@@ -237,7 +237,18 @@
+                 preserveAspectRatio="xMidYMid meet"
+                 xmlns="http://www.w3.org/2000/svg"
+-                class="box-border w-[16px] shrink-0 h-[16px]"
+-              >
+-</svg>
++                class="box-border w-[16px] shrink-0 h-[16px] relative [z-index:0]"
++              >
++</svg>
++<div
++                data-pencil-name="Badge"
++                class="box-border w-fit h-fit absolute left-[20px] top-[4px] flex flex-row gap-0 p-[2px_8px] justify-center items-start bg-[#DC2626] rounded-[999px] [z-index:1]"
++              >
++<div
++                  data-pencil-name="Count"
++                  class="text-[11px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                >
++                  2
++                </div>
++</div>
+ </div>
+ </div>
+@@ -265,5 +276,5 @@
+                 class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+               >
+-                3 proyek selesai
++                12 proyek aktif
+               </div>
+ </div>
+@@ -300,5 +311,5 @@
+           >
+ <div
+-              data-pencil-name="Row Wedding Putri &amp; Andra"
++              data-pencil-name="Row Prewed Dewi &amp; Arga"
+               class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
+             >
+@@ -311,5 +322,5 @@
+                   class="text-[14px]/[normal] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                 >
+-                  Wedding Putri &amp; Andra
++                  Prewedding Dewi Lestari &amp; Arga…
+                 </div>
+ <div
+@@ -317,5 +328,5 @@
+                   class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                 >
+-                  Putri &amp; Andra · 30 Agu 2026
++                  Dewi Lestari · 20 Okt 2026
+                 </div>
+ </div>
+@@ -326,11 +337,16 @@
+ <div
+                   data-pencil-name="Status"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#E8F7EE] rounded-[999px]"
+-                >
++                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#F4FBDF] rounded-[999px]"
++                >
++<div
++                    data-pencil-name="Dot"
++                    class="box-border w-[6px] shrink-0 h-[6px] bg-[#3F6212] rounded-full"
++                  >
++</div>
+ <div
+                     data-pencil-name="Label"
+-                    class="text-[11px]/[normal] box-border text-[#15803D] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                  >
+-                    Selesai
++                    class="text-[11px]/[normal] box-border text-[#3F6212] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                  >
++                    Pemotretan
+                   </div>
+ </div>
+@@ -358,5 +374,5 @@
+ </div>
+ <div
+-              data-pencil-name="Row Family Tono"
++              data-pencil-name="Row Wisuda Basic — Rina"
+               class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
+             >
+@@ -367,7 +383,7 @@
+ <div
+                   data-pencil-name="Title"
+-                  class="text-[14px]/[normal] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+-                >
+-                  Family Tono
++                  class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                >
++                  Wisuda Basic — Rina
+                 </div>
+ <div
+@@ -375,5 +391,5 @@
+                   class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                 >
+-                  Keluarga Tono · 16 Agu 2026
++                  Rina · 10 Nov 2026
+                 </div>
+ </div>
+@@ -384,11 +400,16 @@
+ <div
+                   data-pencil-name="Status"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#E8F7EE] rounded-[999px]"
+-                >
++                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#EEF3FF] rounded-[999px]"
++                >
++<div
++                    data-pencil-name="Dot"
++                    class="box-border w-[6px] shrink-0 h-[6px] bg-[#1D4ED8] rounded-full"
++                  >
++</div>
+ <div
+                     data-pencil-name="Label"
+-                    class="text-[11px]/[normal] box-border text-[#15803D] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                  >
+-                    Selesai
++                    class="text-[11px]/[normal] box-border text-[#1D4ED8] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                  >
++                    Dibooking
+                   </div>
+ </div>
+@@ -416,5 +437,5 @@
+ </div>
+ <div
+-              data-pencil-name="Row Wisuda Basic — Nadia"
++              data-pencil-name="Row Wedding Bayu &amp; Laras"
+               class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center"
+             >
+@@ -425,7 +446,7 @@
+ <div
+                   data-pencil-name="Title"
+-                  class="text-[14px]/[normal] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+-                >
+-                  Wisuda Basic — Nadia
++                  class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                >
++                  Wedding Bayu &amp; Laras
+                 </div>
+ <div
+@@ -433,5 +454,5 @@
+                   class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                 >
+-                  Nadia · 2 Agu 2026
++                  Bayu &amp; Laras · 22 Nov 2026
+                 </div>
+ </div>
+@@ -442,11 +463,16 @@
+ <div
+                   data-pencil-name="Status"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#E8F7EE] rounded-[999px]"
+-                >
++                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#EEF3FF] rounded-[999px]"
++                >
++<div
++                    data-pencil-name="Dot"
++                    class="box-border w-[6px] shrink-0 h-[6px] bg-[#1D4ED8] rounded-full"
++                  >
++</div>
+ <div
+                     data-pencil-name="Label"
+-                    class="text-[11px]/[normal] box-border text-[#15803D] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                  >
+-                    Selesai
++                    class="text-[11px]/[normal] box-border text-[#1D4ED8] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                  >
++                    Dibooking
+                   </div>
+ </div>

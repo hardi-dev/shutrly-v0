@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv handoff"
+  short_description: "Write or refresh docs/HANDOFF.md at the end of a session, within a size budget"
+policy:
+  allow_implicit_invocation: false

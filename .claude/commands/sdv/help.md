@@ -13,6 +13,8 @@ Give the user a concise, project-aware guide from discovery to shipping. Inspect
 
    `/sdv:init-project` → `/sdv:capture-intent` → `/sdv:discover-feature` → `/sdv:model-feature` → `/sdv:design-feature` → `/sdv:plan-feature` → `/sdv:build-feature` → `/sdv:verify-feature` → `/sdv:ship`
 
+   At the end of any session, run `/sdv:handoff` to refresh `docs/HANDOFF.md`: one current handoff within a 12 KB budget, old ones summarised into `docs/HANDOFF-archive.md`.
+
    Then explain what each feature stage reads and writes, and the gates between them:
 
    - `/sdv:capture-intent` writes `docs/features/<slug>/intent.md` (problem, outcome, constraints, open questions). Optional for small features. Only the Owner sets it to `ACCEPTED`.

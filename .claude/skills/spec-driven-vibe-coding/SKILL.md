@@ -133,6 +133,7 @@ Each mode is a workflow. In Claude Code the plugin (`sdv`) exposes them as names
 | `/sdv:plan-feature <slug>` | technical design + implementation iterations |
 | `/sdv:build-feature <slug> [n]` | implement one approved iteration → tests → deviation report |
 | `/sdv:verify-feature <slug>` | cross-check implementation against authoritative artifacts |
+| `/sdv:handoff [notes]` | end-of-session `HANDOFF.md` refresh within a 12 KB budget; old handoff summarised into the archive |
 | `/sdv:ship [name]` | quality gates → preview/staging → smoke test → release notes |
 
 When recommending a next step to the user, name the exact command above (with the `sdv:` prefix), never a bare `/discover-feature`-style name.

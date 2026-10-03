@@ -23,6 +23,10 @@ export const PROJECT_COPY = {
   noServiceBody:
     "Proyek dibuat dari layanan. Buat atau aktifkan layanan dulu, lalu kembali ke sini.",
   noServiceAction: "Buka Layanan",
+  changeServiceTitle: "Ganti layanan?",
+  changeServiceBody: (service: string) =>
+    `Perubahan isi paket akan hilang. Isi paket diganti dengan isi ${service}.`,
+  changeServiceConfirm: "Ganti layanan",
   clientDialogDescription: "Klien baru langsung dipilih untuk proyek ini.",
   clientCreateLabel: (query: string) => `Tambah klien baru “${query}”`,
   clientNoNumber: "Belum ada nomor WhatsApp",

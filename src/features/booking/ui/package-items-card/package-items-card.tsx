@@ -2,9 +2,16 @@ import { summariseServiceItems } from "@/features/booking/domain/item-summary/it
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
+import { Button } from "@/ui/primitives/button/button";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
-import type { PackageItemsCardProps } from "./package-items-card.types";
+import { ProjectRowMenu } from "../project-row-menu/project-row-menu";
+import type { RowMenuEntry } from "../project-row-menu/project-row-menu.types";
+import type {
+  PackageCardEdit,
+  PackageCardItem,
+  PackageItemsCardProps,
+} from "./package-items-card.types";
 
 /** Lists the package items copied from the service; editing them arrives with F-07 Slice 7. */
 export function PackageItemsCard({
@@ -12,6 +19,7 @@ export function PackageItemsCard({
   items,
   isMobile,
   description,
+  edit,
 }: Readonly<PackageItemsCardProps>) {
   return (
     <SectionCard
@@ -23,6 +31,13 @@ export function PackageItemsCard({
           : PROJECT_COPY.packageDescriptionDesktop(serviceName))
       }
       content="flush"
+      actions={
+        edit ? (
+          <Button variant="secondary" iconLeading="plus" onPress={edit.onAdd}>
+            {isMobile ? PROJECT_COPY.addItemMobile : PROJECT_COPY.addItemDesktop}
+          </Button>
+        ) : null
+      }
     >
       {items.length === 0 ? (
         <EmptyState
@@ -40,11 +55,39 @@ export function PackageItemsCard({
               title={item.definitionName}
               meta={describePackageItem(item)}
               isLast={index === items.length - 1}
+              trailing={edit ? <ItemRowMenu item={item} edit={edit} /> : undefined}
             />
           ))}
         </ul>
       )}
     </SectionCard>
+  );
+}
+
+function ItemRowMenu({ item, edit }: Readonly<{ item: PackageCardItem; edit: PackageCardEdit }>) {
+  const entries: RowMenuEntry[] = [
+    {
+      label: PROJECT_COPY.itemEditValue,
+      icon: "pencil",
+      onSelect: () => {
+        edit.onEdit(item);
+      },
+    },
+    {
+      label: PROJECT_COPY.itemRemove,
+      icon: "trash-2",
+      isDestructive: true,
+      onSelect: () => {
+        edit.onRemove(item);
+      },
+    },
+  ];
+  return (
+    <ProjectRowMenu
+      label={PROJECT_COPY.itemActions(item.definitionName)}
+      title={item.definitionName}
+      entries={entries}
+    />
   );
 }
 

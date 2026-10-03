@@ -1,15 +1,18 @@
 "use client";
+/* eslint-disable max-lines-per-function -- the screen composes every form card in one place */
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 
-import { PackageItemsCard } from "../package-items-card/package-items-card";
+import { ChangeServiceDialog } from "../change-service-dialog/change-service-dialog";
 import { projectFieldErrorText } from "../project-field-error/project-field-error";
 import { ProjectFieldsCard } from "../project-fields-card/project-fields-card";
 import { SessionsCard } from "../sessions-card/sessions-card";
 import { useCreateProjectForm } from "../use-create-project-form/use-create-project-form";
+import type { CreateProjectState } from "../use-create-project-form/use-create-project-form.types";
 import { ClientServiceCard } from "./client-service-card";
 import { CreateProjectActions } from "./create-project-actions";
 import type { CreateProjectScreenProps } from "./create-project-screen.types";
+import { PackageEditing } from "./package-editing";
 import { ProjectDetailCard } from "./project-detail-card";
 
 /** The Proyek baru form: one client, one service, an editable package snapshot, sessions and booking values (S2). */
@@ -24,19 +27,17 @@ export function CreateProjectScreen(props: Readonly<CreateProjectScreenProps>) {
   const values = form.watch();
   const { errors } = form.formState;
   const sessionsKey = errors.sessions?.message;
-  const fieldErrors = Object.fromEntries(
-    (service?.fields ?? []).flatMap((field) => {
-      const key = errors.fieldValues?.[field.key]?.message;
-      return key
-        ? [[field.key, projectFieldErrorText(`fieldValues.${field.key}`, key, field.name)]]
-        : [];
-    }),
-  );
+  const fieldErrors = fieldErrorTexts(service, errors);
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) pb-(--space-6) md:gap-(--component-panel-app-content-gap)">
       <ClientServiceCard state={state} props={props} />
       {service && props.hasActiveService ? (
-        <PackageItemsCard serviceName={service.name} items={service.items} isMobile={isMobile} />
+        <PackageEditing
+          state={state}
+          serviceName={service.name}
+          definitions={props.definitions}
+          isMobile={isMobile}
+        />
       ) : null}
       <ProjectDetailCard state={state} />
       <SessionsCard
@@ -58,7 +59,27 @@ export function CreateProjectScreen(props: Readonly<CreateProjectScreenProps>) {
           onChange={state.changeFieldValue}
         />
       ) : null}
+      <ChangeServiceDialog
+        serviceName={state.pendingService?.name ?? null}
+        onConfirm={state.confirmServiceChange}
+        onCancel={state.cancelServiceChange}
+      />
       <CreateProjectActions state={state} isDisabled={!props.hasActiveService} />
     </main>
   );
 }
+
+function fieldErrorTexts(
+  service: CreateProjectState["service"],
+  errors: CreateProjectState["form"]["formState"]["errors"],
+): Record<string, string> {
+  return Object.fromEntries(
+    (service?.fields ?? []).flatMap((field) => {
+      const key = errors.fieldValues?.[field.key]?.message;
+      return key
+        ? [[field.key, projectFieldErrorText(`fieldValues.${field.key}`, key, field.name)]]
+        : [];
+    }),
+  );
+}
+/* eslint-enable max-lines-per-function -- the screen composes every form card in one place */

@@ -12,6 +12,8 @@ import type { CreateProjectResult } from "@/features/booking/application/use-cas
 import type { BookingValue } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
 import type { SessionInput } from "@/features/booking/domain/session/session.types";
 
+import type { DraftItem, PackageDraftAction } from "./package-draft.types";
+
 export type CreateProjectCall = (
   workspaceId: string,
   values: unknown,
@@ -33,6 +35,13 @@ export interface ProjectPicks {
   readonly selectClient: (option: ClientOption) => void;
   readonly selectService: (id: string) => void;
   readonly changeTitle: (title: string) => void;
+  /** The editable package: the service's items until the Owner changes them (AC-PRJ-030). */
+  readonly items: readonly DraftItem[];
+  readonly dispatchPackage: (action: PackageDraftAction) => void;
+  /** The service the Owner picked while the package was edited; a confirm decides (spec › Main Flow 3). */
+  readonly pendingService: ServiceOptionGroup["services"][number] | null;
+  readonly confirmServiceChange: () => void;
+  readonly cancelServiceChange: () => void;
 }
 
 export interface CreateProjectState {
@@ -43,6 +52,11 @@ export interface CreateProjectState {
   readonly selectClient: ProjectPicks["selectClient"];
   readonly selectService: ProjectPicks["selectService"];
   readonly changeTitle: ProjectPicks["changeTitle"];
+  readonly items: ProjectPicks["items"];
+  readonly dispatchPackage: ProjectPicks["dispatchPackage"];
+  readonly pendingService: ProjectPicks["pendingService"];
+  readonly confirmServiceChange: ProjectPicks["confirmServiceChange"];
+  readonly cancelServiceChange: ProjectPicks["cancelServiceChange"];
   readonly submit: (mode: CreateProjectMode) => Promise<void>;
   readonly addSession: (session: SessionInput) => void;
   readonly updateSession: (index: number, session: SessionInput) => void;

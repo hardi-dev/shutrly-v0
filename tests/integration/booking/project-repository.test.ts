@@ -577,4 +577,44 @@ describe("Drizzle project repository", () => {
       editResult === "SAVED" ? { type: "NUMBER", value: "30" } : { type: "NUMBER", value: "25" },
     );
   });
+
+  it("AC-PRJ-030 stores the edited package and leaves the service template unchanged", async () => {
+    const context = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const [cetak] = await db
+      .insert(serviceItemDefinition)
+      .values({
+        workspaceId: context.workspaceId,
+        name: "Foto cetak",
+        valueType: "NUMBER",
+        unit: "foto",
+        selectionRequired: true,
+        selectionType: "PRINT",
+      })
+      .returning({ id: serviceItemDefinition.id });
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(
+      context,
+      snapshot(ids, context.ownerId, {
+        items: [
+          { definitionId: ids.fotoEdit, value: { type: "NUMBER", value: "30" } },
+          { definitionId: cetak.id, value: { type: "NUMBER", value: "10" } },
+        ],
+      }),
+    );
+    if (created.status !== "CREATED") throw new Error("not created");
+    const detail = await repository.findDetail(context, created.id);
+    expect(detail?.items.map((item) => [item.name, item.value, item.selectionType])).toEqual([
+      ["Foto edit", { type: "NUMBER", value: "30" }, "EDIT"],
+      ["Foto cetak", { type: "NUMBER", value: "10" }, "PRINT"],
+    ]);
+    const template = await db
+      .select({ value: serviceItem.value })
+      .from(serviceItem)
+      .where(eq(serviceItem.serviceId, ids.active));
+    expect(template.map((row) => row.value)).toEqual([
+      { type: "NUMBER", value: "25" },
+      { type: "RANGE", min: "1", max: "3" },
+    ]);
+  });
 });

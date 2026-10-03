@@ -17,6 +17,7 @@ export type IconName =
   | "calendar-check"
   | "list-filter"
   | "circle-x"
+  | "refresh-cw"
   | "circle-check-big"
   | "chevrons-up-down"
   | "layout-grid"

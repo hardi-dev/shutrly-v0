@@ -5,6 +5,7 @@ import type {
 
 import type { ClientPickerProps } from "../client-picker/client-picker.types";
 import type { SearchClientsAction } from "../use-client-search/use-client-search.types";
+import type { DraftItem } from "../use-create-project-form/package-draft.types";
 import type {
   CreateProjectCall,
   CreateProjectState,
@@ -24,3 +25,9 @@ export interface CreateProjectCardProps {
   readonly state: CreateProjectState;
   readonly props: CreateProjectScreenProps;
 }
+
+export type PackageEditOpen =
+  | { readonly kind: "add" }
+  | { readonly kind: "edit"; readonly item: DraftItem }
+  | { readonly kind: "remove"; readonly item: DraftItem }
+  | null;

@@ -1,7 +1,7 @@
 # Feature: Clients
 
 ID: F-06 · Slug: `clients`
-Status: IN PROGRESS (2026-10-03; implementation complete, verification pending) · Technical design: [technical-design.md](technical-design.md) · Plan: [plan.md](plan.md) · Journeys: J-03 (*Create / pick client*)
+Status: DONE (2026-10-03) · Technical design: [technical-design.md](technical-design.md) · Plan: [plan.md](plan.md) · Journeys: J-03 (*Create / pick client*)
 Consumer: F-07 `projects` (a project belongs to one active client; the client picker), F-15 `whatsapp-share` (the client's WhatsApp number)
 
 ## Goal

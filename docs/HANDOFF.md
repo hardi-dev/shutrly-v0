@@ -1,9 +1,17 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 implemented, verification pending) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` is merged into `feat/clients` at `fe1d6f0`).
+Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 DONE and merged to `main`) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `main` (F-04 via PR #1, F-05 via PR #3 and F-06 from `codex/clients` are on `main`).
 
-## Current handoff — F-06 Clients IN PROGRESS (2026-10-03)
+## Current handoff — F-06 Clients DONE (2026-10-03)
+
+- **Done:** the Owner marked F-06 DONE after a browser review, and it is merged to `main` from `codex/clients`. The browser-review fixes and the gate are in the [implementation record](features/clients/technical-design.md#implementation-record--2026-10-03).
+  - **Fixes:** the search URL loop, the double clear `x`, the full-width Bottom Sheet, and the placeholders and phone social rows.
+  - **Gate:** unit, typecheck, lint, build, and the client E2E and axe suites pass. Integration tests were skipped by the Owner.
+- **Carry-over:** AC-CLI-015's real-FK integration check (F-07); promote List Card Item avatar / Sheet Item pending; the `text.link` token gap.
+- **Next:** F-07 Projects (`feat/projects`), then F-08 Team (designed on `feat/team-sessions`). F-04 and F-05 still await `/sdv:verify-feature`.
+
+## Previous handoff — F-06 Clients IN PROGRESS (2026-10-03)
 
 - **Build:** all six slices are implemented on `codex/clients`. The reviewed `0008_client` migration was applied to the non-production database (`migrations applied successfully!`). The responsive pages, add/edit dialog, archive/restore/delete, search and paging, browser journeys and accessibility coverage are committed through `138c48e`.
 - **Validation:** targeted unit/DOM tests, TypeScript and ESLint pass. Client journeys pass individually against the isolated worktree server. The full axe E2E re-run is pending: repeated local registrations began failing at `/register` with no alert content before the isolated scans could start. Also keep AC-CLI-015's real foreign-key integration assertion for F-07.

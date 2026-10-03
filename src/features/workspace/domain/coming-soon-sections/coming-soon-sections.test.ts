@@ -15,6 +15,10 @@ describe("coming soon sections", () => {
     expect(isComingSoonSection("clients")).toBe(false);
   });
 
+  it("AC-PRJ-001 no longer treats projects as coming soon", () => {
+    expect(isComingSoonSection("projects")).toBe(false);
+  });
+
   it("AC-PRJ-007 no longer treats new-project as coming soon", () => {
     expect(isComingSoonSection("new-project")).toBe(false);
   });

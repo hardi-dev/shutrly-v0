@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import {
   advanceProjectEntry,
   createProjectEntry,
+  loadMoreProjectsEntry,
   searchClientsEntry,
 } from "@/composition/booking/project-flow/project-flow";
 
@@ -24,4 +25,8 @@ export async function advanceProjectAction(workspaceId: string, projectId: strin
   const result = await advanceProjectEntry(workspaceId, projectId, step);
   if (result === undefined) revalidatePath(PAGE, "layout");
   return result;
+}
+
+export async function loadMoreProjectsAction(workspaceId: string, query: unknown) {
+  return loadMoreProjectsEntry(workspaceId, query);
 }

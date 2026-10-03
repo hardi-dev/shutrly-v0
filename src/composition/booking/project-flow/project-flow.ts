@@ -4,12 +4,17 @@ import { notFound } from "next/navigation";
 
 import { ProjectError } from "@/features/booking/application/errors/project-errors/project-errors";
 import { projectIdSchema } from "@/features/booking/application/schemas/project-ids/project-ids.schema";
+import { projectListQuerySchema } from "@/features/booking/application/schemas/project-list-query/project-list-query.schema";
 import { advanceProject } from "@/features/booking/application/use-cases/advance-project/advance-project";
+import { countProjects } from "@/features/booking/application/use-cases/count-projects/count-projects";
 import { createProject } from "@/features/booking/application/use-cases/create-project/create-project";
 import { getProjectDetail } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail";
+import { listProjects } from "@/features/booking/application/use-cases/list-projects/list-projects";
 import { loadCreateOptions } from "@/features/booking/application/use-cases/load-create-options/load-create-options";
 import { searchActiveClients } from "@/features/booking/application/use-cases/search-active-clients/search-active-clients";
+import { projectSearchSchema } from "@/features/booking/domain/project-list-query/project-list-query.schema";
 import { PROJECT_SEARCH_MAX_LENGTH } from "@/features/booking/domain/project-record/project-record";
+import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 import { todayInScheduleZone } from "@/features/booking/domain/schedule-clock/schedule-clock";
 import { DomainError } from "@/shared/errors/domain-error";
 import { logger } from "@/shared/logging/logger";
@@ -94,5 +99,36 @@ export async function advanceProjectEntry(
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "advance");
+  }
+}
+
+export async function loadProjects(rawWorkspaceId: string, tab: ProjectTab, rawQ = "") {
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const q = projectSearchSchema.safeParse(rawQ).success ? rawQ.trim() : "";
+  try {
+    return await withProjectScope(async ({ projectList }) => {
+      const today = todayInScheduleZone(new Date());
+      return {
+        tab,
+        q,
+        page: await listProjects(projectList, verified.context, { tab, q, afterId: null }, today),
+        count: await countProjects(projectList, verified.context, tab),
+      };
+    });
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "list");
+  }
+}
+
+export async function loadMoreProjectsEntry(rawWorkspaceId: string, rawQuery: unknown) {
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const parsed = projectListQuerySchema.safeParse(rawQuery);
+  if (!parsed.success) notFound();
+  try {
+    return await withProjectScope(({ projectList }) =>
+      listProjects(projectList, verified.context, parsed.data, todayInScheduleZone(new Date())),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "list");
   }
 }

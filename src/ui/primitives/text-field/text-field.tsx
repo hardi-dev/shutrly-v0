@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { FieldError, Label, Text, TextField as AriaTextField } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
@@ -20,8 +21,11 @@ const MESSAGE = "text-(length:--font-size-label)";
  */
 export function TextField(props: Readonly<TextFieldProps>) {
   const isInvalid = Boolean(props.errorMessage);
+  const errorMessageId = useId();
   return (
     <AriaTextField
+      aria-label={props["aria-label"]}
+      aria-errormessage={isInvalid ? errorMessageId : undefined}
       name={props.name}
       type={props.type}
       autoComplete={props.autoComplete}
@@ -34,7 +38,7 @@ export function TextField(props: Readonly<TextFieldProps>) {
       validationBehavior="aria"
       className="flex flex-col gap-(--component-input-gap)"
     >
-      <TextFieldContent {...props} isInvalid={isInvalid} />
+      <TextFieldContent {...props} isInvalid={isInvalid} errorMessageId={errorMessageId} />
     </AriaTextField>
   );
 }
@@ -50,6 +54,7 @@ function TextFieldContent({ ...props }: Readonly<TextFieldContentProps>) {
 }
 
 function TextFieldLabel({ label, isOptional }: Readonly<TextFieldContentProps>) {
+  if (!label) return null;
   return (
     <div className="flex items-center gap-(--space-1)">
       <Label className="text-(length:--font-size-label) font-semibold text-(--component-input-label)">
@@ -108,6 +113,7 @@ function TextFieldMessage({
   description,
   errorMessage,
   isInvalid,
+  errorMessageId,
 }: Readonly<TextFieldContentProps>) {
   return (
     <>
@@ -117,6 +123,7 @@ function TextFieldMessage({
         </Text>
       ) : null}
       <FieldError
+        id={errorMessageId}
         className={cn(
           MESSAGE,
           "flex items-center gap-(--component-input-content-gap) text-(--component-input-error-text)",

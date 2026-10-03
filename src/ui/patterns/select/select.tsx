@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import {
   Button as AriaButton,
   FieldError,
@@ -8,7 +8,6 @@ import {
   ListBox,
   Popover,
   Select as AriaSelect,
-  SelectValue,
   Text,
 } from "react-aria-components";
 
@@ -23,6 +22,7 @@ import { SELECT_COPY } from "./select.copy";
 import type {
   MobileSelectSheetProps,
   MobileSelectTriggerProps,
+  SelectMessageProps,
   SelectOption,
   SelectProps,
 } from "./select.types";
@@ -40,6 +40,8 @@ export function Select(props: Readonly<SelectProps>) {
 }
 
 function DesktopSelect({ options, value, onChange, ...props }: Readonly<SelectProps>) {
+  const errorMessageId = useId();
+  const fieldName = props.label ?? props["aria-label"];
   const selectedOption = findOption(options, value);
   const handleSelectionChange = (key: string | number | null) => {
     if (key !== null) onChange(String(key));
@@ -47,31 +49,30 @@ function DesktopSelect({ options, value, onChange, ...props }: Readonly<SelectPr
   return (
     <AriaSelect
       {...props}
+      aria-errormessage={props.errorMessage ? errorMessageId : undefined}
       value={value}
       onChange={handleSelectionChange}
       isInvalid={Boolean(props.errorMessage)}
       validationBehavior="aria"
       className="relative flex flex-col gap-(--component-input-gap)"
     >
-      <SelectLabel {...props} />
+      {props.label ? <SelectLabel label={props.label} isOptional={props.isOptional} /> : null}
       <AriaButton className={SELECT_TRIGGER_CLASS}>
         {selectedOption?.icon ? (
           <Icon name={selectedOption.icon} aria-hidden="true" size="sm" />
         ) : null}
-        <SelectValue className="min-w-0 flex-1 truncate text-left">
-          {({ defaultChildren, isPlaceholder, selectedText }) =>
-            isPlaceholder ? defaultChildren : selectedText
-          }
-        </SelectValue>
+        <span className="min-w-0 flex-1 truncate text-left">
+          {selectedOption?.label ?? props.placeholder ?? ""}
+        </span>
         <Icon name="chevron-down" aria-hidden="true" size="sm" />
       </AriaButton>
-      <SelectMessages {...props} />
+      <SelectMessages {...props} errorMessageId={errorMessageId} />
       <Popover
         placement="bottom start"
         offset={4}
         className="w-(--trigger-width) rounded-(--component-menu-radius) border border-(--component-menu-border) bg-(--component-menu-background) p-(--component-menu-padding) shadow-[0_var(--elevation-1-offset-y)_var(--elevation-1-blur)_var(--color-semantic-elevation-1-color)]"
       >
-        <ListBox aria-label={props.label} className="outline-none">
+        <ListBox aria-label={fieldName} className="outline-none">
           {options.map((option) => (
             <SelectOptionItem key={option.id} option={option} isSelected={option.id === value} />
           ))}
@@ -84,7 +85,9 @@ function DesktopSelect({ options, value, onChange, ...props }: Readonly<SelectPr
 function MobileSelect({ options, value, onChange, ...props }: Readonly<SelectProps>) {
   const [isOpen, setIsOpen] = useState(false);
   const [pendingValue, setPendingValue] = useState(value);
+  const errorMessageId = useId();
   const selectedOption = findOption(options, value);
+  const fieldName = props.label ?? props["aria-label"];
   const handleOpenChange = (nextIsOpen: boolean) => {
     setIsOpen(nextIsOpen);
     if (nextIsOpen) setPendingValue(value);
@@ -104,17 +107,17 @@ function MobileSelect({ options, value, onChange, ...props }: Readonly<SelectPro
   };
   return (
     <div className="flex flex-col gap-(--component-input-gap)">
-      <SelectLabel {...props} />
+      {props.label ? <SelectLabel label={props.label} isOptional={props.isOptional} /> : null}
       <MobileSelectTrigger
-        label={props.label}
+        label={fieldName}
         placeholder={props.placeholder}
         selectedOption={selectedOption}
         isDisabled={props.isDisabled}
         onPress={handleOpen}
       />
-      <SelectMessages {...props} />
+      <SelectMessages {...props} errorMessageId={errorMessageId} />
       <MobileSelectSheet
-        label={props.label}
+        label={fieldName}
         pickerDescription={props.pickerDescription}
         options={options}
         pendingValue={pendingValue}
@@ -210,7 +213,8 @@ function SelectLabel({ label, isOptional }: Readonly<Pick<SelectProps, "label" |
 function SelectMessages({
   description,
   errorMessage,
-}: Readonly<Pick<SelectProps, "description" | "errorMessage">>) {
+  errorMessageId,
+}: Readonly<SelectMessageProps>) {
   return (
     <>
       {description && !errorMessage ? (
@@ -219,7 +223,10 @@ function SelectMessages({
         </Text>
       ) : null}
       {errorMessage ? (
-        <FieldError className={`${FIELD_MESSAGE} text-(--component-input-error-text)`}>
+        <FieldError
+          id={errorMessageId}
+          className={`${FIELD_MESSAGE} text-(--component-input-error-text)`}
+        >
           {errorMessage}
         </FieldError>
       ) : null}

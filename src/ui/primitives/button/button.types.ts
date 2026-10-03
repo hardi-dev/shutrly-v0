@@ -29,6 +29,7 @@ export interface ButtonProps {
   isDisabled?: boolean;
   isPending?: boolean;
   form?: string;
+  id?: string;
   onPress?: () => void;
   className?: string;
   "aria-label"?: string;

@@ -1,14 +1,37 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 IN PROGRESS; F-05 catalog implementation complete, PR #3) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `feat/catalog` (F-05; `main` merged in after F-04's PR #1).
+Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 DONE and merged to `main`) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `main` (F-04 via PR #1, F-05 via PR #3 and F-06 from `codex/clients` are on `main`).
 
-## Current handoff — F-05 Service catalog READY TO MERGE (2026-10-02)
+## Current handoff — F-06 Clients DONE (2026-10-03)
 
-- Work only in `/Users/hardiansa/Documents/work/personal/Coding/shutrly-v01-catalog`; do not touch the primary `shutrly-v01` checkout.
+- **Done:** the Owner marked F-06 DONE after a browser review, and it is merged to `main` from `codex/clients`. The browser-review fixes and the gate are in the [implementation record](features/clients/technical-design.md#implementation-record--2026-10-03).
+  - **Fixes:** the search URL loop, the double clear `x`, the full-width Bottom Sheet, and the placeholders and phone social rows.
+  - **Gate:** unit, typecheck, lint, build, and the client E2E and axe suites pass. Integration tests were skipped by the Owner.
+- **Carry-over:** AC-CLI-015's real-FK integration check (F-07); promote List Card Item avatar / Sheet Item pending; the `text.link` token gap.
+- **Next:** F-07 Projects (`feat/projects`), then F-08 Team (designed on `feat/team-sessions`). F-04 and F-05 still await `/sdv:verify-feature`.
+
+## Previous handoff — F-06 Clients IN PROGRESS (2026-10-03)
+
+- **Build:** all six slices are implemented on `codex/clients`. The reviewed `0008_client` migration was applied to the non-production database (`migrations applied successfully!`). The responsive pages, add/edit dialog, archive/restore/delete, search and paging, browser journeys and accessibility coverage are committed through `138c48e`.
+- **Validation:** targeted unit/DOM tests, TypeScript and ESLint pass. Client journeys pass individually against the isolated worktree server. The full axe E2E re-run is pending: repeated local registrations began failing at `/register` with no alert content before the isolated scans could start. Also keep AC-CLI-015's real foreign-key integration assertion for F-07.
+- **Next:** start a fresh local server, re-run the full quality gate and `/sdv:verify-feature clients`; then mark F-06 DONE only if it passes.
+
+### Design (approved 2026-10-02)
+
+
+- **Design APPROVED (Owner 2026-10-02):** 40 frames in [clients.pen](features/clients/clients.pen) (library prefix `Y:`), exports in `features/clients/exports/`, see [design.md](features/clients/design.md).
+  - Tabs as in F-05: C45 underline tabs in the Page Header on desktop, Segmented Control/Full width on phones.
+  - The desktop table sits in the centred 720 column; its toolbar shows *Daftar klien* with the client count (new A-10, AC-CLI-021) and the search on the right.
+- **Library:** F-05's promotion commit `2dc3da6` is merged into this branch (`4d2ee7e`). The F-06 token `color.semantic.surface.panel-subtle` (neutral 50 / 800, table header; Owner option C) sits on top: 597 tokens, checksum `d09d3751`; library = repository.
+  - Merging `main` (F-05) kept this branch's `design-system.lib.pen`: `main` changed only `exploration.pen`.
+- **Next (done 2026-10-02):** `/sdv:plan-feature clients`.
+
+## Previous handoff — F-05 Service catalog merged to `main` (PR #3, 2026-10-02)
+
 - Checkpoint `a877540` contains the catalog implementation, the requested follow-up refinements, and the technical-design writeback. Catalog changes contain no ESLint rule-disabling directives.
 - Full Vitest passes (221 files, 674 tests), ESLint, Prettier, route type generation, TypeScript through the production build, token validation, `git diff --check`, and the isolated authenticated catalog E2E pass. Integration tests remain blocked by the configured Neon pooler's WebSocket closing during fixture setup. The pnpm wrapper lifecycle is also blocked in this environment by ignored dependency build scripts; direct quality gates passed without changing that policy.
-- Do not run `pnpm db:migrate`; do not read or edit `.pen` files. PR #3 is ready to merge into `main`; afterward run `/sdv:verify-feature catalog` if the Owner wants the formal verification record.
+- Do not run `pnpm db:migrate`; do not read or edit `.pen` files. PR #3 is merged into `main`; next run `/sdv:verify-feature catalog` if the Owner wants the formal verification record.
 
 ## Update 2026-10-02 — F-05 Service catalog PLANNED
 
@@ -28,17 +51,18 @@ Branch: `feat/catalog` (F-05; `main` merged in after F-04's PR #1).
 - **Spec:** [spec.md](features/catalog/spec.md) and [acceptance-criteria.md](features/catalog/acceptance-criteria.md) (AC-CAT-001…023). New rules BR-CAT-007…011 (selection types `EDIT`/`PRINT`, active/archived/delete lifecycle, names, fixed definition type once used, four seeded item definitions); scope and domain model updated.
 - **Owner decisions:** *Layanan* tabs (Layanan · Kategori · Item paket); no draft/publish; seed item definitions only.
 - **Next for F-05:** `/sdv:design-feature catalog` (optionally `/sdv:model-feature catalog` first). F-04 was built on `feat/source-config` and merged to `main` (PR #1).
-## Current handoff — F-06 Clients SPECIFIED (2026-10-02)
+
+## Previous handoff — F-06 Clients SPECIFIED (2026-10-02)
 
 - **Order:** the Owner chose F-06 next, ahead of F-05 Catalog and before `/sdv:verify-feature source-config` (still outstanding; F-04 stays IN PROGRESS until it is verified).
-- **Spec:** [spec.md](features/clients/spec.md) and [acceptance-criteria.md](features/clients/acceptance-criteria.md), AC-CLI-001…020. New business rules **BR-CLI-001..003** in `domain/business-rules.md` (Owner discovery 2026-10-02), and the Client line in `domain/domain-model.md` is updated.
+- **Spec:** [spec.md](features/clients/spec.md) and [acceptance-criteria.md](features/clients/acceptance-criteria.md), AC-CLI-001…021. New business rules **BR-CLI-001..003** in `domain/business-rules.md` (Owner discovery 2026-10-02), and the Client line in `domain/domain-model.md` is updated.
 - **Owner decisions (2026-10-02):**
   - fields: name, WhatsApp number, and social-media links the Owner can add and remove, with an *Instagram* row prefilled on the add form; no phone, email, address or notes;
   - the WhatsApp number is optional and normalized (`0812…`, `+62 812…`, `812…` → `62812…`);
   - the number is unique per workspace across active and archived clients, blocked by the database;
   - clients are archived and restored; delete is allowed only while no project refers to the client.
 - **Assumptions to confirm in design review:** A-2 platform list (Instagram, TikTok, Facebook, YouTube, X, Lainnya), A-5 paging (30 + *Muat lebih banyak*), A-6 *Buka WhatsApp* plain chat link, no client detail page in F-06 (A-1).
-- **Next:** `/sdv:design-feature clients` in Pencil (the frame list is in the spec's last section), then the technical design and plan. Pencil isn't available in cloud sessions, so the design step needs the Owner's machine.
+- **Next (done 2026-10-02):** `/sdv:design-feature clients`.
 
 ## Previous handoff — F-04 Source configuration IN PROGRESS (2026-10-02)
 

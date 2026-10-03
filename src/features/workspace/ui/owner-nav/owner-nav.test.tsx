@@ -61,6 +61,8 @@ describe("resolveActiveNav", () => {
     ["/w/A", "A", "dashboard", "dashboard"],
     ["/w/A/projects", "A", "projects", "projects"],
     ["/w/A/invoices", "A", "invoices", "invoices"],
+    ["/w/A/clients", "A", "clients", "clients"],
+    ["/w/A/clients/archived", "A", "clients", "clients"],
     ["/w/A/services", "A", "services", null],
     ["/w/A/settings", "A", "settings", null],
     ["/w/A/search", "A", null, null],
@@ -74,6 +76,36 @@ describe("resolvePageHeading", () => {
   it.each([
     ["/w/A", { title: "Dasbor", subtitle: "Ringkasan workspace Aster." }],
     ["/w/A/projects", { title: "Proyek", subtitle: "Segera hadir." }],
+    [
+      "/w/A/clients",
+      {
+        title: "Klien",
+        subtitle: "Orang yang memesan sesi foto. Pilih mereka saat membuat proyek.",
+        mobileSubtitle: "Orang yang memesan sesi foto.",
+        tabs: {
+          label: "Status klien",
+          tabs: [
+            { label: "Aktif", href: "/w/A/clients", isActive: true },
+            { label: "Arsip", href: "/w/A/clients/archived", isActive: false },
+          ],
+        },
+      },
+    ],
+    [
+      "/w/A/clients/archived",
+      {
+        title: "Klien",
+        subtitle: "Orang yang memesan sesi foto. Pilih mereka saat membuat proyek.",
+        mobileSubtitle: "Orang yang memesan sesi foto.",
+        tabs: {
+          label: "Status klien",
+          tabs: [
+            { label: "Aktif", href: "/w/A/clients", isActive: false },
+            { label: "Arsip", href: "/w/A/clients/archived", isActive: true },
+          ],
+        },
+      },
+    ],
     [
       "/w/A/services",
       {

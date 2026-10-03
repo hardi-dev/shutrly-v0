@@ -10,4 +10,8 @@ describe("coming soon sections", () => {
   it("AC-CAT-003 no longer treats services as coming soon", () => {
     expect(isComingSoonSection("services")).toBe(false);
   });
+
+  it("AC-CLI-001 no longer treats clients as coming soon", () => {
+    expect(isComingSoonSection("clients")).toBe(false);
+  });
 });

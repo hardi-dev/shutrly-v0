@@ -9,7 +9,9 @@
 
 ## Purpose
 
-A data table presented as a card, used for dashboard lists and list pages. It's built from parts, so a screen can compose any set of columns.
+A React Aria data grid for column headers and rows in dashboard lists and list pages. It is built from parts, so a screen can compose any set of columns. **Table is not a card and does not own a title, summary, search/filter control, footer, or empty state.**
+
+For a titled list page, compose Table inside `SectionCard` with `content="bleed"`: `SectionCard` owns the title, description/count, and one header action such as search or a segmented filter. The consumer composes `EmptyState` when there are no records and any paging/count control after the table. This supersedes the earlier Table-card wording in this document.
 
 ## Parts
 
@@ -22,19 +24,18 @@ A data table presented as a card, used for dashboard lists and list pages. It's 
 | `Table Cell/Stage` | `rS9BY` | Stage chip. Swap the stage with `Replace(<cell>/T67o9d, {type:"ref", ref:<Stage Chip/…>, name:"Stage", enabled:true})` |
 | `Table Cell/Actions` | `C1MRI` | Action menu SM, width 32, aligned right |
 | `Table Header Cell` | `T3MFWw` | overline in `table.header.text`; text `Label` `t55nF` |
-| `Table Header Row` | `oOFk7` | `table.header.background`; `table.header.border` top and bottom; padding 8/20; slot `Cells` `mxhia` |
+| `Table Header Row` | `oOFk7` | `table.header.background` (→ `surface.panel-subtle` since 2026-10-02, F-06; was `surface.subtle`, which equals the canvas); `table.header.border` top and bottom; padding 8/20; slot `Cells` `mxhia` |
 | `_TableRow/Base` (private) | `Y1wn7` | padding 12/20 (`table.row.padding-*`); bottom border `table.row.border`; slot `Cells` `GoLkn` |
 | `Table Row/Default` · `/Hover` | `r7YZY` · `XlPZD` | Hover uses `table.row.background-hover` (clickable rows only) |
-| `Table` | `FCsTI` | The card: `table.background`, 1 px `table.border`, `table.radius` (16), clipped. It holds the Toolbar, Header, Rows and Footer, described below. |
+| `Table` | `FCsTI` | The full-width table content: header row and rows only. It has no outer card chrome or toolbar. |
 
-The Table card's parts:
+## Composition
 
-| Part | Padding | Contents |
+| Concern | Owner | Contents |
 |---|---|---|
-| Toolbar | 16/20 | `Title` `ycT8w` (subtitle 16/700), `Subtitle` `aIKsB` (label, muted), and `Filter` `YTJjx` (a Segmented control). Subtitle and Filter are booleans. |
-| Header | — | A Table Header Row. |
-| Rows | — | Slot `cYo5t` of Table Row variants. The last row sets `strokeWidth:{bottom:0}`. |
-| Footer | 12/20, top border `table.border` | `Count` `X0Kcc` (label, muted) and `Link` `QTddd` (label 600, `table.footer.link`). Link is a boolean. |
+| `SectionCard` | Card, heading, description/count, and one action | Use `content="bleed"` for table rows. Put search and a segmented filter in the header `actions` slot. |
+| `Table` | Header and rows | A Table Header Row followed by Table Row variants. The last row has no bottom border. |
+| Consumer | Empty, paging, and external count/link | Render the shared `EmptyState` instead of Table when there are no records. Render paging/count controls outside Table, in the page composition. |
 
 **Columns.** Widths live on the cell instances and are identical in the header and every row. One column is `fill_container`; the others are fixed. The legacy set is Klien fill · Jenis 130 · Tanggal 120 · Tahap 130 · Nilai 110 · Aksi 32.
 
@@ -55,7 +56,7 @@ Insert(c, {type:"ref", ref:"lVDvO", width:"fill_container", descendants:{Q4FlPn:
 | `Table Cell/Select` · `/Selected` | `xbQwc` · `whHzE` | 32 wide, a row Checkbox, unchecked or checked. |
 | `Table Row/Selected` | `bd9LK` | `table.row.background-selected` (`status.info.bg`); pair it with `Table Cell/Selected`. Code: `aria-selected`. |
 | `Table Row/Skeleton` | `eFemy` | Loading placeholder: avatar circle and bars in `table.skeleton` on `table.background`. Show 3–5 rows; the table gets `aria-busy`. |
-| `Table Empty State` | `w0HQb` | Replaces the Rows slot when there is nothing to show: a 40 icon circle, Title, Body and an optional Secondary Button. Hide the footer count. |
+| `Table Empty State` | `w0HQb` | Historical Pencil reference only. In code, compose the shared `EmptyState` in the parent `SectionCard`; do not add an empty-state slot to Table. |
 
 The header cell and cell bases carry an optional `Checkbox` layer (last child, off). **Never move a newly inserted layer inside these masters**: that corrupted the existing Table instances on 2026-09-26, so Pen couldn't save.
 
@@ -63,23 +64,24 @@ The master's sample rows use a plain 130 frame holding a Stage Chip for the *Tah
 
 ## Decisions and snaps
 
-- Filter: the legacy dark inverse pills are replaced by the **Segmented control** (Owner, 2026-09-26), so the app has one filter pattern.
-- Footer padding 14 → 12, the same as the rows (SP4). Avatar 30 → Avatar MD 32. The legacy stage chip padding 3/9 becomes the approved chip values.
-- Footer link: `action.primary` in light mode, `status.info.fg` in dark mode (§2: small blue text fails on dark).
+- Filter: the legacy dark inverse pills are replaced by the **Segmented control** (Owner, 2026-09-26), so the app has one filter pattern. Place it in the `SectionCard` header action slot.
+- Avatar 30 → Avatar MD 32. The legacy stage chip padding 3/9 becomes the approved chip values.
 
 ## Accessibility
 
 - A native `<table>` with `<th scope=col>`. The overline header style is visual only.
 - Clickable rows: the client name is the link (one Tab stop per row); the Action menu has its own `aria-label`.
 - Stage chips have text and a dot, never colour alone. Money uses tabular figures in code (`DESIGN TOKEN GAP`).
-- After filtering, the footer count is announced (`aria-live=polite`).
+- If a consumer shows a changed filtered count, it announces that count with `aria-live=polite` outside Table.
 
 ## Gaps
 
 - No pagination (GAP-02).
-- The toolbar title and subtitle and the footer count bind semantic text tokens; they have no component aliases.
+- C27's former card, toolbar, and footer tokens remain legacy design tokens; new consumers compose these concerns through `SectionCard` and page patterns.
 
 ## Implementation references
 
 - Pencil: `C27 — Table` (`zWcpb`)
+- Code: `src/ui/patterns/data-table/` uses React Aria `Table`, `TableHeader`, `TableBody`, `Row`, `Column`, and `Cell`; it exposes only grid semantics, columns, rows, and the loading skeleton.
+- Composition: `SectionCard` (`C43`) owns card chrome and page-facing content; `EmptyState` is composed by the consumer.
 - Rules: token-usage.md G3, SP4, SP6 (amended), SP10, §2 *Status*, §3, §6, §8

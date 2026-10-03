@@ -13,5 +13,7 @@ export interface MenuItemProps {
   isDisabled?: boolean;
   variant?: MenuItemVariant;
   layout?: MenuItemLayout;
-  onSelect: () => void;
+  href?: string;
+  target?: "_blank";
+  onSelect?: () => void;
 }

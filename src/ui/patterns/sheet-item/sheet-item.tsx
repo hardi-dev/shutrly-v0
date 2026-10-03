@@ -21,26 +21,71 @@ export function SheetItem({
   count,
   isSelected = false,
   isDisabled = false,
+  isPending = false,
   variant = "default",
+  href,
+  target,
   onPress,
 }: Readonly<SheetItemProps>) {
+  const content = (
+    <SheetItemContent
+      label={label}
+      description={description}
+      icon={icon}
+      count={count}
+      isSelected={isSelected}
+      isPending={isPending}
+    />
+  );
+  const className = sheetItemClassName(variant);
+  if (href)
+    return (
+      <a
+        href={href}
+        target={target}
+        rel={target === "_blank" ? "noopener noreferrer" : undefined}
+        aria-label={[label, description, count].filter((value) => value !== undefined).join(" ")}
+        className={className}
+      >
+        {content}
+      </a>
+    );
   return (
     <AriaButton
       type="button"
       onPress={onPress}
-      isDisabled={isDisabled}
+      isDisabled={isDisabled || isPending}
       aria-label={[label, description, count].filter((value) => value !== undefined).join(" ")}
-      className={cn(
-        "flex min-h-[52px] w-full items-center gap-(--component-sheet-item-gap)",
-        "border-t border-(--component-sheet-item-border) px-(--component-sheet-item-padding-x)",
-        "text-left outline-none data-disabled:opacity-(--opacity-disabled)",
-        "data-hovered:bg-(--color-semantic-surface-sunken) data-focus-visible:bg-(--color-semantic-surface-sunken)",
-        VARIANT_CLASSES[variant],
-      )}
+      className={className}
     >
-      {icon ? (
-        <Icon name={icon} aria-hidden="true" className="text-(--component-sheet-item-icon)" />
-      ) : null}
+      {content}
+    </AriaButton>
+  );
+}
+
+function sheetItemClassName(variant: SheetItemVariant): string {
+  return cn(
+    "flex min-h-[52px] w-full items-center gap-(--component-sheet-item-gap)",
+    "border-t border-(--component-sheet-item-border) px-(--component-sheet-item-padding-x)",
+    "text-left outline-none data-disabled:opacity-(--opacity-disabled)",
+    "data-hovered:bg-(--color-semantic-surface-sunken) data-focus-visible:bg-(--color-semantic-surface-sunken)",
+    VARIANT_CLASSES[variant],
+  );
+}
+
+function SheetItemContent({
+  label,
+  description,
+  icon,
+  count,
+  isSelected = false,
+  isPending = false,
+}: Readonly<
+  Pick<SheetItemProps, "label" | "description" | "icon" | "count" | "isSelected" | "isPending">
+>) {
+  return (
+    <>
+      {sheetItemLeading(isPending, icon)}
       <SheetItemText label={label} description={description} isSelected={isSelected} />
       {count !== undefined ? <CountBadge count={count} /> : null}
       {isSelected ? (
@@ -51,8 +96,15 @@ export function SheetItem({
           className="text-(--component-sheet-item-check)"
         />
       ) : null}
-    </AriaButton>
+    </>
   );
+}
+
+function sheetItemLeading(isPending: boolean, icon: SheetItemProps["icon"]) {
+  if (isPending) return <Icon name="loading-03" aria-hidden="true" className="animate-spin" />;
+  return icon ? (
+    <Icon name={icon} aria-hidden="true" className="text-(--component-sheet-item-icon)" />
+  ) : null;
 }
 
 function SheetItemText({

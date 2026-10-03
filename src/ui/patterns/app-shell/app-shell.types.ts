@@ -12,6 +12,7 @@ export interface AppShellSubPage {
 export interface AppShellProps {
   title: string;
   subtitle?: string;
+  mobileSubtitle?: string;
   workspace: SidebarWorkspace;
   account: SidebarAccount;
   onLogout?: () => void;

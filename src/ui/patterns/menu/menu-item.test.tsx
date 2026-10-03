@@ -37,4 +37,15 @@ describe("MenuItem (C09)", () => {
     expect(screen.getByText("Hapus proyek")).toHaveClass("font-semibold");
     expect(screen.getByTestId("menu-item-check")).toBeInTheDocument();
   });
+
+  it("renders a safe link item when href and a new target are supplied", () => {
+    render(
+      <Menu aria-label="Tindakan">
+        <MenuItem label="Buka" href="https://example.com" target="_blank" />
+      </Menu>,
+    );
+    const item = screen.getByRole("menuitem", { name: "Buka" });
+    expect(item).toHaveAttribute("href", "https://example.com");
+    expect(item).toHaveAttribute("rel", "noopener noreferrer");
+  });
 });

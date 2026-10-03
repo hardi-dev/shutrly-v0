@@ -67,6 +67,7 @@
   --color-semantic-surface-canvas: var(--color-primitive-neutral-100);
   --color-semantic-surface-panel: var(--color-primitive-neutral-0);
   --color-semantic-surface-subtle: var(--color-primitive-neutral-100);
+  --color-semantic-surface-panel-subtle: var(--color-primitive-neutral-50);
   --color-semantic-surface-sunken: var(--color-primitive-neutral-100);
   --color-semantic-surface-muted: var(--color-primitive-neutral-200);
   --color-semantic-surface-inverse: var(--color-primitive-neutral-900);
@@ -424,7 +425,7 @@
   --component-menu-item-gap: var(--space-2);
   --component-menu-item-radius: var(--radius-sm);
   --component-menu-item-text-action: var(--color-semantic-action-primary);
-  --component-table-header-background: var(--color-semantic-surface-subtle);
+  --component-table-header-background: var(--color-semantic-surface-panel-subtle);
   --component-table-header-text: var(--color-semantic-text-muted);
   --component-table-header-padding-y: var(--space-2);
   --component-table-header-border: var(--color-semantic-border-default);
@@ -602,6 +603,7 @@
   --color-semantic-surface-canvas: var(--color-primitive-neutral-900);
   --color-semantic-surface-panel: var(--color-primitive-neutral-850);
   --color-semantic-surface-subtle: var(--color-primitive-neutral-900);
+  --color-semantic-surface-panel-subtle: var(--color-primitive-neutral-800);
   --color-semantic-surface-sunken: var(--color-primitive-neutral-900);
   --color-semantic-surface-muted: var(--color-primitive-neutral-700);
   --color-semantic-surface-inverse: var(--color-primitive-neutral-50);

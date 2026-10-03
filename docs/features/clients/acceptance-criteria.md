@@ -7,9 +7,9 @@ Assumption references (A-n) point to [spec.md](spec.md#assumptions-low-risk-reve
 ## AC-CLI-001 — Klien list
 Covers: BR-CLI-001, BR-CLI-002, BR-WS-003 (A-1, A-3, A-7)
 
-**Given** an Owner whose workspace has *Rina* (number `6281234567890`, Instagram `rina.wed`), *ade* (no number) and *Budi* (archived)
+**Given** an Owner whose workspace has *Rina* (number `6281234567890`, Instagram `rina.wed`, TikTok `rina`), *ade* (no number) and *Budi* (archived)
 **When** they open *Klien*
-**Then** the *Aktif* filter shows *ade* then *Rina*. *Rina*'s row shows `+62 812-3456-7890` and `@rina.wed`; *ade*'s row shows *Belum ada nomor WhatsApp*. *Budi* is not shown. The page shows *Tambah klien*, the search box and the *Aktif* / *Arsip* filter. The nav item *Klien* (icon `users`) is active, and no *Segera hadir* placeholder is shown.
+**Then** the *Aktif* filter shows *ade* then *Rina*. *Rina*'s row shows `+62 812-3456-7890` and, on desktop, only her first link `@rina.wed` followed by the count *+1* for the other link (phones show no social links in the list); *ade*'s row shows *Belum ada nomor WhatsApp*. *Budi* is not shown. The page shows *Tambah klien*, the search box and the *Aktif* / *Arsip* filter. The nav item *Klien* (icon `users`) is active, and no *Segera hadir* placeholder is shown.
 
 ## AC-CLI-002 — Archived filter
 Covers: BR-CLI-003
@@ -38,6 +38,13 @@ Covers: A-5
 **Given** a workspace with 65 active clients
 **When** the Owner opens *Klien* and selects *Muat lebih banyak* twice
 **Then** 30, then 60, then 65 clients are shown in name order with no duplicates or gaps, and *Muat lebih banyak* disappears once all are shown.
+
+## AC-CLI-021 — Client count
+Covers: BR-WS-003 (A-5, A-10)
+
+**Given** a workspace with 38 active clients, among them *Rina*, and 1 archived client
+**When** the Owner opens *Klien*, selects *Arsip*, returns to *Aktif*, searches *RIN*, clears the search, archives *Rina*, and then adds a client
+**Then** the list card shows the title *Daftar klien* (not the page title *Klien*) with the subtitle *38 klien aktif*, although only 30 rows are loaded. *Arsip* shows *1 klien diarsipkan*. While searching, the subtitle stays *38 klien aktif*. After *Rina* is archived it shows *37 klien aktif* (and *Arsip* *2 klien diarsipkan*); after the new client is added it shows *38 klien aktif*. A workspace with no clients shows *0 klien aktif*. The subtitle is hidden while the list loads, and another workspace's clients are never counted.
 
 ## Add & edit
 

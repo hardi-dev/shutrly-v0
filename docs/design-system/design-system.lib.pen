@@ -6225,7 +6225,7 @@
               "id": "UkVaL",
               "name": "Group title",
               "fill": "$color/semantic/text/primary",
-              "content": "Surface  ·  6",
+              "content": "Surface  ·  7",
               "lineHeight": 1.35,
               "fontFamily": "$font/family/base",
               "fontSize": 18,
@@ -6640,7 +6640,7 @@
                       "id": "qS0tf",
                       "name": "Usage",
                       "fill": "$color/semantic/text/muted",
-                      "content": "Table header, search field, quiet areas — v3 = L2",
+                      "content": "Search field, modal/sheet footers, quiet areas — v3 = L2",
                       "lineHeight": 1.35,
                       "fontFamily": "$font/family/base",
                       "fontSize": 12,
@@ -6775,6 +6775,190 @@
                       "name": "Dark alias",
                       "fill": "$color/semantic/text/muted",
                       "content": "dark  → neutral/900",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "fQUc1",
+              "name": "surface/panel-subtle",
+              "width": "fill_container",
+              "stroke": "$color/semantic/border/subtle",
+              "strokeWidth": {
+                "bottom": 1
+              },
+              "gap": 16,
+              "padding": [
+                12,
+                0
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Qmtz0",
+                  "name": "Token",
+                  "width": 300,
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "NDbRH",
+                      "name": "Name",
+                      "fill": "$color/semantic/text/primary",
+                      "content": "surface.panel-subtle",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "t1ARO",
+                      "name": "Usage",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "Table header row: quiet zone inside an L3 card, distinct from the canvas (F-06)",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font/family/base",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "soPvX",
+                  "name": "light preview",
+                  "theme": {
+                    "mode": "light"
+                  },
+                  "width": 260,
+                  "height": 56,
+                  "fill": "$color/semantic/surface/panel",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "gap": 10,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": "$radius/xs",
+                      "id": "s0cy79",
+                      "name": "Fill",
+                      "fill": "$color/semantic/surface/panel-subtle",
+                      "width": 96,
+                      "height": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "glFbL",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Uyvlh",
+                          "name": "Hex",
+                          "fill": "$color/semantic/text/secondary",
+                          "content": "#FAFAFA",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ta0G5",
+                  "name": "dark preview",
+                  "theme": {
+                    "mode": "dark"
+                  },
+                  "width": 260,
+                  "height": 56,
+                  "fill": "$color/semantic/surface/panel",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "gap": 10,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": "$radius/xs",
+                      "id": "oDYvB",
+                      "name": "Fill",
+                      "fill": "$color/semantic/surface/panel-subtle",
+                      "width": 96,
+                      "height": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Y66tFd",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "MgcTh",
+                          "name": "Hex",
+                          "fill": "$color/semantic/text/secondary",
+                          "content": "#27272A",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Z2d1I3",
+                  "name": "Alias",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "AQiAQ",
+                      "name": "Light alias",
+                      "fill": "$color/semantic/text/secondary",
+                      "content": "light → neutral/50",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "mTTkR",
+                      "name": "Dark alias",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "dark  → neutral/800",
                       "lineHeight": 1.35,
                       "fontFamily": "IBM Plex Mono",
                       "fontSize": 11,
@@ -114431,7 +114615,7 @@
     },
     "component/table/header/background": {
       "type": "color",
-      "value": "$color/semantic/surface/subtle"
+      "value": "$color/semantic/surface/panel-subtle"
     },
     "component/table/header/text": {
       "type": "color",
@@ -116009,6 +116193,23 @@
     "component/empty-state/in-card/padding-y": {
       "type": "number",
       "value": "$space/8"
+    },
+    "color/semantic/surface/panel-subtle": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/primitive/neutral/50",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/primitive/neutral/800",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
     }
   },
   "fileToken": "a25701b4-4c5b-41fc-8af0-91535884d9bf"

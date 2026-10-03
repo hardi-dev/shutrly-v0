@@ -19,6 +19,14 @@ describe("Input", () => {
     expect(screen.getByText("⌘K")).toBeInTheDocument();
   });
 
+  it("hides the browser's native search clear button so only the designed x shows", () => {
+    render(<Input aria-label="Search" variant="search" />);
+
+    expect(screen.getByLabelText("Search")).toHaveClass(
+      "[&::-webkit-search-cancel-button]:appearance-none",
+    );
+  });
+
   it("supports filled, prefix and trailing icon configurations", () => {
     render(
       <Input

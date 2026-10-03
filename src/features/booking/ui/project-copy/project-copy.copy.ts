@@ -1,3 +1,9 @@
+const COUNT_NOUN = {
+  ACTIVE: "aktif",
+  COMPLETED: "selesai",
+  CANCELLED: "dibatalkan",
+} as const;
+
 export const PROJECT_COPY = {
   parentLabel: "Proyek",
   createTitle: "Proyek baru",
@@ -128,4 +134,33 @@ export const PROJECT_COPY = {
   statusDelivered: "Terkirim",
   statusCompleted: "Selesai",
   statusCancelled: "Dibatalkan",
+  listTitle: "Daftar proyek",
+  listCount: (tab: "ACTIVE" | "COMPLETED" | "CANCELLED", count: number) =>
+    `${String(count)} proyek ${COUNT_NOUN[tab]}`,
+  clientService: (client: string, service: string) => `${client} · ${service}`,
+  tabsLabel: "Status proyek",
+  tabActive: "Aktif",
+  tabCompleted: "Selesai",
+  tabCancelled: "Dibatalkan",
+  listAddDesktop: "Proyek baru",
+  listAddMobile: "Baru",
+  searchLabel: "Cari judul atau nama klien",
+  clearSearch: "Hapus pencarian",
+  searchResultCount: (count: number) => `${String(count)} proyek ditemukan`,
+  columnProject: "PROYEK",
+  columnEvent: "ACARA",
+  columnStatus: "STATUS",
+  columnActions: "Aksi",
+  emptyActiveTitle: "Belum ada proyek",
+  emptyActiveBody: "Buat proyek untuk mencatat klien, layanan, dan harga yang kamu sepakati.",
+  emptyCompletedTitle: "Belum ada proyek yang selesai",
+  emptyCompletedBody: "Proyek pindah ke sini setelah hasil akhirnya dikirim dan diselesaikan.",
+  emptyCancelledTitle: "Belum ada proyek yang dibatalkan",
+  emptyCancelledBody: "Proyek yang kamu batalkan muncul di sini, lengkap dengan alasannya.",
+  noMatchTitle: "Tidak ada proyek yang cocok",
+  noMatchBody: "Coba judul lain, atau ketik sebagian nama klien.",
+  loadMore: "Muat lebih banyak",
+  loadingMore: "Memuat…",
+  listSubtitleDesktop: "Setiap pemotretan yang kamu pegang, dari draf sampai selesai.",
+  listSubtitleMobile: "Pemotretan dari draf sampai selesai.",
 } as const;

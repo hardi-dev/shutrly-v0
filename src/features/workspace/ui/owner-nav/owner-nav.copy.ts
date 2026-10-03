@@ -1,6 +1,10 @@
 export const OWNER_NAV_COPY = {
   dashboard: "Dasbor",
   projects: "Proyek",
+  projectsSubtitle: "Setiap pemotretan yang kamu pegang, dari draf sampai selesai.",
+  projectsMobileSubtitle: "Pemotretan dari draf sampai selesai.",
+  projectsTabsLabel: "Status proyek",
+  projectTabs: { active: "Aktif", completed: "Selesai", cancelled: "Dibatalkan" },
   clients: "Klien",
   clientsSubtitle: "Orang yang memesan sesi foto. Pilih mereka saat membuat proyek.",
   clientsMobileSubtitle: "Orang yang memesan sesi foto.",

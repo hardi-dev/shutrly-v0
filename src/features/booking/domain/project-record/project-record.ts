@@ -27,3 +27,5 @@ export function trimToNull(value: string | null): string | null {
   const text = value?.trim() ?? "";
   return text === "" ? null : text;
 }
+
+export const PROJECT_SEARCH_MAX_LENGTH = 100;

@@ -14,4 +14,8 @@ describe("coming soon sections", () => {
   it("AC-CLI-001 no longer treats clients as coming soon", () => {
     expect(isComingSoonSection("clients")).toBe(false);
   });
+
+  it("AC-PRJ-007 no longer treats new-project as coming soon", () => {
+    expect(isComingSoonSection("new-project")).toBe(false);
+  });
 });

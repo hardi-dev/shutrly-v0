@@ -56,7 +56,6 @@ const SECTION_TITLES: Readonly<Record<string, string>> = {
   team: OWNER_NAV_COPY.team,
   "message-templates": OWNER_NAV_COPY.messageTemplates,
   "photo-sources": OWNER_NAV_COPY.photoSources,
-  "new-project": OWNER_NAV_COPY.create,
   search: OWNER_NAV_COPY.search,
   notifications: OWNER_NAV_COPY.notifications,
 };

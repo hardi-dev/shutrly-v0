@@ -2,9 +2,11 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
+const push = vi.hoisted(() => vi.fn());
+
 vi.mock("next/navigation", () => ({
   usePathname: () => "/w/A/message-templates/gallery-share",
-  useRouter: () => ({ push: vi.fn() }),
+  useRouter: () => ({ push }),
 }));
 
 const { MobileWorkspaceSheet, MobileWorkspaceSwitcherSheet, OwnerShell } =
@@ -162,5 +164,25 @@ describe("OwnerShell sub-pages", () => {
         .find((link) => link.getAttribute("href") === "/w/A/services"),
     ).toHaveAttribute("href", "/w/A/services");
     expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute("href", "/w/A/services");
+  });
+
+  it("AC-PRJ-007 the phone create action opens Proyek baru", async () => {
+    render(
+      <OwnerShell
+        workspaceId="A"
+        workspaceName="Aster Wedding"
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        title="Aster Wedding"
+        workspaces={workspaces}
+        onSwitch={vi.fn()}
+        onCreate={vi.fn()}
+      >
+        <p>isi</p>
+      </OwnerShell>,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Proyek baru" }));
+    expect(push).toHaveBeenCalledWith("/w/A/projects/new");
   });
 });

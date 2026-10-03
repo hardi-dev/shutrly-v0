@@ -140,7 +140,7 @@ test("AC-SHELL-007 AC-SHELL-008 AC-SHELL-013 phone menu, CTA and utilities", asy
   await expect(page.getByRole("heading", { level: 1, name: OWNER_NAV_COPY.team })).toBeVisible();
 
   await page.getByRole("button", { name: OWNER_NAV_COPY.create }).click();
-  await expect(page).toHaveURL(`${home}/projects`);
+  await expect(page).toHaveURL(`${home}/projects/new`);
   await expect(page.getByRole("link", { name: OWNER_NAV_COPY.projects })).toHaveAttribute(
     "aria-current",
     "page",

@@ -11,13 +11,12 @@ import type {
 import { socialLinksSchema } from "@/features/booking/domain/social-link/social-link.schema";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
-import { pgCode } from "../catalog-repository/pg-error";
+import { isReferencedRowError, pgCode } from "../catalog-repository/pg-error";
 import type { DbExecutor } from "../client/client.types";
 import { client } from "../schema/booking/client";
 
 const LIKE_SPECIAL = /[\\%_]/g;
 const DUPLICATE_KEY = "23505";
-const FOREIGN_KEY = "23503";
 
 function searchCondition(query: ClientPageQuery) {
   if (!query.search) return undefined;
@@ -117,7 +116,7 @@ async function deleteClient(db: DbExecutor, context: WorkspaceContext, id: strin
       .returning({ id: client.id });
     return rows.length > 0 ? ("DELETED" as const) : ("NOT_FOUND" as const);
   } catch (error) {
-    if (pgCode(error) === FOREIGN_KEY) return "IN_USE" as const;
+    if (isReferencedRowError(error)) return "IN_USE" as const;
     throw error;
   }
 }

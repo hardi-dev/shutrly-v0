@@ -26,7 +26,7 @@ import {
   serviceItem,
   serviceItemDefinition,
 } from "../schema/booking/catalog";
-import { pgCode } from "./pg-error";
+import { isReferencedRowError, pgCode } from "./pg-error";
 
 const DUPLICATE_KEY = "23505";
 const FOREIGN_KEY_KEY = "23503";
@@ -51,7 +51,7 @@ interface RawField {
   readonly options: unknown;
 }
 
-function toPackageValue(value: unknown): PackageValue | null {
+export function toPackageValue(value: unknown): PackageValue | null {
   if (typeof value !== "object" || value === null || !("type" in value)) return null;
   if (value.type === "NUMBER" && "value" in value && typeof value.value === "string") {
     return { type: "NUMBER", value: value.value };
@@ -98,11 +98,11 @@ function toField(row: RawField): BookingFieldRecord | null {
   };
 }
 
-function isFieldType(value: string): value is FieldType {
+export function isFieldType(value: string): value is FieldType {
   return ["TEXT", "TEXTAREA", "NUMBER", "DATE", "BOOLEAN", "SELECT"].includes(value);
 }
 
-function isStringArray(value: unknown): value is readonly string[] {
+export function isStringArray(value: unknown): value is readonly string[] {
   return Array.isArray(value) && value.every((item) => typeof item === "string");
 }
 
@@ -301,7 +301,7 @@ export function createDrizzleServiceRepository(db: DbExecutor): ServiceRepositor
           .returning({ id: service.id });
         return rows.length > 0 ? "DELETED" : "NOT_FOUND";
       } catch (error) {
-        if (pgCode(error) === FOREIGN_KEY_KEY) return "IN_USE";
+        if (isReferencedRowError(error)) return "IN_USE";
         throw error;
       }
     },

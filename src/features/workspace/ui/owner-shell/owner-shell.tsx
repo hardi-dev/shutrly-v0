@@ -92,8 +92,8 @@ export function OwnerShell({
   const handleOpenNotifications = () => {
     router.push(`/w/${workspaceId}/notifications`);
   };
-  const handleOpenProjects = () => {
-    router.push(`/w/${workspaceId}/projects`);
+  const handleCreateProject = () => {
+    router.push(`/w/${workspaceId}/projects/new`);
   };
   const handleMobileNavigate = (section: string) => {
     setIsMobileMenuOpen(false);
@@ -155,7 +155,7 @@ export function OwnerShell({
           mobileBottomNav={{
             items: mobileItems,
             ctaLabel: OWNER_NAV_COPY.create,
-            onCtaPress: handleOpenProjects,
+            onCtaPress: handleCreateProject,
           }}
           mobileUtilities={
             <MobileUtilities

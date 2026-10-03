@@ -12,12 +12,7 @@ If no iteration number is given, pick the first unfinished iteration in `technic
 1. Read: constitution, relevant coding rules, the feature's technical design, spec, acceptance criteria, and design reference.
 2. Implement only that iteration. Do not invent requirements, add unrelated abstractions, or expand scope.
 3. Enforce business rules server-side; client validation is UX only.
-4. Add tests mapped to the `AC-*` / `BR-*` IDs covered, test-first. Delegate test writing to subagents so it runs on cheaper models, and implement the iteration yourself in this session:
-   - Unit and integration tests: the `sdv-test-writer` subagent (Sonnet 5.5).
-   - E2E tests, only when a user flow changed: the `sdv-e2e-test-writer` subagent (Sonnet 5.5).
-   - Give each one the feature slug, the iteration, the exact `AC-*` / `BR-*` IDs and the units or flow involved; it does not see this conversation. Launch independent ones in parallel.
-   - Check what comes back: tests name their IDs, cover the criteria, and fail for the right reason before the code exists. Send back or fix anything that does not.
-   - If subagents are unavailable (for example in Codex), write the tests yourself under the same rules.
+4. Add tests mapped to the `AC-*` / `BR-*` IDs covered.
 5. Verify your own work before reporting, and fix what fails until it passes. Run the checks that apply to what changed:
    - `pnpm typecheck`, `pnpm lint`, `pnpm test`; add `pnpm test:integration` for server or database changes.
    - `pnpm e2e` when a user flow changed. For UI work, also compare the running page against the Pencil HTML export (screenshot) and fix visible drift.

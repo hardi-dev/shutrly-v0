@@ -1,6 +1,6 @@
 # ADR-004: One client access token per project + required hashed gallery password
 
-Status: Accepted
+Status: Accepted · password storage and re-entry superseded by ADR-017 (2026-10-04)
 Date: 2026-09-25
 
 ## Context

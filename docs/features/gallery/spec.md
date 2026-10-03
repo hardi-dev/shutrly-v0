@@ -2,7 +2,7 @@
 
 ID: F-09 · Slug: `gallery`
 Status: SPECIFIED (2026-10-04) · Intent: [intent.md](intent.md) (ACCEPTED 2026-10-04) · Journeys: J-04, the Owner half (*Share Drive folder → Paste link, sync PROOF photos → Set password, publish gallery*)
-Consumer: F-10 `client-access` (the published gallery, password hash and `passwordVersion`, the media endpoint), F-11 `selection` (`PROOF` photos), F-12 `final-delivery` (`EDITED` / `PRINT` photos), F-15 `whatsapp-share` (`galleryUrl`)
+Consumer: F-10 `client-access` (the published gallery, password hash and `passwordVersion`, the media endpoint), F-15 `whatsapp-share` (the decrypted password for `{{galleryPassword}}`, BR-MSG-003), F-11 `selection` (`PROOF` photos), F-12 `final-delivery` (`EDITED` / `PRINT` photos) and `galleryUrl`
 
 ## Goal
 The Owner attaches a project's photos to the project without moving them out of Google Drive. From the project, the Owner creates one password-protected gallery, links one or more public Drive folders, syncs their metadata and checks the photos by kind. When ready, the Owner publishes the gallery, then manages its expiry and password and archives it at the end (BR-GAL-001..009).
@@ -18,22 +18,22 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
 - **Platform:** a Google Cloud API key with the Drive API enabled is configured as a server secret (ADR-005). It doesn't exist yet: the Owner provisions it for non-production before build and for production before ship.
 
 ## Inputs
-- **Create gallery:** password (6–64 characters, BR-GAL-002) and its confirmation; optional expiry (none, a date, or a duration in days).
+- **Create gallery:** password, prefilled with a generated easy-to-type proposal that the Owner may keep, regenerate or replace (6–64 characters, BR-GAL-002, A-11); optional expiry (none, a date, or a duration in days).
 - **Add source:** workspace source (active ones only), Drive folder link (a URL with folder ID and optional resource key), and an optional label (A-3).
 - **Change expiry:** none, a date (today or later), or a duration in whole days (1–3650, A-4).
-- **Rotate password:** new password and its confirmation.
+- **Rotate password:** new password, prefilled with a new generated proposal (BR-GAL-003).
 - **Actions:** sync one source, sync all, publish, remove source, archive, delete draft.
 
 ## Main Flow
 1. On a `BOOKED`-or-later project, the project detail shows a **Galeri** card with *Buat galeri*.
-2. The Owner sets the password, and optionally the expiry, and creates the gallery. It is a `DRAFT` with no sources. Only the hash is stored (BR-GAL-002).
+2. The Owner keeps (or changes) the proposed password, optionally sets the expiry, and creates the gallery. It is a `DRAFT` with no sources. The password is stored encrypted plus a hash (BR-GAL-002, ADR-017).
 3. The Owner adds a source: picks an active workspace source and pastes a Drive folder link. The public-link warning is shown (BR-SRC-004).
 4. Adding the source syncs it (BR-GAL-006):
    - root images become `PROOF`;
    - images directly in `edited` / `print` become `EDITED` / `PRINT`;
    - everything else is ignored (BR-GAL-007).
    The source records its sync status, time, counts and any error.
-5. The gallery screen shows each source with its status and last sync. The photos are grouped by kind (*Proof*, *Edited*, *Print*), each with a thumbnail served through the Owner-only media endpoint, plus counts.
+5. The gallery screen shows the password (with *Salin*), so the Owner never has to remember it. It also shows each source with its status and last sync. The photos are grouped by kind (*Proof*, *Edited*, *Print*), each with a thumbnail served through the Owner-only media endpoint, plus counts.
    - Each kind is marked for what the client will see: *Proof* is visible once published. *Edited* and *Print* are hidden until final delivery (BR-DEL-002). Missing and removed photos are hidden.
 6. The Owner may sync one source or all of them again at any time. Repeated syncs never duplicate photos.
 7. The Owner publishes:
@@ -57,7 +57,8 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
 - **Expiry passes:** a `PUBLISHED` gallery whose `expiresAt` is in the past is `EXPIRED` for every reader, Owner and public, without needing a job (A-7).
 - **Rotate password:**
   - allowed in `DRAFT`, `PUBLISHED` and `EXPIRED`;
-  - replaces the hash and increments `passwordVersion` (BR-GAL-003);
+  - proposes a new generated password the Owner may replace;
+  - replaces the encrypted password and the hash, and increments `passwordVersion` (BR-GAL-003);
   - records actor and time (BR-AUD-001);
   - reminds the Owner to share the new password.
 - **Archive:** from `PUBLISHED` or `EXPIRED`, after confirmation. It is final; the gallery becomes read-only (BR-GAL-005, BR-GAL-009).
@@ -66,7 +67,7 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
 - **Project `DRAFT`:** the Galeri card explains that a gallery can be created once the project is booked. There is no *Buat galeri* (BR-GAL-009).
 
 ## Error Cases
-- **Password:** shorter than 6 or longer than 64 characters, or the confirmation doesn't match. The field error is shown and nothing is saved.
+- **Password:** shorter than 6 or longer than 64 characters. The field error is shown and nothing is saved. There is no confirmation field: the password stays visible to the Owner.
 - **Invalid link:** not a Drive folder link. A field error; no source is created.
 - **Folder can't be listed** (not public, deleted, wrong resource key): the source is still created, with sync status *Gagal* and a plain-language reason. The Owner can fix the sharing and sync again. The Drive link is never logged (C-103).
 - **Partial failure in *Sync all*:** each source reports its own result; one failure doesn't roll back the others.
@@ -94,7 +95,7 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
 - F-04 `source-config`: workspace sources and their `isActive`.
 - The Google Drive provider behind the `GallerySourceProvider` interface (ADR-005). It's new in this feature; F-04 only stored configurations.
 - Server secret: the Drive API key (see Preconditions).
-- ADR-008/009 (Workers, Neon `Pool` transactions), ADR-004 (password hash, `passwordVersion`), ADR-016 (cross-feature transaction for cancel → archive).
+- ADR-008/009 (Workers, Neon `Pool` transactions), ADR-004 (token, `passwordVersion`), ADR-017 (encrypted, Owner-visible password; a new server secret, the encryption key, which the Owner provisions like the Drive API key), ADR-016 (cross-feature transaction for cancel → archive).
 
 ## Out of Scope
 - The client view `/g/{token}`, password entry, client sessions, rate limits and public media access (F-10). The Owner-only media endpoint built here is reused there behind token and password.
@@ -116,6 +117,7 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
 - **A-7:** `EXPIRED` is derived from `expiresAt` when read. Whether it is also stored is a technical-design choice.
 - **A-8:** a `DRAFT` gallery on a cancelled project is not archived, because it was never public. It can only be deleted.
 - **A-9:** an image is a file whose MIME type starts with `image/`. Videos and other files are ignored and counted as *diabaikan* in the sync summary.
+- **A-11:** a generated password is a common lowercase Indonesian word, a hyphen and four digits (for example *mawar-4821*). It has no look-alike characters and never contains the client's name. Brute force is limited by the token (≥128 bits) and rate limits (BR-ACC-004).
 - **A-10 (delegated to Claude by the Owner, 2026-10-04):**
   - a `DRAFT` gallery can be deleted;
   - there is no unpublish;
@@ -132,6 +134,7 @@ Checked against the constitution (C-001..C-106), BR-GAL/SRC/ACC/PRJ/DEL/AUD, ADR
 | FC-004 | Owner thumbnails need media from Drive, but the API key must never reach the browser, and controlled media delivery was scoped to F-10. | BR-SRC-003, BR-ACC-005 ↔ feature map F-10 | Build an Owner-only media endpoint in F-09; F-10 reuses it behind token and password (Owner 2026-10-04). | RESOLVED |
 | FC-005 | Cancelling a project left a published gallery reachable by the client. | BR-PRJ-010 ↔ BR-GAL-005 | Cancelling archives the gallery in the same transaction (Owner 2026-10-04). Recorded in BR-PRJ-010 and BR-GAL-005. | RESOLVED |
 | FC-006 | "Accessible" in the publish precondition was undefined. | BR-GAL-004 | Checked again with the provider at publish time (Owner 2026-10-04). Recorded in BR-GAL-004. | RESOLVED |
+| FC-007 | Hash-only passwords meant the Owner had to remember and retype a password per project to share it, which isn't workable. | C-103, ADR-004, BR-GAL-002, BR-MSG-003 | Store the password encrypted (plus a hash), generate an easy-to-type one, show it to the Owner, and fill it into the WhatsApp message automatically (Owner 2026-10-04). Recorded in constitution v1.1, ADR-017, BR-GAL-002/003 and BR-MSG-003. | RESOLVED |
 
 ## Open Questions / SPEC GAPS
 None blocking. For the technical design:

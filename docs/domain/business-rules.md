@@ -68,8 +68,8 @@ The platform generates prefilled WhatsApp deep links; the Owner reviews and send
 ### BR-MSG-002 — Template types
 Templates are workspace-level with type `GALLERY_SHARE` | `INVOICE_SHARE` | `PAYMENT_REMINDER` | `FINAL_DELIVERY` | `SELECTION_REMINDER` and channel `WHATSAPP` (MVP). At most one active template per workspace/type/channel. In MVP every workspace has **exactly one** template per type/channel, always active: the Owner edits its content or restores the default, and cannot create, delete or deactivate templates. *(F-03 discovery, Owner 2026-09-28.)*
 
-### BR-MSG-003 — Gallery password in messages needs re-entry
-`{{galleryPassword}}` can only be resolved during a share action in which the Owner re-enters the gallery password and it verifies against the stored hash. The raw password is never stored or logged; the Owner is told the password will appear in the WhatsApp link/draft.
+### BR-MSG-003 — Gallery password in messages
+`{{galleryPassword}}` is resolved server-side from the gallery's encrypted password during the Owner's share action; the Owner does not re-enter it. It is never logged; the Owner is told the password will appear in the WhatsApp link/draft. *(Amended in F-09 design, Owner 2026-10-04; previously required re-entry against the hash. ADR-017.)*
 
 ### BR-MSG-004 — Template output is sanitized
 Template variables are validated and output is sanitized before building the link. Generated links containing passwords are never logged.
@@ -226,11 +226,11 @@ A session is one shoot of a project, created and edited by the Owner (F-07; team
 ### BR-GAL-001 — One gallery per project
 A project has at most one gallery. The gallery owns no files; photos are metadata references to external files.
 
-### BR-GAL-002 — Required password, hash only
-Every gallery has a password; only its hash is stored. The Owner sets it when creating the gallery, so no gallery exists without one. A password is 6–64 characters. The plaintext is accepted only at setup, Owner re-entry for sharing, and rotation. *(F-09 discovery, Owner 2026-10-04.)*
+### BR-GAL-002 — Required password, encrypted and Owner-visible
+Every gallery has a password, set when the gallery is created, so no gallery exists without one. Shutrly proposes an easy-to-type generated password that the Owner may keep, regenerate or replace; a password is 6–64 characters. It is stored encrypted with a server-side key, next to a hash used for verification (ADR-017). Only the Owner of the workspace can see it, on the gallery screen; it is decrypted only server-side, never logged, and never sent to anyone but that Owner and the client message they build (BR-MSG-003). *(F-09 discovery and design review, Owner 2026-10-04.)*
 
 ### BR-GAL-003 — Password rotation
-The Owner may rotate the gallery password at any time. Rotation replaces the hash, increments `passwordVersion`, and immediately invalidates the old password and all gallery sessions authenticated under older versions. Invoice links are unaffected. The Owner is reminded to share the new password.
+The Owner may rotate the gallery password at any time; Shutrly proposes a new generated password, which the Owner may replace. Rotation replaces the encrypted password and the hash, increments `passwordVersion`, and immediately invalidates the old password and all gallery sessions authenticated under older versions. Invoice links are unaffected. The Owner is reminded to share the new password.
 
 ### BR-GAL-004 — Publish preconditions
 A gallery can be published only with a password hash and at least one active, accessible source. Draft galleries may have zero sources. A gallery source is *active* while it is linked to the gallery (not removed, BR-GAL-009); deactivating its workspace source does not change that (BR-SRC-006). It is *accessible* when the provider can list its folder at the moment of publishing: publishing checks every linked source again and is refused if none passes. *(F-09 discovery, Owner 2026-10-04.)*

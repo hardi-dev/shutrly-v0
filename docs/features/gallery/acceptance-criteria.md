@@ -15,18 +15,24 @@ Shared fixture, used unless an AC says otherwise. The Owner's workspace has:
 ## Create
 
 ## AC-GAL-001 — Create a gallery from the project
-Covers: BR-GAL-001, BR-GAL-002, BR-GAL-009 (A-1)
+Covers: BR-GAL-001, BR-GAL-002, BR-GAL-009 (A-1, A-11)
 
 **Given** project *Wisuda Rina* has no gallery
-**When** the Owner opens the project, chooses *Buat galeri*, enters password `rina2026` twice and submits
-**Then** the project has one gallery in `DRAFT` with no sources, the Galeri card shows *Draf* and a way to add a source, and the database stores only a hash of the password with `passwordVersion` 1.
+**When** the Owner opens the project and chooses *Buat galeri*
+**Then** the password field is prefilled with a generated password such as *mawar-4821*, and *Buat ulang* replaces it with another one.
+
+**When** the Owner keeps it and submits
+**Then**:
+- the project has one gallery in `DRAFT` with no sources;
+- the Galeri card shows *Draf* and a way to add a source;
+- the database stores the password encrypted and as a hash, never in plain text, with `passwordVersion` 1.
 
 ## AC-GAL-002 — Password rules
 Covers: BR-GAL-002
 
 **Given** the create form
-**When** the Owner enters `abc12` (5 characters), or 65 characters, or two different values
-**Then** the form shows a field error, and no gallery is created. 6 and 64 characters are accepted.
+**When** the Owner replaces the proposal with `abc12` (5 characters) or 65 characters
+**Then** the form shows a field error and no gallery is created. 6 and 64 characters are accepted.
 
 ## AC-GAL-003 — Only booked-or-later projects
 Covers: BR-GAL-009
@@ -205,9 +211,10 @@ Covers: BR-GAL-005 (A-7)
 Covers: BR-GAL-003, BR-GAL-002, BR-AUD-001
 
 **Given** a `PUBLISHED` gallery with `passwordVersion` 1
-**When** the Owner rotates the password to `baru2026`
+**When** the Owner chooses *Ganti password*, keeps the new proposal (or types `baru2026`) and confirms
 **Then**:
-- the stored hash changes and `passwordVersion` is 2;
+- the encrypted password and the hash change, and `passwordVersion` is 2;
+- the gallery screen shows the new password;
 - an audit record has the actor and time, and no password;
 - the Owner sees a reminder to share the new password.
 
@@ -258,3 +265,13 @@ Covers: C-008
 **Given** the Galeri card, the gallery screen and its dialogs (create, add source, expiry, rotate password, publish, archive, delete)
 **When** they are used with the keyboard only and checked with axe
 **Then** every action is reachable and labelled, focus moves into and out of dialogs correctly, and there are no serious or critical axe violations.
+
+## AC-GAL-027 — The Owner sees and copies the password
+Covers: BR-GAL-002, C-103, BR-WS-002 (ADR-017)
+
+**Given** a gallery whose password is *mawar-4821*
+**When** the Owner opens the gallery screen
+**Then**:
+- the password is shown with *Salin*, which copies it;
+- the Owner of another workspace gets not found;
+- no log line, analytics event, error record or client response contains the password or its ciphertext.

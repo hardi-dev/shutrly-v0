@@ -18,7 +18,7 @@ From a project, the Owner can create one private gallery, link one or more Googl
 
 ## Constraints
 - One gallery per project; the gallery owns no files, only metadata references to external files (BR-GAL-001).
-- Password is required and stored only as a hash. Plaintext is accepted only at setup, rotation and share re-entry (BR-GAL-002, BR-GAL-003, constitution secrets rules).
+- Password is required and stored only as a hash. Plaintext is accepted only at setup, rotation and share re-entry (BR-GAL-002, BR-GAL-003, constitution secrets rules). *Superseded 2026-10-04 (Owner, design review): the password is generated, stored encrypted and visible to the Owner; constitution v1.1, ADR-017.*
 - Publishing needs a password hash and at least one active, accessible source (BR-GAL-004). Lifecycle is `DRAFT → PUBLISHED → EXPIRED | ARCHIVED` (BR-GAL-005).
 - Sync is idempotent and records status, time and error (BR-GAL-006). Folder classification follows BR-GAL-007.
 - Provider access goes through the provider interface, the API key stays server-side, and direct Drive links are never exposed to clients (BR-SRC-*, BR-ACC-005).

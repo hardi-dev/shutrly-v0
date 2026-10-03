@@ -69,6 +69,20 @@ export const TEAM_COPY = {
     rolesRequired: "Pilih minimal satu peran.",
   },
 
+  openWhatsapp: "Buka WhatsApp",
+  archive: "Arsipkan",
+  restore: "Pulihkan",
+  undo: "Batalkan",
+  archivedTitle: (name: string) => `${name} diarsipkan`,
+  archivedBody: "Penugasannya tetap tersimpan.",
+  // not in Pencil: the restore and delete toasts and the plain delete confirmation
+  restoredTitle: (name: string) => `${name} dipulihkan`,
+  memberDeletedTitle: (name: string) => `${name} dihapus`,
+  memberDeleteTitle: (name: string) => `Hapus anggota "${name}"?`,
+  memberDeleteBody: "Nama, nomor WhatsApp, email, dan perannya dihapus permanen.",
+  memberDeleteBlockedTitle: (name: string) => `${name} tidak bisa dihapus`,
+  memberDeleteBlockedBody: "Anggota ini punya penugasan. Arsipkan saja.",
+
   rolesTitle: "Daftar peran",
   rolesCountDesktop: (count: number) => `${String(count)} peran · dipilih saat menambah anggota`,
   rolesCountMobile: (count: number) => `${String(count)} peran`,

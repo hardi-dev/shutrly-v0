@@ -5,7 +5,9 @@ import type { RoleRef } from "@/features/booking/application/ports/team-role-rep
 import type { TeamMemberPage } from "@/features/booking/application/use-cases/team-results/team-results.types";
 import type { TeamMemberStatus } from "@/features/booking/domain/team-member/team-member.types";
 
+import type { DeleteTeamMemberDialogProps } from "../delete-team-member-dialog/delete-team-member-dialog.types";
 import type { TeamMemberDialogProps } from "../team-member-dialog/team-member-dialog.types";
+import type { useMemberDialog } from "./use-member-dialog";
 
 export interface TeamMembersScreenProps {
   readonly workspaceId: string;
@@ -20,6 +22,12 @@ export interface TeamMembersScreenProps {
   readonly addAction: TeamMemberDialogProps["addAction"];
   readonly updateAction: TeamMemberDialogProps["updateAction"];
   readonly addRoleAction: TeamMemberDialogProps["addRoleAction"];
+  readonly setArchivedAction: (
+    workspaceId: string,
+    memberId: string,
+    isArchived: boolean,
+  ) => Promise<void>;
+  readonly deleteAction: DeleteTeamMemberDialogProps["action"];
 }
 
 export interface LoadMoreButtonProps {
@@ -34,4 +42,9 @@ export interface MembersBodyProps extends TeamMembersScreenProps {
   readonly addButton: ReactNode;
   readonly onAdd: () => void;
   readonly onEdit: (member: TeamMemberRecord) => void;
+  readonly onDelete: (member: TeamMemberRecord) => void;
+}
+
+export interface MemberDialogsProps extends TeamMembersScreenProps {
+  readonly dialog: ReturnType<typeof useMemberDialog>;
 }

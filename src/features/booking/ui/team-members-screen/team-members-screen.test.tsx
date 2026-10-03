@@ -49,6 +49,8 @@ function setup(overrides = {}) {
         addAction={vi.fn()}
         updateAction={vi.fn()}
         addRoleAction={vi.fn()}
+        setArchivedAction={vi.fn().mockResolvedValue(undefined)}
+        deleteAction={vi.fn().mockResolvedValue({ ok: true })}
         {...overrides}
       />
     </>,
@@ -160,5 +162,42 @@ describe("TeamMembersScreen", () => {
     const buttons = screen.getAllByRole("button", { name: "Tambah anggota" });
     await userEvent.click(buttons[buttons.length - 1]);
     expect(await screen.findByRole("dialog", { name: "Tambah anggota" })).toBeInTheDocument();
+  });
+
+  it("AC-TEAM-007 archives from the row menu, offers Batalkan and restores on undo", async () => {
+    const setArchivedAction = vi.fn().mockResolvedValue(undefined);
+    setup({ setArchivedAction });
+    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Dimas Pratama" }));
+    await userEvent.click(screen.getByRole("menuitem", { name: "Arsipkan" }));
+    await waitFor(() => {
+      expect(setArchivedAction).toHaveBeenCalledWith("ws", "m2", true);
+    });
+    const toast = showToast.mock.calls.at(-1)?.[0] as {
+      title: string;
+      body: string;
+      action: { label: string; onAction: () => void };
+    };
+    expect(toast.title).toBe("Dimas Pratama diarsipkan");
+    expect(toast.body).toBe("Penugasannya tetap tersimpan.");
+    expect(toast.action.label).toBe("Batalkan");
+    toast.action.onAction();
+    await waitFor(() => {
+      expect(setArchivedAction).toHaveBeenLastCalledWith("ws", "m2", false);
+    });
+  });
+
+  it("AC-TEAM-007 opens the blocked dialog when the member has assignments", async () => {
+    const deleteAction = vi.fn().mockResolvedValue({ ok: false, code: "HAS_ASSIGNMENTS" });
+    setup({ deleteAction });
+    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Dimas Pratama" }));
+    await userEvent.click(screen.getByRole("menuitem", { name: "Hapus" }));
+    await userEvent.click(await screen.findByRole("button", { name: "Hapus" }));
+    expect(await screen.findByText("Dimas Pratama tidak bisa dihapus")).toBeInTheDocument();
+  });
+
+  it("AC-TEAM-007 does not open Ubah when the row menu is used", async () => {
+    setup();
+    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Dimas Pratama" }));
+    expect(screen.queryByRole("dialog", { name: "Ubah anggota" })).not.toBeInTheDocument();
   });
 });

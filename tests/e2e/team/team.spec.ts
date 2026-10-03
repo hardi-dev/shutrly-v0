@@ -116,3 +116,37 @@ test.describe("AC-TEAM-001 AC-TEAM-002 AC-TEAM-003 AC-TEAM-004 Tim › Anggota",
     await expect(page.getByText(TEAM_COPY.emptyArchivedTitle)).toBeVisible();
   });
 });
+
+test.describe("AC-TEAM-007 AC-TEAM-023 Tim › row menu", () => {
+  test("archives with Batalkan, restores from Arsip and deletes an unassigned member", async ({
+    page,
+  }) => {
+    const workspaceId = await openWorkspace(page, "team-menu");
+    await page.goto(`/w/${workspaceId}/team`);
+    await addMember(page, { name: "Dimas Pratama", number: "0812 9876 5432", role: "Fotografer" });
+    await expect(page.getByText("Dimas Pratama")).toBeVisible();
+
+    const rowActions = TEAM_COPY.rowActions("Dimas Pratama");
+    await page.getByRole("button", { name: rowActions }).click();
+    const whatsapp = page.getByRole("menuitem", { name: TEAM_COPY.openWhatsapp });
+    await expect(whatsapp).toHaveAttribute("href", "https://wa.me/6281298765432");
+    await page.getByRole("menuitem", { name: TEAM_COPY.archive }).click();
+    await expect(page.getByText(TEAM_COPY.archivedTitle("Dimas Pratama"))).toBeVisible();
+    await page.getByRole("button", { name: TEAM_COPY.undo }).click();
+    await expect(page.getByText("Dimas Pratama").first()).toBeVisible();
+
+    await page.getByRole("button", { name: rowActions }).click();
+    await page.getByRole("menuitem", { name: TEAM_COPY.archive }).click();
+    await page.goto(`/w/${workspaceId}/team/archived`);
+    await expect(page.getByText("Dimas Pratama")).toBeVisible();
+    await page.getByRole("button", { name: rowActions }).click();
+    await page.getByRole("menuitem", { name: TEAM_COPY.restore }).click();
+    await expect(page.getByText(TEAM_COPY.restoredTitle("Dimas Pratama"))).toBeVisible();
+
+    await page.goto(`/w/${workspaceId}/team`);
+    await page.getByRole("button", { name: rowActions }).click();
+    await page.getByRole("menuitem", { name: TEAM_COPY.delete }).click();
+    await page.getByRole("button", { name: TEAM_COPY.delete, exact: true }).click();
+    await expect(page.getByText(TEAM_COPY.emptyActiveTitle)).toBeVisible();
+  });
+});

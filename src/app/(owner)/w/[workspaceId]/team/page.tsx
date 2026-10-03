@@ -1,7 +1,9 @@
 import {
   addTeamMemberAction,
   addTeamRoleAction,
+  deleteTeamMemberAction,
   loadMoreTeamMembersAction,
+  setTeamMemberArchivedAction,
   updateTeamMemberAction,
 } from "@/app/actions/booking/team";
 import { loadTeamMembers } from "@/composition/booking/team-flow/team-flow";
@@ -26,6 +28,8 @@ export default async function TeamPage({
       addAction={addTeamMemberAction}
       updateAction={updateTeamMemberAction}
       addRoleAction={addTeamRoleAction}
+      setArchivedAction={setTeamMemberArchivedAction}
+      deleteAction={deleteTeamMemberAction}
     />
   );
 }

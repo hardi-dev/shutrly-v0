@@ -69,7 +69,7 @@ function createColumnRenderer(firstColumnId: string | undefined) {
         style={column.width === undefined ? undefined : { width: column.width }}
         className={getColumnClassName(column)}
       >
-        {column.label ?? <span className="sr-only" role="img" aria-label={column["aria-label"]} />}
+        {column.label ?? <span className="sr-only">{column["aria-label"]}</span>}
       </Column>
     );
   };

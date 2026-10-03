@@ -41,8 +41,11 @@ describe("DataTable (C27)", () => {
       within(table)
         .getAllByRole("columnheader")
         .map((header) => header.textContent),
-    ).toEqual(["KLIEN", "WHATSAPP", ""]);
-    expect(within(table).getByRole("columnheader", { name: "Aksi" })).toBeInTheDocument();
+    ).toEqual(["KLIEN", "WHATSAPP", "Aksi"]);
+    const actionHeader = within(table).getByRole("columnheader", { name: "Aksi" });
+    expect(actionHeader).toBeInTheDocument();
+    expect(within(actionHeader).getByText("Aksi")).toHaveClass("sr-only");
+    expect(within(table).queryByRole("img", { name: "Aksi" })).not.toBeInTheDocument();
     expect(within(table).getAllByRole("row")).toHaveLength(3);
     expect(screen.getByText("38 klien aktif")).toBeVisible();
     expect(screen.getByRole("textbox", { name: "Cari" })).toBeVisible();

@@ -4,7 +4,8 @@ import { REGISTER_FORM_COPY } from "@/features/auth/ui/register-form/register-fo
 
 export const PASSWORD = "correct-horse";
 
-export const uniqueEmail = (tag = "e2e") => `${tag}+${crypto.randomUUID()}@test.shutrly.dev`;
+export const uniqueEmail = (tag = "e2e") =>
+  `${tag.toLowerCase().replaceAll(/[^a-z0-9-]+/g, "-")}+${crypto.randomUUID()}@test.shutrly.dev`;
 
 interface CapturedLink {
   kind: string;

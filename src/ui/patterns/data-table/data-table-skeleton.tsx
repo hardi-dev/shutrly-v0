@@ -34,7 +34,7 @@ function renderSkeletonColumn(column: DataTableColumn) {
         column.width === undefined ? "flex-1" : "shrink-0",
       )}
     >
-      {column.label ?? <span className="sr-only" role="img" aria-label={column["aria-label"]} />}
+      {column.label ?? <span className="sr-only">{column["aria-label"]}</span>}
     </Column>
   );
 }

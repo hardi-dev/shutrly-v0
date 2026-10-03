@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/require-await -- the fakes mirror the asynchronous repository ports */
 
 import type {
+  TeamMemberChange,
+  TeamMemberPageQuery,
+  TeamMemberRecord,
+  TeamMemberRepositoryPort,
+} from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
+import type {
   TeamRoleRecord,
   TeamRoleRepositoryPort,
 } from "@/features/booking/application/ports/team-role-repository/team-role-repository.port";
@@ -61,6 +67,112 @@ export class FakeTeamRoleRepository implements TeamRoleRepositoryPort {
       if (!this.find(context, name))
         this.rows.push({ id: crypto.randomUUID(), workspaceId: context.workspaceId, name });
     }
+  }
+}
+
+interface StoredMember {
+  readonly id: string;
+  readonly workspaceId: string;
+  name: string;
+  whatsappNumber: string;
+  email: string | null;
+  roleIds: readonly string[];
+  archived: boolean;
+}
+
+/** In-memory member repository; `roles` is the role catalogue the fake validates role IDs against. */
+export class FakeTeamMemberRepository implements TeamMemberRepositoryPort {
+  readonly rows: StoredMember[] = [];
+  readonly roles = new Map<string, { workspaceId: string; name: string }>();
+
+  private record(row: StoredMember): TeamMemberRecord {
+    return {
+      id: row.id,
+      name: row.name,
+      whatsappNumber: row.whatsappNumber,
+      email: row.email,
+      roles: row.roleIds.map((id) => ({ id, name: this.roles.get(id)?.name ?? "" })),
+      isArchived: row.archived,
+    };
+  }
+
+  private holder(context: WorkspaceContext, number: string, exceptId?: string) {
+    return this.rows.find(
+      (row) =>
+        row.workspaceId === context.workspaceId &&
+        row.whatsappNumber === number &&
+        row.id !== exceptId,
+    );
+  }
+
+  private rolesExist(context: WorkspaceContext, roleIds: readonly string[]) {
+    return roleIds.every((id) => this.roles.get(id)?.workspaceId === context.workspaceId);
+  }
+
+  async listPage(context: WorkspaceContext, query: TeamMemberPageQuery) {
+    const matches = this.rows
+      .filter((row) => row.workspaceId === context.workspaceId)
+      .filter((row) => row.archived === (query.status === "ARCHIVED"))
+      .filter((row) => !query.search || this.matches(row, query))
+      .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    const start = query.afterId ? matches.findIndex((row) => row.id === query.afterId) + 1 : 0;
+    return matches.slice(start, start + query.limit).map((row) => this.record(row));
+  }
+
+  private matches(row: StoredMember, query: TeamMemberPageQuery) {
+    const search = query.search;
+    if (!search) return true;
+    return (
+      row.name.toLowerCase().includes(search.text.toLowerCase()) ||
+      (search.digits !== null && row.whatsappNumber.includes(search.digits))
+    );
+  }
+
+  async count(context: WorkspaceContext, status: "ACTIVE" | "ARCHIVED") {
+    return this.rows.filter(
+      (row) => row.workspaceId === context.workspaceId && row.archived === (status === "ARCHIVED"),
+    ).length;
+  }
+
+  async create(context: WorkspaceContext, change: TeamMemberChange) {
+    if (!this.rolesExist(context, change.roleIds)) return "NOT_FOUND" as const;
+    const holder = this.holder(context, change.whatsappNumber);
+    if (holder) {
+      return {
+        status: "NUMBER_TAKEN",
+        holder: { name: holder.name, isArchived: holder.archived },
+      } as const;
+    }
+    const id = crypto.randomUUID();
+    this.rows.push({
+      id,
+      workspaceId: context.workspaceId,
+      name: change.name,
+      whatsappNumber: change.whatsappNumber,
+      email: change.email,
+      roleIds: change.roleIds,
+      archived: false,
+    });
+    return { status: "CREATED", id } as const;
+  }
+
+  async update(context: WorkspaceContext, id: string, change: TeamMemberChange) {
+    const row = this.rows.find((r) => r.workspaceId === context.workspaceId && r.id === id);
+    if (!row || !this.rolesExist(context, change.roleIds)) return "NOT_FOUND" as const;
+    const holder = this.holder(context, change.whatsappNumber, id);
+    if (holder) {
+      return {
+        status: "NUMBER_TAKEN",
+        holder: { name: holder.name, isArchived: holder.archived },
+      } as const;
+    }
+    Object.assign(row, {
+      name: change.name,
+      whatsappNumber: change.whatsappNumber,
+      email: change.email,
+      roleIds: change.roleIds,
+    });
+    return "UPDATED" as const;
   }
 }
 

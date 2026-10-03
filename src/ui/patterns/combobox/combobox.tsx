@@ -7,7 +7,6 @@ import {
   Label,
   ListBox,
   ListBoxItem,
-  ListBoxSection,
   Popover,
   Text,
 } from "react-aria-components";
@@ -15,7 +14,6 @@ import {
 import { cn } from "@/ui/cn/cn";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { MenuDivider } from "@/ui/patterns/menu/menu-divider";
-import { MenuGroupLabel } from "@/ui/patterns/menu/menu-group-label";
 import { Icon } from "@/ui/primitives/icon/icon";
 import { Input } from "@/ui/primitives/input/input";
 
@@ -121,20 +119,13 @@ function ComboboxMenu<T extends { readonly id: string }>(props: Readonly<Combobo
       offset={4}
       className="w-(--trigger-width) rounded-(--component-menu-radius) border border-(--component-menu-border) bg-(--component-menu-background) p-(--component-menu-padding) shadow-[0_var(--elevation-1-offset-y)_var(--elevation-1-blur)_var(--color-semantic-elevation-1-color)]"
     >
-      {props.items.length === 0 ? (
-        <p className="px-(--component-menu-item-padding-x) py-(--space-2) text-(length:--font-size-overline) font-bold uppercase tracking-(--font-letter-spacing-overline) text-(--component-menu-group-label)">
-          {props.groupLabel}
-        </p>
-      ) : null}
+      <p className="px-(--component-menu-item-padding-x) py-(--space-2) text-(length:--font-size-overline) font-bold uppercase tracking-(--font-letter-spacing-overline) text-(--component-menu-group-label)">
+        {props.groupLabel}
+      </p>
       <ListBox aria-label={props.label} aria-busy={props.isLoading} className="outline-none">
-        {props.items.length > 0 ? (
-          <ListBoxSection aria-label={props.groupLabel}>
-            <MenuGroupLabel>{props.groupLabel}</MenuGroupLabel>
-            {props.items.map((item) => (
-              <ComboboxOption key={item.id} item={item} renderItem={props.renderItem} />
-            ))}
-          </ListBoxSection>
-        ) : null}
+        {props.items.map((item) => (
+          <ComboboxOption key={item.id} item={item} renderItem={props.renderItem} />
+        ))}
         {hasCreate ? <CreateRow label={props.createLabel ?? ""} query={props.inputValue} /> : null}
       </ListBox>
     </Popover>

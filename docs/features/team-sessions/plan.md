@@ -573,7 +573,7 @@ Each slice has a **Read first** list, a **Done when** check and numbered steps. 
 - the member dialog adds and edits members with every field error, including *number taken (diarsipkan)*;
 - *Tambah peran baru* creates and selects a role.
 
-- [ ] **2.1 Member domain.**
+- [x] **2.1 Member domain.**
   - Write `domain/team-member` (§ Rule code) and `team-member-input`, `team-member-list-query`.
   - Tests (unit, `AC-TEAM-004`, `AC-TEAM-005`):
     - `  Rina  ` is trimmed;
@@ -586,7 +586,7 @@ Each slice has a **Read first** list, a **Done when** check and numbered steps. 
     - `[]` roles → `REQUIRED`;
     - duplicate role IDs are deduplicated.
   - Commit: `feat(team): add team member rules`.
-- [ ] **2.2 Member use cases and repository.**
+- [x] **2.2 Member use cases and repository.**
   - Write `list-team-members`, `count-team-members`, `add-team-member`, `update-team-member` and `drizzle-team-member-repository.ts` (`listPage`, `count`, `create`, `update`; D-7, D-8, D-9). Roles are aggregated by `lower(name)`.
   - Tests:
     - integration `AC-TEAM-001`: order *Ayu*, *Dimas*; count 2; *Budi* only in *Arsip*;
@@ -596,19 +596,19 @@ Each slice has a **Read first** list, a **Done when** check and numbered steps. 
     - integration `AC-TEAM-007`, part 1: removing *Videografer* leaves an existing assignment's role;
     - integration TD-A-5: B's role ID in A's body → `NOT_FOUND`.
   - Commit: `feat(team): list, add and edit team members`.
-- [ ] **2.3 Flow, actions and routes.**
+- [x] **2.3 Flow, actions and routes.**
   - Write the `team-flow` member entries (`loadTeamMembers`, `loadMoreTeamMembers`, add, update) and their actions, and `/team/page.tsx` + `/team/archived/page.tsx` + `loading.tsx`.
   - Remove `"team"` from `COMING_SOON_SECTIONS` (D-17); a unit test asserts *Tim* no longer resolves to *Segera hadir* (`AC-TEAM-001`).
   - Pages also pass the roles to the screen.
   - Tests: unit for the action wrappers; an action re-validates bypassed input (`AC-TEAM-005`).
   - Commit: `feat(team): wire the member routes and actions`.
-- [ ] **2.4 Shared `MultiSelect` + `IconButton` danger + `user-plus`.**
+- [x] **2.4 Shared `MultiSelect` + `IconButton` danger + `user-plus`.**
   - `MultiSelect` gains `description`, `errorMessage` and `createAction?: { label; onPress }`. The create row sits under the options with a `plus` icon (export `tim-form-anggota-peran-baru`).
   - `IconButton` gains `tone="danger"`, whose icon uses `--color-semantic-status-danger-fg`.
   - `Icon` gains `user-plus` (Hugeicons).
   - Update the stories and tests.
   - Commit: `feat(ui): extend multi-select, icon-button and icons for the team`.
-- [ ] **2.5 *Anggota* screen.**
+- [x] **2.5 *Anggota* screen.**
   - Write `team-members-screen`, `team-members-table`, `team-member-list`, `team-member-search-field`, `team-members-empty-state`, `team-members-skeleton` and `use-load-more-team-members`.
   - The table footer renders only while there's a next page (design.md › Table footer).
   - Tests (dom):
@@ -618,7 +618,7 @@ Each slice has a **Read first** list, a **Done when** check and numbered steps. 
     - the load-more append.
   - Gate: + build. Compare with the exports at 1440 and 390.
   - Commit: `feat(team): build the members tab`.
-- [ ] **2.6 Member dialog.**
+- [x] **2.6 Member dialog.**
   - Write `team-member-dialog` + `useTeamMemberForm` (RHF + `zodResolver(teamMemberInputSchema)`; server field errors through `setError`; the number-taken message with *(diarsipkan)*) and `team-field-error`.
   - *Tambah peran baru* opens `TeamRoleDialog` on top. On save, the new role joins the options and is selected (A-5).
   - The add and edit toasts.
@@ -650,14 +650,14 @@ Each slice has a **Read first** list, a **Done when** check and numbered steps. 
 
 No log line carries member data.
 
-- [ ] **3.1 Archive and delete backend.**
+- [x] **3.1 Archive and delete backend.**
   - Write `set-team-member-archived`, `delete-team-member`, the repository `setArchived` / `delete` (D-11), the flow entries and the actions.
   - Tests:
     - integration `AC-TEAM-007`: archive, restore, delete with an assignment → `HAS_ASSIGNMENTS`, unassigned delete → gone and its role rows too;
     - integration `AC-TEAM-022`: B's member through A;
     - unit `AC-TEAM-023`: a failing write logs `team.save_failed` with `{ workspaceId, operation }` only (logger spy; no name, number or email).
   - Commit: `feat(team): archive, restore and delete team members`.
-- [ ] **3.2 Row menu, dialogs and toasts.**
+- [x] **3.2 Row menu, dialogs and toasts.**
   - Write `team-member-row-actions` (Action Menu on desktop, opening upward; Bottom Sheet/Actions on phones), `delete-team-member-dialog` (confirm → blocked) and `use-team-mutations` (archive toast with *Batalkan* → restore; restore and delete toasts).
   - *Arsip* rows show *Pulihkan* instead of *Arsipkan*.
   - *Buka WhatsApp* is an `<a>` with `wa.me`, `target="_blank"` and `rel="noopener noreferrer"`.

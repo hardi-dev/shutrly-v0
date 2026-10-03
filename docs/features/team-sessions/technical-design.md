@@ -383,3 +383,17 @@ See [plan.md](plan.md): six vertical slices by screen, test-first, one commit pe
   4. The empty roles state (*Belum ada peran*) is not drawn; its copy is marked `// not in Pencil`.
   5. `/team` keeps *Segera hadir* with the new tabs in the header until step 2.3.
 - **Environment:** `pnpm install` was run once (F-07's `@internationalized/date`). `pnpm lint` also scans another session's `.claude/worktrees/*` and fails there, and needs `NODE_OPTIONS=--max-old-space-size=6144`; the repo's own `src` and `tests` lint clean.
+
+## Implementation record — Slices 2 and 3 (2026-10-04)
+
+- **Built:** the member rules and input schemas; member use cases (list, count, add, update, archive, delete) and the Drizzle member repository (D-7…D-9, D-11); `team-flow` member entries and actions; the shared `MultiSelect` (`description`, `errorMessage`, `groupLabel`, `createAction`), `IconButton` `tone="danger"` and the `user-plus` icon; the *Anggota* tabs at `/team` and `/team/archived` (table, phone list, search, load more, empty and loading states); the member dialog with inline role creation; the row menu (*Ubah*, *Buka WhatsApp*, *Arsipkan* / *Pulihkan*, *Hapus*) with the archive undo toast and the blocked delete dialog. `team` left `COMING_SOON_SECTIONS`.
+- **Checks:** typecheck, ESLint on the changed paths, Prettier, `pnpm build` and 1199 unit tests pass. Team integration (`team-member-repository`: 13) pass. Team E2E (`tests/e2e/team`) written for the members and row menu but **not run**: port 3000 is still the other checkout's dev server (PID 83066), as in Slice 1. The visual comparison with the exports at 1440 and 390 was not possible for the same reason.
+- **Deviations:**
+  1. The `/team` route files and the `COMING_SOON_SECTIONS` removal landed in 2.5 with their screen, not in 2.3 (same reason as Slice 1 deviation 2).
+  2. `MultiSelect` also gained `groupLabel` (the drawn *PERAN* overline); the plan listed three props. On phones it keeps F-07's bottom-sheet list, so the drawn inline menu inside the sheet is not reproduced; the *Tambah peran baru* row is a sheet row.
+  3. The *Hapus pencarian* button in the no-match state has no icon: `Button` allows a fixed icon set without `x`.
+  4. The *Arsip* tab keeps the add button, as the export's header does. The phone row ⋯ and the desktop menu are both in 3.2, so a phone has no edit entry in 2.5/2.6 alone.
+  5. The delete-blocked E2E waits for Slice 4, which is when an assignment can exist.
+  6. The search field has its own hook (`use-team-member-search`) because F-06's is private to its component.
+- **Environment:** integration tests share `tests/support/booking/team-seed.ts` (workspace, roles, project with a session, assignment).
+

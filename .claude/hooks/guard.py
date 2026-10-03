@@ -18,6 +18,10 @@ PEN = re.compile(r"\.pen\b")
 PEN_READERS = re.compile(
     r"\b(cat|less|more|head|tail|sed|awk|grep|rg|strings|xxd|od|hexdump|cp|mv|tee|vim?|nano)\b[^|;&]*\.pen\b"
 )
+# Copying a bundled template into docs/ is allowed (sdv commands need it); nothing else with cp.
+TEMPLATE_COPY = re.compile(
+    r"^\s*cp\s+(-n\s+)?[\w./-]*assets/templates/[\w.-]+\.pen\s+(\./)?docs/[\w./-]+\.pen\s*$"
+)
 SECRET_FILES = re.compile(r"(^|[\s/'\"])(\.dev\.vars[\w.]*|\.env(?!\.example\b)[\w.]*)(\s|$|['\"])")
 
 if tool in ("Read", "Edit", "Write", "NotebookEdit", "Grep", "Glob"):
@@ -27,7 +31,7 @@ if tool in ("Read", "Edit", "Write", "NotebookEdit", "Grep", "Glob"):
 
 if tool == "Bash":
     cmd = inp.get("command", "")
-    if PEN_READERS.search(cmd):
+    if PEN_READERS.search(cmd) and not TEMPLATE_COPY.match(cmd):
         block(".pen files may only be read or edited through the Pencil MCP tools (AGENTS.md hard stop).")
     if re.search(r"\bgit\s+(add|commit)\b", cmd) and SECRET_FILES.search(cmd):
         block("never commit .dev.vars or .env* files (AGENTS.md hard stop).")

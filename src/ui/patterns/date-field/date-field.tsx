@@ -1,6 +1,7 @@
 "use client";
 
 import { parseDate } from "@internationalized/date";
+import { useContext } from "react";
 import type { DateValue } from "react-aria-components";
 import {
   Button as AriaButton,
@@ -8,8 +9,10 @@ import {
   CalendarCell,
   CalendarGrid,
   DatePicker,
+  DatePickerStateContext,
   Dialog,
   FieldError,
+  Group,
   Heading,
   I18nProvider,
   Label,
@@ -17,6 +20,8 @@ import {
 } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
+import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
+import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Icon } from "@/ui/primitives/icon/icon";
 import { TEXT_FIELD_COPY } from "@/ui/primitives/text-field/text-field.copy";
 
@@ -74,17 +79,42 @@ export function DateField(props: Readonly<DateFieldProps>) {
             {props.errorMessage}
           </FieldError>
         ) : null}
-        <Popover
-          placement="bottom start"
-          offset={4}
-          className="rounded-(--component-menu-radius) border border-(--component-menu-border) bg-(--component-menu-background) p-(--space-3) shadow-[0_var(--elevation-1-offset-y)_var(--elevation-1-blur)_var(--color-semantic-elevation-1-color)]"
-        >
-          <Dialog className="outline-none">
-            <CalendarPanel />
-          </Dialog>
-        </Popover>
+        <DateFieldCalendar title={props.label} />
       </DatePicker>
     </I18nProvider>
+  );
+}
+
+function DateFieldCalendar({ title }: Readonly<{ title: string }>) {
+  const isMobile = useMobileViewport();
+  const state = useContext(DatePickerStateContext);
+  const handleOpenChange = (isOpen: boolean) => {
+    state?.setOpen(isOpen);
+  };
+  if (isMobile) {
+    return (
+      <BottomSheet
+        isOpen={state?.isOpen ?? false}
+        onOpenChange={handleOpenChange}
+        title={title}
+        variant="form"
+      >
+        <div className="flex justify-center pb-(--space-4)">
+          <CalendarPanel />
+        </div>
+      </BottomSheet>
+    );
+  }
+  return (
+    <Popover
+      placement="bottom start"
+      offset={4}
+      className="rounded-(--component-menu-radius) border border-(--component-menu-border) bg-(--component-menu-background) p-(--space-3) shadow-[0_var(--elevation-1-offset-y)_var(--elevation-1-blur)_var(--color-semantic-elevation-1-color)]"
+    >
+      <Dialog className="outline-none">
+        <CalendarPanel />
+      </Dialog>
+    </Popover>
   );
 }
 
@@ -113,19 +143,21 @@ function DateFieldTrigger({
   errorMessage,
 }: Readonly<Pick<DateFieldProps, "value" | "display" | "placeholder" | "errorMessage">>) {
   return (
-    <AriaButton
-      className={cn(TRIGGER_CLASS, errorMessage && "border-(--component-input-border-error)")}
-    >
-      <span
-        className={cn(
-          "min-w-0 flex-1 truncate",
-          value === null && "text-(--component-input-placeholder)",
-        )}
+    <Group className="block w-full">
+      <AriaButton
+        className={cn(TRIGGER_CLASS, errorMessage && "border-(--component-input-border-error)")}
       >
-        {value === null ? (placeholder ?? "") : formatDate(value, display)}
-      </span>
-      <Icon name="calendar" aria-hidden="true" className="text-(--component-input-placeholder)" />
-    </AriaButton>
+        <span
+          className={cn(
+            "min-w-0 flex-1 truncate",
+            value === null && "text-(--component-input-placeholder)",
+          )}
+        >
+          {value === null ? (placeholder ?? "") : formatDate(value, display)}
+        </span>
+        <Icon name="calendar" aria-hidden="true" className="text-(--component-input-placeholder)" />
+      </AriaButton>
+    </Group>
   );
 }
 

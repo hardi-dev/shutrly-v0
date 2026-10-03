@@ -21,7 +21,7 @@ export function CreateProjectActions({ state }: Readonly<{ state: CreateProjectS
       <Button
         variant="secondary"
         size={size}
-        className="max-md:flex-1"
+        className="max-md:min-w-0 max-md:flex-1 max-md:px-(--space-3)"
         isPending={state.pendingMode === "DRAFT"}
         isDisabled={state.pendingMode === "BOOKED"}
         onPress={handleSaveDraft}
@@ -30,7 +30,7 @@ export function CreateProjectActions({ state }: Readonly<{ state: CreateProjectS
       </Button>
       <Button
         size={size}
-        className="max-md:flex-1"
+        className="max-md:min-w-0 max-md:flex-1 max-md:px-(--space-3)"
         isPending={state.pendingMode === "BOOKED"}
         isDisabled={state.pendingMode === "DRAFT"}
         onPress={handleCreate}

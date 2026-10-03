@@ -13,12 +13,14 @@ import {
 } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
+import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { MenuDivider } from "@/ui/patterns/menu/menu-divider";
 import { MenuGroupLabel } from "@/ui/patterns/menu/menu-group-label";
 import { Icon } from "@/ui/primitives/icon/icon";
 import { Input } from "@/ui/primitives/input/input";
 
 import type { ComboboxProps } from "./combobox.types";
+import { MobileCombobox } from "./mobile-combobox";
 
 const CREATE_ID = "__create__";
 const FIELD_MESSAGE = "text-(length:--font-size-label)";
@@ -40,6 +42,11 @@ const SHOW_ALL = () => true;
  * @returns the accessible combobox field
  */
 export function Combobox<T extends { readonly id: string }>(props: Readonly<ComboboxProps<T>>) {
+  const isMobile = useMobileViewport();
+  return isMobile ? <MobileCombobox {...props} /> : <DesktopCombobox {...props} />;
+}
+
+function DesktopCombobox<T extends { readonly id: string }>(props: Readonly<ComboboxProps<T>>) {
   const errorMessageId = useId();
   const handleChange = (key: string | number | null) => {
     if (key === null) return;

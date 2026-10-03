@@ -339,3 +339,40 @@ describe("deleting a session or a draft with a team", () => {
     expect(await db.select().from(teamMember).where(eq(teamMember.id, dimas))).toHaveLength(1);
   });
 });
+
+describe("tenant isolation of the team reads", () => {
+  it("AC-TEAM-022 lists only the workspace's own members as assignable", async () => {
+    const first = await fixture();
+    const second = await fixture();
+    const own = await createDrizzleTeamMemberRepository(db).listAssignable(first.base);
+    expect(own.map((member) => member.id)).toEqual([first.dimas]);
+    const theirs = await createDrizzleTeamMemberRepository(db).listAssignable(second.base);
+    expect(theirs.map((member) => member.id)).toEqual([second.dimas]);
+  });
+
+  it("AC-TEAM-022 never lists or flags another workspace's project in the project list", async () => {
+    const first = await fixture();
+    const second = await fixture();
+    await add(second.base, second.target, second.dimas, second.roles.Fotografer);
+    const query = {
+      tab: "ACTIVE",
+      search: null,
+      filter: null,
+      afterId: null,
+      limit: 50,
+      today: "2026-10-04",
+    } as const;
+    const rows = await createDrizzleProjectListReader(db).listPage(first.base, query);
+    expect(rows.map((row) => row.id)).toEqual([first.target.projectId]);
+    expect(rows[0]?.hasTeam).toBe(false);
+  });
+
+  it("AC-TEAM-022 gives another workspace's member no role in this workspace's assignments", async () => {
+    const first = await fixture();
+    const second = await fixture();
+    expect(await add(first.base, first.target, second.dimas, second.roles.Fotografer)).toBe(
+      "NOT_FOUND",
+    );
+    expect(await remove(first.base, first.target.projectId, crypto.randomUUID())).toBe("NOT_FOUND");
+  });
+});

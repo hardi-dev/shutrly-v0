@@ -23,6 +23,10 @@ async function expectProjectsA11y(page: Page): Promise<void> {
   expect(results.violations).toEqual([]);
 }
 
+function visibleText(page: Page, text: string) {
+  return page.getByText(text).filter({ visible: true }).first();
+}
+
 async function openWorkspace(page: Page): Promise<string> {
   await registerAndVerify(page, uniqueEmail("projects"));
   await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Projects Studio");
@@ -114,6 +118,25 @@ test("AC-PRJ-006 AC-PRJ-007 AC-PRJ-008 AC-PRJ-009 creates a booked project from 
   await page.getByRole("button", { name: PROJECT_COPY.create }).click();
   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=created$/);
   await expect(page.getByText(PROJECT_COPY.toastCreatedTitle)).toBeVisible();
+
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Wisuda Basic — Rina" }).first(),
+  ).toBeVisible();
+  await expect(visibleText(page, PROJECT_COPY.statusBooked)).toBeVisible();
+  await expect(visibleText(page, "Rina · +62 812-3456-7890")).toBeVisible();
+  await expect(visibleText(page, "Rp 750.000")).toBeVisible();
+  await expectProjectsA11y(page);
+
+  await page.getByRole("button", { name: PROJECT_COPY.stepStart }).click();
+  await expect(visibleText(page, PROJECT_COPY.toastStartedTitle)).toBeVisible();
+  await expect(visibleText(page, PROJECT_COPY.statusShooting)).toBeVisible();
+  await expect(visibleText(page, PROJECT_COPY.lockedDescription)).toBeVisible();
+
+  await page.getByRole("button", { name: PROJECT_COPY.stepFinish }).click();
+  await expect(visibleText(page, PROJECT_COPY.toastFinishedTitle)).toBeVisible();
+  await expect(visibleText(page, PROJECT_COPY.statusPostProcessing)).toBeVisible();
+  await expect(page.getByRole("button", { name: PROJECT_COPY.stepFinish })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: PROJECT_COPY.stepStart })).toHaveCount(0);
 });
 
 test("AC-PRJ-029 saves a draft without a session", async ({ page }) => {
@@ -125,5 +148,11 @@ test("AC-PRJ-029 saves a draft without a session", async ({ page }) => {
   await pickClientAndService(page);
   await page.getByRole("button", { name: PROJECT_COPY.saveDraft }).click();
   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=draft-saved$/);
-  await expect(page.getByText(PROJECT_COPY.toastDraftSavedTitle)).toBeVisible();
+  await expect(visibleText(page, PROJECT_COPY.toastDraftSavedTitle)).toBeVisible();
+  await expect(visibleText(page, PROJECT_COPY.statusDraft)).toBeVisible();
+  await expect(visibleText(page, PROJECT_COPY.scheduleEmptyTitle)).toBeVisible();
+
+  await page.getByRole("button", { name: PROJECT_COPY.stepConfirm }).click();
+  await expect(visibleText(page, PROJECT_COPY.toastSessionRequiredTitle)).toBeVisible();
+  await expect(visibleText(page, PROJECT_COPY.statusDraft)).toBeVisible();
 });

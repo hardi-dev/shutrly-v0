@@ -3,6 +3,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const logger = { error: vi.fn(), info: vi.fn(), warn: vi.fn() };
 const addTeamRole = vi.fn();
 const deleteTeamRole = vi.fn();
+const addTeamMember = vi.fn();
+const updateTeamMember = vi.fn();
 const notFound = vi.fn(() => {
   throw new Error("NEXT_NOT_FOUND");
 });
@@ -15,6 +17,12 @@ vi.mock("@/features/booking/application/use-cases/add-team-role/add-team-role", 
 vi.mock("@/features/booking/application/use-cases/delete-team-role/delete-team-role", () => ({
   deleteTeamRole,
 }));
+vi.mock("@/features/booking/application/use-cases/add-team-member/add-team-member", () => ({
+  addTeamMember,
+}));
+vi.mock("@/features/booking/application/use-cases/update-team-member/update-team-member", () => ({
+  updateTeamMember,
+}));
 vi.mock("../../auth/owner-guard/owner-guard", () => ({
   requireOwnerOrRedirect: vi.fn().mockResolvedValue({ id: "owner" }),
 }));
@@ -22,11 +30,17 @@ vi.mock("../../workspace/owner-workspace/owner-workspace", () => ({
   verifyOwnerWorkspace: vi.fn().mockResolvedValue({ context: { workspaceId: "ws-1" } }),
 }));
 vi.mock("../team-scope/team-scope", () => ({
-  withTeamScope: (work: (scope: unknown) => Promise<unknown>) => work({ roles: {} }),
+  withTeamScope: (work: (scope: unknown) => Promise<unknown>) => work({ roles: {}, members: {} }),
 }));
 
 const { TeamError } = await import("@/features/booking/application/errors/team-errors/team-errors");
-const { addWorkspaceTeamRole, deleteWorkspaceTeamRole } = await import("./team-flow");
+const {
+  addWorkspaceTeamMember,
+  addWorkspaceTeamRole,
+  deleteWorkspaceTeamRole,
+  loadMoreTeamMembers,
+  updateWorkspaceTeamMember,
+} = await import("./team-flow");
 
 describe("team-flow", () => {
   beforeEach(() => {
@@ -55,5 +69,34 @@ describe("team-flow", () => {
       operation: "add-role",
     });
     expect(JSON.stringify(logger.error.mock.calls)).not.toContain("Rahasia");
+  });
+
+  it("AC-TEAM-022 treats a malformed member ID as not found without touching the database", async () => {
+    await expect(updateWorkspaceTeamMember("ws-1", "nope", {})).rejects.toThrow("NEXT_NOT_FOUND");
+    expect(updateTeamMember).not.toHaveBeenCalled();
+  });
+
+  it("AC-TEAM-022 treats a foreign role in a member body as not found", async () => {
+    addTeamMember.mockRejectedValue(new TeamError("NOT_FOUND"));
+    await expect(addWorkspaceTeamMember("ws-1", {})).rejects.toThrow("NEXT_NOT_FOUND");
+  });
+
+  it("AC-TEAM-003 treats a malformed load-more query as not found", async () => {
+    await expect(loadMoreTeamMembers("ws-1", { status: "OTHER" })).rejects.toThrow(
+      "NEXT_NOT_FOUND",
+    );
+  });
+
+  it("AC-TEAM-023 C-103 logs no member data when a member write fails", async () => {
+    addTeamMember.mockRejectedValue(new Error("database unavailable"));
+    await expect(
+      addWorkspaceTeamMember("ws-1", { name: "Rina", whatsappNumber: "0812", email: "r@x.id" }),
+    ).rejects.toMatchObject({ code: "SAVE_FAILED" });
+    expect(logger.error).toHaveBeenCalledWith("team.save_failed", {
+      workspaceId: "ws-1",
+      operation: "add-member",
+    });
+    const logged = JSON.stringify(logger.error.mock.calls);
+    for (const secret of ["Rina", "0812", "r@x.id"]) expect(logged).not.toContain(secret);
   });
 });

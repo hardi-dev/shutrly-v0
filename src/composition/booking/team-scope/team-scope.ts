@@ -1,5 +1,6 @@
 import "server-only";
 
+import { createDrizzleTeamMemberRepository } from "@/adapters/db/team-repository/drizzle-team-member-repository";
 import { createDrizzleTeamRoleRepository } from "@/adapters/db/team-repository/drizzle-team-role-repository";
 
 import { withRequestDb } from "../../request-db/request-db";
@@ -11,5 +12,10 @@ import type { TeamScope } from "./team-scope.types";
  * @returns the work result
  */
 export function withTeamScope<T>(work: (scope: TeamScope) => Promise<T>): Promise<T> {
-  return withRequestDb((db) => work({ roles: createDrizzleTeamRoleRepository(db) }));
+  return withRequestDb((db) =>
+    work({
+      roles: createDrizzleTeamRoleRepository(db),
+      members: createDrizzleTeamMemberRepository(db),
+    }),
+  );
 }

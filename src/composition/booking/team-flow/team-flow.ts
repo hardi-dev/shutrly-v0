@@ -3,17 +3,28 @@ import "server-only";
 import { notFound } from "next/navigation";
 
 import { TeamError } from "@/features/booking/application/errors/team-errors/team-errors";
-import { teamRoleIdSchema } from "@/features/booking/application/schemas/team-ids/team-ids.schema";
+import {
+  teamMemberIdSchema,
+  teamRoleIdSchema,
+} from "@/features/booking/application/schemas/team-ids/team-ids.schema";
+import { teamMemberListQuerySchema } from "@/features/booking/application/schemas/team-member-list-query/team-member-list-query.schema";
+import { addTeamMember } from "@/features/booking/application/use-cases/add-team-member/add-team-member";
 import { addTeamRole } from "@/features/booking/application/use-cases/add-team-role/add-team-role";
+import { countTeamMembers } from "@/features/booking/application/use-cases/count-team-members/count-team-members";
 import { deleteTeamRole } from "@/features/booking/application/use-cases/delete-team-role/delete-team-role";
+import { listTeamMembers } from "@/features/booking/application/use-cases/list-team-members/list-team-members";
 import { listTeamRoles } from "@/features/booking/application/use-cases/list-team-roles/list-team-roles";
 import { renameTeamRole } from "@/features/booking/application/use-cases/rename-team-role/rename-team-role";
+import { updateTeamMember } from "@/features/booking/application/use-cases/update-team-member/update-team-member";
+import { clientSearchSchema } from "@/features/booking/domain/client-search/client-search.schema";
+import type { TeamMemberStatus } from "@/features/booking/domain/team-member/team-member.types";
 import { DomainError } from "@/shared/errors/domain-error";
 import { logger } from "@/shared/logging/logger";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
 import { verifyOwnerWorkspace } from "../../workspace/owner-workspace/owner-workspace";
 import { withTeamScope } from "../team-scope/team-scope";
+import type { TeamMembersData } from "./team-flow.types";
 
 function saveError(error: unknown, workspaceId: string, operation: string): never {
   if (error instanceof TeamError && error.code === "NOT_FOUND") notFound();
@@ -23,6 +34,12 @@ function saveError(error: unknown, workspaceId: string, operation: string): neve
 
 function idOrNotFound(rawId: string): string {
   const parsed = teamRoleIdSchema.safeParse(rawId);
+  if (!parsed.success) notFound();
+  return parsed.data;
+}
+
+function memberIdOrNotFound(rawId: string): string {
+  const parsed = teamMemberIdSchema.safeParse(rawId);
   if (!parsed.success) notFound();
   return parsed.data;
 }
@@ -97,5 +114,93 @@ export async function deleteWorkspaceTeamRole(rawWorkspaceId: string, rawRoleId:
     return await withTeamScope(({ roles }) => deleteTeamRole(roles, verified.context, roleId));
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "delete-role");
+  }
+}
+
+/**
+ * Loads the first page of a member tab with its count and the workspace roles for the member form.
+ * @param rawWorkspaceId - the untrusted route workspace ID
+ * @param status - the tab: active or archived
+ * @param rawQ - the untrusted `?q=` search text
+ * @returns the page, the tab count, the accepted search text and the roles
+ */
+export async function loadTeamMembers(
+  rawWorkspaceId: string,
+  status: TeamMemberStatus,
+  rawQ = "",
+): Promise<TeamMembersData> {
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const q = clientSearchSchema.safeParse(rawQ).success ? rawQ : "";
+  try {
+    return await withTeamScope(async ({ members, roles }) => ({
+      status,
+      q,
+      page: await listTeamMembers(members, verified.context, { status, q, afterId: null }),
+      count: await countTeamMembers(members, verified.context, status),
+      roles: await listTeamRoles(roles, verified.context),
+    }));
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "list-members");
+  }
+}
+
+/**
+ * Loads the next page of a member tab.
+ * @param rawWorkspaceId - the untrusted route workspace ID
+ * @param rawQuery - the untrusted `{ status, q, afterId }`
+ * @returns the next page and its cursor
+ */
+export async function loadMoreTeamMembers(rawWorkspaceId: string, rawQuery: unknown) {
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const parsed = teamMemberListQuerySchema.safeParse(rawQuery);
+  if (!parsed.success) notFound();
+  try {
+    return await withTeamScope(({ members }) =>
+      listTeamMembers(members, verified.context, parsed.data),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "list-members");
+  }
+}
+
+/**
+ * Adds a member with its roles.
+ * @param rawWorkspaceId - the untrusted route workspace ID
+ * @param values - the untrusted member form values
+ * @returns the created member or the field errors
+ */
+export async function addWorkspaceTeamMember(rawWorkspaceId: string, values: unknown) {
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withTeamScope(({ members }) =>
+      addTeamMember(members, verified.context, account.id, values),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "add-member");
+  }
+}
+
+/**
+ * Saves a member's fields and roles.
+ * @param rawWorkspaceId - the untrusted route workspace ID
+ * @param rawMemberId - the untrusted member ID
+ * @param values - the untrusted member form values
+ * @returns success or the field errors
+ */
+export async function updateWorkspaceTeamMember(
+  rawWorkspaceId: string,
+  rawMemberId: string,
+  values: unknown,
+) {
+  const memberId = memberIdOrNotFound(rawMemberId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withTeamScope(({ members }) =>
+      updateTeamMember(members, verified.context, account.id, memberId, values),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "update-member");
   }
 }

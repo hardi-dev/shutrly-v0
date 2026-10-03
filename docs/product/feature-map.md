@@ -12,8 +12,8 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-03 | Message templates | `message-templates` | BR-MSG-001..006 | — | DONE (2026-10-01) |
 | F-04 | Source configuration: Owner-managed photo sources (Google Drive in MVP, other providers coming soon), seeded *Google Drive*, setup guide and public-link warning; nav *Sumber foto* (Owner 2026-10-01) | `source-config` | BR-SRC-001..006 | — | DONE (merged to `main` 2026-10-02, PR #1; verify pending) |
 | F-05 | Service catalog (categories, item definitions, services, items, booking fields); *Layanan* with tabs, four seeded item definitions (Owner 2026-10-02) | `catalog` | BR-CAT-001..011 | J-02 | DONE (merged to `main` 2026-10-02, PR #3; verify pending) |
-| F-06 | Clients: name, WhatsApp number (normalized, unique per workspace), social-media links; search, archive, delete while unused (Owner 2026-10-02) | `clients` | BR-CLI-001..003, BR-WS-002 | J-03 | PLANNED (2026-10-02) |
-| F-07 | Project creation from service + snapshots | `projects` | BR-PRJ-*, BR-CAT-003 | J-03 | PLANNED (2026-10-02) |
+| F-06 | Clients: name, WhatsApp number (normalized, unique per workspace), social-media links; search, archive, delete while unused (Owner 2026-10-02) | `clients` | BR-CLI-001..003, BR-WS-002 | J-03 | DONE (2026-10-03) |
+| F-07 | Project creation from service + snapshots | `projects` | BR-PRJ-*, BR-CAT-003 | J-03 | DONE (2026-10-04; Owner accepted, fidelity pass and keyboard-only a11y tests remain as follow-ups) |
 | F-08 | Team: members (WhatsApp, email, roles), workspace roles, who works which session (*Atur tim*); no fees, no stored session status (sessions themselves moved to F-07, Owner 2026-10-02; scope Owner 2026-10-03) | `team-sessions` | BR-TEAM-001..006 | J-03 | DESIGNED (2026-10-03) |
 | F-09 | Gallery, sources, Drive sync | `gallery` | BR-GAL-*, BR-SRC-* | J-04 | TODO |
 | F-10 | Client gallery access (token, password, rate limits, media delivery) | `client-access` | BR-ACC-* | J-04 | TODO |
@@ -67,3 +67,5 @@ New rules BR-PRJ-008..010; BR-PRJ-004's gap is resolved and BR-DEL-003 updated. 
 - F-17 App Shell revamp (DONE 2026-10-01, [design.md](../features/app-shell-revamp/design.md)): `/sdv:verify-feature app-shell-revamp`.
 
 **Before the first `/sdv:ship`:** schedule CI (GitHub Actions) and the Cloudflare deploy.
+
+**F-06 Clients** — DONE 2026-10-03 ([spec.md](../features/clients/spec.md), AC-CLI-001…021). The client domain, migration 0008, repository/actions/routes, responsive list and dialog UI, lifecycle actions, search/paging, browser journeys and accessibility coverage are implemented on `codex/clients` and merged to `main`. The Owner accepted it as done after a browser review and the full unit/E2E/axe gate; integration tests were skipped by the Owner and AC-CLI-015's real-FK check stays with F-07. See the [implementation record](../features/clients/technical-design.md#implementation-record--2026-10-03).

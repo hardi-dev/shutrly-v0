@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv verify-feature"
+  short_description: "Cross-check a feature's implementation against constitution, rules, spec, UML, and Pencil design"
+policy:
+  allow_implicit_invocation: false

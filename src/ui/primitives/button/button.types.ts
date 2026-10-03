@@ -15,6 +15,9 @@ export type ButtonIconName = Extract<
   | "pencil"
   | "archive"
   | "archive-restore"
+  | "calendar-check"
+  | "camera"
+  | "circle-check-big"
 >;
 
 export interface ButtonIconProps {
@@ -29,6 +32,7 @@ export interface ButtonProps {
   isDisabled?: boolean;
   isPending?: boolean;
   form?: string;
+  id?: string;
   onPress?: () => void;
   className?: string;
   "aria-label"?: string;

@@ -39,6 +39,7 @@
     "@hookform/resolvers": "5.9.1",
     "@hugeicons/core-free-icons": "4.3.5",
     "@hugeicons/react": "1.1.10",
+    "@internationalized/date": "3.12.4",
     "@neondatabase/serverless": "1.1.0",
     "@opennextjs/cloudflare": "1.20.6",
     "@react-aria/toast": "3.0.8",

@@ -9,6 +9,7 @@ import { useLayoutChange } from "@/ui/hooks/use-layout-change/use-layout-change"
 import { AppPanel, PageContent } from "../app-panel/app-panel";
 import { BottomNav } from "../bottom-nav/bottom-nav";
 import { CompactBar } from "../compact-bar/compact-bar";
+import { COMPACT_BAR_ACTIONS_ID } from "../compact-bar/compact-bar-actions";
 import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
 import { Sidebar } from "../sidebar/sidebar";
 import { APP_SHELL_COPY } from "./app-shell.copy";
@@ -21,6 +22,7 @@ import { readCollapsed, writeCollapsed } from "./sidebar-collapse-preference";
 export function AppShell({
   title,
   subtitle,
+  mobileSubtitle,
   workspace,
   account,
   onLogout,
@@ -28,6 +30,8 @@ export function AppShell({
   nav,
   navBottom,
   panelActions,
+  panelTitleAdornment,
+  panelMeta,
   panelUtilities,
   panelTabs,
   panelBreadcrumbs,
@@ -105,6 +109,8 @@ export function AppShell({
         subtitle={subtitle}
         parent={subPage?.parent.label ?? workspace.name}
         panelActions={panelActions}
+        panelTitleAdornment={panelTitleAdornment}
+        panelMeta={panelMeta}
         panelUtilities={panelUtilities}
         panelTabs={panelTabs}
         panelBreadcrumbs={panelBreadcrumbs}
@@ -114,13 +120,25 @@ export function AppShell({
       <MobileContent
         title={title}
         subtitle={subtitle}
+        mobileSubtitle={mobileSubtitle}
         mobileBottomNav={mobileBottomNav}
+        isMobileBottomNavHidden={subPage?.hidesBottomNav}
         isMobileOverlayOpen={isMobileOverlayOpen}
         mobileSheet={mobileSheet}
         workspaceName={workspace.name}
         mobileUtilities={mobileUtilities}
         onMobileWorkspacePress={onMobileWorkspacePress}
-        header={subPage ? <CompactBar title={title} parent={subPage.parent} /> : undefined}
+        header={
+          subPage ? (
+            <CompactBar
+              title={title}
+              parent={subPage.parent}
+              actions={
+                <div id={COMPACT_BAR_ACTIONS_ID} className="flex items-center gap-(--space-2)" />
+              }
+            />
+          ) : undefined
+        }
       >
         {children}
       </MobileContent>
@@ -227,6 +245,8 @@ function DesktopContent({
   subtitle,
   parent,
   panelActions,
+  panelTitleAdornment,
+  panelMeta,
   panelUtilities,
   panelTabs,
   panelBreadcrumbs,
@@ -237,6 +257,8 @@ function DesktopContent({
   subtitle: AppShellProps["subtitle"];
   parent: string;
   panelActions: AppShellProps["panelActions"];
+  panelTitleAdornment: AppShellProps["panelTitleAdornment"];
+  panelMeta: AppShellProps["panelMeta"];
   panelUtilities: AppShellProps["panelUtilities"];
   panelTabs: AppShellProps["panelTabs"];
   panelBreadcrumbs: AppShellProps["panelBreadcrumbs"];
@@ -250,6 +272,8 @@ function DesktopContent({
         subtitle={subtitle}
         parent={parent}
         actions={panelActions}
+        titleAdornment={panelTitleAdornment}
+        meta={panelMeta}
         utilities={panelUtilities}
         tabs={panelTabs}
         breadcrumbs={panelBreadcrumbs}
@@ -263,8 +287,10 @@ function DesktopContent({
 function MobileContent({
   title,
   subtitle,
+  mobileSubtitle,
   children,
   mobileBottomNav,
+  isMobileBottomNavHidden,
   isMobileOverlayOpen,
   mobileSheet,
   workspaceName,
@@ -276,20 +302,21 @@ function MobileContent({
     AppShellProps,
     | "title"
     | "subtitle"
+    | "mobileSubtitle"
     | "children"
     | "mobileBottomNav"
     | "isMobileOverlayOpen"
     | "mobileSheet"
     | "mobileUtilities"
     | "onMobileWorkspacePress"
-  > & { workspaceName: string; header?: ReactNode }
+  > & { workspaceName: string; header?: ReactNode; isMobileBottomNavHidden?: boolean }
 >) {
   return (
     <div className="flex min-w-0 flex-1 md:hidden">
       <MobileAppShell
         title={title}
-        subtitle={subtitle}
-        bottomNav={<BottomNavFromProps {...mobileBottomNav} />}
+        subtitle={mobileSubtitle ?? subtitle}
+        bottomNav={isMobileBottomNavHidden ? null : <BottomNavFromProps {...mobileBottomNav} />}
         isOverlayOpen={isMobileOverlayOpen}
         sheet={mobileSheet}
         workspace={workspaceName}

@@ -22,6 +22,7 @@ const INPUT = [
   "text-(length:--font-size-body) text-(--component-input-text)",
   "placeholder:text-(--component-input-placeholder)",
   "outline-none transition-colors",
+  "[&::-webkit-search-cancel-button]:appearance-none",
   "data-hovered:border-(--component-input-border-hover)",
   "data-focused:border-(--component-input-border-focus)",
   "data-focused:shadow-[inset_0_0_0_1px_var(--component-input-border-focus),0_0_0_4px_var(--color-semantic-focus-glow)]",
@@ -150,6 +151,7 @@ function InputAdornment({
       {iconLeading || prefix ? (
         <span
           data-testid="input-adornment-leading"
+          aria-disabled={isDisabled ? "true" : undefined}
           className="pointer-events-none absolute inset-y-0 left-(--component-input-padding-x) flex items-center gap-(--space-1) text-(--component-input-placeholder)"
         >
           {iconLeading ? (

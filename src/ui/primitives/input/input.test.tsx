@@ -19,6 +19,14 @@ describe("Input", () => {
     expect(screen.getByText("⌘K")).toBeInTheDocument();
   });
 
+  it("hides the browser's native search clear button so only the designed x shows", () => {
+    render(<Input aria-label="Search" variant="search" />);
+
+    expect(screen.getByLabelText("Search")).toHaveClass(
+      "[&::-webkit-search-cancel-button]:appearance-none",
+    );
+  });
+
   it("supports filled, prefix and trailing icon configurations", () => {
     render(
       <Input
@@ -100,5 +108,10 @@ describe("Input", () => {
     expect(screen.getByLabelText("Disabled name")).toHaveClass(
       "data-disabled:text-(--component-input-text-disabled)",
     );
+  });
+
+  it("marks the prefix of a disabled input as disabled so contrast checks skip it", () => {
+    render(<Input aria-label="Harga" prefix="Rp" isDisabled value="1" onChange={vi.fn()} />);
+    expect(screen.getByTestId("input-adornment-leading")).toHaveAttribute("aria-disabled", "true");
   });
 });

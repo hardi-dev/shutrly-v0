@@ -7,11 +7,14 @@ import type { SidebarAccount, SidebarWorkspace } from "../sidebar/sidebar.types"
 
 export interface AppShellSubPage {
   parent: CompactBarProps["parent"];
+  /** Hides the phone Bottom Nav, e.g. when a sticky action bar takes its place. */
+  hidesBottomNav?: boolean;
 }
 
 export interface AppShellProps {
   title: string;
   subtitle?: string;
+  mobileSubtitle?: string;
   workspace: SidebarWorkspace;
   account: SidebarAccount;
   onLogout?: () => void;
@@ -19,6 +22,8 @@ export interface AppShellProps {
   nav: ReactNode;
   navBottom?: ReactNode;
   panelActions?: ReactNode;
+  panelTitleAdornment?: ReactNode;
+  panelMeta?: string;
   panelUtilities?: ReactNode;
   panelTabs?: NonNullable<PageHeaderProps["tabs"]>;
   panelBreadcrumbs?: NonNullable<PageHeaderProps["breadcrumbs"]>;

@@ -3,7 +3,8 @@ import type { ReactNode } from "react";
 import type { IconName } from "@/ui/primitives/icon/icon.types";
 
 export interface ListCardItemProps {
-  icon: IconName;
+  icon?: IconName;
+  avatarInitials?: string;
   title: string;
   meta: string;
   /** Status Chip and/or a row-actions button. When href is set, actions render beside the link. */

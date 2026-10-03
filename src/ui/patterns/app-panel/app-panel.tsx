@@ -8,6 +8,8 @@ export function AppPanel({
   parent = "Workspace",
   breadcrumbs,
   subtitle,
+  titleAdornment,
+  meta,
   utilities,
   actions,
   tabs,
@@ -26,6 +28,8 @@ export function AppPanel({
         title={title}
         breadcrumbs={breadcrumbs}
         subtitle={subtitle}
+        titleAdornment={titleAdornment}
+        meta={meta}
         utilities={utilities}
         action={actions}
         tabs={tabs}

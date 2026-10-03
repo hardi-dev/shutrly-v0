@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv verify-design-system"
+  short_description: "Verify token structure, Pencil mappings, themes, library canvas, rules, components, consumers, and visual design-system drift"
+policy:
+  allow_implicit_invocation: false

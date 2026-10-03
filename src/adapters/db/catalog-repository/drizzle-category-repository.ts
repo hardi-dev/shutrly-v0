@@ -10,10 +10,9 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import type { DbExecutor } from "../client/client.types";
 import { service, serviceCategory } from "../schema/booking/catalog";
-import { pgCode } from "./pg-error";
+import { isReferencedRowError, pgCode } from "./pg-error";
 
 const DUPLICATE_KEY = "23505";
-const FOREIGN_KEY_KEY = "23503";
 
 // eslint-disable-next-line max-lines-per-function -- exposes the complete category repository port
 export function createDrizzleCategoryRepository(db: DbExecutor): CategoryRepositoryPort {
@@ -99,7 +98,7 @@ export function createDrizzleCategoryRepository(db: DbExecutor): CategoryReposit
           .returning({ id: serviceCategory.id });
         return rows.length > 0 ? "DELETED" : "NOT_FOUND";
       } catch (error) {
-        if (pgCode(error) === FOREIGN_KEY_KEY) return "IN_USE";
+        if (isReferencedRowError(error)) return "IN_USE";
         throw error;
       }
     },

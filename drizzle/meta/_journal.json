@@ -57,6 +57,20 @@
       "when": 1790911627687,
       "tag": "0007_item_definition_backfill",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1790973507759,
+      "tag": "0008_client",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1791013603101,
+      "tag": "0009_project",
+      "breakpoints": true
     }
   ]
 }

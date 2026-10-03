@@ -1,0 +1,31 @@
+--- base
++++ state
+@@ -1,5 +1,5 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Proyek / Detail / Dibooking / Desktop"
++      data-pencil-name="Proyek / Detail / Status pending / Desktop"
+       class="box-border w-[1440px] h-[1152px] flex flex-row gap-0 p-[12px_12px_12px_0px] justify-start items-start bg-[#E4E4E7] overflow-hidden"
+     >
+@@ -482,9 +482,9 @@
+ <div
+                 data-pencil-name="Status step"
+-                class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#2F5BFF] rounded-[999px]"
+-              >
+-<svg
+-                  data-pencil-name="Icon leading"
+-                  data-icon-name="camera"
++                class="box-border w-fit shrink-0 h-fit opacity-[0.4] flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#2F5BFF] rounded-[999px]"
++              >
++<svg
++                  data-pencil-name="Pending indicator"
++                  data-icon-name="loader-circle"
+                   data-icon-set="lucide"
+                   viewBox="0 0 13.99993896484375 14"
+@@ -498,5 +498,5 @@
+                   class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                 >
+-                  Mulai pemotretan
++                  Mulai pemotretan…
+                 </div>
+ </div>

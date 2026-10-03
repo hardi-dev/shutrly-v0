@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChangeEvent, ReactNode } from "react";
+import { type ChangeEvent, type ReactNode, useId } from "react";
 import {
   FieldError,
   Label,
@@ -12,7 +12,11 @@ import {
 import { cn } from "@/ui/cn/cn";
 
 import { TEXTAREA_COPY } from "./textarea.copy";
-import type { TextareaProps } from "./textarea.types";
+import type {
+  TextareaDescriptionProps,
+  TextareaFooterProps,
+  TextareaProps,
+} from "./textarea.types";
 
 const TEXTAREA = [
   "min-h-(--component-textarea-min-height) w-full resize-y rounded-(--component-input-radius)",
@@ -32,13 +36,24 @@ function TextareaFooter({
   errorMessage,
   helperText,
   trailingMeta,
-}: Readonly<Pick<TextareaProps, "errorMessage" | "helperText" | "trailingMeta">>): ReactNode {
+  errorMessageId,
+}: Readonly<TextareaFooterProps>): ReactNode {
   if (!trailingMeta) {
-    return <TextareaDescription errorMessage={errorMessage} helperText={helperText} />;
+    return (
+      <TextareaDescription
+        errorMessage={errorMessage}
+        helperText={helperText}
+        errorMessageId={errorMessageId}
+      />
+    );
   }
   return (
     <div className="flex items-start justify-between gap-(--space-3)">
-      <TextareaDescription errorMessage={errorMessage} helperText={helperText} />
+      <TextareaDescription
+        errorMessage={errorMessage}
+        helperText={helperText}
+        errorMessageId={errorMessageId}
+      />
       <span className="ml-auto shrink-0 text-(length:--font-size-label) text-(--component-input-helper)">
         {trailingMeta}
       </span>
@@ -49,10 +64,14 @@ function TextareaFooter({
 function TextareaDescription({
   errorMessage,
   helperText,
-}: Readonly<Pick<TextareaProps, "errorMessage" | "helperText">>): ReactNode {
+  errorMessageId,
+}: Readonly<TextareaDescriptionProps>): ReactNode {
   if (errorMessage) {
     return (
-      <FieldError className="text-(length:--font-size-label) text-(--component-input-error-text)">
+      <FieldError
+        id={errorMessageId}
+        className="text-(length:--font-size-label) text-(--component-input-error-text)"
+      >
         {errorMessage}
       </FieldError>
     );
@@ -70,18 +89,10 @@ function TextareaDescription({
   return null;
 }
 
-function TextareaLabel({
-  label,
-  optional,
-  isLabelHidden,
-}: Readonly<Pick<TextareaProps, "label" | "optional" | "isLabelHidden">>) {
+function TextareaLabel({ label, optional }: Readonly<Pick<TextareaProps, "label" | "optional">>) {
+  if (!label) return null;
   return (
-    <Label
-      className={cn(
-        "text-(length:--font-size-label) text-(--component-input-label)",
-        isLabelHidden && "sr-only",
-      )}
-    >
+    <Label className="text-(length:--font-size-label) text-(--component-input-label)">
       {label}
       {optional ? (
         <span className="ml-(--space-1) text-(--component-input-helper)">
@@ -98,6 +109,7 @@ function TextareaLabel({
  */
 export function Textarea({
   label,
+  "aria-label": ariaLabel,
   optional = false,
   helperText,
   errorMessage,
@@ -108,21 +120,23 @@ export function Textarea({
   isReadOnly,
   value,
   defaultValue,
-  isLabelHidden = false,
   rows = 3,
   trailingMeta,
   ...props
 }: Readonly<TextareaProps>) {
+  const errorMessageId = useId();
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => onChange?.(event.target.value);
   return (
     <TextField
+      aria-label={ariaLabel}
+      aria-errormessage={errorMessage ? errorMessageId : undefined}
       isInvalid={Boolean(errorMessage)}
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
       defaultValue={value === undefined ? defaultValue : undefined}
       className={cn("flex w-full flex-col gap-(--component-input-gap)", className)}
     >
-      <TextareaLabel label={label} optional={optional} isLabelHidden={isLabelHidden} />
+      <TextareaLabel label={label} optional={optional} />
       <AriaTextArea
         {...props}
         ref={textareaRef}
@@ -137,6 +151,7 @@ export function Textarea({
         errorMessage={errorMessage}
         helperText={helperText}
         trailingMeta={trailingMeta}
+        errorMessageId={errorMessageId}
       />
     </TextField>
   );

@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv build-feature"
+  short_description: "Implement exactly one planned iteration of a feature, with tests and a deviation report"
+policy:
+  allow_implicit_invocation: false

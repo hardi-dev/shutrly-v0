@@ -1,6 +1,6 @@
 # Technical Design — F-07 Projects
 
-Status: PLANNED (2026-10-02) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
+Status: DONE (2026-10-04; Owner accepted with 8.2 partial and 8.3 not run, see open follow-ups) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
 
 ## Context
 
@@ -367,3 +367,131 @@ See [plan.md](plan.md): vertical slices by screen (Slice 0–8), test-first, one
 - **Date and time pickers** are new shared components (D-12). Their keyboard behaviour comes from React Aria and is checked by axe in Slice 8.
 - **List SQL complexity (D-8):** the `LATERAL` shown-session expression is shared by the order and the cursor and covered by integration tests with a fixed `today`. If it gets slow, add a partial index on `project_session (project_id, session_date)`, which already exists.
 - **D-5 reading of AC-PRJ-008:** a row exists for an empty optional field (value NULL). Reported here for the Owner. It doesn't change behaviour visible in the spec.
+
+## Implementation record — Slice 1 (2026-10-03)
+
+**Scope built:** Slice 0 (base check, merge of `main`, component inventory) and Slice 1 (*Proyek baru*, main path). Commits: `dff27f5` (merge), `3367cb3`, `8cf1388`, `bf0b518`, `21c261c`, `03a8b56`, `32cb537`.
+
+**Migration:** `0009_project` was generated, reviewed (four `CREATE TABLE`, no `DROP` or `RENAME`), committed and then applied to the shared non-production database with `pnpm db:migrate` (`migrations applied successfully!`).
+
+**Checks:**
+
+| Check | Result |
+|---|---|
+| `pnpm typecheck` | pass |
+| `pnpm lint` | pass (0 errors; 3 warnings in F-06/F-17 files this slice did not touch) |
+| `pnpm test` | pass (275 files, 918 tests) |
+| `pnpm test:integration tests/integration/booking` | pass (3 files, 16 tests); the other integration suites were not run |
+| `pnpm build` | pass |
+| E2E `tests/e2e/projects` + `app-shell-revamp` | pass (projects journeys include axe on the form) |
+
+**AC → test (Slice 1):** AC-PRJ-006 (`create-project`, `load-create-options`, `search-active-clients`, `service-picker`, `client-picker`, E2E) · 007 (`create-project-screen`, `project-record`, shell test) · 008 (`project-repository` integration, `create-project`, E2E) · 009 (draft half: `create-project`, `create-project-screen`, E2E) · 010/011 (`create-project`, `project-record`, `create-project-screen`) · 012 (`project-repository` integration, `create-project`) · 024 (`project-repository` integration) · 029 (`session`, `sessions-card`, `create-project`).
+
+**Deviations and decisions:**
+
+1. **`@internationalized/date` was added by hand.** `pnpm add` refuses to run here (the `node_modules` store differs from the configured store). I edited `package.json` and `pnpm-lock.yaml` (importer entry, `3.12.4`, the version already resolved through `react-aria-components`) and linked the package into `node_modules`. **Owner action:** run `pnpm install` once and confirm the lockfile does not change.
+2. **A restrict violation is now "in use" (bug found by AC-PRJ-024).** `ON DELETE RESTRICT` raises `23001`, not `23503`. The client, service, category and definition deletes only recognised `23503`, so deleting a referenced row would have thrown instead of returning `IN_USE`. `isReferencedRowError` in `catalog-repository/pg-error.ts` accepts both. This also closes F-06's carry-over *AC-CLI-015 real foreign-key check*.
+3. **Items and the client picker are read-only in this slice (as planned).** *Tambah item*, the item ⋯ and the *Tambah klien baru* row appear in the exports but arrive in Slice 7. The picker's create row is hidden until `onCreate` is wired.
+4. **The phone Bottom Nav is hidden on *Proyek baru*.** The exports show a Compact Bar and a sticky action bar and no Bottom Nav, but the plan's Backend table had no shell change for it. `PageHeadingOverride` takes `hidesBottomNav`, passed through `OwnerShell` and `AppShell` (`AppShellSubPage.hidesBottomNav`). The phone CTA E2E in `app-shell-revamp` changed to match (the Bottom Nav *Proyek* tab is hidden on this page, and notifications are opened from the dashboard).
+5. **Rows have a leading icon the exports lack.** `ListCardItem` requires exactly one leading icon or avatar (library rule, tested), but the item and session rows in the frames are plain. The rows use `package`/`image` and `calendar`. **Owner decision:** allow plain rows in the library, or redraw the frames.
+6. **Title-only card headers are shorter than the frames** (about 65 px against 99 px) because `SectionCard` has no spare description row. Not changed; it is the library unit.
+7. **`validateItemList` returns `{ values, errors }`**, not only the errors, so the use case stores the canonical values (`2,5` → `2.5`). The plan's signature returned the errors only.
+8. **Combobox:** `allowsCustomValue` makes Escape close the menu and keep the query (React Aria otherwise clears it and reopens the menu); `allowsEmptyCollection` keeps the menu open for the *TIDAK ADA KLIEN “…”* state. The create row is hidden for a blank query.
+9. **Placeholder copy:** a choice or yes/no booking field reads *Pilih {field in lower case}* (for example *Pilih ukuran toga*); the frame draws *Pilih ukuran*. The plan gives the rule, the frame one example.
+10. **Not unit-tested:** clearing a time segment (jsdom does not deliver the key events React Aria listens to); the arrow keys and the displayed `07.30` are.
+
+**Visual check:** the filled form was compared with `new-terisi-desktop-QeT50` at 1440, and the empty and filled forms with the phone exports at 390. Layout, copy, Compact Bar, sticky bar and the *Wisuda* group label match apart from deviations 3, 5 and 6. The check used a service without items and booking fields, so the item rows and the *Field booking* card were checked by their tests rather than by eye.
+
+## Implementation record — Slice 2 (2026-10-03)
+
+**Scope built:** the project detail page (S3) read-only with the three status steps. Commits: `47d643f` (manual-test fixes to Slice 1), `46cf832` (backend), `4978da9` (screen), and the E2E commit after them.
+
+**Manual-test fixes to Slice 1 (`47d643f`):** the Owner tried the form in the browser and reported four problems. The calendar popover opened at the top-left (the trigger was not wrapped in a React Aria `Group`, so it had no anchor); the client picker and the calendar were not bottom sheets on phones (`Combobox` and `DateField` now switch on `useMobileViewport`, like `Select`); and *Buat proyek* ran off the right edge on a 375 px phone (the footer buttons now shrink). Phone-mode tests were added for the combobox sheet and the calendar sheet.
+
+**Checks:**
+
+| Check | Result |
+|---|---|
+| `pnpm typecheck` | pass |
+| `pnpm lint` | pass (0 errors) |
+| `pnpm test` | pass (283 files, 956 tests) |
+| `pnpm test:integration tests/integration/booking` | pass (20 tests); other integration suites were not run |
+| `pnpm build` | pass |
+| E2E `tests/e2e/projects` + `app-shell-revamp` | pass (the projects journeys now run the steps and axe on the detail page) |
+
+**AC → test (Slice 2):** AC-PRJ-009 (`advance-project`, `use-project-actions`, E2E) · 015 (`get-project-detail`, `project-detail-screen`, `project-status-chip`, `project-session-summary`, `booking-value-display`, `page-header`, `page-heading-override`) · 016 (`project-repository` integration: catalog edits after create; `project-detail-screen`: locked and cancelled descriptions) · 018 (`get-project-detail`, `project-session-summary`, `project-detail-screen`) · 020 (`advance-project`, `project-repository` integration: two concurrent steps → `MOVED` + `STALE`, `project-detail-screen`, E2E) · 021 (`advance-project`, `use-project-actions`, `project-repository` integration) · 025 (`get-project-detail`, `advance-project`, `project-repository` integration, including `cancellation.byName`).
+
+**Deviations and decisions:**
+
+1. **The phone Bottom Nav is hidden on the detail page**, as on *Proyek baru*. No phone detail export draws a Bottom Nav, including *Pascaproduksi* where there is no step bar either (`hidesBottomNav`). **Owner to confirm.**
+2. **No ⋯ menu and no edit controls are rendered**, as the plan says (Slices 5 and 6). The phone Compact Bar therefore shows no actions yet, and `CompactBar` is not changed in this slice.
+3. **`PageHeader` / `AppPanel` / `AppShell` gained `titleAdornment` and `meta`**, and `PageHeadingOverride` gained `status` (label, tone, dot) and `meta`. `meta` replaces the subtitle. The phone shows the chip and the session line in the screen's own header block (`ProjectStatusChip`, `ProjectSessionSummaryLine`), without the client.
+4. **Two icons were registered**: `calendar-check` (Hugeicons `CalendarCheck01Icon`) and `circle-check-big` (`CheckmarkCircle02Icon`). `ButtonIconName` also allows `camera`. These are the closest Hugeicons to the Lucide names in the exports.
+5. **`PackageItemsCard` got an optional `description`** instead of a second card; the detail page passes the *Bisa diubah…*, *Terkunci…* or *Proyek dibatalkan…* text. The project items are mapped to the service-item shape it already takes.
+6. **Item, session and field rows keep the leading icon** that `ListCardItem` requires (same as Slice 1 deviation 5). The detail Info and Field booking cards are a plain label/value list (`ProjectFacts`), not a shared pattern, because no existing unit shows facts.
+7. **`SPEC GAP` (low risk, resolved with a default):** a cancelled project whose canceller was deleted has `byName = null`. The alert then reads *Dibatalkan pada {tanggal}.* `// not in Pencil`. The cancel date is shown in `Asia/Jakarta`.
+8. **The step buttons use `Button` with `iconLeading`.** Pending shows the `loading-03` spinner and the *…* label, which is the existing Button pending state (the export's Loading variant).
+9. **`getProjectDetail` takes `today`** from `todayInScheduleZone(new Date())` in `project-flow`, so the shown session is decided on the server.
+10. **Not verified in the browser:** the *Dibatalkan*, *Draf*, *Pemotretan* and *Pascaproduksi* views and the toasts' look (they are covered by tests and the E2E). Only a *Dibooking* project was compared by eye against the exports at 1440 and 390.
+
+## Implementation record — Slices 3–5 (2026-10-03)
+
+**Scope built:** the project list (S1, Slice 3), the filter (S1a, Slice 4) and the ⋯ menu with *Ubah info*, *Batalkan proyek* and *Hapus draf* (S1b, S3a, Slice 5). Commits: `2b49f22`, `43a313b` (list), `931b32a`, `d188ba3`, `dc9aad9` (filter), `911c589`, `c33e983` (menu and dialogs).
+
+**Checks:**
+
+| Check | Result |
+|---|---|
+| `pnpm typecheck` | pass |
+| `pnpm lint` | pass (0 errors) |
+| `pnpm test` | pass (298 files, 1023 tests) |
+| `pnpm test:integration tests/integration/booking` | pass (31 tests, incl. `project-list.test.ts`); other integration suites were not run |
+| `pnpm build` | pass |
+| E2E | **not run.** The Owner asked to run E2E only on the last slice, so steps 3.3 and 5.3 stay open and move to Slice 8 |
+
+**AC → test:** AC-PRJ-001…005 (`project-list` integration, `list-projects`, `projects-screen`, `owner-nav`) · 028 (`project-list-filter`, `project-list` integration, `project-filter-dialog`, `multi-select`, `checkbox`, `icon-button`) · 017/018 (`update-project-info`, `project-repository` integration, `project-info-dialog`) · 022 (`cancel-project`, `project-repository` integration, `project-status-dialogs`) · 023 (`delete-draft`, integration) · 027 (`project-menu`, `project-menu` UI test) · 025 (workspace B cases in every use case and integration).
+
+**Deviations and decisions:**
+
+1. **E2E deferred** (see above).
+2. **`Checkbox` uses React Aria `CheckboxField` + `CheckboxButton`**, because `Checkbox` is deprecated in 1.21. `MultiSelect` is a React Aria `Select` with `selectionMode="multiple"`; on phones it opens a sheet of checkboxes.
+3. **`IconButton` gained `badgeLabel`** (default *belum dibaca*); the filter button passes *aktif*. Icons added: `list-filter`, `circle-x`.
+4. **Filter status ignored outside *Aktif*** and the badge counts four groups, per A-11. The list reads the filter from the URL; *Terapkan* keeps `q`.
+5. **`ProjectRepositoryPort` grew** `listServicesForFilter`, `searchClientsForFilter`, `findFilterClient`, `withLockedProject`; `ClientRepositoryPort` grew `findById` (for *Tambah nomor WhatsApp*).
+6. **Cancel dialog is not a destructive `Modal`**, because the destructive Modal variant renders no body and the reason field is part of the dialog. The confirm button is Danger. The reason label uses the Textarea's own *Opsional* suffix in BOOKED.
+7. **The ⋯ menu opens the dialogs from one host** (`ProjectMenuHost`) used by list rows and the detail page; *Ubah info* from a row loads the project through `loadProjectDetailAction` first.
+8. **Phone detail ⋯** goes into the Compact Bar through the new `CompactBarActions` portal.
+9. **Several new responsive files carry a paired `max-lines-per-function` disable** with a reason (same practice as `clients-screen`).
+10. **Not checked by eye:** the list at 1440 only (the *Aktif* tab with three projects); the filter dialog, menus and cancel/delete dialogs were not compared with their exports.
+
+## Implementation record — Slices 6–8 (2026-10-04)
+
+**Scope built:** deal and session edits on the detail page (Slice 6), the rest of *Proyek baru* (Slice 7: inline client, service guards, package edits, service change) and the close (Slice 8: E2E journeys, gate). Commits: `395cff5`, `e9be56e` (Slice 6); `069d644`, `7994927`, `72de71c`, `8fbe593` (Slice 7); `b01d965` (E2E and the two axe fixes).
+
+**Checks (final):**
+
+| Check | Result |
+|---|---|
+| `pnpm typecheck` | pass |
+| `pnpm lint` | pass (0 errors) |
+| `pnpm test` | pass (302 files, 1066 tests) |
+| `pnpm test:integration` | pass (13 files, 85 tests, all suites) |
+| `pnpm build` | pass |
+| E2E `projects` + `app-shell-revamp` + `clients` | 24 tests: 18 passed, 6 passed on retry (flaky on first try: shell workspace switch, two client specs, three project journeys), 0 failed |
+
+**E2E journeys (all in `tests/e2e/projects/projects.spec.ts`):** create booked and draft (AC-PRJ-006…009, 029) · inline client + package edits + booking (013, 008, 030) · draft → session prompt → confirm (009, 029) · list, search, filter, row menu step (001, 004, 027, 028) · lock, cancel with a reason, delete a draft (018, 020, 022, 023) · another account gets 404 (025) · axe on the list, form and detail at 390 and 1440, light and dark (026).
+
+**Accessibility fixes found by axe:** the *Kirim ke klien* group label sat directly in the menu (`aria-required-children`), now inside a `MenuSection`; the prefix of a disabled input (*Rp*) failed contrast, so the adornment is marked `aria-disabled` when its input is disabled.
+
+**AC → test (Slices 6–7):** AC-PRJ-017/018/019/029 (`edit-project.test.ts`, `project-detail-edit.test.tsx`, `project-repository` integration incl. the step-vs-edit race) · 012 (`create-project-screen.test.tsx`, integration) · 013 (`client-picker.test.tsx`, `add-client.test.ts`, E2E) · 014 (`load-create-options.test.ts`, `create-project-screen.test.tsx`) · 030 (`package-draft.test.ts`, `create-project-package.test.tsx`, `project-repository` integration, E2E).
+
+**Deviations and decisions:**
+
+1. **8.3 fidelity pass was not done.** The 92 exports were not compared one by one at 1440 and 390. Only the list, the *Dibooking* detail and the create form were looked at by eye. **Owner / `/sdv:verify-feature projects` should do this.**
+2. **8.2 accessibility is partial.** Axe runs on the list, filter dialog, detail, open menu, *Ubah info* and the create form (journeys above) and on the list, form and detail on phone and dark. It does not cover every dialog in both themes, and the keyboard-only paths in the plan were not written as tests.
+3. **Package edits in the create form** use client-side validation (`validateItemList`) and the draft stays in form state; the server re-validates on save as before.
+4. **Selection type** of an added item is carried from the active definition (`ActiveDefinition.selectionType`), so the create form previews *pilihan edit* / *pilihan cetak* correctly.
+5. **The picker's list reopens after the inline client dialog closes** (focus returns to the combobox, `menuTrigger="focus"`); the E2E closes it with Escape. Not changed.
+6. **Several responsive files carry a paired `max-lines-per-function` disable** with a reason, as in earlier slices.
+7. **`addClient` now returns the new client** (`{ ok: true, client }`); F-06's callers ignore it, and `ClientRepositoryPort.create` returns the new `id`.
+8. **Open COMPONENT GAPs / follow-ups:** `Checkbox`, `MultiSelect`, `Combobox`, `DateField` and `TimeField` exist in code and stories; their Pencil components still need to be confirmed. The row-icon requirement of `ListCardItem` (Slice 1 deviation 5) is still open.

@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv sync-pencil"
+  short_description: "Synchronize approved repository design tokens with Pencil through MCP"
+policy:
+  allow_implicit_invocation: false

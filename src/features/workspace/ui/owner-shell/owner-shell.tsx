@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { AppShell } from "@/ui/patterns/app-shell/app-shell";
+import type { AppShellSubPage } from "@/ui/patterns/app-shell/app-shell.types";
 import type { BottomNavProps } from "@/ui/patterns/bottom-nav/bottom-nav.types";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { PAGE_ACTIONS_ID } from "@/ui/patterns/page-actions/page-actions";
@@ -14,6 +15,7 @@ import { SidebarBrandLogo } from "@/ui/patterns/sidebar/sidebar";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
+import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { CreateWorkspaceDialog } from "../create-workspace-dialog/create-workspace-dialog";
 import { OwnerNav, OwnerNavBottom, resolvePageHeading } from "../owner-nav/owner-nav";
@@ -63,10 +65,14 @@ export function OwnerShell({
   const [headingOverride, setHeadingOverride] = useState<PageHeadingOverrideValue | null>(null);
   const resolvedHeading = resolvePageHeading(currentPathname, workspaceId, workspaceName);
   const heading = headingOverride ?? subPage ?? resolvedHeading ?? { title };
-  let shellSubPage: { parent: { label: string; href: string } } | undefined;
+  let shellSubPage: AppShellSubPage | undefined;
   let panelBreadcrumbs: readonly BreadcrumbItem[] | undefined;
-  if (headingOverride) shellSubPage = { parent: headingOverride.parent };
-  else if (subPage) shellSubPage = { parent: subPage.parent };
+  if (headingOverride) {
+    shellSubPage = {
+      parent: headingOverride.parent,
+      hidesBottomNav: headingOverride.hidesBottomNav,
+    };
+  } else if (subPage) shellSubPage = { parent: subPage.parent };
   if (headingOverride) {
     panelBreadcrumbs = [headingOverride.parent, { label: headingOverride.title }];
   } else if (subPage) {
@@ -92,8 +98,8 @@ export function OwnerShell({
   const handleOpenNotifications = () => {
     router.push(`/w/${workspaceId}/notifications`);
   };
-  const handleOpenProjects = () => {
-    router.push(`/w/${workspaceId}/projects`);
+  const handleCreateProject = () => {
+    router.push(`/w/${workspaceId}/projects/new`);
   };
   const handleMobileNavigate = (section: string) => {
     setIsMobileMenuOpen(false);
@@ -135,6 +141,11 @@ export function OwnerShell({
         <AppShell
           title={heading.title}
           subtitle={heading.subtitle}
+          panelTitleAdornment={
+            headingOverride?.status ? <StatusChip {...headingOverride.status} /> : undefined
+          }
+          panelMeta={headingOverride?.meta}
+          mobileSubtitle={"mobileSubtitle" in heading ? heading.mobileSubtitle : undefined}
           workspace={{ name: workspaceName }}
           subPage={shellSubPage}
           panelBreadcrumbs={panelBreadcrumbs}
@@ -154,7 +165,7 @@ export function OwnerShell({
           mobileBottomNav={{
             items: mobileItems,
             ctaLabel: OWNER_NAV_COPY.create,
-            onCtaPress: handleOpenProjects,
+            onCtaPress: handleCreateProject,
           }}
           mobileUtilities={
             <MobileUtilities

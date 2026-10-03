@@ -1,5 +1,6 @@
 "use client";
 
+import { forwardRef } from "react";
 import { Button as AriaButton } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
@@ -17,20 +18,18 @@ const SIZE_CLASSES = {
  * @param props - icon, accessible name, size and button state
  * @returns the icon-only button
  */
-export function IconButton({
-  size = "md",
-  className,
-  icon,
-  badgeCount = 0,
-  ...props
-}: Readonly<IconButtonProps>) {
+export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
+  { size = "md", className, icon, badgeCount = 0, badgeLabel = "belum dibaca", ...props },
+  ref,
+) {
   const label =
     badgeCount > 0
-      ? `${props["aria-label"]}, ${String(Math.min(badgeCount, 99))} belum dibaca`
+      ? `${props["aria-label"]}, ${String(Math.min(badgeCount, 99))} ${badgeLabel}`
       : props["aria-label"];
   return (
     <AriaButton
       {...props}
+      ref={ref}
       aria-label={label}
       type="button"
       className={cn(
@@ -53,4 +52,4 @@ export function IconButton({
       ) : null}
     </AriaButton>
   );
-}
+});

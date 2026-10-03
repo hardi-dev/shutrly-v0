@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv plan-feature"
+  short_description: "Write the technical design and split the feature into small verifiable iterations"
+policy:
+  allow_implicit_invocation: false

@@ -42,4 +42,16 @@ describe("SheetItem (C32)", () => {
     const item = screen.getByRole("button", { name: "Studio Lime" });
     expect(item.querySelector('[data-testid="sheet-item-check"]')).toBeInTheDocument();
   });
+
+  it("renders a safe link and pending state", () => {
+    const { rerender } = render(
+      <SheetItem label="Buka" href="https://example.com" target="_blank" />,
+    );
+    const link = screen.getByRole("link", { name: "Buka" });
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+
+    rerender(<SheetItem label="Hapus" icon="trash-2" isPending />);
+    expect(screen.getByRole("button", { name: "Hapus" })).toBeDisabled();
+    expect(screen.queryByTestId("sheet-item-check")).not.toBeInTheDocument();
+  });
 });

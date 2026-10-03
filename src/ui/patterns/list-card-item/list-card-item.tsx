@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { cn } from "@/ui/cn/cn";
+import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Icon } from "@/ui/primitives/icon/icon";
 
 import type { ListCardItemProps } from "./list-card-item.types";
@@ -11,7 +12,14 @@ export const LIST_CARD_ROW = [
   "px-(--component-list-card-item-padding-x) py-(--component-list-card-item-padding-y)",
 ];
 
-function ListCardBody({ icon, title, meta, trailing, href }: Readonly<ListCardItemProps>) {
+function ListCardBody({
+  icon,
+  avatarInitials,
+  title,
+  meta,
+  trailing,
+  href,
+}: Readonly<ListCardItemProps>) {
   const linkIndicator =
     href && !trailing ? (
       <Icon
@@ -28,9 +36,12 @@ function ListCardBody({ icon, title, meta, trailing, href }: Readonly<ListCardIt
 
   return (
     <>
-      <span className="flex size-(--space-9) shrink-0 items-center justify-center rounded-(--component-list-card-item-icon-radius) bg-(--component-list-card-item-icon-background) text-(--component-list-card-item-icon)">
-        <Icon name={icon} size="md" aria-hidden="true" />
-      </span>
+      {avatarInitials ? <Avatar initials={avatarInitials} size="md" aria-hidden /> : null}
+      {icon ? (
+        <span className="flex size-(--space-9) shrink-0 items-center justify-center rounded-(--component-list-card-item-icon-radius) bg-(--component-list-card-item-icon-background) text-(--component-list-card-item-icon)">
+          <Icon name={icon} size="md" aria-hidden="true" />
+        </span>
+      ) : null}
       <span className="flex min-w-0 flex-1 flex-col gap-(--component-list-card-item-text-gap)">
         <span className="truncate text-(length:--font-size-body) font-semibold text-(--component-list-card-item-title)">
           {title}
@@ -76,14 +87,25 @@ function LinkedListCardRow({
  */
 export function ListCardItem({
   icon,
+  avatarInitials,
   title,
   meta,
   trailing,
   href,
   isLast = false,
 }: Readonly<ListCardItemProps>) {
+  if (Boolean(icon) === Boolean(avatarInitials)) {
+    throw new Error("ListCardItem requires exactly one of icon or avatarInitials");
+  }
   const body = (
-    <ListCardBody icon={icon} title={title} meta={meta} trailing={trailing} href={href} />
+    <ListCardBody
+      icon={icon}
+      avatarInitials={avatarInitials}
+      title={title}
+      meta={meta}
+      trailing={trailing}
+      href={href}
+    />
   );
 
   if (href && trailing) {

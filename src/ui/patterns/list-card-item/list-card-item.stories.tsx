@@ -38,6 +38,10 @@ export const Link: StoryObj<typeof meta> = {
   args: { icon: "folder-open", title: COPY.galleryTitle, meta: COPY.galleryMeta, href: "/gallery" },
 };
 
+export const Client: StoryObj<typeof meta> = {
+  args: { avatarInitials: "RI", title: COPY.clientTitle, meta: COPY.clientMeta, isLast: true },
+};
+
 export const Skeleton: StoryObj<typeof meta> = {
   args: { icon: "hard-drive", title: COPY.title, meta: COPY.meta },
   render: () => <ListCardItemSkeleton />,

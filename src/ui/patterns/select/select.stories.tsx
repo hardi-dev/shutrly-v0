@@ -51,3 +51,15 @@ export const ErrorState: StoryObj<typeof meta> = {
     errorMessage: SELECT_STORY_COPY.error,
   },
 };
+
+export const WithSections: StoryObj<typeof meta> = {
+  args: {
+    label: SELECT_STORY_COPY.service,
+    options: [
+      { id: "a", label: SELECT_STORY_COPY.number, section: SELECT_STORY_COPY.wisuda },
+      { id: "b", label: SELECT_STORY_COPY.range, section: SELECT_STORY_COPY.prewed },
+    ],
+    value: null,
+    onChange: () => undefined,
+  },
+};

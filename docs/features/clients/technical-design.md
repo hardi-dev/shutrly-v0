@@ -1,6 +1,6 @@
 # Technical Design — F-06 Clients
 
-Status: PLANNED (2026-10-02) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-CLI-001…021) · Design: [design.md](design.md) (40 frames, `exports/`) · Plan: [plan.md](plan.md)
+Status: DONE (2026-10-03) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-CLI-001…021) · Design: [design.md](design.md) (40 frames, `exports/`) · Plan: [plan.md](plan.md)
 
 ## Context
 
@@ -295,3 +295,23 @@ See [plan.md](plan.md): vertical slices by screen (Slice 0–6), test-first, one
 - **AC-CLI-015** can only be proven against a real FK once F-07 adds `project.client_id`. Until then the mapping is unit-tested, and F-07 adds the integration test.
 - **Double render:** the shell renders children in both trees. Dialogs and menus mount once per tree, and E2E selectors scope to the visible tree (F-03/F-04).
 - **Page-action flash:** the desktop *Tambah klien* is portalled after hydration (accepted in F-04).
+
+## Implementation record — 2026-10-03
+
+F-06 is implemented on `codex/clients` and marked DONE by the Owner on 2026-10-03.
+
+- **Commits:** `b4d1e72` through `138c48e`, including the client domain, migration `0008_client`, Drizzle repository, composition/actions/routes, responsive lists and dialogs, row lifecycle actions, search/paging, E2E journeys, and accessibility coverage.
+- **Migration:** the reviewed and committed `0008_client` migration was applied to the shared non-production database. Output: `migrations applied successfully!`.
+- **Exports/fidelity:** all 40 HTML exports were present. The implementation was compared structurally at the required desktop/phone compositions. The desktop table is intentionally a standalone React Aria `DataTable`; the Section Card owns *Daftar klien*, count, actions and search, while `EmptyState` remains a separate composition unit. Search is 320px on desktop and full width on phone; the allowed table column literals (184/240/32) and narrow 720px content column are retained.
+- **Accessibility refinements:** `IconButton` forwards a ref for React Aria triggers. A client row-menu Escape restores focus to its own action trigger; social-link focus remains on a surviving field after removal. The focused DOM tests and keyboard E2E path pass.
+- **AC map:** the test matrix above maps AC-CLI-001…021 to domain/UI/integration/E2E coverage. `tests/e2e/clients/clients.spec.ts` supplies the completed journeys for navigation, add/edit/duplicate number, archive/restore/delete, search, WhatsApp link and tenant isolation.
+- **Gate (2026-10-03, on a fresh dev server):** `pnpm test` (249 files, 796 tests), `pnpm typecheck`, `pnpm lint` and `pnpm build` pass. The client E2E suite passes all 11 tests: six journeys, four axe scans (desktop/phone × light/dark) and the keyboard path. AC-CLI-006 and AC-CLI-013 occasionally need their retry because the dev server is slower than the 5 s expectation; no failure was functional. The earlier `/register` failures came from E2E email tags with spaces (fixed in `b3fb19f`), and the 3001 config could never verify, since email links point at port 3000.
+- **Not run:** `pnpm test:integration`, skipped by the Owner. AC-CLI-015's real-FK integration check remains F-07 work.
+- **Fixes after the browser review (Owner 2026-10-03):**
+  - `62d011e`: the desktop and phone search fields replaced the URL back and forth forever and exhausted the database connection. They now navigate only from the owner's own input.
+  - `25eb135`: the browser's native search clear button is hidden, leaving only the designed `x`.
+  - `fed4e75`: the Bottom Sheet spans the viewport up to the tablet breakpoint, with its content capped at the desktop Modal `md` width (560 px). The C32 spec is updated.
+  - `d1387ee`: the designed placeholders (`mis. Rina & Dimas`, `0812 3456 7890`) are in place, and phone social rows put the remove button beside the platform, with the value on the next line.
+  - `6d239ce`: `SheetItem` and `DeleteClientDialog` are split under the 50-line function limit.
+- **Verification:** the Owner accepted F-06 as DONE without a separate `/sdv:verify-feature clients` report.
+- **Follow-ups:** promote the List Card Item avatar and pending Sheet Item additions when the design-system promotion cycle resumes; resolve the existing `text.link` design-token gap.

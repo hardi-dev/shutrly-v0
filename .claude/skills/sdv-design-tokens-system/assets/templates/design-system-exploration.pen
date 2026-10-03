@@ -1,0 +1,3105 @@
+{
+  "version": "2.19",
+  "children": [
+    {
+      "type": "frame",
+      "id": "P3leO2",
+      "x": 0,
+      "y": 0,
+      "name": "01 — Context & visual directions",
+      "clip": true,
+      "width": 1440,
+      "height": 1080,
+      "fill": "#F5F3EE",
+      "layout": "vertical",
+      "gap": 24,
+      "padding": 48,
+      "children": [
+        {
+          "type": "text",
+          "id": "K0jxXy",
+          "name": "Board index",
+          "fill": "#59695E",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "FORMA  /  DESIGN EXPLORATION                                      01  /  03",
+          "lineHeight": 1.35,
+          "fontFamily": "IBM Plex Mono",
+          "fontSize": 12,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "rocc3",
+          "name": "Board title",
+          "fill": "#26392F",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "A quieter place to do good work.",
+          "lineHeight": 1.35,
+          "fontFamily": "Inter",
+          "fontSize": 40,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "pZpqK",
+          "name": "Board description",
+          "fill": "#59695E",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "DEMO ONLY  /  Project workspace for small creative teams  /  PROVISIONAL",
+          "lineHeight": 1.35,
+          "fontFamily": "Inter",
+          "fontSize": 16,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "id": "AxQtc",
+          "name": "Section divider",
+          "fill": "#D9DDD5",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "Ijxro",
+          "name": "Product intent",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "irkOQ",
+              "name": "PERSONALITY",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "abuoK",
+                  "name": "PERSONALITY",
+                  "fill": "#59695E",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "PERSONALITY",
+                  "lineHeight": 1.35,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "BK2XB",
+                  "name": "PERSONALITY value",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Calm, capable, human.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "P0heEa",
+              "name": "USE CASE",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "i4uaqk",
+                  "name": "USE CASE",
+                  "fill": "#59695E",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "USE CASE",
+                  "lineHeight": 1.35,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "RpybR",
+                  "name": "USE CASE value",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Plan projects. See progress. Stay focused.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "OAdjR",
+              "name": "CONSTRAINTS",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "fQsNp",
+                  "name": "CONSTRAINTS",
+                  "fill": "#59695E",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "CONSTRAINTS",
+                  "lineHeight": 1.35,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "XlO99",
+                  "name": "CONSTRAINTS value",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Desktop first · Light mode · Comfortable density",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "yGNWW",
+          "name": "Comparable visual directions",
+          "width": "fill_container",
+          "height": 530,
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "ceRyN",
+              "name": "A / FIELD NOTES",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 14,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nb0T1",
+                  "name": "A / FIELD NOTES",
+                  "fill": "#1B3A28",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "A / FIELD NOTES",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "XR5SY",
+                  "name": "A / FIELD NOTES status",
+                  "fill": "#2D5E3A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "SELECTED · DEMO",
+                  "lineHeight": 1.35,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "gH1fo",
+                  "name": "A / FIELD NOTES visual study",
+                  "width": "fill_container",
+                  "height": 320,
+                  "fill": "#E7EDE4",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "aee8K",
+                      "name": "Brand wordmark",
+                      "fill": "#1B3A28",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "forma",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 26,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Hi9nQ",
+                      "name": "Sample heading",
+                      "fill": "#1B3A28",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Make room for focus.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 24,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "f0OG0",
+                      "name": "Direction palette",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "o3LQda",
+                          "name": "Palette #1B3A28",
+                          "fill": "#1B3A28",
+                          "width": "fill_container",
+                          "height": 22
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "hs1ik",
+                          "name": "Palette #2D5E3A",
+                          "fill": "#2D5E3A",
+                          "width": "fill_container",
+                          "height": 22
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "t1Tdf",
+                          "name": "Palette #E7EDE4",
+                          "fill": "#E7EDE4",
+                          "width": "fill_container",
+                          "height": 22
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "CjYuu",
+                          "name": "Palette #FFFFFF",
+                          "fill": "#FFFFFF",
+                          "width": "fill_container",
+                          "height": 22
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "oLvTp",
+                      "name": "Same task sample",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 6,
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 16,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "YdnGb",
+                          "name": "Sample task",
+                          "fill": "#1B3A28",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Website refresh",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "MSJfW",
+                          "name": "Sample metadata",
+                          "fill": "#1B3A28",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "6 tasks · Due Friday",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "wyw4e",
+                      "name": "Action sample",
+                      "fill": "#2D5E3A",
+                      "cornerRadius": 6,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": [
+                        10,
+                        18
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "kfcar",
+                          "name": "Action label",
+                          "fill": "#FFFFFF",
+                          "content": "Open project",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "L7E3Mr",
+                  "name": "Direction rationale",
+                  "fill": "#1B3A28",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Quiet structure with a human tone.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "PTMNB",
+                  "name": "Direction trade-off",
+                  "fill": "#59695E",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Balanced for daily use; less expressive than C.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "HJ146",
+              "name": "B / STUDIO GRID",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 14,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lja8i",
+                  "name": "B / STUDIO GRID",
+                  "fill": "#152D51",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "B / STUDIO GRID",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "A5e49",
+                  "name": "B / STUDIO GRID status",
+                  "fill": "#254EE5",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "ALTERNATIVE",
+                  "lineHeight": 1.35,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "NDqtR",
+                  "name": "B / STUDIO GRID visual study",
+                  "width": "fill_container",
+                  "height": 320,
+                  "fill": "#EAF0FC",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "lEsn3",
+                      "name": "Brand wordmark",
+                      "fill": "#152D51",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "forma",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 26,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "O6kIm",
+                      "name": "Sample heading",
+                      "fill": "#152D51",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Make room for focus.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 24,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Y2B7Y",
+                      "name": "Direction palette",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "UwMnF",
+                          "name": "Palette #152D51",
+                          "fill": "#152D51",
+                          "width": "fill_container",
+                          "height": 22
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "Im2ET",
+                          "name": "Palette #254EE5",
+                          "fill": "#254EE5",
+                          "width": "fill_container",
+                          "height": 22
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "s17BM",
+                          "name": "Palette #EAF0FC",
+                          "fill": "#EAF0FC",
+                          "width": "fill_container",
+                          "height": 22
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "Mo2nu",
+                          "name": "Palette #FFFFFF",
+                          "fill": "#FFFFFF",
+                          "width": "fill_container",
+                          "height": 22
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "b1ANtz",
+                      "name": "Same task sample",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 16,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "lr9Zt",
+                          "name": "Sample task",
+                          "fill": "#152D51",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Website refresh",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "U2UCD",
+                          "name": "Sample metadata",
+                          "fill": "#152D51",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "6 tasks · Due Friday",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "A1vJF",
+                      "name": "Action sample",
+                      "fill": "#254EE5",
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": [
+                        10,
+                        18
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "G7updO",
+                          "name": "Action label",
+                          "fill": "#FFFFFF",
+                          "content": "Open project",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nsbbx",
+                  "name": "Direction rationale",
+                  "fill": "#152D51",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Precise, technical and systematic.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "DyP08",
+                  "name": "Direction trade-off",
+                  "fill": "#59695E",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Fast scanning; can feel rigid for creative teams.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "eBYFe",
+              "name": "C / SOFT SIGNAL",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 14,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "klliX",
+                  "name": "C / SOFT SIGNAL",
+                  "fill": "#442B55",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "C / SOFT SIGNAL",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "aub0u",
+                  "name": "C / SOFT SIGNAL status",
+                  "fill": "#79459B",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "ALTERNATIVE",
+                  "lineHeight": 1.35,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "L9M05",
+                  "name": "C / SOFT SIGNAL visual study",
+                  "width": "fill_container",
+                  "height": 320,
+                  "fill": "#F1EAF7",
+                  "cornerRadius": 20,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "bhBay",
+                      "name": "Brand wordmark",
+                      "fill": "#442B55",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "forma",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 26,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "XiHoz",
+                      "name": "Sample heading",
+                      "fill": "#442B55",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Make room for focus.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 24,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "DXdTP",
+                      "name": "Direction palette",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 20,
+                          "id": "W8Y7qO",
+                          "name": "Palette #442B55",
+                          "fill": "#442B55",
+                          "width": "fill_container",
+                          "height": 22
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 20,
+                          "id": "I7Nou",
+                          "name": "Palette #79459B",
+                          "fill": "#79459B",
+                          "width": "fill_container",
+                          "height": 22
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 20,
+                          "id": "aeOmO",
+                          "name": "Palette #F1EAF7",
+                          "fill": "#F1EAF7",
+                          "width": "fill_container",
+                          "height": 22
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 20,
+                          "id": "Q0TmEy",
+                          "name": "Palette #FFFFFF",
+                          "fill": "#FFFFFF",
+                          "width": "fill_container",
+                          "height": 22
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "G29M8C",
+                      "name": "Same task sample",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 20,
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 16,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "dfli7",
+                          "name": "Sample task",
+                          "fill": "#442B55",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Website refresh",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "G5Vygz",
+                          "name": "Sample metadata",
+                          "fill": "#442B55",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "6 tasks · Due Friday",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ca0kS",
+                      "name": "Action sample",
+                      "fill": "#79459B",
+                      "cornerRadius": 20,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": [
+                        10,
+                        18
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pbmV1",
+                          "name": "Action label",
+                          "fill": "#FFFFFF",
+                          "content": "Open project",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "S4nuU",
+                  "name": "Direction rationale",
+                  "fill": "#442B55",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Friendly, expressive and spacious.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "Z2Buke",
+                  "name": "Direction trade-off",
+                  "fill": "#59695E",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Warm character; lower information density.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "audOl",
+          "name": "Selected direction rationale",
+          "width": "fill_container",
+          "fill": "#E7EDE4",
+          "gap": 32,
+          "padding": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "Kqj7E",
+              "name": "Selected direction",
+              "width": 300,
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "IH0Ac",
+                  "name": "Selection label",
+                  "fill": "#2D5E3A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "DIRECTION A",
+                  "lineHeight": 1.35,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "DDGwy",
+                  "name": "Selection title",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Field Notes",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 25,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "KD8tQ",
+              "name": "Reason and retained alternatives",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "PfceZ",
+                  "name": "Decision rationale",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Selected for its clear hierarchy, restrained green accent and comfortable rhythm.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "Fs3NU",
+                  "name": "Decision boundary",
+                  "fill": "#59695E",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Dummy selection recorded · User approval pending · B and C retained for comparison.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "sVqEV",
+          "name": "Board footer",
+          "fill": "#59695E",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "01  /  Exploration complete for this demo; direction and token approval remain pending.",
+          "lineHeight": 1.35,
+          "fontFamily": "IBM Plex Mono",
+          "fontSize": 12,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "bYpQg",
+      "x": 1560,
+      "y": 0,
+      "name": "02 — Token expansion & primitive studies",
+      "clip": true,
+      "width": 1440,
+      "height": 1080,
+      "fill": "#F5F3EE",
+      "layout": "vertical",
+      "gap": 24,
+      "padding": 48,
+      "children": [
+        {
+          "type": "text",
+          "id": "wfViQ",
+          "name": "Board index",
+          "fill": "#59695E",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "FORMA  /  DESIGN EXPLORATION                                      02  /  03",
+          "lineHeight": 1.35,
+          "fontFamily": "IBM Plex Mono",
+          "fontSize": 12,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "FXOF6",
+          "name": "Board title",
+          "fill": "#26392F",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "From a direction to a system.",
+          "lineHeight": 1.35,
+          "fontFamily": "Inter",
+          "fontSize": 40,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "wCwpb",
+          "name": "Board description",
+          "fill": "#59695E",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "FIELD NOTES  /  Observed evidence + proposed expansion  /  PROVISIONAL",
+          "lineHeight": 1.35,
+          "fontFamily": "Inter",
+          "fontSize": 16,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "id": "iKJC5",
+          "name": "Section divider",
+          "fill": "#D9DDD5",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "VaYfc",
+          "name": "Token studies",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "JzY9F",
+              "name": "Color and semantic contract",
+              "width": 660,
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "CRQlu",
+                  "name": "Palette heading",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "01  /  Color relationships",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "YIXvd",
+                  "name": "Expanded green palette",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "X7RAiY",
+                      "name": "Green 50",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "JgzOr",
+                          "name": "Green 50 sample",
+                          "fill": "#E7EDE4",
+                          "width": "fill_container",
+                          "height": 62
+                        },
+                        {
+                          "type": "text",
+                          "id": "J8zikk",
+                          "name": "Color value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "50  #E7EDE4",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "n9weRO",
+                          "name": "Evidence state",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "OBSERVED",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "l8nIj",
+                      "name": "Green 200",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "l8exa",
+                          "name": "Green 200 sample",
+                          "fill": "#B5CCBA",
+                          "width": "fill_container",
+                          "height": 62
+                        },
+                        {
+                          "type": "text",
+                          "id": "AA4Qb",
+                          "name": "Color value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "200  #B5CCBA",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "RM07S",
+                          "name": "Evidence state",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "PROPOSED",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "flrzV",
+                      "name": "Green 400",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "jvf65",
+                          "name": "Green 400 sample",
+                          "fill": "#74977C",
+                          "width": "fill_container",
+                          "height": 62
+                        },
+                        {
+                          "type": "text",
+                          "id": "OFgBW",
+                          "name": "Color value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "400  #74977C",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "jizwR",
+                          "name": "Evidence state",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "PROPOSED",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "TXqTk",
+                      "name": "Green 600",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "aGiT6",
+                          "name": "Green 600 sample",
+                          "fill": "#2D5E3A",
+                          "width": "fill_container",
+                          "height": 62
+                        },
+                        {
+                          "type": "text",
+                          "id": "HE0rz",
+                          "name": "Color value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "600  #2D5E3A",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "K6H3Y8",
+                          "name": "Evidence state",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "OBSERVED",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "sodVd",
+                      "name": "Green 900",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "zZLsn",
+                          "name": "Green 900 sample",
+                          "fill": "#1B3A28",
+                          "width": "fill_container",
+                          "height": 62
+                        },
+                        {
+                          "type": "text",
+                          "id": "dGceE",
+                          "name": "Color value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "900  #1B3A28",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "DiCdj",
+                          "name": "Evidence state",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "OBSERVED",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "wtDsA",
+                  "name": "surface.canvas → warm.50",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "e06Kq",
+                      "name": "Semantic alias",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "surface.canvas → warm.50",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "DBG9R",
+                      "name": "Alias evidence",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "#F5F3EE · OBSERVED · Board 03",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "sxbY4",
+                  "name": "Section divider",
+                  "fill": "#D9DDD5",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "Reh1T",
+                  "name": "surface.panel → white",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "MqUCx",
+                      "name": "Semantic alias",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "surface.panel → white",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "OP8Jw",
+                      "name": "Alias evidence",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "#FFFFFF · OBSERVED · Direction A",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "FfPkF",
+                  "name": "Section divider",
+                  "fill": "#D9DDD5",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "dhVfI",
+                  "name": "text.primary → green.900",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "wP6mk",
+                      "name": "Semantic alias",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "text.primary → green.900",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Rw0Bh",
+                      "name": "Alias evidence",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "#1B3A28 · OBSERVED · Direction A",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "Vjbg2",
+                  "name": "Section divider",
+                  "fill": "#D9DDD5",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "mXaVg",
+                  "name": "action.primary → green.600",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "w42ReV",
+                      "name": "Semantic alias",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "action.primary → green.600",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "IOFwH",
+                      "name": "Alias evidence",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "#2D5E3A · OBSERVED · Direction A",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "Sl9nh",
+                  "name": "Section divider",
+                  "fill": "#D9DDD5",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "G1Yoa",
+                  "name": "button.primary.background → action.primary",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "bxpIo",
+                      "name": "Semantic alias",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "button.primary.background → action.primary",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "LVUDD",
+                      "name": "Alias evidence",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "PROPOSED alias · Default state",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "MAmSR",
+                  "name": "Section divider",
+                  "fill": "#D9DDD5",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "text",
+                  "id": "MGAwR",
+                  "name": "Theme scope",
+                  "fill": "#59695E",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "THEMES / MODES",
+                  "lineHeight": 1.35,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "jjpTb",
+                  "name": "Theme decision",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Light · demonstrated     /     Dark · UNOBSERVED, deferred\nComfortable density · demonstrated     /     Compact · out of scope",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "YnIoD",
+              "name": "Type and dimensional scales",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "eV5dI",
+                  "name": "Type heading",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "02  /  Type & rhythm",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "V8jkZ",
+                  "name": "Typeface specimen",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Inter. Clear by design.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 32,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "wXcKe",
+                  "name": "Type scale evidence",
+                  "fill": "#59695E",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "12 / 14 / 16 / 24 / 26  OBSERVED in A\n20 / 32 / 40  PROPOSED product scale\n400 regular · 600 emphasis PROPOSED · line height 1.35",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "rectangle",
+                  "id": "Cq5m1",
+                  "name": "Section divider",
+                  "fill": "#D9DDD5",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "text",
+                  "id": "odTlv",
+                  "name": "Spacing heading",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Spacing / 4 px base",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "Jtv95",
+                  "name": "Spacing scale",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "alignItems": "end",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "fnLRj",
+                      "name": "Spacing 4",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "N8nHil",
+                          "name": "4 px spacing bar",
+                          "fill": "#2D5E3A",
+                          "width": "fill_container",
+                          "height": 4
+                        },
+                        {
+                          "type": "text",
+                          "id": "k9rVu0",
+                          "name": "Spacing value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "4",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "AdLie",
+                          "name": "Spacing evidence",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "PROP.",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "BfqtJ",
+                      "name": "Spacing 8",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "JCYwx",
+                          "name": "8 px spacing bar",
+                          "fill": "#2D5E3A",
+                          "width": "fill_container",
+                          "height": 8
+                        },
+                        {
+                          "type": "text",
+                          "id": "TrU2w",
+                          "name": "Spacing value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "8",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "l3qeD",
+                          "name": "Spacing evidence",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "OBS.",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "SDmLh",
+                      "name": "Spacing 12",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "SOfqH",
+                          "name": "12 px spacing bar",
+                          "fill": "#2D5E3A",
+                          "width": "fill_container",
+                          "height": 12
+                        },
+                        {
+                          "type": "text",
+                          "id": "nXZwT",
+                          "name": "Spacing value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "12",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "rELS6",
+                          "name": "Spacing evidence",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "PROP.",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "dkmX4",
+                      "name": "Spacing 16",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "w037XE",
+                          "name": "16 px spacing bar",
+                          "fill": "#2D5E3A",
+                          "width": "fill_container",
+                          "height": 16
+                        },
+                        {
+                          "type": "text",
+                          "id": "OSuDg",
+                          "name": "Spacing value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "16",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "I5ZAPX",
+                          "name": "Spacing evidence",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "OBS.",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "H0Rza",
+                      "name": "Spacing 24",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "nbxO6",
+                          "name": "24 px spacing bar",
+                          "fill": "#2D5E3A",
+                          "width": "fill_container",
+                          "height": 24
+                        },
+                        {
+                          "type": "text",
+                          "id": "h9duH",
+                          "name": "Spacing value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "24",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "p67pY",
+                          "name": "Spacing evidence",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "OBS.",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Z9hmvz",
+                      "name": "Spacing 32",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "IQYTI",
+                          "name": "32 px spacing bar",
+                          "fill": "#2D5E3A",
+                          "width": "fill_container",
+                          "height": 32
+                        },
+                        {
+                          "type": "text",
+                          "id": "QWofh",
+                          "name": "Spacing value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "32",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Oukpu",
+                          "name": "Spacing evidence",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "PROP.",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "xC8o0",
+                      "name": "Spacing 48",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "h1PMA",
+                          "name": "48 px spacing bar",
+                          "fill": "#2D5E3A",
+                          "width": "fill_container",
+                          "height": 48
+                        },
+                        {
+                          "type": "text",
+                          "id": "u371j",
+                          "name": "Spacing value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "48",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "e4f0sA",
+                          "name": "Spacing evidence",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "PROP.",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "nvKfC",
+                  "name": "Section divider",
+                  "fill": "#D9DDD5",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "text",
+                  "id": "XjRMy",
+                  "name": "Shape and depth",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Radius 0 / 6 / 12     ·     6 OBSERVED; 0 / 12 PROPOSED\nElevation 0 OBSERVED / 1 PROPOSED (0, 4, 16; ink 10%)\nOpacity 100% OBSERVED / 40% PROPOSED for disabled UI",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "P1QEoJ",
+          "name": "Primitive previews",
+          "width": "fill_container",
+          "fill": "#E7EDE4",
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "yVrNZ",
+              "name": "Primitive heading",
+              "fill": "#26392F",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "03  /  Primitive & component seeds",
+              "lineHeight": 1.35,
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "yHJn3",
+              "name": "Primitive examples",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "A6yuF",
+                  "name": "Button states",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "PHYXu",
+                      "name": "Button states heading",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "BUTTON / default + disabled",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ilmTG",
+                      "name": "Create project",
+                      "width": 180,
+                      "fill": "#2D5E3A",
+                      "cornerRadius": 6,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": [
+                        12,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "KUEHH",
+                          "name": "Button label",
+                          "fill": "#FFFFFF",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Create project",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "f2d1F",
+                      "name": "Create project",
+                      "opacity": 0.4,
+                      "width": 180,
+                      "fill": "#2D5E3A",
+                      "cornerRadius": 6,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": [
+                        12,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "h2hzf",
+                          "name": "Button label",
+                          "fill": "#FFFFFF",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Create project",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "g6vV3",
+                  "name": "Field and focus study",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "wZlkV",
+                      "name": "Field heading",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "INPUT / focus proposal",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "P3okk7",
+                      "name": "Field label",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Project name",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "MxcGx",
+                      "name": "Focused input",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 6,
+                      "stroke": "#2D5E3A",
+                      "strokeWidth": 2,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Jb1kN",
+                          "name": "Input value",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Website refresh",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "y6FGpU",
+                      "name": "Focus annotation",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "2 px ring · PROPOSED",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "AjPy2",
+                  "name": "Task component seed",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "CjQgO",
+                      "name": "Seed heading",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "TASK / local study",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "QcDx9",
+                      "name": "Task preview",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 6,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#1B3A281A",
+                        "offset": {
+                          "x": 0,
+                          "y": 4
+                        },
+                        "blur": 16
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 16,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "A3K0K",
+                          "name": "Task title",
+                          "fill": "#26392F",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Explore the homepage",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "m3S17",
+                          "name": "Task metadata",
+                          "fill": "#59695E",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Design · Due Friday",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "KA2sH",
+                      "name": "Seed annotation",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Elevation 1 · PROPOSED",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "kZOs1",
+          "name": "Expansion footer",
+          "fill": "#59695E",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "CANDIDATE SET  /  Light core shown · Error and warning colors UNOBSERVED · Approval pending",
+          "lineHeight": 1.35,
+          "fontFamily": "IBM Plex Mono",
+          "fontSize": 12,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "mU7Bk",
+      "x": 3120,
+      "y": 0,
+      "name": "03 — Representative case & decision record",
+      "clip": true,
+      "width": 1440,
+      "height": 1080,
+      "fill": "#F5F3EE",
+      "layout": "vertical",
+      "gap": 24,
+      "padding": 48,
+      "children": [
+        {
+          "type": "text",
+          "id": "KNTDu",
+          "name": "Board index",
+          "fill": "#59695E",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "FORMA  /  DESIGN EXPLORATION                                      03  /  03",
+          "lineHeight": 1.35,
+          "fontFamily": "IBM Plex Mono",
+          "fontSize": 12,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "n256W",
+          "name": "Board title",
+          "fill": "#26392F",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "The direction, in everyday use.",
+          "lineHeight": 1.35,
+          "fontFamily": "Inter",
+          "fontSize": 40,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "oobaB",
+          "name": "Board description",
+          "fill": "#59695E",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "FIELD NOTES  /  Representative desktop case  /  DEMO ONLY",
+          "lineHeight": 1.35,
+          "fontFamily": "Inter",
+          "fontSize": 16,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "id": "b9tww",
+          "name": "Section divider",
+          "fill": "#D9DDD5",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "Kek2w",
+          "name": "Case and review",
+          "width": "fill_container",
+          "gap": 32,
+          "children": [
+            {
+              "type": "frame",
+              "id": "l2pY6",
+              "name": "Forma — Project overview",
+              "clip": true,
+              "width": 850,
+              "height": 504,
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "stroke": "#D9DDD5",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nIbFF",
+                  "name": "Application navigation",
+                  "width": "fill_container",
+                  "fill": "#E7EDE4",
+                  "gap": 24,
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "tKx3O",
+                      "name": "Brand",
+                      "fill": "#1B3A28",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "forma",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 24,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "nURN2",
+                      "name": "Active navigation",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Projects",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "mzjc5",
+                      "name": "Secondary navigation",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Team",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "hG44T",
+                      "name": "User initials",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "JL",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "yo3TB",
+                  "name": "Project workspace",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 20,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "fK8b5",
+                      "name": "Workspace heading",
+                      "width": "fill_container",
+                      "gap": 16,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "SXJJZ",
+                          "name": "Workspace title",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "tG6kL",
+                              "name": "Page title",
+                              "fill": "#26392F",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Your work, in focus.",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 26,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "LnL02",
+                              "name": "Page subtitle",
+                              "fill": "#59695E",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "3 active projects · A little progress, every day.",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "O4WoHk",
+                          "name": "Create project action",
+                          "width": 152,
+                          "fill": "#2D5E3A",
+                          "cornerRadius": 6,
+                          "layout": "vertical",
+                          "gap": 16,
+                          "padding": [
+                            12,
+                            16
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "L8vEy",
+                              "name": "Create label",
+                              "fill": "#FFFFFF",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "+ New project",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vD5j1",
+                      "name": "Project summary",
+                      "width": "fill_container",
+                      "gap": 23,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "X6Qnjg",
+                          "name": "Active projects",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "c93oC",
+                              "name": "Metric",
+                              "fill": "#26392F",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "03",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 24,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "VP07F",
+                              "name": "Metric label",
+                              "fill": "#59695E",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Active projects",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "JmrUr",
+                          "name": "Tasks this week",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ZzbGC",
+                              "name": "Metric",
+                              "fill": "#26392F",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "12",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 24,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "s2PKZG",
+                              "name": "Metric label",
+                              "fill": "#59695E",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Tasks this week",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "uuez2",
+                          "name": "On track",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "XBFBF",
+                              "name": "Metric",
+                              "fill": "#26392F",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "86%",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 24,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "GmqMN",
+                              "name": "Metric label",
+                              "fill": "#59695E",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "On track",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "G7JnBk",
+                      "name": "Section divider",
+                      "fill": "#D9DDD5",
+                      "width": "fill_container",
+                      "height": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ZyRvR",
+                      "name": "Project list",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "KHav7",
+                          "name": "Website refresh",
+                          "width": "fill_container",
+                          "gap": 16,
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "aDFTI",
+                              "name": "Website refresh detail",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Qf02q",
+                                  "name": "Project title",
+                                  "fill": "#26392F",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Website refresh",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 16,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "mEYkP",
+                                  "name": "Project metadata",
+                                  "fill": "#59695E",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Design · 6 tasks · Due Friday",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "l1n9B",
+                              "name": "Status In progress",
+                              "width": 110,
+                              "fill": "#E7EDE4",
+                              "cornerRadius": 6,
+                              "layout": "vertical",
+                              "gap": 16,
+                              "padding": [
+                                8,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "jLXJ4",
+                                  "name": "Status label",
+                                  "fill": "#26392F",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "In progress",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "v4h6E5",
+                          "name": "Section divider",
+                          "fill": "#D9DDD5",
+                          "width": "fill_container",
+                          "height": 1
+                        },
+                        {
+                          "type": "frame",
+                          "id": "AHipg",
+                          "name": "Brand foundations",
+                          "width": "fill_container",
+                          "gap": 16,
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "O5alAa",
+                              "name": "Brand foundations detail",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "hl7xq",
+                                  "name": "Project title",
+                                  "fill": "#26392F",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Brand foundations",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 16,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "U8AOhM",
+                                  "name": "Project metadata",
+                                  "fill": "#59695E",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Strategy · 4 tasks · Due Monday",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "uUnY6",
+                              "name": "Status In review",
+                              "width": 110,
+                              "fill": "#E7EDE4",
+                              "cornerRadius": 6,
+                              "layout": "vertical",
+                              "gap": 16,
+                              "padding": [
+                                8,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "bXRTA",
+                                  "name": "Status label",
+                                  "fill": "#26392F",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "In review",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "AkD80",
+                          "name": "Section divider",
+                          "fill": "#D9DDD5",
+                          "width": "fill_container",
+                          "height": 1
+                        },
+                        {
+                          "type": "frame",
+                          "id": "EVqn1",
+                          "name": "Customer interviews",
+                          "width": "fill_container",
+                          "gap": 16,
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "pOWn9",
+                              "name": "Customer interviews detail",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "nvHwr",
+                                  "name": "Project title",
+                                  "fill": "#26392F",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Customer interviews",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 16,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "fbiiL",
+                                  "name": "Project metadata",
+                                  "fill": "#59695E",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Research · 2 tasks · Due Thursday",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "mSGfj",
+                              "name": "Status Planned",
+                              "width": 110,
+                              "fill": "#F5F3EE",
+                              "cornerRadius": 6,
+                              "layout": "vertical",
+                              "gap": 16,
+                              "padding": [
+                                8,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "we2PC",
+                                  "name": "Status label",
+                                  "fill": "#26392F",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Planned",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "Wr6Ma",
+                          "name": "Section divider",
+                          "fill": "#D9DDD5",
+                          "width": "fill_container",
+                          "height": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "cx9QD",
+              "name": "Decision record",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 18,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "s1gJJT",
+                  "name": "Decision header",
+                  "fill": "#59695E",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "DECISION RECORD",
+                  "lineHeight": 1.35,
+                  "fontFamily": "IBM Plex Mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "l54JUD",
+                  "name": "Approval status",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Approval pending.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "eEVoy",
+                  "name": "DIRECTION",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 5,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rklCs",
+                      "name": "Decision label",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "DIRECTION",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "GOmUP",
+                      "name": "Decision value",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "A / Field Notes selected in dummy review.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "bpyGT",
+                  "name": "TOKEN CANDIDATE",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 5,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "QMb6W",
+                      "name": "Decision label",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "TOKEN CANDIDATE",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "tItVG",
+                      "name": "Decision value",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Green palette, Inter, 4 px rhythm; semantic and component aliases proposed.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BTr47",
+                  "name": "PRIMITIVES",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 5,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "i1nji",
+                      "name": "Decision label",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "PRIMITIVES",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "V3Ep4V",
+                      "name": "Decision value",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Button, input, surface and task seeds demonstrated locally.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "diARc",
+                  "name": "SCOPE",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 5,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "VwX4X",
+                      "name": "Decision label",
+                      "fill": "#59695E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "SCOPE",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Z14gm",
+                      "name": "Decision value",
+                      "fill": "#26392F",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Light mode + comfortable density. Dark and compact excluded from this candidate.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "wNKvI",
+          "name": "Accessibility and open findings",
+          "width": "fill_container",
+          "fill": "#E7EDE4",
+          "gap": 32,
+          "padding": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "O0fwT",
+              "name": "Accessibility assumptions",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "V033K",
+                  "name": "Accessibility title",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Accessibility assumptions",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "j0Fs5",
+                  "name": "Accessibility details",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "WCAG AA target · Body text ≥ 14 px; metadata 12 px.\nPrimary action ≥ 44 px high; focus ring 2 px proposed.\nContrast and keyboard behavior require validation.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "u97Fo",
+              "name": "Unresolved gaps",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "NbCD2",
+                  "name": "Gaps title",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Open findings",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "hW8fQ",
+                  "name": "Gap details",
+                  "fill": "#26392F",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "GAP 01 / Error + warning states not explored.\nGAP 02 / Dark mode has no visual evidence.\nCONFLICT / None recorded in this dummy study.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "O3un97",
+          "name": "Review footer",
+          "fill": "#59695E",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "PROVISIONAL  /  Direction · expanded tokens · mode scope · accessibility · primitives · gaps: approval pending",
+          "lineHeight": 1.35,
+          "fontFamily": "IBM Plex Mono",
+          "fontSize": 12,
+          "fontWeight": "normal"
+        }
+      ]
+    }
+  ],
+  "fileToken": "cdcb927e-7754-4f86-be88-0fe50c128527"
+}

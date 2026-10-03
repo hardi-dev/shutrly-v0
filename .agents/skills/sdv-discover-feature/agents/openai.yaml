@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv discover-feature"
+  short_description: "Specify one feature — spec, business-rule refs, acceptance criteria, open questions"
+policy:
+  allow_implicit_invocation: false

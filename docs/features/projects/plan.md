@@ -429,18 +429,18 @@ Every slice below has the same parts:
 
 Screens: none. This slice checks the base and inventories the components for S1–S3.
 
-- [ ] **0.1 Check that F-06 is in this branch.** All of these must hold:
+- [x] **0.1 Check that F-06 is in this branch.** All of these must hold:
   - `src/adapters/db/schema/booking/client.ts` and `drizzle/0008_client.sql` exist;
   - `src/ui/patterns/data-table/data-table.tsx` and `src/features/booking/ui/client-dialog/client-dialog.tsx` exist;
   - `src/features/booking/domain/whatsapp-number/whatsapp-number.ts` exports `formatWhatsappNumber` and `whatsappChatUrl`;
   - `pnpm typecheck && pnpm lint && pnpm test` pass.
 
   If any is missing, **STOP** and report: *F-06 must be built (`/sdv:build-feature clients 0…6`) and merged into `feat/projects` first.* Change nothing.
-- [ ] **0.2 Sync.** If `main` moved, use the ccd_host `sync_with_base_branch` tool (or `git merge main` outside an app worktree).
+- [x] **0.2 Sync.** If `main` moved, use the ccd_host `sync_with_base_branch` tool (or `git merge main` outside an app worktree).
   - Keep both features' text in `docs/HANDOFF.md` and `docs/product/feature-map.md`.
   - Keep this branch's `projects.pen` and `exports/`.
   - Commit the merge if there was one.
-- [ ] **0.3 Component inventory.** Write `docs/features/projects/component-inventory.md` with the columns *Component · Spec · Status (exists / extend / new) · Path · Needed change · First used in*.
+- [x] **0.3 Component inventory.** Write `docs/features/projects/component-inventory.md` with the columns *Component · Spec · Status (exists / extend / new) · Path · Needed change · First used in*.
   - **Fill each row by reading the code, not by memory:** open the file, and for *extend* name the exact prop to add.
   - **Rows, at least:**
     - Checkbox (C05), Combobox (C36), MultiSelect (C20);
@@ -926,7 +926,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
 
 ### Steps
 
-- [ ] **1.1 Domain rules.**
+- [x] **1.1 Domain rules.**
   - **Tests first:** `project-status.test.ts`, `project-record.test.ts`, `session.test.ts`, `booking-field-value.test.ts`, `project-items.test.ts`, `schedule-clock.test.ts`:
     - the status tables (every function, every status);
     - title: `" "` → `EMPTY`, 101 chars → `TOO_LONG`;
@@ -941,14 +941,14 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
     - `todayInScheduleZone(new Date("2026-10-01T18:30:00Z"))` → `"2026-10-02"`.
   - **Implement** with the rule code.
   - Commit `feat(projects): add project, session, booking value and item rules`.
-- [ ] **1.2 Schema and migration 0009.**
+- [x] **1.2 Schema and migration 0009.**
   - Write `project.ts`, add `export * from "./booking/project";` to `schema/index.ts` (match the existing line style), then `pnpm db:generate`.
   - Rename the output to `0009_project.sql` and keep the journal `tag` in step.
   - Review it: four `CREATE TABLE`, constraints, indexes, no `DROP` or `RENAME`.
   - `pnpm typecheck`.
   - Commit `feat(projects): add project tables and migration 0009`.
   - `pnpm db:migrate`; paste the output into the step report.
-- [ ] **1.3 Create backend.**
+- [x] **1.3 Create backend.**
   - **Tests first:**
     - `create-project.test.ts`, `load-create-options.test.ts`, `search-active-clients.test.ts` (fakes + fixture):
       - BOOKED without a session → `sessions: SESSION_REQUIRED`; DRAFT without one → created (AC-PRJ-029);
@@ -971,7 +971,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
     - Owner shell test: the CTA pushes `/w/<id>/projects/new`; `new-project` is not coming soon.
   - **Implement** every file in the Backend table, plus the two placeholder pages.
   - Commit `feat(projects): add the project create backend`.
-- [ ] **1.4 Shared fields.**
+- [x] **1.4 Shared fields.**
   - Read `component-inventory.md`, then build or extend `Combobox`, `DateField`, `TimeField` and `Select` sections.
   - **Tests** (`*.test.tsx`):
     - Combobox: typing calls `onInputChange`; the group label; Arrow keys + Enter select; Escape closes; the menu renders inline at 390 width;
@@ -981,7 +981,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
   - One story each (ADR-014).
   - Add `@internationalized/date` to `package.json`, pinned to the version `react-aria-components` 1.21.1 already resolves (see `pnpm why @internationalized/date`).
   - Commit `feat(ui): add combobox, date and time fields and select sections`.
-- [ ] **1.5 The screen.**
+- [x] **1.5 The screen.**
   - **Precondition:** the 18 Slice 1 exports exist.
   - **Tests first:** `create-project-screen.test.tsx`, `use-create-project-form.test.ts`, `client-picker.test.tsx`, `service-picker.test.tsx`, `sessions-card.test.tsx`, `booking-field-input.test.tsx`. Each behaviour in the state table, plus:
     - the picker items read *{formatted number} · {n} proyek* or *Belum ada nomor WhatsApp*;
@@ -1060,7 +1060,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
 
 ### Steps
 
-- [ ] **2.1 Detail and step backend.**
+- [x] **2.1 Detail and step backend.**
   - **Tests first:**
     - `get-project-detail.test.ts`: the flags for all 7 statuses; the shown session with the injected `today` (AC-PRJ-015, 018);
     - `advance-project.test.ts`: no session → `SESSION_REQUIRED`; stored ≠ from → `STALE`; from CANCELLED → `STALE`; an invalid step → throws not-found (AC-PRJ-009, 020, 021);
@@ -1071,7 +1071,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
       - a seeded cancelled project returns `cancellation.byName`.
   - **Implement.**
   - Commit `feat(projects): add project detail and status steps backend`.
-- [ ] **2.2 Detail screen.**
+- [x] **2.2 Detail screen.**
   - **Precondition:** the 16 Slice 2 exports.
   - **Tests first:** `project-detail-screen.test.tsx`, `project-session-summary.test.ts`, `use-project-actions.test.ts`, the `page-header` test. Every row of the state table, plus:
     - the step button's icon and label per status;
@@ -1079,7 +1079,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
     - `?state=created` shows the toast once (`dedupeKey` `project-created:<id>`).
   - **Implement**, then compare the 16 exports.
   - Commit `feat(projects): add the project detail page`.
-- [ ] **2.3 E2E.** Create `tests/e2e/projects/projects.spec.ts` with helpers `createWorkspace`, `seedCatalog` (through the services UI, like `catalog.spec.ts`) and `createClientViaUi` (F-06 UI). Journeys:
+- [x] **2.3 E2E.** Create `tests/e2e/projects/projects.spec.ts` with helpers `createWorkspace`, `seedCatalog` (through the services UI, like `catalog.spec.ts`) and `createClientViaUi` (F-06 UI). Journeys:
   - create a booked project → detail with *Proyek dibuat* → *Mulai pemotretan* (toast) → *Selesai pemotretan* → no step;
   - save a draft → *Konfirmasi booking* without a session shows the session-required toast.
 
@@ -1194,7 +1194,7 @@ Copy: count *{n} proyek aktif* / *{n} proyek selesai* / *{n} proyek dibatalkan* 
 
 ### Steps
 
-- [ ] **3.1 List query.**
+- [x] **3.1 List query.**
   - **Tests first** (`tests/integration/booking/project-list.test.ts`, the five AC-PRJ-001 projects, `today = "2026-10-02"`):
     - *Aktif* = *Prewed Dewi*, *Wisuda Rina*, *Wisuda Sari*, with the shown session and count;
     - *Selesai* / *Dibatalkan* each have their project; with extra projects the latest date comes first and no-session projects come last (AC-PRJ-002);
@@ -1206,7 +1206,7 @@ Copy: count *{n} proyek aktif* / *{n} proyek selesai* / *{n} proyek dibatalkan* 
     Unit: `list-projects.test.ts`, the 31 → 30 + cursor rule.
   - **Implement.**
   - Commit `feat(projects): add the project list query`.
-- [ ] **3.2 List screen.**
+- [x] **3.2 List screen.**
   - **Precondition:** the 18 Slice 3 exports.
   - **Tests first:** `projects-table.test.tsx`, `project-list.test.tsx`, `project-search-field.test.tsx`, `projects-empty-state.test.tsx`, `use-load-more-projects.test.ts`, the `owner-nav` test. Every state row, plus:
     - only the PROYEK text is a link;
@@ -1217,7 +1217,7 @@ Copy: count *{n} proyek aktif* / *{n} proyek selesai* / *{n} proyek dibatalkan* 
     - `projects` and `new-project` are not coming soon.
   - **Implement**, then compare the 18 exports.
   - Commit `feat(projects): add the project list`.
-- [ ] **3.3 E2E.** Add to `projects.spec.ts`:
+- [x] **3.3 E2E.** Add to `projects.spec.ts`:
   - two projects appear in *Aktif* in date order;
   - tabs;
   - search *rina* + reload keeps `?q=`;
@@ -1317,7 +1317,7 @@ Bind an empty list as `null`. `count` ignores the filter (A-11).
 
 ### Steps
 
-- [ ] **4.1 Filter query.**
+- [x] **4.1 Filter query.**
   - **Tests first:**
     - `project-list-filter.test.ts`:
       - the grammar table: unknown statuses dropped, a malformed uuid dropped, `to < from` → both dropped on load;
@@ -1330,12 +1330,12 @@ Bind an empty list as `null`. `count` ignores the filter (A-11).
       - the counts are unchanged.
   - **Implement.**
   - Commit `feat(projects): add project list filters`.
-- [ ] **4.2 Shared filter controls.**
+- [x] **4.2 Shared filter controls.**
   - Read the inventory, then build or extend `Checkbox`, `MultiSelect` and the `IconButton` badge.
   - **Tests:** keyboard toggling, labels, the badge's accessible name, disabled.
   - One story each.
   - Commit `feat(ui): add checkbox, multi-select and icon button badge`.
-- [ ] **4.3 Filter dialog.**
+- [x] **4.3 Filter dialog.**
   - **Precondition:** the 4 Slice 4 exports.
   - **Tests first** (`project-filter-dialog.test.tsx`, `projects-table.test.tsx` +):
     - every state row;
@@ -1453,7 +1453,7 @@ A divider separates non-empty groups. The *KIRIM KE KLIEN* label sits above `sen
 
 ### Steps
 
-- [ ] **5.1 Backend.**
+- [x] **5.1 Backend.**
   - **Tests first:**
     - `project-menu.test.ts`: one case per spec row (DRAFT, BOOKED, SHOOTING, POST_PROCESSING, DELIVERED, COMPLETED, CANCELLED), the no-number case and the AC-PRJ-027 rows;
     - `update-project-info.test.ts`: title and notes change in SHOOTING; a price change in SHOOTING → `DEAL_LOCKED`; CANCELLED → `PROJECT_CANCELLED` (AC-PRJ-018);
@@ -1466,7 +1466,7 @@ A divider separates non-empty groups. The *KIRIM KE KLIEN* label sits above `sen
       - workspace B → `NOT_FOUND`.
   - **Implement.**
   - Commit `feat(projects): add project info, cancel and delete backend`.
-- [ ] **5.2 Menu and dialogs.**
+- [x] **5.2 Menu and dialogs.**
   - **Precondition:** the 14 Slice 5 exports.
   - **Tests first** (`project-menu.test.tsx`, `project-info-dialog.test.tsx`, `project-status-dialogs.test.tsx`, `use-project-actions.test.ts` +, `compact-bar.test.tsx` +):
     - every state row;
@@ -1479,7 +1479,7 @@ A divider separates non-empty groups. The *KIRIM KE KLIEN* label sits above `sen
     - *Ubah info* locked price.
   - **Implement**, then compare.
   - Commit `feat(projects): add the project menu and dialogs`.
-- [ ] **5.3 E2E.** Add to `projects.spec.ts`:
+- [x] **5.3 E2E.** Add to `projects.spec.ts`:
   - *Mulai pemotretan* from the row menu (chip *Pemotretan*, toast);
   - cancel a SHOOTING project: required error, then a reason → banner with the reason;
   - delete a draft → list + toast;
@@ -1551,7 +1551,7 @@ Session dialog on the detail: title *Tambah sesi* / *Ubah sesi*, description *Pe
 
 ### Steps
 
-- [ ] **6.1 Backend.**
+- [x] **6.1 Backend.**
   - **Tests first** (use cases on the fakes):
     - every deal edit in SHOOTING → `DEAL_LOCKED` with no change (AC-PRJ-018);
     - add: an existing definition → `definitionId: DUPLICATE_DEFINITION`; archived (*Album lama*) → `DEFINITION_INACTIVE`; *Foto cetak* 10 → appended last with the definition's name, unit and `PRINT` (AC-PRJ-017);
@@ -1564,7 +1564,7 @@ Session dialog on the detail: title *Tambah sesi* / *Ubah sesi*, description *Pe
     - every new method with workspace B → `NOT_FOUND`.
   - **Implement.**
   - Commit `feat(projects): add deal and session edit backend`.
-- [ ] **6.2 Screens.**
+- [x] **6.2 Screens.**
   - **Precondition:** the 14 Slice 6 exports.
   - **Tests first** (`package-items-card.test.tsx` +, `project-item-dialog.test.tsx`, `booking-fields-dialog.test.tsx`, `sessions-card.test.tsx` +, `use-project-actions.test.ts` +):
     - the control table per status;
@@ -1708,7 +1708,7 @@ export function isPackageEdited(
 
 ### Steps
 
-- [ ] **7.1 Inline client (S2b, AC-PRJ-013).**
+- [x] **7.1 Inline client (S2b, AC-PRJ-013).**
   - **Tests first:**
     - `add-client.test.ts`: success returns `{ ok: true, client }` with the new ID; the validation failures are unchanged;
     - `nextProjectTitle` table:
@@ -1728,7 +1728,7 @@ export function isPackageEdited(
     - `nextProjectTitle` in the form hook, for both client and service changes.
   - **Compare** with `new-klien-baru-*`.
   - Commit `feat(projects): create a client from the project form`.
-- [ ] **7.2 Service guards (S2, AC-PRJ-012, AC-PRJ-014).**
+- [x] **7.2 Service guards (S2, AC-PRJ-012, AC-PRJ-014).**
   - **Tests first:**
     - `load-create-options.test.ts`: `hasActiveService: false` when every service is archived; active definitions are returned;
     - `create-project.test.ts`: `CLIENT_INACTIVE` → `clientId`, `SERVICE_INACTIVE` → `serviceId`, `DEFINITION_INACTIVE` / `DUPLICATE_DEFINITION` → `items.N.definitionId`;
@@ -1739,7 +1739,7 @@ export function isPackageEdited(
     - `create-project-screen.test.tsx`: after a `SERVICE_INACTIVE` failure every other field keeps its value, and focus moves to *Layanan*.
   - **Implement**, then compare with `new-tanpa-layanan-aktif-*` and `new-layanan-tidak-aktif-*`.
   - Commit `feat(projects): guard the project form against inactive clients and services`.
-- [ ] **7.3 Package edits and service change (S2c create mode, S2d, AC-PRJ-030).**
+- [x] **7.3 Package edits and service change (S2c create mode, S2d, AC-PRJ-030).**
   - **Tests first:**
     - `package-draft.test.ts`:
       - each action, with order kept and an added item last (A-7);
@@ -1759,7 +1759,7 @@ export function isPackageEdited(
   - **Implement:** the draft in `use-create-project-form` (`useReducer` + `reducePackageDraft`), the card in create mode, the reused dialogs, and `change-service-dialog`.
   - **Compare** with `new-tambah-item-*`, `new-ubah-nilai-*`, `new-hapus-item-*` and `new-ganti-layanan-*` at 1440 and 390.
   - Commit `feat(projects): edit the package and change the service before saving`.
-- [ ] **7.4 E2E.** Extend `projects.spec.ts`:
+- [x] **7.4 E2E.** Extend `projects.spec.ts`:
   1. On *Proyek baru*, type *Sar*, choose *Tambah klien baru “Sar”*, save *Sari* with a number. *Sari* is selected and the title reads *{layanan} — Sari*.
   2. Pick *Wisuda Basic*, set *Foto edit* 30, remove *Jumlah orang*, add *Foto cetak* 10.
   3. Switch to another service, cancel the confirm, and check the edits are still there.
@@ -1780,7 +1780,7 @@ export function isPackageEdited(
 
 Screens: all (S1–S3c), end to end.
 
-- [ ] **8.1 E2E journeys.** Complete `tests/e2e/projects/projects.spec.ts`. It reuses the helpers from 2.3 and `registerAndVerify` / `uniqueEmail` from `tests/e2e/auth/auth-e2e.ts`. Every journey is one `test(...)` named with its AC IDs:
+- [x] **8.1 E2E journeys.** Complete `tests/e2e/projects/projects.spec.ts`. It reuses the helpers from 2.3 and `registerAndVerify` / `uniqueEmail` from `tests/e2e/auth/auth-e2e.ts`. Every journey is one `test(...)` named with its AC IDs:
 
   | Journey | Checks |
   |---|---|
@@ -1795,7 +1795,7 @@ Screens: all (S1–S3c), end to end.
   | AC-PRJ-025 | a second account opens the first account's project URL → not found |
 
   Commit `test(projects): complete project journeys`.
-- [ ] **8.2 Accessibility (AC-PRJ-026).**
+- [x] **8.2 Accessibility (AC-PRJ-026).** _Accepted partial by the Owner 2026-10-04: axe runs on the main surfaces; the remaining dialogs in both themes and the keyboard-only tests are open follow-ups._
   - Add `expectProjectsA11y(page)`, a copy of `expectCatalogA11y` (wait until `[data-entering], [data-exiting]` count is 0, then axe with `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`, and expect no violations).
   - Run it on each surface at 1440×900 and 390×844, in light, and in dark through `page.emulateMedia({ colorScheme: "dark" })`:
     - the list (populated and empty);
@@ -1811,12 +1811,12 @@ Screens: all (S1–S3c), end to end.
     - open the row menu with Enter, Escape closes, and focus returns to ⋯;
     - every dialog traps focus and returns it to its trigger.
   - Commit `test(projects): check project screens for accessibility`.
-- [ ] **8.3 Fidelity.**
+- [x] **8.3 Fidelity.** _Accepted by the Owner 2026-10-04 without the full 92-export comparison; only the list, the Dibooking detail and the create form were compared. Later deviations are fixed as bugs._
   - Start the dev server with `preview_start`.
   - For each of the 92 exports: open the export file and the matching app state at the same width (1440 or 390), take both screenshots, and compare structure, copy, spacing and tokens.
   - Fix every deviation that is a bug. Record the intentional ones (literal sizes, the documented COMPONENT GAPs) in the implementation record.
   - Commit fixes as `fix(projects): match {screen} to the design`.
-- [ ] **8.4 Full gate and record.**
+- [x] **8.4 Full gate and record.**
   - Run `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm test:integration`, `pnpm build` and the E2E suite; all pass.
   - Append *Implementation record* to `technical-design.md`:
     - date and commits;

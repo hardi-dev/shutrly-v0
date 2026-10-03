@@ -1,6 +1,6 @@
 # Technical Design — F-07 Projects
 
-Status: IN PROGRESS (Slices 0–1 built 2026-10-03) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
+Status: IN PROGRESS (Slices 0–2 built 2026-10-03) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
 
 ## Context
 
@@ -402,3 +402,34 @@ See [plan.md](plan.md): vertical slices by screen (Slice 0–8), test-first, one
 
 **Visual check:** the filled form was compared with `new-terisi-desktop-QeT50` at 1440, and the empty and filled forms with the phone exports at 390. Layout, copy, Compact Bar, sticky bar and the *Wisuda* group label match apart from deviations 3, 5 and 6. The check used a service without items and booking fields, so the item rows and the *Field booking* card were checked by their tests rather than by eye.
 
+## Implementation record — Slice 2 (2026-10-03)
+
+**Scope built:** the project detail page (S3) read-only with the three status steps. Commits: `47d643f` (manual-test fixes to Slice 1), `46cf832` (backend), `4978da9` (screen), and the E2E commit after them.
+
+**Manual-test fixes to Slice 1 (`47d643f`):** the Owner tried the form in the browser and reported four problems. The calendar popover opened at the top-left (the trigger was not wrapped in a React Aria `Group`, so it had no anchor); the client picker and the calendar were not bottom sheets on phones (`Combobox` and `DateField` now switch on `useMobileViewport`, like `Select`); and *Buat proyek* ran off the right edge on a 375 px phone (the footer buttons now shrink). Phone-mode tests were added for the combobox sheet and the calendar sheet.
+
+**Checks:**
+
+| Check | Result |
+|---|---|
+| `pnpm typecheck` | pass |
+| `pnpm lint` | pass (0 errors) |
+| `pnpm test` | pass (283 files, 956 tests) |
+| `pnpm test:integration tests/integration/booking` | pass (20 tests); other integration suites were not run |
+| `pnpm build` | pass |
+| E2E `tests/e2e/projects` + `app-shell-revamp` | pass (the projects journeys now run the steps and axe on the detail page) |
+
+**AC → test (Slice 2):** AC-PRJ-009 (`advance-project`, `use-project-actions`, E2E) · 015 (`get-project-detail`, `project-detail-screen`, `project-status-chip`, `project-session-summary`, `booking-value-display`, `page-header`, `page-heading-override`) · 016 (`project-repository` integration: catalog edits after create; `project-detail-screen`: locked and cancelled descriptions) · 018 (`get-project-detail`, `project-session-summary`, `project-detail-screen`) · 020 (`advance-project`, `project-repository` integration: two concurrent steps → `MOVED` + `STALE`, `project-detail-screen`, E2E) · 021 (`advance-project`, `use-project-actions`, `project-repository` integration) · 025 (`get-project-detail`, `advance-project`, `project-repository` integration, including `cancellation.byName`).
+
+**Deviations and decisions:**
+
+1. **The phone Bottom Nav is hidden on the detail page**, as on *Proyek baru*. No phone detail export draws a Bottom Nav, including *Pascaproduksi* where there is no step bar either (`hidesBottomNav`). **Owner to confirm.**
+2. **No ⋯ menu and no edit controls are rendered**, as the plan says (Slices 5 and 6). The phone Compact Bar therefore shows no actions yet, and `CompactBar` is not changed in this slice.
+3. **`PageHeader` / `AppPanel` / `AppShell` gained `titleAdornment` and `meta`**, and `PageHeadingOverride` gained `status` (label, tone, dot) and `meta`. `meta` replaces the subtitle. The phone shows the chip and the session line in the screen's own header block (`ProjectStatusChip`, `ProjectSessionSummaryLine`), without the client.
+4. **Two icons were registered**: `calendar-check` (Hugeicons `CalendarCheck01Icon`) and `circle-check-big` (`CheckmarkCircle02Icon`). `ButtonIconName` also allows `camera`. These are the closest Hugeicons to the Lucide names in the exports.
+5. **`PackageItemsCard` got an optional `description`** instead of a second card; the detail page passes the *Bisa diubah…*, *Terkunci…* or *Proyek dibatalkan…* text. The project items are mapped to the service-item shape it already takes.
+6. **Item, session and field rows keep the leading icon** that `ListCardItem` requires (same as Slice 1 deviation 5). The detail Info and Field booking cards are a plain label/value list (`ProjectFacts`), not a shared pattern, because no existing unit shows facts.
+7. **`SPEC GAP` (low risk, resolved with a default):** a cancelled project whose canceller was deleted has `byName = null`. The alert then reads *Dibatalkan pada {tanggal}.* `// not in Pencil`. The cancel date is shown in `Asia/Jakarta`.
+8. **The step buttons use `Button` with `iconLeading`.** Pending shows the `loading-03` spinner and the *…* label, which is the existing Button pending state (the export's Loading variant).
+9. **`getProjectDetail` takes `today`** from `todayInScheduleZone(new Date())` in `project-flow`, so the shown session is decided on the server.
+10. **Not verified in the browser:** the *Dibatalkan*, *Draf*, *Pemotretan* and *Pascaproduksi* views and the toasts' look (they are covered by tests and the E2E). Only a *Dibooking* project was compared by eye against the exports at 1440 and 390.

@@ -1060,7 +1060,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
 
 ### Steps
 
-- [ ] **2.1 Detail and step backend.**
+- [x] **2.1 Detail and step backend.**
   - **Tests first:**
     - `get-project-detail.test.ts`: the flags for all 7 statuses; the shown session with the injected `today` (AC-PRJ-015, 018);
     - `advance-project.test.ts`: no session → `SESSION_REQUIRED`; stored ≠ from → `STALE`; from CANCELLED → `STALE`; an invalid step → throws not-found (AC-PRJ-009, 020, 021);
@@ -1071,7 +1071,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
       - a seeded cancelled project returns `cancellation.byName`.
   - **Implement.**
   - Commit `feat(projects): add project detail and status steps backend`.
-- [ ] **2.2 Detail screen.**
+- [x] **2.2 Detail screen.**
   - **Precondition:** the 16 Slice 2 exports.
   - **Tests first:** `project-detail-screen.test.tsx`, `project-session-summary.test.ts`, `use-project-actions.test.ts`, the `page-header` test. Every row of the state table, plus:
     - the step button's icon and label per status;
@@ -1079,7 +1079,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
     - `?state=created` shows the toast once (`dedupeKey` `project-created:<id>`).
   - **Implement**, then compare the 16 exports.
   - Commit `feat(projects): add the project detail page`.
-- [ ] **2.3 E2E.** Create `tests/e2e/projects/projects.spec.ts` with helpers `createWorkspace`, `seedCatalog` (through the services UI, like `catalog.spec.ts`) and `createClientViaUi` (F-06 UI). Journeys:
+- [x] **2.3 E2E.** Create `tests/e2e/projects/projects.spec.ts` with helpers `createWorkspace`, `seedCatalog` (through the services UI, like `catalog.spec.ts`) and `createClientViaUi` (F-06 UI). Journeys:
   - create a booked project → detail with *Proyek dibuat* → *Mulai pemotretan* (toast) → *Selesai pemotretan* → no step;
   - save a draft → *Konfirmasi booking* without a session shows the session-required toast.
 

@@ -29,4 +29,9 @@ describe("IconButton (C02)", () => {
     expect(screen.getByRole("button", { name: "Notifikasi, 99 belum dibaca" })).toBeInTheDocument();
     expect(screen.getByText("99+")).toBeInTheDocument();
   });
+
+  it("AC-PRJ-028 names the filter button with its count and badge label", () => {
+    render(<IconButton icon="list-filter" aria-label="Filter" badgeCount={2} badgeLabel="aktif" />);
+    expect(screen.getByRole("button", { name: "Filter, 2 aktif" })).toBeInTheDocument();
+  });
 });

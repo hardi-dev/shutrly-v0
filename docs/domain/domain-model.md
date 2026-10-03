@@ -19,10 +19,10 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25). Business-oriented; pe
 
 **Engagement**
 - **Client** — customer record: name, optional WhatsApp number, social-media links; never logs in; archived rather than deleted once it has projects (BR-CLI-001..003).
-- **Project** — one engagement for one client; operational aggregate; owns the client access token and agreed price.
+- **Project** — one engagement for one client; operational aggregate; owns the client access token, title, internal notes, agreed price and its sessions (the schedule; there is no separate event date). Created as `DRAFT` or `BOOKED`; its deal is editable until shooting starts (BR-PRJ-008..010).
 - **ProjectItem** — frozen snapshot of an agreed package benefit.
 - **ProjectFieldValue** — frozen booking input with field metadata snapshot.
-- **Session** — a shoot within a project.
+- **Session** — a shoot within a project: name, date, optional start and end time, optional location (BR-TEAM-003). A `BOOKED`-or-later project has at least one.
 - **TeamMember** — freelancer resource; **ProjectAssignment** — their role/fee on a project.
 
 **Gallery & selection**
@@ -86,10 +86,12 @@ classDiagram
 stateDiagram-v2
     state Project {
       [*] --> DRAFT
-      DRAFT --> BOOKED
-      BOOKED --> SHOOTING
-      SHOOTING --> POST_PROCESSING
+      DRAFT --> BOOKED : Owner
+      BOOKED --> SHOOTING : Owner
+      SHOOTING --> POST_PROCESSING : Owner
       POST_PROCESSING --> DELIVERED : publish final delivery
+      BOOKED --> DELIVERED : publish final delivery
+      SHOOTING --> DELIVERED : publish final delivery
       DELIVERED --> COMPLETED : Owner
       DRAFT --> CANCELLED
       BOOKED --> CANCELLED

@@ -8,6 +8,7 @@ import { clientListQuerySchema } from "@/features/booking/application/schemas/cl
 import { addClient } from "@/features/booking/application/use-cases/add-client/add-client";
 import { countClients } from "@/features/booking/application/use-cases/count-clients/count-clients";
 import { deleteClient } from "@/features/booking/application/use-cases/delete-client/delete-client";
+import { getClient } from "@/features/booking/application/use-cases/get-client/get-client";
 import { listClients } from "@/features/booking/application/use-cases/list-clients/list-clients";
 import { setClientArchived } from "@/features/booking/application/use-cases/set-client-archived/set-client-archived";
 import { updateClient } from "@/features/booking/application/use-cases/update-client/update-client";
@@ -122,5 +123,15 @@ export async function loadMoreClients(rawWorkspaceId: string, rawQuery: unknown)
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "list");
+  }
+}
+
+export async function loadClientForEdit(rawWorkspaceId: string, rawClientId: string) {
+  const clientId = idOrNotFound(rawClientId);
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withClientScope(({ clients }) => getClient(clients, verified.context, clientId));
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "get");
   }
 }

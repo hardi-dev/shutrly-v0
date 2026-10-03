@@ -56,7 +56,6 @@ const SECTION_TITLES: Readonly<Record<string, string>> = {
   team: OWNER_NAV_COPY.team,
   "message-templates": OWNER_NAV_COPY.messageTemplates,
   "photo-sources": OWNER_NAV_COPY.photoSources,
-  "new-project": OWNER_NAV_COPY.create,
   search: OWNER_NAV_COPY.search,
   notifications: OWNER_NAV_COPY.notifications,
 };
@@ -95,9 +94,36 @@ export function resolvePageHeading(
     return { title: OWNER_NAV_COPY.photoSources, subtitle: OWNER_NAV_COPY.photoSourcesSubtitle };
   }
   if (section === "clients") return resolveClientsHeading(pathname, prefix);
+  if (section === "projects") return resolveProjectsHeading(pathname, prefix);
   if (section === "services") return resolveServicesHeading(pathname, prefix, workspaceName);
   const title = SECTION_TITLES[section];
   return title ? { title, subtitle: OWNER_NAV_COPY.comingSoonSubtitle } : null;
+}
+
+function resolveProjectsHeading(pathname: string, prefix: string): PageHeading {
+  const base = `${prefix}/projects`;
+  const rest = pathname.slice(base.length).split("/").filter(Boolean).join("/");
+  const tabs = [
+    { label: OWNER_NAV_COPY.projectTabs.active, href: base, isActive: rest === "" },
+    {
+      label: OWNER_NAV_COPY.projectTabs.completed,
+      href: `${base}/completed`,
+      isActive: rest === "completed",
+    },
+    {
+      label: OWNER_NAV_COPY.projectTabs.cancelled,
+      href: `${base}/cancelled`,
+      isActive: rest === "cancelled",
+    },
+  ];
+  // Proyek baru and a project's detail are sub-pages: they set their own heading and have no tabs.
+  if (!tabs.some((tab) => tab.isActive)) return { title: OWNER_NAV_COPY.projects };
+  return {
+    title: OWNER_NAV_COPY.projects,
+    subtitle: OWNER_NAV_COPY.projectsSubtitle,
+    mobileSubtitle: OWNER_NAV_COPY.projectsMobileSubtitle,
+    tabs: { label: OWNER_NAV_COPY.projectsTabsLabel, tabs },
+  };
 }
 
 function resolveClientsHeading(pathname: string, prefix: string): PageHeading {

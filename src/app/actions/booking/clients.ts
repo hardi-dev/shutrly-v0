@@ -15,7 +15,7 @@ const PAGE = "/w/[workspaceId]/clients";
 export async function addClientAction(workspaceId: string, values: unknown) {
   const result = await addWorkspaceClient(workspaceId, values);
   if (result.ok) revalidatePath(PAGE, "layout");
-  return result.ok ? undefined : result;
+  return result;
 }
 
 export async function loadMoreClientsAction(workspaceId: string, query: unknown) {

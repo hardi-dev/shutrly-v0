@@ -42,7 +42,9 @@ export function ClientDialog(props: Readonly<ClientDialogProps>) {
     <ClientSaveButton isPending={controller.isPending} mobile={mobile} isEditing={isEditing} />
   );
   const title = isEditing ? CLIENT_COPY.editDialogTitle : CLIENT_COPY.dialogTitle;
-  const description = isEditing ? CLIENT_COPY.editDialogDescription : CLIENT_COPY.dialogDescription;
+  const description =
+    props.description ??
+    (isEditing ? CLIENT_COPY.editDialogDescription : CLIENT_COPY.dialogDescription);
   if (mobile)
     return (
       <BottomSheet
@@ -83,14 +85,14 @@ export function ClientDialog(props: Readonly<ClientDialogProps>) {
 function useClientDialogForm(props: Readonly<ClientDialogProps>) {
   const form = useForm<ClientInput, unknown, ClientFields>({
     resolver: zodResolver(clientInputSchema),
-    defaultValues: clientFormValues(props.client),
+    defaultValues: clientFormValues(props.client, props.initialName),
     shouldFocusError: true,
   });
   const [isPending, setIsPending] = useState(false);
   const [numberHolder, setNumberHolder] = useState<NumberHolder | undefined>();
   useEffect(() => {
     if (props.isOpen) {
-      form.reset(clientFormValues(props.client));
+      form.reset(clientFormValues(props.client, props.initialName));
       form.clearErrors();
       const clearHolder = window.setTimeout(() => {
         setNumberHolder(undefined);
@@ -100,7 +102,7 @@ function useClientDialogForm(props: Readonly<ClientDialogProps>) {
       };
     }
     return undefined;
-  }, [form, props.client, props.isOpen]);
+  }, [form, props.client, props.initialName, props.isOpen]);
   async function submit(): Promise<void> {
     if (!(await form.trigger())) return;
     setIsPending(true);
@@ -112,6 +114,7 @@ function useClientDialogForm(props: Readonly<ClientDialogProps>) {
         setServerErrors(form, result.fieldErrors);
         return;
       }
+      if (result?.ok && result.client) props.onCreated?.(result.client);
       props.onOpenChange(false);
     } catch {
       // The mutation hook presents a retryable failure toast and the raw values remain in the form.
@@ -126,8 +129,8 @@ function useClientDialogForm(props: Readonly<ClientDialogProps>) {
   return { form, isPending, handleSubmit, numberHolder };
 }
 
-function clientFormValues(client: ClientDialogProps["client"]): ClientInput {
-  if (!client) return DEFAULT_VALUES;
+function clientFormValues(client: ClientDialogProps["client"], initialName = ""): ClientInput {
+  if (!client) return { ...DEFAULT_VALUES, name: initialName };
   return {
     name: client.name,
     whatsappNumber: client.whatsappNumber ? formatWhatsappNumber(client.whatsappNumber) : "",

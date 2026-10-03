@@ -109,4 +109,9 @@ describe("Input", () => {
       "data-disabled:text-(--component-input-text-disabled)",
     );
   });
+
+  it("marks the prefix of a disabled input as disabled so contrast checks skip it", () => {
+    render(<Input aria-label="Harga" prefix="Rp" isDisabled value="1" onChange={vi.fn()} />);
+    expect(screen.getByTestId("input-adornment-leading")).toHaveAttribute("aria-disabled", "true");
+  });
 });

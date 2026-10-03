@@ -60,4 +60,22 @@ describe("PageHeader", () => {
       screen.getAllByText("Kategori").find((element) => element.getAttribute("aria-current")),
     ).toHaveAttribute("aria-current", "page");
   });
+
+  it("AC-PRJ-015 puts the adornment after the title and the meta in place of the subtitle", () => {
+    render(
+      <PageHeader
+        parent="Proyek"
+        current="Wisuda Basic — Rina"
+        title="Wisuda Basic — Rina"
+        subtitle="Tidak dipakai"
+        meta="Rina · Belum ada jadwal"
+        titleAdornment={<span>Dibooking</span>}
+      />,
+    );
+
+    const heading = screen.getByRole("heading", { level: 1, name: "Wisuda Basic — Rina" });
+    expect(heading.nextElementSibling).toHaveTextContent("Dibooking");
+    expect(screen.getByText("Rina · Belum ada jadwal")).toBeInTheDocument();
+    expect(screen.queryByText("Tidak dipakai")).not.toBeInTheDocument();
+  });
 });

@@ -140,12 +140,13 @@ test("AC-SHELL-007 AC-SHELL-008 AC-SHELL-013 phone menu, CTA and utilities", asy
   await expect(page.getByRole("heading", { level: 1, name: OWNER_NAV_COPY.team })).toBeVisible();
 
   await page.getByRole("button", { name: OWNER_NAV_COPY.create }).click();
-  await expect(page).toHaveURL(`${home}/projects`);
-  await expect(page.getByRole("link", { name: OWNER_NAV_COPY.projects })).toHaveAttribute(
-    "aria-current",
-    "page",
-  );
+  await expect(page).toHaveURL(`${home}/projects/new`);
+  // Proyek baru is a sub-page: the Compact Bar replaces the Mobile Header and the Bottom Nav is hidden.
+  await expect(page.getByRole("heading", { level: 1, name: "Proyek baru" })).toBeVisible();
+  await expect(page.getByRole("link", { name: OWNER_NAV_COPY.projects })).toHaveCount(0);
 
+  // Sub-pages have no utilities, so open notifications from the dashboard.
+  await page.goto(home);
   await page.getByRole("button", { name: OWNER_SHELL_COPY.notifications }).click();
   await expect(page).toHaveURL(`${home}/notifications`);
   await expect(

@@ -11,13 +11,12 @@ import type {
 import { socialLinksSchema } from "@/features/booking/domain/social-link/social-link.schema";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
-import { pgCode } from "../catalog-repository/pg-error";
+import { isReferencedRowError, pgCode } from "../catalog-repository/pg-error";
 import type { DbExecutor } from "../client/client.types";
 import { client } from "../schema/booking/client";
 
 const LIKE_SPECIAL = /[\\%_]/g;
 const DUPLICATE_KEY = "23505";
-const FOREIGN_KEY = "23503";
 
 function searchCondition(query: ClientPageQuery) {
   if (!query.search) return undefined;
@@ -50,8 +49,29 @@ function toRecord(row: {
   };
 }
 
+async function findClientById(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  id: string,
+): Promise<ClientRecord | null> {
+  const row = (
+    await db
+      .select({
+        id: client.id,
+        name: client.name,
+        whatsappNumber: client.whatsappNumber,
+        socialLinks: client.socialLinks,
+        archivedAt: client.archivedAt,
+      })
+      .from(client)
+      .where(and(eq(client.workspaceId, context.workspaceId), eq(client.id, id)))
+  ).at(0);
+  return row ? toRecord(row) : null;
+}
+
 export function createDrizzleClientRepository(db: DbExecutor): ClientRepositoryPort {
   return {
+    findById: (context, id) => findClientById(db, context, id),
     async listPage(context, query) {
       const status =
         query.status === "ACTIVE" ? isNull(client.archivedAt) : isNotNull(client.archivedAt);
@@ -117,7 +137,7 @@ async function deleteClient(db: DbExecutor, context: WorkspaceContext, id: strin
       .returning({ id: client.id });
     return rows.length > 0 ? ("DELETED" as const) : ("NOT_FOUND" as const);
   } catch (error) {
-    if (pgCode(error) === FOREIGN_KEY) return "IN_USE" as const;
+    if (isReferencedRowError(error)) return "IN_USE" as const;
     throw error;
   }
 }
@@ -151,14 +171,17 @@ async function updateClient(
 
 async function createClient(db: DbExecutor, context: WorkspaceContext, change: ClientChange) {
   try {
-    await db.insert(client).values({
-      workspaceId: context.workspaceId,
-      name: change.name,
-      whatsappNumber: change.whatsappNumber,
-      socialLinks: change.socialLinks,
-      updatedBy: change.editorUserId,
-    });
-    return { status: "CREATED" } as const;
+    const rows = await db
+      .insert(client)
+      .values({
+        workspaceId: context.workspaceId,
+        name: change.name,
+        whatsappNumber: change.whatsappNumber,
+        socialLinks: change.socialLinks,
+        updatedBy: change.editorUserId,
+      })
+      .returning({ id: client.id });
+    return { status: "CREATED", id: rows.at(0)?.id ?? "" } as const;
   } catch (error) {
     if (pgCode(error) !== DUPLICATE_KEY || change.whatsappNumber === null) throw error;
     const holder = await findNumberHolder(db, context, change.whatsappNumber);

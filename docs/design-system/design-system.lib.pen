@@ -114834,7 +114834,7 @@
     },
     "component/icon-button/border": {
       "type": "color",
-      "value": "$color/semantic/border/default"
+      "value": "$color/semantic/border/input"
     },
     "component/icon-button/icon": {
       "type": "color",

@@ -175,7 +175,7 @@ The Owner may archive a client and restore it. An archived client keeps its data
 ## Project (PRJ)
 
 ### BR-PRJ-001 — Snapshot on creation
-Creating a project from a service atomically copies every service item (with name, valueType, value, unit, selectionRequired, selectionType) into `ProjectItem`s and every booking value (with fieldKey, fieldName, fieldType) into `ProjectFieldValue`s. Snapshots are the authoritative deal; `serviceId` is only an origin reference.
+Creating a project from a service atomically copies every service item (with name, valueType, value, unit, selectionRequired, selectionType) into `ProjectItem`s and every booking value (with fieldKey, fieldName, fieldType) into `ProjectFieldValue`s. While creating the project, the Owner may already adjust the deal as BR-PRJ-009 allows (item values, removing items, adding items from active definitions), and the snapshot stores the adjusted items in the same transaction. *(F-07 design, Owner 2026-10-02.)* Snapshots are the authoritative deal; `serviceId` is only an origin reference.
 
 ### BR-PRJ-002 — One value per booking field
 A project has at most one value per logical booking `fieldKey`. Required booking fields must be valid on creation.
@@ -185,7 +185,7 @@ Each project gets one cryptographically random, unique, high-entropy client acce
 
 ### BR-PRJ-004 — Project lifecycle
 `DRAFT → BOOKED → SHOOTING → POST_PROCESSING → DELIVERED → COMPLETED`; `DRAFT | BOOKED | SHOOTING → CANCELLED` (cancel from `SHOOTING` requires an audit reason). `CANCELLED` is terminal in MVP.
-**SPEC GAP (deferred to F-07 discovery):** whether `BOOKED → SHOOTING` and `SHOOTING → POST_PROCESSING` are manual Owner actions or derived from sessions; from which states final delivery may move a project to `DELIVERED` (see BR-DEL-003).
+`DRAFT → BOOKED`, `BOOKED → SHOOTING` and `SHOOTING → POST_PROCESSING` are manual Owner actions, one step forward at a time; sessions never move a project's status. Moving a project to `BOOKED` (created as `BOOKED` or confirmed from `DRAFT`) requires at least one session (BR-TEAM-003). Publishing final delivery moves a `BOOKED`, `SHOOTING` or `POST_PROCESSING` project to `DELIVERED` (BR-DEL-003). No transition goes backwards. *(F-07 discovery, Owner 2026-10-02.)*
 
 ### BR-PRJ-005 — Completion is manual
 Only the Owner can move a `DELIVERED` project to `COMPLETED`, recording actor and timestamp. Outstanding invoice balances are shown as a warning but never block completion.
@@ -196,6 +196,15 @@ Invoice or payment state never changes project status automatically.
 ### BR-PRJ-007 — Currency snapshot
 A project snapshots its service's currency; all project prices, add-ons, and invoices use that currency.
 
+### BR-PRJ-008 — Project record
+A project belongs to one workspace, one client and one service of that workspace (BR-WS-002). It is created from an active service for an active client (BR-CAT-008, BR-CLI-003); archiving either later leaves the project unchanged. It has a title (1–100 characters after trimming, not unique), optional internal notes (at most 2000 characters, never shown to the client) and an agreed price (whole IDR, ≥ 0) that starts at the service's base price. The Owner creates it either as `DRAFT` or directly as `BOOKED`; both require valid required booking fields (BR-PRJ-002), and `BOOKED` also requires at least one session (BR-TEAM-003). The project has no event date of its own: its schedule is its sessions. *(F-07 discovery, Owner 2026-10-02; event date replaced by sessions in F-07 design, Owner 2026-10-02.)*
+
+### BR-PRJ-009 — The deal is editable until shooting starts
+While a project is `DRAFT` or `BOOKED`, the Owner may change its agreed price, the values of its project items, its booking-field values, and add or remove project items. An added item is snapshotted from an active item definition that the project doesn't use yet (one item per definition per project), with values valid under BR-CAT-001/002. Edited booking values must stay valid for the snapshotted field type; required fields stay required. Field metadata (key, name, type, options) never changes. From `SHOOTING` onwards the deal is read-only; later changes go through add-ons (BR-ADD-*) or invoices. Edits never touch the service template (BR-CAT-003). *(F-07 discovery, Owner 2026-10-02.)*
+
+### BR-PRJ-010 — Deleting and cancelling projects
+A `DRAFT` project can be deleted permanently, with its snapshots. Any other project is never deleted: `BOOKED` and `SHOOTING` projects are cancelled instead (BR-PRJ-004), recording actor and timestamp (BR-AUD-001). *(F-07 discovery, Owner 2026-10-02.)*
+
 ---
 
 ## Team & Sessions (TEAM)
@@ -204,8 +213,11 @@ A project snapshots its service's currency; all project prices, add-ons, and inv
 Freelancers are workspace `TeamMember`s without login. A project may have zero, one, or many assignments, each with its own role and fee.
 
 ### BR-TEAM-002 — Sessions belong to a project
-A project may have 0..* sessions. Photos may optionally reference a session of the same project.
+A project may have 0..* sessions; a project that is `BOOKED` or later keeps at least one (BR-TEAM-003). Photos may optionally reference a session of the same project.
 **SPEC GAP (deferred to F-08 discovery):** session status values and assignment status values.
+
+### BR-TEAM-003 — Session record
+A session is one shoot of a project, created and edited by the Owner (F-07; team assignments stay in F-08). It has a name (1–100 characters after trimming, e.g. *Akad*, *Resepsi*), a date, an optional start time, an optional end time (only with a start time, and later than it on the same day) and an optional location (free text, at most 200 characters). Times are local wall-clock times of the workspace, stored without a time zone. Sessions are listed by date, then start time (sessions without a time first), then creation time. A `DRAFT` project may have none; creating a project as `BOOKED` or confirming a draft requires at least one, and the last session of a `BOOKED`-or-later project can't be deleted. Sessions can be added, edited and deleted in every status except `CANCELLED`. *(F-07 design, Owner 2026-10-02.)*
 
 ---
 
@@ -291,7 +303,7 @@ Final delivery uses the existing gallery link and password. No separate delivery
 `EDITED`/`PRINT` files are hidden from clients until final delivery is published. They are never selectable and never count toward limits.
 
 ### BR-DEL-003 — Publishing final delivery
-Requires at least one synced `EDITED` or `PRINT` file; records `finalDeliveryPublishedAt` and moves the project to `DELIVERED` (never to `COMPLETED`).
+Requires at least one synced `EDITED` or `PRINT` file and a project in `BOOKED`, `SHOOTING` or `POST_PROCESSING` (BR-PRJ-004); records `finalDeliveryPublishedAt` and moves the project to `DELIVERED` (never to `COMPLETED`).
 
 ### BR-DEL-004 — Independent finished files
 Each finished file is an independent download with no link to its original proof photo; no inference from names/paths.

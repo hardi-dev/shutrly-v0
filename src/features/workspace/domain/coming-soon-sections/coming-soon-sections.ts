@@ -1,11 +1,4 @@
-export const COMING_SOON_SECTIONS = [
-  "projects",
-  "invoices",
-  "team",
-  "new-project",
-  "search",
-  "notifications",
-] as const;
+export const COMING_SOON_SECTIONS = ["invoices", "team", "search", "notifications"] as const;
 
 export type ComingSoonSection = (typeof COMING_SOON_SECTIONS)[number];
 

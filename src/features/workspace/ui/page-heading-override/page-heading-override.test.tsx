@@ -25,4 +25,25 @@ describe("PageHeadingOverride", () => {
     view.unmount();
     expect(onChange).toHaveBeenLastCalledWith(null);
   });
+
+  it("AC-PRJ-015 publishes the status chip and meta for a detail header", () => {
+    const onChange = vi.fn();
+    render(
+      <PageHeadingOverrideProvider onChange={onChange}>
+        <PageHeadingOverride
+          title="Wisuda Basic — Rina"
+          status={{ label: "Dibooking", tone: "info", hasDot: true }}
+          meta="Rina · Belum ada jadwal"
+          parent={{ label: "Proyek", href: "/w/ws/projects" }}
+        />
+      </PageHeadingOverrideProvider>,
+    );
+
+    expect(onChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        status: { label: "Dibooking", tone: "info", hasDot: true },
+        meta: "Rina · Belum ada jadwal",
+      }),
+    );
+  });
 });

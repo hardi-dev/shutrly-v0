@@ -1,9 +1,35 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 DONE and merged to `main`) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `main` (F-04 via PR #1, F-05 via PR #3 and F-06 from `codex/clients` are on `main`).
+Last updated: 2026-10-04 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 DONE and merged to `main`; F-07 DONE, accepted by the Owner 2026-10-04) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `feat/projects` (`main` merged in) (F-04 via PR #1, F-05 via PR #3 and F-06 from `codex/clients` are on `main`).
 
-## Current handoff — F-06 Clients DONE (2026-10-03)
+## Current handoff — F-07 Projects DONE (2026-10-04)
+
+- **Accepted by the Owner 2026-10-04** with open follow-ups: the 92-export fidelity pass (8.3), the remaining dialogs in both themes and keyboard-only a11y tests (8.2), the six flaky E2E tests, and `pnpm install` once. Nothing is pushed and no PR is open.
+- The notes below were written mid-build; Slices 0–8 are all built.
+
+- **Built on `feat/projects`:** Slice 0 (base check, `main` merged, [component inventory](features/projects/component-inventory.md)), Slice 1 (*Proyek baru*) and Slice 2 (the read-only project detail page with the *Konfirmasi booking* / *Mulai pemotretan* / *Selesai pemotretan* steps). Slice 1: domain rules, tables and migration `0009`, create backend, shared Combobox / DateField / TimeField / Select sections, and the create screen with sessions and booking fields.
+  - **Migration:** `0009_project` is applied to the non-production database.
+  - **Gate:** typecheck, lint, 918 unit tests, booking integration (16), build and the projects and app-shell E2E suites pass. See the [implementation records](features/projects/technical-design.md#implementation-record--slice-1-2026-10-03).
+- **Try it:** `/w/<id>/projects/new`; *Buat proyek* and *Simpan draf* open `/w/<id>/projects/<projectId>`, which shows the cards and the next step. `/projects` is still the coming-soon page (Slice 3).
+- **Owner actions and decisions:**
+  - run `pnpm install` once: `@internationalized/date` was added to `package.json` and the lockfile by hand because `pnpm add` refuses here (store mismatch);
+  - the exports draw item and session rows without a leading icon, but `ListCardItem` requires one (deviation 5);
+  - the phone Bottom Nav is hidden on *Proyek baru* and on the project detail (Slice 1 deviation 4, Slice 2 deviation 1).
+- **Fixed on the way:** deleting a client, service, category or definition that a project uses now returns `IN_USE` (a `RESTRICT` violation is `23001`). This closes F-06's AC-CLI-015 real-FK carry-over.
+- **Next:** `/sdv:verify-feature projects`. It should also do the design-fidelity pass of the 92 exports (plan step 8.3, not done) and finish the keyboard-only accessibility checks (8.2, partial).
+
+- **Spec:** [spec.md](features/projects/spec.md), [acceptance-criteria.md](features/projects/acceptance-criteria.md) (AC-PRJ-001…026).
+- **Domain updates:** BR-PRJ-004's SPEC GAP is resolved (manual steps; no backwards moves; final delivery from `BOOKED`/`SHOOTING`/`POST_PROCESSING`). BR-DEL-003 now names those states. New rules are BR-PRJ-008 (record), BR-PRJ-009 (deal editable while `DRAFT`/`BOOKED`) and BR-PRJ-010 (delete drafts, cancel the rest). The domain-model lifecycle diagram is updated.
+- **Feature map:** F-04 and F-05 are marked DONE (merged; verification owed). The *Next up* section was rewritten.
+- **Assumptions to confirm in design review:**
+  - A-2: default title *{service} — {client}*;
+  - A-4: filters *Berjalan*/*Selesai*/*Dibatalkan*, ordered by event date;
+  - A-5: status labels;
+  - A-1: routes `/projects`, `/projects/new`, `/projects/[id]`.
+- **Next:** continue `/sdv:design-feature projects` from the design handoff. F-06 build (`/sdv:build-feature clients 1`) is still pending on `feat/clients`.
+
+## Previous handoff — F-06 Clients DONE (2026-10-03)
 
 - **Done:** the Owner marked F-06 DONE after a browser review, and it is merged to `main` from `codex/clients`. The browser-review fixes and the gate are in the [implementation record](features/clients/technical-design.md#implementation-record--2026-10-03).
   - **Fixes:** the search URL loop, the double clear `x`, the full-width Bottom Sheet, and the placeholders and phone social rows.

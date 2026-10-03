@@ -75,7 +75,6 @@ describe("resolveActiveNav", () => {
 describe("resolvePageHeading", () => {
   it.each([
     ["/w/A", { title: "Dasbor", subtitle: "Ringkasan workspace Aster." }],
-    ["/w/A/projects", { title: "Proyek", subtitle: "Segera hadir." }],
     [
       "/w/A/clients",
       {
@@ -180,5 +179,24 @@ describe("resolvePageHeading", () => {
         { label: "Item paket" },
       ],
     });
+  });
+});
+
+describe("projects heading", () => {
+  it("AC-PRJ-001 gives the list routes tabs with the active one marked", () => {
+    const heading = resolvePageHeading("/w/ws/projects/completed", "ws", "Aster");
+    const tabs = heading && "tabs" in heading ? (heading.tabs?.tabs ?? []) : [];
+    expect(heading?.title).toBe("Proyek");
+    expect(heading?.subtitle).toContain("pemotretan");
+    expect(tabs.map((tab) => [tab.label, tab.isActive])).toEqual([
+      ["Aktif", false],
+      ["Selesai", true],
+      ["Dibatalkan", false],
+    ]);
+  });
+
+  it("AC-PRJ-007 gives Proyek baru and a detail no tabs", () => {
+    expect(resolvePageHeading("/w/ws/projects/new", "ws", "Aster")).toEqual({ title: "Proyek" });
+    expect(resolvePageHeading("/w/ws/projects/abc", "ws", "Aster")).toEqual({ title: "Proyek" });
   });
 });

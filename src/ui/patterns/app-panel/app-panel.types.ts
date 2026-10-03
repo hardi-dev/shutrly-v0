@@ -9,6 +9,8 @@ export interface AppPanelProps {
   breadcrumbs?: readonly BreadcrumbItem[];
   utilities?: ReactNode;
   subtitle?: string;
+  titleAdornment?: ReactNode;
+  meta?: string;
   actions?: ReactNode;
   tabs?: NonNullable<PageHeaderProps["tabs"]>;
   children: ReactNode;

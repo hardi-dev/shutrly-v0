@@ -10,10 +10,9 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import type { DbExecutor } from "../client/client.types";
 import { serviceItem, serviceItemDefinition } from "../schema/booking/catalog";
-import { pgCode } from "./pg-error";
+import { isReferencedRowError, pgCode } from "./pg-error";
 
 const DUPLICATE_KEY = "23505";
-const FOREIGN_KEY_KEY = "23503";
 
 interface DefinitionRow {
   readonly id: string;
@@ -175,7 +174,7 @@ export function createDrizzleItemDefinitionRepository(
           .returning({ id: serviceItemDefinition.id });
         return rows.length > 0 ? "DELETED" : "NOT_FOUND";
       } catch (error) {
-        if (pgCode(error) === FOREIGN_KEY_KEY) return "IN_USE";
+        if (isReferencedRowError(error)) return "IN_USE";
         throw error;
       }
     },

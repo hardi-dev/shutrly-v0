@@ -1,4 +1,4 @@
-/* eslint-disable max-len, no-restricted-syntax -- table cells capture their row record */
+/* eslint-disable no-restricted-syntax -- table cells capture their row record */
 import { isSocialUrl, socialLinkLabel } from "@/features/booking/domain/social-link/social-link";
 import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
 import { DataTable } from "@/ui/patterns/data-table/data-table";
@@ -118,5 +118,5 @@ function SocialLinksCell({
 function whatsappLabel(number: string | null): string {
   return number ? formatWhatsappNumber(number) : CLIENT_COPY.noWhatsapp;
 }
-/* eslint-enable max-len, no-restricted-syntax -- end row cell callbacks */
+/* eslint-enable no-restricted-syntax -- end row cell callbacks */
 import type { ReactNode } from "react";

@@ -19,12 +19,12 @@ const SIZE_CLASSES = {
  * @returns the icon-only button
  */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
-  { size = "md", className, icon, badgeCount = 0, ...props },
+  { size = "md", className, icon, badgeCount = 0, badgeLabel = "belum dibaca", ...props },
   ref,
 ) {
   const label =
     badgeCount > 0
-      ? `${props["aria-label"]}, ${String(Math.min(badgeCount, 99))} belum dibaca`
+      ? `${props["aria-label"]}, ${String(Math.min(badgeCount, 99))} ${badgeLabel}`
       : props["aria-label"];
   return (
     <AriaButton

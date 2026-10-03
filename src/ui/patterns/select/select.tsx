@@ -6,6 +6,7 @@ import {
   FieldError,
   Label,
   ListBox,
+  ListBoxSection,
   Popover,
   Select as AriaSelect,
   Text,
@@ -13,6 +14,7 @@ import {
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
+import { MenuGroupLabel } from "@/ui/patterns/menu/menu-group-label";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { Button } from "@/ui/primitives/button/button";
 import { Icon } from "@/ui/primitives/icon/icon";
@@ -24,9 +26,11 @@ import type {
   MobileSelectTriggerProps,
   SelectMessageProps,
   SelectOption,
+  SelectOptionGroup,
   SelectProps,
 } from "./select.types";
 import { SelectOptionItem } from "./select-option";
+import { groupBySection } from "./select-sections";
 
 const FIELD_MESSAGE = "text-(length:--font-size-label)";
 
@@ -73,8 +77,8 @@ function DesktopSelect({ options, value, onChange, ...props }: Readonly<SelectPr
         className="w-(--trigger-width) rounded-(--component-menu-radius) border border-(--component-menu-border) bg-(--component-menu-background) p-(--component-menu-padding) shadow-[0_var(--elevation-1-offset-y)_var(--elevation-1-blur)_var(--color-semantic-elevation-1-color)]"
       >
         <ListBox aria-label={fieldName} className="outline-none">
-          {options.map((option) => (
-            <SelectOptionItem key={option.id} option={option} isSelected={option.id === value} />
+          {groupBySection(options).map((group) => (
+            <SelectOptionGroupView key={group.section ?? ""} group={group} value={value} />
           ))}
         </ListBox>
       </Popover>
@@ -180,18 +184,43 @@ function MobileSelectSheet({
       variant="menu"
       actions={<Button onPress={onPick}>{SELECT_COPY.pick}</Button>}
     >
-      {options.map((option) => (
-        <SheetItem
-          key={option.id}
-          label={option.label}
-          description={option.description}
-          icon={option.icon}
-          isDisabled={option.isDisabled}
-          isSelected={option.id === pendingValue}
-          onPress={selectOption(option.id)}
-        />
+      {groupBySection(options).map((group) => (
+        <div key={group.section ?? ""}>
+          {group.section ? (
+            <p className="px-(--component-menu-item-padding-x) pt-(--space-2) text-(length:--font-size-overline) font-bold uppercase tracking-(--font-letter-spacing-overline) text-(--component-menu-group-label)">
+              {group.section}
+            </p>
+          ) : null}
+          {group.options.map((option) => (
+            <SheetItem
+              key={option.id}
+              label={option.label}
+              description={option.description}
+              icon={option.icon}
+              isDisabled={option.isDisabled}
+              isSelected={option.id === pendingValue}
+              onPress={selectOption(option.id)}
+            />
+          ))}
+        </div>
       ))}
     </BottomSheet>
+  );
+}
+
+function SelectOptionGroupView({
+  group,
+  value,
+}: Readonly<{ group: SelectOptionGroup; value: string | null }>) {
+  const items = group.options.map((option) => (
+    <SelectOptionItem key={option.id} option={option} isSelected={option.id === value} />
+  ));
+  if (group.section === null) return <>{items}</>;
+  return (
+    <ListBoxSection aria-label={group.section}>
+      <MenuGroupLabel>{group.section}</MenuGroupLabel>
+      {items}
+    </ListBoxSection>
   );
 }
 

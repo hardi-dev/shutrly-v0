@@ -46,11 +46,12 @@ export interface ClientRepositoryPort {
     context: WorkspaceContext,
     query: ClientPageQuery,
   ) => Promise<readonly ClientRecord[]>;
+  readonly findById: (context: WorkspaceContext, id: string) => Promise<ClientRecord | null>;
   readonly count: (context: WorkspaceContext, status: ClientStatus) => Promise<number>;
   readonly create: (
     context: WorkspaceContext,
     change: ClientChange,
-  ) => Promise<{ readonly status: "CREATED" } | NumberTaken>;
+  ) => Promise<{ readonly status: "CREATED"; readonly id: string } | NumberTaken>;
   readonly update: (
     context: WorkspaceContext,
     id: string,

@@ -34,10 +34,12 @@ From a project, the Owner can create one private gallery, link one or more Googl
 - Uploading or storing photo files in Shutrly.
 
 ## Open questions
-- **SPEC GAP (already recorded in BR-SRC, deferred to this discovery):** do gallery sources under a deactivated workspace source keep syncing, and do they count as *active* for BR-GAL-004?
-- Is sync started only by the Owner, or also automatically (on link, on a schedule)? Drive API quota and Cloudflare Workers limits may decide this.
-- What does "accessible" mean for a source (BR-GAL-004): the folder link resolved on the last sync, or checked again at publish time?
-- When a file disappears from Drive between syncs, is the photo removed, hidden or kept as missing? Selections (F-11) will reference photos.
-- Is the gallery created with its password at the same moment, or as a draft that gets a password before publishing? BR-GAL-002 says every gallery has a password.
-- Which `expiresAt` options does the Owner get (none, a date, a default)? BR-GAL-005 requires it be honored but no rule sets it.
-- Which project statuses may have a gallery, including `DRAFT` and `CANCELLED` projects?
+All answered by the Owner on 2026-10-04. Discovery turns them into rules and criteria.
+
+- **SPEC GAP (BR-SRC, deferred here), deactivated workspace source:** existing gallery sources keep syncing and still count as *active* for BR-GAL-004. Deactivation only blocks new gallery sources.
+- **Sync trigger:** Owner-triggered only. Sync runs when a folder is linked and when the Owner asks for it; nothing is scheduled.
+- **"Accessible" (BR-GAL-004):** checked again with the provider at publish time; publishing is blocked if a source fails.
+- **File gone from Drive:** the photo is kept, marked missing, hidden from the client and flagged to the Owner. It returns if the file comes back.
+- **Password:** set when the gallery is created, so BR-GAL-002 holds from the start.
+- **Expiry:** none by default. The Owner may set an expiry as a date or as a duration (for example 30 days), and change it later.
+- **Project statuses:** a gallery can be created from `BOOKED` to `COMPLETED`, not on `DRAFT`. On a `CANCELLED` project an existing gallery stays but cannot be published.

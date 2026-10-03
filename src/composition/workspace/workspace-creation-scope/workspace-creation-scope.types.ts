@@ -1,4 +1,5 @@
 import type { ItemDefinitionRepositoryPort } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
+import type { TeamRoleRepositoryPort } from "@/features/booking/application/ports/team-role-repository/team-role-repository.port";
 import type { MessageTemplateRepositoryPort } from "@/features/communications/application/ports/message-template-repository/message-template-repository.port";
 import type { WorkspaceSourceRepositoryPort } from "@/features/gallery/application/ports/workspace-source-repository/workspace-source-repository.port";
 import type { WorkspaceRepositoryPort } from "@/features/workspace/application/ports/workspace-repository/workspace-repository.port";
@@ -8,4 +9,5 @@ export interface WorkspaceCreationScope {
   readonly templates: MessageTemplateRepositoryPort;
   readonly sources: WorkspaceSourceRepositoryPort;
   readonly itemDefinitions: ItemDefinitionRepositoryPort;
+  readonly teamRoles: TeamRoleRepositoryPort;
 }

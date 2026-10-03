@@ -14,6 +14,7 @@
 - `adr.md`
 
 ## Per feature
+- `intent.md`
 - `feature-spec.md`
 - `acceptance-criteria.md`
 - `activity.md`

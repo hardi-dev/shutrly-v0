@@ -33,5 +33,12 @@ As a [actor], I want [capability], so that [value].
 ## Out of Scope
 - [Explicit exclusion]
 
+## Flagged Concerns
+Places where the spec cannot satisfy the constitution, a `BR-*` rule, an ADR or coding rules, or where two of them contradict. Leave `None` only after checking.
+
+| ID | Concern | Conflicting sources | Owner decision | Status |
+|---|---|---|---|---|
+| FC-001 | [What cannot be satisfied and why] | [`BR-*` / constitution rule / ADR] | [Owner's call, with date] | OPEN / RESOLVED |
+
 ## Open Questions / SPEC GAPS
 - [Question]

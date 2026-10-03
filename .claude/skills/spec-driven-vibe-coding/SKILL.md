@@ -21,7 +21,7 @@ When artifacts conflict, use this order:
 2. Product and Domain Rules
 3. Architecture, Tech Stack, and accepted ADRs
 4. Coding Rules
-5. Feature Spec and Acceptance Criteria
+5. Feature Intent, Feature Spec and Acceptance Criteria
 6. Technical Design
 7. Implementation
 
@@ -52,7 +52,11 @@ Never silently resolve a conflict by changing a higher-authority rule. Report th
    - Maintain `docs/coding-rules.md` for implementation conventions.
    - Use the templates in `assets/templates/`.
 
-6. **Discover selected feature**
+6. **Capture intent** (optional for small features)
+   - Brainstorm the idea, ticket, bug or incident into `docs/features/<slug>/intent.md`: problem, outcome, users and systems, constraints, out of scope, open questions.
+   - The Owner reviews and accepts it before discovery starts.
+
+6b. **Discover selected feature**
    - Define goal, story, preconditions, inputs, main/alternative/error flows, dependencies, business-rule references, and out-of-scope behavior.
    - Write acceptance criteria with stable IDs such as `AC-BOOK-001`.
 
@@ -122,6 +126,7 @@ Each mode is a workflow. In Claude Code the plugin (`sdv`) exposes them as names
 | Command | Workflow |
 |---|---|
 | `/sdv:init-project [idea]` | product discovery → domain discovery → feature map → stack → constitution/coding rules (adopt existing docs instead of re-deciding) |
+| `/sdv:capture-intent <slug> [idea]` | brainstorm → `intent.md` (problem, outcome, constraints, open questions) → Owner accepts |
 | `/sdv:discover-feature <slug>` | spec + business-rule refs + acceptance criteria + open questions |
 | `/sdv:model-feature <slug>` | activity + sequence + state diagrams only where useful |
 | `/sdv:design-feature <slug>` | screen/state inventory → Pencil iteration → spec-gap loop → approval record |

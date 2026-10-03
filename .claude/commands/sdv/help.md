@@ -9,7 +9,15 @@ Give the user a concise, project-aware guide from discovery to shipping. Inspect
 
 1. Explain the overall lifecycle:
 
-   `/sdv:init-project` → `/sdv:discover-feature` → `/sdv:model-feature` → `/sdv:design-feature` → `/sdv:plan-feature` → `/sdv:build-feature` → `/sdv:verify-feature` → `/sdv:ship`
+   `/sdv:init-project` → `/sdv:capture-intent` → `/sdv:discover-feature` → `/sdv:model-feature` → `/sdv:design-feature` → `/sdv:plan-feature` → `/sdv:build-feature` → `/sdv:verify-feature` → `/sdv:ship`
+
+   Then explain what each feature stage reads and writes, and the gates between them:
+
+   - `/sdv:capture-intent` writes `docs/features/<slug>/intent.md` (problem, outcome, constraints, open questions). Optional for small features. Only the Owner sets it to `ACCEPTED`.
+   - `/sdv:discover-feature` reads an accepted intent and writes `spec.md` with a **Flagged Concerns** table, plus `acceptance-criteria.md`. It stops on a draft intent. The Owner resolves each `OPEN` concern before the feature counts as `SPECIFIED`.
+   - `/sdv:plan-feature` stops while any Flagged Concern is `OPEN`.
+   - `/sdv:build-feature` ends with a verify-and-fix loop (typecheck, lint, tests, e2e or screenshot diff, build as applicable) and never reports done with a failing or unrun check.
+   - Hooks in `.claude/hooks/guard.py` enforce the `AGENTS.md` hard stops regardless of the command: no direct `.pen` access, no committing `.dev.vars` or `.env*`, no production migrations. A blocked action explains itself; ask the Owner rather than working around it.
 
 2. Explain the design-system branch when visual tokens or reusable components are needed:
 
@@ -51,7 +59,7 @@ Give the user a concise, project-aware guide from discovery to shipping. Inspect
    - Usage rules have their own `PROPOSED` → `APPROVED` gate.
    - Nothing counts as `PERSISTED` until the user has saved the file in Pen and its size/mtime change has been confirmed.
 5. Explain that observed values come from the canvas, while expanded values are systematic proposals. Mark them `OBSERVED`, `PROPOSED`, `UNOBSERVED`, `APPROVED`, or `PERSISTED`; do not invent missing values silently.
-6. Identify the current project/feature status from available docs and recommend the smallest next command.
+6. Identify the current project/feature status from available docs (including a feature's `intent.md` status and any `OPEN` Flagged Concerns) and recommend the smallest next command.
 7. Mention relevant artifacts created by the recommended command and any unresolved `SPEC GAP`, `DESIGN TOKEN GAP`, `CONFLICT`, drift, or broken-library-link finding.
 
 For Pencil work, always open the target file with `open -a Pen <absolute-path-to-file.pen>` before using Pencil MCP. Pencil MCP is the only design inspection/modification path; do not use the `pen` CLI to edit or synchronize design content. Terminal commands are limited to opening Pen, copying bundled templates, validation, and packaging when explicitly requested.

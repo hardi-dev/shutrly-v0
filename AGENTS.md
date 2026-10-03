@@ -17,6 +17,7 @@ Start with [docs/HANDOFF.md](docs/HANDOFF.md) › _Current handoff_. It says wha
   - Codex finds the two skills in `.agents/skills/` (symlinks into `.claude/skills/`). It has no `/sdv:*` commands, so each command is a generated Codex skill: `$sdv-<command> <args>` does what `/sdv:<command> <args>` does.
   - The commands in `.claude/commands/sdv/` are the source of truth. After editing one, run `python3 scripts/sdv/sync-codex-skills.py` and commit the regenerated `.agents/skills/sdv-*` folders (`--check` exits 1 when they are out of date). Never edit those folders by hand.
   - Each command's model, effort and fork setting live in its frontmatter (`model`, `effort`, `context`). Change them there; Codex ignores them and uses its own default model.
+  - `build-feature` delegates tests to the subagents in `.claude/agents/`: `sdv-test-writer` (unit and integration, Haiku 4.5, which retires 2026-10-15, so move it to Sonnet 5.5 by then) and `sdv-e2e-test-writer` (Sonnet 5.5).
   - The hooks in `.claude/hooks/` only run in Claude Code. In Codex the hard stops below are instructions you must follow yourself.
   - `plugins/sdv/` is the untouched upstream release, kept only to diff against when upgrading; don't edit it.
 

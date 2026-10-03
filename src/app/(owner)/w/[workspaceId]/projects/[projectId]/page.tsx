@@ -2,10 +2,12 @@ import {
   PROJECT_EDIT_ACTIONS,
   PROJECT_MENU_ACTIONS,
 } from "@/app/actions/booking/project-menu-actions";
+import { addSessionAssignmentAction } from "@/app/actions/booking/session-team";
 import {
   loadProjectDefinitions,
   loadProjectDetail,
 } from "@/composition/booking/project-flow/project-flow";
+import { loadAssignableMembers } from "@/composition/booking/team-flow/team-flow";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { ProjectDetailScreen } from "@/features/booking/ui/project-detail-screen/project-detail-screen";
 import { projectMetaText } from "@/features/booking/ui/project-session-summary/project-session-summary";
@@ -22,9 +24,10 @@ export default async function ProjectDetailPage({
 }>) {
   const { workspaceId, projectId } = await params;
   const { state } = await searchParams;
-  const [project, definitions] = await Promise.all([
+  const [project, definitions, assignableMembers] = await Promise.all([
     loadProjectDetail(workspaceId, projectId),
     loadProjectDefinitions(workspaceId),
+    loadAssignableMembers(workspaceId),
   ]);
   const toast = resolveToast(state, project.title);
   return (
@@ -42,6 +45,8 @@ export default async function ProjectDetailPage({
         menuActions={PROJECT_MENU_ACTIONS}
         editActions={PROJECT_EDIT_ACTIONS}
         definitions={definitions}
+        assignableMembers={assignableMembers}
+        addAssignmentAction={addSessionAssignmentAction}
       />
       {toast ? (
         <ToastOnMount

@@ -73,6 +73,30 @@ export const PROJECT_COPY = {
   addTeamFor: (session: string) => `Tambah tim untuk ${session}`,
   teamGroupLabel: (session: string, count: number) => `Tim ${session}: ${String(count)} anggota`,
   avatarTooltip: (name: string, role: string) => `${name} · ${role}`,
+  assignTitle: (session: string) => `Tambah anggota · ${session}`,
+  assignMember: "Anggota",
+  assignMemberHint: "Hanya anggota aktif yang belum ada di sesi ini.",
+  // not in Pencil: the empty member field's placeholder
+  assignMemberPlaceholder: "Pilih anggota",
+  assignRole: "Peran",
+  assignRolePlaceholder: "Pilih peran",
+  assignRoleHint: (name: string) => `Peran yang dimiliki ${name}.`,
+  assignSubmit: "Tambah",
+  assignSubmitting: "Menambahkan…",
+  assignCancel: "Batal",
+  assignEmptyTitle: "Belum ada anggota tim aktif",
+  assignEmptyBody: "Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini.",
+  assignEmptyAction: "Buka Tim",
+  assignedToastTitle: "Anggota ditambahkan",
+  assignedToastBody: (name: string, session: string, role: string) =>
+    `${name} bertugas di ${session} sebagai ${role}.`,
+  // not in Pencil: the assignment errors and the cancelled toast
+  assignErrors: {
+    ALREADY_ASSIGNED: (name: string) => `${name} sudah ada di sesi ini.`,
+    MEMBER_ARCHIVED: (name: string) => `${name} sudah diarsipkan.`,
+    ROLE_NOT_HELD: (name: string) => `${name} tidak punya peran ini lagi.`,
+  },
+  teamCancelledToast: "Proyek dibatalkan; tim tidak bisa diubah.",
   deleteSession: "Hapus",
   fieldsTitle: "Field booking",
   fieldsDescription: (service: string) =>

@@ -18,6 +18,7 @@ export type ButtonIconName = Extract<
   | "calendar-check"
   | "camera"
   | "circle-check-big"
+  | "user-round-cog"
 >;
 
 export interface ButtonIconProps {

@@ -1,7 +1,9 @@
 import type { ReactNode } from "react";
 
+import type { AssignableMember } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import type { ProjectDetailView } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail.types";
 
+import type { AssignmentDialogProps } from "../assignment-dialog/assignment-dialog.types";
 import type { DefinitionOption, ProjectEditActions } from "../project-edit/project-edit.types";
 import type { ProjectMenuActions } from "../project-menu-host/project-menu-host.types";
 
@@ -11,6 +13,9 @@ export interface ProjectDetailScreenProps {
   readonly menuActions: ProjectMenuActions;
   readonly editActions: ProjectEditActions;
   readonly definitions: readonly DefinitionOption[];
+  /** Active members with their roles, for the Penugasan form (D-13). */
+  readonly assignableMembers: readonly AssignableMember[];
+  readonly addAssignmentAction: AssignmentDialogProps["addAction"];
 }
 
 export interface ProjectDetailCardProps {

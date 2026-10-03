@@ -57,16 +57,19 @@ Covers: BR-SRC-002, BR-SRC-004, BR-GAL-006, BR-GAL-007 (A-9)
 **When** the Owner adds a source with *Google Drive* and the *Rina-Wisuda* folder link
 **Then**:
 - the public-link warning is shown before saving;
-- after sync, the gallery has `PROOF` `IMG_001.jpg`, `IMG_002.jpg`, `IMG_010.jpg`, `EDITED` `E_001.jpg`, `E_002.jpg` and `PRINT` `P_001.jpg`;
-- `notes.pdf`, `clip.mp4`, `raw/` and `Edited/old/` are ignored;
-- the source shows status *Berhasil*, the sync time, and the counts 3 proof · 2 edited · 1 print · 2 ignored.
+- after sync, the gallery has:
+  - `PROOF` `IMG_001.jpg`, `IMG_002.jpg`, `IMG_010.jpg` and `raw/R_001.jpg`;
+  - `EDITED` `Edited/E_001.jpg`, `Edited/E_002.jpg` and `Edited/old/X_001.jpg`;
+  - `PRINT` `print/P_001.jpg`;
+- `notes.pdf` and `clip.mp4` are ignored;
+- the source shows status *Berhasil*, the sync time, and the counts 4 proof · 3 edited · 1 print · 2 diabaikan.
 
 ## AC-GAL-006 — Re-sync never duplicates
 Covers: BR-GAL-006, C-005
 
 **Given** the source from AC-GAL-005
 **When** the Owner syncs it twice more, and two sync requests for it arrive at the same time
-**Then** the gallery still has exactly 6 photos, and each `(source, externalFileId)` appears once.
+**Then** the gallery still has exactly 8 photos, and each `(source, externalFileId)` appears once.
 
 ## AC-GAL-007 — New and missing files
 Covers: BR-GAL-006
@@ -143,7 +146,7 @@ Covers: BR-GAL-007, BR-DEL-002, BR-GAL-006
 **Given** the synced gallery from AC-GAL-007
 **When** the Owner opens the gallery screen
 **Then**:
-- tabs or sections *Proof (3)*, *Edited (2)*, *Print (1)* show thumbnails;
+- tabs *Proof (5)*, *Edited (3)*, *Print (1)* show the folder tree. *Proof* shows the folder `raw` and the root photos together, with the same tile size;
 - *Proof* is marked visible to the client once published;
 - *Edited* and *Print* are marked hidden until final delivery;
 - the missing `IMG_002.jpg` is marked *Hilang*;
@@ -302,3 +305,19 @@ Covers: BR-GAL-006 (A-13)
 - the matches from every folder and kind show, each with its folder (for example *Rina-Wisuda · edited*);
 - a search with no match shows *Tidak ada foto bernama “…”*;
 - clearing the search returns to the folder view.
+
+## AC-GAL-030 — Subfolders browse like Drive
+Covers: BR-GAL-007 (A-12, A-14)
+
+**Given** *Rina-Wisuda* holds `IMG_001.jpg` and the folders `Akad/` (`A_001.jpg`, `edited/AE_001.jpg`) and `Resepsi/` (`R_010.jpg`)
+**When** the Owner opens *Proof* on a gallery whose only source is *Rina-Wisuda*
+**Then**:
+- the grid shows the folder tiles *Akad · 1 foto* and *Resepsi · 1 foto*, then `IMG_001.jpg`, all the same tile size;
+- opening *Akad* shows `A_001.jpg` under the breadcrumb *Semua folder › Rina-Wisuda › Akad*.
+
+**When** the Owner opens *Edited*
+**Then** it shows the folder *Akad · 1 foto*, and inside it `AE_001.jpg`. The `edited` folder level is folded into *Akad*.
+
+**Given** a folder 6 levels below the source
+**When** the source syncs
+**Then** its photos are skipped, and the sync summary reports *1 folder terlalu dalam*.

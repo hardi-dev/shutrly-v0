@@ -8,7 +8,7 @@ Photographers already keep photos in Google Drive. OAuth/service-account integra
 
 ## Decision
 - The Owner shares a root folder "Anyone with the link" and pastes it. The server extracts folder ID + optional resource key and lists public metadata with a server-side Google Cloud API key.
-- Root images → `PROOF`; files directly in `edited` / `print` (case-insensitive) → `EDITED` / `PRINT`; others ignored.
+- Root images → `PROOF`; files directly in `edited` / `print` (case-insensitive) → `EDITED` / `PRINT`; others ignored. *Amended 2026-10-04 (Owner, F-09): the whole folder tree is synced; see BR-GAL-007 for the classification.*
 - Sync is idempotent on `(gallerySourceId, externalFileId)` with status/error recorded.
 - The platform never writes to Drive. The domain depends on a `GallerySourceProvider` interface.
 - The Owner is warned that direct Drive links bypass app protection.

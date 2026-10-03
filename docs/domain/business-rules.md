@@ -245,7 +245,7 @@ A gallery can be published only with a password hash and at least one active, ac
 Sync upserts photos by `(gallerySource, externalFileId)` and records sync status, time, and error. Repeated syncs never duplicate photos. Sync runs only when the Owner links a source or asks for it; nothing is scheduled. A photo whose file is no longer found is kept and marked *missing*: it is hidden from the client and flagged to the Owner, and it becomes visible again if a later sync finds the file. Sync errors never record the Drive link (C-103). *(F-09 discovery, Owner 2026-10-04.)*
 
 ### BR-GAL-007 — Folder classification
-Image files directly in the source root are `PROOF`. Files directly inside child folders named `edited` / `print` (case-insensitive) are `EDITED` / `PRINT`. Other folders and deeper nesting are ignored in MVP.
+A source is synced with its whole folder tree. An image's kind comes from its nearest ancestor folder named `edited` or `print` (case-insensitive, at any depth): that folder makes it `EDITED` or `PRINT`. Every other image, in the source root or in any other subfolder (for example `Akad`, `Resepsi`, `raw`), is `PROOF`. Each photo keeps its folder path, so the Owner can browse the tree. Non-image files are ignored. *(F-09 design review, Owner 2026-10-04.)*
 
 ### BR-GAL-008 — Slug is display-only
 An optional gallery slug never grants access.

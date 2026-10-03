@@ -29,14 +29,16 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
 2. The Owner keeps (or changes) the proposed password, optionally sets the expiry, and creates the gallery. It is a `DRAFT` with no sources. The password is stored encrypted plus a hash (BR-GAL-002, ADR-017).
 3. The Owner adds a source: picks an active workspace source and pastes a Drive folder link. The public-link warning is shown (BR-SRC-004).
 4. Adding the source syncs it (BR-GAL-006):
-   - root images become `PROOF`;
-   - images directly in `edited` / `print` become `EDITED` / `PRINT`;
-   - everything else is ignored (BR-GAL-007).
+   - the whole folder tree is read (BR-GAL-007, up to A-14's depth);
+   - images under a folder named `edited` / `print`, at any depth, become `EDITED` / `PRINT`;
+   - every other image, in the root or in any other subfolder, becomes `PROOF`;
+   - non-image files are ignored.
    The source records its sync status, time, counts and any error.
 5. The gallery screen shows the password (with *Salin*), so the Owner never has to remember it. It also shows each source with its status and last sync. The photos are grouped by kind (*Proof*, *Edited*, *Print*), each with a thumbnail served through the Owner-only media endpoint, plus counts.
    - Each kind is marked for what the client will see: *Proof* is visible once published. *Edited* and *Print* are hidden until final delivery (BR-DEL-002). Missing and removed photos are hidden.
    - **Browsing many photos:** the photos have tabs by kind (*Proof*, *Edited*, *Print*, each with its total), as above.
-     - Inside a tab the Owner sees one folder tile per source with that kind's count, and opens one. A breadcrumb (*Semua folder › {folder}*) leads back. With a single source, its folder opens directly (A-12).
+     - A tab shows the source's folder tree like Google Drive, keeping only the folders that hold photos of that kind. Folders and photos sit together in one grid, folders first. In *Edited* and *Print*, the `edited` / `print` folders themselves are folded into their parent folder.
+     - With several sources, the top level shows one folder per source. With a single source, its folder opens directly. A breadcrumb (*Semua folder › Rina-Wisuda › Akad*) leads back (A-12).
      - The grid loads in pages as the Owner scrolls (infinite scroll, A-13); thumbnails are small and load when visible.
      - *Cari nama file* searches every folder of the gallery. Results show each photo's folder.
 6. The Owner may sync one source or all of them again at any time. Repeated syncs never duplicate photos.
@@ -122,7 +124,8 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
 - **A-8:** a `DRAFT` gallery on a cancelled project is not archived, because it was never public. It can only be deleted.
 - **A-9:** an image is a file whose MIME type starts with `image/`. Videos and other files are ignored and counted as *diabaikan* in the sync summary.
 - **A-11:** a generated password is a common lowercase Indonesian word, a hyphen and four digits (for example *mawar-4821*). It has no look-alike characters and never contains the client's name. Brute force is limited by the token (≥128 bits) and rate limits (BR-ACC-004).
-- **A-12:** folder navigation shows only synced sources and their kind; ignored folders (BR-GAL-007) are not listed.
+- **A-12:** a folder tile shows the folder name and its photo count for the active tab. Empty folders, and folders without photos of that kind, are not shown.
+- **A-14:** sync reads folders up to 5 levels below the source. Deeper folders are skipped and counted in the sync summary as *n folder terlalu dalam*. Shortcuts to other folders are not followed.
 - **A-13:** the grid loads 48 photos per page. Search matches part of a file name, ignoring case, and returns results 48 at a time too.
 - **A-10 (delegated to Claude by the Owner, 2026-10-04):**
   - a `DRAFT` gallery can be deleted;
@@ -140,6 +143,7 @@ Checked against the constitution (C-001..C-106), BR-GAL/SRC/ACC/PRJ/DEL/AUD, ADR
 | FC-004 | Owner thumbnails need media from Drive, but the API key must never reach the browser, and controlled media delivery was scoped to F-10. | BR-SRC-003, BR-ACC-005 ↔ feature map F-10 | Build an Owner-only media endpoint in F-09; F-10 reuses it behind token and password (Owner 2026-10-04). | RESOLVED |
 | FC-005 | Cancelling a project left a published gallery reachable by the client. | BR-PRJ-010 ↔ BR-GAL-005 | Cancelling archives the gallery in the same transaction (Owner 2026-10-04). Recorded in BR-PRJ-010 and BR-GAL-005. | RESOLVED |
 | FC-006 | "Accessible" in the publish precondition was undefined. | BR-GAL-004 | Checked again with the provider at publish time (Owner 2026-10-04). Recorded in BR-GAL-004. | RESOLVED |
+| FC-008 | Photographers keep shoots in subfolders (`Akad`, `Resepsi`), which BR-GAL-007 ignored, so their photos would never show. | BR-GAL-007, ADR-005 | Sync the whole tree. Any folder except `edited` / `print` is proof, and `edited` / `print` count at any depth. Folders are browsed like Drive (Owner 2026-10-04). | RESOLVED |
 | FC-007 | Hash-only passwords meant the Owner had to remember and retype a password per project to share it, which isn't workable. | C-103, ADR-004, BR-GAL-002, BR-MSG-003 | Store the password encrypted (plus a hash), generate an easy-to-type one, show it to the Owner, and fill it into the WhatsApp message automatically (Owner 2026-10-04). Recorded in constitution v1.1, ADR-017, BR-GAL-002/003 and BR-MSG-003. | RESOLVED |
 
 ## Open Questions / SPEC GAPS

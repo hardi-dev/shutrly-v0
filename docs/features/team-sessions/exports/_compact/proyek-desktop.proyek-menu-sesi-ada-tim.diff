@@ -1,0 +1,126 @@
+--- base
++++ state
+@@ -1,5 +1,5 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Proyek / Detail / Jadwal dengan tim / Desktop"
++      data-pencil-name="Proyek / Menu sesi / Ada tim / Desktop"
+       class="box-border w-[1440px] h-[1085px] flex flex-row gap-0 p-[12px_12px_12px_0px] justify-start items-start bg-[#E4E4E7] overflow-hidden"
+     >
+@@ -989,10 +989,10 @@
+ </div>
+ <div
+-                        data-pencil-name="Session actions"
+-                        class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
++                        data-pencil-name="Actions (open)"
++                        class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end relative"
+                       >
+ <div
+                           data-pencil-name="Trigger"
+-                          class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
++                          class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center bg-[#F4F4F5] rounded-[8px] relative [z-index:0]"
+                         >
+ <svg
+@@ -1007,4 +1007,102 @@
+ </svg>
+ </div>
++<div
++                          data-pencil-name="Menu"
++                          class="box-border w-[240px] h-fit [box-shadow:0px_4px_16px_#18181B14] absolute left-[-208px] top-[-129px] flex flex-col gap-0 p-[4px] justify-start items-start bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[12px] [z-index:1]"
++                        >
++<div
++                            data-pencil-name="Items"
++                            class="box-border w-full h-fit shrink-0 flex flex-col gap-0 justify-start items-start"
++                          >
++<div
++                              data-pencil-name="Item"
++                              class="box-border w-full h-fit shrink-0 flex flex-row gap-[8px] p-[8px_12px] justify-start items-center rounded-[8px]"
++                            >
++<svg
++                                data-pencil-name="Icon"
++                                data-icon-name="users"
++                                data-icon-set="lucide"
++                                viewBox="0 0 13.99993896484375 14"
++                                preserveAspectRatio="xMidYMid meet"
++                                xmlns="http://www.w3.org/2000/svg"
++                                class="box-border w-[16px] shrink-0 h-[16px]"
++                              >
++</svg>
++<div
++                                data-pencil-name="Text"
++                                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
++                              >
++<div
++                                  data-pencil-name="Label"
++                                  class="text-[14px]/[20px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-medium text-left"
++                                >
++                                  Atur tim
++                                </div>
++</div>
++</div>
++<div
++                              data-pencil-name="Item"
++                              class="box-border w-full h-fit shrink-0 flex flex-row gap-[8px] p-[8px_12px] justify-start items-center rounded-[8px]"
++                            >
++<svg
++                                data-pencil-name="Icon"
++                                data-icon-name="pencil"
++                                data-icon-set="lucide"
++                                viewBox="0 0 13.99993896484375 14"
++                                preserveAspectRatio="xMidYMid meet"
++                                xmlns="http://www.w3.org/2000/svg"
++                                class="box-border w-[16px] shrink-0 h-[16px]"
++                              >
++</svg>
++<div
++                                data-pencil-name="Text"
++                                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
++                              >
++<div
++                                  data-pencil-name="Label"
++                                  class="text-[14px]/[20px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-medium text-left"
++                                >
++                                  Ubah sesi
++                                </div>
++</div>
++</div>
++<div
++                              data-pencil-name="Divider"
++                              class="box-border w-full h-fit shrink-0 flex flex-col gap-0 p-[4px_0px] justify-start items-start"
++                            >
++<div
++                                data-pencil-name="Line"
++                                class="box-border w-full h-[1px] shrink-0 bg-[#F0F0F2]"
++                              >
++</div>
++</div>
++<div
++                              data-pencil-name="Delete"
++                              class="box-border w-full h-fit shrink-0 flex flex-row gap-[8px] p-[8px_12px] justify-start items-center rounded-[8px]"
++                            >
++<svg
++                                data-pencil-name="Icon"
++                                data-icon-name="trash-2"
++                                data-icon-set="lucide"
++                                viewBox="0 0 13.99993896484375 14"
++                                preserveAspectRatio="xMidYMid meet"
++                                xmlns="http://www.w3.org/2000/svg"
++                                class="box-border w-[16px] shrink-0 h-[16px]"
++                              >
++</svg>
++<div
++                                data-pencil-name="Text"
++                                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
++                              >
++<div
++                                  data-pencil-name="Label"
++                                  class="text-[14px]/[20px] box-border w-full text-[#B91C1C] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-medium text-left"
++                                >
++                                  Hapus sesi
++                                </div>
++</div>
++</div>
++</div>
++</div>
+ </div>
+ </div>

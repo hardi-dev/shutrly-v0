@@ -2,6 +2,75 @@
 
 Older handoffs, the early status table, the component-library and design-system notes, and superseded next steps, moved out of [HANDOFF.md](HANDOFF.md) on 2026-10-04 to keep the file that every session reads small. Nothing was edited. Read this only when you need history; the live sources are the feature folders, `docs/design-system/` and `docs/features/README.md`.
 
+## Previous handoff — F-08 Team DESIGNED (2026-10-03)
+
+- **Done:** spec and AC-TEAM-001…027 written, design APPROVED (48 frames and exports), diagrams for member state and add/remove/delete.
+- **Scope cut (Owner 2026-10-03):** no money; fees moved to F-18; no member detail page.
+- **Domain:** BR-TEAM-001, 002, 004, 005, 006 (BR-TEAM-007 deprecated).
+- **Artifacts:** [spec](features/team-sessions/spec.md), [design](features/team-sessions/design.md).
+- **Next then:** `/sdv:plan-feature team-sessions`.
+
+## Previous handoff — F-07 Projects DONE (2026-10-04)
+
+- **Done:** Slices 0–8 built on `feat/projects`; accepted by the Owner 2026-10-04. Migration `0009_project` applied to the non-production database. Deleting a client, service, category or definition used by a project returns `IN_USE`.
+- **Open follow-ups:** 92-export fidelity pass (8.3), remaining dialogs in both themes and keyboard a11y tests (8.2), six flaky E2E tests, `pnpm install` once (`@internationalized/date` added by hand).
+- **Owner decisions:** BR-PRJ-004 manual steps, no backwards moves; BR-PRJ-008…010 added; phone Bottom Nav hidden on *Proyek baru* and project detail.
+- **Artifacts:** [spec](features/projects/spec.md), [technical design](features/projects/technical-design.md).
+
+## Key decisions (Owner), sessions 1–4 (moved 2026-10-04)
+
+**Earlier (session 1):**
+- The Studio Lime pieces were taken from the legacy frames.
+- `blue.500 = #2F5BFF` in both modes.
+- Slate folded into zinc, and spacing snapped to 4 px.
+- Full light and dark themes (dark values inferred, GAP-01).
+- Toast style B, and input border Option A (GAP-06 accepted).
+- The metric tile follows legacy Frame 4 exactly.
+
+**Session 2 (2026-09-26):**
+- **Rules approved** ("approve"). Any later change to an approved rule is recorded as an amendment.
+- **Component method:** research Figma best practice first, then adapt it to pen.dev and pilot it on one component. The first flat "Library components" gallery was rejected and deleted.
+- **Whole steps only outside SP6's small components:**
+  - Button padding: MD **12/36**, LG **16/48** (3:1 squish). **`space.9` = 36** was added to the scale.
+  - Checkbox, radio and switch ↔ label gap: 10 → **8**.
+  - Segmented: item 6/12 → **8/16**, track padding and gap 2 → **4**.
+- **Buttons:** icons are allowed on both sides (`Icon leading` / `Icon trailing`, off by default). Secondary buttons got a hover state (`surface.sunken`).
+- **Hover tokens** for checkbox, radio and switch. New semantics: `border.control-hover` and `control.track-off-hover`.
+- **Stepper "+"** uses `action.primary` (the same as Button primary), and "−" is neutral.
+- **Tier 1b primitives:** Input (plus search, and password/select/date/prefix configurations), Textarea, Segmented item, Metric delta, Stepper, Avatar, Icon button, Notification badge (new semantic `status.danger.on-solid`), and Kbd.
+- **Tier 1c:** Menu item and Menu, for dropdown / select / action menu.
+- **Canvas:** components sit below the tokens, 8 per row, ordered by group. The C-codes were renumbered to match the canvas order.
+
+**Session 3 (2026-09-26):**
+- **Tier 2 tokens approved** ("approve all"): 16 component tokens — `calendar.day.label/number/dot/dot-selected`, `nav.item.background-hover`, `nav.group-label`, `metric.tile.label/value`, `metric.spark.gap/radius`, `toast.<tone>.action` ×5, `icon-button.sm.padding`.
+- **SP6 amended:** toast title ↔ body (2) joins the half-step list.
+- **Icon button SM** (32 px, ghost only) for the toast close and table-row action menus. MD variants renamed `Icon Button/<Style>/MD/<State>` (IDs unchanged).
+- Snaps: spark and dot gap 3 → 4; toast padding 12/14 → 12; calendar date weight 800 → 700; nav group label 11/600 → overline.
+
+**Session 4 (2026-09-26):**
+- **C02–C26 approved** (Owner review).
+- **Tier 3 tokens approved:** 13 — `table.background/border/radius`, `table.toolbar.padding-y/-x`, `table.header.padding-y/border`, `table.row.background-hover`, `table.cell.text/text-strong`, `table.footer.link` (light `action.primary`, dark `status.info.fg`), `panel.app.title`, `panel.app.header.gap`.
+- **SP6 amended:** table cell avatar ↔ name (10) joins the half-step list.
+- **Table filter** = Segmented control (legacy dark pills dropped). Scope extended with **Sidebar + App shell**.
+- Sidebar binds semantic/scale tokens as a layout region (no `sidebar.*` aliases yet; Owner may promote). Logo mark monochrome, log-out neutral.
+- Metric tile label now fills and wraps (collided with the delta in narrow tiles).
+- **C27–C30 approved** (Owner review).
+- **Page Content + max-width (done).** The App Panel's Content region is its own component, **Page Content** (`B4HAVd`, on C28): outer fill width with padding 28/40, and an inner `Container` **slot** fixed at 1096 and centred. Pen has no `maxWidth`, so the fixed centred container emulates it; code uses `max-width: 1096px; width: 100%`. New tokens: `size.content-max` = 1096 (scale) → `panel.app.content.max-width`. App Panel `C5QYo` now accepts only Page Content and has no padding/gap of its own. The masters show an empty Page Content; the dashboard lives in the C28 Modes examples and the dark App Shell example (`TXZxf`). The C28 Content and Modes exhibits were restacked (notes above the artwork) so the panels are wide enough for the 1096 container.
+
+- **Modal (tier 4):** Owner asked for a Modal + a modal slot in the App Shell, then a mobile Bottom Sheet. Two options were explored first (exploration board 04); the Owner picked **A — Sectioned** (radius 16, header divider + close, footer on `surface.subtle`) and approved its tokens: primitives `red.300`, `alpha.neutral-950-a50`, `alpha.black-a60`; semantics `overlay.scrim`, `status.danger.solid-hover`; 18 `modal.*`; 3 `button.danger.*`. Widths SM 400 · MD 560 · LG 720.
+- **Button/Danger** added to C01 (MD/LG × 4 states) for destructive confirms.
+- **App Shell Overlay:** boolean layer (off), absolute 1440 × 960 with `modal.scrim`, centring a Modal slot (default Modal/MD). It covers the whole screen, sidebar included.
+
+- **Bottom Sheet (tier 4):** two options explored (board 05). Owner: "A is better, but I like header of B" → docked, full-width sheet (top corners 24, rows with `border.subtle`, footer on `surface.subtle`) with B's header (no divider; centred title + meta for action lists, left title + round close on `surface.sunken` for forms). 25 `sheet.*` tokens approved; no new primitives/semantics. Components: Sheet Item Default/Destructive, Bottom Sheet/Actions, Bottom Sheet/Form. Shown on a phone placeholder (no mobile shell — GAP-04).
+
+- **Sheet spacing + mobile frame (Owner "fix the gap", both):** sheet item icon ↔ label = **10** (`space.2-5`; SP6 list amended), Form body gap stays 12. New **C33 Mobile Shell** template (status bar · app bar back/title/action · Content slot · safe area · Overlay with Sheet slot); C32 examples now sit on it. No new tokens (layout region, G3).
+
+- **Mobile App Shell (Owner):** Bottom Nav = Dasbor · Proyek · [+ CTA] · Klien · Lainnya (Owner). Two options explored (board 06); Owner picked **B** (colour-only active tab, raised 54 px CTA with a `surface.panel` ring) and raised the bar's padding-top 6 → **12**. 12 `bottom-nav.*` tokens (active colour: light `action.primary`, dark `status.info.fg`). *Lainnya* → **Bottom Sheet/Menu**: header = Sidebar logo + round close; list = workspace switcher (Owner: moved from header into the content), Invoice (3), KATALOG (Layanan, Tim), Template pesan · Sumber klien · Pengaturan (unlabelled, as in the Sidebar — Owner: inherit the Sidebar, add nothing it lacks), account + Keluar. Separator line above the switcher. Sheet Item gained an optional Count. C35 Mobile App Shell = status bar · app bar (title, search, notifications) · Content · Bottom Nav · Overlay (default Menu sheet). C33 stays the sub-page / client template (Back + title).
+
+- **C31–C35 approved** (Owner review).
+
+- **Handoff next steps resolved (2026-09-26, Owner picked the recommended defaults):** 1920 App Shell exhibit (`C30 — App shell · 1920`, row 5); rows re-laid out by the Owner (C33–C35 now row 5, y 19863); `sidebar.*` aliases (10, same values; Sidebar + Menu sheet rebound); Calendar Day/Hover (`surface.muted`); toast close aligned to the title line; Segmented Item/LG + Segmented Control/LG; Table states (sorted header, select column, selected row, skeleton, empty state); **C36 Combobox**. Tablet: Owner picked **A — icon rail 72 with tooltips** (board 07) → **C37** Tooltip, Nav Rail Item, Sidebar/Rail, App Shell/Tablet (`size.rail`, `sidebar.rail.*`, `tooltip.*`).
+
 ## Previous handoff — F-06 Clients DONE (2026-10-03)
 
 - **Done:** the Owner marked F-06 DONE after a browser review, and it is merged to `main` from `codex/clients`. The browser-review fixes and the gate are in the [implementation record](features/clients/technical-design.md#implementation-record--2026-10-03).

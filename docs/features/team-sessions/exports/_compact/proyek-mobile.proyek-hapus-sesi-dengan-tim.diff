@@ -1,0 +1,86 @@
+--- base
++++ state
+@@ -1,5 +1,5 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Proyek / Hapus dari sesi / Mobile"
++      data-pencil-name="Proyek / Hapus sesi dengan tim / Mobile"
+       class="box-border w-[390px] h-[844px] flex flex-col gap-0 justify-start items-start bg-[#E4E4E7] [outline:1px_solid_#F0F0F2] rounded-[36px] overflow-hidden relative"
+     >
+@@ -486,17 +486,29 @@
+                 >
+ <div
+-                    data-pencil-name="Atur tim"
+-                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                  >
+-<svg
+-                      data-pencil-name="Icon"
+-                      data-icon-name="user-plus"
+-                      data-icon-set="lucide"
+-                      viewBox="0 0 13.99993896484375 14"
+-                      preserveAspectRatio="xMidYMid meet"
+-                      xmlns="http://www.w3.org/2000/svg"
+-                      class="box-border w-[16px] shrink-0 h-[16px]"
+-                    >
+-</svg>
++                    data-pencil-name="Avatar group"
++                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[-6px] justify-start items-center"
++                  >
++<div
++                      data-pencil-name="Avatar SL"
++                      class="box-border w-[24px] shrink-0 h-[24px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] [outline:2px_solid_#FFFFFF] rounded-[999px]"
++                    >
++<div
++                        data-pencil-name="Initials"
++                        class="text-[10px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
++                      >
++                        SL
++                      </div>
++</div>
++<div
++                      data-pencil-name="Avatar AK"
++                      class="box-border w-[24px] shrink-0 h-[24px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] [outline:2px_solid_#FFFFFF] rounded-[999px]"
++                    >
++<div
++                        data-pencil-name="Initials"
++                        class="text-[10px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
++                      >
++                        AK
++                      </div>
++</div>
+ </div>
+ <div
+@@ -787,5 +799,5 @@
+                 class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+               >
+-                Hapus Sari Lestari dari Wisuda?
++                Hapus sesi Foto keluarga?
+               </div>
+ <div
+@@ -793,5 +805,5 @@
+                 class="text-[12px]/[normal] box-border w-full text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-center"
+               >
+-                Penugasannya dihapus dari sesi ini. Sari tetap ada di Tim.
++                Sesi ini punya 2 anggota tim. Penugasan mereka ikut terhapus.
+               </div>
+ </div>
+@@ -801,10 +813,10 @@
+             >
+ <div
+-                data-pencil-name="Hapus dari sesi"
++                data-pencil-name="Hapus sesi"
+                 class="[box-sizing:content-box] w-[390px] h-[51.5px] shrink-0 flex flex-row gap-[10px] p-[0px_20px] justify-start items-center bg-[#FFFFFF] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:-0.5px_0px_0px_0px]"
+               >
+ <svg
+                   data-pencil-name="Icon"
+-                  data-icon-name="user-minus"
++                  data-icon-name="trash-2"
+                   data-icon-set="lucide"
+                   viewBox="0 0 13.99993896484375 14"
+@@ -818,5 +830,5 @@
+                   class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#B91C1C] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-medium text-left"
+                 >
+-                  Hapus dari sesi
++                  Hapus sesi
+                 </div>
+ </div>

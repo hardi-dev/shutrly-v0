@@ -1,0 +1,742 @@
+--- base
++++ state
+@@ -1,5 +1,5 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Tim / Anggota / Aktif / Desktop"
++      data-pencil-name="Tim / Peran / Desktop"
+       class="box-border w-[1440px] h-[1024px] flex flex-row gap-0 p-[12px_12px_12px_0px] justify-start items-start bg-[#E4E4E7] overflow-hidden"
+     >
+@@ -477,5 +477,5 @@
+                   class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                 >
+-                  Tambah anggota
++                  Tambah peran
+                 </div>
+ </div>
+@@ -488,4 +488,26 @@
+ <div
+               data-pencil-name="Tab Aktif"
++              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[10px_0px] justify-start items-center"
++            >
++<div
++                data-pencil-name="Label"
++                class="text-[14px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-medium text-left [white-space:nowrap]"
++              >
++                Aktif
++              </div>
++</div>
++<div
++              data-pencil-name="Tab Arsip"
++              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[10px_0px] justify-start items-center"
++            >
++<div
++                data-pencil-name="Label"
++                class="text-[14px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-medium text-left [white-space:nowrap]"
++              >
++                Arsip
++              </div>
++</div>
++<div
++              data-pencil-name="Tab Peran"
+               class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[10px_0px] justify-start items-center [border-width:0px_0px_2px_0px] [border-style:solid] [border-color:#18181B]"
+             >
+@@ -493,26 +515,4 @@
+                 data-pencil-name="Label"
+                 class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-              >
+-                Aktif
+-              </div>
+-</div>
+-<div
+-              data-pencil-name="Tab Arsip"
+-              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[10px_0px] justify-start items-center"
+-            >
+-<div
+-                data-pencil-name="Label"
+-                class="text-[14px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-medium text-left [white-space:nowrap]"
+-              >
+-                Arsip
+-              </div>
+-</div>
+-<div
+-              data-pencil-name="Tab Peran"
+-              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[10px_0px] justify-start items-center"
+-            >
+-<div
+-                data-pencil-name="Label"
+-                class="text-[14px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-medium text-left [white-space:nowrap]"
+               >
+                 Peran
+@@ -549,5 +549,5 @@
+                       class="text-[16px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+                     >
+-                      Daftar anggota
++                      Daftar peran
+                     </div>
+ <div
+@@ -555,26 +555,5 @@
+                       class="text-[12px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
+                     >
+-                      8 anggota aktif
+-                    </div>
+-</div>
+-<div
+-                    data-pencil-name="Search"
+-                    class="box-border w-[320px] shrink-0 h-[40px] flex flex-row gap-[8px] p-[0px_12px] justify-start items-center bg-[#FFFFFF] [border:1px_solid_#DCDCE0] rounded-[8px]"
+-                  >
+-<svg
+-                      data-pencil-name="Icon leading"
+-                      data-icon-name="search"
+-                      data-icon-set="lucide"
+-                      viewBox="0 0 13.99993896484375 14"
+-                      preserveAspectRatio="xMidYMid meet"
+-                      xmlns="http://www.w3.org/2000/svg"
+-                      class="box-border w-[16px] shrink-0 h-[16px]"
+-                    >
+-</svg>
+-<div
+-                      data-pencil-name="Placeholder"
+-                      class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                    >
+-                      Cari nama atau nomor WhatsApp
++                      5 peran · dipilih saat menambah anggota
+                     </div>
+ </div>
+@@ -596,5 +575,5 @@
+                         class="text-[10px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[0.6px] text-left [white-space:nowrap]"
+                       >
+-                        ANGGOTA
++                        PERAN
+                       </div>
+ </div>
+@@ -607,16 +586,5 @@
+                         class="text-[10px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[0.6px] text-left [white-space:nowrap]"
+                       >
+-                        WHATSAPP
+-                      </div>
+-</div>
+-<div
+-                      data-pencil-name="Head TANGGAL"
+-                      class="box-border w-[200px] shrink-0 h-fit flex flex-row gap-[4px] justify-start items-center"
+-                    >
+-<div
+-                        data-pencil-name="Label"
+-                        class="text-[10px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[0.6px] text-left [white-space:nowrap]"
+-                      >
+-                        PERAN
++                        DIPAKAI
+                       </div>
+ </div>
+@@ -638,5 +606,5 @@
+                 >
+ <div
+-                    data-pencil-name="Row Ayu Kirana"
++                    data-pencil-name="Row Asisten"
+                     class="[box-sizing:content-box] w-[720px] h-[55.5px] shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
+                   >
+@@ -646,18 +614,7 @@
+                     >
+ <div
+-                        data-pencil-name="Anggota"
++                        data-pencil-name="Peran"
+                         class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+                       >
+-<div
+-                          data-pencil-name="Avatar"
+-                          class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-                        >
+-<div
+-                            data-pencil-name="Initials"
+-                            class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                          >
+-                            AK
+-                          </div>
+-</div>
+ <div
+                           data-pencil-name="Text"
+@@ -668,10 +625,10 @@
+                             class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                           >
+-                            Ayu Kirana
++                            Asisten
+                           </div>
+ </div>
+ </div>
+ <div
+-                        data-pencil-name="WhatsApp"
++                        data-pencil-name="Dipakai"
+                         class="box-border w-[184px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                       >
+@@ -684,21 +641,5 @@
+                             class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                           >
+-                            +62 812-4410-2231
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="Peran"
+-                        class="box-border w-[200px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            Asisten
++                            3 anggota
+                           </div>
+ </div>
+@@ -732,5 +673,5 @@
+ </div>
+ <div
+-                    data-pencil-name="Row Bagas Wicaksono"
++                    data-pencil-name="Row Drone"
+                     class="[box-sizing:content-box] w-[720px] h-[55.5px] shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
+                   >
+@@ -740,18 +681,7 @@
+                     >
+ <div
+-                        data-pencil-name="Anggota"
++                        data-pencil-name="Peran"
+                         class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+                       >
+-<div
+-                          data-pencil-name="Avatar"
+-                          class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-                        >
+-<div
+-                            data-pencil-name="Initials"
+-                            class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                          >
+-                            BW
+-                          </div>
+-</div>
+ <div
+                           data-pencil-name="Text"
+@@ -762,10 +692,10 @@
+                             class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                           >
+-                            Bagas Wicaksono
++                            Drone
+                           </div>
+ </div>
+ </div>
+ <div
+-                        data-pencil-name="WhatsApp"
++                        data-pencil-name="Dipakai"
+                         class="box-border w-[184px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                       >
+@@ -776,23 +706,7 @@
+ <div
+                             data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            +62 813-9021-4455
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="Peran"
+-                        class="box-border w-[200px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            Videografer
++                            class="text-[13px]/[18px] box-border w-full text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                          >
++                            Belum dipakai
+                           </div>
+ </div>
+@@ -826,5 +740,5 @@
+ </div>
+ <div
+-                    data-pencil-name="Row Dimas Pratama"
++                    data-pencil-name="Row Fotografer"
+                     class="[box-sizing:content-box] w-[720px] h-[55.5px] shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
+                   >
+@@ -834,18 +748,7 @@
+                     >
+ <div
+-                        data-pencil-name="Anggota"
++                        data-pencil-name="Peran"
+                         class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+                       >
+-<div
+-                          data-pencil-name="Avatar"
+-                          class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-                        >
+-<div
+-                            data-pencil-name="Initials"
+-                            class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                          >
+-                            DP
+-                          </div>
+-</div>
+ <div
+                           data-pencil-name="Text"
+@@ -856,10 +759,10 @@
+                             class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                           >
+-                            Dimas Pratama
++                            Fotografer
+                           </div>
+ </div>
+ </div>
+ <div
+-                        data-pencil-name="WhatsApp"
++                        data-pencil-name="Dipakai"
+                         class="box-border w-[184px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                       >
+@@ -872,21 +775,5 @@
+                             class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                           >
+-                            +62 812-9876-5432
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="Peran"
+-                        class="box-border w-[200px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            Fotografer, Videografer
++                            4 anggota
+                           </div>
+ </div>
+@@ -920,5 +807,5 @@
+ </div>
+ <div
+-                    data-pencil-name="Row Joko Santoso"
++                    data-pencil-name="Row MUA"
+                     class="[box-sizing:content-box] w-[720px] h-[55.5px] shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
+                   >
+@@ -928,18 +815,7 @@
+                     >
+ <div
+-                        data-pencil-name="Anggota"
++                        data-pencil-name="Peran"
+                         class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+                       >
+-<div
+-                          data-pencil-name="Avatar"
+-                          class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-                        >
+-<div
+-                            data-pencil-name="Initials"
+-                            class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                          >
+-                            JS
+-                          </div>
+-</div>
+ <div
+                           data-pencil-name="Text"
+@@ -950,10 +826,10 @@
+                             class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                           >
+-                            Joko Santoso
++                            MUA
+                           </div>
+ </div>
+ </div>
+ <div
+-                        data-pencil-name="WhatsApp"
++                        data-pencil-name="Dipakai"
+                         class="box-border w-[184px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                       >
+@@ -964,23 +840,7 @@
+ <div
+                             data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            +62 857-3321-0098
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="Peran"
+-                        class="box-border w-[200px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            Videografer
++                            class="text-[13px]/[18px] box-border w-full text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                          >
++                            Belum dipakai
+                           </div>
+ </div>
+@@ -1014,6 +874,6 @@
+ </div>
+ <div
+-                    data-pencil-name="Row Nadia Rahma"
+-                    class="[box-sizing:content-box] w-[720px] h-[55.5px] shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
++                    data-pencil-name="Row Videografer"
++                    class="box-border w-full h-fit shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center"
+                   >
+ <div
+@@ -1022,18 +882,7 @@
+                     >
+ <div
+-                        data-pencil-name="Anggota"
++                        data-pencil-name="Peran"
+                         class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+                       >
+-<div
+-                          data-pencil-name="Avatar"
+-                          class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-                        >
+-<div
+-                            data-pencil-name="Initials"
+-                            class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                          >
+-                            NR
+-                          </div>
+-</div>
+ <div
+                           data-pencil-name="Text"
+@@ -1044,10 +893,10 @@
+                             class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+                           >
+-                            Nadia Rahma
++                            Videografer
+                           </div>
+ </div>
+ </div>
+ <div
+-                        data-pencil-name="WhatsApp"
++                        data-pencil-name="Dipakai"
+                         class="box-border w-[184px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+                       >
+@@ -1060,21 +909,5 @@
+                             class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                           >
+-                            +62 821-7788-1203
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="Peran"
+-                        class="box-border w-[200px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            Fotografer
++                            3 anggota
+                           </div>
+ </div>
+@@ -1107,286 +940,4 @@
+ </div>
+ </div>
+-<div
+-                    data-pencil-name="Row Putri Ayuningtyas"
+-                    class="[box-sizing:content-box] w-[720px] h-[55.5px] shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
+-                  >
+-<div
+-                      data-pencil-name="Cells"
+-                      class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 justify-start items-center"
+-                    >
+-<div
+-                        data-pencil-name="Anggota"
+-                        class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Avatar"
+-                          class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-                        >
+-<div
+-                            data-pencil-name="Initials"
+-                            class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                          >
+-                            PA
+-                          </div>
+-</div>
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+-                          >
+-                            Putri Ayuningtyas
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="WhatsApp"
+-                        class="box-border w-[184px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            +62 878-5512-3390
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="Peran"
+-                        class="box-border w-[200px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            Fotografer, Asisten
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="Aksi"
+-                        class="box-border w-[32px] shrink-0 h-fit flex flex-row gap-[10px] justify-end items-center"
+-                      >
+-<div
+-                          data-pencil-name="Actions"
+-                          class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                        >
+-<div
+-                            data-pencil-name="Trigger"
+-                            class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                          >
+-<svg
+-                              data-pencil-name="Icon"
+-                              data-icon-name="ellipsis"
+-                              data-icon-set="lucide"
+-                              viewBox="0 0 13.99993896484375 14"
+-                              preserveAspectRatio="xMidYMid meet"
+-                              xmlns="http://www.w3.org/2000/svg"
+-                              class="box-border w-[16px] shrink-0 h-[16px]"
+-                            >
+-</svg>
+-</div>
+-</div>
+-</div>
+-</div>
+-</div>
+-<div
+-                    data-pencil-name="Row Rangga Saputra"
+-                    class="[box-sizing:content-box] w-[720px] h-[55.5px] shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
+-                  >
+-<div
+-                      data-pencil-name="Cells"
+-                      class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 justify-start items-center"
+-                    >
+-<div
+-                        data-pencil-name="Anggota"
+-                        class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Avatar"
+-                          class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-                        >
+-<div
+-                            data-pencil-name="Initials"
+-                            class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                          >
+-                            RS
+-                          </div>
+-</div>
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+-                          >
+-                            Rangga Saputra
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="WhatsApp"
+-                        class="box-border w-[184px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            +62 811-2234-5566
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="Peran"
+-                        class="box-border w-[200px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            Fotografer
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="Aksi"
+-                        class="box-border w-[32px] shrink-0 h-fit flex flex-row gap-[10px] justify-end items-center"
+-                      >
+-<div
+-                          data-pencil-name="Actions"
+-                          class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                        >
+-<div
+-                            data-pencil-name="Trigger"
+-                            class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                          >
+-<svg
+-                              data-pencil-name="Icon"
+-                              data-icon-name="ellipsis"
+-                              data-icon-set="lucide"
+-                              viewBox="0 0 13.99993896484375 14"
+-                              preserveAspectRatio="xMidYMid meet"
+-                              xmlns="http://www.w3.org/2000/svg"
+-                              class="box-border w-[16px] shrink-0 h-[16px]"
+-                            >
+-</svg>
+-</div>
+-</div>
+-</div>
+-</div>
+-</div>
+-<div
+-                    data-pencil-name="Row Sari Lestari"
+-                    class="box-border w-full h-fit shrink-0 flex flex-row gap-0 p-[12px_20px] justify-start items-center"
+-                  >
+-<div
+-                      data-pencil-name="Cells"
+-                      class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 justify-start items-center"
+-                    >
+-<div
+-                        data-pencil-name="Anggota"
+-                        class="box-border [flex:1_1_0] h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Avatar"
+-                          class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-                        >
+-<div
+-                            data-pencil-name="Initials"
+-                            class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                          >
+-                            SL
+-                          </div>
+-</div>
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
+-                          >
+-                            Sari Lestari
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="WhatsApp"
+-                        class="box-border w-[184px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            +62 822-1190-7734
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="Peran"
+-                        class="box-border w-[200px] shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+-                      >
+-<div
+-                          data-pencil-name="Text"
+-                          class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-                        >
+-<div
+-                            data-pencil-name="Primary"
+-                            class="text-[13px]/[18px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                          >
+-                            Asisten
+-                          </div>
+-</div>
+-</div>
+-<div
+-                        data-pencil-name="Aksi"
+-                        class="box-border w-[32px] shrink-0 h-fit flex flex-row gap-[10px] justify-end items-center"
+-                      >
+-<div
+-                          data-pencil-name="Actions"
+-                          class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                        >
+-<div
+-                            data-pencil-name="Trigger"
+-                            class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                          >
+-<svg
+-                              data-pencil-name="Icon"
+-                              data-icon-name="ellipsis"
+-                              data-icon-set="lucide"
+-                              viewBox="0 0 13.99993896484375 14"
+-                              preserveAspectRatio="xMidYMid meet"
+-                              xmlns="http://www.w3.org/2000/svg"
+-                              class="box-border w-[16px] shrink-0 h-[16px]"
+-                            >
+-</svg>
+-</div>
+-</div>
+-</div>
+-</div>
+-</div>
+ </div>
+ </div>

@@ -1,7 +1,7 @@
 # Feature: Team
 
 ID: F-08 · Slug: `team-sessions`
-Status: DESIGNED (2026-10-03, [design.md](design.md)); specified and modelled 2026-10-03 ([diagrams](diagrams/)); scope cut 2026-10-03: no money · Journeys: J-03 (*Sessions → Assign team → Confirm → BOOKED*)
+Status: PLANNED (2026-10-04, [technical-design.md](technical-design.md), [plan.md](plan.md)); designed 2026-10-03 ([design.md](design.md)); specified and modelled 2026-10-03 ([diagrams](diagrams/)); scope cut 2026-10-03: no money · Journeys: J-03 (*Sessions → Assign team → Confirm → BOOKED*)
 Consumer: F-18 `team-fees` (not scheduled) would add rates, fees and payment tracking to these assignments.
 
 ## Goal
@@ -12,7 +12,7 @@ As a photographer (Owner), I want to record which freelancers work each session 
 
 ## Preconditions
 - F-02 Workspace (DONE): verified `WorkspaceContext` (ADR-015), App Shell.
-- F-07 Projects (PLANNED, built before F-08): projects, the project detail page, and the sessions of its *Jadwal* card (BR-TEAM-003).
+- F-07 Projects (DONE, on `main`): projects, the project detail page, and the sessions of its *Jadwal* card (BR-TEAM-003).
 - F-17 App Shell (DONE): the nav slot `team` (*Tim*, icon `user-round-cog`, under the *Katalog* group). Today it's a *Segera hadir* placeholder at `/w/[workspaceId]/team`. F-08 replaces the placeholder with the real page; the label, icon and position stay.
 - Actor: a signed-in, verified, active Owner inside a workspace they own (BR-WS-003).
 

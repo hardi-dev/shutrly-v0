@@ -19,6 +19,10 @@ export const PROJECT_COPY = {
   clientPlaceholder: "Cari atau tambah klien",
   clientGroupLabel: (count: number) => `KLIEN · ${String(count)} COCOK`,
   clientNoMatchLabel: (query: string) => `TIDAK ADA KLIEN “${query}”`,
+  noServiceTitle: "Belum ada layanan aktif",
+  noServiceBody:
+    "Proyek dibuat dari layanan. Buat atau aktifkan layanan dulu, lalu kembali ke sini.",
+  noServiceAction: "Buka Layanan",
   clientDialogDescription: "Klien baru langsung dipilih untuk proyek ini.",
   clientCreateLabel: (query: string) => `Tambah klien baru “${query}”`,
   clientNoNumber: "Belum ada nomor WhatsApp",

@@ -1,5 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
+
+import { Alert } from "@/ui/patterns/alert/alert";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
 import { ClientPicker } from "../client-picker/client-picker";
@@ -11,6 +15,12 @@ import type { CreateProjectCardProps } from "./create-project-screen.types";
 /** The Klien & layanan card: the client combobox and the service select. */
 export function ClientServiceCard({ state, props }: Readonly<CreateProjectCardProps>) {
   const { errors } = state.form.formState;
+  const serviceError = errorText("serviceId", errors.serviceId?.message);
+  const serviceRef = useRef<HTMLDivElement>(null);
+  // An inactive-service failure from the server moves focus to Layanan (AC-PRJ-012).
+  useEffect(() => {
+    if (serviceError) serviceRef.current?.querySelector("button")?.focus();
+  }, [serviceError]);
   return (
     <SectionCard title={PROJECT_COPY.clientServiceTitle}>
       <ClientPicker
@@ -21,13 +31,31 @@ export function ClientServiceCard({ state, props }: Readonly<CreateProjectCardPr
         createAction={props.createClientAction}
         errorMessage={errorText("clientId", errors.clientId?.message)}
       />
-      <ServicePicker
-        serviceGroups={props.serviceGroups}
-        value={state.service?.id ?? null}
-        onChange={state.selectService}
-        errorMessage={errorText("serviceId", errors.serviceId?.message)}
-      />
+      <div ref={serviceRef}>
+        <ServicePicker
+          serviceGroups={props.serviceGroups}
+          value={state.service?.id ?? null}
+          onChange={state.selectService}
+          errorMessage={serviceError}
+        />
+      </div>
+      {props.hasActiveService ? null : <NoServiceAlert workspaceId={props.workspaceId} />}
     </SectionCard>
+  );
+}
+
+function NoServiceAlert({ workspaceId }: Readonly<{ workspaceId: string }>) {
+  const router = useRouter();
+  const handleAction = () => {
+    router.push(`/w/${workspaceId}/services`);
+  };
+  return (
+    <Alert
+      tone="info"
+      title={PROJECT_COPY.noServiceTitle}
+      body={PROJECT_COPY.noServiceBody}
+      action={{ label: PROJECT_COPY.noServiceAction, onAction: handleAction }}
+    />
   );
 }
 

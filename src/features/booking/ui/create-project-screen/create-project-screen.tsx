@@ -35,7 +35,7 @@ export function CreateProjectScreen(props: Readonly<CreateProjectScreenProps>) {
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) pb-(--space-6) md:gap-(--component-panel-app-content-gap)">
       <ClientServiceCard state={state} props={props} />
-      {service ? (
+      {service && props.hasActiveService ? (
         <PackageItemsCard serviceName={service.name} items={service.items} isMobile={isMobile} />
       ) : null}
       <ProjectDetailCard state={state} />
@@ -49,7 +49,7 @@ export function CreateProjectScreen(props: Readonly<CreateProjectScreenProps>) {
         onUpdate={state.updateSession}
         onRemove={state.removeSession}
       />
-      {service ? (
+      {service && props.hasActiveService ? (
         <ProjectFieldsCard
           serviceName={service.name}
           fields={service.fields}
@@ -58,7 +58,7 @@ export function CreateProjectScreen(props: Readonly<CreateProjectScreenProps>) {
           onChange={state.changeFieldValue}
         />
       ) : null}
-      <CreateProjectActions state={state} />
+      <CreateProjectActions state={state} isDisabled={!props.hasActiveService} />
     </main>
   );
 }

@@ -1,5 +1,3 @@
-import type { ServiceOptionGroup } from "@/features/booking/application/ports/project-repository/project-repository.port";
+import type { CreateOptions } from "@/features/booking/application/use-cases/load-create-options/load-create-options.types";
 
-export interface CreateProjectOptions {
-  readonly serviceGroups: readonly ServiceOptionGroup[];
-}
+export type CreateProjectOptions = CreateOptions;

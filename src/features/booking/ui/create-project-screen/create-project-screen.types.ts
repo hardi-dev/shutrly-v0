@@ -1,4 +1,7 @@
-import type { ServiceOptionGroup } from "@/features/booking/application/ports/project-repository/project-repository.port";
+import type {
+  ActiveDefinition,
+  ServiceOptionGroup,
+} from "@/features/booking/application/ports/project-repository/project-repository.port";
 
 import type { ClientPickerProps } from "../client-picker/client-picker.types";
 import type { SearchClientsAction } from "../use-client-search/use-client-search.types";
@@ -12,6 +15,8 @@ export interface CreateProjectScreenProps {
   readonly serviceGroups: readonly ServiceOptionGroup[];
   readonly createAction: CreateProjectCall;
   readonly searchClientsAction: SearchClientsAction;
+  readonly hasActiveService: boolean;
+  readonly definitions: readonly ActiveDefinition[];
   readonly createClientAction?: NonNullable<ClientPickerProps["createAction"]>;
 }
 

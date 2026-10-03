@@ -21,7 +21,9 @@ export function ServicePicker(props: Readonly<ServicePickerProps>) {
   return (
     <Select
       label={PROJECT_COPY.serviceLabel}
-      placeholder={PROJECT_COPY.servicePlaceholder}
+      placeholder={
+        options.length === 0 ? PROJECT_COPY.noServiceTitle : PROJECT_COPY.servicePlaceholder
+      }
       options={options}
       value={props.value}
       onChange={props.onChange}
@@ -31,7 +33,7 @@ export function ServicePicker(props: Readonly<ServicePickerProps>) {
           : undefined
       }
       errorMessage={props.errorMessage}
-      isDisabled={props.isDisabled}
+      isDisabled={props.isDisabled || options.length === 0}
     />
   );
 }

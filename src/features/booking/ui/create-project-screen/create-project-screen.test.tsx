@@ -29,11 +29,16 @@ const { CreateProjectScreen } = await import("./create-project-screen");
 const serviceGroups = await projectFixture().listActiveServiceOptions(projectContext);
 const searchClientsAction = vi.fn().mockResolvedValue([]);
 
-function renderScreen(createAction = vi.fn().mockResolvedValue({ ok: true, projectId: "p-1" })) {
+function renderScreen(
+  createAction = vi.fn().mockResolvedValue({ ok: true, projectId: "p-1" }),
+  options: { groups?: typeof serviceGroups; hasActiveService?: boolean } = {},
+) {
   render(
     <CreateProjectScreen
       workspaceId="ws-1"
-      serviceGroups={serviceGroups}
+      serviceGroups={options.groups ?? serviceGroups}
+      hasActiveService={options.hasActiveService ?? true}
+      definitions={[]}
       createAction={createAction}
       searchClientsAction={searchClientsAction}
     />,
@@ -47,7 +52,7 @@ async function pickClient() {
 }
 
 async function pickService() {
-  await userEvent.click(screen.getByRole("button", { name: /Layanan/ }));
+  await userEvent.click(screen.getByRole("button", { name: /^Layanan/ }));
   await userEvent.click(screen.getByRole("option", { name: "Wisuda Basic" }));
 }
 
@@ -220,5 +225,49 @@ describe("CreateProjectScreen (S2)", () => {
       );
     });
     expect(screen.getByRole("textbox", { name: /Nama kampus/ })).toHaveValue("UI");
+  });
+
+  it("AC-PRJ-014 shows the no-active-service state and blocks both submit buttons", () => {
+    renderScreen(undefined, { groups: [], hasActiveService: false });
+    expect(screen.getByRole("button", { name: /^Layanan/ })).toBeDisabled();
+    expect(
+      screen.getByText(
+        "Proyek dibuat dari layanan. Buat atau aktifkan layanan dulu, lalu kembali ke sini.",
+      ),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Buka Layanan" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Simpan draf" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Buat proyek" })).toBeDisabled();
+    expect(screen.queryByText("Isi paket")).not.toBeInTheDocument();
+    expect(screen.queryByText("Field booking")).not.toBeInTheDocument();
+  });
+
+  it("AC-PRJ-012 shows SERVICE_INACTIVE under Layanan, keeps the form and focuses Layanan", async () => {
+    const createAction = vi.fn().mockResolvedValue({
+      ok: false,
+      code: "VALIDATION_FAILED",
+      fieldErrors: { serviceId: "SERVICE_INACTIVE" },
+    });
+    renderScreen(createAction);
+    await pickClient();
+    await pickService();
+    await userEvent.type(screen.getByRole("textbox", { name: /Nama kampus/ }), "UI");
+    await userEvent.click(screen.getByRole("button", { name: /Tanggal wisuda/ }));
+    await userEvent.click(within(screen.getByRole("grid")).getByText("15"));
+    await userEvent.type(
+      screen.getByPlaceholderText("Hanya kamu yang bisa melihat catatan ini."),
+      "Catatan",
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Simpan draf" }));
+    expect(
+      await screen.findByText("Layanan ini sudah tidak aktif. Pilih layanan lain."),
+    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Hanya kamu yang bisa melihat catatan ini.")).toHaveValue(
+      "Catatan",
+    );
+    expect(screen.getByRole("textbox", { name: "Judul proyek" })).toHaveValue(
+      "Wisuda Basic — Rina",
+    );
+    expect(screen.getByRole("button", { name: /^Layanan/ })).toHaveFocus();
   });
 });

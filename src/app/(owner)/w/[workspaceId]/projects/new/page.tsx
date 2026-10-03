@@ -9,7 +9,8 @@ export default async function NewProjectPage({
   params,
 }: Readonly<{ params: Promise<{ workspaceId: string }> }>) {
   const { workspaceId } = await params;
-  const { serviceGroups } = await loadCreateProjectOptions(workspaceId);
+  const { serviceGroups, hasActiveService, definitions } =
+    await loadCreateProjectOptions(workspaceId);
   return (
     <>
       <PageHeadingOverride
@@ -21,6 +22,8 @@ export default async function NewProjectPage({
       <CreateProjectScreen
         workspaceId={workspaceId}
         serviceGroups={serviceGroups}
+        hasActiveService={hasActiveService}
+        definitions={definitions}
         createAction={createProjectAction}
         searchClientsAction={searchActiveClientsAction}
         createClientAction={addClientAction}

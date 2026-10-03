@@ -7,7 +7,10 @@ import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import type { CreateProjectState } from "../use-create-project-form/use-create-project-form.types";
 
 /** Simpan draf and Buat proyek: right-aligned under the form on desktop, a sticky half-width bar on phones. */
-export function CreateProjectActions({ state }: Readonly<{ state: CreateProjectState }>) {
+export function CreateProjectActions({
+  state,
+  isDisabled = false,
+}: Readonly<{ state: CreateProjectState; isDisabled?: boolean }>) {
   const isMobile = useMobileViewport();
   const size = isMobile ? "lg" : "md";
   const handleSaveDraft = () => {
@@ -23,7 +26,7 @@ export function CreateProjectActions({ state }: Readonly<{ state: CreateProjectS
         size={size}
         className="max-md:min-w-0 max-md:flex-1 max-md:px-(--space-3)"
         isPending={state.pendingMode === "DRAFT"}
-        isDisabled={state.pendingMode === "BOOKED"}
+        isDisabled={isDisabled || state.pendingMode === "BOOKED"}
         onPress={handleSaveDraft}
       >
         {state.pendingMode === "DRAFT" ? PROJECT_COPY.savingDraft : PROJECT_COPY.saveDraft}
@@ -32,7 +35,7 @@ export function CreateProjectActions({ state }: Readonly<{ state: CreateProjectS
         size={size}
         className="max-md:min-w-0 max-md:flex-1 max-md:px-(--space-3)"
         isPending={state.pendingMode === "BOOKED"}
-        isDisabled={state.pendingMode === "DRAFT"}
+        isDisabled={isDisabled || state.pendingMode === "DRAFT"}
         onPress={handleCreate}
       >
         {state.pendingMode === "BOOKED" ? PROJECT_COPY.creating : PROJECT_COPY.create}

@@ -1,0 +1,92 @@
+--- base
++++ state
+@@ -1,5 +1,5 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Galeri / Draf / Proof / Desktop"
++      data-pencil-name="Galeri / Draf / Gagal + foto hilang / Desktop"
+       class="box-border w-[1440px] h-[1417px] flex flex-row gap-0 p-[12px_12px_12px_0px] justify-start items-start bg-[#E4E4E7] overflow-hidden"
+     >
+@@ -759,6 +759,6 @@
+                         class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                       >
+-                        Google Drive · Disinkronkan Sab, 4 Okt 2026 · 10.12 · 5 proof · 2 edited · 1
+-                        print · 2 diabaikan
++                        Google Drive · Disinkronkan Sab, 4 Okt 2026 · 11.02 · 5 proof · 1 hilang · 2
++                        edited · 1 print
+                       </div>
+ </div>
+@@ -841,7 +841,8 @@
+ <div
+                         data-pencil-name="Meta"
+-                        class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                      >
+-                        Google Drive · Disinkronkan Sab, 4 Okt 2026 · 10.13 · 3 proof
++                        class="text-[13px]/[normal] box-border w-full text-[#B91C1C] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                      >
++                        Folder tidak bisa dibaca. Bagikan folder sebagai “Siapa saja yang memiliki
++                        link”, lalu sinkronkan lagi.
+                       </div>
+ </div>
+@@ -856,16 +857,16 @@
+ <div
+                           data-pencil-name="Sync status"
+-                          class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#E8F7EE] rounded-[999px]"
++                          class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#FDECEC] rounded-[999px]"
+                         >
+ <div
+                             data-pencil-name="Dot"
+-                            class="box-border w-[6px] shrink-0 h-[6px] bg-[#15803D] rounded-full"
++                            class="box-border w-[6px] shrink-0 h-[6px] bg-[#B91C1C] rounded-full"
+                           >
+ </div>
+ <div
+                             data-pencil-name="Label"
+-                            class="text-[11px]/[normal] box-border text-[#15803D] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                          >
+-                            Berhasil
++                            class="text-[11px]/[normal] box-border text-[#B91C1C] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                          >
++                            Gagal
+                           </div>
+ </div>
+@@ -956,5 +957,5 @@
+                     class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                   >
+-                    8 proof · 2 edited · 1 print
++                    8 proof (1 hilang) · 2 edited · 1 print
+                   </div>
+ <div
+@@ -976,5 +977,6 @@
+                       class="text-[13px]/[20px] box-border [flex:1_1_0] text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                     >
+-                      Terlihat oleh klien setelah galeri dipublikasikan.
++                      Terlihat oleh klien setelah galeri dipublikasikan. Foto bertanda Hilang
++                      disembunyikan sampai ditemukan lagi.
+                     </div>
+ </div>
+@@ -1014,6 +1016,22 @@
+ <div
+                           data-pencil-name="Image"
+-                          class="box-border w-full h-[220px] shrink-0 bg-[url('https://images.unsplash.com/photo-1625321482818-d13675fea97b?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=1080')] bg-no-repeat bg-cover bg-center rounded-[12px] overflow-hidden"
+-                        >
++                          class="box-border w-full h-[220px] shrink-0 bg-[url('https://images.unsplash.com/photo-1625321482818-d13675fea97b?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=1080')] bg-no-repeat bg-cover bg-center rounded-[12px] overflow-hidden relative"
++                        >
++<div
++                            data-pencil-name="Badge"
++                            class="box-border w-fit h-fit absolute left-[8px] top-[8px] flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#FEF3E2] rounded-[999px] [z-index:0]"
++                          >
++<div
++                              data-pencil-name="Dot"
++                              class="box-border w-[6px] shrink-0 h-[6px] bg-[#B45309] rounded-full"
++                            >
++</div>
++<div
++                              data-pencil-name="Label"
++                              class="text-[11px]/[normal] box-border text-[#B45309] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                            >
++                              Hilang
++                            </div>
++</div>
+ </div>
+ <div

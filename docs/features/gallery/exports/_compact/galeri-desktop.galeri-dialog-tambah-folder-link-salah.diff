@@ -1,0 +1,311 @@
+--- base
++++ state
+@@ -1,10 +1,10 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Galeri / Draf / Proof / Desktop"
+-      class="box-border w-[1440px] h-[1417px] flex flex-row gap-0 p-[12px_12px_12px_0px] justify-start items-start bg-[#E4E4E7] overflow-hidden"
++      data-pencil-name="Galeri / Dialog Tambah folder, link salah / Desktop"
++      class="box-border w-[1440px] h-[1024px] flex flex-row gap-0 p-[12px_12px_12px_0px] justify-start items-start bg-[#E4E4E7] overflow-hidden relative"
+     >
+ <div
+         data-pencil-name="Sidebar"
+-        class="box-border w-[252px] shrink-0 h-full flex flex-col gap-[12px] p-[8px_12px] justify-start items-start bg-[#E4E4E7]"
++        class="box-border w-[252px] shrink-0 h-full flex flex-col gap-[12px] p-[8px_12px] justify-start items-start bg-[#E4E4E7] relative [z-index:0]"
+       >
+ <div
+@@ -361,5 +361,5 @@
+ <div
+         data-pencil-name="Panel"
+-        class="box-border [flex:1_1_0] h-full flex flex-col gap-0 justify-start items-start bg-[#F4F4F5] [border:1px_solid_#DCDCE0] rounded-[16px] overflow-hidden"
++        class="box-border [flex:1_1_0] h-full flex flex-col gap-0 justify-start items-start bg-[#F4F4F5] [border:1px_solid_#DCDCE0] rounded-[16px] overflow-hidden relative [z-index:1]"
+       >
+ <div
+@@ -1168,4 +1168,287 @@
+ </div>
+ </div>
++<div
++        data-pencil-name="Overlay"
++        class="box-border w-[1440px] h-[1024px] absolute left-0 top-0 flex flex-row gap-0 justify-center items-center bg-[#09090B80] [z-index:2]"
++      >
++<div
++          data-pencil-name="Modal"
++          class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 justify-center items-center"
++        >
++<div
++            data-pencil-name="Modal"
++            class="box-border w-[560px] shrink-0 h-fit [box-shadow:0px_16px_40px_#18181B24] flex flex-col gap-0 justify-start items-start bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[16px] overflow-hidden"
++          >
++<div
++              data-pencil-name="Header"
++              class="[box-sizing:content-box] w-[560px] h-[106.5px] shrink-0 flex flex-row gap-[12px] p-[20px_24px] justify-start items-start [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
++            >
++<div
++                data-pencil-name="Heading"
++                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
++              >
++<div
++                  data-pencil-name="Title"
++                  class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-0.4px] text-left [white-space:nowrap]"
++                >
++                  Tambah folder
++                </div>
++<div
++                  data-pencil-name="Description"
++                  class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                >
++                  Foto di folder utama menjadi proof. Subfolder edited dan print menjadi hasil
++                  akhir.
++                </div>
++</div>
++<div
++                data-pencil-name="Close"
++                class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
++              >
++<svg
++                  data-pencil-name="Icon"
++                  data-icon-name="x"
++                  data-icon-set="lucide"
++                  viewBox="0 0 13.99993896484375 14"
++                  preserveAspectRatio="xMidYMid meet"
++                  xmlns="http://www.w3.org/2000/svg"
++                  class="box-border w-[16px] shrink-0 h-[16px]"
++                >
++</svg>
++</div>
++</div>
++<div
++              data-pencil-name="Body"
++              class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[24px] justify-start items-start"
++            >
++<div
++                data-pencil-name="Fields"
++                class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] justify-start items-start"
++              >
++<div
++                  data-pencil-name="Sumber"
++                  class="box-border w-full h-fit shrink-0 flex flex-col gap-0 justify-start items-start"
++                >
++<div
++                    data-pencil-name="Field"
++                    class="box-border w-full h-fit shrink-0 flex flex-col gap-[6px] justify-start items-start"
++                  >
++<div
++                      data-pencil-name="Label row"
++                      class="box-border w-full h-fit shrink-0 flex flex-row gap-[4px] justify-start items-center"
++                    >
++<div
++                        data-pencil-name="Label"
++                        class="text-[12px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                      >
++                        Sumber
++                      </div>
++</div>
++<div
++                      data-pencil-name="Input"
++                      class="box-border w-full h-[40px] shrink-0 flex flex-row gap-[8px] p-[0px_12px] justify-start items-center bg-[#FFFFFF] [border:1px_solid_#DCDCE0] rounded-[8px]"
++                    >
++<div
++                        data-pencil-name="Value"
++                        class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                      >
++                        Google Drive
++                      </div>
++<svg
++                        data-pencil-name="Icon trailing"
++                        data-icon-name="chevron-down"
++                        data-icon-set="lucide"
++                        viewBox="0 0 13.99993896484375 14"
++                        preserveAspectRatio="xMidYMid meet"
++                        xmlns="http://www.w3.org/2000/svg"
++                        class="box-border w-[16px] shrink-0 h-[16px]"
++                      >
++</svg>
++</div>
++<div
++                      data-pencil-name="Message"
++                      class="box-border w-full h-fit shrink-0 flex flex-row gap-[8px] justify-start items-center"
++                    >
++<div
++                        data-pencil-name="Helper"
++                        class="text-[12px]/[17px] box-border [flex:1_1_0] text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                      >
++                        Hanya sumber aktif.
++                      </div>
++</div>
++</div>
++</div>
++<div
++                  data-pencil-name="Link folder Google Drive"
++                  class="box-border w-full h-fit shrink-0 flex flex-col gap-[6px] justify-start items-start"
++                >
++<div
++                    data-pencil-name="Label row"
++                    class="box-border w-full h-fit shrink-0 flex flex-row gap-[4px] justify-start items-center"
++                  >
++<div
++                      data-pencil-name="Label"
++                      class="text-[12px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                    >
++                      Link folder Google Drive
++                    </div>
++</div>
++<div
++                    data-pencil-name="Input"
++                    class="box-border w-full h-[40px] shrink-0 flex flex-row gap-[8px] p-[0px_12px] justify-start items-center bg-[#FFFFFF] [border:2px_solid_#DC2626] rounded-[8px]"
++                  >
++<div
++                      data-pencil-name="Value"
++                      class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                    >
++                      https://drive.google.com/file/d/1aB9xQ/view
++                    </div>
++<svg
++                      data-pencil-name="Icon trailing"
++                      data-icon-name="circle-alert"
++                      data-icon-set="lucide"
++                      viewBox="0 0 13.99993896484375 14"
++                      preserveAspectRatio="xMidYMid meet"
++                      xmlns="http://www.w3.org/2000/svg"
++                      class="box-border w-[16px] shrink-0 h-[16px]"
++                    >
++</svg>
++</div>
++<div
++                    data-pencil-name="Message"
++                    class="box-border w-full h-fit shrink-0 flex flex-row gap-[8px] justify-start items-center"
++                  >
++<svg
++                      data-pencil-name="Message icon"
++                      data-icon-name="circle-alert"
++                      data-icon-set="lucide"
++                      viewBox="0 0 13.99993896484375 14"
++                      preserveAspectRatio="xMidYMid meet"
++                      xmlns="http://www.w3.org/2000/svg"
++                      class="box-border w-[16px] shrink-0 h-[16px]"
++                    >
++</svg>
++<div
++                      data-pencil-name="Helper"
++                      class="text-[12px]/[17px] box-border [flex:1_1_0] text-[#B91C1C] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                    >
++                      Ini link file. Tempel link folder Google Drive.
++                    </div>
++</div>
++</div>
++<div
++                  data-pencil-name="Label"
++                  class="box-border w-full h-fit shrink-0 flex flex-col gap-[6px] justify-start items-start"
++                >
++<div
++                    data-pencil-name="Label row"
++                    class="box-border w-full h-fit shrink-0 flex flex-row gap-[4px] justify-start items-center"
++                  >
++<div
++                      data-pencil-name="Label"
++                      class="text-[12px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                    >
++                      Label
++                    </div>
++<div
++                      data-pencil-name="Optional"
++                      class="text-[12px]/[normal] box-border text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left [white-space:nowrap]"
++                    >
++                      (opsional)
++                    </div>
++</div>
++<div
++                    data-pencil-name="Input"
++                    class="box-border w-full h-[40px] shrink-0 flex flex-row gap-[8px] p-[0px_12px] justify-start items-center bg-[#FFFFFF] [border:1px_solid_#DCDCE0] rounded-[8px]"
++                  >
++<div
++                      data-pencil-name="Placeholder"
++                      class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                    >
++                      Contoh: Sesi wisuda
++                    </div>
++</div>
++<div
++                    data-pencil-name="Message"
++                    class="box-border w-full h-fit shrink-0 flex flex-row gap-[8px] justify-start items-center"
++                  >
++<div
++                      data-pencil-name="Helper"
++                      class="text-[12px]/[17px] box-border [flex:1_1_0] text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                    >
++                      Kosongkan untuk memakai nama folder dari Drive.
++                    </div>
++</div>
++</div>
++<div
++                  data-pencil-name="Alert"
++                  class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-start bg-[#FEF3E2] [border:1px_solid_#B4530940] rounded-[12px]"
++                >
++<svg
++                    data-pencil-name="Icon"
++                    data-icon-name="triangle-alert"
++                    data-icon-set="lucide"
++                    viewBox="0 0 13.99993896484375 14"
++                    preserveAspectRatio="xMidYMid meet"
++                    xmlns="http://www.w3.org/2000/svg"
++                    class="box-border w-[16px] shrink-0 h-[16px]"
++                  >
++</svg>
++<div
++                    data-pencil-name="Text"
++                    class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
++                  >
++<div
++                      data-pencil-name="Title"
++                      class="text-[13px]/[18px] box-border w-full text-[#B45309] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
++                    >
++                      Link Drive melewati password galeri
++                    </div>
++<div
++                      data-pencil-name="Body"
++                      class="text-[12px]/[17px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                    >
++                      Siapa pun yang punya link folder bisa melihat fotonya langsung. Bagikan link
++                      galeri ke klien, bukan link Drive.
++                    </div>
++</div>
++</div>
++</div>
++</div>
++<div
++              data-pencil-name="Footer"
++              class="[box-sizing:content-box] w-[560px] h-[73.5px] shrink-0 flex flex-row gap-[12px] p-[16px_24px] justify-end items-center bg-[#F4F4F5] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:-0.5px_0px_0px_0px]"
++            >
++<div
++                data-pencil-name="Actions"
++                class="box-border w-fit shrink-0 h-fit flex flex-row gap-[12px] justify-start items-center"
++              >
++<div
++                  data-pencil-name="Batal"
++                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[999px]"
++                >
++<div
++                    data-pencil-name="Label"
++                    class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                  >
++                    Batal
++                  </div>
++</div>
++<div
++                  data-pencil-name="Tambah folder"
++                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#2F5BFF] rounded-[999px]"
++                >
++<div
++                    data-pencil-name="Label"
++                    class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                  >
++                    Tambah folder
++                  </div>
++</div>
++</div>
++</div>
++</div>
++</div>
++</div>
+ </div>
+ </body>

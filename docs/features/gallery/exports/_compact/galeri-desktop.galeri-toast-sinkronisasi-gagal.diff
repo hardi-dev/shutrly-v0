@@ -1,0 +1,92 @@
+--- base
++++ state
+@@ -1,10 +1,10 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Galeri / Draf / Proof / Desktop"
+-      class="box-border w-[1440px] h-[1417px] flex flex-row gap-0 p-[12px_12px_12px_0px] justify-start items-start bg-[#E4E4E7] overflow-hidden"
++      data-pencil-name="Galeri / Toast Sinkronisasi gagal / Desktop"
++      class="box-border w-[1440px] h-[1024px] flex flex-row gap-0 p-[12px_12px_12px_0px] justify-start items-start bg-[#E4E4E7] overflow-hidden relative"
+     >
+ <div
+         data-pencil-name="Sidebar"
+-        class="box-border w-[252px] shrink-0 h-full flex flex-col gap-[12px] p-[8px_12px] justify-start items-start bg-[#E4E4E7]"
++        class="box-border w-[252px] shrink-0 h-full flex flex-col gap-[12px] p-[8px_12px] justify-start items-start bg-[#E4E4E7] relative [z-index:0]"
+       >
+ <div
+@@ -361,5 +361,5 @@
+ <div
+         data-pencil-name="Panel"
+-        class="box-border [flex:1_1_0] h-full flex flex-col gap-0 justify-start items-start bg-[#F4F4F5] [border:1px_solid_#DCDCE0] rounded-[16px] overflow-hidden"
++        class="box-border [flex:1_1_0] h-full flex flex-col gap-0 justify-start items-start bg-[#F4F4F5] [border:1px_solid_#DCDCE0] rounded-[16px] overflow-hidden relative [z-index:1]"
+       >
+ <div
+@@ -1168,4 +1168,68 @@
+ </div>
+ </div>
++<div
++        data-pencil-name="Toast"
++        class="box-border w-[1440px] h-[1024px] absolute left-0 top-0 flex flex-col gap-0 p-[24px] justify-end items-end [z-index:2]"
++      >
++<div
++          data-pencil-name="Toast"
++          class="box-border w-[420px] h-fit shrink-0 [box-shadow:0px_4px_16px_#18181B14] flex flex-row gap-[12px] p-[12px] justify-start items-start bg-[#FDECEC] [border:1px_solid_#B91C1C40] rounded-[12px]"
++        >
++<svg
++            data-pencil-name="Icon"
++            data-icon-name="circle-alert"
++            data-icon-set="lucide"
++            viewBox="0 0 13.99993896484375 14"
++            preserveAspectRatio="xMidYMid meet"
++            xmlns="http://www.w3.org/2000/svg"
++            class="box-border w-[16px] shrink-0 h-[16px]"
++          >
++</svg>
++<div
++            data-pencil-name="Text"
++            class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
++          >
++<div
++              data-pencil-name="Title"
++              class="text-[13px]/[18px] box-border w-full text-[#B91C1C] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
++            >
++              Sinkronisasi gagal
++            </div>
++<div
++              data-pencil-name="Body"
++              class="text-[12px]/[17px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++            >
++              Google Drive sedang tidak bisa dihubungi. Foto yang ada tidak berubah. Coba lagi
++              sebentar lagi.
++            </div>
++<div
++              data-pencil-name="Action"
++              class="text-[12px]/[17px] box-border text-[#B91C1C] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++            >
++              Coba lagi
++            </div>
++</div>
++<div
++            data-pencil-name="Close align"
++            class="box-border w-fit shrink-0 h-[18px] flex flex-row gap-0 justify-center items-center"
++          >
++<div
++              data-pencil-name="Close"
++              class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
++            >
++<svg
++                data-pencil-name="Icon"
++                data-icon-name="x"
++                data-icon-set="lucide"
++                viewBox="0 0 13.99993896484375 14"
++                preserveAspectRatio="xMidYMid meet"
++                xmlns="http://www.w3.org/2000/svg"
++                class="box-border w-[16px] shrink-0 h-[16px]"
++              >
++</svg>
++</div>
++</div>
++</div>
++</div>
+ </div>
+ </body>

@@ -1,0 +1,276 @@
+--- base
++++ state
+@@ -1,6 +1,6 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Galeri / Draf / Proof / Mobile"
+-      class="box-border w-[390px] h-[1156px] flex flex-col gap-0 justify-start items-start bg-[#E4E4E7] [outline:1px_solid_#F0F0F2] rounded-[36px] overflow-hidden"
++      data-pencil-name="Galeri / Proyek dibatalkan / Mobile"
++      class="box-border w-[390px] h-[1206px] flex flex-col gap-0 justify-start items-start bg-[#E4E4E7] [outline:1px_solid_#F0F0F2] rounded-[36px] overflow-hidden"
+     >
+ <div
+@@ -87,29 +87,4 @@
+             </div>
+ </div>
+-<div
+-            data-pencil-name="Actions"
+-            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] justify-start items-center"
+-          >
+-<div
+-              data-pencil-name="Menu galeri"
+-              class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-            >
+-<div
+-                data-pencil-name="Trigger"
+-                class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[12px] justify-center items-center rounded-[8px]"
+-              >
+-<svg
+-                  data-pencil-name="Icon"
+-                  data-icon-name="ellipsis"
+-                  data-icon-set="lucide"
+-                  viewBox="0 0 13.99993896484375 14"
+-                  preserveAspectRatio="xMidYMid meet"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                  class="box-border w-[16px] shrink-0 h-[16px]"
+-                >
+-</svg>
+-</div>
+-</div>
+-</div>
+ </div>
+ </div>
+@@ -146,6 +121,39 @@
+               class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+             >
+-              2 folder · 8 proof · Tanpa kedaluwarsa
++              2 folder · 8 proof
+             </div>
++</div>
++<div
++            data-pencil-name="Alert"
++            class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-start bg-[#FEF3E2] [border:1px_solid_#B4530940] rounded-[12px]"
++          >
++<svg
++              data-pencil-name="Icon"
++              data-icon-name="circle-x"
++              data-icon-set="lucide"
++              viewBox="0 0 13.99993896484375 14"
++              preserveAspectRatio="xMidYMid meet"
++              xmlns="http://www.w3.org/2000/svg"
++              class="box-border w-[16px] shrink-0 h-[16px]"
++            >
++</svg>
++<div
++              data-pencil-name="Text"
++              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
++            >
++<div
++                data-pencil-name="Title"
++                class="text-[13px]/[18px] box-border w-full text-[#B45309] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left"
++              >
++                Proyek dibatalkan
++              </div>
++<div
++                data-pencil-name="Body"
++                class="text-[12px]/[17px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++              >
++                Galeri draf ini tidak bisa dipublikasikan, disinkronkan, atau diubah. Kamu masih
++                bisa menghapusnya.
++              </div>
++</div>
+ </div>
+ <div
+@@ -155,5 +163,5 @@
+ <div
+               data-pencil-name="Header"
+-              class="[box-sizing:content-box] w-[358px] h-[65.5px] shrink-0 flex flex-row gap-[16px] p-[12px_16px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
++              class="[box-sizing:content-box] w-[358px] h-[43.5px] shrink-0 flex flex-row gap-[16px] p-[12px_16px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
+             >
+ <div
+@@ -167,30 +175,4 @@
+                   Akses klien
+                 </div>
+-</div>
+-<div
+-                data-pencil-name="Actions"
+-                class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] justify-start items-center"
+-              >
+-<div
+-                  data-pencil-name="Ganti password"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[999px]"
+-                >
+-<svg
+-                    data-pencil-name="Icon leading"
+-                    data-icon-name="key-round"
+-                    data-icon-set="lucide"
+-                    viewBox="0 0 13.99993896484375 14"
+-                    preserveAspectRatio="xMidYMid meet"
+-                    xmlns="http://www.w3.org/2000/svg"
+-                    class="box-border w-[16px] shrink-0 h-[16px]"
+-                  >
+-</svg>
+-<div
+-                    data-pencil-name="Label"
+-                    class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                  >
+-                    Ganti
+-                  </div>
+-</div>
+ </div>
+ </div>
+@@ -261,5 +243,5 @@
+ <div
+               data-pencil-name="Header"
+-              class="[box-sizing:content-box] w-[358px] h-[65.5px] shrink-0 flex flex-row gap-[16px] p-[12px_16px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
++              class="[box-sizing:content-box] w-[358px] h-[43.5px] shrink-0 flex flex-row gap-[16px] p-[12px_16px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:0px_0px_-0.5px_0px]"
+             >
+ <div
+@@ -274,45 +256,4 @@
+                 </div>
+ </div>
+-<div
+-                data-pencil-name="Actions"
+-                class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] justify-start items-center"
+-              >
+-<div
+-                  data-pencil-name="Sinkronkan semua"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[12px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#DCDCE0] rounded-[8px]"
+-                >
+-<svg
+-                    data-pencil-name="Icon"
+-                    data-icon-name="refresh-cw"
+-                    data-icon-set="lucide"
+-                    viewBox="0 0 13.99993896484375 14"
+-                    preserveAspectRatio="xMidYMid meet"
+-                    xmlns="http://www.w3.org/2000/svg"
+-                    class="box-border w-[16px] shrink-0 h-[16px]"
+-                  >
+-</svg>
+-</div>
+-<div
+-                  data-pencil-name="Tambah folder"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[999px]"
+-                >
+-<svg
+-                    data-pencil-name="Icon leading"
+-                    data-icon-name="plus"
+-                    data-icon-set="lucide"
+-                    viewBox="0 0 13.99993896484375 14"
+-                    preserveAspectRatio="xMidYMid meet"
+-                    xmlns="http://www.w3.org/2000/svg"
+-                    class="box-border w-[16px] shrink-0 h-[16px]"
+-                  >
+-</svg>
+-<div
+-                    data-pencil-name="Label"
+-                    class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                  >
+-                    Tambah
+-                  </div>
+-</div>
+-</div>
+ </div>
+ <div
+@@ -338,5 +279,5 @@
+                     class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                   >
+-                    5 proof · 2 edited · 1 print · 10.12
++                    Terakhir 4 Okt 2026 · 10.12
+                   </div>
+ </div>
+@@ -365,24 +306,4 @@
+                       </div>
+ </div>
+-<div
+-                      data-pencil-name="Source actions"
+-                      class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                    >
+-<div
+-                        data-pencil-name="Trigger"
+-                        class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                      >
+-<svg
+-                          data-pencil-name="Icon"
+-                          data-icon-name="ellipsis"
+-                          data-icon-set="lucide"
+-                          viewBox="0 0 13.99993896484375 14"
+-                          preserveAspectRatio="xMidYMid meet"
+-                          xmlns="http://www.w3.org/2000/svg"
+-                          class="box-border w-[16px] shrink-0 h-[16px]"
+-                        >
+-</svg>
+-</div>
+-</div>
+ </div>
+ </div>
+@@ -406,5 +327,5 @@
+                     class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                   >
+-                    3 proof · 10.13
++                    Terakhir 4 Okt 2026 · 10.13
+                   </div>
+ </div>
+@@ -432,24 +353,4 @@
+                         Berhasil
+                       </div>
+-</div>
+-<div
+-                      data-pencil-name="Source actions"
+-                      class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                    >
+-<div
+-                        data-pencil-name="Trigger"
+-                        class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                      >
+-<svg
+-                          data-pencil-name="Icon"
+-                          data-icon-name="ellipsis"
+-                          data-icon-set="lucide"
+-                          viewBox="0 0 13.99993896484375 14"
+-                          preserveAspectRatio="xMidYMid meet"
+-                          xmlns="http://www.w3.org/2000/svg"
+-                          class="box-border w-[16px] shrink-0 h-[16px]"
+-                        >
+-</svg>
+-</div>
+ </div>
+ </div>
+@@ -520,5 +421,5 @@
+ <svg
+                   data-pencil-name="Icon"
+-                  data-icon-name="eye"
++                  data-icon-name="eye-off"
+                   data-icon-set="lucide"
+                   viewBox="0 0 13.99993896484375 14"
+@@ -532,5 +433,5 @@
+                   class="text-[13px]/[20px] box-border [flex:1_1_0] text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                 >
+-                  Terlihat oleh klien setelah galeri dipublikasikan.
++                  Tidak akan terlihat oleh klien.
+                 </div>
+ </div>
+@@ -684,10 +585,10 @@
+         >
+ <div
+-            data-pencil-name="Publikasikan"
+-            class="box-border [flex:1_1_0] h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#2F5BFF] rounded-[999px]"
++            data-pencil-name="Hapus galeri"
++            class="box-border [flex:1_1_0] h-fit flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[999px]"
+           >
+ <svg
+               data-pencil-name="Icon leading"
+-              data-icon-name="globe"
++              data-icon-name="trash-2"
+               data-icon-set="lucide"
+               viewBox="0 0 13.99993896484375 14"
+@@ -699,7 +600,7 @@
+ <div
+               data-pencil-name="Label"
+-              class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-            >
+-              Publikasikan
++              class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++            >
++              Hapus galeri
+             </div>
+ </div>

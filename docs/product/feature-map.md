@@ -15,7 +15,7 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-06 | Clients: name, WhatsApp number (normalized, unique per workspace), social-media links; search, archive, delete while unused (Owner 2026-10-02) | `clients` | BR-CLI-001..003, BR-WS-002 | J-03 | DONE (2026-10-03) |
 | F-07 | Project creation from service + snapshots | `projects` | BR-PRJ-*, BR-CAT-003 | J-03 | DONE (2026-10-04; Owner accepted, fidelity pass and keyboard-only a11y tests remain as follow-ups) |
 | F-08 | Team members, assignments, session status (sessions themselves moved to F-07, Owner 2026-10-02) | `team-sessions` | BR-TEAM-001, BR-TEAM-002 | J-03 | TODO |
-| F-09 | Gallery, sources, Drive sync (Owner side: create with password, link Drive folders, sync, photos by kind with Owner-only media, publish, expiry, rotate, archive; [intent](../features/gallery/intent.md), [spec](../features/gallery/spec.md)) | `gallery` | BR-GAL-001..009, BR-SRC-* | J-04 | SPECIFIED (2026-10-04) |
+| F-09 | Gallery, sources, Drive sync (Owner side: create with password, link Drive folders, sync, photos by kind with Owner-only media, publish, expiry, rotate, archive; [intent](../features/gallery/intent.md), [spec](../features/gallery/spec.md)) | `gallery` | BR-GAL-001..009, BR-SRC-* | J-04 | DESIGNED (2026-10-04; [design](../features/gallery/design.md), 100 exports; library C46–C48 added) |
 | F-10 | Client gallery access (token, password, rate limits, media delivery) | `client-access` | BR-ACC-* | J-04 | TODO |
 | F-11 | Selection groups and client selection | `selection` | BR-SEL-* | J-04 | TODO |
 | F-12 | Final delivery and project completion | `final-delivery` | BR-DEL-*, BR-PRJ-004..006 | J-06 | TODO |

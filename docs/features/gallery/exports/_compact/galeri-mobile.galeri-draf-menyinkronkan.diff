@@ -1,0 +1,123 @@
+--- base
++++ state
+@@ -1,5 +1,5 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Galeri / Draf / Proof / Mobile"
++      data-pencil-name="Galeri / Draf / Menyinkronkan / Mobile"
+       class="box-border w-[390px] h-[1156px] flex flex-col gap-0 justify-start items-start bg-[#E4E4E7] [outline:1px_solid_#F0F0F2] rounded-[36px] overflow-hidden"
+     >
+@@ -280,9 +280,9 @@
+ <div
+                   data-pencil-name="Sinkronkan semua"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[12px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#DCDCE0] rounded-[8px]"
++                  class="box-border w-fit shrink-0 h-fit opacity-[0.4] flex flex-row gap-0 p-[12px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#DCDCE0] rounded-[8px]"
+                 >
+ <svg
+                     data-pencil-name="Icon"
+-                    data-icon-name="refresh-cw"
++                    data-icon-name="loader"
+                     data-icon-set="lucide"
+                     viewBox="0 0 13.99993896484375 14"
+@@ -338,5 +338,5 @@
+                     class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                   >
+-                    5 proof · 2 edited · 1 print · 10.12
++                    Menyinkronkan…
+                   </div>
+ </div>
+@@ -351,37 +351,17 @@
+ <div
+                       data-pencil-name="Sync status"
+-                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#E8F7EE] rounded-[999px]"
++                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#EEF3FF] rounded-[999px]"
+                     >
+ <div
+                         data-pencil-name="Dot"
+-                        class="box-border w-[6px] shrink-0 h-[6px] bg-[#15803D] rounded-full"
++                        class="box-border w-[6px] shrink-0 h-[6px] bg-[#1D4ED8] rounded-full"
+                       >
+ </div>
+ <div
+                         data-pencil-name="Label"
+-                        class="text-[11px]/[normal] box-border text-[#15803D] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                      >
+-                        Berhasil
+-                      </div>
+-</div>
+-<div
+-                      data-pencil-name="Source actions"
+-                      class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                    >
+-<div
+-                        data-pencil-name="Trigger"
+-                        class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                      >
+-<svg
+-                          data-pencil-name="Icon"
+-                          data-icon-name="ellipsis"
+-                          data-icon-set="lucide"
+-                          viewBox="0 0 13.99993896484375 14"
+-                          preserveAspectRatio="xMidYMid meet"
+-                          xmlns="http://www.w3.org/2000/svg"
+-                          class="box-border w-[16px] shrink-0 h-[16px]"
+-                        >
+-</svg>
+-</div>
++                        class="text-[11px]/[normal] box-border text-[#1D4ED8] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                      >
++                        Sinkron
++                      </div>
+ </div>
+ </div>
+@@ -406,5 +386,5 @@
+                     class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                   >
+-                    3 proof · 10.13
++                    Menunggu giliran…
+                   </div>
+ </div>
+@@ -419,37 +399,17 @@
+ <div
+                       data-pencil-name="Sync status"
+-                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#E8F7EE] rounded-[999px]"
++                      class="box-border w-fit shrink-0 h-fit flex flex-row gap-[6px] p-[2px_8px] justify-start items-center bg-[#EEF3FF] rounded-[999px]"
+                     >
+ <div
+                         data-pencil-name="Dot"
+-                        class="box-border w-[6px] shrink-0 h-[6px] bg-[#15803D] rounded-full"
++                        class="box-border w-[6px] shrink-0 h-[6px] bg-[#1D4ED8] rounded-full"
+                       >
+ </div>
+ <div
+                         data-pencil-name="Label"
+-                        class="text-[11px]/[normal] box-border text-[#15803D] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                      >
+-                        Berhasil
+-                      </div>
+-</div>
+-<div
+-                      data-pencil-name="Source actions"
+-                      class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                    >
+-<div
+-                        data-pencil-name="Trigger"
+-                        class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                      >
+-<svg
+-                          data-pencil-name="Icon"
+-                          data-icon-name="ellipsis"
+-                          data-icon-set="lucide"
+-                          viewBox="0 0 13.99993896484375 14"
+-                          preserveAspectRatio="xMidYMid meet"
+-                          xmlns="http://www.w3.org/2000/svg"
+-                          class="box-border w-[16px] shrink-0 h-[16px]"
+-                        >
+-</svg>
+-</div>
++                        class="text-[11px]/[normal] box-border text-[#1D4ED8] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                      >
++                        Sinkron
++                      </div>
+ </div>
+ </div>

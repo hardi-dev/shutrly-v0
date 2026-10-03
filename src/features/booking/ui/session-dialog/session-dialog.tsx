@@ -12,6 +12,7 @@ import { TimeField } from "@/ui/primitives/time-field/time-field";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { SessionTeamField } from "../session-team-field/session-team-field";
+import { useTeamPicker } from "../session-team-field/use-team-picker";
 import type { SessionDialogProps } from "./session-dialog.types";
 import { useSessionDraft } from "./use-session-draft";
 
@@ -74,19 +75,14 @@ function SessionForm({
   members,
 }: Readonly<SessionDialogProps>) {
   const fields = useSessionDraft(isOpen, session, onSave);
+  const picker = useTeamPicker(members ?? [], fields.draft.team, fields.update("team"));
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
-    if (fields.submit(event)) onOpenChange(false);
+    if (fields.submit(event, picker.pending)) onOpenChange(false);
   };
   return (
     <form id={FORM_ID} noValidate onSubmit={handleSubmit} className="flex flex-col gap-(--space-4)">
       <SessionFields {...fields} />
-      {members ? (
-        <SessionTeamField
-          members={members}
-          picks={fields.draft.team}
-          onChange={fields.update("team")}
-        />
-      ) : null}
+      {members ? <SessionTeamField members={members} picker={picker} /> : null}
     </form>
   );
 }

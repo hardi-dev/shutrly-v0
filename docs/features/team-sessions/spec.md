@@ -71,6 +71,10 @@ Field rules: BR-TEAM-004 (member), BR-TEAM-005 (roles), BR-TEAM-006 (assignment)
   - the session shows the `user-plus` Icon Button, and its ⋯ menu offers *Tambah tim*; both open the Penugasan form;
   - there is no empty *Atur tim* (Owner 2026-10-03);
   - a draft without sessions has nothing to staff, because sessions come first (F-07).
+- **While creating a project (Owner 2026-10-04, AC-TEAM-028):**
+  - the *Tambah sesi* / *Ubah sesi* dialog of *Proyek baru* has an optional *Tim* field: pick a member and their role, repeat, remove;
+  - the picks are saved with the project in one transaction, with the same rules as the Penugasan form;
+  - this is not drawn in Pencil yet: the field reuses the Select, Avatar and avatar group components (design.md COMPONENT GAP).
 
 ## Error Cases
 - Name empty or longer than 100 characters → field error; nothing is saved.

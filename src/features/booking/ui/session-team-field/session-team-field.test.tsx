@@ -1,12 +1,34 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
+
+import type { TeamPick } from "@/features/booking/domain/session-assignment/session-assignment.types";
 
 vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
   useMobileViewport: () => false,
 }));
 
 const { SessionTeamField } = await import("./session-team-field");
+const { useTeamPicker } = await import("./use-team-picker");
+
+function Harness({
+  members,
+  initial,
+  onChange,
+}: Readonly<{
+  members: (typeof DIMAS)[];
+  initial: TeamPick[];
+  onChange: (picks: TeamPick[]) => void;
+}>) {
+  const [picks, setPicks] = useState(initial);
+  function handleChange(next: readonly TeamPick[]): void {
+    setPicks([...next]);
+    onChange([...next]);
+  }
+  const picker = useTeamPicker(members, picks, handleChange);
+  return <SessionTeamField members={members} picker={picker} />;
+}
 
 const DIMAS = {
   id: "m1",
@@ -22,9 +44,9 @@ describe("SessionTeamField", () => {
   it("AC-TEAM-028 lists the picks with their roles and removes one", async () => {
     const onChange = vi.fn();
     render(
-      <SessionTeamField
+      <Harness
         members={[DIMAS, SARI]}
-        picks={[{ memberId: "m1", roleId: "r2" }]}
+        initial={[{ memberId: "m1", roleId: "r2" }]}
         onChange={onChange}
       />,
     );
@@ -38,9 +60,9 @@ describe("SessionTeamField", () => {
   it("AC-TEAM-028 adds a member with their first role preselected and keeps the order", async () => {
     const onChange = vi.fn();
     render(
-      <SessionTeamField
+      <Harness
         members={[DIMAS, SARI]}
-        picks={[{ memberId: "m1", roleId: "r1" }]}
+        initial={[{ memberId: "m1", roleId: "r1" }]}
         onChange={onChange}
       />,
     );
@@ -55,7 +77,7 @@ describe("SessionTeamField", () => {
   });
 
   it("AC-TEAM-027 says there are no active members and offers nothing to pick", () => {
-    render(<SessionTeamField members={[]} picks={[]} onChange={vi.fn()} />);
+    render(<Harness members={[]} initial={[]} onChange={vi.fn()} />);
     expect(
       screen.getByText("Belum ada anggota tim aktif. Tambahkan di halaman Tim dulu."),
     ).toBeInTheDocument();

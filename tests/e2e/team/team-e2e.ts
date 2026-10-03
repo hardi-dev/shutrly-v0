@@ -100,7 +100,11 @@ export async function addMember(
   await expect(dialog).toBeHidden();
 }
 
-export async function createBookedProject(page: Page, workspaceId: string): Promise<void> {
+export async function createBookedProject(
+  page: Page,
+  workspaceId: string,
+  teamMember?: string,
+): Promise<void> {
   await page.goto(`/w/${workspaceId}/projects/new`);
   await page.getByRole("combobox", { name: PROJECT_COPY.clientLabel }).click();
   await page.getByRole("option", { name: /Rina/ }).click();
@@ -113,6 +117,7 @@ export async function createBookedProject(page: Page, workspaceId: string): Prom
   await dialog.getByRole("textbox", { name: PROJECT_COPY.sessionName }).fill("Resepsi");
   await dialog.getByRole("button", { name: new RegExp(PROJECT_COPY.sessionDate) }).click();
   await page.getByRole("grid").getByText("15", { exact: true }).first().click();
+  if (teamMember) await pickTeamInSessionDialog(page, dialog, teamMember);
   await dialog.getByRole("button", { name: PROJECT_COPY.sessionSave }).click();
   await expect(dialog).toBeHidden();
   await page.getByRole("button", { name: PROJECT_COPY.create }).click();
@@ -174,4 +179,19 @@ export async function cancelProject(page: Page, title: string): Promise<void> {
   const cancel = page.getByRole("dialog", { name: PROJECT_COPY.cancelDialogTitle });
   await cancel.getByRole("button", { name: PROJECT_COPY.cancelConfirm }).click();
   await expect(page.getByText(PROJECT_COPY.cancelledTitle).first()).toBeVisible();
+}
+
+async function pickTeamInSessionDialog(
+  page: Page,
+  dialog: ReturnType<Page["locator"]>,
+  member: string,
+): Promise<void> {
+  await dialog
+    .getByRole("button", { name: new RegExp(`^${PROJECT_COPY.sessionTeamMember}`) })
+    .click();
+  await page.getByRole("option", { name: member }).click();
+  await dialog.getByRole("button", { name: PROJECT_COPY.teamAddMember }).click();
+  await expect(dialog.getByRole("list", { name: PROJECT_COPY.sessionTeamListLabel })).toContainText(
+    member,
+  );
 }

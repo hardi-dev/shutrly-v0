@@ -236,6 +236,18 @@ Covers: BR-TEAM-004, BR-TEAM-006, C-007
 - *Tambah* is disabled;
 - *Buka Tim* opens *Tim* › *Anggota*.
 
+## AC-TEAM-028 — Staffing while creating a project
+Covers: BR-TEAM-003, BR-TEAM-004, BR-TEAM-006, C-004, C-005 (Owner 2026-10-04)
+
+**Given** the *Proyek baru* form, and active members who hold roles
+**When** the Owner adds or edits a session in the *Tambah sesi* / *Ubah sesi* dialog, picks a member in *Tim* (the member's first role is preselected, and members already picked are not offered), and saves the project as a draft or as booked
+**Then**:
+- the session row shows the avatar group of its picks, which opens the dialog again;
+- the project, its sessions and every session's assignments are saved in one transaction, so a refused team creates nothing;
+- the server re-checks every pick: a member or role outside the workspace is *not found*, an archived member, a member who no longer holds the role or the same member twice in one session answers a field error *Tim sesi ini perlu diperbarui. Periksa anggota dan perannya.* and the form keeps its input;
+- *Tim* is optional, and with no active members the dialog says so;
+- the *Ubah sesi* dialog on a saved project has no *Tim* field: its team is changed through *Atur tim*.
+
 ## Security
 
 ## AC-TEAM-022 — Tenant isolation

@@ -114,3 +114,20 @@ test.describe("AC-TEAM-022 foreign URLs", () => {
     await other.close();
   });
 });
+
+test.describe("AC-TEAM-028 staffing while creating a project", () => {
+  test("a team picked in the session dialog is saved with the project and shown in Jadwal", async ({
+    page,
+  }) => {
+    const workspaceId = await openWorkspace(page);
+    await addClient(page, workspaceId);
+    await addService(page, workspaceId);
+    await addMember(page, workspaceId);
+    await createBookedProject(page, workspaceId, "Dimas Pratama");
+    const group = page.getByRole("button", { name: PROJECT_COPY.teamGroupLabel("Resepsi", 1) });
+    await expect(group).toContainText("DP");
+    const team = await openAturTim(page, "Resepsi", 1);
+    await expect(team.getByText("Fotografer")).toBeVisible();
+    await expectA11y(page);
+  });
+});

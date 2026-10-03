@@ -1,5 +1,6 @@
 "use client";
 
+import type { TeamPick } from "@/features/booking/domain/session-assignment/session-assignment.types";
 import { clientInitials } from "@/features/booking/ui/client-initials/client-initials";
 import { Select } from "@/ui/patterns/select/select";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
@@ -9,7 +10,7 @@ import { TEXT_FIELD_COPY } from "@/ui/primitives/text-field/text-field.copy";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import type { SessionTeamFieldProps } from "./session-team-field.types";
-import { useTeamPicker } from "./use-team-picker";
+import type { useTeamPicker } from "./use-team-picker";
 
 /**
  * The *Tim* field of the session dialog: the members picked for the session with a remove button
@@ -19,7 +20,7 @@ import { useTeamPicker } from "./use-team-picker";
  * @returns the field
  */
 export function SessionTeamField(props: Readonly<SessionTeamFieldProps>) {
-  const picker = useTeamPicker(props.members, props.picks, props.onChange);
+  const { picker } = props;
   return (
     <div className="flex flex-col gap-(--space-3)">
       <div className="flex flex-col gap-(--space-1)">
@@ -31,7 +32,12 @@ export function SessionTeamField(props: Readonly<SessionTeamFieldProps>) {
           {props.members.length === 0 ? PROJECT_COPY.sessionTeamNone : PROJECT_COPY.sessionTeamHint}
         </span>
       </div>
-      <PickedMembers {...props} onRemove={picker.remove} />
+      <PickedMembers
+        members={props.members}
+        picks={picker.picks}
+        isDisabled={props.isDisabled}
+        onRemove={picker.remove}
+      />
       {picker.candidates.length > 0 ? (
         <AddRow picker={picker} isDisabled={props.isDisabled} />
       ) : null}
@@ -44,7 +50,12 @@ function PickedMembers({
   picks,
   isDisabled,
   onRemove,
-}: Readonly<SessionTeamFieldProps & { onRemove: (memberId: string) => void }>) {
+}: Readonly<{
+  members: SessionTeamFieldProps["members"];
+  picks: readonly TeamPick[];
+  isDisabled?: boolean;
+  onRemove: (memberId: string) => void;
+}>) {
   if (picks.length === 0) return null;
   return (
     <ul aria-label={PROJECT_COPY.sessionTeamListLabel} className="flex flex-col">
@@ -92,22 +103,24 @@ function AddRow({
   const roleOptions = (member?.roles ?? []).map((role) => ({ id: role.id, label: role.name }));
   return (
     <div className="flex flex-col gap-(--space-3)">
-      <Select
-        label={PROJECT_COPY.sessionTeamMember}
-        placeholder={PROJECT_COPY.assignMemberPlaceholder}
-        options={memberOptions}
-        value={state.memberId}
-        onChange={picker.selectMember}
-        isDisabled={isDisabled}
-      />
-      <Select
-        label={PROJECT_COPY.sessionTeamRole}
-        placeholder={PROJECT_COPY.assignRolePlaceholder}
-        options={roleOptions}
-        value={state.roleId}
-        onChange={picker.selectRole}
-        isDisabled={isDisabled || member === undefined}
-      />
+      <div className="grid grid-cols-2 items-start gap-(--space-3)">
+        <Select
+          label={PROJECT_COPY.sessionTeamMember}
+          placeholder={PROJECT_COPY.assignMemberPlaceholder}
+          options={memberOptions}
+          value={state.memberId}
+          onChange={picker.selectMember}
+          isDisabled={isDisabled}
+        />
+        <Select
+          label={PROJECT_COPY.sessionTeamRole}
+          placeholder={PROJECT_COPY.assignRolePlaceholder}
+          options={roleOptions}
+          value={state.roleId}
+          onChange={picker.selectRole}
+          isDisabled={isDisabled || member === undefined}
+        />
+      </div>
       <Button
         variant="secondary"
         iconLeading="user-plus"

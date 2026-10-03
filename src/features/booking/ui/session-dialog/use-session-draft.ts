@@ -3,6 +3,8 @@
 import type { SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
 
+import type { TeamPick } from "@/features/booking/domain/session-assignment/session-assignment.types";
+
 import type { SessionDraft, SessionDraftErrors, SessionWithTeam } from "./session-dialog.types";
 import { toSessionDraft, validateSessionDraft } from "./session-draft";
 
@@ -29,14 +31,19 @@ export function useSessionDraft(
       setDraft((previous) => ({ ...previous, [key]: value }));
     };
   };
-  const submit = (event: SyntheticEvent<HTMLFormElement>): boolean => {
+  // `pending` is a member and role chosen in the team field but not added yet: saving keeps it.
+  const submit = (event: SyntheticEvent<HTMLFormElement>, pending: TeamPick | null): boolean => {
     event.preventDefault();
     const result = validateSessionDraft(draft);
     if ("errors" in result) {
       setErrors(result.errors);
       return false;
     }
-    onSave(result.session);
+    onSave(
+      pending === null
+        ? result.session
+        : { ...result.session, team: [...(result.session.team ?? []), pending] },
+    );
     return true;
   };
   return { draft, errors, update, submit };

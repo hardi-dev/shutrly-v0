@@ -40,5 +40,8 @@ export function useTeamPicker(
   function remove(memberId: string): void {
     onChange(picks.filter((pick) => pick.memberId !== memberId));
   }
-  return { state, candidates, member, selectMember, selectRole, add, remove };
+  // A complete choice that was not added yet still counts when the session is saved.
+  const pending: TeamPick | null =
+    member && state.roleId !== null ? { memberId: member.id, roleId: state.roleId } : null;
+  return { state, picks, candidates, member, pending, selectMember, selectRole, add, remove };
 }

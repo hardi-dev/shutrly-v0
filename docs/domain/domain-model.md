@@ -112,7 +112,9 @@ stateDiagram-v2
       G_DRAFT --> PUBLISHED
       PUBLISHED --> EXPIRED
       PUBLISHED --> ARCHIVED
+      EXPIRED --> PUBLISHED : later expiry
       EXPIRED --> ARCHIVED
+      G_DRAFT --> [*] : delete (never published)
     }
 ```
 

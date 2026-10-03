@@ -1,6 +1,8 @@
 ---
 description: Bootstrap or adopt a project — product, domain, feature map, stack, constitution, coding rules
 argument-hint: "[idea or path to existing notes]"
+model: claude-sonnet-5-5
+effort: high
 ---
 
 Use the `spec-driven-vibe-coding` skill and run its **init-project** workflow.

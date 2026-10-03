@@ -1,6 +1,11 @@
 ---
 description: Cross-check a feature's implementation against constitution, rules, spec, UML, and Pencil design
 argument-hint: "<feature-slug>"
+model: claude-opus-5-5
+effort: high
+context: fork
+agent: general-purpose
+background: false
 ---
 
 Use the `spec-driven-vibe-coding` skill and run its **verify-feature** workflow for feature: **$ARGUMENTS**

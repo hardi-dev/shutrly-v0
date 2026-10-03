@@ -1,6 +1,8 @@
 ---
 description: Write and approve token usage and spacing rules (token-usage.md + library boards 07/08) from the persisted tokens
 argument-hint: "[design-system.lib.pen] [approve]"
+model: claude-sonnet-5-5
+effort: medium
 ---
 
 Use the `sdv-design-tokens-system` skill and run its **design-rules** workflow for: **$ARGUMENTS**

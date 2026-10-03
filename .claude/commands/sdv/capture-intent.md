@@ -1,6 +1,8 @@
 ---
 description: Capture an idea, ticket, bug or incident as a reviewed intent.md before specifying the feature
 argument-hint: "<feature-slug> [idea, ticket, or incident in your own words]"
+model: claude-sonnet-5-5
+effort: high
 ---
 
 Use the `spec-driven-vibe-coding` skill and run its **capture-intent** workflow for: **$ARGUMENTS**

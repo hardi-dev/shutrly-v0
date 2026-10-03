@@ -1,6 +1,8 @@
 ---
 description: Create activity / sequence / state diagrams for a feature — only where they reduce ambiguity
 argument-hint: "<feature-slug>"
+model: claude-sonnet-5-5
+effort: medium
 ---
 
 Use the `spec-driven-vibe-coding` skill and run its **model-feature** workflow for feature: **$ARGUMENTS**

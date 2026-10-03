@@ -1,6 +1,8 @@
 ---
 description: Specify one feature — spec, business-rule refs, acceptance criteria, open questions
 argument-hint: "<feature-slug>"
+model: claude-opus-5-5
+effort: high
 ---
 
 Use the `spec-driven-vibe-coding` skill and run its **discover-feature** workflow for feature: **$ARGUMENTS**

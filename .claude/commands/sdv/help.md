@@ -1,6 +1,8 @@
 ---
 description: Explain the complete SDV workflow and recommend the next command
 argument-hint: "[project, feature, or question]"
+model: claude-haiku-4-5-20251001
+effort: low
 ---
 
 Use the `spec-driven-vibe-coding` skill together with `sdv-design-tokens-system` when the request involves visual foundations or design tokens. Run the **help** workflow for: **$ARGUMENTS**

@@ -1,6 +1,8 @@
 ---
 description: Implement exactly one planned iteration of a feature, with tests and a deviation report
 argument-hint: "<feature-slug> [iteration-number]"
+model: claude-sonnet-5-5
+effort: high
 ---
 
 Use the `spec-driven-vibe-coding` skill and run its **build-feature** workflow for: **$ARGUMENTS**

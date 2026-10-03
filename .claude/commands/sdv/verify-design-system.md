@@ -1,6 +1,11 @@
 ---
 description: Verify token structure, Pencil mappings, themes, library canvas, rules, components, consumers, and visual design-system drift
 argument-hint: "[design-system.lib.pen] [tokens.json]"
+model: claude-opus-5-5
+effort: high
+context: fork
+agent: general-purpose
+background: false
 ---
 
 Use the `sdv-design-tokens-system` skill and run its **verify-design-system** workflow for: **$ARGUMENTS**

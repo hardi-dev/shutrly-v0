@@ -16,6 +16,7 @@ Start with [docs/HANDOFF.md](docs/HANDOFF.md) › _Current handoff_. It says wha
   - Skills live in `.claude/skills/` (`spec-driven-vibe-coding`, `sdv-design-tokens-system`); commands in `.claude/commands/sdv/`, so `/sdv:<command>` works directly and edits apply on the fly. The plugin is disabled in `.claude/settings.json` to avoid duplicates.
   - Codex finds the two skills in `.agents/skills/` (symlinks into `.claude/skills/`). It has no `/sdv:*` commands, so each command is a generated Codex skill: `$sdv-<command> <args>` does what `/sdv:<command> <args>` does.
   - The commands in `.claude/commands/sdv/` are the source of truth. After editing one, run `python3 scripts/sdv/sync-codex-skills.py` and commit the regenerated `.agents/skills/sdv-*` folders (`--check` exits 1 when they are out of date). Never edit those folders by hand.
+  - Each command's model, effort and fork setting live in its frontmatter (`model`, `effort`, `context`). Change them there; Codex ignores them and uses its own default model.
   - The hooks in `.claude/hooks/` only run in Claude Code. In Codex the hard stops below are instructions you must follow yourself.
   - `plugins/sdv/` is the untouched upstream release, kept only to diff against when upgrading; don't edit it.
 

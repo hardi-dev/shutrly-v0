@@ -1,6 +1,8 @@
 ---
 description: Synchronize approved repository design tokens with Pencil through MCP
 argument-hint: "<pencil-file> [token-path]"
+model: claude-sonnet-5-5
+effort: medium
 ---
 
 Use the `sdv-design-tokens-system` skill and run its **sync-pencil** workflow for: **$ARGUMENTS**

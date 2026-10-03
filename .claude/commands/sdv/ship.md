@@ -1,6 +1,8 @@
 ---
 description: Ship verified work — quality gates, preview/staging, smoke test, release notes
 argument-hint: "[feature-slug or release name]"
+model: claude-sonnet-5-5
+effort: medium
 ---
 
 Use the `spec-driven-vibe-coding` skill and run its **ship** workflow for: **$ARGUMENTS**

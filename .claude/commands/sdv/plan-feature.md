@@ -1,6 +1,8 @@
 ---
 description: Write the technical design and split the feature into small verifiable iterations
 argument-hint: "<feature-slug>"
+model: claude-opus-5-5
+effort: high
 ---
 
 Use the `spec-driven-vibe-coding` skill and run its **plan-feature** workflow for feature: **$ARGUMENTS**

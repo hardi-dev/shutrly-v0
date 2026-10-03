@@ -1,6 +1,8 @@
 ---
 description: Define or review observed, expanded, and approved DTCG-compatible design tokens and their themes
 argument-hint: "[path or token scope]"
+model: claude-sonnet-5-5
+effort: medium
 ---
 
 Use the `sdv-design-tokens-system` skill and run its **design-tokens** workflow for: **$ARGUMENTS**

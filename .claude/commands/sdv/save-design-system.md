@@ -1,6 +1,8 @@
 ---
 description: Persist an explicitly approved Pencil exploration into tokens.json, Pencil variables, a documented token canvas, and reusable library components
 argument-hint: "<exploration.pen> [tokens | canvas | components]"
+model: claude-sonnet-5-5
+effort: medium
 ---
 
 Use the `sdv-design-tokens-system` skill and run its **save-design-system** workflow for: **$ARGUMENTS**

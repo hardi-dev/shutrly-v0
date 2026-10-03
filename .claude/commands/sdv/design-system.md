@@ -1,6 +1,8 @@
 ---
 description: Explore and refine token-based design-system directions on the pen.dev canvas
 argument-hint: "<pencil-file> [preferences]"
+model: claude-sonnet-5-5
+effort: medium
 ---
 
 Use the `sdv-design-tokens-system` skill and run its **design-system exploration** workflow for: **$ARGUMENTS**

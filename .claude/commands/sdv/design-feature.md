@@ -1,6 +1,8 @@
 ---
 description: Derive screens and UI states, iterate the design in Pencil, and record the approved reference
 argument-hint: "<feature-slug>"
+model: claude-sonnet-5-5
+effort: medium
 ---
 
 Use the `spec-driven-vibe-coding` skill and run its **design-feature** workflow for feature: **$ARGUMENTS**

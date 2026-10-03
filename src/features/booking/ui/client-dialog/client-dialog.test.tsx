@@ -27,6 +27,38 @@ describe("ClientDialog", () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
+  it.each([
+    [false, "@nama atau tautan https://"],
+    [true, "@nama atau tautan"],
+  ])("shows the designed placeholder in every text input (phone: %s)", (isMobile, social) => {
+    useMobileViewport.mockReturnValue(isMobile);
+    render(<ClientDialog isOpen workspaceId="x" onOpenChange={vi.fn()} onSubmit={vi.fn()} />);
+
+    expect(screen.getByLabelText("Nama klien")).toHaveAttribute("placeholder", "mis. Rina & Dimas");
+    expect(screen.getByLabelText("Nomor WhatsApp")).toHaveAttribute(
+      "placeholder",
+      "0812 3456 7890",
+    );
+    expect(screen.getByRole("textbox", { name: /Instagram/ })).toHaveAttribute(
+      "placeholder",
+      social,
+    );
+  });
+
+  it.each([false, true])("orders a social row as designed (phone: %s)", (isMobile) => {
+    useMobileViewport.mockReturnValue(isMobile);
+    render(<ClientDialog isOpen workspaceId="x" onOpenChange={vi.fn()} onSubmit={vi.fn()} />);
+
+    const value = screen.getByRole("textbox", { name: /Instagram/ });
+    const remove = screen.getByRole("button", { name: /^Hapus Instagram/ });
+    // Phone: platform and remove on the first line, the value full width below it.
+    const removeFirst = Boolean(
+      remove.compareDocumentPosition(value) & Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    expect(removeFirst).toBe(isMobile);
+    expect(value.closest(".grid > *")).toHaveClass(isMobile ? "col-span-2" : "col-span-1");
+  });
+
   it("blocks an empty name before calling the action", async () => {
     useMobileViewport.mockReturnValue(false);
     const submit = vi.fn();

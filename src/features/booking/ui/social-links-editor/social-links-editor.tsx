@@ -6,6 +6,7 @@ import {
   SOCIAL_LINK_MAX_COUNT,
   SOCIAL_PLATFORMS,
 } from "@/features/booking/domain/social-link/social-link";
+import { cn } from "@/ui/cn/cn";
 import { Select } from "@/ui/patterns/select/select";
 import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
@@ -80,8 +81,28 @@ function SocialLinkRow(props: Readonly<SocialLinkRowProps>) {
     onRemove(index);
     onFocusAfterRemove(index, rowCount);
   }
+  const valueField = (
+    <SocialValueField fields={fields} index={index} isPending={isPending} isMobile={isMobile} />
+  );
+  const removeButton = (
+    <IconButton
+      icon="x"
+      aria-label={CLIENT_COPY.removeSocialLinkField(
+        PLATFORM_COPY[fields.platform.value],
+        index + 1,
+      )}
+      onPress={removeRow}
+      isDisabled={isPending}
+    />
+  );
+  // Phone: platform and remove share the first line and the value spans the next (design).
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-(--space-2) md:grid-cols-[148px_minmax(0,1fr)_auto]">
+    <div
+      className={cn(
+        "grid gap-(--space-2)",
+        isMobile ? "grid-cols-[minmax(0,1fr)_auto]" : "grid-cols-[148px_minmax(0,1fr)_auto]",
+      )}
+    >
       <Select
         aria-label={CLIENT_COPY.socialPlatformField(index + 1)}
         value={fields.platform.value}
@@ -90,30 +111,8 @@ function SocialLinkRow(props: Readonly<SocialLinkRowProps>) {
         isDisabled={isPending}
         errorMessage={fields.platform.error}
       />
-      <TextField
-        aria-label={CLIENT_COPY.socialValueField(PLATFORM_COPY[fields.platform.value], index + 1)}
-        name={fields.value.name}
-        value={fields.value.value}
-        onChange={fields.value.onChange}
-        onBlur={fields.value.onBlur}
-        inputRef={fields.value.ref}
-        placeholder={
-          isMobile
-            ? CLIENT_COPY.socialValuePlaceholderMobile
-            : CLIENT_COPY.socialValuePlaceholderDesktop
-        }
-        isDisabled={isPending}
-        errorMessage={fields.value.error}
-      />
-      <IconButton
-        icon="x"
-        aria-label={CLIENT_COPY.removeSocialLinkField(
-          PLATFORM_COPY[fields.platform.value],
-          index + 1,
-        )}
-        onPress={removeRow}
-        isDisabled={isPending}
-      />
+      {isMobile ? removeButton : valueField}
+      {isMobile ? valueField : removeButton}
     </div>
   );
 }
@@ -164,4 +163,36 @@ function isSocialValuePath(path: string): path is `socialLinks.${number}.value` 
 
 function valueErrorText(error: string): string {
   return error === "EMPTY" ? CLIENT_COPY.emptySocialValue : clientFieldErrorText(error);
+}
+
+function SocialValueField({
+  fields,
+  index,
+  isPending,
+  isMobile,
+}: Readonly<{
+  fields: ReturnType<typeof useSocialLinkFields>;
+  index: number;
+  isPending: boolean;
+  isMobile: boolean;
+}>) {
+  return (
+    <div className={isMobile ? "col-span-2" : "col-span-1"}>
+      <TextField
+        aria-label={CLIENT_COPY.socialValueField(PLATFORM_COPY[fields.platform.value], index + 1)}
+        name={fields.value.name}
+        value={fields.value.value}
+        onChange={fields.value.onChange}
+        onBlur={fields.value.onBlur}
+        inputRef={fields.value.ref}
+        placeholder={
+          isMobile
+            ? CLIENT_COPY.socialValuePlaceholderMobile
+            : CLIENT_COPY.socialValuePlaceholderDesktop
+        }
+        isDisabled={isPending}
+        errorMessage={fields.value.error}
+      />
+    </div>
+  );
 }

@@ -204,6 +204,7 @@ function ClientForm({
         onChange={whatsappNumber.field.onChange}
         onBlur={whatsappNumber.field.onBlur}
         inputRef={whatsappNumber.field.ref}
+        placeholder={CLIENT_COPY.whatsappPlaceholder}
         description={CLIENT_COPY.whatsappDescription}
         isDisabled={isPending}
         errorMessage={

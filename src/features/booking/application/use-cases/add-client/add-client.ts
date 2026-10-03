@@ -16,5 +16,9 @@ export async function addClient(
   const parsed = clientInputSchema.safeParse(input);
   if (!parsed.success) return validationFailure(parsed.error.issues);
   const result = await repository.create(context, { ...parsed.data, editorUserId });
-  return result.status === "NUMBER_TAKEN" ? numberTaken(result.holder) : { ok: true };
+  if (result.status === "NUMBER_TAKEN") return numberTaken(result.holder);
+  return {
+    ok: true,
+    client: { id: result.id, name: parsed.data.name, whatsappNumber: parsed.data.whatsappNumber },
+  };
 }

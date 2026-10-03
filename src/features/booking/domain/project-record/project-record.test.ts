@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   CANCEL_REASON_MAX_LENGTH,
   defaultProjectTitle,
+  nextProjectTitle,
   PROJECT_NOTES_MAX_LENGTH,
   PROJECT_TITLE_MAX_LENGTH,
 } from "./project-record";
@@ -53,5 +54,40 @@ describe("project record (BR-PRJ-008)", () => {
     expect(Array.from(defaultProjectTitle("a".repeat(80), "b".repeat(80)))).toHaveLength(
       PROJECT_TITLE_MAX_LENGTH,
     );
+  });
+});
+
+describe("nextProjectTitle (A-2, AC-PRJ-013)", () => {
+  const base = { lastDefault: null, serviceName: "Wisuda Basic", clientName: "Rina" };
+
+  it("AC-PRJ-007 fills an empty title with the default", () => {
+    expect(nextProjectTitle({ ...base, currentTitle: "" })).toEqual({
+      title: "Wisuda Basic — Rina",
+      lastDefault: "Wisuda Basic — Rina",
+    });
+  });
+
+  it("AC-PRJ-013 follows the default while the title is untouched", () => {
+    expect(
+      nextProjectTitle({
+        currentTitle: "Wisuda Basic — Rina",
+        lastDefault: "Wisuda Basic — Rina",
+        serviceName: "Wisuda Basic",
+        clientName: "Sari",
+      }),
+    ).toEqual({ title: "Wisuda Basic — Sari", lastDefault: "Wisuda Basic — Sari" });
+  });
+
+  it("AC-PRJ-007 keeps an edited title", () => {
+    expect(
+      nextProjectTitle({ ...base, currentTitle: "Judul saya", lastDefault: "Wisuda Basic — Rina" }),
+    ).toEqual({ title: "Judul saya", lastDefault: "Wisuda Basic — Rina" });
+  });
+
+  it("AC-PRJ-007 leaves the title alone until both a service and a client are picked", () => {
+    expect(nextProjectTitle({ ...base, currentTitle: "", serviceName: null })).toEqual({
+      title: "",
+      lastDefault: null,
+    });
   });
 });

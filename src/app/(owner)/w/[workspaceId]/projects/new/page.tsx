@@ -1,3 +1,4 @@
+import { addClientAction } from "@/app/actions/booking/clients";
 import { createProjectAction, searchActiveClientsAction } from "@/app/actions/booking/projects";
 import { loadCreateProjectOptions } from "@/composition/booking/project-flow/project-flow";
 import { CreateProjectScreen } from "@/features/booking/ui/create-project-screen/create-project-screen";
@@ -22,6 +23,7 @@ export default async function NewProjectPage({
         serviceGroups={serviceGroups}
         createAction={createProjectAction}
         searchClientsAction={searchActiveClientsAction}
+        createClientAction={addClientAction}
       />
     </>
   );

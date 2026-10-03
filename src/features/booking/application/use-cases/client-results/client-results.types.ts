@@ -13,7 +13,13 @@ export interface ClientValidationFailure {
   readonly fieldErrors: Readonly<Partial<Record<string, ClientFieldErrorKey>>>;
   readonly numberHolder?: NumberHolder;
 }
-export type ClientWriteResult = { readonly ok: true } | ClientValidationFailure;
+export interface CreatedClient {
+  readonly id: string;
+  readonly name: string;
+  readonly whatsappNumber: string | null;
+}
+export type ClientWriteResult =
+  { readonly ok: true; readonly client?: CreatedClient } | ClientValidationFailure;
 export interface ClientPage {
   readonly items: readonly ClientRecord[];
   readonly nextCursor: string | null;

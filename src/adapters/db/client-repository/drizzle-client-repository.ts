@@ -171,14 +171,17 @@ async function updateClient(
 
 async function createClient(db: DbExecutor, context: WorkspaceContext, change: ClientChange) {
   try {
-    await db.insert(client).values({
-      workspaceId: context.workspaceId,
-      name: change.name,
-      whatsappNumber: change.whatsappNumber,
-      socialLinks: change.socialLinks,
-      updatedBy: change.editorUserId,
-    });
-    return { status: "CREATED" } as const;
+    const rows = await db
+      .insert(client)
+      .values({
+        workspaceId: context.workspaceId,
+        name: change.name,
+        whatsappNumber: change.whatsappNumber,
+        socialLinks: change.socialLinks,
+        updatedBy: change.editorUserId,
+      })
+      .returning({ id: client.id });
+    return { status: "CREATED", id: rows.at(0)?.id ?? "" } as const;
   } catch (error) {
     if (pgCode(error) !== DUPLICATE_KEY || change.whatsappNumber === null) throw error;
     const holder = await findNumberHolder(db, context, change.whatsappNumber);

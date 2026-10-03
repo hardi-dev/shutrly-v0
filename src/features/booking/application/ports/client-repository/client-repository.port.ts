@@ -51,7 +51,7 @@ export interface ClientRepositoryPort {
   readonly create: (
     context: WorkspaceContext,
     change: ClientChange,
-  ) => Promise<{ readonly status: "CREATED" } | NumberTaken>;
+  ) => Promise<{ readonly status: "CREATED"; readonly id: string } | NumberTaken>;
   readonly update: (
     context: WorkspaceContext,
     id: string,

@@ -82,8 +82,9 @@ export class FakeClientRepository implements ClientRepositoryPort {
         status: "NUMBER_TAKEN",
         holder: { name: holder.name, isArchived: holder.isArchived },
       } as const;
+    const id = crypto.randomUUID();
     this.rows.push({
-      id: crypto.randomUUID(),
+      id,
       workspaceId: context.workspaceId,
       name: change.name,
       whatsappNumber: change.whatsappNumber,
@@ -92,7 +93,7 @@ export class FakeClientRepository implements ClientRepositoryPort {
       updatedBy: change.editorUserId,
       createdAt: this.createdAt++,
     });
-    return { status: "CREATED" } as const;
+    return { status: "CREATED", id } as const;
   }
 
   async update(context: WorkspaceContext, id: string, change: ClientChange) {

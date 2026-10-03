@@ -20,7 +20,14 @@ describe("addClient", () => {
           { platform: "TIKTOK", value: "https://www.tiktok.com/@rina" },
         ],
       }),
-    ).toEqual({ ok: true });
+    ).toEqual({
+      ok: true,
+      client: {
+        id: expect.any(String) as string,
+        name: "Rina Wedding",
+        whatsappNumber: whatsappNumberSchema.parse("6281234567890"),
+      },
+    });
     expect(repository.rows[0]).toMatchObject({
       name: "Rina Wedding",
       whatsappNumber: whatsappNumberSchema.parse("6281234567890"),

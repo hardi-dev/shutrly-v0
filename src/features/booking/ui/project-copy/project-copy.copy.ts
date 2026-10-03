@@ -19,6 +19,7 @@ export const PROJECT_COPY = {
   clientPlaceholder: "Cari atau tambah klien",
   clientGroupLabel: (count: number) => `KLIEN · ${String(count)} COCOK`,
   clientNoMatchLabel: (query: string) => `TIDAK ADA KLIEN “${query}”`,
+  clientDialogDescription: "Klien baru langsung dipilih untuk proyek ini.",
   clientCreateLabel: (query: string) => `Tambah klien baru “${query}”`,
   clientNoNumber: "Belum ada nomor WhatsApp",
   clientNote: (number: string, projectCount: number) =>

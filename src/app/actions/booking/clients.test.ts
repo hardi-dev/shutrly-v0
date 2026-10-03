@@ -18,8 +18,9 @@ describe("client actions", () => {
   });
 
   it("AC-CLI-018 revalidates the clients layout only after a successful add", async () => {
-    addWorkspaceClient.mockResolvedValue({ ok: true });
-    await expect(addClientAction("ws-1", {})).resolves.toBeUndefined();
+    const created = { id: "c1", name: "Rina", whatsappNumber: null };
+    addWorkspaceClient.mockResolvedValue({ ok: true, client: created });
+    await expect(addClientAction("ws-1", {})).resolves.toEqual({ ok: true, client: created });
     expect(revalidatePath).toHaveBeenCalledWith("/w/[workspaceId]/clients", "layout");
   });
 

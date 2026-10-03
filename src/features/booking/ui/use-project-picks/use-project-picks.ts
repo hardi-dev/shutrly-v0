@@ -8,7 +8,7 @@ import type {
   ServiceSnapshotSource,
 } from "@/features/booking/application/ports/project-repository/project-repository.port";
 import { formatIdrNumber } from "@/features/booking/domain/idr-amount/idr-amount";
-import { defaultProjectTitle } from "@/features/booking/domain/project-record/project-record";
+import { nextProjectTitle } from "@/features/booking/domain/project-record/project-record";
 
 import type {
   CreateForm,
@@ -21,7 +21,7 @@ export function useProjectPicks(
   serviceGroups: readonly ServiceOptionGroup[],
 ): ProjectPicks {
   const [client, setClient] = useState<ClientOption | null>(null);
-  const isTitleEdited = useRef(false);
+  const lastDefault = useRef<string | null>(null);
   const services = useMemo(() => serviceGroups.flatMap((group) => group.services), [serviceGroups]);
   const serviceId = form.watch("serviceId");
   const service = services.find((candidate) => candidate.id === serviceId) ?? null;
@@ -30,8 +30,15 @@ export function useProjectPicks(
     nextService: ServiceSnapshotSource | null,
     nextClient: ClientOption | null,
   ) => {
-    if (isTitleEdited.current || !nextService || !nextClient) return;
-    form.setValue("title", defaultProjectTitle(nextService.name, nextClient.name));
+    const currentTitle = form.getValues("title");
+    const next = nextProjectTitle({
+      currentTitle,
+      lastDefault: lastDefault.current,
+      serviceName: nextService?.name ?? null,
+      clientName: nextClient?.name ?? null,
+    });
+    lastDefault.current = next.lastDefault;
+    if (next.title !== currentTitle) form.setValue("title", next.title);
   };
   const selectClient = (option: ClientOption) => {
     setClient(option);
@@ -53,7 +60,6 @@ export function useProjectPicks(
     refreshTitle(next, client);
   };
   const changeTitle = (title: string) => {
-    isTitleEdited.current = true;
     form.setValue("title", title);
   };
   return { client, service, selectClient, selectService, changeTitle };

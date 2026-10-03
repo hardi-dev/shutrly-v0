@@ -1,3 +1,5 @@
+import type { NextTitleInput, NextTitleResult } from "./project-record.types";
+
 export const PROJECT_TITLE_MAX_LENGTH = 100;
 export const PROJECT_NOTES_MAX_LENGTH = 2000;
 export const CANCEL_REASON_MAX_LENGTH = 500;
@@ -29,3 +31,16 @@ export function trimToNull(value: string | null): string | null {
 }
 
 export const PROJECT_SEARCH_MAX_LENGTH = 100;
+
+/** Decides the title after the client or service changes: it follows the default until the Owner edits it (A-2). @param input - the current title, the last default shown, and the new names @returns the next title and default */
+export function nextProjectTitle(input: NextTitleInput): NextTitleResult {
+  const nextDefault =
+    input.serviceName !== null && input.clientName !== null
+      ? defaultProjectTitle(input.serviceName, input.clientName)
+      : null;
+  const isUntouched = input.currentTitle === "" || input.currentTitle === input.lastDefault;
+  return {
+    title: isUntouched && nextDefault !== null ? nextDefault : input.currentTitle,
+    lastDefault: nextDefault,
+  };
+}

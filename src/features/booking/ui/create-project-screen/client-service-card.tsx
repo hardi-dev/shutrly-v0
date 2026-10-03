@@ -18,6 +18,7 @@ export function ClientServiceCard({ state, props }: Readonly<CreateProjectCardPr
         selectedClient={state.client}
         onSelect={state.selectClient}
         searchAction={props.searchClientsAction}
+        createAction={props.createClientAction}
         errorMessage={errorText("clientId", errors.clientId?.message)}
       />
       <ServicePicker

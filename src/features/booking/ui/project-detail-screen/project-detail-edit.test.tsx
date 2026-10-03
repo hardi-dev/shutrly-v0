@@ -22,7 +22,14 @@ vi.mock("@/ui/patterns/compact-bar/compact-bar-actions", () => ({
 }));
 
 const DEFINITIONS = [
-  { id: "d3", name: "Foto cetak", unit: "foto", valueType: "NUMBER", selectionRequired: true },
+  {
+    id: "d3",
+    name: "Foto cetak",
+    unit: "foto",
+    valueType: "NUMBER",
+    selectionRequired: true,
+    selectionType: "PRINT",
+  },
 ] as const;
 
 function setup(status: ProjectStatus, overrides: Partial<ProjectDetailView> = {}) {

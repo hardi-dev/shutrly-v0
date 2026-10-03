@@ -42,6 +42,7 @@ const definitions = [
     unit: "foto",
     valueType: "NUMBER",
     selectionRequired: true,
+    selectionType: "EDIT",
   },
   {
     id: PROJECT_IDS.fotoCetak,
@@ -49,6 +50,7 @@ const definitions = [
     unit: "foto",
     valueType: "NUMBER",
     selectionRequired: true,
+    selectionType: "PRINT",
   },
 ] as const;
 

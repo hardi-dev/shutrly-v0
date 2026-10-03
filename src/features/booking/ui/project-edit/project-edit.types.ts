@@ -29,6 +29,7 @@ export interface DefinitionOption {
   readonly unit: string | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
+  readonly selectionType: "EDIT" | "PRINT" | null;
 }
 
 /** What a dialog's submit returns: field errors to show, or null to close. */

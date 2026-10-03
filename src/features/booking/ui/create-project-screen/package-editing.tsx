@@ -78,7 +78,7 @@ export function PackageEditing({
         unit: definition.unit,
         valueType: definition.valueType,
         selectionRequired: definition.selectionRequired,
-        selectionType: definition.selectionRequired ? "PRINT" : null,
+        selectionType: definition.selectionType,
         value: checked.value,
       },
     });

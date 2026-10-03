@@ -221,6 +221,7 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
         unit: row.unit,
         valueType: row.valueType,
         selectionRequired: row.selectionRequired,
+        selectionType: row.selectionType,
       }));
   }
 

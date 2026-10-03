@@ -223,6 +223,10 @@ async function listActiveDefinitions(
             unit: row.unit,
             valueType: row.valueType,
             selectionRequired: row.selectionRequired,
+            selectionType:
+              row.selectionType === "EDIT" || row.selectionType === "PRINT"
+                ? row.selectionType
+                : null,
           },
         ]
       : [],

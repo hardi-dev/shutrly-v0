@@ -177,6 +177,7 @@ export interface ActiveDefinition {
   readonly unit: string | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
+  readonly selectionType: "EDIT" | "PRINT" | null;
 }
 
 export type MoveStatusResult = "MOVED" | "STALE" | "NOT_FOUND";

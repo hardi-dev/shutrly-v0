@@ -1,89 +1,32 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-04 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 DONE and merged to `main`; F-07 DONE, accepted by the Owner 2026-10-04) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `feat/projects` (`main` merged in) (F-04 via PR #1, F-05 via PR #3 and F-06 from `codex/clients` are on `main`).
+Last updated: 2026-10-04 (F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `claude/new-feature-skill-start-a92e1b` (F-09 gallery design, worktree). F-07 is on `feat/projects`; F-08 Team designed on `feat/team-sessions`.
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-07 Projects DONE (2026-10-04)
+## Current handoff — F-09 Gallery PLANNED (2026-10-04)
 
-- **Accepted by the Owner 2026-10-04** with open follow-ups: the 92-export fidelity pass (8.3), the remaining dialogs in both themes and keyboard-only a11y tests (8.2), the six flaky E2E tests, and `pnpm install` once. Nothing is pushed and no PR is open.
-- The notes below were written mid-build; Slices 0–8 are all built.
-
-- **Built on `feat/projects`:** Slice 0 (base check, `main` merged, [component inventory](features/projects/component-inventory.md)), Slice 1 (*Proyek baru*) and Slice 2 (the read-only project detail page with the *Konfirmasi booking* / *Mulai pemotretan* / *Selesai pemotretan* steps). Slice 1: domain rules, tables and migration `0009`, create backend, shared Combobox / DateField / TimeField / Select sections, and the create screen with sessions and booking fields.
-  - **Migration:** `0009_project` is applied to the non-production database.
-  - **Gate:** typecheck, lint, 918 unit tests, booking integration (16), build and the projects and app-shell E2E suites pass. See the [implementation records](features/projects/technical-design.md#implementation-record--slice-1-2026-10-03).
-- **Try it:** `/w/<id>/projects/new`; *Buat proyek* and *Simpan draf* open `/w/<id>/projects/<projectId>`, which shows the cards and the next step. `/projects` is still the coming-soon page (Slice 3).
-- **Owner actions and decisions:**
-  - run `pnpm install` once: `@internationalized/date` was added to `package.json` and the lockfile by hand because `pnpm add` refuses here (store mismatch);
-  - the exports draw item and session rows without a leading icon, but `ListCardItem` requires one (deviation 5);
-  - the phone Bottom Nav is hidden on *Proyek baru* and on the project detail (Slice 1 deviation 4, Slice 2 deviation 1).
-- **Fixed on the way:** deleting a client, service, category or definition that a project uses now returns `IN_USE` (a `RESTRICT` violation is `23001`). This closes F-06's AC-CLI-015 real-FK carry-over.
-- **Next:** `/sdv:verify-feature projects`. It should also do the design-fidelity pass of the 92 exports (plan step 8.3, not done) and finish the keyboard-only accessibility checks (8.2, partial).
-
-- **Spec:** [spec.md](features/projects/spec.md), [acceptance-criteria.md](features/projects/acceptance-criteria.md) (AC-PRJ-001…026).
-- **Domain updates:** BR-PRJ-004's SPEC GAP is resolved (manual steps; no backwards moves; final delivery from `BOOKED`/`SHOOTING`/`POST_PROCESSING`). BR-DEL-003 now names those states. New rules are BR-PRJ-008 (record), BR-PRJ-009 (deal editable while `DRAFT`/`BOOKED`) and BR-PRJ-010 (delete drafts, cancel the rest). The domain-model lifecycle diagram is updated.
-- **Feature map:** F-04 and F-05 are marked DONE (merged; verification owed). The *Next up* section was rewritten.
-- **Assumptions to confirm in design review:**
-  - A-2: default title *{service} — {client}*;
-  - A-4: filters *Berjalan*/*Selesai*/*Dibatalkan*, ordered by event date;
-  - A-5: status labels;
-  - A-1: routes `/projects`, `/projects/new`, `/projects/[id]`.
-- **Next:** continue `/sdv:design-feature projects` from the design handoff. F-06 build (`/sdv:build-feature clients 1`) is still pending on `feat/clients`.
+- **State:** F-09 Gallery `PLANNED` (design approved: "1 approve"). Branch `claude/new-feature-skill-start-a92e1b` (worktree), not pushed, no PR. Only `docs/design-system/pencil-variables.json` is untracked (generated, never committed).
+- **Done this session:**
+  - Intent accepted, spec + AC-GAL-001…031 written, FC-001…008 all resolved: [intent](features/gallery/intent.md), [spec](features/gallery/spec.md), [AC](features/gallery/acceptance-criteria.md).
+  - Gallery password stored encrypted, generated (e.g. *mawar-4821*), Owner-visible and auto-filled into WhatsApp: [ADR-017](architecture/decisions/ADR-017-gallery-password-encrypted-owner-visible.md), constitution v1.1 (C-103), BR-GAL-002/003, BR-MSG-003.
+  - Whole Drive folder tree is synced; edited/print decided by the nearest ancestor at any depth (BR-GAL-007, ADR-005 amended). Browse = kind tabs + Drive-like folders + filename search + infinite scroll inside a *Semua foto* modal; immersive photo preview.
+  - Design: [design.md](features/gallery/design.md) (frame IDs, states, exceptions), 100 HTML exports + [`exports/INDEX.md`](features/gallery/exports/INDEX.md); [technical design](features/gallery/technical-design.md) and [plan](features/gallery/plan.md) written (F-09 `PLANNED`).
+  - Library: new components C46 Photo Tile, C47 Folder Tile, C48 Media Viewer (+ specs in `design-system/components/`); 623 tokens, checksum `c2c0a40b`; `token-usage.md` amended (`surface.inverse` may back a media viewer).
+  - Hook: `guard.py` allows copying bundled `.pen` templates into `docs/`.
+- **Checks:** token validator + checksum match; export index `--check` OK; sample export content checked. No code yet, so no typecheck/tests ran.
+- **Owner actions:**
+  - Provision the Drive API key and the gallery-password encryption key (non-production now, production before ship).
+  - Commit the `guard.py` TEMPLATE_COPY change in the main checkout (uncommitted on `feat/team-sessions`).
+  - Merge this branch before any other `design-system.lib.pen` change (`.lib.pen` can't be merged by git); re-run `tokens_to_pencil.py` if token files conflict.
+- **Open items** (tracked in [design.md](features/gallery/design.md)): library board 07 doesn't show the `surface.inverse` amendment yet; Modal `size="xl"` built in code; F-07 cancel-dialog copy and F-03 preview copy changes land with the F-09 build; sharing deferred.
+- **Next:** `/sdv:build-feature gallery 0` once the Owner has put `GOOGLE_DRIVE_API_KEY` and `GALLERY_PASSWORD_KEY` in `.dev.vars` / `.env.test`. Slice 0 spikes Drive listing and thumbnails (plan R-1/R-2; sync size limit A-T1 awaits the Owner).
 
 ## Key decisions (Owner)
 
-**Earlier (session 1):**
-- The Studio Lime pieces were taken from the legacy frames.
-- `blue.500 = #2F5BFF` in both modes.
-- Slate folded into zinc, and spacing snapped to 4 px.
-- Full light and dark themes (dark values inferred, GAP-01).
-- Toast style B, and input border Option A (GAP-06 accepted).
-- The metric tile follows legacy Frame 4 exactly.
-
-**Session 2 (2026-09-26):**
-- **Rules approved** ("approve"). Any later change to an approved rule is recorded as an amendment.
-- **Component method:** research Figma best practice first, then adapt it to pen.dev and pilot it on one component. The first flat "Library components" gallery was rejected and deleted.
-- **Whole steps only outside SP6's small components:**
-  - Button padding: MD **12/36**, LG **16/48** (3:1 squish). **`space.9` = 36** was added to the scale.
-  - Checkbox, radio and switch ↔ label gap: 10 → **8**.
-  - Segmented: item 6/12 → **8/16**, track padding and gap 2 → **4**.
-- **Buttons:** icons are allowed on both sides (`Icon leading` / `Icon trailing`, off by default). Secondary buttons got a hover state (`surface.sunken`).
-- **Hover tokens** for checkbox, radio and switch. New semantics: `border.control-hover` and `control.track-off-hover`.
-- **Stepper "+"** uses `action.primary` (the same as Button primary), and "−" is neutral.
-- **Tier 1b primitives:** Input (plus search, and password/select/date/prefix configurations), Textarea, Segmented item, Metric delta, Stepper, Avatar, Icon button, Notification badge (new semantic `status.danger.on-solid`), and Kbd.
-- **Tier 1c:** Menu item and Menu, for dropdown / select / action menu.
-- **Canvas:** components sit below the tokens, 8 per row, ordered by group. The C-codes were renumbered to match the canvas order.
-
-**Session 3 (2026-09-26):**
-- **Tier 2 tokens approved** ("approve all"): 16 component tokens — `calendar.day.label/number/dot/dot-selected`, `nav.item.background-hover`, `nav.group-label`, `metric.tile.label/value`, `metric.spark.gap/radius`, `toast.<tone>.action` ×5, `icon-button.sm.padding`.
-- **SP6 amended:** toast title ↔ body (2) joins the half-step list.
-- **Icon button SM** (32 px, ghost only) for the toast close and table-row action menus. MD variants renamed `Icon Button/<Style>/MD/<State>` (IDs unchanged).
-- Snaps: spark and dot gap 3 → 4; toast padding 12/14 → 12; calendar date weight 800 → 700; nav group label 11/600 → overline.
-
-**Session 4 (2026-09-26):**
-- **C02–C26 approved** (Owner review).
-- **Tier 3 tokens approved:** 13 — `table.background/border/radius`, `table.toolbar.padding-y/-x`, `table.header.padding-y/border`, `table.row.background-hover`, `table.cell.text/text-strong`, `table.footer.link` (light `action.primary`, dark `status.info.fg`), `panel.app.title`, `panel.app.header.gap`.
-- **SP6 amended:** table cell avatar ↔ name (10) joins the half-step list.
-- **Table filter** = Segmented control (legacy dark pills dropped). Scope extended with **Sidebar + App shell**.
-- Sidebar binds semantic/scale tokens as a layout region (no `sidebar.*` aliases yet; Owner may promote). Logo mark monochrome, log-out neutral.
-- Metric tile label now fills and wraps (collided with the delta in narrow tiles).
-- **C27–C30 approved** (Owner review).
-- **Page Content + max-width (done).** The App Panel's Content region is its own component, **Page Content** (`B4HAVd`, on C28): outer fill width with padding 28/40, and an inner `Container` **slot** fixed at 1096 and centred. Pen has no `maxWidth`, so the fixed centred container emulates it; code uses `max-width: 1096px; width: 100%`. New tokens: `size.content-max` = 1096 (scale) → `panel.app.content.max-width`. App Panel `C5QYo` now accepts only Page Content and has no padding/gap of its own. The masters show an empty Page Content; the dashboard lives in the C28 Modes examples and the dark App Shell example (`TXZxf`). The C28 Content and Modes exhibits were restacked (notes above the artwork) so the panels are wide enough for the 1096 container.
-
-- **Modal (tier 4):** Owner asked for a Modal + a modal slot in the App Shell, then a mobile Bottom Sheet. Two options were explored first (exploration board 04); the Owner picked **A — Sectioned** (radius 16, header divider + close, footer on `surface.subtle`) and approved its tokens: primitives `red.300`, `alpha.neutral-950-a50`, `alpha.black-a60`; semantics `overlay.scrim`, `status.danger.solid-hover`; 18 `modal.*`; 3 `button.danger.*`. Widths SM 400 · MD 560 · LG 720.
-- **Button/Danger** added to C01 (MD/LG × 4 states) for destructive confirms.
-- **App Shell Overlay:** boolean layer (off), absolute 1440 × 960 with `modal.scrim`, centring a Modal slot (default Modal/MD). It covers the whole screen, sidebar included.
-
-- **Bottom Sheet (tier 4):** two options explored (board 05). Owner: "A is better, but I like header of B" → docked, full-width sheet (top corners 24, rows with `border.subtle`, footer on `surface.subtle`) with B's header (no divider; centred title + meta for action lists, left title + round close on `surface.sunken` for forms). 25 `sheet.*` tokens approved; no new primitives/semantics. Components: Sheet Item Default/Destructive, Bottom Sheet/Actions, Bottom Sheet/Form. Shown on a phone placeholder (no mobile shell — GAP-04).
-
-- **Sheet spacing + mobile frame (Owner "fix the gap", both):** sheet item icon ↔ label = **10** (`space.2-5`; SP6 list amended), Form body gap stays 12. New **C33 Mobile Shell** template (status bar · app bar back/title/action · Content slot · safe area · Overlay with Sheet slot); C32 examples now sit on it. No new tokens (layout region, G3).
-
-- **Mobile App Shell (Owner):** Bottom Nav = Dasbor · Proyek · [+ CTA] · Klien · Lainnya (Owner). Two options explored (board 06); Owner picked **B** (colour-only active tab, raised 54 px CTA with a `surface.panel` ring) and raised the bar's padding-top 6 → **12**. 12 `bottom-nav.*` tokens (active colour: light `action.primary`, dark `status.info.fg`). *Lainnya* → **Bottom Sheet/Menu**: header = Sidebar logo + round close; list = workspace switcher (Owner: moved from header into the content), Invoice (3), KATALOG (Layanan, Tim), Template pesan · Sumber klien · Pengaturan (unlabelled, as in the Sidebar — Owner: inherit the Sidebar, add nothing it lacks), account + Keluar. Separator line above the switcher. Sheet Item gained an optional Count. C35 Mobile App Shell = status bar · app bar (title, search, notifications) · Content · Bottom Nav · Overlay (default Menu sheet). C33 stays the sub-page / client template (Back + title).
-
-- **C31–C35 approved** (Owner review).
-
-- **Handoff next steps resolved (2026-09-26, Owner picked the recommended defaults):** 1920 App Shell exhibit (`C30 — App shell · 1920`, row 5); rows re-laid out by the Owner (C33–C35 now row 5, y 19863); `sidebar.*` aliases (10, same values; Sidebar + Menu sheet rebound); Calendar Day/Hover (`surface.muted`); toast close aligned to the title line; Segmented Item/LG + Segmented Control/LG; Table states (sorted header, select column, selected row, skeleton, empty state); **C36 Combobox**. Tablet: Owner picked **A — icon rail 72 with tooltips** (board 07) → **C37** Tooltip, Nav Rail Item, Sidebar/Rail, App Shell/Tablet (`size.rail`, `sidebar.rail.*`, `tooltip.*`).
+- Design-system decisions from sessions 1–4 (2026-09-26) are in the [archive](HANDOFF-archive.md); the approved values live in `docs/design-system/`.
+- **F-09 (2026-10-04):** gallery passwords are generated, stored encrypted and visible to the Owner ([ADR-017](architecture/decisions/ADR-017-gallery-password-encrypted-owner-visible.md)); sharing a gallery is out of scope for now.
 
 ## Open gaps (deferred)
 
@@ -130,4 +73,6 @@ History (previous handoffs, early status table, component-library notes): [HANDO
   - A replaced node keeps its new ID in the instance path: re-replace `KS7sb/XNJJO`, not `KS7sb/C5QYo`.
 - **Master edits that break the file (2026-09-26):** `Move`-ing a newly inserted layer inside a deeply nested master (Table Cell / Header Cell) corrupted every existing Table instance in memory and emptied the Table master's row cells; Pen then refused to save ("pen.dev can't save your changes"). Rules: insert new layers at the **end** of a master, never `Move` them; after every master edit run `Get((n,ctx)=>{ctx.skipChildren();return n.name})` (whole-doc check) and test pages one per call (`Get(pageId,{depth:30})`) — errors abort the whole call. Broken instances are fixed by deleting and rebuilding them. An IPC error (`reading 'parent'`) can leave a half-applied change: close without saving and reopen.
 - **Pencil targets the frontmost Pen window**, whatever `filePath` says: run `open -a Pen <file>` before switching files, and check `GetVariables` (the library has variables; `exploration.pen` has none).
+- **Design exports:** builds read the raw exports through `exports/INDEX.md` (`scripts/sdv/index-exports.py`). The compact exports were dropped on 2026-10-04 because their stripped bases didn't render the real UI (Owner).
+- **Pen library import in a worktree** can point at the main checkout's library; verify and never remove a used import (see `CLAUDE.md` › Mistakes to avoid).
 - **CLI save isn't possible:** `osascript` keystrokes are blocked (no Accessibility permission), so the Owner presses ⌘S.

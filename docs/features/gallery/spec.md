@@ -34,13 +34,19 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
    - every other image, in the root or in any other subfolder, becomes `PROOF`;
    - non-image files are ignored.
    The source records its sync status, time, counts and any error.
-5. The gallery screen shows the password (with *Salin*), so the Owner never has to remember it. It also shows each source with its status and last sync. The photos are grouped by kind (*Proof*, *Edited*, *Print*), each with a thumbnail served through the Owner-only media endpoint, plus counts.
+5. The gallery screen shows the password (with *Salin*), so the Owner never has to remember it. It also shows each source with its status and last sync.
+   - **Foto card:** counts per kind (*Proof*, *Edited*, *Print*), a preview of the first 8 photos, and *Lihat semua foto*. Thumbnails come from the Owner-only media endpoint.
    - Each kind is marked for what the client will see: *Proof* is visible once published. *Edited* and *Print* are hidden until final delivery (BR-DEL-002). Missing and removed photos are hidden.
-   - **Browsing many photos:** the photos have tabs by kind (*Proof*, *Edited*, *Print*, each with its total), as above.
-     - A tab shows the source's folder tree like Google Drive, keeping only the folders that hold photos of that kind. Folders and photos sit together in one grid, folders first. In *Edited* and *Print*, the `edited` / `print` folders themselves are folded into their parent folder.
-     - With several sources, the top level shows one folder per source. With a single source, its folder opens directly. A breadcrumb (*Semua folder › Rina-Wisuda › Akad*) leads back (A-12).
-     - The grid loads in pages as the Owner scrolls (infinite scroll, A-13); thumbnails are small and load when visible.
-     - *Cari nama file* searches every folder of the gallery. Results show each photo's folder.
+   - **Semua foto** (a modal; full screen on phones) holds all browsing (Owner 2026-10-04):
+     - tabs by kind, each with its total;
+     - the folder tree like Google Drive, keeping only the folders that hold photos of that kind. Folders and photos sit in one grid, folders first, at the same tile size. In *Edited* and *Print*, the `edited` / `print` folders are folded into their parent folder;
+     - with several sources, the top level shows one folder per source. With a single source, its folder opens directly. A breadcrumb (*Semua folder › Rina-Wisuda › Akad*) leads back (A-12);
+     - infinite scroll (A-13), with thumbnails loaded when visible;
+     - *Cari nama file* across every folder; results show each photo's folder.
+   - **Photo preview:** opening any photo, on the card or in the modal, shows a large preview, again through the Owner-only media endpoint.
+     - It has ← / → (and the arrow keys) for the previous and next photo in the same list, and Esc closes it.
+     - Info: file name, folder path, kind, *Hilang* if missing, and whether the client can see it.
+     - *Buka di Google Drive* opens the file in Drive in a new tab. It is shown only to the Owner (BR-SRC-003 covers client responses only) and never for a missing file.
 6. The Owner may sync one source or all of them again at any time. Repeated syncs never duplicate photos.
 7. The Owner publishes:
    - the server checks that a password hash exists and lists every linked source again;

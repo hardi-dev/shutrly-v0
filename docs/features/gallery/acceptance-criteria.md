@@ -146,10 +146,9 @@ Covers: BR-GAL-007, BR-DEL-002, BR-GAL-006
 **Given** the synced gallery from AC-GAL-007
 **When** the Owner opens the gallery screen
 **Then**:
-- tabs *Proof (5)*, *Edited (3)*, *Print (1)* show the folder tree. *Proof* shows the folder `raw` and the root photos together, with the same tile size;
-- *Proof* is marked visible to the client once published;
-- *Edited* and *Print* are marked hidden until final delivery;
-- the missing `IMG_002.jpg` is marked *Hilang*;
+- the *Foto* card shows *5 proof · 3 edited · 1 print* and a preview of the first photos, with the missing `IMG_002.jpg` marked *Hilang*, and *Lihat semua foto*;
+- in *Semua foto*, the tabs *Proof (5)*, *Edited (3)*, *Print (1)* show the folder tree, and *Proof* shows the folder `raw` and the root photos together at the same tile size;
+- *Proof* is marked visible to the client once published, and *Edited* and *Print* hidden until final delivery;
 - loading, empty (no sources yet: a prompt to add a folder) and error states are shown where they apply (C-007).
 
 ## AC-GAL-015 — Owner-only media
@@ -283,7 +282,7 @@ Covers: BR-GAL-002, C-103, BR-WS-002 (ADR-017)
 Covers: BR-GAL-007 (A-12, A-13)
 
 **Given** a gallery with *Rina-Wisuda* (212 proof, 40 edited) and *Rina-Keluarga* (100 proof)
-**When** the Owner opens the gallery screen
+**When** the Owner opens *Lihat semua foto*
 **Then** the tabs read *Proof (312)*, *Edited (40)*, *Print (0)*, and *Proof* shows two folder tiles, *Rina-Wisuda · 212* and *Rina-Keluarga · 100*.
 
 **When** the Owner opens *Rina-Wisuda*
@@ -300,7 +299,7 @@ Covers: BR-GAL-007 (A-12, A-13)
 Covers: BR-GAL-006 (A-13)
 
 **Given** the gallery from AC-GAL-028
-**When** the Owner types `IMG_02` in *Cari nama file*
+**When** the Owner types `IMG_02` in *Cari nama file* in *Semua foto*
 **Then**:
 - the matches from every folder and kind show, each with its folder (for example *Rina-Wisuda · edited*);
 - a search with no match shows *Tidak ada foto bernama “…”*;
@@ -310,7 +309,7 @@ Covers: BR-GAL-006 (A-13)
 Covers: BR-GAL-007 (A-12, A-14)
 
 **Given** *Rina-Wisuda* holds `IMG_001.jpg` and the folders `Akad/` (`A_001.jpg`, `edited/AE_001.jpg`) and `Resepsi/` (`R_010.jpg`)
-**When** the Owner opens *Proof* on a gallery whose only source is *Rina-Wisuda*
+**When** the Owner opens *Proof* in *Semua foto* on a gallery whose only source is *Rina-Wisuda*
 **Then**:
 - the grid shows the folder tiles *Akad · 1 foto* and *Resepsi · 1 foto*, then `IMG_001.jpg`, all the same tile size;
 - opening *Akad* shows `A_001.jpg` under the breadcrumb *Semua folder › Rina-Wisuda › Akad*.
@@ -321,3 +320,21 @@ Covers: BR-GAL-007 (A-12, A-14)
 **Given** a folder 6 levels below the source
 **When** the source syncs
 **Then** its photos are skipped, and the sync summary reports *1 folder terlalu dalam*.
+
+## AC-GAL-031 — Photo preview
+Covers: BR-GAL-006, BR-DEL-002, BR-SRC-003, BR-WS-002
+
+**Given** *Rina-Wisuda › Akad* with 64 proof photos
+**When** the Owner opens `A_012.jpg` from *Semua foto*
+**Then**:
+- a large preview shows *12 / 64*;
+- the info panel shows `A_012.jpg`, *Rina-Wisuda › Akad*, *Proof*, *Terlihat oleh klien setelah dipublikasikan*, and *Buka di Google Drive*;
+- → (or the right-arrow key) shows `A_013.jpg`, and Esc closes the preview.
+
+**Given** the missing `IMG_002.jpg`
+**When** the Owner opens it
+**Then** the preview shows *File tidak ditemukan di Google Drive*, the photo is marked *Hilang* and hidden from the client, and there is no *Buka di Google Drive*.
+
+**Given** the Owner of another workspace
+**When** they request the preview image or the Drive link of this photo
+**Then** the response is not found.

@@ -9,6 +9,8 @@ import type {
   LockedProject,
   MoveStatusResult,
   ProjectDetailRecord,
+  ProjectFieldRecord,
+  ProjectItemRecord,
   ProjectRepositoryPort,
   ProjectSnapshotInput,
   ProjectWriter,
@@ -17,6 +19,8 @@ import type {
 } from "@/features/booking/application/ports/project-repository/project-repository.port";
 import type { StepTransition } from "@/features/booking/domain/project-status/project-status.types";
 import type { ProjectStatus } from "@/features/booking/domain/project-status/project-status.types";
+import { compareSessions } from "@/features/booking/domain/session/session";
+import type { SessionRecordShape } from "@/features/booking/domain/session/session.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 export interface FakeClient {
@@ -41,6 +45,9 @@ export interface StoredProject {
   readonly workspaceId: string;
   readonly accessToken: string;
   input: ProjectSnapshotInput;
+  items: ProjectItemRecord[];
+  fields: ProjectFieldRecord[];
+  sessions: SessionRecordShape[];
   status: ProjectStatus;
   cancellation: { at: string; byName: string | null; reason: string | null } | null;
 }
@@ -82,10 +89,36 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       workspaceId: context.workspaceId,
       accessToken: input.accessToken,
       input,
+      items: input.items.map((item, index) => this.itemRecord(id, index, item)),
+      fields: service.fields.map((field) => ({
+        ...field,
+        id: `${id}-field-${field.key}`,
+        value: input.fieldValues[field.key] ?? null,
+      })),
+      sessions: input.sessions.map((session, index) => ({
+        ...session,
+        id: `${id}-session-${String(index)}`,
+        createdAt: `2026-10-01T00:00:0${String(index)}Z`,
+      })),
       status: input.status,
       cancellation: null,
     });
     return { status: "CREATED", id };
+  }
+
+  itemRecord(projectId: string, index: number, item: ProjectSnapshotInput["items"][number]) {
+    const definition = this.definitions.find((row) => row.id === item.definitionId);
+    return {
+      id: `${projectId}-item-${item.definitionId}`,
+      definitionId: item.definitionId,
+      name: definition?.name ?? "",
+      unit: definition?.unit ?? null,
+      valueType: definition?.valueType ?? "NUMBER",
+      selectionRequired: definition?.selectionRequired ?? false,
+      selectionType: definition?.selectionType ?? null,
+      value: item.value,
+      order: index,
+    } satisfies ProjectItemRecord & { order: number };
   }
 
   async findServiceForSnapshot(context: WorkspaceContext, serviceId: string) {
@@ -136,13 +169,9 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       status: stored.status,
       client: { id: client.id, name: client.name, whatsappNumber: client.whatsappNumber },
       service: { id: service.id, name: service.name, basePrice: service.basePrice },
-      items: [],
-      fields: [],
-      sessions: stored.input.sessions.map((session, index) => ({
-        ...session,
-        id: `session-${String(index)}`,
-        createdAt: `2026-10-01T00:00:0${String(index)}Z`,
-      })),
+      items: stored.items,
+      fields: stored.fields,
+      sessions: [...stored.sessions].sort(compareSessions),
       cancellation: stored.cancellation,
     };
   }
@@ -203,7 +232,7 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       status: stored.status,
       agreedPrice: stored.input.agreedPrice,
       title: stored.input.title,
-      sessionCount: stored.input.sessions.length,
+      sessionCount: stored.sessions.length,
     };
     const writer: ProjectWriter = {
       updateInfo: async (input) => {
@@ -221,6 +250,56 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       deleteProject: async () => {
         this.projects.splice(this.projects.indexOf(stored), 1);
       },
+      addItem: async (input) => {
+        const definition = this.definitions.find((row) => row.id === input.definitionId);
+        if (!definition) return "NOT_FOUND";
+        if (!definition.isActive) return "DEFINITION_INACTIVE";
+        if (stored.items.some((item) => item.definitionId === input.definitionId)) {
+          return "DUPLICATE_DEFINITION";
+        }
+        stored.items.push(
+          this.itemRecord(stored.id, stored.items.length, {
+            definitionId: input.definitionId,
+            value: input.value,
+          }),
+        );
+        return "ADDED";
+      },
+      findItem: async (itemId) => stored.items.find((item) => item.id === itemId) ?? null,
+      updateItemValue: async (itemId, value) => {
+        stored.items = stored.items.map((item) => (item.id === itemId ? { ...item, value } : item));
+      },
+      removeItem: async (itemId) => {
+        const before = stored.items.length;
+        stored.items = stored.items.filter((item) => item.id !== itemId);
+        return stored.items.length < before;
+      },
+      listFields: async () => stored.fields,
+      updateFieldValues: async (values) => {
+        stored.fields = stored.fields.map((field) =>
+          field.key in values ? { ...field, value: values[field.key] ?? null } : field,
+        );
+      },
+      addSession: async (input) => {
+        stored.sessions.push({
+          ...input,
+          id: `${stored.id}-session-${String(stored.sessions.length + 10)}`,
+          createdAt: "2026-10-02T00:00:00Z",
+        });
+      },
+      updateSession: async (sessionId, input) => {
+        const found = stored.sessions.find((session) => session.id === sessionId);
+        if (!found) return false;
+        stored.sessions = stored.sessions.map((session) =>
+          session.id === sessionId ? { ...session, ...input } : session,
+        );
+        return true;
+      },
+      deleteSession: async (sessionId) => {
+        const before = stored.sessions.length;
+        stored.sessions = stored.sessions.filter((session) => session.id !== sessionId);
+        return stored.sessions.length < before;
+      },
     };
     return change(locked, writer);
   }
@@ -229,7 +308,7 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
     const stored = this.projects.find(
       (row) => row.id === id && row.workspaceId === context.workspaceId,
     );
-    return stored ? stored.input.sessions.length : null;
+    return stored ? stored.sessions.length : null;
   }
 
   async listActiveServiceOptions(

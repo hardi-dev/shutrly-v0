@@ -3,6 +3,7 @@ import "server-only";
 import { notFound } from "next/navigation";
 
 import { ProjectError } from "@/features/booking/application/errors/project-errors/project-errors";
+import type { ProjectRepositoryPort } from "@/features/booking/application/ports/project-repository/project-repository.port";
 import { projectIdSchema } from "@/features/booking/application/schemas/project-ids/project-ids.schema";
 import { projectListQuerySchema } from "@/features/booking/application/schemas/project-list-query/project-list-query.schema";
 import { advanceProject } from "@/features/booking/application/use-cases/advance-project/advance-project";
@@ -10,6 +11,17 @@ import { cancelProject } from "@/features/booking/application/use-cases/cancel-p
 import { countProjects } from "@/features/booking/application/use-cases/count-projects/count-projects";
 import { createProject } from "@/features/booking/application/use-cases/create-project/create-project";
 import { deleteDraft } from "@/features/booking/application/use-cases/delete-draft/delete-draft";
+import {
+  addProjectSession,
+  deleteProjectSession,
+  updateProjectFieldValues,
+  updateProjectSession,
+} from "@/features/booking/application/use-cases/edit-project/project-field-and-session-edits";
+import {
+  addProjectItem,
+  removeProjectItem,
+  updateProjectItemValue,
+} from "@/features/booking/application/use-cases/edit-project/project-item-edits";
 import { getProjectDetail } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail";
 import { listProjects } from "@/features/booking/application/use-cases/list-projects/list-projects";
 import { loadCreateOptions } from "@/features/booking/application/use-cases/load-create-options/load-create-options";
@@ -17,6 +29,7 @@ import {
   loadFilterServices,
   searchFilterClients,
 } from "@/features/booking/application/use-cases/load-filter-options/load-filter-options";
+import type { ProjectWriteResult } from "@/features/booking/application/use-cases/project-results/project-results.types";
 import { searchActiveClients } from "@/features/booking/application/use-cases/search-active-clients/search-active-clients";
 import { updateProjectInfo } from "@/features/booking/application/use-cases/update-project-info/update-project-info";
 import { parseProjectListParams } from "@/features/booking/domain/project-list-query/project-list-filter";
@@ -26,6 +39,7 @@ import type { ProjectTab } from "@/features/booking/domain/project-status/projec
 import { todayInScheduleZone } from "@/features/booking/domain/schedule-clock/schedule-clock";
 import { DomainError } from "@/shared/errors/domain-error";
 import { logger } from "@/shared/logging/logger";
+import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
 import { verifyOwnerWorkspace } from "../../workspace/owner-workspace/owner-workspace";
@@ -208,4 +222,74 @@ export async function deleteDraftEntry(rawWorkspaceId: string, rawProjectId: str
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "delete-draft");
   }
+}
+
+async function runEdit(
+  rawWorkspaceId: string,
+  rawProjectId: string,
+  operation: string,
+  work: (
+    projects: ProjectRepositoryPort,
+    context: WorkspaceContext,
+    actorId: string,
+    projectId: string,
+  ) => Promise<ProjectWriteResult>,
+) {
+  const projectId = idOrNotFound(rawProjectId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withProjectScope(({ projects }) =>
+      work(projects, verified.context, account.id, projectId),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, operation);
+  }
+}
+
+export function addProjectItemEntry(ws: string, id: string, values: unknown) {
+  return runEdit(ws, id, "add-item", (projects, context, actor, projectId) =>
+    addProjectItem(projects, context, actor, projectId, values),
+  );
+}
+
+export function updateProjectItemValueEntry(
+  ws: string,
+  id: string,
+  itemId: string,
+  values: unknown,
+) {
+  return runEdit(ws, id, "update-item", (projects, context, actor, projectId) =>
+    updateProjectItemValue(projects, context, actor, projectId, idOrNotFound(itemId), values),
+  );
+}
+
+export function removeProjectItemEntry(ws: string, id: string, itemId: string) {
+  return runEdit(ws, id, "remove-item", (projects, context, _actor, projectId) =>
+    removeProjectItem(projects, context, projectId, idOrNotFound(itemId)),
+  );
+}
+
+export function updateProjectFieldValuesEntry(ws: string, id: string, values: unknown) {
+  return runEdit(ws, id, "update-fields", (projects, context, actor, projectId) =>
+    updateProjectFieldValues(projects, context, actor, projectId, values),
+  );
+}
+
+export function addSessionEntry(ws: string, id: string, values: unknown) {
+  return runEdit(ws, id, "add-session", (projects, context, actor, projectId) =>
+    addProjectSession(projects, context, actor, projectId, values),
+  );
+}
+
+export function updateSessionEntry(ws: string, id: string, sessionId: string, values: unknown) {
+  return runEdit(ws, id, "update-session", (projects, context, actor, projectId) =>
+    updateProjectSession(projects, context, actor, projectId, idOrNotFound(sessionId), values),
+  );
+}
+
+export function deleteSessionEntry(ws: string, id: string, sessionId: string) {
+  return runEdit(ws, id, "delete-session", (projects, context, _actor, projectId) =>
+    deleteProjectSession(projects, context, projectId, idOrNotFound(sessionId)),
+  );
 }

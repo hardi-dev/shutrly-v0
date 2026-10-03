@@ -3,6 +3,7 @@ import "server-only";
 import { and, asc, count, eq, inArray, isNull, sql } from "drizzle-orm";
 
 import type {
+  AddItemOutcome,
   ClientOption,
   DefinitionRules,
   FilterClientOption,
@@ -21,7 +22,10 @@ import { canonicalIdrAmount } from "@/features/booking/domain/idr-amount/idr-amo
 import { PROJECT_STATUSES } from "@/features/booking/domain/project-status/project-status";
 import type { StepTransition } from "@/features/booking/domain/project-status/project-status.types";
 import { compareSessions } from "@/features/booking/domain/session/session";
-import type { SessionRecordShape } from "@/features/booking/domain/session/session.types";
+import type {
+  SessionInput,
+  SessionRecordShape,
+} from "@/features/booking/domain/session/session.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import {
@@ -209,6 +213,159 @@ async function findFilterClient(
   return row ? { id: row.id, name: row.name, isArchived: row.archivedAt !== null } : null;
 }
 
+type ItemWriter = Pick<ProjectWriter, "addItem" | "findItem" | "updateItemValue" | "removeItem">;
+type FieldWriter = Pick<ProjectWriter, "listFields" | "updateFieldValues">;
+type SessionWriter = Pick<ProjectWriter, "addSession" | "updateSession" | "deleteSession">;
+
+async function addItemRow(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  projectId: string,
+  input: Parameters<ProjectWriter["addItem"]>[0],
+): Promise<AddItemOutcome> {
+  const definition = (
+    await db
+      .select()
+      .from(serviceItemDefinition)
+      .where(
+        and(
+          eq(serviceItemDefinition.workspaceId, context.workspaceId),
+          eq(serviceItemDefinition.id, input.definitionId),
+        ),
+      )
+      .for("share")
+  ).at(0);
+  if (!definition) return "NOT_FOUND";
+  if (!definition.isActive) return "DEFINITION_INACTIVE";
+  const existing = await db
+    .select({ definitionId: projectItem.definitionId, sortOrder: projectItem.sortOrder })
+    .from(projectItem)
+    .where(
+      and(eq(projectItem.workspaceId, context.workspaceId), eq(projectItem.projectId, projectId)),
+    );
+  if (existing.some((row) => row.definitionId === input.definitionId)) {
+    return "DUPLICATE_DEFINITION";
+  }
+  await db.insert(projectItem).values({
+    workspaceId: context.workspaceId,
+    projectId,
+    definitionId: definition.id,
+    name: definition.name,
+    valueType: definition.valueType,
+    value: input.value,
+    unit: definition.unit,
+    selectionRequired: definition.selectionRequired,
+    selectionType: definition.selectionType,
+    sortOrder: Math.max(-1, ...existing.map((row) => row.sortOrder)) + 1,
+    updatedBy: input.actorId,
+  });
+  return "ADDED";
+}
+
+function itemWriter(db: DbExecutor, context: WorkspaceContext, projectId: string): ItemWriter {
+  const own = (itemId: string) =>
+    and(
+      eq(projectItem.workspaceId, context.workspaceId),
+      eq(projectItem.projectId, projectId),
+      eq(projectItem.id, itemId),
+    );
+  return {
+    addItem: (input) => addItemRow(db, context, projectId, input),
+    async findItem(itemId) {
+      const row = (await db.select().from(projectItem).where(own(itemId))).at(0);
+      return row ? toItem(row) : null;
+    },
+    async updateItemValue(itemId, value, actorId) {
+      await db
+        .update(projectItem)
+        .set({ value, updatedBy: actorId, updatedAt: new Date() })
+        .where(own(itemId));
+    },
+    async removeItem(itemId) {
+      const removed = await db
+        .delete(projectItem)
+        .where(own(itemId))
+        .returning({ id: projectItem.id });
+      return removed.length > 0;
+    },
+  };
+}
+
+function fieldWriter(db: DbExecutor, context: WorkspaceContext, projectId: string): FieldWriter {
+  return {
+    async listFields() {
+      const rows = await db
+        .select()
+        .from(projectFieldValue)
+        .where(
+          and(
+            eq(projectFieldValue.workspaceId, context.workspaceId),
+            eq(projectFieldValue.projectId, projectId),
+          ),
+        )
+        .orderBy(asc(projectFieldValue.sortOrder));
+      return rows.flatMap((row) => toField(row) ?? []);
+    },
+    async updateFieldValues(values, actorId) {
+      for (const [key, value] of Object.entries(values)) {
+        await db
+          .update(projectFieldValue)
+          .set({ value, updatedBy: actorId, updatedAt: new Date() })
+          .where(
+            and(
+              eq(projectFieldValue.workspaceId, context.workspaceId),
+              eq(projectFieldValue.projectId, projectId),
+              eq(projectFieldValue.fieldKey, key),
+            ),
+          );
+      }
+    },
+  };
+}
+
+function sessionWriter(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  projectId: string,
+): SessionWriter {
+  const own = (sessionId: string) =>
+    and(
+      eq(projectSession.workspaceId, context.workspaceId),
+      eq(projectSession.projectId, projectId),
+      eq(projectSession.id, sessionId),
+    );
+  const columns = (input: SessionInput, actorId: string) => ({
+    name: input.name,
+    sessionDate: input.date,
+    startTime: input.startTime,
+    endTime: input.endTime,
+    location: input.location,
+    updatedBy: actorId,
+  });
+  return {
+    async addSession(input, actorId) {
+      await db
+        .insert(projectSession)
+        .values({ workspaceId: context.workspaceId, projectId, ...columns(input, actorId) });
+    },
+    async updateSession(sessionId, input, actorId) {
+      const rows = await db
+        .update(projectSession)
+        .set({ ...columns(input, actorId), updatedAt: new Date() })
+        .where(own(sessionId))
+        .returning({ id: projectSession.id });
+      return rows.length > 0;
+    },
+    async deleteSession(sessionId) {
+      const rows = await db
+        .delete(projectSession)
+        .where(own(sessionId))
+        .returning({ id: projectSession.id });
+      return rows.length > 0;
+    },
+  };
+}
+
 function writerFor(db: DbExecutor, context: WorkspaceContext, id: string): ProjectWriter {
   const scope = and(eq(project.workspaceId, context.workspaceId), eq(project.id, id));
   return {
@@ -241,6 +398,9 @@ function writerFor(db: DbExecutor, context: WorkspaceContext, id: string): Proje
     async deleteProject() {
       await db.delete(project).where(scope);
     },
+    ...itemWriter(db, context, id),
+    ...fieldWriter(db, context, id),
+    ...sessionWriter(db, context, id),
   };
 }
 

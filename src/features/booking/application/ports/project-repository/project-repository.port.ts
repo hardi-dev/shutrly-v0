@@ -143,7 +143,33 @@ export interface ProjectWriter {
     readonly actorId: string;
   }) => Promise<void>;
   readonly deleteProject: () => Promise<void>;
+  /** Locks the definition FOR SHARE, requires it active and appends the item with its current metadata. */
+  readonly addItem: (input: {
+    readonly definitionId: string;
+    readonly value: PackageValue;
+    readonly actorId: string;
+  }) => Promise<AddItemOutcome>;
+  readonly findItem: (itemId: string) => Promise<ProjectItemRecord | null>;
+  readonly updateItemValue: (itemId: string, value: PackageValue, actorId: string) => Promise<void>;
+  /** False when the item is not in this project. */
+  readonly removeItem: (itemId: string) => Promise<boolean>;
+  readonly listFields: () => Promise<readonly ProjectFieldRecord[]>;
+  readonly updateFieldValues: (
+    values: Readonly<Record<string, BookingValue>>,
+    actorId: string,
+  ) => Promise<void>;
+  readonly addSession: (input: SessionInput, actorId: string) => Promise<void>;
+  /** False when the session is not in this project. */
+  readonly updateSession: (
+    sessionId: string,
+    input: SessionInput,
+    actorId: string,
+  ) => Promise<boolean>;
+  /** False when the session is not in this project. */
+  readonly deleteSession: (sessionId: string) => Promise<boolean>;
 }
+
+export type AddItemOutcome = "ADDED" | "DEFINITION_INACTIVE" | "DUPLICATE_DEFINITION" | "NOT_FOUND";
 
 export type MoveStatusResult = "MOVED" | "STALE" | "NOT_FOUND";
 

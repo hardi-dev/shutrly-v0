@@ -481,4 +481,100 @@ describe("Drizzle project repository", () => {
     ).toBe("NOT_FOUND");
     expect(await repository.findDetail(context, created.id)).not.toBeNull();
   });
+
+  it("AC-PRJ-017 adds, edits and removes items and field values through the writer", async () => {
+    const context = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(context, snapshot(ids, context.ownerId));
+    if (created.status !== "CREATED") throw new Error("not created");
+    const outcomes = await repository.withLockedProject(context, created.id, async (_l, writer) => {
+      const added = await writer.addItem({
+        definitionId: ids.albumLama,
+        value: { type: "NUMBER", value: "1" },
+        actorId: context.ownerId,
+      });
+      const duplicate = await writer.addItem({
+        definitionId: ids.fotoEdit,
+        value: { type: "NUMBER", value: "1" },
+        actorId: context.ownerId,
+      });
+      const item = await writer.findItem(
+        (await repository.findDetail(context, created.id))?.items[0]?.id ?? "",
+      );
+      if (item)
+        await writer.updateItemValue(item.id, { type: "NUMBER", value: "30" }, context.ownerId);
+      await writer.updateFieldValues({ ukuran_toga: "M" }, context.ownerId);
+      return { added, duplicate, listed: (await writer.listFields()).length };
+    });
+    expect(outcomes).toEqual({
+      added: "DEFINITION_INACTIVE",
+      duplicate: "DUPLICATE_DEFINITION",
+      listed: 3,
+    });
+    const detail = await repository.findDetail(context, created.id);
+    expect(detail?.items[0]?.value).toEqual({ type: "NUMBER", value: "30" });
+    expect(detail?.fields.find((field) => field.key === "ukuran_toga")?.value).toBe("M");
+    await repository.withLockedProject(context, created.id, (_l, writer) =>
+      writer.removeItem(detail?.items[0]?.id ?? ""),
+    );
+    expect((await repository.findDetail(context, created.id))?.items).toHaveLength(1);
+  });
+
+  it("AC-PRJ-029 adds, changes and deletes sessions through the writer", async () => {
+    const context = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(context, snapshot(ids, context.ownerId));
+    if (created.status !== "CREATED") throw new Error("not created");
+    const extra = {
+      name: "Foto",
+      date: "2026-11-09",
+      startTime: "06:30",
+      endTime: null,
+      location: null,
+    };
+    await repository.withLockedProject(context, created.id, (_l, writer) =>
+      writer.addSession(extra, context.ownerId),
+    );
+    const sessions = (await repository.findDetail(context, created.id))?.sessions ?? [];
+    expect(sessions.map((session) => session.name)).toEqual(["Foto", "Wisuda"]);
+    const changed = await repository.withLockedProject(context, created.id, (_l, writer) =>
+      writer.updateSession(sessions[0]?.id ?? "", { ...extra, name: "Foto baru" }, context.ownerId),
+    );
+    expect(changed).toBe(true);
+    const removed = await repository.withLockedProject(context, created.id, (_l, writer) =>
+      writer.deleteSession(sessions[1]?.id ?? ""),
+    );
+    expect(removed).toBe(true);
+    expect((await repository.findDetail(context, created.id))?.sessions.map((s) => s.name)).toEqual(
+      ["Foto baru"],
+    );
+  });
+
+  it("AC-PRJ-019 serialises a step and a deal edit: either the edit lands first or it is refused", async () => {
+    const context = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(context, snapshot(ids, context.ownerId));
+    if (created.status !== "CREATED") throw new Error("not created");
+    const itemId = (await repository.findDetail(context, created.id))?.items[0]?.id ?? "";
+    const edit = repository.withLockedProject(context, created.id, async (locked, writer) => {
+      if (locked.status !== "BOOKED") return "DEAL_LOCKED";
+      await writer.updateItemValue(itemId, { type: "NUMBER", value: "30" }, context.ownerId);
+      return "SAVED";
+    });
+    const step = repository.moveStatus(
+      context,
+      created.id,
+      { from: "BOOKED", to: "SHOOTING" },
+      context.ownerId,
+    );
+    const [editResult] = await Promise.all([edit, step]);
+    const detail = await repository.findDetail(context, created.id);
+    expect(detail?.status).toBe("SHOOTING");
+    expect(detail?.items[0]?.value).toEqual(
+      editResult === "SAVED" ? { type: "NUMBER", value: "30" } : { type: "NUMBER", value: "25" },
+    );
+  });
 });

@@ -1795,7 +1795,7 @@ Screens: all (S1–S3c), end to end.
   | AC-PRJ-025 | a second account opens the first account's project URL → not found |
 
   Commit `test(projects): complete project journeys`.
-- [ ] **8.2 Accessibility (AC-PRJ-026).**
+- [x] **8.2 Accessibility (AC-PRJ-026).** _Accepted partial by the Owner 2026-10-04: axe runs on the main surfaces; the remaining dialogs in both themes and the keyboard-only tests are open follow-ups._
   - Add `expectProjectsA11y(page)`, a copy of `expectCatalogA11y` (wait until `[data-entering], [data-exiting]` count is 0, then axe with `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`, and expect no violations).
   - Run it on each surface at 1440×900 and 390×844, in light, and in dark through `page.emulateMedia({ colorScheme: "dark" })`:
     - the list (populated and empty);
@@ -1811,7 +1811,7 @@ Screens: all (S1–S3c), end to end.
     - open the row menu with Enter, Escape closes, and focus returns to ⋯;
     - every dialog traps focus and returns it to its trigger.
   - Commit `test(projects): check project screens for accessibility`.
-- [ ] **8.3 Fidelity.**
+- [x] **8.3 Fidelity.** _Accepted by the Owner 2026-10-04 without the full 92-export comparison; only the list, the Dibooking detail and the create form were compared. Later deviations are fixed as bugs._
   - Start the dev server with `preview_start`.
   - For each of the 92 exports: open the export file and the matching app state at the same width (1440 or 390), take both screenshots, and compare structure, copy, spacing and tokens.
   - Fix every deviation that is a bug. Record the intentional ones (literal sizes, the documented COMPONENT GAPs) in the implementation record.

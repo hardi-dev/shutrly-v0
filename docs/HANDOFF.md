@@ -1,9 +1,12 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 DONE and merged to `main`; F-07 IN PROGRESS, Slices 0–8 built) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-04 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 DONE and merged to `main`; F-07 DONE, accepted by the Owner 2026-10-04) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/projects` (`main` merged in) (F-04 via PR #1, F-05 via PR #3 and F-06 from `codex/clients` are on `main`).
 
-## Current handoff — F-07 Projects IN PROGRESS (Slices 0–8 built, 2026-10-03)
+## Current handoff — F-07 Projects DONE (2026-10-04)
+
+- **Accepted by the Owner 2026-10-04** with open follow-ups: the 92-export fidelity pass (8.3), the remaining dialogs in both themes and keyboard-only a11y tests (8.2), the six flaky E2E tests, and `pnpm install` once. Nothing is pushed and no PR is open.
+- The notes below were written mid-build; Slices 0–8 are all built.
 
 - **Built on `feat/projects`:** Slice 0 (base check, `main` merged, [component inventory](features/projects/component-inventory.md)), Slice 1 (*Proyek baru*) and Slice 2 (the read-only project detail page with the *Konfirmasi booking* / *Mulai pemotretan* / *Selesai pemotretan* steps). Slice 1: domain rules, tables and migration `0009`, create backend, shared Combobox / DateField / TimeField / Select sections, and the create screen with sessions and booking fields.
   - **Migration:** `0009_project` is applied to the non-production database.

@@ -1,6 +1,6 @@
 # Technical Design — F-07 Projects
 
-Status: IN PROGRESS (Slices 0–8 built 2026-10-04; verification pending, 8.2/8.3 partly open) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
+Status: DONE (2026-10-04; Owner accepted with 8.2 partial and 8.3 not run, see open follow-ups) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
 
 ## Context
 

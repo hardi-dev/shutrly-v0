@@ -13,6 +13,31 @@ export const TEAM_COPY = {
   retry: "Coba lagi",
   serverErrorTitle: "Perubahan belum tersimpan",
 
+  membersTitle: "Daftar anggota",
+  membersCount: (status: "ACTIVE" | "ARCHIVED", count: number) =>
+    status === "ACTIVE" ? `${String(count)} anggota aktif` : `${String(count)} anggota diarsipkan`,
+  memberColumn: "ANGGOTA",
+  whatsappColumn: "WHATSAPP",
+  memberRolesColumn: "PERAN",
+  searchPlaceholderDesktop: "Cari nama atau nomor WhatsApp",
+  searchPlaceholderMobile: "Cari nama atau nomor",
+  // not in Pencil: the search field's accessible name, its clear action and the live result count
+  searchLabel: "Cari anggota",
+  searchResultCount: (count: number) => `${String(count)} anggota cocok`,
+  addMember: "Tambah anggota",
+  addMemberShort: "Tambah",
+  emptyActiveTitle: "Belum ada anggota tim",
+  emptyActiveBody: "Catat freelancer yang sering kamu ajak, lalu pilih mereka di jadwal proyek.",
+  emptyArchivedTitle: "Belum ada anggota yang diarsipkan",
+  // not in Pencil: the archive empty body
+  emptyArchivedBody: "Anggota yang diarsipkan muncul di sini.",
+  noMatchTitle: "Tidak ada anggota yang cocok",
+  noMatchBody: "Coba nama lain atau nomor WhatsApp-nya.",
+  clearSearch: "Hapus pencarian",
+  loadMore: "Muat lebih banyak",
+  // not in Pencil: the load-more pending label
+  loadingMore: "Memuat…",
+
   rolesTitle: "Daftar peran",
   rolesCountDesktop: (count: number) => `${String(count)} peran · dipilih saat menambah anggota`,
   rolesCountMobile: (count: number) => `${String(count)} peran`,

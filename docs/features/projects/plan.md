@@ -429,18 +429,18 @@ Every slice below has the same parts:
 
 Screens: none. This slice checks the base and inventories the components for S1–S3.
 
-- [ ] **0.1 Check that F-06 is in this branch.** All of these must hold:
+- [x] **0.1 Check that F-06 is in this branch.** All of these must hold:
   - `src/adapters/db/schema/booking/client.ts` and `drizzle/0008_client.sql` exist;
   - `src/ui/patterns/data-table/data-table.tsx` and `src/features/booking/ui/client-dialog/client-dialog.tsx` exist;
   - `src/features/booking/domain/whatsapp-number/whatsapp-number.ts` exports `formatWhatsappNumber` and `whatsappChatUrl`;
   - `pnpm typecheck && pnpm lint && pnpm test` pass.
 
   If any is missing, **STOP** and report: *F-06 must be built (`/sdv:build-feature clients 0…6`) and merged into `feat/projects` first.* Change nothing.
-- [ ] **0.2 Sync.** If `main` moved, use the ccd_host `sync_with_base_branch` tool (or `git merge main` outside an app worktree).
+- [x] **0.2 Sync.** If `main` moved, use the ccd_host `sync_with_base_branch` tool (or `git merge main` outside an app worktree).
   - Keep both features' text in `docs/HANDOFF.md` and `docs/product/feature-map.md`.
   - Keep this branch's `projects.pen` and `exports/`.
   - Commit the merge if there was one.
-- [ ] **0.3 Component inventory.** Write `docs/features/projects/component-inventory.md` with the columns *Component · Spec · Status (exists / extend / new) · Path · Needed change · First used in*.
+- [x] **0.3 Component inventory.** Write `docs/features/projects/component-inventory.md` with the columns *Component · Spec · Status (exists / extend / new) · Path · Needed change · First used in*.
   - **Fill each row by reading the code, not by memory:** open the file, and for *extend* name the exact prop to add.
   - **Rows, at least:**
     - Checkbox (C05), Combobox (C36), MultiSelect (C20);
@@ -926,7 +926,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
 
 ### Steps
 
-- [ ] **1.1 Domain rules.**
+- [x] **1.1 Domain rules.**
   - **Tests first:** `project-status.test.ts`, `project-record.test.ts`, `session.test.ts`, `booking-field-value.test.ts`, `project-items.test.ts`, `schedule-clock.test.ts`:
     - the status tables (every function, every status);
     - title: `" "` → `EMPTY`, 101 chars → `TOO_LONG`;
@@ -941,14 +941,14 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
     - `todayInScheduleZone(new Date("2026-10-01T18:30:00Z"))` → `"2026-10-02"`.
   - **Implement** with the rule code.
   - Commit `feat(projects): add project, session, booking value and item rules`.
-- [ ] **1.2 Schema and migration 0009.**
+- [x] **1.2 Schema and migration 0009.**
   - Write `project.ts`, add `export * from "./booking/project";` to `schema/index.ts` (match the existing line style), then `pnpm db:generate`.
   - Rename the output to `0009_project.sql` and keep the journal `tag` in step.
   - Review it: four `CREATE TABLE`, constraints, indexes, no `DROP` or `RENAME`.
   - `pnpm typecheck`.
   - Commit `feat(projects): add project tables and migration 0009`.
   - `pnpm db:migrate`; paste the output into the step report.
-- [ ] **1.3 Create backend.**
+- [x] **1.3 Create backend.**
   - **Tests first:**
     - `create-project.test.ts`, `load-create-options.test.ts`, `search-active-clients.test.ts` (fakes + fixture):
       - BOOKED without a session → `sessions: SESSION_REQUIRED`; DRAFT without one → created (AC-PRJ-029);
@@ -971,7 +971,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
     - Owner shell test: the CTA pushes `/w/<id>/projects/new`; `new-project` is not coming soon.
   - **Implement** every file in the Backend table, plus the two placeholder pages.
   - Commit `feat(projects): add the project create backend`.
-- [ ] **1.4 Shared fields.**
+- [x] **1.4 Shared fields.**
   - Read `component-inventory.md`, then build or extend `Combobox`, `DateField`, `TimeField` and `Select` sections.
   - **Tests** (`*.test.tsx`):
     - Combobox: typing calls `onInputChange`; the group label; Arrow keys + Enter select; Escape closes; the menu renders inline at 390 width;
@@ -981,7 +981,7 @@ Postgres returns `time` as `HH:MM:SS`. Cut it to `HH:MM` in the repository's row
   - One story each (ADR-014).
   - Add `@internationalized/date` to `package.json`, pinned to the version `react-aria-components` 1.21.1 already resolves (see `pnpm why @internationalized/date`).
   - Commit `feat(ui): add combobox, date and time fields and select sections`.
-- [ ] **1.5 The screen.**
+- [x] **1.5 The screen.**
   - **Precondition:** the 18 Slice 1 exports exist.
   - **Tests first:** `create-project-screen.test.tsx`, `use-create-project-form.test.ts`, `client-picker.test.tsx`, `service-picker.test.tsx`, `sessions-card.test.tsx`, `booking-field-input.test.tsx`. Each behaviour in the state table, plus:
     - the picker items read *{formatted number} · {n} proyek* or *Belum ada nomor WhatsApp*;

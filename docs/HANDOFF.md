@@ -1,19 +1,20 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 DONE and merged to `main`) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 DONE and merged to `main`; F-07 IN PROGRESS, Slices 0–1 built) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/projects` (`main` merged in) (F-04 via PR #1, F-05 via PR #3 and F-06 from `codex/clients` are on `main`).
 
-## Current handoff — F-07 Projects PLANNED (2026-10-02; base updated 2026-10-03)
+## Current handoff — F-07 Projects IN PROGRESS (Slices 0–1 built, 2026-10-03)
 
-- **Plan:** [technical-design.md](features/projects/technical-design.md) (decisions D-1…D-16) and [plan.md](features/projects/plan.md), vertical slices by screen (Slice 0–8), one commit per step.
-  - **Tables:** `project`, `project_item`, `project_field_value` and `project_session` in the `booking` context, migration **0009**.
-  - **Writes:** every write locks the project row and decides from the stored status; status actions send a step, never a status.
-  - **List:** sorted by each project's shown session (A-12), with keyset paging.
-  - **Token:** 256-bit, written once and never selected by F-07.
-- **Base:** F-06 is DONE and `main` is merged into `feat/projects` (2026-10-03), so Slice 0 can start.
-- **Owner check:** technical-design.md › D-5 reads AC-PRJ-008's *"none for Ukuran toga"* as *no value*. A metadata row is still stored, so the detail can show the field as empty and edit it later.
-- **New dependency:** `@internationalized/date` (React Aria's date library), recorded in tech-stack.md.
-- **Next:** `/sdv:build-feature projects 0`.
+- **Built on `feat/projects`:** Slice 0 (base check, `main` merged, [component inventory](features/projects/component-inventory.md)) and Slice 1 (*Proyek baru*): domain rules, tables and migration `0009`, create backend, shared Combobox / DateField / TimeField / Select sections, and the create screen with sessions and booking fields.
+  - **Migration:** `0009_project` is applied to the non-production database.
+  - **Gate:** typecheck, lint, 918 unit tests, booking integration (16), build and the projects and app-shell E2E suites pass. See the [implementation record](features/projects/technical-design.md#implementation-record--slice-1-2026-10-03).
+- **Try it:** `/w/<id>/projects/new`. *Buat proyek* and *Simpan draf* land on a placeholder detail page (title and toast only) until Slice 2.
+- **Owner actions and decisions:**
+  - run `pnpm install` once: `@internationalized/date` was added to `package.json` and the lockfile by hand because `pnpm add` refuses here (store mismatch);
+  - the exports draw item and session rows without a leading icon, but `ListCardItem` requires one (deviation 5);
+  - the phone Bottom Nav is hidden on *Proyek baru* (deviation 4).
+- **Fixed on the way:** deleting a client, service, category or definition that a project uses now returns `IN_USE` (a `RESTRICT` violation is `23001`). This closes F-06's AC-CLI-015 real-FK carry-over.
+- **Next:** `/sdv:build-feature projects 2` (detail: read and status steps).
 
 - **Spec:** [spec.md](features/projects/spec.md), [acceptance-criteria.md](features/projects/acceptance-criteria.md) (AC-PRJ-001…026).
 - **Domain updates:** BR-PRJ-004's SPEC GAP is resolved (manual steps; no backwards moves; final delivery from `BOOKED`/`SHOOTING`/`POST_PROCESSING`). BR-DEL-003 now names those states. New rules are BR-PRJ-008 (record), BR-PRJ-009 (deal editable while `DRAFT`/`BOOKED`) and BR-PRJ-010 (delete drafts, cancel the rest). The domain-model lifecycle diagram is updated.

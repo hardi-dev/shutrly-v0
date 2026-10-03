@@ -1,6 +1,6 @@
 # Technical Design — F-07 Projects
 
-Status: PLANNED (2026-10-02) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
+Status: IN PROGRESS (Slices 0–1 built 2026-10-03) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
 
 ## Context
 
@@ -367,3 +367,38 @@ See [plan.md](plan.md): vertical slices by screen (Slice 0–8), test-first, one
 - **Date and time pickers** are new shared components (D-12). Their keyboard behaviour comes from React Aria and is checked by axe in Slice 8.
 - **List SQL complexity (D-8):** the `LATERAL` shown-session expression is shared by the order and the cursor and covered by integration tests with a fixed `today`. If it gets slow, add a partial index on `project_session (project_id, session_date)`, which already exists.
 - **D-5 reading of AC-PRJ-008:** a row exists for an empty optional field (value NULL). Reported here for the Owner. It doesn't change behaviour visible in the spec.
+
+## Implementation record — Slice 1 (2026-10-03)
+
+**Scope built:** Slice 0 (base check, merge of `main`, component inventory) and Slice 1 (*Proyek baru*, main path). Commits: `dff27f5` (merge), `3367cb3`, `8cf1388`, `bf0b518`, `21c261c`, `03a8b56`, `32cb537`.
+
+**Migration:** `0009_project` was generated, reviewed (four `CREATE TABLE`, no `DROP` or `RENAME`), committed and then applied to the shared non-production database with `pnpm db:migrate` (`migrations applied successfully!`).
+
+**Checks:**
+
+| Check | Result |
+|---|---|
+| `pnpm typecheck` | pass |
+| `pnpm lint` | pass (0 errors; 3 warnings in F-06/F-17 files this slice did not touch) |
+| `pnpm test` | pass (275 files, 918 tests) |
+| `pnpm test:integration tests/integration/booking` | pass (3 files, 16 tests); the other integration suites were not run |
+| `pnpm build` | pass |
+| E2E `tests/e2e/projects` + `app-shell-revamp` | pass (projects journeys include axe on the form) |
+
+**AC → test (Slice 1):** AC-PRJ-006 (`create-project`, `load-create-options`, `search-active-clients`, `service-picker`, `client-picker`, E2E) · 007 (`create-project-screen`, `project-record`, shell test) · 008 (`project-repository` integration, `create-project`, E2E) · 009 (draft half: `create-project`, `create-project-screen`, E2E) · 010/011 (`create-project`, `project-record`, `create-project-screen`) · 012 (`project-repository` integration, `create-project`) · 024 (`project-repository` integration) · 029 (`session`, `sessions-card`, `create-project`).
+
+**Deviations and decisions:**
+
+1. **`@internationalized/date` was added by hand.** `pnpm add` refuses to run here (the `node_modules` store differs from the configured store). I edited `package.json` and `pnpm-lock.yaml` (importer entry, `3.12.4`, the version already resolved through `react-aria-components`) and linked the package into `node_modules`. **Owner action:** run `pnpm install` once and confirm the lockfile does not change.
+2. **A restrict violation is now "in use" (bug found by AC-PRJ-024).** `ON DELETE RESTRICT` raises `23001`, not `23503`. The client, service, category and definition deletes only recognised `23503`, so deleting a referenced row would have thrown instead of returning `IN_USE`. `isReferencedRowError` in `catalog-repository/pg-error.ts` accepts both. This also closes F-06's carry-over *AC-CLI-015 real foreign-key check*.
+3. **Items and the client picker are read-only in this slice (as planned).** *Tambah item*, the item ⋯ and the *Tambah klien baru* row appear in the exports but arrive in Slice 7. The picker's create row is hidden until `onCreate` is wired.
+4. **The phone Bottom Nav is hidden on *Proyek baru*.** The exports show a Compact Bar and a sticky action bar and no Bottom Nav, but the plan's Backend table had no shell change for it. `PageHeadingOverride` takes `hidesBottomNav`, passed through `OwnerShell` and `AppShell` (`AppShellSubPage.hidesBottomNav`). The phone CTA E2E in `app-shell-revamp` changed to match (the Bottom Nav *Proyek* tab is hidden on this page, and notifications are opened from the dashboard).
+5. **Rows have a leading icon the exports lack.** `ListCardItem` requires exactly one leading icon or avatar (library rule, tested), but the item and session rows in the frames are plain. The rows use `package`/`image` and `calendar`. **Owner decision:** allow plain rows in the library, or redraw the frames.
+6. **Title-only card headers are shorter than the frames** (about 65 px against 99 px) because `SectionCard` has no spare description row. Not changed; it is the library unit.
+7. **`validateItemList` returns `{ values, errors }`**, not only the errors, so the use case stores the canonical values (`2,5` → `2.5`). The plan's signature returned the errors only.
+8. **Combobox:** `allowsCustomValue` makes Escape close the menu and keep the query (React Aria otherwise clears it and reopens the menu); `allowsEmptyCollection` keeps the menu open for the *TIDAK ADA KLIEN “…”* state. The create row is hidden for a blank query.
+9. **Placeholder copy:** a choice or yes/no booking field reads *Pilih {field in lower case}* (for example *Pilih ukuran toga*); the frame draws *Pilih ukuran*. The plan gives the rule, the frame one example.
+10. **Not unit-tested:** clearing a time segment (jsdom does not deliver the key events React Aria listens to); the arrow keys and the displayed `07.30` are.
+
+**Visual check:** the filled form was compared with `new-terisi-desktop-QeT50` at 1440, and the empty and filled forms with the phone exports at 390. Layout, copy, Compact Bar, sticky bar and the *Wisuda* group label match apart from deviations 3, 5 and 6. The check used a service without items and booking fields, so the item rows and the *Field booking* card were checked by their tests rather than by eye.
+

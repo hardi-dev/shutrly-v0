@@ -5,6 +5,8 @@ import { and, asc, count, eq, inArray, isNull, sql } from "drizzle-orm";
 import type {
   ClientOption,
   DefinitionRules,
+  FilterClientOption,
+  FilterServiceOption,
   MoveStatusResult,
   ProjectDetailRecord,
   ProjectFieldRecord,
@@ -28,7 +30,7 @@ import {
 } from "../catalog-repository/drizzle-service-repository";
 import type { DbExecutor } from "../client/client.types";
 import { user } from "../schema/auth/auth";
-import { serviceItemDefinition } from "../schema/booking/catalog";
+import { service, serviceItemDefinition } from "../schema/booking/catalog";
 import { client } from "../schema/booking/client";
 import { project, projectFieldValue, projectItem, projectSession } from "../schema/booking/project";
 import { createSnapshot } from "./drizzle-project-snapshot";
@@ -151,6 +153,35 @@ async function findDetail(
       ? { at: row.cancelledAt.toISOString(), byName: row.cancelledByName, reason: row.cancelReason }
       : null,
   };
+}
+
+async function listServicesForFilter(
+  db: DbExecutor,
+  context: WorkspaceContext,
+): Promise<readonly FilterServiceOption[]> {
+  return db
+    .select({ id: service.id, name: service.name, isActive: service.isActive })
+    .from(service)
+    .where(eq(service.workspaceId, context.workspaceId))
+    .orderBy(sql`lower(${service.name})`, asc(service.id));
+}
+
+async function searchClientsForFilter(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  text: string,
+  limit: number,
+): Promise<readonly FilterClientOption[]> {
+  const escaped = text.replace(LIKE_SPECIAL, (character) => `\\${character}`);
+  const pattern = "%" + escaped + "%";
+  const nameMatch = text === "" ? undefined : sql`${client.name} ilike ${pattern} escape '\\'`;
+  const rows = await db
+    .select({ id: client.id, name: client.name, archivedAt: client.archivedAt })
+    .from(client)
+    .where(and(eq(client.workspaceId, context.workspaceId), nameMatch))
+    .orderBy(sql`lower(${client.name})`, asc(client.createdAt), asc(client.id))
+    .limit(limit);
+  return rows.map((row) => ({ id: row.id, name: row.name, isArchived: row.archivedAt !== null }));
 }
 
 async function moveStatus(
@@ -307,6 +338,9 @@ export function createDrizzleProjectRepository(db: DbExecutor): ProjectRepositor
     moveStatus: (context, id, transition, actorId) =>
       moveStatus(db, context, id, transition, actorId),
     countSessions: (context, id) => countSessions(db, context, id),
+    listServicesForFilter: (context) => listServicesForFilter(db, context),
+    searchClientsForFilter: (context, text, limit) =>
+      searchClientsForFilter(db, context, text, limit),
     listActiveServiceOptions: (context) => listActiveServiceOptions(db, context),
   };
 }

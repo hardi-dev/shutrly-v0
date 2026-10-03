@@ -4,6 +4,8 @@ import type {
   ClientOption,
   CreateSnapshotResult,
   DefinitionRules,
+  FilterClientOption,
+  FilterServiceOption,
   MoveStatusResult,
   ProjectDetailRecord,
   ProjectRepositoryPort,
@@ -153,6 +155,26 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
     if (stored.status !== transition.from) return "STALE";
     stored.status = transition.to;
     return "MOVED";
+  }
+
+  async listServicesForFilter(context: WorkspaceContext): Promise<readonly FilterServiceOption[]> {
+    if (context.workspaceId !== this.workspaceId) return [];
+    return this.services
+      .map((row) => ({ id: row.id, name: row.name, isActive: row.isActive }))
+      .sort((left, right) => left.name.localeCompare(right.name));
+  }
+
+  async searchClientsForFilter(
+    context: WorkspaceContext,
+    text: string,
+    limit: number,
+  ): Promise<readonly FilterClientOption[]> {
+    if (context.workspaceId !== this.workspaceId) return [];
+    return this.clients
+      .filter((row) => row.name.toLowerCase().includes(text.toLowerCase()))
+      .sort((left, right) => left.name.localeCompare(right.name))
+      .slice(0, limit)
+      .map((row) => ({ id: row.id, name: row.name, isArchived: row.isArchived }));
   }
 
   async countSessions(context: WorkspaceContext, id: string): Promise<number | null> {

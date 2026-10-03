@@ -11,8 +11,13 @@ import { createProject } from "@/features/booking/application/use-cases/create-p
 import { getProjectDetail } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail";
 import { listProjects } from "@/features/booking/application/use-cases/list-projects/list-projects";
 import { loadCreateOptions } from "@/features/booking/application/use-cases/load-create-options/load-create-options";
+import {
+  loadFilterServices,
+  searchFilterClients,
+} from "@/features/booking/application/use-cases/load-filter-options/load-filter-options";
 import { searchActiveClients } from "@/features/booking/application/use-cases/search-active-clients/search-active-clients";
-import { projectSearchSchema } from "@/features/booking/domain/project-list-query/project-list-query.schema";
+import { parseProjectListParams } from "@/features/booking/domain/project-list-query/project-list-filter";
+import type { ProjectListParams } from "@/features/booking/domain/project-list-query/project-list-filter.types";
 import { PROJECT_SEARCH_MAX_LENGTH } from "@/features/booking/domain/project-record/project-record";
 import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 import { todayInScheduleZone } from "@/features/booking/domain/schedule-clock/schedule-clock";
@@ -102,21 +107,39 @@ export async function advanceProjectEntry(
   }
 }
 
-export async function loadProjects(rawWorkspaceId: string, tab: ProjectTab, rawQ = "") {
+export async function loadProjects(
+  rawWorkspaceId: string,
+  tab: ProjectTab,
+  params: ProjectListParams = {},
+) {
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
-  const q = projectSearchSchema.safeParse(rawQ).success ? rawQ.trim() : "";
+  const { q, filter } = parseProjectListParams(params, tab);
   try {
-    return await withProjectScope(async ({ projectList }) => {
+    return await withProjectScope(async ({ projects, projectList }) => {
       const today = todayInScheduleZone(new Date());
+      const query = { tab, q: q ?? "", afterId: null, filter };
       return {
         tab,
-        q,
-        page: await listProjects(projectList, verified.context, { tab, q, afterId: null }, today),
+        q: q ?? "",
+        filter,
+        page: await listProjects(projectList, verified.context, query, today),
         count: await countProjects(projectList, verified.context, tab),
+        services: await loadFilterServices(projects, verified.context),
       };
     });
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "list");
+  }
+}
+
+export async function searchFilterClientsEntry(rawWorkspaceId: string, query: unknown) {
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withProjectScope(({ projects }) =>
+      searchFilterClients(projects, verified.context, query),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "filter-clients");
   }
 }
 

@@ -22,6 +22,34 @@ function statusList(tab: ProjectListReadQuery["tab"]): SQL {
   );
 }
 
+function sqlList(values: readonly string[], cast?: "uuid"): SQL {
+  const items = values.map((value) => (cast ? sql`${value}::uuid` : sql`${value}`));
+  return sql.join(items, sql`, `);
+}
+
+function filterPredicates(filter: ProjectListReadQuery["filter"]): SQL {
+  if (filter === null) return sql``;
+  const parts: SQL[] = [];
+  if (filter.statuses.length > 0) {
+    parts.push(sql`and p.status in (${sqlList(filter.statuses)})`);
+  }
+  if (filter.serviceIds.length > 0) {
+    parts.push(sql`and p.service_id in (${sqlList(filter.serviceIds, "uuid")})`);
+  }
+  if (filter.clientId !== null) parts.push(sql`and p.client_id = ${filter.clientId}::uuid`);
+  if (filter.from !== null || filter.to !== null) parts.push(scheduleFilter(filter));
+  return sql.join(parts, sql` `);
+}
+
+function scheduleFilter(filter: NonNullable<ProjectListReadQuery["filter"]>): SQL {
+  const from = filter.from === null ? sql`` : sql`and f.session_date >= ${filter.from}::date`;
+  const to = filter.to === null ? sql`` : sql`and f.session_date <= ${filter.to}::date`;
+  const none = filter.includeNoSchedule
+    ? sql`or not exists (select 1 from project_session g where g.project_id = p.id)`
+    : sql``;
+  return sql`and (exists (select 1 from project_session f where f.project_id = p.id ${from} ${to}) ${none})`;
+}
+
 function baseCte(context: WorkspaceContext, query: ProjectListReadQuery): SQL {
   const pattern = query.search === null ? "" : "%" + escapeLike(query.search) + "%";
   const search =
@@ -42,6 +70,7 @@ function baseCte(context: WorkspaceContext, query: ProjectListReadQuery): SQL {
       ${shownSessionJoin(query.today)}
       where p.workspace_id = ${context.workspaceId} and p.status in (${statusList(query.tab)})
       ${search}
+      ${filterPredicates(query.filter)}
     )`;
 }
 

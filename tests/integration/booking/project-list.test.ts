@@ -97,8 +97,11 @@ async function addProject(
 
 async function seedFive(base: Base) {
   await addProject(base, "Wisuda Rina", "BOOKED", [{ date: "2026-11-10", start: "07:30" }]);
-  await addProject(base, "Prewed Dewi", "DRAFT", [{ date: "2026-10-20" }, { date: "2026-10-01" }]);
-  await addProject(base, "Wisuda Sari", "SHOOTING", [], base.sari);
+  await addProject(base, "Prewed Dewi", "SHOOTING", [
+    { date: "2026-10-20" },
+    { date: "2026-10-01" },
+  ]);
+  await addProject(base, "Wisuda Sari", "BOOKED", [], base.sari);
   await addProject(base, "Selesai Rina", "COMPLETED", [{ date: "2026-09-01" }]);
   await addProject(base, "Batal Rina", "CANCELLED", [{ date: "2026-09-15" }]);
 }
@@ -106,6 +109,7 @@ async function seedFive(base: Base) {
 const query = (overrides: object = {}) => ({
   tab: "ACTIVE" as const,
   search: null,
+  filter: null,
   afterId: null,
   limit: 31,
   today: TODAY,
@@ -201,5 +205,40 @@ describe("Drizzle project list reader", () => {
     const reader = createDrizzleProjectListReader(db);
     expect(await reader.listPage(other.context, query())).toEqual([]);
     expect(await reader.count(other.context, "ACTIVE")).toBe(0);
+  });
+
+  it("AC-PRJ-028 filters by status, session dates, no-schedule, service and client", async () => {
+    const base = await seedBase();
+    await seedFive(base);
+    const reader = createDrizzleProjectListReader(db);
+    const empty = {
+      statuses: [],
+      from: null,
+      to: null,
+      includeNoSchedule: false,
+      serviceIds: [],
+      clientId: null,
+    };
+    const titles = async (filter: object) =>
+      (await reader.listPage(base.context, query({ filter: { ...empty, ...filter } }))).map(
+        (row) => row.title,
+      );
+    expect(
+      await titles({ statuses: ["BOOKED", "SHOOTING"], from: "2026-10-01", to: "2026-11-30" }),
+    ).toEqual(["Prewed Dewi", "Wisuda Rina"]);
+    expect(
+      await titles({
+        statuses: ["BOOKED", "SHOOTING"],
+        from: "2026-10-01",
+        to: "2026-11-30",
+        includeNoSchedule: true,
+      }),
+    ).toEqual(["Prewed Dewi", "Wisuda Rina", "Wisuda Sari"]);
+    expect(await titles({ from: "2026-11-01" })).toEqual(["Wisuda Rina"]);
+    expect(await titles({ to: "2026-10-05" })).toEqual(["Prewed Dewi"]);
+    expect(await titles({ clientId: base.sari })).toEqual(["Wisuda Sari"]);
+    expect(await titles({ serviceIds: [base.serviceId] })).toHaveLength(3);
+    expect(await titles({ serviceIds: [crypto.randomUUID()] })).toEqual([]);
+    expect(await reader.count(base.context, "ACTIVE")).toBe(3);
   });
 });

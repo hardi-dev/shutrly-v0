@@ -106,6 +106,18 @@ export interface ClientOption {
   readonly projectCount: number;
 }
 
+export interface FilterServiceOption {
+  readonly id: string;
+  readonly name: string;
+  readonly isActive: boolean;
+}
+
+export interface FilterClientOption {
+  readonly id: string;
+  readonly name: string;
+  readonly isArchived: boolean;
+}
+
 export type MoveStatusResult = "MOVED" | "STALE" | "NOT_FOUND";
 
 /** Every call is scoped by the verified workspace (C-101). */
@@ -140,6 +152,16 @@ export interface ProjectRepositoryPort {
     transition: StepTransition,
     actorId: string,
   ) => Promise<MoveStatusResult>;
+  /** Every service, archived ones included, by name (the list filter, A-11). */
+  readonly listServicesForFilter: (
+    context: WorkspaceContext,
+  ) => Promise<readonly FilterServiceOption[]>;
+  /** Active and archived clients matching the text (TD-A-4). */
+  readonly searchClientsForFilter: (
+    context: WorkspaceContext,
+    text: string,
+    limit: number,
+  ) => Promise<readonly FilterClientOption[]>;
   /** Null when the project does not exist in the workspace. */
   readonly countSessions: (context: WorkspaceContext, id: string) => Promise<number | null>;
   readonly listActiveServiceOptions: (

@@ -7,6 +7,7 @@ import {
   createProjectEntry,
   loadMoreProjectsEntry,
   searchClientsEntry,
+  searchFilterClientsEntry,
 } from "@/composition/booking/project-flow/project-flow";
 
 const PAGE = "/w/[workspaceId]/projects";
@@ -29,4 +30,8 @@ export async function advanceProjectAction(workspaceId: string, projectId: strin
 
 export async function loadMoreProjectsAction(workspaceId: string, query: unknown) {
   return loadMoreProjectsEntry(workspaceId, query);
+}
+
+export async function searchFilterClientsAction(workspaceId: string, query: unknown) {
+  return searchFilterClientsEntry(workspaceId, query);
 }

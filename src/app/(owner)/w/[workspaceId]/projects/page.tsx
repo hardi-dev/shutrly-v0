@@ -5,10 +5,13 @@ import { ProjectsScreen } from "@/features/booking/ui/projects-screen/projects-s
 export default async function ProjectsPage({
   params,
   searchParams,
-}: Readonly<{ params: Promise<{ workspaceId: string }>; searchParams: Promise<{ q?: string }> }>) {
+}: Readonly<{
+  params: Promise<{ workspaceId: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}>) {
   const { workspaceId } = await params;
-  const { q } = await searchParams;
-  const data = await loadProjects(workspaceId, "ACTIVE", q);
+  const query = await searchParams;
+  const data = await loadProjects(workspaceId, "ACTIVE", query);
   return (
     <ProjectsScreen
       workspaceId={workspaceId}

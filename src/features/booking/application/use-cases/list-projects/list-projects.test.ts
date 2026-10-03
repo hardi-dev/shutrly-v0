@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+import { EMPTY_PROJECT_FILTER } from "@/features/booking/domain/project-list-query/project-list-filter";
+
 import type {
   ProjectListReaderPort,
   ProjectListRow,
@@ -42,7 +44,7 @@ describe("list projects", () => {
     const page = await listProjects(
       port,
       context,
-      { tab: "ACTIVE", q: "", afterId: null },
+      { tab: "ACTIVE", q: "", afterId: null, filter: EMPTY_PROJECT_FILTER },
       "2026-10-02",
     );
     expect(page.items).toHaveLength(30);
@@ -55,7 +57,7 @@ describe("list projects", () => {
     const page = await listProjects(
       port,
       context,
-      { tab: "ACTIVE", q: "", afterId: null },
+      { tab: "ACTIVE", q: "", afterId: null, filter: EMPTY_PROJECT_FILTER },
       "2026-10-02",
     );
     expect(page.items).toHaveLength(30);
@@ -64,12 +66,22 @@ describe("list projects", () => {
 
   it("AC-PRJ-004 trims the search and lists unfiltered when it is blank or too long", async () => {
     const { port, calls } = reader(1);
-    await listProjects(port, context, { tab: "ACTIVE", q: " rina ", afterId: null }, "2026-10-02");
-    await listProjects(port, context, { tab: "ACTIVE", q: "   ", afterId: null }, "2026-10-02");
     await listProjects(
       port,
       context,
-      { tab: "ACTIVE", q: "a".repeat(101), afterId: null },
+      { tab: "ACTIVE", q: " rina ", afterId: null, filter: EMPTY_PROJECT_FILTER },
+      "2026-10-02",
+    );
+    await listProjects(
+      port,
+      context,
+      { tab: "ACTIVE", q: "   ", afterId: null, filter: EMPTY_PROJECT_FILTER },
+      "2026-10-02",
+    );
+    await listProjects(
+      port,
+      context,
+      { tab: "ACTIVE", q: "a".repeat(101), afterId: null, filter: EMPTY_PROJECT_FILTER },
       "2026-10-02",
     );
     expect(calls.map((call) => (call as { search: string | null }).search)).toEqual([

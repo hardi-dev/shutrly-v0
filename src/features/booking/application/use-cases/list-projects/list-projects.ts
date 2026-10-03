@@ -18,6 +18,7 @@ export async function listProjects(
   const rows = await reader.listPage(context, {
     tab: query.tab,
     search: projectSearchSchema.safeParse(query.q).data ?? null,
+    filter: query.filter,
     afterId: query.afterId,
     limit: PROJECT_PAGE_SIZE + 1,
     today,

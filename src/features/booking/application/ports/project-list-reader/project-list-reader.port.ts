@@ -1,5 +1,6 @@
 import "server-only";
 
+import type { ProjectFilter } from "@/features/booking/domain/project-list-query/project-list-filter.types";
 import type {
   ProjectStatus,
   ProjectTab,
@@ -22,6 +23,7 @@ export interface ProjectListRow {
 export interface ProjectListReadQuery {
   readonly tab: ProjectTab;
   readonly search: string | null;
+  readonly filter: ProjectFilter | null;
   readonly afterId: string | null;
   readonly limit: number;
   /** YYYY-MM-DD in the schedule zone; decides the shown session. */

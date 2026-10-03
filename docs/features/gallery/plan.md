@@ -11,7 +11,7 @@
 **Sources:**
 - [technical-design.md](technical-design.md) (decisions D-1…D-19);
 - [spec.md](spec.md) and [acceptance-criteria.md](acceptance-criteria.md) (AC-GAL-001…031);
-- [design.md](design.md) and the raw HTML exports in [exports/](exports/), named `<state>-<device>-<frameId>.html` (the compact exports were removed on 2026-10-04: their stripped bases didn't render the real UI, Owner);
+- [design.md](design.md) and [exports/INDEX.md](exports/INDEX.md), which points to the raw HTML export of each state (`<state>-<device>-<frameId>.html`);
 - component specs in `docs/design-system/components/` (`photo-tile`, `folder-tile`, `media-viewer`, `modal`).
 
 ## Global constraints (every slice)
@@ -23,7 +23,7 @@
   - Functions of at most 50 lines; copy lives in `*.copy.ts`.
   - Prettier and `eslint --fix` per file as you go.
 - **Token rules:** `docs/design-system/token-usage.md` v3.1. Tokens only, no hex.
-- **UI fidelity:** build each screen from its raw exports, `exports/<state>-<device>-<frameId>.html`. Read only the states the slice names, desktop and mobile. Each file is a complete frame of 25–165 KB, so read one state at a time. There is no `_compact/`, and `compact-exports.py` must not be re-run for this feature (Owner, 2026-10-04).
+- **UI fidelity:** find each state in `exports/INDEX.md`, then build from its raw exports (desktop and mobile). Read only the states the slice names, one file at a time; each is a complete frame of 25–165 KB.
 - **Secrets and logs:** never log links, the API key, passwords or ciphertext (C-103). Never use `process.env` in `src/`.
 - **Migrations:** `pnpm db:migrate` only for the reviewed and committed `0010_gallery`, against the non-production database, and report the run.
 - **Gate per slice:**
@@ -287,7 +287,7 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 **Read first:**
 - AC-GAL-025, 026; C-008;
 - technical-design.md › Testing Strategy;
-- every file in `exports/` (all 100 states).
+- `exports/INDEX.md` (all 50 states, desktop and mobile).
 
 **Steps:**
 - [ ] Axe and keyboard E2E for each surface.

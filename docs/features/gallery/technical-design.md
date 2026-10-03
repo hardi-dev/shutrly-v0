@@ -34,7 +34,7 @@ The Owner creates one password-protected gallery per project and links public Go
   - ADR-015 (URL workspace);
   - ADR-016 (cross-feature transaction in composition);
   - ADR-017 (encrypted, Owner-visible password).
-- **Design:** [design.md](design.md) (APPROVED 2026-10-04), raw HTML exports in [exports/](exports/) (no compact exports, Owner 2026-10-04). Component specs: `docs/design-system/components/photo-tile.md`, `folder-tile.md`, `media-viewer.md`.
+- **Design:** [design.md](design.md) (APPROVED 2026-10-04), [exports/INDEX.md](exports/INDEX.md) (raw HTML exports). Component specs: `docs/design-system/components/photo-tile.md`, `folder-tile.md`, `media-viewer.md`.
 
 ## Decisions
 

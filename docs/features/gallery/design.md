@@ -16,7 +16,7 @@
      - The expiry in *Buat galeri* uses the same radio group as *Kedaluwarsa galeri*: *Tidak ada kedaluwarsa* (default), *Sampai tanggal* (shows a date field) and *Selama beberapa hari* (shows *Jumlah hari*, counted from publishing).
 - **Status:** **APPROVED 2026-10-04** (Owner: "1 approve").
 - **Exports:** 100 HTML exports in [`exports/`](exports/), one per state frame (`<screen>-<state>-<device>-<frameId>.html`, html-tailwind), exported through Pencil MCP. The screens are `galeri`, `semuafoto`, `preview` and `proyek`. The Galeri card board and the sample-photo assets aren't exported.
-- **Compact exports:** removed 2026-10-04 (Owner). The stripped base files from `compact-exports.py` didn't render the real UI, so `/sdv:build-feature` reads the raw exports in `exports/` directly. Don't re-run `compact-exports.py` for this feature.
+- **Export index:** `python3 scripts/sdv/index-exports.py gallery` wrote [`exports/INDEX.md`](exports/INDEX.md): 50 states × desktop and mobile, with the notes and AC from the frame tables below; `--check` passes. The compact exports (stripped bases and diffs) were dropped on 2026-10-04 because their bases didn't render the real UI (Owner).
 
 ## Frames
 
@@ -208,4 +208,4 @@ Screen copy is drawn in Pencil. The table lists copy beyond the spec, for Owner 
 
 - [x] Owner reviewed the frames and approved them, 2026-10-04 ("1 approve").
 - [x] `gallery.pen` saved: 3,524,610 bytes, 2026-10-04 05:03, imports the worktree library under `r:` (623 variables).
-- [x] HTML exports written to `exports/`. The compact exports were removed later (Owner, 2026-10-04); build from the raw files.
+- [x] HTML exports written to `exports/`, and `index-exports.py gallery` run (`--check` passes).

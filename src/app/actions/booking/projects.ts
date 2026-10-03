@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import {
+  advanceProjectEntry,
   createProjectEntry,
   searchClientsEntry,
 } from "@/composition/booking/project-flow/project-flow";
@@ -17,4 +18,10 @@ export async function createProjectAction(workspaceId: string, values: unknown) 
 
 export async function searchActiveClientsAction(workspaceId: string, query: unknown) {
   return searchClientsEntry(workspaceId, query);
+}
+
+export async function advanceProjectAction(workspaceId: string, projectId: string, step: unknown) {
+  const result = await advanceProjectEntry(workspaceId, projectId, step);
+  if (result === undefined) revalidatePath(PAGE, "layout");
+  return result;
 }

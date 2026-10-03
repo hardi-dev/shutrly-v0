@@ -4,11 +4,13 @@ import { notFound } from "next/navigation";
 
 import { ProjectError } from "@/features/booking/application/errors/project-errors/project-errors";
 import { projectIdSchema } from "@/features/booking/application/schemas/project-ids/project-ids.schema";
+import { advanceProject } from "@/features/booking/application/use-cases/advance-project/advance-project";
 import { createProject } from "@/features/booking/application/use-cases/create-project/create-project";
 import { getProjectDetail } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail";
 import { loadCreateOptions } from "@/features/booking/application/use-cases/load-create-options/load-create-options";
 import { searchActiveClients } from "@/features/booking/application/use-cases/search-active-clients/search-active-clients";
 import { PROJECT_SEARCH_MAX_LENGTH } from "@/features/booking/domain/project-record/project-record";
+import { todayInScheduleZone } from "@/features/booking/domain/schedule-clock/schedule-clock";
 import { DomainError } from "@/shared/errors/domain-error";
 import { logger } from "@/shared/logging/logger";
 
@@ -71,9 +73,26 @@ export async function loadProjectDetail(rawWorkspaceId: string, rawProjectId: st
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
     return await withProjectScope(({ projects }) =>
-      getProjectDetail(projects, verified.context, projectId),
+      getProjectDetail(projects, verified.context, projectId, todayInScheduleZone(new Date())),
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "detail");
+  }
+}
+
+export async function advanceProjectEntry(
+  rawWorkspaceId: string,
+  rawProjectId: string,
+  step: unknown,
+) {
+  const projectId = idOrNotFound(rawProjectId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withProjectScope(({ projects }) =>
+      advanceProject(projects, verified.context, account.id, projectId, step),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "advance");
   }
 }

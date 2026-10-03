@@ -1,10 +1,11 @@
 import "server-only";
 
-import { and, asc, eq, inArray, isNull, sql } from "drizzle-orm";
+import { and, asc, count, eq, inArray, isNull, sql } from "drizzle-orm";
 
 import type {
   ClientOption,
   DefinitionRules,
+  MoveStatusResult,
   ProjectDetailRecord,
   ProjectFieldRecord,
   ProjectItemRecord,
@@ -14,6 +15,7 @@ import type {
 } from "@/features/booking/application/ports/project-repository/project-repository.port";
 import { canonicalIdrAmount } from "@/features/booking/domain/idr-amount/idr-amount";
 import { PROJECT_STATUSES } from "@/features/booking/domain/project-status/project-status";
+import type { StepTransition } from "@/features/booking/domain/project-status/project-status.types";
 import { compareSessions } from "@/features/booking/domain/session/session";
 import type { SessionRecordShape } from "@/features/booking/domain/session/session.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
@@ -151,6 +153,43 @@ async function findDetail(
   };
 }
 
+async function moveStatus(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  id: string,
+  transition: StepTransition,
+  actorId: string,
+): Promise<MoveStatusResult> {
+  const scope = and(eq(project.workspaceId, context.workspaceId), eq(project.id, id));
+  const moved = await db
+    .update(project)
+    .set({ status: transition.to, updatedBy: actorId, updatedAt: new Date() })
+    .where(and(scope, eq(project.status, transition.from)))
+    .returning({ id: project.id });
+  if (moved.length > 0) return "MOVED";
+  const existing = await db.select({ id: project.id }).from(project).where(scope);
+  return existing.length > 0 ? "STALE" : "NOT_FOUND";
+}
+
+async function countSessions(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  id: string,
+): Promise<number | null> {
+  const exists = await db
+    .select({ id: project.id })
+    .from(project)
+    .where(and(eq(project.workspaceId, context.workspaceId), eq(project.id, id)));
+  if (exists.length === 0) return null;
+  const rows = await db
+    .select({ total: count() })
+    .from(projectSession)
+    .where(
+      and(eq(projectSession.workspaceId, context.workspaceId), eq(projectSession.projectId, id)),
+    );
+  return rows.at(0)?.total ?? 0;
+}
+
 function toSnapshotSource(detail: {
   id: string;
   name: string;
@@ -265,6 +304,9 @@ export function createDrizzleProjectRepository(db: DbExecutor): ProjectRepositor
     findDefinitionRules: (context, ids) => findDefinitionRules(db, context, ids),
     searchActiveClients: (context, text, limit) => searchActiveClients(db, context, text, limit),
     findDetail: (context, id) => findDetail(db, context, id),
+    moveStatus: (context, id, transition, actorId) =>
+      moveStatus(db, context, id, transition, actorId),
+    countSessions: (context, id) => countSessions(db, context, id),
     listActiveServiceOptions: (context) => listActiveServiceOptions(db, context),
   };
 }

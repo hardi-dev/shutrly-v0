@@ -309,4 +309,97 @@ describe("Drizzle project repository", () => {
       "IN_USE",
     );
   });
+
+  it("AC-PRJ-020 AC-PRJ-021 lets exactly one of two concurrent steps win", async () => {
+    const context = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(context, snapshot(ids, context.ownerId));
+    if (created.status !== "CREATED") throw new Error("not created");
+    const transition = { from: "BOOKED", to: "SHOOTING" } as const;
+    const results = await Promise.all([
+      repository.moveStatus(context, created.id, transition, context.ownerId),
+      repository.moveStatus(context, created.id, transition, context.ownerId),
+    ]);
+    expect(results).toContain("MOVED");
+    expect(results).toContain("STALE");
+    expect((await repository.findDetail(context, created.id))?.status).toBe("SHOOTING");
+  });
+
+  it("AC-PRJ-025 does not move or count another workspace's project", async () => {
+    const context = await seedWorkspace();
+    const other = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(context, snapshot(ids, context.ownerId));
+    if (created.status !== "CREATED") throw new Error("not created");
+    const transition = { from: "BOOKED", to: "SHOOTING" } as const;
+    expect(await repository.moveStatus(other, created.id, transition, other.ownerId)).toBe(
+      "NOT_FOUND",
+    );
+    expect(await repository.countSessions(other, created.id)).toBeNull();
+    expect(await repository.countSessions(context, created.id)).toBe(1);
+  });
+
+  it("AC-PRJ-016 keeps the project unchanged when the catalog is edited afterwards", async () => {
+    const context = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(context, snapshot(ids, context.ownerId));
+    if (created.status !== "CREATED") throw new Error("not created");
+    const before = await repository.findDetail(context, created.id);
+    await db
+      .update(service)
+      .set({ name: "Wisuda Premium", basePrice: "9000000" })
+      .where(eq(service.id, ids.active));
+    await db
+      .update(serviceItemDefinition)
+      .set({ name: "Foto retouch" })
+      .where(eq(serviceItemDefinition.id, ids.fotoEdit));
+    await db
+      .update(serviceFieldDefinition)
+      .set({ name: "Kampus" })
+      .where(
+        and(
+          eq(serviceFieldDefinition.serviceId, ids.active),
+          eq(serviceFieldDefinition.key, "nama_kampus"),
+        ),
+      );
+    const after = await repository.findDetail(context, created.id);
+    expect(after?.items).toEqual(before?.items);
+    expect(after?.fields).toEqual(before?.fields);
+    expect(after?.agreedPrice).toBe("750000");
+    expect(after?.items.map((item) => item.name)).toEqual(["Foto edit", "Jumlah orang"]);
+  });
+
+  it("AC-PRJ-025 returns who cancelled a cancelled project", async () => {
+    const context = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(context, snapshot(ids, context.ownerId));
+    if (created.status !== "CREATED") throw new Error("not created");
+    await db
+      .update(project)
+      .set({
+        status: "CANCELLED",
+        cancelledAt: new Date("2026-11-04T03:00:00Z"),
+        cancelledBy: context.ownerId,
+        cancelReason: "wisuda diundur",
+      })
+      .where(eq(project.id, created.id));
+    const detail = await repository.findDetail(context, created.id);
+    expect(detail?.status).toBe("CANCELLED");
+    expect(detail?.cancellation).toMatchObject({
+      byName: "Project Owner",
+      reason: "wisuda diundur",
+    });
+    expect(
+      await repository.moveStatus(
+        context,
+        created.id,
+        { from: "BOOKED", to: "SHOOTING" },
+        context.ownerId,
+      ),
+    ).toBe("STALE");
+  });
 });

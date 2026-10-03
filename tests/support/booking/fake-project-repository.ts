@@ -4,12 +4,15 @@ import type {
   ClientOption,
   CreateSnapshotResult,
   DefinitionRules,
+  MoveStatusResult,
   ProjectDetailRecord,
   ProjectRepositoryPort,
   ProjectSnapshotInput,
   ServiceOptionGroup,
   ServiceSnapshotSource,
 } from "@/features/booking/application/ports/project-repository/project-repository.port";
+import type { StepTransition } from "@/features/booking/domain/project-status/project-status.types";
+import type { ProjectStatus } from "@/features/booking/domain/project-status/project-status.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 export interface FakeClient {
@@ -34,6 +37,7 @@ export interface StoredProject {
   readonly workspaceId: string;
   readonly accessToken: string;
   readonly input: ProjectSnapshotInput;
+  status: ProjectStatus;
 }
 
 export class FakeProjectRepository implements ProjectRepositoryPort {
@@ -73,6 +77,7 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       workspaceId: context.workspaceId,
       accessToken: input.accessToken,
       input,
+      status: input.status,
     });
     return { status: "CREATED", id };
   }
@@ -108,8 +113,53 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       }));
   }
 
-  async findDetail(): Promise<ProjectDetailRecord | null> {
-    return null;
+  async findDetail(context: WorkspaceContext, id: string): Promise<ProjectDetailRecord | null> {
+    const stored = this.projects.find(
+      (row) => row.id === id && row.workspaceId === context.workspaceId,
+    );
+    if (!stored) return null;
+    const client = this.clients.find((row) => row.id === stored.input.clientId);
+    const service = this.services.find((row) => row.id === stored.input.serviceId);
+    if (!client || !service) return null;
+    return {
+      id: stored.id,
+      title: stored.input.title,
+      notes: stored.input.notes,
+      agreedPrice: stored.input.agreedPrice,
+      currency: "IDR",
+      status: stored.status,
+      client: { id: client.id, name: client.name, whatsappNumber: client.whatsappNumber },
+      service: { id: service.id, name: service.name },
+      items: [],
+      fields: [],
+      sessions: stored.input.sessions.map((session, index) => ({
+        ...session,
+        id: `session-${String(index)}`,
+        createdAt: `2026-10-01T00:00:0${String(index)}Z`,
+      })),
+      cancellation: null,
+    };
+  }
+
+  async moveStatus(
+    context: WorkspaceContext,
+    id: string,
+    transition: StepTransition,
+  ): Promise<MoveStatusResult> {
+    const stored = this.projects.find(
+      (row) => row.id === id && row.workspaceId === context.workspaceId,
+    );
+    if (!stored) return "NOT_FOUND";
+    if (stored.status !== transition.from) return "STALE";
+    stored.status = transition.to;
+    return "MOVED";
+  }
+
+  async countSessions(context: WorkspaceContext, id: string): Promise<number | null> {
+    const stored = this.projects.find(
+      (row) => row.id === id && row.workspaceId === context.workspaceId,
+    );
+    return stored ? stored.input.sessions.length : null;
   }
 
   async listActiveServiceOptions(

@@ -3,7 +3,10 @@ import "server-only";
 import type { SnapshotField } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
 import type { BookingValue } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
-import type { ProjectStatus } from "@/features/booking/domain/project-status/project-status.types";
+import type {
+  ProjectStatus,
+  StepTransition,
+} from "@/features/booking/domain/project-status/project-status.types";
 import type {
   SessionInput,
   SessionRecordShape,
@@ -103,6 +106,8 @@ export interface ClientOption {
   readonly projectCount: number;
 }
 
+export type MoveStatusResult = "MOVED" | "STALE" | "NOT_FOUND";
+
 /** Every call is scoped by the verified workspace (C-101). */
 export interface ProjectRepositoryPort {
   /** Locks the client, service and definitions FOR SHARE and writes the whole project in one transaction (D-4). */
@@ -128,6 +133,15 @@ export interface ProjectRepositoryPort {
     context: WorkspaceContext,
     id: string,
   ) => Promise<ProjectDetailRecord | null>;
+  /** Moves the status only while it still equals `transition.from` (D-3); STALE means someone moved it first. */
+  readonly moveStatus: (
+    context: WorkspaceContext,
+    id: string,
+    transition: StepTransition,
+    actorId: string,
+  ) => Promise<MoveStatusResult>;
+  /** Null when the project does not exist in the workspace. */
+  readonly countSessions: (context: WorkspaceContext, id: string) => Promise<number | null>;
   readonly listActiveServiceOptions: (
     context: WorkspaceContext,
   ) => Promise<readonly ServiceOptionGroup[]>;

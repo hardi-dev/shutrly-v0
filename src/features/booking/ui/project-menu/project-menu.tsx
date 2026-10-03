@@ -9,6 +9,7 @@ import { Menu } from "@/ui/patterns/menu/menu";
 import { MenuDivider } from "@/ui/patterns/menu/menu-divider";
 import { MenuGroupLabel } from "@/ui/patterns/menu/menu-group-label";
 import { MenuItem } from "@/ui/patterns/menu/menu-item";
+import { MenuSection } from "@/ui/patterns/menu/menu-section";
 import { MenuTrigger } from "@/ui/patterns/menu/menu-trigger";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
@@ -36,10 +37,16 @@ export function ProjectMenu(props: Readonly<ProjectMenuProps>) {
         {sections.map((section, index) => (
           <Fragment key={section.id}>
             {index > 0 ? <MenuDivider /> : null}
-            {section.label ? <MenuGroupLabel>{section.label}</MenuGroupLabel> : null}
-            {section.items.map((entry) => (
-              <DesktopEntry key={entry.key} entry={entry} />
-            ))}
+            {section.label ? (
+              <MenuSection>
+                <MenuGroupLabel>{section.label}</MenuGroupLabel>
+                {section.items.map((entry) => (
+                  <DesktopEntry key={entry.key} entry={entry} />
+                ))}
+              </MenuSection>
+            ) : (
+              section.items.map((entry) => <DesktopEntry key={entry.key} entry={entry} />)
+            )}
           </Fragment>
         ))}
       </Menu>

@@ -1,6 +1,6 @@
 # Technical Design — F-07 Projects
 
-Status: IN PROGRESS (Slices 0–2 built 2026-10-03) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
+Status: IN PROGRESS (Slices 0–5 built 2026-10-03; E2E steps 3.3 and 5.3 deferred to Slice 8) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
 
 ## Context
 
@@ -433,3 +433,33 @@ See [plan.md](plan.md): vertical slices by screen (Slice 0–8), test-first, one
 8. **The step buttons use `Button` with `iconLeading`.** Pending shows the `loading-03` spinner and the *…* label, which is the existing Button pending state (the export's Loading variant).
 9. **`getProjectDetail` takes `today`** from `todayInScheduleZone(new Date())` in `project-flow`, so the shown session is decided on the server.
 10. **Not verified in the browser:** the *Dibatalkan*, *Draf*, *Pemotretan* and *Pascaproduksi* views and the toasts' look (they are covered by tests and the E2E). Only a *Dibooking* project was compared by eye against the exports at 1440 and 390.
+
+## Implementation record — Slices 3–5 (2026-10-03)
+
+**Scope built:** the project list (S1, Slice 3), the filter (S1a, Slice 4) and the ⋯ menu with *Ubah info*, *Batalkan proyek* and *Hapus draf* (S1b, S3a, Slice 5). Commits: `2b49f22`, `43a313b` (list), `931b32a`, `d188ba3`, `dc9aad9` (filter), `911c589`, `c33e983` (menu and dialogs).
+
+**Checks:**
+
+| Check | Result |
+|---|---|
+| `pnpm typecheck` | pass |
+| `pnpm lint` | pass (0 errors) |
+| `pnpm test` | pass (298 files, 1023 tests) |
+| `pnpm test:integration tests/integration/booking` | pass (31 tests, incl. `project-list.test.ts`); other integration suites were not run |
+| `pnpm build` | pass |
+| E2E | **not run.** The Owner asked to run E2E only on the last slice, so steps 3.3 and 5.3 stay open and move to Slice 8 |
+
+**AC → test:** AC-PRJ-001…005 (`project-list` integration, `list-projects`, `projects-screen`, `owner-nav`) · 028 (`project-list-filter`, `project-list` integration, `project-filter-dialog`, `multi-select`, `checkbox`, `icon-button`) · 017/018 (`update-project-info`, `project-repository` integration, `project-info-dialog`) · 022 (`cancel-project`, `project-repository` integration, `project-status-dialogs`) · 023 (`delete-draft`, integration) · 027 (`project-menu`, `project-menu` UI test) · 025 (workspace B cases in every use case and integration).
+
+**Deviations and decisions:**
+
+1. **E2E deferred** (see above).
+2. **`Checkbox` uses React Aria `CheckboxField` + `CheckboxButton`**, because `Checkbox` is deprecated in 1.21. `MultiSelect` is a React Aria `Select` with `selectionMode="multiple"`; on phones it opens a sheet of checkboxes.
+3. **`IconButton` gained `badgeLabel`** (default *belum dibaca*); the filter button passes *aktif*. Icons added: `list-filter`, `circle-x`.
+4. **Filter status ignored outside *Aktif*** and the badge counts four groups, per A-11. The list reads the filter from the URL; *Terapkan* keeps `q`.
+5. **`ProjectRepositoryPort` grew** `listServicesForFilter`, `searchClientsForFilter`, `findFilterClient`, `withLockedProject`; `ClientRepositoryPort` grew `findById` (for *Tambah nomor WhatsApp*).
+6. **Cancel dialog is not a destructive `Modal`**, because the destructive Modal variant renders no body and the reason field is part of the dialog. The confirm button is Danger. The reason label uses the Textarea's own *Opsional* suffix in BOOKED.
+7. **The ⋯ menu opens the dialogs from one host** (`ProjectMenuHost`) used by list rows and the detail page; *Ubah info* from a row loads the project through `loadProjectDetailAction` first.
+8. **Phone detail ⋯** goes into the Compact Bar through the new `CompactBarActions` portal.
+9. **Several new responsive files carry a paired `max-lines-per-function` disable** with a reason (same practice as `clients-screen`).
+10. **Not checked by eye:** the list at 1440 only (the *Aktif* tab with three projects); the filter dialog, menus and cancel/delete dialogs were not compared with their exports.

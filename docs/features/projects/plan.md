@@ -1194,7 +1194,7 @@ Copy: count *{n} proyek aktif* / *{n} proyek selesai* / *{n} proyek dibatalkan* 
 
 ### Steps
 
-- [ ] **3.1 List query.**
+- [x] **3.1 List query.**
   - **Tests first** (`tests/integration/booking/project-list.test.ts`, the five AC-PRJ-001 projects, `today = "2026-10-02"`):
     - *Aktif* = *Prewed Dewi*, *Wisuda Rina*, *Wisuda Sari*, with the shown session and count;
     - *Selesai* / *Dibatalkan* each have their project; with extra projects the latest date comes first and no-session projects come last (AC-PRJ-002);
@@ -1206,7 +1206,7 @@ Copy: count *{n} proyek aktif* / *{n} proyek selesai* / *{n} proyek dibatalkan* 
     Unit: `list-projects.test.ts`, the 31 → 30 + cursor rule.
   - **Implement.**
   - Commit `feat(projects): add the project list query`.
-- [ ] **3.2 List screen.**
+- [x] **3.2 List screen.**
   - **Precondition:** the 18 Slice 3 exports.
   - **Tests first:** `projects-table.test.tsx`, `project-list.test.tsx`, `project-search-field.test.tsx`, `projects-empty-state.test.tsx`, `use-load-more-projects.test.ts`, the `owner-nav` test. Every state row, plus:
     - only the PROYEK text is a link;
@@ -1317,7 +1317,7 @@ Bind an empty list as `null`. `count` ignores the filter (A-11).
 
 ### Steps
 
-- [ ] **4.1 Filter query.**
+- [x] **4.1 Filter query.**
   - **Tests first:**
     - `project-list-filter.test.ts`:
       - the grammar table: unknown statuses dropped, a malformed uuid dropped, `to < from` → both dropped on load;
@@ -1330,12 +1330,12 @@ Bind an empty list as `null`. `count` ignores the filter (A-11).
       - the counts are unchanged.
   - **Implement.**
   - Commit `feat(projects): add project list filters`.
-- [ ] **4.2 Shared filter controls.**
+- [x] **4.2 Shared filter controls.**
   - Read the inventory, then build or extend `Checkbox`, `MultiSelect` and the `IconButton` badge.
   - **Tests:** keyboard toggling, labels, the badge's accessible name, disabled.
   - One story each.
   - Commit `feat(ui): add checkbox, multi-select and icon button badge`.
-- [ ] **4.3 Filter dialog.**
+- [x] **4.3 Filter dialog.**
   - **Precondition:** the 4 Slice 4 exports.
   - **Tests first** (`project-filter-dialog.test.tsx`, `projects-table.test.tsx` +):
     - every state row;
@@ -1453,7 +1453,7 @@ A divider separates non-empty groups. The *KIRIM KE KLIEN* label sits above `sen
 
 ### Steps
 
-- [ ] **5.1 Backend.**
+- [x] **5.1 Backend.**
   - **Tests first:**
     - `project-menu.test.ts`: one case per spec row (DRAFT, BOOKED, SHOOTING, POST_PROCESSING, DELIVERED, COMPLETED, CANCELLED), the no-number case and the AC-PRJ-027 rows;
     - `update-project-info.test.ts`: title and notes change in SHOOTING; a price change in SHOOTING → `DEAL_LOCKED`; CANCELLED → `PROJECT_CANCELLED` (AC-PRJ-018);
@@ -1466,7 +1466,7 @@ A divider separates non-empty groups. The *KIRIM KE KLIEN* label sits above `sen
       - workspace B → `NOT_FOUND`.
   - **Implement.**
   - Commit `feat(projects): add project info, cancel and delete backend`.
-- [ ] **5.2 Menu and dialogs.**
+- [x] **5.2 Menu and dialogs.**
   - **Precondition:** the 14 Slice 5 exports.
   - **Tests first** (`project-menu.test.tsx`, `project-info-dialog.test.tsx`, `project-status-dialogs.test.tsx`, `use-project-actions.test.ts` +, `compact-bar.test.tsx` +):
     - every state row;

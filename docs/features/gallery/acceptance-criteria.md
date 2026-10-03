@@ -327,13 +327,14 @@ Covers: BR-GAL-006, BR-DEL-002, BR-SRC-003, BR-WS-002
 **Given** *Rina-Wisuda › Akad* with 64 proof photos
 **When** the Owner opens `A_012.jpg` from *Semua foto*
 **Then**:
-- a large preview shows *12 / 64*;
-- the info panel shows `A_012.jpg`, *Rina-Wisuda › Akad*, *Proof*, *Terlihat oleh klien setelah dipublikasikan*, and *Buka di Google Drive*;
-- → (or the right-arrow key) shows `A_013.jpg`, and Esc closes the preview.
+- a full-screen preview shows the photo;
+- the top bar shows `A_012.jpg`, *Rina-Wisuda › Akad · Proof · 12 dari 64* and *Buka di Google Drive*;
+- the filmstrip highlights the current photo;
+- → (or the right-arrow key, or a filmstrip thumbnail) shows another photo, and Esc closes the preview.
 
 **Given** the missing `IMG_002.jpg`
 **When** the Owner opens it
-**Then** the preview shows *File tidak ditemukan di Google Drive*, the photo is marked *Hilang* and hidden from the client, and there is no *Buka di Google Drive*.
+**Then** the preview shows *File tidak ditemukan di Google Drive*, the top bar reads *… · Hilang · …*, and there is no *Buka di Google Drive*.
 
 **Given** the Owner of another workspace
 **When** they request the preview image or the Drive link of this photo

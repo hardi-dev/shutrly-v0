@@ -44,8 +44,9 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
      - infinite scroll (A-13), with thumbnails loaded when visible;
      - *Cari nama file* across every folder; results show each photo's folder.
    - **Photo preview:** opening any photo, on the card or in the modal, shows a large preview, again through the Owner-only media endpoint.
-     - It has ← / → (and the arrow keys) for the previous and next photo in the same list, and Esc closes it.
-     - Info: file name, folder path, kind, *Hilang* if missing, and whether the client can see it.
+     - It opens full screen on a dark backdrop (Owner 2026-10-04, design option B).
+     - It has ← / → (and the arrow keys) and a filmstrip of neighbouring thumbnails for the previous and next photo in the same list. Esc closes it.
+     - Info in the top bar: file name, folder path, kind, *Hilang* if missing, and the position (*12 dari 64*). There is no client-visibility status in the preview; that stays on the card and in the modal.
      - *Buka di Google Drive* opens the file in Drive in a new tab. It is shown only to the Owner (BR-SRC-003 covers client responses only) and never for a missing file.
 6. The Owner may sync one source or all of them again at any time. Repeated syncs never duplicate photos.
 7. The Owner publishes:

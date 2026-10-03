@@ -12,12 +12,10 @@ Start with [docs/HANDOFF.md](docs/HANDOFF.md) › _Current handoff_. It says wha
   - `pnpm db:migrate` runs only against the shared **non-production** database from `.dev.vars`, and only for a migration you generated, reviewed and committed (Owner 2026-10-02, see `docs/architecture/tech-stack.md` › Deployment). Keep migrations safe for other branches on that database (no drops or renames of columns they use), and report each run. Never run migrations against production.
   - Never read or edit `.pen` files directly; they're edited only through the Pencil tool.
 - **Machine note:** `head` on this machine isn't coreutils; use `sed -n '1,20p'`.
-- **Workflow commands (`sdv` plugin, vendored in `plugins/sdv/`):**
-  - Claude Code loads it from `.claude/settings.json` (marketplace `shutrly`, plugin `sdv@shutrly`) once the folder is trusted, so `/sdv:<command>` works directly.
-  - Codex finds the skills `spec-driven-vibe-coding` and `sdv-design-tokens-system` in `.agents/skills/` (symlinks into the plugin). Codex has no `/sdv:*` commands: when asked to run `/sdv:<command> <args>`, read `plugins/sdv/commands/<command>.md`, use `<args>` for `$ARGUMENTS`, and follow it with the skill it names.
-  - Update the plugin by replacing `plugins/sdv/` with the new release; don't edit it in place.
-
-<!-- BEGIN:nextjs-agent-rules -->
+- **Workflow commands (`sdv`, local copy, edit freely):**
+  - Skills live in `.claude/skills/` (`spec-driven-vibe-coding`, `sdv-design-tokens-system`); commands in `.claude/commands/sdv/`, so `/sdv:<command>` works directly and edits apply on the fly. The plugin is disabled in `.claude/settings.json` to avoid duplicates.
+  - Codex finds the skills in `.agents/skills/` (symlinks into `.claude/skills/`). Codex has no `/sdv:*` commands: when asked to run `/sdv:<command> <args>`, read `.claude/commands/sdv/<command>.md`, use `<args>` for `$ARGUMENTS`, and follow it with the skill it names.
+  - `plugins/sdv/` is the untouched upstream release, kept only to diff against when upgrading; don't edit it.
 
 # This is NOT the Next.js you know
 

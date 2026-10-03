@@ -8,6 +8,6 @@
     }
   },
   "enabledPlugins": {
-    "sdv@shutrly": true
+    "sdv@shutrly": false
   }
 }

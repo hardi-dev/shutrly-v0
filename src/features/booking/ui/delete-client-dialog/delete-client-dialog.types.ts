@@ -7,3 +7,17 @@ export interface DeleteClientDialogProps {
   readonly onOpenChange: (isOpen: boolean) => void;
   readonly action: (workspaceId: string, clientId: string) => Promise<DeleteClientResult>;
 }
+
+export interface DeleteState {
+  readonly pending: boolean;
+  readonly blocked: boolean;
+  readonly title: string;
+  readonly description: string;
+  readonly close: () => void;
+  readonly confirm: () => void;
+}
+
+export interface DeleteViewProps {
+  readonly state: DeleteState;
+  readonly onOpenChange: (isOpen: boolean) => void;
+}

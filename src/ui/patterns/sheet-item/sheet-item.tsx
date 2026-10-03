@@ -27,29 +27,17 @@ export function SheetItem({
   target,
   onPress,
 }: Readonly<SheetItemProps>) {
-  const leading = sheetItemLeading(isPending, icon);
   const content = (
-    <>
-      {leading}
-      <SheetItemText label={label} description={description} isSelected={isSelected} />
-      {count !== undefined ? <CountBadge count={count} /> : null}
-      {isSelected ? (
-        <Icon
-          name="check"
-          aria-hidden="true"
-          data-testid="sheet-item-check"
-          className="text-(--component-sheet-item-check)"
-        />
-      ) : null}
-    </>
+    <SheetItemContent
+      label={label}
+      description={description}
+      icon={icon}
+      count={count}
+      isSelected={isSelected}
+      isPending={isPending}
+    />
   );
-  const className = cn(
-    "flex min-h-[52px] w-full items-center gap-(--component-sheet-item-gap)",
-    "border-t border-(--component-sheet-item-border) px-(--component-sheet-item-padding-x)",
-    "text-left outline-none data-disabled:opacity-(--opacity-disabled)",
-    "data-hovered:bg-(--color-semantic-surface-sunken) data-focus-visible:bg-(--color-semantic-surface-sunken)",
-    VARIANT_CLASSES[variant],
-  );
+  const className = sheetItemClassName(variant);
   if (href)
     return (
       <a
@@ -72,6 +60,43 @@ export function SheetItem({
     >
       {content}
     </AriaButton>
+  );
+}
+
+function sheetItemClassName(variant: SheetItemVariant): string {
+  return cn(
+    "flex min-h-[52px] w-full items-center gap-(--component-sheet-item-gap)",
+    "border-t border-(--component-sheet-item-border) px-(--component-sheet-item-padding-x)",
+    "text-left outline-none data-disabled:opacity-(--opacity-disabled)",
+    "data-hovered:bg-(--color-semantic-surface-sunken) data-focus-visible:bg-(--color-semantic-surface-sunken)",
+    VARIANT_CLASSES[variant],
+  );
+}
+
+function SheetItemContent({
+  label,
+  description,
+  icon,
+  count,
+  isSelected = false,
+  isPending = false,
+}: Readonly<
+  Pick<SheetItemProps, "label" | "description" | "icon" | "count" | "isSelected" | "isPending">
+>) {
+  return (
+    <>
+      {sheetItemLeading(isPending, icon)}
+      <SheetItemText label={label} description={description} isSelected={isSelected} />
+      {count !== undefined ? <CountBadge count={count} /> : null}
+      {isSelected ? (
+        <Icon
+          name="check"
+          aria-hidden="true"
+          data-testid="sheet-item-check"
+          className="text-(--component-sheet-item-check)"
+        />
+      ) : null}
+    </>
   );
 }
 

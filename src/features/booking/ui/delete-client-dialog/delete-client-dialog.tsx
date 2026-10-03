@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable max-len -- destructive confirmation preserves the explicit server action contract */
 
 import { useState } from "react";
 
@@ -11,7 +10,11 @@ import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 
 import { CLIENT_COPY } from "../client-copy/client-copy.copy";
-import type { DeleteClientDialogProps } from "./delete-client-dialog.types";
+import type {
+  DeleteClientDialogProps,
+  DeleteState,
+  DeleteViewProps,
+} from "./delete-client-dialog.types";
 
 /** Confirms a destructive client delete before invoking the server action. */
 export function DeleteClientDialog({
@@ -36,59 +39,82 @@ export function DeleteClientDialog({
       showToast({ tone: "success", title: CLIENT_COPY.deletedTitle });
       onOpenChange(false);
     } catch {
-      showToast({
-        tone: "danger",
-        title: CLIENT_COPY.serverErrorTitle,
-        body: CLIENT_COPY.serverErrorBody,
-      });
+      showServerError();
     } finally {
       setPending(false);
     }
   }
-  function close(): void {
-    onOpenChange(false);
-  }
-  function pressConfirm(): void {
-    void confirm();
-  }
-  const title = blocked ? CLIENT_COPY.deleteBlockedTitle : CLIENT_COPY.deleteTitle(selected.name);
-  const description = blocked
-    ? CLIENT_COPY.deleteBlockedBody(selected.name)
-    : CLIENT_COPY.deleteDescription;
-  if (mobile)
-    return (
-      <BottomSheet
-        isOpen
-        onOpenChange={onOpenChange}
-        title={title}
-        description={description}
-        variant="actions"
-      >
-        <SheetItem
-          label={pending ? CLIENT_COPY.deleting : CLIENT_COPY.deleteClient}
-          icon="trash-2"
-          variant="destructive"
-          isPending={pending}
-          isDisabled={blocked}
-          onPress={pressConfirm}
-        />
-        <SheetItem label={CLIENT_COPY.cancel} isDisabled={pending} onPress={close} />
-      </BottomSheet>
-    );
+  const state: DeleteState = {
+    pending,
+    blocked,
+    title: blocked ? CLIENT_COPY.deleteBlockedTitle : CLIENT_COPY.deleteTitle(selected.name),
+    description: blocked
+      ? CLIENT_COPY.deleteBlockedBody(selected.name)
+      : CLIENT_COPY.deleteDescription,
+    close: () => {
+      onOpenChange(false);
+    },
+    confirm: () => {
+      void confirm();
+    },
+  };
+  return mobile ? (
+    <DeleteClientSheet state={state} onOpenChange={onOpenChange} />
+  ) : (
+    <DeleteClientModal state={state} onOpenChange={onOpenChange} />
+  );
+}
+
+function showServerError(): void {
+  showToast({
+    tone: "danger",
+    title: CLIENT_COPY.serverErrorTitle,
+    body: CLIENT_COPY.serverErrorBody,
+  });
+}
+
+function DeleteClientSheet({ state, onOpenChange }: Readonly<DeleteViewProps>) {
+  return (
+    <BottomSheet
+      isOpen
+      onOpenChange={onOpenChange}
+      title={state.title}
+      description={state.description}
+      variant="actions"
+    >
+      <SheetItem
+        label={state.pending ? CLIENT_COPY.deleting : CLIENT_COPY.deleteClient}
+        icon="trash-2"
+        variant="destructive"
+        isPending={state.pending}
+        isDisabled={state.blocked}
+        onPress={state.confirm}
+      />
+      <SheetItem label={CLIENT_COPY.cancel} isDisabled={state.pending} onPress={state.close} />
+    </BottomSheet>
+  );
+}
+
+function DeleteClientModal({ state, onOpenChange }: Readonly<DeleteViewProps>) {
   return (
     <Modal
       isOpen
       onOpenChange={onOpenChange}
-      title={title}
-      description={description}
+      title={state.title}
+      description={state.description}
       size="sm"
       isDestructive
       actions={
         <>
-          <Button variant="secondary" onPress={close} isDisabled={pending}>
-            {blocked ? CLIENT_COPY.close : CLIENT_COPY.cancel}
+          <Button variant="secondary" onPress={state.close} isDisabled={state.pending}>
+            {state.blocked ? CLIENT_COPY.close : CLIENT_COPY.cancel}
           </Button>
-          <Button variant="danger" onPress={pressConfirm} isDisabled={blocked} isPending={pending}>
+          <Button
+            variant="danger"
+            onPress={state.confirm}
+            isDisabled={state.blocked}
+            isPending={state.pending}
+          >
             {CLIENT_COPY.deleteClient}
           </Button>
         </>
@@ -98,4 +124,3 @@ export function DeleteClientDialog({
     </Modal>
   );
 }
-/* eslint-enable max-len -- end destructive confirmation contract */

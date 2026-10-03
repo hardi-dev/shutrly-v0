@@ -7,7 +7,7 @@
 - **Direction:** the F-07 project detail (App Shell C30 / Mobile App Shell C35, Section Card C43, List Card Item/Two-line C42), extended in the *Jadwal* card.
   - The two base frames are rebuilt from F-07's *Dibooking* detail (`X5y4S3` / `hLX50` in `projects.pen`), with `H:` mapped to `m:`.
   - Every state frame is a copy of a base frame. A dialog sits in the App Shell *Overlay* layer and a toast in its *Toast* layer, as in F-07.
-- **Status:** **IN REVIEW**. All states are drawn: 24 states, 48 frames. The project-detail part was reviewed with the Owner; the *Tim* pages wait for review. Not approved, no exports yet.
+- **Status:** **APPROVED 2026-10-03** (Owner). There are 48 HTML exports in [`exports/`](exports/), one frame per file (`<area>-<state>-<device>-<frameId>.html`, html-tailwind). The board `Yx7xX` isn't exported.
 
 ## Decision log (Owner, 2026-10-03)
 
@@ -117,7 +117,12 @@ The pattern follows F-06 *Klien*:
 
 ## Approval
 
-Not approved yet. Remaining:
-1. the Owner reviews the *Tim* pages and approves;
-2. the Owner saves (⌘S), then the HTML exports go to `exports/`;
-3. set `DESIGNED`, then run `/sdv:plan-feature team-sessions`.
+APPROVED by the Owner on 2026-10-03, with the instruction *"lanjut 1 & 2"*: export the frames and set the status.
+
+Evidence:
+- `team-sessions.pen` saved by the Owner (⌘S, 1,297,910 bytes, 04:25);
+- 48 frames (24 states × desktop + phone);
+- 0 raw colours, and only intentional clipping;
+- exports in `exports/*.html`: 48 files, each checked to hold exactly one frame.
+
+Next: `/sdv:plan-feature team-sessions`.

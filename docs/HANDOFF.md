@@ -1,9 +1,9 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED; F-07 PLANNED; F-08 SPECIFIED, design in progress) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED; F-07 PLANNED; F-08 DESIGNED) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/team-sessions` (F-08 discovery; from `feat/projects`). Earlier: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` is merged into `feat/clients` at `fe1d6f0`).
 
-## Current handoff — F-08 Team: design in progress (2026-10-03)
+## Current handoff — F-08 Team DESIGNED (2026-10-03)
 
 - **Branch:** `feat/team-sessions`, cut from `feat/projects` (assignments need F-07's sessions). Nothing here is built; F-06, then F-07, still come first.
 - **Spec:** [spec.md](features/team-sessions/spec.md) and [acceptance-criteria.md](features/team-sessions/acceptance-criteria.md). The live criteria run AC-TEAM-001…027; 012, 016–019, 024 and 025 are removed.
@@ -16,17 +16,14 @@ Branch: `feat/team-sessions` (F-08 discovery; from `feat/projects`). Earlier: `f
   - BR-TEAM-004: a member has a name, a required WhatsApp number, an optional email and roles.
   - BR-TEAM-005: workspace roles, three of them seeded.
   - BR-TEAM-006: a member is on a session at most once; deleting a session or a draft deletes its assignments.
-- **Design (in progress):** the record and decision log are in [design.md](features/team-sessions/design.md), and `team-sessions.pen` was saved at 04:07.
+- **Design (APPROVED 2026-10-03):** [design.md](features/team-sessions/design.md) holds 48 frames and 48 HTML exports in `features/team-sessions/exports/`.
   - *Jadwal* shows an avatar group per session (at most 3, then *+n*), or an Icon Button/Ghost/SM `user-plus`.
   - A session without a team: `user-plus` and ⋯ › *Tambah tim* open the Penugasan form directly.
   - A session with a team: the avatar group and ⋯ › *Atur tim* open *Atur tim*. It lists the members with a danger `trash-2` per row, with no edit and no empty state; removing the last member closes it.
+  - The *Tim* pages follow F-06: tabs *Aktif · Arsip · Peran*, a table on desktop, a list on phones, and the member form with a Multi-select for *Peran* (*Tambah peran baru*).
   - The library import resolves as **`m:`**, not `H:`.
-  - The project-detail part has 10 states (desktop + phone). The *Tim* pages are still to draw.
 - **Diagrams:** member state, plus the add / remove and delete activities. The sequence diagram was removed with the payment race.
-- **Next:**
-  - draw the *Tim* pages (*Anggota*, *Peran*, member dialog);
-  - write `design.md`, then the Owner saves and approves;
-  - export the HTML, then run `/sdv:plan-feature team-sessions`.
+- **Next:** `/sdv:plan-feature team-sessions`. F-06, then F-07, are still built first.
 
 ## Previous handoff — F-07 Projects PLANNED (2026-10-02)
 

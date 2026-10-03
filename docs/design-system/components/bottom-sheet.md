@@ -31,7 +31,7 @@ The mobile counterpart of the Modal: a sheet docked to the bottom edge over `ove
 - **Grabber:** 36 × 4 in `sheet.grabber`, 8 from the top.
 - **Header:** padding `sheet.header.padding-y/-x` (8 / 20); gap 12; title ↔ description 4; **no divider** (option B).
 - **Safe area:** 34 px, showing the device home indicator. In code it is `env(safe-area-inset-bottom)`.
-- **Width:** 375 is the design frame. In code the sheet is 100 % of the viewport (max 560 on tablets).
+- **Width:** 375 is the design frame. In code the sheet spans 100 % of the viewport up to the tablet breakpoint (767px); its header, body and footer content are centred and capped at 560 px, the desktop Modal `md` width (Owner 2026-10-03).
 - **Height:** hugs its content up to 90 % of the viewport. Past that the Body scrolls and the header stays fixed.
 
 **Fill slots.** This works on top-level instances only.

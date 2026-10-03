@@ -10,6 +10,9 @@ import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 import { BOTTOM_SHEET_COPY } from "./bottom-sheet.copy";
 import type { BottomSheetProps, SheetContentProps, SheetHeaderProps } from "./bottom-sheet.types";
 
+// The sheet spans the phone/tablet viewport; its content keeps the desktop Modal `md` width.
+const SHEET_CONTENT_WIDTH = "mx-auto w-full max-w-[560px]";
+
 const HEADER_ALIGNMENT = {
   actions: "items-center text-center",
   form: "items-start text-left",
@@ -88,7 +91,7 @@ function SheetContent({
   }
 
   return (
-    <AriaModal className="max-h-[90dvh] w-full max-w-[560px] overflow-hidden rounded-t-(--component-sheet-radius) bg-(--component-sheet-background) shadow-[0_-8px_40px_var(--color-semantic-elevation-2-color)] data-[entering]:animate-[bottom-sheet-in_300ms_ease-out] data-[exiting]:animate-[bottom-sheet-out_300ms_ease-in] motion-reduce:animate-none">
+    <AriaModal className="max-h-[90dvh] w-full overflow-hidden rounded-t-(--component-sheet-radius) bg-(--component-sheet-background) shadow-[0_-8px_40px_var(--color-semantic-elevation-2-color)] data-[entering]:animate-[bottom-sheet-in_300ms_ease-out] data-[exiting]:animate-[bottom-sheet-out_300ms_ease-in] motion-reduce:animate-none">
       <Dialog
         ref={dialogRef}
         role="dialog"
@@ -108,14 +111,16 @@ function SheetContent({
           hasClose={hasClose}
           onClose={handleClose}
         />
-        <div
-          className={cn(
-            "min-h-0 flex-1 overflow-y-auto",
-            variant === "form" &&
-              "px-(--component-sheet-body-padding-x) py-(--component-sheet-body-padding-y)",
-          )}
-        >
-          {children}
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          <div
+            className={cn(
+              SHEET_CONTENT_WIDTH,
+              variant === "form" &&
+                "px-(--component-sheet-body-padding-x) py-(--component-sheet-body-padding-y)",
+            )}
+          >
+            {children}
+          </div>
         </div>
         {actions ? <SheetFooter>{actions}</SheetFooter> : null}
         <div
@@ -153,6 +158,7 @@ function SheetHeader({
   return (
     <header
       className={cn(
+        SHEET_CONTENT_WIDTH,
         "flex shrink-0 gap-(--component-sheet-header-gap) px-(--component-sheet-header-padding-x) py-(--component-sheet-header-padding-y)",
         HEADER_ALIGNMENT[variant],
       )}
@@ -197,8 +203,15 @@ function SheetHeader({
 
 function SheetFooter({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <footer className="flex shrink-0 flex-col gap-(--component-sheet-body-gap) border-t border-(--component-sheet-footer-border) bg-(--component-sheet-footer-background) px-(--component-sheet-footer-padding-x) py-(--component-sheet-footer-padding-y)">
-      {children}
+    <footer className="shrink-0 border-t border-(--component-sheet-footer-border) bg-(--component-sheet-footer-background) py-(--component-sheet-footer-padding-y)">
+      <div
+        className={cn(
+          SHEET_CONTENT_WIDTH,
+          "flex flex-col gap-(--component-sheet-body-gap) px-(--component-sheet-footer-padding-x)",
+        )}
+      >
+        {children}
+      </div>
     </footer>
   );
 }

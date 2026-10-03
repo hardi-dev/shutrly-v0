@@ -39,6 +39,24 @@ function BottomSheetHarness({
 }
 
 describe("BottomSheet (C32)", () => {
+  it("spans the viewport up to the tablet breakpoint and caps its content at the desktop modal width", async () => {
+    const user = userEvent.setup();
+    render(<BottomSheetHarness variant="form" />);
+
+    await user.click(screen.getByRole("button", { name: "Buka sheet" }));
+
+    const dialog = await screen.findByRole("dialog", { name: "Foto proyek" });
+    const surface = dialog.parentElement;
+    expect(surface).toHaveClass("w-full");
+    expect(surface?.className).not.toMatch(/max-w-/);
+    for (const part of [
+      screen.getByRole("heading", { name: "Foto proyek" }).closest("header"),
+      screen.getByRole("button", { name: "Unduh foto" }).parentElement,
+      screen.getByRole("button", { name: "Simpan" }).parentElement,
+    ])
+      expect(part).toHaveClass("mx-auto", "max-w-[560px]");
+  });
+
   it("renders an actions sheet with a decorative grabber and returns focus on Escape", async () => {
     const user = userEvent.setup();
     render(<BottomSheetHarness />);
@@ -73,7 +91,7 @@ describe("BottomSheet (C32)", () => {
     expect(screen.getByText("Pilih tindakan untuk foto ini.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tutup" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Simpan" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Simpan" }).parentElement).toHaveClass(
+    expect(screen.getByRole("button", { name: "Simpan" }).closest("footer")).toHaveClass(
       "bg-(--component-sheet-footer-background)",
     );
     expect(

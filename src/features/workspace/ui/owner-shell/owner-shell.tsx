@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { AppShell } from "@/ui/patterns/app-shell/app-shell";
+import type { AppShellSubPage } from "@/ui/patterns/app-shell/app-shell.types";
 import type { BottomNavProps } from "@/ui/patterns/bottom-nav/bottom-nav.types";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { PAGE_ACTIONS_ID } from "@/ui/patterns/page-actions/page-actions";
@@ -63,10 +64,14 @@ export function OwnerShell({
   const [headingOverride, setHeadingOverride] = useState<PageHeadingOverrideValue | null>(null);
   const resolvedHeading = resolvePageHeading(currentPathname, workspaceId, workspaceName);
   const heading = headingOverride ?? subPage ?? resolvedHeading ?? { title };
-  let shellSubPage: { parent: { label: string; href: string } } | undefined;
+  let shellSubPage: AppShellSubPage | undefined;
   let panelBreadcrumbs: readonly BreadcrumbItem[] | undefined;
-  if (headingOverride) shellSubPage = { parent: headingOverride.parent };
-  else if (subPage) shellSubPage = { parent: subPage.parent };
+  if (headingOverride) {
+    shellSubPage = {
+      parent: headingOverride.parent,
+      hidesBottomNav: headingOverride.hidesBottomNav,
+    };
+  } else if (subPage) shellSubPage = { parent: subPage.parent };
   if (headingOverride) {
     panelBreadcrumbs = [headingOverride.parent, { label: headingOverride.title }];
   } else if (subPage) {

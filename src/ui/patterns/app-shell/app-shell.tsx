@@ -117,6 +117,7 @@ export function AppShell({
         subtitle={subtitle}
         mobileSubtitle={mobileSubtitle}
         mobileBottomNav={mobileBottomNav}
+        isMobileBottomNavHidden={subPage?.hidesBottomNav}
         isMobileOverlayOpen={isMobileOverlayOpen}
         mobileSheet={mobileSheet}
         workspaceName={workspace.name}
@@ -268,6 +269,7 @@ function MobileContent({
   mobileSubtitle,
   children,
   mobileBottomNav,
+  isMobileBottomNavHidden,
   isMobileOverlayOpen,
   mobileSheet,
   workspaceName,
@@ -286,14 +288,14 @@ function MobileContent({
     | "mobileSheet"
     | "mobileUtilities"
     | "onMobileWorkspacePress"
-  > & { workspaceName: string; header?: ReactNode }
+  > & { workspaceName: string; header?: ReactNode; isMobileBottomNavHidden?: boolean }
 >) {
   return (
     <div className="flex min-w-0 flex-1 md:hidden">
       <MobileAppShell
         title={title}
         subtitle={mobileSubtitle ?? subtitle}
-        bottomNav={<BottomNavFromProps {...mobileBottomNav} />}
+        bottomNav={isMobileBottomNavHidden ? null : <BottomNavFromProps {...mobileBottomNav} />}
         isOverlayOpen={isMobileOverlayOpen}
         sheet={mobileSheet}
         workspace={workspaceName}

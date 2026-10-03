@@ -185,4 +185,49 @@ describe("OwnerShell sub-pages", () => {
     await userEvent.click(screen.getByRole("button", { name: "Proyek baru" }));
     expect(push).toHaveBeenCalledWith("/w/A/projects/new");
   });
+
+  it("AC-PRJ-007 a page can hide the phone Bottom Nav while its sticky bar is shown", () => {
+    render(
+      <OwnerShell
+        workspaceId="A"
+        workspaceName="Aster Wedding"
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        title="Aster Wedding"
+        workspaces={workspaces}
+        onSwitch={vi.fn()}
+        onCreate={vi.fn()}
+      >
+        <PageHeadingOverride
+          title="Proyek baru"
+          parent={{ label: "Proyek", href: "/w/A/projects" }}
+          hidesBottomNav
+        />
+        <p>isi</p>
+      </OwnerShell>,
+    );
+
+    // The desktop sidebar and the phone menu keep their "Utama" navigations; the Bottom Nav is the third.
+    expect(screen.getAllByRole("navigation", { name: "Utama" })).toHaveLength(2);
+    expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute("href", "/w/A/projects");
+  });
+
+  it("AC-PRJ-007 keeps the phone Bottom Nav on other pages", () => {
+    render(
+      <OwnerShell
+        workspaceId="A"
+        workspaceName="Aster Wedding"
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        title="Aster Wedding"
+        workspaces={workspaces}
+        onSwitch={vi.fn()}
+        onCreate={vi.fn()}
+      >
+        <p>isi</p>
+      </OwnerShell>,
+    );
+
+    expect(screen.getAllByRole("navigation", { name: "Utama" })).toHaveLength(3);
+  });
 });

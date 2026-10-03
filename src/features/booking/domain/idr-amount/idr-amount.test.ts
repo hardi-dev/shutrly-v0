@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { canonicalIdrAmount, formatIdr, parseIdrAmount } from "./idr-amount";
+import { canonicalIdrAmount, formatIdr, formatIdrNumber, parseIdrAmount } from "./idr-amount";
 
 describe("IDR amounts (BR-CUR-001, BR-CUR-003, ADR-007)", () => {
   it.each([
@@ -33,5 +33,10 @@ describe("IDR amounts (BR-CUR-001, BR-CUR-003, ADR-007)", () => {
     ["1200.500", "1200.500"],
   ])("normalizes database value %s to %s", (raw, expected) => {
     expect(canonicalIdrAmount(raw)).toBe(expected);
+  });
+
+  it("AC-PRJ-007 groups digits without the currency prefix", () => {
+    expect(formatIdrNumber("750000")).toBe("750.000");
+    expect(formatIdrNumber("0")).toBe("0");
   });
 });

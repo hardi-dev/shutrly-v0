@@ -7,6 +7,8 @@ import type { SidebarAccount, SidebarWorkspace } from "../sidebar/sidebar.types"
 
 export interface AppShellSubPage {
   parent: CompactBarProps["parent"];
+  /** Hides the phone Bottom Nav, e.g. when a sticky action bar takes its place. */
+  hidesBottomNav?: boolean;
 }
 
 export interface AppShellProps {

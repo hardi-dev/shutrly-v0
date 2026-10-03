@@ -57,6 +57,7 @@ export function Combobox<T extends { readonly id: string }>(props: Readonly<Comb
       menuTrigger="focus"
       // Typed text is never a selection, so Escape closes the menu and keeps the query.
       allowsCustomValue
+      allowsEmptyCollection
       isDisabled={props.isDisabled}
       isInvalid={Boolean(props.errorMessage)}
       validationBehavior="aria"
@@ -113,13 +114,20 @@ function ComboboxMenu<T extends { readonly id: string }>(props: Readonly<Combobo
       offset={4}
       className="w-(--trigger-width) rounded-(--component-menu-radius) border border-(--component-menu-border) bg-(--component-menu-background) p-(--component-menu-padding) shadow-[0_var(--elevation-1-offset-y)_var(--elevation-1-blur)_var(--color-semantic-elevation-1-color)]"
     >
+      {props.items.length === 0 ? (
+        <p className="px-(--component-menu-item-padding-x) py-(--space-2) text-(length:--font-size-overline) font-bold uppercase tracking-(--font-letter-spacing-overline) text-(--component-menu-group-label)">
+          {props.groupLabel}
+        </p>
+      ) : null}
       <ListBox aria-label={props.label} aria-busy={props.isLoading} className="outline-none">
-        <ListBoxSection aria-label={props.groupLabel}>
-          <MenuGroupLabel>{props.groupLabel}</MenuGroupLabel>
-          {props.items.map((item) => (
-            <ComboboxOption key={item.id} item={item} renderItem={props.renderItem} />
-          ))}
-        </ListBoxSection>
+        {props.items.length > 0 ? (
+          <ListBoxSection aria-label={props.groupLabel}>
+            <MenuGroupLabel>{props.groupLabel}</MenuGroupLabel>
+            {props.items.map((item) => (
+              <ComboboxOption key={item.id} item={item} renderItem={props.renderItem} />
+            ))}
+          </ListBoxSection>
+        ) : null}
         {hasCreate ? <CreateRow label={props.createLabel ?? ""} query={props.inputValue} /> : null}
       </ListBox>
     </Popover>

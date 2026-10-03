@@ -19,7 +19,12 @@ export function parseIdrAmount(raw: string): IdrAmountResult {
 
 /** Formats a whole-rupiah digit string, never through floating point (ADR-007). @param amount - digit string @returns e.g. "Rp 750.000" */
 export function formatIdr(amount: string): string {
-  return `Rp ${IDR_FORMAT.format(BigInt(amount))}`;
+  return `Rp ${formatIdrNumber(amount)}`;
+}
+
+/** Groups a whole-rupiah digit string with dots, without the currency prefix. @param amount - digit string @returns e.g. "750.000" */
+export function formatIdrNumber(amount: string): string {
+  return IDR_FORMAT.format(BigInt(amount));
 }
 
 /** Normalizes the fixed-scale database representation without using floating point. */

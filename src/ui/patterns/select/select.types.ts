@@ -1,4 +1,5 @@
 import type { IconName } from "@/ui/primitives/icon/icon.types";
+import type { FieldNameProps } from "@/ui/primitives/text-field/text-field.types";
 
 export interface SelectOption {
   readonly id: string;
@@ -8,8 +9,7 @@ export interface SelectOption {
   readonly isDisabled?: boolean;
 }
 
-export interface SelectProps {
-  readonly label: string;
+export type SelectProps = FieldNameProps & {
   readonly options: readonly SelectOption[];
   readonly value: string | null;
   readonly onChange: (id: string) => void;
@@ -20,7 +20,7 @@ export interface SelectProps {
   readonly isOptional?: boolean;
   readonly pickerDescription?: string;
   readonly name?: string;
-}
+};
 
 export interface SelectOptionItemProps {
   readonly option: SelectOption;
@@ -44,4 +44,10 @@ export interface MobileSelectSheetProps {
   readonly onOpenChange: (isOpen: boolean) => void;
   readonly onPendingChange: (keys: Set<string | number> | "all") => void;
   readonly onPick: () => void;
+}
+
+export interface SelectMessageProps {
+  readonly description?: string;
+  readonly errorMessage?: string;
+  readonly errorMessageId: string;
 }

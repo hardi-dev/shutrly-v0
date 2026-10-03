@@ -135,6 +135,7 @@ export function OwnerShell({
         <AppShell
           title={heading.title}
           subtitle={heading.subtitle}
+          mobileSubtitle={"mobileSubtitle" in heading ? heading.mobileSubtitle : undefined}
           workspace={{ name: workspaceName }}
           subPage={shellSubPage}
           panelBreadcrumbs={panelBreadcrumbs}

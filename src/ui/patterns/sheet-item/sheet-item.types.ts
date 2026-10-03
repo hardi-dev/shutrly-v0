@@ -10,5 +10,8 @@ export interface SheetItemProps {
   isSelected?: boolean;
   isDisabled?: boolean;
   variant?: SheetItemVariant;
-  onPress: () => void;
+  href?: string;
+  target?: "_blank";
+  isPending?: boolean;
+  onPress?: () => void;
 }

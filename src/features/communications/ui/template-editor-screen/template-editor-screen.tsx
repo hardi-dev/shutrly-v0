@@ -144,8 +144,7 @@ function ContentField({ template, type, isMobile }: Readonly<EditorPartProps>) {
   };
   return (
     <Textarea
-      label={COPY.contentLabel}
-      isLabelHidden
+      aria-label={COPY.contentLabel}
       name={field.name}
       // 13 / 12 lines of 21 px ≈ the 300 / 280 px textarea in v8MaG / byw9B (D-M4).
       rows={isMobile ? 13 : 12}

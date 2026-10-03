@@ -106,4 +106,21 @@ describe("AppShell (C30/C37)", () => {
       "/w/A/services",
     );
   });
+
+  it("uses mobileSubtitle for the mobile header and falls back to subtitle", () => {
+    const { rerender } = render(
+      <AppShell {...props} subtitle="Ringkasan desktop" mobileSubtitle="Ringkasan ponsel">
+        <p>isi</p>
+      </AppShell>,
+    );
+
+    expect(screen.getByText("Ringkasan ponsel")).toBeInTheDocument();
+
+    rerender(
+      <AppShell {...props} subtitle="Ringkasan desktop">
+        <p>isi</p>
+      </AppShell>,
+    );
+    expect(screen.getAllByText("Ringkasan desktop")).toHaveLength(2);
+  });
 });

@@ -78,9 +78,26 @@ describe("TextField", () => {
       errorMessage: "Masukkan email yang valid",
     });
     expect(input).toHaveAttribute("aria-invalid", "true");
-    expect(input).toHaveAccessibleDescription("Masukkan email yang valid");
+    expect(input).toHaveAccessibleErrorMessage("Masukkan email yang valid");
     expect(screen.queryByText("Kami kirim tautan ke email ini.")).toBeNull();
     expect(screen.getByTestId("input-icon-trailing")).toBeInTheDocument();
+  });
+
+  it("uses an aria-label without rendering a visible label", () => {
+    const { container } = render(
+      <TextField
+        aria-label="Cari klien"
+        name="search"
+        value=""
+        onChange={vi.fn()}
+        onBlur={vi.fn()}
+        errorMessage="Masukkan pencarian"
+      />,
+    );
+
+    const input = screen.getByRole("textbox", { name: "Cari klien" });
+    expect(container.querySelector("label")).toBeNull();
+    expect(input).toHaveAccessibleErrorMessage("Masukkan pencarian");
   });
 
   it("AC-FND-014 reports string values and blur", async () => {

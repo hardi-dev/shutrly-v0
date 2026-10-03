@@ -1,6 +1,5 @@
 export const COMING_SOON_SECTIONS = [
   "projects",
-  "clients",
   "invoices",
   "team",
   "new-project",

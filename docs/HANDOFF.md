@@ -1,21 +1,20 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-02 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 PLANNED; F-07 PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` is merged into `feat/clients` at `fe1d6f0`).
+Last updated: 2026-10-03 (F-00, F-01, F-02, F-03 and F-17 DONE; F-04 merged, not yet verified; F-05 merged to `main` (PR #3), not yet verified; F-06 DONE and merged to `main`) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `feat/projects` (`main` merged in) (F-04 via PR #1, F-05 via PR #3 and F-06 from `codex/clients` are on `main`).
 
-## Current handoff — F-07 Projects PLANNED (2026-10-02)
+## Current handoff — F-07 Projects PLANNED (2026-10-02; base updated 2026-10-03)
 
 - **Plan:** [technical-design.md](features/projects/technical-design.md) (decisions D-1…D-16) and [plan.md](features/projects/plan.md), vertical slices by screen (Slice 0–8), one commit per step.
   - **Tables:** `project`, `project_item`, `project_field_value` and `project_session` in the `booking` context, migration **0009**.
   - **Writes:** every write locks the project row and decides from the stored status; status actions send a step, never a status.
   - **List:** sorted by each project's shown session (A-12), with keyset paging.
   - **Token:** 256-bit, written once and never selected by F-07.
-- **Base:** F-06 Clients is planned but **not built**. Slice 0 stops until F-06 is built and merged into `feat/projects`.
+- **Base:** F-06 is DONE and `main` is merged into `feat/projects` (2026-10-03), so Slice 0 can start.
 - **Owner check:** technical-design.md › D-5 reads AC-PRJ-008's *"none for Ukuran toga"* as *no value*. A metadata row is still stored, so the detail can show the field as empty and edit it later.
 - **New dependency:** `@internationalized/date` (React Aria's date library), recorded in tech-stack.md.
-- **Next:** build F-06 (`/sdv:build-feature clients 0`, Slices 0–6), then `/sdv:build-feature projects 0`.
+- **Next:** `/sdv:build-feature projects 0`.
 
-- **Branch:** `feat/projects`, cut from `feat/clients` because projects need the client table. Merge F-06 to `main` first, or rebase this branch once it lands.
 - **Spec:** [spec.md](features/projects/spec.md), [acceptance-criteria.md](features/projects/acceptance-criteria.md) (AC-PRJ-001…026).
 - **Domain updates:** BR-PRJ-004's SPEC GAP is resolved (manual steps; no backwards moves; final delivery from `BOOKED`/`SHOOTING`/`POST_PROCESSING`). BR-DEL-003 now names those states. New rules are BR-PRJ-008 (record), BR-PRJ-009 (deal editable while `DRAFT`/`BOOKED`) and BR-PRJ-010 (delete drafts, cancel the rest). The domain-model lifecycle diagram is updated.
 - **Feature map:** F-04 and F-05 are marked DONE (merged; verification owed). The *Next up* section was rewritten.
@@ -26,13 +25,19 @@ Branch: `feat/clients` (F-04 via PR #1 and F-05 via PR #3 are on `main`; `main` 
   - A-1: routes `/projects`, `/projects/new`, `/projects/[id]`.
 - **Next:** continue `/sdv:design-feature projects` from the design handoff. F-06 build (`/sdv:build-feature clients 1`) is still pending on `feat/clients`.
 
-## Previous handoff — F-06 Clients PLANNED (2026-10-02)
+## Previous handoff — F-06 Clients DONE (2026-10-03)
 
-- **Plan:** [technical-design.md](features/clients/technical-design.md) (decisions D-1…D-8) and [plan.md](features/clients/plan.md), vertical slices by screen (Slice 0–6), one commit per step.
-  - Clients live in the `booking` context with one `client` table (social links as validated JSONB) and migration **0008**.
-  - *Aktif* / *Arsip* are routes shown as Page Header tabs; the list uses keyset paging with a count, and a new shared `DataTable` (C27).
-- **Base (Owner 2026-10-02):** the plan assumes F-05 is on `main`. It is (PR #3), and `main` is merged into `feat/clients`, so Slice 0's base check passes; its sync step is already done.
-- **Next:** `/sdv:build-feature clients 0`.
+- **Done:** the Owner marked F-06 DONE after a browser review, and it is merged to `main` from `codex/clients`. The browser-review fixes and the gate are in the [implementation record](features/clients/technical-design.md#implementation-record--2026-10-03).
+  - **Fixes:** the search URL loop, the double clear `x`, the full-width Bottom Sheet, and the placeholders and phone social rows.
+  - **Gate:** unit, typecheck, lint, build, and the client E2E and axe suites pass. Integration tests were skipped by the Owner.
+- **Carry-over:** AC-CLI-015's real-FK integration check (F-07); promote List Card Item avatar / Sheet Item pending; the `text.link` token gap.
+- **Next:** F-07 Projects (`feat/projects`), then F-08 Team (designed on `feat/team-sessions`). F-04 and F-05 still await `/sdv:verify-feature`.
+
+## Previous handoff — F-06 Clients IN PROGRESS (2026-10-03)
+
+- **Build:** all six slices are implemented on `codex/clients`. The reviewed `0008_client` migration was applied to the non-production database (`migrations applied successfully!`). The responsive pages, add/edit dialog, archive/restore/delete, search and paging, browser journeys and accessibility coverage are committed through `138c48e`.
+- **Validation:** targeted unit/DOM tests, TypeScript and ESLint pass. Client journeys pass individually against the isolated worktree server. The full axe E2E re-run is pending: repeated local registrations began failing at `/register` with no alert content before the isolated scans could start. Also keep AC-CLI-015's real foreign-key integration assertion for F-07.
+- **Next:** start a fresh local server, re-run the full quality gate and `/sdv:verify-feature clients`; then mark F-06 DONE only if it passes.
 
 ### Design (approved 2026-10-02)
 

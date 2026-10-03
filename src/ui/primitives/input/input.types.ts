@@ -5,7 +5,7 @@ import type { IconName } from "../icon/icon.types";
 export type InputVariant = "default" | "search";
 export type InputIconName = Extract<
   IconName,
-  "search" | "chevron-down" | "calendar" | "eye" | "eye-off" | "circle-alert"
+  "search" | "x" | "chevron-down" | "calendar" | "eye" | "eye-off" | "circle-alert"
 >;
 
 export interface InputIconAction {

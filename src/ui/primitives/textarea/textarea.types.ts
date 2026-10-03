@@ -1,7 +1,8 @@
 import type { Ref } from "react";
 
-export interface TextareaProps {
-  label: string;
+import type { FieldNameProps } from "../text-field/text-field.types";
+
+export type TextareaProps = FieldNameProps & {
   name?: string;
   optional?: boolean;
   helperText?: string;
@@ -14,7 +15,16 @@ export interface TextareaProps {
   isReadOnly?: boolean;
   className?: string;
   textareaRef?: Ref<HTMLTextAreaElement>;
-  isLabelHidden?: boolean;
   rows?: number;
+  trailingMeta?: string;
+};
+
+export interface TextareaDescriptionProps {
+  errorMessage?: string;
+  helperText?: string;
+  errorMessageId: string;
+}
+
+export interface TextareaFooterProps extends TextareaDescriptionProps {
   trailingMeta?: string;
 }

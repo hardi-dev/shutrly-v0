@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable max-len -- semantic action item content is kept adjacent to its React Aria wrapper */
 
 import { MenuItem as AriaMenuItem } from "react-aria-components";
 
@@ -42,18 +43,42 @@ export function MenuItem({
   isDisabled = false,
   variant = "default",
   layout = "compact",
+  href,
+  target,
   onSelect,
 }: Readonly<MenuItemProps>) {
   const isDestructive = variant === "destructive";
-
   return (
     <AriaMenuItem
+      href={href}
+      target={target}
+      rel={target === "_blank" ? "noopener noreferrer" : undefined}
       textValue={label}
       isDisabled={isDisabled}
       onAction={onSelect}
       aria-label={description ? `${label} ${description}` : label}
       className={getMenuItemClassName(isDestructive, isDisabled, layout)}
     >
+      <MenuItemContent
+        label={label}
+        description={description}
+        icon={icon}
+        isSelected={isSelected}
+        layout={layout}
+      />
+    </AriaMenuItem>
+  );
+}
+
+function MenuItemContent({
+  label,
+  description,
+  icon,
+  isSelected,
+  layout,
+}: Readonly<Pick<MenuItemProps, "label" | "description" | "icon" | "isSelected" | "layout">>) {
+  return (
+    <>
       {icon ? <Icon name={icon} aria-hidden="true" data-testid="menu-item-icon" /> : null}
       <span className="min-w-0 flex-1">
         <span className={cn("block", isSelected && "font-semibold")}>{label}</span>
@@ -75,6 +100,7 @@ export function MenuItem({
           }
         />
       ) : null}
-    </AriaMenuItem>
+    </>
   );
 }
+/* eslint-enable max-len -- end adjacent item content */

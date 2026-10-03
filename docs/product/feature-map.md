@@ -38,7 +38,7 @@ F-07 defines one menu per project (row ⋯ on the list and the detail page menu)
 | Planned (Owner 2026-10-02, feature not yet scheduled) | *Kirim konfirmasi booking* | `DRAFT`, `BOOKED` | new type `BOOKING_CONFIRMATION`: changes BR-MSG-002 (five → six types), the F-03 catalogue and the default seed; needs its own discovery |
 
 ## Next up
-**F-08 Team** — IN PROGRESS 2026-10-04 (Slice 1 built; planned 2026-10-04, designed 2026-10-03) on `feat/team-sessions` (branched from `feat/projects`, since assignments need sessions) ([spec.md](../features/team-sessions/spec.md)). Owner decisions:
+**F-08 Team** — IN PROGRESS 2026-10-04 (Slices 1–5 built, Slice 6 specs written but E2E and fidelity not run; planned 2026-10-04, designed 2026-10-03) on `feat/team-sessions` (branched from `feat/projects`, since assignments need sessions) ([spec.md](../features/team-sessions/spec.md)). Owner decisions:
 - each assignment puts one member on one session, in one role;
 - sessions and assignments have no stored status;
 - no money at all: rates, fees and payment tracking moved to F-18 *Team fees* (BR-TEAM-007 deprecated);

@@ -1,7 +1,7 @@
 # Feature: Team
 
 ID: F-08 · Slug: `team-sessions`
-Status: IN PROGRESS (Slice 1 built 2026-10-04; planned 2026-10-04, [technical-design.md](technical-design.md), [plan.md](plan.md)); designed 2026-10-03 ([design.md](design.md)); specified and modelled 2026-10-03 ([diagrams](diagrams/)); scope cut 2026-10-03: no money · Journeys: J-03 (*Sessions → Assign team → Confirm → BOOKED*)
+Status: IN PROGRESS (Slices 1–5 built and the Slice 6 sweep and E2E specs written 2026-10-04; E2E, axe and the fidelity pass not yet run; planned 2026-10-04, [technical-design.md](technical-design.md), [plan.md](plan.md)); designed 2026-10-03 ([design.md](design.md)); specified and modelled 2026-10-03 ([diagrams](diagrams/)); scope cut 2026-10-03: no money · Journeys: J-03 (*Sessions → Assign team → Confirm → BOOKED*)
 Consumer: F-18 `team-fees` (not scheduled) would add rates, fees and payment tracking to these assignments.
 
 ## Goal

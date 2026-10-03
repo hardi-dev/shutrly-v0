@@ -750,7 +750,7 @@ No log line carries member data.
 - cancelled projects show it read-only;
 - the session and draft delete confirmations name the team.
 
-- [ ] **5.1 Remove backend.**
+- [x] **5.1 Remove backend.**
   - Write `remove-session-assignment`, the repository `remove` (D-5), the flow entry and the action.
   - Tests:
     - integration `AC-TEAM-014`: removed;
@@ -758,7 +758,7 @@ No log line carries member data.
     - integration `AC-TEAM-022`: B's assignment → `NOT_FOUND`;
     - integration `AC-TEAM-020`: session delete and draft delete cascade, and the members remain.
   - Commit: `feat(team): remove members from sessions`.
-- [ ] **5.2 *Atur tim*.**
+- [x] **5.2 *Atur tim*.**
   - Write `session-team-dialog`:
     - Modal MD / Bottom Sheet Form;
     - title *Tim · {session}* and the session line;
@@ -772,7 +772,7 @@ No log line carries member data.
     - dom `AC-TEAM-015`: read-only.
   - Compare with the exports at 1440 and 390.
   - Commit: `feat(team): add atur tim`.
-- [ ] **5.3 Team-aware deletes.**
+- [x] **5.3 Team-aware deletes.**
   - In `DetailEditing`, a session with assignments gets the body *Sesi ini punya {n} anggota tim. Penugasan mereka ikut terhapus.*
   - `StatusDialogTarget` / `ProjectMenuTarget` gain `hasTeam?`. The list row passes `row.hasTeam`, the detail passes `assignments.length > 0`, and `DeleteDraftDialog` appends *Penugasan tim ikut terhapus.*
   - Tests (dom `AC-TEAM-020`): both bodies, with and without a team. F-07's dialog tests still pass.
@@ -794,11 +794,11 @@ No log line carries member data.
 - axe is clean on every F-08 surface at 1440 and 390, light and dark;
 - the isolation sweep and the fidelity pass are recorded in technical-design.md › Implementation record.
 
-- [ ] **6.1 Isolation and logging sweep.**
+- [x] **6.1 Isolation and logging sweep.**
   - Integration `AC-TEAM-022`: one test per write and read entry with workspace B's IDs, in the route and in the body.
   - Unit `AC-TEAM-023`: every flow's `saveError` logs IDs only.
   - Commit: `test(team): cover tenant isolation and log redaction`.
-- [ ] **6.2 Journeys and accessibility.**
+- [ ] **6.2 Journeys and accessibility.** _(specs written and committed, not run: port 3000 is held by another checkout)_
   - E2E J-03:
     - add members;
     - staff two sessions;
@@ -809,7 +809,7 @@ No log line carries member data.
   - axe on the three tabs, the member and role dialogs, the row sheet, *Atur tim* and the Penugasan form, at 1440 and 390, light and dark.
   - Keyboard paths: tab to `user-plus`, Enter opens the form, Esc returns focus.
   - Commit: `test(team): add the staffing journey and accessibility checks`.
-- [ ] **6.3 Fidelity pass and record.**
+- [ ] **6.3 Fidelity pass and record.** _(record written; the fidelity comparison and the BUILT status wait for a running app)_
   - Compare every screen with its 48 exports at 1440 and 390. Only class names and nesting may change (AGENTS.md).
   - Append *Implementation record* to technical-design.md: deviations, DESIGN TOKEN GAPs, migration runs and test counts.
   - Set the spec status to BUILT, pending `/sdv:verify-feature team-sessions`.

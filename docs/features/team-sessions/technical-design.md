@@ -409,3 +409,15 @@ See [plan.md](plan.md): six vertical slices by screen, test-first, one commit pe
   5. Reuse: `SessionTeamAvatars` is feature-local (design.md COMPONENT GAP); the avatar group is one `<button>`, which opens *Atur tim*.
 - **Open for Slice 5:** `DeleteDraftDialog` and the list row menu need `hasTeam` (D-14), already on `ProjectListRow`.
 
+## Implementation record — Slices 5 and 6 (2026-10-04)
+
+- **Built:** `removeSessionAssignment` and the repository `remove` (project row `FOR UPDATE`, D-5), its flow entry and action; `SessionTeamDialog` (*Atur tim*: rows, `trash-2` remove with `ProjectConfirmDialog`, read-only note and *Tutup* for a cancelled project) wired into `SessionTeamHost` with the `addFromTeam` return to the team view; `firstName`; `hasTeam` on `StatusDialogTarget` / `ProjectMenuTarget` (list row and detail), the draft delete sentence and the session delete body with the team count; the 6.1 sweep (isolation reads, a table-driven log redaction test over all 13 flow entries); E2E specs for the staffing journey (J-03), foreign URLs, the axe matrix (desktop and phone, light and dark) and the keyboard path, with shared helpers in `tests/e2e/team/team-e2e.ts`.
+- **Checks:** typecheck, ESLint and Prettier on `src` and `tests`, `pnpm build` and 1282 unit tests pass. Team integration plus F-07 `project-repository` and `project-list` (73) pass, including remove, cancel races, the cascades and isolation. **Not run:** every team E2E spec (`tests/e2e/team/*`, `tests/e2e/projects/session-team.spec.ts`; they load with `playwright test --list`), the axe matrix, and the comparison with the exports at 1440 and 390. Port 3000 is still a dev server of another checkout (PID 83066, `~/.codex/worktrees/clients`) and `.dev.vars` ties auth to it. I did not stop it.
+- **Deviations:**
+  1. Step 5.2's dom tests were written after the component, not before; they pass and cover the listed behaviours.
+  2. `Button` gained the `user-plus` icon (the drawn *Tambah anggota* in *Atur tim*).
+  3. On phones *Atur tim* shows only *Tambah anggota* in its footer, and the read-only sheet has no footer button, as drawn; removing is the same Actions sheet as F-07's.
+  4. The removal failure toast is F-07's (*Perubahan belum tersimpan*, no *Coba lagi* action), as `useProjectEdits` does.
+  5. `AssignmentDialog` and `SessionTeamDialog` are mounted per view, so the Penugasan form no longer animates out when it returns to *Atur tim*.
+- **Open:** run the E2E, axe and fidelity pass once port 3000 is free, then set the spec to BUILT and run `/sdv:verify-feature team-sessions`.
+

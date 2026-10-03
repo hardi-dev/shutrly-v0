@@ -47,6 +47,8 @@ export const TEAM_COPY = {
   memberName: "Nama",
   memberNamePlaceholder: "Nama lengkap",
   memberWhatsapp: "Nomor WhatsApp",
+  // not in Pencil: the export draws only the hint; the placeholder matches the client form
+  memberWhatsappPlaceholder: "0812 3456 7890",
   memberWhatsappHint: "Contoh: 0812 3456 7890",
   memberEmail: "Email",
   memberEmailPlaceholder: "nama@email.com",

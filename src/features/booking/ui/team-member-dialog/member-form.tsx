@@ -58,6 +58,7 @@ function WhatsappField({ control, isPending, numberHolder }: Readonly<FieldProps
       onChange={field.onChange}
       onBlur={field.onBlur}
       inputRef={field.ref}
+      placeholder={TEAM_COPY.memberWhatsappPlaceholder}
       description={TEAM_COPY.memberWhatsappHint}
       isDisabled={isPending}
       errorMessage={key ? teamMemberErrorText("whatsappNumber", key, numberHolder) : undefined}

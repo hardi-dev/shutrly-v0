@@ -193,4 +193,12 @@ describe("TeamMemberDialog", () => {
     expect(screen.getByRole("dialog", { name: "Tambah anggota" })).toBeInTheDocument();
     expect(screen.getByLabelText("Nama")).toBeInTheDocument();
   });
+
+  it("AC-TEAM-004 shows a placeholder in the WhatsApp field", () => {
+    setup();
+    expect(screen.getByRole("textbox", { name: /Nomor WhatsApp/ })).toHaveAttribute(
+      "placeholder",
+      "0812 3456 7890",
+    );
+  });
 });

@@ -1,8 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import type { ReactNode } from "react";
 import { useState } from "react";
 
+import type { ProjectListRow } from "@/features/booking/application/ports/project-list-reader/project-list-reader.port";
+import { formatShortDate } from "@/features/booking/domain/session/session";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { Button } from "@/ui/primitives/button/button";
@@ -11,8 +15,11 @@ import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { ProjectFilterButton } from "../project-filter-button/project-filter-button";
 import { ProjectFilterDialog } from "../project-filter-dialog/project-filter-dialog";
 import { ProjectList } from "../project-list/project-list";
+import { ProjectMenuHost } from "../project-menu-host/project-menu-host";
+import type { ProjectMenuTarget } from "../project-menu-host/project-menu-host.types";
 import { ProjectSearchField } from "../project-search-field/project-search-field";
 import { projectTabPath } from "../project-search-field/project-tab-path";
+import { projectStatusChip } from "../project-status-chip/project-status-props";
 import { ProjectsEmptyState } from "../projects-empty-state/projects-empty-state";
 import { ProjectsTable } from "../projects-table/projects-table";
 import { ProjectsTabsBar } from "../projects-tabs-bar/projects-tabs-bar";
@@ -20,9 +27,8 @@ import { useLoadMoreProjects } from "../use-load-more-projects/use-load-more-pro
 import { NewProjectButton } from "./new-project-button";
 import type { ProjectsScreenProps } from "./projects-screen.types";
 
-/** The project list (S1): tabs, search, table or list card, and Muat lebih banyak (AC-PRJ-001…005). */
-export function ProjectsScreen(props: Readonly<ProjectsScreenProps>) {
-  const pager = useLoadMoreProjects({
+function usePager(props: Readonly<ProjectsScreenProps>) {
+  return useLoadMoreProjects({
     workspaceId: props.workspaceId,
     tab: props.tab,
     q: props.q,
@@ -30,13 +36,39 @@ export function ProjectsScreen(props: Readonly<ProjectsScreenProps>) {
     filter: props.filter,
     action: props.loadMoreAction,
   });
+}
+
+/** The project list (S1): tabs, search, table or list card, and Muat lebih banyak (AC-PRJ-001…005). */
+export function ProjectsScreen(props: Readonly<ProjectsScreenProps>) {
+  const pager = usePager(props);
+  const router = useRouter();
+  const handleDeleted = () => {
+    router.refresh();
+  };
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const handleOpenFilter = () => {
     setIsFilterOpen(true);
   };
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)">
-      <ProjectsBody {...props} rows={pager.rows} onOpenFilter={handleOpenFilter} />
+      <ProjectMenuHost
+        workspaceId={props.workspaceId}
+        actions={props.menuActions}
+        variant="row"
+        onDeleted={handleDeleted}
+      >
+        {(api) => {
+          const renderMenu = (row: ProjectListRow) => api.menuFor(rowTarget(row));
+          return (
+            <ProjectsBody
+              {...props}
+              rows={pager.rows}
+              onOpenFilter={handleOpenFilter}
+              renderMenu={renderMenu}
+            />
+          );
+        }}
+      </ProjectMenuHost>
       <ProjectFilterDialog
         isOpen={isFilterOpen}
         onOpenChange={setIsFilterOpen}
@@ -58,6 +90,7 @@ function ProjectsBody(
     ProjectsScreenProps & {
       rows: ProjectsScreenProps["initialPage"]["items"];
       onOpenFilter: () => void;
+      renderMenu: (row: ProjectListRow) => ReactNode;
     }
   >,
 ) {
@@ -78,6 +111,7 @@ function ProjectsBody(
           count={props.count}
           rows={props.rows}
           emptyState={emptyState}
+          renderMenu={props.renderMenu}
           action={newButton(PROJECT_COPY.listAddMobile)}
         />
       </>
@@ -93,9 +127,26 @@ function ProjectsBody(
         rows={props.rows}
         emptyState={emptyState}
         search={search}
+        renderMenu={props.renderMenu}
       />
     </>
   );
+}
+
+function rowTarget(row: ProjectListRow): ProjectMenuTarget {
+  const when =
+    row.shownSession === null
+      ? PROJECT_COPY.metaNoSchedule
+      : formatShortDate(row.shownSession.date);
+  return {
+    id: row.id,
+    title: row.title,
+    status: row.status,
+    clientId: row.clientId,
+    clientName: row.clientName,
+    whatsappNumber: row.clientWhatsappNumber,
+    meta: PROJECT_COPY.menuSheetMeta(row.clientName, when, projectStatusChip(row.status).label),
+  };
 }
 
 function ProjectsSearchRow(

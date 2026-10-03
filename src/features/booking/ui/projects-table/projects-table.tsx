@@ -25,13 +25,16 @@ export function ProjectsTable({
   rows,
   emptyState,
   search,
+  renderMenu,
 }: Readonly<ProjectsTableProps>) {
-  const renderCell = (row: ProjectListRow, columnId: string): ReactNode => {
-    if (columnId === "project") return <ProjectCell workspaceId={workspaceId} row={row} />;
-    if (columnId === "event") return <EventCell row={row} />;
-    if (columnId === "status") return <ProjectStatusChip status={row.status} />;
-    return <span className="sr-only" />;
-  };
+  const renderCell = (row: ProjectListRow, columnId: string): ReactNode => (
+    <TableCell
+      workspaceId={workspaceId}
+      row={row}
+      columnId={columnId}
+      menu={columnId === "actions" ? renderMenu(row) : null}
+    />
+  );
   return (
     <SectionCard
       title={PROJECT_COPY.listTitle}
@@ -51,6 +54,18 @@ export function ProjectsTable({
       )}
     </SectionCard>
   );
+}
+
+function TableCell({
+  workspaceId,
+  row,
+  columnId,
+  menu,
+}: Readonly<{ workspaceId: string; row: ProjectListRow; columnId: string; menu: ReactNode }>) {
+  if (columnId === "project") return <ProjectCell workspaceId={workspaceId} row={row} />;
+  if (columnId === "event") return <EventCell row={row} />;
+  if (columnId === "status") return <ProjectStatusChip status={row.status} />;
+  return <>{menu}</>;
 }
 
 function ProjectCell({ workspaceId, row }: Readonly<{ workspaceId: string; row: ProjectListRow }>) {

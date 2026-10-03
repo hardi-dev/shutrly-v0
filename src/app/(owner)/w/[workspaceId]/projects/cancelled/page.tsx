@@ -1,3 +1,4 @@
+import { PROJECT_MENU_ACTIONS } from "@/app/actions/booking/project-menu-actions";
 import { loadMoreProjectsAction, searchFilterClientsAction } from "@/app/actions/booking/projects";
 import { loadProjects } from "@/composition/booking/project-flow/project-flow";
 import { ProjectsScreen } from "@/features/booking/ui/projects-screen/projects-screen";
@@ -22,6 +23,7 @@ export default async function CancelledProjectsPage({
       services={data.services}
       filterClient={data.filterClient}
       searchClientsAction={searchFilterClientsAction}
+      menuActions={PROJECT_MENU_ACTIONS}
       initialPage={data.page}
       loadMoreAction={loadMoreProjectsAction}
     />

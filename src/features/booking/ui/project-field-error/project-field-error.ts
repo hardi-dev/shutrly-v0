@@ -24,6 +24,10 @@ const PATH_MESSAGES: Readonly<Partial<Record<string, Readonly<Partial<Record<str
       END_NOT_AFTER_START: "Jam selesai harus setelah jam mulai.",
     },
     location: { TOO_LONG: "Lokasi maksimal 200 karakter." },
+    reason: {
+      REASON_REQUIRED: "Isi alasan pembatalan. Wajib setelah pemotretan dimulai.",
+      TOO_LONG: "Alasan maksimal 500 karakter.",
+    },
   };
 const GENERIC_INVALID = "Masukkan angka yang valid.";
 

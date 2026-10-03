@@ -1,4 +1,4 @@
-import { advanceProjectAction } from "@/app/actions/booking/projects";
+import { PROJECT_MENU_ACTIONS } from "@/app/actions/booking/project-menu-actions";
 import { loadProjectDetail } from "@/composition/booking/project-flow/project-flow";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { ProjectDetailScreen } from "@/features/booking/ui/project-detail-screen/project-detail-screen";
@@ -30,7 +30,7 @@ export default async function ProjectDetailPage({
       <ProjectDetailScreen
         workspaceId={workspaceId}
         project={project}
-        advanceAction={advanceProjectAction}
+        menuActions={PROJECT_MENU_ACTIONS}
       />
       {toast ? (
         <ToastOnMount

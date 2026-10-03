@@ -14,10 +14,10 @@ import type { UseProjectActionsInput } from "./use-project-actions.types";
 export function useProjectActions(input: Readonly<UseProjectActionsInput>) {
   const router = useRouter();
   const [pendingStep, setPendingStep] = useState<ProjectStep | null>(null);
-  const advance = async (step: ProjectStep): Promise<void> => {
+  const advance = async (step: ProjectStep, projectId = input.projectId): Promise<void> => {
     setPendingStep(step);
     try {
-      const result = await input.advanceAction(input.workspaceId, input.projectId, step);
+      const result = await input.advanceAction(input.workspaceId, projectId, step);
       if (result === undefined) {
         const copy = projectStepCopy(step);
         showToast({ tone: "success", title: copy.toastTitle, body: copy.toastBody });
@@ -32,10 +32,10 @@ export function useProjectActions(input: Readonly<UseProjectActionsInput>) {
       } else if (result.code === "SESSION_REQUIRED") {
         showToast({ tone: "danger", title: PROJECT_COPY.toastSessionRequiredTitle });
       } else {
-        showFailure(step, advance);
+        showFailure(step, projectId, advance);
       }
     } catch {
-      showFailure(step, advance);
+      showFailure(step, projectId, advance);
     } finally {
       setPendingStep(null);
     }
@@ -43,7 +43,11 @@ export function useProjectActions(input: Readonly<UseProjectActionsInput>) {
   return { pendingStep, advance };
 }
 
-function showFailure(step: ProjectStep, retry: (step: ProjectStep) => Promise<void>): void {
+function showFailure(
+  step: ProjectStep,
+  projectId: string,
+  retry: (step: ProjectStep, projectId: string) => Promise<void>,
+): void {
   showToast({
     tone: "danger",
     title: PROJECT_COPY.serverErrorTitle,
@@ -51,7 +55,7 @@ function showFailure(step: ProjectStep, retry: (step: ProjectStep) => Promise<vo
     action: {
       label: PROJECT_COPY.retry,
       onAction: () => {
-        void retry(step);
+        void retry(step, projectId);
       },
     },
   });

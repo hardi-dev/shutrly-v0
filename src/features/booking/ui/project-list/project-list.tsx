@@ -14,6 +14,7 @@ export function ProjectList({
   rows,
   action,
   emptyState,
+  renderMenu,
 }: Readonly<ProjectListProps>) {
   return (
     <SectionCard
@@ -38,7 +39,12 @@ export function ProjectList({
                   : formatShortDate(row.shownSession.date)
               }`}
               isLast={index === rows.length - 1}
-              trailing={<ProjectStatusChip status={row.status} />}
+              trailing={
+                <span className="flex items-center gap-(--space-2)">
+                  <ProjectStatusChip status={row.status} />
+                  {renderMenu(row)}
+                </span>
+              }
             />
           ))}
         </ul>

@@ -4,6 +4,7 @@ import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
+import { Button } from "@/ui/primitives/button/button";
 
 import { PackageItemsCard } from "../package-items-card/package-items-card";
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
@@ -16,14 +17,28 @@ function lockedDescription(project: ProjectDetailCardProps["project"]): string |
   return project.canEditDeal ? undefined : PROJECT_COPY.lockedDescription;
 }
 
-/** Info card: client, service, agreed price and internal notes. */
-export function ProjectInfoCard({ project }: Readonly<ProjectDetailCardProps>) {
+/** Info card: client, service, agreed price and internal notes; Ubah info shows while the project can change. */
+export function ProjectInfoCard({
+  project,
+  isMobile,
+  onEdit,
+}: Readonly<ProjectDetailCardProps & { onEdit?: () => void }>) {
   const number = project.client.whatsappNumber;
   const client = number
     ? `${project.client.name} · ${formatWhatsappNumber(number)}`
     : project.client.name;
   return (
-    <SectionCard title={PROJECT_COPY.infoTitle} content="flush">
+    <SectionCard
+      title={PROJECT_COPY.infoTitle}
+      content="flush"
+      actions={
+        onEdit && project.canEditInfo ? (
+          <Button variant="secondary" iconLeading="pencil" onPress={onEdit}>
+            {isMobile ? PROJECT_COPY.infoEditMobile : PROJECT_COPY.infoEditDesktop}
+          </Button>
+        ) : null
+      }
+    >
       <ProjectFacts
         facts={[
           { label: PROJECT_COPY.infoClient, value: client },

@@ -6,6 +6,7 @@ import type { ProjectDetailView } from "@/features/booking/application/use-cases
 import { buildProjectMenu } from "@/features/booking/domain/project-menu/project-menu";
 import type { ProjectStatus } from "@/features/booking/domain/project-status/project-status.types";
 
+import type { ProjectMenuActions } from "../project-menu-host/project-menu-host.types";
 import { ProjectDetailScreen } from "./project-detail-screen";
 
 const { isMobile, refresh, showToast } = vi.hoisted(() => ({
@@ -16,7 +17,12 @@ const { isMobile, refresh, showToast } = vi.hoisted(() => ({
 vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
   useMobileViewport: () => isMobile.value,
 }));
-vi.mock("next/navigation", () => ({ useRouter: () => ({ refresh }) }));
+vi.mock("next/navigation", () => ({ useRouter: () => ({ refresh, push: vi.fn() }) }));
+vi.mock("@/ui/patterns/compact-bar/compact-bar-actions", () => ({
+  CompactBarActions: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="compact-actions">{children}</div>
+  ),
+}));
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast }));
 vi.mock("@/ui/patterns/page-actions/page-actions", () => ({
   PageActions: ({ children }: { children: React.ReactNode }) => (
@@ -111,11 +117,25 @@ function view(
   };
 }
 
+function menuActions(advanceAction: ProjectMenuActions["advanceAction"]): ProjectMenuActions {
+  return {
+    advanceAction,
+    updateInfoAction: vi.fn(),
+    cancelAction: vi.fn(),
+    deleteDraftAction: vi.fn(),
+    loadDetailAction: vi.fn(),
+    loadClientAction: vi.fn(),
+    updateClientAction: vi.fn(),
+  };
+}
+
 function renderScreen(
   project: ProjectDetailView,
   advance = vi.fn(() => Promise.resolve(undefined)),
 ) {
-  render(<ProjectDetailScreen workspaceId="ws" project={project} advanceAction={advance} />);
+  render(
+    <ProjectDetailScreen workspaceId="ws" project={project} menuActions={menuActions(advance)} />,
+  );
   return advance;
 }
 
@@ -151,7 +171,11 @@ describe("ProjectDetailScreen", () => {
       ["SHOOTING", "Selesai pemotretan"],
     ] as const) {
       const { unmount } = render(
-        <ProjectDetailScreen workspaceId="ws" project={view(status)} advanceAction={vi.fn()} />,
+        <ProjectDetailScreen
+          workspaceId="ws"
+          project={view(status)}
+          menuActions={menuActions(vi.fn())}
+        />,
       );
       expect(
         within(screen.getByTestId("page-actions")).getByRole("button", { name: label }),
@@ -164,7 +188,11 @@ describe("ProjectDetailScreen", () => {
     "AC-PRJ-020 offers no step for %s",
     (status) => {
       renderScreen(view(status));
-      expect(screen.queryByTestId("page-actions")).not.toBeInTheDocument();
+      expect(
+        within(screen.getByTestId("page-actions")).queryByRole("button", {
+          name: /booking|pemotretan/i,
+        }),
+      ).not.toBeInTheDocument();
     },
   );
 
@@ -241,12 +269,13 @@ describe("ProjectDetailScreen", () => {
     expect(screen.getByText("Bisa diubah sampai pemotretan dimulai.")).toBeInTheDocument();
     expect(screen.getByText("Urut tanggal.")).toBeInTheDocument();
     expect(screen.queryByTestId("page-actions")).not.toBeInTheDocument();
+    expect(screen.getByTestId("compact-actions")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Mulai pemotretan" })).toBeInTheDocument();
   });
 
   it("AC-PRJ-015 has no step bar on a phone for a project without a step", () => {
     isMobile.value = true;
     renderScreen(view("POST_PROCESSING"));
-    expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /booking|pemotretan/i })).not.toBeInTheDocument();
   });
 });

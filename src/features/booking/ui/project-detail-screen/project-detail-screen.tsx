@@ -1,10 +1,22 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import type { ReactNode } from "react";
+
+import { formatShortDate } from "@/features/booking/domain/session/session";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
+import { CompactBarActions } from "@/ui/patterns/compact-bar/compact-bar-actions";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 
+import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { ProjectMenuHost } from "../project-menu-host/project-menu-host";
+import type {
+  ProjectMenuApi,
+  ProjectMenuTarget,
+} from "../project-menu-host/project-menu-host.types";
 import { ProjectSessionSummaryLine } from "../project-session-summary/project-session-summary-line";
 import { ProjectStatusChip } from "../project-status-chip/project-status-chip";
+import { projectStatusChip } from "../project-status-chip/project-status-props";
 import { useProjectActions } from "../use-project-actions/use-project-actions";
 import { ProjectCancelledAlert } from "./project-cancelled-alert";
 import {
@@ -17,13 +29,68 @@ import type { ProjectDetailScreenProps } from "./project-detail-screen.types";
 import { ProjectStepButton } from "./project-step-button";
 
 /** The project detail page (S3): header block on phones, one read-only card per area and the status step. */
-export function ProjectDetailScreen({
+export function ProjectDetailScreen(props: Readonly<ProjectDetailScreenProps>) {
+  const router = useRouter();
+  const handleDeleted = () => {
+    router.push(`/w/${props.workspaceId}/projects`);
+  };
+  return (
+    <ProjectMenuHost
+      workspaceId={props.workspaceId}
+      actions={props.menuActions}
+      variant="detail"
+      onDeleted={handleDeleted}
+    >
+      {(api) => <DetailBody {...props} api={api} />}
+    </ProjectMenuHost>
+  );
+}
+
+function menuTargetOf(project: ProjectDetailScreenProps["project"]): ProjectMenuTarget {
+  const when =
+    project.shownSession === null
+      ? PROJECT_COPY.metaNoSchedule
+      : formatShortDate(project.shownSession.session.date);
+  return {
+    id: project.id,
+    title: project.title,
+    status: project.status,
+    clientId: project.client.id,
+    clientName: project.client.name,
+    whatsappNumber: project.client.whatsappNumber,
+    meta: PROJECT_COPY.menuSheetMeta(
+      project.client.name,
+      when,
+      projectStatusChip(project.status).label,
+    ),
+    info: {
+      projectId: project.id,
+      title: project.title,
+      notes: project.notes,
+      agreedPrice: project.agreedPrice,
+      basePrice: project.service.basePrice,
+      canEditDeal: project.canEditDeal,
+    },
+  };
+}
+
+function DetailBody({
   workspaceId,
   project,
-  advanceAction,
-}: Readonly<ProjectDetailScreenProps>) {
+  menuActions,
+  api,
+}: Readonly<ProjectDetailScreenProps & { api: ProjectMenuApi }>) {
   const isMobile = useMobileViewport();
-  const actions = useProjectActions({ workspaceId, projectId: project.id, advanceAction });
+  const actions = useProjectActions({
+    workspaceId,
+    projectId: project.id,
+    advanceAction: menuActions.advanceAction,
+  });
+  const target = menuTargetOf(project);
+  const menu = api.menuFor(target);
+  const handleEditInfo = () => {
+    api.openInfo(target);
+  };
   const step = project.nextStep;
   const button =
     step === null ? null : (
@@ -38,27 +105,53 @@ export function ProjectDetailScreen({
     );
   return (
     <>
-      {!isMobile && button ? <PageActions>{button}</PageActions> : null}
-      <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) pb-(--space-6) md:gap-(--component-panel-app-content-gap)">
-        {isMobile ? (
-          <header className="flex flex-col items-start gap-(--space-2)">
-            <ProjectStatusChip status={project.status} />
-            <ProjectSessionSummaryLine shown={project.shownSession} />
-          </header>
-        ) : null}
-        {project.cancellation ? (
-          <ProjectCancelledAlert cancellation={project.cancellation} />
-        ) : null}
-        <ProjectInfoCard project={project} isMobile={isMobile} />
-        <ProjectPackageCard project={project} isMobile={isMobile} />
-        <ProjectScheduleCard project={project} isMobile={isMobile} />
-        <ProjectFieldsReadCard project={project} isMobile={isMobile} />
-        {isMobile && button ? (
-          <div className="sticky bottom-0 z-10 border-t border-(--color-semantic-border-default) bg-(--color-semantic-surface-panel) p-(--space-4) max-md:-mx-(--space-4) max-md:-mb-(--space-5)">
-            {button}
-          </div>
-        ) : null}
-      </main>
+      {isMobile ? (
+        <CompactBarActions>{menu}</CompactBarActions>
+      ) : (
+        <PageActions>
+          {button}
+          {menu}
+        </PageActions>
+      )}
+      <DetailCards
+        project={project}
+        isMobile={isMobile}
+        onEditInfo={handleEditInfo}
+        button={button}
+      />
     </>
+  );
+}
+
+function DetailCards({
+  project,
+  isMobile,
+  onEditInfo,
+  button,
+}: Readonly<{
+  project: ProjectDetailScreenProps["project"];
+  isMobile: boolean;
+  onEditInfo: () => void;
+  button: ReactNode;
+}>) {
+  return (
+    <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) pb-(--space-6) md:gap-(--component-panel-app-content-gap)">
+      {isMobile ? (
+        <header className="flex flex-col items-start gap-(--space-2)">
+          <ProjectStatusChip status={project.status} />
+          <ProjectSessionSummaryLine shown={project.shownSession} />
+        </header>
+      ) : null}
+      {project.cancellation ? <ProjectCancelledAlert cancellation={project.cancellation} /> : null}
+      <ProjectInfoCard project={project} isMobile={isMobile} onEdit={onEditInfo} />
+      <ProjectPackageCard project={project} isMobile={isMobile} />
+      <ProjectScheduleCard project={project} isMobile={isMobile} />
+      <ProjectFieldsReadCard project={project} isMobile={isMobile} />
+      {isMobile && button ? (
+        <div className="sticky bottom-0 z-10 border-t border-(--color-semantic-border-default) bg-(--color-semantic-surface-panel) p-(--space-4) max-md:-mx-(--space-4) max-md:-mb-(--space-5)">
+          {button}
+        </div>
+      ) : null}
+    </main>
   );
 }

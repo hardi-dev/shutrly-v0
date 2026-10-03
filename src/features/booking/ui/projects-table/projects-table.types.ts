@@ -10,4 +10,5 @@ export interface ProjectsTableProps {
   readonly rows: readonly ProjectListRow[];
   readonly emptyState: ReactNode;
   readonly search: ReactNode;
+  readonly renderMenu: (row: ProjectListRow) => ReactNode;
 }

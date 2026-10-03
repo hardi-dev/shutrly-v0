@@ -7,6 +7,7 @@ import type { ProjectFilter } from "@/features/booking/domain/project-list-query
 import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 
 import type { SearchFilterClientsCall } from "../project-filter-dialog/project-filter-dialog.types";
+import type { ProjectMenuActions } from "../project-menu-host/project-menu-host.types";
 import type { LoadMoreProjectsCall } from "../use-load-more-projects/use-load-more-projects.types";
 
 export interface ProjectsScreenProps {
@@ -18,6 +19,7 @@ export interface ProjectsScreenProps {
   readonly services: readonly FilterServiceOption[];
   readonly filterClient: FilterClientOption | null;
   readonly searchClientsAction: SearchFilterClientsCall;
+  readonly menuActions: ProjectMenuActions;
   readonly initialPage: ProjectPage;
   readonly loadMoreAction: LoadMoreProjectsCall;
 }

@@ -9,6 +9,7 @@ import { useLayoutChange } from "@/ui/hooks/use-layout-change/use-layout-change"
 import { AppPanel, PageContent } from "../app-panel/app-panel";
 import { BottomNav } from "../bottom-nav/bottom-nav";
 import { CompactBar } from "../compact-bar/compact-bar";
+import { COMPACT_BAR_ACTIONS_ID } from "../compact-bar/compact-bar-actions";
 import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
 import { Sidebar } from "../sidebar/sidebar";
 import { APP_SHELL_COPY } from "./app-shell.copy";
@@ -127,7 +128,17 @@ export function AppShell({
         workspaceName={workspace.name}
         mobileUtilities={mobileUtilities}
         onMobileWorkspacePress={onMobileWorkspacePress}
-        header={subPage ? <CompactBar title={title} parent={subPage.parent} /> : undefined}
+        header={
+          subPage ? (
+            <CompactBar
+              title={title}
+              parent={subPage.parent}
+              actions={
+                <div id={COMPACT_BAR_ACTIONS_ID} className="flex items-center gap-(--space-2)" />
+              }
+            />
+          ) : undefined
+        }
       >
         {children}
       </MobileContent>

@@ -16,6 +16,7 @@ export type IconName =
   | "camera"
   | "calendar-check"
   | "list-filter"
+  | "circle-x"
   | "circle-check-big"
   | "chevrons-up-down"
   | "layout-grid"

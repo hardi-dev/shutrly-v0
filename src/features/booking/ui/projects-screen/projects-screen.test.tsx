@@ -34,6 +34,15 @@ const FILTER_PROPS = {
   services: [],
   filterClient: null,
   searchClientsAction: vi.fn(() => Promise.resolve([])),
+  menuActions: {
+    advanceAction: vi.fn(),
+    updateInfoAction: vi.fn(),
+    cancelAction: vi.fn(),
+    deleteDraftAction: vi.fn(),
+    loadDetailAction: vi.fn(),
+    loadClientAction: vi.fn(),
+    updateClientAction: vi.fn(),
+  },
 } as const;
 
 const WITH_SESSION: ProjectListRow = {

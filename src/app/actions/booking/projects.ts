@@ -9,6 +9,7 @@ import {
   createProjectEntry,
   deleteDraftEntry,
   loadMoreProjectsEntry,
+  loadProjectDetail,
   searchClientsEntry,
   searchFilterClientsEntry,
   updateProjectInfoEntry,
@@ -64,4 +65,8 @@ export async function deleteDraftAction(workspaceId: string, projectId: string) 
 
 export async function loadClientForEditAction(workspaceId: string, clientId: string) {
   return loadClientForEdit(workspaceId, clientId);
+}
+
+export async function loadProjectDetailAction(workspaceId: string, projectId: string) {
+  return loadProjectDetail(workspaceId, projectId);
 }

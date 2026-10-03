@@ -10,4 +10,5 @@ export interface ProjectListProps {
   readonly rows: readonly ProjectListRow[];
   readonly action: ReactNode;
   readonly emptyState: ReactNode;
+  readonly renderMenu: (row: ProjectListRow) => ReactNode;
 }

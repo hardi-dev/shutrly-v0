@@ -10,7 +10,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import type { Db } from "@/adapters/db/client/client.types";
 import { client } from "@/adapters/db/schema/booking/client";
-import { sessionAssignment, teamMember } from "@/adapters/db/schema/booking/team";
+import { sessionAssignment, teamMember, teamMemberRole } from "@/adapters/db/schema/booking/team";
 import { createDrizzleTeamMemberRepository } from "@/adapters/db/team-repository/drizzle-team-member-repository";
 import type { TeamMemberChange } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import { teamMemberInputSchema } from "@/features/booking/application/schemas/team-member-input/team-member-input.schema";
@@ -298,5 +298,87 @@ describe("Drizzle team member repository", () => {
       ),
     ).toBe("NOT_FOUND");
     expect((await page(second, {}))[0]?.name).toBe("Rahasia");
+  });
+
+  it("AC-TEAM-007 archives, restores and keeps the first archive time when repeated", async () => {
+    const base = await seedTeamWorkspace(db);
+    const roles = await seedTeamRoles(db, base, ["Fotografer"]);
+    const repository = createDrizzleTeamMemberRepository(db);
+    const dimas = await createMember(base, {
+      name: "Dimas",
+      number: DIMAS,
+      roleIds: [roles.Fotografer],
+    });
+    const change = { id: dimas, editorUserId: base.ownerId };
+    expect(await repository.setArchived(base, { ...change, isArchived: true })).toBe(true);
+    const [first] = await db
+      .select({ at: teamMember.archivedAt })
+      .from(teamMember)
+      .where(eq(teamMember.id, dimas));
+    await repository.setArchived(base, { ...change, isArchived: true });
+    const [second] = await db
+      .select({ at: teamMember.archivedAt })
+      .from(teamMember)
+      .where(eq(teamMember.id, dimas));
+    expect(second.at).toEqual(first.at);
+    expect((await page(base, { status: "ARCHIVED" })).map((member) => member.name)).toEqual([
+      "Dimas",
+    ]);
+    expect(await repository.setArchived(base, { ...change, isArchived: false })).toBe(true);
+    expect((await page(base, {})).map((member) => member.name)).toEqual(["Dimas"]);
+  });
+
+  it("AC-TEAM-007 refuses to delete an assigned member and deletes an unassigned one with its role rows", async () => {
+    const base = await seedTeamWorkspace(db);
+    const roles = await seedTeamRoles(db, base, ["Fotografer"]);
+    const repository = createDrizzleTeamMemberRepository(db);
+    const assigned = await createMember(base, {
+      name: "Dimas",
+      number: DIMAS,
+      roleIds: [roles.Fotografer],
+    });
+    const free = await createMember(base, {
+      name: "Ayu",
+      number: AYU,
+      roleIds: [roles.Fotografer],
+    });
+    await seedAssignment(
+      db,
+      base,
+      await seedProjectWithSession(db, base),
+      assigned,
+      roles.Fotografer,
+    );
+
+    expect(await repository.delete(base, assigned)).toBe("HAS_ASSIGNMENTS");
+    expect(await repository.delete(base, free)).toBe("DELETED");
+    expect(await repository.delete(base, free)).toBe("NOT_FOUND");
+    expect((await page(base, {})).map((member) => member.name)).toEqual(["Dimas"]);
+    const leftover = await db
+      .select({ memberId: teamMemberRole.memberId })
+      .from(teamMemberRole)
+      .where(eq(teamMemberRole.memberId, free));
+    expect(leftover).toEqual([]);
+  });
+
+  it("AC-TEAM-022 never archives or deletes another workspace's member", async () => {
+    const first = await seedTeamWorkspace(db);
+    const second = await seedTeamWorkspace(db);
+    const roles = await seedTeamRoles(db, second, ["Fotografer"]);
+    const repository = createDrizzleTeamMemberRepository(db);
+    const foreign = await createMember(second, {
+      name: "Rahasia",
+      number: DIMAS,
+      roleIds: [roles.Fotografer],
+    });
+    expect(
+      await repository.setArchived(first, {
+        id: foreign,
+        isArchived: true,
+        editorUserId: first.ownerId,
+      }),
+    ).toBe(false);
+    expect(await repository.delete(first, foreign)).toBe("NOT_FOUND");
+    expect((await page(second, {})).map((member) => member.name)).toEqual(["Rahasia"]);
   });
 });

@@ -5,7 +5,7 @@ import type { TeamMemberStatus } from "@/features/booking/domain/team-member/tea
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { TeamMemberFields } from "../../schemas/team-member-input/team-member-input.types";
-import type { NumberHolder } from "../client-repository/client-repository.port";
+import type { ArchiveChange, NumberHolder } from "../client-repository/client-repository.port";
 import type { RoleRef } from "../team-role-repository/team-role-repository.port";
 
 export interface TeamMemberRecord {
@@ -58,4 +58,11 @@ export interface TeamMemberRepositoryPort {
     id: string,
     change: TeamMemberChange,
   ) => Promise<"UPDATED" | "NOT_FOUND" | MemberNumberTaken>;
+  /** Sets or clears `archived_at`; false when the member is not in the workspace (BR-TEAM-004). */
+  readonly setArchived: (context: WorkspaceContext, change: ArchiveChange) => Promise<boolean>;
+  /** D-11: locks the member and deletes it only while it has no assignment. */
+  readonly delete: (
+    context: WorkspaceContext,
+    id: string,
+  ) => Promise<"DELETED" | "HAS_ASSIGNMENTS" | "NOT_FOUND">;
 }

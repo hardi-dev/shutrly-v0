@@ -11,10 +11,12 @@ import { teamMemberListQuerySchema } from "@/features/booking/application/schema
 import { addTeamMember } from "@/features/booking/application/use-cases/add-team-member/add-team-member";
 import { addTeamRole } from "@/features/booking/application/use-cases/add-team-role/add-team-role";
 import { countTeamMembers } from "@/features/booking/application/use-cases/count-team-members/count-team-members";
+import { deleteTeamMember } from "@/features/booking/application/use-cases/delete-team-member/delete-team-member";
 import { deleteTeamRole } from "@/features/booking/application/use-cases/delete-team-role/delete-team-role";
 import { listTeamMembers } from "@/features/booking/application/use-cases/list-team-members/list-team-members";
 import { listTeamRoles } from "@/features/booking/application/use-cases/list-team-roles/list-team-roles";
 import { renameTeamRole } from "@/features/booking/application/use-cases/rename-team-role/rename-team-role";
+import { setTeamMemberArchived } from "@/features/booking/application/use-cases/set-team-member-archived/set-team-member-archived";
 import { updateTeamMember } from "@/features/booking/application/use-cases/update-team-member/update-team-member";
 import { clientSearchSchema } from "@/features/booking/domain/client-search/client-search.schema";
 import type { TeamMemberStatus } from "@/features/booking/domain/team-member/team-member.types";
@@ -202,5 +204,52 @@ export async function updateWorkspaceTeamMember(
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "update-member");
+  }
+}
+
+/**
+ * Archives or restores a member.
+ * @param rawWorkspaceId - the untrusted route workspace ID
+ * @param rawMemberId - the untrusted member ID
+ * @param isArchived - true to archive, false to restore
+ * @returns nothing
+ */
+export async function setWorkspaceTeamMemberArchived(
+  rawWorkspaceId: string,
+  rawMemberId: string,
+  isArchived: boolean,
+): Promise<void> {
+  const memberId = memberIdOrNotFound(rawMemberId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    await withTeamScope(({ members }) =>
+      setTeamMemberArchived(members, verified.context, account.id, memberId, isArchived),
+    );
+  } catch (error) {
+    return saveError(
+      error,
+      verified.context.workspaceId,
+      isArchived ? "archive-member" : "restore-member",
+    );
+  }
+}
+
+/**
+ * Deletes a member that has no assignment.
+ * @param rawWorkspaceId - the untrusted route workspace ID
+ * @param rawMemberId - the untrusted member ID
+ * @returns success, or `HAS_ASSIGNMENTS`
+ */
+export async function deleteWorkspaceTeamMember(rawWorkspaceId: string, rawMemberId: string) {
+  const memberId = memberIdOrNotFound(rawMemberId);
+  await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withTeamScope(({ members }) =>
+      deleteTeamMember(members, verified.context, memberId),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "delete-member");
   }
 }

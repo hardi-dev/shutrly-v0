@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await -- the fakes mirror the asynchronous repository ports */
 
+import type { ArchiveChange } from "@/features/booking/application/ports/client-repository/client-repository.port";
 import type {
   TeamMemberChange,
   TeamMemberPageQuery,
@@ -83,6 +84,8 @@ interface StoredMember {
 /** In-memory member repository; `roles` is the role catalogue the fake validates role IDs against. */
 export class FakeTeamMemberRepository implements TeamMemberRepositoryPort {
   readonly rows: StoredMember[] = [];
+  /** IDs of members with an assignment, standing in for `session_assignment`. */
+  readonly assigned = new Set<string>();
   readonly roles = new Map<string, { workspaceId: string; name: string }>();
 
   private record(row: StoredMember): TeamMemberRecord {
@@ -173,6 +176,21 @@ export class FakeTeamMemberRepository implements TeamMemberRepositoryPort {
       roleIds: change.roleIds,
     });
     return "UPDATED" as const;
+  }
+
+  async setArchived(context: WorkspaceContext, change: ArchiveChange) {
+    const row = this.rows.find((r) => r.workspaceId === context.workspaceId && r.id === change.id);
+    if (!row) return false;
+    row.archived = change.isArchived;
+    return true;
+  }
+
+  async delete(context: WorkspaceContext, id: string) {
+    const index = this.rows.findIndex((r) => r.workspaceId === context.workspaceId && r.id === id);
+    if (index < 0) return "NOT_FOUND" as const;
+    if (this.assigned.has(id)) return "HAS_ASSIGNMENTS" as const;
+    this.rows.splice(index, 1);
+    return "DELETED" as const;
   }
 }
 

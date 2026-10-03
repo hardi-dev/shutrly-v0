@@ -48,3 +48,6 @@ export interface TeamMemberPage {
   readonly items: readonly TeamMemberRecord[];
   readonly nextCursor: string | null;
 }
+
+export type DeleteTeamMemberResult =
+  { readonly ok: true } | { readonly ok: false; readonly code: "HAS_ASSIGNMENTS" };

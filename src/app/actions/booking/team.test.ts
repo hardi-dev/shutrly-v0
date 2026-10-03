@@ -7,6 +7,8 @@ const deleteWorkspaceTeamRole = vi.fn();
 const addWorkspaceTeamMember = vi.fn();
 const updateWorkspaceTeamMember = vi.fn();
 const loadMoreTeamMembers = vi.fn();
+const setWorkspaceTeamMemberArchived = vi.fn();
+const deleteWorkspaceTeamMember = vi.fn();
 
 vi.mock("next/cache", () => ({ revalidatePath }));
 vi.mock("@/composition/booking/team-flow/team-flow", () => ({
@@ -16,14 +18,18 @@ vi.mock("@/composition/booking/team-flow/team-flow", () => ({
   addWorkspaceTeamMember,
   updateWorkspaceTeamMember,
   loadMoreTeamMembers,
+  setWorkspaceTeamMemberArchived,
+  deleteWorkspaceTeamMember,
 }));
 
 const {
   addTeamMemberAction,
   addTeamRoleAction,
+  deleteTeamMemberAction,
   deleteTeamRoleAction,
   loadMoreTeamMembersAction,
   renameTeamRoleAction,
+  setTeamMemberArchivedAction,
   updateTeamMemberAction,
 } = await import("./team");
 
@@ -99,5 +105,24 @@ describe("team actions", () => {
       items: [],
       nextCursor: null,
     });
+  });
+
+  it("AC-TEAM-007 revalidates team and projects after an archive or restore", async () => {
+    setWorkspaceTeamMemberArchived.mockResolvedValue(undefined);
+    await setTeamMemberArchivedAction("ws-1", "m1", true);
+    expect(setWorkspaceTeamMemberArchived).toHaveBeenCalledWith("ws-1", "m1", true);
+    expect(revalidatePath).toHaveBeenCalledWith("/w/[workspaceId]/team", "layout");
+    expect(revalidatePath).toHaveBeenCalledWith("/w/[workspaceId]/projects", "layout");
+  });
+
+  it("AC-TEAM-007 revalidates after a delete and not when the member has assignments", async () => {
+    deleteWorkspaceTeamMember.mockResolvedValueOnce({ ok: true });
+    await deleteTeamMemberAction("ws-1", "m1");
+    expect(revalidatePath).toHaveBeenCalledWith("/w/[workspaceId]/team", "layout");
+    revalidatePath.mockClear();
+    const blocked = { ok: false, code: "HAS_ASSIGNMENTS" };
+    deleteWorkspaceTeamMember.mockResolvedValueOnce(blocked);
+    await expect(deleteTeamMemberAction("ws-1", "m1")).resolves.toEqual(blocked);
+    expect(revalidatePath).not.toHaveBeenCalled();
   });
 });

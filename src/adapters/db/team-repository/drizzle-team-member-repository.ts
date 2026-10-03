@@ -2,6 +2,7 @@ import "server-only";
 
 import { and, asc, eq, inArray, isNotNull, isNull, like, or, sql } from "drizzle-orm";
 
+import type { ArchiveChange } from "@/features/booking/application/ports/client-repository/client-repository.port";
 import type {
   TeamMemberChange,
   TeamMemberPageQuery,
@@ -14,10 +15,11 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import { pgCode } from "../catalog-repository/pg-error";
 import type { DbExecutor } from "../client/client.types";
-import { teamMember, teamMemberRole, teamRole } from "../schema/booking/team";
+import { sessionAssignment, teamMember, teamMemberRole, teamRole } from "../schema/booking/team";
 
 const LIKE_SPECIAL = /[\\%_]/g;
 const DUPLICATE_KEY = "23505";
+const FOREIGN_KEY_VIOLATION = "23503";
 
 function searchCondition(query: TeamMemberPageQuery) {
   if (!query.search) return undefined;
@@ -240,6 +242,55 @@ async function updateMember(
   }
 }
 
+async function setArchived(db: DbExecutor, context: WorkspaceContext, change: ArchiveChange) {
+  const rows = await db
+    .update(teamMember)
+    .set({
+      // Keep the first archive time when archiving twice, so the call is idempotent.
+      archivedAt: change.isArchived ? sql`coalesce(${teamMember.archivedAt}, now())` : null,
+      updatedBy: change.editorUserId,
+      updatedAt: new Date(),
+    })
+    .where(and(eq(teamMember.workspaceId, context.workspaceId), eq(teamMember.id, change.id)))
+    .returning({ id: teamMember.id });
+  return rows.length > 0;
+}
+
+async function deleteUnassignedMember(tx: DbExecutor, context: WorkspaceContext, id: string) {
+  const locked = await tx
+    .select({ id: teamMember.id })
+    .from(teamMember)
+    .where(and(eq(teamMember.workspaceId, context.workspaceId), eq(teamMember.id, id)))
+    .for("update");
+  if (locked.length === 0) return "NOT_FOUND" as const;
+  const assigned = await tx
+    .select({ id: sessionAssignment.id })
+    .from(sessionAssignment)
+    .where(
+      and(
+        eq(sessionAssignment.workspaceId, context.workspaceId),
+        eq(sessionAssignment.memberId, id),
+      ),
+    )
+    .limit(1);
+  if (assigned.length > 0) return "HAS_ASSIGNMENTS" as const;
+  // The member's role rows go with it (ON DELETE CASCADE).
+  await tx
+    .delete(teamMember)
+    .where(and(eq(teamMember.workspaceId, context.workspaceId), eq(teamMember.id, id)));
+  return "DELETED" as const;
+}
+
+async function deleteMember(db: DbExecutor, context: WorkspaceContext, id: string) {
+  try {
+    return await db.transaction((tx) => deleteUnassignedMember(tx, context, id));
+  } catch (error) {
+    // An assignment landed between the check and the delete: the RESTRICT FK is the backstop.
+    if (pgCode(error) === FOREIGN_KEY_VIOLATION) return "HAS_ASSIGNMENTS" as const;
+    throw error;
+  }
+}
+
 /**
  * Drizzle implementation of the team-member port.
  * @param db - the request database or a transaction
@@ -251,5 +302,7 @@ export function createDrizzleTeamMemberRepository(db: DbExecutor): TeamMemberRep
     count: (context, status) => count(db, context, status),
     create: (context, change) => createMember(db, context, change),
     update: (context, id, change) => updateMember(db, context, id, change),
+    setArchived: (context, change) => setArchived(db, context, change),
+    delete: (context, id) => deleteMember(db, context, id),
   };
 }

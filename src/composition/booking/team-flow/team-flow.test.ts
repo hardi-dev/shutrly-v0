@@ -5,6 +5,8 @@ const addTeamRole = vi.fn();
 const deleteTeamRole = vi.fn();
 const addTeamMember = vi.fn();
 const updateTeamMember = vi.fn();
+const setTeamMemberArchived = vi.fn();
+const deleteTeamMember = vi.fn();
 const notFound = vi.fn(() => {
   throw new Error("NEXT_NOT_FOUND");
 });
@@ -23,6 +25,13 @@ vi.mock("@/features/booking/application/use-cases/add-team-member/add-team-membe
 vi.mock("@/features/booking/application/use-cases/update-team-member/update-team-member", () => ({
   updateTeamMember,
 }));
+vi.mock(
+  "@/features/booking/application/use-cases/set-team-member-archived/set-team-member-archived",
+  () => ({ setTeamMemberArchived }),
+);
+vi.mock("@/features/booking/application/use-cases/delete-team-member/delete-team-member", () => ({
+  deleteTeamMember,
+}));
 vi.mock("../../auth/owner-guard/owner-guard", () => ({
   requireOwnerOrRedirect: vi.fn().mockResolvedValue({ id: "owner" }),
 }));
@@ -37,8 +46,10 @@ const { TeamError } = await import("@/features/booking/application/errors/team-e
 const {
   addWorkspaceTeamMember,
   addWorkspaceTeamRole,
+  deleteWorkspaceTeamMember,
   deleteWorkspaceTeamRole,
   loadMoreTeamMembers,
+  setWorkspaceTeamMemberArchived,
   updateWorkspaceTeamMember,
 } = await import("./team-flow");
 
@@ -98,5 +109,35 @@ describe("team-flow", () => {
     });
     const logged = JSON.stringify(logger.error.mock.calls);
     for (const secret of ["Rina", "0812", "r@x.id"]) expect(logged).not.toContain(secret);
+  });
+
+  it("AC-TEAM-023 C-103 logs only the workspace and operation when archive or delete fails", async () => {
+    setTeamMemberArchived.mockRejectedValue(new Error("Dimas 6281298765432 unavailable"));
+    deleteTeamMember.mockRejectedValue(new Error("Dimas 6281298765432 unavailable"));
+    const memberId = crypto.randomUUID();
+    await expect(setWorkspaceTeamMemberArchived("ws-1", memberId, true)).rejects.toMatchObject({
+      code: "SAVE_FAILED",
+    });
+    await expect(deleteWorkspaceTeamMember("ws-1", memberId)).rejects.toMatchObject({
+      code: "SAVE_FAILED",
+    });
+    expect(logger.error).toHaveBeenNthCalledWith(1, "team.save_failed", {
+      workspaceId: "ws-1",
+      operation: "archive-member",
+    });
+    expect(logger.error).toHaveBeenNthCalledWith(2, "team.save_failed", {
+      workspaceId: "ws-1",
+      operation: "delete-member",
+    });
+    expect(JSON.stringify(logger.error.mock.calls)).not.toContain("Dimas");
+  });
+
+  it("AC-TEAM-022 treats a malformed member ID as not found for archive and delete", async () => {
+    await expect(setWorkspaceTeamMemberArchived("ws-1", "nope", true)).rejects.toThrow(
+      "NEXT_NOT_FOUND",
+    );
+    await expect(deleteWorkspaceTeamMember("ws-1", "nope")).rejects.toThrow("NEXT_NOT_FOUND");
+    expect(setTeamMemberArchived).not.toHaveBeenCalled();
+    expect(deleteTeamMember).not.toHaveBeenCalled();
   });
 });

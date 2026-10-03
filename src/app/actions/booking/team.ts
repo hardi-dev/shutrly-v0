@@ -5,9 +5,11 @@ import { revalidatePath } from "next/cache";
 import {
   addWorkspaceTeamMember,
   addWorkspaceTeamRole,
+  deleteWorkspaceTeamMember,
   deleteWorkspaceTeamRole,
   loadMoreTeamMembers,
   renameWorkspaceTeamRole,
+  setWorkspaceTeamMemberArchived,
   updateWorkspaceTeamMember,
 } from "@/composition/booking/team-flow/team-flow";
 
@@ -58,4 +60,21 @@ export async function updateTeamMemberAction(
 
 export async function loadMoreTeamMembersAction(workspaceId: string, query: unknown) {
   return loadMoreTeamMembers(workspaceId, query);
+}
+
+export async function setTeamMemberArchivedAction(
+  workspaceId: string,
+  memberId: string,
+  isArchived: boolean,
+): Promise<void> {
+  await setWorkspaceTeamMemberArchived(workspaceId, memberId, isArchived);
+  revalidatePath(PAGE, "layout");
+  // An archived member shows as such in the project's Jadwal.
+  revalidatePath(PROJECTS, "layout");
+}
+
+export async function deleteTeamMemberAction(workspaceId: string, memberId: string) {
+  const result = await deleteWorkspaceTeamMember(workspaceId, memberId);
+  if (result.ok) revalidatePath(PAGE, "layout");
+  return result;
 }

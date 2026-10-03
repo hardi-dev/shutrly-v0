@@ -5,6 +5,7 @@ import {
   assignableFor,
   assignmentsBySession,
   avatarGroup,
+  firstName,
   isTeamEditable,
   SESSION_AVATAR_MAX,
 } from "./session-assignment";
@@ -60,5 +61,13 @@ describe("assignmentsBySession", () => {
     expect(grouped.get("wisuda")?.map((a) => a.id)).toEqual(["1", "3"]);
     expect(grouped.get("akad")?.map((a) => a.id)).toEqual(["2"]);
     expect(grouped.get("none")).toBeUndefined();
+  });
+});
+
+describe("firstName", () => {
+  it("AC-TEAM-014 is the first whitespace-separated word, as the remove confirm draws it", () => {
+    expect(firstName("Sari Lestari")).toBe("Sari");
+    expect(firstName("  Dimas   Adi Pratama ")).toBe("Dimas");
+    expect(firstName("Joko")).toBe("Joko");
   });
 });

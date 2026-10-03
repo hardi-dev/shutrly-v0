@@ -60,6 +60,7 @@ export function ProjectDetailScreen(props: Readonly<ProjectDetailScreenProps>) {
           project={props.project}
           assignableMembers={props.assignableMembers}
           addAssignmentAction={props.addAssignmentAction}
+          removeAssignmentAction={props.removeAssignmentAction}
         >
           {(team) => (
             <DetailBody

@@ -97,6 +97,25 @@ export const PROJECT_COPY = {
     ROLE_NOT_HELD: (name: string) => `${name} tidak punya peran ini lagi.`,
   },
   teamCancelledToast: "Proyek dibatalkan; tim tidak bisa diubah.",
+  teamTitle: (session: string) => `Tim · ${session}`,
+  teamAddMember: "Tambah anggota",
+  teamDone: "Selesai",
+  teamClose: "Tutup",
+  teamCancelledNote: "Proyek dibatalkan, tim tidak bisa diubah.",
+  // not in Pencil: the list's accessible name and the archived marker after a name
+  teamListLabel: (session: string) => `Tim ${session}`,
+  teamArchivedMark: "(diarsipkan)",
+  teamRemoveLabel: "Hapus dari sesi",
+  removeAssignmentTitle: (name: string, session: string) => `Hapus ${name} dari ${session}?`,
+  removeAssignmentBody: (firstName: string) =>
+    `Penugasannya dihapus dari sesi ini. ${firstName} tetap ada di Tim.`,
+  removeAssignmentConfirm: "Hapus dari sesi",
+  // not in Pencil: the removal toast
+  removedToastTitle: "Anggota dihapus dari sesi",
+  removedToastBody: (name: string, session: string) => `${name} tidak lagi bertugas di ${session}.`,
+  deleteSessionTeamBody: (count: number) =>
+    `Sesi ini punya ${String(count)} anggota tim. Penugasan mereka ikut terhapus.`,
+  deleteDraftTeamNote: "Penugasan tim ikut terhapus.",
   deleteSession: "Hapus",
   fieldsTitle: "Field booking",
   fieldsDescription: (service: string) =>

@@ -57,3 +57,12 @@ export function assignmentsBySession<T extends { readonly sessionId: string }>(
   }
   return grouped;
 }
+
+/**
+ * The first whitespace-separated word of a name, for the remove confirmation (*Sari tetap ada di Tim.*).
+ * @param name - a member's full name
+ * @returns the first word, or the trimmed name when it has none
+ */
+export function firstName(name: string): string {
+  return name.trim().split(/\s+/)[0] ?? name.trim();
+}

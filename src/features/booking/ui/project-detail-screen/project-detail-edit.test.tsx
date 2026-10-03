@@ -61,6 +61,7 @@ function setup(status: ProjectStatus, overrides: Partial<ProjectDetailView> = {}
       editActions={edit}
       assignableMembers={[]}
       addAssignmentAction={vi.fn()}
+      removeAssignmentAction={vi.fn()}
       definitions={DEFINITIONS}
     />,
   );

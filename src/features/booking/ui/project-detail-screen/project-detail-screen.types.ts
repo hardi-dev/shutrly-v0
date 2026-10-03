@@ -6,6 +6,7 @@ import type { ProjectDetailView } from "@/features/booking/application/use-cases
 import type { AssignmentDialogProps } from "../assignment-dialog/assignment-dialog.types";
 import type { DefinitionOption, ProjectEditActions } from "../project-edit/project-edit.types";
 import type { ProjectMenuActions } from "../project-menu-host/project-menu-host.types";
+import type { SessionTeamDialogProps } from "../session-team-dialog/session-team-dialog.types";
 
 export interface ProjectDetailScreenProps {
   readonly workspaceId: string;
@@ -16,6 +17,7 @@ export interface ProjectDetailScreenProps {
   /** Active members with their roles, for the Penugasan form (D-13). */
   readonly assignableMembers: readonly AssignableMember[];
   readonly addAssignmentAction: AssignmentDialogProps["addAction"];
+  readonly removeAssignmentAction: SessionTeamDialogProps["removeAction"];
 }
 
 export interface ProjectDetailCardProps {

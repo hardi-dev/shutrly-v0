@@ -2,7 +2,10 @@ import {
   PROJECT_EDIT_ACTIONS,
   PROJECT_MENU_ACTIONS,
 } from "@/app/actions/booking/project-menu-actions";
-import { addSessionAssignmentAction } from "@/app/actions/booking/session-team";
+import {
+  addSessionAssignmentAction,
+  removeSessionAssignmentAction,
+} from "@/app/actions/booking/session-team";
 import {
   loadProjectDefinitions,
   loadProjectDetail,
@@ -47,6 +50,7 @@ export default async function ProjectDetailPage({
         definitions={definitions}
         assignableMembers={assignableMembers}
         addAssignmentAction={addSessionAssignmentAction}
+        removeAssignmentAction={removeSessionAssignmentAction}
       />
       {toast ? (
         <ToastOnMount

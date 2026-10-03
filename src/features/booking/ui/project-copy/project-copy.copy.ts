@@ -67,6 +67,12 @@ export const PROJECT_COPY = {
   sessionActions: (name: string) => `Aksi untuk sesi ${name}`,
   editSession: "Ubah",
   editSessionDetail: "Ubah sesi",
+  addTeam: "Tambah tim",
+  manageTeam: "Atur tim",
+  // not in Pencil: the accessible names of the team controls
+  addTeamFor: (session: string) => `Tambah tim untuk ${session}`,
+  teamGroupLabel: (session: string, count: number) => `Tim ${session}: ${String(count)} anggota`,
+  avatarTooltip: (name: string, role: string) => `${name} · ${role}`,
   deleteSession: "Hapus",
   fieldsTitle: "Field booking",
   fieldsDescription: (service: string) =>

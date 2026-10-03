@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type { ProjectDetailView } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail.types";
 
 import type { DefinitionOption, ProjectEditActions } from "../project-edit/project-edit.types";
@@ -14,6 +16,12 @@ export interface ProjectDetailScreenProps {
 export interface ProjectDetailCardProps {
   readonly project: ProjectDetailView;
   readonly isMobile: boolean;
+}
+
+/** What the *Jadwal* rows can do with a session's team; the host decides where each opens. */
+export interface SessionTeamHandlers {
+  readonly onAdd: (session: ProjectDetailView["sessions"][number]) => void;
+  readonly onManage: (session: ProjectDetailView["sessions"][number]) => void;
 }
 
 export interface DetailEditHandlers {
@@ -37,3 +45,22 @@ export type EditOpen =
   | { readonly kind: "editSession"; readonly session: EditSession }
   | { readonly kind: "deleteSession"; readonly session: EditSession }
   | null;
+
+export interface SessionTrailingProps {
+  readonly session: ProjectDetailView["sessions"][number];
+  readonly assignments: ProjectDetailView["assignments"];
+  readonly canEditTeam: boolean;
+  readonly team?: SessionTeamHandlers;
+  readonly menu: ReactNode;
+}
+
+export interface SessionRowProps {
+  readonly session: ProjectDetailView["sessions"][number];
+  readonly isLastRow: boolean;
+  readonly assignments: ProjectDetailView["assignments"];
+  readonly canEditTeam: boolean;
+  readonly team?: SessionTeamHandlers;
+  /** Present while the schedule is editable; it carries the ⋯ menu. */
+  readonly edit?: DetailEditHandlers;
+  readonly isLastOfBooked: boolean;
+}

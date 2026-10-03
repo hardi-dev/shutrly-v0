@@ -42,3 +42,18 @@ export function assignableFor<M extends { readonly id: string }>(
   );
   return members.filter((member) => !taken.has(member.id));
 }
+
+/**
+ * Groups assignments by session, keeping the stored order within each (A-4).
+ * @param assignments - every assignment of the project
+ * @returns the assignments of each session, keyed by session ID
+ */
+export function assignmentsBySession<T extends { readonly sessionId: string }>(
+  assignments: readonly T[],
+): Map<string, T[]> {
+  const grouped = new Map<string, T[]>();
+  for (const assignment of assignments) {
+    grouped.set(assignment.sessionId, [...(grouped.get(assignment.sessionId) ?? []), assignment]);
+  }
+  return grouped;
+}

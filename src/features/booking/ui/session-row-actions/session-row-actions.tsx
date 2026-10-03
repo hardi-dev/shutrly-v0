@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Menu } from "@/ui/patterns/menu/menu";
+import { MenuDivider } from "@/ui/patterns/menu/menu-divider";
 import { MenuItem } from "@/ui/patterns/menu/menu-item";
 import { MenuTrigger } from "@/ui/patterns/menu/menu-trigger";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
@@ -21,6 +22,7 @@ export function SessionRowActions({
   onDelete,
   deleteHint,
   isDetail = false,
+  teamAction,
 }: Readonly<SessionRowActionsProps>) {
   const isMobile = useMobileViewport();
   const [isOpen, setIsOpen] = useState(false);
@@ -38,11 +40,18 @@ export function SessionRowActions({
     setIsOpen(false);
     onDelete();
   };
+  const handleTeam = () => {
+    setIsOpen(false);
+    teamAction?.onSelect();
+  };
   if (isMobile) {
     return (
       <>
         <IconButton icon="more-horizontal" size="sm" aria-label={label} onPress={handleOpen} />
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen} title={name} variant="actions">
+          {teamAction ? (
+            <SheetItem label={teamAction.label} icon={teamAction.icon} onPress={handleTeam} />
+          ) : null}
           <SheetItem label={editLabel} icon="pencil" onPress={handleEdit} />
           <SheetItem
             label={deleteLabel}
@@ -64,7 +73,15 @@ export function SessionRowActions({
     <MenuTrigger label={label}>
       <IconButton icon="more-horizontal" size="sm" aria-label={label} />
       <Menu aria-label={label}>
+        {teamAction ? (
+          <MenuItem
+            label={teamAction.label}
+            icon={teamAction.icon}
+            onSelect={teamAction.onSelect}
+          />
+        ) : null}
         <MenuItem label={editLabel} icon="pencil" onSelect={onEdit} />
+        {teamAction ? <MenuDivider /> : null}
         <MenuItem
           label={deleteLabel}
           description={deleteHint}

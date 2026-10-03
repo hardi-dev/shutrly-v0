@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { PROJECT_STATUSES } from "../project-status/project-status";
 import {
   assignableFor,
+  assignmentsBySession,
   avatarGroup,
   isTeamEditable,
   SESSION_AVATAR_MAX,
@@ -46,5 +47,18 @@ describe("assignableFor", () => {
 
   it("AC-TEAM-013 offers everyone when the session has no team", () => {
     expect(assignableFor(members, "resepsi", [])).toEqual(members);
+  });
+});
+
+describe("assignmentsBySession", () => {
+  it("AC-TEAM-026 groups by session and keeps the order within each", () => {
+    const grouped = assignmentsBySession([
+      { id: "1", sessionId: "wisuda" },
+      { id: "2", sessionId: "akad" },
+      { id: "3", sessionId: "wisuda" },
+    ]);
+    expect(grouped.get("wisuda")?.map((a) => a.id)).toEqual(["1", "3"]);
+    expect(grouped.get("akad")?.map((a) => a.id)).toEqual(["2"]);
+    expect(grouped.get("none")).toBeUndefined();
   });
 });

@@ -16,6 +16,7 @@ If no iteration number is given, pick the first unfinished iteration in `technic
    - `technical-design.md`: only the sections the slice cites. Skip the `Implementation record` sections unless the slice names a deviation that affects this one.
    - `spec.md` and `acceptance-criteria.md`: only the `AC-*` / `BR-*` entries this iteration covers (grep the IDs).
    - Design reference: only the exports for the screens in this iteration.
+   - If the slice cites something you have not read, read it. If you hit a decision the artifacts do not cover, stop and report a `SPEC GAP`; do not guess.
 2. Implement only that iteration. Do not invent requirements, add unrelated abstractions, or expand scope.
 3. Enforce business rules server-side; client validation is UX only.
 4. Add tests mapped to the `AC-*` / `BR-*` IDs covered.

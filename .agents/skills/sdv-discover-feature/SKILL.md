@@ -11,7 +11,7 @@ Use the `spec-driven-vibe-coding` skill and run its **discover-feature** workflo
 
 If no slug was given, propose the next feature from `docs/product/feature-map.md` and ask before continuing.
 
-1. Load only relevant context: `docs/features/<slug>/intent.md` if it exists, feature-map entry, related journeys, related `BR-*` rules, constitution, relevant ADRs. Do not read the whole docs tree.
+1. Load only relevant context: `docs/features/<slug>/intent.md` if it exists, feature-map entry, related journeys, the business-rules index plus the full text of every `BR-*` rule the feature touches (read the index first so a conflicting rule is not missed), the constitution in full, and the ADR index with bodies only for decisions the feature touches. Do not read the whole docs tree, other features' plans, or implementation records.
    - If an intent exists and is not `ACCEPTED`, stop and ask the Owner to accept it (or run `$sdv-capture-intent <slug>`). Do not specify against a draft.
    - Carry the intent's open questions into the spec; answer them or keep them open. Keep the spec within the intent's constraints and out-of-scope list, and report any widening as a `SPEC GAP`.
    - No intent file is fine for small or pre-existing features; proceed as before.

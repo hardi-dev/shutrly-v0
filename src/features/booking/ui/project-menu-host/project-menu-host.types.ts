@@ -55,6 +55,8 @@ export interface ProjectMenuHostProps {
   readonly variant: "row" | "detail";
   /** Where to go after a draft is deleted; the list only refreshes. */
   readonly onDeleted: () => void;
+  /** Called when *Konfirmasi booking* finds no session (the detail page opens Tambah sesi). */
+  readonly onSessionRequired?: () => void;
   readonly children: (api: ProjectMenuApi) => ReactNode;
 }
 

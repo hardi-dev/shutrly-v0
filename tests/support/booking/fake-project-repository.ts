@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await -- the fake mirrors the asynchronous repository port */
 
 import type {
+  ActiveDefinition,
   ClientOption,
   CreateSnapshotResult,
   DefinitionRules,
@@ -208,6 +209,19 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       .sort((left, right) => left.name.localeCompare(right.name))
       .slice(0, limit)
       .map((row) => ({ id: row.id, name: row.name, isArchived: row.isArchived }));
+  }
+
+  async listActiveDefinitions(context: WorkspaceContext): Promise<readonly ActiveDefinition[]> {
+    if (context.workspaceId !== this.workspaceId) return [];
+    return this.definitions
+      .filter((row) => row.isActive)
+      .map((row) => ({
+        id: row.id,
+        name: row.name,
+        unit: row.unit,
+        valueType: row.valueType,
+        selectionRequired: row.selectionRequired,
+      }));
   }
 
   async findFilterClient(

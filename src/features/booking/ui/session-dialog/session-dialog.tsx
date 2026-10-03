@@ -36,7 +36,7 @@ export function SessionDialog(props: Readonly<SessionDialogProps>) {
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         title={title}
-        description={PROJECT_COPY.sessionDialogDescription}
+        description={props.description ?? PROJECT_COPY.sessionDialogDescription}
         variant="form"
         actions={save}
       >
@@ -49,7 +49,7 @@ export function SessionDialog(props: Readonly<SessionDialogProps>) {
       isOpen={props.isOpen}
       onOpenChange={props.onOpenChange}
       title={title}
-      description={PROJECT_COPY.sessionDialogDescription}
+      description={props.description ?? PROJECT_COPY.sessionDialogDescription}
       size="md"
       actions={
         <>

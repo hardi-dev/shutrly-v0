@@ -1,5 +1,11 @@
-import { PROJECT_MENU_ACTIONS } from "@/app/actions/booking/project-menu-actions";
-import { loadProjectDetail } from "@/composition/booking/project-flow/project-flow";
+import {
+  PROJECT_EDIT_ACTIONS,
+  PROJECT_MENU_ACTIONS,
+} from "@/app/actions/booking/project-menu-actions";
+import {
+  loadProjectDefinitions,
+  loadProjectDetail,
+} from "@/composition/booking/project-flow/project-flow";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { ProjectDetailScreen } from "@/features/booking/ui/project-detail-screen/project-detail-screen";
 import { projectMetaText } from "@/features/booking/ui/project-session-summary/project-session-summary";
@@ -16,7 +22,10 @@ export default async function ProjectDetailPage({
 }>) {
   const { workspaceId, projectId } = await params;
   const { state } = await searchParams;
-  const project = await loadProjectDetail(workspaceId, projectId);
+  const [project, definitions] = await Promise.all([
+    loadProjectDetail(workspaceId, projectId),
+    loadProjectDefinitions(workspaceId),
+  ]);
   const toast = resolveToast(state, project.title);
   return (
     <>
@@ -31,6 +40,8 @@ export default async function ProjectDetailPage({
         workspaceId={workspaceId}
         project={project}
         menuActions={PROJECT_MENU_ACTIONS}
+        editActions={PROJECT_EDIT_ACTIONS}
+        definitions={definitions}
       />
       {toast ? (
         <ToastOnMount

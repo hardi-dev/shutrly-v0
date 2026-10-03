@@ -171,6 +171,14 @@ export interface ProjectWriter {
 
 export type AddItemOutcome = "ADDED" | "DEFINITION_INACTIVE" | "DUPLICATE_DEFINITION" | "NOT_FOUND";
 
+export interface ActiveDefinition {
+  readonly id: string;
+  readonly name: string;
+  readonly unit: string | null;
+  readonly valueType: "NUMBER" | "RANGE";
+  readonly selectionRequired: boolean;
+}
+
 export type MoveStatusResult = "MOVED" | "STALE" | "NOT_FOUND";
 
 /** Every call is scoped by the verified workspace (C-101). */
@@ -215,6 +223,10 @@ export interface ProjectRepositoryPort {
     text: string,
     limit: number,
   ) => Promise<readonly FilterClientOption[]>;
+  /** Active item definitions by name, for Tambah item. */
+  readonly listActiveDefinitions: (
+    context: WorkspaceContext,
+  ) => Promise<readonly ActiveDefinition[]>;
   /** The client named in the URL's `client` param, or null when it is not in the workspace. */
   readonly findFilterClient: (
     context: WorkspaceContext,

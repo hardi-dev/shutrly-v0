@@ -6,6 +6,8 @@ export interface SessionDialogProps {
   /** The session being edited, or null when adding. */
   readonly session: SessionInput | null;
   readonly onSave: (session: SessionInput) => void;
+  /** Overrides the create-form description, e.g. on the detail page. */
+  readonly description?: string;
 }
 
 export interface SessionDraft {

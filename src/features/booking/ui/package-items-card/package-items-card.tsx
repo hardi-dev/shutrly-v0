@@ -38,7 +38,7 @@ export function PackageItemsCard({
               key={item.definitionId}
               icon={item.selectionType ? "image" : "package"}
               title={item.definitionName}
-              meta={describeItem(item)}
+              meta={describePackageItem(item)}
               isLast={index === items.length - 1}
             />
           ))}
@@ -48,7 +48,8 @@ export function PackageItemsCard({
   );
 }
 
-function describeItem(item: PackageItemsCardProps["items"][number]): string {
+/** The item row meta, e.g. "25 foto · pilihan edit". @param item - the package item @returns the summary text */
+export function describePackageItem(item: PackageItemsCardProps["items"][number]): string {
   const summary = summariseServiceItems([
     { name: item.definitionName, unit: item.unit, value: item.value },
   ]);

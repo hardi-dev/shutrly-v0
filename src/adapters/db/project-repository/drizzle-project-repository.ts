@@ -3,6 +3,7 @@ import "server-only";
 import { and, asc, count, eq, inArray, isNull, sql } from "drizzle-orm";
 
 import type {
+  ActiveDefinition,
   AddItemOutcome,
   ClientOption,
   DefinitionRules,
@@ -197,6 +198,35 @@ async function searchClientsForFilter(
     .orderBy(sql`lower(${client.name})`, asc(client.createdAt), asc(client.id))
     .limit(limit);
   return rows.map((row) => ({ id: row.id, name: row.name, isArchived: row.archivedAt !== null }));
+}
+
+async function listActiveDefinitions(
+  db: DbExecutor,
+  context: WorkspaceContext,
+): Promise<readonly ActiveDefinition[]> {
+  const rows = await db
+    .select()
+    .from(serviceItemDefinition)
+    .where(
+      and(
+        eq(serviceItemDefinition.workspaceId, context.workspaceId),
+        eq(serviceItemDefinition.isActive, true),
+      ),
+    )
+    .orderBy(sql`lower(${serviceItemDefinition.name})`, asc(serviceItemDefinition.id));
+  return rows.flatMap((row) =>
+    row.valueType === "NUMBER" || row.valueType === "RANGE"
+      ? [
+          {
+            id: row.id,
+            name: row.name,
+            unit: row.unit,
+            valueType: row.valueType,
+            selectionRequired: row.selectionRequired,
+          },
+        ]
+      : [],
+  );
 }
 
 async function findFilterClient(
@@ -590,6 +620,7 @@ export function createDrizzleProjectRepository(db: DbExecutor): ProjectRepositor
       moveStatus(db, context, id, transition, actorId),
     countSessions: (context, id) => countSessions(db, context, id),
     withLockedProject: (context, id, change) => withLockedProject(db, context, id, change),
+    listActiveDefinitions: (context) => listActiveDefinitions(db, context),
     findFilterClient: (context, id) => findFilterClient(db, context, id),
     listServicesForFilter: (context) => listServicesForFilter(db, context),
     searchClientsForFilter: (context, text, limit) =>

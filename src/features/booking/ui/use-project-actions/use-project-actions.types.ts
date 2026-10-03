@@ -11,4 +11,6 @@ export interface UseProjectActionsInput {
   readonly workspaceId: string;
   readonly projectId: string;
   readonly advanceAction: AdvanceProjectCall;
+  /** Called after the SESSION_REQUIRED toast so the page can open Tambah sesi. */
+  readonly onSessionRequired?: () => void;
 }

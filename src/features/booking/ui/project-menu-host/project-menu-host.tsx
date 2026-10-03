@@ -30,6 +30,7 @@ export function ProjectMenuHost(props: Readonly<ProjectMenuHostProps>) {
     workspaceId: props.workspaceId,
     projectId: "",
     advanceAction: props.actions.advanceAction,
+    onSessionRequired: props.onSessionRequired,
   });
   const refresh = () => {
     router.refresh();

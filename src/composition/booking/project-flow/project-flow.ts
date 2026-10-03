@@ -153,6 +153,17 @@ export async function loadProjects(
   }
 }
 
+export async function loadProjectDefinitions(rawWorkspaceId: string) {
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withProjectScope(({ projects }) =>
+      projects.listActiveDefinitions(verified.context),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "definitions");
+  }
+}
+
 export async function searchFilterClientsEntry(rawWorkspaceId: string, query: unknown) {
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {

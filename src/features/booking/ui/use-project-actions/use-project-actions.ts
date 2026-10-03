@@ -31,6 +31,7 @@ export function useProjectActions(input: Readonly<UseProjectActionsInput>) {
         router.refresh();
       } else if (result.code === "SESSION_REQUIRED") {
         showToast({ tone: "danger", title: PROJECT_COPY.toastSessionRequiredTitle });
+        input.onSessionRequired?.();
       } else {
         showFailure(step, projectId, advance);
       }

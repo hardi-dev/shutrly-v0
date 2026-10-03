@@ -1,3 +1,12 @@
+const QUANTITY_MESSAGES = {
+  INVALID: "Isi angka yang valid.",
+  NEGATIVE: "Tidak boleh negatif.",
+  TOO_MANY_DECIMALS: "Maksimal 2 angka di belakang koma.",
+  TOO_LARGE: "Angkanya terlalu besar.",
+  NOT_WHOLE: "Harus angka bulat.",
+  MIN_GREATER_THAN_MAX: "Maksimum harus sama atau lebih dari minimum.",
+} as const;
+
 const PATH_MESSAGES: Readonly<Partial<Record<string, Readonly<Partial<Record<string, string>>>>>> =
   {
     clientId: {
@@ -24,6 +33,14 @@ const PATH_MESSAGES: Readonly<Partial<Record<string, Readonly<Partial<Record<str
       END_NOT_AFTER_START: "Jam selesai harus setelah jam mulai.",
     },
     location: { TOO_LONG: "Lokasi maksimal 200 karakter." },
+    definitionId: {
+      REQUIRED: "Pilih item.",
+      DUPLICATE_DEFINITION: "Item ini sudah ada di proyek",
+      DEFINITION_INACTIVE: "Item ini sudah tidak aktif. Pilih item lain.",
+    },
+    value: QUANTITY_MESSAGES,
+    min: QUANTITY_MESSAGES,
+    max: QUANTITY_MESSAGES,
     reason: {
       REASON_REQUIRED: "Isi alasan pembatalan. Wajib setelah pemotretan dimulai.",
       TOO_LONG: "Alasan maksimal 500 karakter.",

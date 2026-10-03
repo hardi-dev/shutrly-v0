@@ -30,6 +30,13 @@ export interface TeamMemberChange extends TeamMemberFields {
   readonly editorUserId: string;
 }
 
+export interface AssignableMember {
+  readonly id: string;
+  readonly name: string;
+  /** Ordered by lower-cased name; the first is preselected in the Penugasan form (TD-A-1). */
+  readonly roles: readonly RoleRef[];
+}
+
 export interface MemberNumberTaken {
   readonly status: "NUMBER_TAKEN";
   readonly holder: NumberHolder;
@@ -65,4 +72,6 @@ export interface TeamMemberRepositoryPort {
     context: WorkspaceContext,
     id: string,
   ) => Promise<"DELETED" | "HAS_ASSIGNMENTS" | "NOT_FOUND">;
+  /** Active members with their roles, by lower-cased name, for the Penugasan form (D-13). */
+  readonly listAssignable: (context: WorkspaceContext) => Promise<readonly AssignableMember[]>;
 }

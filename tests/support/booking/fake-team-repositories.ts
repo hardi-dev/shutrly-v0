@@ -2,6 +2,12 @@
 
 import type { ArchiveChange } from "@/features/booking/application/ports/client-repository/client-repository.port";
 import type {
+  AddAssignmentResult,
+  AssignmentChange,
+  SessionAssignmentRepositoryPort,
+} from "@/features/booking/application/ports/session-assignment-repository/session-assignment-repository.port";
+import type {
+  AssignableMember,
   TeamMemberChange,
   TeamMemberPageQuery,
   TeamMemberRecord,
@@ -185,12 +191,30 @@ export class FakeTeamMemberRepository implements TeamMemberRepositoryPort {
     return true;
   }
 
+  async listAssignable(context: WorkspaceContext): Promise<readonly AssignableMember[]> {
+    return this.rows
+      .filter((row) => row.workspaceId === context.workspaceId && !row.archived)
+      .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+      .map((row) => ({ id: row.id, name: row.name, roles: this.record(row).roles }));
+  }
+
   async delete(context: WorkspaceContext, id: string) {
     const index = this.rows.findIndex((r) => r.workspaceId === context.workspaceId && r.id === id);
     if (index < 0) return "NOT_FOUND" as const;
     if (this.assigned.has(id)) return "HAS_ASSIGNMENTS" as const;
     this.rows.splice(index, 1);
     return "DELETED" as const;
+  }
+}
+
+/** In-memory assignment repository: it answers with the result its test queues. */
+export class FakeSessionAssignmentRepository implements SessionAssignmentRepositoryPort {
+  readonly calls: AssignmentChange[] = [];
+  result: AddAssignmentResult = "ADDED";
+
+  async add(_context: WorkspaceContext, change: AssignmentChange) {
+    this.calls.push(change);
+    return this.result;
   }
 }
 

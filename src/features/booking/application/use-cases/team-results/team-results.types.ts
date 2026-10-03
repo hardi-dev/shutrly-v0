@@ -1,4 +1,5 @@
 import type { NumberHolder } from "../../ports/client-repository/client-repository.port";
+import type { AddAssignmentResult } from "../../ports/session-assignment-repository/session-assignment-repository.port";
 import type { TeamMemberRecord } from "../../ports/team-member-repository/team-member-repository.port";
 import type { RoleRef } from "../../ports/team-role-repository/team-role-repository.port";
 
@@ -51,3 +52,8 @@ export interface TeamMemberPage {
 
 export type DeleteTeamMemberResult =
   { readonly ok: true } | { readonly ok: false; readonly code: "HAS_ASSIGNMENTS" };
+
+export type AssignmentFailureCode = Exclude<AddAssignmentResult, "ADDED" | "NOT_FOUND">;
+
+export type AssignmentWriteResult =
+  { readonly ok: true } | { readonly ok: false; readonly code: AssignmentFailureCode };

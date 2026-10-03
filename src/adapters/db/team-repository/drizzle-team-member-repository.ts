@@ -4,6 +4,7 @@ import { and, asc, eq, inArray, isNotNull, isNull, like, or, sql } from "drizzle
 
 import type { ArchiveChange } from "@/features/booking/application/ports/client-repository/client-repository.port";
 import type {
+  AssignableMember,
   TeamMemberChange,
   TeamMemberPageQuery,
   TeamMemberRecord,
@@ -291,6 +292,23 @@ async function deleteMember(db: DbExecutor, context: WorkspaceContext, id: strin
   }
 }
 
+async function listAssignable(
+  db: DbExecutor,
+  context: WorkspaceContext,
+): Promise<AssignableMember[]> {
+  const rows = await db
+    .select({ id: teamMember.id, name: teamMember.name })
+    .from(teamMember)
+    .where(and(eq(teamMember.workspaceId, context.workspaceId), isNull(teamMember.archivedAt)))
+    .orderBy(sql`lower(${teamMember.name})`, asc(teamMember.createdAt), asc(teamMember.id));
+  const roles = await rolesByMember(
+    db,
+    context,
+    rows.map((row) => row.id),
+  );
+  return rows.map((row) => ({ ...row, roles: roles.get(row.id) ?? [] }));
+}
+
 /**
  * Drizzle implementation of the team-member port.
  * @param db - the request database or a transaction
@@ -304,5 +322,6 @@ export function createDrizzleTeamMemberRepository(db: DbExecutor): TeamMemberRep
     update: (context, id, change) => updateMember(db, context, id, change),
     setArchived: (context, change) => setArchived(db, context, change),
     delete: (context, id) => deleteMember(db, context, id),
+    listAssignable: (context) => listAssignable(db, context),
   };
 }

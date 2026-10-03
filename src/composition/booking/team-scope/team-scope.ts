@@ -1,5 +1,6 @@
 import "server-only";
 
+import { createDrizzleSessionAssignmentRepository } from "@/adapters/db/team-repository/drizzle-session-assignment-repository";
 import { createDrizzleTeamMemberRepository } from "@/adapters/db/team-repository/drizzle-team-member-repository";
 import { createDrizzleTeamRoleRepository } from "@/adapters/db/team-repository/drizzle-team-role-repository";
 
@@ -16,6 +17,7 @@ export function withTeamScope<T>(work: (scope: TeamScope) => Promise<T>): Promis
     work({
       roles: createDrizzleTeamRoleRepository(db),
       members: createDrizzleTeamMemberRepository(db),
+      assignments: createDrizzleSessionAssignmentRepository(db),
     }),
   );
 }

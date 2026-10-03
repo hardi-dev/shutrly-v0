@@ -1,4 +1,5 @@
 import {
+  seedAssignment,
   seedProjectWithSession,
   seedTeamRoles,
   seedTeamWorkspace,
@@ -51,6 +52,14 @@ function add(
     memberId,
     roleId,
     actorId: base.ownerId,
+    isEditable: isTeamEditable,
+  });
+}
+
+function remove(base: TeamSeedBase, projectId: string, assignmentId: string) {
+  return createDrizzleSessionAssignmentRepository(db).remove(base, {
+    projectId,
+    assignmentId,
     isEditable: isTeamEditable,
   });
 }
@@ -223,5 +232,110 @@ describe("project detail and list with a team", () => {
     await add(base, target, dimas, roles.Fotografer);
     const after = (await reader.listPage(base, query)).find((row) => row.id === target.projectId);
     expect(after?.hasTeam).toBe(true);
+  });
+});
+
+describe("removing an assignment", () => {
+  it("AC-TEAM-014 removes the assignment and keeps the member and the session", async () => {
+    const { base, roles, dimas, target } = await fixture();
+    const id = await seedAssignment(db, base, target, dimas, roles.Fotografer);
+    expect(await remove(base, target.projectId, id)).toBe("REMOVED");
+    expect(await db.select().from(sessionAssignment).where(eq(sessionAssignment.id, id))).toEqual(
+      [],
+    );
+    expect(await db.select().from(teamMember).where(eq(teamMember.id, dimas))).toHaveLength(1);
+    expect(await remove(base, target.projectId, id)).toBe("NOT_FOUND");
+  });
+
+  it("AC-TEAM-014 lets the member be added again, in another role", async () => {
+    const { base, roles, dimas, target } = await fixture();
+    const id = await seedAssignment(db, base, target, dimas, roles.Fotografer);
+    expect(await remove(base, target.projectId, id)).toBe("REMOVED");
+    expect(await add(base, target, dimas, roles.Videografer)).toBe("ADDED");
+  });
+
+  it("AC-TEAM-015 refuses to remove from a cancelled project and keeps the row", async () => {
+    const { base, roles, dimas } = await fixture();
+    const target = await seedProjectWithSession(db, base);
+    const id = await seedAssignment(db, base, target, dimas, roles.Fotografer);
+    await createDrizzleProjectRepository(db).withLockedProject(base, target.projectId, (_l, w) =>
+      w.cancel({ reason: null, actorId: base.ownerId }),
+    );
+    expect(await remove(base, target.projectId, id)).toBe("PROJECT_CANCELLED");
+    expect(await add(base, target, dimas, roles.Videografer)).toBe("PROJECT_CANCELLED");
+    expect(
+      await db.select().from(sessionAssignment).where(eq(sessionAssignment.id, id)),
+    ).toHaveLength(1);
+  });
+
+  it("AC-TEAM-015 serialises a cancel and an add: the add lands first or is refused", async () => {
+    const { base, roles, dimas, target } = await fixture();
+    const [, added] = await Promise.all([
+      createDrizzleProjectRepository(db).withLockedProject(base, target.projectId, (_l, w) =>
+        w.cancel({ reason: null, actorId: base.ownerId }),
+      ),
+      add(base, target, dimas, roles.Fotografer),
+    ]);
+    expect(["ADDED", "PROJECT_CANCELLED"]).toContain(added);
+    const rows = await db
+      .select()
+      .from(sessionAssignment)
+      .where(eq(sessionAssignment.sessionId, target.sessionId));
+    expect(rows).toHaveLength(added === "ADDED" ? 1 : 0);
+    const [row] = await db.select().from(project).where(eq(project.id, target.projectId));
+    expect(row.status).toBe("CANCELLED");
+  });
+
+  it("AC-TEAM-022 does not find another workspace's assignment, by route or by id", async () => {
+    const first = await fixture();
+    const second = await fixture();
+    const theirs = await seedAssignment(
+      db,
+      second.base,
+      second.target,
+      second.dimas,
+      second.roles.Fotografer,
+    );
+    expect(await remove(first.base, second.target.projectId, theirs)).toBe("NOT_FOUND");
+    expect(await remove(first.base, first.target.projectId, theirs)).toBe("NOT_FOUND");
+    expect(
+      await db.select().from(sessionAssignment).where(eq(sessionAssignment.id, theirs)),
+    ).toHaveLength(1);
+  });
+
+  it("AC-TEAM-022 does not find an assignment through another project's route", async () => {
+    const { base, roles, dimas, target } = await fixture();
+    const other = await seedProjectWithSession(db, base);
+    const id = await seedAssignment(db, base, target, dimas, roles.Fotografer);
+    expect(await remove(base, other.projectId, id)).toBe("NOT_FOUND");
+  });
+});
+
+describe("deleting a session or a draft with a team", () => {
+  it("AC-TEAM-020 removes the assignments with the session and keeps the members", async () => {
+    const { base, roles, dimas, target } = await fixture();
+    const id = await seedAssignment(db, base, target, dimas, roles.Fotografer);
+    const removed = await createDrizzleProjectRepository(db).withLockedProject(
+      base,
+      target.projectId,
+      (_l, w) => w.deleteSession(target.sessionId),
+    );
+    expect(removed).toBe(true);
+    expect(await db.select().from(sessionAssignment).where(eq(sessionAssignment.id, id))).toEqual(
+      [],
+    );
+    expect(await db.select().from(teamMember).where(eq(teamMember.id, dimas))).toHaveLength(1);
+  });
+
+  it("AC-TEAM-020 removes the assignments with a deleted draft and keeps the members", async () => {
+    const { base, roles, dimas, target } = await fixture();
+    const id = await seedAssignment(db, base, target, dimas, roles.Fotografer);
+    await createDrizzleProjectRepository(db).withLockedProject(base, target.projectId, (_l, w) =>
+      w.deleteProject(),
+    );
+    expect(await db.select().from(sessionAssignment).where(eq(sessionAssignment.id, id))).toEqual(
+      [],
+    );
+    expect(await db.select().from(teamMember).where(eq(teamMember.id, dimas))).toHaveLength(1);
   });
 });

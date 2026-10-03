@@ -21,6 +21,15 @@ export type AddAssignmentResult =
   | "ROLE_NOT_HELD"
   | "ALREADY_ASSIGNED";
 
+export interface RemoveAssignmentChange {
+  readonly projectId: string;
+  readonly assignmentId: string;
+  /** BR-TEAM-006: the domain predicate, so the repository holds no policy. */
+  readonly isEditable: (status: ProjectStatus) => boolean;
+}
+
+export type RemoveAssignmentResult = "REMOVED" | "NOT_FOUND" | "PROJECT_CANCELLED";
+
 /** Every call is scoped by the verified workspace (C-101). */
 export interface SessionAssignmentRepositoryPort {
   /** D-4: locks the project row, then checks the session, member and role before inserting. */
@@ -28,4 +37,9 @@ export interface SessionAssignmentRepositoryPort {
     context: WorkspaceContext,
     change: AssignmentChange,
   ) => Promise<AddAssignmentResult>;
+  /** D-5: locks the project row, requires it not cancelled and deletes by project and assignment. */
+  readonly remove: (
+    context: WorkspaceContext,
+    change: RemoveAssignmentChange,
+  ) => Promise<RemoveAssignmentResult>;
 }

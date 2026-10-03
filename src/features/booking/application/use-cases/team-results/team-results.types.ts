@@ -57,3 +57,6 @@ export type AssignmentFailureCode = Exclude<AddAssignmentResult, "ADDED" | "NOT_
 
 export type AssignmentWriteResult =
   { readonly ok: true } | { readonly ok: false; readonly code: AssignmentFailureCode };
+
+export type RemoveAssignmentWriteResult =
+  { readonly ok: true } | { readonly ok: false; readonly code: "PROJECT_CANCELLED" };

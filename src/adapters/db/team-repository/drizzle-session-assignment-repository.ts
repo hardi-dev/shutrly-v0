@@ -4,6 +4,7 @@ import { and, eq } from "drizzle-orm";
 
 import type {
   AssignmentChange,
+  RemoveAssignmentChange,
   SessionAssignmentRepositoryPort,
 } from "@/features/booking/application/ports/session-assignment-repository/session-assignment-repository.port";
 import { PROJECT_STATUSES } from "@/features/booking/domain/project-status/project-status";
@@ -125,6 +126,30 @@ async function addAssignment(db: DbExecutor, context: WorkspaceContext, change: 
   }
 }
 
+// D-5: the same project lock as an add, so a cancel that races a remove is serialized.
+async function removeAssignment(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  change: RemoveAssignmentChange,
+) {
+  return db.transaction(async (tx) => {
+    const status = await lockProjectStatus(tx, context, change.projectId);
+    if (!status) return "NOT_FOUND" as const;
+    if (!change.isEditable(status)) return "PROJECT_CANCELLED" as const;
+    const removed = await tx
+      .delete(sessionAssignment)
+      .where(
+        and(
+          eq(sessionAssignment.workspaceId, context.workspaceId),
+          eq(sessionAssignment.projectId, change.projectId),
+          eq(sessionAssignment.id, change.assignmentId),
+        ),
+      )
+      .returning({ id: sessionAssignment.id });
+    return removed.length > 0 ? ("REMOVED" as const) : ("NOT_FOUND" as const);
+  });
+}
+
 /**
  * Drizzle implementation of the session-assignment port.
  * @param db - the request database or a transaction
@@ -133,5 +158,8 @@ async function addAssignment(db: DbExecutor, context: WorkspaceContext, change: 
 export function createDrizzleSessionAssignmentRepository(
   db: DbExecutor,
 ): SessionAssignmentRepositoryPort {
-  return { add: (context, change) => addAssignment(db, context, change) };
+  return {
+    add: (context, change) => addAssignment(db, context, change),
+    remove: (context, change) => removeAssignment(db, context, change),
+  };
 }

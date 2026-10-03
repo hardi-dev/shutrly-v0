@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { TeamError } from "@/features/booking/application/errors/team-errors/team-errors";
 import {
+  assignmentIdSchema,
   projectIdSchema,
   sessionIdSchema,
   teamMemberIdSchema,
@@ -19,6 +20,7 @@ import { deleteTeamRole } from "@/features/booking/application/use-cases/delete-
 import { listAssignableMembers } from "@/features/booking/application/use-cases/list-assignable-members/list-assignable-members";
 import { listTeamMembers } from "@/features/booking/application/use-cases/list-team-members/list-team-members";
 import { listTeamRoles } from "@/features/booking/application/use-cases/list-team-roles/list-team-roles";
+import { removeSessionAssignment } from "@/features/booking/application/use-cases/remove-session-assignment/remove-session-assignment";
 import { renameTeamRole } from "@/features/booking/application/use-cases/rename-team-role/rename-team-role";
 import { setTeamMemberArchived } from "@/features/booking/application/use-cases/set-team-member-archived/set-team-member-archived";
 import { updateTeamMember } from "@/features/booking/application/use-cases/update-team-member/update-team-member";
@@ -305,5 +307,31 @@ export async function addSessionAssignmentEntry(
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "add-assignment", target.projectId);
+  }
+}
+
+/**
+ * Takes a member off a session of a project.
+ * @param rawWorkspaceId - the untrusted route workspace ID
+ * @param rawProjectId - the untrusted project ID
+ * @param rawAssignmentId - the untrusted assignment ID
+ * @returns success, or `PROJECT_CANCELLED`
+ */
+export async function removeSessionAssignmentEntry(
+  rawWorkspaceId: string,
+  rawProjectId: string,
+  rawAssignmentId: string,
+) {
+  const projectId = projectIdSchema.safeParse(rawProjectId);
+  const assignmentId = assignmentIdSchema.safeParse(rawAssignmentId);
+  if (!projectId.success || !assignmentId.success) notFound();
+  await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withTeamScope(({ assignments }) =>
+      removeSessionAssignment(assignments, verified.context, projectId.data, assignmentId.data),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "remove-assignment", projectId.data);
   }
 }

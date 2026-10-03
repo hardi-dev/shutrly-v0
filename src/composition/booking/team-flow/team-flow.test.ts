@@ -8,6 +8,7 @@ const updateTeamMember = vi.fn();
 const setTeamMemberArchived = vi.fn();
 const deleteTeamMember = vi.fn();
 const addSessionAssignment = vi.fn();
+const removeSessionAssignment = vi.fn();
 const notFound = vi.fn(() => {
   throw new Error("NEXT_NOT_FOUND");
 });
@@ -37,6 +38,10 @@ vi.mock(
   "@/features/booking/application/use-cases/add-session-assignment/add-session-assignment",
   () => ({ addSessionAssignment }),
 );
+vi.mock(
+  "@/features/booking/application/use-cases/remove-session-assignment/remove-session-assignment",
+  () => ({ removeSessionAssignment }),
+);
 vi.mock("../../auth/owner-guard/owner-guard", () => ({
   requireOwnerOrRedirect: vi.fn().mockResolvedValue({ id: "owner" }),
 }));
@@ -56,6 +61,7 @@ const {
   deleteWorkspaceTeamMember,
   deleteWorkspaceTeamRole,
   loadMoreTeamMembers,
+  removeSessionAssignmentEntry,
   setWorkspaceTeamMemberArchived,
   updateWorkspaceTeamMember,
 } = await import("./team-flow");
@@ -174,6 +180,37 @@ describe("team-flow", () => {
     expect(logger.error).toHaveBeenCalledWith("team.save_failed", {
       workspaceId: "ws-1",
       operation: "add-assignment",
+      projectId,
+    });
+    expect(JSON.stringify(logger.error.mock.calls)).not.toContain("Dimas");
+  });
+
+  it("AC-TEAM-022 treats a malformed project or assignment ID as not found on remove", async () => {
+    await expect(removeSessionAssignmentEntry("ws-1", "nope", crypto.randomUUID())).rejects.toThrow(
+      "NEXT_NOT_FOUND",
+    );
+    await expect(removeSessionAssignmentEntry("ws-1", crypto.randomUUID(), "nope")).rejects.toThrow(
+      "NEXT_NOT_FOUND",
+    );
+    expect(removeSessionAssignment).not.toHaveBeenCalled();
+  });
+
+  it("AC-TEAM-022 maps a foreign assignment to not found", async () => {
+    removeSessionAssignment.mockRejectedValue(new TeamError("NOT_FOUND"));
+    await expect(
+      removeSessionAssignmentEntry("ws-1", crypto.randomUUID(), crypto.randomUUID()),
+    ).rejects.toThrow("NEXT_NOT_FOUND");
+  });
+
+  it("AC-TEAM-023 C-103 logs the project ID only when a removal fails", async () => {
+    removeSessionAssignment.mockRejectedValue(new Error("Dimas Pratama 6281298765432"));
+    const projectId = crypto.randomUUID();
+    await expect(
+      removeSessionAssignmentEntry("ws-1", projectId, crypto.randomUUID()),
+    ).rejects.toMatchObject({ code: "SAVE_FAILED" });
+    expect(logger.error).toHaveBeenCalledWith("team.save_failed", {
+      workspaceId: "ws-1",
+      operation: "remove-assignment",
       projectId,
     });
     expect(JSON.stringify(logger.error.mock.calls)).not.toContain("Dimas");

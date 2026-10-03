@@ -4,6 +4,8 @@ import type { ArchiveChange } from "@/features/booking/application/ports/client-
 import type {
   AddAssignmentResult,
   AssignmentChange,
+  RemoveAssignmentChange,
+  RemoveAssignmentResult,
   SessionAssignmentRepositoryPort,
 } from "@/features/booking/application/ports/session-assignment-repository/session-assignment-repository.port";
 import type {
@@ -210,11 +212,18 @@ export class FakeTeamMemberRepository implements TeamMemberRepositoryPort {
 /** In-memory assignment repository: it answers with the result its test queues. */
 export class FakeSessionAssignmentRepository implements SessionAssignmentRepositoryPort {
   readonly calls: AssignmentChange[] = [];
+  readonly removeCalls: RemoveAssignmentChange[] = [];
   result: AddAssignmentResult = "ADDED";
+  removeResult: RemoveAssignmentResult = "REMOVED";
 
   async add(_context: WorkspaceContext, change: AssignmentChange) {
     this.calls.push(change);
     return this.result;
+  }
+
+  async remove(_context: WorkspaceContext, change: RemoveAssignmentChange) {
+    this.removeCalls.push(change);
+    return this.removeResult;
   }
 }
 

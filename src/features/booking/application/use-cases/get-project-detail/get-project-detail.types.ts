@@ -1,3 +1,4 @@
+import type { ProjectMenuGroups } from "@/features/booking/domain/project-menu/project-menu.types";
 import type { ProjectStep } from "@/features/booking/domain/project-status/project-status.types";
 import type { ShownSession } from "@/features/booking/domain/session/session.types";
 
@@ -10,4 +11,5 @@ export interface ProjectDetailView extends ProjectDetailRecord {
   readonly canEditDeal: boolean;
   readonly canEditSchedule: boolean;
   readonly canEditInfo: boolean;
+  readonly menu: ProjectMenuGroups;
 }

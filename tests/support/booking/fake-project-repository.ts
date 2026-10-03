@@ -6,10 +6,12 @@ import type {
   DefinitionRules,
   FilterClientOption,
   FilterServiceOption,
+  LockedProject,
   MoveStatusResult,
   ProjectDetailRecord,
   ProjectRepositoryPort,
   ProjectSnapshotInput,
+  ProjectWriter,
   ServiceOptionGroup,
   ServiceSnapshotSource,
 } from "@/features/booking/application/ports/project-repository/project-repository.port";
@@ -38,8 +40,9 @@ export interface StoredProject {
   readonly id: string;
   readonly workspaceId: string;
   readonly accessToken: string;
-  readonly input: ProjectSnapshotInput;
+  input: ProjectSnapshotInput;
   status: ProjectStatus;
+  cancellation: { at: string; byName: string | null; reason: string | null } | null;
 }
 
 export class FakeProjectRepository implements ProjectRepositoryPort {
@@ -80,6 +83,7 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       accessToken: input.accessToken,
       input,
       status: input.status,
+      cancellation: null,
     });
     return { status: "CREATED", id };
   }
@@ -131,7 +135,7 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       currency: "IDR",
       status: stored.status,
       client: { id: client.id, name: client.name, whatsappNumber: client.whatsappNumber },
-      service: { id: service.id, name: service.name },
+      service: { id: service.id, name: service.name, basePrice: service.basePrice },
       items: [],
       fields: [],
       sessions: stored.input.sessions.map((session, index) => ({
@@ -139,7 +143,7 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
         id: `session-${String(index)}`,
         createdAt: `2026-10-01T00:00:0${String(index)}Z`,
       })),
-      cancellation: null,
+      cancellation: stored.cancellation,
     };
   }
 
@@ -184,6 +188,41 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
     if (context.workspaceId !== this.workspaceId) return null;
     const found = this.clients.find((row) => row.id === id);
     return found ? { id: found.id, name: found.name, isArchived: found.isArchived } : null;
+  }
+
+  async withLockedProject<T>(
+    context: WorkspaceContext,
+    id: string,
+    change: (locked: LockedProject, writer: ProjectWriter) => Promise<T>,
+  ): Promise<T | "NOT_FOUND"> {
+    const stored = this.projects.find(
+      (row) => row.id === id && row.workspaceId === context.workspaceId,
+    );
+    if (!stored) return "NOT_FOUND";
+    const locked = {
+      status: stored.status,
+      agreedPrice: stored.input.agreedPrice,
+      title: stored.input.title,
+      sessionCount: stored.input.sessions.length,
+    };
+    const writer: ProjectWriter = {
+      updateInfo: async (input) => {
+        stored.input = {
+          ...stored.input,
+          title: input.title,
+          notes: input.notes,
+          agreedPrice: input.agreedPrice,
+        };
+      },
+      cancel: async (input) => {
+        stored.status = "CANCELLED";
+        stored.cancellation = { at: "2026-11-04T03:00:00Z", byName: "Owner", reason: input.reason };
+      },
+      deleteProject: async () => {
+        this.projects.splice(this.projects.indexOf(stored), 1);
+      },
+    };
+    return change(locked, writer);
   }
 
   async countSessions(context: WorkspaceContext, id: string): Promise<number | null> {

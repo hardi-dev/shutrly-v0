@@ -49,8 +49,29 @@ function toRecord(row: {
   };
 }
 
+async function findClientById(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  id: string,
+): Promise<ClientRecord | null> {
+  const row = (
+    await db
+      .select({
+        id: client.id,
+        name: client.name,
+        whatsappNumber: client.whatsappNumber,
+        socialLinks: client.socialLinks,
+        archivedAt: client.archivedAt,
+      })
+      .from(client)
+      .where(and(eq(client.workspaceId, context.workspaceId), eq(client.id, id)))
+  ).at(0);
+  return row ? toRecord(row) : null;
+}
+
 export function createDrizzleClientRepository(db: DbExecutor): ClientRepositoryPort {
   return {
+    findById: (context, id) => findClientById(db, context, id),
     async listPage(context, query) {
       const status =
         query.status === "ACTIVE" ? isNull(client.archivedAt) : isNotNull(client.archivedAt);

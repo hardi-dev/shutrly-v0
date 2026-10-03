@@ -43,7 +43,12 @@ export interface ProjectDetailRecord {
     readonly name: string;
     readonly whatsappNumber: string | null;
   };
-  readonly service: { readonly id: string; readonly name: string };
+  readonly service: {
+    readonly id: string;
+    readonly name: string;
+    /** The service's current base price, for the Ubah info helper. */
+    readonly basePrice: string;
+  };
   readonly items: readonly ProjectItemRecord[];
   readonly fields: readonly ProjectFieldRecord[];
   readonly sessions: readonly SessionRecordShape[];
@@ -118,6 +123,28 @@ export interface FilterClientOption {
   readonly isArchived: boolean;
 }
 
+export interface LockedProject {
+  readonly status: ProjectStatus;
+  readonly agreedPrice: string;
+  readonly sessionCount: number;
+  readonly title: string;
+}
+
+/** Writes that run while the project row is locked FOR UPDATE (D-5). */
+export interface ProjectWriter {
+  readonly updateInfo: (input: {
+    readonly title: string;
+    readonly notes: string | null;
+    readonly agreedPrice: string;
+    readonly actorId: string;
+  }) => Promise<void>;
+  readonly cancel: (input: {
+    readonly reason: string | null;
+    readonly actorId: string;
+  }) => Promise<void>;
+  readonly deleteProject: () => Promise<void>;
+}
+
 export type MoveStatusResult = "MOVED" | "STALE" | "NOT_FOUND";
 
 /** Every call is scoped by the verified workspace (C-101). */
@@ -167,6 +194,12 @@ export interface ProjectRepositoryPort {
     context: WorkspaceContext,
     id: string,
   ) => Promise<FilterClientOption | null>;
+  /** Locks the project row, runs `change` in the same transaction and returns its result, or NOT_FOUND. */
+  readonly withLockedProject: <T>(
+    context: WorkspaceContext,
+    id: string,
+    change: (locked: LockedProject, writer: ProjectWriter) => Promise<T>,
+  ) => Promise<T | "NOT_FOUND">;
   /** Null when the project does not exist in the workspace. */
   readonly countSessions: (context: WorkspaceContext, id: string) => Promise<number | null>;
   readonly listActiveServiceOptions: (

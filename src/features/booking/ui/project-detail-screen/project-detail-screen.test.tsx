@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { ProjectDetailView } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail.types";
+import { buildProjectMenu } from "@/features/booking/domain/project-menu/project-menu";
 import type { ProjectStatus } from "@/features/booking/domain/project-status/project-status.types";
 
 import { ProjectDetailScreen } from "./project-detail-screen";
@@ -65,7 +66,7 @@ function view(
     currency: "IDR",
     status,
     client: { id: "c1", name: "Rina", whatsappNumber: "6281234567890" },
-    service: { id: "sv1", name: "Wisuda Basic" },
+    service: { id: "sv1", name: "Wisuda Basic", basePrice: "750000" },
     items: [
       {
         id: "i1",
@@ -105,6 +106,7 @@ function view(
     canEditDeal: status === "DRAFT" || status === "BOOKED",
     canEditSchedule: status !== "CANCELLED",
     canEditInfo: status !== "CANCELLED",
+    menu: buildProjectMenu({ status, hasWhatsappNumber: true }),
     ...overrides,
   };
 }

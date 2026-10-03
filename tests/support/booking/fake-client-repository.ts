@@ -20,6 +20,21 @@ export class FakeClientRepository implements ClientRepositoryPort {
   lastListQuery: ClientPageQuery | undefined;
   private createdAt = 0;
 
+  async findById(context: WorkspaceContext, id: string): Promise<ClientRecord | null> {
+    const row = this.rows.find(
+      (candidate) => candidate.workspaceId === context.workspaceId && candidate.id === id,
+    );
+    return row
+      ? {
+          id: row.id,
+          name: row.name,
+          whatsappNumber: row.whatsappNumber,
+          socialLinks: row.socialLinks,
+          isArchived: row.isArchived,
+        }
+      : null;
+  }
+
   async listPage(
     context: WorkspaceContext,
     query: ClientPageQuery,

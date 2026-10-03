@@ -6,8 +6,10 @@ import { ProjectError } from "@/features/booking/application/errors/project-erro
 import { projectIdSchema } from "@/features/booking/application/schemas/project-ids/project-ids.schema";
 import { projectListQuerySchema } from "@/features/booking/application/schemas/project-list-query/project-list-query.schema";
 import { advanceProject } from "@/features/booking/application/use-cases/advance-project/advance-project";
+import { cancelProject } from "@/features/booking/application/use-cases/cancel-project/cancel-project";
 import { countProjects } from "@/features/booking/application/use-cases/count-projects/count-projects";
 import { createProject } from "@/features/booking/application/use-cases/create-project/create-project";
+import { deleteDraft } from "@/features/booking/application/use-cases/delete-draft/delete-draft";
 import { getProjectDetail } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail";
 import { listProjects } from "@/features/booking/application/use-cases/list-projects/list-projects";
 import { loadCreateOptions } from "@/features/booking/application/use-cases/load-create-options/load-create-options";
@@ -16,6 +18,7 @@ import {
   searchFilterClients,
 } from "@/features/booking/application/use-cases/load-filter-options/load-filter-options";
 import { searchActiveClients } from "@/features/booking/application/use-cases/search-active-clients/search-active-clients";
+import { updateProjectInfo } from "@/features/booking/application/use-cases/update-project-info/update-project-info";
 import { parseProjectListParams } from "@/features/booking/domain/project-list-query/project-list-filter";
 import type { ProjectListParams } from "@/features/booking/domain/project-list-query/project-list-filter.types";
 import { PROJECT_SEARCH_MAX_LENGTH } from "@/features/booking/domain/project-record/project-record";
@@ -157,5 +160,52 @@ export async function loadMoreProjectsEntry(rawWorkspaceId: string, rawQuery: un
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "list");
+  }
+}
+
+export async function updateProjectInfoEntry(
+  rawWorkspaceId: string,
+  rawProjectId: string,
+  values: unknown,
+) {
+  const projectId = idOrNotFound(rawProjectId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withProjectScope(({ projects }) =>
+      updateProjectInfo(projects, verified.context, account.id, projectId, values),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "update-info");
+  }
+}
+
+export async function cancelProjectEntry(
+  rawWorkspaceId: string,
+  rawProjectId: string,
+  values: unknown,
+) {
+  const projectId = idOrNotFound(rawProjectId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withProjectScope(({ projects }) =>
+      cancelProject(projects, verified.context, account.id, projectId, values),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "cancel");
+  }
+}
+
+export async function deleteDraftEntry(rawWorkspaceId: string, rawProjectId: string) {
+  const projectId = idOrNotFound(rawProjectId);
+  await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withProjectScope(({ projects }) =>
+      deleteDraft(projects, verified.context, projectId),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "delete-draft");
   }
 }

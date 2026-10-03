@@ -1,5 +1,6 @@
 import "server-only";
 
+import { buildProjectMenu } from "@/features/booking/domain/project-menu/project-menu";
 import {
   isDealEditable,
   isScheduleEditable,
@@ -28,5 +29,9 @@ export async function getProjectDetail(
     canEditDeal: isDealEditable(detail.status),
     canEditSchedule: isScheduleEditable(detail.status),
     canEditInfo: isScheduleEditable(detail.status),
+    menu: buildProjectMenu({
+      status: detail.status,
+      hasWhatsappNumber: detail.client.whatsappNumber !== null,
+    }),
   };
 }

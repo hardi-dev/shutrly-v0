@@ -7,11 +7,13 @@ import type {
   DefinitionRules,
   FilterClientOption,
   FilterServiceOption,
+  LockedProject,
   MoveStatusResult,
   ProjectDetailRecord,
   ProjectFieldRecord,
   ProjectItemRecord,
   ProjectRepositoryPort,
+  ProjectWriter,
   ServiceOptionGroup,
   ServiceSnapshotSource,
 } from "@/features/booking/application/ports/project-repository/project-repository.port";
@@ -105,13 +107,9 @@ async function readChildren(db: DbExecutor, context: WorkspaceContext, projectId
   };
 }
 
-async function findDetail(
-  db: DbExecutor,
-  context: WorkspaceContext,
-  id: string,
-): Promise<ProjectDetailRecord | null> {
+async function selectDetailRow(db: DbExecutor, context: WorkspaceContext, id: string) {
   // The client access token is deliberately never selected (C-103, D-6).
-  const row = (
+  return (
     await db
       .select({
         id: project.id,
@@ -127,6 +125,7 @@ async function findDetail(
         clientWhatsappNumber: client.whatsappNumber,
         serviceId: project.serviceId,
         serviceName: sql<string>`(select s.name from service s where s.workspace_id = ${project.workspaceId} and s.id = ${project.serviceId})`,
+        serviceBasePrice: sql<string>`(select s.base_price from service s where s.workspace_id = ${project.workspaceId} and s.id = ${project.serviceId})`,
       })
       .from(project)
       .innerJoin(
@@ -136,6 +135,14 @@ async function findDetail(
       .leftJoin(user, eq(user.id, project.cancelledBy))
       .where(and(eq(project.workspaceId, context.workspaceId), eq(project.id, id)))
   ).at(0);
+}
+
+async function findDetail(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  id: string,
+): Promise<ProjectDetailRecord | null> {
+  const row = await selectDetailRow(db, context, id);
   const status = PROJECT_STATUSES.find((candidate) => candidate === row?.status);
   if (!row || !status) return null;
   const children = await readChildren(db, context, id);
@@ -147,7 +154,11 @@ async function findDetail(
     currency: "IDR",
     status,
     client: { id: row.clientId, name: row.clientName, whatsappNumber: row.clientWhatsappNumber },
-    service: { id: row.serviceId, name: row.serviceName },
+    service: {
+      id: row.serviceId,
+      name: row.serviceName,
+      basePrice: canonicalIdrAmount(row.serviceBasePrice),
+    },
     ...children,
     cancellation: row.cancelledAt
       ? { at: row.cancelledAt.toISOString(), byName: row.cancelledByName, reason: row.cancelReason }
@@ -196,6 +207,72 @@ async function findFilterClient(
       .where(and(eq(client.workspaceId, context.workspaceId), eq(client.id, id)))
   ).at(0);
   return row ? { id: row.id, name: row.name, isArchived: row.archivedAt !== null } : null;
+}
+
+function writerFor(db: DbExecutor, context: WorkspaceContext, id: string): ProjectWriter {
+  const scope = and(eq(project.workspaceId, context.workspaceId), eq(project.id, id));
+  return {
+    async updateInfo(input) {
+      await db
+        .update(project)
+        .set({
+          title: input.title,
+          notes: input.notes,
+          agreedPrice: input.agreedPrice,
+          updatedBy: input.actorId,
+          updatedAt: new Date(),
+        })
+        .where(scope);
+    },
+    async cancel(input) {
+      const now = new Date();
+      await db
+        .update(project)
+        .set({
+          status: "CANCELLED",
+          cancelledAt: now,
+          cancelledBy: input.actorId,
+          cancelReason: input.reason,
+          updatedBy: input.actorId,
+          updatedAt: now,
+        })
+        .where(scope);
+    },
+    async deleteProject() {
+      await db.delete(project).where(scope);
+    },
+  };
+}
+
+async function withLockedProject<T>(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  id: string,
+  change: (locked: LockedProject, writer: ProjectWriter) => Promise<T>,
+): Promise<T | "NOT_FOUND"> {
+  return db.transaction(async (tx) => {
+    const row = (
+      await tx
+        .select({
+          status: project.status,
+          agreedPrice: project.agreedPrice,
+          title: project.title,
+          sessionCount: sql<number>`(select count(*)::int from project_session s where s.workspace_id = "project"."workspace_id" and s.project_id = "project"."id")`,
+        })
+        .from(project)
+        .where(and(eq(project.workspaceId, context.workspaceId), eq(project.id, id)))
+        .for("update")
+    ).at(0);
+    const status = PROJECT_STATUSES.find((candidate) => candidate === row?.status);
+    if (!row || !status) return "NOT_FOUND";
+    const locked = {
+      status,
+      agreedPrice: canonicalIdrAmount(row.agreedPrice),
+      title: row.title,
+      sessionCount: row.sessionCount,
+    };
+    return change(locked, writerFor(tx, context, id));
+  });
 }
 
 async function moveStatus(
@@ -352,6 +429,7 @@ export function createDrizzleProjectRepository(db: DbExecutor): ProjectRepositor
     moveStatus: (context, id, transition, actorId) =>
       moveStatus(db, context, id, transition, actorId),
     countSessions: (context, id) => countSessions(db, context, id),
+    withLockedProject: (context, id, change) => withLockedProject(db, context, id, change),
     findFilterClient: (context, id) => findFilterClient(db, context, id),
     listServicesForFilter: (context) => listServicesForFilter(db, context),
     searchClientsForFilter: (context, text, limit) =>

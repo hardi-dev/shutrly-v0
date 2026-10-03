@@ -402,4 +402,83 @@ describe("Drizzle project repository", () => {
       ),
     ).toBe("STALE");
   });
+
+  it("AC-PRJ-022 cancels under the lock and findDetail returns who and why", async () => {
+    const context = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(context, snapshot(ids, context.ownerId));
+    if (created.status !== "CREATED") throw new Error("not created");
+    const result = await repository.withLockedProject(
+      context,
+      created.id,
+      async (locked, writer) => {
+        expect(locked).toMatchObject({ status: "BOOKED", agreedPrice: "750000", sessionCount: 1 });
+        await writer.cancel({ reason: "wisuda diundur", actorId: context.ownerId });
+        return "done";
+      },
+    );
+    expect(result).toBe("done");
+    const detail = await repository.findDetail(context, created.id);
+    expect(detail?.status).toBe("CANCELLED");
+    expect(detail?.cancellation).toMatchObject({
+      byName: "Project Owner",
+      reason: "wisuda diundur",
+    });
+    expect(detail?.service.basePrice).toBe("750000");
+  });
+
+  it("AC-PRJ-017 updates title, notes and price through the writer", async () => {
+    const context = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(context, snapshot(ids, context.ownerId));
+    if (created.status !== "CREATED") throw new Error("not created");
+    await repository.withLockedProject(context, created.id, (_locked, writer) =>
+      writer.updateInfo({
+        title: "Judul baru",
+        notes: "catatan",
+        agreedPrice: "800000",
+        actorId: context.ownerId,
+      }),
+    );
+    const detail = await repository.findDetail(context, created.id);
+    expect(detail).toMatchObject({ title: "Judul baru", notes: "catatan", agreedPrice: "800000" });
+  });
+
+  it("AC-PRJ-023 deletes a draft with its items, fields and sessions", async () => {
+    const context = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(
+      context,
+      snapshot(ids, context.ownerId, { status: "DRAFT" }),
+    );
+    if (created.status !== "CREATED") throw new Error("not created");
+    await repository.withLockedProject(context, created.id, (_locked, writer) =>
+      writer.deleteProject(),
+    );
+    expect(await repository.findDetail(context, created.id)).toBeNull();
+    const rowsOf = async (
+      table: typeof projectItem | typeof projectFieldValue | typeof projectSession,
+    ) => (await db.select({ n: count() }).from(table).where(eq(table.projectId, created.id)))[0]?.n;
+    expect(await rowsOf(projectItem)).toBe(0);
+    expect(await rowsOf(projectFieldValue)).toBe(0);
+    expect(await rowsOf(projectSession)).toBe(0);
+  });
+
+  it("AC-PRJ-025 does not lock or change another workspace's project", async () => {
+    const context = await seedWorkspace();
+    const other = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(context, snapshot(ids, context.ownerId));
+    if (created.status !== "CREATED") throw new Error("not created");
+    expect(
+      await repository.withLockedProject(other, created.id, (_locked, writer) =>
+        writer.deleteProject(),
+      ),
+    ).toBe("NOT_FOUND");
+    expect(await repository.findDetail(context, created.id)).not.toBeNull();
+  });
 });

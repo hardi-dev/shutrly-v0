@@ -158,6 +158,7 @@
   --opacity-hover-overlay: 0.06;
   --opacity-status-tint: 0.16;
   --opacity-scrim: 0.5;
+  --opacity-media-inactive: 0.6;
   --elevation-1-offset-y: 4px;
   --elevation-1-blur: 16px;
   --elevation-2-offset-y: 16px;
@@ -597,6 +598,31 @@
   --component-tooltip-padding-y: var(--space-1);
   --component-tooltip-padding-x: var(--space-2);
   --component-empty-state-in-card-padding-y: var(--space-8);
+  --component-photo-tile-image-background: var(--color-semantic-surface-sunken);
+  --component-photo-tile-image-radius: var(--radius-md);
+  --component-photo-tile-gap: var(--space-2);
+  --component-photo-tile-text-gap: var(--space-0-5);
+  --component-photo-tile-name: var(--color-semantic-text-primary);
+  --component-photo-tile-meta: var(--color-semantic-text-secondary);
+  --component-photo-tile-badge-inset: var(--space-2);
+  --component-folder-tile-background: var(--color-semantic-surface-subtle);
+  --component-folder-tile-border: var(--color-semantic-border-default);
+  --component-folder-tile-radius: var(--radius-md);
+  --component-folder-tile-icon: var(--color-semantic-text-secondary);
+  --component-folder-tile-gap: var(--space-2);
+  --component-folder-tile-text-gap: var(--space-0-5);
+  --component-folder-tile-name: var(--color-semantic-text-primary);
+  --component-folder-tile-count: var(--color-semantic-text-secondary);
+  --component-media-viewer-backdrop: var(--color-semantic-surface-inverse);
+  --component-media-viewer-text: var(--color-semantic-text-inverse);
+  --component-media-viewer-bar-padding-x: var(--space-6);
+  --component-media-viewer-bar-padding-y: var(--space-4);
+  --component-media-viewer-bar-gap: var(--space-4);
+  --component-media-viewer-nav-inset: var(--space-8);
+  --component-media-viewer-filmstrip-gap: var(--space-2);
+  --component-media-viewer-thumb-radius: var(--radius-sm);
+  --component-media-viewer-thumb-active-border: var(--color-semantic-text-inverse);
+  --component-media-viewer-thumb-inactive-opacity: var(--opacity-media-inactive);
 }
 
 [data-theme="dark"] {
@@ -659,5 +685,8 @@
   --component-alert-highlight-action: var(--color-semantic-text-primary);
   --component-table-footer-link: var(--color-semantic-status-info-fg);
   --component-bottom-nav-item-active: var(--color-semantic-status-info-fg);
+  --component-media-viewer-backdrop: var(--color-semantic-surface-canvas);
+  --component-media-viewer-text: var(--color-semantic-text-primary);
+  --component-media-viewer-thumb-active-border: var(--color-semantic-text-primary);
 }
 

@@ -4,7 +4,7 @@
     "tokens": "docs/design-system/tokens.json",
     "exploration": "docs/design-system/exploration.pen",
     "status": "APPROVED 2026-09-29 (board 03 decision record) · PERSISTED 2026-09-29",
-    "generated": "2026-10-02"
+    "generated": "2026-10-04"
   },
   "library": {
     "file": "docs/design-system/design-system.lib.pen",
@@ -260,6 +260,14 @@
     "component/chip/status/warning/background": "component.chip.status.warning.background",
     "component/chip/status/warning/text": "component.chip.status.warning.text",
     "component/empty-state/in-card/padding-y": "component.empty-state.in-card.padding-y",
+    "component/folder-tile/background": "component.folder-tile.background",
+    "component/folder-tile/border": "component.folder-tile.border",
+    "component/folder-tile/count": "component.folder-tile.count",
+    "component/folder-tile/gap": "component.folder-tile.gap",
+    "component/folder-tile/icon": "component.folder-tile.icon",
+    "component/folder-tile/name": "component.folder-tile.name",
+    "component/folder-tile/radius": "component.folder-tile.radius",
+    "component/folder-tile/text-gap": "component.folder-tile.text-gap",
     "component/group/gap": "component.group.gap",
     "component/group/title/padding-x": "component.group.title.padding-x",
     "component/group/title/text": "component.group.title.text",
@@ -315,6 +323,16 @@
     "component/list-card/item/title": "component.list-card.item.title",
     "component/list-card/padding-y": "component.list-card.padding-y",
     "component/list-card/radius": "component.list-card.radius",
+    "component/media-viewer/backdrop": "component.media-viewer.backdrop",
+    "component/media-viewer/bar-gap": "component.media-viewer.bar-gap",
+    "component/media-viewer/bar-padding-x": "component.media-viewer.bar-padding-x",
+    "component/media-viewer/bar-padding-y": "component.media-viewer.bar-padding-y",
+    "component/media-viewer/filmstrip-gap": "component.media-viewer.filmstrip-gap",
+    "component/media-viewer/nav-inset": "component.media-viewer.nav-inset",
+    "component/media-viewer/text": "component.media-viewer.text",
+    "component/media-viewer/thumb-active-border": "component.media-viewer.thumb-active-border",
+    "component/media-viewer/thumb-inactive-opacity": "component.media-viewer.thumb-inactive-opacity",
+    "component/media-viewer/thumb-radius": "component.media-viewer.thumb-radius",
     "component/menu/background": "component.menu.background",
     "component/menu/border": "component.menu.border",
     "component/menu/divider": "component.menu.divider",
@@ -425,6 +443,13 @@
     "component/panel/app/header/padding-x": "component.panel.app.header.padding-x",
     "component/panel/app/radius": "component.panel.app.radius",
     "component/panel/app/title": "component.panel.app.title",
+    "component/photo-tile/badge-inset": "component.photo-tile.badge-inset",
+    "component/photo-tile/gap": "component.photo-tile.gap",
+    "component/photo-tile/image-background": "component.photo-tile.image-background",
+    "component/photo-tile/image-radius": "component.photo-tile.image-radius",
+    "component/photo-tile/meta": "component.photo-tile.meta",
+    "component/photo-tile/name": "component.photo-tile.name",
+    "component/photo-tile/text-gap": "component.photo-tile.text-gap",
     "component/section-card/background": "component.section-card.background",
     "component/section-card/border": "component.section-card.border",
     "component/section-card/compact/content/padding": "component.section-card.compact.content.padding",
@@ -580,6 +605,7 @@
     "font/weight/semibold": "font.weight.semibold",
     "opacity/disabled": "opacity.disabled",
     "opacity/hover-overlay": "opacity.hover-overlay",
+    "opacity/media-inactive": "opacity.media-inactive",
     "opacity/scrim": "opacity.scrim",
     "opacity/status-tint": "opacity.status-tint",
     "radius/2xs": "radius.2xs",
@@ -619,12 +645,12 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 597,
+    "total": 623,
     "primitive": 64,
     "semantic": 55,
-    "component": 412,
-    "scale": 66,
-    "themed": 59
+    "component": 437,
+    "scale": 67,
+    "themed": 62
   },
   "transforms": {
     "opacity/*": "Pencil value = token $value × 100 (Pencil opacity variables are percent; literal node opacity is 0–1)"
@@ -650,7 +676,7 @@
     "rules_status": "APPROVED v3.1 2026-09-29 (Owner: ok agree; v3 2026-09-28 Owner: ya)",
     "note": "Documentation boards bind every swatch/scale to live variables; dark previews use theme mode=dark."
   },
-  "components_status": "APPROVED — C01–C35 approved 2026-09-26; C36 Combobox and C37 Nav rail & tablet shell retained; C38 Empty State, C39 Toast, Button loading and Sheet Item/Selected approved 2026-09-28; shell v3 amendments plus C40 Page Header, C41 Group and C42 List Card approved by Owner (ya) 2026-09-28; F-17 promotion 2026-09-29: Workspace Pill, Mobile Header, Compact Bar, Toast/Danger, Menu/List, Count Badge/Danger (C14 merged), Page Header Utilities, Nav Item active/hover (rules v3.1), Mobile App Shell / Mobile Shell / Tablet shell updates; C43 Section Card approved by Owner 2026-10-01 (F-02 settings v3; renamed from Form Section, versatile slot). C12 generalised to Status Chip (Stage Chip presets kept), List Card Item Two-line + Skeleton, and C44 Option Card approved by Owner 2026-10-01 (F-04; 585 tokens, checksum 284a052f). F-05 promotion 2026-10-02 (Owner: \"follow your suggestion\"; F-05 promotion): C45 Tabs, Page Header/Tabs, Segmented Control/Full width, Empty State/In card, List Card Two-line Trailing amendment (596 tokens, checksum 986ecbcb); Menu Item/Rich (Default, Hover, Selected) 2026-10-02 (Owner: \"ikuti saranmu\"; F-05).",
+  "components_status": "APPROVED — C01–C35 approved 2026-09-26; C36 Combobox and C37 Nav rail & tablet shell retained; C38 Empty State, C39 Toast, Button loading and Sheet Item/Selected approved 2026-09-28; shell v3 amendments plus C40 Page Header, C41 Group and C42 List Card approved by Owner (ya) 2026-09-28; F-17 promotion 2026-09-29: Workspace Pill, Mobile Header, Compact Bar, Toast/Danger, Menu/List, Count Badge/Danger (C14 merged), Page Header Utilities, Nav Item active/hover (rules v3.1), Mobile App Shell / Mobile Shell / Tablet shell updates; C43 Section Card approved by Owner 2026-10-01 (F-02 settings v3; renamed from Form Section, versatile slot). C12 generalised to Status Chip (Stage Chip presets kept), List Card Item Two-line + Skeleton, and C44 Option Card approved by Owner 2026-10-01 (F-04; 585 tokens, checksum 284a052f). F-05 promotion 2026-10-02 (Owner: \"follow your suggestion\"; F-05 promotion): C45 Tabs, Page Header/Tabs, Segmented Control/Full width, Empty State/In card, List Card Two-line Trailing amendment (596 tokens, checksum 986ecbcb); Menu Item/Rich (Default, Hover, Selected) 2026-10-02 (Owner: \"ikuti saranmu\"; F-05). F-09 promotion 2026-10-04 (Owner: \"Approve all\"): C46 Photo Tile, C47 Folder Tile, C48 Media Viewer (+ Filmstrip Thumb); 26 tokens added incl. opacity.media-inactive (623 tokens, checksum c2c0a40b).",
   "components": {
     "page-header": {
       "status": "APPROVED 2026-09-28 (Owner: ya; shell v3) · Tabs variant APPROVED 2026-10-02 (Owner: \"follow your suggestion\"; F-05 promotion)",
@@ -4177,11 +4203,215 @@
       "gaps": [
         "active underline and focus outline widths are literal strokes (2 px), like input border-error; no border-width tokens"
       ]
+    },
+    "photo-tile": {
+      "status": "APPROVED 2026-10-04 (Owner: \"Approve all\"; F-09 promotion)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C46 — Photo tile",
+        "id": "vxJaC"
+      },
+      "spec": "docs/design-system/components/photo-tile.md",
+      "base": {
+        "name": "_PhotoTile/Base",
+        "id": "En7KF",
+        "private": true
+      },
+      "axes": {
+        "state": [
+          "default",
+          "missing",
+          "skeleton"
+        ]
+      },
+      "props": {
+        "image": {
+          "kind": "fill",
+          "layer": "Image",
+          "id": "vnyor",
+          "note": "image fill, mode cover; override height with the grid (220 desktop, 104 phone)"
+        },
+        "fileName": {
+          "kind": "text",
+          "layer": "File name",
+          "id": "dTxmf"
+        },
+        "meta": {
+          "kind": "boolean+text",
+          "layer": "Meta",
+          "id": "erGMi"
+        },
+        "badge": {
+          "kind": "boolean",
+          "layer": "Badge",
+          "id": "gj2DD",
+          "note": "Status Chip/Warning \"Hilang\"; on in Missing"
+        }
+      },
+      "layers": {
+        "Image": "vnyor",
+        "Badge": "gj2DD",
+        "File name": "dTxmf",
+        "Meta": "erGMi"
+      },
+      "variants": {
+        "default": "AzJU9",
+        "missing": "HEwJS",
+        "skeleton": "e0pYUm"
+      },
+      "nested": [
+        "g26Cg6"
+      ],
+      "tokens": [
+        "component.photo-tile.*"
+      ],
+      "gaps": [
+        "badge offset is literal x/y 8 (component.photo-tile.badge-inset documents the value; absolute positions take no variables)",
+        "image height is literal per grid (220 / 104), like list rows"
+      ]
+    },
+    "folder-tile": {
+      "status": "APPROVED 2026-10-04 (Owner: \"Approve all\"; F-09 promotion)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C47 — Folder tile",
+        "id": "FSfkL"
+      },
+      "spec": "docs/design-system/components/folder-tile.md",
+      "base": null,
+      "axes": {},
+      "props": {
+        "name": {
+          "kind": "text",
+          "layer": "Name",
+          "id": "rkS3D"
+        },
+        "count": {
+          "kind": "text",
+          "layer": "Count",
+          "id": "tll3W"
+        },
+        "iconWrap": {
+          "kind": "size",
+          "layer": "Icon wrap",
+          "id": "gvT5W",
+          "note": "override height with the grid (220 / 104)"
+        }
+      },
+      "layers": {
+        "Icon wrap": "gvT5W",
+        "Icon": "mWqBB",
+        "Name": "rkS3D",
+        "Count": "tll3W"
+      },
+      "variants": {
+        "default": "NWvmt"
+      },
+      "nested": [],
+      "tokens": [
+        "component.folder-tile.*"
+      ],
+      "gaps": [
+        "icon size 48 is literal, like other icon sizes"
+      ]
+    },
+    "media-viewer": {
+      "status": "APPROVED 2026-10-04 (Owner: \"Approve all\"; F-09 promotion)",
+      "file": "docs/design-system/design-system.lib.pen",
+      "page": {
+        "name": "C48 — Media viewer",
+        "id": "f3g3Pl"
+      },
+      "spec": "docs/design-system/components/media-viewer.md",
+      "base": {
+        "name": "_FilmstripThumb/Base",
+        "id": "m7vpvp",
+        "private": true
+      },
+      "axes": {
+        "device": [
+          "desktop",
+          "mobile"
+        ],
+        "thumb": [
+          "default",
+          "active"
+        ]
+      },
+      "props": {
+        "fileName": {
+          "kind": "text",
+          "layer": "File name",
+          "id": "b8WLGZ",
+          "on": "Desktop (rbwFa); Mobile fmvZT"
+        },
+        "meta": {
+          "kind": "text",
+          "layer": "Meta",
+          "id": "p8Hc7",
+          "on": "Desktop; Mobile wgYkD"
+        },
+        "actions": {
+          "kind": "slot",
+          "layer": "Actions",
+          "id": "x1fkwu",
+          "on": "Desktop; Mobile SeLrM",
+          "recommended": [
+            "JmfmZ",
+            "qY0Em"
+          ]
+        },
+        "image": {
+          "kind": "fill",
+          "layer": "Image",
+          "id": "QEKsU",
+          "on": "Desktop; Mobile gbxP7",
+          "note": "image fill, mode contain; or replace with a missing-file message"
+        },
+        "filmstrip": {
+          "kind": "slot",
+          "layer": "Filmstrip",
+          "id": "FclcC",
+          "on": "Desktop; Mobile oLMLe",
+          "recommended": [
+            "IGxRK",
+            "xyliD"
+          ],
+          "fill": "Replace(instance+'/FclcC', {type:'frame', name:'Filmstrip', gap:'$component/media-viewer/filmstrip-gap', alignItems:'center'})"
+        }
+      },
+      "layers": {
+        "Top bar": "A5QLMd",
+        "Actions": "x1fkwu",
+        "Stage": "h5vq2",
+        "Image": "QEKsU",
+        "Filmstrip": "FclcC"
+      },
+      "variants": {
+        "desktop": "rbwFa",
+        "mobile": "cLkBF",
+        "thumb-default": "IGxRK",
+        "thumb-active": "xyliD"
+      },
+      "nested": [
+        "qY0Em",
+        "m9dUlL",
+        "JmfmZ"
+      ],
+      "tokens": [
+        "component.media-viewer.*",
+        "opacity.media-inactive"
+      ],
+      "gaps": [
+        "stage image and ← / → are absolutely positioned (literal x/y); nav-inset documents the 32 px side inset",
+        "viewer sizes are the viewport (1440 × 1024, 390 × 844)",
+        "thumbnail placeholder fill borrows component.photo-tile.image-background"
+      ]
     }
   },
   "checksum": {
     "algorithm": "fnv1a-32 over sorted 'name|type|canonical-value' lines",
-    "total": "0d6aad88",
-    "count": 597
+    "total": "c2c0a40b",
+    "count": 623
   }
 }

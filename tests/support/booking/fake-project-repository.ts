@@ -173,6 +173,7 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       items: stored.items,
       fields: stored.fields,
       sessions: [...stored.sessions].sort(compareSessions),
+      assignments: [],
       cancellation: stored.cancellation,
     };
   }

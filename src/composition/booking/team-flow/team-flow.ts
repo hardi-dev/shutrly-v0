@@ -4,15 +4,19 @@ import { notFound } from "next/navigation";
 
 import { TeamError } from "@/features/booking/application/errors/team-errors/team-errors";
 import {
+  projectIdSchema,
+  sessionIdSchema,
   teamMemberIdSchema,
   teamRoleIdSchema,
 } from "@/features/booking/application/schemas/team-ids/team-ids.schema";
 import { teamMemberListQuerySchema } from "@/features/booking/application/schemas/team-member-list-query/team-member-list-query.schema";
+import { addSessionAssignment } from "@/features/booking/application/use-cases/add-session-assignment/add-session-assignment";
 import { addTeamMember } from "@/features/booking/application/use-cases/add-team-member/add-team-member";
 import { addTeamRole } from "@/features/booking/application/use-cases/add-team-role/add-team-role";
 import { countTeamMembers } from "@/features/booking/application/use-cases/count-team-members/count-team-members";
 import { deleteTeamMember } from "@/features/booking/application/use-cases/delete-team-member/delete-team-member";
 import { deleteTeamRole } from "@/features/booking/application/use-cases/delete-team-role/delete-team-role";
+import { listAssignableMembers } from "@/features/booking/application/use-cases/list-assignable-members/list-assignable-members";
 import { listTeamMembers } from "@/features/booking/application/use-cases/list-team-members/list-team-members";
 import { listTeamRoles } from "@/features/booking/application/use-cases/list-team-roles/list-team-roles";
 import { renameTeamRole } from "@/features/booking/application/use-cases/rename-team-role/rename-team-role";
@@ -28,9 +32,16 @@ import { verifyOwnerWorkspace } from "../../workspace/owner-workspace/owner-work
 import { withTeamScope } from "../team-scope/team-scope";
 import type { TeamMembersData } from "./team-flow.types";
 
-function saveError(error: unknown, workspaceId: string, operation: string): never {
+function saveError(
+  error: unknown,
+  workspaceId: string,
+  operation: string,
+  projectId?: string,
+): never {
   if (error instanceof TeamError && error.code === "NOT_FOUND") notFound();
-  if (!(error instanceof DomainError)) logger.error("team.save_failed", { workspaceId, operation });
+  if (!(error instanceof DomainError)) {
+    logger.error("team.save_failed", { workspaceId, operation, ...(projectId && { projectId }) });
+  }
   throw new TeamError("SAVE_FAILED");
 }
 
@@ -251,5 +262,48 @@ export async function deleteWorkspaceTeamMember(rawWorkspaceId: string, rawMembe
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "delete-member");
+  }
+}
+
+/**
+ * Loads the active members with their roles for the project detail's Penugasan form.
+ * @param rawWorkspaceId - the untrusted route workspace ID
+ * @returns the active members by name
+ */
+export async function loadAssignableMembers(rawWorkspaceId: string) {
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withTeamScope(({ members }) => listAssignableMembers(members, verified.context));
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "list-assignable");
+  }
+}
+
+/**
+ * Puts a member on a session of a project in one role.
+ * @param rawWorkspaceId - the untrusted route workspace ID
+ * @param rawProjectId - the untrusted project ID
+ * @param rawSessionId - the untrusted session ID
+ * @param values - the untrusted `{ memberId, roleId }`
+ * @returns success, or the failure code for the form
+ */
+export async function addSessionAssignmentEntry(
+  rawWorkspaceId: string,
+  rawProjectId: string,
+  rawSessionId: string,
+  values: unknown,
+) {
+  const projectId = projectIdSchema.safeParse(rawProjectId);
+  const sessionId = sessionIdSchema.safeParse(rawSessionId);
+  if (!projectId.success || !sessionId.success) notFound();
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const target = { projectId: projectId.data, sessionId: sessionId.data };
+  try {
+    return await withTeamScope(({ assignments }) =>
+      addSessionAssignment(assignments, verified.context, account.id, target, values),
+    );
+  } catch (error) {
+    return saveError(error, verified.context.workspaceId, "add-assignment", target.projectId);
   }
 }

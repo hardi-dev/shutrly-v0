@@ -63,6 +63,7 @@ const WITH_SESSION: ProjectListRow = {
     createdAt: "2026-10-01T00:00:00Z",
   },
   sessionCount: 2,
+  hasTeam: false,
 };
 const NO_SESSION: ProjectListRow = {
   ...WITH_SESSION,

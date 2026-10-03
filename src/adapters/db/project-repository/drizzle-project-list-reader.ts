@@ -66,6 +66,7 @@ function toRow(row: RawRow): ProjectListRow | null {
     serviceName: text(row.service_name),
     shownSession: toSession(row),
     sessionCount: Number(row.session_count),
+    hasTeam: row.has_team === true,
   };
 }
 

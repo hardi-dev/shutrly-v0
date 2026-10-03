@@ -7,6 +7,7 @@ const addTeamMember = vi.fn();
 const updateTeamMember = vi.fn();
 const setTeamMemberArchived = vi.fn();
 const deleteTeamMember = vi.fn();
+const addSessionAssignment = vi.fn();
 const notFound = vi.fn(() => {
   throw new Error("NEXT_NOT_FOUND");
 });
@@ -32,6 +33,10 @@ vi.mock(
 vi.mock("@/features/booking/application/use-cases/delete-team-member/delete-team-member", () => ({
   deleteTeamMember,
 }));
+vi.mock(
+  "@/features/booking/application/use-cases/add-session-assignment/add-session-assignment",
+  () => ({ addSessionAssignment }),
+);
 vi.mock("../../auth/owner-guard/owner-guard", () => ({
   requireOwnerOrRedirect: vi.fn().mockResolvedValue({ id: "owner" }),
 }));
@@ -39,11 +44,13 @@ vi.mock("../../workspace/owner-workspace/owner-workspace", () => ({
   verifyOwnerWorkspace: vi.fn().mockResolvedValue({ context: { workspaceId: "ws-1" } }),
 }));
 vi.mock("../team-scope/team-scope", () => ({
-  withTeamScope: (work: (scope: unknown) => Promise<unknown>) => work({ roles: {}, members: {} }),
+  withTeamScope: (work: (scope: unknown) => Promise<unknown>) =>
+    work({ roles: {}, members: {}, assignments: {} }),
 }));
 
 const { TeamError } = await import("@/features/booking/application/errors/team-errors/team-errors");
 const {
+  addSessionAssignmentEntry,
   addWorkspaceTeamMember,
   addWorkspaceTeamRole,
   deleteWorkspaceTeamMember,
@@ -139,5 +146,36 @@ describe("team-flow", () => {
     await expect(deleteWorkspaceTeamMember("ws-1", "nope")).rejects.toThrow("NEXT_NOT_FOUND");
     expect(setTeamMemberArchived).not.toHaveBeenCalled();
     expect(deleteTeamMember).not.toHaveBeenCalled();
+  });
+
+  it("AC-TEAM-022 treats a malformed project or session ID as not found", async () => {
+    await expect(
+      addSessionAssignmentEntry("ws-1", "nope", crypto.randomUUID(), {}),
+    ).rejects.toThrow("NEXT_NOT_FOUND");
+    await expect(
+      addSessionAssignmentEntry("ws-1", crypto.randomUUID(), "nope", {}),
+    ).rejects.toThrow("NEXT_NOT_FOUND");
+    expect(addSessionAssignment).not.toHaveBeenCalled();
+  });
+
+  it("AC-TEAM-022 maps a foreign session to not found", async () => {
+    addSessionAssignment.mockRejectedValue(new TeamError("NOT_FOUND"));
+    await expect(
+      addSessionAssignmentEntry("ws-1", crypto.randomUUID(), crypto.randomUUID(), {}),
+    ).rejects.toThrow("NEXT_NOT_FOUND");
+  });
+
+  it("AC-TEAM-023 C-103 logs the project ID but no member data when an assignment fails", async () => {
+    addSessionAssignment.mockRejectedValue(new Error("Dimas Pratama 6281298765432"));
+    const projectId = crypto.randomUUID();
+    await expect(
+      addSessionAssignmentEntry("ws-1", projectId, crypto.randomUUID(), { memberId: "Dimas" }),
+    ).rejects.toMatchObject({ code: "SAVE_FAILED" });
+    expect(logger.error).toHaveBeenCalledWith("team.save_failed", {
+      workspaceId: "ws-1",
+      operation: "add-assignment",
+      projectId,
+    });
+    expect(JSON.stringify(logger.error.mock.calls)).not.toContain("Dimas");
   });
 });

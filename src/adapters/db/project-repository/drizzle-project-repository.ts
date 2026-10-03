@@ -40,6 +40,7 @@ import { user } from "../schema/auth/auth";
 import { service, serviceItemDefinition } from "../schema/booking/catalog";
 import { client } from "../schema/booking/client";
 import { project, projectFieldValue, projectItem, projectSession } from "../schema/booking/project";
+import { sessionAssignment, teamMember, teamRole } from "../schema/booking/team";
 import { createSnapshot } from "./drizzle-project-snapshot";
 
 const LIKE_SPECIAL = /[\\%_]/g;
@@ -112,6 +113,42 @@ async function readChildren(db: DbExecutor, context: WorkspaceContext, projectId
   };
 }
 
+// D-13: the team rides with the detail so every *Jadwal* state comes from one render.
+async function readAssignments(db: DbExecutor, context: WorkspaceContext, projectId: string) {
+  const rows = await db
+    .select({
+      id: sessionAssignment.id,
+      sessionId: sessionAssignment.sessionId,
+      memberId: sessionAssignment.memberId,
+      memberName: teamMember.name,
+      archivedAt: teamMember.archivedAt,
+      roleName: teamRole.name,
+    })
+    .from(sessionAssignment)
+    .innerJoin(
+      teamMember,
+      and(
+        eq(teamMember.workspaceId, sessionAssignment.workspaceId),
+        eq(teamMember.id, sessionAssignment.memberId),
+      ),
+    )
+    .innerJoin(
+      teamRole,
+      and(
+        eq(teamRole.workspaceId, sessionAssignment.workspaceId),
+        eq(teamRole.id, sessionAssignment.roleId),
+      ),
+    )
+    .where(
+      and(
+        eq(sessionAssignment.workspaceId, context.workspaceId),
+        eq(sessionAssignment.projectId, projectId),
+      ),
+    )
+    .orderBy(asc(sessionAssignment.createdAt), asc(sessionAssignment.id));
+  return rows.map(({ archivedAt, ...row }) => ({ ...row, isMemberArchived: archivedAt !== null }));
+}
+
 async function selectDetailRow(db: DbExecutor, context: WorkspaceContext, id: string) {
   // The client access token is deliberately never selected (C-103, D-6).
   return (
@@ -150,7 +187,10 @@ async function findDetail(
   const row = await selectDetailRow(db, context, id);
   const status = PROJECT_STATUSES.find((candidate) => candidate === row?.status);
   if (!row || !status) return null;
-  const children = await readChildren(db, context, id);
+  const [children, assignments] = await Promise.all([
+    readChildren(db, context, id),
+    readAssignments(db, context, id),
+  ]);
   return {
     id: row.id,
     title: row.title,
@@ -165,6 +205,7 @@ async function findDetail(
       basePrice: canonicalIdrAmount(row.serviceBasePrice),
     },
     ...children,
+    assignments,
     cancellation: row.cancelledAt
       ? { at: row.cancelledAt.toISOString(), byName: row.cancelledByName, reason: row.cancelReason }
       : null,

@@ -8,8 +8,10 @@ import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import type { Db } from "@/adapters/db/client/client.types";
+import { createDrizzleProjectListReader } from "@/adapters/db/project-repository/drizzle-project-list-reader";
+import { createDrizzleProjectRepository } from "@/adapters/db/project-repository/drizzle-project-repository";
 import { project } from "@/adapters/db/schema/booking/project";
-import { sessionAssignment, teamMember } from "@/adapters/db/schema/booking/team";
+import { sessionAssignment, teamMember, teamRole } from "@/adapters/db/schema/booking/team";
 import { createDrizzleSessionAssignmentRepository } from "@/adapters/db/team-repository/drizzle-session-assignment-repository";
 import { createDrizzleTeamMemberRepository } from "@/adapters/db/team-repository/drizzle-team-member-repository";
 import { teamMemberInputSchema } from "@/features/booking/application/schemas/team-member-input/team-member-input.schema";
@@ -168,5 +170,58 @@ describe("Drizzle session assignment repository", () => {
     expect(list.map((member) => member.name)).toEqual(["Ayu Kirana", "Dimas Pratama"]);
     expect(list[0]?.id).toBe(ayu);
     expect(list[1]?.roles.map((role) => role.name)).toEqual(["Fotografer", "Videografer"]);
+  });
+});
+
+describe("project detail and list with a team", () => {
+  it("AC-TEAM-026 loads assignments in creation order with the archived flag and the current role name", async () => {
+    const { base, roles, dimas, target } = await fixture();
+    const sari = await createMember(base, "Sari Lestari", "6281222222222", [roles.Asisten]);
+    expect(await add(base, target, sari, roles.Asisten)).toBe("ADDED");
+    expect(await add(base, target, dimas, roles.Videografer)).toBe("ADDED");
+    await db.update(teamMember).set({ archivedAt: new Date() }).where(eq(teamMember.id, sari));
+    await db
+      .update(teamRole)
+      .set({ name: "Asisten lapangan" })
+      .where(eq(teamRole.id, roles.Asisten));
+
+    const detail = await createDrizzleProjectRepository(db).findDetail(base, target.projectId);
+    expect(detail?.assignments.map((a) => [a.memberName, a.roleName, a.isMemberArchived])).toEqual([
+      ["Sari Lestari", "Asisten lapangan", true],
+      ["Dimas Pratama", "Videografer", false],
+    ]);
+    expect(detail?.assignments.every((a) => a.sessionId === target.sessionId)).toBe(true);
+  });
+
+  it("AC-TEAM-022 never loads another workspace's assignments", async () => {
+    const first = await fixture();
+    const second = await fixture();
+    await add(second.base, second.target, second.dimas, second.roles.Fotografer);
+    const detail = await createDrizzleProjectRepository(db).findDetail(
+      first.base,
+      first.target.projectId,
+    );
+    expect(detail?.assignments).toEqual([]);
+    expect(
+      await createDrizzleProjectRepository(db).findDetail(first.base, second.target.projectId),
+    ).toBeNull();
+  });
+
+  it("AC-TEAM-020 marks a listed project as having a team only once someone is assigned", async () => {
+    const { base, roles, dimas, target } = await fixture();
+    const reader = createDrizzleProjectListReader(db);
+    const query = {
+      tab: "ACTIVE",
+      search: null,
+      filter: null,
+      afterId: null,
+      limit: 50,
+      today: "2026-10-04",
+    } as const;
+    const before = (await reader.listPage(base, query)).find((row) => row.id === target.projectId);
+    expect(before?.hasTeam).toBe(false);
+    await add(base, target, dimas, roles.Fotografer);
+    const after = (await reader.listPage(base, query)).find((row) => row.id === target.projectId);
+    expect(after?.hasTeam).toBe(true);
   });
 });

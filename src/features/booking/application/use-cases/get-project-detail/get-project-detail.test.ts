@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import {
   otherProjectContext,
@@ -84,5 +84,17 @@ describe("get project detail", () => {
         schedule,
       ]);
     }
+  });
+
+  it("AC-TEAM-015 lets the team be edited in every status but CANCELLED", async () => {
+    const { repository, id } = await seed("BOOKED");
+    const booked = await getProjectDetail(repository, projectContext, id, "2026-10-04");
+    expect(booked.canEditTeam).toBe(true);
+    expect(booked.assignments).toEqual([]);
+    const cancelled = { ...booked, status: "CANCELLED" } as const;
+    vi.spyOn(repository, "findDetail").mockResolvedValue(cancelled);
+    expect((await getProjectDetail(repository, projectContext, id, "2026-10-04")).canEditTeam).toBe(
+      false,
+    );
   });
 });

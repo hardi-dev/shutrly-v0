@@ -31,6 +31,16 @@ export interface ProjectFieldRecord extends SnapshotField {
   readonly value: BookingValue;
 }
 
+/** One member's assignment on a session, with the names the *Jadwal* shows (D-13). */
+export interface SessionAssignmentRecord {
+  readonly id: string;
+  readonly sessionId: string;
+  readonly memberId: string;
+  readonly memberName: string;
+  readonly isMemberArchived: boolean;
+  readonly roleName: string;
+}
+
 export interface ProjectDetailRecord {
   readonly id: string;
   readonly title: string;
@@ -52,6 +62,8 @@ export interface ProjectDetailRecord {
   readonly items: readonly ProjectItemRecord[];
   readonly fields: readonly ProjectFieldRecord[];
   readonly sessions: readonly SessionRecordShape[];
+  /** Every session's assignments by `created_at`, then ID (A-4); group them by `sessionId`. */
+  readonly assignments: readonly SessionAssignmentRecord[];
   readonly cancellation: {
     readonly at: string;
     readonly byName: string | null;

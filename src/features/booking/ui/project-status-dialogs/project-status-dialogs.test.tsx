@@ -87,4 +87,23 @@ describe("DeleteDraftDialog", () => {
     });
     expect(onDone).toHaveBeenCalled();
   });
+
+  it.each([
+    [
+      true,
+      "Draf beserta isi paket, jadwal, dan field booking-nya dihapus permanen. Penugasan tim ikut terhapus.",
+    ],
+    [false, "Draf beserta isi paket, jadwal, dan field booking-nya dihapus permanen."],
+  ])("AC-TEAM-020 hasTeam=%s: the confirmation body", (hasTeam, body) => {
+    render(
+      <DeleteDraftDialog
+        workspaceId="ws"
+        target={{ ...TARGET, status: "DRAFT", hasTeam }}
+        deleteAction={vi.fn()}
+        onOpenChange={vi.fn()}
+        onDone={vi.fn()}
+      />,
+    );
+    expect(screen.getByText(body)).toBeInTheDocument();
+  });
 });

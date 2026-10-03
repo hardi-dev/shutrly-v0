@@ -152,3 +152,101 @@ test.describe("AC-TEAM-011 AC-TEAM-013 AC-TEAM-021 AC-TEAM-026 AC-TEAM-027 Jadwa
     await expect(page.getByText(TEAM_COPY.memberDeleteBlockedTitle("Dimas Pratama"))).toBeVisible();
   });
 });
+
+async function staffSession(page: Page, session: string, role: string): Promise<void> {
+  const form = page
+    .getByRole("dialog", { name: PROJECT_COPY.assignTitle(session) })
+    .filter({ visible: true });
+  await form.getByRole("button", { name: new RegExp(`^${PROJECT_COPY.assignMember}`) }).click();
+  await page.getByRole("option", { name: "Dimas Pratama" }).click();
+  await form.getByRole("button", { name: new RegExp(`^${PROJECT_COPY.assignRole}`) }).click();
+  await page.getByRole("option", { name: role }).click();
+  await form.getByRole("button", { name: PROJECT_COPY.assignSubmit }).click();
+  await expect(form).toBeHidden();
+}
+
+async function setupStaffedProject(page: Page): Promise<string> {
+  const workspaceId = await openWorkspace(page);
+  await addClient(page, workspaceId);
+  await addService(page, workspaceId);
+  await addMember(page, workspaceId);
+  await createBookedProject(page, workspaceId);
+  await page.getByRole("button", { name: PROJECT_COPY.addTeamFor("Resepsi") }).click();
+  await staffSession(page, "Resepsi", "Fotografer");
+  return workspaceId;
+}
+
+async function removeFromAturTim(page: Page): Promise<void> {
+  await page.getByRole("button", { name: PROJECT_COPY.teamGroupLabel("Resepsi", 1) }).click();
+  const team = page
+    .getByRole("dialog", { name: PROJECT_COPY.teamTitle("Resepsi") })
+    .filter({ visible: true });
+  await expect(team.getByText("Dimas Pratama")).toBeVisible();
+  await expect(team.getByText("Fotografer")).toBeVisible();
+  await expectA11y(page);
+  await team.getByRole("button", { name: PROJECT_COPY.teamRemoveLabel }).click();
+  const confirm = page
+    .getByRole("alertdialog", {
+      name: PROJECT_COPY.removeAssignmentTitle("Dimas Pratama", "Resepsi"),
+    })
+    .filter({ visible: true });
+  await expect(confirm.getByText(PROJECT_COPY.removeAssignmentBody("Dimas"))).toBeVisible();
+  await confirm.getByRole("button", { name: PROJECT_COPY.removeAssignmentConfirm }).click();
+  await expect(page.getByText(PROJECT_COPY.removedToastTitle)).toBeVisible();
+}
+
+test.describe("AC-TEAM-014 Atur tim", () => {
+  test("removing the last member closes Atur tim, and a role changes by remove then add", async ({
+    page,
+  }) => {
+    await setupStaffedProject(page);
+    await removeFromAturTim(page);
+    const addTeam = page.getByRole("button", { name: PROJECT_COPY.addTeamFor("Resepsi") });
+    await expect(addTeam).toBeVisible();
+    await expect(page.getByRole("dialog", { name: PROJECT_COPY.teamTitle("Resepsi") })).toHaveCount(
+      0,
+    );
+
+    await addTeam.click();
+    await staffSession(page, "Resepsi", "Videografer");
+    await page.getByRole("button", { name: PROJECT_COPY.teamGroupLabel("Resepsi", 1) }).click();
+    const team = page
+      .getByRole("dialog", { name: PROJECT_COPY.teamTitle("Resepsi") })
+      .filter({ visible: true });
+    await expect(team.getByText("Videografer")).toBeVisible();
+  });
+});
+
+async function addSecondSession(page: Page): Promise<void> {
+  await page.getByRole("button", { name: PROJECT_COPY.addSessionDesktop }).click();
+  const dialog = page
+    .getByRole("dialog", { name: PROJECT_COPY.sessionDialogTitle })
+    .filter({ visible: true });
+  await dialog.getByRole("textbox", { name: PROJECT_COPY.sessionName }).fill("Akad");
+  await dialog.getByRole("button", { name: new RegExp(PROJECT_COPY.sessionDate) }).click();
+  await page.getByRole("grid").getByText("16", { exact: true }).first().click();
+  await dialog.getByRole("button", { name: PROJECT_COPY.sessionSave }).click();
+  await expect(dialog).toBeHidden();
+}
+
+test.describe("AC-TEAM-020 deleting a staffed session", () => {
+  test("names the team in the confirmation, removes the assignment and keeps the member", async ({
+    page,
+  }) => {
+    const workspaceId = await setupStaffedProject(page);
+    await addSecondSession(page);
+    await page.getByRole("button", { name: PROJECT_COPY.sessionActions("Resepsi") }).click();
+    await page.getByRole("menuitem", { name: PROJECT_COPY.deleteSessionConfirm }).click();
+    const confirm = page
+      .getByRole("alertdialog", { name: PROJECT_COPY.deleteSessionTitle("Resepsi") })
+      .filter({ visible: true });
+    await expect(confirm.getByText(PROJECT_COPY.deleteSessionTeamBody(1))).toBeVisible();
+    await confirm.getByRole("button", { name: PROJECT_COPY.deleteSessionConfirm }).click();
+    await expect(
+      page.getByRole("button", { name: PROJECT_COPY.sessionActions("Resepsi") }),
+    ).toHaveCount(0);
+
+    await page.goto(`/w/${workspaceId}/team`);
+    await expect(page.getByText("Dimas Pratama")).toBeVisible();
+  });
+});

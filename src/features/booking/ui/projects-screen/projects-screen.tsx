@@ -142,6 +142,7 @@ function rowTarget(row: ProjectListRow): ProjectMenuTarget {
     id: row.id,
     title: row.title,
     status: row.status,
+    hasTeam: row.hasTeam,
     clientId: row.clientId,
     clientName: row.clientName,
     whatsappNumber: row.clientWhatsappNumber,

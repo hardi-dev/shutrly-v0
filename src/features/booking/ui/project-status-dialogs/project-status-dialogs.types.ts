@@ -6,6 +6,8 @@ export interface StatusDialogTarget {
   readonly id: string;
   readonly title: string;
   readonly status: ProjectStatus;
+  /** D-14: the project has someone assigned, so the delete confirmation says they go too. */
+  readonly hasTeam?: boolean;
 }
 
 export type CancelProjectCall = (

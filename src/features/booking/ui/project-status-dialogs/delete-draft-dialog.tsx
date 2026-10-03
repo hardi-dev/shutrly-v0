@@ -43,13 +43,16 @@ export function DeleteDraftDialog(props: Readonly<DeleteDraftDialogProps>) {
     props.onOpenChange(false);
   };
   const title = PROJECT_COPY.deleteDialogTitle(target.title);
+  const body = target.hasTeam
+    ? `${PROJECT_COPY.deleteDialogBody} ${PROJECT_COPY.deleteDraftTeamNote}`
+    : PROJECT_COPY.deleteDialogBody;
   if (isMobile) {
     return (
       <BottomSheet
         isOpen
         onOpenChange={props.onOpenChange}
         title={title}
-        description={PROJECT_COPY.deleteDialogBody}
+        description={body}
         variant="actions"
       >
         <SheetItem
@@ -68,7 +71,7 @@ export function DeleteDraftDialog(props: Readonly<DeleteDraftDialogProps>) {
       isOpen
       onOpenChange={props.onOpenChange}
       title={title}
-      description={PROJECT_COPY.deleteDialogBody}
+      description={body}
       size="sm"
       isDestructive
       actions={

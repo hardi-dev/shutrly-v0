@@ -97,6 +97,7 @@ function menuTargetOf(project: ProjectDetailScreenProps["project"]): ProjectMenu
     id: project.id,
     title: project.title,
     status: project.status,
+    hasTeam: project.assignments.length > 0,
     clientId: project.client.id,
     clientName: project.client.name,
     whatsappNumber: project.client.whatsappNumber,

@@ -35,6 +35,10 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
    The source records its sync status, time, counts and any error.
 5. The gallery screen shows the password (with *Salin*), so the Owner never has to remember it. It also shows each source with its status and last sync. The photos are grouped by kind (*Proof*, *Edited*, *Print*), each with a thumbnail served through the Owner-only media endpoint, plus counts.
    - Each kind is marked for what the client will see: *Proof* is visible once published. *Edited* and *Print* are hidden until final delivery (BR-DEL-002). Missing and removed photos are hidden.
+   - **Browsing many photos:** the photos have tabs by kind (*Proof*, *Edited*, *Print*, each with its total), as above.
+     - Inside a tab the Owner sees one folder tile per source with that kind's count, and opens one. A breadcrumb (*Semua folder › {folder}*) leads back. With a single source, its folder opens directly (A-12).
+     - The grid loads in pages as the Owner scrolls (infinite scroll, A-13); thumbnails are small and load when visible.
+     - *Cari nama file* searches every folder of the gallery. Results show each photo's folder.
 6. The Owner may sync one source or all of them again at any time. Repeated syncs never duplicate photos.
 7. The Owner publishes:
    - the server checks that a password hash exists and lists every linked source again;
@@ -118,6 +122,8 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
 - **A-8:** a `DRAFT` gallery on a cancelled project is not archived, because it was never public. It can only be deleted.
 - **A-9:** an image is a file whose MIME type starts with `image/`. Videos and other files are ignored and counted as *diabaikan* in the sync summary.
 - **A-11:** a generated password is a common lowercase Indonesian word, a hyphen and four digits (for example *mawar-4821*). It has no look-alike characters and never contains the client's name. Brute force is limited by the token (≥128 bits) and rate limits (BR-ACC-004).
+- **A-12:** folder navigation shows only synced sources and their kind; ignored folders (BR-GAL-007) are not listed.
+- **A-13:** the grid loads 48 photos per page. Search matches part of a file name, ignoring case, and returns results 48 at a time too.
 - **A-10 (delegated to Claude by the Owner, 2026-10-04):**
   - a `DRAFT` gallery can be deleted;
   - there is no unpublish;
@@ -137,6 +143,8 @@ Checked against the constitution (C-001..C-106), BR-GAL/SRC/ACC/PRJ/DEL/AUD, ADR
 | FC-007 | Hash-only passwords meant the Owner had to remember and retype a password per project to share it, which isn't workable. | C-103, ADR-004, BR-GAL-002, BR-MSG-003 | Store the password encrypted (plus a hash), generate an easy-to-type one, show it to the Owner, and fill it into the WhatsApp message automatically (Owner 2026-10-04). Recorded in constitution v1.1, ADR-017, BR-GAL-002/003 and BR-MSG-003. | RESOLVED |
 
 ## Open Questions / SPEC GAPS
+- **Resolved in design review (Owner, 2026-10-04):** how hundreds of photos are browsed. The answer is tabs by kind, then folders per source, infinite scroll and filename search (Main flow 5).
+
 None blocking. For the technical design:
 - **Sync on Workers (ADR-008):** a large folder means several Drive list pages plus up to two subfolders. The technical design must show that one sync fits the Worker's CPU, subrequest and duration limits (or splits the work) and stays idempotent (C-005).
 - **Owner media endpoint:** thumbnail size and caching (`private, no-store` per coding rules, or a short private cache for the Owner only), and how it hides the API key (proxy vs. short-lived Drive thumbnail links resolved server-side).

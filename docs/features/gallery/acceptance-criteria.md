@@ -275,3 +275,30 @@ Covers: BR-GAL-002, C-103, BR-WS-002 (ADR-017)
 - the password is shown with *Salin*, which copies it;
 - the Owner of another workspace gets not found;
 - no log line, analytics event, error record or client response contains the password or its ciphertext.
+
+## AC-GAL-028 — Many photos: folders and infinite scroll
+Covers: BR-GAL-007 (A-12, A-13)
+
+**Given** a gallery with *Rina-Wisuda* (212 proof, 40 edited) and *Rina-Keluarga* (100 proof)
+**When** the Owner opens the gallery screen
+**Then** the tabs read *Proof (312)*, *Edited (40)*, *Print (0)*, and *Proof* shows two folder tiles, *Rina-Wisuda · 212* and *Rina-Keluarga · 100*.
+
+**When** the Owner opens *Rina-Wisuda*
+**Then**:
+- the breadcrumb reads *Semua folder › Rina-Wisuda*;
+- the first 48 photos show in file-name order;
+- scrolling near the end loads the next 48, with a skeleton row while loading, until all 212 are shown.
+
+**Given** a gallery with a single source
+**When** the Owner opens a tab
+**Then** that source's photos show directly, without the folder step.
+
+## AC-GAL-029 — Search by file name
+Covers: BR-GAL-006 (A-13)
+
+**Given** the gallery from AC-GAL-028
+**When** the Owner types `IMG_02` in *Cari nama file*
+**Then**:
+- the matches from every folder and kind show, each with its folder (for example *Rina-Wisuda · edited*);
+- a search with no match shows *Tidak ada foto bernama “…”*;
+- clearing the search returns to the folder view.

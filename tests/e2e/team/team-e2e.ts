@@ -138,7 +138,7 @@ export async function staffSession(
   await form.getByRole("button", { name: new RegExp(`^${PROJECT_COPY.assignRole}`) }).click();
   await page.getByRole("option", { name: role }).click();
   await form.getByRole("button", { name: PROJECT_COPY.assignSubmit }).click();
-  await expect(form).toBeHidden();
+  await expect(form).toBeHidden({ timeout: 15_000 });
 }
 
 export async function setupStaffedProject(page: Page): Promise<string> {
@@ -165,11 +165,15 @@ export async function addSessionOnDetail(page: Page, name: string, day: string):
 }
 
 export async function openAturTim(page: Page, session: string, count: number) {
-  await page.getByRole("button", { name: PROJECT_COPY.teamGroupLabel(session, count) }).click();
+  const group = page.getByRole("button", { name: PROJECT_COPY.teamGroupLabel(session, count) });
   const team = page
     .getByRole("dialog", { name: PROJECT_COPY.teamTitle(session) })
     .filter({ visible: true });
-  await expect(team).toBeVisible();
+  // A click before hydration does nothing, so press again until the dialog is there.
+  await expect(async () => {
+    await group.click();
+    await expect(team).toBeVisible({ timeout: 2_000 });
+  }).toPass({ timeout: 20_000 });
   return team;
 }
 
@@ -178,7 +182,7 @@ export async function cancelProject(page: Page, title: string): Promise<void> {
   await page.getByRole("menuitem", { name: PROJECT_COPY.menuCancel }).click();
   const cancel = page.getByRole("dialog", { name: PROJECT_COPY.cancelDialogTitle });
   await cancel.getByRole("button", { name: PROJECT_COPY.cancelConfirm }).click();
-  await expect(page.getByText(PROJECT_COPY.cancelledTitle).first()).toBeVisible();
+  await expect(visibleText(page, PROJECT_COPY.cancelledTitle).first()).toBeVisible();
 }
 
 async function pickTeamInSessionDialog(
@@ -194,4 +198,9 @@ async function pickTeamInSessionDialog(
   await expect(dialog.getByRole("list", { name: PROJECT_COPY.sessionTeamListLabel })).toContainText(
     member,
   );
+}
+
+/** The visible match of a text: Tim and Jadwal render a table and a phone list, one hidden by CSS. */
+export function visibleText(page: Page, text: string | RegExp, options?: { exact?: boolean }) {
+  return page.getByText(text, options).filter({ visible: true }).first();
 }

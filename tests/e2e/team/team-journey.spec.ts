@@ -15,6 +15,7 @@ import {
   openWorkspace,
   SARI,
   staffSession,
+  visibleText,
 } from "./team-e2e";
 
 test.setTimeout(240_000);
@@ -50,12 +51,15 @@ async function addAndRemoveInAturTim(page: Page): Promise<void> {
   const team = await openAturTim(page, "Resepsi", 1);
   await team.getByRole("button", { name: PROJECT_COPY.teamAddMember }).click();
   await staffSession(page, "Resepsi", "Asisten", "Sari Lestari");
-  const back = await openAturTim(page, "Resepsi", 2);
+  // Saving the form returns to Atur tim, so the dialog is already open again.
+  const back = page
+    .getByRole("dialog", { name: PROJECT_COPY.teamTitle("Resepsi") })
+    .filter({ visible: true });
   await expect(back.getByText("Sari Lestari")).toBeVisible();
   await back.getByRole("button", { name: PROJECT_COPY.teamRemoveLabel }).nth(1).click();
   const confirm = page.getByRole("alertdialog").filter({ visible: true });
   await confirm.getByRole("button", { name: PROJECT_COPY.removeAssignmentConfirm }).click();
-  await expect(page.getByText(PROJECT_COPY.removedToastTitle)).toBeVisible();
+  await expect(visibleText(page, PROJECT_COPY.removedToastTitle)).toBeVisible();
   await expect(back.getByText("Sari Lestari")).toHaveCount(0);
   await back.getByRole("button", { name: PROJECT_COPY.teamDone }).click();
 }

@@ -12,6 +12,7 @@ import {
   openAturTim,
   openWorkspace,
   setupStaffedProject,
+  visibleText,
 } from "./team-e2e";
 
 test.setTimeout(240_000);
@@ -57,7 +58,8 @@ async function checkMemberSurfaces(
     .click();
   await expectDialogA11y(page, TEAM_COPY.addMember);
   await page.getByRole("button", { name: TEAM_COPY.rowActions("Dimas Pratama") }).click();
-  await expect(page.getByRole("menuitem", { name: TEAM_COPY.archive })).toBeVisible();
+  // Phones open a sheet of buttons, desktop a menu: look for the label itself.
+  await expect(visibleText(page, TEAM_COPY.archive, { exact: true })).toBeVisible();
   await expectA11y(page);
   await page.keyboard.press("Escape");
 }

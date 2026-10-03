@@ -15,7 +15,7 @@ Give the user a concise, project-aware guide from discovery to shipping. Inspect
 
    `$sdv-init-project` → `$sdv-capture-intent` → `$sdv-discover-feature` → `$sdv-model-feature` → `$sdv-design-feature` → `$sdv-plan-feature` → `$sdv-build-feature` → `$sdv-verify-feature` → `$sdv-ship`
 
-   At the end of any session, run `$sdv-handoff` to refresh `docs/HANDOFF.md`: one current handoff within a 12 KB budget, old ones summarised into `docs/HANDOFF-archive.md`.
+   At the end of any session, run `$sdv-handoff` to refresh `docs/HANDOFF.md`: one current handoff within a 12 KB budget, old ones summarised into `docs/HANDOFF-archive.md`. If a session is running out of context or tokens before the work is done, run `$sdv-handoff wip` instead: a 15-line resume note that reads no docs and costs almost nothing.
 
    Then explain what each feature stage reads and writes, and the gates between them:
 

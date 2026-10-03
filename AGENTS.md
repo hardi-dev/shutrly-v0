@@ -1,6 +1,6 @@
 # Agent instructions — Shutrly
 
-Start with [docs/HANDOFF.md](docs/HANDOFF.md) › _Current handoff_. It says what to work on and when to stop and ask the Owner.
+Start with [docs/HANDOFF.md](docs/HANDOFF.md) › _Current handoff_. It says what to work on and when to stop and ask the Owner. If it is headed `WIP`, resume at its _Resume at_ line.
 
 - **Authority order (highest first):** `docs/constitution.md`, then product/domain rules, then architecture + ADRs (`docs/architecture/`), then `docs/coding-rules.md`, then the feature intent, spec and acceptance criteria, then the technical design, then code. Never resolve a conflict by changing a higher-authority document; report it.
 - **Architecture:** the folder architecture in `docs/architecture/overview.md` is fixed. Every unit gets its own folder with a co-located test.

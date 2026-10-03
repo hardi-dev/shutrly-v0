@@ -7,7 +7,22 @@ effort: medium
 
 Use the `spec-driven-vibe-coding` skill and run its **handoff** workflow. Extra notes from the user: **$ARGUMENTS**
 
-`docs/HANDOFF.md` is read at the start of every session, so it must stay small: **at most 12 KB and one current handoff**. It points to the artifacts; it never restates them.
+**Quick mode.** If the first word of the notes is `wip` or `quick` (for example `/sdv:handoff wip`), or you are told context or tokens are nearly gone while the work is unfinished, do this instead and nothing else. It must cost almost nothing, so read no docs and skip the archive:
+
+1. Run only `git status --short` and `git log --oneline -5`. Note the branch.
+2. Replace the **Current handoff** section of `docs/HANDOFF.md` with `## Current handoff — WIP: <feature> <iteration or task> (<date>)`, at most 15 lines:
+   - **Resume at:** the exact next step: iteration or slice, task, file, and what is half done.
+   - **Uncommitted:** the files from `git status`, and whether they pass or are known broken.
+   - **Last checks:** what you ran last and the result; what has not been run.
+   - **Decided but not recorded:** decisions or assumptions made this session that are in no artifact yet, one line each.
+   - **Blockers / Owner:** anything waiting on the Owner.
+   - **Then:** `/sdv:<command> <slug> <n>` to continue.
+3. Leave the previous handoff in place under it with the heading `Previous handoff`; do not move or trim anything. A later full `/sdv:handoff` will tidy it.
+4. Do not commit. If the working tree has broken, half-written code, say so in **Uncommitted** rather than committing it. Then tell the user the WIP handoff is written and stop.
+
+A session that starts from a `WIP` handoff resumes at **Resume at**, reads only what that step needs, and replaces the WIP handoff with a normal one when the iteration is done.
+
+Full mode follows. `docs/HANDOFF.md` is read at the start of every session, so it must stay small: **at most 12 KB and one current handoff**. It points to the artifacts; it never restates them.
 
 1. Gather facts, do not guess: `git status`, `git log` since the previous handoff, the current branch, open PR if any, and the feature status in `docs/product/feature-map.md`. Read the existing `HANDOFF.md` and `docs/HANDOFF-archive.md` heading list only.
 2. Move the old **Current handoff** section to the top of `docs/HANDOFF-archive.md` as a summary of at most 8 lines: date, feature, outcome, and links to its artifacts. Do not paste it whole.

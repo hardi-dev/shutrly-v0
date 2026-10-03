@@ -1217,7 +1217,7 @@ Copy: count *{n} proyek aktif* / *{n} proyek selesai* / *{n} proyek dibatalkan* 
     - `projects` and `new-project` are not coming soon.
   - **Implement**, then compare the 18 exports.
   - Commit `feat(projects): add the project list`.
-- [ ] **3.3 E2E.** Add to `projects.spec.ts`:
+- [x] **3.3 E2E.** Add to `projects.spec.ts`:
   - two projects appear in *Aktif* in date order;
   - tabs;
   - search *rina* + reload keeps `?q=`;
@@ -1479,7 +1479,7 @@ A divider separates non-empty groups. The *KIRIM KE KLIEN* label sits above `sen
     - *Ubah info* locked price.
   - **Implement**, then compare.
   - Commit `feat(projects): add the project menu and dialogs`.
-- [ ] **5.3 E2E.** Add to `projects.spec.ts`:
+- [x] **5.3 E2E.** Add to `projects.spec.ts`:
   - *Mulai pemotretan* from the row menu (chip *Pemotretan*, toast);
   - cancel a SHOOTING project: required error, then a reason → banner with the reason;
   - delete a draft → list + toast;
@@ -1551,7 +1551,7 @@ Session dialog on the detail: title *Tambah sesi* / *Ubah sesi*, description *Pe
 
 ### Steps
 
-- [ ] **6.1 Backend.**
+- [x] **6.1 Backend.**
   - **Tests first** (use cases on the fakes):
     - every deal edit in SHOOTING → `DEAL_LOCKED` with no change (AC-PRJ-018);
     - add: an existing definition → `definitionId: DUPLICATE_DEFINITION`; archived (*Album lama*) → `DEFINITION_INACTIVE`; *Foto cetak* 10 → appended last with the definition's name, unit and `PRINT` (AC-PRJ-017);
@@ -1564,7 +1564,7 @@ Session dialog on the detail: title *Tambah sesi* / *Ubah sesi*, description *Pe
     - every new method with workspace B → `NOT_FOUND`.
   - **Implement.**
   - Commit `feat(projects): add deal and session edit backend`.
-- [ ] **6.2 Screens.**
+- [x] **6.2 Screens.**
   - **Precondition:** the 14 Slice 6 exports.
   - **Tests first** (`package-items-card.test.tsx` +, `project-item-dialog.test.tsx`, `booking-fields-dialog.test.tsx`, `sessions-card.test.tsx` +, `use-project-actions.test.ts` +):
     - the control table per status;
@@ -1708,7 +1708,7 @@ export function isPackageEdited(
 
 ### Steps
 
-- [ ] **7.1 Inline client (S2b, AC-PRJ-013).**
+- [x] **7.1 Inline client (S2b, AC-PRJ-013).**
   - **Tests first:**
     - `add-client.test.ts`: success returns `{ ok: true, client }` with the new ID; the validation failures are unchanged;
     - `nextProjectTitle` table:
@@ -1728,7 +1728,7 @@ export function isPackageEdited(
     - `nextProjectTitle` in the form hook, for both client and service changes.
   - **Compare** with `new-klien-baru-*`.
   - Commit `feat(projects): create a client from the project form`.
-- [ ] **7.2 Service guards (S2, AC-PRJ-012, AC-PRJ-014).**
+- [x] **7.2 Service guards (S2, AC-PRJ-012, AC-PRJ-014).**
   - **Tests first:**
     - `load-create-options.test.ts`: `hasActiveService: false` when every service is archived; active definitions are returned;
     - `create-project.test.ts`: `CLIENT_INACTIVE` → `clientId`, `SERVICE_INACTIVE` → `serviceId`, `DEFINITION_INACTIVE` / `DUPLICATE_DEFINITION` → `items.N.definitionId`;
@@ -1739,7 +1739,7 @@ export function isPackageEdited(
     - `create-project-screen.test.tsx`: after a `SERVICE_INACTIVE` failure every other field keeps its value, and focus moves to *Layanan*.
   - **Implement**, then compare with `new-tanpa-layanan-aktif-*` and `new-layanan-tidak-aktif-*`.
   - Commit `feat(projects): guard the project form against inactive clients and services`.
-- [ ] **7.3 Package edits and service change (S2c create mode, S2d, AC-PRJ-030).**
+- [x] **7.3 Package edits and service change (S2c create mode, S2d, AC-PRJ-030).**
   - **Tests first:**
     - `package-draft.test.ts`:
       - each action, with order kept and an added item last (A-7);
@@ -1759,7 +1759,7 @@ export function isPackageEdited(
   - **Implement:** the draft in `use-create-project-form` (`useReducer` + `reducePackageDraft`), the card in create mode, the reused dialogs, and `change-service-dialog`.
   - **Compare** with `new-tambah-item-*`, `new-ubah-nilai-*`, `new-hapus-item-*` and `new-ganti-layanan-*` at 1440 and 390.
   - Commit `feat(projects): edit the package and change the service before saving`.
-- [ ] **7.4 E2E.** Extend `projects.spec.ts`:
+- [x] **7.4 E2E.** Extend `projects.spec.ts`:
   1. On *Proyek baru*, type *Sar*, choose *Tambah klien baru “Sar”*, save *Sari* with a number. *Sari* is selected and the title reads *{layanan} — Sari*.
   2. Pick *Wisuda Basic*, set *Foto edit* 30, remove *Jumlah orang*, add *Foto cetak* 10.
   3. Switch to another service, cancel the confirm, and check the edits are still there.
@@ -1780,7 +1780,7 @@ export function isPackageEdited(
 
 Screens: all (S1–S3c), end to end.
 
-- [ ] **8.1 E2E journeys.** Complete `tests/e2e/projects/projects.spec.ts`. It reuses the helpers from 2.3 and `registerAndVerify` / `uniqueEmail` from `tests/e2e/auth/auth-e2e.ts`. Every journey is one `test(...)` named with its AC IDs:
+- [x] **8.1 E2E journeys.** Complete `tests/e2e/projects/projects.spec.ts`. It reuses the helpers from 2.3 and `registerAndVerify` / `uniqueEmail` from `tests/e2e/auth/auth-e2e.ts`. Every journey is one `test(...)` named with its AC IDs:
 
   | Journey | Checks |
   |---|---|
@@ -1816,7 +1816,7 @@ Screens: all (S1–S3c), end to end.
   - For each of the 92 exports: open the export file and the matching app state at the same width (1440 or 390), take both screenshots, and compare structure, copy, spacing and tokens.
   - Fix every deviation that is a bug. Record the intentional ones (literal sizes, the documented COMPONENT GAPs) in the implementation record.
   - Commit fixes as `fix(projects): match {screen} to the design`.
-- [ ] **8.4 Full gate and record.**
+- [x] **8.4 Full gate and record.**
   - Run `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm test:integration`, `pnpm build` and the E2E suite; all pass.
   - Append *Implementation record* to `technical-design.md`:
     - date and commits;

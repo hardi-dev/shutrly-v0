@@ -1,6 +1,6 @@
 # Technical Design — F-07 Projects
 
-Status: IN PROGRESS (Slices 0–5 built 2026-10-03; E2E steps 3.3 and 5.3 deferred to Slice 8) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
+Status: IN PROGRESS (Slices 0–8 built 2026-10-04; verification pending, 8.2/8.3 partly open) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-PRJ-001…030) · Design: [design.md](design.md) (94 frames, 92 exports in `exports/`) · Plan: [plan.md](plan.md)
 
 ## Context
 
@@ -463,3 +463,35 @@ See [plan.md](plan.md): vertical slices by screen (Slice 0–8), test-first, one
 8. **Phone detail ⋯** goes into the Compact Bar through the new `CompactBarActions` portal.
 9. **Several new responsive files carry a paired `max-lines-per-function` disable** with a reason (same practice as `clients-screen`).
 10. **Not checked by eye:** the list at 1440 only (the *Aktif* tab with three projects); the filter dialog, menus and cancel/delete dialogs were not compared with their exports.
+
+## Implementation record — Slices 6–8 (2026-10-04)
+
+**Scope built:** deal and session edits on the detail page (Slice 6), the rest of *Proyek baru* (Slice 7: inline client, service guards, package edits, service change) and the close (Slice 8: E2E journeys, gate). Commits: `395cff5`, `e9be56e` (Slice 6); `069d644`, `7994927`, `72de71c`, `8fbe593` (Slice 7); `b01d965` (E2E and the two axe fixes).
+
+**Checks (final):**
+
+| Check | Result |
+|---|---|
+| `pnpm typecheck` | pass |
+| `pnpm lint` | pass (0 errors) |
+| `pnpm test` | pass (302 files, 1066 tests) |
+| `pnpm test:integration` | pass (13 files, 85 tests, all suites) |
+| `pnpm build` | pass |
+| E2E `projects` + `app-shell-revamp` + `clients` | 24 tests: 18 passed, 6 passed on retry (flaky on first try: shell workspace switch, two client specs, three project journeys), 0 failed |
+
+**E2E journeys (all in `tests/e2e/projects/projects.spec.ts`):** create booked and draft (AC-PRJ-006…009, 029) · inline client + package edits + booking (013, 008, 030) · draft → session prompt → confirm (009, 029) · list, search, filter, row menu step (001, 004, 027, 028) · lock, cancel with a reason, delete a draft (018, 020, 022, 023) · another account gets 404 (025) · axe on the list, form and detail at 390 and 1440, light and dark (026).
+
+**Accessibility fixes found by axe:** the *Kirim ke klien* group label sat directly in the menu (`aria-required-children`), now inside a `MenuSection`; the prefix of a disabled input (*Rp*) failed contrast, so the adornment is marked `aria-disabled` when its input is disabled.
+
+**AC → test (Slices 6–7):** AC-PRJ-017/018/019/029 (`edit-project.test.ts`, `project-detail-edit.test.tsx`, `project-repository` integration incl. the step-vs-edit race) · 012 (`create-project-screen.test.tsx`, integration) · 013 (`client-picker.test.tsx`, `add-client.test.ts`, E2E) · 014 (`load-create-options.test.ts`, `create-project-screen.test.tsx`) · 030 (`package-draft.test.ts`, `create-project-package.test.tsx`, `project-repository` integration, E2E).
+
+**Deviations and decisions:**
+
+1. **8.3 fidelity pass was not done.** The 92 exports were not compared one by one at 1440 and 390. Only the list, the *Dibooking* detail and the create form were looked at by eye. **Owner / `/sdv:verify-feature projects` should do this.**
+2. **8.2 accessibility is partial.** Axe runs on the list, filter dialog, detail, open menu, *Ubah info* and the create form (journeys above) and on the list, form and detail on phone and dark. It does not cover every dialog in both themes, and the keyboard-only paths in the plan were not written as tests.
+3. **Package edits in the create form** use client-side validation (`validateItemList`) and the draft stays in form state; the server re-validates on save as before.
+4. **Selection type** of an added item is carried from the active definition (`ActiveDefinition.selectionType`), so the create form previews *pilihan edit* / *pilihan cetak* correctly.
+5. **The picker's list reopens after the inline client dialog closes** (focus returns to the combobox, `menuTrigger="focus"`); the E2E closes it with Escape. Not changed.
+6. **Several responsive files carry a paired `max-lines-per-function` disable** with a reason, as in earlier slices.
+7. **`addClient` now returns the new client** (`{ ok: true, client }`); F-06's callers ignore it, and `ClientRepositoryPort.create` returns the new `id`.
+8. **Open COMPONENT GAPs / follow-ups:** `Checkbox`, `MultiSelect`, `Combobox`, `DateField` and `TimeField` exist in code and stories; their Pencil components still need to be confirmed. The row-icon requirement of `ListCardItem` (Slice 1 deviation 5) is still open.

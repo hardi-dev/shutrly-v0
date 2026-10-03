@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 
-import type { SessionInput } from "@/features/booking/domain/session/session.types";
-
+import type { SessionWithTeam } from "../session-dialog/session-dialog.types";
 import type { SessionsCardProps } from "./sessions-card.types";
 
 /** Tracks which session the dialog is adding or editing and saves it to the right place. @param props - the card's sessions and change handlers @returns the dialog's open state and handlers */
@@ -21,7 +20,7 @@ export function useSessionEditing(
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) setTarget(null);
   };
-  const handleSave = (session: SessionInput) => {
+  const handleSave = (session: SessionWithTeam) => {
     if (index === null) props.onAdd(session);
     else props.onUpdate(index, session);
   };

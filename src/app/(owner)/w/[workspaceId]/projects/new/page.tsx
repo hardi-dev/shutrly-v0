@@ -1,6 +1,7 @@
 import { addClientAction } from "@/app/actions/booking/clients";
 import { createProjectAction, searchActiveClientsAction } from "@/app/actions/booking/projects";
 import { loadCreateProjectOptions } from "@/composition/booking/project-flow/project-flow";
+import { loadAssignableMembers } from "@/composition/booking/team-flow/team-flow";
 import { CreateProjectScreen } from "@/features/booking/ui/create-project-screen/create-project-screen";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
@@ -11,6 +12,7 @@ export default async function NewProjectPage({
   const { workspaceId } = await params;
   const { serviceGroups, hasActiveService, definitions } =
     await loadCreateProjectOptions(workspaceId);
+  const assignableMembers = await loadAssignableMembers(workspaceId);
   return (
     <>
       <PageHeadingOverride
@@ -24,6 +26,7 @@ export default async function NewProjectPage({
         serviceGroups={serviceGroups}
         hasActiveService={hasActiveService}
         definitions={definitions}
+        assignableMembers={assignableMembers}
         createAction={createProjectAction}
         searchClientsAction={searchActiveClientsAction}
         createClientAction={addClientAction}

@@ -97,6 +97,13 @@ export const PROJECT_COPY = {
     ROLE_NOT_HELD: (name: string) => `${name} tidak punya peran ini lagi.`,
   },
   teamCancelledToast: "Proyek dibatalkan; tim tidak bisa diubah.",
+  // not in Pencil: the team field of the session dialog (AC-TEAM-028)
+  sessionTeamLabel: "Tim",
+  sessionTeamHint: "Pilih anggota dan perannya di sesi ini. Bisa diubah nanti lewat Atur tim.",
+  sessionTeamNone: "Belum ada anggota tim aktif. Tambahkan di halaman Tim dulu.",
+  sessionTeamMember: "Anggota tim",
+  sessionTeamRole: "Peran di sesi ini",
+  sessionTeamListLabel: "Tim sesi ini",
   teamTitle: (session: string) => `Tim · ${session}`,
   teamAddMember: "Tambah anggota",
   teamDone: "Selesai",

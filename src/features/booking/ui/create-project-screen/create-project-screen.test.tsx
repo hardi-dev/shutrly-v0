@@ -7,6 +7,8 @@ import {
 } from "@tests/support/booking/project-fixtures";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import type { AssignableMember } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
+
 const push = vi.hoisted(() => vi.fn());
 const showToast = vi.hoisted(() => vi.fn());
 const useMobileViewport = vi.hoisted(() => vi.fn(() => false));
@@ -31,7 +33,11 @@ const searchClientsAction = vi.fn().mockResolvedValue([]);
 
 function renderScreen(
   createAction = vi.fn().mockResolvedValue({ ok: true, projectId: "p-1" }),
-  options: { groups?: typeof serviceGroups; hasActiveService?: boolean } = {},
+  options: {
+    groups?: typeof serviceGroups;
+    hasActiveService?: boolean;
+    members?: readonly AssignableMember[];
+  } = {},
 ) {
   render(
     <CreateProjectScreen
@@ -39,11 +45,33 @@ function renderScreen(
       serviceGroups={options.groups ?? serviceGroups}
       hasActiveService={options.hasActiveService ?? true}
       definitions={[]}
+      assignableMembers={options.members ?? []}
       createAction={createAction}
       searchClientsAction={searchClientsAction}
     />,
   );
   return createAction;
+}
+
+const DIMAS: AssignableMember = {
+  id: "11111111-1111-4111-8111-111111111111",
+  name: "Dimas Pratama",
+  roles: [
+    { id: "22222222-2222-4222-8222-222222222222", name: "Fotografer" },
+    { id: "33333333-3333-4333-8333-333333333333", name: "Videografer" },
+  ],
+};
+
+async function addSessionWithTeam() {
+  await userEvent.click(screen.getByRole("button", { name: "Tambah sesi" }));
+  const dialog = await screen.findByRole("dialog", { name: "Tambah sesi" });
+  await userEvent.type(within(dialog).getByRole("textbox", { name: /Nama sesi/ }), "Akad");
+  await userEvent.click(within(dialog).getByRole("button", { name: /Tanggal/ }));
+  await userEvent.click(within(screen.getByRole("grid")).getByText("15"));
+  await userEvent.click(within(dialog).getByRole("button", { name: /Anggota tim/ }));
+  await userEvent.click(screen.getByRole("option", { name: "Dimas Pratama" }));
+  await userEvent.click(within(dialog).getByRole("button", { name: "Tambah anggota" }));
+  await userEvent.click(within(dialog).getByRole("button", { name: "Tambah sesi" }));
 }
 
 async function pickClient() {
@@ -269,5 +297,43 @@ describe("CreateProjectScreen (S2)", () => {
       "Wisuda Basic — Rina",
     );
     expect(screen.getByRole("button", { name: /^Layanan/ })).toHaveFocus();
+  });
+
+  it("AC-TEAM-028 picks a member and role in the session dialog and sends the team with the form", async () => {
+    const createAction = renderScreen(undefined, { members: [DIMAS] });
+    await pickClient();
+    await pickService();
+    await addSessionWithTeam();
+    expect(screen.getByRole("button", { name: "Tim Akad: 1 anggota" })).toHaveTextContent("DP");
+    await userEvent.type(screen.getByRole("textbox", { name: /Nama kampus/ }), "UI");
+    await userEvent.click(screen.getByRole("button", { name: /Tanggal wisuda/ }));
+    await userEvent.click(within(screen.getByRole("grid")).getByText("15"));
+    await userEvent.click(screen.getByRole("button", { name: "Simpan draf" }));
+    await waitFor(() => {
+      expect(createAction).toHaveBeenCalled();
+    });
+    const sessions = (createAction.mock.calls[0]?.[1] as { sessions: { team: unknown[] }[] })
+      .sessions;
+    expect(sessions[0]?.team).toEqual([{ memberId: DIMAS.id, roleId: DIMAS.roles[0]?.id }]);
+  });
+
+  it("AC-TEAM-028 shows the refused team under the schedule when the server rejects it", async () => {
+    const createAction = vi.fn().mockResolvedValue({
+      ok: false,
+      code: "VALIDATION_FAILED",
+      fieldErrors: { "sessions.0.team": "TEAM_INVALID" },
+    });
+    renderScreen(createAction, { members: [DIMAS] });
+    await pickClient();
+    await pickService();
+    await addSessionWithTeam();
+    await userEvent.type(screen.getByRole("textbox", { name: /Nama kampus/ }), "UI");
+    await userEvent.click(screen.getByRole("button", { name: /Tanggal wisuda/ }));
+    await userEvent.click(within(screen.getByRole("grid")).getByText("15"));
+    await userEvent.click(screen.getByRole("button", { name: "Simpan draf" }));
+    expect(
+      await screen.findByText("Tim sesi ini perlu diperbarui. Periksa anggota dan perannya."),
+    ).toBeInTheDocument();
+    expect(push).not.toHaveBeenCalled();
   });
 });

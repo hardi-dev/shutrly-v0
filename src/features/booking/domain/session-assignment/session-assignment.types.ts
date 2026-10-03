@@ -9,3 +9,9 @@ export interface AvatarGroup<T> {
   readonly shown: readonly T[];
   readonly overflow: number;
 }
+
+/** A member and the role they take on a session, before it is saved (AC-TEAM-028). */
+export interface TeamPick {
+  readonly memberId: string;
+  readonly roleId: string;
+}

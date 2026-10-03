@@ -11,6 +11,7 @@ import { TextField } from "@/ui/primitives/text-field/text-field";
 import { TimeField } from "@/ui/primitives/time-field/time-field";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { SessionTeamField } from "../session-team-field/session-team-field";
 import type { SessionDialogProps } from "./session-dialog.types";
 import { useSessionDraft } from "./use-session-draft";
 
@@ -65,16 +66,41 @@ export function SessionDialog(props: Readonly<SessionDialogProps>) {
   );
 }
 
-function SessionForm({ isOpen, session, onSave, onOpenChange }: Readonly<SessionDialogProps>) {
-  const { draft, errors, update, submit } = useSessionDraft(isOpen, session, onSave);
+function SessionForm({
+  isOpen,
+  session,
+  onSave,
+  onOpenChange,
+  members,
+}: Readonly<SessionDialogProps>) {
+  const fields = useSessionDraft(isOpen, session, onSave);
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
-    if (submit(event)) onOpenChange(false);
+    if (fields.submit(event)) onOpenChange(false);
   };
+  return (
+    <form id={FORM_ID} noValidate onSubmit={handleSubmit} className="flex flex-col gap-(--space-4)">
+      <SessionFields {...fields} />
+      {members ? (
+        <SessionTeamField
+          members={members}
+          picks={fields.draft.team}
+          onChange={fields.update("team")}
+        />
+      ) : null}
+    </form>
+  );
+}
+
+function SessionFields({
+  draft,
+  errors,
+  update,
+}: Readonly<Pick<ReturnType<typeof useSessionDraft>, "draft" | "errors" | "update">>) {
   const handleDate = (date: string | null) => {
     update("date")(date ?? "");
   };
   return (
-    <form id={FORM_ID} noValidate onSubmit={handleSubmit} className="flex flex-col gap-(--space-4)">
+    <>
       <TextField
         label={PROJECT_COPY.sessionName}
         name="name"
@@ -109,7 +135,7 @@ function SessionForm({ isOpen, session, onSave, onOpenChange }: Readonly<Session
         placeholder={PROJECT_COPY.sessionLocationPlaceholder}
         errorMessage={errors.location}
       />
-    </form>
+    </>
   );
 }
 

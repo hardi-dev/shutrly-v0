@@ -1,10 +1,9 @@
 "use client";
 
+import type { AssignableMember } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import { compareSessions, formatSessionRange } from "@/features/booking/domain/session/session";
-import type {
-  SessionInput,
-  SessionRecordShape,
-} from "@/features/booking/domain/session/session.types";
+import type { SessionRecordShape } from "@/features/booking/domain/session/session.types";
+import type { TeamPick } from "@/features/booking/domain/session-assignment/session-assignment.types";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -12,14 +11,17 @@ import { Button } from "@/ui/primitives/button/button";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { SessionDialog } from "../session-dialog/session-dialog";
+import type { SessionWithTeam } from "../session-dialog/session-dialog.types";
 import { SessionRowActions } from "../session-row-actions/session-row-actions";
+import { SessionTeamAvatars } from "../session-team-avatars/session-team-avatars";
 import type { SessionRowProps, SessionsCardProps } from "./sessions-card.types";
+import { picksAsAssignments } from "./team-assignments";
 import { useSessionEditing } from "./use-session-editing";
 
 const PAD = 6;
 
 // Sessions have no id before they are saved; the list position keeps ties stable.
-function toShape(session: SessionInput, index: number): SessionRecordShape {
+function toShape(session: SessionWithTeam, index: number): SessionRecordShape {
   return { ...session, id: String(index), createdAt: String(index).padStart(PAD, "0") };
 }
 
@@ -43,7 +45,13 @@ export function SessionsCard(props: Readonly<SessionsCardProps>) {
           </Button>
         }
       >
-        <SessionList rows={rows} onEdit={editing.handleEdit} onRemove={props.onRemove} />
+        <SessionList
+          rows={rows}
+          sessions={props.sessions}
+          members={props.members}
+          onEdit={editing.handleEdit}
+          onRemove={props.onRemove}
+        />
         {props.errorMessage ? (
           <p
             role="alert"
@@ -57,6 +65,7 @@ export function SessionsCard(props: Readonly<SessionsCardProps>) {
         isOpen={editing.isOpen}
         onOpenChange={editing.handleOpenChange}
         session={editing.session}
+        members={props.members}
         onSave={editing.handleSave}
       />
     </>
@@ -65,10 +74,14 @@ export function SessionsCard(props: Readonly<SessionsCardProps>) {
 
 function SessionList({
   rows,
+  sessions,
+  members,
   onEdit,
   onRemove,
 }: Readonly<{
   rows: readonly SessionRecordShape[];
+  sessions: readonly SessionWithTeam[];
+  members?: readonly AssignableMember[];
   onEdit: (index: number) => void;
   onRemove: (index: number) => void;
 }>) {
@@ -89,6 +102,14 @@ function SessionList({
           key={row.id}
           row={row}
           isLast={position === rows.length - 1}
+          team={
+            <SessionRowTeam
+              row={row}
+              picks={sessions[Number(row.id)]?.team ?? []}
+              members={members ?? []}
+              onEdit={onEdit}
+            />
+          }
           onEdit={onEdit}
           onRemove={onRemove}
         />
@@ -97,7 +118,29 @@ function SessionList({
   );
 }
 
-function SessionRow({ row, isLast, onEdit, onRemove }: Readonly<SessionRowProps>) {
+/** The avatars of the picked members; they open the dialog where the team is edited (AC-TEAM-028). */
+function SessionRowTeam({
+  row,
+  picks,
+  members,
+  onEdit,
+}: Readonly<{
+  row: SessionRecordShape;
+  picks: readonly TeamPick[];
+  members: readonly AssignableMember[];
+  onEdit: (index: number) => void;
+}>) {
+  const assignments = picksAsAssignments(row.id, picks, members);
+  const handleOpen = () => {
+    onEdit(Number(row.id));
+  };
+  if (assignments.length === 0) return null;
+  return (
+    <SessionTeamAvatars sessionName={row.name} assignments={assignments} onOpen={handleOpen} />
+  );
+}
+
+function SessionRow({ row, isLast, team, onEdit, onRemove }: Readonly<SessionRowProps>) {
   const index = Number(row.id);
   const handleEdit = () => {
     onEdit(index);
@@ -111,7 +154,12 @@ function SessionRow({ row, isLast, onEdit, onRemove }: Readonly<SessionRowProps>
       title={row.name}
       meta={formatSessionRange(row)}
       isLast={isLast}
-      trailing={<SessionRowActions name={row.name} onEdit={handleEdit} onDelete={handleDelete} />}
+      trailing={
+        <div className="flex items-center gap-(--space-2)">
+          {team}
+          <SessionRowActions name={row.name} onEdit={handleEdit} onDelete={handleDelete} />
+        </div>
+      }
     />
   );
 }

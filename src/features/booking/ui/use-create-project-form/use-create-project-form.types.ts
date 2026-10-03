@@ -10,8 +10,8 @@ import type {
 } from "@/features/booking/application/schemas/create-project-input/create-project-input.types";
 import type { CreateProjectResult } from "@/features/booking/application/use-cases/project-results/project-results.types";
 import type { BookingValue } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
-import type { SessionInput } from "@/features/booking/domain/session/session.types";
 
+import type { SessionWithTeam } from "../session-dialog/session-dialog.types";
 import type { DraftItem, PackageDraftAction } from "./package-draft.types";
 
 export type CreateProjectCall = (
@@ -58,8 +58,8 @@ export interface CreateProjectState {
   readonly confirmServiceChange: ProjectPicks["confirmServiceChange"];
   readonly cancelServiceChange: ProjectPicks["cancelServiceChange"];
   readonly submit: (mode: CreateProjectMode) => Promise<void>;
-  readonly addSession: (session: SessionInput) => void;
-  readonly updateSession: (index: number, session: SessionInput) => void;
+  readonly addSession: (session: SessionWithTeam) => void;
+  readonly updateSession: (index: number, session: SessionWithTeam) => void;
   readonly removeSession: (index: number) => void;
   readonly changeFieldValue: (key: string, value: BookingValue) => void;
 }

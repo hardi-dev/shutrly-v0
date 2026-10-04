@@ -183,4 +183,33 @@ export const GALLERY_COPY = {
     `Folder ini juga tertaut ke galeri ${projects}. Klien kedua proyek bisa melihat foto yang sama.`,
   folderInUseConfirm: "Tetap tambahkan",
   linkedTitle: "Folder ditambahkan", // not in Pencil
+  allPhotosTitle: "Semua foto",
+  allPhotosDescription: (project: string, totals: string) => `${project} · ${totals}`,
+  kindTab: { PROOF: "Proof", EDITED: "Edited", PRINT: "Print" },
+  kindLower: { PROOF: "proof", EDITED: "edited", PRINT: "print" },
+  tabLabel: (kind: string, count: number) => `${kind} (${String(count)})`,
+  segmentLabel: (kind: string, count: number) => `${kind} ${String(count)}`,
+  kindsLabel: "Jenis foto", // not in Pencil: the tab list's name
+  breadcrumbRoot: "Semua folder",
+  breadcrumbLabel: "Lokasi folder", // not in Pencil: the breadcrumb's name
+  crumbFolders: (folders: number, photos: number) =>
+    folders > 0
+      ? `· ${String(folders)} folder · ${String(photos)} foto`
+      : `· ${String(photos)} foto`,
+  folderCount: (count: number) => `${String(count)} foto`,
+  searchLabel: "Cari nama file",
+  searchSummary: (count: number, text: string) => `${String(count)} foto cocok dengan “${text}”`,
+  searchEmptyTitle: (text: string) => `Tidak ada foto bernama “${text}”`,
+  searchEmptyBody:
+    "Coba bagian lain dari nama file, atau kosongkan pencarian untuk kembali ke folder.",
+  folderEmptyTitle: "Belum ada foto di sini", // not in Pencil
+  folderEmptyBody: "Foto jenis ini muncul setelah folder disinkronkan.", // not in Pencil
+  loadingMore: "Memuat foto berikutnya…",
+  browseFailedTitle: "Foto belum bisa dimuat", // not in Pencil
+  visibilityFolded: {
+    EDITED:
+      "Disembunyikan dari klien sampai hasil akhir dikirim. Folder edited digabung ke folder induknya.",
+    PRINT:
+      "Disembunyikan dari klien sampai hasil akhir dikirim. Folder print digabung ke folder induknya.",
+  },
 } as const;

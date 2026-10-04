@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { stubViewport } from "@tests/support/gallery/viewport";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { GalleryPhotosSection } from "./gallery-photos-section";
 
@@ -41,7 +41,9 @@ describe("GalleryPhotosSection", () => {
   });
 
   it("AC-GAL-014 shows the counts, the visibility line and 8 tiles with Hilang", () => {
-    const { container } = render(<GalleryPhotosSection workspaceId="ws-1" page={PAGE} />);
+    const { container } = render(
+      <GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />,
+    );
     expect(screen.getByText("8 proof (1 hilang) · 2 edited · 1 print")).toBeInTheDocument();
     expect(
       screen.getByText(/Terlihat oleh klien setelah galeri dipublikasikan\. Foto bertanda Hilang/),
@@ -51,7 +53,9 @@ describe("GalleryPhotosSection", () => {
   });
 
   it("AC-GAL-015 loads thumbnails only from the Owner endpoint", () => {
-    const { container } = render(<GalleryPhotosSection workspaceId="ws-1" page={PAGE} />);
+    const { container } = render(
+      <GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />,
+    );
     for (const image of container.querySelectorAll("img")) {
       expect(image.getAttribute("src")).toMatch(/^\/api\/w\/ws-1\/gallery-photos\/p-\d+\/thumb$/);
     }
@@ -60,7 +64,9 @@ describe("GalleryPhotosSection", () => {
 
   it("design shows 6 tiles on phones", () => {
     stubViewport(true);
-    const { container } = render(<GalleryPhotosSection workspaceId="ws-1" page={PAGE} />);
+    const { container } = render(
+      <GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />,
+    );
     expect(container.querySelectorAll("img")).toHaveLength(6);
   });
 });

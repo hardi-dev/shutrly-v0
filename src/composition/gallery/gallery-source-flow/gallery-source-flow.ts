@@ -1,5 +1,6 @@
 import "server-only";
 
+import { browseGalleryPhotos } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos";
 import { findFolderUse } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
 import { syncGallerySource } from "@/features/gallery/application/use-cases/sync-gallery-source/sync-gallery-source";
@@ -55,5 +56,22 @@ export async function syncGallerySourceEntry(rawWorkspaceId: string, rawSourceId
     return await withGalleryScope((scope) => syncGallerySource(scope, verified.context, sourceId));
   } catch (error) {
     return gallerySaveError(error, verified.context.workspaceId, "sync");
+  }
+}
+
+/** Reads one page of *Semua foto* (AC-GAL-028…030). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @param query - untrusted browse query @returns the page */
+export async function browseGalleryPhotosEntry(
+  rawWorkspaceId: string,
+  rawGalleryId: string,
+  query: unknown,
+) {
+  const galleryId = galleryIdOrNotFound(rawGalleryId);
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withGalleryScope(({ browse }) =>
+      browseGalleryPhotos(browse, verified.context, galleryId, query),
+    );
+  } catch (error) {
+    return gallerySaveError(error, verified.context.workspaceId, "browse");
   }
 }

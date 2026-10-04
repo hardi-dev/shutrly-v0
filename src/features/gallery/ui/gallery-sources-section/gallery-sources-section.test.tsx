@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { fakePageActions } from "@tests/support/gallery/fake-page-actions";
 import { stubViewport } from "@tests/support/gallery/viewport";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -56,12 +57,7 @@ describe("GallerySourcesSection", () => {
   });
 
   it("AC-GAL-005 AC-GAL-008 shows each source's status", () => {
-    const actions = {
-      proposeAction: vi.fn(),
-      checkFolderAction: vi.fn(),
-      linkSourceAction: vi.fn(),
-      syncSourceAction: vi.fn(),
-    };
+    const actions = fakePageActions();
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
     expect(screen.getByText("Berhasil")).toBeInTheDocument();
     expect(screen.getByText("Gagal")).toBeInTheDocument();
@@ -72,12 +68,7 @@ describe("GallerySourcesSection", () => {
     const syncSourceAction = vi.fn(() =>
       Promise.resolve({ ok: true as const, status: "SUCCEEDED" as const }),
     );
-    const actions = {
-      proposeAction: vi.fn(),
-      checkFolderAction: vi.fn(),
-      linkSourceAction: vi.fn(),
-      syncSourceAction,
-    };
+    const actions = fakePageActions({ syncSourceAction });
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
     await userEvent.click(screen.getByRole("button", { name: "Sinkronkan semua" }));
     await waitFor(() => {
@@ -90,12 +81,7 @@ describe("GallerySourcesSection", () => {
   });
 
   it("AC-GAL-022 offers no source changes on an archived gallery", () => {
-    const actions = {
-      proposeAction: vi.fn(),
-      checkFolderAction: vi.fn(),
-      linkSourceAction: vi.fn(),
-      syncSourceAction: vi.fn(),
-    };
+    const actions = fakePageActions();
     const archived = { ...PAGE, gallery: { ...PAGE.gallery, status: "ARCHIVED" as const } };
     render(<GallerySourcesSection workspaceId="ws-1" page={archived} actions={actions} />);
     expect(screen.queryByRole("button", { name: "Sinkronkan semua" })).not.toBeInTheDocument();

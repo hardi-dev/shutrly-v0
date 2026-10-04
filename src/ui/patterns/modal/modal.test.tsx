@@ -7,6 +7,8 @@ import { Button } from "@/ui/primitives/button/button";
 
 import { Modal } from "./modal";
 
+const noop = () => undefined;
+
 function ModalHarness({ isDestructive = false }: Readonly<{ isDestructive?: boolean }>) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -65,5 +67,16 @@ describe("Modal (C31)", () => {
 
     expect(screen.getByRole("alertdialog", { name: "Buat workspace" })).toBeInTheDocument();
     expect(screen.queryByText("Isi modal")).toBeNull();
+  });
+
+  it("D-17 sizes xl to the content width at a fixed height", () => {
+    render(
+      <Modal isOpen onOpenChange={noop} title="Semua foto" size="xl">
+        <p>Isi</p>
+      </Modal>,
+    );
+    const dialog = screen.getByRole("dialog", { name: "Semua foto" });
+    expect(dialog.parentElement?.className).toContain("var(--size-content-max)");
+    expect(dialog.className).toContain("h-full");
   });
 });

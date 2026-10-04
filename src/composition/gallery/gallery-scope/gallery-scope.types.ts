@@ -1,3 +1,4 @@
+import type { GalleryBrowseReaderPort } from "@/features/gallery/application/ports/gallery-browse-reader/gallery-browse-reader.port";
 import type { GalleryPasswordCipherPort } from "@/features/gallery/application/ports/gallery-password-cipher/gallery-password-cipher.port";
 import type { GalleryRateLimiterPort } from "@/features/gallery/application/ports/gallery-rate-limiter/gallery-rate-limiter.port";
 import type { GalleryRepositoryPort } from "@/features/gallery/application/ports/gallery-repository/gallery-repository.port";
@@ -9,6 +10,7 @@ import type { WorkspaceSourceRepositoryPort } from "@/features/gallery/applicati
 
 export interface GalleryScope {
   readonly galleries: GalleryRepositoryPort;
+  readonly browse: GalleryBrowseReaderPort;
   readonly sources: GallerySourceRepositoryPort;
   readonly workspaceSources: WorkspaceSourceRepositoryPort;
   readonly provider: GallerySourceProviderPort;

@@ -1,6 +1,7 @@
 import type { GalleryPageActions } from "@/features/gallery/ui/gallery-actions/gallery-actions.types";
 
 import {
+  browseGalleryPhotosAction,
   checkFolderInUseAction,
   linkGallerySourceAction,
   proposeGalleryPasswordAction,
@@ -13,4 +14,5 @@ export const GALLERY_PAGE_ACTIONS: GalleryPageActions = {
   checkFolderAction: checkFolderInUseAction,
   linkSourceAction: linkGallerySourceAction,
   syncSourceAction: syncGallerySourceAction,
+  browseAction: browseGalleryPhotosAction,
 };

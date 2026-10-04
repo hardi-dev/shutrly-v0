@@ -219,10 +219,18 @@
 - states `semuafoto-isi-folder-memuat`, `semuafoto-subfolder-akad`, `semuafoto-edited-dengan-subfolder`, `semuafoto-hasil-cari`, `semuafoto-cari-tanpa-hasil`.
 
 **Steps:**
-- [ ] `src/ui/patterns/folder-tile`, and Modal `size="xl"` (with a story and test). Record it in `docs/design-system/components/modal.md`.
-- [ ] Reader `GalleryBrowseReaderPort` (folder level, page, search, keyset) and use case `browse-gallery-photos` + schema. Integration tests use the AC-GAL-028 fixture (312/40 photos, 48 per page) and the AC-GAL-030 folding.
-- [ ] UI `AllPhotosModal` + `use-gallery-browse` (tabs or Segmented, breadcrumb, debounced search, sentinel), opened from *Lihat semua foto*.
+- [x] `src/ui/patterns/folder-tile`, and Modal `size="xl"` (with a story and test). Record it in `docs/design-system/components/modal.md`.
+- [x] Reader `GalleryBrowseReaderPort` (folder level, page, search, keyset) and use case `browse-gallery-photos` + schema. Integration tests use the AC-GAL-028 fixture (312/40 photos, 48 per page) and the AC-GAL-030 folding.
+- [x] UI `AllPhotosModal` + `use-gallery-browse` (tabs or Segmented, breadcrumb, debounced search, sentinel), opened from *Lihat semua foto*.
 - [ ] E2E: open folders and the breadcrumb, scroll to load the next page, search and clear.
+
+**Implementation record (2026-10-04):**
+- `src/ui/patterns/folder-tile` (C47), Modal `size="xl"` (recorded in `modal.md`), `use-intersection-sentinel` hook.
+- Existing units extended, not recreated (Owner): `Tabs` takes button tabs (`onPress`, no `href`) for in-page state; the Page Header breadcrumb is now `page-header/breadcrumb-trail.tsx`, with `onPress` items, reused by *Semua foto*. Phones use the existing `SegmentedControl`, as clients/projects/team do.
+- `GalleryBrowseReaderPort` + Drizzle reader (folder level on the folded path, recursive counts, keyset pages of 48, escaped `ILIKE` search), `browse-gallery-photos` use case and schema.
+- UI: `AllPhotosModal` (tabs with totals, breadcrumb with folder/photo counts, debounced search with folder labels, empty results, skeleton rows and the sentinel), `useGalleryBrowse` (stale answers dropped).
+- Checks: typecheck, lint, unit/dom (1438), integration (153, incl. the 312/40 fixture and the AC-GAL-030 folding), build pass. E2E not run (Owner).
+- Deviations: none beyond the shared-unit changes above.
 
 ## Slice 5 — Photo preview
 

@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 
 import { Tabs } from "./tabs";
 
@@ -23,5 +24,24 @@ describe("Tabs (C45)", () => {
     const activeTab = screen.getByRole("link", { name: "Layanan" });
     expect(activeTab).toHaveClass("rounded-none");
     expect(activeTab).not.toHaveClass("rounded-(--component-tabs-item-radius)");
+  });
+
+  it("AC-GAL-028 renders button tabs for in-page state", async () => {
+    const onPress = vi.fn();
+    render(
+      <Tabs
+        label="Jenis foto"
+        tabs={[
+          { label: "Proof (312)", isActive: true, onPress: vi.fn() },
+          { label: "Edited (40)", isActive: false, onPress },
+        ]}
+      />,
+    );
+    expect(screen.getByRole("button", { name: "Proof (312)" })).toHaveAttribute(
+      "aria-current",
+      "true",
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Edited (40)" }));
+    expect(onPress).toHaveBeenCalled();
   });
 });

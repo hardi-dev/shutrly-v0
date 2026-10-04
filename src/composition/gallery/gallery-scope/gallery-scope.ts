@@ -3,6 +3,7 @@ import "server-only";
 import { createWebCryptoGalleryPasswordCipher } from "@/adapters/crypto/gallery-password-cipher/web-crypto-gallery-password-cipher";
 import { createBetterAuthPasswordHasher } from "@/adapters/crypto/password-hasher/better-auth-password-hasher";
 import { createWebCryptoRandomInt } from "@/adapters/crypto/random-int/web-crypto-random-int";
+import { createDrizzleGalleryBrowseReader } from "@/adapters/db/gallery-repository/drizzle-gallery-browse-reader";
 import { createDrizzleGalleryRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-repository";
 import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
 import { createNeonRateLimiter } from "@/adapters/db/rate-limiter/neon-rate-limiter";
@@ -27,6 +28,7 @@ export function withGalleryScope<T>(work: (scope: GalleryScope) => Promise<T>): 
   return withRequestDb((db, rc) =>
     work({
       galleries: createDrizzleGalleryRepository(db),
+      browse: createDrizzleGalleryBrowseReader(db),
       sources: createDrizzleGallerySourceRepository(db),
       workspaceSources: createDrizzleWorkspaceSourceRepository(db),
       provider: providerFor(rc.env),

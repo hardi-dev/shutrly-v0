@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { fakePageActions } from "@tests/support/gallery/fake-page-actions";
 import { stubViewport } from "@tests/support/gallery/viewport";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -7,12 +8,7 @@ import { GalleryPageScreen } from "./gallery-page-screen";
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }) }));
 
-const ACTIONS = {
-  proposeAction: vi.fn(),
-  checkFolderAction: vi.fn(),
-  linkSourceAction: vi.fn(),
-  syncSourceAction: vi.fn(),
-};
+const ACTIONS = fakePageActions();
 
 const PAGE = {
   project: { id: "p-1", title: "Wisuda Basic — Rina", status: "BOOKED" as const },

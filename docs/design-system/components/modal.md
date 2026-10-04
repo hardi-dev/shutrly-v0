@@ -87,3 +87,8 @@ The masters never include the scrim; the App Shell Overlay owns it.
 - Pencil: `C31 — Modal` (`ukLqT`); `C30 — App shell` › *Modal overlay*
 - Exploration: `exploration.pen` › 04 (options A / B, decision)
 - Rules: token-usage.md §2 *Surfaces*, §5, §6, §7, §8
+
+## Code size `xl` (F-09, 2026-10-04)
+
+- `size="xl"` widens the modal to `size.content-max` (1096) and fixes its height to the viewport minus 40 on each side, for *Semua foto* (F-09 design.md › Findings). Its body scrolls.
+- Pencil has no Modal/XL component: the F-09 frames widen Modal/LG as a recorded exception.

@@ -29,7 +29,11 @@ export function GalleryPageScreen({
       ) : null}
       <AccessCard gallery={gallery} />
       <GallerySourcesSection workspaceId={workspaceId} page={page} actions={actions} />
-      <GalleryPhotosSection workspaceId={workspaceId} page={page} />
+      <GalleryPhotosSection
+        workspaceId={workspaceId}
+        page={page}
+        browseAction={actions.browseAction}
+      />
     </main>
   );
 }

@@ -7,12 +7,15 @@ import {
   proposeGalleryPasswordEntry,
 } from "@/composition/gallery/gallery-flow/gallery-flow";
 import {
+  browseGalleryPhotosEntry,
   checkFolderInUseEntry,
   linkGallerySourceEntry,
   syncGallerySourceEntry,
 } from "@/composition/gallery/gallery-source-flow/gallery-source-flow";
+import type { BrowseQuery } from "@/features/gallery/application/schemas/browse-query/browse-query.types";
 import type { CreateGalleryInput } from "@/features/gallery/application/schemas/create-gallery/create-gallery.types";
 import type { LinkGallerySourceInput } from "@/features/gallery/application/schemas/link-gallery-source/link-gallery-source.types";
+import type { BrowsePageView } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos.types";
 import type { FolderUseResult } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use.types";
 import type { CreateGalleryResult } from "@/features/gallery/application/use-cases/gallery-results/gallery-results.types";
 import type { LinkGallerySourceResult } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source.types";
@@ -62,4 +65,12 @@ export async function syncGallerySourceAction(
   const result = await syncGallerySourceEntry(workspaceId, sourceId);
   revalidatePath(PROJECTS, "layout");
   return result;
+}
+
+export async function browseGalleryPhotosAction(
+  workspaceId: string,
+  galleryId: string,
+  query: BrowseQuery,
+): Promise<BrowsePageView> {
+  return browseGalleryPhotosEntry(workspaceId, galleryId, query);
 }

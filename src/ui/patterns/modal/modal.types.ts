@@ -1,6 +1,6 @@
 import type { ReactNode, RefObject } from "react";
 
-export type ModalSize = "sm" | "md" | "lg";
+export type ModalSize = "sm" | "md" | "lg" | "xl";
 
 export interface ModalProps {
   isOpen: boolean;

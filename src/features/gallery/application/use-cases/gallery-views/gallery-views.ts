@@ -1,0 +1,63 @@
+import "server-only";
+
+import { effectiveGalleryStatus } from "@/features/gallery/domain/gallery-status/gallery-status";
+import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
+
+import type { GalleryPasswordCipherPort } from "../../ports/gallery-password-cipher/gallery-password-cipher.port";
+import type {
+  GalleryProjectFacts,
+  GallerySourceRecord,
+  GallerySummaryRecord,
+} from "../../ports/gallery-repository/gallery-repository.port";
+import type {
+  GalleryProjectView,
+  GallerySourceView,
+  GallerySummaryView,
+} from "./gallery-views.types";
+
+/** Projects the facts the gallery screens show about a project. @param project - the project facts @returns the project view */
+export function toProjectView(project: GalleryProjectFacts): GalleryProjectView {
+  return { id: project.id, title: project.title, status: project.status };
+}
+
+/** Builds the Owner's gallery summary with the decrypted password and the derived status (ADR-017, D-1). @param summary - the stored summary @param cipher - password cipher @param context - verified workspace @param now - the current instant @returns the summary view */
+export async function toSummaryView(
+  summary: GallerySummaryRecord,
+  cipher: GalleryPasswordCipherPort,
+  context: WorkspaceContext,
+  now: Date,
+): Promise<GallerySummaryView> {
+  const { gallery } = summary;
+  const password = await cipher.decrypt(gallery.password, {
+    workspaceId: context.workspaceId,
+    galleryId: gallery.id,
+  });
+  return {
+    id: gallery.id,
+    status: effectiveGalleryStatus(gallery.status, gallery.expiresAt, now),
+    password,
+    expiresAt: gallery.expiresAt?.toISOString() ?? null,
+    expiryDays: gallery.expiryDays,
+    activeSourceCount: summary.activeSourceCount,
+    failedSourceCount: summary.failedSourceCount,
+    counts: summary.counts,
+  };
+}
+
+/** Builds a source row: its label, or the Drive folder name from the last sync (A-3). @param source - the stored source @returns the source view */
+export function toSourceView(source: GallerySourceRecord): GallerySourceView {
+  return {
+    id: source.id,
+    name: source.label ?? source.folderName,
+    removed: source.removedAt !== null,
+    syncStatus: source.syncStatus,
+    syncErrorCode: source.syncErrorCode,
+    lastSyncedAt: source.lastSyncedAt?.toISOString() ?? null,
+    proofCount: source.proofCount,
+    editedCount: source.editedCount,
+    printCount: source.printCount,
+    ignoredCount: source.ignoredCount,
+    missingCount: source.missingCount,
+    tooDeepCount: source.tooDeepCount,
+  };
+}

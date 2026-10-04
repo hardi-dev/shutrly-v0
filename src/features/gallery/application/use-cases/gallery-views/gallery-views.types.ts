@@ -1,0 +1,55 @@
+import type {
+  GalleryProjectStatus,
+  GalleryStatus,
+} from "@/features/gallery/domain/gallery-status/gallery-status.types";
+
+import type {
+  GalleryPhotoCounts,
+  GallerySyncErrorCode,
+  GallerySyncStatus,
+} from "../../ports/gallery-repository/gallery-repository.port";
+
+export interface GalleryProjectView {
+  readonly id: string;
+  readonly title: string;
+  readonly status: GalleryProjectStatus;
+}
+
+// Dates are ISO strings so the view crosses the server/client boundary unchanged.
+export interface GallerySummaryView {
+  readonly id: string;
+  readonly status: GalleryStatus;
+  readonly password: string;
+  readonly expiresAt: string | null;
+  readonly expiryDays: number | null;
+  readonly activeSourceCount: number;
+  readonly failedSourceCount: number;
+  readonly counts: GalleryPhotoCounts;
+}
+
+export interface GalleryCardView {
+  readonly project: GalleryProjectView;
+  readonly canCreate: boolean;
+  readonly gallery: GallerySummaryView | null;
+}
+
+export interface GallerySourceView {
+  readonly id: string;
+  readonly name: string | null;
+  readonly removed: boolean;
+  readonly syncStatus: GallerySyncStatus;
+  readonly syncErrorCode: GallerySyncErrorCode | null;
+  readonly lastSyncedAt: string | null;
+  readonly proofCount: number;
+  readonly editedCount: number;
+  readonly printCount: number;
+  readonly ignoredCount: number;
+  readonly missingCount: number;
+  readonly tooDeepCount: number;
+}
+
+export interface GalleryPageView {
+  readonly project: GalleryProjectView;
+  readonly gallery: GallerySummaryView;
+  readonly sources: readonly GallerySourceView[];
+}

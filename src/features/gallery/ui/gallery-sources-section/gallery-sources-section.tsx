@@ -1,8 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-
 import type { GallerySourceView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 import { canEditSources } from "@/features/gallery/domain/gallery-status/gallery-status";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -13,11 +10,14 @@ import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import type { GalleryMenuEntry } from "../gallery-row-menu/gallery-row-menu.types";
 import { GallerySourceRow } from "../gallery-source-row/gallery-source-row";
 import { LinkSourceDialog } from "../link-source-dialog/link-source-dialog";
+import { RemoveSourceDialog } from "../remove-source-dialog/remove-source-dialog";
 import { SourcesCard } from "../sources-card/sources-card";
 import { useGallerySync } from "../use-gallery-sync/use-gallery-sync";
+import { useSourceDialogs } from "../use-source-dialogs/use-source-dialogs";
 import type {
   AddFolderButtonProps,
   GallerySourcesSectionProps,
+  SourceDialogsProps,
   SourceListProps,
   SourcesHeaderActionsProps,
 } from "./gallery-sources-section.types";
@@ -28,56 +28,88 @@ export function GallerySourcesSection({
   page,
   actions,
 }: Readonly<GallerySourcesSectionProps>) {
-  const router = useRouter();
-  const [isLinking, setIsLinking] = useState(false);
+  const dialogs = useSourceDialogs();
   const sync = useGallerySync({ workspaceId, syncSourceAction: actions.syncSourceAction });
   const isEditable = canEditSources(page.gallery.status, page.project.status);
-  const handleAdd = () => {
-    setIsLinking(true);
-  };
-  const handleLinked = () => {
-    setIsLinking(false);
-    router.refresh();
-  };
+  const isLive = page.gallery.status === "PUBLISHED" || page.gallery.status === "EXPIRED";
+  const isLastLocked = isLive && page.gallery.activeSourceCount <= 1;
   return (
     <>
       <SourcesCard
         sources={page.sources}
         actions={
           isEditable ? (
-            <SourcesHeaderActions sync={sync} page={page} onAdd={handleAdd} />
+            <SourcesHeaderActions sync={sync} page={page} onAdd={dialogs.openLinking} />
           ) : undefined
         }
-        emptyAction={isEditable ? <AddFolderButton onAdd={handleAdd} /> : undefined}
+        emptyAction={isEditable ? <AddFolderButton onAdd={dialogs.openLinking} /> : undefined}
       >
         <SourceList
           sources={page.sources}
           sync={sync}
           isEditable={isEditable}
           isArchived={page.gallery.status === "ARCHIVED"}
+          isLastLocked={isLastLocked}
+          onRemove={dialogs.setRemoving}
         />
       </SourcesCard>
-      {isLinking ? (
+      <SourceDialogs
+        workspaceId={workspaceId}
+        page={page}
+        actions={actions}
+        isLinking={dialogs.isLinking}
+        removing={dialogs.removing}
+        onLinkingChange={dialogs.setIsLinking}
+        onLinked={dialogs.handleLinked}
+        onCloseRemove={dialogs.closeRemoving}
+      />
+    </>
+  );
+}
+
+function SourceDialogs(props: Readonly<SourceDialogsProps>) {
+  const { workspaceId, page, actions } = props;
+  return (
+    <>
+      {props.removing ? (
+        <RemoveSourceDialog
+          workspaceId={workspaceId}
+          source={props.removing}
+          removeSourceAction={actions.removeSourceAction}
+          onClose={props.onCloseRemove}
+        />
+      ) : null}
+      {props.isLinking ? (
         <LinkSourceDialog
           isOpen
-          onOpenChange={setIsLinking}
+          onOpenChange={props.onLinkingChange}
           workspaceId={workspaceId}
           galleryId={page.gallery.id}
           linkableSources={page.linkableSources}
           checkFolderAction={actions.checkFolderAction}
           linkSourceAction={actions.linkSourceAction}
-          onLinked={handleLinked}
+          onLinked={props.onLinked}
         />
       ) : null}
     </>
   );
 }
 
-function SourceList({ sources, sync, isEditable, isArchived }: Readonly<SourceListProps>) {
+function SourceList({
+  sources,
+  sync,
+  isEditable,
+  isArchived,
+  isLastLocked,
+  onRemove,
+}: Readonly<SourceListProps>) {
   const entriesFor = (source: GallerySourceView): GalleryMenuEntry[] => {
     if (!isEditable || source.removed) return [];
     const handleSync = () => {
       sync.syncOne(source);
+    };
+    const handleRemove = () => {
+      onRemove(source);
     };
     return [
       {
@@ -85,6 +117,14 @@ function SourceList({ sources, sync, isEditable, isArchived }: Readonly<SourceLi
         icon: "refresh-cw",
         isDisabled: sync.isRunning,
         onSelect: handleSync,
+      },
+      {
+        label: GALLERY_COPY.removeSource,
+        icon: "trash-2",
+        isDestructive: true,
+        isDisabled: isLastLocked,
+        description: GALLERY_COPY.removeLastHint,
+        onSelect: handleRemove,
       },
     ];
   };

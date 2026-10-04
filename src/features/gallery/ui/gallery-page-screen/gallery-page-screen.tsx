@@ -4,8 +4,10 @@ import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-vie
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { AccessCard } from "../access-card/access-card";
+import { GalleryLifecycle } from "../gallery-lifecycle/gallery-lifecycle";
 import { GalleryPhotosSection } from "../gallery-photos-section/gallery-photos-section";
 import { GallerySourcesSection } from "../gallery-sources-section/gallery-sources-section";
+import { GalleryStateAlert } from "../gallery-state-alert/gallery-state-alert";
 import { galleryMetaText, galleryStatusChip } from "../gallery-text/gallery-text";
 import type { GalleryPageScreenProps } from "./gallery-page-screen.types";
 
@@ -27,6 +29,7 @@ export function GalleryPageScreen({
           </p>
         </header>
       ) : null}
+      <GalleryStateAlert gallery={gallery} />
       <AccessCard gallery={gallery} />
       <GallerySourcesSection workspaceId={workspaceId} page={page} actions={actions} />
       <GalleryPhotosSection
@@ -34,6 +37,7 @@ export function GalleryPageScreen({
         page={page}
         browseAction={actions.browseAction}
       />
+      <GalleryLifecycle workspaceId={workspaceId} page={page} actions={actions} />
     </main>
   );
 }

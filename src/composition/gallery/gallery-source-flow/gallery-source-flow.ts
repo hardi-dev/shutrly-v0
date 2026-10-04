@@ -1,8 +1,14 @@
 import "server-only";
 
+import { archiveGallery } from "@/features/gallery/application/use-cases/archive-gallery/archive-gallery";
 import { browseGalleryPhotos } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos";
+import { deleteDraftGallery } from "@/features/gallery/application/use-cases/delete-draft-gallery/delete-draft-gallery";
 import { findFolderUse } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
+import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
+import { removeGallerySource } from "@/features/gallery/application/use-cases/remove-gallery-source/remove-gallery-source";
+import { rotateGalleryPassword } from "@/features/gallery/application/use-cases/rotate-gallery-password/rotate-gallery-password";
+import { setGalleryExpiry } from "@/features/gallery/application/use-cases/set-gallery-expiry/set-gallery-expiry";
 import { syncGallerySource } from "@/features/gallery/application/use-cases/sync-gallery-source/sync-gallery-source";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
@@ -73,5 +79,97 @@ export async function browseGalleryPhotosEntry(
     );
   } catch (error) {
     return gallerySaveError(error, verified.context.workspaceId, "browse");
+  }
+}
+
+/** Publishes a draft gallery (AC-GAL-016, 017). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @returns the publish result */
+export async function publishGalleryEntry(rawWorkspaceId: string, rawGalleryId: string) {
+  const galleryId = galleryIdOrNotFound(rawGalleryId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withGalleryScope((scope) =>
+      publishGallery(scope, verified.context, account.id, galleryId),
+    );
+  } catch (error) {
+    return gallerySaveError(error, verified.context.workspaceId, "publish");
+  }
+}
+
+/** Changes the gallery expiry (AC-GAL-018…020). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @param values - untrusted `{ expiry }` @returns the expiry result */
+export async function setGalleryExpiryEntry(
+  rawWorkspaceId: string,
+  rawGalleryId: string,
+  values: unknown,
+) {
+  const galleryId = galleryIdOrNotFound(rawGalleryId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withGalleryScope((scope) =>
+      setGalleryExpiry(scope, verified.context, account.id, galleryId, values),
+    );
+  } catch (error) {
+    return gallerySaveError(error, verified.context.workspaceId, "set-expiry");
+  }
+}
+
+/** Replaces the gallery password (AC-GAL-021). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @param values - untrusted `{ password }` @returns the write result */
+export async function rotateGalleryPasswordEntry(
+  rawWorkspaceId: string,
+  rawGalleryId: string,
+  values: unknown,
+) {
+  const galleryId = galleryIdOrNotFound(rawGalleryId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withGalleryScope((scope) =>
+      rotateGalleryPassword(scope, verified.context, account.id, galleryId, values),
+    );
+  } catch (error) {
+    return gallerySaveError(error, verified.context.workspaceId, "rotate-password");
+  }
+}
+
+/** Removes a folder from the gallery (AC-GAL-013). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @returns the write result */
+export async function removeGallerySourceEntry(rawWorkspaceId: string, rawSourceId: string) {
+  const sourceId = galleryIdOrNotFound(rawSourceId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withGalleryScope((scope) =>
+      removeGallerySource(scope, verified.context, account.id, sourceId),
+    );
+  } catch (error) {
+    return gallerySaveError(error, verified.context.workspaceId, "remove-source");
+  }
+}
+
+/** Archives a gallery (AC-GAL-022). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @returns the write result */
+export async function archiveGalleryEntry(rawWorkspaceId: string, rawGalleryId: string) {
+  const galleryId = galleryIdOrNotFound(rawGalleryId);
+  const account = await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withGalleryScope((scope) =>
+      archiveGallery(scope, verified.context, account.id, galleryId),
+    );
+  } catch (error) {
+    return gallerySaveError(error, verified.context.workspaceId, "archive");
+  }
+}
+
+/** Deletes a draft gallery (AC-GAL-023). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @returns the write result */
+export async function deleteDraftGalleryEntry(rawWorkspaceId: string, rawGalleryId: string) {
+  const galleryId = galleryIdOrNotFound(rawGalleryId);
+  await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withGalleryScope((scope) =>
+      deleteDraftGallery(scope, verified.context, galleryId),
+    );
+  } catch (error) {
+    return gallerySaveError(error, verified.context.workspaceId, "delete-draft");
   }
 }

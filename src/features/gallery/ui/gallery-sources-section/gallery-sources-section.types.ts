@@ -23,8 +23,19 @@ export interface SourceListProps {
   readonly sync: GallerySyncState;
   readonly isEditable: boolean;
   readonly isArchived: boolean;
+  /** The last active folder of a published or expired gallery can't be removed. */
+  readonly isLastLocked: boolean;
+  readonly onRemove: (source: GallerySourceView) => void;
 }
 
 export interface AddFolderButtonProps {
   readonly onAdd: () => void;
+}
+
+export interface SourceDialogsProps extends GallerySourcesSectionProps {
+  readonly isLinking: boolean;
+  readonly removing: GallerySourceView | null;
+  readonly onLinkingChange: (isOpen: boolean) => void;
+  readonly onLinked: () => void;
+  readonly onCloseRemove: () => void;
 }

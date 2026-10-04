@@ -188,6 +188,59 @@ export const GALLERY_COPY = {
   previewMissing: "File tidak ditemukan di Google Drive",
   openInDrive: "Buka di Google Drive",
   openInDriveMobile: "Buka di Drive",
+  publishDialogTitle: "Publikasikan galeri?",
+  publishDialogBody:
+    "Folder dicek ulang sekarang. Setelah itu klien bisa membuka galeri dengan link dan password yang kamu bagikan.",
+  publishExpiry: (text: string) => `Kedaluwarsa: ${text}.`,
+  publishDescription: (body: string, expiry: string) => `${body} ${expiry}`,
+  publishRefusedTitle: "Galeri belum bisa dipublikasikan",
+  publishRefusedNone: "Tidak ada folder yang bisa dibaca saat dicek ulang.",
+  publishRefusedHint:
+    "Folder tidak dibagikan sebagai “Siapa saja yang memiliki link”. Perbaiki di Google Drive, lalu coba lagi.",
+  close: "Tutup",
+  publishedTitle: "Galeri dipublikasikan",
+  publishedBody: "Bagikan link galeri dan password ke klien.", // not in Pencil
+  expiryDialogTitle: "Kedaluwarsa galeri",
+  expiryDialogBody: "Setelah kedaluwarsa, klien tidak bisa membuka galeri sampai kamu mengubahnya.",
+  expiryDaysHelperLive: "Dihitung dari saat disimpan.", // not in Pencil
+  expirySave: "Simpan",
+  expirySavedTitle: "Kedaluwarsa disimpan", // not in Pencil
+  reopenedTitle: "Galeri dibuka lagi",
+  changeExpiry: "Ubah kedaluwarsa",
+  rotateDialogTitle: "Ganti password galeri",
+  rotateDialogBody:
+    "Password lama langsung tidak berlaku. Klien yang sedang membuka galeri harus memasukkan password baru.",
+  rotateLabel: "Password baru",
+  rotateHelper: "Dibuat otomatis. Boleh diganti (6–64 karakter).",
+  rotatedTitle: "Password diganti",
+  rotatedBody: "Bagikan password baru ke klien. Password lama tidak berlaku lagi.",
+  removeSource: "Lepas folder",
+  removeDialogTitle: (name: string) => `Lepas ${name}?`,
+  removeDialogBody: (count: number) =>
+    `${String(count)} foto dari folder ini disembunyikan dari klien. Folder di Google Drive tidak berubah. Folder yang dilepas tidak bisa dipasang lagi; tambahkan sebagai folder baru bila perlu.`,
+  removeLastHint: "Galeri yang dipublikasikan butuh minimal satu folder aktif.",
+  removedTitle: "Folder dilepas", // not in Pencil
+  archiveDialogTitle: "Arsipkan galeri?",
+  archiveDialogBody:
+    "Klien tidak bisa membuka galeri lagi. Galeri yang diarsipkan tidak bisa dipublikasikan kembali.",
+  archive: "Arsipkan galeri",
+  archivedTitle: "Galeri diarsipkan",
+  deleteDialogTitle: "Hapus galeri draf?",
+  deleteDialogBody: (folders: number, photos: number) =>
+    `Galeri, ${String(folders)} folder, dan data ${String(photos)} foto dihapus dari Shutrly. File di Google Drive tidak berubah.`,
+  deleteGallery: "Hapus galeri",
+  deletedTitle: "Galeri draf dihapus",
+  expiredAlertTitle: (date: string) => `Galeri kedaluwarsa sejak ${date}`,
+  expiredAlertBody:
+    "Klien tidak bisa membuka galeri. Atur tanggal baru atau hapus kedaluwarsa untuk membukanya lagi dengan link dan password yang sama.",
+  archivedAlertTitle: "Galeri diarsipkan",
+  archivedAlertBody:
+    "Galeri hanya bisa dilihat: tidak bisa disinkronkan atau diubah, dan klien tidak bisa membukanya.",
+  galleryMenuTitle: "Galeri",
+  cardFailedTitle: (count: number) => `${String(count)} folder gagal disinkronkan`,
+  // Pencil names the folder; the card summary carries only the count.
+  cardFailedBody: (count: number) =>
+    `${String(count)} folder tidak bisa dibaca. Buka galeri untuk melihat penyebabnya.`,
   allPhotosTitle: "Semua foto",
   allPhotosDescription: (project: string, totals: string) => `${project} · ${totals}`,
   kindTab: { PROOF: "Proof", EDITED: "Edited", PRINT: "Print" },

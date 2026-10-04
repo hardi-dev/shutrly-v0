@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
+import { Alert } from "@/ui/patterns/alert/alert";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
@@ -49,6 +50,15 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
       }
     >
       <GallerySummaryFacts gallery={card.gallery} isMobile={isMobile} />
+      {card.gallery.failedSourceCount > 0 ? (
+        <div className="px-(--space-4) pb-(--space-4) md:px-(--space-6) md:pb-(--space-6)">
+          <Alert
+            tone="warning"
+            title={GALLERY_COPY.cardFailedTitle(card.gallery.failedSourceCount)}
+            body={GALLERY_COPY.cardFailedBody(card.gallery.failedSourceCount)}
+          />
+        </div>
+      ) : null}
     </SectionCard>
   );
 }

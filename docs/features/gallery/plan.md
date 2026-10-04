@@ -282,7 +282,7 @@
 Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-pemotretan-galeri-dipublikasikan-folder-gagal` (card states D, E and F).
 
 **Steps:**
-- [ ] Use cases with unit tests:
+- [x] Use cases with unit tests:
   - `publish-gallery` (re-check sources outside the lock, then the locked write);
   - `set-gallery-expiry` (re-open from `EXPIRED`);
   - `rotate-gallery-password`;
@@ -291,9 +291,16 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
   - `delete-draft-gallery` (cascade).
 
   Integration tests cover rotation (version 2, audit columns, no plaintext), delete draft and the refused delete of a published gallery.
-- [ ] Actions and composition.
-- [ ] UI: `GalleryMenu`, the remaining dialogs, header actions by state, the expired Alert, the archived read-only view, and the remaining card states.
+- [x] Actions and composition.
+- [x] UI: `GalleryMenu`, the remaining dialogs, header actions by state, the expired Alert, the archived read-only view, and the remaining card states.
 - [ ] E2E: publish → set an expiry in the past through a test helper → expired → re-open; rotate the password; archive.
+
+**Implementation record (2026-10-04):**
+- Use cases `publish-gallery` (provider checked outside the lock, re-check inside), `set-gallery-expiry` (re-opens from `EXPIRED`), `rotate-gallery-password`, `remove-gallery-source` (`LAST_ACTIVE_SOURCE`), `archive-gallery`, `delete-draft-gallery`, all under `withGalleryLock`; Drizzle lifecycle writer (version + audit columns, cascade delete); actions and composition entries.
+- Domain `galleryHeaderActions` (primary and menu per state, from the same guards as the server).
+- UI: `GalleryLifecycle` (header buttons or phone sticky bar, ⋯ menu, dialogs), confirm, expiry, rotate-password, publish-refused and remove-source dialogs, expired/archived Alert, folder *Lepas folder* with the last-folder hint, failed-folder Alert on the project card.
+- Checks: typecheck, lint, unit/dom (1474), integration (156), build pass. E2E not run (Owner).
+- Deviations: no *Ganti password* button in the *Akses klien* header (it is in the ⋯ menu); the failed-folder Alert on the card shows a count, not the folder name; success toasts for publish, expiry, remove are not drawn in Pencil; *Galeri dibuka lagi* toast is not wired (the expiry toast reads *Kedaluwarsa disimpan* even when it re-opens).
 
 ## Slice 7 — Cancelling the project archives the gallery
 

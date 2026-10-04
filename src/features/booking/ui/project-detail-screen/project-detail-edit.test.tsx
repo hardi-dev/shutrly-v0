@@ -59,6 +59,9 @@ function setup(status: ProjectStatus, overrides: Partial<ProjectDetailView> = {}
       project={projectDetailView(status, overrides)}
       menuActions={menu}
       editActions={edit}
+      assignableMembers={[]}
+      addAssignmentAction={vi.fn()}
+      removeAssignmentAction={vi.fn()}
       definitions={DEFINITIONS}
     />,
   );
@@ -158,6 +161,44 @@ describe("detail edit controls", () => {
     expect(screen.getByText("Hapus sesi Foto keluarga?")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Hapus sesi" }));
     expect(edit.deleteSessionAction).toHaveBeenCalledWith("ws", "p1", "s1");
+  });
+
+  it("AC-TEAM-020 names the team in the delete confirmation of a staffed session", async () => {
+    const assignments = ["a1", "a2"].map((id) => ({
+      id,
+      sessionId: "s1",
+      memberId: `m-${id}`,
+      memberName: `Anggota ${id}`,
+      isMemberArchived: false,
+      roleName: "Asisten",
+    }));
+    const { edit } = setup("BOOKED", { assignments });
+    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk sesi Foto keluarga" }));
+    await userEvent.click(screen.getByRole("menuitem", { name: "Hapus sesi" }));
+    expect(screen.getByText("Hapus sesi Foto keluarga?")).toBeInTheDocument();
+    expect(
+      screen.getByText("Sesi ini punya 2 anggota tim. Penugasan mereka ikut terhapus."),
+    ).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Hapus sesi" }));
+    expect(edit.deleteSessionAction).toHaveBeenCalledWith("ws", "p1", "s1");
+  });
+
+  it("AC-TEAM-020 keeps the plain delete body for a session without a team, even when another has one", async () => {
+    const assignments = [
+      {
+        id: "a1",
+        sessionId: "s2",
+        memberId: "m1",
+        memberName: "Dimas",
+        isMemberArchived: false,
+        roleName: "Fotografer",
+      },
+    ];
+    setup("BOOKED", { assignments });
+    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk sesi Foto keluarga" }));
+    await userEvent.click(screen.getByRole("menuitem", { name: "Hapus sesi" }));
+    expect(screen.getByText("Sesi dihapus dari jadwal proyek ini.")).toBeInTheDocument();
+    expect(screen.queryByText(/anggota tim/)).not.toBeInTheDocument();
   });
 
   it("AC-PRJ-009 opens Tambah sesi after Konfirmasi booking finds no session", async () => {

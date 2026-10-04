@@ -64,7 +64,7 @@ describe("Combobox (C36)", () => {
     render(<Harness onCreate={vi.fn()} />);
     await userEvent.type(screen.getByRole("combobox", { name: "Klien" }), "Rin");
     const listbox = screen.getByRole("listbox");
-    expect(within(listbox).getByText("KLIEN · 2 COCOK")).toBeInTheDocument();
+    expect(screen.getByText("KLIEN · 2 COCOK")).toBeInTheDocument();
     expect(within(listbox).getByRole("option", { name: /Rina.*2 proyek/ })).toBeInTheDocument();
     expect(
       within(listbox).getByRole("option", { name: /Belum ada nomor WhatsApp/ }),

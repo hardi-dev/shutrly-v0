@@ -1,0 +1,455 @@
+--- base
++++ state
+@@ -1,6 +1,6 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Tim / Anggota / Aktif / Mobile"
+-      class="box-border w-[390px] h-[1100px] flex flex-col gap-0 justify-start items-start bg-[#E4E4E7] [outline:1px_solid_#F0F0F2] rounded-[36px] overflow-hidden"
++      data-pencil-name="Tim / Peran / Mobile"
++      class="box-border w-[390px] h-[844px] flex flex-col gap-0 justify-start items-start bg-[#E4E4E7] [outline:1px_solid_#F0F0F2] rounded-[36px] overflow-hidden"
+     >
+ <div
+@@ -168,4 +168,26 @@
+ <div
+                 data-pencil-name="Item Aktif"
++                class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 p-[8px_16px] justify-center items-start rounded-[999px]"
++              >
++<div
++                  data-pencil-name="Label"
++                  class="text-[12px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                >
++                  Aktif
++                </div>
++</div>
++<div
++                data-pencil-name="Item Arsip"
++                class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 p-[8px_16px] justify-center items-start rounded-[999px]"
++              >
++<div
++                  data-pencil-name="Label"
++                  class="text-[12px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                >
++                  Arsip
++                </div>
++</div>
++<div
++                data-pencil-name="Item Peran"
+                 class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 p-[8px_16px] justify-center items-start bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[999px]"
+               >
+@@ -174,51 +196,8 @@
+                   class="text-[12px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                 >
+-                  Aktif
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Item Arsip"
+-                class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 p-[8px_16px] justify-center items-start rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Label"
+-                  class="text-[12px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                >
+-                  Arsip
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Item Peran"
+-                class="box-border [flex:1_1_0] h-fit flex flex-row gap-0 p-[8px_16px] justify-center items-start rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Label"
+-                  class="text-[12px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                >
+                   Peran
+                 </div>
+ </div>
+ </div>
+-</div>
+-<div
+-            data-pencil-name="Search"
+-            class="box-border w-full h-[40px] shrink-0 flex flex-row gap-[8px] p-[0px_12px] justify-start items-center bg-[#FFFFFF] [border:1px_solid_#DCDCE0] rounded-[8px]"
+-          >
+-<svg
+-              data-pencil-name="Icon leading"
+-              data-icon-name="search"
+-              data-icon-set="lucide"
+-              viewBox="0 0 13.99993896484375 14"
+-              preserveAspectRatio="xMidYMid meet"
+-              xmlns="http://www.w3.org/2000/svg"
+-              class="box-border w-[16px] shrink-0 h-[16px]"
+-            >
+-</svg>
+-<div
+-              data-pencil-name="Placeholder"
+-              class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-            >
+-              Cari nama atau nomor
+-            </div>
+ </div>
+ </div>
+@@ -239,5 +218,5 @@
+                 class="text-[16px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+               >
+-                Daftar anggota
++                Daftar peran
+               </div>
+ <div
+@@ -245,5 +224,5 @@
+                 class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+               >
+-                8 anggota aktif
++                5 peran
+               </div>
+ </div>
+@@ -280,18 +259,7 @@
+           >
+ <div
+-              data-pencil-name="Row Ayu Kirana"
++              data-pencil-name="Row Asisten"
+               class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
+             >
+-<div
+-                data-pencil-name="Avatar"
+-                class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Initials"
+-                  class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                >
+-                  AK
+-                </div>
+-</div>
+ <div
+                 data-pencil-name="Text"
+@@ -302,5 +270,5 @@
+                   class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                 >
+-                  Ayu Kirana
++                  Asisten
+                 </div>
+ <div
+@@ -308,5 +276,5 @@
+                   class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                 >
+-                  Asisten
++                  3 anggota
+                 </div>
+ </div>
+@@ -338,18 +306,7 @@
+ </div>
+ <div
+-              data-pencil-name="Row Bagas Wicaksono"
++              data-pencil-name="Row Drone"
+               class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
+             >
+-<div
+-                data-pencil-name="Avatar"
+-                class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Initials"
+-                  class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                >
+-                  BW
+-                </div>
+-</div>
+ <div
+                 data-pencil-name="Text"
+@@ -360,5 +317,5 @@
+                   class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                 >
+-                  Bagas Wicaksono
++                  Drone
+                 </div>
+ <div
+@@ -366,5 +323,5 @@
+                   class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                 >
+-                  Videografer
++                  Belum dipakai
+                 </div>
+ </div>
+@@ -396,18 +353,7 @@
+ </div>
+ <div
+-              data-pencil-name="Row Dimas Pratama"
++              data-pencil-name="Row Fotografer"
+               class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
+             >
+-<div
+-                data-pencil-name="Avatar"
+-                class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Initials"
+-                  class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                >
+-                  DP
+-                </div>
+-</div>
+ <div
+                 data-pencil-name="Text"
+@@ -418,5 +364,5 @@
+                   class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                 >
+-                  Dimas Pratama
++                  Fotografer
+                 </div>
+ <div
+@@ -424,5 +370,5 @@
+                   class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                 >
+-                  Fotografer, Videografer
++                  4 anggota
+                 </div>
+ </div>
+@@ -454,18 +400,7 @@
+ </div>
+ <div
+-              data-pencil-name="Row Joko Santoso"
++              data-pencil-name="Row MUA"
+               class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
+             >
+-<div
+-                data-pencil-name="Avatar"
+-                class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Initials"
+-                  class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                >
+-                  JS
+-                </div>
+-</div>
+ <div
+                 data-pencil-name="Text"
+@@ -476,5 +411,5 @@
+                   class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                 >
+-                  Joko Santoso
++                  MUA
+                 </div>
+ <div
+@@ -482,5 +417,5 @@
+                   class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                 >
+-                  Videografer
++                  Belum dipakai
+                 </div>
+ </div>
+@@ -512,18 +447,7 @@
+ </div>
+ <div
+-              data-pencil-name="Row Nadia Rahma"
+-              class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
+-            >
+-<div
+-                data-pencil-name="Avatar"
+-                class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Initials"
+-                  class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                >
+-                  NR
+-                </div>
+-</div>
++              data-pencil-name="Row Videografer"
++              class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center"
++            >
+ <div
+                 data-pencil-name="Text"
+@@ -534,5 +458,5 @@
+                   class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+                 >
+-                  Nadia Rahma
++                  Videografer
+                 </div>
+ <div
+@@ -540,5 +464,5 @@
+                   class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+                 >
+-                  Fotografer
++                  3 anggota
+                 </div>
+ </div>
+@@ -569,178 +493,4 @@
+ </div>
+ </div>
+-<div
+-              data-pencil-name="Row Putri Ayuningtyas"
+-              class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
+-            >
+-<div
+-                data-pencil-name="Avatar"
+-                class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Initials"
+-                  class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                >
+-                  PA
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Text"
+-                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-              >
+-<div
+-                  data-pencil-name="Title"
+-                  class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                >
+-                  Putri Ayuningtyas
+-                </div>
+-<div
+-                  data-pencil-name="Meta"
+-                  class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                >
+-                  Fotografer, Asisten
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Trailing"
+-                class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] justify-start items-center"
+-              >
+-<div
+-                  data-pencil-name="Row actions"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                >
+-<div
+-                    data-pencil-name="Trigger"
+-                    class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                  >
+-<svg
+-                      data-pencil-name="Icon"
+-                      data-icon-name="ellipsis"
+-                      data-icon-set="lucide"
+-                      viewBox="0 0 13.99993896484375 14"
+-                      preserveAspectRatio="xMidYMid meet"
+-                      xmlns="http://www.w3.org/2000/svg"
+-                      class="box-border w-[16px] shrink-0 h-[16px]"
+-                    >
+-</svg>
+-</div>
+-</div>
+-</div>
+-</div>
+-<div
+-              data-pencil-name="Row Rangga Saputra"
+-              class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center [border-width:0px_0px_1px_0px] [border-style:solid] [border-color:#F0F0F2]"
+-            >
+-<div
+-                data-pencil-name="Avatar"
+-                class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Initials"
+-                  class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                >
+-                  RS
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Text"
+-                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-              >
+-<div
+-                  data-pencil-name="Title"
+-                  class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                >
+-                  Rangga Saputra
+-                </div>
+-<div
+-                  data-pencil-name="Meta"
+-                  class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                >
+-                  Fotografer
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Trailing"
+-                class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] justify-start items-center"
+-              >
+-<div
+-                  data-pencil-name="Row actions"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                >
+-<div
+-                    data-pencil-name="Trigger"
+-                    class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                  >
+-<svg
+-                      data-pencil-name="Icon"
+-                      data-icon-name="ellipsis"
+-                      data-icon-set="lucide"
+-                      viewBox="0 0 13.99993896484375 14"
+-                      preserveAspectRatio="xMidYMid meet"
+-                      xmlns="http://www.w3.org/2000/svg"
+-                      class="box-border w-[16px] shrink-0 h-[16px]"
+-                    >
+-</svg>
+-</div>
+-</div>
+-</div>
+-</div>
+-<div
+-              data-pencil-name="Row Sari Lestari"
+-              class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[12px] justify-start items-center"
+-            >
+-<div
+-                data-pencil-name="Avatar"
+-                class="box-border w-[32px] shrink-0 h-[32px] flex flex-row gap-0 justify-center items-center bg-[#E4E4E7] rounded-[999px]"
+-              >
+-<div
+-                  data-pencil-name="Initials"
+-                  class="text-[11px]/[normal] box-border text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold text-left [white-space:nowrap]"
+-                >
+-                  SL
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Text"
+-                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[2px] justify-start items-start"
+-              >
+-<div
+-                  data-pencil-name="Title"
+-                  class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-                >
+-                  Sari Lestari
+-                </div>
+-<div
+-                  data-pencil-name="Meta"
+-                  class="text-[13px]/[normal] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
+-                >
+-                  Asisten
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Trailing"
+-                class="box-border w-fit shrink-0 h-fit flex flex-row gap-[8px] justify-start items-center"
+-              >
+-<div
+-                  data-pencil-name="Row actions"
+-                  class="box-border w-fit shrink-0 h-fit flex flex-col gap-0 justify-start items-end"
+-                >
+-<div
+-                    data-pencil-name="Trigger"
+-                    class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 p-[8px] justify-center items-center rounded-[8px]"
+-                  >
+-<svg
+-                      data-pencil-name="Icon"
+-                      data-icon-name="ellipsis"
+-                      data-icon-set="lucide"
+-                      viewBox="0 0 13.99993896484375 14"
+-                      preserveAspectRatio="xMidYMid meet"
+-                      xmlns="http://www.w3.org/2000/svg"
+-                      class="box-border w-[16px] shrink-0 h-[16px]"
+-                    >
+-</svg>
+-</div>
+-</div>
+-</div>
+-</div>
+ </div>
+ </div>

@@ -31,6 +31,16 @@ export interface ProjectFieldRecord extends SnapshotField {
   readonly value: BookingValue;
 }
 
+/** One member's assignment on a session, with the names the *Jadwal* shows (D-13). */
+export interface SessionAssignmentRecord {
+  readonly id: string;
+  readonly sessionId: string;
+  readonly memberId: string;
+  readonly memberName: string;
+  readonly isMemberArchived: boolean;
+  readonly roleName: string;
+}
+
 export interface ProjectDetailRecord {
   readonly id: string;
   readonly title: string;
@@ -52,11 +62,18 @@ export interface ProjectDetailRecord {
   readonly items: readonly ProjectItemRecord[];
   readonly fields: readonly ProjectFieldRecord[];
   readonly sessions: readonly SessionRecordShape[];
+  /** Every session's assignments by `created_at`, then ID (A-4); group them by `sessionId`. */
+  readonly assignments: readonly SessionAssignmentRecord[];
   readonly cancellation: {
     readonly at: string;
     readonly byName: string | null;
     readonly reason: string | null;
   } | null;
+}
+
+/** A session of a new project with the members picked for it (AC-TEAM-028). */
+export interface NewSessionInput extends SessionInput {
+  readonly team: readonly { readonly memberId: string; readonly roleId: string }[];
 }
 
 export interface ProjectSnapshotInput {
@@ -70,12 +87,14 @@ export interface ProjectSnapshotInput {
   readonly actorId: string;
   readonly items: readonly { readonly definitionId: string; readonly value: PackageValue }[];
   readonly fieldValues: Readonly<Record<string, BookingValue>>;
-  readonly sessions: readonly SessionInput[];
+  readonly sessions: readonly NewSessionInput[];
 }
 
 export type CreateSnapshotResult =
   | { readonly status: "CREATED"; readonly id: string }
   | { readonly status: "CLIENT_INACTIVE" | "SERVICE_INACTIVE" | "NOT_FOUND" }
+  /** A picked member is archived or no longer holds the role; `sessionIndex` is its session's position. */
+  | { readonly status: "TEAM_INVALID"; readonly sessionIndex: number }
   | {
       readonly status: "DEFINITION_INACTIVE" | "DUPLICATE_DEFINITION";
       readonly definitionId: string;

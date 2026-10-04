@@ -171,6 +171,7 @@ function snapshot(
         startTime: "07:30",
         endTime: "10:00",
         location: "Balairung UI, Depok",
+        team: [],
       },
     ],
     ...overrides,

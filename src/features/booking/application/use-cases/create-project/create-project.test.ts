@@ -46,8 +46,52 @@ describe("create project (BR-PRJ-001, BR-PRJ-002, BR-PRJ-008)", () => {
         startTime: "07:30",
         endTime: "10:00",
         location: "Balairung UI, Depok",
+        team: [],
       },
     ]);
+  });
+
+  it("AC-TEAM-028 passes each session's team on to the snapshot", async () => {
+    const { repository, create } = setup();
+    const team = [{ memberId: crypto.randomUUID(), roleId: crypto.randomUUID() }];
+    const base = validCreateInput();
+    const session = { ...base.sessions[0], team };
+    expect(await create({ ...base, sessions: [session] })).toMatchObject({ ok: true });
+    expect(repository.projects.at(0)?.input.sessions[0]?.team).toEqual(team);
+  });
+
+  it("AC-TEAM-028 rejects the same member twice in one session and creates nothing", async () => {
+    const { repository, create } = setup();
+    const pick = { memberId: crypto.randomUUID(), roleId: crypto.randomUUID() };
+    const base = validCreateInput();
+    const session = { ...base.sessions[0], team: [pick, { ...pick, roleId: crypto.randomUUID() }] };
+    expect(await create({ ...base, sessions: [session] })).toEqual({
+      ok: false,
+      code: "VALIDATION_FAILED",
+      fieldErrors: { "sessions.0.team": "TEAM_INVALID" },
+    });
+    expect(repository.projects).toHaveLength(0);
+  });
+
+  it("AC-TEAM-028 reports the session a refused team belongs to", async () => {
+    const { repository, create } = setup();
+    repository.rejectTeamOfSession = 0;
+    const base = validCreateInput();
+    const session = { ...base.sessions[0], team: [] };
+    expect(await create({ ...base, sessions: [session] })).toEqual({
+      ok: false,
+      code: "VALIDATION_FAILED",
+      fieldErrors: { "sessions.0.team": "TEAM_INVALID" },
+    });
+  });
+
+  it("AC-TEAM-022 treats a malformed member or role id in a session team as a field error", async () => {
+    const { repository, create } = setup();
+    const base = validCreateInput();
+    const session = { ...base.sessions[0], team: [{ memberId: "x", roleId: "y" }] };
+    const result = await create({ ...base, sessions: [session] });
+    expect(result).toMatchObject({ ok: false, code: "VALIDATION_FAILED" });
+    expect(repository.projects).toHaveLength(0);
   });
 
   it("AC-PRJ-029 rejects BOOKED without a session but creates a DRAFT without one", async () => {

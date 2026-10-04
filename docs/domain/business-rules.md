@@ -210,14 +210,38 @@ A `DRAFT` project can be deleted permanently, with its snapshots. Any other proj
 ## Team & Sessions (TEAM)
 
 ### BR-TEAM-001 — Freelancers are resources
-Freelancers are workspace `TeamMember`s without login. A project may have zero, one, or many assignments, each with its own role and fee.
+Freelancers are workspace `TeamMember`s without login. A project may have zero, one, or many assignments. Each assignment puts one member on one session of the project, in one role (BR-TEAM-006). F-08 records no fees or payments for freelancers (Owner 2026-10-03). *(Assignment per session: F-08 discovery, Owner 2026-10-03.)*
 
 ### BR-TEAM-002 — Sessions belong to a project
 A project may have 0..* sessions; a project that is `BOOKED` or later keeps at least one (BR-TEAM-003). Photos may optionally reference a session of the same project.
-**SPEC GAP (deferred to F-08 discovery):** session status values and assignment status values.
+Sessions have no stored status in MVP. Screens may label a session by its date relative to today, but nothing is stored and nothing is clicked. Assignments have no status either. *(F-08 discovery, Owner 2026-10-03; resolves the session- and assignment-status SPEC GAP. Fee payment status dropped with BR-TEAM-007, Owner 2026-10-03.)*
 
 ### BR-TEAM-003 — Session record
 A session is one shoot of a project, created and edited by the Owner (F-07; team assignments stay in F-08). It has a name (1–100 characters after trimming, e.g. *Akad*, *Resepsi*), a date, an optional start time, an optional end time (only with a start time, and later than it on the same day) and an optional location (free text, at most 200 characters). Times are local wall-clock times of the workspace, stored without a time zone. Sessions are listed by date, then start time (sessions without a time first), then creation time. A `DRAFT` project may have none; creating a project as `BOOKED` or confirming a draft requires at least one, and the last session of a `BOOKED`-or-later project can't be deleted. Sessions can be added, edited and deleted in every status except `CANCELLED`. *(F-07 design, Owner 2026-10-02.)*
+
+### BR-TEAM-004 — Team member record
+A team member belongs to one workspace and never logs in (BR-AUTH-001). It has:
+- a name (1–100 characters after trimming; not unique);
+- a WhatsApp number, which is required. It is normalized and validated as in BR-CLI-002, and is unique per workspace across active and archived members, enforced by the database. Client numbers are a separate set, so one person can be both a client and a member.
+- an optional email (a valid address, at most 254 characters, stored in lower case; not unique);
+- one or more roles from the workspace's role list (BR-TEAM-005).
+
+A member has no rate or other money fields (Owner 2026-10-03).
+
+A member is archived and restored at any time. Archiving keeps their existing assignments, but an archived member can't be assigned again. A member is deleted permanently only while no assignment refers to them. *(F-08 discovery, Owner 2026-10-03.)*
+
+### BR-TEAM-005 — Team roles
+Each workspace keeps a list of role names: 1–50 characters after trimming, unique per workspace ignoring case. Every workspace starts with *Fotografer*, *Videografer* and *Asisten*. These are created with the workspace and backfilled for workspaces that existed before F-08; the backfill skips a name the workspace already has. The Owner may add and rename roles. A role is deleted only while no member and no assignment uses it. Renaming a role changes its name wherever it is shown. *(F-08 discovery, Owner 2026-10-03.)*
+
+### BR-TEAM-006 — Session assignment
+An assignment links one active member (BR-TEAM-004) to one session of a project in the same workspace (BR-TEAM-003), in one role, which must be one of the member's roles when the assignment is saved. It has no fee (Owner 2026-10-03).
+
+A member is assigned at most once per session, enforced by the database. Archiving a member, or removing a role from them, leaves their existing assignments unchanged. An assignment is never edited: to change the member or the role, the Owner removes it and adds a new one (Owner 2026-10-03, design). Assignments are added and removed in every project status except `CANCELLED`.
+
+Deleting a session deletes its assignments, and deleting a draft project deletes the assignments of its sessions. *(F-08 discovery, Owner 2026-10-03; fee, fee prefill and the paid-delete guard removed, Owner 2026-10-03.)*
+
+### ~~BR-TEAM-007 — Fee payment status~~
+**Deprecated (Owner 2026-10-03):** freelancer fees and their payment are out of F-08 and wait for their own feature (feature map › *Team fees*). The rule was: ~~An assignment's fee is `UNPAID` or `PAID`, starting `UNPAID`. The Owner marks it `PAID` with a payment date (default today, not in the future), recording who did it and when. The Owner can undo that, back to `UNPAID`, which clears the date. While an assignment is `PAID`, its fee, role and member can't change and it can't be removed. Payment can be marked or undone in every project status, `CANCELLED` included. This only records money the Owner pays outside the app: it is not a payment in BR-PAY-* and never touches invoices or project status (BR-PRJ-006). *(F-08 discovery, Owner 2026-10-03.)*~~
 
 ---
 

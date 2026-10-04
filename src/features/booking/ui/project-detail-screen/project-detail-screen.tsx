@@ -19,6 +19,7 @@ import type {
 import { ProjectSessionSummaryLine } from "../project-session-summary/project-session-summary-line";
 import { ProjectStatusChip } from "../project-status-chip/project-status-chip";
 import { projectStatusChip } from "../project-status-chip/project-status-props";
+import { SessionTeamHost } from "../session-team-host/session-team-host";
 import { useProjectActions } from "../use-project-actions/use-project-actions";
 import { DetailEditing } from "./detail-editing";
 import { ProjectCancelledAlert } from "./project-cancelled-alert";
@@ -28,7 +29,11 @@ import {
   ProjectPackageCard,
   ProjectScheduleCard,
 } from "./project-detail-cards";
-import type { DetailEditHandlers, ProjectDetailScreenProps } from "./project-detail-screen.types";
+import type {
+  DetailEditHandlers,
+  ProjectDetailScreenProps,
+  SessionTeamHandlers,
+} from "./project-detail-screen.types";
 import { ProjectStepButton } from "./project-step-button";
 
 /** The project detail page (S3): header block on phones, one read-only card per area and the status step. */
@@ -50,7 +55,23 @@ export function ProjectDetailScreen(props: Readonly<ProjectDetailScreenProps>) {
       addSessionRequest={addSessionRequest}
     >
       {(edit) => (
-        <DetailBody {...props} api={api} edit={edit} onSessionRequired={handleSessionRequired} />
+        <SessionTeamHost
+          workspaceId={props.workspaceId}
+          project={props.project}
+          assignableMembers={props.assignableMembers}
+          addAssignmentAction={props.addAssignmentAction}
+          removeAssignmentAction={props.removeAssignmentAction}
+        >
+          {(team) => (
+            <DetailBody
+              {...props}
+              api={api}
+              edit={edit}
+              team={team}
+              onSessionRequired={handleSessionRequired}
+            />
+          )}
+        </SessionTeamHost>
       )}
     </DetailEditing>
   );
@@ -76,6 +97,7 @@ function menuTargetOf(project: ProjectDetailScreenProps["project"]): ProjectMenu
     id: project.id,
     title: project.title,
     status: project.status,
+    hasTeam: project.assignments.length > 0,
     clientId: project.client.id,
     clientName: project.client.name,
     whatsappNumber: project.client.whatsappNumber,
@@ -102,11 +124,13 @@ function DetailBody({
   galleryCard,
   api,
   edit,
+  team,
   onSessionRequired,
 }: Readonly<
   ProjectDetailScreenProps & {
     api: ProjectMenuApi;
     edit: DetailEditHandlers;
+    team: SessionTeamHandlers;
     onSessionRequired: () => void;
   }
 >) {
@@ -151,6 +175,7 @@ function DetailBody({
         button={button}
         edit={edit}
         galleryCard={galleryCard}
+        team={team}
       />
     </>
   );
@@ -163,6 +188,7 @@ function DetailCards({
   button,
   edit,
   galleryCard,
+  team,
 }: Readonly<{
   project: ProjectDetailScreenProps["project"];
   isMobile: boolean;
@@ -170,6 +196,7 @@ function DetailCards({
   button: ReactNode;
   edit: DetailEditHandlers;
   galleryCard: ReactNode;
+  team: SessionTeamHandlers;
 }>) {
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) pb-(--space-6) md:gap-(--component-panel-app-content-gap)">
@@ -183,7 +210,7 @@ function DetailCards({
       <ProjectInfoCard project={project} isMobile={isMobile} onEdit={onEditInfo} />
       {galleryCard}
       <ProjectPackageCard project={project} isMobile={isMobile} edit={edit} />
-      <ProjectScheduleCard project={project} isMobile={isMobile} edit={edit} />
+      <ProjectScheduleCard project={project} isMobile={isMobile} edit={edit} team={team} />
       <ProjectFieldsReadCard project={project} isMobile={isMobile} edit={edit} />
       {isMobile && button ? (
         <div className="sticky bottom-0 z-10 border-t border-(--color-semantic-border-default) bg-(--color-semantic-surface-panel) p-(--space-4) max-md:-mx-(--space-4) max-md:-mb-(--space-5)">

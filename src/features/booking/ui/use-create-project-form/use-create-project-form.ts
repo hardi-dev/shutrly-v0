@@ -9,8 +9,8 @@ import type {
   CreateProjectInput,
 } from "@/features/booking/application/schemas/create-project-input/create-project-input.types";
 import type { BookingValue } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
-import type { SessionInput } from "@/features/booking/domain/session/session.types";
 
+import type { SessionWithTeam } from "../session-dialog/session-dialog.types";
 import { useProjectPicks } from "../use-project-picks/use-project-picks";
 import { useProjectSubmit } from "../use-project-submit/use-project-submit";
 import { CREATE_PROJECT_DEFAULTS } from "./create-project-form-defaults";
@@ -24,14 +24,17 @@ export function useCreateProjectForm(input: Readonly<UseCreateProjectFormInput>)
   });
   const picks = useProjectPicks(form, input.serviceGroups);
   const submission = useProjectSubmit(form, picks, input);
-  const setSessions = (sessions: readonly SessionInput[]) => {
-    form.setValue("sessions", [...sessions]);
+  const setSessions = (sessions: readonly SessionWithTeam[]) => {
+    form.setValue(
+      "sessions",
+      sessions.map((session) => ({ ...session, team: [...(session.team ?? [])] })),
+    );
     form.clearErrors("sessions");
   };
-  const addSession = (session: SessionInput) => {
+  const addSession = (session: SessionWithTeam) => {
     setSessions([...form.getValues("sessions"), session]);
   };
-  const updateSession = (index: number, session: SessionInput) => {
+  const updateSession = (index: number, session: SessionWithTeam) => {
     setSessions(form.getValues("sessions").map((current, i) => (i === index ? session : current)));
   };
   const removeSession = (index: number) => {

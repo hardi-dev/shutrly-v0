@@ -2,6 +2,14 @@
 
 Older handoffs, the early status table, the component-library and design-system notes, and superseded next steps, moved out of [HANDOFF.md](HANDOFF.md) on 2026-10-04 to keep the file that every session reads small. Nothing was edited. Read this only when you need history; the live sources are the feature folders, `docs/design-system/` and `docs/features/README.md`.
 
+## Previous handoff — F-08 Team DESIGNED (2026-10-03)
+
+- **Done:** spec and AC-TEAM-001…027 written, design APPROVED (48 frames and exports), diagrams for member state and add/remove/delete.
+- **Scope cut (Owner 2026-10-03):** no money; fees moved to F-18; no member detail page.
+- **Domain:** BR-TEAM-001, 002, 004, 005, 006 (BR-TEAM-007 deprecated).
+- **Artifacts:** [spec](features/team-sessions/spec.md), [design](features/team-sessions/design.md).
+- **Next then:** `/sdv:plan-feature team-sessions`.
+
 ## Previous handoff — F-07 Projects DONE (2026-10-04)
 
 - **Outcome:** Slices 0–8 built on `feat/projects`; accepted by the Owner 2026-10-04. Migration `0009_project` applied to the non-production DB. Not pushed, no PR.

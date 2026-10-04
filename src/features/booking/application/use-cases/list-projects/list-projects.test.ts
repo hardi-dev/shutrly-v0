@@ -21,6 +21,7 @@ function row(index: number): ProjectListRow {
     serviceName: "Wisuda",
     shownSession: null,
     sessionCount: 0,
+    hasTeam: false,
   };
 }
 

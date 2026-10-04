@@ -69,6 +69,7 @@ import {
   TextIcon,
   ToggleOffIcon,
   UnfoldMoreIcon,
+  UserAdd01Icon,
   UserRoundCogFreeIcons,
   UsersFreeIcons,
   ViewIcon,
@@ -157,6 +158,7 @@ export const ICON_NAMES: readonly IconName[] = [
   "image-off",
   "external-link",
   "arrow-left",
+  "user-plus",
 ];
 
 export const ICON_REGISTRY: Record<IconName, IconSvgElement> = {
@@ -208,6 +210,7 @@ export const ICON_REGISTRY: Record<IconName, IconSvgElement> = {
   receipt: ReceiptFreeIcons,
   package: PackageFreeIcons,
   "user-round-cog": UserRoundCogFreeIcons,
+  "user-plus": UserAdd01Icon,
   "message-square-text": MessageSquareTextFreeIcons,
   "message-circle": MessageCircleIcon,
   "share-2": Share2,

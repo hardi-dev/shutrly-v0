@@ -1,19 +1,29 @@
 import { formatIdr } from "@/features/booking/domain/idr-amount/idr-amount";
 import { needsSession } from "@/features/booking/domain/project-status/project-status";
 import { formatSessionRange } from "@/features/booking/domain/session/session";
+import { assignmentsBySession } from "@/features/booking/domain/session-assignment/session-assignment";
 import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
+import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { describePackageItem } from "../package-items-card/package-items-card";
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { ProjectRowMenu } from "../project-row-menu/project-row-menu";
 import type { RowMenuEntry } from "../project-row-menu/project-row-menu.types";
 import { SessionRowActions } from "../session-row-actions/session-row-actions";
+import type { SessionTeamAction } from "../session-row-actions/session-row-actions.types";
+import { SessionTeamAvatars } from "../session-team-avatars/session-team-avatars";
 import { displayBookingValue } from "./booking-value-display";
-import type { DetailEditHandlers, ProjectDetailCardProps } from "./project-detail-screen.types";
+import type {
+  DetailEditHandlers,
+  ProjectDetailCardProps,
+  SessionRowProps,
+  SessionTeamHandlers,
+  SessionTrailingProps,
+} from "./project-detail-screen.types";
 import { ProjectFacts } from "./project-facts";
 
 function lockedDescription(project: ProjectDetailCardProps["project"]): string | undefined {
@@ -156,9 +166,12 @@ function fieldsDescription({ project, isMobile }: Readonly<ProjectDetailCardProp
 
 /** Schedule card: sessions in date order; Tambah sesi and the session ⋯ show while the project is not cancelled. */
 export function ProjectScheduleCard(
-  props: Readonly<ProjectDetailCardProps & { edit?: DetailEditHandlers }>,
+  props: Readonly<
+    ProjectDetailCardProps & { edit?: DetailEditHandlers; team?: SessionTeamHandlers }
+  >,
 ) {
-  const { project, isMobile, edit } = props;
+  const { project, isMobile, edit, team } = props;
+  const byUnit = assignmentsBySession(project.assignments);
   const description = scheduleDescription(props);
   const canEdit = edit !== undefined && project.canEditSchedule;
   const isLastOfBooked = needsSession(project.status) && project.sessions.length <= 1;
@@ -185,17 +198,15 @@ export function ProjectScheduleCard(
       ) : (
         <ul aria-label={PROJECT_COPY.scheduleTitle}>
           {project.sessions.map((session, index) => (
-            <ListCardItem
+            <SessionRow
               key={session.id}
-              icon="calendar"
-              title={session.name}
-              meta={formatSessionRange(session)}
-              isLast={index === project.sessions.length - 1}
-              trailing={
-                canEdit ? (
-                  <SessionMenu session={session} edit={edit} isLast={isLastOfBooked} />
-                ) : undefined
-              }
+              session={session}
+              isLastRow={index === project.sessions.length - 1}
+              assignments={byUnit.get(session.id) ?? []}
+              canEditTeam={project.canEditTeam}
+              team={team}
+              edit={canEdit ? edit : undefined}
+              isLastOfBooked={isLastOfBooked}
             />
           ))}
         </ul>
@@ -204,14 +215,100 @@ export function ProjectScheduleCard(
   );
 }
 
+function SessionRow({
+  session,
+  isLastRow,
+  assignments,
+  canEditTeam,
+  team,
+  edit,
+  isLastOfBooked,
+}: Readonly<SessionRowProps>) {
+  const menu = edit ? (
+    <SessionMenu
+      session={session}
+      edit={edit}
+      isLast={isLastOfBooked}
+      hasTeam={assignments.length > 0}
+      canEditTeam={canEditTeam}
+      team={team}
+    />
+  ) : null;
+  return (
+    <ListCardItem
+      icon="calendar"
+      title={session.name}
+      meta={formatSessionRange(session)}
+      isLast={isLastRow}
+      trailing={
+        <SessionTrailing
+          session={session}
+          assignments={assignments}
+          canEditTeam={canEditTeam}
+          team={team}
+          menu={menu}
+        />
+      }
+    />
+  );
+}
+
+/** The row's trailing area: the avatar group or the `user-plus` button, then the ⋯ menu (AC-TEAM-026). */
+function SessionTrailing({
+  session,
+  assignments,
+  canEditTeam,
+  team,
+  menu,
+}: Readonly<SessionTrailingProps>) {
+  function handleManage(): void {
+    team?.onManage(session);
+  }
+  function handleAdd(): void {
+    team?.onAdd(session);
+  }
+  let teamControl = null;
+  if (assignments.length > 0) {
+    teamControl = (
+      <SessionTeamAvatars
+        sessionName={session.name}
+        assignments={assignments}
+        onOpen={handleManage}
+      />
+    );
+  } else if (canEditTeam && team) {
+    teamControl = (
+      <IconButton
+        icon="user-plus"
+        size="sm"
+        aria-label={PROJECT_COPY.addTeamFor(session.name)}
+        onPress={handleAdd}
+      />
+    );
+  }
+  if (teamControl === null && menu === null) return null;
+  return (
+    <div className="flex items-center gap-(--space-2)">
+      {teamControl}
+      {menu}
+    </div>
+  );
+}
+
 function SessionMenu({
   session,
   edit,
   isLast,
+  hasTeam,
+  canEditTeam,
+  team,
 }: Readonly<{
   session: ProjectDetailCardProps["project"]["sessions"][number];
   edit: DetailEditHandlers;
   isLast: boolean;
+  hasTeam: boolean;
+  canEditTeam: boolean;
+  team?: SessionTeamHandlers;
 }>) {
   const handleEdit = () => {
     edit.onEditSession(session);
@@ -219,6 +316,18 @@ function SessionMenu({
   const handleDelete = () => {
     edit.onDeleteSession(session);
   };
+  const handleAdd = () => {
+    team?.onAdd(session);
+  };
+  const handleManage = () => {
+    team?.onManage(session);
+  };
+  let teamAction: SessionTeamAction | undefined;
+  if (canEditTeam && team) {
+    teamAction = hasTeam
+      ? { label: PROJECT_COPY.manageTeam, icon: "users", onSelect: handleManage }
+      : { label: PROJECT_COPY.addTeam, icon: "user-plus", onSelect: handleAdd };
+  }
   return (
     <SessionRowActions
       name={session.name}
@@ -226,6 +335,7 @@ function SessionMenu({
       onDelete={handleDelete}
       deleteHint={isLast ? PROJECT_COPY.lastSessionHint : undefined}
       isDetail
+      teamAction={teamAction}
     />
   );
 }

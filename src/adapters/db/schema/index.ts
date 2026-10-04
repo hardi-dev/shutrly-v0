@@ -3,6 +3,7 @@ export * from "./auth/auth";
 export * from "./booking/catalog";
 export * from "./booking/client";
 export * from "./booking/project";
+export * from "./booking/team";
 export * from "./communications/message-template";
 export * from "./gallery/gallery";
 export * from "./gallery/workspace-source-config";

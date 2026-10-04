@@ -43,9 +43,8 @@ export function CreateProjectScreen(props: Readonly<CreateProjectScreenProps>) {
       <SessionsCard
         sessions={values.sessions}
         isMobile={isMobile}
-        errorMessage={
-          sessionsKey === undefined ? undefined : projectFieldErrorText("sessions", sessionsKey)
-        }
+        members={props.assignableMembers}
+        errorMessage={sessionsErrorText(sessionsKey, errors.sessions)}
         onAdd={state.addSession}
         onUpdate={state.updateSession}
         onRemove={state.removeSession}
@@ -67,6 +66,17 @@ export function CreateProjectScreen(props: Readonly<CreateProjectScreenProps>) {
       <CreateProjectActions state={state} isDisabled={!props.hasActiveService} />
     </main>
   );
+}
+
+/** The card's one message: the missing-session error, else the first session whose team the server refused. */
+function sessionsErrorText(
+  key: string | undefined,
+  errors: CreateProjectState["form"]["formState"]["errors"]["sessions"],
+): string | undefined {
+  if (key !== undefined) return projectFieldErrorText("sessions", key);
+  const team = errors?.find?.((entry) => entry?.team)?.team;
+  const teamKey = team && "message" in team ? team.message : undefined;
+  return teamKey === undefined ? undefined : projectFieldErrorText("team", teamKey);
 }
 
 function fieldErrorTexts(

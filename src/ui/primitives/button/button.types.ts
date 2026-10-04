@@ -22,6 +22,8 @@ export type ButtonIconName = Extract<
   | "copy"
   | "images"
   | "external-link"
+  | "user-round-cog"
+  | "user-plus"
 >;
 
 export interface ButtonIconProps {

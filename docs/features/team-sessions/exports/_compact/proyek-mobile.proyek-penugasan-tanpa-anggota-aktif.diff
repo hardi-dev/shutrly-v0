@@ -1,0 +1,201 @@
+--- base
++++ state
+@@ -1,5 +1,5 @@
+ <body style="background-color: #E4E4E7">
+ <div
+-      data-pencil-name="Proyek / Hapus dari sesi / Mobile"
++      data-pencil-name="Proyek / Penugasan / Tanpa anggota aktif / Mobile"
+       class="box-border w-[390px] h-[844px] flex flex-col gap-0 justify-start items-start bg-[#E4E4E7] [outline:1px_solid_#F0F0F2] rounded-[36px] overflow-hidden relative"
+     >
+@@ -766,5 +766,5 @@
+         >
+ <div
+-            data-pencil-name="Konfirmasi"
++            data-pencil-name="Penugasan"
+             class="box-border w-full h-fit shrink-0 [box-shadow:0px_-8px_40px_#18181B24] flex flex-col gap-0 justify-start items-start bg-[#FFFFFF] rounded-[24px_24px_0px_0px] overflow-hidden"
+           >
+@@ -781,64 +781,131 @@
+ <div
+               data-pencil-name="Header"
+-              class="box-border w-full h-fit shrink-0 flex flex-col gap-[4px] p-[8px_20px] justify-start items-center"
+-            >
+-<div
+-                data-pencil-name="Title"
+-                class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
+-              >
+-                Hapus Sari Lestari dari Wisuda?
+-              </div>
+-<div
+-                data-pencil-name="Meta"
+-                class="text-[12px]/[normal] box-border w-full text-[#71717A] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-center"
+-              >
+-                Penugasannya dihapus dari sesi ini. Sari tetap ada di Tim.
+-              </div>
+-</div>
+-<div
+-              data-pencil-name="Items"
+-              class="box-border w-full h-fit shrink-0 flex flex-col gap-0 justify-start items-start"
+-            >
+-<div
+-                data-pencil-name="Hapus dari sesi"
+-                class="[box-sizing:content-box] w-[390px] h-[51.5px] shrink-0 flex flex-row gap-[10px] p-[0px_20px] justify-start items-center bg-[#FFFFFF] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:-0.5px_0px_0px_0px]"
++              class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] p-[8px_20px] justify-start items-start"
++            >
++<div
++                data-pencil-name="Heading"
++                class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
++              >
++<div
++                  data-pencil-name="Title"
++                  class="text-[18px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-bold tracking-[-0.4px] text-left [white-space:nowrap]"
++                >
++                  Tambah anggota · Wisuda
++                </div>
++<div
++                  data-pencil-name="Description"
++                  class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-left"
++                >
++                  Sel, 10 Nov 2026 · 07.30–10.00 · Balairung UI, Depok
++                </div>
++</div>
++<div
++                data-pencil-name="Close"
++                class="box-border w-fit shrink-0 h-fit flex flex-row gap-0 p-[8px] justify-center items-center bg-[#F4F4F5] rounded-[999px]"
+               >
+ <svg
+                   data-pencil-name="Icon"
+-                  data-icon-name="user-minus"
++                  data-icon-name="x"
+                   data-icon-set="lucide"
+                   viewBox="0 0 13.99993896484375 14"
+                   preserveAspectRatio="xMidYMid meet"
+                   xmlns="http://www.w3.org/2000/svg"
+-                  class="box-border w-[20px] shrink-0 h-[20px]"
+-                >
+-</svg>
+-<div
+-                  data-pencil-name="Label"
+-                  class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#B91C1C] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-medium text-left"
+-                >
+-                  Hapus dari sesi
+-                </div>
+-</div>
+-<div
+-                data-pencil-name="Batal"
+-                class="[box-sizing:content-box] w-[390px] h-[51.5px] shrink-0 flex flex-row gap-[10px] p-[0px_20px] justify-start items-center bg-[#FFFFFF] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:-0.5px_0px_0px_0px]"
+-              >
+-<div
+-                  data-pencil-name="Label"
+-                  class="text-[14px]/[normal] box-border [flex:1_1_0] text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-medium text-left"
+-                >
+-                  Batal
+-                </div>
+-</div>
+-</div>
+-<div
+-              data-pencil-name="Safe area"
+-              class="box-border w-full h-[34px] shrink-0 flex flex-row gap-0 justify-center items-center"
+-            >
+-<div
+-                data-pencil-name="Home indicator (device)"
+-                class="box-border w-[134px] shrink-0 h-[5px] bg-[#18181B] rounded-[999px]"
+-              >
++                  class="box-border w-[16px] shrink-0 h-[16px]"
++                >
++</svg>
++</div>
++</div>
++<div
++              data-pencil-name="Body"
++              class="box-border w-full h-fit shrink-0 flex flex-col gap-[12px] p-[16px_20px] justify-start items-start"
++            >
++<div
++                data-pencil-name="Empty"
++                class="box-border w-full h-fit shrink-0 flex flex-col gap-[16px] p-[48px] justify-start items-center bg-[#F4F4F5] [outline:1px_solid_#F0F0F2] [outline-offset:-0.5px] rounded-[12px]"
++              >
++<div
++                  data-pencil-name="Icon wrap"
++                  class="box-border w-[48px] h-[48px] shrink-0 flex flex-row gap-0 justify-center items-center bg-[#F4FBDF] rounded-[12px]"
++                >
++<svg
++                    data-pencil-name="Icon"
++                    data-icon-name="users"
++                    data-icon-set="lucide"
++                    viewBox="0 0 13.99993896484375 14"
++                    preserveAspectRatio="xMidYMid meet"
++                    xmlns="http://www.w3.org/2000/svg"
++                    class="box-border w-[24px] shrink-0 h-[24px]"
++                  >
++</svg>
++</div>
++<div
++                  data-pencil-name="Text"
++                  class="box-border w-full h-fit shrink-0 flex flex-col gap-[4px] justify-start items-center"
++                >
++<div
++                    data-pencil-name="Title"
++                    class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                  >
++                    Belum ada anggota tim aktif
++                  </div>
++<div
++                    data-pencil-name="Body"
++                    class="text-[13px]/[20px] box-border w-full text-[#52525B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-normal text-center"
++                  >
++                    Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini.
++                  </div>
++</div>
++<div
++                  data-pencil-name="Action"
++                  class="box-border w-fit h-fit shrink-0 flex flex-row gap-[8px] p-[12px_36px] justify-center items-center bg-[#FFFFFF] [border:1px_solid_#F0F0F2] rounded-[999px]"
++                >
++<svg
++                    data-pencil-name="Icon leading"
++                    data-icon-name="user-round-cog"
++                    data-icon-set="lucide"
++                    viewBox="0 0 13.99993896484375 14"
++                    preserveAspectRatio="xMidYMid meet"
++                    xmlns="http://www.w3.org/2000/svg"
++                    class="box-border w-[16px] shrink-0 h-[16px]"
++                  >
++</svg>
++<div
++                    data-pencil-name="Label"
++                    class="text-[14px]/[normal] box-border text-[#18181B] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                  >
++                    Buka Tim
++                  </div>
++</div>
++</div>
++</div>
++<div
++              data-pencil-name="Footer"
++              class="[box-sizing:content-box] w-[390px] h-[99.5px] shrink-0 flex flex-col gap-0 p-[16px_20px_0px_20px] justify-start items-start bg-[#F4F4F5] [border-width:1px_0px_0px_0px] [border-style:solid] [border-color:#F0F0F2] [margin:-0.5px_0px_0px_0px]"
++            >
++<div
++                data-pencil-name="Actions"
++                class="box-border w-full h-fit shrink-0 flex flex-col gap-[12px] justify-start items-start"
++              >
++<div
++                  data-pencil-name="Tambah"
++                  class="box-border w-full h-fit shrink-0 opacity-[0.4] flex flex-row gap-[8px] p-[16px_48px] justify-center items-center bg-[#2F5BFF] rounded-[999px]"
++                >
++<div
++                    data-pencil-name="Label"
++                    class="text-[14px]/[normal] box-border text-[#FFFFFF] font-['Plus_Jakarta_Sans',system-ui,sans-serif] font-semibold text-left [white-space:nowrap]"
++                  >
++                    Tambah
++                  </div>
++</div>
++</div>
++<div
++                data-pencil-name="Safe area"
++                class="box-border w-full h-[34px] shrink-0 flex flex-row gap-0 justify-center items-center"
++              >
++<div
++                  data-pencil-name="Home indicator (device)"
++                  class="box-border w-[134px] shrink-0 h-[5px] bg-[#18181B] rounded-[999px]"
++                >
++</div>
+ </div>
+ </div>

@@ -18,6 +18,8 @@ export interface ProjectListRow {
   readonly serviceName: string;
   readonly shownSession: SessionRecordShape | null;
   readonly sessionCount: number;
+  /** True when any session has an assignment; *Hapus draf* then warns (D-14). */
+  readonly hasTeam: boolean;
 }
 
 export interface ProjectListReadQuery {

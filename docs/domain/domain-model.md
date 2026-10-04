@@ -23,7 +23,9 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25). Business-oriented; pe
 - **ProjectItem** — frozen snapshot of an agreed package benefit.
 - **ProjectFieldValue** — frozen booking input with field metadata snapshot.
 - **Session** — a shoot within a project: name, date, optional start and end time, optional location (BR-TEAM-003). A `BOOKED`-or-later project has at least one.
-- **TeamMember** — freelancer resource; **ProjectAssignment** — their role/fee on a project.
+- **TeamMember** — freelancer resource without login: name, WhatsApp number, optional email, one or more roles (BR-TEAM-004).
+- **TeamRole** — a workspace's role name (*Fotografer*, *Videografer*, *Asisten*, …) (BR-TEAM-005).
+- **SessionAssignment** — one member on one session, in one role (BR-TEAM-006). No fee and no status; sessions have no stored status either (BR-TEAM-002).
 
 **Gallery & selection**
 - **Gallery** — client-facing access boundary for a project's photos; password-protected; also the final delivery point.
@@ -58,8 +60,11 @@ classDiagram
     Project "1" *-- "0..*" ProjectItem
     Project "1" *-- "0..*" ProjectFieldValue
     Project "1" *-- "0..*" Session
-    Project "1" *-- "0..*" ProjectAssignment
-    TeamMember "1" --> "0..*" ProjectAssignment
+    Workspace "1" *-- "0..*" TeamRole
+    TeamMember "0..*" --> "1..*" TeamRole : roles
+    Session "1" *-- "0..*" SessionAssignment
+    TeamMember "1" --> "0..*" SessionAssignment
+    TeamRole "1" --> "0..*" SessionAssignment
     Project "1" *-- "0..1" Gallery
     Gallery "1" *-- "0..*" GallerySource
     WorkspaceSourceConfig "1" --> "0..*" GallerySource
@@ -143,7 +148,7 @@ stateDiagram-v2
 ## Aggregate responsibilities
 - **Workspace** — tenant boundary and brand context.
 - **Service** (+ items, fields) — reusable configuration, not history.
-- **Project** — deal snapshot, token, status, sessions, assignments, add-ons.
+- **Project** — deal snapshot, token, status, sessions and their assignments, add-ons.
 - **Gallery** — access control for client media; final delivery publication.
 - **SelectionGroup** — entitlement and selection lifecycle; **PhotoSelection** — individual choices.
 - **Invoice** — totals and derived status; **Payment** — money received.

@@ -33,6 +33,8 @@ const PATH_MESSAGES: Readonly<Partial<Record<string, Readonly<Partial<Record<str
       END_NOT_AFTER_START: "Jam selesai harus setelah jam mulai.",
     },
     location: { TOO_LONG: "Lokasi maksimal 200 karakter." },
+    // not in Pencil: the team of a new session no longer matches the members and roles
+    team: { TEAM_INVALID: "Tim sesi ini perlu diperbarui. Periksa anggota dan perannya." },
     definitionId: {
       REQUIRED: "Pilih item.",
       DUPLICATE_DEFINITION: "Item ini sudah ada di proyek",

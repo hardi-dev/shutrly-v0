@@ -11,5 +11,7 @@ export interface ProjectDetailView extends ProjectDetailRecord {
   readonly canEditDeal: boolean;
   readonly canEditSchedule: boolean;
   readonly canEditInfo: boolean;
+  /** BR-TEAM-006: false only for a cancelled project; its team is read-only. */
+  readonly canEditTeam: boolean;
   readonly menu: ProjectMenuGroups;
 }

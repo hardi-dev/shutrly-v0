@@ -10,6 +10,7 @@ const meta = {
   argTypes: {
     icon: { control: "select" },
     size: { control: "select", options: ["sm", "md"] },
+    tone: { control: "select", options: ["default", "danger"] },
     isDisabled: { control: "boolean" },
   },
   parameters: { designSystemSpec: "docs/design-system/components/icon-button.md" },
@@ -20,3 +21,4 @@ export default meta;
 export const Default: StoryObj<typeof meta> = {};
 export const Small: StoryObj<typeof meta> = { args: { size: "sm" } };
 export const Disabled: StoryObj<typeof meta> = { args: { isDisabled: true } };
+export const Danger: StoryObj<typeof meta> = { args: { icon: "trash-2", tone: "danger" } };

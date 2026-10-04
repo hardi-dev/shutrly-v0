@@ -312,7 +312,7 @@ Test names start with the AC or BR ID.
 - Unit and integration tests use a fake `GallerySourceProviderPort`.
 - E2E uses `E2E_FAKE_DRIVE=1` (development stage only, refused in production by `appEnvSchema`). Composition then wires a fixture provider that serves the AC fixture tree and sample JPEGs from `tests/fixtures/drive/`.
 - A manual smoke test against real Drive with the Owner's non-production key is part of Slice 0, Slice 8 and rework slice R5 (the real smoke spec also checks that a Google image URL loads).
-- **Free-tier check (ADR-018 point 2):** CPU time per request on a free Workers preview, for login, the project page, the gallery page, one sync step and one browse page. It needs the Owner's go-ahead for the deploy (R5).
+- **Free-tier check (ADR-018 point 2):** CPU time per request on a free Workers preview, for login, the project page, the gallery page, one sync step and one browse page. The Owner allowed the deploy (R5).
 
 ## Implementation Iterations
 

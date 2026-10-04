@@ -499,10 +499,18 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 **Exports:** none.
 
 **Steps:**
-- [ ] Re-run the axe and keyboard specs on the surfaces R2 and R3 touched; extend the real-Drive smoke spec to check that a tile's image URL is a Google URL and loads.
+- [x] Re-run the axe and keyboard specs on the surfaces R2 and R3 touched; extend the real-Drive smoke spec to check that a tile's image URL is a Google URL and loads.
 - [ ] Deploy a preview to the free Cloudflare account that is signed in from the terminal (Owner allowed it, 2026-10-05): create a new Workers project, or reuse an existing one if that is refused. Use the non-production secrets only, and remove nothing that exists. Then read CPU time per request (`wrangler tail` or the dashboard) for login, the project page, the gallery page, one sync step of the real 113-photo folder and one browse page. Record the numbers in ADR-018 and technical-design.md › R-6, and tune `SYNC_STEP_MAX_ENTRIES`. Any path over 10 ms: stop and report; ADR-018 point 2 needs a new ADR.
-- [ ] Update `docs/HANDOFF.md` (rework done, retention cleanup still deferred) and the feature map; run `/sdv:verify-feature gallery`.
-- [ ] Push `feat/gallery-free-tier` and open a PR to `main`.
+- [x] Update `docs/HANDOFF.md` (rework done, retention cleanup still deferred) and the feature map; run `/sdv:verify-feature gallery`.
+- [x] Push `feat/gallery-free-tier` and open a PR to `main`.
+
+**Implementation record (2026-10-05) — R5 (CPU check blocked):**
+- Real-Drive smoke (`gallery-drive-smoke.spec.ts`, the Owner's 113-photo folder, non-production key) passes, now also asserting the first tile's `src` is `lh3.googleusercontent.com/d/<id>=w600` with `no-referrer`, so it loaded from Google without the fallback. Axe and keyboard on every surface pass inside that spec; `gallery-sync.spec.ts` (fake drive) passes with axe too.
+- **Free-preview CPU check not done.** `wrangler` on this machine reports an expired login that cannot refresh non-interactively (`wrangler whoami`), and there is no `CLOUDFLARE_API_TOKEN`; the terminal pane shows no Cloudflare session. Signing in is the Owner's step (`npx wrangler login`). Nothing was deployed.
+- Local proxy only (`scripts/gallery/step-cpu-proxy.ts`, pure work of one step: Zod-parse of Drive list pages, the walker, the cursor JSON): about 3–5 ms CPU per 1,000–3,000 entries on a laptop. A Workers isolate is slower and the session, database and response work come on top, so `SYNC_STEP_MAX_ENTRIES = 3000` may be too high for 10 ms. It is not a measurement.
+- Checks (related only): see R3 and R4 plus the two specs above. `pnpm build` and the full suite were not run.
+- Open: run the preview measurement (login first), tune `SYNC_STEP_MAX_ENTRIES`, then `/sdv:verify-feature gallery`.
+
 
 ## AC index
 

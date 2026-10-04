@@ -76,7 +76,9 @@ export async function syncGallerySourceAction(
   sourceId: string,
 ): Promise<SyncStepOutcome> {
   const result = await syncGallerySourceEntry(workspaceId, sourceId);
-  revalidatePath(PROJECTS, "layout");
+  // A step in the middle of a run changes nothing the page shows; re-rendering it per step would
+  // spend the request's CPU on a page the browser refreshes once the run ends (ADR-018).
+  if (!result.ok || result.status !== "CONTINUE") revalidatePath(PROJECTS, "layout");
   return result;
 }
 

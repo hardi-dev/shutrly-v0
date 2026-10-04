@@ -67,48 +67,53 @@ function sourceWriter(
   };
 }
 
+// Only the columns a step needs: the stored cursor can be large and is read by the claim alone.
+async function selectSyncRow(db: DbExecutor, context: WorkspaceContext, sourceId: string) {
+  const rows = await db
+    .select({
+      galleryId: gallerySource.galleryId,
+      providerFolderId: gallerySource.providerFolderId,
+      resourceKey: gallerySource.resourceKey,
+      removedAt: gallerySource.removedAt,
+      syncStatus: gallerySource.syncStatus,
+      status: gallery.status,
+      expiresAt: gallery.expiresAt,
+      expiryDays: gallery.expiryDays,
+      projectStatus: project.status,
+    })
+    .from(gallerySource)
+    .innerJoin(
+      gallery,
+      and(
+        eq(gallery.workspaceId, gallerySource.workspaceId),
+        eq(gallery.id, gallerySource.galleryId),
+      ),
+    )
+    .innerJoin(
+      project,
+      and(eq(project.workspaceId, gallery.workspaceId), eq(project.id, gallery.projectId)),
+    )
+    .where(and(eq(gallerySource.workspaceId, context.workspaceId), eq(gallerySource.id, sourceId)));
+  return rows.at(0);
+}
+
 async function findSyncTarget(
   db: DbExecutor,
   context: WorkspaceContext,
   sourceId: string,
 ): Promise<SyncTarget | null> {
-  const row = (
-    await db
-      .select({
-        source: gallerySource,
-        status: gallery.status,
-        expiresAt: gallery.expiresAt,
-        expiryDays: gallery.expiryDays,
-        projectStatus: project.status,
-      })
-      .from(gallerySource)
-      .innerJoin(
-        gallery,
-        and(
-          eq(gallery.workspaceId, gallerySource.workspaceId),
-          eq(gallery.id, gallerySource.galleryId),
-        ),
-      )
-      .innerJoin(
-        project,
-        and(eq(project.workspaceId, gallery.workspaceId), eq(project.id, gallery.projectId)),
-      )
-      .where(
-        and(eq(gallerySource.workspaceId, context.workspaceId), eq(gallerySource.id, sourceId)),
-      )
-  ).at(0);
+  const row = await selectSyncRow(db, context, sourceId);
   const status = row ? toGalleryStatus(row.status) : null;
   const projectStatus = row ? toProjectStatus(row.projectStatus) : null;
   if (!row || !status || !projectStatus) return null;
-  const { source } = row;
   return {
     sourceId,
-    galleryId: source.galleryId,
-    folder: { folderId: source.providerFolderId, resourceKey: source.resourceKey },
-    removed: source.removedAt !== null,
-    runOpen: source.syncStatus === "SYNCING",
+    galleryId: row.galleryId,
+    folder: { folderId: row.providerFolderId, resourceKey: row.resourceKey },
+    removed: row.removedAt !== null,
+    runOpen: row.syncStatus === "SYNCING",
     gallery: {
-      galleryId: source.galleryId,
+      galleryId: row.galleryId,
       status,
       expiresAt: row.expiresAt,
       expiryDays: row.expiryDays,

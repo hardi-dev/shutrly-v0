@@ -415,13 +415,22 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 **Exports (`galeri / desktop` and `galeri / mobile`):** the state `galeri-draf-menyinkronkan` (the source row while syncing; only its meta text changes), and `galeri-dialog-tambah-folder` for the dialog that now closes right after linking.
 
 **Steps:**
-- [ ] Port `GallerySourceRepositoryPort`: replace `claimSync`, `completeSync`, `failSync` with `claimStep`, `commitStep` and `failRun`; adapter in `gallery-sync-sql.ts` (claim with lease and 30-minute restart, the conditional upsert with the `IS DISTINCT FROM` guard, the `<> ALL(seen)` missing update, counts, cursor; `content_version` is left to R4). Integration tests: a 3-step run equals one pass; two concurrent steps, only one commits; unchanged re-sync leaves `updated_at` and `xmin`; rename and remove touch only their rows; a failed run keeps earlier rows and marks none missing; a stale run restarts.
-- [ ] Use case `sync-gallery-source-step` replaces `sync-gallery-source` and its outcome gains `CONTINUE`; the rate limit counts run starts only. Unit tests with a counting fake provider assert ≤ 40 list calls per step.
-- [ ] `linkGallerySource` stops syncing inline (D-27). `publishGallery` checks folders until one passes (D-25). Update their unit tests.
-- [ ] Migration `0014`: drop `gallery_photo.last_seen_at` (Owner-approved 2026-10-05), generated, reviewed, committed, then applied to the non-production database and reported, together with the removal of every write to it.
-- [ ] Action and composition: `syncGallerySourceAction` returns the step outcome. Remove `walkFolderTree`, `SYNC_LIMITS` and the old claim code.
-- [ ] UI: `useGallerySync` loops steps (cap 500), reports `foldersDone` of `foldersTotal`, and *Sinkronkan semua* runs sources one after another; the link dialog closes and the page starts the first sync; progress copy in `gallery-copy.copy.ts`. Dom tests: the loop ends on `SUCCEEDED`, on `FAILED` and at the cap.
-- [ ] E2E (fake drive): link the fixture folder, see the progress text then *Berhasil*, re-sync, and a failing folder shows *Gagal*.
+- [x] Port `GallerySourceRepositoryPort`: replace `claimSync`, `completeSync`, `failSync` with `claimStep`, `commitStep` and `failRun`; adapter in `gallery-sync-sql.ts` (claim with lease and 30-minute restart, the conditional upsert with the `IS DISTINCT FROM` guard, the `<> ALL(seen)` missing update, counts, cursor; `content_version` is left to R4). Integration tests: a 3-step run equals one pass; two concurrent steps, only one commits; unchanged re-sync leaves `updated_at` and `xmin`; rename and remove touch only their rows; a failed run keeps earlier rows and marks none missing; a stale run restarts.
+- [x] Use case `sync-gallery-source-step` replaces `sync-gallery-source` and its outcome gains `CONTINUE`; the rate limit counts run starts only. Unit tests with a counting fake provider assert ≤ 40 list calls per step.
+- [x] `linkGallerySource` stops syncing inline (D-27). `publishGallery` checks folders until one passes (D-25). Update their unit tests.
+- [x] Migration `0014`: drop `gallery_photo.last_seen_at` (Owner-approved 2026-10-05), generated, reviewed, committed, then applied to the non-production database and reported, together with the removal of every write to it.
+- [x] Action and composition: `syncGallerySourceAction` returns the step outcome. Remove `walkFolderTree`, `SYNC_LIMITS` and the old claim code.
+- [x] UI: `useGallerySync` loops steps (cap 500), reports `foldersDone` of `foldersTotal`, and *Sinkronkan semua* runs sources one after another; the link dialog closes and the page starts the first sync; progress copy in `gallery-copy.copy.ts`. Dom tests: the loop ends on `SUCCEEDED`, on `FAILED` and at the cap.
+- [x] E2E (fake drive): link the fixture folder, see the progress text then *Berhasil*, re-sync, and a failing folder shows *Gagal*.
+
+**Implementation record (2026-10-05) — R2:**
+- Server: `claimStep` / `commitStep` / `failRun` replace the old claim, complete and fail. A step claims with a lease (2 min) and a 30-minute run limit, lists at most 40 Drive pages, then writes in one transaction. A photo row is written only if a column changed (`IS DISTINCT FROM`); the last step marks every unseen photo missing with one `<> ALL(seen)` update. Use case `sync-gallery-source-step`; `walkFolderTree`, `SYNC_LIMITS` and the old claim code are gone.
+- `linkGallerySource` only creates the source (D-27); `publishGallery` stops at the first accessible folder (D-25). The step action skips `revalidatePath` on `CONTINUE`; the step read selects only the columns it needs, not the cursor.
+- UI: `useGallerySync` loops steps (cap 500) with progress (*Menyinkronkan… n dari m folder*); the link dialog closes and the page starts the first sync.
+- Migration `0014_gallery_drop_last_seen` (drops `gallery_photo.last_seen_at`, Owner-approved) generated, reviewed, committed and applied to the non-production database; it breaks older F-09 code on other branches that still writes that column.
+- Checks (related only, Owner 2026-10-05): typecheck, eslint on `src` and `tests`, unit/dom for `src/features/gallery` and `src/adapters` 257 passed, integration `tests/integration/gallery` 36 passed (3-step run, concurrent steps, lease and 30-minute restart, failed run, unchanged re-sync by `xmin`), new E2E `gallery-sync.spec.ts` (fake drive) passed. Build, the full suite and the real-Drive smoke spec not run.
+- Deviations: none from the design. One transient `SAVE_FAILED` log from a page render appeared during the E2E and did not recur after the step read was narrowed; the cause is unproven, watch it in R5.
+
 
 ## Slice R3 — Images from Google, with a fallback
 

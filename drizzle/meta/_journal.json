@@ -99,6 +99,13 @@
       "when": 1791138858672,
       "tag": "0013_gallery_free_tier",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1791139858276,
+      "tag": "0014_gallery_drop_last_seen",
+      "breakpoints": true
     }
   ]
 }

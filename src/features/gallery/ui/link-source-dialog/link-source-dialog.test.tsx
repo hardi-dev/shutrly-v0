@@ -18,13 +18,7 @@ function renderDialog(projectTitles: string[] = []) {
     galleryId: "g-1",
     linkableSources: [{ id: SOURCE_ID, name: "Google Drive" }],
     checkFolderAction: vi.fn(() => Promise.resolve({ ok: true as const, projectTitles })),
-    linkSourceAction: vi.fn(() =>
-      Promise.resolve({
-        ok: true as const,
-        sourceId: "s-1",
-        sync: { ok: true as const, status: "SUCCEEDED" as const },
-      }),
-    ),
+    linkSourceAction: vi.fn(() => Promise.resolve({ ok: true as const, sourceId: "s-1" })),
     onLinked: vi.fn(),
   };
   render(<LinkSourceDialog {...props} />);
@@ -49,7 +43,7 @@ describe("LinkSourceDialog", () => {
         label: "",
       });
     });
-    expect(props.onLinked).toHaveBeenCalled();
+    expect(props.onLinked).toHaveBeenCalledWith("s-1");
   });
 
   it("AC-GAL-009 shows the file-link error from the server", async () => {

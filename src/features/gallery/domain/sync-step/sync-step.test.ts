@@ -138,6 +138,58 @@ describe("walkStep", () => {
     ]);
   });
 
+  it("AC-GAL-005 classifies the fixture: 4 proof, 3 edited, 1 print, 2 ignored", async () => {
+    const tree = {
+      "root-folder-id": [
+        file("IMG_001.jpg"),
+        file("IMG_002.jpg"),
+        file("IMG_010.jpg"),
+        file("notes.pdf", "application/pdf"),
+        file("clip.mp4", "video/mp4"),
+        folder("edited-id", "Edited"),
+        folder("print-id", "print"),
+        folder("raw-id", "raw"),
+      ],
+      "edited-id": [file("E_001.jpg"), file("E_002.jpg"), folder("old-id", "old")],
+      "print-id": [file("P_001.jpg")],
+      "raw-id": [file("R_001.jpg")],
+      "old-id": [file("X_001.jpg")],
+    };
+    const run = await runToEnd(tree);
+    const byKind = (kind: string) =>
+      run.photos
+        .filter((photo) => photo.kind === kind)
+        .map((photo) => `${photo.folderPath}/${photo.fileName}`);
+    expect(byKind("PROOF")).toEqual([
+      "/IMG_001.jpg",
+      "/IMG_002.jpg",
+      "/IMG_010.jpg",
+      "raw/R_001.jpg",
+    ]);
+    expect(byKind("EDITED")).toEqual([
+      "Edited/E_001.jpg",
+      "Edited/E_002.jpg",
+      "Edited/old/X_001.jpg",
+    ]);
+    expect(byKind("PRINT")).toEqual(["print/P_001.jpg"]);
+    expect(run.cursor.ignoredCount).toBe(2);
+  });
+
+  it("AC-GAL-030 skips a folder 6 levels below the source and counts it", async () => {
+    const tree = {
+      "root-folder-id": [folder("d1", "1")],
+      d1: [folder("d2", "2")],
+      d2: [folder("d3", "3")],
+      d3: [folder("d4", "4")],
+      d4: [folder("d5", "5")],
+      d5: [folder("d6", "6"), file("deep5.jpg")],
+      d6: [file("deep6.jpg")],
+    };
+    const run = await runToEnd(tree);
+    expect(run.photos.map((photo) => photo.fileName)).toEqual(["deep5.jpg"]);
+    expect(run.cursor.tooDeepCount).toBe(1);
+  });
+
   it("BR-GAL-006 a provider failure ends the run with its code", async () => {
     const failing = (): Promise<FolderListing> =>
       Promise.resolve({ ok: false, code: "NOT_PUBLIC" });

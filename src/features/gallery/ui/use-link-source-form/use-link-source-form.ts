@@ -30,11 +30,11 @@ function setFieldErrors(form: LinkForm, fieldErrors: Readonly<Record<string, str
 function applyLinkResult(
   form: LinkForm,
   result: LinkGallerySourceResult,
-  onLinked: () => void,
+  onLinked: (sourceId: string) => void,
 ): void {
   if (result.ok) {
     showToast({ tone: "success", title: GALLERY_COPY.linkedTitle });
-    onLinked();
+    onLinked(result.sourceId);
   } else if (result.code === "VALIDATION_FAILED") setFieldErrors(form, result.fieldErrors);
   else showToast({ tone: "danger", title: GALLERY_COPY.refused[result.code] });
 }

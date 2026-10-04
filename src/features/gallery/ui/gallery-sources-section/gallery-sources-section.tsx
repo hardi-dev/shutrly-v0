@@ -30,6 +30,10 @@ export function GallerySourcesSection({
 }: Readonly<GallerySourcesSectionProps>) {
   const dialogs = useSourceDialogs();
   const sync = useGallerySync({ workspaceId, syncSourceAction: actions.syncSourceAction });
+  const handleLinked = (sourceId: string) => {
+    dialogs.handleLinked();
+    sync.syncNew(sourceId);
+  };
   const isEditable = canEditSources(page.gallery.status, page.project.status);
   const isLive = page.gallery.status === "PUBLISHED" || page.gallery.status === "EXPIRED";
   const isLastLocked = isLive && page.gallery.activeSourceCount <= 1;
@@ -60,7 +64,7 @@ export function GallerySourcesSection({
         isLinking={dialogs.isLinking}
         removing={dialogs.removing}
         onLinkingChange={dialogs.setIsLinking}
-        onLinked={dialogs.handleLinked}
+        onLinked={handleLinked}
         onCloseRemove={dialogs.closeRemoving}
       />
     </>
@@ -135,6 +139,7 @@ function SourceList({
           key={source.id}
           source={source}
           phase={sync.phaseOf(source.id)}
+          progress={sync.progressOf(source.id)}
           isArchived={isArchived}
           isReadOnly={!isEditable}
           menuEntries={entriesFor(source)}

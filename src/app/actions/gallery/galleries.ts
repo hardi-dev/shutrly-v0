@@ -32,7 +32,7 @@ import type {
   PublishResult,
 } from "@/features/gallery/application/use-cases/gallery-results/gallery-results.types";
 import type { LinkGallerySourceResult } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source.types";
-import type { SyncOutcome } from "@/features/gallery/application/use-cases/sync-gallery-source/sync-gallery-source.types";
+import type { SyncStepOutcome } from "@/features/gallery/application/use-cases/sync-gallery-source-step/sync-gallery-source-step.types";
 
 const PROJECTS = "/w/[workspaceId]/projects";
 
@@ -74,7 +74,7 @@ export async function linkGallerySourceAction(
 export async function syncGallerySourceAction(
   workspaceId: string,
   sourceId: string,
-): Promise<SyncOutcome> {
+): Promise<SyncStepOutcome> {
   const result = await syncGallerySourceEntry(workspaceId, sourceId);
   revalidatePath(PROJECTS, "layout");
   return result;

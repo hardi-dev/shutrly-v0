@@ -9,7 +9,7 @@ import { publishGallery } from "@/features/gallery/application/use-cases/publish
 import { removeGallerySource } from "@/features/gallery/application/use-cases/remove-gallery-source/remove-gallery-source";
 import { rotateGalleryPassword } from "@/features/gallery/application/use-cases/rotate-gallery-password/rotate-gallery-password";
 import { setGalleryExpiry } from "@/features/gallery/application/use-cases/set-gallery-expiry/set-gallery-expiry";
-import { syncGallerySource } from "@/features/gallery/application/use-cases/sync-gallery-source/sync-gallery-source";
+import { syncGallerySourceStep } from "@/features/gallery/application/use-cases/sync-gallery-source-step/sync-gallery-source-step";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
 import { verifyOwnerWorkspace } from "../../workspace/owner-workspace/owner-workspace";
@@ -19,7 +19,7 @@ import {
 } from "../gallery-flow-support/gallery-flow-support";
 import { withGalleryScope } from "../gallery-scope/gallery-scope";
 
-/** Links a Drive folder and syncs it once (AC-GAL-005, 008–011). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @param values - untrusted form values @returns the link result */
+/** Links a Drive folder; the page syncs it next (AC-GAL-005, 008–011, D-27). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @param values - untrusted form values @returns the link result */
 export async function linkGallerySourceEntry(
   rawWorkspaceId: string,
   rawGalleryId: string,
@@ -54,12 +54,14 @@ export async function checkFolderInUseEntry(
   }
 }
 
-/** Syncs one source (AC-GAL-006, 007, 012). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @returns the sync outcome */
+/** Runs one step of a source's sync (AC-GAL-006, 007, 012, 032). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @returns the step outcome */
 export async function syncGallerySourceEntry(rawWorkspaceId: string, rawSourceId: string) {
   const sourceId = galleryIdOrNotFound(rawSourceId);
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
-    return await withGalleryScope((scope) => syncGallerySource(scope, verified.context, sourceId));
+    return await withGalleryScope((scope) =>
+      syncGallerySourceStep(scope, verified.context, sourceId),
+    );
   } catch (error) {
     return gallerySaveError(error, verified.context.workspaceId, "sync");
   }

@@ -82,6 +82,55 @@ describe("GallerySourcesSection", () => {
     ]);
   });
 
+  it("AC-GAL-032 keeps asking for steps until the run ends and shows the progress", async () => {
+    const answers = [
+      { ok: true as const, status: "CONTINUE" as const, foldersDone: 40, foldersTotal: 95 },
+      { ok: true as const, status: "CONTINUE" as const, foldersDone: 80, foldersTotal: 95 },
+      { ok: true as const, status: "SUCCEEDED" as const },
+    ];
+    let release: () => void = () => undefined;
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const syncSourceAction = vi.fn(async () => {
+      const next = answers.shift();
+      if (answers.length === 1) await gate;
+      return next ?? { ok: true as const, status: "SUCCEEDED" as const };
+    });
+    const actions = fakePageActions({ syncSourceAction });
+    render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
+    await userEvent.click(
+      screen.getAllByRole("button", { name: /Sinkronkan semua|Menyinkronkan/ })[0],
+    );
+    expect(await screen.findByText(/Menyinkronkan… 40 dari 95 folder/)).toBeInTheDocument();
+    release();
+    await waitFor(() => {
+      expect(
+        syncSourceAction.mock.calls.filter((call) => (call as unknown as string[])[1] === "s-1"),
+      ).toHaveLength(3);
+    });
+  });
+
+  it("D-9 stops a run whose steps never end after 500 calls", async () => {
+    const syncSourceAction = vi.fn(() =>
+      Promise.resolve({
+        ok: true as const,
+        status: "CONTINUE" as const,
+        foldersDone: 1,
+        foldersTotal: 2,
+      }),
+    );
+    const actions = fakePageActions({ syncSourceAction });
+    render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
+    await userEvent.click(screen.getByRole("button", { name: "Sinkronkan semua" }));
+    await waitFor(
+      () => {
+        expect(syncSourceAction).toHaveBeenCalledTimes(1000);
+      },
+      { timeout: 10_000 },
+    );
+  });
+
   it("AC-GAL-022 offers no source changes on an archived gallery", () => {
     const actions = fakePageActions();
     const archived = { ...PAGE, gallery: { ...PAGE.gallery, status: "ARCHIVED" as const } };

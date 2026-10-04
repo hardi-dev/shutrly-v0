@@ -9,6 +9,7 @@ import type {
   SyncedPhoto,
   SyncFailureCode,
 } from "@/features/gallery/domain/sync-plan/sync-plan.types";
+import type { SyncCursor } from "@/features/gallery/domain/sync-step/sync-step.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { EncryptedPassword } from "../gallery-password-cipher/gallery-password-cipher.port";
@@ -75,19 +76,25 @@ export interface SyncTarget {
   readonly galleryId: string;
   readonly folder: DriveFolderRef;
   readonly removed: boolean;
+  /** A run is open (`SYNCING`): the next step continues it instead of starting one (D-8). */
+  readonly runOpen: boolean;
   readonly gallery: LockedGalleryState;
 }
 
+// The hold on one step of a run (D-8). `startedAt` is the run's identity, `leaseAt` this step's.
 export interface SyncClaim {
   readonly sourceId: string;
   readonly startedAt: Date;
+  readonly leaseAt: Date;
+  /** What the run still has to read, or null at the start of a run. */
+  readonly cursor: SyncCursor | null;
 }
 
-export interface SyncSuccess {
-  readonly folderName: string;
+// What one finished step writes (D-21): its photos, the next cursor, and whether the run ends.
+export interface SyncStepResult {
   readonly photos: readonly SyncedPhoto[];
-  readonly ignoredCount: number;
-  readonly tooDeepCount: number;
+  readonly cursor: SyncCursor;
+  readonly done: boolean;
 }
 
 export interface GallerySourceRepositoryPort {
@@ -115,20 +122,21 @@ export interface GallerySourceRepositoryPort {
     context: WorkspaceContext,
     sourceId: string,
   ) => Promise<SyncTarget | null>;
-  /** The conditional claim of D-8: null while another sync runs (younger than 10 minutes). */
-  readonly claimSync: (
+  /** The conditional claim of D-8: starts a run, or continues one whose lease expired; null while another step holds it. */
+  readonly claimStep: (
     context: WorkspaceContext,
     sourceId: string,
     now: Date,
   ) => Promise<SyncClaim | null>;
-  /** Writes a listing in one transaction after re-checking the state; false when it was discarded. */
-  readonly completeSync: (
+  /** Writes a step in one transaction after re-checking the state; false when it was discarded. */
+  readonly commitStep: (
     context: WorkspaceContext,
     claim: SyncClaim,
-    result: SyncSuccess,
+    step: SyncStepResult,
     now: Date,
   ) => Promise<boolean>;
-  readonly failSync: (
+  /** Ends the run as failed and clears its cursor; photos earlier steps wrote stay (D-23). */
+  readonly failRun: (
     context: WorkspaceContext,
     claim: SyncClaim,
     code: SyncFailureCode,

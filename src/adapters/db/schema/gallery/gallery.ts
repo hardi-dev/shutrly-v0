@@ -152,8 +152,6 @@ export const galleryPhoto = pgTable(
     kind: text("kind").notNull(),
     folderPath: text("folder_path").notNull().default(""),
     browsePath: text("browse_path").notNull().default(""),
-    // Superseded by the run's `seen` list (TD D-21); the column goes in the migration that replaces the sync writes.
-    lastSeenAt: timestamp("last_seen_at", { withTimezone: true }).notNull().defaultNow(),
     missingAt: timestamp("missing_at", { withTimezone: true }),
     ...auditColumns(),
   },

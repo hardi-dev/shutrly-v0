@@ -135,7 +135,7 @@ describe("drizzle gallery repository", () => {
     await expect(db.insert(gallery).values({ ...base, expiryDays: 0 })).rejects.toThrow();
   });
 
-  it("D-20 D-21 D-24 a gallery starts at content version 1 and a photo needs no last-seen time", async () => {
+  it("D-20 D-21 D-24 a gallery starts at content version 1 and a source has no open run", async () => {
     const seed = await seedGalleryWorkspace(db);
     const created = await createGallery(
       deps(),
@@ -173,7 +173,8 @@ describe("drizzle gallery repository", () => {
         kind: "PROOF",
       })
       .returning();
-    expect(photo.lastSeenAt).toBeInstanceOf(Date);
+    expect(photo.externalFileId).toBe("file-0001");
+    expect(photo).not.toHaveProperty("lastSeenAt");
   });
 
   it("BR-GAL-009 a folder is linked once per gallery but again after removal", async () => {

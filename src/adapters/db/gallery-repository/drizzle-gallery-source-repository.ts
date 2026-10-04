@@ -6,7 +6,6 @@ import type {
   GallerySourceRepositoryPort,
   GallerySourceWriter,
   NewGallerySource,
-  SyncClaim,
   SyncTarget,
 } from "@/features/gallery/application/ports/gallery-source-repository/gallery-source-repository.port";
 import {
@@ -23,7 +22,7 @@ import { workspaceSourceConfig } from "../schema/gallery/workspace-source-config
 import { lifecycleWriter } from "./gallery-lifecycle-sql";
 import { lockGallery } from "./gallery-lock-sql";
 import { toGalleryStatus, toProjectStatus } from "./gallery-rows";
-import { claimSync, heldClaim, writeSync } from "./gallery-sync-sql";
+import { claimStep, heldClaim, holdsClaim, releaseRun, writeStep } from "./gallery-sync-sql";
 
 function sourceWriter(
   tx: DbExecutor,
@@ -107,6 +106,7 @@ async function findSyncTarget(
     galleryId: source.galleryId,
     folder: { folderId: source.providerFolderId, resourceKey: source.resourceKey },
     removed: source.removedAt !== null,
+    runOpen: source.syncStatus === "SYNCING",
     gallery: {
       galleryId: source.galleryId,
       status,
@@ -184,22 +184,6 @@ async function findFolderUse(
   return rows.map((row) => row.title);
 }
 
-async function releaseClaim(
-  tx: DbExecutor,
-  context: WorkspaceContext,
-  claim: SyncClaim,
-  now: Date,
-) {
-  await tx
-    .update(gallerySource)
-    .set({
-      syncStatus: sql`case when ${gallerySource.lastSyncedAt} is null then 'NEVER' else 'SUCCEEDED' end`,
-      syncStartedAt: null,
-      updatedAt: now,
-    })
-    .where(heldClaim(context, claim));
-}
-
 /** Builds the Drizzle repository for gallery sources and sync (D-8, BR-GAL-006, BR-GAL-009). @param db - request database or transaction @returns the source repository port */
 export function createDrizzleGallerySourceRepository(db: DbExecutor): GallerySourceRepositoryPort {
   return {
@@ -214,32 +198,35 @@ export function createDrizzleGallerySourceRepository(db: DbExecutor): GallerySou
     findSyncTarget: (context, sourceId) => findSyncTarget(db, context, sourceId),
     findGalleryIdByProject: (context, projectId) => findGalleryIdByProject(db, context, projectId),
     listActiveSources: (context, galleryId) => listActiveSources(db, context, galleryId),
-    claimSync: (context, sourceId, now) => claimSync(db, context, sourceId, now),
-    completeSync: (context, claim, result, now) =>
+    claimStep: (context, sourceId, now) => claimStep(db, context, sourceId, now),
+    commitStep: (context, claim, step, now) =>
       db.transaction(async (tx) => {
         const target = await findSyncTarget(tx, context, claim.sourceId);
         const locked = target ? await lockGallery(tx, context, target.galleryId) : null;
+        if (!(await holdsClaim(tx, context, claim))) return false;
         const open =
           locked !== null &&
           canSync(
             effectiveGalleryStatus(locked.status, locked.expiresAt, now),
             locked.projectStatus,
           );
-        // Archived, cancelled or removed meanwhile: discard the listing (TD › Concurrency).
+        // Archived, cancelled or removed meanwhile: discard the step (TD › Concurrency).
         if (!target || !open || target.removed) {
-          await releaseClaim(tx, context, claim, now);
+          await releaseRun(tx, context, claim, now);
           return false;
         }
-        await writeSync(tx, context, { galleryId: target.galleryId, claim }, result, now);
+        await writeStep(tx, context, target.galleryId, claim, step, now);
         return true;
       }),
-    async failSync(context, claim, code: SyncFailureCode, now) {
+    async failRun(context, claim, code: SyncFailureCode, now) {
       await db
         .update(gallerySource)
         .set({
           syncStatus: "FAILED",
           syncErrorCode: code,
           syncStartedAt: null,
+          syncLeaseAt: null,
+          syncCursor: null,
           lastSyncAttemptAt: now,
           updatedAt: now,
         })

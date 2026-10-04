@@ -20,9 +20,11 @@ async function checkSources(
   const failures: PublishSourceFailure[] = [];
   for (const source of sources) {
     const result = await deps.provider.getFolder(source.folder);
-    if (!result.ok) failures.push({ name: source.name, code: result.code });
+    // BR-GAL-004 refuses only when none passes, so the first accessible folder ends the check (D-25).
+    if (result.ok) return { passed: 1, failures };
+    failures.push({ name: source.name, code: result.code });
   }
-  return { passed: sources.length - failures.length, failures };
+  return { passed: 0, failures };
 }
 
 /** Publishes a draft once at least one folder still lists at publish time; a duration expiry starts now (BR-GAL-004, BR-GAL-005, AC-GAL-016…018). @param deps - repository, provider and clock @param context - verified workspace @param actorId - the signed-in owner @param galleryId - the gallery id @returns ok, a refusal naming the failing folders, or a state failure @throws GalleryError NOT_FOUND for another workspace's gallery */

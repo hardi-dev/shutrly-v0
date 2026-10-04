@@ -16,10 +16,9 @@ import {
   toGalleryValidationFailure,
 } from "../gallery-results/gallery-results";
 import type { GalleryFailure } from "../gallery-results/gallery-results.types";
-import { syncGallerySource } from "../sync-gallery-source/sync-gallery-source";
 import type { LinkGallerySourceDeps, LinkGallerySourceResult } from "./link-gallery-source.types";
 
-/** Links a public Drive folder to the gallery from an active workspace source, then syncs it once (BR-SRC-002, BR-SRC-006, BR-GAL-009, AC-GAL-005, 009–011). @param deps - repositories, provider, rate limiter and clock @param context - verified workspace @param actorId - the signed-in owner @param galleryId - the gallery id @param input - untrusted `{ workspaceSourceId, link, label }` @returns the new source and its first sync, or a failure @throws GalleryError NOT_FOUND for another workspace's gallery */
+/** Links a public Drive folder to the gallery from an active workspace source; the page syncs it next, step by step (D-27; BR-SRC-002, BR-SRC-006, BR-GAL-009, AC-GAL-005, 009–011). @param deps - repositories, provider, rate limiter and clock @param context - verified workspace @param actorId - the signed-in owner @param galleryId - the gallery id @param input - untrusted `{ workspaceSourceId, link, label }` @returns the new source, or a failure @throws GalleryError NOT_FOUND for another workspace's gallery */
 export async function linkGallerySource(
   deps: LinkGallerySourceDeps,
   context: WorkspaceContext,
@@ -51,6 +50,5 @@ export async function linkGallerySource(
   );
   if (inserted === "NOT_FOUND") throw new GalleryError("NOT_FOUND");
   if ("ok" in inserted) return inserted;
-  const sync = await syncGallerySource(deps, context, inserted.sourceId);
-  return { ok: true, sourceId: inserted.sourceId, sync };
+  return { ok: true, sourceId: inserted.sourceId };
 }

@@ -21,6 +21,8 @@ export interface GalleryHeaderControlsProps {
   readonly primary: GalleryAction | null;
   readonly menu: readonly GalleryAction[];
   readonly hasSources: boolean;
+  /** The phone menu sheet's meta line: the gallery status and the project. */
+  readonly menuMeta: string;
   readonly onChoose: (action: GalleryAction) => void;
 }
 

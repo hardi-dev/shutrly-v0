@@ -79,6 +79,7 @@ function HeaderControls({
   primary,
   menu,
   hasSources,
+  menuMeta,
   onChoose,
 }: Readonly<GalleryHeaderControlsProps>) {
   const isMobile = useMobileViewport();
@@ -92,6 +93,7 @@ function HeaderControls({
       <GalleryRowMenu
         label={GALLERY_COPY.galleryMenu}
         title={GALLERY_COPY.galleryMenuTitle}
+        meta={menuMeta}
         entries={entries}
         size="md"
       />
@@ -265,6 +267,10 @@ export function GalleryLifecycle(props: Readonly<GalleryLifecycleProps>) {
         primary={header.primary}
         menu={header.menu}
         hasSources={page.gallery.activeSourceCount > 0}
+        menuMeta={GALLERY_COPY.menuSheetMeta(
+          GALLERY_COPY.status[page.gallery.status],
+          page.project.title,
+        )}
         onChoose={setOpen}
       />
       <GalleryDialogs

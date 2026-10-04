@@ -10,7 +10,7 @@ import { Icon } from "@/ui/primitives/icon/icon";
 import { AllPhotosModal } from "../all-photos-modal/all-photos-modal";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { galleryMediaUrl } from "../gallery-media-url/gallery-media-url";
-import { photoCountsText } from "../gallery-text/gallery-text";
+import { galleryVisibilityText, photoCountsText } from "../gallery-text/gallery-text";
 import { PhotoPreview } from "../photo-preview/photo-preview";
 import { PhotosCard } from "../photos-card/photos-card";
 import { BROWSE_START, useGalleryBrowse } from "../use-gallery-browse/use-gallery-browse";
@@ -88,8 +88,8 @@ function PreviewBody({ workspaceId, page, onOpenPhoto, isMobile }: Readonly<Prev
   const photos = isMobile ? page.previewPhotos.slice(0, MOBILE_PREVIEW) : page.previewPhotos;
   const visibility =
     counts.missing > 0
-      ? `${GALLERY_COPY.visibility[status]} ${GALLERY_COPY.visibilityMissing}`
-      : GALLERY_COPY.visibility[status];
+      ? `${galleryVisibilityText(status, page.project.status)} ${GALLERY_COPY.visibilityMissing}`
+      : galleryVisibilityText(status, page.project.status);
   return (
     <div className="flex flex-col gap-(--space-4) md:gap-(--space-5)">
       <p className="text-(length:--font-size-body) font-semibold text-(--component-photo-tile-name)">

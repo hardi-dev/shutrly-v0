@@ -29,7 +29,7 @@ export function GalleryPageScreen({
           </p>
         </header>
       ) : null}
-      <GalleryStateAlert gallery={gallery} />
+      <GalleryStateAlert gallery={gallery} projectStatus={page.project.status} />
       <AccessCard gallery={gallery} />
       <GallerySourcesSection workspaceId={workspaceId} page={page} actions={actions} />
       <GalleryPhotosSection

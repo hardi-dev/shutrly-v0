@@ -31,6 +31,7 @@ const PAGE = {
     expiryDays: null,
     activeSourceCount: 2,
     failedSourceCount: 0,
+    failedSourceNames: [],
     counts: { proof: 312, edited: 40, print: 0, missing: 0 },
   },
   sources: [
@@ -39,6 +40,7 @@ const PAGE = {
       name: "Rina-Wisuda",
       workspaceSourceName: "Google Drive",
       removed: false,
+      removedAt: null,
       syncStatus: "SUCCEEDED" as const,
       syncErrorCode: null,
       lastSyncedAt: null,

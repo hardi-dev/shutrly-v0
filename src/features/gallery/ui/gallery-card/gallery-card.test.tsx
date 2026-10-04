@@ -20,6 +20,7 @@ const GALLERY = {
   expiryDays: null,
   activeSourceCount: 2,
   failedSourceCount: 0,
+  failedSourceNames: [],
   counts: { proof: 8, edited: 2, print: 1, missing: 0 },
 };
 
@@ -85,5 +86,14 @@ describe("GalleryCard", () => {
       });
     });
     expect(push).toHaveBeenCalledWith("/w/ws-1/projects/p-1/gallery");
+  });
+
+  it("AC-GAL-008 the card names the folder that failed to sync", () => {
+    const failed = { ...GALLERY, failedSourceCount: 1, failedSourceNames: ["Rina-Keluarga"] };
+    renderCard({ project: PROJECT, canCreate: false, gallery: failed });
+    expect(screen.getByText("1 folder gagal disinkronkan")).toBeInTheDocument();
+    expect(
+      screen.getByText("Rina-Keluarga tidak bisa dibaca. Buka galeri untuk melihat penyebabnya."),
+    ).toBeInTheDocument();
   });
 });

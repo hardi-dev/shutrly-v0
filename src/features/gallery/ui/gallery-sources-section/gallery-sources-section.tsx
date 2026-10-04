@@ -136,6 +136,7 @@ function SourceList({
           source={source}
           phase={sync.phaseOf(source.id)}
           isArchived={isArchived}
+          isReadOnly={!isEditable}
           menuEntries={entriesFor(source)}
           isLast={index === sources.length - 1}
         />

@@ -7,6 +7,12 @@ const WEEKDAY_DATE = new Intl.DateTimeFormat("id-ID", {
   year: "numeric",
   timeZone: GALLERY_TIME_ZONE,
 });
+const SHORT_DATE = new Intl.DateTimeFormat("id-ID", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  timeZone: GALLERY_TIME_ZONE,
+});
 const TIME = new Intl.DateTimeFormat("id-ID", {
   hour: "2-digit",
   minute: "2-digit",
@@ -22,4 +28,15 @@ export function formatGalleryDate(iso: string): string {
 export function formatGalleryDateTime(iso: string): string {
   const date = new Date(iso);
   return `${WEEKDAY_DATE.format(date)} · ${TIME.format(date)}`;
+}
+
+/** Formats an instant's time in the gallery zone, e.g. "10.12". @param iso - ISO instant @returns the time */
+export function formatGalleryTime(iso: string): string {
+  return TIME.format(new Date(iso));
+}
+
+/** Formats an instant without the weekday, with its time, e.g. "4 Okt 2026 · 10.12" (phone rows). @param iso - ISO instant @returns the short date and time */
+export function formatGalleryShortDateTime(iso: string): string {
+  const date = new Date(iso);
+  return `${SHORT_DATE.format(date)} · ${TIME.format(date)}`;
 }

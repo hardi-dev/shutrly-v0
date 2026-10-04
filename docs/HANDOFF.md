@@ -8,8 +8,8 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 ## Current handoff — F-09 Gallery IN PROGRESS, Slices 0–8 built (smoke test open) (2026-10-04)
 
 - **State:** F-09 Gallery `IN PROGRESS`. Branch `claude/new-feature-skill-start-a92e1b` (worktree), `origin/main` (F-08) merged, not pushed, no PR. Only the generated `docs/design-system/pencil-variables.json` is untracked.
-- **Done:** Slices 0–7 of the [plan](features/gallery/plan.md), each with an implementation record: env keys, create and password, folders and sync, *Foto* and the Owner media endpoint, *Semua foto*, photo preview, lifecycle (publish, expiry, rotate, remove, archive, delete) and cancel → archive in one transaction. Migration `0012_gallery` applied to the non-production DB. Slice 8: isolation test, and a browser pass with axe (no violations) plus fixes; only the real-Drive smoke test is open.
-- **Checks (last run):** typecheck, lint, unit/dom (1478), integration (160) and build pass. **No E2E ran** (Owner: build without E2E); `tests/e2e/gallery/gallery-create.spec.ts` was written but never run.
+- **Done:** Slices 0–7 of the [plan](features/gallery/plan.md), each with an implementation record: env keys, create and password, folders and sync, *Foto* and the Owner media endpoint, *Semua foto*, photo preview, lifecycle (publish, expiry, rotate, remove, archive, delete) and cancel → archive in one transaction. Migration `0012_gallery` applied to the non-production DB. Slice 8: isolation test, and a browser pass with axe (no violations) plus fixes; a copy audit of all 100 exports against the code copy; only the real-Drive smoke test is open.
+- **Checks (last run):** typecheck, lint, unit/dom (1493), integration (160) and build pass. **No E2E ran** (Owner: build without E2E); `tests/e2e/gallery/gallery-create.spec.ts` was written but never run.
 - **Owner actions:**
   - Public Drive test folder ("Anyone with the link") for the Slice 0 spike and the Slice 8 smoke test (R-1, R-2, A-T1); optionally a 1,000–2,000 photo folder.
   - Decide whether to add `axe-core` as a dependency for jsdom axe checks, or to run the E2E suite with axe.

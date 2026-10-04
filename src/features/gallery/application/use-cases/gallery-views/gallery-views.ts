@@ -43,6 +43,7 @@ export async function toSummaryView(
     expiryDays: gallery.expiryDays,
     activeSourceCount: summary.activeSourceCount,
     failedSourceCount: summary.failedSourceCount,
+    failedSourceNames: summary.failedSourceNames,
     counts: summary.counts,
   };
 }
@@ -54,6 +55,7 @@ export function toSourceView(source: GallerySourceRecord): GallerySourceView {
     name: source.label ?? source.folderName,
     workspaceSourceName: source.workspaceSourceName,
     removed: source.removedAt !== null,
+    removedAt: source.removedAt?.toISOString() ?? null,
     syncStatus: source.syncStatus,
     syncErrorCode: source.syncErrorCode,
     lastSyncedAt: source.lastSyncedAt?.toISOString() ?? null,

@@ -31,6 +31,7 @@ export const GALLERY_COPY = {
     `${String(proof)} proof · ${String(edited)} edited · ${String(print)} print`,
   missingSuffix: (count: number) => ` (${String(count)} hilang)`,
   expiryNone: "Tidak ada",
+  expiryPast: (date: string) => `${date} (lewat)`,
   expiryNoneMeta: "Tanpa kedaluwarsa",
   // not in Pencil: a draft's duration before publishing.
   expiryDays: (days: number) => `${String(days)} hari setelah dipublikasikan`,
@@ -112,9 +113,10 @@ export const GALLERY_COPY = {
   visibility: {
     DRAFT: "Terlihat oleh klien setelah galeri dipublikasikan.",
     PUBLISHED: "Terlihat oleh klien sekarang.",
-    EXPIRED: "Klien tidak bisa membuka galeri sampai kedaluwarsa diubah.", // not in Pencil
-    ARCHIVED: "Klien tidak bisa membuka galeri yang diarsipkan.", // not in Pencil
+    EXPIRED: "Tidak terlihat oleh klien selama galeri kedaluwarsa.",
+    ARCHIVED: "Tidak terlihat oleh klien.",
   },
+  visibilityCancelled: "Tidak akan terlihat oleh klien.",
   visibilityHidden:
     "Disembunyikan dari klien sampai hasil akhir dikirim. Tidak bisa dipilih klien.",
   visibilityMissing: "Foto bertanda Hilang disembunyikan sampai ditemukan lagi.",
@@ -140,6 +142,9 @@ export const GALLERY_COPY = {
   sourceSyncing: "Menyinkronkan…",
   sourceQueued: "Menunggu giliran…",
   sourceNever: "Belum disinkronkan", // not in Pencil
+  sourceRemovedAt: (when: string, photos: number) =>
+    `Dilepas ${when} · ${String(photos)} foto disembunyikan dari klien`,
+  sourceLastSyncedShort: (when: string) => `Terakhir ${when}`,
   sourceSyncedAt: (when: string) => `Disinkronkan ${when}`,
   sourceLastSyncedAt: (when: string) => `Terakhir disinkronkan ${when}`,
   sourceProof: (count: number) => `${String(count)} proof`,
@@ -186,6 +191,9 @@ export const GALLERY_COPY = {
   previewPosition: (position: number, total: number) => `${String(position)} dari ${String(total)}`,
   previewMissingBadge: "Hilang",
   previewMissing: "File tidak ditemukan di Google Drive",
+  previewMissingNote: "Foto disembunyikan dari klien sampai ditemukan lagi saat sinkronisasi.",
+  loadingGallery: "Memuat galeri…",
+  menuSheetMeta: (status: string, project: string) => `${status} · ${project}`,
   openInDrive: "Buka di Google Drive",
   openInDriveMobile: "Buka di Drive",
   publishDialogTitle: "Publikasikan galeri?",
@@ -233,14 +241,16 @@ export const GALLERY_COPY = {
   expiredAlertTitle: (date: string) => `Galeri kedaluwarsa sejak ${date}`,
   expiredAlertBody:
     "Klien tidak bisa membuka galeri. Atur tanggal baru atau hapus kedaluwarsa untuk membukanya lagi dengan link dan password yang sama.",
+  cancelledAlertTitle: "Proyek dibatalkan",
+  cancelledAlertBody:
+    "Galeri draf ini tidak bisa dipublikasikan, disinkronkan, atau diubah. Kamu masih bisa menghapusnya.",
   archivedAlertTitle: "Galeri diarsipkan",
   archivedAlertBody:
     "Galeri hanya bisa dilihat: tidak bisa disinkronkan atau diubah, dan klien tidak bisa membukanya.",
   galleryMenuTitle: "Galeri",
   cardFailedTitle: (count: number) => `${String(count)} folder gagal disinkronkan`,
-  // Pencil names the folder; the card summary carries only the count.
-  cardFailedBody: (count: number) =>
-    `${String(count)} folder tidak bisa dibaca. Buka galeri untuk melihat penyebabnya.`,
+  cardFailedBody: (names: string) =>
+    `${names} tidak bisa dibaca. Buka galeri untuk melihat penyebabnya.`,
   allPhotosTitle: "Semua foto",
   allPhotosDescription: (project: string, totals: string) => `${project} · ${totals}`,
   kindTab: { PROOF: "Proof", EDITED: "Edited", PRINT: "Print" },

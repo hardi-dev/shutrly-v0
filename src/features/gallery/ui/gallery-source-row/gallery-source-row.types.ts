@@ -7,6 +7,7 @@ export interface GallerySourceRowProps {
   readonly source: GallerySourceView;
   readonly phase: SourceSyncPhase;
   readonly isArchived: boolean;
+  readonly isReadOnly: boolean;
   /** Empty when the source can't change (removed, archived, cancelled project). */
   readonly menuEntries: readonly GalleryMenuEntry[];
   readonly isLast: boolean;

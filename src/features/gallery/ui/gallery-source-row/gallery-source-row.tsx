@@ -1,5 +1,6 @@
 "use client";
 
+import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
@@ -13,10 +14,12 @@ export function GallerySourceRow({
   source,
   phase,
   isArchived,
+  isReadOnly,
   menuEntries,
   isLast,
 }: Readonly<GallerySourceRowProps>) {
-  const text = sourceRowText(source, phase, isArchived);
+  const isMobile = useMobileViewport();
+  const text = sourceRowText(source, phase, { isArchived, isReadOnly, isMobile });
   return (
     <ListCardItem
       icon="folder"

@@ -45,6 +45,9 @@ export async function selectProjectFacts(
 const ACTIVE_SOURCES = sql<number>`(select count(*)::int from gallery_source s where s.workspace_id = "gallery"."workspace_id" and s.gallery_id = "gallery"."id" and s.removed_at is null)`;
 const FAILED_SOURCES = sql<number>`(select count(*)::int from gallery_source s where s.workspace_id = "gallery"."workspace_id" and s.gallery_id = "gallery"."id" and s.removed_at is null and s.sync_status = 'FAILED')`;
 // Photos of removed sources are hidden (BR-GAL-009); missing ones still count, flagged apart.
+const FAILED_NAMES = sql<
+  string[]
+>`array(select coalesce(s.label, s.folder_name, '') from gallery_source s where s.workspace_id = "gallery"."workspace_id" and s.gallery_id = "gallery"."id" and s.removed_at is null and s.sync_status = 'FAILED' order by s.created_at, s.id)`;
 const PHOTO_COUNTS = sql<string>`(select json_build_object(
   'proof', count(*) filter (where p.kind = 'PROOF'),
   'edited', count(*) filter (where p.kind = 'EDITED'),
@@ -77,6 +80,7 @@ export async function selectSummary(
         row: gallery,
         active: ACTIVE_SOURCES,
         failed: FAILED_SOURCES,
+        failedNames: FAILED_NAMES,
         counts: PHOTO_COUNTS,
       })
       .from(gallery)
@@ -102,6 +106,7 @@ export async function selectSummary(
     },
     activeSourceCount: row.active,
     failedSourceCount: row.failed,
+    failedSourceNames: row.failedNames,
     counts: parseCounts(row.counts),
   };
 }

@@ -1,28 +1,45 @@
 import type { GallerySourceView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
-import { formatGalleryDateTime } from "@/features/gallery/domain/gallery-display/gallery-display";
+import {
+  formatGalleryDate,
+  formatGalleryDateTime,
+  formatGalleryShortDateTime,
+  formatGalleryTime,
+} from "@/features/gallery/domain/gallery-display/gallery-display";
 
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
-import type { SourceRowText, SourceSyncPhase } from "./source-text.types";
+import type { SourceRowMode, SourceRowText, SourceSyncPhase } from "./source-text.types";
 
 const COPY = GALLERY_COPY;
 
-function countsText(source: GallerySourceView): string[] {
+function countsText(source: GallerySourceView, withIgnored: boolean): string[] {
   const parts = [COPY.sourceProof(source.proofCount)];
   if (source.missingCount > 0) parts.push(COPY.sourceMissing(source.missingCount));
-  parts.push(COPY.sourceEdited(source.editedCount), COPY.sourcePrint(source.printCount));
-  if (source.ignoredCount > 0) parts.push(COPY.sourceIgnored(source.ignoredCount));
-  if (source.tooDeepCount > 0) parts.push(COPY.sourceTooDeep(source.tooDeepCount));
+  if (source.editedCount > 0) parts.push(COPY.sourceEdited(source.editedCount));
+  if (source.printCount > 0) parts.push(COPY.sourcePrint(source.printCount));
+  if (withIgnored && source.ignoredCount > 0) parts.push(COPY.sourceIgnored(source.ignoredCount));
+  if (withIgnored && source.tooDeepCount > 0) parts.push(COPY.sourceTooDeep(source.tooDeepCount));
   return parts;
 }
 
-function syncedMeta(source: GallerySourceView, isArchived: boolean): string {
-  if (source.lastSyncedAt === null)
-    return [source.workspaceSourceName, COPY.sourceNever].join(" · ");
-  const when = formatGalleryDateTime(source.lastSyncedAt);
-  const synced = isArchived ? COPY.sourceLastSyncedAt(when) : COPY.sourceSyncedAt(when);
-  return [source.workspaceSourceName, synced, ...(isArchived ? [] : countsText(source))].join(
-    " · ",
-  );
+function syncedMeta(source: GallerySourceView, mode: SourceRowMode): string {
+  const { lastSyncedAt } = source;
+  if (lastSyncedAt === null) return [source.workspaceSourceName, COPY.sourceNever].join(" · ");
+  if (mode.isReadOnly) {
+    const text = mode.isMobile
+      ? COPY.sourceLastSyncedShort(formatGalleryShortDateTime(lastSyncedAt))
+      : COPY.sourceLastSyncedAt(formatGalleryDateTime(lastSyncedAt));
+    return mode.isMobile ? text : [source.workspaceSourceName, text].join(" · ");
+  }
+  if (mode.isMobile)
+    return [...countsText(source, false), formatGalleryTime(lastSyncedAt)].join(" · ");
+  const synced = COPY.sourceSyncedAt(formatGalleryDateTime(lastSyncedAt));
+  return [source.workspaceSourceName, synced, ...countsText(source, true)].join(" · ");
+}
+
+function removedMeta(source: GallerySourceView): string {
+  const photos = source.proofCount + source.editedCount + source.printCount;
+  const when = source.removedAt === null ? "" : formatGalleryDate(source.removedAt);
+  return COPY.sourceRemovedAt(when, photos);
 }
 
 function runningText(source: GallerySourceView, phase: SourceSyncPhase): SourceRowText | null {
@@ -37,27 +54,32 @@ function runningText(source: GallerySourceView, phase: SourceSyncPhase): SourceR
   };
 }
 
-/** Builds a source row's title, meta and status chip from its sync state (design.md › Sumber foto, AC-GAL-005, 007, 008). @param source - the source view @param phase - the client's running sync, if any @param isArchived - the gallery is archived @returns the row text */
+/** Builds a source row's title, meta and status chip from its sync state and the page mode (design.md › Sumber foto, AC-GAL-005, 007, 008, 013). @param source - the source view @param phase - the client's running sync, if any @param mode - archived, read-only and phone flags @returns the row text */
 export function sourceRowText(
   source: GallerySourceView,
   phase: SourceSyncPhase,
-  isArchived: boolean,
+  mode: SourceRowMode,
 ): SourceRowText {
   const title = source.name ?? COPY.sourceFallbackName;
+  const neutral = (label: string): SourceRowText["chip"] => ({
+    tone: "neutral",
+    label,
+    hasDot: true,
+  });
   if (source.removed) {
     return {
       title,
-      meta: syncedMeta(source, true),
+      meta: removedMeta(source),
       metaTone: "default",
-      chip: { tone: "neutral", label: COPY.sourceChip.REMOVED, hasDot: true },
+      chip: neutral(COPY.sourceChip.REMOVED),
     };
   }
-  if (isArchived) {
+  if (mode.isArchived) {
     return {
       title,
-      meta: syncedMeta(source, true),
+      meta: syncedMeta(source, mode),
       metaTone: "default",
-      chip: { tone: "neutral", label: COPY.sourceChip.ARCHIVED, hasDot: true },
+      chip: neutral(COPY.sourceChip.ARCHIVED),
     };
   }
   const running = runningText(source, phase);
@@ -70,13 +92,12 @@ export function sourceRowText(
       chip: { tone: "danger", label: COPY.sourceChip.FAILED, hasDot: true },
     };
   }
-  const tone = source.syncStatus === "SUCCEEDED" ? "success" : "neutral";
-  const label =
-    source.syncStatus === "SUCCEEDED" ? COPY.sourceChip.SUCCEEDED : COPY.sourceChip.NEVER;
+  const isDone = source.syncStatus === "SUCCEEDED";
+  const label = isDone ? COPY.sourceChip.SUCCEEDED : COPY.sourceChip.NEVER;
   return {
     title,
-    meta: syncedMeta(source, false),
+    meta: syncedMeta(source, mode),
     metaTone: "default",
-    chip: { tone, label, hasDot: true },
+    chip: { tone: isDone ? "success" : "neutral", label, hasDot: true },
   };
 }

@@ -4,6 +4,7 @@ import {
   galleryExpiryFact,
   galleryMetaText,
   galleryStatusChip,
+  galleryVisibilityText,
   photoCountsText,
 } from "./gallery-text";
 
@@ -56,5 +57,17 @@ describe("gallery text", () => {
       "2 folder · 8 proof · Kedaluwarsa sejak Sel, 3 Nov 2026",
     );
     expect(galleryMetaText({ ...published, status: "ARCHIVED" }, null)).toBe("2 folder · 8 proof");
+  });
+
+  it("design marks a past expiry (lewat) and words visibility per status and project", () => {
+    expect(
+      galleryExpiryFact({ ...BASE, status: "EXPIRED", expiresAt: "2026-11-03T03:00:00Z" }).text,
+    ).toBe("Sel, 3 Nov 2026 (lewat)");
+    expect(galleryVisibilityText("EXPIRED", "BOOKED")).toBe(
+      "Tidak terlihat oleh klien selama galeri kedaluwarsa.",
+    );
+    expect(galleryVisibilityText("ARCHIVED", "BOOKED")).toBe("Tidak terlihat oleh klien.");
+    expect(galleryVisibilityText("DRAFT", "CANCELLED")).toBe("Tidak akan terlihat oleh klien.");
+    expect(galleryVisibilityText("PUBLISHED", "SHOOTING")).toBe("Terlihat oleh klien sekarang.");
   });
 });

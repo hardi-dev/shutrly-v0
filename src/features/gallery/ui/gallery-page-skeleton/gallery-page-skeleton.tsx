@@ -15,6 +15,9 @@ export function GalleryPageSkeleton() {
       data-testid="gallery-page-skeleton"
       className="mx-auto flex w-full max-w-(--size-content-max) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)"
     >
+      <p className="text-(length:--font-size-body-sm) text-(--component-page-header-subtitle) md:hidden">
+        {GALLERY_COPY.loadingGallery}
+      </p>
       <SectionCard title={GALLERY_COPY.sourcesTitle} content="flush">
         <ul>
           {Array.from({ length: SOURCE_ROWS }, (_, index) => (

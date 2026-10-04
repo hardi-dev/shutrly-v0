@@ -25,6 +25,7 @@ export interface GallerySummaryView {
   readonly expiryDays: number | null;
   readonly activeSourceCount: number;
   readonly failedSourceCount: number;
+  readonly failedSourceNames: readonly string[];
   readonly counts: GalleryPhotoCounts;
 }
 
@@ -39,6 +40,7 @@ export interface GallerySourceView {
   readonly name: string | null;
   readonly workspaceSourceName: string;
   readonly removed: boolean;
+  readonly removedAt: string | null;
   readonly syncStatus: GallerySyncStatus;
   readonly syncErrorCode: GallerySyncErrorCode | null;
   readonly lastSyncedAt: string | null;

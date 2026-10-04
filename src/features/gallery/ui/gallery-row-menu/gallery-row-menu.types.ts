@@ -15,6 +15,8 @@ export interface GalleryRowMenuProps {
   /** The phone sheet's title. */
   readonly title: string;
   readonly entries: readonly GalleryMenuEntry[];
+  /** The phone sheet's meta line, e.g. *Draf · Wisuda Basic — Rina*. */
+  readonly meta?: string;
   readonly size?: "sm" | "md";
 }
 

@@ -57,6 +57,9 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
       },
       activeSourceCount: active.length,
       failedSourceCount: active.filter((row) => row.syncStatus === "FAILED").length,
+      failedSourceNames: active
+        .filter((row) => row.syncStatus === "FAILED")
+        .map((row) => row.label ?? row.folderName ?? ""),
       counts: { proof: 0, edited: 0, print: 0, missing: 0 },
     };
   }

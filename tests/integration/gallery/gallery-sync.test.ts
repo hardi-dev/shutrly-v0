@@ -15,6 +15,7 @@ import { gallery, galleryPhoto, gallerySource } from "@/adapters/db/schema/galle
 import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-source-repository/drizzle-workspace-source-repository";
 import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { findFolderUse } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use";
+import { getGalleryCard } from "@/features/gallery/application/use-cases/get-gallery-card/get-gallery-card";
 import { getGalleryPage } from "@/features/gallery/application/use-cases/get-gallery-page/get-gallery-page";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
 import { serveOwnerPhoto } from "@/features/gallery/application/use-cases/serve-owner-photo/serve-owner-photo";
@@ -220,6 +221,17 @@ describe("gallery sync against Postgres", () => {
       status: "SUCCEEDED",
     });
     expect(await photosOf(second.sourceId)).toHaveLength(1);
+    const card = await getGalleryCard(
+      createDrizzleGalleryRepository(db),
+      fakeCipher,
+      seed.context,
+      seed.bookedProjectId,
+      new Date(),
+    );
+    expect(card.gallery).toMatchObject({
+      failedSourceCount: 1,
+      failedSourceNames: ["Rina-Keluarga"],
+    });
   });
 
   it("AC-GAL-025 another workspace can't sync or link into the gallery", async () => {

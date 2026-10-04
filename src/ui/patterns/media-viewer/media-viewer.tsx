@@ -26,12 +26,13 @@ const ARROW = cn(
   "absolute top-1/2 -translate-y-1/2 border border-(--component-media-viewer-text)",
 );
 
-function Stage({ item, src, missingText }: Readonly<StageProps>) {
+function Stage({ item, src, missingText, missingNote }: Readonly<StageProps>) {
   if (item.isMissing) {
     return (
       <div className="flex flex-col items-center gap-(--space-3) text-(--component-media-viewer-text)">
         <Icon name="image-off" size="lg" aria-hidden="true" />
         <p className="text-(length:--font-size-body)">{missingText}</p>
+        {missingNote ? <p className="text-(length:--font-size-body-sm)">{missingNote}</p> : null}
       </div>
     );
   }
@@ -153,7 +154,12 @@ function ViewerFrame(props: Readonly<ViewerFrameProps>) {
           onTouchStart={nav.handleTouchStart}
           onTouchEnd={nav.handleTouchEnd}
         >
-          <Stage item={item} src={props.imageSrc(item, "stage")} missingText={props.missingText} />
+          <Stage
+            item={item}
+            src={props.imageSrc(item, "stage")}
+            missingText={props.missingText}
+            missingNote={props.missingNote}
+          />
           {isMobile ? null : <Arrows index={index} count={items.length} nav={nav} />}
         </div>
         <Filmstrip

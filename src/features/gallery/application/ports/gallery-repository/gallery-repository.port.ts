@@ -73,6 +73,8 @@ export interface GallerySummaryRecord {
   readonly gallery: GalleryRecord;
   readonly activeSourceCount: number;
   readonly failedSourceCount: number;
+  /** Names of the failed folders (label or Drive name), in link order; empty before the first sync read a name. */
+  readonly failedSourceNames: readonly string[];
   readonly counts: GalleryPhotoCounts;
 }
 

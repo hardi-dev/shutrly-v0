@@ -18,7 +18,7 @@ export function PhotoPreview(props: Readonly<PhotoPreviewProps>) {
   const items = photos.map((photo, position) => ({
     id: photo.id,
     title: photo.fileName,
-    meta: previewMeta(photo, position + 1, Math.max(props.total, photos.length)),
+    meta: previewMeta(photo, position + 1, Math.max(props.total, photos.length), isMobile),
     isMissing: photo.missing,
   }));
   const imageSrc = (item: MediaViewerItem, size: "stage" | "thumb") =>
@@ -51,6 +51,7 @@ export function PhotoPreview(props: Readonly<PhotoPreviewProps>) {
       onClose={props.onClose}
       imageSrc={imageSrc}
       missingText={GALLERY_COPY.previewMissing}
+      missingNote={GALLERY_COPY.previewMissingNote}
       renderActions={renderActions}
     />
   );

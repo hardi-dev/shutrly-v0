@@ -29,6 +29,7 @@ const PAGE = {
     expiryDays: null,
     activeSourceCount: 1,
     failedSourceCount: 0,
+    failedSourceNames: [],
     counts: { proof: 8, edited: 2, print: 1, missing: 1 },
   },
   sources: [],

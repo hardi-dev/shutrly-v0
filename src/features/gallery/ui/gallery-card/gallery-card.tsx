@@ -55,12 +55,16 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
           <Alert
             tone="warning"
             title={GALLERY_COPY.cardFailedTitle(card.gallery.failedSourceCount)}
-            body={GALLERY_COPY.cardFailedBody(card.gallery.failedSourceCount)}
+            body={GALLERY_COPY.cardFailedBody(failedNames(card.gallery.failedSourceNames))}
           />
         </div>
       ) : null}
     </SectionCard>
   );
+}
+
+function failedNames(names: readonly string[]): string {
+  return names.map((name) => name || GALLERY_COPY.sourceFallbackName).join(", ");
 }
 
 function noGalleryText(card: GalleryCardView): EmptyText {

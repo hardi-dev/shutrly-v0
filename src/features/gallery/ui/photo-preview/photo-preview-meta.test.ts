@@ -24,4 +24,11 @@ describe("previewMeta", () => {
       "Rina-Wisuda · Proof · Hilang · 2 dari 13",
     );
   });
+
+  it("design shows only the innermost folder on phones", () => {
+    expect(previewMeta(PHOTO, 12, 64, true)).toBe("Akad · Proof · 12 dari 64");
+    expect(previewMeta({ ...PHOTO, browsePath: "" }, 1, 28, true)).toBe(
+      "Rina-Wisuda · Proof · 1 dari 28",
+    );
+  });
 });

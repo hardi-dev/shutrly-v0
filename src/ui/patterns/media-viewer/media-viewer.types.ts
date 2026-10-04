@@ -19,6 +19,8 @@ export interface MediaViewerProps {
   readonly onClose: () => void;
   readonly imageSrc: (item: MediaViewerItem, size: "stage" | "thumb") => string;
   readonly missingText: string;
+  /** A second line under `missingText`, e.g. what happens to the photo meanwhile. */
+  readonly missingNote?: string;
   /** The Owner's (or client's) actions for the current item, e.g. *Buka di Google Drive*. */
   readonly renderActions?: (item: MediaViewerItem) => ReactNode;
 }
@@ -31,6 +33,7 @@ export interface StageProps {
   readonly item: MediaViewerItem;
   readonly src: string;
   readonly missingText: string;
+  readonly missingNote?: string;
 }
 
 export interface FilmstripProps {

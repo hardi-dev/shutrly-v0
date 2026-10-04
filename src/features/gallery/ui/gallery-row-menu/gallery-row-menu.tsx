@@ -17,6 +17,7 @@ export function GalleryRowMenu({
   label,
   title,
   entries,
+  meta,
   size = "sm",
 }: Readonly<GalleryRowMenuProps>) {
   const isMobile = useMobileViewport();
@@ -28,7 +29,13 @@ export function GalleryRowMenu({
     return (
       <>
         <IconButton icon="more-horizontal" size={size} aria-label={label} onPress={handleOpen} />
-        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen} title={title} variant="actions">
+        <BottomSheet
+          isOpen={isOpen}
+          onOpenChange={setIsOpen}
+          title={title}
+          meta={meta}
+          variant="actions"
+        >
           {entries.map((entry) => (
             <MobileEntry key={entry.label} entry={entry} onDone={setIsOpen} />
           ))}

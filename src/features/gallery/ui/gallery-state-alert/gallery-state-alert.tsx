@@ -5,7 +5,16 @@ import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import type { GalleryStateAlertProps } from "./gallery-state-alert.types";
 
 /** The page-top Alert of an expired or archived gallery (design.md › Gallery page, AC-GAL-020, AC-GAL-022). */
-export function GalleryStateAlert({ gallery }: Readonly<GalleryStateAlertProps>) {
+export function GalleryStateAlert({ gallery, projectStatus }: Readonly<GalleryStateAlertProps>) {
+  if (projectStatus === "CANCELLED" && gallery.status === "DRAFT") {
+    return (
+      <Alert
+        tone="warning"
+        title={GALLERY_COPY.cancelledAlertTitle}
+        body={GALLERY_COPY.cancelledAlertBody}
+      />
+    );
+  }
   if (gallery.status === "EXPIRED" && gallery.expiresAt !== null) {
     return (
       <Alert

@@ -1,4 +1,5 @@
 import { fakeCipher, fakeHasher } from "@tests/support/gallery/fake-gallery-crypto";
+import { FakeWorkspaceSourceRepository } from "@tests/support/gallery/fake-workspace-source-repository";
 import {
   BOOKED_PROJECT_ID,
   fixtureGalleries,
@@ -27,6 +28,7 @@ describe("getGalleryPage", () => {
   it("AC-GAL-027 shows the Owner the password, the header facts and no sources yet", async () => {
     const page = await getGalleryPage(
       await withGallery(),
+      new FakeWorkspaceSourceRepository(),
       fakeCipher,
       WORKSPACE,
       BOOKED_PROJECT_ID,
@@ -39,13 +41,27 @@ describe("getGalleryPage", () => {
 
   it("AC-GAL-027 gives another workspace's Owner not found", async () => {
     await expect(
-      getGalleryPage(await withGallery(), fakeCipher, OTHER_WORKSPACE, BOOKED_PROJECT_ID, NOW),
+      getGalleryPage(
+        await withGallery(),
+        new FakeWorkspaceSourceRepository(),
+        fakeCipher,
+        OTHER_WORKSPACE,
+        BOOKED_PROJECT_ID,
+        NOW,
+      ),
     ).rejects.toMatchObject({ code: "NOT_FOUND" });
   });
 
   it("returns not found for a project without a gallery", async () => {
     await expect(
-      getGalleryPage(fixtureGalleries(), fakeCipher, WORKSPACE, BOOKED_PROJECT_ID, NOW),
+      getGalleryPage(
+        fixtureGalleries(),
+        new FakeWorkspaceSourceRepository(),
+        fakeCipher,
+        WORKSPACE,
+        BOOKED_PROJECT_ID,
+        NOW,
+      ),
     ).rejects.toMatchObject({ code: "NOT_FOUND" });
   });
 });

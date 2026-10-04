@@ -49,6 +49,7 @@ export function toSourceView(source: GallerySourceRecord): GallerySourceView {
   return {
     id: source.id,
     name: source.label ?? source.folderName,
+    workspaceSourceName: source.workspaceSourceName,
     removed: source.removedAt !== null,
     syncStatus: source.syncStatus,
     syncErrorCode: source.syncErrorCode,

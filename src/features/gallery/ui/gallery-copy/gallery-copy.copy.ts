@@ -75,6 +75,11 @@ export const GALLERY_COPY = {
     FOLDER_ALREADY_LINKED: "Folder ini sudah ada di galeri ini.",
     SOURCE_NOT_ACTIVE: "Sumber ini tidak aktif lagi. Pilih sumber lain.", // not in Pencil
   },
+  // not in Pencil: TOO_LONG on the folder form's fields (A-3).
+  fieldTooLong: {
+    label: "Label maksimal 60 karakter.",
+    link: "Link terlalu panjang.",
+  },
   // not in Pencil: domain refusals shown as toasts.
   refused: {
     NOT_ALLOWED_FOR_PROJECT: "Galeri hanya bisa dibuat untuk proyek yang sudah dibooking.",
@@ -94,6 +99,7 @@ export const GALLERY_COPY = {
     "Tautkan folder Google Drive berisi foto proyek ini. Foto di folder utama menjadi proof; subfolder edited dan print untuk hasil akhir.",
   sourcesEmptyBodyMobile: "Tautkan folder Google Drive berisi foto proyek ini.",
   addFolder: "Tambah folder",
+  addFolderMobile: "Tambah",
   photosTitle: "Foto",
   photosDescriptionEmpty: "Ditemukan saat sinkronisasi. Urut nama file.",
   photosDescriptionMobile: "Urut nama file.",
@@ -104,4 +110,63 @@ export const GALLERY_COPY = {
   rotatePasswordMobile: "Ganti",
   publish: "Publikasikan",
   galleryMenu: "Menu galeri",
+  syncAll: "Sinkronkan semua",
+  syncAllRunning: "Menyinkronkan…",
+  sync: "Sinkronkan",
+  sourceMenu: (name: string) => `Menu ${name}`,
+  sourceFallbackName: "Folder Google Drive", // not in Pencil: before the first sync reads the name
+  sourceChip: {
+    SUCCEEDED: "Berhasil",
+    SYNCING: "Menyinkronkan",
+    FAILED: "Gagal",
+    NEVER: "Belum disinkronkan", // not in Pencil
+    REMOVED: "Dilepas",
+    ARCHIVED: "Arsip",
+  },
+  sourceSyncing: "Menyinkronkan…",
+  sourceQueued: "Menunggu giliran…",
+  sourceNever: "Belum disinkronkan", // not in Pencil
+  sourceSyncedAt: (when: string) => `Disinkronkan ${when}`,
+  sourceLastSyncedAt: (when: string) => `Terakhir disinkronkan ${when}`,
+  sourceProof: (count: number) => `${String(count)} proof`,
+  sourceMissing: (count: number) => `${String(count)} hilang`,
+  sourceEdited: (count: number) => `${String(count)} edited`,
+  sourcePrint: (count: number) => `${String(count)} print`,
+  sourceIgnored: (count: number) => `${String(count)} diabaikan`,
+  sourceTooDeep: (count: number) => `${String(count)} folder terlalu dalam`,
+  syncError: {
+    NOT_PUBLIC:
+      "Folder tidak bisa dibaca. Bagikan folder sebagai “Siapa saja yang memiliki link”, lalu sinkronkan lagi.",
+    RATE_LIMITED: "Google Drive sedang sibuk. Foto yang ada tidak berubah. Coba lagi nanti.", // not in Pencil
+    UNAVAILABLE:
+      "Google Drive sedang tidak bisa dihubungi. Foto yang ada tidak berubah. Coba lagi nanti.", // not in Pencil
+    TOO_LARGE:
+      "Folder terlalu besar untuk disinkronkan. Pecah ke beberapa folder lalu tambahkan lagi.", // not in Pencil (R-1)
+  },
+  syncDoneTitle: "Sinkronisasi selesai",
+  syncDoneBody: (count: number) => `${String(count)} folder disinkronkan.`, // not in Pencil: per-folder diff not tracked
+  syncFailedNames: (names: string) => `${names} gagal dibaca.`,
+  syncFailedTitle: "Sinkronisasi gagal",
+  syncFailedBody:
+    "Google Drive sedang tidak bisa dihubungi. Foto yang ada tidak berubah. Coba lagi sebentar lagi.",
+  linkDialogTitle: "Tambah folder",
+  linkDialogDescription:
+    "Foto di folder utama menjadi proof. Subfolder edited dan print menjadi hasil akhir.",
+  linkSourceLabel: "Sumber",
+  linkSourceHelper: "Hanya sumber aktif.",
+  linkLabel: "Link folder Google Drive",
+  linkPlaceholder: "https://drive.google.com/drive/folders/…",
+  linkHelper: "Folder harus dibagikan sebagai “Siapa saja yang memiliki link”.",
+  labelLabel: "Label",
+  labelPlaceholder: "Contoh: Sesi wisuda",
+  labelHelper: "Kosongkan untuk memakai nama folder dari Drive.",
+  publicLinkTitle: "Link Drive melewati password galeri",
+  publicLinkBody:
+    "Siapa pun yang punya link folder bisa melihat fotonya langsung. Bagikan link galeri ke klien, bukan link Drive.",
+  folderInUseTitle: "Folder sudah dipakai proyek lain",
+  // Pencil names the folder; its name is only known after the first sync, so code says "Folder ini".
+  folderInUseBody: (projects: string) =>
+    `Folder ini juga tertaut ke galeri ${projects}. Klien kedua proyek bisa melihat foto yang sama.`,
+  folderInUseConfirm: "Tetap tambahkan",
+  linkedTitle: "Folder ditambahkan", // not in Pencil
 } as const;

@@ -4,13 +4,17 @@ import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-vie
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { AccessCard } from "../access-card/access-card";
+import { GallerySourcesSection } from "../gallery-sources-section/gallery-sources-section";
 import { galleryMetaText, galleryStatusChip } from "../gallery-text/gallery-text";
 import { PhotosCard } from "../photos-card/photos-card";
-import { SourcesCard } from "../sources-card/sources-card";
 import type { GalleryPageScreenProps } from "./gallery-page-screen.types";
 
 /** The gallery page (design.md › Layout): *Akses klien*, *Sumber foto* and *Foto* in the wide column. */
-export function GalleryPageScreen({ page }: Readonly<GalleryPageScreenProps>) {
+export function GalleryPageScreen({
+  workspaceId,
+  page,
+  actions,
+}: Readonly<GalleryPageScreenProps>) {
   const isMobile = useMobileViewport();
   const { gallery } = page;
   return (
@@ -24,7 +28,7 @@ export function GalleryPageScreen({ page }: Readonly<GalleryPageScreenProps>) {
         </header>
       ) : null}
       <AccessCard gallery={gallery} />
-      <SourcesCard sources={page.sources} />
+      <GallerySourcesSection workspaceId={workspaceId} page={page} actions={actions} />
       <PhotosCard
         hasPhotos={gallery.counts.proof + gallery.counts.edited + gallery.counts.print > 0}
       />

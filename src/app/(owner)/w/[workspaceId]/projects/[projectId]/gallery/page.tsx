@@ -1,3 +1,4 @@
+import { GALLERY_PAGE_ACTIONS } from "@/app/actions/gallery/gallery-page-actions";
 import { loadGalleryPage } from "@/composition/gallery/gallery-flow/gallery-flow";
 import { GALLERY_COPY } from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
 import { GalleryPageScreen } from "@/features/gallery/ui/gallery-page-screen/gallery-page-screen";
@@ -21,7 +22,7 @@ export default async function GalleryPage({
         parent={{ label: page.project.title, href: `/w/${workspaceId}/projects/${projectId}` }}
         hidesBottomNav
       />
-      <GalleryPageScreen workspaceId={workspaceId} page={page} />
+      <GalleryPageScreen workspaceId={workspaceId} page={page} actions={GALLERY_PAGE_ACTIONS} />
     </>
   );
 }

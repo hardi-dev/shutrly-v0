@@ -7,6 +7,8 @@ export interface ListCardItemProps {
   avatarInitials?: string;
   title: string;
   meta: string;
+  /** `danger` colours the meta for a failure reason (F-09 source rows). */
+  metaTone?: "default" | "danger";
   /** Status Chip and/or a row-actions button. When href is set, actions render beside the link. */
   trailing?: ReactNode;
   href?: string;

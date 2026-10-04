@@ -18,6 +18,10 @@ export type ButtonIconName = Extract<
   | "calendar-check"
   | "camera"
   | "circle-check-big"
+  | "refresh-cw"
+  | "copy"
+  | "images"
+  | "external-link"
 >;
 
 export interface ButtonIconProps {

@@ -17,6 +17,7 @@ function ListCardBody({
   avatarInitials,
   title,
   meta,
+  metaTone = "default",
   trailing,
   href,
 }: Readonly<ListCardItemProps>) {
@@ -46,7 +47,14 @@ function ListCardBody({
         <span className="truncate text-(length:--font-size-body) font-semibold text-(--component-list-card-item-title)">
           {title}
         </span>
-        <span className="text-(length:--font-size-body-sm) text-(--component-list-card-item-meta)">
+        <span
+          className={cn(
+            "text-(length:--font-size-body-sm)",
+            metaTone === "danger"
+              ? "text-(--color-semantic-status-danger-fg)"
+              : "text-(--component-list-card-item-meta)",
+          )}
+        >
           {meta}
         </span>
       </span>
@@ -85,28 +93,12 @@ function LinkedListCardRow({
  * @param props - row content, link and position
  * @returns the list item
  */
-export function ListCardItem({
-  icon,
-  avatarInitials,
-  title,
-  meta,
-  trailing,
-  href,
-  isLast = false,
-}: Readonly<ListCardItemProps>) {
+export function ListCardItem(props: Readonly<ListCardItemProps>) {
+  const { icon, avatarInitials, title, trailing, href, isLast = false } = props;
   if (Boolean(icon) === Boolean(avatarInitials)) {
     throw new Error("ListCardItem requires exactly one of icon or avatarInitials");
   }
-  const body = (
-    <ListCardBody
-      icon={icon}
-      avatarInitials={avatarInitials}
-      title={title}
-      meta={meta}
-      trailing={trailing}
-      href={href}
-    />
-  );
+  const body = <ListCardBody {...props} />;
 
   if (href && trailing) {
     return (

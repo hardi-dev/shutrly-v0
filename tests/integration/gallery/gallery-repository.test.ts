@@ -1,4 +1,5 @@
 import { TEST_APP_ENV } from "@tests/support/env/test-app-env";
+import { FakeWorkspaceSourceRepository } from "@tests/support/gallery/fake-workspace-source-repository";
 import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
@@ -55,6 +56,7 @@ describe("drizzle gallery repository", () => {
     expect(JSON.stringify(row)).not.toContain("mawar-4821");
     const page = await getGalleryPage(
       createDrizzleGalleryRepository(db),
+      new FakeWorkspaceSourceRepository(),
       cipher,
       seed.context,
       seed.bookedProjectId,
@@ -102,6 +104,7 @@ describe("drizzle gallery repository", () => {
     await expect(
       getGalleryPage(
         createDrizzleGalleryRepository(db),
+        new FakeWorkspaceSourceRepository(),
         cipher,
         other.context,
         seed.bookedProjectId,

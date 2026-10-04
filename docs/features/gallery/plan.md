@@ -142,12 +142,12 @@
   - `galeri-toast-sinkronisasi-selesai`, `galeri-toast-sinkronisasi-gagal`.
 
 **Steps:**
-- [ ] Domain `drive-folder-link`, `photo-classification`, `name-sort-key`, `sync-plan` (tree walker), with unit tests for the AC-GAL-005 and AC-GAL-030 trees, depth 6 and `TOO_LARGE`.
-- [ ] `GallerySourceProviderPort`. Three providers:
+- [x] Domain `drive-folder-link`, `photo-classification`, `name-sort-key`, `sync-plan` (tree walker), with unit tests for the AC-GAL-005 and AC-GAL-030 trees, depth 6 and `TOO_LARGE`.
+- [x] `GallerySourceProviderPort`. Three providers:
   - `adapters/source/google-drive-provider` (fetch + Zod, error mapping, no key in errors), with unit tests on a mocked fetch;
   - a fixture provider for E2E;
   - a fake for tests.
-- [ ] Repository: link the source (partial unique → `FOLDER_ALREADY_LINKED`), find a folder's use in other galleries, claim the sync (D-8), write the sync in chunks, mark missing photos.
+- [x] Repository: link the source (partial unique → `FOLDER_ALREADY_LINKED`), find a folder's use in other galleries, claim the sync (D-8), write the sync in chunks, mark missing photos.
 
   Use cases `link-gallery-source`, `find-folder-use`, `sync-gallery-source`, with the rate limit (D-19).
 
@@ -156,12 +156,20 @@
   - missing photos and their return;
   - a failure keeps the earlier photos.
 - [ ] Actions and composition, with the provider chosen by `E2E_FAKE_DRIVE`.
-- [ ] UI:
+- [x] UI:
   - `SourcesCard` / `SourceRow` / `SourceMenu`;
   - `LinkSourceDialog` (link error, public-link Alert, the in-use warning step);
   - the client loop for *Sinkronkan semua* (D-9);
   - toasts.
 - [ ] E2E: link the fixture folder, check the counts, re-sync, and a failing folder shows *Gagal*.
+
+**Implementation record (2026-10-04):**
+- Domain: link parser, classification (nearest `edited`/`print`, folded browse path), natural sort key, breadth-first walker (depth 5, shortcuts skipped, `TOO_LARGE` budget).
+- Google Drive provider (Zod, error mapping, no key or URL in failures, host allowlist, no redirects), fixture provider for `E2E_FAKE_DRIVE`, test fake.
+- `GallerySourceRepositoryPort` (a second port beside `GalleryRepositoryPort`): link with the partial unique index, folder use, D-8 claim/write/fail with stale-claim takeover and a discard when the gallery changed meanwhile.
+- UI: source rows with status chips and failure reasons, folder ⋯ menu, *Sinkronkan semua* client loop, *Tambah folder* with the public-link Alert and the in-use step. `ListCardItem` gained `metaTone`; Button icons gained `refresh-cw`, `copy`, `images`, `external-link`.
+- Checks: typecheck, lint, unit/dom (1180), integration (98), build pass. E2E not written or run (Owner: no E2E).
+- Deviations: the in-use dialog says *Folder ini* (the folder name is unknown before the first sync); the sync toast reports folders synced and failed, not per-folder new/missing counts; phone source rows reuse the desktop row (icon and full meta) instead of the compact meta.
 
 ## Slice 3 — Photos card and Owner media
 

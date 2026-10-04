@@ -36,6 +36,7 @@ export interface GalleryCardView {
 export interface GallerySourceView {
   readonly id: string;
   readonly name: string | null;
+  readonly workspaceSourceName: string;
   readonly removed: boolean;
   readonly syncStatus: GallerySyncStatus;
   readonly syncErrorCode: GallerySyncErrorCode | null;
@@ -48,8 +49,15 @@ export interface GallerySourceView {
   readonly tooDeepCount: number;
 }
 
+// An active workspace source offered in *Tambah folder* (BR-SRC-006, AC-GAL-011).
+export interface LinkableSourceView {
+  readonly id: string;
+  readonly name: string;
+}
+
 export interface GalleryPageView {
   readonly project: GalleryProjectView;
   readonly gallery: GallerySummaryView;
   readonly sources: readonly GallerySourceView[];
+  readonly linkableSources: readonly LinkableSourceView[];
 }

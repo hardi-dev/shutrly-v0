@@ -12,12 +12,14 @@ Older handoffs, the early status table, the component-library and design-system 
 
 ## Previous handoff — F-07 Projects DONE (2026-10-04)
 
-- **Done:** Slices 0–8 built on `feat/projects`; accepted by the Owner 2026-10-04. Migration `0009_project` applied to the non-production database. Deleting a client, service, category or definition used by a project returns `IN_USE`.
-- **Open follow-ups:** 92-export fidelity pass (8.3), remaining dialogs in both themes and keyboard a11y tests (8.2), six flaky E2E tests, `pnpm install` once (`@internationalized/date` added by hand).
-- **Owner decisions:** BR-PRJ-004 manual steps, no backwards moves; BR-PRJ-008…010 added; phone Bottom Nav hidden on *Proyek baru* and project detail.
-- **Artifacts:** [spec](features/projects/spec.md), [technical design](features/projects/technical-design.md).
+- **Outcome:** Slices 0–8 built on `feat/projects`; accepted by the Owner 2026-10-04. Migration `0009_project` applied to the non-production DB. Not pushed, no PR.
+- **Follow-ups:** the 92-export fidelity pass (plan 8.3), remaining dialogs in both themes and keyboard-only a11y (8.2), six flaky E2E tests, `pnpm install` once (`@internationalized/date` added by hand).
+- **Deviations:** list rows without leading icon vs `ListCardItem`; phone Bottom Nav hidden on *Proyek baru* and project detail.
+- **Fixed on the way:** deleting a used client/service/category/definition returns `IN_USE` (closes AC-CLI-015).
+- **Next then:** `/sdv:verify-feature projects`.
+- **Links:** [spec](features/projects/spec.md), [AC](features/projects/acceptance-criteria.md), [technical design + records](features/projects/technical-design.md).
 
-## Key decisions (Owner), sessions 1–4 (moved 2026-10-04)
+## Key decisions (Owner) — design system, sessions 1–4 (2026-09-26), moved 2026-10-04
 
 **Earlier (session 1):**
 - The Studio Lime pieces were taken from the legacy frames.

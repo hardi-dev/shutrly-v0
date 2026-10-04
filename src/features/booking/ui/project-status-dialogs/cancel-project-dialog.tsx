@@ -88,7 +88,7 @@ function CancelBody(
         isOpen
         onOpenChange={props.onOpenChange}
         title={PROJECT_COPY.cancelDialogTitle}
-        description={PROJECT_COPY.cancelDialogBody}
+        description={PROJECT_COPY.cancelDialogDescription}
         variant="form"
         actions={confirmButton}
       >
@@ -101,7 +101,7 @@ function CancelBody(
       isOpen
       onOpenChange={props.onOpenChange}
       title={PROJECT_COPY.cancelDialogTitle}
-      description={PROJECT_COPY.cancelDialogBody}
+      description={PROJECT_COPY.cancelDialogDescription}
       size="md"
       actions={
         <>

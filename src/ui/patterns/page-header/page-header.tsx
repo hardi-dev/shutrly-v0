@@ -1,8 +1,5 @@
-import Link from "next/link";
-
-import { Icon } from "@/ui/primitives/icon/icon";
-
 import { Tabs } from "../tabs/tabs";
+import { BreadcrumbTrail } from "./breadcrumb-trail";
 import { PAGE_HEADER_COPY } from "./page-header.copy";
 import type { PageHeaderProps } from "./page-header.types";
 
@@ -24,19 +21,11 @@ export function PageHeader({
   return (
     <header className="shrink-0 border-b border-(--component-page-header-border) bg-(--component-page-header-background)">
       <div className="flex items-center gap-(--component-page-header-breadcrumb-gap) border-b border-(--component-page-header-border) py-(--space-1-5) pr-(--space-7) pl-(--component-page-header-breadcrumb-padding-x)">
-        <nav
-          aria-label={PAGE_HEADER_COPY.breadcrumb}
-          className="flex min-h-(--space-10) min-w-0 flex-1 items-center gap-(--component-page-header-breadcrumb-gap) text-(length:--font-size-body-sm) font-medium text-(--component-page-header-breadcrumb-text)"
-        >
-          {breadcrumbItems.map((item, index) => (
-            <BreadcrumbTrailItem
-              key={`${item.label}-${item.href ?? "current"}`}
-              item={item}
-              isCurrent={index === breadcrumbItems.length - 1}
-              showSeparator={index > 0}
-            />
-          ))}
-        </nav>
+        <BreadcrumbTrail
+          label={PAGE_HEADER_COPY.breadcrumb}
+          items={breadcrumbItems}
+          className="min-h-(--space-10) flex-1"
+        />
         {utilities ? <div className="flex items-center gap-(--space-1)">{utilities}</div> : null}
       </div>
       <div className="flex items-center justify-between gap-(--component-page-header-hero-gap) px-(--component-page-header-hero-padding-x) pb-(--component-page-header-hero-padding-bottom) pt-(--component-page-header-hero-padding-top)">
@@ -74,42 +63,5 @@ function HeaderTitle({
       {heading}
       {adornment}
     </div>
-  );
-}
-
-function BreadcrumbTrailItem({
-  item,
-  isCurrent,
-  showSeparator,
-}: Readonly<{
-  item: NonNullable<PageHeaderProps["breadcrumbs"]>[number];
-  isCurrent: boolean;
-  showSeparator: boolean;
-}>) {
-  return (
-    <>
-      {showSeparator ? (
-        <Icon name="chevron-right" size="sm" aria-hidden="true" className="shrink-0" />
-      ) : null}
-      {item.href && !isCurrent ? (
-        <Link
-          href={item.href}
-          className="truncate outline-none hover:text-(--component-page-header-breadcrumb-current) focus-visible:rounded-(--radius-xs) focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
-        >
-          {item.label}
-        </Link>
-      ) : (
-        <span
-          aria-current={isCurrent ? "page" : undefined}
-          className={
-            isCurrent
-              ? "truncate font-semibold text-(--component-page-header-breadcrumb-current)"
-              : "truncate"
-          }
-        >
-          {item.label}
-        </span>
-      )}
-    </>
   );
 }

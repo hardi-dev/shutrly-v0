@@ -12,6 +12,8 @@ export interface BottomSheetProps {
   description?: string;
   children: ReactNode;
   actions?: ReactNode;
+  /** Fills the viewport below a 44 px top gap, for a browsing sheet like *Semua foto* (F-09). */
+  isFullHeight?: boolean;
 }
 
 export interface SheetContentProps extends BottomSheetProps {

@@ -48,4 +48,18 @@ describe("IconButton (C02)", () => {
       "text-(--component-icon-button-icon)",
     );
   });
+
+  it("AC-GAL-031 renders as a labelled link opening a new tab", () => {
+    render(
+      <IconButton
+        icon="external-link"
+        aria-label="Buka di Drive"
+        href="https://drive.google.com/file/d/x/view"
+        target="_blank"
+      />,
+    );
+    const link = screen.getByRole("link", { name: "Buka di Drive" });
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
 });

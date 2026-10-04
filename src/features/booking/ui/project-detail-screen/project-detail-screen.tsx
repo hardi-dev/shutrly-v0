@@ -121,6 +121,7 @@ function DetailBody({
   workspaceId,
   project,
   menuActions,
+  galleryCard,
   api,
   edit,
   team,
@@ -173,6 +174,7 @@ function DetailBody({
         onEditInfo={handleEditInfo}
         button={button}
         edit={edit}
+        galleryCard={galleryCard}
         team={team}
       />
     </>
@@ -185,6 +187,7 @@ function DetailCards({
   onEditInfo,
   button,
   edit,
+  galleryCard,
   team,
 }: Readonly<{
   project: ProjectDetailScreenProps["project"];
@@ -192,6 +195,7 @@ function DetailCards({
   onEditInfo: () => void;
   button: ReactNode;
   edit: DetailEditHandlers;
+  galleryCard: ReactNode;
   team: SessionTeamHandlers;
 }>) {
   return (
@@ -204,6 +208,7 @@ function DetailCards({
       ) : null}
       {project.cancellation ? <ProjectCancelledAlert cancellation={project.cancellation} /> : null}
       <ProjectInfoCard project={project} isMobile={isMobile} onEdit={onEditInfo} />
+      {galleryCard}
       <ProjectPackageCard project={project} isMobile={isMobile} edit={edit} />
       <ProjectScheduleCard project={project} isMobile={isMobile} edit={edit} team={team} />
       <ProjectFieldsReadCard project={project} isMobile={isMobile} edit={edit} />

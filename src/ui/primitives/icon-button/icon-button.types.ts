@@ -17,4 +17,7 @@ export interface IconButtonProps {
   /** The words after the count in the accessible name; default "belum dibaca" (notifications). */
   badgeLabel?: string;
   "data-client-row-action"?: string;
+  /** Renders the icon button as a link, e.g. *Buka di Drive* on phones (F-09). */
+  href?: string;
+  target?: "_blank";
 }

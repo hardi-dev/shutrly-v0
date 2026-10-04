@@ -9,6 +9,8 @@ export interface DateFieldProps {
   readonly display: DateFieldDisplay;
   readonly placeholder?: string;
   readonly isOptional?: boolean;
+  /** Helper text under the field; the error replaces it. */
+  readonly description?: string;
   readonly errorMessage?: string;
   readonly isDisabled?: boolean;
 }

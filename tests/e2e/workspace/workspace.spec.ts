@@ -79,7 +79,8 @@ test("AC-WS-022 AC-WS-025 workspace shell is accessible and unbuilt sections are
     expect(results.violations).toEqual([]);
   }
 
-  await page.getByRole("link", { name: "Proyek" }).click();
+  // Projects is built (F-07); invoices is still an unbuilt section.
+  await page.goto(`${new URL(page.url()).pathname.replace(/\/$/, "")}/invoices`);
   await expect(page.getByRole("heading", { name: COMING_SOON_COPY.title })).toBeVisible();
   await expect(page.getByRole("link", { name: COMING_SOON_COPY.back })).toBeVisible();
 });

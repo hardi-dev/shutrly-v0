@@ -15,7 +15,7 @@ If no iteration number is given, pick the first unfinished iteration in `technic
    - The plan (`plan.md`, or the iterations in `technical-design.md`): its global constraints and shared contracts, plus this iteration's slice only. Never read other slices.
    - `technical-design.md`: only the sections the slice cites. Skip the `Implementation record` sections unless the slice names a deviation that affects this one.
    - `spec.md` and `acceptance-criteria.md`: only the `AC-*` / `BR-*` entries this iteration covers (grep the IDs).
-   - Design reference: if `exports/_compact/INDEX.md` exists, read it, then the base for each screen and device in this iteration and only the diffs for the states the slice needs; open a raw export only for exact icon paths. Without `_compact/`, read just the raw exports for this iteration's screens, and tell the Owner to run `python3 scripts/sdv/compact-exports.py <slug>`.
+   - Design reference: read `exports/INDEX.md` to find the files, then the raw exports (`<screen>-<state>-<device>-<frameId>.html`) for only the states and devices the slice names, one file at a time. Each is a complete frame and the visual source of truth. If `INDEX.md` is missing or `--check` fails, run `python3 scripts/sdv/index-exports.py <slug>` first.
    - If the slice cites something you have not read, read it. If you hit a decision the artifacts do not cover, stop and report a `SPEC GAP`; do not guess.
 2. Implement only that iteration. Do not invent requirements, add unrelated abstractions, or expand scope.
 3. Enforce business rules server-side; client validation is UX only.

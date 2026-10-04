@@ -14,6 +14,8 @@ export interface ProjectDetailScreenProps {
   readonly menuActions: ProjectMenuActions;
   readonly editActions: ProjectEditActions;
   readonly definitions: readonly DefinitionOption[];
+  /** The F-09 Galeri card, rendered right after *Info* (gallery TD D-16). */
+  readonly galleryCard?: ReactNode;
   /** Active members with their roles, for the Penugasan form (D-13). */
   readonly assignableMembers: readonly AssignableMember[];
   readonly addAssignmentAction: AssignmentDialogProps["addAction"];

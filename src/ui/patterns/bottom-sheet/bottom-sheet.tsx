@@ -13,6 +13,9 @@ import type { BottomSheetProps, SheetContentProps, SheetHeaderProps } from "./bo
 // The sheet spans the phone/tablet viewport; its content keeps the desktop Modal `md` width.
 const SHEET_CONTENT_WIDTH = "mx-auto w-full max-w-[560px]";
 
+// Viewport minus a 44 px top gap: 800 of 844 (design.md › Semua foto).
+const FULL_HEIGHT = "h-[calc(100dvh_-_44px)] max-h-[calc(100dvh_-_44px)]";
+
 const HEADER_ALIGNMENT = {
   actions: "items-center text-center",
   form: "items-start text-left",
@@ -32,6 +35,7 @@ export function BottomSheet({
   description,
   children,
   actions,
+  isFullHeight = false,
 }: Readonly<BottomSheetProps>) {
   const titleId = useId();
   const descriptionId = useId();
@@ -61,6 +65,7 @@ export function BottomSheet({
         meta={meta}
         description={description}
         actions={actions}
+        isFullHeight={isFullHeight}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
@@ -82,6 +87,7 @@ function SheetContent({
   description,
   children,
   actions,
+  isFullHeight,
   onOpenChange,
 }: Readonly<SheetContentProps>) {
   const hasClose = variant !== "actions";
@@ -91,13 +97,21 @@ function SheetContent({
   }
 
   return (
-    <AriaModal className="max-h-[90dvh] w-full overflow-hidden rounded-t-(--component-sheet-radius) bg-(--component-sheet-background) shadow-[0_-8px_40px_var(--color-semantic-elevation-2-color)] data-[entering]:animate-[bottom-sheet-in_300ms_ease-out] data-[exiting]:animate-[bottom-sheet-out_300ms_ease-in] motion-reduce:animate-none">
+    <AriaModal
+      className={cn(
+        "max-h-[90dvh] w-full overflow-hidden rounded-t-(--component-sheet-radius) bg-(--component-sheet-background) shadow-[0_-8px_40px_var(--color-semantic-elevation-2-color)] data-[entering]:animate-[bottom-sheet-in_300ms_ease-out] data-[exiting]:animate-[bottom-sheet-out_300ms_ease-in] motion-reduce:animate-none",
+        isFullHeight && FULL_HEIGHT,
+      )}
+    >
       <Dialog
         ref={dialogRef}
         role="dialog"
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
-        className="flex max-h-[90dvh] flex-col outline-none"
+        className={cn(
+          "flex max-h-[90dvh] flex-col outline-none",
+          isFullHeight && "h-full max-h-none",
+        )}
       >
         <SheetGrabber />
         <SheetHeader

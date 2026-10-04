@@ -1,34 +1,35 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-04 (F-08 PLANNED; F-00, F-01, F-02, F-03, F-06, F-07 and F-17 DONE; F-04 and F-05 merged, not yet verified) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `feat/team-sessions` (F-08 planned; from `feat/projects`, `main` merged in).
+Last updated: 2026-10-05 (F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `claude/new-feature-skill-start-a92e1b` (F-09 gallery, worktree). F-07 is on `feat/projects`; F-08 Team designed on `feat/team-sessions`.
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-08 Team PLANNED (2026-10-04)
+## Current handoff — F-09 Gallery DONE, pending Owner acceptance (2026-10-05)
 
-- **State:** `feat/team-sessions` (from `feat/projects`, `main` merged). Status PLANNED. The planning docs (`technical-design.md`, `plan.md`, `exports/_compact/`, spec and feature-map edits) are **uncommitted**. Nothing is built, pushed or in a PR.
-- **Done this session:**
-  - [technical-design.md](features/team-sessions/technical-design.md): 17 decisions (D-1…D-17), two migrations (`0010_team`, custom `0011_team_role_backfill`). No new ADR.
-  - [plan.md](features/team-sessions/plan.md): six slices, one commit per step, each with a *Read first* list. 1 Peran + schema, 2 Anggota, 3 member row menu, 4 Jadwal staffing, 5 Atur tim and team-aware deletes, 6 close (isolation, E2E, axe, fidelity).
-  - Compact design exports generated (`exports/_compact/INDEX.md`). Spec and feature map set to PLANNED.
-- **Checks:** prettier on the new docs passes. No build or tests run (planning only). No SPEC GAP or CONFLICT.
+- **State:** F-09 Gallery `DONE` (pending Owner acceptance). Branch `claude/new-feature-skill-start-a92e1b` (worktree), `origin/main` (F-08) merged, not pushed, no PR. Only the generated `docs/design-system/pencil-variables.json` is untracked.
+- **Done:** Slices 0–8 of the [plan](features/gallery/plan.md), each with an implementation record. Slice 0 spike on the Owner's public folder closed R-1/R-2 ([technical design › Risks](features/gallery/technical-design.md)). Slice 8: isolation test, browser pass with axe, copy audit of all 100 exports, and the real-Drive smoke E2E (`gallery-drive-smoke.spec.ts`, axe and keyboard on every surface). Migration `0012_gallery` applied to the non-production DB.
+- **Checks (last run):** typecheck, lint, unit/dom (1493), integration (160) and build pass. Full E2E: 73 passed, 2 flaky (pass on retry), 1 stale workspace test fixed and passing; the gallery specs and the real-Drive smoke pass.
 - **Owner actions:**
-  - Review the copy marked `// not in Pencil` in plan.md › Copy (Penugasan errors, toasts, delete confirmations).
-  - Confirm the role usage count (members holding the role **or** with an assignment in it) for BR-TEAM-005.
-  - Commit the planning docs, e.g. `docs(team-sessions): plan f-08 team`.
-- **Open items:** F-07 is DONE but its follow-ups remain open (92-export fidelity pass, remaining dialogs in both themes, keyboard a11y tests, six flaky E2E tests, `pnpm install` once). F-04 and F-05 still await `/sdv:verify-feature`. F-08 changes five F-07 units by addition only; each step re-runs F-07's tests.
-- **Next:** `/sdv:build-feature team-sessions 1` (Slice 1: *Peran*, schema, migrations, role seeding).
+  - Accept F-09 or report changes; the smoke spec runs with `pnpm e2e tests/e2e/gallery` when `GALLERY_SMOKE_FOLDER_URL` is set in the shell or in `.env.test`.
+  - Check the Workers Paid plan before ship; provision the Drive and password keys for production; commit the `guard.py` change on `feat/team-sessions` if still pending.
+  - Optionally measure a 1,000–2,000 photo folder to settle A-T1 (sync size limit).
+- **Open items:**
+  - A-T1 stays an assumption (only 113 photos measured).
+  - Small deviations are listed in the plan's records (no *Ganti password* button in the *Akses klien* header, *Galeri dibuka lagi* toast not wired).
+  - Flaky E2E: catalog phone axe (timeout) and AC-SRC-015, both pass on retry.
+- **Next:** `/sdv:verify-feature gallery` for the independent review, then `/sdv:ship`.
 
 ## Key decisions (Owner)
 
-- **Design-system decisions (2026-09-26, sessions 1–4)** are in [HANDOFF-archive.md](HANDOFF-archive.md#key-decisions-owner-sessions-14-moved-2026-10-04): tokens, component method, whole-step spacing, tiers 1–4, shells, tablet rail.
+- Design-system decisions from sessions 1–4 (2026-09-26) are in the [archive](HANDOFF-archive.md); the approved values live in `docs/design-system/`.
 - **F-08 scope (Owner 2026-10-03):** no money in F-08; fees moved to F-18 *Team fees*; members are edited in a dialog, no detail page.
-- **Pen library import** resolves as `m:`, not `H:`.
-- **Migrations** may run against the shared non-production database for a reviewed, committed migration (Owner 2026-10-02, see AGENTS.md).
+- **F-09 (2026-10-04):** gallery passwords are generated, stored encrypted and visible to the Owner ([ADR-017](architecture/decisions/ADR-017-gallery-password-encrypted-owner-visible.md)); sharing a gallery is out of scope for now.
 
 ## Open gaps (deferred)
 
+- **Free hosting (Owner 2026-10-05):** [ADR-018](architecture/decisions/ADR-018-free-tier-runtime-budget.md) and [ADR-019](architecture/decisions/ADR-019-gallery-media-and-sync-on-free-tier.md) are `Proposed`. They need Owner acceptance, a CPU check on a free Workers preview, and an F-09 rework plan. ADR-019 also needs a decision on C-103 / AC-GAL-015 (media straight from Google).
+- **Pricing (draft):** [product/pricing-and-costs.md](product/pricing-and-costs.md) lists costs, the Fastpik comparison and open business questions to discuss.
 - GAP-01 dark-mode evidence
 - GAP-02 loading states (button, switch) and states beyond those drawn
 - GAP-03 workspace brand-override rules
@@ -72,4 +73,6 @@ History (previous handoffs, early status table, component-library notes): [HANDO
   - A replaced node keeps its new ID in the instance path: re-replace `KS7sb/XNJJO`, not `KS7sb/C5QYo`.
 - **Master edits that break the file (2026-09-26):** `Move`-ing a newly inserted layer inside a deeply nested master (Table Cell / Header Cell) corrupted every existing Table instance in memory and emptied the Table master's row cells; Pen then refused to save ("pen.dev can't save your changes"). Rules: insert new layers at the **end** of a master, never `Move` them; after every master edit run `Get((n,ctx)=>{ctx.skipChildren();return n.name})` (whole-doc check) and test pages one per call (`Get(pageId,{depth:30})`) — errors abort the whole call. Broken instances are fixed by deleting and rebuilding them. An IPC error (`reading 'parent'`) can leave a half-applied change: close without saving and reopen.
 - **Pencil targets the frontmost Pen window**, whatever `filePath` says: run `open -a Pen <file>` before switching files, and check `GetVariables` (the library has variables; `exploration.pen` has none).
+- **Design exports:** builds read the raw exports through `exports/INDEX.md` (`scripts/sdv/index-exports.py`). The compact exports were dropped on 2026-10-04 because their stripped bases didn't render the real UI (Owner).
+- **Pen library import in a worktree** can point at the main checkout's library; verify and never remove a used import (see `CLAUDE.md` › Mistakes to avoid).
 - **CLI save isn't possible:** `osascript` keystrokes are blocked (no Accessibility permission), so the Owner presses ⌘S.

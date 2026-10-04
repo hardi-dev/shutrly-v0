@@ -17,6 +17,7 @@ import {
   I18nProvider,
   Label,
   Popover,
+  Text,
 } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
@@ -74,6 +75,11 @@ export function DateField(props: Readonly<DateFieldProps>) {
       >
         <DateFieldLabel label={props.label} isOptional={props.isOptional} />
         <DateFieldTrigger {...props} />
+        {props.description && !props.errorMessage ? (
+          <Text slot="description" className={cn(FIELD_MESSAGE, "text-(--component-input-helper)")}>
+            {props.description}
+          </Text>
+        ) : null}
         {props.errorMessage ? (
           <FieldError className={cn(FIELD_MESSAGE, "text-(--component-input-error-text)")}>
             {props.errorMessage}

@@ -10,4 +10,7 @@ export const TEST_APP_ENV: AppEnv = {
   GOOGLE_CLIENT_SECRET: "test-google-client-secret",
   RESEND_API_KEY: "re_test",
   AUTH_EMAIL_FROM: "Shutrly <auth@test.shutrly.dev>",
+  GOOGLE_DRIVE_API_KEY: "test-drive-api-key",
+  // 32 zero bytes, base64url: a fixed non-production cipher key.
+  GALLERY_PASSWORD_KEY: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 };

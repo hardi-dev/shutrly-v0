@@ -22,6 +22,7 @@ When artifacts conflict, the higher one wins. Never silently resolve a conflict 
 | | [product/scope.md](product/scope.md) | MVP in/out, constraints, later |
 | | [product/user-journeys.md](product/user-journeys.md) | End-to-end Owner and Client journeys |
 | | [product/feature-map.md](product/feature-map.md) | Epics/features with IDs and status |
+| | [product/pricing-and-costs.md](product/pricing-and-costs.md) | Running costs, competitors, open pricing questions (draft) |
 | Domain | [domain/business-rules.md](domain/business-rules.md) | `BR-*` invariants |
 | | [domain/domain-model.md](domain/domain-model.md) | Concepts, relationships, lifecycles |
 | | [domain/glossary.md](domain/glossary.md) | Ubiquitous language (EN/ID) |

@@ -3525,5 +3525,209 @@
     "gaps": [
       "active underline and focus outline widths are literal strokes (2 px), like input border-error; no border-width tokens"
     ]
+  },
+  "photo-tile": {
+    "status": "APPROVED 2026-10-04 (Owner: \"Approve all\"; F-09 promotion)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C46 — Photo tile",
+      "id": "vxJaC"
+    },
+    "spec": "docs/design-system/components/photo-tile.md",
+    "base": {
+      "name": "_PhotoTile/Base",
+      "id": "En7KF",
+      "private": true
+    },
+    "axes": {
+      "state": [
+        "default",
+        "missing",
+        "skeleton"
+      ]
+    },
+    "props": {
+      "image": {
+        "kind": "fill",
+        "layer": "Image",
+        "id": "vnyor",
+        "note": "image fill, mode cover; override height with the grid (220 desktop, 104 phone)"
+      },
+      "fileName": {
+        "kind": "text",
+        "layer": "File name",
+        "id": "dTxmf"
+      },
+      "meta": {
+        "kind": "boolean+text",
+        "layer": "Meta",
+        "id": "erGMi"
+      },
+      "badge": {
+        "kind": "boolean",
+        "layer": "Badge",
+        "id": "gj2DD",
+        "note": "Status Chip/Warning \"Hilang\"; on in Missing"
+      }
+    },
+    "layers": {
+      "Image": "vnyor",
+      "Badge": "gj2DD",
+      "File name": "dTxmf",
+      "Meta": "erGMi"
+    },
+    "variants": {
+      "default": "AzJU9",
+      "missing": "HEwJS",
+      "skeleton": "e0pYUm"
+    },
+    "nested": [
+      "g26Cg6"
+    ],
+    "tokens": [
+      "component.photo-tile.*"
+    ],
+    "gaps": [
+      "badge offset is literal x/y 8 (component.photo-tile.badge-inset documents the value; absolute positions take no variables)",
+      "image height is literal per grid (220 / 104), like list rows"
+    ]
+  },
+  "folder-tile": {
+    "status": "APPROVED 2026-10-04 (Owner: \"Approve all\"; F-09 promotion)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C47 — Folder tile",
+      "id": "FSfkL"
+    },
+    "spec": "docs/design-system/components/folder-tile.md",
+    "base": null,
+    "axes": {},
+    "props": {
+      "name": {
+        "kind": "text",
+        "layer": "Name",
+        "id": "rkS3D"
+      },
+      "count": {
+        "kind": "text",
+        "layer": "Count",
+        "id": "tll3W"
+      },
+      "iconWrap": {
+        "kind": "size",
+        "layer": "Icon wrap",
+        "id": "gvT5W",
+        "note": "override height with the grid (220 / 104)"
+      }
+    },
+    "layers": {
+      "Icon wrap": "gvT5W",
+      "Icon": "mWqBB",
+      "Name": "rkS3D",
+      "Count": "tll3W"
+    },
+    "variants": {
+      "default": "NWvmt"
+    },
+    "nested": [],
+    "tokens": [
+      "component.folder-tile.*"
+    ],
+    "gaps": [
+      "icon size 48 is literal, like other icon sizes"
+    ]
+  },
+  "media-viewer": {
+    "status": "APPROVED 2026-10-04 (Owner: \"Approve all\"; F-09 promotion)",
+    "file": "docs/design-system/design-system.lib.pen",
+    "page": {
+      "name": "C48 — Media viewer",
+      "id": "f3g3Pl"
+    },
+    "spec": "docs/design-system/components/media-viewer.md",
+    "base": {
+      "name": "_FilmstripThumb/Base",
+      "id": "m7vpvp",
+      "private": true
+    },
+    "axes": {
+      "device": [
+        "desktop",
+        "mobile"
+      ],
+      "thumb": [
+        "default",
+        "active"
+      ]
+    },
+    "props": {
+      "fileName": {
+        "kind": "text",
+        "layer": "File name",
+        "id": "b8WLGZ",
+        "on": "Desktop (rbwFa); Mobile fmvZT"
+      },
+      "meta": {
+        "kind": "text",
+        "layer": "Meta",
+        "id": "p8Hc7",
+        "on": "Desktop; Mobile wgYkD"
+      },
+      "actions": {
+        "kind": "slot",
+        "layer": "Actions",
+        "id": "x1fkwu",
+        "on": "Desktop; Mobile SeLrM",
+        "recommended": [
+          "JmfmZ",
+          "qY0Em"
+        ]
+      },
+      "image": {
+        "kind": "fill",
+        "layer": "Image",
+        "id": "QEKsU",
+        "on": "Desktop; Mobile gbxP7",
+        "note": "image fill, mode contain; or replace with a missing-file message"
+      },
+      "filmstrip": {
+        "kind": "slot",
+        "layer": "Filmstrip",
+        "id": "FclcC",
+        "on": "Desktop; Mobile oLMLe",
+        "recommended": [
+          "IGxRK",
+          "xyliD"
+        ],
+        "fill": "Replace(instance+'/FclcC', {type:'frame', name:'Filmstrip', gap:'$component/media-viewer/filmstrip-gap', alignItems:'center'})"
+      }
+    },
+    "layers": {
+      "Top bar": "A5QLMd",
+      "Actions": "x1fkwu",
+      "Stage": "h5vq2",
+      "Image": "QEKsU",
+      "Filmstrip": "FclcC"
+    },
+    "variants": {
+      "desktop": "rbwFa",
+      "mobile": "cLkBF",
+      "thumb-default": "IGxRK",
+      "thumb-active": "xyliD"
+    },
+    "nested": [
+      "qY0Em",
+      "m9dUlL",
+      "JmfmZ"
+    ],
+    "tokens": [
+      "component.media-viewer.*",
+      "opacity.media-inactive"
+    ],
+    "gaps": [
+      "stage image and ← / → are absolutely positioned (literal x/y); nav-inset documents the 32 px side inset",
+      "viewer sizes are the viewport (1440 × 1024, 390 × 844)",
+      "thumbnail placeholder fill borrows component.photo-tile.image-background"
+    ]
   }
 }

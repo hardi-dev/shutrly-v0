@@ -113047,6 +113047,1863 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "vxJaC",
+      "x": 14698,
+      "y": 24442,
+      "name": "C46 — Photo tile",
+      "theme": {
+        "mode": "light"
+      },
+      "width": 1440,
+      "fill": "$color/semantic/surface/panel",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 64,
+      "children": [
+        {
+          "type": "frame",
+          "id": "GDP1p",
+          "name": "Header",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            0,
+            0,
+            32,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "MZGJr",
+              "name": "Overline",
+              "fill": "$color/semantic/text/muted",
+              "content": "COMPONENT  ·  C46  ·  MEDIA  ·  PHOTO TILE",
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 0.6
+            },
+            {
+              "type": "text",
+              "id": "k02OJE",
+              "name": "Title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Photo tile",
+              "fontFamily": "$font/family/base",
+              "fontSize": 44,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "TYwUR",
+              "name": "Description",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 880,
+              "content": "One photo in a grid: a cropped thumbnail and its file name, with an optional source or path line. Used by the F-09 gallery (Owner view) and reused by F-10 (client view). Missing photos show Status Chip/Warning “Hilang” over the image.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "enhK3",
+          "name": "Exhibit — Component set",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "jTOO5",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Component set",
+              "fontFamily": "$font/family/base",
+              "fontSize": 18,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "lBTNa",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "gap": 24,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "En7KF",
+                  "name": "_PhotoTile/Base",
+                  "context": "PRIVATE base for Photo Tile variants — do not instance in screens.",
+                  "reusable": true,
+                  "width": 200,
+                  "layout": "vertical",
+                  "gap": "$component/photo-tile/gap",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "vnyor",
+                      "name": "Image",
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": 180,
+                      "fill": "$component/photo-tile/image-background",
+                      "cornerRadius": "$component/photo-tile/image-radius",
+                      "layout": "none",
+                      "children": [
+                        {
+                          "id": "gj2DD",
+                          "type": "ref",
+                          "ref": "g26Cg6",
+                          "name": "Badge",
+                          "x": 8,
+                          "y": 8,
+                          "enabled": false,
+                          "descendants": {
+                            "SD1o7": {
+                              "content": "Hilang"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Bvmpj",
+                      "name": "Text",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$component/photo-tile/text-gap",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "dTxmf",
+                          "name": "File name",
+                          "fill": "$component/photo-tile/name",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "IMG_001.jpg",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": "$font/size/body-sm",
+                          "fontWeight": "$font/weight/medium"
+                        },
+                        {
+                          "type": "text",
+                          "id": "erGMi",
+                          "name": "Meta",
+                          "fill": "$component/photo-tile/meta",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Rina-Wisuda · proof",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": "$font/size/caption",
+                          "fontWeight": "$font/weight/regular"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "AzJU9",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "En7KF",
+                  "name": "Photo Tile/Default",
+                  "context": "Photo Tile · state=default. Image: set an image fill on Image (cover). Text: File name; Meta (boolean). Spec: docs/design-system/components/photo-tile.md",
+                  "descendants": {
+                    "vnyor": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1763673404916-0b9eb4b30e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "cover"
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "HEwJS",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "En7KF",
+                  "name": "Photo Tile/Missing",
+                  "context": "Photo Tile · state=missing (file gone from Drive). Badge on. Spec: docs/design-system/components/photo-tile.md",
+                  "descendants": {
+                    "vnyor": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1625321482818-d13675fea97b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "cover"
+                      }
+                    },
+                    "gj2DD": {
+                      "enabled": true
+                    },
+                    "dTxmf": {
+                      "content": "IMG_002.jpg"
+                    }
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "e0pYUm",
+                  "name": "Photo Tile/Skeleton",
+                  "context": "Photo Tile · loading placeholder. Spec: docs/design-system/components/photo-tile.md",
+                  "reusable": true,
+                  "width": 200,
+                  "layout": "vertical",
+                  "gap": "$component/photo-tile/gap",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": "$component/photo-tile/image-radius",
+                      "id": "d1NUV1",
+                      "name": "Image",
+                      "fill": "$component/photo-tile/image-background",
+                      "width": "fill_container",
+                      "height": 180
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": "$radius/sm",
+                      "id": "q16Nt",
+                      "name": "Bar",
+                      "fill": "$component/photo-tile/image-background",
+                      "width": 120,
+                      "height": 12
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "CyXvU",
+          "name": "Exhibit — In context",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "RqwmG",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "G56CL",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "In context",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "W2n6q",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "F-09 gallery card preview and Semua foto grid. Meta shows the folder path only in search results; otherwise it is off. A missing photo keeps its tile with the Hilang badge.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Dslnq",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ieg2v",
+                  "name": "Grid row",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "id": "QQNtT",
+                      "type": "ref",
+                      "ref": "NWvmt",
+                      "name": "Folder Akad",
+                      "width": "fill_container"
+                    },
+                    {
+                      "id": "mivzX",
+                      "type": "ref",
+                      "ref": "NWvmt",
+                      "name": "Folder Resepsi",
+                      "width": "fill_container",
+                      "descendants": {
+                        "rkS3D": {
+                          "content": "Resepsi"
+                        },
+                        "tll3W": {
+                          "content": "120 foto"
+                        }
+                      }
+                    },
+                    {
+                      "id": "kqa6U",
+                      "type": "ref",
+                      "ref": "AzJU9",
+                      "name": "Photo",
+                      "width": "fill_container",
+                      "descendants": {
+                        "erGMi": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "Azs27",
+                      "type": "ref",
+                      "ref": "HEwJS",
+                      "name": "Photo missing",
+                      "width": "fill_container",
+                      "descendants": {
+                        "erGMi": {
+                          "enabled": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Qvjjw",
+          "name": "Exhibit — Modes",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "Q7Z1t",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cr1ih",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Modes",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "r8Q1Fg",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Default, Missing and Skeleton under theme mode = dark.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "uwTHc",
+              "name": "Artwork",
+              "theme": {
+                "mode": "dark"
+              },
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "AitGJ",
+                  "name": "Row dark",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "id": "OmS3o",
+                      "type": "ref",
+                      "ref": "AzJU9",
+                      "name": "Default"
+                    },
+                    {
+                      "id": "d9sUj1",
+                      "type": "ref",
+                      "ref": "HEwJS",
+                      "name": "Missing"
+                    },
+                    {
+                      "id": "Rx6pY",
+                      "type": "ref",
+                      "ref": "e0pYUm",
+                      "name": "Skeleton"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "p1bhjE",
+          "name": "Exhibit — Accessibility",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "FAlva",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "j8lDAR",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Accessibility",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "eHZKT",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "KdRZL",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  The tile is one button that opens the preview; its accessible name is the file name, plus “hilang” when missing.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "pvM5E",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  The image has empty alt (the name is in the label); thumbnails load lazily and keep their box while loading (Skeleton).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "QVQtr",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  The Hilang badge is text, never colour-only. File name text.primary / meta text.secondary meet AA on surface.panel.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "FSfkL",
+      "x": 16238,
+      "y": 24442,
+      "name": "C47 — Folder tile",
+      "theme": {
+        "mode": "light"
+      },
+      "width": 1440,
+      "fill": "$color/semantic/surface/panel",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 64,
+      "children": [
+        {
+          "type": "frame",
+          "id": "e4djFd",
+          "name": "Header",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            0,
+            0,
+            32,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "GYlht",
+              "name": "Overline",
+              "fill": "$color/semantic/text/muted",
+              "content": "COMPONENT  ·  C47  ·  MEDIA  ·  FOLDER TILE",
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 0.6
+            },
+            {
+              "type": "text",
+              "id": "UZM8L",
+              "name": "Title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Folder tile",
+              "fontFamily": "$font/family/base",
+              "fontSize": 44,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "Owu9e",
+              "name": "Description",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 880,
+              "content": "A folder in a photo grid, the same footprint as Photo Tile so folders and photos sit in one Drive-like grid (folders first). Shows the folder name and its photo count for the active kind.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "gWzIK",
+          "name": "Exhibit — Component set",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "h9bnu8",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Component set",
+              "fontFamily": "$font/family/base",
+              "fontSize": 18,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "V881cp",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "gap": 24,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "NWvmt",
+                  "name": "Folder Tile",
+                  "context": "Folder Tile · opens a folder. Text: Name, Count. Same size as Photo Tile; override the Icon wrap height with the grid (220 desktop / 104 phone). Spec: docs/design-system/components/folder-tile.md",
+                  "reusable": true,
+                  "width": 200,
+                  "layout": "vertical",
+                  "gap": "$component/folder-tile/gap",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "gvT5W",
+                      "name": "Icon wrap",
+                      "width": "fill_container",
+                      "height": 180,
+                      "fill": "$component/folder-tile/background",
+                      "cornerRadius": "$component/folder-tile/radius",
+                      "stroke": "$component/folder-tile/border",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "mWqBB",
+                          "name": "Icon",
+                          "width": 48,
+                          "height": 48,
+                          "icon": "folder",
+                          "library": "lucide",
+                          "fill": "$component/folder-tile/icon"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "RIGCL",
+                      "name": "Text",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$component/folder-tile/text-gap",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "rkS3D",
+                          "name": "Name",
+                          "fill": "$component/folder-tile/name",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Akad",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": "$font/size/body-sm",
+                          "fontWeight": "$font/weight/medium"
+                        },
+                        {
+                          "type": "text",
+                          "id": "tll3W",
+                          "name": "Count",
+                          "fill": "$component/folder-tile/count",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "64 foto",
+                          "fontFamily": "$font/family/base",
+                          "fontSize": "$font/size/caption",
+                          "fontWeight": "$font/weight/regular"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "JkTvV",
+          "name": "Exhibit — In context",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "C9FVZ",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "rsfxK",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "In context",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "pN4X0",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "F-09 Semua foto, inside Rina-Wisuda: subfolders first, then photos, one grid, same tile size (Owner 2026-10-04). Desktop 4 per row with 220 images; phone 3 per row with 104.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "VyU1r",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "IFKzP",
+                  "name": "Grid row",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "id": "Vq0hh",
+                      "type": "ref",
+                      "ref": "NWvmt",
+                      "name": "Folder Akad",
+                      "width": "fill_container"
+                    },
+                    {
+                      "id": "T6oGm",
+                      "type": "ref",
+                      "ref": "NWvmt",
+                      "name": "Folder Resepsi",
+                      "width": "fill_container",
+                      "descendants": {
+                        "rkS3D": {
+                          "content": "Resepsi"
+                        },
+                        "tll3W": {
+                          "content": "120 foto"
+                        }
+                      }
+                    },
+                    {
+                      "id": "nLUgr",
+                      "type": "ref",
+                      "ref": "AzJU9",
+                      "name": "Photo",
+                      "width": "fill_container",
+                      "descendants": {
+                        "erGMi": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "SNzgO",
+                      "type": "ref",
+                      "ref": "HEwJS",
+                      "name": "Photo missing",
+                      "width": "fill_container",
+                      "descendants": {
+                        "erGMi": {
+                          "enabled": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "S5MAGW",
+          "name": "Exhibit — Modes",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "tamI9",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "s1IJf",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Modes",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "V5ozYQ",
+                  "name": "Exhibit note",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Folder Tile beside Photo Tile under theme mode = dark.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "bhfBU",
+              "name": "Artwork",
+              "theme": {
+                "mode": "dark"
+              },
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "B1MSfa",
+                  "name": "Grid row dark",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "id": "eguQd",
+                      "type": "ref",
+                      "ref": "NWvmt",
+                      "name": "Folder Akad",
+                      "width": "fill_container"
+                    },
+                    {
+                      "id": "iH28A",
+                      "type": "ref",
+                      "ref": "NWvmt",
+                      "name": "Folder Resepsi",
+                      "width": "fill_container",
+                      "descendants": {
+                        "rkS3D": {
+                          "content": "Resepsi"
+                        },
+                        "tll3W": {
+                          "content": "120 foto"
+                        }
+                      }
+                    },
+                    {
+                      "id": "bDvGg",
+                      "type": "ref",
+                      "ref": "AzJU9",
+                      "name": "Photo",
+                      "width": "fill_container",
+                      "descendants": {
+                        "erGMi": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "a3WIU",
+                      "type": "ref",
+                      "ref": "HEwJS",
+                      "name": "Photo missing",
+                      "width": "fill_container",
+                      "descendants": {
+                        "erGMi": {
+                          "enabled": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Pig4l",
+          "name": "Exhibit — Accessibility",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "jXrPn",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lEE4x",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Accessibility",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "VhSLT",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "hcHwC",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  The whole tile is one button (or link) named “{folder}, {n} foto”; the icon is decorative.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "fU10r",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Keyboard: grid items are in reading order; Enter/Space opens the folder; the breadcrumb is the way back.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "UmExW",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Name text.primary and count text.secondary on surface.panel meet AA in both modes.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "f3g3Pl",
+      "x": 17778,
+      "y": 24442,
+      "name": "C48 — Media viewer",
+      "theme": {
+        "mode": "light"
+      },
+      "width": 2080,
+      "fill": "$color/semantic/surface/panel",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 64,
+      "children": [
+        {
+          "type": "frame",
+          "id": "krt9g",
+          "name": "Header",
+          "width": "fill_container",
+          "stroke": "$color/semantic/border/default",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            0,
+            0,
+            32,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "NsTc2",
+              "name": "Overline",
+              "fill": "$color/semantic/text/muted",
+              "content": "COMPONENT  ·  C48  ·  MEDIA  ·  MEDIA VIEWER",
+              "fontFamily": "IBM Plex Mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 0.6
+            },
+            {
+              "type": "text",
+              "id": "o7omQY",
+              "name": "Title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Media viewer",
+              "fontFamily": "$font/family/base",
+              "fontSize": 44,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "Hi60w",
+              "name": "Description",
+              "fill": "$color/semantic/text/secondary",
+              "textGrowth": "fixed-width",
+              "width": 880,
+              "content": "Full-screen photo preview (lightbox): dark backdrop (surface.inverse, token-usage amendment 2026-10-04), top bar with file name, meta and actions, the photo as large as it fits, ← / → and a filmstrip. Opens from Photo Tile. F-09 Owner preview; F-10 client preview reuses it with different actions.",
+              "lineHeight": 1.5,
+              "fontFamily": "$font/family/base",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "pR3fA",
+          "name": "Exhibit — Component set",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "hOLTW",
+              "name": "Exhibit title",
+              "fill": "$color/semantic/text/primary",
+              "content": "Component set",
+              "fontFamily": "$font/family/base",
+              "fontSize": 18,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "gDITr",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$component/media-viewer/backdrop",
+              "cornerRadius": "$radius/md",
+              "gap": 24,
+              "padding": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "m7vpvp",
+                  "name": "_FilmstripThumb/Base",
+                  "context": "PRIVATE base for Filmstrip Thumb — do not instance in screens.",
+                  "reusable": true,
+                  "clip": true,
+                  "width": 48,
+                  "height": 48,
+                  "fill": "$component/photo-tile/image-background",
+                  "cornerRadius": "$component/media-viewer/thumb-radius"
+                },
+                {
+                  "id": "IGxRK",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "m7vpvp",
+                  "name": "Filmstrip Thumb/Default",
+                  "context": "Filmstrip Thumb · state=default (inactive, dimmed by media-viewer.thumb-inactive-opacity). Set an image fill. Spec: docs/design-system/components/media-viewer.md",
+                  "opacity": "$component/media-viewer/thumb-inactive-opacity",
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1763673404916-0b9eb4b30e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "cover"
+                  }
+                },
+                {
+                  "id": "xyliD",
+                  "type": "ref",
+                  "reusable": true,
+                  "ref": "m7vpvp",
+                  "name": "Filmstrip Thumb/Active",
+                  "context": "Filmstrip Thumb · state=active (current photo): full opacity + 2 px media-viewer.thumb-active-border. Spec: docs/design-system/components/media-viewer.md",
+                  "stroke": "$component/media-viewer/thumb-active-border",
+                  "strokeWidth": 2,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1591766814407-adbc542893c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "cover"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "cOZ4V",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "gap": 24,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "rbwFa",
+                  "name": "Media Viewer/Desktop",
+                  "context": "Media Viewer · desktop/tablet, fills the viewport (1440 × 1024 shown). Text: File name, Meta. Slots: Actions (Button Secondary; Owner: Buka di Google Drive), Image (image fill, contain), Filmstrip (Filmstrip Thumb). Spec: docs/design-system/components/media-viewer.md",
+                  "reusable": true,
+                  "width": 1440,
+                  "height": 1024,
+                  "fill": "$component/media-viewer/backdrop",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "A5QLMd",
+                      "name": "Top bar",
+                      "width": "fill_container",
+                      "gap": "$component/media-viewer/bar-gap",
+                      "padding": [
+                        "$component/media-viewer/bar-padding-y",
+                        "$component/media-viewer/bar-padding-x"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "KSW0c",
+                          "name": "Title",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$space/0-5",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "b8WLGZ",
+                              "name": "File name",
+                              "fill": "$component/media-viewer/text",
+                              "content": "A_012.jpg",
+                              "fontFamily": "$font/family/base",
+                              "fontSize": "$font/size/body",
+                              "fontWeight": "$font/weight/bold"
+                            },
+                            {
+                              "type": "text",
+                              "id": "p8Hc7",
+                              "name": "Meta",
+                              "fill": "$component/media-viewer/text",
+                              "content": "Rina-Wisuda › Akad · Proof · 12 dari 64",
+                              "fontFamily": "$font/family/base",
+                              "fontSize": "$font/size/body-sm",
+                              "fontWeight": "$font/weight/regular"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "x1fkwu",
+                          "name": "Actions",
+                          "slot": [
+                            "JmfmZ"
+                          ],
+                          "gap": "$space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "wWQxP",
+                              "type": "ref",
+                              "ref": "JmfmZ",
+                              "name": "Buka di Google Drive",
+                              "descendants": {
+                                "fMNO1": {
+                                  "enabled": true,
+                                  "icon": "external-link"
+                                },
+                                "xnhuK": {
+                                  "content": "Buka di Google Drive"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "id": "x03pmp",
+                          "type": "ref",
+                          "ref": "qY0Em",
+                          "name": "Tutup",
+                          "descendants": {
+                            "wSyzB": {
+                              "icon": "x",
+                              "fill": "$component/media-viewer/text"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "h5vq2",
+                      "name": "Stage",
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "QEKsU",
+                          "x": 120,
+                          "y": 0,
+                          "name": "Image",
+                          "clip": true,
+                          "width": 1200,
+                          "height": 820,
+                          "fill": {
+                            "type": "image",
+                            "enabled": true,
+                            "url": "https://images.unsplash.com/photo-1591766814407-adbc542893c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                            "mode": "contain"
+                          }
+                        },
+                        {
+                          "id": "yiU67",
+                          "type": "ref",
+                          "ref": "m9dUlL",
+                          "name": "Sebelumnya",
+                          "x": 32,
+                          "y": 390,
+                          "descendants": {
+                            "wSyzB": {
+                              "icon": "chevron-left"
+                            }
+                          }
+                        },
+                        {
+                          "id": "x2dft",
+                          "type": "ref",
+                          "ref": "m9dUlL",
+                          "name": "Berikutnya",
+                          "x": 1368,
+                          "y": 390,
+                          "descendants": {
+                            "wSyzB": {
+                              "icon": "chevron-right"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "P9MOM0",
+                      "name": "Bottom",
+                      "width": "fill_container",
+                      "padding": [
+                        "$space/3",
+                        "$component/media-viewer/bar-padding-x",
+                        "$component/media-viewer/bar-padding-y",
+                        "$component/media-viewer/bar-padding-x"
+                      ],
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "FclcC",
+                          "name": "Filmstrip",
+                          "slot": [
+                            "IGxRK",
+                            "xyliD"
+                          ],
+                          "gap": "$component/media-viewer/filmstrip-gap",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "hkRKb",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 1",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1591766814407-adbc542893c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "hqk0v",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 2",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1763673404916-0b9eb4b30e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "G4giUG",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 3",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1625321482818-d13675fea97b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "bKDwz",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 4",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1591766814407-adbc542893c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "FUob8",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 5",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1763673404916-0b9eb4b30e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "r3q82",
+                              "type": "ref",
+                              "ref": "xyliD",
+                              "name": "Thumb 6",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1625321482818-d13675fea97b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "QdoXb",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 7",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1591766814407-adbc542893c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "vmy4q",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 8",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1763673404916-0b9eb4b30e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "NzrtA",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 9",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1625321482818-d13675fea97b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "XlSi1",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 10",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1591766814407-adbc542893c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "YoZn0",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 11",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1763673404916-0b9eb4b30e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "cLkBF",
+                  "name": "Media Viewer/Mobile",
+                  "context": "Media Viewer · phone, full screen (390 × 844). Swipe for next/previous; Actions holds an icon button. Slots: Actions, Image, Filmstrip. Spec: docs/design-system/components/media-viewer.md",
+                  "reusable": true,
+                  "width": 390,
+                  "height": 844,
+                  "fill": "$component/media-viewer/backdrop",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "j8mEop",
+                      "name": "Top bar",
+                      "width": "fill_container",
+                      "gap": "$space/2",
+                      "padding": [
+                        "$space/12",
+                        "$space/2",
+                        "$space/2",
+                        "$space/4"
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "AgWM2",
+                          "name": "Title",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "fmvZT",
+                              "name": "File name",
+                              "fill": "$component/media-viewer/text",
+                              "content": "A_012.jpg",
+                              "fontFamily": "$font/family/base",
+                              "fontSize": "$font/size/body",
+                              "fontWeight": "$font/weight/bold"
+                            },
+                            {
+                              "type": "text",
+                              "id": "wgYkD",
+                              "name": "Meta",
+                              "fill": "$component/media-viewer/text",
+                              "content": "Akad · Proof · 12 dari 64",
+                              "fontFamily": "$font/family/base",
+                              "fontSize": "$font/size/caption",
+                              "fontWeight": "$font/weight/regular"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "SeLrM",
+                          "name": "Actions",
+                          "slot": [
+                            "qY0Em"
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "tBHRW",
+                              "type": "ref",
+                              "ref": "qY0Em",
+                              "name": "Buka di Google Drive",
+                              "descendants": {
+                                "wSyzB": {
+                                  "icon": "external-link",
+                                  "fill": "$component/media-viewer/text"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "id": "UbQwg",
+                          "type": "ref",
+                          "ref": "qY0Em",
+                          "name": "Tutup",
+                          "descendants": {
+                            "wSyzB": {
+                              "icon": "x",
+                              "fill": "$component/media-viewer/text"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Uh9WH",
+                      "name": "Stage",
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "gbxP7",
+                          "x": 0,
+                          "y": 0,
+                          "name": "Image",
+                          "clip": true,
+                          "width": 390,
+                          "height": 560,
+                          "fill": {
+                            "type": "image",
+                            "enabled": true,
+                            "url": "https://images.unsplash.com/photo-1591766814407-adbc542893c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                            "mode": "contain"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nVVLt",
+                      "name": "Bottom",
+                      "width": "fill_container",
+                      "padding": [
+                        "$space/3",
+                        "$space/4",
+                        "$space/8",
+                        "$space/4"
+                      ],
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "oLMLe",
+                          "name": "Filmstrip",
+                          "slot": [
+                            "IGxRK",
+                            "xyliD"
+                          ],
+                          "gap": "$component/media-viewer/filmstrip-gap",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "id": "j5T6J",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 1",
+                              "width": 44,
+                              "height": 44,
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1591766814407-adbc542893c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "A5UkbS",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 2",
+                              "width": 44,
+                              "height": 44,
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1763673404916-0b9eb4b30e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "l74PT",
+                              "type": "ref",
+                              "ref": "xyliD",
+                              "name": "Thumb 3",
+                              "width": 44,
+                              "height": 44,
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1625321482818-d13675fea97b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "wOkmM",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 4",
+                              "width": 44,
+                              "height": 44,
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1591766814407-adbc542893c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "J3SFXc",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 5",
+                              "width": 44,
+                              "height": 44,
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1763673404916-0b9eb4b30e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            },
+                            {
+                              "id": "VR86e",
+                              "type": "ref",
+                              "ref": "IGxRK",
+                              "name": "Thumb 6",
+                              "width": 44,
+                              "height": 44,
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://images.unsplash.com/photo-1625321482818-d13675fea97b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTEwNTgwMzl8&ixlib=rb-4.1.0&q=80&w=1080",
+                                "mode": "cover"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "UZ9oA",
+          "name": "Exhibit — Modes",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "ekHL3",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "dRIno",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Modes",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "e5N6Af",
+              "name": "Artwork",
+              "theme": {
+                "mode": "dark"
+              },
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "padding": 24,
+              "children": [
+                {
+                  "id": "H68l1",
+                  "type": "ref",
+                  "ref": "cLkBF",
+                  "name": "Mobile dark"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "mG5qO",
+          "name": "Exhibit — Accessibility",
+          "width": "fill_container",
+          "gap": 40,
+          "children": [
+            {
+              "type": "frame",
+              "id": "x0Pe1",
+              "name": "Notes",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "BkEoR",
+                  "name": "Exhibit title",
+                  "fill": "$color/semantic/text/primary",
+                  "content": "Accessibility",
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "a5aWQ",
+              "name": "Artwork",
+              "width": "fill_container",
+              "fill": "$color/semantic/surface/canvas",
+              "cornerRadius": "$radius/md",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Q8EGue",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  role=dialog with aria-modal=true and aria-label “Preview {file name}”; focus moves to Tutup on open and returns to the opening tile on close.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "Nq7IS",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Keys: ← / → previous and next, Esc closes, Home/End first and last. On phones, swipe left/right; the filmstrip is a horizontal list of buttons.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "hAmyd",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Backdrop stays dark in both modes (surface.inverse light / surface.canvas dark); text and the active-thumb outline use media-viewer.text (≥ 15:1).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "ZOjwA",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  Inactive thumbnails are dimmed (media-viewer.thumb-inactive-opacity 0.6) as a photo treatment, not a colour variant (G7 exception, Owner 2026-10-04); the current one also has the outline, so state is not opacity-only.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "tEkms",
+                  "name": "Bullet",
+                  "fill": "$color/semantic/text/secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "•  The image has alt = file name; a missing file shows text, not an empty frame.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "themes": {
@@ -114616,6 +116473,23 @@
     "component/table/header/background": {
       "type": "color",
       "value": "$color/semantic/surface/panel-subtle"
+    },
+    "color/semantic/surface/panel-subtle": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/primitive/neutral/50",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/primitive/neutral/800",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
     },
     "component/table/header/text": {
       "type": "color",
@@ -116194,22 +118068,148 @@
       "type": "number",
       "value": "$space/8"
     },
-    "color/semantic/surface/panel-subtle": {
+    "opacity/media-inactive": {
+      "type": "number",
+      "value": 60
+    },
+    "component/photo-tile/image-background": {
+      "type": "color",
+      "value": "$color/semantic/surface/sunken"
+    },
+    "component/photo-tile/image-radius": {
+      "type": "number",
+      "value": "$radius/md"
+    },
+    "component/photo-tile/gap": {
+      "type": "number",
+      "value": "$space/2"
+    },
+    "component/photo-tile/text-gap": {
+      "type": "number",
+      "value": "$space/0-5"
+    },
+    "component/photo-tile/name": {
+      "type": "color",
+      "value": "$color/semantic/text/primary"
+    },
+    "component/photo-tile/meta": {
+      "type": "color",
+      "value": "$color/semantic/text/secondary"
+    },
+    "component/photo-tile/badge-inset": {
+      "type": "number",
+      "value": "$space/2"
+    },
+    "component/folder-tile/background": {
+      "type": "color",
+      "value": "$color/semantic/surface/subtle"
+    },
+    "component/folder-tile/border": {
+      "type": "color",
+      "value": "$color/semantic/border/default"
+    },
+    "component/folder-tile/radius": {
+      "type": "number",
+      "value": "$radius/md"
+    },
+    "component/folder-tile/icon": {
+      "type": "color",
+      "value": "$color/semantic/text/secondary"
+    },
+    "component/folder-tile/gap": {
+      "type": "number",
+      "value": "$space/2"
+    },
+    "component/folder-tile/text-gap": {
+      "type": "number",
+      "value": "$space/0-5"
+    },
+    "component/folder-tile/name": {
+      "type": "color",
+      "value": "$color/semantic/text/primary"
+    },
+    "component/folder-tile/count": {
+      "type": "color",
+      "value": "$color/semantic/text/secondary"
+    },
+    "component/media-viewer/backdrop": {
       "type": "color",
       "value": [
         {
-          "value": "$color/primitive/neutral/50",
+          "value": "$color/semantic/surface/inverse",
           "theme": {
             "mode": "light"
           }
         },
         {
-          "value": "$color/primitive/neutral/800",
+          "value": "$color/semantic/surface/canvas",
           "theme": {
             "mode": "dark"
           }
         }
       ]
+    },
+    "component/media-viewer/text": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/text/inverse",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/media-viewer/bar-padding-x": {
+      "type": "number",
+      "value": "$space/6"
+    },
+    "component/media-viewer/bar-padding-y": {
+      "type": "number",
+      "value": "$space/4"
+    },
+    "component/media-viewer/bar-gap": {
+      "type": "number",
+      "value": "$space/4"
+    },
+    "component/media-viewer/nav-inset": {
+      "type": "number",
+      "value": "$space/8"
+    },
+    "component/media-viewer/filmstrip-gap": {
+      "type": "number",
+      "value": "$space/2"
+    },
+    "component/media-viewer/thumb-radius": {
+      "type": "number",
+      "value": "$radius/sm"
+    },
+    "component/media-viewer/thumb-active-border": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/semantic/text/inverse",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/semantic/text/primary",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
+    },
+    "component/media-viewer/thumb-inactive-opacity": {
+      "type": "number",
+      "value": "$opacity/media-inactive"
     }
   },
   "fileToken": "a25701b4-4c5b-41fc-8af0-91535884d9bf"

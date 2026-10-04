@@ -281,7 +281,12 @@ export const PROJECT_COPY = {
   // not in Pencil
   infoCancelledTitle: "Proyek sudah dibatalkan",
   cancelDialogTitle: "Batalkan proyek?",
-  cancelDialogBody: "Proyek pindah ke Dibatalkan dan tidak bisa diubah lagi.",
+  // F-09 (BR-PRJ-010): the description now carries the gallery sentence (F-09 design.md › Copy).
+  cancelDialogDescription:
+    "Proyek pindah ke Dibatalkan dan tidak bisa diubah lagi. Galeri yang dipublikasikan ikut diarsipkan; klien tidak bisa membukanya lagi.",
+  // F-09 (BR-PRJ-010): added to the cancel dialog; drawn in the F-09 copy table.
+  cancelDialogGalleryNote:
+    "Galeri yang dipublikasikan ikut diarsipkan; klien tidak bisa membukanya lagi.",
   cancelReasonRequiredLabel: "Alasan pembatalan",
   cancelReasonPlaceholder: "Contoh: klien membatalkan karena jadwal berubah",
   cancelBack: "Kembali",

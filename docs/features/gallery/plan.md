@@ -1,0 +1,373 @@
+# F-09 Gallery — Implementation Plan (vertical slices by screen)
+
+> **For agentic workers:** `/sdv:build-feature gallery <slice>` runs one slice. Each step inside a slice is one commit, test-first (red → green → refactor). Read only the slice's **Read first** list. Stop with a `SPEC GAP` instead of guessing.
+
+**Goal:** the Owner creates a password-protected gallery for a booked project and links Drive folders to it. The Owner then syncs and browses the photos (folders, search, preview), publishes the gallery, and manages its expiry, password and archive.
+
+**Approach:**
+- The plan follows F-07: each slice delivers one screen end to end (domain → application → repository → action → UI → tests) and can be tried in the browser when it's done.
+- The order follows the data: create → sources and sync → photos → *Semua foto* → preview → lifecycle → cancel → verification.
+
+**Sources:**
+- [technical-design.md](technical-design.md) (decisions D-1…D-19);
+- [spec.md](spec.md) and [acceptance-criteria.md](acceptance-criteria.md) (AC-GAL-001…031);
+- [design.md](design.md) and [exports/INDEX.md](exports/INDEX.md), which points to the raw HTML export of each state (`<state>-<device>-<frameId>.html`);
+- component specs in `docs/design-system/components/` (`photo-tile`, `folder-tile`, `media-viewer`, `modal`).
+
+## Global constraints (every slice)
+
+- **Architecture and coding rules:** [architecture/overview.md](../../architecture/overview.md) and [coding-rules.md](../../coding-rules.md).
+  - Unit folders with co-located tests.
+  - `server-only` on application, composition and adapter modules.
+  - No types in `.tsx` or use-case files; put them in `*.types.ts`.
+  - Functions of at most 50 lines; copy lives in `*.copy.ts`.
+  - Prettier and `eslint --fix` per file as you go.
+- **Token rules:** `docs/design-system/token-usage.md` v3.1. Tokens only, no hex.
+- **UI fidelity:** find each state in `exports/INDEX.md`, then build from its raw exports (desktop and mobile). Read only the states the slice names, one file at a time; each is a complete frame of 25–165 KB.
+- **Secrets and logs:** never log links, the API key, passwords or ciphertext (C-103). Never use `process.env` in `src/`.
+- **Migrations:** `pnpm db:migrate` only for the reviewed and committed `0012_gallery`, against the non-production database, and report the run.
+- **Gate per slice:**
+  - `pnpm typecheck`;
+  - `pnpm lint`;
+  - `pnpm test`;
+  - the relevant `pnpm test:integration`;
+  - the relevant `pnpm e2e`;
+  - `pnpm build`.
+
+  A slice is not done with any check failing or unrun.
+
+## Existing code to follow
+
+| Need | Follow |
+|---|---|
+| Composition entry with guard + scope | `src/composition/booking/project-flow/project-flow.ts`, `project-scope/` |
+| Cross-feature transaction | `src/composition/workspace/workspace-creation-scope/` (ADR-016) |
+| Locked aggregate writes | `withLockedProject` in `src/adapters/db/project-repository/drizzle-project-repository.ts` |
+| Write results and validation failures | `features/booking/application/use-cases/project-results/` |
+| Tenant tables | `src/adapters/db/schema/_conventions/tenant.ts`, `schema/booking/project.ts` |
+| Web Crypto adapter | `src/adapters/crypto/access-token-generator/` |
+| Rate limiter | `src/adapters/db/rate-limiter/neon-rate-limiter.ts` |
+| Dialogs, menus, toasts, infinite scroll | `features/booking/ui/project-status-dialogs`, `project-menu`, `use-load-more-projects`; `src/ui/patterns/toast` |
+| Existing gallery feature (F-04) | `src/features/gallery/**`, `src/composition/gallery/source-config-*` |
+| Env bindings | `src/shared/env/app-env.schema.ts`, `.env.example` |
+
+## Slice 0 — Base, secrets and Drive spike
+
+**Done when:**
+- the env keys validate;
+- the Drive spike lists a real public test folder tree and fetches one thumbnail with the non-production key;
+- its numbers are recorded in technical-design.md › R-1/R-2.
+
+**Read first:**
+- technical-design.md › Decisions D-6, D-7, D-10, Server / API Interface › Environment, Risks;
+- coding-rules.md › Security-relevant rules;
+- `src/shared/env/*`, `.env.example`.
+
+**Steps:**
+- [x] **Owner:** provision `GOOGLE_DRIVE_API_KEY` (Drive API enabled, restricted to the Drive API) and `GALLERY_PASSWORD_KEY` (32 random bytes, base64url) in `.dev.vars` and `.env.test`. Stop until they're done.
+- [x] Add both keys and `E2E_FAKE_DRIVE` to `appEnvSchema`. The 32-byte decode is checked, and `E2E_FAKE_DRIVE` is refused when `APP_STAGE=production`. Add them to `.env.example` with comments. Tests in `app-env.test.ts`.
+- [x] Spike: a script under `scripts/gallery/drive-spike.ts`, not shipped, that lists a public folder tree with the key and fetches `thumbnailLink=s400`. Record the list calls, the time and whether the thumbnail works without OAuth. Delete the script after recording, or keep it under `scripts/` with a header comment.
+
+**Implementation record (2026-10-04):**
+- Env keys validated (`GALLERY_PASSWORD_KEY` by a 43-character base64url pattern whose last character carries 4 bits, so exactly 32 bytes; `E2E_FAKE_DRIVE` refused on production); `.env.example` updated; 3 new `app-env` tests.
+- `scripts/gallery/drive-spike.ts` written (header comment, prints counts only). Run 2026-10-05 on the Owner's public test folder: 1 list call in 0.6 s, 113 images, 0 ignored, 0 too deep; the thumbnail came from `*.googleusercontent.com` with HTTP 200 `image/jpeg` and no OAuth. R-1 and R-2 closed; A-T1 holds at this size (no 1,000+ photo folder tested).
+
+## Slice 1 — Create a gallery and see its password
+
+**Done when:**
+- on a `BOOKED` project the Galeri card offers *Buat galeri*;
+- the dialog proposes a password (*Buat ulang* works);
+- creating it opens the gallery page with *Akses klien* (password and *Salin*) and an empty *Sumber foto*;
+- the database holds ciphertext and hash only;
+- AC-GAL-001…004 and AC-GAL-027 pass.
+
+**Read first:**
+- AC-GAL-001, 002, 003, 004, 027, 025 (create and read paths);
+- BR-GAL-001, 002, 009; ADR-017;
+- technical-design.md › D-1…D-5, D-14, D-16, D-18, Database Changes (whole), Security;
+- coding-rules.md › Data Access, Validation, UI / Components;
+- `src/features/booking/ui/project-detail-screen/*`, `src/app/(owner)/w/[workspaceId]/projects/[projectId]/page.tsx`.
+
+**Exports:**
+- `proyek / desktop` and `proyek / mobile`: state `proyek-detail-dibooking-belum-ada-galeri`, plus states `proyek-detail-draf-galeri-belum-tersedia`, `proyek-detail-dibooking-galeri-draf`, `proyek-dialog-buat-galeri`, `proyek-dialog-buat-galeri-error`, `proyek-dialog-buat-galeri-kedaluwarsa-hari`, `proyek-dialog-buat-galeri-kedaluwarsa-tanggal`;
+- `galeri / desktop` and `galeri / mobile`: states `galeri-draf-kosong`, `galeri-toast-galeri-dibuat`, `galeri-memuat`.
+
+**Steps:**
+- [x] Schema `src/adapters/db/schema/gallery/gallery.ts` (all three tables, D-1…D-3, Database Changes), exported from the schema barrel. Run `pnpm db:generate` to make `0012_gallery`, review it and commit. Then run `pnpm db:migrate` (non-production) and report it. Add integration tests for the checks and unique keys.
+- [x] Domain `gallery-status`, `gallery-expiry`, `gallery-password` (generator and rules) with unit tests.
+- [x] Adapters:
+  - `adapters/crypto/gallery-password-cipher` (AES-256-GCM, AAD, key version);
+  - `adapters/crypto/password-hasher` (`better-auth/crypto`);
+  - `adapters/crypto/random-int`.
+
+  Unit tests cover the round trip, a wrong AAD failing, and a fresh IV every time.
+- [x] Ports, `GalleryError`, and `adapters/db/gallery-repository` (create with project `FOR SHARE`, card and page reads). Use cases `propose-gallery-password`, `create-gallery`, `get-gallery-card`, `get-gallery-page`, each with unit tests and integration tests for the race and the isolation.
+- [x] Composition `gallery-scope` / `gallery-flow`, and actions in `src/app/actions/gallery/galleries.ts`.
+- [x] UI:
+  - `GalleryCard` (states A, B, C for now);
+  - `CreateGalleryDialog` + `ExpiryFields`;
+  - the `galleryCard` slot in `ProjectDetailScreen` (D-16);
+  - the gallery page route + `loading.tsx`;
+  - `GalleryPageScreen` with the header, `AccessCard` and an empty `SourcesCard`.
+
+  Dom tests and the copy file go with it.
+- [ ] E2E: create a gallery from a booked project, check the password shows and copies, and the draft project shows the hint.
+
+**Implementation record (2026-10-04):**
+- `0012_gallery` generated, reviewed (additive) and applied to the shared non-production DB.
+- Domain (status, expiry, password generator), crypto adapters (AES-256-GCM with AAD, Better Auth scrypt, unbiased random int), gallery repository (project `FOR SHARE`, `ON CONFLICT DO NOTHING` create), use cases, composition, actions, Galeri card slot, gallery page + skeleton.
+- New shared UI: `src/ui/primitives/radio` (C06, on `RadioField`), DateField `description`, icons `copy`, `images`, `image-off`, `external-link`, `arrow-left`.
+- Checks: typecheck, lint, unit/dom (all), integration (all 91), build pass. The E2E spec `tests/e2e/gallery/gallery-create.spec.ts` is written but **not run** (Owner: continue without E2E).
+- Deviations: no `ClockPort`; use cases take `now` from the scope, like F-07. Domain codes return as results (F-07 shape), and `GalleryError` keeps only `NOT_FOUND`/`SAVE_FAILED`. The design date "Sab, 4 Okt 2026" is a placeholder weekday; code prints the real one ("Min"). Fixed a stale token-count test (597 → 623, from the F-09 design session).
+
+## Slice 2 — Folders and sync
+
+**Done when:**
+- *Tambah folder* validates the link, warns about public links and about a folder used by another project, then creates the source and syncs it;
+- source rows show *Berhasil*, *Menyinkronkan*, *Gagal* with the reason, and the counts;
+- *Sinkronkan* and *Sinkronkan semua* work;
+- AC-GAL-005…012 pass with the fake provider.
+
+**Read first:**
+- AC-GAL-005, 006, 007, 008, 009, 010, 011, 012;
+- BR-GAL-006, 007, 009, BR-SRC-002…006; ADR-005;
+- technical-design.md › D-6…D-9, D-19, Concurrency / Consistency, Error Handling;
+- `src/features/gallery/application/ports/workspace-source-repository/*` (active sources), `src/adapters/db/rate-limiter/*`.
+
+**Exports (`galeri / desktop` and `galeri / mobile`):**
+- the state `galeri-draf-proof`;
+- the states:
+  - `galeri-dialog-tambah-folder`, `galeri-dialog-tambah-folder-link-salah`, `galeri-dialog-folder-dipakai-proyek-lain`;
+  - `galeri-draf-menyinkronkan`, `galeri-draf-gagal-foto-hilang`, `galeri-menu-folder-draf`;
+  - `galeri-toast-sinkronisasi-selesai`, `galeri-toast-sinkronisasi-gagal`.
+
+**Steps:**
+- [x] Domain `drive-folder-link`, `photo-classification`, `name-sort-key`, `sync-plan` (tree walker), with unit tests for the AC-GAL-005 and AC-GAL-030 trees, depth 6 and `TOO_LARGE`.
+- [x] `GallerySourceProviderPort`. Three providers:
+  - `adapters/source/google-drive-provider` (fetch + Zod, error mapping, no key in errors), with unit tests on a mocked fetch;
+  - a fixture provider for E2E;
+  - a fake for tests.
+- [x] Repository: link the source (partial unique → `FOLDER_ALREADY_LINKED`), find a folder's use in other galleries, claim the sync (D-8), write the sync in chunks, mark missing photos.
+
+  Use cases `link-gallery-source`, `find-folder-use`, `sync-gallery-source`, with the rate limit (D-19).
+
+  Integration tests:
+  - a concurrent sync leaves 8 photos;
+  - missing photos and their return;
+  - a failure keeps the earlier photos.
+- [ ] Actions and composition, with the provider chosen by `E2E_FAKE_DRIVE`.
+- [x] UI:
+  - `SourcesCard` / `SourceRow` / `SourceMenu`;
+  - `LinkSourceDialog` (link error, public-link Alert, the in-use warning step);
+  - the client loop for *Sinkronkan semua* (D-9);
+  - toasts.
+- [ ] E2E: link the fixture folder, check the counts, re-sync, and a failing folder shows *Gagal*.
+
+**Implementation record (2026-10-04):**
+- Domain: link parser, classification (nearest `edited`/`print`, folded browse path), natural sort key, breadth-first walker (depth 5, shortcuts skipped, `TOO_LARGE` budget).
+- Google Drive provider (Zod, error mapping, no key or URL in failures, host allowlist, no redirects), fixture provider for `E2E_FAKE_DRIVE`, test fake.
+- `GallerySourceRepositoryPort` (a second port beside `GalleryRepositoryPort`): link with the partial unique index, folder use, D-8 claim/write/fail with stale-claim takeover and a discard when the gallery changed meanwhile.
+- UI: source rows with status chips and failure reasons, folder ⋯ menu, *Sinkronkan semua* client loop, *Tambah folder* with the public-link Alert and the in-use step. `ListCardItem` gained `metaTone`; Button icons gained `refresh-cw`, `copy`, `images`, `external-link`.
+- Checks: typecheck, lint, unit/dom (1180), integration (98), build pass. E2E not written or run (Owner: no E2E).
+- Deviations: the in-use dialog says *Folder ini* (the folder name is unknown before the first sync); the sync toast reports folders synced and failed, not per-folder new/missing counts; phone source rows reuse the desktop row (icon and full meta) instead of the compact meta.
+
+## Slice 3 — Photos card and Owner media
+
+**Done when:**
+- the *Foto* card shows the counts per kind, the visibility lines and the first 8 thumbnails (6 on phones) with *Hilang*;
+- thumbnails load only through the Owner endpoint;
+- AC-GAL-014 and AC-GAL-015 pass.
+
+**Read first:**
+- AC-GAL-014, 015, 025;
+- BR-SRC-003, BR-ACC-005, BR-DEL-002;
+- technical-design.md › D-10, D-11, D-12 (counts), D-17, Security;
+- `docs/design-system/components/photo-tile.md`.
+
+**Exports:**
+- `galeri / desktop` and `galeri / mobile`, state `galeri-draf-proof` (the *Foto* card);
+- the state `galeri-draf-gagal-foto-hilang`.
+
+**Steps:**
+- [x] `src/ui/patterns/photo-tile` (Default, Missing, Skeleton) with a story and a test.
+- [x] Provider `thumbnail(file, size)` (host allowlist), use case `serve-owner-photo`, and route handler `api/w/[workspaceId]/gallery-photos/[photoId]/[size]` (headers per D-10). Unit tests cover the headers and the allowlist. An integration test checks that another workspace gets 404 and that no Drive URL is in the body or headers.
+- [x] `PhotosCard` with the reader counts and the first page.
+- [ ] E2E: thumbnails come from `/api/w/…`, and the page source has no `googleusercontent`/`drive.google` string other than the Owner Drive links.
+
+**Implementation record (2026-10-04):**
+- `src/ui/patterns/photo-tile` (Default, Missing, Skeleton; story and test). Plain `<img loading="lazy">` with a justified `no-img-element` disable.
+- Owner media: `serve-owner-photo` → `GET /api/w/[ws]/gallery-photos/[id]/[thumb|preview]` with `private, max-age=600` and `nosniff`; missing, removed, foreign or failed → empty 404 (`notFound()` in the route handler).
+- *Foto* card: counts ("8 proof (1 hilang) · …"), visibility line by status (+ the *Hilang* note), first 8 photos (6 on phones), proof first then natural name order.
+- Checks: typecheck, lint, unit/dom (1423), integration (150), build pass. E2E not run (Owner).
+- Deviations: visibility copy for expired/archived galleries is not in Pencil; *Lihat semua foto* comes with Slice 4.
+
+## Slice 4 — *Semua foto*
+
+**Done when:**
+- the modal shows tabs with totals, Drive-like folders (one tile per source, or straight into a single source), the breadcrumb, infinite scroll with skeletons, and search with folder labels and an empty result;
+- AC-GAL-028, 029 and 030 pass.
+
+**Read first:**
+- AC-GAL-014 (modal part), 028, 029, 030;
+- BR-GAL-007; spec A-12, A-13;
+- technical-design.md › D-12, D-13, D-17 (Modal `xl`);
+- `docs/design-system/components/folder-tile.md`, `modal.md`;
+- `features/booking/ui/use-load-more-projects`.
+
+**Exports (`semuafoto / desktop` and `semuafoto / mobile`):**
+- state `semuafoto-daftar-folder`;
+- states `semuafoto-isi-folder-memuat`, `semuafoto-subfolder-akad`, `semuafoto-edited-dengan-subfolder`, `semuafoto-hasil-cari`, `semuafoto-cari-tanpa-hasil`.
+
+**Steps:**
+- [x] `src/ui/patterns/folder-tile`, and Modal `size="xl"` (with a story and test). Record it in `docs/design-system/components/modal.md`.
+- [x] Reader `GalleryBrowseReaderPort` (folder level, page, search, keyset) and use case `browse-gallery-photos` + schema. Integration tests use the AC-GAL-028 fixture (312/40 photos, 48 per page) and the AC-GAL-030 folding.
+- [x] UI `AllPhotosModal` + `use-gallery-browse` (tabs or Segmented, breadcrumb, debounced search, sentinel), opened from *Lihat semua foto*.
+- [ ] E2E: open folders and the breadcrumb, scroll to load the next page, search and clear.
+
+**Implementation record (2026-10-04):**
+- `src/ui/patterns/folder-tile` (C47), Modal `size="xl"` (recorded in `modal.md`), `use-intersection-sentinel` hook.
+- Existing units extended, not recreated (Owner): `Tabs` takes button tabs (`onPress`, no `href`) for in-page state; the Page Header breadcrumb is now `page-header/breadcrumb-trail.tsx`, with `onPress` items, reused by *Semua foto*. Phones use the existing `SegmentedControl`, as clients/projects/team do.
+- `GalleryBrowseReaderPort` + Drizzle reader (folder level on the folded path, recursive counts, keyset pages of 48, escaped `ILIKE` search), `browse-gallery-photos` use case and schema.
+- UI: `AllPhotosModal` (tabs with totals, breadcrumb with folder/photo counts, debounced search with folder labels, empty results, skeleton rows and the sentinel), `useGalleryBrowse` (stale answers dropped).
+- Checks: typecheck, lint, unit/dom (1438), integration (153, incl. the 312/40 fixture and the AC-GAL-030 folding), build pass. E2E not run (Owner).
+- Deviations: none beyond the shared-unit changes above.
+
+## Slice 5 — Photo preview
+
+**Done when:**
+- opening any tile (card or modal) shows the immersive preview with the top-bar meta, *Buka di Google Drive* (not for missing photos), ←/→, the keys, the filmstrip and Esc;
+- AC-GAL-031 passes.
+
+**Read first:**
+- AC-GAL-031;
+- technical-design.md › D-10 (`preview` size), D-11, D-17;
+- `docs/design-system/components/media-viewer.md`;
+- token-usage.md, the `surface.inverse` row (amended 2026-10-04).
+
+**Exports (`preview / desktop` and `preview / mobile`):**
+- desktop: state `preview-edited`, states `preview-proof`, `preview-hilang`;
+- mobile: state `preview-proof`, states `preview-edited`, `preview-hilang`.
+
+**Steps:**
+- [x] `src/ui/patterns/media-viewer`, with dom tests for the keyboard (←/→/Home/End/Esc), focus return and the dialog label.
+- [x] `listPreviewStripAction` (the neighbours around a photo in the same list) and `PhotoPreview` wiring from `PhotosCard` and `AllPhotosModal`.
+- [ ] E2E: open a photo, move with → and the filmstrip, check the missing photo shows the message without the Drive button, Esc closes.
+
+**Implementation record (2026-10-04):**
+- `src/ui/patterns/media-viewer` (C48): dark backdrop, top bar with an actions slot, stage with ← / → (desktop), swipe (phones), filmstrip; ←/→/Home/End/Esc; focus starts on *Tutup* and returns on close. Story and dom tests.
+- `Button` gained `href`/`target` (link with the same look), used for *Buka di Google Drive*.
+- `PhotoPreview` + `usePhotoPreview`, opened from the *Foto* card and *Semua foto*; meta *{folder} · {Kind} · [Hilang ·] n dari total*; no Drive button for a missing file.
+- Fixed: *Semua foto* lost its folders and breadcrumb counts after loading the next page.
+- Checks: typecheck, lint, unit/dom (1445), build pass. Integration not rerun (no server change). E2E not run (Owner).
+- Deviations: no `listPreviewStripAction`; the preview follows the open list and loads *Semua foto*'s next page through the same browse action near the end. Phones show *Buka di Drive* as a labelled button, not icon-only.
+
+## Slice 6 — Lifecycle: publish, expiry, password, remove, archive, delete
+
+**Done when:**
+- every gallery and folder menu action works in each state (draft, published, expired, archived), with its dialog and toast;
+- the refused publish names the failing folders;
+- AC-GAL-013 and AC-GAL-016…023 pass.
+
+**Read first:**
+- AC-GAL-013, 016, 017, 018, 019, 020, 021, 022, 023;
+- BR-GAL-003, 004, 005, 009, BR-AUD-001;
+- technical-design.md › D-1, D-2, D-18, Domain / Application Logic › Rules, Concurrency / Consistency.
+
+**Exports (`galeri`, desktop and mobile):** states
+- **dialogs:** `galeri-dialog-publikasikan`, `galeri-dialog-publikasi-ditolak`, `galeri-dialog-kedaluwarsa`, `galeri-dialog-ganti-password`, `galeri-dialog-lepas-folder`, `galeri-dialog-arsipkan`, `galeri-dialog-hapus-galeri-draf`;
+- **menus:** `galeri-menu-galeri-draf`, `galeri-menu-galeri-dipublikasikan`, `galeri-menu-folder-lepas-tidak-tersedia`;
+- **states:** `galeri-dipublikasikan`, `galeri-dipublikasikan-folder-dilepas`, `galeri-kedaluwarsa`, `galeri-diarsipkan`;
+- **toasts:** `galeri-toast-dipublikasikan`, `galeri-toast-password-diganti`, `galeri-toast-diarsipkan`, `galeri-toast-dibuka-lagi`.
+
+Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-pemotretan-galeri-dipublikasikan-folder-gagal` (card states D, E and F).
+
+**Steps:**
+- [x] Use cases with unit tests:
+  - `publish-gallery` (re-check sources outside the lock, then the locked write);
+  - `set-gallery-expiry` (re-open from `EXPIRED`);
+  - `rotate-gallery-password`;
+  - `remove-gallery-source` (`LAST_ACTIVE_SOURCE`);
+  - `archive-gallery`;
+  - `delete-draft-gallery` (cascade).
+
+  Integration tests cover rotation (version 2, audit columns, no plaintext), delete draft and the refused delete of a published gallery.
+- [x] Actions and composition.
+- [x] UI: `GalleryMenu`, the remaining dialogs, header actions by state, the expired Alert, the archived read-only view, and the remaining card states.
+- [ ] E2E: publish → set an expiry in the past through a test helper → expired → re-open; rotate the password; archive.
+
+**Implementation record (2026-10-04):**
+- Use cases `publish-gallery` (provider checked outside the lock, re-check inside), `set-gallery-expiry` (re-opens from `EXPIRED`), `rotate-gallery-password`, `remove-gallery-source` (`LAST_ACTIVE_SOURCE`), `archive-gallery`, `delete-draft-gallery`, all under `withGalleryLock`; Drizzle lifecycle writer (version + audit columns, cascade delete); actions and composition entries.
+- Domain `galleryHeaderActions` (primary and menu per state, from the same guards as the server).
+- UI: `GalleryLifecycle` (header buttons or phone sticky bar, ⋯ menu, dialogs), confirm, expiry, rotate-password, publish-refused and remove-source dialogs, expired/archived Alert, folder *Lepas folder* with the last-folder hint, failed-folder Alert on the project card.
+- Checks: typecheck, lint, unit/dom (1474), integration (156), build pass. E2E not run (Owner).
+- Deviations: no *Ganti password* button in the *Akses klien* header (it is in the ⋯ menu); the failed-folder Alert on the card shows a count, not the folder name; success toasts for publish, expiry, remove are not drawn in Pencil; *Galeri dibuka lagi* toast is not wired (the expiry toast reads *Kedaluwarsa disimpan* even when it re-opens).
+
+## Slice 7 — Cancelling the project archives the gallery
+
+**Done when:**
+- cancelling a project with a published gallery archives it in the same transaction, and a forced failure rolls back both;
+- a cancelled project's draft gallery is read-only except *Hapus galeri*;
+- the F-07 cancel dialog has the new sentence;
+- AC-GAL-024 passes.
+
+**Read first:**
+- AC-GAL-024; BR-PRJ-010, BR-GAL-005, BR-GAL-009; ADR-016;
+- technical-design.md › D-14, D-15;
+- `src/composition/booking/project-flow/project-flow.ts` (`cancelProjectEntry`), `src/features/booking/application/use-cases/cancel-project/*`, `src/composition/workspace/workspace-creation-scope/*`.
+
+**Exports:**
+- `galeri / *` state `galeri-proyek-dibatalkan`;
+- `proyek / *` state `proyek-detail-dibatalkan-galeri-diarsipkan`.
+
+**Steps:**
+- [x] Use case `archive-gallery-of-cancelled-project`, and the composition scope `withProjectCancellationScope` (D-15). Switch `cancelProjectEntry` to it. Integration tests cover the joint commit and the rollback when the archive throws.
+- [x] Add the F-07 copy sentence (`project-copy.copy.ts`, design.md › Copy) and the cancelled states on the card and page.
+- [ ] E2E: cancel a booked project with a published gallery, and check the card shows *Diarsipkan*.
+
+**Implementation record (2026-10-04):**
+- `archive-gallery-of-cancelled-project` and composition `withProjectCancellationScope` (ADR-016 pattern: project and gallery repositories over one `tx`; their transactions become savepoints). `cancelProjectEntry` now runs the cancel and, on success, the archive in that scope; a published or expired gallery is archived with the actor, a draft is left alone.
+- `lockGallery` now locks the project (FOR SHARE) before the gallery (FOR UPDATE), the same order cancelling uses, to avoid deadlocks between a gallery write and a cancel.
+- F-07 cancel dialog description carries the new sentence (`cancelDialogDescription`).
+- Checks: typecheck, lint, unit/dom (1478), integration (159, incl. the joint commit, the rollback after a forced failure and the draft that stays), build pass. E2E not run (Owner).
+- Deviations: the cancelled-project card and page states reuse the Slice 1 and 6 logic (no new components); the new sentence shows on every cancel, not only when a gallery is published.
+
+## Slice 8 — Verification pass
+
+**Done when:**
+- keyboard-only and axe pass on the card, page, modal, preview and every dialog (AC-GAL-026);
+- the isolation suite covers every action and the media route (AC-GAL-025);
+- the fidelity pass against all 100 exports is done (class names and nesting only);
+- the real-Drive smoke test with the non-production key passes;
+- feature-map F-09 is marked `DONE`, pending Owner acceptance.
+
+**Read first:**
+- AC-GAL-025, 026; C-008;
+- technical-design.md › Testing Strategy;
+- `exports/INDEX.md` (all 50 states, desktop and mobile).
+
+**Steps:**
+- [x] Axe and keyboard E2E for each surface.
+- [x] Cross-workspace integration test table: every action plus the media route, expecting not found and no change.
+- [x] Fidelity pass per screen group (galeri, semuafoto, preview, proyek), desktop and mobile.
+- [x] Real Drive smoke test, an implementation record in technical-design.md, and the feature-map update.
+
+**Implementation record (2026-10-04/05) — Slice 8:**
+- Isolation (AC-GAL-025): `tests/integration/gallery/gallery-isolation.test.ts` drives every gallery use case and the media use case from another workspace; each is not found and a before/after snapshot is unchanged.
+- Browser verification (Owner: no Playwright E2E, so a manual pass in the in-app browser against the dev server with `E2E_FAKE_DRIVE=1`, a throwaway test user and `axe-core` run in the page for WCAG 2 A/AA/2.1): register → create → *Tambah folder* and sync (4 proof · 3 edited · 1 print · 2 diabaikan) → *Semua foto* (folders, breadcrumb, tabs, folded `Edited/old`) → preview (←/→/Home/End, focus on *Tutup*) → publish → expiry (30 days = *Sel, 3 Nov 2026*) → forced expiry and re-open → rotate → archive → cancel the project (card becomes *Diarsipkan*). Axe found no violation on the card, page, *Buat galeri*, *Tambah folder*, publish, expiry, rotate, archive, menus, *Semua foto* and the preview, on desktop and phone, after the fixes below.
+- Fixed while verifying: folder and photo tiles collapsed in the grid (`w-full`); phone meta line failed contrast (page-header subtitle token); preview position counted subfolder photos; *Semua foto* sheet wasn't full height (`BottomSheet isFullHeight`, viewport − 44); *Buka di Drive* is an icon link on phones (`IconButton href`); `PasswordDialog` started a server action while rendering (React warning); the phone ⋯ menu never appeared because `CompactBarActions` looked for the shell slot only once at mount (new `useSlotTarget` waits for it; it also fixes F-07's phone menu).
+- Fidelity: compared the draft, expired and archived pages, *Buat galeri*, *Tambah folder*, *Semua foto* (modal 1094 × 942 vs 1096 × 944, tiles 250 px), the preview and the phone page against their exports in the browser. Copy fidelity: a script compared the visible text of all 100 exports with `GALLERY_COPY` and the components; mismatches were fixed in code (e.g. *(lewat)* on an expired expiry date, failed-folder names, publish-refused dialog). Visual (pixel) comparison covers only the screens above.
+- Real Drive (2026-10-05, Owner's public test folder, non-production key): `tests/e2e/gallery/gallery-drive-smoke.spec.ts` links the folder, syncs 113 proof photos, loads a thumbnail, previews with ←/→ and Escape, opens *Semua foto*, publishes, opens expiry and rotate from the ⋯ menu and archives, with axe on each surface: pass. It runs only when `GALLERY_SMOKE_FOLDER_URL` is set (`testIgnore` in `playwright.config.ts`), so the folder ID is never committed.
+- E2E (Owner: "run e2e", 2026-10-05): full suite 73 passed, 2 flaky (catalog phone axe timeout, AC-SRC-015; both pass on retry), 1 failed: `workspace.spec.ts` AC-WS-022 still clicked *Proyek* and expected *Segera hadir*, stale since F-07 built Projects (fails on `main` too). Fixed to open `/invoices`, now passes; gallery specs pass.
+
+## AC index
+
+| AC | Slice |
+|---|---|
+| 001–004, 027 | 1 |
+| 005–012 | 2 |
+| 014, 015 | 3 (and 4 for the modal part of 014) |
+| 028–030 | 4 |
+| 031 | 5 |
+| 013, 016–023 | 6 |
+| 024 | 7 |
+| 025, 026 | 1–7 per surface, completed in 8 |

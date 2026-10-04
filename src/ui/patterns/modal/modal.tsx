@@ -14,7 +14,11 @@ const SIZE_CLASSES: Record<ModalSize, string> = {
   sm: "max-w-[min(calc(100%_-_32px),_400px)]",
   md: "max-w-[min(calc(100%_-_32px),_560px)]",
   lg: "max-w-[min(calc(100%_-_32px),_720px)]",
+  // *Semua foto* (F-09): the content width, at a fixed height of the viewport minus 40 per side.
+  xl: "h-[calc(100dvh_-_80px)] max-w-[min(calc(100%_-_32px),var(--size-content-max))]",
 };
+
+const DIALOG_CLASS = "flex max-h-[calc(100dvh_-_32px)] flex-col outline-none";
 
 /** Renders a token-backed dialog overlay with structured header, body and footer (C31). */
 export function Modal({
@@ -92,7 +96,7 @@ function ModalContent({
         role={isDestructive ? "alertdialog" : "dialog"}
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
-        className="flex max-h-[calc(100dvh_-_32px)] flex-col outline-none"
+        className={cn(DIALOG_CLASS, size === "xl" && "h-full")}
       >
         <ModalHeader
           titleId={titleId}

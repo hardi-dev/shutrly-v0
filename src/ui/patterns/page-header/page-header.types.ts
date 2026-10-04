@@ -5,6 +5,22 @@ import type { TabLink } from "../tabs/tabs.types";
 export interface BreadcrumbItem {
   readonly label: string;
   readonly href?: string;
+  /** Acts in the page instead of linking (in-page state). */
+  readonly onPress?: () => void;
+}
+
+export interface BreadcrumbTrailProps {
+  readonly label: string;
+  readonly items: readonly BreadcrumbItem[];
+  /** Text after the trail, e.g. *· 2 folder · 212 foto*. */
+  readonly trailing?: string;
+  readonly className?: string;
+}
+
+export interface BreadcrumbTrailItemProps {
+  readonly item: BreadcrumbItem;
+  readonly isCurrent: boolean;
+  readonly showSeparator: boolean;
 }
 
 export interface PageHeaderProps {

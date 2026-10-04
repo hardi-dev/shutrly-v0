@@ -320,9 +320,16 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 - `proyek / *` state `proyek-detail-dibatalkan-galeri-diarsipkan`.
 
 **Steps:**
-- [ ] Use case `archive-gallery-of-cancelled-project`, and the composition scope `withProjectCancellationScope` (D-15). Switch `cancelProjectEntry` to it. Integration tests cover the joint commit and the rollback when the archive throws.
-- [ ] Add the F-07 copy sentence (`project-copy.copy.ts`, design.md › Copy) and the cancelled states on the card and page.
+- [x] Use case `archive-gallery-of-cancelled-project`, and the composition scope `withProjectCancellationScope` (D-15). Switch `cancelProjectEntry` to it. Integration tests cover the joint commit and the rollback when the archive throws.
+- [x] Add the F-07 copy sentence (`project-copy.copy.ts`, design.md › Copy) and the cancelled states on the card and page.
 - [ ] E2E: cancel a booked project with a published gallery, and check the card shows *Diarsipkan*.
+
+**Implementation record (2026-10-04):**
+- `archive-gallery-of-cancelled-project` and composition `withProjectCancellationScope` (ADR-016 pattern: project and gallery repositories over one `tx`; their transactions become savepoints). `cancelProjectEntry` now runs the cancel and, on success, the archive in that scope; a published or expired gallery is archived with the actor, a draft is left alone.
+- `lockGallery` now locks the project (FOR SHARE) before the gallery (FOR UPDATE), the same order cancelling uses, to avoid deadlocks between a gallery write and a cancel.
+- F-07 cancel dialog description carries the new sentence (`cancelDialogDescription`).
+- Checks: typecheck, lint, unit/dom (1478), integration (159, incl. the joint commit, the rollback after a forced failure and the draft that stays), build pass. E2E not run (Owner).
+- Deviations: the cancelled-project card and page states reuse the Slice 1 and 6 logic (no new components); the new sentence shows on every cancel, not only when a gallery is published.
 
 ## Slice 8 — Verification pass
 

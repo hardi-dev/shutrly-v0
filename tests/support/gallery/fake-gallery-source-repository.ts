@@ -96,6 +96,13 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
     };
   }
 
+  readonly galleryByProject = new Map<string, string>();
+
+  async findGalleryIdByProject(context: WorkspaceContext, projectId: string) {
+    const id = this.galleryByProject.get(projectId) ?? null;
+    return id !== null && this.galleries.get(id)?.workspaceId === context.workspaceId ? id : null;
+  }
+
   async listActiveSources(context: WorkspaceContext, galleryId: string) {
     return this.sources
       .filter(

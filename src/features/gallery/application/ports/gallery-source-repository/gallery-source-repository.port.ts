@@ -102,6 +102,11 @@ export interface GallerySourceRepositoryPort {
     galleryId: string,
     folderId: string,
   ) => Promise<readonly string[]>;
+  /** The project's gallery id, or null when it has none (BR-GAL-001). */
+  readonly findGalleryIdByProject: (
+    context: WorkspaceContext,
+    projectId: string,
+  ) => Promise<string | null>;
   readonly listActiveSources: (
     context: WorkspaceContext,
     galleryId: string,

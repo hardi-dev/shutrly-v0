@@ -117,6 +117,18 @@ async function findSyncTarget(
   };
 }
 
+async function findGalleryIdByProject(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  projectId: string,
+) {
+  const rows = await db
+    .select({ id: gallery.id })
+    .from(gallery)
+    .where(and(eq(gallery.workspaceId, context.workspaceId), eq(gallery.projectId, projectId)));
+  return rows.at(0)?.id ?? null;
+}
+
 async function listActiveSources(db: DbExecutor, context: WorkspaceContext, galleryId: string) {
   const rows = await db
     .select({
@@ -200,6 +212,7 @@ export function createDrizzleGallerySourceRepository(db: DbExecutor): GallerySou
     findFolderUse: (context, galleryId, folderId) =>
       findFolderUse(db, context, galleryId, folderId),
     findSyncTarget: (context, sourceId) => findSyncTarget(db, context, sourceId),
+    findGalleryIdByProject: (context, projectId) => findGalleryIdByProject(db, context, projectId),
     listActiveSources: (context, galleryId) => listActiveSources(db, context, galleryId),
     claimSync: (context, sourceId, now) => claimSync(db, context, sourceId, now),
     completeSync: (context, claim, result, now) =>

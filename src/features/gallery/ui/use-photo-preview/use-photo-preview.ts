@@ -14,9 +14,9 @@ export function usePhotoPreview(browse: GalleryBrowse) {
   const [preview, setPreview] = useState<OpenPreview | null>(null);
   const fromBrowse = preview?.from === "BROWSE";
   const photos = fromBrowse ? browse.state.photos : (preview?.list ?? []);
-  const total = fromBrowse
-    ? (browse.state.page?.summary?.photoCount ?? photos.length)
-    : photos.length;
+  // The position counts the photos the preview can move through: the loaded list when it is complete.
+  const hasMore = fromBrowse && browse.state.page?.nextCursor != null;
+  const total = hasMore ? (browse.state.page?.summary?.photoCount ?? photos.length) : photos.length;
   const open =
     (from: OpenPreview["from"]) => (photo: GalleryPhotoView, list: readonly GalleryPhotoView[]) => {
       setPreview({ from, list, index: Math.max(list.indexOf(photo), 0) });

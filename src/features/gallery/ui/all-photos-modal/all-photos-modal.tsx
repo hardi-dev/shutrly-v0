@@ -127,6 +127,7 @@ export function AllPhotosModal(props: Readonly<AllPhotosModalProps>) {
         title={GALLERY_COPY.allPhotosTitle}
         meta={totals}
         variant="form"
+        isFullHeight
       >
         {body}
       </BottomSheet>

@@ -37,4 +37,9 @@ describe("PhotoTile (C46)", () => {
     const { container } = render(<PhotoTileSkeleton />);
     expect(container.firstChild).toHaveAttribute("aria-hidden", "true");
   });
+
+  it("fills its grid cell like a folder tile", () => {
+    render(<PhotoTile fileName="IMG_001.jpg" imageSrc="/x" onPress={vi.fn()} />);
+    expect(screen.getByRole("button", { name: "IMG_001.jpg" })).toHaveClass("w-full");
+  });
 });

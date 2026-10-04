@@ -13,4 +13,9 @@ describe("FolderTile (C47)", () => {
     await userEvent.keyboard("{Enter}");
     expect(onPress).toHaveBeenCalled();
   });
+
+  it("fills its grid cell so the icon wrap keeps the tile footprint", () => {
+    render(<FolderTile name="Akad" countLabel="64 foto" onPress={vi.fn()} />);
+    expect(screen.getByRole("button", { name: "Akad, 64 foto" })).toHaveClass("w-full");
+  });
 });

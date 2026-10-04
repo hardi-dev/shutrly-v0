@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type { PublishSourceFailure } from "@/features/gallery/application/use-cases/gallery-results/gallery-results.types";
 import type { GalleryAction } from "@/features/gallery/domain/gallery-status/gallery-header-actions";
@@ -204,11 +204,13 @@ function PasswordDialog({ workspaceId, page, actions, onClose }: Readonly<Galler
     proposeAction: actions.proposeAction,
   });
   const { handleOpen } = launcher;
-  const [started, setStarted] = useState(false);
-  if (!started) {
-    setStarted(true);
+  const started = useRef(false);
+  // The proposal is a server action: it must start after mount, never while rendering.
+  useEffect(() => {
+    if (started.current) return;
+    started.current = true;
     handleOpen();
-  }
+  }, [handleOpen]);
   if (launcher.initialPassword === null) return null;
   return (
     <RotatePasswordDialog

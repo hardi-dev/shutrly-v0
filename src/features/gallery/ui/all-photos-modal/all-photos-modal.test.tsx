@@ -126,4 +126,19 @@ describe("AllPhotosModal", () => {
       );
     });
   });
+
+  it("AC-GAL-031 counts the preview position over the photos it can move through", async () => {
+    const browseAction = vi.fn(() =>
+      Promise.resolve({
+        ...INSIDE,
+        mode: "FOLDER" as const,
+        summary: { folderCount: 1, photoCount: 212 },
+      }),
+    );
+    render(<GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={browseAction} />);
+    await userEvent.click(screen.getByRole("button", { name: "Lihat semua foto" }));
+    const dialog = await screen.findByRole("dialog", { name: "Semua foto" });
+    await userEvent.click(await within(dialog).findByRole("button", { name: "IMG_001.jpg" }));
+    expect(await screen.findByText("Rina-Wisuda · Proof · 1 dari 1")).toBeInTheDocument();
+  });
 });

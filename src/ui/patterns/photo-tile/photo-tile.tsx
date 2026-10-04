@@ -64,7 +64,7 @@ export function PhotoTile({
       aria-label={label}
       onPress={onPress}
       className={cn(
-        "flex min-w-0 cursor-pointer flex-col gap-(--component-photo-tile-gap) rounded-(--component-photo-tile-image-radius)",
+        "flex w-full min-w-0 cursor-pointer flex-col gap-(--component-photo-tile-gap) rounded-(--component-photo-tile-image-radius)",
         FOCUS,
       )}
     >

@@ -24,7 +24,7 @@ export function GalleryPageScreen({
       {isMobile ? (
         <header className="flex flex-col items-start gap-(--space-2)">
           <StatusChip {...galleryStatusChip(gallery.status)} />
-          <p className="text-(length:--font-size-label) text-(--component-input-helper)">
+          <p className="text-(length:--font-size-body-sm) text-(--component-page-header-subtitle)">
             {galleryMetaText(gallery, null)}
           </p>
         </header>

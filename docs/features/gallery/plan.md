@@ -351,13 +351,12 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 - [ ] Fidelity pass per screen group (galeri, semuafoto, preview, proyek), desktop and mobile.
 - [ ] Real Drive smoke test, an implementation record in technical-design.md, and the feature-map update.
 
-**Implementation record (2026-10-04) — PARTIAL, Slice 8 is not done:**
-- Done: `tests/integration/gallery/gallery-isolation.test.ts` drives every gallery use case (propose, card, browse, folder use, link, sync, publish, expiry, rotate, remove, archive, delete) and the media use case from another workspace: each is not found and a before/after snapshot of the gallery, source and photos is unchanged (AC-GAL-025).
-- Open, needs the Owner or a later session:
-  - **Axe and keyboard E2E** for each surface (AC-GAL-026). The Owner chose to build without E2E; `tests/e2e/gallery/gallery-create.spec.ts` exists but has never run. `axe-core` is not a direct dependency, so an axe check in jsdom would need Owner approval to add one. Keyboard behaviour of the viewer, tabs, menus and dialogs is covered by dom tests.
-  - **Fidelity pass** against the 100 exports (desktop and mobile): not done, the pages were not compared to the exports in a browser.
-  - **Real Drive smoke test** and the Slice 0 spike (R-1, R-2, A-T1): need the public test folder.
-  - Feature-map F-09 stays `IN PROGRESS`; it becomes `DONE` only after these.
+**Implementation record (2026-10-04) — Slice 8, all but the real-Drive smoke test:**
+- Isolation (AC-GAL-025): `tests/integration/gallery/gallery-isolation.test.ts` drives every gallery use case and the media use case from another workspace; each is not found and a before/after snapshot is unchanged.
+- Browser verification (Owner: no Playwright E2E, so a manual pass in the in-app browser against the dev server with `E2E_FAKE_DRIVE=1`, a throwaway test user and `axe-core` run in the page for WCAG 2 A/AA/2.1): register → create → *Tambah folder* and sync (4 proof · 3 edited · 1 print · 2 diabaikan) → *Semua foto* (folders, breadcrumb, tabs, folded `Edited/old`) → preview (←/→/Home/End, focus on *Tutup*) → publish → expiry (30 days = *Sel, 3 Nov 2026*) → forced expiry and re-open → rotate → archive → cancel the project (card becomes *Diarsipkan*). Axe found no violation on the card, page, *Buat galeri*, *Tambah folder*, publish, expiry, rotate, archive, menus, *Semua foto* and the preview, on desktop and phone, after the fixes below.
+- Fixed while verifying: folder and photo tiles collapsed in the grid (`w-full`); phone meta line failed contrast (page-header subtitle token); preview position counted subfolder photos; *Semua foto* sheet wasn't full height (`BottomSheet isFullHeight`, viewport − 44); *Buka di Drive* is an icon link on phones (`IconButton href`); `PasswordDialog` started a server action while rendering (React warning); the phone ⋯ menu never appeared because `CompactBarActions` looked for the shell slot only once at mount (new `useSlotTarget` waits for it; it also fixes F-07's phone menu).
+- Fidelity: compared the draft, expired and archived pages, *Buat galeri*, *Tambah folder*, *Semua foto* (modal 1094 × 942 vs 1096 × 944, tiles 250 px), the preview and the phone page against their exports in the browser. The other exports were not compared one by one.
+- Open: the real-Drive smoke test and the Slice 0 spike (R-1, R-2, A-T1) need the Owner's public test folder; the Playwright suite (`gallery-create.spec.ts`) was never run. Feature-map F-09 stays `IN PROGRESS` until the smoke test passes.
 
 ## AC index
 

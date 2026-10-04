@@ -38,6 +38,8 @@ function BottomSheetHarness({
   );
 }
 
+const handleNoop = () => undefined;
+
 describe("BottomSheet (C32)", () => {
   it("spans the viewport up to the tablet breakpoint and caps its content at the desktop modal width", async () => {
     const user = userEvent.setup();
@@ -97,5 +99,16 @@ describe("BottomSheet (C32)", () => {
     expect(
       screen.getByRole("button", { name: "Simpan" }).closest("footer")?.nextElementSibling,
     ).toHaveClass("h-[env(safe-area-inset-bottom)]", "bg-(--component-sheet-footer-background)");
+  });
+
+  it("D-17 fills the viewport when asked, for a browsing sheet", () => {
+    render(
+      <BottomSheet isOpen onOpenChange={handleNoop} title="Semua foto" variant="form" isFullHeight>
+        <p>Isi</p>
+      </BottomSheet>,
+    );
+    const dialog = screen.getByRole("dialog", { name: "Semua foto" });
+    expect(dialog.className).toContain("h-full");
+    expect(dialog.parentElement?.className).toContain("100dvh");
   });
 });

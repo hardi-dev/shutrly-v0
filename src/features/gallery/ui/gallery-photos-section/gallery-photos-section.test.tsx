@@ -91,4 +91,14 @@ describe("GalleryPhotosSection", () => {
       within(missing).queryByRole("link", { name: "Buka di Google Drive" }),
     ).not.toBeInTheDocument();
   });
+
+  it("AC-GAL-031 shows Buka di Drive as an icon link on phones", async () => {
+    stubViewport(true);
+    render(<GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />);
+    await userEvent.click(screen.getByRole("button", { name: "IMG_001.jpg" }));
+    const viewer = await screen.findByRole("dialog", { name: "Preview IMG_001.jpg" });
+    const link = within(viewer).getByRole("link", { name: "Buka di Drive" });
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveTextContent("");
+  });
 });

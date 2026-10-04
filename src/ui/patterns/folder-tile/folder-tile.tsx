@@ -21,7 +21,7 @@ export function FolderTile({ name, countLabel, onPress }: Readonly<FolderTilePro
       aria-label={FOLDER_TILE_COPY.label(name, countLabel)}
       onPress={onPress}
       className={cn(
-        "flex min-w-0 cursor-pointer flex-col gap-(--component-folder-tile-gap) rounded-(--component-folder-tile-radius) text-left",
+        "flex w-full min-w-0 cursor-pointer flex-col gap-(--component-folder-tile-gap) rounded-(--component-folder-tile-radius) text-left",
         FOCUS,
       )}
     >

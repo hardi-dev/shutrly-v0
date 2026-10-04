@@ -4,6 +4,7 @@ import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-vie
 import { MediaViewer } from "@/ui/patterns/media-viewer/media-viewer";
 import type { MediaViewerItem } from "@/ui/patterns/media-viewer/media-viewer.types";
 import { Button } from "@/ui/primitives/button/button";
+import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { galleryMediaUrl } from "../gallery-media-url/gallery-media-url";
@@ -25,9 +26,20 @@ export function PhotoPreview(props: Readonly<PhotoPreviewProps>) {
   const renderActions = (item: MediaViewerItem) => {
     const driveUrl = photos.find((photo) => photo.id === item.id)?.driveUrl ?? null;
     if (driveUrl === null) return null;
+    if (isMobile) {
+      return (
+        <IconButton
+          icon="external-link"
+          aria-label={GALLERY_COPY.openInDriveMobile}
+          href={driveUrl}
+          target="_blank"
+          className="text-(--component-media-viewer-text)"
+        />
+      );
+    }
     return (
       <Button variant="secondary" iconLeading="external-link" href={driveUrl} target="_blank">
-        {isMobile ? GALLERY_COPY.openInDriveMobile : GALLERY_COPY.openInDrive}
+        {GALLERY_COPY.openInDrive}
       </Button>
     );
   };

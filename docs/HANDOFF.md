@@ -5,21 +5,20 @@ Branch: `claude/new-feature-skill-start-a92e1b` (F-09 gallery design, worktree).
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-09 Gallery IN PROGRESS, Slices 0–7 built (2026-10-04)
+## Current handoff — F-09 Gallery IN PROGRESS, Slices 0–8 built (smoke test open) (2026-10-04)
 
 - **State:** F-09 Gallery `IN PROGRESS`. Branch `claude/new-feature-skill-start-a92e1b` (worktree), `origin/main` (F-08) merged, not pushed, no PR. Only the generated `docs/design-system/pencil-variables.json` is untracked.
-- **Done:** Slices 0–7 of the [plan](features/gallery/plan.md), each with an implementation record: env keys, create and password, folders and sync, *Foto* and the Owner media endpoint, *Semua foto*, photo preview, lifecycle (publish, expiry, rotate, remove, archive, delete) and cancel → archive in one transaction. Migration `0012_gallery` applied to the non-production DB. Slice 8 is partial (cross-workspace isolation test only).
+- **Done:** Slices 0–7 of the [plan](features/gallery/plan.md), each with an implementation record: env keys, create and password, folders and sync, *Foto* and the Owner media endpoint, *Semua foto*, photo preview, lifecycle (publish, expiry, rotate, remove, archive, delete) and cancel → archive in one transaction. Migration `0012_gallery` applied to the non-production DB. Slice 8: isolation test, and a browser pass with axe (no violations) plus fixes; only the real-Drive smoke test is open.
 - **Checks (last run):** typecheck, lint, unit/dom (1478), integration (160) and build pass. **No E2E ran** (Owner: build without E2E); `tests/e2e/gallery/gallery-create.spec.ts` was written but never run.
 - **Owner actions:**
   - Public Drive test folder ("Anyone with the link") for the Slice 0 spike and the Slice 8 smoke test (R-1, R-2, A-T1); optionally a 1,000–2,000 photo folder.
   - Decide whether to add `axe-core` as a dependency for jsdom axe checks, or to run the E2E suite with axe.
   - Check the Workers Paid plan before ship; provision the Drive and password keys for production; commit the `guard.py` change on `feat/team-sessions` if still pending.
-- **Open items (Slice 8):**
-  - Axe and keyboard E2E for each surface (AC-GAL-026).
-  - Fidelity pass against the 100 exports, desktop and mobile.
-  - Real-Drive smoke test.
+- **Open items:**
+  - Real-Drive smoke test and the Slice 0 spike (need the test folder).
+  - The Playwright suite has never run; the other exports were not compared one by one (see the Slice 8 record).
   - Small deviations are listed in the plan's records (no *Ganti password* button in the *Akses klien* header, count-only failed-folder Alert, *Galeri dibuka lagi* toast not wired).
-- **Next:** run `scripts/gallery/drive-spike.ts` against the test folder, then `/sdv:build-feature gallery 8`, then `/sdv:verify-feature gallery`.
+- **Next:** run `scripts/gallery/drive-spike.ts` against the test folder, do the real-Drive smoke test, then `/sdv:verify-feature gallery`.
 
 ## Key decisions (Owner)
 

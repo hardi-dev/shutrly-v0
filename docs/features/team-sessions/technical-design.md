@@ -1,6 +1,6 @@
 # Technical Design — F-08 Team
 
-Status: PLANNED (2026-10-04) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-TEAM-001…027; 012, 016–019, 024, 025 removed) · Design: [design.md](design.md) (48 exports in `exports/`, read through [`exports/_compact/INDEX.md`](exports/_compact/INDEX.md)) · Diagrams: [activity](diagrams/activity.md), [state](diagrams/state.md) · Plan: [plan.md](plan.md)
+Status: DONE (2026-10-04, accepted with open items: see [verification-report.md](verification-report.md)) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) (AC-TEAM-001…027; 012, 016–019, 024, 025 removed) · Design: [design.md](design.md) (48 exports in `exports/`, read through [`exports/_compact/INDEX.md`](exports/_compact/INDEX.md)) · Diagrams: [activity](diagrams/activity.md), [state](diagrams/state.md) · Plan: [plan.md](plan.md)
 
 ## Context
 

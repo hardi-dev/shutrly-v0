@@ -15,6 +15,30 @@ describe("DateField (C25 calendar)", () => {
     expect(screen.getByRole("button", { name: /Tanggal/ })).toHaveTextContent("Sel, 10 Nov 2026");
   });
 
+  it("AC-GAL-019 shows a helper that the error replaces", () => {
+    const { rerender } = render(
+      <DateField
+        label="Tanggal kedaluwarsa"
+        value="2026-12-31"
+        onChange={vi.fn()}
+        display="weekday"
+        description="Galeri kedaluwarsa di akhir hari itu."
+      />,
+    );
+    expect(screen.getByText("Galeri kedaluwarsa di akhir hari itu.")).toBeInTheDocument();
+    rerender(
+      <DateField
+        label="Tanggal kedaluwarsa"
+        value="2026-12-31"
+        onChange={vi.fn()}
+        display="weekday"
+        description="Galeri kedaluwarsa di akhir hari itu."
+        errorMessage="Pilih tanggal hari ini atau sesudahnya."
+      />,
+    );
+    expect(screen.queryByText("Galeri kedaluwarsa di akhir hari itu.")).not.toBeInTheDocument();
+  });
+
   it("AC-PRJ-029 shows the placeholder while empty", () => {
     render(
       <DateField

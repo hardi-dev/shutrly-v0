@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type { ProjectDetailView } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail.types";
 
 import type { DefinitionOption, ProjectEditActions } from "../project-edit/project-edit.types";
@@ -9,6 +11,8 @@ export interface ProjectDetailScreenProps {
   readonly menuActions: ProjectMenuActions;
   readonly editActions: ProjectEditActions;
   readonly definitions: readonly DefinitionOption[];
+  /** The F-09 Galeri card, rendered right after *Info* (gallery TD D-16). */
+  readonly galleryCard?: ReactNode;
 }
 
 export interface ProjectDetailCardProps {

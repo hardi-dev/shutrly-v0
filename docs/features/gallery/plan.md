@@ -64,9 +64,13 @@
 - `src/shared/env/*`, `.env.example`.
 
 **Steps:**
-- [ ] **Owner:** provision `GOOGLE_DRIVE_API_KEY` (Drive API enabled, restricted to the Drive API) and `GALLERY_PASSWORD_KEY` (32 random bytes, base64url) in `.dev.vars` and `.env.test`. Stop until they're done.
-- [ ] Add both keys and `E2E_FAKE_DRIVE` to `appEnvSchema`. The 32-byte decode is checked, and `E2E_FAKE_DRIVE` is refused when `APP_STAGE=production`. Add them to `.env.example` with comments. Tests in `app-env.test.ts`.
+- [x] **Owner:** provision `GOOGLE_DRIVE_API_KEY` (Drive API enabled, restricted to the Drive API) and `GALLERY_PASSWORD_KEY` (32 random bytes, base64url) in `.dev.vars` and `.env.test`. Stop until they're done.
+- [x] Add both keys and `E2E_FAKE_DRIVE` to `appEnvSchema`. The 32-byte decode is checked, and `E2E_FAKE_DRIVE` is refused when `APP_STAGE=production`. Add them to `.env.example` with comments. Tests in `app-env.test.ts`.
 - [ ] Spike: a script under `scripts/gallery/drive-spike.ts`, not shipped, that lists a public folder tree with the key and fetches `thumbnailLink=s400`. Record the list calls, the time and whether the thumbnail works without OAuth. Delete the script after recording, or keep it under `scripts/` with a header comment.
+
+**Implementation record (2026-10-04):**
+- Env keys validated (`GALLERY_PASSWORD_KEY` by a 43-character base64url pattern whose last character carries 4 bits, so exactly 32 bytes; `E2E_FAKE_DRIVE` refused on production); `.env.example` updated; 3 new `app-env` tests.
+- `scripts/gallery/drive-spike.ts` written (header comment, prints counts only). **Not run yet:** the Owner has no public test folder yet. R-1/R-2 stay open; run it before Slice 8.
 
 ## Slice 1 — Create a gallery and see its password
 
@@ -89,17 +93,17 @@
 - `galeri / desktop` and `galeri / mobile`: states `galeri-draf-kosong`, `galeri-toast-galeri-dibuat`, `galeri-memuat`.
 
 **Steps:**
-- [ ] Schema `src/adapters/db/schema/gallery/gallery.ts` (all three tables, D-1…D-3, Database Changes), exported from the schema barrel. Run `pnpm db:generate` to make `0010_gallery`, review it and commit. Then run `pnpm db:migrate` (non-production) and report it. Add integration tests for the checks and unique keys.
-- [ ] Domain `gallery-status`, `gallery-expiry`, `gallery-password` (generator and rules) with unit tests.
-- [ ] Adapters:
+- [x] Schema `src/adapters/db/schema/gallery/gallery.ts` (all three tables, D-1…D-3, Database Changes), exported from the schema barrel. Run `pnpm db:generate` to make `0010_gallery`, review it and commit. Then run `pnpm db:migrate` (non-production) and report it. Add integration tests for the checks and unique keys.
+- [x] Domain `gallery-status`, `gallery-expiry`, `gallery-password` (generator and rules) with unit tests.
+- [x] Adapters:
   - `adapters/crypto/gallery-password-cipher` (AES-256-GCM, AAD, key version);
   - `adapters/crypto/password-hasher` (`better-auth/crypto`);
   - `adapters/crypto/random-int`.
 
   Unit tests cover the round trip, a wrong AAD failing, and a fresh IV every time.
-- [ ] Ports, `GalleryError`, and `adapters/db/gallery-repository` (create with project `FOR SHARE`, card and page reads). Use cases `propose-gallery-password`, `create-gallery`, `get-gallery-card`, `get-gallery-page`, each with unit tests and integration tests for the race and the isolation.
-- [ ] Composition `gallery-scope` / `gallery-flow`, and actions in `src/app/actions/gallery/galleries.ts`.
-- [ ] UI:
+- [x] Ports, `GalleryError`, and `adapters/db/gallery-repository` (create with project `FOR SHARE`, card and page reads). Use cases `propose-gallery-password`, `create-gallery`, `get-gallery-card`, `get-gallery-page`, each with unit tests and integration tests for the race and the isolation.
+- [x] Composition `gallery-scope` / `gallery-flow`, and actions in `src/app/actions/gallery/galleries.ts`.
+- [x] UI:
   - `GalleryCard` (states A, B, C for now);
   - `CreateGalleryDialog` + `ExpiryFields`;
   - the `galleryCard` slot in `ProjectDetailScreen` (D-16);
@@ -108,6 +112,13 @@
 
   Dom tests and the copy file go with it.
 - [ ] E2E: create a gallery from a booked project, check the password shows and copies, and the draft project shows the hint.
+
+**Implementation record (2026-10-04):**
+- `0010_gallery` generated, reviewed (additive) and applied to the shared non-production DB.
+- Domain (status, expiry, password generator), crypto adapters (AES-256-GCM with AAD, Better Auth scrypt, unbiased random int), gallery repository (project `FOR SHARE`, `ON CONFLICT DO NOTHING` create), use cases, composition, actions, Galeri card slot, gallery page + skeleton.
+- New shared UI: `src/ui/primitives/radio` (C06, on `RadioField`), DateField `description`, icons `copy`, `images`, `image-off`, `external-link`, `arrow-left`.
+- Checks: typecheck, lint, unit/dom (all), integration (all 91), build pass. The E2E spec `tests/e2e/gallery/gallery-create.spec.ts` is written but **not run** (Owner: continue without E2E).
+- Deviations: no `ClockPort`; use cases take `now` from the scope, like F-07. Domain codes return as results (F-07 shape), and `GalleryError` keeps only `NOT_FOUND`/`SAVE_FAILED`. The design date "Sab, 4 Okt 2026" is a placeholder weekday; code prints the real one ("Min"). Fixed a stale token-count test (597 → 623, from the F-09 design session).
 
 ## Slice 2 — Folders and sync
 

@@ -1,0 +1,144 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
+import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
+import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
+import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
+import { SectionCard } from "@/ui/patterns/section-card/section-card";
+import { Button } from "@/ui/primitives/button/button";
+import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
+
+import { CopyPasswordButton } from "../copy-password-button/copy-password-button";
+import { CreateGalleryDialog } from "../create-gallery-dialog/create-gallery-dialog";
+import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
+import { GalleryFacts } from "../gallery-facts/gallery-facts";
+import type { GalleryFact } from "../gallery-facts/gallery-facts.types";
+import {
+  galleryExpiryFact,
+  galleryStatusChip,
+  photoCountsText,
+} from "../gallery-text/gallery-text";
+import { useCreateGalleryLauncher } from "../use-create-gallery-launcher/use-create-gallery-launcher";
+import type {
+  EmptyText,
+  GalleryCardProps,
+  GallerySummaryFactsProps,
+  NoGalleryProps,
+} from "./gallery-card.types";
+
+/** The project detail's Galeri card (board `ZiJzF`): *Buat galeri*, the draft-project hint, or the gallery facts (AC-GAL-001, 003). */
+export function GalleryCard(props: Readonly<GalleryCardProps>) {
+  const router = useRouter();
+  const isMobile = useMobileViewport();
+  const { card, workspaceId } = props;
+  const galleryHref = `/w/${workspaceId}/projects/${card.project.id}/gallery`;
+  const handleManage = () => {
+    router.push(galleryHref);
+  };
+  if (card.gallery === null) return <NoGallery {...props} galleryHref={galleryHref} />;
+  const manageLabel = isMobile ? GALLERY_COPY.manageMobile : GALLERY_COPY.manage;
+  return (
+    <SectionCard
+      title={GALLERY_COPY.cardTitle}
+      content="flush"
+      actions={
+        <Button variant="secondary" iconLeading="arrow-right" onPress={handleManage}>
+          {card.gallery.status === "ARCHIVED" ? GALLERY_COPY.view : manageLabel}
+        </Button>
+      }
+    >
+      <GallerySummaryFacts gallery={card.gallery} isMobile={isMobile} />
+    </SectionCard>
+  );
+}
+
+function noGalleryText(card: GalleryCardView): EmptyText {
+  if (card.canCreate)
+    return { title: GALLERY_COPY.cardEmptyTitle, body: GALLERY_COPY.cardEmptyBody };
+  if (card.project.status === "DRAFT") {
+    return { title: GALLERY_COPY.cardDraftProjectTitle, body: GALLERY_COPY.cardDraftProjectBody };
+  }
+  return { title: GALLERY_COPY.cardCancelledTitle, body: GALLERY_COPY.cardCancelledBody };
+}
+
+function NoGallery(props: Readonly<NoGalleryProps>) {
+  const router = useRouter();
+  const { card } = props;
+  const launcher = useCreateGalleryLauncher({
+    workspaceId: props.workspaceId,
+    projectId: card.project.id,
+    proposeAction: props.proposeAction,
+  });
+  const handleCreated = () => {
+    launcher.close();
+    router.push(props.galleryHref);
+  };
+  const text = noGalleryText(card);
+  return (
+    <SectionCard title={GALLERY_COPY.cardTitle} description={GALLERY_COPY.cardDescription}>
+      <EmptyState
+        icon="images"
+        placement="in-card"
+        title={text.title}
+        body={text.body}
+        action={
+          card.canCreate ? (
+            <Button
+              variant="secondary"
+              iconLeading="plus"
+              isPending={launcher.isOpening}
+              onPress={launcher.handleOpen}
+            >
+              {GALLERY_COPY.create}
+            </Button>
+          ) : undefined
+        }
+      />
+      {launcher.initialPassword === null ? null : (
+        <CreateGalleryDialog
+          isOpen
+          onOpenChange={launcher.handleOpenChange}
+          workspaceId={props.workspaceId}
+          projectId={card.project.id}
+          initialPassword={launcher.initialPassword}
+          createAction={props.createAction}
+          proposeAction={props.proposeAction}
+          onCreated={handleCreated}
+        />
+      )}
+    </SectionCard>
+  );
+}
+
+function GallerySummaryFacts({ gallery, isMobile }: Readonly<GallerySummaryFactsProps>) {
+  const expiry = galleryExpiryFact(gallery);
+  const sources =
+    gallery.activeSourceCount === 0
+      ? GALLERY_COPY.noSources
+      : GALLERY_COPY.sourceCount(gallery.activeSourceCount);
+  const photos = photoCountsText(gallery.counts);
+  const facts: GalleryFact[] = [
+    {
+      label: GALLERY_COPY.factStatus,
+      value: <StatusChip {...galleryStatusChip(gallery.status)} />,
+    },
+    {
+      label: GALLERY_COPY.factPassword,
+      value: (
+        <>
+          {gallery.password}
+          <CopyPasswordButton password={gallery.password} />
+        </>
+      ),
+    },
+    ...(isMobile
+      ? [{ label: GALLERY_COPY.factSourcesPhotos, value: `${sources} · ${photos}` }]
+      : [
+          { label: GALLERY_COPY.factSources, value: sources },
+          { label: GALLERY_COPY.factPhotos, value: photos },
+        ]),
+    { label: GALLERY_COPY.factExpiry, value: expiry.text, isMuted: expiry.isMuted },
+  ];
+  return <GalleryFacts facts={facts} />;
+}

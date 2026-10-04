@@ -451,11 +451,18 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 **Exports (`galeri`, `semuafoto`, `preview`; desktop and mobile):** `galeri-draf-proof`, `semuafoto-daftar-folder`, `preview-proof`, `preview-hilang`. The look doesn't change; check the missing-image state still matches `preview-hilang`.
 
 **Steps:**
-- [ ] Domain `google-image-url` (`googleImageUrl`, widths `w600` / `w1600`, the ID pattern) with unit tests (valid, bad IDs, widths).
-- [ ] Views: `GalleryPhotoView` gains `externalFileId`; the page view gains `imageHost` (null with `E2E_FAKE_DRIVE=1`). Replace `galleryMediaUrl` by an `imageSources(photo, size, imageHost)` helper returning `{ src, fallbackSrc }`. Unit tests.
-- [ ] UI: `PhotoTile` and the viewer image slot take `fallbackSrc` and swap once on `onError`; `<img referrerPolicy="no-referrer">`. Dom tests for one swap and no loop. Wire `PhotosCard`, `BrowseGrid` and `PhotoPreview`.
-- [ ] A test that walks the Owner page view, a browse page and every action result for the fixture's folder ID and resource key (AC-GAL-035).
-- [ ] E2E (fake drive): thumbnails come from `/api/w/…`; one test with the image host on checks the `lh3` URL shape.
+- [x] Domain `google-image-url` (`googleImageUrl`, widths `w600` / `w1600`, the ID pattern) with unit tests (valid, bad IDs, widths).
+- [x] Views: `GalleryPhotoView` gains `externalFileId`; the page view gains `imageHost` (null with `E2E_FAKE_DRIVE=1`). Replace `galleryMediaUrl` by an `imageSources(photo, size, imageHost)` helper returning `{ src, fallbackSrc }`. Unit tests.
+- [x] UI: `PhotoTile` and the viewer image slot take `fallbackSrc` and swap once on `onError`; `<img referrerPolicy="no-referrer">`. Dom tests for one swap and no loop. Wire `PhotosCard`, `BrowseGrid` and `PhotoPreview`.
+- [x] A test that walks the Owner page view, a browse page and every action result for the fixture's folder ID and resource key (AC-GAL-035).
+- [x] E2E (fake drive): thumbnails come from `/api/w/…`; one test with the image host on checks the `lh3` URL shape.
+
+**Implementation record (2026-10-05) — R3:**
+- Domain `google-image-url` (`w600` tiles, `w1600` preview, ID pattern). `GalleryPhotoView` gains `externalFileId`; the route page gets `googleImages` (a boolean, false with `E2E_FAKE_DRIVE=1`) from the composition scope, through `GalleryPageScreenView`. `imageSources(photo, size, workspaceId, googleImages)` returns the Google URL with the Owner route as fallback.
+- `useImageFallback` (shared hook): the main URL, then the fallback once, then nothing. `PhotoTile` and `MediaViewer` (stage and filmstrip) use it, with `referrerPolicy="no-referrer"`. A React context (`GalleryImageProvider`, in `GalleryPhotosSection`) carries the flag to the card tiles, *Semua foto* and the preview, so no prop travels through the modal and grid.
+- Checks (related only): typecheck, eslint on `src` and `tests`, unit/dom for `src/ui/patterns/photo-tile`, `media-viewer`, `src/ui/hooks`, `src/features/gallery` 251+ passed, integration `tests/integration/gallery` 39 passed (AC-GAL-035 walks the page view, a browse page and the sync results for the folder ID and its resource key), E2E `gallery-sync.spec.ts` (fake drive) checks the tile URL and `no-referrer`. The real-Drive smoke is R5.
+- Deviations: the view flag is `googleImages: boolean`, not the `imageHost` string of D-22 (the host is a constant). A photo whose image failed on both URLs reads as missing in the viewer (the existing missing state) and shows no image in a tile. AC-GAL-035 now says *the folder's resource key*: the Owner-only *Buka di Google Drive* link may carry a file's resource key (D-11).
+
 
 ## Slice R4 — Content version
 
@@ -469,8 +476,14 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 **Exports:** none.
 
 **Steps:**
-- [ ] Increment `content_version` in the lifecycle writers (publish, expiry change, rotate, remove source, archive) and in the sync commit (a step that wrote or marked a row, and the last step). Integration tests: one per event, and an unchanged re-sync leaves it.
-- [ ] Note for F-10 in `docs/features/gallery/technical-design.md` › Context: the client gallery cache key is `galleryId` + `content_version`, and whether Cache API calls count as subrequests must be checked first (ADR-019 point 5).
+- [x] Increment `content_version` in the lifecycle writers (publish, expiry change, rotate, remove source, archive) and in the sync commit (a step that wrote or marked a row, and the last step). Integration tests: one per event, and an unchanged re-sync leaves it.
+- [x] Note for F-10 in `docs/features/gallery/technical-design.md` › Context: the client gallery cache key is `galleryId` + `content_version`, and whether Cache API calls count as subrequests must be checked first (ADR-019 point 5).
+
+**Implementation record (2026-10-05) — R4:**
+- `content_version` is bumped inside the existing locked transactions by publish, expiry change, password rotation, source removal, archive, and by a sync step that wrote or marked at least one photo row. An unchanged re-sync leaves it (AC-GAL-036). D-24 said the last step always bumps; that contradicted the AC, so D-24 now follows the AC.
+- Checks (related only): typecheck, eslint, integration `tests/integration/gallery` 39 passed (one test per event, two tests).
+- Deviations: none beyond the D-24 wording.
+
 
 ## Slice R5 — Verification, CPU check and PR
 

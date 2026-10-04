@@ -49,6 +49,7 @@ function pageWith(
     },
     sources: [SOURCE],
     linkableSources: [],
+    googleImages: false,
     previewPhotos: [],
   };
 }

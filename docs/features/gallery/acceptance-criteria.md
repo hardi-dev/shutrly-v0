@@ -353,7 +353,7 @@ Covers: BR-SRC-003, C-103, BR-ACC-005 (ADR-019)
 
 **Given** a gallery whose source folder ID is `<id>`
 **When** the Owner opens the gallery page, *Semua foto* and the preview, and every gallery server action returns
-**Then** no HTML, RSC payload, action result or error contains the folder ID, the folder link or a resource key. Photo file IDs appear, and the Owner-only *Buka di Google Drive* link points to a file.
+**Then** no HTML, RSC payload, action result or error contains the folder ID, the folder link or the folder's resource key. Photo file IDs appear, and the Owner-only *Buka di Google Drive* link points to a file.
 
 ## AC-GAL-036 — Content version
 Covers: BR-GAL-005, BR-GAL-006 (ADR-019)

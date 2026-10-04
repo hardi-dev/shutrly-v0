@@ -1,5 +1,9 @@
 import { TEST_APP_ENV } from "@tests/support/env/test-app-env";
-import { FakeDriveProvider, RINA_FOLDER_ID } from "@tests/support/gallery/fake-drive-provider";
+import {
+  FakeDriveProvider,
+  RINA_FOLDER_ID,
+  SECOND_FOLDER_ID,
+} from "@tests/support/gallery/fake-drive-provider";
 import { fakeHasher } from "@tests/support/gallery/fake-gallery-crypto";
 import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -144,5 +148,52 @@ describe("gallery lifecycle against Postgres", () => {
     expect(
       await db.select().from(galleryPhoto).where(eq(galleryPhoto.gallerySourceId, sourceId)),
     ).toHaveLength(8);
+  });
+
+  it("AC-GAL-036 the content version rises on each change a client could see, and not on an unchanged re-sync", async () => {
+    const seed = await seedGalleryWorkspace(db);
+    const { galleryId, sourceId } = await linkedGallery(seed);
+    const version = async () => (await galleryRow(galleryId)).contentVersion;
+    expect(await version()).toBe(2);
+    await syncSourceToEnd(deps(), seed.context, sourceId);
+    expect(await version()).toBe(2);
+    await publishGallery(deps(), seed.context, seed.ownerId, galleryId);
+    expect(await version()).toBe(3);
+    await setGalleryExpiry(deps(), seed.context, seed.ownerId, galleryId, {
+      expiry: { type: "NONE" },
+    });
+    expect(await version()).toBe(4);
+    await rotateGalleryPassword(deps(), seed.context, seed.ownerId, galleryId, {
+      password: "baru2026",
+    });
+    expect(await version()).toBe(5);
+    await archiveGallery(deps(), seed.context, seed.ownerId, galleryId);
+    expect(await version()).toBe(6);
+  });
+
+  it("AC-GAL-036 removing a folder and a sync that finds a renamed file each bump the version", async () => {
+    const seed = await seedGalleryWorkspace(db);
+    const { galleryId, sourceId } = await linkedGallery(seed);
+    const second = await linkGallerySource(deps(), seed.context, seed.ownerId, galleryId, {
+      workspaceSourceId: seed.sourceConfigId,
+      link: `https://drive.google.com/drive/folders/${SECOND_FOLDER_ID}`,
+      label: "",
+    });
+    if (!second.ok) throw new Error("link failed");
+    await syncSourceToEnd(deps(), seed.context, second.sourceId);
+    await publishGallery(deps(), seed.context, seed.ownerId, galleryId);
+    const before = (await galleryRow(galleryId)).contentVersion;
+    await removeGallerySource(deps(), seed.context, seed.ownerId, second.sourceId);
+    expect((await galleryRow(galleryId)).contentVersion).toBe(before + 1);
+    const root = provider.tree.get(RINA_FOLDER_ID) ?? [];
+    provider.tree.set(
+      RINA_FOLDER_ID,
+      root.map((entry) =>
+        entry.name === "IMG_001.jpg" ? { ...entry, name: "IMG_001-b.jpg" } : entry,
+      ),
+    );
+    await syncSourceToEnd(deps(), seed.context, sourceId);
+    expect((await galleryRow(galleryId)).contentVersion).toBe(before + 2);
+    provider.tree.set(RINA_FOLDER_ID, root);
   });
 });

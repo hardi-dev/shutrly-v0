@@ -19,6 +19,7 @@ const PHOTO = {
   sourceId: SOURCE_ID,
   sourceName: "Rina-Wisuda",
   missing: false,
+  externalFileId: "1AbCdEfGhIjKlMnOp",
   driveUrl: null,
 };
 const PAGE = {
@@ -53,6 +54,7 @@ const PAGE = {
     },
   ],
   linkableSources: [],
+  googleImages: false,
   previewPhotos: [PHOTO],
 };
 const TOTALS = { proof: 312, edited: 40, print: 0 };

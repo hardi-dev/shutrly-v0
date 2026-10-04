@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { stubViewport } from "@tests/support/gallery/viewport";
 import { useState } from "react";
@@ -73,5 +73,27 @@ describe("MediaViewer (C48)", () => {
     await userEvent.click(screen.getByRole("button", { name: "Foto berikutnya" }));
     expect(screen.getByRole("dialog", { name: "Preview A_012.jpg" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Buka di Google Drive" })).toBeInTheDocument();
+  });
+
+  it("AC-GAL-034 tries the fallback once, then reads the photo as missing", () => {
+    const imageSrc = (item: { id: string }) => `/google/${item.id}`;
+    const imageFallbackSrc = (item: { id: string }) => `/route/${item.id}`;
+    render(
+      <MediaViewer
+        items={ITEMS.slice(0, 2)}
+        index={1}
+        onIndexChange={vi.fn()}
+        onClose={vi.fn()}
+        imageSrc={imageSrc}
+        imageFallbackSrc={imageFallbackSrc}
+        missingText="File tidak ditemukan di Google Drive"
+      />,
+    );
+    const stage = () => screen.getAllByRole("img", { name: "A_012.jpg" })[0];
+    expect(stage()).toHaveAttribute("src", "/google/b");
+    fireEvent.error(stage());
+    expect(stage()).toHaveAttribute("src", "/route/b");
+    fireEvent.error(stage());
+    expect(screen.getByText("File tidak ditemukan di Google Drive")).toBeInTheDocument();
   });
 });

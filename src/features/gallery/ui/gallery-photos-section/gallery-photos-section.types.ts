@@ -1,5 +1,5 @@
 import type {
-  GalleryPageView,
+  GalleryPageScreenView,
   GalleryPhotoView,
 } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 
@@ -7,7 +7,7 @@ import type { GalleryPageActions } from "../gallery-actions/gallery-actions.type
 
 export interface GalleryPhotosSectionProps {
   readonly workspaceId: string;
-  readonly page: GalleryPageView;
+  readonly page: GalleryPageScreenView;
   readonly browseAction: GalleryPageActions["browseAction"];
 }
 

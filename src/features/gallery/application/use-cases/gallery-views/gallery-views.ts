@@ -68,10 +68,11 @@ export function toSourceView(source: GallerySourceRecord): GallerySourceView {
   };
 }
 
-/** Builds the Owner's photo DTO: no Drive IDs beyond the Owner-only file link, none for a missing file (D-11, TD › Security). @param photo - the stored photo @returns the photo view */
+/** Builds the Owner's photo DTO: the file ID and the Owner-only file link, never a folder ID or resource key of the source (D-11, D-26, TD › Security). @param photo - the stored photo @returns the photo view */
 export function toPhotoView(photo: GalleryPhotoRecord): GalleryPhotoView {
   return {
     id: photo.id,
+    externalFileId: photo.externalFileId,
     fileName: photo.fileName,
     kind: photo.kind,
     folderPath: photo.folderPath,

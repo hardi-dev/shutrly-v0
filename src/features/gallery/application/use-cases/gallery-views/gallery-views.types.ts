@@ -60,6 +60,8 @@ export interface LinkableSourceView {
 
 export interface GalleryPhotoView {
   readonly id: string;
+  /** The Drive file ID: not a secret, and what Google's image URL is built from (ADR-019, D-22). */
+  readonly externalFileId: string;
   readonly fileName: string;
   readonly kind: PhotoKind;
   readonly folderPath: string;
@@ -69,6 +71,12 @@ export interface GalleryPhotoView {
   readonly missing: boolean;
   /** Owner-only *Buka di Google Drive*; null for a missing file (D-11). */
   readonly driveUrl: string | null;
+}
+
+// The page the route renders: the use case's view plus how images load, which composition knows.
+export interface GalleryPageScreenView extends GalleryPageView {
+  /** True when images load from Google first; false while E2E uses the fixture Drive (D-22). */
+  readonly googleImages: boolean;
 }
 
 export interface GalleryPageView {

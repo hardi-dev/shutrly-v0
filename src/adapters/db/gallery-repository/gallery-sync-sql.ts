@@ -10,7 +10,7 @@ import { parseSyncCursor } from "@/features/gallery/application/schemas/sync-cur
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { DbExecutor } from "../client/client.types";
-import { galleryPhoto, gallerySource } from "../schema/gallery/gallery";
+import { gallery, galleryPhoto, gallerySource } from "../schema/gallery/gallery";
 
 const UPSERT_CHUNK = 500;
 // D-8: a step's lease holds for this long, and a run restarts when it is older than the run limit.
@@ -85,15 +85,16 @@ async function upsertChanged(
   galleryId: string,
   sourceId: string,
   photos: SyncStepResult["photos"],
-): Promise<void> {
+): Promise<number> {
   const rows = photos.map((photo) => ({
     ...photo,
     workspaceId: context.workspaceId,
     galleryId,
     gallerySourceId: sourceId,
   }));
+  let written = 0;
   for (let start = 0; start < rows.length; start += UPSERT_CHUNK) {
-    await tx
+    const done = await tx
       .insert(galleryPhoto)
       .values(rows.slice(start, start + UPSERT_CHUNK))
       .onConflictDoUpdate({
@@ -110,8 +111,11 @@ async function upsertChanged(
           updatedAt: sql`now()`,
         },
         setWhere: CHANGED,
-      });
+      })
+      .returning({ id: galleryPhoto.id });
+    written += done.length;
   }
+  return written;
 }
 
 async function presentCounts(tx: DbExecutor, context: WorkspaceContext, sourceId: string) {
@@ -140,9 +144,9 @@ async function finishRun(
   claim: SyncClaim,
   step: SyncStepResult,
   now: Date,
-): Promise<void> {
+): Promise<number> {
   // One set-based statement: every photo this run never saw is missing (BR-GAL-006, D-21).
-  await tx
+  const marked = await tx
     .update(galleryPhoto)
     .set({ missingAt: now, updatedAt: now })
     .where(
@@ -152,7 +156,8 @@ async function finishRun(
         isNull(galleryPhoto.missingAt),
         sql`${galleryPhoto.externalFileId} <> all(${sql.param([...step.cursor.seen])}::text[])`,
       ),
-    );
+    )
+    .returning({ id: galleryPhoto.id });
   const counts = await presentCounts(tx, context, claim.sourceId);
   await tx
     .update(gallerySource)
@@ -171,9 +176,10 @@ async function finishRun(
       updatedAt: now,
     })
     .where(heldClaim(context, claim));
+  return marked.length;
 }
 
-/** Writes one finished step: its changed photos, then either the next cursor or, on the last step, the missing marks, the counts and `SUCCEEDED` (BR-GAL-006, D-21). @param tx - the transaction, with the gallery locked @param context - verified workspace @param galleryId - the gallery @param claim - the step's held claim @param step - the step's photos, cursor and end flag @param now - the write instant */
+/** Writes one finished step: its changed photos, then either the next cursor or, on the last step, the missing marks, the counts and `SUCCEEDED`, and bumps the gallery's content version when a photo row changed (BR-GAL-006, D-21, D-24). @param tx - the transaction, with the gallery locked @param context - verified workspace @param galleryId - the gallery @param claim - the step's held claim @param step - the step's photos, cursor and end flag @param now - the write instant */
 export async function writeStep(
   tx: DbExecutor,
   context: WorkspaceContext,
@@ -182,15 +188,20 @@ export async function writeStep(
   step: SyncStepResult,
   now: Date,
 ): Promise<void> {
-  await upsertChanged(tx, context, galleryId, claim.sourceId, step.photos);
-  if (step.done) {
-    await finishRun(tx, context, claim, step, now);
-    return;
+  let changed = await upsertChanged(tx, context, galleryId, claim.sourceId, step.photos);
+  if (step.done) changed += await finishRun(tx, context, claim, step, now);
+  else {
+    await tx
+      .update(gallerySource)
+      .set({ syncCursor: step.cursor, syncLeaseAt: null, updatedAt: now })
+      .where(heldClaim(context, claim));
   }
+  // A re-sync that changed nothing leaves the version alone, so a client cache stays valid (D-24).
+  if (changed === 0) return;
   await tx
-    .update(gallerySource)
-    .set({ syncCursor: step.cursor, syncLeaseAt: null, updatedAt: now })
-    .where(heldClaim(context, claim));
+    .update(gallery)
+    .set({ contentVersion: sql`${gallery.contentVersion} + 1`, updatedAt: now })
+    .where(and(eq(gallery.workspaceId, context.workspaceId), eq(gallery.id, galleryId)));
 }
 
 /** Ends a run without writing a listing: back to its last settled status, with the cursor and lease cleared (archived, cancelled or removed meanwhile). @param tx - the transaction @param context - verified workspace @param claim - the step's claim @param now - the instant */

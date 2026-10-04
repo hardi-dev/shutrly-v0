@@ -50,6 +50,7 @@ const PAGE = {
     },
   ],
   linkableSources: [],
+  googleImages: false,
   previewPhotos: [],
 };
 

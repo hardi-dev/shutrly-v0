@@ -38,12 +38,22 @@ test("AC-GAL-005 AC-GAL-006 AC-GAL-008 AC-GAL-032 links a folder, syncs it step 
     timeout: 60_000,
   });
   await expect(visibleText(page, "4 proof · 3 edited · 1 print")).toBeVisible();
+  // AC-GAL-015: with the fixture Drive the tiles use the Owner media route, never a Drive URL.
+  const thumbnail = page.locator("main img").first();
+  await expect(thumbnail).toHaveAttribute(
+    "src",
+    /^\/api\/w\/[0-9a-f-]+\/gallery-photos\/[0-9a-f-]+\/thumb$/,
+  );
+  await expect(thumbnail).toHaveAttribute("referrerpolicy", "no-referrer");
   await expectGalleryA11y(page);
 
   await page.getByRole("button", { name: GALLERY_COPY.sourceMenu("Rina-Wisuda") }).click();
   await page.getByRole("menuitem", { name: GALLERY_COPY.sync }).click();
+  // The re-sync runs its steps first, so the row is *Menyinkronkan* for a while on a cold server.
+  await expect(visibleText(page, GALLERY_COPY.sourceChip.SUCCEEDED)).toBeVisible({
+    timeout: 60_000,
+  });
   await expect(visibleText(page, "4 proof · 3 edited · 1 print")).toBeVisible();
-  await expect(visibleText(page, GALLERY_COPY.sourceChip.SUCCEEDED)).toBeVisible();
 
   await linkFolder(page, NOT_PUBLIC);
   await expect(visibleText(page, GALLERY_COPY.sourceChip.FAILED)).toBeVisible({

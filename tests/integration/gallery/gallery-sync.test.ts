@@ -10,10 +10,12 @@ import { and, eq, sql } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import type { Db } from "@/adapters/db/client/client.types";
+import { createDrizzleGalleryBrowseReader } from "@/adapters/db/gallery-repository/drizzle-gallery-browse-reader";
 import { createDrizzleGalleryRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-repository";
 import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
 import { gallery, galleryPhoto, gallerySource } from "@/adapters/db/schema/gallery/gallery";
 import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-source-repository/drizzle-workspace-source-repository";
+import { browseGalleryPhotos } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos";
 import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { findFolderUse } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use";
 import { getGalleryCard } from "@/features/gallery/application/use-cases/get-gallery-card/get-gallery-card";
@@ -459,5 +461,39 @@ describe("gallery sync against Postgres", () => {
     expect(
       (await photosOf(linked.sourceId)).find((p) => p.fileName === "IMG_001-baru.jpg"),
     ).toBeDefined();
+  });
+
+  it("AC-GAL-035 no view, browse page or sync result carries the folder ID or its resource key", async () => {
+    const seed = await seedGalleryWorkspace(db);
+    const galleryId = await withGallery(seed);
+    const provider = FakeDriveProvider.withFixture();
+    const resourceKey = "0-SecretKeyOfTheFolder";
+    const linked = await linkGallerySource(deps(provider), seed.context, seed.ownerId, galleryId, {
+      workspaceSourceId: seed.sourceConfigId,
+      link: `https://drive.google.com/drive/folders/${RINA_FOLDER_ID}?resourcekey=${resourceKey}`,
+      label: "",
+    });
+    if (!linked.ok) throw new Error("link failed");
+    const outcome = await syncToEnd(provider, seed, linked.sourceId);
+    const page = await getGalleryPage(
+      createDrizzleGalleryRepository(db),
+      createDrizzleWorkspaceSourceRepository(db),
+      fakeCipher,
+      seed.context,
+      seed.bookedProjectId,
+      new Date(),
+    );
+    const reader = createDrizzleGalleryBrowseReader(db);
+    const browse = await browseGalleryPhotos(reader, seed.context, galleryId, {
+      kind: "PROOF",
+      sourceId: null,
+      path: "",
+      search: "",
+      cursor: null,
+    });
+    const shown = JSON.stringify([linked, outcome, page, browse]);
+    expect(shown).not.toContain(RINA_FOLDER_ID);
+    expect(shown).not.toContain(resourceKey);
+    expect(shown).toContain("file-IMG_001.jpg");
   });
 });

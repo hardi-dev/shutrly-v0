@@ -18,6 +18,11 @@ export interface MediaViewerProps {
   readonly onIndexChange: (index: number) => void;
   readonly onClose: () => void;
   readonly imageSrc: (item: MediaViewerItem, size: "stage" | "thumb") => string;
+  /** Tried once when `imageSrc` fails to load; if that fails too the item reads as missing. */
+  readonly imageFallbackSrc?: (
+    item: MediaViewerItem,
+    size: "stage" | "thumb",
+  ) => string | undefined;
   readonly missingText: string;
   /** A second line under `missingText`, e.g. what happens to the photo meanwhile. */
   readonly missingNote?: string;
@@ -32,6 +37,7 @@ export interface ViewerFrameProps extends MediaViewerProps {
 export interface StageProps {
   readonly item: MediaViewerItem;
   readonly src: string;
+  readonly fallbackSrc?: string;
   readonly missingText: string;
   readonly missingNote?: string;
 }
@@ -40,6 +46,7 @@ export interface FilmstripProps {
   readonly items: readonly MediaViewerItem[];
   readonly index: number;
   readonly imageSrc: MediaViewerProps["imageSrc"];
+  readonly imageFallbackSrc: MediaViewerProps["imageFallbackSrc"];
   readonly onIndexChange: (index: number) => void;
 }
 
@@ -48,6 +55,7 @@ export interface FilmstripThumbProps {
   readonly position: number;
   readonly isActive: boolean;
   readonly src: string;
+  readonly fallbackSrc?: string;
   readonly onSelect: (position: number) => void;
 }
 

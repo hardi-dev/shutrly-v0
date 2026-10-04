@@ -25,7 +25,7 @@
 - **Token rules:** `docs/design-system/token-usage.md` v3.1. Tokens only, no hex.
 - **UI fidelity:** find each state in `exports/INDEX.md`, then build from its raw exports (desktop and mobile). Read only the states the slice names, one file at a time; each is a complete frame of 25–165 KB.
 - **Secrets and logs:** never log links, the API key, passwords or ciphertext (C-103). Never use `process.env` in `src/`.
-- **Migrations:** `pnpm db:migrate` only for the reviewed and committed `0010_gallery`, against the non-production database, and report the run.
+- **Migrations:** `pnpm db:migrate` only for the reviewed and committed `0012_gallery`, against the non-production database, and report the run.
 - **Gate per slice:**
   - `pnpm typecheck`;
   - `pnpm lint`;
@@ -93,7 +93,7 @@
 - `galeri / desktop` and `galeri / mobile`: states `galeri-draf-kosong`, `galeri-toast-galeri-dibuat`, `galeri-memuat`.
 
 **Steps:**
-- [x] Schema `src/adapters/db/schema/gallery/gallery.ts` (all three tables, D-1…D-3, Database Changes), exported from the schema barrel. Run `pnpm db:generate` to make `0010_gallery`, review it and commit. Then run `pnpm db:migrate` (non-production) and report it. Add integration tests for the checks and unique keys.
+- [x] Schema `src/adapters/db/schema/gallery/gallery.ts` (all three tables, D-1…D-3, Database Changes), exported from the schema barrel. Run `pnpm db:generate` to make `0012_gallery`, review it and commit. Then run `pnpm db:migrate` (non-production) and report it. Add integration tests for the checks and unique keys.
 - [x] Domain `gallery-status`, `gallery-expiry`, `gallery-password` (generator and rules) with unit tests.
 - [x] Adapters:
   - `adapters/crypto/gallery-password-cipher` (AES-256-GCM, AAD, key version);
@@ -114,7 +114,7 @@
 - [ ] E2E: create a gallery from a booked project, check the password shows and copies, and the draft project shows the hint.
 
 **Implementation record (2026-10-04):**
-- `0010_gallery` generated, reviewed (additive) and applied to the shared non-production DB.
+- `0012_gallery` generated, reviewed (additive) and applied to the shared non-production DB.
 - Domain (status, expiry, password generator), crypto adapters (AES-256-GCM with AAD, Better Auth scrypt, unbiased random int), gallery repository (project `FOR SHARE`, `ON CONFLICT DO NOTHING` create), use cases, composition, actions, Galeri card slot, gallery page + skeleton.
 - New shared UI: `src/ui/primitives/radio` (C06, on `RadioField`), DateField `description`, icons `copy`, `images`, `image-off`, `external-link`, `arrow-left`.
 - Checks: typecheck, lint, unit/dom (all), integration (all 91), build pass. The E2E spec `tests/e2e/gallery/gallery-create.spec.ts` is written but **not run** (Owner: continue without E2E).

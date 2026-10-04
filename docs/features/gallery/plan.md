@@ -66,11 +66,11 @@
 **Steps:**
 - [x] **Owner:** provision `GOOGLE_DRIVE_API_KEY` (Drive API enabled, restricted to the Drive API) and `GALLERY_PASSWORD_KEY` (32 random bytes, base64url) in `.dev.vars` and `.env.test`. Stop until they're done.
 - [x] Add both keys and `E2E_FAKE_DRIVE` to `appEnvSchema`. The 32-byte decode is checked, and `E2E_FAKE_DRIVE` is refused when `APP_STAGE=production`. Add them to `.env.example` with comments. Tests in `app-env.test.ts`.
-- [ ] Spike: a script under `scripts/gallery/drive-spike.ts`, not shipped, that lists a public folder tree with the key and fetches `thumbnailLink=s400`. Record the list calls, the time and whether the thumbnail works without OAuth. Delete the script after recording, or keep it under `scripts/` with a header comment.
+- [x] Spike: a script under `scripts/gallery/drive-spike.ts`, not shipped, that lists a public folder tree with the key and fetches `thumbnailLink=s400`. Record the list calls, the time and whether the thumbnail works without OAuth. Delete the script after recording, or keep it under `scripts/` with a header comment.
 
 **Implementation record (2026-10-04):**
 - Env keys validated (`GALLERY_PASSWORD_KEY` by a 43-character base64url pattern whose last character carries 4 bits, so exactly 32 bytes; `E2E_FAKE_DRIVE` refused on production); `.env.example` updated; 3 new `app-env` tests.
-- `scripts/gallery/drive-spike.ts` written (header comment, prints counts only). **Not run yet:** the Owner has no public test folder yet. R-1/R-2 stay open; run it before Slice 8.
+- `scripts/gallery/drive-spike.ts` written (header comment, prints counts only). Run 2026-10-05 on the Owner's public test folder: 1 list call in 0.6 s, 113 images, 0 ignored, 0 too deep; the thumbnail came from `*.googleusercontent.com` with HTTP 200 `image/jpeg` and no OAuth. R-1 and R-2 closed; A-T1 holds at this size (no 1,000+ photo folder tested).
 
 ## Slice 1 — Create a gallery and see its password
 
@@ -346,17 +346,18 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 - `exports/INDEX.md` (all 50 states, desktop and mobile).
 
 **Steps:**
-- [ ] Axe and keyboard E2E for each surface.
+- [x] Axe and keyboard E2E for each surface.
 - [x] Cross-workspace integration test table: every action plus the media route, expecting not found and no change.
-- [ ] Fidelity pass per screen group (galeri, semuafoto, preview, proyek), desktop and mobile.
-- [ ] Real Drive smoke test, an implementation record in technical-design.md, and the feature-map update.
+- [x] Fidelity pass per screen group (galeri, semuafoto, preview, proyek), desktop and mobile.
+- [x] Real Drive smoke test, an implementation record in technical-design.md, and the feature-map update.
 
-**Implementation record (2026-10-04) — Slice 8, all but the real-Drive smoke test:**
+**Implementation record (2026-10-04/05) — Slice 8:**
 - Isolation (AC-GAL-025): `tests/integration/gallery/gallery-isolation.test.ts` drives every gallery use case and the media use case from another workspace; each is not found and a before/after snapshot is unchanged.
 - Browser verification (Owner: no Playwright E2E, so a manual pass in the in-app browser against the dev server with `E2E_FAKE_DRIVE=1`, a throwaway test user and `axe-core` run in the page for WCAG 2 A/AA/2.1): register → create → *Tambah folder* and sync (4 proof · 3 edited · 1 print · 2 diabaikan) → *Semua foto* (folders, breadcrumb, tabs, folded `Edited/old`) → preview (←/→/Home/End, focus on *Tutup*) → publish → expiry (30 days = *Sel, 3 Nov 2026*) → forced expiry and re-open → rotate → archive → cancel the project (card becomes *Diarsipkan*). Axe found no violation on the card, page, *Buat galeri*, *Tambah folder*, publish, expiry, rotate, archive, menus, *Semua foto* and the preview, on desktop and phone, after the fixes below.
 - Fixed while verifying: folder and photo tiles collapsed in the grid (`w-full`); phone meta line failed contrast (page-header subtitle token); preview position counted subfolder photos; *Semua foto* sheet wasn't full height (`BottomSheet isFullHeight`, viewport − 44); *Buka di Drive* is an icon link on phones (`IconButton href`); `PasswordDialog` started a server action while rendering (React warning); the phone ⋯ menu never appeared because `CompactBarActions` looked for the shell slot only once at mount (new `useSlotTarget` waits for it; it also fixes F-07's phone menu).
 - Fidelity: compared the draft, expired and archived pages, *Buat galeri*, *Tambah folder*, *Semua foto* (modal 1094 × 942 vs 1096 × 944, tiles 250 px), the preview and the phone page against their exports in the browser. Copy fidelity: a script compared the visible text of all 100 exports with `GALLERY_COPY` and the components; mismatches were fixed in code (e.g. *(lewat)* on an expired expiry date, failed-folder names, publish-refused dialog). Visual (pixel) comparison covers only the screens above.
-- Open: the real-Drive smoke test and the Slice 0 spike (R-1, R-2, A-T1) need the Owner's public test folder; the Playwright suite (`gallery-create.spec.ts`) was never run. Feature-map F-09 stays `IN PROGRESS` until the smoke test passes.
+- Real Drive (2026-10-05, Owner's public test folder, non-production key): `tests/e2e/gallery/gallery-drive-smoke.spec.ts` links the folder, syncs 113 proof photos, loads a thumbnail, previews with ←/→ and Escape, opens *Semua foto*, publishes, opens expiry and rotate from the ⋯ menu and archives, with axe on each surface: pass. It runs only when `GALLERY_SMOKE_FOLDER_URL` is set (`testIgnore` in `playwright.config.ts`), so the folder ID is never committed.
+- E2E (Owner: "run e2e", 2026-10-05): full suite 73 passed, 2 flaky (catalog phone axe timeout, AC-SRC-015; both pass on retry), 1 failed: `workspace.spec.ts` AC-WS-022 still clicked *Proyek* and expected *Segera hadir*, stale since F-07 built Projects (fails on `main` too). Fixed to open `/invoices`, now passes; gallery specs pass.
 
 ## AC index
 

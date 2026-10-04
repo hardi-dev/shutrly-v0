@@ -1,24 +1,24 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-04 (F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery PLANNED) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `claude/new-feature-skill-start-a92e1b` (F-09 gallery design, worktree). F-07 is on `feat/projects`; F-08 Team designed on `feat/team-sessions`.
+Last updated: 2026-10-05 (F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `claude/new-feature-skill-start-a92e1b` (F-09 gallery, worktree). F-07 is on `feat/projects`; F-08 Team designed on `feat/team-sessions`.
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-09 Gallery IN PROGRESS, Slices 0–8 built (smoke test open) (2026-10-04)
+## Current handoff — F-09 Gallery DONE, pending Owner acceptance (2026-10-05)
 
-- **State:** F-09 Gallery `IN PROGRESS`. Branch `claude/new-feature-skill-start-a92e1b` (worktree), `origin/main` (F-08) merged, not pushed, no PR. Only the generated `docs/design-system/pencil-variables.json` is untracked.
-- **Done:** Slices 0–7 of the [plan](features/gallery/plan.md), each with an implementation record: env keys, create and password, folders and sync, *Foto* and the Owner media endpoint, *Semua foto*, photo preview, lifecycle (publish, expiry, rotate, remove, archive, delete) and cancel → archive in one transaction. Migration `0012_gallery` applied to the non-production DB. Slice 8: isolation test, and a browser pass with axe (no violations) plus fixes; a copy audit of all 100 exports against the code copy; only the real-Drive smoke test is open.
-- **Checks (last run):** typecheck, lint, unit/dom (1493), integration (160) and build pass. **No E2E ran** (Owner: build without E2E); `tests/e2e/gallery/gallery-create.spec.ts` was written but never run.
+- **State:** F-09 Gallery `DONE` (pending Owner acceptance). Branch `claude/new-feature-skill-start-a92e1b` (worktree), `origin/main` (F-08) merged, not pushed, no PR. Only the generated `docs/design-system/pencil-variables.json` is untracked.
+- **Done:** Slices 0–8 of the [plan](features/gallery/plan.md), each with an implementation record. Slice 0 spike on the Owner's public folder closed R-1/R-2 ([technical design › Risks](features/gallery/technical-design.md)). Slice 8: isolation test, browser pass with axe, copy audit of all 100 exports, and the real-Drive smoke E2E (`gallery-drive-smoke.spec.ts`, axe and keyboard on every surface). Migration `0012_gallery` applied to the non-production DB.
+- **Checks (last run):** typecheck, lint, unit/dom (1493), integration (160) and build pass. Full E2E: 73 passed, 2 flaky (pass on retry), 1 stale workspace test fixed and passing; the gallery specs and the real-Drive smoke pass.
 - **Owner actions:**
-  - Public Drive test folder ("Anyone with the link") for the Slice 0 spike and the Slice 8 smoke test (R-1, R-2, A-T1); optionally a 1,000–2,000 photo folder.
-  - Decide whether to add `axe-core` as a dependency for jsdom axe checks, or to run the E2E suite with axe.
+  - Accept F-09 or report changes; the smoke spec runs with `GALLERY_SMOKE_FOLDER_URL=<public folder> pnpm e2e tests/e2e/gallery`.
   - Check the Workers Paid plan before ship; provision the Drive and password keys for production; commit the `guard.py` change on `feat/team-sessions` if still pending.
+  - Optionally measure a 1,000–2,000 photo folder to settle A-T1 (sync size limit).
 - **Open items:**
-  - Real-Drive smoke test and the Slice 0 spike (need the test folder).
-  - The Playwright suite has never run; the other exports were not compared one by one (see the Slice 8 record).
-  - Small deviations are listed in the plan's records (no *Ganti password* button in the *Akses klien* header, count-only failed-folder Alert, *Galeri dibuka lagi* toast not wired).
-- **Next:** run `scripts/gallery/drive-spike.ts` against the test folder, do the real-Drive smoke test, then `/sdv:verify-feature gallery`.
+  - A-T1 stays an assumption (only 113 photos measured).
+  - Small deviations are listed in the plan's records (no *Ganti password* button in the *Akses klien* header, *Galeri dibuka lagi* toast not wired).
+  - Flaky E2E: catalog phone axe (timeout) and AC-SRC-015, both pass on retry.
+- **Next:** `/sdv:verify-feature gallery` for the independent review, then `/sdv:ship`.
 
 ## Key decisions (Owner)
 

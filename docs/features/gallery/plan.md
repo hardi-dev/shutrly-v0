@@ -347,9 +347,17 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 
 **Steps:**
 - [ ] Axe and keyboard E2E for each surface.
-- [ ] Cross-workspace integration test table: every action plus the media route, expecting not found and no change.
+- [x] Cross-workspace integration test table: every action plus the media route, expecting not found and no change.
 - [ ] Fidelity pass per screen group (galeri, semuafoto, preview, proyek), desktop and mobile.
 - [ ] Real Drive smoke test, an implementation record in technical-design.md, and the feature-map update.
+
+**Implementation record (2026-10-04) — PARTIAL, Slice 8 is not done:**
+- Done: `tests/integration/gallery/gallery-isolation.test.ts` drives every gallery use case (propose, card, browse, folder use, link, sync, publish, expiry, rotate, remove, archive, delete) and the media use case from another workspace: each is not found and a before/after snapshot of the gallery, source and photos is unchanged (AC-GAL-025).
+- Open, needs the Owner or a later session:
+  - **Axe and keyboard E2E** for each surface (AC-GAL-026). The Owner chose to build without E2E; `tests/e2e/gallery/gallery-create.spec.ts` exists but has never run. `axe-core` is not a direct dependency, so an axe check in jsdom would need Owner approval to add one. Keyboard behaviour of the viewer, tabs, menus and dialogs is covered by dom tests.
+  - **Fidelity pass** against the 100 exports (desktop and mobile): not done, the pages were not compared to the exports in a browser.
+  - **Real Drive smoke test** and the Slice 0 spike (R-1, R-2, A-T1): need the public test folder.
+  - Feature-map F-09 stays `IN PROGRESS`; it becomes `DONE` only after these.
 
 ## AC index
 

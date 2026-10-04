@@ -5,23 +5,21 @@ Branch: `claude/new-feature-skill-start-a92e1b` (F-09 gallery design, worktree).
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-09 Gallery PLANNED (2026-10-04)
+## Current handoff — F-09 Gallery IN PROGRESS, Slices 0–7 built (2026-10-04)
 
-- **State:** F-09 Gallery `PLANNED` (design approved: "1 approve"). Branch `claude/new-feature-skill-start-a92e1b` (worktree), not pushed, no PR. Only `docs/design-system/pencil-variables.json` is untracked (generated, never committed).
-- **Done this session:**
-  - Intent accepted, spec + AC-GAL-001…031 written, FC-001…008 all resolved: [intent](features/gallery/intent.md), [spec](features/gallery/spec.md), [AC](features/gallery/acceptance-criteria.md).
-  - Gallery password stored encrypted, generated (e.g. *mawar-4821*), Owner-visible and auto-filled into WhatsApp: [ADR-017](architecture/decisions/ADR-017-gallery-password-encrypted-owner-visible.md), constitution v1.1 (C-103), BR-GAL-002/003, BR-MSG-003.
-  - Whole Drive folder tree is synced; edited/print decided by the nearest ancestor at any depth (BR-GAL-007, ADR-005 amended). Browse = kind tabs + Drive-like folders + filename search + infinite scroll inside a *Semua foto* modal; immersive photo preview.
-  - Design: [design.md](features/gallery/design.md) (frame IDs, states, exceptions), 100 HTML exports + [`exports/INDEX.md`](features/gallery/exports/INDEX.md); [technical design](features/gallery/technical-design.md) and [plan](features/gallery/plan.md) written (F-09 `PLANNED`).
-  - Library: new components C46 Photo Tile, C47 Folder Tile, C48 Media Viewer (+ specs in `design-system/components/`); 623 tokens, checksum `c2c0a40b`; `token-usage.md` amended (`surface.inverse` may back a media viewer).
-  - Hook: `guard.py` allows copying bundled `.pen` templates into `docs/`.
-- **Checks:** token validator + checksum match; export index `--check` OK; sample export content checked. No code yet, so no typecheck/tests ran.
+- **State:** F-09 Gallery `IN PROGRESS`. Branch `claude/new-feature-skill-start-a92e1b` (worktree), `origin/main` (F-08) merged, not pushed, no PR. Only the generated `docs/design-system/pencil-variables.json` is untracked.
+- **Done:** Slices 0–7 of the [plan](features/gallery/plan.md), each with an implementation record: env keys, create and password, folders and sync, *Foto* and the Owner media endpoint, *Semua foto*, photo preview, lifecycle (publish, expiry, rotate, remove, archive, delete) and cancel → archive in one transaction. Migration `0012_gallery` applied to the non-production DB. Slice 8 is partial (cross-workspace isolation test only).
+- **Checks (last run):** typecheck, lint, unit/dom (1478), integration (160) and build pass. **No E2E ran** (Owner: build without E2E); `tests/e2e/gallery/gallery-create.spec.ts` was written but never run.
 - **Owner actions:**
-  - Provision the Drive API key and the gallery-password encryption key (non-production now, production before ship).
-  - Commit the `guard.py` TEMPLATE_COPY change in the main checkout (uncommitted on `feat/team-sessions`).
-  - Merge this branch before any other `design-system.lib.pen` change (`.lib.pen` can't be merged by git); re-run `tokens_to_pencil.py` if token files conflict.
-- **Open items** (tracked in [design.md](features/gallery/design.md)): library board 07 doesn't show the `surface.inverse` amendment yet; Modal `size="xl"` built in code; F-07 cancel-dialog copy and F-03 preview copy changes land with the F-09 build; sharing deferred.
-- **Next:** `/sdv:build-feature gallery 0` once the Owner has put `GOOGLE_DRIVE_API_KEY` and `GALLERY_PASSWORD_KEY` in `.dev.vars` / `.env.test`. Slice 0 spikes Drive listing and thumbnails (plan R-1/R-2; sync size limit A-T1 awaits the Owner).
+  - Public Drive test folder ("Anyone with the link") for the Slice 0 spike and the Slice 8 smoke test (R-1, R-2, A-T1); optionally a 1,000–2,000 photo folder.
+  - Decide whether to add `axe-core` as a dependency for jsdom axe checks, or to run the E2E suite with axe.
+  - Check the Workers Paid plan before ship; provision the Drive and password keys for production; commit the `guard.py` change on `feat/team-sessions` if still pending.
+- **Open items (Slice 8):**
+  - Axe and keyboard E2E for each surface (AC-GAL-026).
+  - Fidelity pass against the 100 exports, desktop and mobile.
+  - Real-Drive smoke test.
+  - Small deviations are listed in the plan's records (no *Ganti password* button in the *Akses klien* header, count-only failed-folder Alert, *Galeri dibuka lagi* toast not wired).
+- **Next:** run `scripts/gallery/drive-spike.ts` against the test folder, then `/sdv:build-feature gallery 8`, then `/sdv:verify-feature gallery`.
 
 ## Key decisions (Owner)
 

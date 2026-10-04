@@ -382,11 +382,19 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 **Exports:** none (no UI).
 
 **Steps:**
-- [ ] Spike: extend `scripts/gallery/drive-spike.ts` to fetch `https://lh3.googleusercontent.com/d/<fileId>=w600` for a photo of the Owner's public test folder with no key and no referrer, then the same for a file that has a resource key if the Owner has one. Record status, content type and size in technical-design.md › R-7.
+- [x] Spike: extend `scripts/gallery/drive-spike.ts` to fetch `https://lh3.googleusercontent.com/d/<fileId>=w600` for a photo of the Owner's public test folder with no key and no referrer, then the same for a file that has a resource key if the Owner has one. Record status, content type and size in technical-design.md › R-7.
   - **Stop:** if `lh3` fails, report to the Owner before R3; ADR-019 point 3 rests on it. R1 and R2 do not depend on it.
-- [ ] Schema: add `content_version`, `sync_cursor` and `sync_lease_at`, and drop `last_seen_at`, in `gallery.ts` (the drop is Owner-approved, 2026-10-05; report it with the run); generate the migration with drizzle-kit, review that it is additive, commit it, then apply it to the non-production database with the project's migrate script and report the run. Integration test for the new check and defaults.
-- [ ] Domain: constants `SYNC_STEP_MAX_LIST_CALLS`, `SYNC_STEP_MAX_ENTRIES`, `MAX_SYNC_PHOTOS` (replace `SYNC_LIMITS`), the cursor type, `startCursor` and `walkStep` in `sync-plan`. Keep `walkFolderTree` until R2 removes it. Unit tests: a 95-folder fake tree takes 3 steps and gives the same photos as one pass, the budget stops at 40 calls and at the entry cap, a folder page token resumes, the depth and shortcut rules still hold, and `TOO_LARGE` at the photo cap.
-- [ ] Cursor Zod schema in `application/schemas/sync-cursor`, with unit tests for a bad shape.
+- [x] Schema: add `content_version`, `sync_cursor` and `sync_lease_at`, and give `last_seen_at` a default, in `gallery.ts` (the drop of `last_seen_at` moves to R2, see the record); generate the migration with drizzle-kit, review that it is additive, commit it, then apply it to the non-production database with the project's migrate script and report the run. Integration test for the new check and defaults.
+- [x] Domain: constants `SYNC_STEP_MAX_LIST_CALLS`, `SYNC_STEP_MAX_ENTRIES`, `MAX_SYNC_PHOTOS` (replace `SYNC_LIMITS`), the cursor type, `startCursor` and `walkStep` in `sync-plan`. Keep `walkFolderTree` until R2 removes it. Unit tests: a 95-folder fake tree takes 3 steps and gives the same photos as one pass, the budget stops at 40 calls and at the entry cap, a folder page token resumes, the depth and shortcut rules still hold, and `TOO_LARGE` at the photo cap.
+- [x] Cursor Zod schema in `application/schemas/sync-cursor`, with unit tests for a bad shape.
+
+**Implementation record (2026-10-05) — R1:**
+- Spike: on the Owner's test folder `lh3.googleusercontent.com/d/<id>=w600` and `=w1600` return HTTP 200 `image/jpeg` with no key and no referrer (R-7 closed except a resource-key file, none available).
+- Migration `0013_gallery_free_tier` (additive: `content_version`, `sync_lease_at`, `sync_cursor`, a default on `last_seen_at`) generated, reviewed, committed and applied to the non-production database (no other branch breaks).
+- Domain `sync-step` (`startCursor`, `walkStep`, `syncProgress`, the cursor types) with `SYNC_STEP_MAX_LIST_CALLS = 40`, `SYNC_STEP_MAX_ENTRIES = 3000`, `MAX_SYNC_PHOTOS = 20 000`; `toPhoto` exported from `sync-plan`. `walkFolderTree` stays until R2.
+- `application/schemas/sync-cursor` (Zod, bounded) with `parseSyncCursor`.
+- Checks: typecheck, lint (incl. tokens), unit/dom 1505 passed (387 files), integration for `gallery-repository` 7 passed. Build not run (no routing or config change). Other integration and E2E not rerun (nothing user-visible changed).
+- Deviation: the drop of `gallery_photo.last_seen_at` (Owner-approved) moves from R1 to R2 as migration `0014`, because the current sync code still writes it and R1 must leave sync working.
 
 ## Slice R2 — Sync in steps, end to end
 
@@ -410,6 +418,7 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 - [ ] Port `GallerySourceRepositoryPort`: replace `claimSync`, `completeSync`, `failSync` with `claimStep`, `commitStep` and `failRun`; adapter in `gallery-sync-sql.ts` (claim with lease and 30-minute restart, the conditional upsert with the `IS DISTINCT FROM` guard, the `<> ALL(seen)` missing update, counts, cursor; `content_version` is left to R4). Integration tests: a 3-step run equals one pass; two concurrent steps, only one commits; unchanged re-sync leaves `updated_at` and `xmin`; rename and remove touch only their rows; a failed run keeps earlier rows and marks none missing; a stale run restarts.
 - [ ] Use case `sync-gallery-source-step` replaces `sync-gallery-source` and its outcome gains `CONTINUE`; the rate limit counts run starts only. Unit tests with a counting fake provider assert ≤ 40 list calls per step.
 - [ ] `linkGallerySource` stops syncing inline (D-27). `publishGallery` checks folders until one passes (D-25). Update their unit tests.
+- [ ] Migration `0014`: drop `gallery_photo.last_seen_at` (Owner-approved 2026-10-05), generated, reviewed, committed, then applied to the non-production database and reported, together with the removal of every write to it.
 - [ ] Action and composition: `syncGallerySourceAction` returns the step outcome. Remove `walkFolderTree`, `SYNC_LIMITS` and the old claim code.
 - [ ] UI: `useGallerySync` loops steps (cap 500), reports `foldersDone` of `foldersTotal`, and *Sinkronkan semua* runs sources one after another; the link dialog closes and the page starts the first sync; progress copy in `gallery-copy.copy.ts`. Dom tests: the loop ends on `SUCCEEDED`, on `FAILED` and at the cap.
 - [ ] E2E (fake drive): link the fixture folder, see the progress text then *Berhasil*, re-sync, and a failing folder shows *Gagal*.

@@ -3,7 +3,14 @@ import type { PhotoKind, PhotoPlacement, SyncLimits } from "./photo-classificati
 // A-14 and A-T1 (TD D-7, R-1): depth below the source, and the per-sync budget.
 export const SYNC_MAX_DEPTH = 5;
 export const MAX_SYNC_LIST_CALLS = 300;
-export const MAX_SYNC_PHOTOS = 10_000;
+export const MAX_SYNC_PHOTOS = 20_000;
+// ADR-018, ADR-019, TD D-7: one sync step stays within 50 subrequests and 10 ms CPU (A-T3, tuned by R-6).
+export const SYNC_STEP_MAX_LIST_CALLS = 40;
+export const SYNC_STEP_MAX_ENTRIES = 3000;
+// TD D-20: bounds on the stored cursor, so a damaged value can't grow a source row.
+export const CURSOR_MAX_QUEUE = 50_000;
+export const CURSOR_MAX_TEXT = 2048;
+export const CURSOR_MAX_ID = 200;
 export const SYNC_LIMITS: SyncLimits = {
   maxListCalls: MAX_SYNC_LIST_CALLS,
   maxPhotos: MAX_SYNC_PHOTOS,

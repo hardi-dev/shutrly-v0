@@ -20,6 +20,7 @@ import type { DbExecutor } from "../client/client.types";
 import { project } from "../schema/booking/project";
 import { gallery, gallerySource } from "../schema/gallery/gallery";
 import { workspaceSourceConfig } from "../schema/gallery/workspace-source-config";
+import { lifecycleWriter } from "./gallery-lifecycle-sql";
 import { lockGallery } from "./gallery-lock-sql";
 import { toGalleryStatus, toProjectStatus } from "./gallery-rows";
 import { claimSync, heldClaim, writeSync } from "./gallery-sync-sql";
@@ -30,6 +31,7 @@ function sourceWriter(
   galleryId: string,
 ): GallerySourceWriter {
   return {
+    ...lifecycleWriter(tx, context, galleryId),
     async isWorkspaceSourceActive(workspaceSourceId) {
       const rows = await tx
         .select({ isActive: workspaceSourceConfig.isActive })
@@ -77,6 +79,7 @@ async function findSyncTarget(
         source: gallerySource,
         status: gallery.status,
         expiresAt: gallery.expiresAt,
+        expiryDays: gallery.expiryDays,
         projectStatus: project.status,
       })
       .from(gallerySource)
@@ -104,8 +107,38 @@ async function findSyncTarget(
     galleryId: source.galleryId,
     folder: { folderId: source.providerFolderId, resourceKey: source.resourceKey },
     removed: source.removedAt !== null,
-    gallery: { galleryId: source.galleryId, status, expiresAt: row.expiresAt, projectStatus },
+    gallery: {
+      galleryId: source.galleryId,
+      status,
+      expiresAt: row.expiresAt,
+      expiryDays: row.expiryDays,
+      projectStatus,
+    },
   };
+}
+
+async function listActiveSources(db: DbExecutor, context: WorkspaceContext, galleryId: string) {
+  const rows = await db
+    .select({
+      sourceId: gallerySource.id,
+      name: sql<string | null>`coalesce(${gallerySource.label}, ${gallerySource.folderName})`,
+      folderId: gallerySource.providerFolderId,
+      resourceKey: gallerySource.resourceKey,
+    })
+    .from(gallerySource)
+    .where(
+      and(
+        eq(gallerySource.workspaceId, context.workspaceId),
+        eq(gallerySource.galleryId, galleryId),
+        isNull(gallerySource.removedAt),
+      ),
+    )
+    .orderBy(gallerySource.createdAt);
+  return rows.map((row) => ({
+    sourceId: row.sourceId,
+    name: row.name,
+    folder: { folderId: row.folderId, resourceKey: row.resourceKey },
+  }));
 }
 
 async function findFolderUse(
@@ -167,6 +200,7 @@ export function createDrizzleGallerySourceRepository(db: DbExecutor): GallerySou
     findFolderUse: (context, galleryId, folderId) =>
       findFolderUse(db, context, galleryId, folderId),
     findSyncTarget: (context, sourceId) => findSyncTarget(db, context, sourceId),
+    listActiveSources: (context, galleryId) => listActiveSources(db, context, galleryId),
     claimSync: (context, sourceId, now) => claimSync(db, context, sourceId, now),
     completeSync: (context, claim, result, now) =>
       db.transaction(async (tx) => {

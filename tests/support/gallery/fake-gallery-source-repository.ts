@@ -29,8 +29,17 @@ export interface FakePhoto extends SyncedPhoto {
   missing: boolean;
 }
 
+export interface FakeGallery extends LockedGalleryState {
+  workspaceId: string;
+  passwordVersion: number;
+  passwordHash: string;
+  passwordChangedBy: string | null;
+  archivedBy: string | null;
+  deleted: boolean;
+}
+
 export class FakeGallerySourceRepository implements GallerySourceRepositoryPort {
-  readonly galleries = new Map<string, LockedGalleryState & { workspaceId: string }>();
+  readonly galleries = new Map<string, FakeGallery>();
   readonly activeWorkspaceSources = new Set<string>();
   readonly sources: FakeSource[] = [];
   readonly photos: FakePhoto[] = [];
@@ -38,7 +47,62 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
   private next = 0;
 
   addGallery(workspaceId: string, gallery: LockedGalleryState): void {
-    this.galleries.set(gallery.galleryId, { ...gallery, workspaceId });
+    this.galleries.set(gallery.galleryId, {
+      ...gallery,
+      workspaceId,
+      passwordVersion: 1,
+      passwordHash: "hash(mawar-4821)",
+      passwordChangedBy: null,
+      archivedBy: null,
+      deleted: false,
+    });
+  }
+
+  private lifecycle(gallery: FakeGallery) {
+    const active = () =>
+      this.sources.filter((row) => row.galleryId === gallery.galleryId && !row.removed);
+    const set = (change: Partial<FakeGallery>) => {
+      this.galleries.set(gallery.galleryId, {
+        ...(this.galleries.get(gallery.galleryId) ?? gallery),
+        ...change,
+      });
+    };
+    return {
+      countActiveSources: async () => active().length,
+      removeSource: async (sourceId: string) => {
+        const source = active().find((row) => row.id === sourceId);
+        if (source) source.removed = true;
+        return source !== undefined;
+      },
+      publish: async (expiry: { expiresAt: Date | null; expiryDays: number | null }) => {
+        set({ status: "PUBLISHED", ...expiry });
+      },
+      setExpiry: async (expiry: { expiresAt: Date | null; expiryDays: number | null }) => {
+        set(expiry);
+      },
+      rotatePassword: async (rotated: { passwordHash: string }, actorId: string) => {
+        set({
+          passwordHash: rotated.passwordHash,
+          passwordVersion: gallery.passwordVersion + 1,
+          passwordChangedBy: actorId,
+        });
+      },
+      archive: async (actorId: string) => {
+        set({ status: "ARCHIVED", archivedBy: actorId });
+      },
+      deleteGallery: async () => {
+        set({ deleted: true });
+      },
+    };
+  }
+
+  async listActiveSources(context: WorkspaceContext, galleryId: string) {
+    return this.sources
+      .filter(
+        (row) =>
+          row.galleryId === galleryId && row.workspaceId === context.workspaceId && !row.removed,
+      )
+      .map((row) => ({ sourceId: row.id, name: row.folderName, folder: row.folder }));
   }
 
   async withLockedGallery<T>(
@@ -47,8 +111,10 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
     work: Parameters<GallerySourceRepositoryPort["withLockedGallery"]>[2],
   ): Promise<T | "NOT_FOUND"> {
     const gallery = this.galleries.get(galleryId);
-    if (!gallery || gallery.workspaceId !== context.workspaceId) return "NOT_FOUND";
+    if (!gallery || gallery.deleted || gallery.workspaceId !== context.workspaceId)
+      return "NOT_FOUND";
     const writer = {
+      ...this.lifecycle(gallery),
       isWorkspaceSourceActive: async (id: string) => this.activeWorkspaceSources.has(id),
       insertSource: async (source: NewGallerySource) => {
         const taken = this.sources.some(

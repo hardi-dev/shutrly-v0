@@ -21,6 +21,7 @@ export async function lockGallery(
       .select({
         status: gallery.status,
         expiresAt: gallery.expiresAt,
+        expiryDays: gallery.expiryDays,
         projectId: gallery.projectId,
       })
       .from(gallery)
@@ -38,5 +39,5 @@ export async function lockGallery(
   const status = toGalleryStatus(row.status);
   const projectStatus = owner ? toProjectStatus(owner.status) : null;
   if (!status || !projectStatus) return null;
-  return { galleryId, status, expiresAt: row.expiresAt, projectStatus };
+  return { galleryId, status, expiresAt: row.expiresAt, expiryDays: row.expiryDays, projectStatus };
 }

@@ -11,11 +11,14 @@ import type {
 } from "@/features/gallery/domain/sync-plan/sync-plan.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
+import type { EncryptedPassword } from "../gallery-password-cipher/gallery-password-cipher.port";
+
 // The gallery and project state a source write re-checks under lock (D-8, D-14).
 export interface LockedGalleryState {
   readonly galleryId: string;
   readonly status: GalleryStoredStatus;
   readonly expiresAt: Date | null;
+  readonly expiryDays: number | null;
   readonly projectStatus: GalleryProjectStatus;
 }
 
@@ -30,7 +33,36 @@ export interface InsertedSource {
   readonly sourceId: string;
 }
 
-export interface GallerySourceWriter {
+export interface GalleryExpiryColumns {
+  readonly expiresAt: Date | null;
+  readonly expiryDays: number | null;
+}
+
+export interface RotatedPassword {
+  readonly password: EncryptedPassword;
+  readonly passwordHash: string;
+}
+
+export interface ActiveSourceRecord {
+  readonly sourceId: string;
+  readonly name: string | null;
+  readonly folder: DriveFolderRef;
+}
+
+// Lifecycle writes under the gallery lock (BR-GAL-003…005, BR-GAL-009, BR-AUD-001, D-18).
+export interface GalleryLifecycleWriter {
+  readonly countActiveSources: () => Promise<number>;
+  /** Marks an active source removed; false when it isn't an active source of this gallery. */
+  readonly removeSource: (sourceId: string, actorId: string, now: Date) => Promise<boolean>;
+  readonly publish: (expiry: GalleryExpiryColumns, actorId: string, now: Date) => Promise<void>;
+  readonly setExpiry: (expiry: GalleryExpiryColumns, actorId: string, now: Date) => Promise<void>;
+  readonly rotatePassword: (rotated: RotatedPassword, actorId: string, now: Date) => Promise<void>;
+  readonly archive: (actorId: string, now: Date) => Promise<void>;
+  /** Deletes the gallery with its sources and photo records (cascade). */
+  readonly deleteGallery: () => Promise<void>;
+}
+
+export interface GallerySourceWriter extends GalleryLifecycleWriter {
   /** True when the workspace source exists and is active (BR-SRC-006). */
   readonly isWorkspaceSourceActive: (workspaceSourceId: string) => Promise<boolean>;
   readonly insertSource: (
@@ -70,6 +102,10 @@ export interface GallerySourceRepositoryPort {
     galleryId: string,
     folderId: string,
   ) => Promise<readonly string[]>;
+  readonly listActiveSources: (
+    context: WorkspaceContext,
+    galleryId: string,
+  ) => Promise<readonly ActiveSourceRecord[]>;
   readonly findSyncTarget: (
     context: WorkspaceContext,
     sourceId: string,

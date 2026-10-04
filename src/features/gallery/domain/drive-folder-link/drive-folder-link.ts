@@ -32,3 +32,4 @@ export function parseDriveFolderLink(text: string): DriveFolderLinkResult {
   }
   return { ok: true, folderId, resourceKey: url.searchParams.get("resourcekey") };
 }
+export const GALLERY_SOURCE_LABEL_MAX = 60;

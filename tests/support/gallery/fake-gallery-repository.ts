@@ -3,6 +3,7 @@
 import type {
   GalleryCardRecord,
   GalleryPageRecord,
+  GalleryPhotoRecord,
   GalleryProjectFacts,
   GalleryRepositoryPort,
   GallerySourceRecord,
@@ -28,6 +29,7 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
   readonly projects: StoredProject[] = [];
   readonly galleries: StoredGallery[] = [];
   readonly sources: (GallerySourceRecord & { galleryId: string })[] = [];
+  readonly photos: (GalleryPhotoRecord & { galleryId: string; workspaceId: string })[] = [];
 
   addProject(project: StoredProject): void {
     this.projects.push(project);
@@ -101,7 +103,22 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
     const gallery = this.galleries.find((row) => row.projectId === projectId);
     if (!project || !gallery) return null;
     const sources = this.sources.filter((row) => row.galleryId === gallery.id);
-    return { project, summary: this.summary(gallery), sources };
+    const previewPhotos = this.photos.filter((row) => row.galleryId === gallery.id).slice(0, 8);
+    return { project, summary: this.summary(gallery), sources, previewPhotos };
+  }
+
+  async findMediaPhoto(context: WorkspaceContext, photoId: string) {
+    const photo = this.photos.find(
+      (row) => row.id === photoId && row.workspaceId === context.workspaceId,
+    );
+    if (!photo) return null;
+    const source = this.sources.find((row) => row.id === photo.sourceId);
+    return {
+      externalFileId: photo.externalFileId,
+      resourceKey: photo.resourceKey,
+      missing: photo.missing,
+      sourceRemoved: source?.removedAt != null,
+    };
   }
 }
 /* eslint-enable @typescript-eslint/require-await -- end of the fake */

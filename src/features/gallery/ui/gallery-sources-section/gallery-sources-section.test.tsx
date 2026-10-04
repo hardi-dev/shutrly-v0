@@ -47,6 +47,7 @@ const PAGE = {
     },
   ],
   linkableSources: [],
+  previewPhotos: [],
 };
 
 describe("GallerySourcesSection", () => {

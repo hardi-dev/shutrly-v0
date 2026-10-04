@@ -4,9 +4,9 @@ import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-vie
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { AccessCard } from "../access-card/access-card";
+import { GalleryPhotosSection } from "../gallery-photos-section/gallery-photos-section";
 import { GallerySourcesSection } from "../gallery-sources-section/gallery-sources-section";
 import { galleryMetaText, galleryStatusChip } from "../gallery-text/gallery-text";
-import { PhotosCard } from "../photos-card/photos-card";
 import type { GalleryPageScreenProps } from "./gallery-page-screen.types";
 
 /** The gallery page (design.md › Layout): *Akses klien*, *Sumber foto* and *Foto* in the wide column. */
@@ -29,9 +29,7 @@ export function GalleryPageScreen({
       ) : null}
       <AccessCard gallery={gallery} />
       <GallerySourcesSection workspaceId={workspaceId} page={page} actions={actions} />
-      <PhotosCard
-        hasPhotos={gallery.counts.proof + gallery.counts.edited + gallery.counts.print > 0}
-      />
+      <GalleryPhotosSection workspaceId={workspaceId} page={page} />
     </main>
   );
 }

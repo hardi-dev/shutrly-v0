@@ -1,15 +1,18 @@
 import "server-only";
 
+import { driveFileUrl } from "@/features/gallery/domain/drive-folder-link/drive-folder-link";
 import { effectiveGalleryStatus } from "@/features/gallery/domain/gallery-status/gallery-status";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { GalleryPasswordCipherPort } from "../../ports/gallery-password-cipher/gallery-password-cipher.port";
 import type {
+  GalleryPhotoRecord,
   GalleryProjectFacts,
   GallerySourceRecord,
   GallerySummaryRecord,
 } from "../../ports/gallery-repository/gallery-repository.port";
 import type {
+  GalleryPhotoView,
   GalleryProjectView,
   GallerySourceView,
   GallerySummaryView,
@@ -60,5 +63,20 @@ export function toSourceView(source: GallerySourceRecord): GallerySourceView {
     ignoredCount: source.ignoredCount,
     missingCount: source.missingCount,
     tooDeepCount: source.tooDeepCount,
+  };
+}
+
+/** Builds the Owner's photo DTO: no Drive IDs beyond the Owner-only file link, none for a missing file (D-11, TD › Security). @param photo - the stored photo @returns the photo view */
+export function toPhotoView(photo: GalleryPhotoRecord): GalleryPhotoView {
+  return {
+    id: photo.id,
+    fileName: photo.fileName,
+    kind: photo.kind,
+    folderPath: photo.folderPath,
+    browsePath: photo.browsePath,
+    sourceId: photo.sourceId,
+    sourceName: photo.sourceName,
+    missing: photo.missing,
+    driveUrl: photo.missing ? null : driveFileUrl(photo.externalFileId, photo.resourceKey),
   };
 }

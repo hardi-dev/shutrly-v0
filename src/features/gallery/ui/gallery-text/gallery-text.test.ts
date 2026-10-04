@@ -24,7 +24,7 @@ describe("gallery text", () => {
 
   it("AC-GAL-014 counts per kind with the missing ones", () => {
     expect(photoCountsText({ proof: 5, edited: 3, print: 1, missing: 1 })).toBe(
-      "5 proof · 3 edited · 1 print (1 hilang)",
+      "5 proof (1 hilang) · 3 edited · 1 print",
     );
   });
 

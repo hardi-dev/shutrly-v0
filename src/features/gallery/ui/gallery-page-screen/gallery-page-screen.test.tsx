@@ -28,6 +28,7 @@ const PAGE = {
   },
   sources: [],
   linkableSources: [{ id: "src-1", name: "Google Drive" }],
+  previewPhotos: [],
 };
 
 describe("GalleryPageScreen", () => {

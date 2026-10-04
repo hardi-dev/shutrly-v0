@@ -12,9 +12,12 @@ import type { Db } from "@/adapters/db/client/client.types";
 import { createDrizzleGalleryRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-repository";
 import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
 import { gallery, galleryPhoto, gallerySource } from "@/adapters/db/schema/gallery/gallery";
+import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-source-repository/drizzle-workspace-source-repository";
 import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { findFolderUse } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use";
+import { getGalleryPage } from "@/features/gallery/application/use-cases/get-gallery-page/get-gallery-page";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
+import { serveOwnerPhoto } from "@/features/gallery/application/use-cases/serve-owner-photo/serve-owner-photo";
 import { syncGallerySource } from "@/features/gallery/application/use-cases/sync-gallery-source/sync-gallery-source";
 
 import { openTestDb } from "../helpers/test-db";
@@ -247,5 +250,41 @@ describe("gallery sync against Postgres", () => {
         ),
       );
     expect(rows).toHaveLength(0);
+  });
+
+  it("AC-GAL-014 AC-GAL-015 previews proof first and serves media only to its workspace", async () => {
+    const seed = await seedGalleryWorkspace(db);
+    const other = await seedGalleryWorkspace(db);
+    const galleryId = await withGallery(seed);
+    const provider = FakeDriveProvider.withFixture();
+    await link(seed, galleryId, provider);
+    const page = await getGalleryPage(
+      createDrizzleGalleryRepository(db),
+      createDrizzleWorkspaceSourceRepository(db),
+      fakeCipher,
+      seed.context,
+      seed.bookedProjectId,
+      new Date(),
+    );
+    expect(page.gallery.counts).toEqual({ proof: 4, edited: 3, print: 1, missing: 0 });
+    expect(page.previewPhotos.map((photo) => photo.fileName)).toEqual([
+      "IMG_001.jpg",
+      "IMG_002.jpg",
+      "IMG_010.jpg",
+      "R_001.jpg",
+      "E_001.jpg",
+      "E_002.jpg",
+      "X_001.jpg",
+      "P_001.jpg",
+    ]);
+    expect(JSON.stringify(page)).not.toMatch(/googleusercontent|googleapis/);
+    const photoId = page.previewPhotos[0].id;
+    const galleries = createDrizzleGalleryRepository(db);
+    expect(
+      await serveOwnerPhoto({ galleries, provider }, seed.context, photoId, "thumb"),
+    ).toMatchObject({ ok: true });
+    expect(await serveOwnerPhoto({ galleries, provider }, other.context, photoId, "thumb")).toEqual(
+      { ok: false },
+    );
   });
 });

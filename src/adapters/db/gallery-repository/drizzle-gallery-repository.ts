@@ -9,6 +9,7 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import type { DbExecutor } from "../client/client.types";
 import { gallery } from "../schema/gallery/gallery";
+import { selectMediaPhoto, selectPreviewPhotos } from "./gallery-photo-sql";
 import { selectProjectFacts, selectSources, selectSummary } from "./gallery-read-sql";
 
 function createWriter(db: DbExecutor, context: WorkspaceContext): GalleryCreateWriter {
@@ -57,7 +58,9 @@ export function createDrizzleGalleryRepository(db: DbExecutor): GalleryRepositor
       const summary = facts ? await selectSummary(db, context, projectId) : null;
       if (!facts || !summary) return null;
       const sources = await selectSources(db, context, summary.gallery.id);
-      return { project: facts, summary, sources };
+      const previewPhotos = await selectPreviewPhotos(db, context, summary.gallery.id);
+      return { project: facts, summary, sources, previewPhotos };
     },
+    findMediaPhoto: (context, photoId) => selectMediaPhoto(db, context, photoId),
   };
 }

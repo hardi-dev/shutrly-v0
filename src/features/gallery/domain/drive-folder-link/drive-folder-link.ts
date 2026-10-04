@@ -33,3 +33,9 @@ export function parseDriveFolderLink(text: string): DriveFolderLinkResult {
   return { ok: true, folderId, resourceKey: url.searchParams.get("resourcekey") };
 }
 export const GALLERY_SOURCE_LABEL_MAX = 60;
+
+/** Builds the Owner-only *Buka di Google Drive* link of a file (D-11, BR-SRC-003 covers client responses only). @param fileId - the Drive file ID @param resourceKey - the file's resource key, if any @returns the Drive viewer URL */
+export function driveFileUrl(fileId: string, resourceKey: string | null): string {
+  const base = `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/view`;
+  return resourceKey === null ? base : `${base}?resourcekey=${encodeURIComponent(resourceKey)}`;
+}

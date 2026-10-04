@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { parseDriveFolderLink } from "./drive-folder-link";
+import { driveFileUrl, parseDriveFolderLink } from "./drive-folder-link";
 
 const ID = "1AbCdEfGhIjKlMnOpQrStUv";
 
@@ -36,5 +36,14 @@ describe("parseDriveFolderLink", () => {
       ok: false,
       code: "NOT_DRIVE",
     });
+  });
+});
+
+describe("driveFileUrl", () => {
+  it("D-11 builds the Drive viewer link with the resource key", () => {
+    expect(driveFileUrl("abc", null)).toBe("https://drive.google.com/file/d/abc/view");
+    expect(driveFileUrl("abc", "0-k")).toBe(
+      "https://drive.google.com/file/d/abc/view?resourcekey=0-k",
+    );
   });
 });

@@ -189,10 +189,17 @@
 - the state `galeri-draf-gagal-foto-hilang`.
 
 **Steps:**
-- [ ] `src/ui/patterns/photo-tile` (Default, Missing, Skeleton) with a story and a test.
-- [ ] Provider `thumbnail(file, size)` (host allowlist), use case `serve-owner-photo`, and route handler `api/w/[workspaceId]/gallery-photos/[photoId]/[size]` (headers per D-10). Unit tests cover the headers and the allowlist. An integration test checks that another workspace gets 404 and that no Drive URL is in the body or headers.
-- [ ] `PhotosCard` with the reader counts and the first page.
+- [x] `src/ui/patterns/photo-tile` (Default, Missing, Skeleton) with a story and a test.
+- [x] Provider `thumbnail(file, size)` (host allowlist), use case `serve-owner-photo`, and route handler `api/w/[workspaceId]/gallery-photos/[photoId]/[size]` (headers per D-10). Unit tests cover the headers and the allowlist. An integration test checks that another workspace gets 404 and that no Drive URL is in the body or headers.
+- [x] `PhotosCard` with the reader counts and the first page.
 - [ ] E2E: thumbnails come from `/api/w/…`, and the page source has no `googleusercontent`/`drive.google` string other than the Owner Drive links.
+
+**Implementation record (2026-10-04):**
+- `src/ui/patterns/photo-tile` (Default, Missing, Skeleton; story and test). Plain `<img loading="lazy">` with a justified `no-img-element` disable.
+- Owner media: `serve-owner-photo` → `GET /api/w/[ws]/gallery-photos/[id]/[thumb|preview]` with `private, max-age=600` and `nosniff`; missing, removed, foreign or failed → empty 404 (`notFound()` in the route handler).
+- *Foto* card: counts ("8 proof (1 hilang) · …"), visibility line by status (+ the *Hilang* note), first 8 photos (6 on phones), proof first then natural name order.
+- Checks: typecheck, lint, unit/dom (1423), integration (150), build pass. E2E not run (Owner).
+- Deviations: visibility copy for expired/archived galleries is not in Pencil; *Lihat semua foto* comes with Slice 4.
 
 ## Slice 4 — *Semua foto*
 

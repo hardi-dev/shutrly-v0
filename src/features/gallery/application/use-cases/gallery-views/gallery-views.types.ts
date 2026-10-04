@@ -2,6 +2,7 @@ import type {
   GalleryProjectStatus,
   GalleryStatus,
 } from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import type { PhotoKind } from "@/features/gallery/domain/photo-classification/photo-classification.types";
 
 import type {
   GalleryPhotoCounts,
@@ -55,9 +56,23 @@ export interface LinkableSourceView {
   readonly name: string;
 }
 
+export interface GalleryPhotoView {
+  readonly id: string;
+  readonly fileName: string;
+  readonly kind: PhotoKind;
+  readonly folderPath: string;
+  readonly browsePath: string;
+  readonly sourceId: string;
+  readonly sourceName: string | null;
+  readonly missing: boolean;
+  /** Owner-only *Buka di Google Drive*; null for a missing file (D-11). */
+  readonly driveUrl: string | null;
+}
+
 export interface GalleryPageView {
   readonly project: GalleryProjectView;
   readonly gallery: GallerySummaryView;
   readonly sources: readonly GallerySourceView[];
   readonly linkableSources: readonly LinkableSourceView[];
+  readonly previewPhotos: readonly GalleryPhotoView[];
 }

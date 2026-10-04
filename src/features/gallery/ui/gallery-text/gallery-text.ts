@@ -29,10 +29,13 @@ export function galleryExpiryFact(gallery: ExpiryFacts): ExpiryFact {
   return { text: GALLERY_COPY.expiryNone, isMuted: true };
 }
 
-/** Formats the per-kind counts, adding the missing count when any (AC-GAL-014). @param counts - photo counts @returns e.g. "8 proof · 2 edited · 1 print (1 hilang)" */
+/** Formats the per-kind counts with the missing count after proof, as drawn (AC-GAL-014). @param counts - photo counts @returns e.g. "8 proof (1 hilang) · 2 edited · 1 print" */
 export function photoCountsText(counts: GalleryPhotoCounts): string {
-  const text = GALLERY_COPY.photoCounts(counts.proof, counts.edited, counts.print);
-  return counts.missing > 0 ? `${text}${GALLERY_COPY.missingSuffix(counts.missing)}` : text;
+  const missing = counts.missing > 0 ? GALLERY_COPY.missingSuffix(counts.missing) : "";
+  return GALLERY_COPY.photoCounts(counts.proof, counts.edited, counts.print).replace(
+    " proof",
+    ` proof${missing}`,
+  );
 }
 
 function expiryMeta(gallery: ExpiryFacts): string | null {

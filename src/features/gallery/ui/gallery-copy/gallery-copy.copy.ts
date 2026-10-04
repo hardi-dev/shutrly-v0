@@ -104,6 +104,20 @@ export const GALLERY_COPY = {
   photosDescriptionEmpty: "Ditemukan saat sinkronisasi. Urut nama file.",
   photosDescriptionMobile: "Urut nama file.",
   photosEmptyTitle: "Belum ada foto",
+  photosDescription:
+    "Cuplikan 8 foto pertama. Buka semua untuk menjelajah folder, mencari, dan melihat preview.",
+  photosDescriptionPreviewMobile: "Cuplikan foto pertama.", // not in Pencil
+  viewAll: "Lihat semua foto",
+  viewAllMobile: "Semua",
+  visibility: {
+    DRAFT: "Terlihat oleh klien setelah galeri dipublikasikan.",
+    PUBLISHED: "Terlihat oleh klien sekarang.",
+    EXPIRED: "Klien tidak bisa membuka galeri sampai kedaluwarsa diubah.", // not in Pencil
+    ARCHIVED: "Klien tidak bisa membuka galeri yang diarsipkan.", // not in Pencil
+  },
+  visibilityHidden:
+    "Disembunyikan dari klien sampai hasil akhir dikirim. Tidak bisa dipilih klien.",
+  visibilityMissing: "Foto bertanda Hilang disembunyikan sampai ditemukan lagi.",
   photosEmptyBody: "Foto muncul di sini setelah folder disinkronkan.",
   accessTitle: "Akses klien",
   rotatePassword: "Ganti password",

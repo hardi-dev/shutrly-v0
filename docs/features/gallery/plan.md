@@ -506,10 +506,10 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 
 **Implementation record (2026-10-05) — R5 (CPU check blocked):**
 - Real-Drive smoke (`gallery-drive-smoke.spec.ts`, the Owner's 113-photo folder, non-production key) passes, now also asserting the first tile's `src` is `lh3.googleusercontent.com/d/<id>=w600` with `no-referrer`, so it loaded from Google without the fallback. Axe and keyboard on every surface pass inside that spec; `gallery-sync.spec.ts` (fake drive) passes with axe too.
-- **Free-preview CPU check not done.** `wrangler` on this machine reports an expired login that cannot refresh non-interactively (`wrangler whoami`), and there is no `CLOUDFLARE_API_TOKEN`; the terminal pane shows no Cloudflare session. Signing in is the Owner's step (`npx wrangler login`). Nothing was deployed.
+- **Free-preview CPU check done, and it fails (ADR-018 › Measurement).** After the Owner signed in, `opennextjs-cloudflare build` and `wrangler deploy` put a throwaway Worker `shutrly-cpu-check` on the account (non-production secrets, then deleted), and `wrangler tail` gave `cpuTime`: `GET /login` 22–43 ms (9 of 20) and 356–1,007 ms (11 of 20), against a 10 ms limit. The build itself (`opennextjs-cloudflare build`) passes. Gallery paths were not measured: they need a signed-in session on a public preview.
 - Local proxy only (`scripts/gallery/step-cpu-proxy.ts`, pure work of one step: Zod-parse of Drive list pages, the walker, the cursor JSON): about 3–5 ms CPU per 1,000–3,000 entries on a laptop. A Workers isolate is slower and the session, database and response work come on top, so `SYNC_STEP_MAX_ENTRIES = 3000` may be too high for 10 ms. It is not a measurement.
 - Checks (related only): see R3 and R4 plus the two specs above. `pnpm build` and the full suite were not run.
-- Open: run the preview measurement (login first), tune `SYNC_STEP_MAX_ENTRIES`, then `/sdv:verify-feature gallery`.
+- Open: the Owner picks the way forward in a new ADR (Workers Paid, another host, or a lighter app start-up); `SYNC_STEP_MAX_ENTRIES` is tuned once the target is known; then `/sdv:verify-feature gallery`.
 
 
 ## AC index

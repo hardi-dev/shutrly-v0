@@ -1,6 +1,6 @@
 # ADR-018: Run on the free tiers of Cloudflare Workers, Neon and Resend
 
-Status: Accepted (Owner, 2026-10-05). Point 2, the CPU measurement on a free Workers preview, is still to do; the Owner allowed the deploy (2026-10-05).
+Status: Accepted (Owner, 2026-10-05). Point 2, the CPU measurement, was done on 2026-10-05 and **failed on the first path measured**: see Measurement. A new ADR must pick the way forward before the free Workers plan is relied on.
 Date: 2026-10-05
 Amends: [ADR-008](ADR-008-cloudflare-runtime.md) (adds the plan the runtime must fit), [ADR-011](ADR-011-resend-transactional-email.md) (adds the email budget)
 
@@ -40,6 +40,14 @@ Per tenant (Owner, 2026-10-05): 50 clients a year, 300 proof + 30 edited photos 
 | Workers 10 ms CPU | independent of tenants: passes or fails from the start (point 2) |
 
 Cost once every service is paid: about **$45/month** (Neon Launch with 0.25 CU awake all month ≈ $20, Resend Pro $20, Workers Paid $5). Pricing and break-even are discussed in [docs/product/pricing-and-costs.md](../../product/pricing-and-costs.md).
+
+## Measurement (2026-10-05, point 2)
+
+- **How:** `opennextjs-cloudflare build`, then `wrangler deploy` of the F-09 rework branch as a throwaway Worker `shutrly-cpu-check` (non-production secrets, deleted afterwards), and `wrangler tail --format json` for each request's `cpuTime`. Wrangler 4.141.0.
+- **Result, `GET /login` (a page with no session and no database):** 20 requests, CPU **22–43 ms on 9 of them, 356–1,007 ms on the other 11** (median 356 ms). `GET /robots.txt` (a redirect from the middleware): 2, 4 and 45 ms.
+- **Reading:** the Workers Free limit is 10 ms CPU per request, and even the best `/login` request used more than twice that. The high values look like cold isolates paying for the bundle's start-up. Every request returned HTTP 200, so the account these were deployed to did not enforce the Free limit (it is probably on a paid plan; the dashboard shows which). The numbers therefore show the cost of **Next.js on OpenNext itself**, before any F-09 code runs; they say nothing against the gallery sync.
+- **Not measured:** authenticated pages, the gallery page, a sync step and a browse page. They need a signed-in session on a public preview, which the author did not enter (credentials go only into localhost). The local proxy of one sync step (3–5 ms for 1,000–3,000 entries) stays a lower bound.
+- **Consequence:** point 2 applies. A new ADR must choose between Workers Paid, another host (Cloud Run is the candidate named above) and trimming the app's own start-up and render cost, and the Owner decides. Until then the free-tier plan can't be called proven.
 
 ## Alternatives considered
 - **Workers Paid from the start ($5/month):** removes the CPU and subrequest risk at once. Rejected for now by the Owner (free only).

@@ -11,7 +11,7 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 - **Done:** Slices 0–8 of the [plan](features/gallery/plan.md), each with an implementation record. Slice 0 spike on the Owner's public folder closed R-1/R-2 ([technical design › Risks](features/gallery/technical-design.md)). Slice 8: isolation test, browser pass with axe, copy audit of all 100 exports, and the real-Drive smoke E2E (`gallery-drive-smoke.spec.ts`, axe and keyboard on every surface). Migration `0012_gallery` applied to the non-production DB.
 - **Checks (last run):** typecheck, lint, unit/dom (1493), integration (160) and build pass. Full E2E: 73 passed, 2 flaky (pass on retry), 1 stale workspace test fixed and passing; the gallery specs and the real-Drive smoke pass.
 - **Owner actions:**
-  - Accept F-09 or report changes; the smoke spec runs with `GALLERY_SMOKE_FOLDER_URL=<public folder> pnpm e2e tests/e2e/gallery`.
+  - Accept F-09 or report changes; the smoke spec runs with `pnpm e2e tests/e2e/gallery` when `GALLERY_SMOKE_FOLDER_URL` is set in the shell or in `.env.test`.
   - Check the Workers Paid plan before ship; provision the Drive and password keys for production; commit the `guard.py` change on `feat/team-sessions` if still pending.
   - Optionally measure a 1,000–2,000 photo folder to settle A-T1 (sync size limit).
 - **Open items:**

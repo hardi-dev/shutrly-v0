@@ -7,7 +7,7 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 
 ## Current handoff — F-09 free-tier rework PLANNED (2026-10-05)
 
-- **Done:** R1–R4 and the checks of R5 (see [plan.md](features/gallery/plan.md)). **Next:** the Owner decides what the CPU measurement means ([ADR-018](architecture/decisions/ADR-018-free-tier-runtime-budget.md) › Measurement: `/login` alone used 22–1,007 ms CPU on a Workers preview, against 10 ms on the free plan), recorded in a new ADR; then tune `SYNC_STEP_MAX_ENTRIES` and run `/sdv:verify-feature gallery`. The Owner accepted ADR-018 and ADR-019 and the media trade-off (constitution v1.2, BR-ACC-005, BR-SRC-003, AC-GAL-015 amended; new AC-GAL-032…036). **Owner allowed (2026-10-05):** the CPU check on a free Cloudflare preview (R5; new Workers project, or an existing one); done 2026-10-05 and failed on the first path (see above). The `last_seen_at` drop is done (`0014`).
+- **Done:** R1–R4 and the checks of R5 (see [plan.md](features/gallery/plan.md)). **Next:** the Owner decides what the CPU measurement means ([ADR-018](architecture/decisions/ADR-018-free-tier-runtime-budget.md) › Measurement: `/login` alone used 22–1,007 ms CPU on a Workers preview, and a sync step 102–173 ms, browse 365 ms, against 10 ms on the free plan; the Owner chose to keep pursuing Free, see the table in the ADR), recorded in a new ADR. A separate defect: `POST /reset-password` hung on Workers for about 550 s; then tune `SYNC_STEP_MAX_ENTRIES` and run `/sdv:verify-feature gallery`. The Owner accepted ADR-018 and ADR-019 and the media trade-off (constitution v1.2, BR-ACC-005, BR-SRC-003, AC-GAL-015 amended; new AC-GAL-032…036). **Owner allowed (2026-10-05):** the CPU check on a free Cloudflare preview (R5; new Workers project, or an existing one); done 2026-10-05 and failed on the first path (see above). The `last_seen_at` drop is done (`0014`).
 - **F-09 before the rework:** the block below, still true for `main`.
 
 ### F-09 Gallery DONE on `main`, pending Owner acceptance
@@ -24,6 +24,8 @@ History (previous handoffs, early status table, component-library notes): [HANDO
   - Small deviations are listed in the plan's records (no *Ganti password* button in the *Akses klien* header, *Galeri dibuka lagi* toast not wired).
   - Flaky E2E: catalog phone axe (timeout) and AC-SRC-015, both pass on retry.
 - **Next:** `/sdv:verify-feature gallery` for the independent review, then `/sdv:ship`.
+
+- **Local test account:** `scripts/dev/show-test-owner.sh [--reveal]` prints the named test Owner kept in the git-ignored `.env.test` (`TEST_OWNER_EMAIL`, `TEST_OWNER_PASSWORD`). It has a workspace, a client, a service and a booked project with a gallery of the Owner's 113-photo folder.
 
 ## Key decisions (Owner)
 

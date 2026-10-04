@@ -4,5 +4,6 @@ export * from "./booking/catalog";
 export * from "./booking/client";
 export * from "./booking/project";
 export * from "./communications/message-template";
+export * from "./gallery/gallery";
 export * from "./gallery/workspace-source-config";
 export * from "./workspace/workspace";

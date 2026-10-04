@@ -73,6 +73,7 @@ export function toPhotoView(photo: GalleryPhotoRecord): GalleryPhotoView {
   return {
     id: photo.id,
     externalFileId: photo.externalFileId,
+    provider: photo.provider,
     fileName: photo.fileName,
     kind: photo.kind,
     folderPath: photo.folderPath,

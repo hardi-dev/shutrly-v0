@@ -19,7 +19,7 @@ export interface GalleryScope {
   readonly hasher: PasswordHasherPort;
   readonly randomInt: RandomIntPort;
   /** Images load from Google first; false while E2E uses the fixture Drive (D-22). */
-  readonly googleImages: boolean;
+  readonly directImages: boolean;
   readonly newId: () => string;
   readonly now: Date;
 }

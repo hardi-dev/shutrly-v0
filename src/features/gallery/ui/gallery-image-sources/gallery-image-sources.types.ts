@@ -1,6 +1,6 @@
-import type { ThumbnailSize } from "@/features/gallery/application/ports/gallery-source-provider/gallery-source-provider.port";
+import type { ImageSize } from "@/features/gallery/domain/source-image/source-image.types";
 
-export type ImageSize = ThumbnailSize;
+export type { ImageSize };
 
 export interface ImageSources {
   readonly src: string;
@@ -10,6 +10,6 @@ export interface ImageSources {
 
 export interface GalleryImageProviderProps {
   /** True when images load from Google first (false while E2E uses the fixture Drive). */
-  readonly googleImages: boolean;
+  readonly directImages: boolean;
   readonly children: React.ReactNode;
 }

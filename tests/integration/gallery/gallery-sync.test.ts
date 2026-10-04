@@ -337,6 +337,8 @@ describe("gallery sync against Postgres", () => {
       "P_001.jpg",
     ]);
     expect(JSON.stringify(page)).not.toMatch(/googleusercontent|googleapis/);
+    // The photo's provider comes from its workspace source, so a new provider needs no reader change.
+    expect(page.previewPhotos.every((photo) => photo.provider === "GOOGLE_DRIVE")).toBe(true);
     const photoId = page.previewPhotos[0].id;
     const galleries = createDrizzleGalleryRepository(db);
     expect(

@@ -16,6 +16,7 @@ function photo(index: number, missing = false) {
     sourceName: "Rina-Wisuda",
     missing,
     externalFileId: "1AbCdEfGhIjKlMnOp",
+    provider: "GOOGLE_DRIVE" as const,
     driveUrl: missing ? null : "https://drive.google.com/file/d/x/view",
   };
 }
@@ -35,7 +36,7 @@ const PAGE = {
   },
   sources: [],
   linkableSources: [],
-  googleImages: false,
+  directImages: false,
   previewPhotos: Array.from({ length: 8 }, (_, index) => photo(index + 1, index === 1)),
 };
 
@@ -60,7 +61,7 @@ describe("GalleryPhotosSection", () => {
     const { container } = render(
       <GalleryPhotosSection
         workspaceId="ws-1"
-        page={{ ...PAGE, googleImages: true }}
+        page={{ ...PAGE, directImages: true }}
         browseAction={vi.fn()}
       />,
     );

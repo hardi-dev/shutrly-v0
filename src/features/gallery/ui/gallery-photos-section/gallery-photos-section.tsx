@@ -11,7 +11,7 @@ import { AllPhotosModal } from "../all-photos-modal/all-photos-modal";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import {
   GalleryImageProvider,
-  useGoogleImages,
+  useDirectImages,
 } from "../gallery-image-sources/gallery-image-context";
 import { imageSources } from "../gallery-image-sources/gallery-image-sources";
 import { galleryVisibilityText, photoCountsText } from "../gallery-text/gallery-text";
@@ -46,7 +46,7 @@ export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>)
   };
   const hasPhotos = page.previewPhotos.length > 0;
   return (
-    <GalleryImageProvider googleImages={page.googleImages}>
+    <GalleryImageProvider directImages={page.directImages}>
       <PhotosCard
         hasPhotos={hasPhotos}
         description={
@@ -119,7 +119,7 @@ function PreviewBody({ workspaceId, page, onOpenPhoto, isMobile }: Readonly<Prev
 }
 
 function PreviewTile({ workspaceId, photo, list, onOpenPhoto }: Readonly<PreviewTileProps>) {
-  const image = imageSources(photo, "thumb", workspaceId, useGoogleImages());
+  const image = imageSources(photo, "thumb", workspaceId, useDirectImages());
   const handlePress = () => {
     onOpenPhoto(photo, list);
   };

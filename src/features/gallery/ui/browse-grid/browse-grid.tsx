@@ -8,7 +8,7 @@ import { Icon } from "@/ui/primitives/icon/icon";
 
 import { searchMeta } from "../browse-text/browse-text";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
-import { useGoogleImages } from "../gallery-image-sources/gallery-image-context";
+import { useDirectImages } from "../gallery-image-sources/gallery-image-context";
 import { imageSources } from "../gallery-image-sources/gallery-image-sources";
 import type {
   BrowseFolderItemProps,
@@ -42,7 +42,7 @@ function BrowsePhotoItem({
   isSearch,
   onOpenPhoto,
 }: Readonly<BrowsePhotoItemProps>) {
-  const image = imageSources(photo, "thumb", workspaceId, useGoogleImages());
+  const image = imageSources(photo, "thumb", workspaceId, useDirectImages());
   const handlePress = () => {
     onOpenPhoto(photo, list);
   };

@@ -29,6 +29,7 @@ describe("browse text", () => {
       sourceName: "Rina-Wisuda",
       missing: false,
       externalFileId: "1AbCdEfGhIjKlMnOp",
+      provider: "GOOGLE_DRIVE" as const,
       driveUrl: null,
     };
     expect(searchMeta(photo)).toBe("Rina-Wisuda › Akad · edited");

@@ -12,7 +12,13 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import type { DbExecutor } from "../client/client.types";
 import { gallery, galleryPhoto, gallerySource } from "../schema/gallery/gallery";
-import { PHOTO_COLUMNS, PHOTO_SOURCE_JOIN, toPhotoRecord } from "./gallery-photo-sql";
+import { workspaceSourceConfig } from "../schema/gallery/workspace-source-config";
+import {
+  PHOTO_COLUMNS,
+  PHOTO_SOURCE_JOIN,
+  SOURCE_CONFIG_JOIN,
+  toPhotoRecord,
+} from "./gallery-photo-sql";
 
 const LIKE_SPECIAL = /[\\%_]/g;
 
@@ -58,6 +64,7 @@ async function photoPage(
     .select({ ...PHOTO_COLUMNS, sortKey: galleryPhoto.nameSortKey })
     .from(galleryPhoto)
     .innerJoin(gallerySource, PHOTO_SOURCE_JOIN)
+    .innerJoin(workspaceSourceConfig, SOURCE_CONFIG_JOIN)
     .where(where)
     .orderBy(asc(galleryPhoto.nameSortKey), asc(galleryPhoto.id))
     .limit(limit + 1);

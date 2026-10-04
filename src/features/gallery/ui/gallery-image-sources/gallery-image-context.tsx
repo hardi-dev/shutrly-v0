@@ -9,13 +9,13 @@ const GalleryImageContext = createContext(false);
 
 /** Tells every photo tile and the preview below it whether to load from Google first (TD D-22). @param props - the flag and the children @returns the provider */
 export function GalleryImageProvider({
-  googleImages,
+  directImages,
   children,
 }: Readonly<GalleryImageProviderProps>) {
-  return <GalleryImageContext value={googleImages}>{children}</GalleryImageContext>;
+  return <GalleryImageContext value={directImages}>{children}</GalleryImageContext>;
 }
 
 /** Reads whether photos load from Google first. @returns true when they do */
-export function useGoogleImages(): boolean {
+export function useDirectImages(): boolean {
   return useContext(GalleryImageContext);
 }

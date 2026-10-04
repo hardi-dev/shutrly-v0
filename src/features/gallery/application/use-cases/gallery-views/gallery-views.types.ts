@@ -3,6 +3,7 @@ import type {
   GalleryStatus,
 } from "@/features/gallery/domain/gallery-status/gallery-status.types";
 import type { PhotoKind } from "@/features/gallery/domain/photo-classification/photo-classification.types";
+import type { SourceProvider } from "@/features/gallery/domain/source-provider/source-provider.types";
 
 import type {
   GalleryPhotoCounts,
@@ -62,6 +63,8 @@ export interface GalleryPhotoView {
   readonly id: string;
   /** The Drive file ID: not a secret, and what Google's image URL is built from (ADR-019, D-22). */
   readonly externalFileId: string;
+  /** Which provider's direct image URL, if any, the photo can load from (D-22). */
+  readonly provider: SourceProvider;
   readonly fileName: string;
   readonly kind: PhotoKind;
   readonly folderPath: string;
@@ -76,7 +79,7 @@ export interface GalleryPhotoView {
 // The page the route renders: the use case's view plus how images load, which composition knows.
 export interface GalleryPageScreenView extends GalleryPageView {
   /** True when images load from Google first; false while E2E uses the fixture Drive (D-22). */
-  readonly googleImages: boolean;
+  readonly directImages: boolean;
 }
 
 export interface GalleryPageView {

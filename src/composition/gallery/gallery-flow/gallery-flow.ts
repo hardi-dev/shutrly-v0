@@ -63,7 +63,7 @@ export async function loadGalleryPage(rawWorkspaceId: string, rawProjectId: stri
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
     return await withGalleryScope(
-      async ({ galleries, workspaceSources, cipher, now, googleImages }) => ({
+      async ({ galleries, workspaceSources, cipher, now, directImages }) => ({
         ...(await getGalleryPage(
           galleries,
           workspaceSources,
@@ -72,7 +72,7 @@ export async function loadGalleryPage(rawWorkspaceId: string, rawProjectId: stri
           projectId,
           now,
         )),
-        googleImages,
+        directImages,
       }),
     );
   } catch (error) {

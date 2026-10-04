@@ -63,7 +63,8 @@ export function useGalleryBrowse(input: Readonly<UseGalleryBrowseInput>) {
       next
         ? {
             ...current,
-            page: next,
+            // Later pages carry photos only: keep the first page's folders and counts.
+            page: current.page ? { ...current.page, nextCursor: next.nextCursor } : next,
             photos: [...current.photos, ...next.photos],
             isLoadingMore: false,
           }

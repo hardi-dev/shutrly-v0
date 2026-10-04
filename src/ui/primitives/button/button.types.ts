@@ -44,5 +44,8 @@ export interface ButtonProps {
   "aria-label"?: string;
   iconLeading?: ButtonIconName;
   iconTrailing?: ButtonIconName;
+  /** Renders the button as a link with the same look, e.g. *Buka di Google Drive*. */
+  href?: string;
+  target?: "_blank";
   children: ReactNode;
 }

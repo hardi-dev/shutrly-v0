@@ -183,6 +183,11 @@ export const GALLERY_COPY = {
     `Folder ini juga tertaut ke galeri ${projects}. Klien kedua proyek bisa melihat foto yang sama.`,
   folderInUseConfirm: "Tetap tambahkan",
   linkedTitle: "Folder ditambahkan", // not in Pencil
+  previewPosition: (position: number, total: number) => `${String(position)} dari ${String(total)}`,
+  previewMissingBadge: "Hilang",
+  previewMissing: "File tidak ditemukan di Google Drive",
+  openInDrive: "Buka di Google Drive",
+  openInDriveMobile: "Buka di Drive",
   allPhotosTitle: "Semua foto",
   allPhotosDescription: (project: string, totals: string) => `${project} · ${totals}`,
   kindTab: { PROOF: "Proof", EDITED: "Edited", PRINT: "Print" },

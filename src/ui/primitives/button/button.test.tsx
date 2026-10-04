@@ -140,4 +140,16 @@ describe("Button", () => {
     expect(secondary).toContain("w-full");
     expect(primary + secondary).not.toMatch(/#[0-9a-f]{3,8}\b/i);
   });
+
+  it("AC-GAL-031 renders as a link opening a new tab", () => {
+    render(
+      <Button variant="secondary" href="https://drive.google.com/file/d/x/view" target="_blank">
+        Buka di Google Drive
+      </Button>,
+    );
+    const link = screen.getByRole("link", { name: "Buka di Google Drive" });
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    expect(link).toHaveAttribute("data-variant", "secondary");
+  });
 });

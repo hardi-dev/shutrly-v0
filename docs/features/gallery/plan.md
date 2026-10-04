@@ -249,9 +249,17 @@
 - mobile: state `preview-proof`, states `preview-edited`, `preview-hilang`.
 
 **Steps:**
-- [ ] `src/ui/patterns/media-viewer`, with dom tests for the keyboard (←/→/Home/End/Esc), focus return and the dialog label.
-- [ ] `listPreviewStripAction` (the neighbours around a photo in the same list) and `PhotoPreview` wiring from `PhotosCard` and `AllPhotosModal`.
+- [x] `src/ui/patterns/media-viewer`, with dom tests for the keyboard (←/→/Home/End/Esc), focus return and the dialog label.
+- [x] `listPreviewStripAction` (the neighbours around a photo in the same list) and `PhotoPreview` wiring from `PhotosCard` and `AllPhotosModal`.
 - [ ] E2E: open a photo, move with → and the filmstrip, check the missing photo shows the message without the Drive button, Esc closes.
+
+**Implementation record (2026-10-04):**
+- `src/ui/patterns/media-viewer` (C48): dark backdrop, top bar with an actions slot, stage with ← / → (desktop), swipe (phones), filmstrip; ←/→/Home/End/Esc; focus starts on *Tutup* and returns on close. Story and dom tests.
+- `Button` gained `href`/`target` (link with the same look), used for *Buka di Google Drive*.
+- `PhotoPreview` + `usePhotoPreview`, opened from the *Foto* card and *Semua foto*; meta *{folder} · {Kind} · [Hilang ·] n dari total*; no Drive button for a missing file.
+- Fixed: *Semua foto* lost its folders and breadcrumb counts after loading the next page.
+- Checks: typecheck, lint, unit/dom (1445), build pass. Integration not rerun (no server change). E2E not run (Owner).
+- Deviations: no `listPreviewStripAction`; the preview follows the open list and loads *Semua foto*'s next page through the same browse action near the end. Phones show *Buka di Drive* as a labelled button, not icon-only.
 
 ## Slice 6 — Lifecycle: publish, expiry, password, remove, archive, delete
 

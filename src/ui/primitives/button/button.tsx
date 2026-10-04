@@ -1,6 +1,6 @@
 "use client";
 
-import { Button as AriaButton } from "react-aria-components";
+import { Button as AriaButton, Link as AriaLink } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
 
@@ -51,37 +51,48 @@ const VARIANTS: Record<ButtonVariant, string[]> = {
  * @param props - `type` defaults to `"button"` and `variant` to `"primary"`
  * @returns the styled button
  */
-export function Button({
-  type = "button",
-  variant = "primary",
-  size = "md",
-  isDisabled,
-  isPending = false,
-  form,
-  id,
-  onPress,
-  className,
-  "aria-label": ariaLabel,
-  iconLeading,
-  iconTrailing,
-  children,
-}: Readonly<ButtonProps>) {
+export function Button(props: Readonly<ButtonProps>) {
+  const { variant = "primary", size = "md", isPending = false, className, href } = props;
+  const classes = cn(BASE, SIZES[size], VARIANTS[variant], className);
+  const content = (
+    <>
+      <ButtonLeadingIcon isPending={isPending} iconLeading={props.iconLeading} />
+      {props.children}
+      {props.iconTrailing ? <ButtonIcon name={props.iconTrailing} side="trailing" /> : null}
+    </>
+  );
+  if (href !== undefined) {
+    const rel = props.target === "_blank" ? "noopener noreferrer" : undefined;
+    return (
+      <AriaLink
+        href={href}
+        target={props.target}
+        rel={rel}
+        id={props.id}
+        aria-label={props["aria-label"]}
+        isDisabled={props.isDisabled}
+        data-variant={variant}
+        data-size={size}
+        className={classes}
+      >
+        {content}
+      </AriaLink>
+    );
+  }
   return (
     <AriaButton
-      type={type}
-      isDisabled={isDisabled}
+      type={props.type ?? "button"}
+      isDisabled={props.isDisabled}
       isPending={isPending}
-      form={form}
-      id={id}
-      onPress={onPress}
-      aria-label={ariaLabel}
+      form={props.form}
+      id={props.id}
+      onPress={props.onPress}
+      aria-label={props["aria-label"]}
       data-variant={variant}
       data-size={size}
-      className={cn(BASE, SIZES[size], VARIANTS[variant], className)}
+      className={classes}
     >
-      <ButtonLeadingIcon isPending={isPending} iconLeading={iconLeading} />
-      {children}
-      {iconTrailing ? <ButtonIcon name={iconTrailing} side="trailing" /> : null}
+      {content}
     </AriaButton>
   );
 }

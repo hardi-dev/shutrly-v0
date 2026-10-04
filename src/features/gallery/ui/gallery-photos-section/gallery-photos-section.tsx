@@ -11,16 +11,18 @@ import { AllPhotosModal } from "../all-photos-modal/all-photos-modal";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { galleryMediaUrl } from "../gallery-media-url/gallery-media-url";
 import { photoCountsText } from "../gallery-text/gallery-text";
+import { PhotoPreview } from "../photo-preview/photo-preview";
 import { PhotosCard } from "../photos-card/photos-card";
 import { BROWSE_START, useGalleryBrowse } from "../use-gallery-browse/use-gallery-browse";
+import { usePhotoPreview } from "../use-photo-preview/use-photo-preview";
 import type {
   GalleryPhotosSectionProps,
   PreviewBodyProps,
   PreviewTileProps,
+  ViewAllButtonProps,
 } from "./gallery-photos-section.types";
 
 const MOBILE_PREVIEW = 6;
-const noop = () => undefined;
 
 /** *Foto*: counts per kind, the client-visibility line, the first photos from the Owner media endpoint and *Lihat semua foto* (AC-GAL-014, AC-GAL-015, AC-GAL-028). */
 export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>) {
@@ -32,16 +34,12 @@ export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>)
     galleryId: page.gallery.id,
     browseAction: props.browseAction,
   });
+  const preview = usePhotoPreview(browse);
   const handleViewAll = () => {
     setIsAllOpen(true);
     browse.setSearchText("");
     void browse.go(BROWSE_START);
   };
-  const viewAll = (
-    <Button variant="secondary" iconLeading="images" onPress={handleViewAll}>
-      {isMobile ? GALLERY_COPY.viewAllMobile : GALLERY_COPY.viewAll}
-    </Button>
-  );
   const hasPhotos = page.previewPhotos.length > 0;
   return (
     <>
@@ -50,9 +48,9 @@ export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>)
         description={
           isMobile ? GALLERY_COPY.photosDescriptionPreviewMobile : GALLERY_COPY.photosDescription
         }
-        actions={hasPhotos ? viewAll : undefined}
+        actions={hasPhotos ? <ViewAllButton onPress={handleViewAll} /> : undefined}
       >
-        <PreviewBody {...props} isMobile={isMobile} />
+        <PreviewBody {...props} isMobile={isMobile} onOpenPhoto={preview.openFromCard} />
       </PhotosCard>
       {isAllOpen ? (
         <AllPhotosModal
@@ -61,10 +59,27 @@ export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>)
           workspaceId={workspaceId}
           page={page}
           browse={browse}
-          onOpenPhoto={props.onOpenPhoto ?? noop}
+          onOpenPhoto={preview.openFromBrowse}
         />
       ) : null}
+      <PhotoPreview
+        workspaceId={workspaceId}
+        photos={preview.photos}
+        index={preview.index}
+        total={preview.total}
+        onIndexChange={preview.handleIndexChange}
+        onClose={preview.close}
+      />
     </>
+  );
+}
+
+function ViewAllButton({ onPress }: Readonly<ViewAllButtonProps>) {
+  const isMobile = useMobileViewport();
+  return (
+    <Button variant="secondary" iconLeading="images" onPress={onPress}>
+      {isMobile ? GALLERY_COPY.viewAllMobile : GALLERY_COPY.viewAll}
+    </Button>
   );
 }
 
@@ -101,7 +116,7 @@ function PreviewBody({ workspaceId, page, onOpenPhoto, isMobile }: Readonly<Prev
 
 function PreviewTile({ workspaceId, photo, list, onOpenPhoto }: Readonly<PreviewTileProps>) {
   const handlePress = () => {
-    onOpenPhoto?.(photo, list);
+    onOpenPhoto(photo, list);
   };
   return (
     <li className="min-w-0">
@@ -109,7 +124,7 @@ function PreviewTile({ workspaceId, photo, list, onOpenPhoto }: Readonly<Preview
         fileName={photo.fileName}
         imageSrc={galleryMediaUrl(workspaceId, photo.id, "thumb")}
         isMissing={photo.missing}
-        onPress={onOpenPhoto ? handlePress : undefined}
+        onPress={handlePress}
       />
     </li>
   );

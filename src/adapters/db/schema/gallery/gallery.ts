@@ -3,6 +3,7 @@ import {
   check,
   index,
   integer,
+  jsonb,
   pgTable,
   text,
   timestamp,
@@ -37,6 +38,8 @@ export const gallery = pgTable(
     passwordKeyVersion: integer("password_key_version").notNull().default(1),
     passwordHash: text("password_hash").notNull(),
     passwordVersion: integer("password_version").notNull().default(1),
+    // ADR-019 point 5, TD D-24: bumped by every change a client could see; F-10 keys its cache on it.
+    contentVersion: integer("content_version").notNull().default(1),
     passwordChangedAt: timestamp("password_changed_at", { withTimezone: true }),
     passwordChangedBy: text("password_changed_by").references(() => user.id, {
       onDelete: "set null",
@@ -59,6 +62,7 @@ export const gallery = pgTable(
     unique("gallery_project_uq").on(t.projectId),
     check("gallery_status_ck", sql`${t.status} in ('DRAFT','PUBLISHED','ARCHIVED')`),
     check("gallery_password_version_ck", sql`${t.passwordVersion} >= 1`),
+    check("gallery_content_version_ck", sql`${t.contentVersion} >= 1`),
     check(
       "gallery_expiry_days_ck",
       sql`${t.expiryDays} is null or ${t.expiryDays} between 1 and 3650`,
@@ -88,6 +92,9 @@ export const gallerySource = pgTable(
     removedBy: text("removed_by").references(() => user.id, { onDelete: "set null" }),
     syncStatus: text("sync_status").notNull().default("NEVER"),
     syncStartedAt: timestamp("sync_started_at", { withTimezone: true }),
+    // TD D-8, D-20: the open run's lease and the rest of its walk; both are null between runs.
+    syncLeaseAt: timestamp("sync_lease_at", { withTimezone: true }),
+    syncCursor: jsonb("sync_cursor"),
     lastSyncedAt: timestamp("last_synced_at", { withTimezone: true }),
     lastSyncAttemptAt: timestamp("last_sync_attempt_at", { withTimezone: true }),
     syncErrorCode: text("sync_error_code"),
@@ -145,7 +152,8 @@ export const galleryPhoto = pgTable(
     kind: text("kind").notNull(),
     folderPath: text("folder_path").notNull().default(""),
     browsePath: text("browse_path").notNull().default(""),
-    lastSeenAt: timestamp("last_seen_at", { withTimezone: true }).notNull(),
+    // Superseded by the run's `seen` list (TD D-21); the column goes in the migration that replaces the sync writes.
+    lastSeenAt: timestamp("last_seen_at", { withTimezone: true }).notNull().defaultNow(),
     missingAt: timestamp("missing_at", { withTimezone: true }),
     ...auditColumns(),
   },

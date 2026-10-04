@@ -1,6 +1,7 @@
-// F-09 Slice 0 spike (plan R-1/R-2), not shipped: lists a public Drive folder tree with an API
-// key and fetches one thumbnail without OAuth. Prints counts and timings only, never the key or
-// a URL (C-103).
+// F-09 Slice 0 spike (plan R-1/R-2) and R1 spike (R-7), not shipped: lists a public Drive folder
+// tree with an API key, fetches one thumbnail without OAuth, and checks that Google's image URL
+// (ADR-019) serves a photo with no key and no referrer. Prints counts and timings only, never the
+// key or a URL (C-103).
 // Usage: GOOGLE_DRIVE_API_KEY=… pnpm exec tsx scripts/gallery/drive-spike.ts <folderId>
 import { z } from "zod";
 
@@ -81,6 +82,18 @@ async function probeThumbnail(key: string, fileId: string): Promise<string> {
   return `host *${host.slice(host.indexOf("."))} · HTTP ${String(image.status)} · ${type} · ${String(bytes)} B`;
 }
 
+async function probeGoogleImage(fileId: string, width: number): Promise<string> {
+  const started = performance.now();
+  const response = await fetch(`https://lh3.googleusercontent.com/d/${fileId}=w${String(width)}`, {
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  });
+  const bytes = (await response.arrayBuffer()).byteLength;
+  const type = response.headers.get("content-type") ?? "?";
+  const millis = Math.round(performance.now() - started);
+  return `w${String(width)} · HTTP ${String(response.status)} · ${type} · ${String(bytes)} B · ${String(millis)} ms`;
+}
+
 async function main(key: string, folderId: string): Promise<void> {
   const started = performance.now();
   const tree = await walk(key, folderId);
@@ -90,6 +103,9 @@ async function main(key: string, folderId: string): Promise<void> {
   console.log(`folders deeper than ${String(MAX_DEPTH)}: ${String(tree.tooDeep)}`);
   const first = tree.images.at(0);
   console.log(`thumbnail: ${first ? await probeThumbnail(key, first.id) : "no image"}`);
+  if (!first) return;
+  console.log(`google image: ${await probeGoogleImage(first.id, 600)}`);
+  console.log(`google image: ${await probeGoogleImage(first.id, 1600)}`);
 }
 
 function fail(error: unknown): void {

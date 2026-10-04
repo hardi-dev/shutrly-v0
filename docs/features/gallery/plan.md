@@ -14,7 +14,12 @@
 - [design.md](design.md) and [exports/INDEX.md](exports/INDEX.md), which points to the raw HTML export of each state (`<state>-<device>-<frameId>.html`);
 - component specs in `docs/design-system/components/` (`photo-tile`, `folder-tile`, `media-viewer`, `modal`).
 
+**Free-tier rework (2026-10-05).** Slices 0–8 are built and on `main`. The Owner accepted [ADR-018](../../architecture/decisions/ADR-018-free-tier-runtime-budget.md) and [ADR-019](../../architecture/decisions/ADR-019-gallery-media-and-sync-on-free-tier.md), so slices **R1–R5** below rework sync, media and the content version for Workers Free. They run on `feat/gallery-free-tier`. Technical design decisions D-7…D-10 and D-19 are amended, and D-20…D-27 are new. The Owner's go-ahead is still open for the free-preview CPU measurement (R5).
+
 ## Global constraints (every slice)
+
+- **Free tier (rework slices):** every request stays within 50 subrequests and 10 ms CPU (ADR-018). Say in the slice record how many Drive calls a step makes and what it writes.
+- **Branch hygiene (Owner):** pull `origin/main` into `feat/gallery-free-tier` before each slice, and never commit `.env*`.
 
 - **Architecture and coding rules:** [architecture/overview.md](../../architecture/overview.md) and [coding-rules.md](../../coding-rules.md).
   - Unit folders with co-located tests.
@@ -359,6 +364,115 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 - Real Drive (2026-10-05, Owner's public test folder, non-production key): `tests/e2e/gallery/gallery-drive-smoke.spec.ts` links the folder, syncs 113 proof photos, loads a thumbnail, previews with ←/→ and Escape, opens *Semua foto*, publishes, opens expiry and rotate from the ⋯ menu and archives, with axe on each surface: pass. It runs only when `GALLERY_SMOKE_FOLDER_URL` is set (`testIgnore` in `playwright.config.ts`), so the folder ID is never committed.
 - E2E (Owner: "run e2e", 2026-10-05): full suite 73 passed, 2 flaky (catalog phone axe timeout, AC-SRC-015; both pass on retry), 1 failed: `workspace.spec.ts` AC-WS-022 still clicked *Proyek* and expected *Segera hadir*, stale since F-07 built Projects (fails on `main` too). Fixed to open `/invoices`, now passes; gallery specs pass.
 
+## Slice R1 — Spike, schema and the step walker
+
+**Done when:**
+- the Google image URL is proven on the Owner's test folder (or the Owner has been told it isn't and has decided);
+- migration `0013_gallery_free_tier` is applied to the non-production database;
+- `walkStep` and the cursor type pass their unit tests;
+- nothing user-visible changed.
+
+**Read first:**
+- ADR-019 points 1–3; ADR-018 points 3, 5;
+- AC-GAL-032, 033, 036 (the data they need);
+- technical-design.md › D-7, D-8, D-20, D-21, D-24, Database Changes (both sections), R-1, R-7;
+- coding-rules.md › Data Access, General (named constants, 50-line functions);
+- existing code to follow: `src/features/gallery/domain/sync-plan/*`, `src/adapters/db/schema/gallery/gallery.ts`, `scripts/gallery/drive-spike.ts`.
+
+**Exports:** none (no UI).
+
+**Steps:**
+- [ ] Spike: extend `scripts/gallery/drive-spike.ts` to fetch `https://lh3.googleusercontent.com/d/<fileId>=w600` for a photo of the Owner's public test folder with no key and no referrer, then the same for a file that has a resource key if the Owner has one. Record status, content type and size in technical-design.md › R-7.
+  - **Stop:** if `lh3` fails, report to the Owner before R3; ADR-019 point 3 rests on it. R1 and R2 do not depend on it.
+- [ ] Schema: add `content_version`, `sync_cursor`, `sync_lease_at` and the `last_seen_at` default to `gallery.ts`; generate the migration with drizzle-kit, review that it is additive, commit it, then apply it to the non-production database with the project's migrate script and report the run. Integration test for the new check and defaults.
+- [ ] Domain: constants `SYNC_STEP_MAX_LIST_CALLS`, `SYNC_STEP_MAX_ENTRIES`, `MAX_SYNC_PHOTOS` (replace `SYNC_LIMITS`), the cursor type, `startCursor` and `walkStep` in `sync-plan`. Keep `walkFolderTree` until R2 removes it. Unit tests: a 95-folder fake tree takes 3 steps and gives the same photos as one pass, the budget stops at 40 calls and at the entry cap, a folder page token resumes, the depth and shortcut rules still hold, and `TOO_LARGE` at the photo cap.
+- [ ] Cursor Zod schema in `application/schemas/sync-cursor`, with unit tests for a bad shape.
+
+## Slice R2 — Sync in steps, end to end
+
+**Done when:**
+- *Tambah folder* creates the source, and the page then syncs it step by step with *Menyinkronkan… n dari m folder*;
+- *Sinkronkan* and *Sinkronkan semua* work the same way;
+- an unchanged re-sync writes no photo row; a failed run keeps what it saved and marks nothing missing;
+- publish checks folders until one passes;
+- AC-GAL-005…012, 016, 017, 032 and 033 pass with the fake provider and a counting fake.
+
+**Read first:**
+- AC-GAL-005, 006, 007, 008, 010, 011, 012, 016, 017, 032, 033;
+- BR-GAL-004, 006, 007, 009;
+- technical-design.md › D-8, D-9, D-19, D-20, D-21, D-23, D-25, D-27, Concurrency / Consistency, Error Handling;
+- coding-rules.md › Data Access, Easy to break, UI / Components;
+- existing code to follow: `application/use-cases/sync-gallery-source/*`, `link-gallery-source/*`, `publish-gallery/*`, `adapters/db/gallery-repository/{gallery-sync-sql,drizzle-gallery-source-repository}.ts`, `ui/use-gallery-sync/*`, `ui/link-source-dialog/*`, `ui/gallery-sources-section/*`, `ui/source-text/*`.
+
+**Exports (`galeri / desktop` and `galeri / mobile`):** the state `galeri-draf-menyinkronkan` (the source row while syncing; only its meta text changes), and `galeri-dialog-tambah-folder` for the dialog that now closes right after linking.
+
+**Steps:**
+- [ ] Port `GallerySourceRepositoryPort`: replace `claimSync`, `completeSync`, `failSync` with `claimStep`, `commitStep` and `failRun`; adapter in `gallery-sync-sql.ts` (claim with lease and 30-minute restart, the conditional upsert with the `IS DISTINCT FROM` guard, the `<> ALL(seen)` missing update, counts, cursor; `content_version` is left to R4). Integration tests: a 3-step run equals one pass; two concurrent steps, only one commits; unchanged re-sync leaves `updated_at` and `xmin`; rename and remove touch only their rows; a failed run keeps earlier rows and marks none missing; a stale run restarts.
+- [ ] Use case `sync-gallery-source-step` replaces `sync-gallery-source` and its outcome gains `CONTINUE`; the rate limit counts run starts only. Unit tests with a counting fake provider assert ≤ 40 list calls per step.
+- [ ] `linkGallerySource` stops syncing inline (D-27). `publishGallery` checks folders until one passes (D-25). Update their unit tests.
+- [ ] Action and composition: `syncGallerySourceAction` returns the step outcome. Remove `walkFolderTree`, `SYNC_LIMITS` and the old claim code.
+- [ ] UI: `useGallerySync` loops steps (cap 500), reports `foldersDone` of `foldersTotal`, and *Sinkronkan semua* runs sources one after another; the link dialog closes and the page starts the first sync; progress copy in `gallery-copy.copy.ts`. Dom tests: the loop ends on `SUCCEEDED`, on `FAILED` and at the cap.
+- [ ] E2E (fake drive): link the fixture folder, see the progress text then *Berhasil*, re-sync, and a failing folder shows *Gagal*.
+
+## Slice R3 — Images from Google, with a fallback
+
+**Done when:**
+- thumbnails and the preview load from `lh3.googleusercontent.com/d/<id>=w600` / `=w1600` with no referrer;
+- a failed image falls back once to the Owner endpoint, then shows the missing-image state;
+- in fake-drive mode the UI uses the Owner endpoint directly;
+- no view carries a folder ID or resource key;
+- AC-GAL-015, 034 and 035 pass.
+
+**Read first:**
+- AC-GAL-014, 015, 031, 034, 035;
+- BR-SRC-003, BR-ACC-005 (amended), BR-DEL-002; ADR-019 points 3, 4;
+- technical-design.md › D-10, D-11, D-22, D-26, Security, UI Components;
+- `docs/design-system/components/photo-tile.md`, `media-viewer.md`;
+- existing code to follow: `ui/gallery-media-url/*`, `src/ui/patterns/photo-tile/*`, `src/ui/patterns/media-viewer/*`, `ui/photos-card`, `ui/browse-grid`, `ui/photo-preview`, `application/use-cases/gallery-views/*`.
+
+**Exports (`galeri`, `semuafoto`, `preview`; desktop and mobile):** `galeri-draf-proof`, `semuafoto-daftar-folder`, `preview-proof`, `preview-hilang`. The look doesn't change; check the missing-image state still matches `preview-hilang`.
+
+**Steps:**
+- [ ] Domain `google-image-url` (`googleImageUrl`, widths `w600` / `w1600`, the ID pattern) with unit tests (valid, bad IDs, widths).
+- [ ] Views: `GalleryPhotoView` gains `externalFileId`; the page view gains `imageHost` (null with `E2E_FAKE_DRIVE=1`). Replace `galleryMediaUrl` by an `imageSources(photo, size, imageHost)` helper returning `{ src, fallbackSrc }`. Unit tests.
+- [ ] UI: `PhotoTile` and the viewer image slot take `fallbackSrc` and swap once on `onError`; `<img referrerPolicy="no-referrer">`. Dom tests for one swap and no loop. Wire `PhotosCard`, `BrowseGrid` and `PhotoPreview`.
+- [ ] A test that walks the Owner page view, a browse page and every action result for the fixture's folder ID and resource key (AC-GAL-035).
+- [ ] E2E (fake drive): thumbnails come from `/api/w/…`; one test with the image host on checks the `lh3` URL shape.
+
+## Slice R4 — Content version
+
+**Done when:** `content_version` increments exactly on the D-24 events, and AC-GAL-036 passes.
+
+**Read first:**
+- AC-GAL-036; BR-GAL-005, BR-GAL-006; ADR-019 point 5;
+- technical-design.md › D-24, Concurrency / Consistency;
+- existing code: `adapters/db/gallery-repository/gallery-lifecycle-sql.ts`, `gallery-sync-sql.ts`, `gallery-lock-sql.ts`.
+
+**Exports:** none.
+
+**Steps:**
+- [ ] Increment `content_version` in the lifecycle writers (publish, expiry change, rotate, remove source, archive) and in the sync commit (a step that wrote or marked a row, and the last step). Integration tests: one per event, and an unchanged re-sync leaves it.
+- [ ] Note for F-10 in `docs/features/gallery/technical-design.md` › Context: the client gallery cache key is `galleryId` + `content_version`, and whether Cache API calls count as subrequests must be checked first (ADR-019 point 5).
+
+## Slice R5 — Verification, CPU check and PR
+
+**Done when:**
+- every gate passes and the real-Drive smoke spec passes, including one Google image URL;
+- the free-preview CPU numbers are recorded (or the Owner has said to skip them);
+- the records, handoff and feature map are up to date, and `feat/gallery-free-tier` is pushed with a PR to `main`.
+
+**Read first:**
+- AC-GAL-015, 026, 032…036; ADR-018 points 2, 4; technical-design.md › Testing Strategy, R-6, R-7;
+- existing code: `tests/e2e/gallery/*`, `playwright.config.ts`.
+
+**Exports:** none.
+
+**Steps:**
+- [ ] Re-run the axe and keyboard specs on the surfaces R2 and R3 touched; extend the real-Drive smoke spec to check that a tile's image URL is a Google URL and loads.
+- [ ] **Stop and ask the Owner** for the go-ahead to deploy a preview to a free Cloudflare account. With it: deploy, then read CPU time per request (`wrangler tail` or the dashboard) for login, the project page, the gallery page, one sync step of the real 113-photo folder and one browse page. Record the numbers in ADR-018 and technical-design.md › R-6, and tune `SYNC_STEP_MAX_ENTRIES`. Any path over 10 ms: stop and report; ADR-018 point 2 needs a new ADR.
+- [ ] Update `docs/HANDOFF.md` (rework done, the follow-up migration that drops `gallery_photo.last_seen_at`, retention cleanup still deferred) and the feature map; run `/sdv:verify-feature gallery`.
+- [ ] Push `feat/gallery-free-tier` and open a PR to `main`.
+
 ## AC index
 
 | AC | Slice |
@@ -371,3 +485,8 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 | 013, 016–023 | 6 |
 | 024 | 7 |
 | 025, 026 | 1–7 per surface, completed in 8 |
+| 005–012, 016, 017 (reworked) | R2 |
+| 015 (amended), 034, 035 | R3 |
+| 032, 033 | R2 (data in R1) |
+| 036 | R4 |
+| 015, 026, 032–036 (re-check) | R5 |

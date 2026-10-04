@@ -107,7 +107,7 @@ Provider configuration lives at workspace level (`WorkspaceSourceConfig`); concr
 MVP accepts only Owner-supplied Drive folder links shared "Anyone with the link". The platform reads metadata only — no Owner OAuth, no service account, no folder creation, no uploads.
 
 ### BR-SRC-003 — Credentials never reach clients
-The platform API key is a server secret, never stored in `configData`/gallery data and never sent to browsers. Direct Drive folder links are not exposed in client responses.
+The platform API key is a server secret, never stored in `configData`/gallery data and never sent to browsers. Drive folder links, folder IDs and resource keys are never exposed in any browser response, Owner or client; only the file IDs of photos the reader may see are. *(Amended: F-09 free-tier rework, Owner 2026-10-05, ADR-019.)*
 
 ### BR-SRC-004 — Public-link warning
 During source setup the Owner is warned that anyone holding the direct Drive link bypasses gallery token and password.
@@ -294,7 +294,7 @@ Client-facing endpoints authorize only via the project token (+ password for gal
 Password attempts, public gallery access, and public selection submissions are rate-limited.
 
 ### BR-ACC-005 — Controlled media
-Clients receive media through server-controlled or short-lived URLs; provider URLs and API keys are never exposed. Private gallery/invoice responses are never publicly cached.
+Clients receive photos either through a server-controlled URL or from Google's public image host by file ID (`lh3.googleusercontent.com/d/<fileId>`, ADR-019), and only for photos they may see (BR-GAL-007, BR-DEL-002). Folder links, folder IDs, resource keys and API keys are never exposed. Private gallery/invoice pages and JSON are never publicly cached. A client who saw a photo may keep its image URL after the gallery expires or its password changes, because the file is already link-shared on Drive (BR-SRC-004). *(Amended: F-09 free-tier rework, Owner 2026-10-05.)*
 
 ---
 

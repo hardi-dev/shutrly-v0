@@ -1,6 +1,6 @@
 # ADR-019: Gallery sync in small steps, images straight from Google, cached by gallery version
 
-Status: Proposed (2026-10-05; not accepted yet)
+Status: Accepted (Owner, 2026-10-05), including the media trade-off in Consequences. C-103 (v1.2), BR-ACC-005, BR-SRC-003 and AC-GAL-015 are amended. Point 5's Cache API part belongs to F-10; F-09 only adds `content_version`. Point 6 stays deferred.
 Date: 2026-10-05
 Amends, once accepted: F-09 technical design D-7 (sync walk), D-10 (Owner media route) and R-1; the media part of C-103 / AC-GAL-015 needs an Owner decision (see Consequences).
 

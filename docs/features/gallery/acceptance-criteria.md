@@ -151,16 +151,15 @@ Covers: BR-GAL-007, BR-DEL-002, BR-GAL-006
 - *Proof* is marked visible to the client once published, and *Edited* and *Print* hidden until final delivery;
 - loading, empty (no sources yet: a prompt to add a folder) and error states are shown where they apply (C-007).
 
-## AC-GAL-015 — Owner-only media
-Covers: BR-SRC-003, BR-ACC-005, BR-WS-002
+## AC-GAL-015 — Media: from Google by file ID, Owner-only fallback (amended 2026-10-05)
+Covers: BR-SRC-003, BR-ACC-005, BR-WS-002, C-103 (ADR-019)
 
 **Given** a thumbnail on the gallery screen
 **When** the browser loads it
 **Then**:
-- the image comes from a Shutrly endpoint;
-- no response, URL or page source contains the API key or a Drive link;
-- the same URL returns nothing without a signed-in Owner of that workspace;
-- the response is not publicly cacheable.
+- the image URL is `https://lh3.googleusercontent.com/d/<fileId>=w600` (the preview uses `=w1600`), built from the photo's file ID, and the `<img>` sends no referrer;
+- no response, URL or page source contains the API key, a Drive folder link, a folder ID or a resource key;
+- the Shutrly fallback endpoint, `/api/w/<workspace>/gallery-photos/<photo>/<size>`, returns nothing without a signed-in Owner of that workspace, and its response is `private`, never publicly cacheable.
 
 ## Publish and lifecycle
 
@@ -320,6 +319,48 @@ Covers: BR-GAL-007 (A-12, A-14)
 **Given** a folder 6 levels below the source
 **When** the source syncs
 **Then** its photos are skipped, and the sync summary reports *1 folder terlalu dalam*.
+
+## AC-GAL-032 — Sync in steps
+Covers: BR-GAL-006, BR-GAL-007, C-005 (ADR-018, ADR-019)
+
+**Given** a source whose tree needs 95 Drive list calls (for example 95 folders)
+**When** the Owner syncs it
+**Then**:
+- the browser repeats the sync step three times; no step makes more than 40 Drive list calls;
+- the source row shows *Menyinkronkan… n dari m folder* between steps, then *Berhasil* with the same photos and counts as one single pass would give;
+- two steps of the same run requested at the same time never both commit, and a dropped browser leaves a run that the next *Sinkronkan* continues;
+- a run that fails in step 2 shows *Gagal* with the reason, keeps the photos saved in step 1 and marks none missing.
+
+## AC-GAL-033 — Sync writes only what changed
+Covers: BR-GAL-006 (ADR-019)
+
+**Given** the synced source from AC-GAL-005
+**When** the Owner syncs it again with nothing changed in Drive
+**Then** no photo row is rewritten (each keeps its `updated_at`).
+
+**When** one file is renamed and one is removed in Drive, and the Owner syncs again
+**Then** only the renamed photo's row is updated and only the removed photo is marked missing.
+
+## AC-GAL-034 — Image fallback
+Covers: BR-SRC-003, BR-ACC-005 (ADR-019)
+
+**Given** a photo tile whose Google image URL fails to load
+**When** the tile renders
+**Then** it loads the same photo from the Owner-only fallback endpoint once, and shows the missing-image state if that fails too, without a loop of retries.
+
+## AC-GAL-035 — Folder links never reach the browser
+Covers: BR-SRC-003, C-103, BR-ACC-005 (ADR-019)
+
+**Given** a gallery whose source folder ID is `<id>`
+**When** the Owner opens the gallery page, *Semua foto* and the preview, and every gallery server action returns
+**Then** no HTML, RSC payload, action result or error contains the folder ID, the folder link or a resource key. Photo file IDs appear, and the Owner-only *Buka di Google Drive* link points to a file.
+
+## AC-GAL-036 — Content version
+Covers: BR-GAL-005, BR-GAL-006 (ADR-019)
+
+**Given** a gallery with `contentVersion` 1
+**When** a sync writes at least one change, or the gallery is published, its expiry changes, its password rotates, a source is removed or it is archived
+**Then** `contentVersion` increases by one for that change, and an unchanged re-sync leaves it as it was.
 
 ## AC-GAL-031 — Photo preview
 Covers: BR-GAL-006, BR-DEL-002, BR-SRC-003, BR-WS-002

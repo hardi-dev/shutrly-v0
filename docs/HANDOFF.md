@@ -1,11 +1,16 @@
 # Handoff — Shutrly
 
 Last updated: 2026-10-05 (F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `claude/new-feature-skill-start-a92e1b` (F-09 gallery, worktree). F-07 is on `feat/projects`; F-08 Team designed on `feat/team-sessions`.
+Branch: `feat/gallery-free-tier` (F-09 free-tier rework, worktree `.claude/worktrees/gallery-free-tier`). F-07 is on `feat/projects`; F-08 Team designed on `feat/team-sessions`.
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-09 Gallery DONE, pending Owner acceptance (2026-10-05)
+## Current handoff — F-09 free-tier rework PLANNED (2026-10-05)
+
+- **Next:** `/sdv:build-feature gallery R1` (spike, schema, step walker), then R2–R5 in [plan.md](features/gallery/plan.md). The Owner accepted ADR-018 and ADR-019 and the media trade-off (constitution v1.2, BR-ACC-005, BR-SRC-003, AC-GAL-015 amended; new AC-GAL-032…036). **Still open for the Owner:** go-ahead to deploy a preview to a free Cloudflare account for the CPU check (R5).
+- **F-09 before the rework:** the block below, still true for `main`.
+
+### F-09 Gallery DONE on `main`, pending Owner acceptance
 
 - **State:** F-09 Gallery `DONE` (pending Owner acceptance). Branch `claude/new-feature-skill-start-a92e1b` (worktree), `origin/main` (F-08) merged, not pushed, no PR. Only the generated `docs/design-system/pencil-variables.json` is untracked.
 - **Done:** Slices 0–8 of the [plan](features/gallery/plan.md), each with an implementation record. Slice 0 spike on the Owner's public folder closed R-1/R-2 ([technical design › Risks](features/gallery/technical-design.md)). Slice 8: isolation test, browser pass with axe, copy audit of all 100 exports, and the real-Drive smoke E2E (`gallery-drive-smoke.spec.ts`, axe and keyboard on every surface). Migration `0012_gallery` applied to the non-production DB.
@@ -28,7 +33,7 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 
 ## Open gaps (deferred)
 
-- **Free hosting (Owner 2026-10-05):** [ADR-018](architecture/decisions/ADR-018-free-tier-runtime-budget.md) and [ADR-019](architecture/decisions/ADR-019-gallery-media-and-sync-on-free-tier.md) are `Proposed`. They need Owner acceptance, a CPU check on a free Workers preview, and an F-09 rework plan. ADR-019 also needs a decision on C-103 / AC-GAL-015 (media straight from Google).
+- **Free hosting (Owner 2026-10-05):** [ADR-018](architecture/decisions/ADR-018-free-tier-runtime-budget.md) and [ADR-019](architecture/decisions/ADR-019-gallery-media-and-sync-on-free-tier.md) are `Accepted`; the F-09 rework is planned (slices R1–R5). Left: the CPU check on a free Workers preview (needs the Owner's go-ahead), and a later migration that drops `gallery_photo.last_seen_at`.
 - **Pricing (draft):** [product/pricing-and-costs.md](product/pricing-and-costs.md) lists costs, the Fastpik comparison and open business questions to discuss.
 - GAP-01 dark-mode evidence
 - GAP-02 loading states (button, switch) and states beyond those drawn

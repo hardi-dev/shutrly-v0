@@ -1,6 +1,6 @@
 # Project Constitution
 
-Version: 1.1 · Adopted: 2026-09-25 · Amended: 2026-10-04 (C-103, see the amendment log)
+Version: 1.2 · Adopted: 2026-09-25 · Amended: 2026-10-05 (C-103, see the amendment log)
 
 Non-negotiable principles. They outrank every other artifact. Changing one requires an explicit Owner decision recorded here with a version bump.
 
@@ -51,7 +51,7 @@ No read or write may cross workspaces. Every owner request verifies workspace ow
 Project snapshots (items, booking fields) and issued invoice lines/discounts never change because a template changed. Corrections are explicit, audited actions — not silent edits (BR-PRJ-001, BR-INV-003, BR-CAT-003).
 
 ### C-103 — Client secrets stay secret
-Gallery passwords are stored encrypted with a server-side key, next to a hash used for verification; only the workspace Owner can see them, and only server-side code decrypts them (ADR-017). Client access tokens, gallery passwords, WhatsApp links containing them, Drive links, and API keys are never logged, never placed in analytics, and never publicly cached (ADR-004, ADR-005, ADR-017).
+Gallery passwords are stored encrypted with a server-side key, next to a hash used for verification; only the workspace Owner can see them, and only server-side code decrypts them (ADR-017). Client access tokens, gallery passwords, WhatsApp links containing them, Drive folder links and folder IDs, and API keys are never logged, never placed in analytics, never sent to a browser (folder links and IDs, API keys) and never publicly cached (ADR-004, ADR-005, ADR-017). A photo's file ID, and the Google image URL built from it, are not secrets: the file is already link-shared on Drive (BR-SRC-004), so a photo the reader may see can load from Google's image host (ADR-019).
 
 ### C-104 — Client access is token-scoped
 Client endpoints authorize only through the project token (+ current gallery password), and only ever return data belonging to that project (BR-ACC-*).
@@ -66,4 +66,5 @@ In MVP the system only builds messages; the Owner sends them (BR-MSG-001).
 
 | Version | Date | Change | Owner decision |
 |---|---|---|---|
+| 1.2 | 2026-10-05 | C-103: Drive *folder* links and IDs stay server-side; photo file IDs and the Google image URLs built from them may reach a browser, so images load straight from Google on the free tier (ADR-019). | Free-tier decision: the Owner accepted ADR-018 and ADR-019 and the trade-off that a client can keep an image URL after the gallery expires or its password changes. |
 | 1.1 | 2026-10-04 | C-103: gallery passwords are stored encrypted (plus a hash) instead of hash-only, so the Owner can see them and messages can include them without re-entry (ADR-017). | F-09 design review: the Owner can't remember a password per project; store it encrypted, generate an easy-to-type one, fill it into the WhatsApp message automatically. |

@@ -63,7 +63,8 @@ function baseCte(context: WorkspaceContext, query: ProjectListReadQuery): SQL {
              shown.id as s_id, shown.name as s_name, shown.session_date as s_date,
              shown.start_time as s_start, shown.end_time as s_end, shown.location as s_location,
              shown.created_at as s_created,
-             (select count(*) from project_session x where x.project_id = p.id)::int as session_count
+             (select count(*) from project_session x where x.project_id = p.id)::int as session_count,
+             exists (select 1 from session_assignment a where a.workspace_id = p.workspace_id and a.project_id = p.id) as has_team
       from project p
       join client c on c.workspace_id = p.workspace_id and c.id = p.client_id
       join service s on s.workspace_id = p.workspace_id and s.id = p.service_id

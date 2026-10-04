@@ -16,6 +16,11 @@ export const OWNER_NAV_COPY = {
   servicesTabsLabel: "Bagian layanan",
   serviceTabs: { services: "Layanan", categories: "Kategori", items: "Item paket" },
   team: "Tim",
+  teamSubtitle: "Freelancer yang kamu ajak bertugas. Pilih mereka di jadwal proyek.",
+  teamMobileSubtitle: "Freelancer yang kamu ajak bertugas.",
+  // not in Pencil: the tab bar's accessible name
+  teamTabsLabel: "Bagian tim",
+  teamTabs: { active: "Aktif", archived: "Arsip", roles: "Peran" },
   catalog: "KATALOG",
   messageTemplates: "Template pesan",
   photoSources: "Sumber foto",

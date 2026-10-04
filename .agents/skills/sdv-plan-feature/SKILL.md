@@ -9,7 +9,7 @@ Arguments: whatever the user wrote after `$sdv-plan-feature` (expected: `<featur
 
 Use the `spec-driven-vibe-coding` skill and run its **plan-feature** workflow for feature: **$ARGUMENTS**
 
-1. Read: constitution, coding rules, tech stack, the ADR index, feature spec, acceptance criteria, diagrams, design reference. Read ADR bodies only for decisions this feature touches (find them from the titles). Do not read other features' plans or implementation records, except to learn a contract this feature depends on.
+1. Read: constitution, coding rules, tech stack, the ADR index, feature spec, acceptance criteria, diagrams, and the design reference as `design.md` plus `exports/_compact/INDEX.md` only. Never open the export HTML while planning; it is for building, and the plan only names which states each iteration needs. Read ADR bodies only for decisions this feature touches (find them from the titles). Do not read other features' plans or implementation records, except to learn a contract this feature depends on.
    - If the spec's **Flagged Concerns** has any `OPEN` row, stop and ask the Owner to resolve it. Do not plan around an unresolved concern.
    - Plan against each `RESOLVED` concern's recorded decision.
 2. Write `docs/features/<slug>/technical-design.md`: context, relevant BRs, database changes, server/API interface, domain/application logic, UI components, validation, error handling, concurrency/consistency, security, testing strategy (mapped to `AC-*`), risks.

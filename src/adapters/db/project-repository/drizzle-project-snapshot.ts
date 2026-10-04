@@ -17,6 +17,7 @@ import {
 } from "../schema/booking/catalog";
 import { client } from "../schema/booking/client";
 import { project, projectFieldValue, projectItem, projectSession } from "../schema/booking/project";
+import { checkTeams, insertTeams } from "./drizzle-snapshot-team";
 
 type Rejection = Exclude<CreateSnapshotResult, { status: "CREATED" }>;
 
@@ -165,20 +166,24 @@ async function insertSessions(
   context: WorkspaceContext,
   input: ProjectSnapshotInput,
   projectId: string,
-): Promise<void> {
-  if (input.sessions.length === 0) return;
-  await tx.insert(projectSession).values(
-    input.sessions.map((session) => ({
-      workspaceId: context.workspaceId,
-      projectId,
-      name: session.name,
-      sessionDate: session.date,
-      startTime: session.startTime,
-      endTime: session.endTime,
-      location: session.location,
-      updatedBy: input.actorId,
-    })),
-  );
+): Promise<string[]> {
+  if (input.sessions.length === 0) return [];
+  const rows = await tx
+    .insert(projectSession)
+    .values(
+      input.sessions.map((session) => ({
+        workspaceId: context.workspaceId,
+        projectId,
+        name: session.name,
+        sessionDate: session.date,
+        startTime: session.startTime,
+        endTime: session.endTime,
+        location: session.location,
+        updatedBy: input.actorId,
+      })),
+    )
+    .returning({ id: projectSession.id });
+  return rows.map((row) => row.id);
 }
 
 /** Writes the project and its snapshots in one transaction, locking the client, service and definitions FOR SHARE (D-4). @param db - request database @param context - verified workspace @param input - validated snapshot @returns the created id or why it was refused */
@@ -192,6 +197,8 @@ export function createSnapshot(
     if (parents) return parents;
     const definitions = await lockDefinitions(tx, context, input);
     if (definitions.rejection) return definitions.rejection;
+    const teams = await checkTeams(tx, context, input.sessions);
+    if (teams) return teams;
     const rows = await tx
       .insert(project)
       .values({
@@ -211,7 +218,13 @@ export function createSnapshot(
     if (!projectId) throw new Error("project insert returned no row");
     await insertItems(tx, context, input, projectId, definitions.rows);
     await insertFieldValues(tx, context, input, projectId);
-    await insertSessions(tx, context, input, projectId);
+    const sessionIds = await insertSessions(tx, context, input, projectId);
+    await insertTeams(tx, context, {
+      projectId,
+      sessionIds,
+      sessions: input.sessions,
+      actorId: input.actorId,
+    });
     return { status: "CREATED", id: projectId } as const;
   });
 }

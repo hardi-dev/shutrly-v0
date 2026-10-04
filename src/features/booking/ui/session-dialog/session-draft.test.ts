@@ -22,7 +22,14 @@ describe("session draft (AC-PRJ-029)", () => {
     expect(
       validateSessionDraft({ ...EMPTY_SESSION_DRAFT, name: " Akad ", date: "2026-11-10" }),
     ).toEqual({
-      session: { name: "Akad", date: "2026-11-10", startTime: null, endTime: null, location: null },
+      session: {
+        name: "Akad",
+        date: "2026-11-10",
+        startTime: null,
+        endTime: null,
+        location: null,
+        team: [],
+      },
     });
   });
 
@@ -41,6 +48,7 @@ describe("session draft (AC-PRJ-029)", () => {
       startTime: "07:30",
       endTime: null,
       location: "",
+      team: [],
     });
     expect(toSessionDraft(null)).toEqual(EMPTY_SESSION_DRAFT);
   });

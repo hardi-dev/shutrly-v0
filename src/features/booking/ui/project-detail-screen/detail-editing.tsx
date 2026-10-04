@@ -16,6 +16,12 @@ import { ProjectItemDialog } from "../project-item-dialog/project-item-dialog";
 import { SessionDialog } from "../session-dialog/session-dialog";
 import type { DetailEditHandlers, EditOpen } from "./project-detail-screen.types";
 
+/** AC-TEAM-020: the delete body names the session's team when it has one. */
+function deleteSessionBody(project: ProjectDetailView, session: { readonly id: string }): string {
+  const count = project.assignments.filter((a) => a.sessionId === session.id).length;
+  return count > 0 ? PROJECT_COPY.deleteSessionTeamBody(count) : PROJECT_COPY.deleteSessionBody;
+}
+
 /** Owns the detail edit dialogs; every submit goes through `use-project-edits` (AC-PRJ-017, 019, 029). */
 export function DetailEditing({
   workspaceId,
@@ -153,7 +159,7 @@ export function DetailEditing({
           isOpen
           onOpenChange={close}
           title={PROJECT_COPY.deleteSessionTitle(open.session.name)}
-          body={PROJECT_COPY.deleteSessionBody}
+          body={deleteSessionBody(project, open.session)}
           confirmLabel={PROJECT_COPY.deleteSessionConfirm}
           onConfirm={confirmDeleteSession}
         />

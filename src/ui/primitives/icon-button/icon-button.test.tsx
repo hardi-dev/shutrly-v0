@@ -34,4 +34,18 @@ describe("IconButton (C02)", () => {
     render(<IconButton icon="list-filter" aria-label="Filter" badgeCount={2} badgeLabel="aktif" />);
     expect(screen.getByRole("button", { name: "Filter, 2 aktif" })).toBeInTheDocument();
   });
+
+  it("AC-TEAM-014 tints the icon with the danger status token for destructive row actions", () => {
+    render(<IconButton icon="trash-2" tone="danger" aria-label="Hapus dari sesi" />);
+    expect(screen.getByRole("button", { name: "Hapus dari sesi" })).toHaveClass(
+      "text-(--color-semantic-status-danger-fg)",
+    );
+  });
+
+  it("keeps the default icon colour without a tone", () => {
+    render(<IconButton icon="menu" aria-label="Menu" />);
+    expect(screen.getByRole("button", { name: "Menu" })).toHaveClass(
+      "text-(--component-icon-button-icon)",
+    );
+  });
 });

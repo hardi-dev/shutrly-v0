@@ -14,12 +14,25 @@ const SIZE_CLASSES = {
   md: "size-(--space-10) p-(--component-icon-button-padding)",
 } as const;
 
+const TONE_CLASSES = {
+  default: "text-(--component-icon-button-icon)",
+  danger: "text-(--color-semantic-status-danger-fg)",
+} as const;
+
 /** Renders a token-backed ghost icon button for compact actions.
  * @param props - icon, accessible name, size and button state
  * @returns the icon-only button
  */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
-  { size = "md", className, icon, badgeCount = 0, badgeLabel = "belum dibaca", ...props },
+  {
+    size = "md",
+    tone = "default",
+    className,
+    icon,
+    badgeCount = 0,
+    badgeLabel = "belum dibaca",
+    ...props
+  },
   ref,
 ) {
   const label =
@@ -34,7 +47,8 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
       type="button"
       className={cn(
         "relative flex shrink-0 items-center justify-center rounded-(--component-icon-button-radius)",
-        "text-(--component-icon-button-icon) outline-none transition-colors",
+        "outline-none transition-colors",
+        TONE_CLASSES[tone],
         "hover:bg-(--component-icon-button-background-hover)",
         "focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
         "disabled:opacity-(--opacity-disabled)",

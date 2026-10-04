@@ -61,6 +61,7 @@ function renderScreen() {
       serviceGroups={groups}
       hasActiveService
       definitions={definitions}
+      assignableMembers={[]}
       createAction={vi.fn()}
       searchClientsAction={vi.fn()}
     />,

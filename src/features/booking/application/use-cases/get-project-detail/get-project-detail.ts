@@ -7,6 +7,7 @@ import {
   nextStep,
 } from "@/features/booking/domain/project-status/project-status";
 import { pickShownSession } from "@/features/booking/domain/session/session";
+import { isTeamEditable } from "@/features/booking/domain/session-assignment/session-assignment";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { ProjectError } from "../../errors/project-errors/project-errors";
@@ -29,6 +30,7 @@ export async function getProjectDetail(
     canEditDeal: isDealEditable(detail.status),
     canEditSchedule: isScheduleEditable(detail.status),
     canEditInfo: isScheduleEditable(detail.status),
+    canEditTeam: isTeamEditable(detail.status),
     menu: buildProjectMenu({
       status: detail.status,
       hasWhatsappNumber: detail.client.whatsappNumber !== null,

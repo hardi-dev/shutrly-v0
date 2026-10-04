@@ -71,7 +71,8 @@ export type IconName =
   | "type"
   | "align-left"
   | "toggle-left"
-  | "list";
+  | "list"
+  | "user-plus";
 
 export type IconSize = "sm" | "md" | "lg";
 

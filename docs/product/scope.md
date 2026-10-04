@@ -8,7 +8,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25)
 - Workspace message templates (WhatsApp channel) and source configuration (Google Drive).
 - Service catalog: categories, reusable item definitions (four seeded per workspace), services with item values (`NUMBER`/`RANGE`), service-specific booking fields; archive/unarchive, delete only when unreferenced (F-05, Owner 2026-10-02).
 - Clients.
-- Projects created from a service, with immutable item and booking-field snapshots, customizable deal, sessions, team members (freelancers without login) and assignments.
+- Projects created from a service, with immutable item and booking-field snapshots, customizable deal, sessions, team members (freelancers without login) and per-session assignments with a role (F-08, Owner 2026-10-03).
 - One private Gallery per Project backed by one or more public Google Drive folder links; idempotent metadata sync.
 - Client access via Project token + required Gallery password; password rotation; token rotation.
 - Selection groups derived from project items; quantity-aware selection; one-time submit; Owner lock.
@@ -19,6 +19,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25)
 
 ## Explicitly Out of Scope
 - Staff/multi-user workspaces (`WorkspaceMember`), freelancer logins.
+- Freelancer money: rates, fees per assignment, payment status and payout reports (feature map › *Team fees*, not scheduled); availability calendars and double-booking checks (F-08, Owner 2026-10-03).
 - Workspace logo upload, workspace archive or deletion (Owner 2026-09-27, F-02 discovery).
 - Client accounts.
 - Social sign-in providers other than Google, adding a password to a Google-only account, unlinking Google, 2FA, email change, avatar, self-service account deletion, admin UI for user status.

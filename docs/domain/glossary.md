@@ -14,7 +14,9 @@ Use these terms in code, UI copy, and docs. Indonesian equivalents come from the
 | Project | One engagement for one client | Project |
 | Snapshot | Frozen copy of template data at project creation / invoice issue | Snapshot |
 | Session | A shoot within a project | Sesi |
-| Team member | Freelancer resource without login | Freelancer |
+| Team member | Freelancer resource without login | Anggota tim |
+| Team role | Workspace role name a member can take on a session | Peran |
+| Assignment | One member on one session, in one role | Penugasan |
 | Gallery | Password-protected client page for proofing + delivery | Gallery |
 | Source | External folder feeding a gallery | Sumber |
 | Proof photo | Selectable root-folder photo (`PROOF`) | Foto proof |

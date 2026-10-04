@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { validateFieldValues } from "@/features/booking/domain/booking-field-value/booking-field-value";
 import { validateItemList } from "@/features/booking/domain/project-items/project-items";
+import { hasDuplicateMember } from "@/features/booking/domain/session-assignment/session-assignment";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { ProjectError } from "../../errors/project-errors/project-errors";
@@ -75,6 +76,10 @@ function snapshotFailure(
       return validationFailureOf({ clientId: "CLIENT_INACTIVE" });
     case "SERVICE_INACTIVE":
       return validationFailureOf({ serviceId: "SERVICE_INACTIVE" });
+    case "TEAM_INVALID":
+      return validationFailureOf({
+        [`sessions.${String(result.sessionIndex)}.team`]: "TEAM_INVALID",
+      });
     case "DEFINITION_INACTIVE":
       return validationFailureOf({
         [indexOfDefinition(input, result.definitionId, false)]: "DEFINITION_INACTIVE",
@@ -84,6 +89,15 @@ function snapshotFailure(
         [indexOfDefinition(input, result.definitionId, true)]: "DUPLICATE_DEFINITION",
       });
   }
+}
+
+/** AC-TEAM-028: a member picked twice for one session is refused before anything is written. */
+function duplicateTeamErrors(input: CreateProjectInput): Record<string, ProjectFieldErrorKey> {
+  return Object.fromEntries(
+    input.sessions.flatMap((session, index) =>
+      hasDuplicateMember(session.team) ? [[`sessions.${String(index)}.team`, "TEAM_INVALID"]] : [],
+    ),
+  );
 }
 
 /** Creates a project as a DRAFT or BOOKED snapshot of a service, reporting every validation problem at once (BR-PRJ-001, BR-PRJ-002, BR-PRJ-008). @param repository - project port @param generateToken - client access token generator @param context - verified workspace @param actorId - the Owner creating it @param input - untrusted form values @returns the new project id or the field errors */
@@ -109,6 +123,7 @@ export async function createProject(
   Object.assign(errors, itemCheck.errors);
   if (partial.mode === "BOOKED" && partial.sessions?.length === 0)
     errors.sessions = "SESSION_REQUIRED";
+  if (parsed.success) Object.assign(errors, duplicateTeamErrors(parsed.data));
   if (!parsed.success || Object.keys(errors).length > 0) return validationFailureOf(errors);
   const result = await repository.createSnapshot(context, {
     status: parsed.data.mode,

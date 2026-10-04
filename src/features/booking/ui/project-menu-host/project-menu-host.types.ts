@@ -20,6 +20,8 @@ export interface ProjectMenuTarget {
   readonly id: string;
   readonly title: string;
   readonly status: ProjectStatus;
+  /** D-14: passed on to the draft delete confirmation. */
+  readonly hasTeam?: boolean;
   readonly clientId: string;
   readonly clientName: string;
   readonly whatsappNumber: string | null;

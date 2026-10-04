@@ -184,6 +184,8 @@ export const projectSession = pgTable(
       { workspaceId: t.workspaceId, column: t.projectId },
       { workspaceId: project.workspaceId, id: project.id },
     ).onDelete("cascade"),
+    // F-08 D-3: the target of session_assignment's three-column FK.
+    unique("project_session_project_key_uq").on(t.workspaceId, t.projectId, t.id),
     index("project_session_order_ix").on(t.projectId, t.sessionDate, t.startTime, t.createdAt),
     check(
       "project_session_name_ck",

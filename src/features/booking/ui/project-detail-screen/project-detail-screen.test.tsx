@@ -61,6 +61,9 @@ function renderScreen(
       project={project}
       menuActions={menuActions(advance)}
       editActions={EDIT_ACTIONS}
+      assignableMembers={[]}
+      addAssignmentAction={vi.fn()}
+      removeAssignmentAction={vi.fn()}
       definitions={[]}
     />,
   );
@@ -104,6 +107,9 @@ describe("ProjectDetailScreen", () => {
           project={projectDetailView(status)}
           menuActions={menuActions(vi.fn())}
           editActions={EDIT_ACTIONS}
+          assignableMembers={[]}
+          addAssignmentAction={vi.fn()}
+          removeAssignmentAction={vi.fn()}
           definitions={[]}
         />,
       );

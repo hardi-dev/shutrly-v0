@@ -21,5 +21,6 @@ export const projectFieldErrorKeySchema = z
     "DUPLICATE_DEFINITION",
     "REASON_REQUIRED",
     "TO_BEFORE_FROM",
+    "TEAM_INVALID",
   ])
   .catch("INVALID");

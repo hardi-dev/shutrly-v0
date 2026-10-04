@@ -67,6 +67,62 @@ export const PROJECT_COPY = {
   sessionActions: (name: string) => `Aksi untuk sesi ${name}`,
   editSession: "Ubah",
   editSessionDetail: "Ubah sesi",
+  addTeam: "Tambah tim",
+  manageTeam: "Atur tim",
+  // not in Pencil: the accessible names of the team controls
+  addTeamFor: (session: string) => `Tambah tim untuk ${session}`,
+  teamGroupLabel: (session: string, count: number) => `Tim ${session}: ${String(count)} anggota`,
+  avatarTooltip: (name: string, role: string) => `${name} · ${role}`,
+  assignTitle: (session: string) => `Tambah anggota · ${session}`,
+  assignMember: "Anggota",
+  assignMemberHint: "Hanya anggota aktif yang belum ada di sesi ini.",
+  // not in Pencil: the empty member field's placeholder
+  assignMemberPlaceholder: "Pilih anggota",
+  assignRole: "Peran",
+  assignRolePlaceholder: "Pilih peran",
+  assignRoleHint: (name: string) => `Peran yang dimiliki ${name}.`,
+  assignSubmit: "Tambah",
+  assignSubmitting: "Menambahkan…",
+  assignCancel: "Batal",
+  assignEmptyTitle: "Belum ada anggota tim aktif",
+  assignEmptyBody: "Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini.",
+  assignEmptyAction: "Buka Tim",
+  assignedToastTitle: "Anggota ditambahkan",
+  assignedToastBody: (name: string, session: string, role: string) =>
+    `${name} bertugas di ${session} sebagai ${role}.`,
+  // not in Pencil: the assignment errors and the cancelled toast
+  assignErrors: {
+    ALREADY_ASSIGNED: (name: string) => `${name} sudah ada di sesi ini.`,
+    MEMBER_ARCHIVED: (name: string) => `${name} sudah diarsipkan.`,
+    ROLE_NOT_HELD: (name: string) => `${name} tidak punya peran ini lagi.`,
+  },
+  teamCancelledToast: "Proyek dibatalkan; tim tidak bisa diubah.",
+  // not in Pencil: the team field of the session dialog (AC-TEAM-028)
+  sessionTeamLabel: "Tim",
+  sessionTeamHint: "Pilih anggota dan perannya di sesi ini. Bisa diubah nanti lewat Atur tim.",
+  sessionTeamNone: "Belum ada anggota tim aktif. Tambahkan di halaman Tim dulu.",
+  sessionTeamMember: "Anggota tim",
+  sessionTeamRole: "Peran di sesi ini",
+  sessionTeamListLabel: "Tim sesi ini",
+  teamTitle: (session: string) => `Tim · ${session}`,
+  teamAddMember: "Tambah anggota",
+  teamDone: "Selesai",
+  teamClose: "Tutup",
+  teamCancelledNote: "Proyek dibatalkan, tim tidak bisa diubah.",
+  // not in Pencil: the list's accessible name and the archived marker after a name
+  teamListLabel: (session: string) => `Tim ${session}`,
+  teamArchivedMark: "(diarsipkan)",
+  teamRemoveLabel: "Hapus dari sesi",
+  removeAssignmentTitle: (name: string, session: string) => `Hapus ${name} dari ${session}?`,
+  removeAssignmentBody: (firstName: string) =>
+    `Penugasannya dihapus dari sesi ini. ${firstName} tetap ada di Tim.`,
+  removeAssignmentConfirm: "Hapus dari sesi",
+  // not in Pencil: the removal toast
+  removedToastTitle: "Anggota dihapus dari sesi",
+  removedToastBody: (name: string, session: string) => `${name} tidak lagi bertugas di ${session}.`,
+  deleteSessionTeamBody: (count: number) =>
+    `Sesi ini punya ${String(count)} anggota tim. Penugasan mereka ikut terhapus.`,
+  deleteDraftTeamNote: "Penugasan tim ikut terhapus.",
   deleteSession: "Hapus",
   fieldsTitle: "Field booking",
   fieldsDescription: (service: string) =>

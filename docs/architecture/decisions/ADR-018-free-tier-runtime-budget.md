@@ -46,8 +46,25 @@ Cost once every service is paid: about **$45/month** (Neon Launch with 0.25 CU a
 - **How:** `opennextjs-cloudflare build`, then `wrangler deploy` of the F-09 rework branch as a throwaway Worker `shutrly-cpu-check` (non-production secrets, deleted afterwards), and `wrangler tail --format json` for each request's `cpuTime`. Wrangler 4.141.0.
 - **Result, `GET /login` (a page with no session and no database):** 20 requests, CPU **22–43 ms on 9 of them, 356–1,007 ms on the other 11** (median 356 ms). `GET /robots.txt` (a redirect from the middleware): 2, 4 and 45 ms.
 - **Reading:** the Workers Free limit is 10 ms CPU per request, and even the best `/login` request used more than twice that. The high values look like cold isolates paying for the bundle's start-up. Every request returned HTTP 200, so the account these were deployed to did not enforce the Free limit (it is probably on a paid plan; the dashboard shows which). The numbers therefore show the cost of **Next.js on OpenNext itself**, before any F-09 code runs; they say nothing against the gallery sync.
-- **Not measured:** authenticated pages, the gallery page, a sync step and a browse page. They need a signed-in session on a public preview, which the author did not enter (credentials go only into localhost). The local proxy of one sync step (3–5 ms for 1,000–3,000 entries) stays a lower bound.
-- **Consequence:** point 2 applies. A new ADR must choose between Workers Paid, another host (Cloud Run is the candidate named above) and trimming the app's own start-up and render cost, and the Owner decides. Until then the free-tier plan can't be called proven.
+- **Second round, signed-in paths (2026-10-05).** A second throwaway Worker, the Owner signed in themselves with a named test account, and the gallery flow was driven in the in-app browser against the real Drive folder (113 photos). `wrangler tail` `cpuTime`, one sample each (a cold or warm isolate is not controlled):
+
+  | Path | CPU | Wall |
+  |---|---|---|
+  | `POST /login` | 444 ms | 785 ms |
+  | Projects list page (document) | 631 ms | 729 ms |
+  | Project page (document) | 354 ms | 430 ms |
+  | Client navigation (RSC) between pages | 6–60 ms | 6–240 ms |
+  | Propose password (open *Buat galeri*) | 27 ms | 101 ms |
+  | Create gallery | 184 ms | 366 ms |
+  | Check folder link | 17 ms | 94 ms |
+  | Link folder | 144 ms | 330 ms |
+  | Sync, 113 photos in one step (1 Drive list call) | 102 ms | 1,085 ms |
+  | Re-sync, same folder (one step, nothing changed) | 173 ms | 1,396 ms |
+  | *Lihat semua foto* (browse) | 365 ms | 582 ms |
+
+  Every request returned HTTP 200, so the account does not enforce the Free limit. **Every measured server path used more than 10 ms CPU; the smallest, the check of a folder link, used 17 ms.** The sync step itself (102–173 ms) is 10–17 times the limit, and a normal gallery visit is dominated by the Next.js render, not by the gallery code.
+- **A separate defect found on the way:** `POST /reset-password` hung for about 550 seconds (CPU 176 ms, wall 549,628 ms, outcome `canceled` once the browser tab was closed), so the form stayed on *Menyimpan…*. The earlier requests in the same Worker logged `Network connection lost`. It is not part of this ADR's question but affects any Workers deployment.
+- **Consequence:** point 2 applies, now for the gallery too. The Owner chose to keep trying for the free plan on 2026-10-05; the numbers say it needs far more than tuning (about 10× on a sync step, 35–60× on page renders). A new ADR must choose between Workers Paid, another host (Cloud Run is the candidate named above) and a deep cut of the app's own render and start-up cost, and the Owner decides.
 
 ## Alternatives considered
 - **Workers Paid from the start ($5/month):** removes the CPU and subrequest risk at once. Rejected for now by the Owner (free only).

@@ -26,9 +26,12 @@ export function visibleText(page: Page, text: string) {
   return page.getByText(text).filter({ visible: true }).first();
 }
 
-/** Registers an Owner, creates a workspace with client *Rina* and service *Wisuda Basic*. @returns the workspace id */
-export async function openGalleryWorkspace(page: Page): Promise<string> {
-  await registerAndVerify(page, uniqueEmail("gallery"));
+/** Registers an Owner, creates a workspace with client *Rina* and service *Wisuda Basic*. @param email - the Owner's email, unique per run by default @returns the workspace id */
+export async function openGalleryWorkspace(
+  page: Page,
+  email: string = uniqueEmail("gallery"),
+): Promise<string> {
+  await registerAndVerify(page, email);
   await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Gallery Studio");
   await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);

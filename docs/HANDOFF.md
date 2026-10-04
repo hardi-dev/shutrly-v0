@@ -28,6 +28,8 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 
 ## Open gaps (deferred)
 
+- **Free hosting (Owner 2026-10-05):** [ADR-018](architecture/decisions/ADR-018-free-tier-runtime-budget.md) and [ADR-019](architecture/decisions/ADR-019-gallery-media-and-sync-on-free-tier.md) are `Proposed`. They need Owner acceptance, a CPU check on a free Workers preview, and an F-09 rework plan. ADR-019 also needs a decision on C-103 / AC-GAL-015 (media straight from Google).
+- **Pricing (draft):** [product/pricing-and-costs.md](product/pricing-and-costs.md) lists costs, the Fastpik comparison and open business questions to discuss.
 - GAP-01 dark-mode evidence
 - GAP-02 loading states (button, switch) and states beyond those drawn
 - GAP-03 workspace brand-override rules

@@ -51,6 +51,7 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 
 ## Deployment
 - Cloudflare; preview deployment per git branch, all previews share the non-production Neon database
+- **Plan (proposed, Owner 2026-10-05):** free plans of Workers, Neon and Resend, with a CPU check before ship and upgrade triggers ([ADR-018](decisions/ADR-018-free-tier-runtime-budget.md), Proposed)
 - Two Neon databases only: **production** and one shared **non-production** (dev, CI, previews)
 - Migrations run from `main` via CI only; preview deploys never migrate the shared database
   - **Interim (Owner 2026-09-26, until CI exists):** the Owner runs `pnpm db:migrate` by hand from a clean, up-to-date `main` checkout.

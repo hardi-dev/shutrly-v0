@@ -14,7 +14,7 @@
 - [design.md](design.md) and [exports/INDEX.md](exports/INDEX.md), which points to the raw HTML export of each state (`<state>-<device>-<frameId>.html`);
 - component specs in `docs/design-system/components/` (`photo-tile`, `folder-tile`, `media-viewer`, `modal`).
 
-**Free-tier rework (2026-10-05).** Slices 0–8 are built and on `main`. The Owner accepted [ADR-018](../../architecture/decisions/ADR-018-free-tier-runtime-budget.md) and [ADR-019](../../architecture/decisions/ADR-019-gallery-media-and-sync-on-free-tier.md), so slices **R1–R5** below rework sync, media and the content version for Workers Free. They run on `feat/gallery-free-tier`. Technical design decisions D-7…D-10 and D-19 are amended, and D-20…D-27 are new. The Owner's go-ahead is still open for the free-preview CPU measurement (R5).
+**Free-tier rework (2026-10-05).** Slices 0–8 are built and on `main`. The Owner accepted [ADR-018](../../architecture/decisions/ADR-018-free-tier-runtime-budget.md) and [ADR-019](../../architecture/decisions/ADR-019-gallery-media-and-sync-on-free-tier.md), so slices **R1–R5** below rework sync, media and the content version for Workers Free. They run on `feat/gallery-free-tier`. Technical design decisions D-7…D-10 and D-19 are amended, and D-20…D-27 are new. The Owner allowed the free-preview CPU measurement (R5) and dropping `gallery_photo.last_seen_at` in migration `0013` (2026-10-05).
 
 ## Global constraints (every slice)
 
@@ -384,7 +384,7 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 **Steps:**
 - [ ] Spike: extend `scripts/gallery/drive-spike.ts` to fetch `https://lh3.googleusercontent.com/d/<fileId>=w600` for a photo of the Owner's public test folder with no key and no referrer, then the same for a file that has a resource key if the Owner has one. Record status, content type and size in technical-design.md › R-7.
   - **Stop:** if `lh3` fails, report to the Owner before R3; ADR-019 point 3 rests on it. R1 and R2 do not depend on it.
-- [ ] Schema: add `content_version`, `sync_cursor`, `sync_lease_at` and the `last_seen_at` default to `gallery.ts`; generate the migration with drizzle-kit, review that it is additive, commit it, then apply it to the non-production database with the project's migrate script and report the run. Integration test for the new check and defaults.
+- [ ] Schema: add `content_version`, `sync_cursor` and `sync_lease_at`, and drop `last_seen_at`, in `gallery.ts` (the drop is Owner-approved, 2026-10-05; report it with the run); generate the migration with drizzle-kit, review that it is additive, commit it, then apply it to the non-production database with the project's migrate script and report the run. Integration test for the new check and defaults.
 - [ ] Domain: constants `SYNC_STEP_MAX_LIST_CALLS`, `SYNC_STEP_MAX_ENTRIES`, `MAX_SYNC_PHOTOS` (replace `SYNC_LIMITS`), the cursor type, `startCursor` and `walkStep` in `sync-plan`. Keep `walkFolderTree` until R2 removes it. Unit tests: a 95-folder fake tree takes 3 steps and gives the same photos as one pass, the budget stops at 40 calls and at the entry cap, a folder page token resumes, the depth and shortcut rules still hold, and `TOO_LARGE` at the photo cap.
 - [ ] Cursor Zod schema in `application/schemas/sync-cursor`, with unit tests for a bad shape.
 
@@ -469,8 +469,8 @@ Also `proyek / *` states `proyek-toast-galeri-draf-dihapus` and `proyek-detail-p
 
 **Steps:**
 - [ ] Re-run the axe and keyboard specs on the surfaces R2 and R3 touched; extend the real-Drive smoke spec to check that a tile's image URL is a Google URL and loads.
-- [ ] **Stop and ask the Owner** for the go-ahead to deploy a preview to a free Cloudflare account. With it: deploy, then read CPU time per request (`wrangler tail` or the dashboard) for login, the project page, the gallery page, one sync step of the real 113-photo folder and one browse page. Record the numbers in ADR-018 and technical-design.md › R-6, and tune `SYNC_STEP_MAX_ENTRIES`. Any path over 10 ms: stop and report; ADR-018 point 2 needs a new ADR.
-- [ ] Update `docs/HANDOFF.md` (rework done, the follow-up migration that drops `gallery_photo.last_seen_at`, retention cleanup still deferred) and the feature map; run `/sdv:verify-feature gallery`.
+- [ ] Deploy a preview to the free Cloudflare account that is signed in from the terminal (Owner allowed it, 2026-10-05): create a new Workers project, or reuse an existing one if that is refused. Use the non-production secrets only, and remove nothing that exists. Then read CPU time per request (`wrangler tail` or the dashboard) for login, the project page, the gallery page, one sync step of the real 113-photo folder and one browse page. Record the numbers in ADR-018 and technical-design.md › R-6, and tune `SYNC_STEP_MAX_ENTRIES`. Any path over 10 ms: stop and report; ADR-018 point 2 needs a new ADR.
+- [ ] Update `docs/HANDOFF.md` (rework done, retention cleanup still deferred) and the feature map; run `/sdv:verify-feature gallery`.
 - [ ] Push `feat/gallery-free-tier` and open a PR to `main`.
 
 ## AC index

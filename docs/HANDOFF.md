@@ -7,7 +7,7 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 
 ## Current handoff — F-09 free-tier rework PLANNED (2026-10-05)
 
-- **Next:** `/sdv:build-feature gallery R1` (spike, schema, step walker), then R2–R5 in [plan.md](features/gallery/plan.md). The Owner accepted ADR-018 and ADR-019 and the media trade-off (constitution v1.2, BR-ACC-005, BR-SRC-003, AC-GAL-015 amended; new AC-GAL-032…036). **Still open for the Owner:** go-ahead to deploy a preview to a free Cloudflare account for the CPU check (R5).
+- **Next:** `/sdv:build-feature gallery R1` (spike, schema, step walker), then R2–R5 in [plan.md](features/gallery/plan.md). The Owner accepted ADR-018 and ADR-019 and the media trade-off (constitution v1.2, BR-ACC-005, BR-SRC-003, AC-GAL-015 amended; new AC-GAL-032…036). **Owner allowed (2026-10-05):** the CPU check on a free Cloudflare preview (R5; new Workers project, or an existing one) and dropping `gallery_photo.last_seen_at` in `0013`.
 - **F-09 before the rework:** the block below, still true for `main`.
 
 ### F-09 Gallery DONE on `main`, pending Owner acceptance
@@ -33,7 +33,7 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 
 ## Open gaps (deferred)
 
-- **Free hosting (Owner 2026-10-05):** [ADR-018](architecture/decisions/ADR-018-free-tier-runtime-budget.md) and [ADR-019](architecture/decisions/ADR-019-gallery-media-and-sync-on-free-tier.md) are `Accepted`; the F-09 rework is planned (slices R1–R5). Left: the CPU check on a free Workers preview (needs the Owner's go-ahead), and a later migration that drops `gallery_photo.last_seen_at`.
+- **Free hosting (Owner 2026-10-05):** [ADR-018](architecture/decisions/ADR-018-free-tier-runtime-budget.md) and [ADR-019](architecture/decisions/ADR-019-gallery-media-and-sync-on-free-tier.md) are `Accepted`; the F-09 rework is planned (slices R1–R5). Left: the CPU check on a free Workers preview (allowed, R5).
 - **Pricing (draft):** [product/pricing-and-costs.md](product/pricing-and-costs.md) lists costs, the Fastpik comparison and open business questions to discuss.
 - GAP-01 dark-mode evidence
 - GAP-02 loading states (button, switch) and states beyond those drawn

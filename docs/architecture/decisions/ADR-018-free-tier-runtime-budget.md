@@ -1,6 +1,6 @@
 # ADR-018: Run on the free tiers of Cloudflare Workers, Neon and Resend
 
-Status: Accepted (Owner, 2026-10-05). Point 2, the CPU measurement on a free Workers preview, is still to do and needs the Owner's go-ahead to deploy.
+Status: Accepted (Owner, 2026-10-05). Point 2, the CPU measurement on a free Workers preview, is still to do; the Owner allowed the deploy (2026-10-05).
 Date: 2026-10-05
 Amends: [ADR-008](ADR-008-cloudflare-runtime.md) (adds the plan the runtime must fit), [ADR-011](ADR-011-resend-transactional-email.md) (adds the email budget)
 

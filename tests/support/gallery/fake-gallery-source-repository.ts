@@ -5,12 +5,13 @@ import type {
   LockedGalleryState,
   NewGallerySource,
   SyncClaim,
-  SyncSuccess,
+  SyncStepResult,
 } from "@/features/gallery/application/ports/gallery-source-repository/gallery-source-repository.port";
 import type {
   SyncedPhoto,
   SyncFailureCode,
 } from "@/features/gallery/domain/sync-plan/sync-plan.types";
+import type { SyncCursor } from "@/features/gallery/domain/sync-step/sync-step.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 export interface FakeSource extends NewGallerySource {
@@ -21,6 +22,8 @@ export interface FakeSource extends NewGallerySource {
   syncStatus: string;
   syncErrorCode: SyncFailureCode | null;
   startedAt: Date | null;
+  leaseAt: Date | null;
+  cursor: SyncCursor | null;
   folderName: string | null;
 }
 
@@ -43,6 +46,8 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
   readonly activeWorkspaceSources = new Set<string>();
   readonly sources: FakeSource[] = [];
   readonly photos: FakePhoto[] = [];
+  /** Photo rows a step wrote (inserted or changed): an unchanged photo adds none (D-21). */
+  photoWrites = 0;
   readonly otherProjectFolders = new Map<string, string[]>();
   private next = 0;
 
@@ -142,6 +147,8 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
           syncStatus: "NEVER",
           syncErrorCode: null,
           startedAt: null,
+          leaseAt: null,
+          cursor: null,
           folderName: null,
         });
         return { sourceId: id };
@@ -169,47 +176,89 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
       galleryId: source.galleryId,
       folder: source.folder,
       removed: source.removed,
+      runOpen: source.syncStatus === "SYNCING",
       gallery,
     };
   }
 
-  async claimSync(
+  async claimStep(
     context: WorkspaceContext,
     sourceId: string,
     now: Date,
   ): Promise<SyncClaim | null> {
     const source = this.source(context, sourceId);
-    if (!source || source.syncStatus === "SYNCING") return null;
-    source.syncStatus = "SYNCING";
-    source.startedAt = now;
-    return { sourceId, startedAt: now };
+    if (!source || source.removed) return null;
+    const leaseHeld =
+      source.leaseAt !== null && now.getTime() - source.leaseAt.getTime() < LEASE_MS;
+    if (source.syncStatus === "SYNCING" && leaseHeld) return null;
+    if (source.syncStatus !== "SYNCING") {
+      Object.assign(source, { syncStatus: "SYNCING", startedAt: now, cursor: null });
+    }
+    source.leaseAt = now;
+    return { sourceId, startedAt: source.startedAt ?? now, leaseAt: now, cursor: source.cursor };
   }
 
-  async completeSync(context: WorkspaceContext, claim: SyncClaim, result: SyncSuccess) {
-    const source = this.source(context, claim.sourceId);
-    if (!source || source.removed) return false;
-    const seen = new Set(result.photos.map((photo) => photo.externalFileId));
-    for (const photo of this.photos.filter((row) => row.sourceId === source.id)) {
-      photo.missing = !seen.has(photo.externalFileId);
-    }
-    for (const photo of result.photos) {
+  private writePhotos(sourceId: string, photos: readonly SyncedPhoto[]) {
+    for (const photo of photos) {
       const existing = this.photos.find(
-        (row) => row.sourceId === source.id && row.externalFileId === photo.externalFileId,
+        (row) => row.sourceId === sourceId && row.externalFileId === photo.externalFileId,
       );
-      if (existing) Object.assign(existing, photo, { missing: false });
-      else this.photos.push({ ...photo, sourceId: source.id, missing: false });
+      if (!existing) {
+        this.photos.push({ ...photo, sourceId, missing: false });
+        this.photoWrites += 1;
+      } else if (changed(existing, photo)) {
+        Object.assign(existing, photo, { missing: false });
+        this.photoWrites += 1;
+      }
+    }
+  }
+
+  async commitStep(context: WorkspaceContext, claim: SyncClaim, step: SyncStepResult) {
+    const source = this.source(context, claim.sourceId);
+    if (!source || source.removed || source.leaseAt?.getTime() !== claim.leaseAt.getTime()) {
+      return false;
+    }
+    this.writePhotos(source.id, step.photos);
+    if (!step.done) {
+      Object.assign(source, { cursor: step.cursor, leaseAt: null });
+      return true;
+    }
+    const seen = new Set(step.cursor.seen);
+    for (const photo of this.photos.filter((row) => row.sourceId === source.id)) {
+      if (!seen.has(photo.externalFileId)) photo.missing = true;
     }
     Object.assign(source, {
       syncStatus: "SUCCEEDED",
       syncErrorCode: null,
-      folderName: result.folderName,
+      folderName: step.cursor.folderName,
+      cursor: null,
+      leaseAt: null,
     });
     return true;
   }
 
-  async failSync(context: WorkspaceContext, claim: SyncClaim, code: SyncFailureCode) {
-    const source = this.source(context, claim.sourceId);
-    if (source) Object.assign(source, { syncStatus: "FAILED", syncErrorCode: code });
+  async failRun(context: WorkspaceContext, _claim: SyncClaim, code: SyncFailureCode) {
+    const source = this.source(context, _claim.sourceId);
+    if (source) {
+      Object.assign(source, {
+        syncStatus: "FAILED",
+        syncErrorCode: code,
+        cursor: null,
+        leaseAt: null,
+      });
+    }
   }
+}
+
+const LEASE_MS = 2 * 60 * 1000;
+
+function changed(existing: FakePhoto, photo: SyncedPhoto): boolean {
+  return (
+    existing.missing ||
+    existing.fileName !== photo.fileName ||
+    existing.kind !== photo.kind ||
+    existing.folderPath !== photo.folderPath ||
+    existing.browsePath !== photo.browsePath
+  );
 }
 /* eslint-enable @typescript-eslint/require-await -- end of the fake */

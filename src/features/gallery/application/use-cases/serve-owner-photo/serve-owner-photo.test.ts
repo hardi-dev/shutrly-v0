@@ -21,6 +21,7 @@ function setup(missing = false) {
     sourceId: "s-1",
     sourceName: "Rina-Wisuda",
     externalFileId: "file-IMG_001.jpg",
+    provider: "GOOGLE_DRIVE",
     resourceKey: null,
     missing,
   });

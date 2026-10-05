@@ -5,6 +5,7 @@ import type {
   GalleryStoredStatus,
 } from "@/features/gallery/domain/gallery-status/gallery-status.types";
 import type { PhotoKind } from "@/features/gallery/domain/photo-classification/photo-classification.types";
+import type { SourceProvider } from "@/features/gallery/domain/source-provider/source-provider.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { EncryptedPassword } from "../gallery-password-cipher/gallery-password-cipher.port";
@@ -92,6 +93,8 @@ export interface GalleryPhotoRecord {
   readonly sourceId: string;
   readonly sourceName: string | null;
   readonly externalFileId: string;
+  /** The photo's storage provider, from its workspace source (BR-SRC-001). */
+  readonly provider: SourceProvider;
   readonly resourceKey: string | null;
   readonly missing: boolean;
 }

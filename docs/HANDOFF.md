@@ -1,11 +1,16 @@
 # Handoff — Shutrly
 
 Last updated: 2026-10-05 (F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `claude/new-feature-skill-start-a92e1b` (F-09 gallery, worktree). F-07 is on `feat/projects`; F-08 Team designed on `feat/team-sessions`.
+Branch: `feat/gallery-free-tier` (F-09 free-tier rework, worktree `.claude/worktrees/gallery-free-tier`). F-07 is on `feat/projects`; F-08 Team designed on `feat/team-sessions`.
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-09 Gallery DONE, pending Owner acceptance (2026-10-05)
+## Current handoff — F-09 free-tier rework PLANNED (2026-10-05)
+
+- **Done:** R1–R4 and the checks of R5 (see [plan.md](features/gallery/plan.md)). **Next:** mark PR #8 ready and merge (verified and shipped-checked 2026-10-05: [report](features/gallery/verification-report.md), [release notes](features/gallery/release-notes.md)); production needs the two secrets and migrations `0013`/`0014`, then `/sdv:handoff`. The CPU measurement (ADR-018 › Measurement) found every path far over the documented 10 ms but no request refused on a Workers Free account; the Owner decided on 2026-10-05 to go on with Workers Free and watch for CPU errors (upgrade trigger in ADR-018 point 4). `SYNC_STEP_MAX_ENTRIES` is now 1,000, derived from the measurements (gallery technical design, R-6). The Owner accepted ADR-018 and ADR-019 and the media trade-off (constitution v1.2, BR-ACC-005, BR-SRC-003, AC-GAL-015 amended; new AC-GAL-032…036). **Owner allowed (2026-10-05):** the CPU check on a free Cloudflare preview (R5; new Workers project, or an existing one); done 2026-10-05 and failed on the first path (see above). The `last_seen_at` drop is done (`0014`).
+- **F-09 before the rework:** the block below, still true for `main`.
+
+### F-09 Gallery DONE on `main`, pending Owner acceptance
 
 - **State:** F-09 Gallery `DONE` (pending Owner acceptance). Branch `claude/new-feature-skill-start-a92e1b` (worktree), `origin/main` (F-08) merged, not pushed, no PR. Only the generated `docs/design-system/pencil-variables.json` is untracked.
 - **Done:** Slices 0–8 of the [plan](features/gallery/plan.md), each with an implementation record. Slice 0 spike on the Owner's public folder closed R-1/R-2 ([technical design › Risks](features/gallery/technical-design.md)). Slice 8: isolation test, browser pass with axe, copy audit of all 100 exports, and the real-Drive smoke E2E (`gallery-drive-smoke.spec.ts`, axe and keyboard on every surface). Migration `0012_gallery` applied to the non-production DB.
@@ -20,6 +25,8 @@ History (previous handoffs, early status table, component-library notes): [HANDO
   - Flaky E2E: catalog phone axe (timeout) and AC-SRC-015, both pass on retry.
 - **Next:** `/sdv:verify-feature gallery` for the independent review, then `/sdv:ship`.
 
+- **Local test account:** `scripts/dev/show-test-owner.sh [--reveal]` prints the named test Owner kept in the git-ignored `.env.test` (`TEST_OWNER_EMAIL`, `TEST_OWNER_PASSWORD`). It has a workspace, a client, a service and a booked project with a gallery of the Owner's 113-photo folder.
+
 ## Key decisions (Owner)
 
 - Design-system decisions from sessions 1–4 (2026-09-26) are in the [archive](HANDOFF-archive.md); the approved values live in `docs/design-system/`.
@@ -28,7 +35,8 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 
 ## Open gaps (deferred)
 
-- **Free hosting (Owner 2026-10-05):** [ADR-018](architecture/decisions/ADR-018-free-tier-runtime-budget.md) and [ADR-019](architecture/decisions/ADR-019-gallery-media-and-sync-on-free-tier.md) are `Proposed`. They need Owner acceptance, a CPU check on a free Workers preview, and an F-09 rework plan. ADR-019 also needs a decision on C-103 / AC-GAL-015 (media straight from Google).
+- **Free hosting (Owner 2026-10-05):** [ADR-018](architecture/decisions/ADR-018-free-tier-runtime-budget.md) and [ADR-019](architecture/decisions/ADR-019-gallery-media-and-sync-on-free-tier.md) are `Accepted`; the F-09 rework is planned (slices R1–R5). The CPU check ran and failed: a new ADR must choose Workers Paid, another host, or a lighter start-up.
+- **Open findings** live in [findings/](findings/README.md), not here (the handoff is archived per feature).
 - **Pricing (draft):** [product/pricing-and-costs.md](product/pricing-and-costs.md) lists costs, the Fastpik comparison and open business questions to discuss.
 - GAP-01 dark-mode evidence
 - GAP-02 loading states (button, switch) and states beyond those drawn

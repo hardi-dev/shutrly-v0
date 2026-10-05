@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { stubViewport } from "@tests/support/gallery/viewport";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -15,6 +15,8 @@ function photo(index: number, missing = false) {
     sourceId: "s-1",
     sourceName: "Rina-Wisuda",
     missing,
+    externalFileId: "1AbCdEfGhIjKlMnOp",
+    provider: "GOOGLE_DRIVE" as const,
     driveUrl: missing ? null : "https://drive.google.com/file/d/x/view",
   };
 }
@@ -34,6 +36,7 @@ const PAGE = {
   },
   sources: [],
   linkableSources: [],
+  directImages: false,
   previewPhotos: Array.from({ length: 8 }, (_, index) => photo(index + 1, index === 1)),
 };
 
@@ -52,6 +55,25 @@ describe("GalleryPhotosSection", () => {
     ).toBeInTheDocument();
     expect(container.querySelectorAll("img")).toHaveLength(8);
     expect(screen.getByText("Hilang")).toBeInTheDocument();
+  });
+
+  it("AC-GAL-015 loads thumbnails from Google by file ID, with the Owner endpoint as fallback", () => {
+    const { container } = render(
+      <GalleryPhotosSection
+        workspaceId="ws-1"
+        page={{ ...PAGE, directImages: true }}
+        browseAction={vi.fn()}
+      />,
+    );
+    const image = container.querySelector("img");
+    expect(image?.getAttribute("src")).toBe(
+      "https://lh3.googleusercontent.com/d/1AbCdEfGhIjKlMnOp=w600",
+    );
+    expect(image).toHaveAttribute("referrerpolicy", "no-referrer");
+    fireEvent.error(image as HTMLImageElement);
+    expect(container.querySelector("img")?.getAttribute("src")).toMatch(
+      /^\/api\/w\/ws-1\/gallery-photos\/[^/]+\/thumb$/,
+    );
   });
 
   it("AC-GAL-015 loads thumbnails only from the Owner endpoint", () => {

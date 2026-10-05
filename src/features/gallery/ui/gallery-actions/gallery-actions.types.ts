@@ -10,7 +10,7 @@ import type {
   PublishResult,
 } from "@/features/gallery/application/use-cases/gallery-results/gallery-results.types";
 import type { LinkGallerySourceResult } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source.types";
-import type { SyncOutcome } from "@/features/gallery/application/use-cases/sync-gallery-source/sync-gallery-source.types";
+import type { SyncStepOutcome } from "@/features/gallery/application/use-cases/sync-gallery-source-step/sync-gallery-source-step.types";
 
 import type { ProposePasswordAction } from "../use-create-gallery-form/use-create-gallery-form.types";
 
@@ -27,7 +27,7 @@ export interface GalleryPageActions {
     galleryId: string,
     values: LinkGallerySourceInput,
   ) => Promise<LinkGallerySourceResult>;
-  readonly syncSourceAction: (workspaceId: string, sourceId: string) => Promise<SyncOutcome>;
+  readonly syncSourceAction: (workspaceId: string, sourceId: string) => Promise<SyncStepOutcome>;
   readonly publishAction: (workspaceId: string, galleryId: string) => Promise<PublishResult>;
   readonly setExpiryAction: (
     workspaceId: string,

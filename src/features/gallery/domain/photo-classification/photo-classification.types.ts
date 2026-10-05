@@ -5,8 +5,3 @@ export interface PhotoPlacement {
   /** The folder path with the deciding `edited` / `print` segment folded away (Main flow 5). */
   readonly browsePath: string;
 }
-
-export interface SyncLimits {
-  readonly maxListCalls: number;
-  readonly maxPhotos: number;
-}

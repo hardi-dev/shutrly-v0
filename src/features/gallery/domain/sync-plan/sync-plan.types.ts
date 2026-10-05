@@ -34,12 +34,3 @@ export interface SyncedPhoto {
   readonly folderPath: string;
   readonly browsePath: string;
 }
-
-export type TreeWalk =
-  | {
-      readonly ok: true;
-      readonly photos: readonly SyncedPhoto[];
-      readonly ignoredCount: number;
-      readonly tooDeepCount: number;
-    }
-  | { readonly ok: false; readonly code: SyncFailureCode };

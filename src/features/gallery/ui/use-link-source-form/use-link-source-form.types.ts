@@ -9,7 +9,7 @@ export interface UseLinkSourceFormInput {
   readonly linkableSources: readonly LinkableSourceView[];
   readonly checkFolderAction: GalleryPageActions["checkFolderAction"];
   readonly linkSourceAction: GalleryPageActions["linkSourceAction"];
-  readonly onLinked: () => void;
+  readonly onLinked: (sourceId: string) => void;
 }
 
 // The values waiting for *Tetap tambahkan* and the projects already using the folder.

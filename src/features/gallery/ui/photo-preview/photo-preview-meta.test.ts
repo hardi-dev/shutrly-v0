@@ -11,6 +11,8 @@ const PHOTO = {
   sourceId: "s",
   sourceName: "Rina-Wisuda",
   missing: false,
+  externalFileId: "1AbCdEfGhIjKlMnOp",
+  provider: "GOOGLE_DRIVE" as const,
   driveUrl: "https://drive.google.com/file/d/x/view",
 };
 

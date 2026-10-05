@@ -1,0 +1,1 @@
+ALTER TABLE "gallery_photo" DROP COLUMN "last_seen_at";

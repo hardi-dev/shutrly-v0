@@ -140,6 +140,10 @@ export const GALLERY_COPY = {
     ARCHIVED: "Arsip",
   },
   sourceSyncing: "Menyinkronkan…",
+  // Not in Pencil: the running row only adds how far the steps have come (TD D-9).
+  sourceSyncProgress: (done: number, total: number) =>
+    `Menyinkronkan… ${String(done)} dari ${String(total)} folder`,
+  syncStopped: "Sinkronisasi berhenti sebelum selesai.", // not in Pencil: the step loop hit its cap
   sourceQueued: "Menunggu giliran…",
   sourceNever: "Belum disinkronkan", // not in Pencil
   sourceRemovedAt: (when: string, photos: number) =>
@@ -266,6 +270,7 @@ export const GALLERY_COPY = {
       : `· ${String(photos)} foto`,
   folderCount: (count: number) => `${String(count)} foto`,
   searchLabel: "Cari nama file",
+  clearSearch: "Hapus pencarian",
   searchSummary: (count: number, text: string) => `${String(count)} foto cocok dengan “${text}”`,
   searchEmptyTitle: (text: string) => `Tidak ada foto bernama “${text}”`,
   searchEmptyBody:

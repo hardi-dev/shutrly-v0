@@ -81,6 +81,7 @@ function TextFieldInput({
   iconLeadingAction,
   iconTrailing,
   iconTrailingAction,
+  keepTrailingOnError,
   shortcut,
   name,
   value,
@@ -102,8 +103,8 @@ function TextFieldInput({
       prefix={prefix}
       iconLeading={iconLeading}
       iconLeadingAction={iconLeadingAction}
-      iconTrailing={isInvalid ? "circle-alert" : iconTrailing}
-      iconTrailingAction={isInvalid ? undefined : iconTrailingAction}
+      iconTrailing={isInvalid && !keepTrailingOnError ? "circle-alert" : iconTrailing}
+      iconTrailingAction={isInvalid && !keepTrailingOnError ? undefined : iconTrailingAction}
       shortcut={shortcut}
     />
   );

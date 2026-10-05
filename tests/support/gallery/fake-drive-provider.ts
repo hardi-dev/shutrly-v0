@@ -26,6 +26,8 @@ export class FakeDriveProvider implements GallerySourceProviderPort {
   readonly tree = new Map<string, FolderEntry[]>();
   readonly names = new Map<string, string>();
   readonly failures = new Map<string, ProviderFailureCode>();
+  /** Every `listFolder` call, so a test can count the Drive subrequests of one step. */
+  listCalls = 0;
 
   /** Seeds the AC-GAL-005 fixture *Rina-Wisuda* plus a second folder with `IMG_003.jpg`. */
   static withFixture(): FakeDriveProvider {
@@ -64,6 +66,7 @@ export class FakeDriveProvider implements GallerySourceProviderPort {
   };
 
   listFolder: GallerySourceProviderPort["listFolder"] = (folder) => {
+    this.listCalls += 1;
     const failure = this.failures.get(folder.folderId);
     if (failure) return Promise.resolve({ ok: false, code: failure });
     return Promise.resolve({

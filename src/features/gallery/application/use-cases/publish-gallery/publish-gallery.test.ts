@@ -2,7 +2,7 @@ import { RINA_FOLDER_ID, SECOND_FOLDER_ID } from "@tests/support/gallery/fake-dr
 import { OTHER_WORKSPACE, OWNER_ID, WORKSPACE } from "@tests/support/gallery/gallery-fixtures";
 import { BOTH_FOLDERS, lifecycleSetup } from "@tests/support/gallery/lifecycle-fixtures";
 import { GALLERY_ID } from "@tests/support/gallery/source-fixtures";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { publishGallery } from "./publish-gallery";
 
@@ -43,6 +43,13 @@ describe("publishGallery", () => {
     const { deps, provider } = await lifecycleSetup({}, BOTH_FOLDERS);
     provider.failures.set(SECOND_FOLDER_ID, "NOT_PUBLIC");
     expect(await publishGallery(deps, WORKSPACE, OWNER_ID, GALLERY_ID)).toEqual({ ok: true });
+  });
+
+  it("D-25 stops checking folders at the first accessible one", async () => {
+    const { deps, provider } = await lifecycleSetup({}, BOTH_FOLDERS);
+    const getFolder = vi.spyOn(provider, "getFolder");
+    expect(await publishGallery(deps, WORKSPACE, OWNER_ID, GALLERY_ID)).toEqual({ ok: true });
+    expect(getFolder).toHaveBeenCalledTimes(1);
   });
 
   it("AC-GAL-022 AC-GAL-024 refuses a published gallery or a cancelled project", async () => {

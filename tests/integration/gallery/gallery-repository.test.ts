@@ -7,7 +7,7 @@ import { createWebCryptoGalleryPasswordCipher } from "@/adapters/crypto/gallery-
 import { createBetterAuthPasswordHasher } from "@/adapters/crypto/password-hasher/better-auth-password-hasher";
 import type { Db } from "@/adapters/db/client/client.types";
 import { createDrizzleGalleryRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-repository";
-import { gallery, gallerySource } from "@/adapters/db/schema/gallery/gallery";
+import { gallery, galleryPhoto, gallerySource } from "@/adapters/db/schema/gallery/gallery";
 import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { getGalleryCard } from "@/features/gallery/application/use-cases/get-gallery-card/get-gallery-card";
 import { getGalleryPage } from "@/features/gallery/application/use-cases/get-gallery-page/get-gallery-page";
@@ -133,6 +133,48 @@ describe("drizzle gallery repository", () => {
     ).rejects.toThrow();
     await expect(db.insert(gallery).values({ ...base, publishedAt: new Date() })).rejects.toThrow();
     await expect(db.insert(gallery).values({ ...base, expiryDays: 0 })).rejects.toThrow();
+  });
+
+  it("D-20 D-21 D-24 a gallery starts at content version 1 and a source has no open run", async () => {
+    const seed = await seedGalleryWorkspace(db);
+    const created = await createGallery(
+      deps(),
+      seed.context,
+      seed.ownerId,
+      seed.bookedProjectId,
+      VALUES,
+    );
+    if (!created.ok) throw new Error("create failed");
+    const [row] = await db.select().from(gallery).where(eq(gallery.id, created.galleryId));
+    expect(row.contentVersion).toBe(1);
+    await expect(
+      db.update(gallery).set({ contentVersion: 0 }).where(eq(gallery.id, created.galleryId)),
+    ).rejects.toThrow();
+    const [source] = await db
+      .insert(gallerySource)
+      .values({
+        workspaceId: seed.context.workspaceId,
+        galleryId: created.galleryId,
+        workspaceSourceId: seed.sourceConfigId,
+        providerFolderId: "1AbCdEfGhIjKlMnOp",
+      })
+      .returning();
+    expect(source).toMatchObject({ syncCursor: null, syncLeaseAt: null });
+    const [photo] = await db
+      .insert(galleryPhoto)
+      .values({
+        workspaceId: seed.context.workspaceId,
+        galleryId: created.galleryId,
+        gallerySourceId: source.id,
+        externalFileId: "file-0001",
+        fileName: "IMG_001.jpg",
+        mimeType: "image/jpeg",
+        nameSortKey: "img_0000000001.jpg",
+        kind: "PROOF",
+      })
+      .returning();
+    expect(photo.externalFileId).toBe("file-0001");
+    expect(photo).not.toHaveProperty("lastSeenAt");
   });
 
   it("BR-GAL-009 a folder is linked once per gallery but again after removal", async () => {

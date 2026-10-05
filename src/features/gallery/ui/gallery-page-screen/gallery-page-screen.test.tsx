@@ -25,6 +25,7 @@ const PAGE = {
   },
   sources: [],
   linkableSources: [{ id: "src-1", name: "Google Drive" }],
+  directImages: false,
   previewPhotos: [],
 };
 

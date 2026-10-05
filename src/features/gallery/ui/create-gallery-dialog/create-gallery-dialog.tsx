@@ -4,18 +4,16 @@ import type { SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/ui/primitives/button/button";
-import { IconButton } from "@/ui/primitives/icon-button/icon-button";
-import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { ExpiryFields } from "../expiry-fields/expiry-fields";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { GalleryDialogShell } from "../gallery-dialog-shell/gallery-dialog-shell";
 import { galleryErrorText } from "../gallery-error-text/gallery-error-text";
+import { PasswordProposalField } from "../password-proposal-field/password-proposal-field";
 import { useCreateGalleryForm } from "../use-create-gallery-form/use-create-gallery-form";
 import type {
   CreateGalleryDialogProps,
   CreateGalleryFormProps,
-  PasswordRowProps,
 } from "./create-gallery-dialog.types";
 
 const FORM_ID = "create-gallery-form";
@@ -69,9 +67,11 @@ function CreateGalleryForm(props: Readonly<CreateGalleryFormProps>) {
       onSubmit={handleSubmit}
       className="flex flex-col gap-(--space-5)"
     >
-      <PasswordRow
+      <PasswordProposalField
+        label={GALLERY_COPY.passwordLabel}
+        description={GALLERY_COPY.passwordHelper}
         field={field}
-        error={state.errors.password}
+        errorMessage={galleryErrorText(state.errors.password)}
         isRegenerating={state.isRegenerating}
         onRegenerate={handleRegenerate}
       />
@@ -83,33 +83,5 @@ function CreateGalleryForm(props: Readonly<CreateGalleryFormProps>) {
         daysHelper={GALLERY_COPY.expiryDaysHelperDraft}
       />
     </form>
-  );
-}
-
-function PasswordRow({ field, error, isRegenerating, onRegenerate }: Readonly<PasswordRowProps>) {
-  return (
-    <div className="flex items-end gap-(--space-2)">
-      <div className="min-w-0 flex-1">
-        <TextField
-          label={GALLERY_COPY.passwordLabel}
-          name={field.name}
-          autoComplete="off"
-          value={field.value}
-          onChange={field.onChange}
-          onBlur={field.onBlur}
-          inputRef={field.ref}
-          description={GALLERY_COPY.passwordHelper}
-          errorMessage={galleryErrorText(error)}
-        />
-      </div>
-      <div className="pb-(--space-6)">
-        <IconButton
-          icon="refresh-cw"
-          aria-label={GALLERY_COPY.regenerate}
-          isDisabled={isRegenerating}
-          onPress={onRegenerate}
-        />
-      </div>
-    </div>
   );
 }

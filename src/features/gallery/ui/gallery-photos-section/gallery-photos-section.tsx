@@ -9,7 +9,11 @@ import { Icon } from "@/ui/primitives/icon/icon";
 
 import { AllPhotosModal } from "../all-photos-modal/all-photos-modal";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
-import { galleryMediaUrl } from "../gallery-media-url/gallery-media-url";
+import {
+  GalleryImageProvider,
+  useDirectImages,
+} from "../gallery-image-sources/gallery-image-context";
+import { imageSources } from "../gallery-image-sources/gallery-image-sources";
 import { galleryVisibilityText, photoCountsText } from "../gallery-text/gallery-text";
 import { PhotoPreview } from "../photo-preview/photo-preview";
 import { PhotosCard } from "../photos-card/photos-card";
@@ -42,7 +46,7 @@ export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>)
   };
   const hasPhotos = page.previewPhotos.length > 0;
   return (
-    <>
+    <GalleryImageProvider directImages={page.directImages}>
       <PhotosCard
         hasPhotos={hasPhotos}
         description={
@@ -70,7 +74,7 @@ export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>)
         onIndexChange={preview.handleIndexChange}
         onClose={preview.close}
       />
-    </>
+    </GalleryImageProvider>
   );
 }
 
@@ -115,6 +119,7 @@ function PreviewBody({ workspaceId, page, onOpenPhoto, isMobile }: Readonly<Prev
 }
 
 function PreviewTile({ workspaceId, photo, list, onOpenPhoto }: Readonly<PreviewTileProps>) {
+  const image = imageSources(photo, "thumb", workspaceId, useDirectImages());
   const handlePress = () => {
     onOpenPhoto(photo, list);
   };
@@ -122,7 +127,8 @@ function PreviewTile({ workspaceId, photo, list, onOpenPhoto }: Readonly<Preview
     <li className="min-w-0">
       <PhotoTile
         fileName={photo.fileName}
-        imageSrc={galleryMediaUrl(workspaceId, photo.id, "thumb")}
+        imageSrc={image.src}
+        fallbackSrc={image.fallbackSrc}
         isMissing={photo.missing}
         onPress={handlePress}
       />

@@ -7,7 +7,12 @@ import {
 } from "@/features/gallery/domain/gallery-display/gallery-display";
 
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
-import type { SourceRowMode, SourceRowText, SourceSyncPhase } from "./source-text.types";
+import type {
+  SourceRowMode,
+  SourceRowText,
+  SourceSyncPhase,
+  SourceSyncProgress,
+} from "./source-text.types";
 
 const COPY = GALLERY_COPY;
 
@@ -42,10 +47,14 @@ function removedMeta(source: GallerySourceView): string {
   return COPY.sourceRemovedAt(when, photos);
 }
 
-function runningText(source: GallerySourceView, phase: SourceSyncPhase): SourceRowText | null {
+function runningText(
+  source: GallerySourceView,
+  phase: SourceSyncPhase,
+  progress: SourceSyncProgress,
+): SourceRowText | null {
   const running = phase ?? (source.syncStatus === "SYNCING" ? "SYNCING" : null);
   if (running === null) return null;
-  const meta = running === "QUEUED" ? COPY.sourceQueued : COPY.sourceSyncing;
+  const meta = runningMeta(running, progress);
   return {
     title: source.name ?? COPY.sourceFallbackName,
     meta: `${source.workspaceSourceName} · ${meta}`,
@@ -54,10 +63,18 @@ function runningText(source: GallerySourceView, phase: SourceSyncPhase): SourceR
   };
 }
 
-/** Builds a source row's title, meta and status chip from its sync state and the page mode (design.md › Sumber foto, AC-GAL-005, 007, 008, 013). @param source - the source view @param phase - the client's running sync, if any @param mode - archived, read-only and phone flags @returns the row text */
+function runningMeta(running: "QUEUED" | "SYNCING", progress: SourceSyncProgress): string {
+  if (running === "QUEUED") return COPY.sourceQueued;
+  return progress === null
+    ? COPY.sourceSyncing
+    : COPY.sourceSyncProgress(progress.foldersDone, progress.foldersTotal);
+}
+
+/** Builds a source row's title, meta and status chip from its sync state and the page mode (design.md › Sumber foto, AC-GAL-005, 007, 008, 013). @param source - the source view @param phase - the client's running sync, if any @param progress - how far that sync has come @param mode - archived, read-only and phone flags @returns the row text */
 export function sourceRowText(
   source: GallerySourceView,
   phase: SourceSyncPhase,
+  progress: SourceSyncProgress,
   mode: SourceRowMode,
 ): SourceRowText {
   const title = source.name ?? COPY.sourceFallbackName;
@@ -82,7 +99,7 @@ export function sourceRowText(
       chip: neutral(COPY.sourceChip.ARCHIVED),
     };
   }
-  const running = runningText(source, phase);
+  const running = runningText(source, phase, progress);
   if (running !== null) return running;
   if (source.syncStatus === "FAILED" && source.syncErrorCode !== null) {
     return {

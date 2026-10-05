@@ -7,9 +7,9 @@ import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
-import { galleryMediaUrl } from "../gallery-media-url/gallery-media-url";
 import type { PhotoPreviewProps } from "./photo-preview.types";
 import { previewMeta } from "./photo-preview-meta";
+import { usePreviewImages } from "./use-preview-images";
 
 /** The immersive photo preview: Owner-only media, the top-bar meta and *Buka di Google Drive* except for a missing file (AC-GAL-031, D-10, D-11). */
 export function PhotoPreview(props: Readonly<PhotoPreviewProps>) {
@@ -21,8 +21,7 @@ export function PhotoPreview(props: Readonly<PhotoPreviewProps>) {
     meta: previewMeta(photo, position + 1, Math.max(props.total, photos.length), isMobile),
     isMissing: photo.missing,
   }));
-  const imageSrc = (item: MediaViewerItem, size: "stage" | "thumb") =>
-    galleryMediaUrl(workspaceId, item.id, size === "stage" ? "preview" : "thumb");
+  const { imageSrc, imageFallbackSrc } = usePreviewImages(photos, workspaceId);
   const renderActions = (item: MediaViewerItem) => {
     const driveUrl = photos.find((photo) => photo.id === item.id)?.driveUrl ?? null;
     if (driveUrl === null) return null;
@@ -50,6 +49,7 @@ export function PhotoPreview(props: Readonly<PhotoPreviewProps>) {
       onIndexChange={props.onIndexChange}
       onClose={props.onClose}
       imageSrc={imageSrc}
+      imageFallbackSrc={imageFallbackSrc}
       missingText={GALLERY_COPY.previewMissing}
       missingNote={GALLERY_COPY.previewMissingNote}
       renderActions={renderActions}

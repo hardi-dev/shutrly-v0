@@ -16,6 +16,7 @@ import { linkGallerySource } from "@/features/gallery/application/use-cases/link
 
 import { openTestDb } from "../helpers/test-db";
 import { type GallerySeed, seedGalleryWorkspace } from "./helpers/gallery-seed";
+import { syncSourceToEnd } from "./helpers/sync-to-end";
 
 let db: Db;
 let close: () => Promise<void>;
@@ -59,6 +60,7 @@ async function galleryWith(seed: GallerySeed, provider: FakeDriveProvider, folde
       label: "",
     });
     if (!linked.ok) throw new Error("link failed");
+    await syncSourceToEnd(deps, seed.context, linked.sourceId);
     sourceIds.push(linked.sourceId);
   }
   return { galleryId: created.galleryId, sourceIds };

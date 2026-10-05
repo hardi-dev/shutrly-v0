@@ -13,13 +13,14 @@ import type { GallerySourceRowProps } from "./gallery-source-row.types";
 export function GallerySourceRow({
   source,
   phase,
+  progress,
   isArchived,
   isReadOnly,
   menuEntries,
   isLast,
 }: Readonly<GallerySourceRowProps>) {
   const isMobile = useMobileViewport();
-  const text = sourceRowText(source, phase, { isArchived, isReadOnly, isMobile });
+  const text = sourceRowText(source, phase, progress, { isArchived, isReadOnly, isMobile });
   return (
     <ListCardItem
       icon="folder"

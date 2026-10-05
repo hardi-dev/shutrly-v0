@@ -23,10 +23,11 @@ import { removeGallerySource } from "@/features/gallery/application/use-cases/re
 import { rotateGalleryPassword } from "@/features/gallery/application/use-cases/rotate-gallery-password/rotate-gallery-password";
 import { serveOwnerPhoto } from "@/features/gallery/application/use-cases/serve-owner-photo/serve-owner-photo";
 import { setGalleryExpiry } from "@/features/gallery/application/use-cases/set-gallery-expiry/set-gallery-expiry";
-import { syncGallerySource } from "@/features/gallery/application/use-cases/sync-gallery-source/sync-gallery-source";
+import { syncGallerySourceStep } from "@/features/gallery/application/use-cases/sync-gallery-source-step/sync-gallery-source-step";
 
 import { openTestDb } from "../helpers/test-db";
 import { seedGalleryWorkspace } from "./helpers/gallery-seed";
+import { syncSourceToEnd } from "./helpers/sync-to-end";
 
 let db: Db;
 let close: () => Promise<void>;
@@ -90,6 +91,7 @@ describe("AC-GAL-025 workspace isolation", () => {
       },
     );
     if (!linked.ok) throw new Error("link failed");
+    await syncSourceToEnd(deps(), owner.context, linked.sourceId);
     const photoRows = await db
       .select()
       .from(galleryPhoto)
@@ -128,7 +130,7 @@ describe("AC-GAL-025 workspace isolation", () => {
           link: `https://drive.google.com/drive/folders/${RINA_FOLDER_ID}`,
           label: "",
         }),
-      sync: () => syncGallerySource(deps(), intruder.context, sourceId),
+      sync: () => syncGallerySourceStep(deps(), intruder.context, sourceId),
       publish: () => publishGallery(deps(), intruder.context, intruder.ownerId, galleryId),
       expiry: () =>
         setGalleryExpiry(deps(), intruder.context, intruder.ownerId, galleryId, {

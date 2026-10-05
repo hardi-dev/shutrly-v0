@@ -12,8 +12,15 @@ export interface SyncGalleryDeps {
   readonly now: Date;
 }
 
-// A finished sync, successful or not; refusals (busy, rate limit, state) are failures.
-export type SyncOutcome =
+// One step of a run: more to do (with progress), the run done, the run failed, or a refusal
+// (busy, rate limit, state). Provider failures are data, not errors (TD › Error Handling).
+export type SyncStepOutcome =
+  | {
+      readonly ok: true;
+      readonly status: "CONTINUE";
+      readonly foldersDone: number;
+      readonly foldersTotal: number;
+    }
   | { readonly ok: true; readonly status: "SUCCEEDED" }
   | { readonly ok: true; readonly status: "FAILED"; readonly errorCode: SyncFailureCode }
   | GalleryDomainFailure;

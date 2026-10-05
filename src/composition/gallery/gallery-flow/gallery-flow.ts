@@ -62,8 +62,18 @@ export async function loadGalleryPage(rawWorkspaceId: string, rawProjectId: stri
   const projectId = galleryIdOrNotFound(rawProjectId);
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
-    return await withGalleryScope(({ galleries, workspaceSources, cipher, now }) =>
-      getGalleryPage(galleries, workspaceSources, cipher, verified.context, projectId, now),
+    return await withGalleryScope(
+      async ({ galleries, workspaceSources, cipher, now, directImages }) => ({
+        ...(await getGalleryPage(
+          galleries,
+          workspaceSources,
+          cipher,
+          verified.context,
+          projectId,
+          now,
+        )),
+        directImages,
+      }),
     );
   } catch (error) {
     return gallerySaveError(error, verified.context.workspaceId, "page");

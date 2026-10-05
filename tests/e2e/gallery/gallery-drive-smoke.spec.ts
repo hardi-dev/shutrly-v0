@@ -29,6 +29,12 @@ async function linkAndSync(page: Page): Promise<void> {
   await expect
     .poll(() => thumbnail.evaluate((image: HTMLImageElement) => image.naturalWidth))
     .toBeGreaterThan(0);
+  // AC-GAL-015, ADR-019: the tile loads from Google by file ID and did not need the fallback route.
+  await expect(thumbnail).toHaveAttribute(
+    "src",
+    /^https:\/\/lh3\.googleusercontent\.com\/d\/[A-Za-z0-9_-]{10,200}=w600$/,
+  );
+  await expect(thumbnail).toHaveAttribute("referrerpolicy", "no-referrer");
   await expectGalleryA11y(page);
 }
 

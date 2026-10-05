@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
@@ -19,6 +19,18 @@ describe("PhotoTile (C46)", () => {
     const image = container.querySelector("img");
     expect(image).toHaveAttribute("alt", "");
     expect(image).toHaveAttribute("loading", "lazy");
+  });
+
+  it("AC-GAL-034 swaps to the fallback once when the image fails, then shows no image", () => {
+    const { container } = render(
+      <PhotoTile fileName="IMG_001.jpg" imageSrc="/google.jpg" fallbackSrc="/route.jpg" />,
+    );
+    expect(container.querySelector("img")).toHaveAttribute("src", "/google.jpg");
+    expect(container.querySelector("img")).toHaveAttribute("referrerpolicy", "no-referrer");
+    fireEvent.error(container.querySelector("img") as HTMLImageElement);
+    expect(container.querySelector("img")).toHaveAttribute("src", "/route.jpg");
+    fireEvent.error(container.querySelector("img") as HTMLImageElement);
+    expect(container.querySelector("img")).toBeNull();
   });
 
   it("AC-GAL-014 marks a missing file with Hilang in text", () => {

@@ -7,10 +7,12 @@ import type {
   MediaPhotoRecord,
 } from "@/features/gallery/application/ports/gallery-repository/gallery-repository.port";
 import { PHOTO_KINDS } from "@/features/gallery/domain/photo-classification/photo-classification";
+import { SOURCE_PROVIDERS } from "@/features/gallery/domain/source-provider/source-provider";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { DbExecutor } from "../client/client.types";
 import { galleryPhoto, gallerySource } from "../schema/gallery/gallery";
+import { workspaceSourceConfig } from "../schema/gallery/workspace-source-config";
 
 export const PREVIEW_PHOTO_COUNT = 8;
 
@@ -24,6 +26,7 @@ export const PHOTO_COLUMNS = {
   sourceId: galleryPhoto.gallerySourceId,
   sourceName: sql<string | null>`coalesce(${gallerySource.label}, ${gallerySource.folderName})`,
   externalFileId: galleryPhoto.externalFileId,
+  provider: workspaceSourceConfig.provider,
   resourceKey: galleryPhoto.resourceKey,
   missingAt: galleryPhoto.missingAt,
 };
@@ -31,6 +34,12 @@ export const PHOTO_COLUMNS = {
 export const PHOTO_SOURCE_JOIN = and(
   eq(gallerySource.workspaceId, galleryPhoto.workspaceId),
   eq(gallerySource.id, galleryPhoto.gallerySourceId),
+);
+
+// The provider of a photo is its workspace source's, so a new provider needs no change here (BR-SRC-001).
+export const SOURCE_CONFIG_JOIN = and(
+  eq(workspaceSourceConfig.workspaceId, gallerySource.workspaceId),
+  eq(workspaceSourceConfig.id, gallerySource.workspaceSourceId),
 );
 
 interface PhotoRow {
@@ -42,6 +51,7 @@ interface PhotoRow {
   sourceId: string;
   sourceName: string | null;
   externalFileId: string;
+  provider: string;
   resourceKey: string | null;
   missingAt: Date | null;
 }
@@ -49,9 +59,10 @@ interface PhotoRow {
 /** Maps a photo row to the port record; the kind check constraint guarantees a known kind. @param row - the selected row @returns the record, or null for an unknown kind */
 export function toPhotoRecord(row: PhotoRow): GalleryPhotoRecord | null {
   const kind = PHOTO_KINDS.find((candidate) => candidate === row.kind);
-  if (!kind) return null;
+  const provider = SOURCE_PROVIDERS.find((candidate) => candidate === row.provider);
+  if (!kind || !provider) return null;
   const { missingAt, ...rest } = row;
-  return { ...rest, kind, missing: missingAt !== null };
+  return { ...rest, kind, provider, missing: missingAt !== null };
 }
 
 /** Reads the *Foto* card's first photos of active sources: proof first, then by natural file name (D-12, AC-GAL-014). @param db - database @param context - verified workspace @param galleryId - the gallery id @returns up to 8 photos */
@@ -64,6 +75,7 @@ export async function selectPreviewPhotos(
     .select(PHOTO_COLUMNS)
     .from(galleryPhoto)
     .innerJoin(gallerySource, PHOTO_SOURCE_JOIN)
+    .innerJoin(workspaceSourceConfig, SOURCE_CONFIG_JOIN)
     .where(
       and(
         eq(galleryPhoto.workspaceId, context.workspaceId),

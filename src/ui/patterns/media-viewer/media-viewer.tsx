@@ -3,6 +3,7 @@
 import { Button as AriaButton, Dialog, Modal, ModalOverlay } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
+import { useImageFallback } from "@/ui/hooks/use-image-fallback/use-image-fallback";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { useRestoreFocus } from "@/ui/hooks/use-restore-focus/use-restore-focus";
 import { Icon } from "@/ui/primitives/icon/icon";
@@ -26,8 +27,10 @@ const ARROW = cn(
   "absolute top-1/2 -translate-y-1/2 border border-(--component-media-viewer-text)",
 );
 
-function Stage({ item, src, missingText, missingNote }: Readonly<StageProps>) {
-  if (item.isMissing) {
+function Stage({ item, src, fallbackSrc, missingText, missingNote }: Readonly<StageProps>) {
+  const image = useImageFallback(src, fallbackSrc);
+  // A photo whose image failed on every URL reads like a missing one: nothing else can be shown.
+  if (item.isMissing || image.src === null) {
     return (
       <div className="flex flex-col items-center gap-(--space-3) text-(--component-media-viewer-text)">
         <Icon name="image-off" size="lg" aria-hidden="true" />
@@ -38,7 +41,13 @@ function Stage({ item, src, missingText, missingNote }: Readonly<StageProps>) {
   }
   return (
     // eslint-disable-next-line @next/next/no-img-element -- the private media proxy must not go through the image optimiser
-    <img src={src} alt={item.title} className="max-h-full max-w-full object-contain" />
+    <img
+      src={image.src}
+      alt={item.title}
+      referrerPolicy="no-referrer"
+      onError={image.onError}
+      className="max-h-full max-w-full object-contain"
+    />
   );
 }
 
@@ -47,8 +56,10 @@ function FilmstripThumb({
   position,
   isActive,
   src,
+  fallbackSrc,
   onSelect,
 }: Readonly<FilmstripThumbProps>) {
+  const image = useImageFallback(src, fallbackSrc);
   const handlePress = () => {
     onSelect(position);
   };
@@ -66,16 +77,29 @@ function FilmstripThumb({
           "data-focus-visible:outline-2 data-focus-visible:outline-(--component-media-viewer-thumb-active-border)",
         )}
       >
-        {item.isMissing ? null : (
+        {item.isMissing || image.src === null ? null : (
           // eslint-disable-next-line @next/next/no-img-element -- the private media proxy must not go through the image optimiser
-          <img src={src} alt="" loading="lazy" className="size-full object-cover" />
+          <img
+            src={image.src}
+            alt=""
+            loading="lazy"
+            referrerPolicy="no-referrer"
+            onError={image.onError}
+            className="size-full object-cover"
+          />
         )}
       </AriaButton>
     </li>
   );
 }
 
-function Filmstrip({ items, index, imageSrc, onIndexChange }: Readonly<FilmstripProps>) {
+function Filmstrip({
+  items,
+  index,
+  imageSrc,
+  imageFallbackSrc,
+  onIndexChange,
+}: Readonly<FilmstripProps>) {
   return (
     <ul
       aria-label={MEDIA_VIEWER_COPY.filmstrip}
@@ -88,6 +112,7 @@ function Filmstrip({ items, index, imageSrc, onIndexChange }: Readonly<Filmstrip
           position={position}
           isActive={position === index}
           src={imageSrc(item, "thumb")}
+          fallbackSrc={imageFallbackSrc?.(item, "thumb")}
           onSelect={onIndexChange}
         />
       ))}
@@ -134,7 +159,7 @@ function Arrows({ index, count, nav }: Readonly<ArrowsProps>) {
         onPress={nav.handleNext}
         className={cn(ARROW, "right-(--component-media-viewer-nav-inset)")}
       >
-        <Icon name="arrow-right" aria-hidden="true" />
+        <Icon name="arrow-right-01" aria-hidden="true" />
       </AriaButton>
     </>
   );
@@ -157,6 +182,7 @@ function ViewerFrame(props: Readonly<ViewerFrameProps>) {
           <Stage
             item={item}
             src={props.imageSrc(item, "stage")}
+            fallbackSrc={props.imageFallbackSrc?.(item, "stage")}
             missingText={props.missingText}
             missingNote={props.missingNote}
           />
@@ -166,6 +192,7 @@ function ViewerFrame(props: Readonly<ViewerFrameProps>) {
           items={items}
           index={index}
           imageSrc={props.imageSrc}
+          imageFallbackSrc={props.imageFallbackSrc}
           onIndexChange={onIndexChange}
         />
       </div>

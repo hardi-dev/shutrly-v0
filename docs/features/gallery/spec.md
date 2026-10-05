@@ -33,9 +33,9 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
    - images under a folder named `edited` / `print`, at any depth, become `EDITED` / `PRINT`;
    - every other image, in the root or in any other subfolder, becomes `PROOF`;
    - non-image files are ignored.
-   The source records its sync status, time, counts and any error.
+   The sync runs in short steps (at most 40 Drive list calls each, ADR-019), and the screen shows *Menyinkronkan… n dari m folder* until the last step. Any folder size works. The source records its sync status, time, counts and any error.
 5. The gallery screen shows the password (with *Salin*), so the Owner never has to remember it. It also shows each source with its status and last sync.
-   - **Foto card:** counts per kind (*Proof*, *Edited*, *Print*), a preview of the first 8 photos, and *Lihat semua foto*. Thumbnails come from the Owner-only media endpoint.
+   - **Foto card:** counts per kind (*Proof*, *Edited*, *Print*), a preview of the first 8 photos, and *Lihat semua foto*. Thumbnails load straight from Google's image host by file ID, and fall back to the Owner-only media endpoint when one fails (ADR-019, Owner 2026-10-05).
    - Each kind is marked for what the client will see: *Proof* is visible once published. *Edited* and *Print* are hidden until final delivery (BR-DEL-002). Missing and removed photos are hidden.
    - **Semua foto** (a modal; full screen on phones) holds all browsing (Owner 2026-10-04):
      - tabs by kind, each with its total;
@@ -43,7 +43,7 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
      - with several sources, the top level shows one folder per source. With a single source, its folder opens directly. A breadcrumb (*Semua folder › Rina-Wisuda › Akad*) leads back (A-12);
      - infinite scroll (A-13), with thumbnails loaded when visible;
      - *Cari nama file* across every folder; results show each photo's folder.
-   - **Photo preview:** opening any photo, on the card or in the modal, shows a large preview, again through the Owner-only media endpoint.
+   - **Photo preview:** opening any photo, on the card or in the modal, shows a large preview, loaded the same way (Google first, the Owner-only media endpoint as fallback).
      - It opens full screen on a dark backdrop (Owner 2026-10-04, design option B).
      - It has ← / → (and the arrow keys) and a filmstrip of neighbouring thumbnails for the previous and next photo in the same list. Esc closes it.
      - Info in the top bar: file name, folder path, kind, *Hilang* if missing, and the position (*12 dari 64*). There is no client-visibility status in the preview; that stays on the card and in the modal.
@@ -84,7 +84,7 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
 - **Invalid link:** not a Drive folder link. A field error; no source is created.
 - **Folder can't be listed** (not public, deleted, wrong resource key): the source is still created, with sync status *Gagal* and a plain-language reason. The Owner can fix the sharing and sync again. The Drive link is never logged (C-103).
 - **Partial failure in *Sync all*:** each source reports its own result; one failure doesn't roll back the others.
-- **Provider unavailable or quota exceeded:** the sync fails with a retry message. Earlier photos stay unchanged.
+- **Provider unavailable or quota exceeded:** the sync fails with a retry message. Photos already saved are kept, and none is marked missing (amended 2026-10-05, ADR-019: a sync is a run of steps, and a failed run leaves what its earlier steps saved).
 - **Concurrent syncs of the same source:** they never create duplicates. A second request while one runs is refused or waits (C-005; mechanism in the technical design).
 - **Publish refused:**
   - no sources, or none passes the publish-time check: the Owner sees which source failed and why (BR-GAL-004);
@@ -100,7 +100,7 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
 - BR-DEL-002 (edited/print hidden until final delivery: shown to the Owner as *hidden*)
 - BR-AUD-001 (password rotation)
 - BR-WS-002, BR-WS-003
-- BR-ACC-005 and BR-SRC-003: media is delivered by the server; the API key and Drive links never reach the browser
+- BR-ACC-005 and BR-SRC-003 (amended 2026-10-05): photos load from Google by file ID or from the server; the API key, folder links, folder IDs and resource keys never reach the browser
 - Constitution C-004, C-005, C-007, C-008, C-101, C-103
 
 ## Dependencies
@@ -150,6 +150,7 @@ Checked against the constitution (C-001..C-106), BR-GAL/SRC/ACC/PRJ/DEL/AUD, ADR
 | FC-004 | Owner thumbnails need media from Drive, but the API key must never reach the browser, and controlled media delivery was scoped to F-10. | BR-SRC-003, BR-ACC-005 ↔ feature map F-10 | Build an Owner-only media endpoint in F-09; F-10 reuses it behind token and password (Owner 2026-10-04). | RESOLVED |
 | FC-005 | Cancelling a project left a published gallery reachable by the client. | BR-PRJ-010 ↔ BR-GAL-005 | Cancelling archives the gallery in the same transaction (Owner 2026-10-04). Recorded in BR-PRJ-010 and BR-GAL-005. | RESOLVED |
 | FC-006 | "Accessible" in the publish precondition was undefined. | BR-GAL-004 | Checked again with the provider at publish time (Owner 2026-10-04). Recorded in BR-GAL-004. | RESOLVED |
+| FC-009 | Free-tier hosting needs images straight from Google, which BR-ACC-005 and AC-GAL-015 forbade, and a sync that fits 50 subrequests. | BR-ACC-005, BR-SRC-003, C-103 ↔ ADR-018, ADR-019 | Images load from Google by file ID with a fallback to the Owner endpoint; the trade-off that a client may keep an image URL is accepted; sync runs in steps (Owner 2026-10-05). Recorded in constitution v1.2, BR-ACC-005, BR-SRC-003, AC-GAL-015 and ADR-019. | RESOLVED |
 | FC-008 | Photographers keep shoots in subfolders (`Akad`, `Resepsi`), which BR-GAL-007 ignored, so their photos would never show. | BR-GAL-007, ADR-005 | Sync the whole tree. Any folder except `edited` / `print` is proof, and `edited` / `print` count at any depth. Folders are browsed like Drive (Owner 2026-10-04). | RESOLVED |
 | FC-007 | Hash-only passwords meant the Owner had to remember and retype a password per project to share it, which isn't workable. | C-103, ADR-004, BR-GAL-002, BR-MSG-003 | Store the password encrypted (plus a hash), generate an easy-to-type one, show it to the Owner, and fill it into the WhatsApp message automatically (Owner 2026-10-04). Recorded in constitution v1.1, ADR-017, BR-GAL-002/003 and BR-MSG-003. | RESOLVED |
 
@@ -157,5 +158,5 @@ Checked against the constitution (C-001..C-106), BR-GAL/SRC/ACC/PRJ/DEL/AUD, ADR
 - **Resolved in design review (Owner, 2026-10-04):** how hundreds of photos are browsed. The answer is tabs by kind, then folders per source, infinite scroll and filename search (Main flow 5).
 
 None blocking. For the technical design:
-- **Sync on Workers (ADR-008):** a large folder means several Drive list pages plus up to two subfolders. The technical design must show that one sync fits the Worker's CPU, subrequest and duration limits (or splits the work) and stays idempotent (C-005).
-- **Owner media endpoint:** thumbnail size and caching (`private, no-store` per coding rules, or a short private cache for the Owner only), and how it hides the API key (proxy vs. short-lived Drive thumbnail links resolved server-side).
+- **Sync on Workers (ADR-008, ADR-018, ADR-019):** answered. A sync is a run of steps, each within 50 subrequests and 10 ms CPU, resumable and idempotent (technical design D-7…D-9, D-20, D-21). The CPU figures still need one measurement on a free Workers preview (R-6).
+- **Owner media endpoint:** answered (D-10, D-22). Google serves the images; the endpoint, a short private cache for the Owner only, is the fallback.

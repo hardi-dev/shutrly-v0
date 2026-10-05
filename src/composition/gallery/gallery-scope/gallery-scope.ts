@@ -32,6 +32,7 @@ export function withGalleryScope<T>(work: (scope: GalleryScope) => Promise<T>): 
       sources: createDrizzleGallerySourceRepository(db),
       workspaceSources: createDrizzleWorkspaceSourceRepository(db),
       provider: providerFor(rc.env),
+      directImages: rc.env.E2E_FAKE_DRIVE !== "1",
       rateLimiter: createNeonRateLimiter(db),
       cipher: createWebCryptoGalleryPasswordCipher(rc.env.GALLERY_PASSWORD_KEY),
       hasher: createBetterAuthPasswordHasher(),

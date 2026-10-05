@@ -1,7 +1,11 @@
+import type { SyncProgress } from "@/features/gallery/domain/sync-step/sync-step.types";
 import type { StatusChipProps } from "@/ui/primitives/status-chip/status-chip.types";
 
 // The client's view of a source while *Sinkronkan* / *Sinkronkan semua* runs (D-9).
 export type SourceSyncPhase = "QUEUED" | "SYNCING" | null;
+
+// How far a running sync has come (`foldersDone` of `foldersTotal`), once its first step answered.
+export type SourceSyncProgress = SyncProgress | null;
 
 export interface SourceRowText {
   readonly title: string;

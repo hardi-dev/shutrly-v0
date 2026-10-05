@@ -36,6 +36,6 @@ export interface SourceDialogsProps extends GallerySourcesSectionProps {
   readonly isLinking: boolean;
   readonly removing: GallerySourceView | null;
   readonly onLinkingChange: (isOpen: boolean) => void;
-  readonly onLinked: () => void;
+  readonly onLinked: (sourceId: string) => void;
   readonly onCloseRemove: () => void;
 }

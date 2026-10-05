@@ -3,6 +3,7 @@
 import { Button as AriaButton } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
+import { useImageFallback } from "@/ui/hooks/use-image-fallback/use-image-fallback";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { PHOTO_TILE_COPY } from "./photo-tile.copy";
@@ -17,18 +18,23 @@ const META = "truncate text-(length:--font-size-caption) text-(--component-photo
 const FOCUS =
   "outline-none data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-(--color-semantic-focus-ring)";
 
-function PhotoTileImage({ imageSrc, isMissing }: Readonly<PhotoTileImageProps>) {
+function PhotoTileImage({ imageSrc, fallbackSrc, isMissing }: Readonly<PhotoTileImageProps>) {
+  const image = useImageFallback(imageSrc, fallbackSrc);
   return (
     <span className={IMAGE}>
-      {/* A plain img on the Owner endpoint: next/image would cache it publicly (TD › UI Components). */}
-      {/* eslint-disable-next-line @next/next/no-img-element -- the private media proxy must not go through the image optimiser */}
-      <img
-        src={imageSrc}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        className="size-full object-cover"
-      />
+      {image.src === null ? null : (
+        // A plain img: next/image would cache the Owner media route publicly (TD › UI Components).
+        // eslint-disable-next-line @next/next/no-img-element -- the private media route must not go through the image optimiser
+        <img
+          src={image.src}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          referrerPolicy="no-referrer"
+          onError={image.onError}
+          className="size-full object-cover"
+        />
+      )}
       {isMissing ? (
         <span className="absolute top-(--component-photo-tile-badge-inset) left-(--component-photo-tile-badge-inset)">
           <StatusChip tone="warning" label={PHOTO_TILE_COPY.missingBadge} hasDot />
@@ -43,12 +49,13 @@ export function PhotoTile({
   fileName,
   meta,
   imageSrc,
+  fallbackSrc,
   isMissing = false,
   onPress,
 }: Readonly<PhotoTileProps>) {
   const content = (
     <>
-      <PhotoTileImage imageSrc={imageSrc} isMissing={isMissing} />
+      <PhotoTileImage imageSrc={imageSrc} fallbackSrc={fallbackSrc} isMissing={isMissing} />
       <span className="flex w-full min-w-0 flex-col gap-(--component-photo-tile-text-gap) text-left">
         <span className={NAME}>{fileName}</span>
         {meta ? <span className={META}>{meta}</span> : null}

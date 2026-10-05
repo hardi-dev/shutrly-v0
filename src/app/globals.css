@@ -11,6 +11,22 @@
     font-size: var(--font-size-body);
     line-height: var(--font-line-height-body);
   }
+
+  /* Tailwind v4 resets buttons to the default cursor. Every enabled control that acts on press shows
+     the pointer; a component that needs another cursor sets it with a utility, which wins over this. */
+  button:not(:disabled),
+  summary,
+  [role="button"]:not([aria-disabled="true"]),
+  [role="menuitem"]:not([aria-disabled="true"]),
+  [role="menuitemradio"]:not([aria-disabled="true"]),
+  [role="menuitemcheckbox"]:not([aria-disabled="true"]),
+  [role="tab"]:not([aria-disabled="true"]),
+  [role="option"]:not([aria-disabled="true"]),
+  [role="switch"]:not([aria-disabled="true"]),
+  [role="radio"]:not([aria-disabled="true"]),
+  [role="checkbox"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
 }
 
 @keyframes bottom-sheet-in {

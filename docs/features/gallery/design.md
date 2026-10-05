@@ -13,6 +13,7 @@
      - The gallery page shows it in an *Akses klien* card, with *Salin* and *Ganti password*.
      - The project's Galeri card shows it too.
      - *Buat galeri* and *Ganti password* prefill a generated password with a *Buat ulang* button. There is no confirm field.
+       - **Deviation, Owner 2026-10-05:** the *Buat ulang* button sits **inside** the input (the Input's trailing action, `refresh-cw`), not beside it as in the exports `proyek-dialog-buat-galeri-*` and `galeri-dialog-ganti-password`. Beside the input it drifted out of line whenever the helper text wrapped to two lines. The button stays while the field shows an error, since it is what fixes one.
      - The expiry in *Buat galeri* uses the same radio group as *Kedaluwarsa galeri*: *Tidak ada kedaluwarsa* (default), *Sampai tanggal* (shows a date field) and *Selama beberapa hari* (shows *Jumlah hari*, counted from publishing).
 - **Status:** **APPROVED 2026-10-04** (Owner: "1 approve").
 - **Exports:** 100 HTML exports in [`exports/`](exports/), one per state frame (`<screen>-<state>-<device>-<frameId>.html`, html-tailwind), exported through Pencil MCP. The screens are `galeri`, `semuafoto`, `preview` and `proyek`. The Galeri card board and the sample-photo assets aren't exported.

@@ -1,6 +1,6 @@
 # ADR-018: Run on the free tiers of Cloudflare Workers, Neon and Resend
 
-Status: Proposed (Owner wants free hosting, 2026-10-05; not accepted yet)
+Status: Accepted (Owner, 2026-10-05). Point 2, the CPU measurement, was done on 2026-10-05: every measured path used far more than the documented 10 ms, yet ran without errors on a Workers Free account. The Owner decided to go on with Workers Free as it is and watch for CPU errors (see Measurement › Decision).
 Date: 2026-10-05
 Amends: [ADR-008](ADR-008-cloudflare-runtime.md) (adds the plan the runtime must fit), [ADR-011](ADR-011-resend-transactional-email.md) (adds the email budget)
 
@@ -40,6 +40,34 @@ Per tenant (Owner, 2026-10-05): 50 clients a year, 300 proof + 30 edited photos 
 | Workers 10 ms CPU | independent of tenants: passes or fails from the start (point 2) |
 
 Cost once every service is paid: about **$45/month** (Neon Launch with 0.25 CU awake all month ≈ $20, Resend Pro $20, Workers Paid $5). Pricing and break-even are discussed in [docs/product/pricing-and-costs.md](../../product/pricing-and-costs.md).
+
+## Measurement (2026-10-05, point 2)
+
+- **How:** `opennextjs-cloudflare build`, then `wrangler deploy` of the F-09 rework branch as a throwaway Worker `shutrly-cpu-check` (non-production secrets, deleted afterwards), and `wrangler tail --format json` for each request's `cpuTime`. Wrangler 4.141.0.
+- **Result, `GET /login` (a page with no session and no database):** 20 requests, CPU **22–43 ms on 9 of them, 356–1,007 ms on the other 11** (median 356 ms). `GET /robots.txt` (a redirect from the middleware): 2, 4 and 45 ms.
+- **Reading:** the Workers Free limit is 10 ms CPU per request, and even the best `/login` request used more than twice that. The high values look like cold isolates paying for the bundle's start-up. Every request returned HTTP 200 with outcome `ok`. The account's billing page shows **Workers Free** (Owner, 2026-10-05), so the 10 ms limit was **not enforced in this low-traffic test**. Why is unknown: the limit may be applied loosely at very low load, or `cpuTime` in `wrangler tail` may not be the figure that is enforced. The numbers therefore show the cost of **Next.js on OpenNext itself**, before any F-09 code runs; they say nothing against the gallery sync.
+- **Second round, signed-in paths (2026-10-05).** A second throwaway Worker, the Owner signed in themselves with a named test account, and the gallery flow was driven in the in-app browser against the real Drive folder (113 photos). `wrangler tail` `cpuTime`, one sample each (a cold or warm isolate is not controlled):
+
+  | Path | CPU | Wall |
+  |---|---|---|
+  | `POST /login` | 444 ms | 785 ms |
+  | Projects list page (document) | 631 ms | 729 ms |
+  | Project page (document) | 354 ms | 430 ms |
+  | Client navigation (RSC) between pages | 6–60 ms | 6–240 ms |
+  | Propose password (open *Buat galeri*) | 27 ms | 101 ms |
+  | Create gallery | 184 ms | 366 ms |
+  | Check folder link | 17 ms | 94 ms |
+  | Link folder | 144 ms | 330 ms |
+  | Sync, 113 photos in one step (1 Drive list call) | 102 ms | 1,085 ms |
+  | Re-sync, same folder (one step, nothing changed) | 173 ms | 1,396 ms |
+  | *Lihat semua foto* (browse) | 365 ms | 582 ms |
+
+  Every request returned HTTP 200 on a Workers Free account. **Every measured server path used more than the documented 10 ms CPU; the smallest, the check of a folder link, used 17 ms.** The sync step itself (102–173 ms) is 10–17 times the limit, and a normal gallery visit is dominated by the Next.js render, not by the gallery code.
+- **A separate defect found on the way:** `POST /reset-password` hung for about 550 seconds (CPU 176 ms, wall 549,628 ms, outcome `canceled` once the browser tab was closed), so the form stayed on *Menyimpan…*. The earlier requests in the same Worker logged `Network connection lost`. It is not part of this ADR's question but affects any Workers deployment.
+- **Reading:** the app exceeds the documented Free limit by roughly 10× on a sync step and 35–60× on page renders, but no request was refused in a session with one user. That is evidence that it can run, not that it will keep running: the documentation says a request over the limit is stopped (error 1102), and the looser behaviour seen here is not documented.
+- **Decision (Owner, 2026-10-05): go on with Workers Free as it is.** No further load test now and no change of host or plan. The cost of being wrong is visible and cheap to fix: the upgrade trigger in point 4 (CPU errors in the logs) already says when to move to Workers Paid ($5/month), and `src/composition/request-context` is the only code tied to the Workers context if a host change is ever needed. Until then, watch the Worker's error rate (1102 and 5xx) in the dashboard or `wrangler tail`.
+- **Unresolved:** the reason the limit was not enforced, and the separate reset-password hang found in the same test ([FND-001](../../findings/FND-001-reset-password-hangs-on-workers.md); not fixed yet).
+- **Sync step size (follow-up, 2026-10-05):** `SYNC_STEP_MAX_ENTRIES` is 1,000, derived from these measurements (see the gallery technical design, R-6).
 
 ## Alternatives considered
 - **Workers Paid from the start ($5/month):** removes the CPU and subrequest risk at once. Rejected for now by the Owner (free only).

@@ -29,7 +29,8 @@ When artifacts conflict, the higher one wins. Never silently resolve a conflict 
 | Architecture | [architecture/tech-stack.md](architecture/tech-stack.md) | Chosen technologies |
 | | [architecture/overview.md](architecture/overview.md) | Layers, boundaries, security, data mapping rules |
 | | [architecture/decisions/](architecture/decisions/) | ADRs |
-| Status | [HANDOFF.md](HANDOFF.md) | Current progress, decisions, next steps, gotchas |
+| Status | [HANDOFF.md](HANDOFF.md) | Current progress, decisions, next steps, gotchas (rewritten and archived per feature) |
+| | [findings/](findings/README.md) | Open defects and risks found but not fixed yet (`FND-*`); they outlive the handoff |
 | Design system | [design-system/](design-system/) | Tokens (`tokens.json`), Pencil library + exploration, usage rules, component specs, and the local Storybook explorer |
 | Guardrails | [constitution.md](constitution.md), [coding-rules.md](coding-rules.md) | Non-negotiables, conventions |
 | Features | [features/](features/) | Created only for the feature currently in work |

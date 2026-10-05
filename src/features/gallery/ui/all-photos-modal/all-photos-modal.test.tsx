@@ -19,6 +19,8 @@ const PHOTO = {
   sourceId: SOURCE_ID,
   sourceName: "Rina-Wisuda",
   missing: false,
+  externalFileId: "1AbCdEfGhIjKlMnOp",
+  provider: "GOOGLE_DRIVE" as const,
   driveUrl: null,
 };
 const PAGE = {
@@ -53,6 +55,7 @@ const PAGE = {
     },
   ],
   linkableSources: [],
+  directImages: false,
   previewPhotos: [PHOTO],
 };
 const TOTALS = { proof: 312, edited: 40, print: 0 };
@@ -125,6 +128,26 @@ describe("AllPhotosModal", () => {
         "ws-1",
         "g-1",
         expect.objectContaining({ search: "IMG_02" }),
+      );
+    });
+  });
+
+  it("AC-GAL-029 shows a clear button only while there is text, and clearing returns to the folders", async () => {
+    const browseAction = vi.fn(() => Promise.resolve(SOURCES));
+    render(<GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={browseAction} />);
+    await userEvent.click(screen.getByRole("button", { name: "Lihat semua foto" }));
+    const dialog = await screen.findByRole("dialog", { name: "Semua foto" });
+    const search = within(dialog).getByRole("searchbox", { name: "Cari nama file" });
+    expect(within(dialog).queryByRole("button", { name: "Hapus pencarian" })).toBeNull();
+    await userEvent.type(search, "IMG_02");
+    await userEvent.click(within(dialog).getByRole("button", { name: "Hapus pencarian" }));
+    expect(search).toHaveValue("");
+    expect(within(dialog).queryByRole("button", { name: "Hapus pencarian" })).toBeNull();
+    await waitFor(() => {
+      expect(browseAction).toHaveBeenLastCalledWith(
+        "ws-1",
+        "g-1",
+        expect.objectContaining({ search: "" }),
       );
     });
   });

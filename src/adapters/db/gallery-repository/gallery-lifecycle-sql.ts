@@ -31,7 +31,13 @@ function sourceWrites(tx: DbExecutor, context: WorkspaceContext, galleryId: stri
         .set({ removedAt: now, removedBy: actorId, updatedAt: now })
         .where(and(active, eq(gallerySource.id, sourceId)))
         .returning({ id: gallerySource.id });
-      return rows.length > 0;
+      if (rows.length === 0) return false;
+      // Removing a folder hides its photos from the client (BR-GAL-009, D-24).
+      await tx
+        .update(gallery)
+        .set({ contentVersion: sql`${gallery.contentVersion} + 1`, updatedAt: now })
+        .where(and(eq(gallery.workspaceId, context.workspaceId), eq(gallery.id, galleryId)));
+      return true;
     },
   };
 }
@@ -44,6 +50,7 @@ function statusWrites(tx: DbExecutor, scope: SQL | undefined): StatusWrites {
         .set({
           status: "PUBLISHED",
           publishedAt: now,
+          contentVersion: sql`${gallery.contentVersion} + 1`,
           ...expiry,
           updatedBy: actorId,
           updatedAt: now,
@@ -53,7 +60,12 @@ function statusWrites(tx: DbExecutor, scope: SQL | undefined): StatusWrites {
     async setExpiry(expiry, actorId, now) {
       await tx
         .update(gallery)
-        .set({ ...expiry, updatedBy: actorId, updatedAt: now })
+        .set({
+          ...expiry,
+          contentVersion: sql`${gallery.contentVersion} + 1`,
+          updatedBy: actorId,
+          updatedAt: now,
+        })
         .where(scope);
     },
     async archive(actorId, now) {
@@ -61,6 +73,7 @@ function statusWrites(tx: DbExecutor, scope: SQL | undefined): StatusWrites {
         .update(gallery)
         .set({
           status: "ARCHIVED",
+          contentVersion: sql`${gallery.contentVersion} + 1`,
           archivedAt: now,
           archivedBy: actorId,
           updatedBy: actorId,
@@ -93,6 +106,7 @@ export function lifecycleWriter(
           passwordKeyVersion: rotated.password.keyVersion,
           passwordHash: rotated.passwordHash,
           passwordVersion: sql`${gallery.passwordVersion} + 1`,
+          contentVersion: sql`${gallery.contentVersion} + 1`,
           passwordChangedAt: now,
           passwordChangedBy: actorId,
           updatedBy: actorId,

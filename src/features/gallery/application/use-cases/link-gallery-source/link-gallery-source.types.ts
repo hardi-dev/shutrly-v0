@@ -1,13 +1,10 @@
 import type { GallerySourceRepositoryPort } from "../../ports/gallery-source-repository/gallery-source-repository.port";
 import type { GalleryFailure } from "../gallery-results/gallery-results.types";
-import type {
-  SyncGalleryDeps,
-  SyncOutcome,
-} from "../sync-gallery-source/sync-gallery-source.types";
 
-export interface LinkGallerySourceDeps extends SyncGalleryDeps {
+export interface LinkGallerySourceDeps {
   readonly sources: GallerySourceRepositoryPort;
+  readonly now: Date;
 }
 
 export type LinkGallerySourceResult =
-  { readonly ok: true; readonly sourceId: string; readonly sync: SyncOutcome } | GalleryFailure;
+  { readonly ok: true; readonly sourceId: string } | GalleryFailure;

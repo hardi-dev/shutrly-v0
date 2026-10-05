@@ -28,7 +28,7 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 - Database: Neon PostgreSQL via Drizzle
 - DB driver: `@neondatabase/serverless` WebSocket `Pool`, per request ([ADR-009](decisions/ADR-009-neon-serverless-driver.md))
 - Authentication: Better Auth with Drizzle adapter; email + password and Google sign-in ([ADR-012](decisions/ADR-012-google-sign-in.md))
-- Client gallery access: a signed, path-scoped cookie per project link and public rate limits on the Neon counters ([ADR-020](decisions/ADR-020-client-gallery-sessions-and-public-limits.md), Proposed)
+- Client gallery access: a signed, path-scoped cookie per project link and public rate limits on the Neon counters ([ADR-020](decisions/ADR-020-client-gallery-sessions-and-public-limits.md), Accepted)
 - Storage: none owned; photos stay in Google Drive and load from Google's image host by file ID ([ADR-019](decisions/ADR-019-gallery-media-and-sync-on-free-tier.md))
 - Transactional email (auth only): Resend ([ADR-011](decisions/ADR-011-resend-transactional-email.md))
 - Hosting runtime: Cloudflare Workers via OpenNext adapter (`@opennextjs/cloudflare`) ([ADR-008](decisions/ADR-008-cloudflare-runtime.md))

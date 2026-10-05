@@ -1,6 +1,6 @@
 # ADR-020: Client gallery sessions are signed cookies; public limits reuse the Neon counters
 
-Status: Proposed (2026-10-06, F-10 plan). Accepted when the Owner approves the F-10 plan.
+Status: Accepted (2026-10-06, with the F-10 plan; Owner 2026-10-06, delegated: "jawab sesuai rekomendasi kamu").
 Date: 2026-10-06
 Amends: [ADR-013](ADR-013-auth-rate-limit-store.md) (the counter table also serves the public client endpoints, as ADR-013 left open).
 

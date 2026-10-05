@@ -168,6 +168,7 @@ Every slice has: **Read first** (exact IDs, sections and exports, so the build l
 
 **Read first:** technical-design › D-18, D-22, Risks R-1, R-2; ADR-018; ADR-019 point 5; `src/adapters/source/google-drive-provider/`.
 
+- [ ] **0.0 Local secrets.** This worktree has no `.dev.vars`. Copy it from the main checkout (memory: worktrees need `.dev.vars` copied), then add `CLIENT_SESSION_KEY` generated with the command in Global Constraints. Never commit it. If the main checkout has no `.dev.vars` either, STOP and ask the Owner.
 - [ ] **0.1 Check the base.** `drizzle/0014_gallery_drop_last_seen.sql` exists; `src/ui/patterns/photo-tile`, `media-viewer`, `folder-tile` exist; `pnpm typecheck && pnpm lint` pass. If `main` moved, sync it (ccd_host `sync_with_base_branch` in this app worktree) and commit the merge.
 - [ ] **0.2 Spike R-1 (original downloads).** A throwaway script under `scripts/spikes/` (not shipped) that, with the non-production `GOOGLE_DRIVE_API_KEY`, calls `files.get?alt=media` for one link-shared photo of the Owner's test folder and reports status, `content-type`, `content-length` and that the bytes equal the original. Also try `lh3.googleusercontent.com/d/<id>=s0-d`. Record results (no IDs or keys) in the technical design under *Spike results*. Commit `docs(client-access): record the download spike`.
 - [ ] **0.3 Check R-2 (Cache API).** From the OpenNext docs and Cloudflare's limits page: is `caches.default` available under `@opennextjs/cloudflare`, and do Cache API calls count as subrequests on Workers Free? Record the answer and the decision for Slice 11 in the same section.
@@ -277,7 +278,7 @@ Gate order in `resolveClientAccess` (D-4): validate token format → `peek(unkno
 - Port `selection-repository` (read side now: `listGroups`, `findGroupForUpdate`, `usageOf`), adapter `drizzle-selection-repository.ts`.
 - `publishGallery`: create groups when none exist (D-10a), test that a second publish (re-open after expiry) creates none.
 - `sync-group-with-item` use case + `composition/booking/project-deal-edit-scope` wrapping the three item edits (D-10c); booking edits return what changed (`ADDED { itemId }`, `VALUE { itemId, value }`, `REMOVED { itemId }`) so the scope can call the gallery.
-- `get-client-home`, `browse-client-photos` (client mode of the browse reader: visible, not missing, kinds by delivery), `serve-client-photo` + route `/g/[token]/media/[photoId]/[size]` reusing `serveOwnerPhoto`'s core.
+- `get-client-home`, `browse-client-photos` (client mode of the browse reader: visible, not missing, kinds by delivery), `serve-client-photo` + route `/g/[token]/media/[photoId]/[size]`: a new repository read `findClientMediaPhoto(context, photoId)` (workspace + gallery scoped, returns kind, missing, source removed), the client visibility rule, then the same `provider.thumbnail` call `serveOwnerPhoto` makes.
 
 **Rule code**
 
@@ -455,7 +456,7 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 
 ## Slice 10: Link rotation and the Akses klien card
 
-**Read first:** AC-ACC-009; BR-PRJ-003, BR-AUD-001; spec §7, A-16; sequence 4; technical-design › D-19, R-3; exports `owner-5-akses-klien/` (both states).
+**Read first:** AC-ACC-009; BR-PRJ-003, BR-AUD-001; spec §7, A-16; sequence 4; technical-design › D-19, R-3; exports `owner-5-akses-klien/` (`aksesklien-kartu`, `aksesklien-dialog-ganti-link`, desktop and mobile).
 
 **Backend:** booking `rotate-client-access-token` (lock, refuse `CANCELLED`, retry on unique collision, audit columns); `get-access-card` (masked link, password via F-09's Owner-only read, expiry); action; `ProjectDetailScreen` slot `accessCard` (Ganti password reuses F-09's rotate dialog).
 

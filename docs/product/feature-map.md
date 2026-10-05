@@ -16,10 +16,10 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-07 | Project creation from service + snapshots | `projects` | BR-PRJ-*, BR-CAT-003 | J-03 | DONE (2026-10-04; Owner accepted, fidelity pass and keyboard-only a11y tests remain as follow-ups) |
 | F-08 | Team: members (WhatsApp, email, roles), workspace roles, who works which session (*Atur tim*); no fees, no stored session status (sessions themselves moved to F-07, Owner 2026-10-02; scope Owner 2026-10-03) | `team-sessions` | BR-TEAM-001..006 | J-03 | IN PROGRESS (2026-10-04) |
 | F-09 | Gallery, sources, Drive sync (Owner side: create with password, link Drive folders, sync, photos by kind with Owner-only media, publish, expiry, rotate, archive; [intent](../features/gallery/intent.md), [spec](../features/gallery/spec.md)) | `gallery` | BR-GAL-001..009, BR-SRC-* | J-04 | IN PROGRESS (free-tier rework R1–R5 built, CPU check done (go on with Workers Free), verified 2026-10-05 ([report](../features/gallery/verification-report.md)), pending Owner acceptance on `feat/gallery-free-tier`, 2026-10-05; Slices 0–8 built and verified on `main`; [design](../features/gallery/design.md), [technical design](../features/gallery/technical-design.md), [plan](../features/gallery/plan.md): Slices 0–8 and R1–R5) |
-| F-10 | Client gallery access (token, password, rate limits, media delivery) | `client-access` | BR-ACC-* | J-04 | TODO |
-| F-11 | Selection groups and client selection | `selection` | BR-SEL-* | J-04 | TODO |
-| F-12 | Final delivery and project completion | `final-delivery` | BR-DEL-*, BR-PRJ-004..006 | J-06 | TODO |
-| F-13 | Add-ons | `add-ons` | BR-ADD-* | J-05 | TODO |
+| F-10 | Client access: gallery (token, password, rate limits, media delivery), selection, final delivery and add-ons, merged from F-10..F-13 (Owner 2026-10-05; [intent](../features/client-access/intent.md)) | `client-access` | BR-ACC-*, BR-SEL-*, BR-DEL-*, BR-ADD-*, BR-PRJ-004..006 | J-04..J-06 | TODO (intent DRAFT) |
+| F-11 | Selection groups and client selection | `selection` | BR-SEL-* | J-04 | MERGED into F-10 (2026-10-05) |
+| F-12 | Final delivery and project completion | `final-delivery` | BR-DEL-*, BR-PRJ-004..006 | J-06 | MERGED into F-10 (2026-10-05) |
+| F-13 | Add-ons | `add-ons` | BR-ADD-* | J-05 | MERGED into F-10 (2026-10-05) |
 | F-14 | Invoices and payments | `billing` | BR-INV-*, BR-PAY-*, BR-CUR-* | J-07 | TODO |
 | F-15 | WhatsApp sharing | `whatsapp-share` | BR-MSG-* | J-04..J-07 | TODO |
 | F-16 | Operational hardening (isolation, abuse, concurrency, provider-failure tests; backups; caching review) | `hardening` | constitution C-004..C-006 | — | TODO |

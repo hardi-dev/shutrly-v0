@@ -19,12 +19,15 @@ flowchart TD
     F -->|No| W[Password salah, attempt counted] --> P
     F -->|Yes| S[Create session bound to token + passwordVersion] --> G
     G --> H{Final delivery published?}
-    H -->|No| I[Show PROOF photos not missing or hidden]
-    H -->|Yes| J[Also show EDITED and PRINT, not selectable]
+    H -->|No| I[Browse mode: folders, search, PROOF grid, no select controls]
+    H -->|Yes| J[Tabs Foto and Hasil akhir; Hasil akhir shows EDITED and PRINT, not selectable]
     I --> K{Project has selection groups?}
     J --> K
-    K -->|Yes| M[Show groups used / effective limit]
-    K -->|No| O[Photos only]
+    K -->|No| O[Browse only, no Mulai memilih]
+    K -->|Yes| M[Mulai memilih in Page Header]
+    M --> N1[Menu lists every group; SUBMITTED and LOCKED rows disabled]
+    N1 --> N2[Selection mode for the chosen group: summary bar, select controls, Kirim pilihan, Kembali ke semua foto]
+    N2 -->|Kembali ke semua foto| I
 ```
 
 ## 2. One pick change

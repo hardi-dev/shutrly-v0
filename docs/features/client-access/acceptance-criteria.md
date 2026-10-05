@@ -107,14 +107,14 @@ Covers: BR-ACC-005 (ADR-019)
 Covers: BR-SEL-001, BR-SEL-002, BR-SEL-007 (A-13)
 
 **Given** the fixture
-**When** the client opens the gallery
-**Then** two groups show: *Foto edit 0 / 3* and *Foto cetak 0 / 2*, with no separate add-on figure
+**When** the client opens the gallery and taps *Mulai memilih*
+**Then** the gallery first shows photos in browse mode with no select controls, and the menu lists *Foto edit 0 / 3* and *Foto cetak 0 / 2*, with no separate add-on figure (A-24)
 
 ## AC-SEL-002 — Pick and un-pick are saved at once
 Covers: BR-SEL-004, BR-SEL-006 (A-7)
 
 **Given** *Foto edit* is `OPEN` with no picks
-**When** the client picks `IMG_001` and `IMG_002`, reloads, then un-picks `IMG_002`
+**When** the client chooses *Foto edit* from *Mulai memilih*, picks `IMG_001` and `IMG_002`, reloads, then un-picks `IMG_002`
 **Then** after the reload both picks are kept, and after the un-pick the group shows *1 / 3*
 
 ## AC-SEL-003 — The limit is enforced server-side
@@ -194,12 +194,19 @@ Covers: BR-CAT-007, BR-CAT-010, BR-CAT-011, BR-PRJ-001, BR-SEL-003
 **When** the Owner adds an item definition *Bingkai* (`NUMBER`, unit *buah*, used for client selection, pick mode `QUANTITY`), puts it in a service, and creates a project from it
 **Then** the project snapshots *Bingkai* with its pick mode, and its group counts quantities; once a service uses *Bingkai*, its pick mode can no longer be changed
 
+## AC-SEL-017 — The group menu shows every group
+Covers: BR-SEL-005, BR-SEL-007 (A-24, A-25)
+
+**Given** *Foto edit* is `SUBMITTED` and *Foto cetak* is `OPEN`
+**When** the client taps *Mulai memilih*
+**Then** both groups are listed with usage and status, *Foto edit* is disabled, choosing *Foto cetak* enters selection mode for it (select controls only for that group, *Kembali ke semua foto* available and no group switcher, *Kirim pilihan* as the only primary button), and photos picked in *Foto edit* carry a *Foto edit* marker
+
 ## AC-SEL-012 — No groups, no selection
 Covers: BR-SEL-001
 
 **Given** a project with no selection item and a published gallery
 **When** the client opens it
-**Then** the photos show without any selection control
+**Then** the photos show in browse mode, with no *Mulai memilih* button and no selection control
 
 ## AC-SEL-013 — Groups follow deal edits while booked
 Covers: BR-SEL-001, BR-PRJ-009

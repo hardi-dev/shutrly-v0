@@ -13049,6 +13049,40 @@
                       "enabled": false
                     }
                   }
+                },
+                {
+                  "type": "frame",
+                  "id": "ogu66",
+                  "name": "Catatan klien",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$3:space/1",
+                  "children": [
+                    {
+                      "id": "xFyo9",
+                      "type": "ref",
+                      "ref": "3:zSBcA",
+                      "name": "Klien bisa memberi catatan",
+                      "width": "fill_container",
+                      "descendants": {
+                        "3:oq6nY": {
+                          "content": "Klien bisa memberi catatan"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "O5HQ97",
+                      "name": "Helper",
+                      "fill": "$3:color/semantic/text/secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Klien bisa menulis instruksi untuk tiap foto yang dipilih, mis. “hapus jerawat, cerahkan sedikit”.",
+                      "fontFamily": "$3:font/family/base",
+                      "fontSize": "$3:font/size/body-sm",
+                      "fontWeight": "$3:font/weight/regular"
+                    }
+                  ]
                 }
               ]
             },
@@ -13072,16 +13106,17 @@
       "width": 390,
       "height": 1200,
       "fill": "$3:color/semantic/overlay/scrim",
-      "layout": "vertical",
-      "justifyContent": "end",
-      "alignItems": "center",
+      "layout": "none",
       "children": [
         {
           "id": "ckmlM",
           "type": "ref",
           "ref": "3:vSBbR",
           "name": "Sheet",
-          "width": "fill_container",
+          "width": 390,
+          "y": 374,
+          "height": "fit_content",
+          "x": 0,
           "descendants": {
             "3:di5Wv": {
               "content": "Tambah item paket"
@@ -13230,6 +13265,40 @@
                       "enabled": false
                     }
                   }
+                },
+                {
+                  "type": "frame",
+                  "id": "RsXmQ",
+                  "name": "Catatan klien",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$3:space/1",
+                  "children": [
+                    {
+                      "id": "tsCd4",
+                      "type": "ref",
+                      "ref": "3:zSBcA",
+                      "name": "Klien bisa memberi catatan",
+                      "width": "fill_container",
+                      "descendants": {
+                        "3:oq6nY": {
+                          "content": "Klien bisa memberi catatan"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "o09GW",
+                      "name": "Helper",
+                      "fill": "$3:color/semantic/text/secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Klien bisa menulis instruksi untuk tiap foto yang dipilih, mis. “hapus jerawat, cerahkan sedikit”.",
+                      "fontFamily": "$3:font/family/base",
+                      "fontSize": "$3:font/size/body-sm",
+                      "fontWeight": "$3:font/weight/regular"
+                    }
+                  ]
                 }
               ]
             },
@@ -13407,6 +13476,40 @@
                       "enabled": false
                     }
                   }
+                },
+                {
+                  "type": "frame",
+                  "id": "HqdAH",
+                  "name": "Catatan klien",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$3:space/1",
+                  "children": [
+                    {
+                      "id": "jgSWY",
+                      "type": "ref",
+                      "ref": "3:oSTqI",
+                      "name": "Klien bisa memberi catatan",
+                      "width": "fill_container",
+                      "descendants": {
+                        "3:oq6nY": {
+                          "content": "Klien bisa memberi catatan"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "ne0nD",
+                      "name": "Helper",
+                      "fill": "$3:color/semantic/text/secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Klien bisa menulis instruksi untuk tiap foto yang dipilih, mis. “hapus jerawat, cerahkan sedikit”.",
+                      "fontFamily": "$3:font/family/base",
+                      "fontSize": "$3:font/size/body-sm",
+                      "fontWeight": "$3:font/weight/regular"
+                    }
+                  ]
                 }
               ]
             },
@@ -13430,16 +13533,17 @@
       "width": 390,
       "height": 1200,
       "fill": "$3:color/semantic/overlay/scrim",
-      "layout": "vertical",
-      "justifyContent": "end",
-      "alignItems": "center",
+      "layout": "none",
       "children": [
         {
           "id": "JvT4u",
           "type": "ref",
           "ref": "3:vSBbR",
           "name": "Sheet",
-          "width": "fill_container",
+          "width": 390,
+          "y": 374,
+          "height": "fit_content",
+          "x": 0,
           "descendants": {
             "3:di5Wv": {
               "content": "Tambah item paket"
@@ -13588,6 +13692,40 @@
                       "enabled": false
                     }
                   }
+                },
+                {
+                  "type": "frame",
+                  "id": "y62QH3",
+                  "name": "Catatan klien",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$3:space/1",
+                  "children": [
+                    {
+                      "id": "X4N1l",
+                      "type": "ref",
+                      "ref": "3:oSTqI",
+                      "name": "Klien bisa memberi catatan",
+                      "width": "fill_container",
+                      "descendants": {
+                        "3:oq6nY": {
+                          "content": "Klien bisa memberi catatan"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "t7Sfwp",
+                      "name": "Helper",
+                      "fill": "$3:color/semantic/text/secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Klien bisa menulis instruksi untuk tiap foto yang dipilih, mis. “hapus jerawat, cerahkan sedikit”.",
+                      "fontFamily": "$3:font/family/base",
+                      "fontSize": "$3:font/size/body-sm",
+                      "fontWeight": "$3:font/weight/regular"
+                    }
+                  ]
                 }
               ]
             },
@@ -13780,6 +13918,40 @@
                       "content": "Item ini dipakai paket atau proyek. Nama dan satuan masih bisa diubah."
                     }
                   }
+                },
+                {
+                  "type": "frame",
+                  "id": "gd0kh",
+                  "name": "Catatan klien",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$3:space/1",
+                  "children": [
+                    {
+                      "id": "J40UH1",
+                      "type": "ref",
+                      "ref": "3:zSBcA",
+                      "name": "Klien bisa memberi catatan",
+                      "width": "fill_container",
+                      "descendants": {
+                        "3:oq6nY": {
+                          "content": "Klien bisa memberi catatan"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "BUR4G",
+                      "name": "Helper",
+                      "fill": "$3:color/semantic/text/secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Klien bisa menulis instruksi untuk tiap foto yang dipilih, mis. “hapus jerawat, cerahkan sedikit”.",
+                      "fontFamily": "$3:font/family/base",
+                      "fontSize": "$3:font/size/body-sm",
+                      "fontWeight": "$3:font/weight/regular"
+                    }
+                  ]
                 }
               ]
             },
@@ -13803,16 +13975,17 @@
       "width": 390,
       "height": 1200,
       "fill": "$3:color/semantic/overlay/scrim",
-      "layout": "vertical",
-      "justifyContent": "end",
-      "alignItems": "center",
+      "layout": "none",
       "children": [
         {
           "id": "o3eQFO",
           "type": "ref",
           "ref": "3:vSBbR",
           "name": "Sheet",
-          "width": "fill_container",
+          "width": 390,
+          "y": 280,
+          "height": "fit_content",
+          "x": 0,
           "descendants": {
             "3:di5Wv": {
               "content": "Ubah item paket"
@@ -13976,6 +14149,40 @@
                       "content": "Item ini dipakai paket atau proyek. Nama dan satuan masih bisa diubah."
                     }
                   }
+                },
+                {
+                  "type": "frame",
+                  "id": "w15Er9",
+                  "name": "Catatan klien",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$3:space/1",
+                  "children": [
+                    {
+                      "id": "P3SEZ",
+                      "type": "ref",
+                      "ref": "3:zSBcA",
+                      "name": "Klien bisa memberi catatan",
+                      "width": "fill_container",
+                      "descendants": {
+                        "3:oq6nY": {
+                          "content": "Klien bisa memberi catatan"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "DZiLW",
+                      "name": "Helper",
+                      "fill": "$3:color/semantic/text/secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Klien bisa menulis instruksi untuk tiap foto yang dipilih, mis. “hapus jerawat, cerahkan sedikit”.",
+                      "fontFamily": "$3:font/family/base",
+                      "fontSize": "$3:font/size/body-sm",
+                      "fontWeight": "$3:font/weight/regular"
+                    }
+                  ]
                 }
               ]
             },

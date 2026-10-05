@@ -98,4 +98,4 @@ sequenceDiagram
 
 ## Notes
 - Sessions carry the token and `passwordVersion`; a request is valid only if both still match, so token rotation and password rotation end sessions without a session table (a technical-design choice).
-- Downloads are not diagrammed: they are a single authorised read per file (token + session, visible finished photo, then Google's host or the media route, ADR-019) with no ordering risk. How *several* and *all* are bundled is technical-design risk R-1.
+- Downloads are not diagrammed: they are a single authorised read per file (token + session, visible finished photo, then Google's host or the media route, ADR-019) with no ordering risk. The design runs *several* and *all* as sequential per-file downloads with progress (A-33, activity flow 4); whether that fits the budget is technical-design risk R-1.

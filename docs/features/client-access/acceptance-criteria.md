@@ -199,7 +199,7 @@ Covers: BR-SEL-005, BR-SEL-007 (A-12, A-24, A-25, A-27)
 
 **Given** *Foto edit* is `SUBMITTED` and *Foto cetak* is `OPEN`
 **When** the client is on Beranda and opens each card
-**Then** both cards show usage and status; *Foto edit* opens its picks read-only; *Foto cetak* opens Pilih titled *Foto cetak* with select controls only for that group, no group switcher, *Tinjau* as the only button in the summary bar and a back control to Beranda; photos picked in *Foto edit* carry a *Foto edit* marker
+**Then** both cards show usage and status; *Foto edit* opens its picks read-only; *Foto cetak* opens Pilih titled *Foto cetak* with select controls only for that group, no group switcher, *Tinjau* as the only button in the summary bar and a way back to Beranda (the breadcrumb *Beranda › Foto cetak* on desktop, a *Beranda* button on phones); photos picked in *Foto edit* carry a *Foto edit* marker
 
 ## AC-SEL-018 — Print quantities are set on Tinjau
 Covers: BR-SEL-003, BR-SEL-006 (A-9, A-29)
@@ -326,11 +326,11 @@ Covers: BR-DEL-003 (A-17)
 **Then** each is refused with its reason and nothing changes
 
 ## AC-DEL-003 — Download one, several or all
-Covers: BR-DEL-004, BR-ACC-005
+Covers: BR-DEL-004, BR-ACC-005 (A-33)
 
 **Given** final delivery is published
-**When** the client downloads `E_001`, then chooses `E_002` and `P_001` together, then chooses *Unduh semua*
-**Then** each download delivers the original files, and no response or URL contains the folder link or folder ID
+**When** the client downloads `E_001` from its tile, then in *Edited* chooses *Unduh ▾ › Pilih beberapa*, ticks `E_001` and `E_002` and chooses *Unduh 2 foto*, then in *Print* chooses *Unduh ▾ › Unduh semua (1)* and confirms
+**Then** each download delivers the original files, the bulk downloads show progress (*n dari m foto selesai*), selection mode ends after its download or *Batal*, and no response or URL contains the folder link or folder ID
 
 ## AC-DEL-004 — Finished files are independent of proofs
 Covers: BR-DEL-002, BR-DEL-004
@@ -344,7 +344,7 @@ Covers: BR-DEL-004, C-007
 
 **Given** `E_002` has been deleted from Drive but not yet synced
 **When** the client downloads all
-**Then** the other files arrive, `E_002` is reported as failed with *Coba lagi*
+**Then** the other files arrive, `E_002` is marked *Gagal* on its tile and the card reports *1 foto gagal diunduh* with *Coba lagi*
 
 ## AC-DEL-006 — Files added after delivery
 Covers: BR-GAL-006, BR-DEL-002 (A-18)

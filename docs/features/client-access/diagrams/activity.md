@@ -24,12 +24,16 @@ flowchart TD
     B1 -->|OPEN group card| P1[Pilih: one group, select controls, bar used/limit + Tinjau]
     B1 -->|SUBMITTED or LOCKED card| R1[Picks read-only]
     B1 -->|Semua foto| I
-    B1 -->|Hasil akhir, after publish| HA[Hasil akhir: EDITED and PRINT, download]
-    P1 -->|Tinjau| T1[Tinjau: picks, quantity steppers, Kirim n]
+    B1 -->|Hasil akhir, after publish| HA[Hasil akhir: Edited / Print switch, flow 4]
+    P1 -->|Catatan on a picked tile| NS[Note sheet: write or change, Simpan catatan] --> P1
+    P1 -->|Tinjau| T1[Tinjau: picks, notes, quantity steppers, Kirim n]
+    T1 -->|Ubah / Tambah catatan| NS
     T1 -->|Tambah foto lagi| P1
     T1 -->|Kirim + confirm below limit| S1[Group SUBMITTED] --> B1
-    I -->|Open photo| V[Viewer: Pilih untuk... lists OPEN groups] --> I
+    I -->|Open photo| V[Viewer: Pilih untuk... lists OPEN groups, Catatan when picked] --> I
 ```
+
+On desktop every page below Beranda returns there through the breadcrumb; phones use a *Beranda* button (A-26).
 
 ## 2. One pick change
 
@@ -80,6 +84,22 @@ flowchart TD
       D2 -->|Yes| D4[Record publishedAt, project DELIVERED, one transaction]
       D4 --> D5[Owner marks complete, confirm] --> D6[COMPLETED, actor + time]
     end
+```
+
+## 4. Hasil akhir downloads (client, A-33)
+
+```mermaid
+flowchart TD
+    H[Hasil akhir: one kind open, Edited or Print] -->|Tile download or preview Unduh foto| O[One original file]
+    H -->|Unduh menu: Unduh semua n| C{Confirm: browser downloads files one by one}
+    C -->|Batal| H
+    C -->|Unduh semua| Q[Sequential downloads, progress n dari m, Batalkan]
+    H -->|Unduh menu: Pilih beberapa| M[Selection mode: tiles become checkboxes, header n dipilih, Batal, Unduh n foto]
+    M -->|Batal| H
+    M -->|Unduh n foto| Q
+    Q --> R{Every file arrived?}
+    R -->|Yes| H
+    R -->|No| F[Failed tiles marked Gagal, card: n foto gagal diunduh, Coba lagi] -->|Coba lagi| Q
 ```
 
 ## Notes

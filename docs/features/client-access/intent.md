@@ -45,6 +45,8 @@ One client-facing journey, from first open to final files:
 - Owner-side gallery management, sync and password rotation (done in F-09).
 
 ## Open questions
+_Resolved during discovery and design (2026-10-05/06): see [spec.md](spec.md) › Flagged Concerns (FC-001…FC-009) and Assumptions, and [design.md](design.md). GAP-04 is designed for phone and desktop; tablet stays open._
+
 - **CONFLICT, add-ons need invoices:** BR-ADD-004 says approving an add-on adds a line to the project's sole draft invoice, creating one if needed, and BR-ADD-005 needs billing adjustments on issued invoices. Invoices are F-14, which this decision does not merge. Options: (a) add-on approval raises the limit now and the invoice line arrives with F-14 (needs BR-ADD-004 to say so, an Owner change to a domain rule); (b) pull the minimum invoice model into this feature; (c) merge F-14 too. Not changed until the Owner decides.
 - **Size and slicing:** four features in one is large and spans J-04..J-06. Confirm it should still be built as ordered slices (gate and gallery, selection, add-ons, final delivery) with one spec, or whether discovery should split it again.
 - **Slug and feature map:** keep `client-access` as the slug for the merged feature? The feature-map rows for F-11..F-13 are marked as merged into F-10 with this intent; the *Project menu* table still lists F-11 and F-12 items and needs the same relabel when this is accepted.

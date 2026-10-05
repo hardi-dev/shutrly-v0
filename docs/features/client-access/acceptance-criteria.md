@@ -199,7 +199,7 @@ Covers: BR-SEL-005, BR-SEL-007 (A-12, A-24, A-25, A-27)
 
 **Given** *Foto edit* is `SUBMITTED` and *Foto cetak* is `OPEN`
 **When** the client is on Beranda and opens each card
-**Then** both cards show usage and status; *Foto edit* opens its picks read-only; *Foto cetak* opens Pilih titled *Foto cetak* with select controls only for that group, no group switcher, *Tinjau* as the only button in the bottom bar and a back control to Beranda; photos picked in *Foto edit* carry a *Foto edit* marker
+**Then** both cards show usage and status; *Foto edit* opens its picks read-only; *Foto cetak* opens Pilih titled *Foto cetak* with select controls only for that group, no group switcher, *Tinjau* as the only button in the summary bar and a back control to Beranda; photos picked in *Foto edit* carry a *Foto edit* marker
 
 ## AC-SEL-018 — Print quantities are set on Tinjau
 Covers: BR-SEL-003, BR-SEL-006 (A-9, A-29)

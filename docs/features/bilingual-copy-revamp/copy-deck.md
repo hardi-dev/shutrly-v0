@@ -200,7 +200,7 @@ Sources: `src/features/auth/ui/*/*.copy.ts`, `src/ui/patterns/split-layout`, `ed
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Page title | Welcome back | Selamat datang kembali |
-| Lead | Sign in to check your project details and shoot schedule. | Masuk untuk cek detail proyek dan jadwal pemotretanmu. |
+| Lead — Owner-approved wording; intended selection/delivery experience | Your next shoot, photos to edit, and results to deliver. Pick up where you left off. | Jadwal pemotretan berikutnya, foto untuk diedit, dan hasil untuk dikirim. Masuk dan lanjutkan pekerjaanmu. |
 | Email label | Email | Email |
 | Email placeholder | you@studio.com | nama@studio.com |
 | Password label | Password | Kata sandi |

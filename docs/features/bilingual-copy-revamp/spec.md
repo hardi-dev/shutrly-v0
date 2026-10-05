@@ -30,6 +30,10 @@ Buttons name the next action. Empty states explain the situation and offer an av
 
 Accessible names, validation and loading text follow the active language. Keep interpolation values intact, provide grammatical singular/plural wording and avoid building sentences from translated fragments.
 
+## Editorial copy deck
+
+The proposed EN/ID wording is collected in one [copy deck](copy-deck.md), grouped by feature, verified page location and state. It includes validation outside copy modules, accessibility labels, platform defaults and recipient messages. Future surfaces and proposed terminology are explicitly marked for review; the deck is not approval for implementation or rollout behavior.
+
 ## Example copy direction
 
 These examples illustrate voice; feature behavior must be checked before adoption.

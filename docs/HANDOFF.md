@@ -9,7 +9,7 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 
 - [Policy](product/localization.md), BR-L10N-* and [ADR-021](architecture/decisions/ADR-021-next-intl-bilingual-localization.md) approved: English default, EN/ID switches, full system/authored-content coverage. Docs aligned; app, dependency, schema and exports unchanged.
 - Read [spec](features/bilingual-copy-revamp/spec.md), [criteria](features/bilingual-copy-revamp/acceptance-criteria.md) and [audit](features/bilingual-copy-revamp/copy-outside-modules-audit.md).
-- Resume at: resolve preference persistence, recipient/reset language, title classification, readiness and legacy snapshots with Owner; then Pencil/exports, technical design and plan. Prior gallery actions remain outstanding below.
+- Resume at: review the [EN/ID copy deck](features/bilingual-copy-revamp/copy-deck.md); resolve preferences, recipient/reset language, classification, readiness and legacy snapshots; then Pencil/exports, technical design and plan. Prior gallery actions remain outstanding.
 
 ## Previous delivery context — F-09 free-tier rework PLANNED (2026-10-05)
 

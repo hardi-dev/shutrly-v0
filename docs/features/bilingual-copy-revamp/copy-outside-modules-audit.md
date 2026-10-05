@@ -86,6 +86,10 @@ Other joins of user values with neutral punctuation (` · `, ` › `, commas, ra
 
 Proposal for later tooling work: add targeted checks for label-bearing option/column objects and sibling-copy provenance, paired with an allowlist for data/brands/keys. Avoid a blanket ban on strings in domain/schema files. No lint rule was changed in this audit.
 
+## Owner coverage decision — 2026-10-06
+
+All OCM-01–22 findings are mandatory localization scope. A page must not mix English and Indonesian system copy. No item is deferred merely because it lives outside `.copy.ts` or originates in a library/default-data record. The exclusions above distinguish brand names, developer-only strings, stable keys and user data; they do not permit untranslated system text. Existing customized data and immutable snapshots need an explicit content-language policy before implementation.
+
 ## Revamp order
 
 1. Include OCM-01–09 in the initial copy extraction and EN/ID review; give OCM-07/08 and accessible text explicit state coverage.

@@ -9,14 +9,15 @@ Base: staging `bdab2c2`; branch `codex/bilingual-copy-revamp`.
 - English is the default language.
 - Users can switch between English and Bahasa Indonesia, one language per screen.
 - Both the photographer dashboard and client galleries support switching.
+- All system-owned user-facing content must be localized; no page may mix English and Indonesian system copy (Owner 2026-10-06). This includes content outside `.copy.ts`, validation, loading, accessibility text, library-generated text, display formatting and platform-default content.
 - Voice is casual and friendly. Indonesian addresses the reader as `kamu` or `-mu` when useful.
 - Use natural local startup language: warmth, everyday verbs, concise task instructions, and clear recovery guidance.
 
 ## Goal and boundaries
 
-Make existing Shutrly journeys easy to understand in either language without changing business behavior. Rewrite navigation, forms, helper text, state messages, confirmations, accessible labels and existing client-gallery text. Inventory existing auth emails and generated WhatsApp messages; their language-selection policy needs a separate decision before rewriting them.
+Make existing Shutrly journeys easy to understand in either language without changing business behavior. Rewrite navigation, forms, helper text, state messages, confirmations, accessible labels and existing client-gallery text. Include existing auth emails and generated WhatsApp messages in localization coverage. Their recipient-language selection and treatment of existing customized templates must be specified before implementation; this is a behavior decision, not an exclusion from localization.
 
-No automatic translation of user-entered client names, project names, service names, package descriptions or custom message templates. Language selection must not silently change currency, financial rules, timezone, entitlements, project stages or permissions. No unrelated visual redesign, new marketing claims, dependency choice or schema change is approved by this document.
+User-entered client names, project names, service names, package descriptions and custom message templates require an explicit content-language policy. Do not automatically translate, overwrite or silently reclassify them as system copy. System-owned default names, units, roles and templates must have EN/ID equivalents. Brand names such as Shutrly, WhatsApp and Google Drive remain brand names in both locales. The Owner’s no-mixed-language requirement is mandatory for system copy; clarify whether arbitrary user-entered content must also have bilingual versions. Language selection must not silently change currency, financial rules, timezone, entitlements, project stages or permissions. No unrelated visual redesign, new marketing claims, dependency choice or schema change is approved by this document.
 
 ## Voice and writing rules
 
@@ -60,6 +61,8 @@ Use one term per concept, aligned with the domain glossary. UI wording may be si
 
 ## Language behavior proposal — unresolved
 
+All visible platform-owned defaults, including catalog item names/units, team-role defaults and default WhatsApp templates, must render in the active content language without overwriting customized data or immutable snapshots. Storage/versioning and recipient-language behavior still need design.
+
 Recommend independent visitor preferences for dashboard and gallery, remembering an explicit choice and falling back to English. The Owner has approved English default and both switches, but has not yet approved storage scope, persistence across devices, workspace language precedence, behavior before login or gallery preference scope. Decide these before implementation.
 
 Separately decide language for generated WhatsApp messages, auth emails and existing custom templates. UI language and recipient-message language must not be assumed identical. Locale formatting must retain existing currency/timezone semantics; display patterns require review.
@@ -87,7 +90,10 @@ Keep copy co-located in sibling `.copy.ts` modules and preserve the fixed archit
 
 - First visits render English on both surfaces; explicit language switching works according to the approved persistence policy.
 - Switching preserves route, gallery authorization, selections and unsaved form values as specified by acceptance criteria.
-- Each supported state has equivalent, reviewed EN/ID meaning with no mixed-language fallback.
+- Each supported state has equivalent, reviewed EN/ID meaning with no mixed-language fallback. Missing translations block release rather than falling back to the other language.
+- All findings OCM-01–22 in [the outside-module audit](copy-outside-modules-audit.md) are included in implementation coverage, with the historical migration/data constraints preserved.
+- Every page is reviewed in English and Indonesian across normal, empty, loading, validation, error, success and confirmation states where available. Review includes portals, dialogs, mobile navigation and library-generated accessible text.
+- Platform-owned default labels, units, roles and message content have both language versions; user-entered content follows its explicitly approved policy.
 - Accessible labels, errors, toasts, loading text and confirmation dialogs use the active language.
 - Dynamic values, counts and verified limits render correctly in both languages.
 - Text fits approved desktop and mobile layouts; buttons remain readable and focus/keyboard behavior works.

@@ -1,6 +1,6 @@
 # ADR-008: Run Next.js on Cloudflare Workers via OpenNext, Neon via serverless driver
 
-Status: Accepted
+Status: Accepted. Amended by [ADR-020](ADR-020-staging-on-netlify.md): staging also runs on Netlify (Node), from the same build.
 Date: 2026-09-25
 
 ## Context

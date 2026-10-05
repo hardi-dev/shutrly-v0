@@ -33,17 +33,18 @@ A client who has the project link and the current gallery password can open the 
 2. If the token belongs to a project whose gallery is `PUBLISHED` and not expired, Shutrly shows the password screen with the workspace brand and the project title. Otherwise it shows the neutral unavailable page (Alternative flows).
 3. The client enters the password. Shutrly verifies it against the hash, server-side (C-004, ADR-017).
 4. On success the client gets a session for this gallery, tied to the token and the current `passwordVersion` (A-1), and lands on the gallery.
-5. The gallery opens in **browse mode**, laid out like the Owner's gallery (F-09 A-12, A-13): folder tiles with a breadcrumb, search by file name, and a grid of `PROOF` photos that are not missing or hidden (BR-GAL-006, BR-GAL-009, BR-GAL-007). Browse mode has no select controls. A photo already picked carries a small marker naming its group. `EDITED` and `PRINT` photos are not shown until final delivery (BR-DEL-002).
-6. Images load from Google by file ID or from the controlled media route; no folder link, folder ID, resource key or API key reaches the browser (BR-ACC-005, ADR-019).
+5. The client lands on **Beranda** (home), the hub of every client task (A-24, Owner 2026-10-05, Flow B): one card per selection group, a *Semua foto* card and a *Hasil akhir* card. A project with no selection group and no published final delivery skips Beranda and opens *Semua foto* (A-31).
+6. *Semua foto* is laid out like the Owner's gallery (F-09 A-12, A-13): folder tiles with a breadcrumb, search by file name, and a grid of `PROOF` photos that are not missing or hidden (BR-GAL-006, BR-GAL-009, BR-GAL-007). The grid has no select controls; a photo already picked carries a marker naming its group, with *× n* for quantities. The photo viewer offers *Pilih untuk…* (A-30). `EDITED` and `PRINT` photos are not shown until final delivery (BR-DEL-002).
+7. Images load from Google by file ID or from the controlled media route; no folder link, folder ID, resource key or API key reaches the browser (BR-ACC-005, ADR-019).
 
 ### 2. Select (client)
-1. If the project has selection groups, the Page Header shows **Mulai memilih**. It opens a menu (a Bottom Sheet on phones) listing every group with its name, *used / effective limit* (BR-SEL-007) and status, for example *Foto edit 12 / 40 · Terbuka*. Groups that are `SUBMITTED` or `LOCKED` are listed but disabled (A-24). Without groups there is no button.
-2. Choosing a group enters **selection mode** for that group (A-25): a summary bar under the Page Header shows the group, its usage bar and status, with *Kirim pilihan*; select controls appear on the tiles; *Mulai memilih* is replaced, in the same place, by the button *Kembali ke semua foto*. *Kirim pilihan* is the only primary button, because picks are saved at once and leaving needs no confirmation. There is no *Ganti bagian*: one group is one task, and to work on another group the client goes back and taps *Mulai memilih* again (Owner 2026-10-05). The client picks a proof photo for the group. For a `QUANTITY` group they also set a quantity, starting at 1 (BR-SEL-003, BR-SEL-004).
+1. On Beranda each group card shows the group name, *used / effective limit* with its unit (BR-SEL-007, A-20) and a status chip: *Terbuka*, *Dibuka lagi* (reopened by an add-on, A-22), *Dikirim* (waiting for the Owner) or *Dikunci*. An `OPEN` card leads to its **Pilih** screen; a `SUBMITTED` or `LOCKED` card opens its picks read-only (A-12). Without groups there are no group cards.
+2. **Pilih** is one screen per group (A-25): its title is the group name, the back control returns to Beranda, and the grid of `PROOF` photos (folder filter and search as in *Semua foto*) has a select control on every tile. A bottom bar shows *used / limit* and the button *Tinjau*. Tapping a tile picks or un-picks it; in a `QUANTITY` group a pick starts at quantity 1 and the tile shows *× n* (BR-SEL-003, BR-SEL-004). A photo picked in another group shows that group's marker. The client can filter the grid to this group's picks.
 3. Every pick, un-pick and quantity change is saved at once, checked server-side under a lock on the group (BR-SEL-006, A-7). A change that would exceed the limit is refused with *Batas pilihan tercapai*.
-4. A photo may be picked in several groups (BR-SEL-004).
-5. The client can filter the grid to the photos picked in the active group.
-6. *Kembali ke semua foto* returns to browse mode with all picks kept.
-7. The client submits a group (A-5). After a confirmation, the group becomes `SUBMITTED` and its picks are read-only for everyone (BR-SEL-005).
+4. A photo may be picked in several groups (BR-SEL-004). From the photo viewer in *Semua foto*, *Pilih untuk…* picks or un-picks the photo in any `OPEN` group (A-30), with the same checks.
+5. **Tinjau** (A-29) lists the group's picks with thumbnail and file name, *used / limit* and the places left. In a `QUANTITY` group each row has a quantity stepper; quantities are changed only here. A pick can be removed here. *Tambah foto lagi* returns to Pilih with all picks kept.
+6. *Kirim n foto* (or *n lembar*) submits the group (A-5). Below the limit a confirmation names the remaining places. The group becomes `SUBMITTED`, its picks are read-only for everyone (BR-SEL-005), and the client returns to Beranda, where the card shows *Dikirim · menunggu fotografer*.
+7. One group is one task: to work on another group the client goes back to Beranda and opens that card (A-27).
 
 ### 3. Review and lock (Owner)
 1. On the project, the Owner sees each group with its status (*Terbuka*, *Dikirim*, *Dikunci*) and *used / effective limit*.
@@ -59,7 +60,7 @@ A client who has the project link and the current gallery password can open the 
 
 ### 5. Final delivery
 1. The Owner publishes final delivery from the gallery when BR-DEL-003 and A-17 hold. Shutrly records `finalDeliveryPublishedAt` and moves the project to `DELIVERED` in the same transaction (BR-PRJ-004).
-2. The same link and password now also show the finished files, by kind (*Edited*, *Print*), excluding missing ones (BR-DEL-001, BR-DEL-002).
+2. The same link and password now also show the finished files: the *Hasil akhir* card moves to the top of Beranda and opens the files by kind (*Edited*, *Print*), excluding missing ones (BR-DEL-001, BR-DEL-002, A-26).
 3. The client downloads one file, several chosen files, or all finished files (BR-DEL-004). Files are the originals. A bulk download never sends the folder link or folder ID to the browser (BR-ACC-005).
 4. Files synced later into `edited` / `print` folders appear for the client after the next sync (A-18).
 
@@ -82,7 +83,7 @@ A client who has the project link and the current gallery password can open the 
 - **Limit reached:** further picks in that group are refused; un-picking frees a place.
 - **Concurrent changes** (two devices, or the Owner lowering a limit): the server's answer wins and the client view refreshes the group (BR-SEL-006).
 - **Submitting fewer than the limit:** allowed after a confirmation that names the remaining places (A-5).
-- **Project without selection items:** the gallery stays in browse mode, with no *Mulai memilih* button.
+- **Project without selection items:** Beranda has no group cards and the viewer has no *Pilih untuk…*; before final delivery the client lands on *Semua foto* (A-31).
 - **Deal edited while `BOOKED`:** groups follow the project items; an edit that would break a group is refused for the Owner (BR-PRJ-009, BR-SEL-001 amendments).
 - **Group no longer `OPEN`:** a pick or submit is refused with *Pilihan sudah dikirim* and the view refreshes.
 - **A picked photo goes missing:** the pick stays, counts toward usage, and is flagged to the Owner as *Hilang*; the client sees it as unavailable (A-8).
@@ -146,11 +147,14 @@ A client who has the project link and the current gallery password can open the 
 - **A-18 Later finished files:** files synced into `edited` / `print` after delivery are shown without publishing again.
 - **A-20 One group per selection item:** a group is made from a project item with `selectionRequired` and is named after that snapshotted item (BR-PRJ-001), so two items of the same type (for example *Foto edit* and *Foto edit bonus*) are two groups with separate limits. Its pick mode, set by the Owner on the item definition, decides how usage counts: `COUNT` or `QUANTITY` (BR-SEL-003). The unit text (*foto*, *lembar*) is shown beside the limit.
 - **A-21 Zero limit:** an item with value 0 yields a group with limit 0 that is shown *0 / 0*, offers no picks, and can't be submitted. An add-on can raise it.
-- **A-24 Group menu:** *Mulai memilih* lists all groups of the project, one row each with name, usage and a status chip; `SUBMITTED` and `LOCKED` rows are disabled (Owner 2026-10-05).
-- **A-27 One group at a time:** selection mode has no group switcher. Another group is chosen from *Mulai memilih* after going back to browse mode.
+- **A-24 Beranda:** after the password the client lands on Beranda: group cards in project-item order, then *Semua foto*, then *Hasil akhir*. Before final delivery the *Hasil akhir* card is shown disabled with *Belum tersedia*; after it, the card moves to the top. The Page Header has the project title and studio brand and no tabs (Owner 2026-10-05, Flow B).
+- **A-27 One group at a time:** Pilih and Tinjau have no group switcher; another group is opened from its Beranda card.
 - **A-28 Grid columns:** photo grids have 4 columns on desktop and 2 on phones (Owner 2026-10-05); this also applies to the Owner's phone view of a group's picks.
-- **A-25 Selection mode:** select controls show only for the active group; a photo picked in another group shows a marker with that group's name, and print quantities show as *× n*.
-- **A-26 Page Header:** before final delivery the Page Header has no tabs; after it, the tabs are *Foto* (browse and selection) and *Hasil akhir*.
+- **A-25 Pilih screen:** select controls show only for the screen's group; a photo picked in another group shows a marker with that group's name, and print quantities show as *× n*. The bottom bar's only button is *Tinjau* (Owner 2026-10-05).
+- **A-26 No tabs:** the client area has no tabs; *Semua foto*, each group and *Hasil akhir* are reached from Beranda, and each screen's back control returns there.
+- **A-29 Tinjau:** a review screen per group between Pilih and submit. Quantities of a `QUANTITY` group are set only here, with a stepper from 1 to the places left (A-9). *Kirim* is disabled with no picks (A-5) (Owner 2026-10-05).
+- **A-30 Pilih untuk… in the viewer:** the photo viewer in *Semua foto* has *Pilih untuk…*, which lists the `OPEN` groups with usage and a check where the photo is already picked; tapping a group picks the photo (quantity 1) or un-picks it. `SUBMITTED` and `LOCKED` groups are listed disabled. A full group refuses with *Batas pilihan tercapai* (Owner 2026-10-05).
+- **A-31 Skipping Beranda:** a project with no selection group and no published final delivery opens *Semua foto* directly, because Beranda would hold only one card. Once final delivery is published the client lands on Beranda.
 - **A-22 Reopened group:** reopening by an add-on keeps every pick; submitting again follows A-5. Cancelling that add-on later never changes the group's status, only its limit (BR-ADD-005). If the Owner locks a group while an add-on is `DRAFT`, approving it is refused (the target is `LOCKED`).
 - **A-23 Groups for galleries published before this feature:** a published gallery with no groups gets them when F-10 is deployed (a backfill in the migration), so it behaves like one published after.
 - **A-19 Completion before invoices:** *Tandai selesai* shows no balance warning until F-14 exists; BR-PRJ-005 never blocks on balances anyway.

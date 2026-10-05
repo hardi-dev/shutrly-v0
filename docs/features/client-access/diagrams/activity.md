@@ -18,16 +18,17 @@ flowchart TD
     E -->|No| F{Password matches the hash?}
     F -->|No| W[Password salah, attempt counted] --> P
     F -->|Yes| S[Create session bound to token + passwordVersion] --> G
-    G --> H{Final delivery published?}
-    H -->|No| I[Browse mode: folders, search, PROOF grid, no select controls]
-    H -->|Yes| J[Tabs Foto and Hasil akhir; Hasil akhir shows EDITED and PRINT, not selectable]
-    I --> K{Project has selection groups?}
-    J --> K
-    K -->|No| O[Browse only, no Mulai memilih]
-    K -->|Yes| M[Mulai memilih in Page Header]
-    M --> N1[Menu lists every group; SUBMITTED and LOCKED rows disabled]
-    N1 --> N2[Selection mode for the chosen group: summary bar, select controls, Kirim pilihan, Kembali ke semua foto]
-    N2 -->|Kembali ke semua foto| I
+    G --> H{Project has selection groups, or final delivery published?}
+    H -->|No| I[Semua foto: folders, search, PROOF grid, no select controls]
+    H -->|Yes| B1[Beranda: group cards, Semua foto, Hasil akhir]
+    B1 -->|OPEN group card| P1[Pilih: one group, select controls, bar used/limit + Tinjau]
+    B1 -->|SUBMITTED or LOCKED card| R1[Picks read-only]
+    B1 -->|Semua foto| I
+    B1 -->|Hasil akhir, after publish| HA[Hasil akhir: EDITED and PRINT, download]
+    P1 -->|Tinjau| T1[Tinjau: picks, quantity steppers, Kirim n]
+    T1 -->|Tambah foto lagi| P1
+    T1 -->|Kirim + confirm below limit| S1[Group SUBMITTED] --> B1
+    I -->|Open photo| V[Viewer: Pilih untuk... lists OPEN groups] --> I
 ```
 
 ## 2. One pick change

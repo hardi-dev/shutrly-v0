@@ -104,17 +104,17 @@ Covers: BR-ACC-005 (ADR-019)
 ## Selection
 
 ## AC-SEL-001 — Groups and limits
-Covers: BR-SEL-001, BR-SEL-002, BR-SEL-007 (A-13)
+Covers: BR-SEL-001, BR-SEL-002, BR-SEL-007 (A-13, A-24)
 
 **Given** the fixture
-**When** the client opens the gallery and taps *Mulai memilih*
-**Then** the gallery first shows photos in browse mode with no select controls, and the menu lists *Foto edit 0 / 3* and *Foto cetak 0 / 2*, with no separate add-on figure (A-24)
+**When** the client enters the password
+**Then** they land on Beranda with the cards *Foto edit 0 / 3 foto · Terbuka*, *Foto cetak 0 / 2 lembar · Terbuka*, *Semua foto* and a disabled *Hasil akhir · Belum tersedia*, with no separate add-on figure
 
 ## AC-SEL-002 — Pick and un-pick are saved at once
 Covers: BR-SEL-004, BR-SEL-006 (A-7)
 
 **Given** *Foto edit* is `OPEN` with no picks
-**When** the client chooses *Foto edit* from *Mulai memilih*, picks `IMG_001` and `IMG_002`, reloads, then un-picks `IMG_002`
+**When** the client opens the *Foto edit* card, picks `IMG_001` and `IMG_002` on Pilih, reloads, then un-picks `IMG_002`
 **Then** after the reload both picks are kept, and after the un-pick the group shows *1 / 3*
 
 ## AC-SEL-003 — The limit is enforced server-side
@@ -156,8 +156,8 @@ Covers: BR-SEL-004
 Covers: BR-SEL-005 (A-5)
 
 **Given** *Foto edit* has 2 of 3 picks
-**When** the client chooses *Kirim pilihan* and confirms the notice that 1 place remains
-**Then** the group is `SUBMITTED`, its picks are read-only, and a later pick, un-pick or second submit is refused with *Pilihan sudah dikirim*
+**When** the client chooses *Tinjau*, sees `IMG_001` and `IMG_002` listed with *sisa 1*, chooses *Kirim 2 foto* and confirms the notice that 1 place remains
+**Then** the group is `SUBMITTED`, the client is back on Beranda with *Foto edit · Dikirim*, its picks are read-only, and a later pick, un-pick or second submit is refused with *Pilihan sudah dikirim*
 
 ## AC-SEL-009 — Submitting needs a pick
 Covers: BR-SEL-005 (A-5)
@@ -194,19 +194,40 @@ Covers: BR-CAT-007, BR-CAT-010, BR-CAT-011, BR-PRJ-001, BR-SEL-003
 **When** the Owner adds an item definition *Bingkai* (`NUMBER`, unit *buah*, used for client selection, pick mode `QUANTITY`), puts it in a service, and creates a project from it
 **Then** the project snapshots *Bingkai* with its pick mode, and its group counts quantities; once a service uses *Bingkai*, its pick mode can no longer be changed
 
-## AC-SEL-017 — The group menu shows every group
-Covers: BR-SEL-005, BR-SEL-007 (A-24, A-25)
+## AC-SEL-017 — Beranda shows every group and opens one task at a time
+Covers: BR-SEL-005, BR-SEL-007 (A-12, A-24, A-25, A-27)
 
 **Given** *Foto edit* is `SUBMITTED` and *Foto cetak* is `OPEN`
-**When** the client taps *Mulai memilih*
-**Then** both groups are listed with usage and status, *Foto edit* is disabled, choosing *Foto cetak* enters selection mode for it (select controls only for that group, *Kembali ke semua foto* available and no group switcher, *Kirim pilihan* as the only primary button), and photos picked in *Foto edit* carry a *Foto edit* marker
+**When** the client is on Beranda and opens each card
+**Then** both cards show usage and status; *Foto edit* opens its picks read-only; *Foto cetak* opens Pilih titled *Foto cetak* with select controls only for that group, no group switcher, *Tinjau* as the only button in the bottom bar and a back control to Beranda; photos picked in *Foto edit* carry a *Foto edit* marker
+
+## AC-SEL-018 — Print quantities are set on Tinjau
+Covers: BR-SEL-003, BR-SEL-006 (A-9, A-29)
+
+**Given** *Foto cetak* (limit 2) is `OPEN` with no picks
+**When** the client picks `IMG_003` on Pilih, opens Tinjau, raises its quantity to 2, then tries to raise it to 3, then removes it
+**Then** the pick starts at *× 1*, the stepper reaches 2 and the tile shows *× 2*, 3 is not offered and a direct request is refused with *Batas pilihan tercapai*, and after removal the group shows *0 / 2* and *Kirim* is disabled
+
+## AC-SEL-019 — Pilih untuk… from the viewer
+Covers: BR-SEL-004, BR-SEL-005, BR-SEL-006 (A-30)
+
+**Given** *Foto edit* is `OPEN` with 3 of 3 picks, *Foto cetak* is `OPEN` with none, and a third group is `SUBMITTED`
+**When** the client opens `IMG_007` in *Semua foto* and chooses *Pilih untuk…*
+**Then** the list shows *Foto edit 3 / 3*, *Foto cetak 0 / 2* and the submitted group disabled; choosing *Foto cetak* picks `IMG_007` with quantity 1 and its marker appears; choosing *Foto edit* is refused with *Batas pilihan tercapai*
+
+## AC-SEL-020 — Landing without groups, and after final delivery
+Covers: BR-SEL-001, BR-DEL-001 (A-24, A-31)
+
+**Given** a published gallery whose project has no selection item and no final delivery
+**When** the client enters the password, and later the Owner publishes final delivery
+**Then** the client first lands on *Semua foto* with no select controls and no *Pilih untuk…*; after the publish they land on Beranda with *Hasil akhir* as the top card
 
 ## AC-SEL-012 — No groups, no selection
 Covers: BR-SEL-001
 
 **Given** a project with no selection item and a published gallery
 **When** the client opens it
-**Then** the photos show in browse mode, with no *Mulai memilih* button and no selection control
+**Then** *Semua foto* opens directly (A-31), with no group card, no select control and no *Pilih untuk…*
 
 ## AC-SEL-013 — Groups follow deal edits while booked
 Covers: BR-SEL-001, BR-PRJ-009

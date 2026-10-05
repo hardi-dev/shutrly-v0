@@ -25580,7 +25580,7 @@
       "y": 4144,
       "descendants": {
         "e8ukxt/3:HsrFT": {
-          "content": "Wisuda Rina"
+          "content": "Halo, Rina"
         },
         "e8ukxt/3:i8XPWU": {
           "content": "Pilih foto untuk paket Anda, lalu kirim ke fotografer."
@@ -25848,7 +25848,7 @@
       "y": 4144,
       "descendants": {
         "SfIhJ/3:K1jSfD": {
-          "content": "Wisuda Rina"
+          "content": "Halo, Rina"
         },
         "SfIhJ/3:EYvag": {
           "content": "Pilih foto untuk paket Anda, lalu kirim ke fotografer."
@@ -26100,7 +26100,7 @@
       "y": 4144,
       "descendants": {
         "e8ukxt/3:HsrFT": {
-          "content": "Wisuda Rina"
+          "content": "Halo, Rina"
         },
         "e8ukxt/3:i8XPWU": {
           "content": "Foto edit sudah dikirim. Tinggal Foto cetak."
@@ -26368,7 +26368,7 @@
       "y": 4144,
       "descendants": {
         "SfIhJ/3:K1jSfD": {
-          "content": "Wisuda Rina"
+          "content": "Halo, Rina"
         },
         "SfIhJ/3:EYvag": {
           "content": "Foto edit sudah dikirim. Tinggal Foto cetak."
@@ -26620,7 +26620,7 @@
       "y": 4144,
       "descendants": {
         "e8ukxt/3:HsrFT": {
-          "content": "Wisuda Rina"
+          "content": "Halo, Rina"
         },
         "e8ukxt/3:i8XPWU": {
           "content": "Fotografer menambah 4 tempat untuk Foto edit."
@@ -26889,7 +26889,7 @@
       "y": 4144,
       "descendants": {
         "SfIhJ/3:K1jSfD": {
-          "content": "Wisuda Rina"
+          "content": "Halo, Rina"
         },
         "SfIhJ/3:EYvag": {
           "content": "Fotografer menambah 4 tempat untuk Foto edit."
@@ -27142,7 +27142,7 @@
       "y": 4144,
       "descendants": {
         "e8ukxt/3:HsrFT": {
-          "content": "Wisuda Rina"
+          "content": "Halo, Rina"
         },
         "e8ukxt/3:i8XPWU": {
           "content": "Foto Anda sudah selesai diedit."
@@ -27432,7 +27432,7 @@
       "y": 4144,
       "descendants": {
         "SfIhJ/3:K1jSfD": {
-          "content": "Wisuda Rina"
+          "content": "Halo, Rina"
         },
         "SfIhJ/3:EYvag": {
           "content": "Foto Anda sudah selesai diedit."
@@ -30763,7 +30763,7 @@
       "name": "Tinjau · edit · Desktop",
       "x": 21000,
       "y": 19081,
-      "height": 960,
+      "height": 989,
       "descendants": {
         "e8ukxt/3:HsrFT": {
           "content": "Tinjau Foto edit"
@@ -30871,7 +30871,7 @@
                     },
                     "3:f60zS": {
                       "type": "frame",
-                      "id": "ZVsQv",
+                      "id": "AjEjS",
                       "name": "Content",
                       "slot": [
                         "Xig4E"
@@ -30884,7 +30884,7 @@
                       ],
                       "children": [
                         {
-                          "id": "D3wCuX",
+                          "id": "vSTSz",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_002.jpg",
@@ -30896,13 +30896,13 @@
                             "k0bfAH": {
                               "content": "Rina-Wisuda › Akad"
                             },
-                            "CV2OV": {
+                            "F88VJe/3:fhch4": {
                               "content": "Hapus jerawat di dahi, cerahkan sedikit."
                             }
                           }
                         },
                         {
-                          "id": "oevGH",
+                          "id": "RIb2P",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_005.jpg",
@@ -30914,13 +30914,13 @@
                             "k0bfAH": {
                               "content": "Rina-Wisuda › Akad"
                             },
-                            "CV2OV": {
+                            "F88VJe/3:fhch4": {
                               "content": "Tolong rapikan rambut yang berantakan."
                             }
                           }
                         },
                         {
-                          "id": "DtqA8",
+                          "id": "nHX1q",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_009.jpg",
@@ -30935,14 +30935,14 @@
                             },
                             "R5zXj": {
                               "type": "frame",
-                              "id": "M5hWgL",
+                              "id": "Zu40o",
                               "name": "Note",
                               "gap": "$3:space/1-5",
                               "alignItems": "center",
                               "children": [
                                 {
                                   "type": "icon",
-                                  "id": "R6JAj",
+                                  "id": "T2xhM",
                                   "name": "Icon",
                                   "width": 14,
                                   "height": 14,
@@ -30952,7 +30952,7 @@
                                 },
                                 {
                                   "type": "text",
-                                  "id": "U2rkA",
+                                  "id": "t5ACK",
                                   "name": "Label",
                                   "fill": "$3:color/semantic/action/primary",
                                   "content": "Tambah catatan",
@@ -31013,10 +31013,10 @@
           ]
         },
         "d1bWR": {
-          "height": 960
+          "height": 989
         },
         "cw9LY": {
-          "height": 960
+          "height": 989
         }
       }
     },
@@ -31027,7 +31027,7 @@
       "name": "Tinjau · edit · Phone",
       "x": 22500,
       "y": 19081,
-      "height": 1015,
+      "height": 1045,
       "descendants": {
         "SfIhJ/3:K1jSfD": {
           "content": "Tinjau Foto edit"
@@ -31116,7 +31116,7 @@
                 },
                 "3:AdZ4y": {
                   "type": "frame",
-                  "id": "XJQvu",
+                  "id": "KRuCe",
                   "name": "Content",
                   "slot": [
                     "Xig4E"
@@ -31129,7 +31129,7 @@
                   ],
                   "children": [
                     {
-                      "id": "GGBfb",
+                      "id": "p5o1O",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_002.jpg",
@@ -31141,13 +31141,13 @@
                         "k0bfAH": {
                           "content": "Rina-Wisuda › Akad"
                         },
-                        "CV2OV": {
+                        "F88VJe/3:fhch4": {
                           "content": "Hapus jerawat di dahi, cerahkan sedikit."
                         }
                       }
                     },
                     {
-                      "id": "SefPL",
+                      "id": "qSbl8",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_005.jpg",
@@ -31159,13 +31159,13 @@
                         "k0bfAH": {
                           "content": "Rina-Wisuda › Akad"
                         },
-                        "CV2OV": {
+                        "F88VJe/3:fhch4": {
                           "content": "Tolong rapikan rambut yang berantakan."
                         }
                       }
                     },
                     {
-                      "id": "FXElW",
+                      "id": "nvt2X",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_009.jpg",
@@ -31180,14 +31180,14 @@
                         },
                         "R5zXj": {
                           "type": "frame",
-                          "id": "OD0V9",
+                          "id": "YYRs7",
                           "name": "Note",
                           "gap": "$3:space/1-5",
                           "alignItems": "center",
                           "children": [
                             {
                               "type": "icon",
-                              "id": "OVxPX",
+                              "id": "R4OuJ",
                               "name": "Icon",
                               "width": 14,
                               "height": 14,
@@ -31197,7 +31197,7 @@
                             },
                             {
                               "type": "text",
-                              "id": "Jfc7G",
+                              "id": "rYyZf",
                               "name": "Label",
                               "fill": "$3:color/semantic/action/primary",
                               "content": "Tambah catatan",
@@ -31248,10 +31248,10 @@
           ]
         },
         "q796XM": {
-          "height": 1015
+          "height": 1045
         },
         "g93lY": {
-          "height": 1015
+          "height": 1045
         }
       }
     },
@@ -31749,7 +31749,7 @@
       "name": "Tinjau · konfirmasi kurang · Desktop",
       "x": 29520,
       "y": 19081,
-      "height": 960,
+      "height": 989,
       "descendants": {
         "e8ukxt/3:HsrFT": {
           "content": "Tinjau Foto edit"
@@ -31857,7 +31857,7 @@
                     },
                     "3:f60zS": {
                       "type": "frame",
-                      "id": "G9nvH",
+                      "id": "M0qYpN",
                       "name": "Content",
                       "slot": [
                         "Xig4E"
@@ -31870,7 +31870,7 @@
                       ],
                       "children": [
                         {
-                          "id": "Z1eSG0",
+                          "id": "YFege",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_002.jpg",
@@ -31882,13 +31882,13 @@
                             "k0bfAH": {
                               "content": "Rina-Wisuda › Akad"
                             },
-                            "CV2OV": {
+                            "F88VJe/3:fhch4": {
                               "content": "Hapus jerawat di dahi, cerahkan sedikit."
                             }
                           }
                         },
                         {
-                          "id": "r1oD7T",
+                          "id": "ecHXy",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_005.jpg",
@@ -31900,13 +31900,13 @@
                             "k0bfAH": {
                               "content": "Rina-Wisuda › Akad"
                             },
-                            "CV2OV": {
+                            "F88VJe/3:fhch4": {
                               "content": "Tolong rapikan rambut yang berantakan."
                             }
                           }
                         },
                         {
-                          "id": "hDYFp",
+                          "id": "uL8Dp",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_009.jpg",
@@ -31921,14 +31921,14 @@
                             },
                             "R5zXj": {
                               "type": "frame",
-                              "id": "N7ML7",
+                              "id": "B6Ay1M",
                               "name": "Note",
                               "gap": "$3:space/1-5",
                               "alignItems": "center",
                               "children": [
                                 {
                                   "type": "icon",
-                                  "id": "VqbPn",
+                                  "id": "gMKfE",
                                   "name": "Icon",
                                   "width": 14,
                                   "height": 14,
@@ -31938,7 +31938,7 @@
                                 },
                                 {
                                   "type": "text",
-                                  "id": "bVu67",
+                                  "id": "z1PlgB",
                                   "name": "Label",
                                   "fill": "$3:color/semantic/action/primary",
                                   "content": "Tambah catatan",
@@ -32000,7 +32000,7 @@
         },
         "d1bWR": {
           "enabled": true,
-          "height": 960,
+          "height": 989,
           "children": [
             {
               "id": "poRYp",
@@ -32028,7 +32028,7 @@
           ]
         },
         "cw9LY": {
-          "height": 960
+          "height": 989
         }
       }
     },
@@ -32039,7 +32039,7 @@
       "name": "Tinjau · konfirmasi kurang · Phone",
       "x": 31020,
       "y": 19081,
-      "height": 1015,
+      "height": 1045,
       "descendants": {
         "SfIhJ/3:K1jSfD": {
           "content": "Tinjau Foto edit"
@@ -32128,7 +32128,7 @@
                 },
                 "3:AdZ4y": {
                   "type": "frame",
-                  "id": "my6cT",
+                  "id": "vUgyr",
                   "name": "Content",
                   "slot": [
                     "Xig4E"
@@ -32141,7 +32141,7 @@
                   ],
                   "children": [
                     {
-                      "id": "JwJXX",
+                      "id": "vSvsU",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_002.jpg",
@@ -32153,13 +32153,13 @@
                         "k0bfAH": {
                           "content": "Rina-Wisuda › Akad"
                         },
-                        "CV2OV": {
+                        "F88VJe/3:fhch4": {
                           "content": "Hapus jerawat di dahi, cerahkan sedikit."
                         }
                       }
                     },
                     {
-                      "id": "LryqN",
+                      "id": "Y2Xha",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_005.jpg",
@@ -32171,13 +32171,13 @@
                         "k0bfAH": {
                           "content": "Rina-Wisuda › Akad"
                         },
-                        "CV2OV": {
+                        "F88VJe/3:fhch4": {
                           "content": "Tolong rapikan rambut yang berantakan."
                         }
                       }
                     },
                     {
-                      "id": "J1FhfU",
+                      "id": "LCYzj",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_009.jpg",
@@ -32192,14 +32192,14 @@
                         },
                         "R5zXj": {
                           "type": "frame",
-                          "id": "VrSMG",
+                          "id": "gSOly",
                           "name": "Note",
                           "gap": "$3:space/1-5",
                           "alignItems": "center",
                           "children": [
                             {
                               "type": "icon",
-                              "id": "OthGR",
+                              "id": "yyNuD",
                               "name": "Icon",
                               "width": 14,
                               "height": 14,
@@ -32209,7 +32209,7 @@
                             },
                             {
                               "type": "text",
-                              "id": "A4Hsf",
+                              "id": "o0dxh6",
                               "name": "Label",
                               "fill": "$3:color/semantic/action/primary",
                               "content": "Tambah catatan",
@@ -32261,7 +32261,7 @@
         },
         "q796XM": {
           "enabled": true,
-          "height": 1015,
+          "height": 1045,
           "children": [
             {
               "type": "frame",
@@ -32294,7 +32294,7 @@
           ]
         },
         "g93lY": {
-          "height": 1015
+          "height": 1045
         }
       }
     },
@@ -32305,7 +32305,7 @@
       "name": "Tinjau · mengirim · Desktop",
       "x": 31650,
       "y": 19081,
-      "height": 960,
+      "height": 989,
       "descendants": {
         "e8ukxt/3:HsrFT": {
           "content": "Tinjau Foto edit"
@@ -32413,7 +32413,7 @@
                     },
                     "3:f60zS": {
                       "type": "frame",
-                      "id": "ATJQc",
+                      "id": "P1wfh",
                       "name": "Content",
                       "slot": [
                         "Xig4E"
@@ -32426,7 +32426,7 @@
                       ],
                       "children": [
                         {
-                          "id": "ZJnwQ",
+                          "id": "BHG2f",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_002.jpg",
@@ -32438,13 +32438,13 @@
                             "k0bfAH": {
                               "content": "Rina-Wisuda › Akad"
                             },
-                            "CV2OV": {
+                            "F88VJe/3:fhch4": {
                               "content": "Hapus jerawat di dahi, cerahkan sedikit."
                             }
                           }
                         },
                         {
-                          "id": "hpx8s",
+                          "id": "TjvMM",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_005.jpg",
@@ -32456,13 +32456,13 @@
                             "k0bfAH": {
                               "content": "Rina-Wisuda › Akad"
                             },
-                            "CV2OV": {
+                            "F88VJe/3:fhch4": {
                               "content": "Tolong rapikan rambut yang berantakan."
                             }
                           }
                         },
                         {
-                          "id": "As3jS",
+                          "id": "wibPM",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_009.jpg",
@@ -32477,14 +32477,14 @@
                             },
                             "R5zXj": {
                               "type": "frame",
-                              "id": "frIoe",
+                              "id": "wF7O9",
                               "name": "Note",
                               "gap": "$3:space/1-5",
                               "alignItems": "center",
                               "children": [
                                 {
                                   "type": "icon",
-                                  "id": "KXIsS",
+                                  "id": "ZiH5c",
                                   "name": "Icon",
                                   "width": 14,
                                   "height": 14,
@@ -32494,7 +32494,7 @@
                                 },
                                 {
                                   "type": "text",
-                                  "id": "Y94lN",
+                                  "id": "GXgSY",
                                   "name": "Label",
                                   "fill": "$3:color/semantic/action/primary",
                                   "content": "Tambah catatan",
@@ -32556,7 +32556,7 @@
         },
         "d1bWR": {
           "enabled": true,
-          "height": 960,
+          "height": 989,
           "children": [
             {
               "id": "Drf9d",
@@ -32590,7 +32590,7 @@
           ]
         },
         "cw9LY": {
-          "height": 960
+          "height": 989
         }
       }
     },
@@ -32601,7 +32601,7 @@
       "name": "Tinjau · mengirim · Phone",
       "x": 33150,
       "y": 19081,
-      "height": 1015,
+      "height": 1045,
       "descendants": {
         "SfIhJ/3:K1jSfD": {
           "content": "Tinjau Foto edit"
@@ -32690,7 +32690,7 @@
                 },
                 "3:AdZ4y": {
                   "type": "frame",
-                  "id": "p0Hyw",
+                  "id": "SfGMX",
                   "name": "Content",
                   "slot": [
                     "Xig4E"
@@ -32703,7 +32703,7 @@
                   ],
                   "children": [
                     {
-                      "id": "e4VXPT",
+                      "id": "B6bSK9",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_002.jpg",
@@ -32715,13 +32715,13 @@
                         "k0bfAH": {
                           "content": "Rina-Wisuda › Akad"
                         },
-                        "CV2OV": {
+                        "F88VJe/3:fhch4": {
                           "content": "Hapus jerawat di dahi, cerahkan sedikit."
                         }
                       }
                     },
                     {
-                      "id": "eWeqM",
+                      "id": "zOh1Z",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_005.jpg",
@@ -32733,13 +32733,13 @@
                         "k0bfAH": {
                           "content": "Rina-Wisuda › Akad"
                         },
-                        "CV2OV": {
+                        "F88VJe/3:fhch4": {
                           "content": "Tolong rapikan rambut yang berantakan."
                         }
                       }
                     },
                     {
-                      "id": "IREmm",
+                      "id": "O861Re",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_009.jpg",
@@ -32754,14 +32754,14 @@
                         },
                         "R5zXj": {
                           "type": "frame",
-                          "id": "cXK4n",
+                          "id": "XwoQt",
                           "name": "Note",
                           "gap": "$3:space/1-5",
                           "alignItems": "center",
                           "children": [
                             {
                               "type": "icon",
-                              "id": "tduBK",
+                              "id": "xfrNY",
                               "name": "Icon",
                               "width": 14,
                               "height": 14,
@@ -32771,7 +32771,7 @@
                             },
                             {
                               "type": "text",
-                              "id": "zx4vF",
+                              "id": "zIUhn",
                               "name": "Label",
                               "fill": "$3:color/semantic/action/primary",
                               "content": "Tambah catatan",
@@ -32823,7 +32823,7 @@
         },
         "q796XM": {
           "enabled": true,
-          "height": 1015,
+          "height": 1045,
           "children": [
             {
               "type": "frame",
@@ -32859,7 +32859,7 @@
           ]
         },
         "g93lY": {
-          "height": 1015
+          "height": 1045
         }
       }
     },
@@ -34828,7 +34828,7 @@
                     },
                     "3:f60zS": {
                       "type": "frame",
-                      "id": "tkclD",
+                      "id": "QOV5B",
                       "name": "Content",
                       "slot": [
                         "Xig4E"
@@ -34841,7 +34841,7 @@
                       ],
                       "children": [
                         {
-                          "id": "fEaFB",
+                          "id": "CGkQO",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_002.jpg",
@@ -34856,16 +34856,16 @@
                             "Z4vY6b": {
                               "enabled": false
                             },
-                            "CV2OV": {
+                            "F88VJe/3:fhch4": {
                               "content": "Hapus jerawat di dahi, cerahkan sedikit."
                             },
-                            "Cs3Gp": {
+                            "sWu5B": {
                               "enabled": false
                             }
                           }
                         },
                         {
-                          "id": "Q4562",
+                          "id": "TblmS",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_005.jpg",
@@ -34880,16 +34880,16 @@
                             "Z4vY6b": {
                               "enabled": false
                             },
-                            "CV2OV": {
+                            "F88VJe/3:fhch4": {
                               "content": "Tolong rapikan rambut yang berantakan."
                             },
-                            "Cs3Gp": {
+                            "sWu5B": {
                               "enabled": false
                             }
                           }
                         },
                         {
-                          "id": "UAnow",
+                          "id": "HrwXy",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_009.jpg",
@@ -35065,7 +35065,7 @@
                 },
                 "3:AdZ4y": {
                   "type": "frame",
-                  "id": "cEJ6G",
+                  "id": "qcWa0",
                   "name": "Content",
                   "slot": [
                     "Xig4E"
@@ -35078,7 +35078,7 @@
                   ],
                   "children": [
                     {
-                      "id": "xPX4W",
+                      "id": "qCCsQ",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_002.jpg",
@@ -35093,16 +35093,16 @@
                         "Z4vY6b": {
                           "enabled": false
                         },
-                        "CV2OV": {
+                        "F88VJe/3:fhch4": {
                           "content": "Hapus jerawat di dahi, cerahkan sedikit."
                         },
-                        "Cs3Gp": {
+                        "sWu5B": {
                           "enabled": false
                         }
                       }
                     },
                     {
-                      "id": "fvptt",
+                      "id": "sxR3K",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_005.jpg",
@@ -35117,16 +35117,16 @@
                         "Z4vY6b": {
                           "enabled": false
                         },
-                        "CV2OV": {
+                        "F88VJe/3:fhch4": {
                           "content": "Tolong rapikan rambut yang berantakan."
                         },
-                        "Cs3Gp": {
+                        "sWu5B": {
                           "enabled": false
                         }
                       }
                     },
                     {
-                      "id": "Y2zSS",
+                      "id": "jdtZ0",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_009.jpg",
@@ -35302,47 +35302,43 @@
           "id": "R5zXj",
           "name": "Note",
           "width": "fill_container",
-          "fill": "$3:color/semantic/surface/subtle",
-          "cornerRadius": "$3:radius/sm",
           "layout": "vertical",
-          "gap": "$3:space/1",
-          "padding": [
-            "$3:space/2",
-            "$3:space/3"
-          ],
+          "gap": "$3:space/2",
           "children": [
             {
-              "type": "text",
-              "id": "HbbUI",
-              "name": "Note label",
-              "fill": "$3:color/semantic/text/secondary",
-              "content": "Catatan untuk fotografer",
-              "fontFamily": "$3:font/family/base",
-              "fontSize": "$3:font/size/caption",
-              "fontWeight": "$3:font/weight/regular"
-            },
-            {
-              "type": "text",
-              "id": "CV2OV",
-              "name": "Note text",
-              "fill": "$3:color/semantic/text/primary",
-              "textGrowth": "fixed-width",
+              "id": "F88VJe",
+              "type": "ref",
+              "ref": "3:S5bhVn",
+              "name": "Note alert",
               "width": "fill_container",
-              "content": "Hapus jerawat di dahi, cerahkan sedikit.",
-              "fontFamily": "$3:font/family/base",
-              "fontSize": "$3:font/size/body-sm",
-              "fontWeight": "$3:font/weight/regular"
+              "descendants": {
+                "3:k7lq2": {
+                  "icon": "message-square-text"
+                },
+                "3:m0dqT6": {
+                  "content": "Catatan untuk fotografer"
+                },
+                "3:fhch4": {
+                  "content": "Hapus jerawat di dahi, cerahkan sedikit."
+                },
+                "3:M54Ca": {
+                  "enabled": false
+                },
+                "3:IXhZl": {
+                  "enabled": false
+                }
+              }
             },
             {
               "type": "frame",
-              "id": "Cs3Gp",
+              "id": "sWu5B",
               "name": "Note edit",
               "gap": "$3:space/1-5",
               "alignItems": "center",
               "children": [
                 {
                   "type": "icon",
-                  "id": "FvJR2",
+                  "id": "pRk1P",
                   "name": "Icon",
                   "width": 14,
                   "height": 14,
@@ -35352,7 +35348,7 @@
                 },
                 {
                   "type": "text",
-                  "id": "h35y7B",
+                  "id": "Z6MSa",
                   "name": "Label",
                   "fill": "$3:color/semantic/action/primary",
                   "content": "Ubah catatan",
@@ -37693,7 +37689,7 @@
       "y": 19081,
       "descendants": {
         "e8ukxt/3:HsrFT": {
-          "content": "Wisuda Rina"
+          "content": "Halo, Rina"
         },
         "e8ukxt/3:i8XPWU": {
           "content": "Foto edit sudah dikirim. Tinggal Foto cetak."
@@ -38001,7 +37997,7 @@
       "y": 19081,
       "descendants": {
         "SfIhJ/3:K1jSfD": {
-          "content": "Wisuda Rina"
+          "content": "Halo, Rina"
         },
         "SfIhJ/3:EYvag": {
           "content": "Foto edit sudah dikirim. Tinggal Foto cetak."
@@ -43947,7 +43943,7 @@
       "name": "Tinjau · ubah catatan · Desktop",
       "x": 23130,
       "y": 19081,
-      "height": 960,
+      "height": 989,
       "descendants": {
         "e8ukxt/3:HsrFT": {
           "content": "Tinjau Foto edit"
@@ -44055,8 +44051,11 @@
                     },
                     "3:f60zS": {
                       "type": "frame",
-                      "id": "R5Ohfe",
+                      "id": "C0GA6",
                       "name": "Content",
+                      "slot": [
+                        "Xig4E"
+                      ],
                       "width": "fill_container",
                       "layout": "vertical",
                       "padding": [
@@ -44065,7 +44064,7 @@
                       ],
                       "children": [
                         {
-                          "id": "YrSa4",
+                          "id": "AWXhX",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_002.jpg",
@@ -44077,13 +44076,13 @@
                             "k0bfAH": {
                               "content": "Rina-Wisuda › Akad"
                             },
-                            "CV2OV": {
+                            "F88VJe/3:fhch4": {
                               "content": "Hapus jerawat di dahi, cerahkan sedikit."
                             }
                           }
                         },
                         {
-                          "id": "q90w6",
+                          "id": "MrT5T",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_005.jpg",
@@ -44095,13 +44094,13 @@
                             "k0bfAH": {
                               "content": "Rina-Wisuda › Akad"
                             },
-                            "CV2OV": {
+                            "F88VJe/3:fhch4": {
                               "content": "Tolong rapikan rambut yang berantakan."
                             }
                           }
                         },
                         {
-                          "id": "U6ofT",
+                          "id": "Nrgta",
                           "type": "ref",
                           "ref": "Xig4E",
                           "name": "IMG_009.jpg",
@@ -44116,14 +44115,14 @@
                             },
                             "R5zXj": {
                               "type": "frame",
-                              "id": "gGuUP",
+                              "id": "KoQvq",
                               "name": "Note",
                               "gap": "$3:space/1-5",
                               "alignItems": "center",
                               "children": [
                                 {
                                   "type": "icon",
-                                  "id": "s6ut3",
+                                  "id": "WVqcC",
                                   "name": "Icon",
                                   "width": 14,
                                   "height": 14,
@@ -44133,7 +44132,7 @@
                                 },
                                 {
                                   "type": "text",
-                                  "id": "Ivrti",
+                                  "id": "QP2tO",
                                   "name": "Label",
                                   "fill": "$3:color/semantic/action/primary",
                                   "content": "Tambah catatan",
@@ -44195,7 +44194,7 @@
         },
         "d1bWR": {
           "enabled": true,
-          "height": 960,
+          "height": 989,
           "children": [
             {
               "id": "QQOms",
@@ -44316,7 +44315,7 @@
           ]
         },
         "cw9LY": {
-          "height": 960
+          "height": 989
         }
       }
     },
@@ -44327,7 +44326,7 @@
       "name": "Tinjau · ubah catatan · Phone",
       "x": 24630,
       "y": 19081,
-      "height": 1015,
+      "height": 1045,
       "descendants": {
         "SfIhJ/3:K1jSfD": {
           "content": "Tinjau Foto edit"
@@ -44416,8 +44415,11 @@
                 },
                 "3:AdZ4y": {
                   "type": "frame",
-                  "id": "xtl2V",
+                  "id": "ysIkx",
                   "name": "Content",
+                  "slot": [
+                    "Xig4E"
+                  ],
                   "width": "fill_container",
                   "layout": "vertical",
                   "padding": [
@@ -44426,7 +44428,7 @@
                   ],
                   "children": [
                     {
-                      "id": "dJtsS",
+                      "id": "oOJbc",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_002.jpg",
@@ -44438,13 +44440,13 @@
                         "k0bfAH": {
                           "content": "Rina-Wisuda › Akad"
                         },
-                        "CV2OV": {
+                        "F88VJe/3:fhch4": {
                           "content": "Hapus jerawat di dahi, cerahkan sedikit."
                         }
                       }
                     },
                     {
-                      "id": "Ryx50",
+                      "id": "pFfE2",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_005.jpg",
@@ -44456,13 +44458,13 @@
                         "k0bfAH": {
                           "content": "Rina-Wisuda › Akad"
                         },
-                        "CV2OV": {
+                        "F88VJe/3:fhch4": {
                           "content": "Tolong rapikan rambut yang berantakan."
                         }
                       }
                     },
                     {
-                      "id": "VQ8gU",
+                      "id": "JzSiQ",
                       "type": "ref",
                       "ref": "Xig4E",
                       "name": "IMG_009.jpg",
@@ -44477,14 +44479,14 @@
                         },
                         "R5zXj": {
                           "type": "frame",
-                          "id": "Mm6DV",
+                          "id": "X3Flg3",
                           "name": "Note",
                           "gap": "$3:space/1-5",
                           "alignItems": "center",
                           "children": [
                             {
                               "type": "icon",
-                              "id": "U8t48K",
+                              "id": "O2z7L",
                               "name": "Icon",
                               "width": 14,
                               "height": 14,
@@ -44494,7 +44496,7 @@
                             },
                             {
                               "type": "text",
-                              "id": "lvzEF",
+                              "id": "U8V9C",
                               "name": "Label",
                               "fill": "$3:color/semantic/action/primary",
                               "content": "Tambah catatan",
@@ -44546,7 +44548,7 @@
         },
         "q796XM": {
           "enabled": true,
-          "height": 1015,
+          "height": 1045,
           "children": [
             {
               "type": "frame",
@@ -44704,7 +44706,7 @@
           ]
         },
         "g93lY": {
-          "height": 1015
+          "height": 1045
         }
       }
     },

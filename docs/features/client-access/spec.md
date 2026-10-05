@@ -1,7 +1,7 @@
 # Feature: Client access
 
 ID: F-10 · Slug: `client-access` (F-10 *Client gallery access*, F-11 *Selection*, F-12 *Final delivery* and F-13 *Add-ons* merged, Owner 2026-10-05)
-Status: DESIGNED (2026-10-06; specified 2026-10-05, synced with the design 2026-10-06) · Intent: [intent.md](intent.md) (ACCEPTED 2026-10-05) · Design: [design.md](design.md) (APPROVED 2026-10-06) · Journeys: J-04 (client half and Owner review), J-05, J-06
+Status: PLANNED (2026-10-06; specified 2026-10-05, designed 2026-10-06) · Technical design: [technical-design.md](technical-design.md) · Plan: [plan.md](plan.md) · Intent: [intent.md](intent.md) (ACCEPTED 2026-10-05) · Design: [design.md](design.md) (APPROVED 2026-10-06) · Journeys: J-04 (client half and Owner review), J-05, J-06
 Builds on: F-07 `projects` (token, project items, lifecycle), F-09 `gallery` (published gallery, password hash and `passwordVersion`, photo kinds, media route, `contentVersion`)
 Consumer: F-14 `billing` (approved add-ons not yet invoiced, BR-ADD-004), F-15 `whatsapp-share` (*Kirim link galeri*, *Ingatkan pilih foto*, *Kirim hasil akhir*)
 

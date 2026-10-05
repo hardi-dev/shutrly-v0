@@ -5,15 +5,16 @@ Branch: `feat/gallery-free-tier` (F-09 free-tier rework, worktree `.claude/workt
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-10 client-access DESIGNED (2026-10-06)
+## Current handoff — F-10 client-access PLANNED (2026-10-06)
 
-Branch `feat/client-access` (worktree `.claude/worktrees/pull-branch-main-21161f`). F-10 merges old F-10..F-13 (gallery access, selection, final delivery, add-ons, completion, token rotation; Owner 2026-10-05). Feature map: `DESIGNED`.
+Branch `feat/client-access` (worktree `.claude/worktrees/pull-branch-main-21161f`). F-10 merges old F-10..F-13 (gallery access, selection, final delivery, add-ons, completion, token rotation; Owner 2026-10-05). Feature map: `PLANNED`.
 
-- **Resume at:** `/sdv:plan-feature client-access`.
-- **Done:** Flow B (Beranda tugas) hi-fi in `docs/features/client-access/client-access.pen`, approved by the Owner 2026-10-06. [design.md](features/client-access/design.md) lists every state frame with its AC, the Owner decisions, components and findings. 125 HTML exports are in `exports/`, one subfolder per flow group, indexed in `exports/INDEX.md` (`scripts/sdv/index-exports.py` now reads subfolders). Spec, AC and diagrams are synced with the design (A-26 breadcrumb, A-33 Hasil akhir downloads, A-34 Owner cards); the Owner rule is that the docs follow the design on UX details.
-- **Components:** board *A · Komponen library* `X7FTwg` (library components, tagged by whether `src/ui` has them; only **Stepper C08** is missing in code) and board *B · Komponen lokal* `Q7CAFN` (Pick Tile → promote to the library as *Photo Tile/Selectable*; Client Header/Shell → decide at F-14; Group Summary and Pick Row stay feature components).
-- **For the plan:** build Stepper before the Foto cetak screens; promote Pick Tile; pick-mode migration (about 39 files use `selectionType`, spec R-4); R-1 (originals and sequential downloads within Workers Free), R-2 (rate-limit storage), R-3 (token rotation).
-- **Open, not blocking:** tablet and dark mode not drawn (GAP-01, GAP-04); most Owner page states have no phone frame (same pattern as F-07/F-09); unused library import `r:` in `client-access.pen` (remove in the Pen UI).
+- **Resume at:** Owner review of the plan, then `/sdv:build-feature client-access 0`.
+- **Done:** design APPROVED 2026-10-06 ([design.md](features/client-access/design.md), 125 exports by flow group in `exports/`). [technical-design.md](features/client-access/technical-design.md) (D-1…D-24) and [plan.md](features/client-access/plan.md) (Slices 0–11, each with a Read first list) written. New [ADR-020](architecture/decisions/ADR-020-client-gallery-sessions-and-public-limits.md) (Proposed): signed path-scoped client cookie, public limits on the Neon counters.
+- **Shape:** client access, selection, delivery reads and client screens in `features/gallery`; add-ons, completion, link rotation and pick mode in `features/booking`; ADR-016 scopes for deal edits with groups, add-on approve/cancel and final delivery. Migrations `0015_pick_mode`, `0016_selection`, `0017_add_on` (all additive; `selection_type` dual-written until a later drop).
+- **Owner decisions needed:** accept ADR-020 with the plan; confirm *Hapus draf* deletes a draft add-on (TD D-16); provision `CLIENT_SESSION_KEY` in `.dev.vars` before Slice 2; promote *Photo Tile/Selectable* in the library when Slice 4 lands.
+- **Risks:** R-1 original downloads and R-2 Cache API are spiked in Slice 0; R-6 bulk downloads on iOS checked in Slice 9.
+- **Open, not blocking:** tablet and dark mode not drawn (GAP-01, GAP-04); most Owner page states have no phone frame; unused library import `r:` in `client-access.pen`.
 
 ## Previous handoff — F-09 free-tier rework PLANNED (2026-10-05)
 

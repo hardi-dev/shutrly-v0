@@ -40,7 +40,7 @@ One client-facing journey, from first open to final files:
 ## Out of scope
 - Invoices, payments, issuing and the `/i/{token}/{invoiceId}` page (F-14). Whatever add-on approval needs from an invoice is a dependency, not part of this feature (see Open questions).
 - WhatsApp sharing and message previews (F-15).
-- Project completion (`COMPLETED` stays manual, BR-PRJ-005) and project cancellation.
+- Project cancellation. *(Project completion, BR-PRJ-005, was moved into scope during discovery, Owner 2026-10-05; spec FC-006.)*
 - Client accounts or logins (scope.md); providers other than Google Drive; uploading photos into Shutrly.
 - Owner-side gallery management, sync and password rotation (done in F-09).
 

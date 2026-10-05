@@ -200,7 +200,7 @@ A project snapshots its service's currency; all project prices, add-ons, and inv
 A project belongs to one workspace, one client and one service of that workspace (BR-WS-002). It is created from an active service for an active client (BR-CAT-008, BR-CLI-003); archiving either later leaves the project unchanged. It has a title (1–100 characters after trimming, not unique), optional internal notes (at most 2000 characters, never shown to the client) and an agreed price (whole IDR, ≥ 0) that starts at the service's base price. The Owner creates it either as `DRAFT` or directly as `BOOKED`; both require valid required booking fields (BR-PRJ-002), and `BOOKED` also requires at least one session (BR-TEAM-003). The project has no event date of its own: its schedule is its sessions. *(F-07 discovery, Owner 2026-10-02; event date replaced by sessions in F-07 design, Owner 2026-10-02.)*
 
 ### BR-PRJ-009 — The deal is editable until shooting starts
-While a project is `DRAFT` or `BOOKED`, the Owner may change its agreed price, the values of its project items, its booking-field values, and add or remove project items. An added item is snapshotted from an active item definition that the project doesn't use yet (one item per definition per project), with values valid under BR-CAT-001/002. Edited booking values must stay valid for the snapshotted field type; required fields stay required. Field metadata (key, name, type, options) never changes. From `SHOOTING` onwards the deal is read-only; later changes go through add-ons (BR-ADD-*) or invoices. Edits never touch the service template (BR-CAT-003). *(F-07 discovery, Owner 2026-10-02.)*
+While a project is `DRAFT` or `BOOKED`, the Owner may change its agreed price, the values of its project items, its booking-field values, and add or remove project items. An added item is snapshotted from an active item definition that the project doesn't use yet (one item per definition per project), with values valid under BR-CAT-001/002. Edited booking values must stay valid for the snapshotted field type; required fields stay required. Field metadata (key, name, type, options) never changes. From `SHOOTING` onwards the deal is read-only; later changes go through add-ons (BR-ADD-*) or invoices. Edits never touch the service template (BR-CAT-003). *(F-07 discovery, Owner 2026-10-02.)* Once a selection item has a group (BR-SEL-001), an edit is refused if it would remove an item whose group has selections, lower a value below the group's usage, or change an item whose group is no longer `OPEN`. *(F-10 discovery, Owner 2026-10-05.)*
 
 ### BR-PRJ-010 — Deleting and cancelling projects
 A `DRAFT` project can be deleted permanently, with its snapshots. Any other project is never deleted: `BOOKED` and `SHOOTING` projects are cancelled instead (BR-PRJ-004), recording actor and timestamp (BR-AUD-001). *(F-07 discovery, Owner 2026-10-02.)* Cancelling also archives the project's published or expired gallery in the same transaction (BR-GAL-005). *(F-09 discovery, Owner 2026-10-04.)*
@@ -302,6 +302,7 @@ Clients receive photos either through a server-controlled URL or from Google's p
 
 ### BR-SEL-001 — Selection groups are the entitlement
 Each project item with `selectionRequired = true` yields one selection group with `baseLimit` = the item's whole-number value. A project may have zero groups. There is no project-wide photo limit.
+Groups exist from the moment the gallery is first published, so the client can select from then on. While the deal is still editable (BR-PRJ-009), groups follow the project items: an added selection item gets an `OPEN` group, and a changed value changes `baseLimit`. *(F-10 discovery, Owner 2026-10-05.)*
 
 ### BR-SEL-002 — Effective limit is derived
 `effectiveLimit = baseLimit + extraLimit`, never stored. `extraLimit` = sum of `quantity` of approved add-ons targeting the group, maintained transactionally.
@@ -336,7 +337,7 @@ Final delivery uses the existing gallery link and password. No separate delivery
 Requires at least one synced `EDITED` or `PRINT` file and a project in `BOOKED`, `SHOOTING` or `POST_PROCESSING` (BR-PRJ-004); records `finalDeliveryPublishedAt` and moves the project to `DELIVERED` (never to `COMPLETED`).
 
 ### BR-DEL-004 — Independent finished files
-Each finished file is an independent download with no link to its original proof photo; no inference from names/paths.
+Each finished file is an independent download with no link to its original proof photo; no inference from names/paths. The client may download one file, several chosen files, or all finished files at once; a bulk download never exposes the Drive folder link or folder ID (BR-ACC-005). *(Download modes: F-10 discovery, Owner 2026-10-05.)*
 
 ---
 
@@ -353,6 +354,7 @@ An add-on that changes selection entitlement must target a selection group (`sel
 
 ### BR-ADD-004 — Approval effects are atomic
 Approval, in one transaction: increases the target group's `extraLimit` (if selection-related) and adds an invoice line to the project's sole draft invoice, creating one if none exists; invoice totals are recalculated.
+Until invoices exist (F-14), approval only increases `extraLimit` and keeps quantity, unit price and total on the add-on. When F-14 ships, every approved add-on that is not yet on an invoice is added to the project's draft invoice under this rule. *(F-10 discovery, Owner 2026-10-05.)*
 
 ### BR-ADD-005 — Safe cancellation
 Cancellation is rejected if the reduced limit would be below current usage. If the add-on is on an issued or paid invoice, cancellation requires an explicit billing adjustment. Draft invoice lines are removed/recalculated in the same transaction.

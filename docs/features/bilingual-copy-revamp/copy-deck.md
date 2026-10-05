@@ -1,6 +1,6 @@
 # Shutrly — bilingual copy deck
 
-Status: DRAFT for Owner review · 2026-10-06 · English is the default.
+Status: DRAFT for Owner review · product/headline review 2026-10-06 · English is the default.
 
 This is the single editorial review document for the bilingual revamp. It groups proposed English and Indonesian copy by feature, page and state. It does not change application code or approve new workflows. Page paths below are verified against this branch; `/w/{workspaceId}` is abbreviated as `{workspace}`. Paths beginning with `/services`, `/clients`, `/projects`, `/team` or `/message-templates` in a page group are suffixes under that workspace, not additional root routes. Dialogs and sheets belong to their parent page, not separate routes.
 
@@ -14,6 +14,33 @@ This is the single editorial review document for the bilingual revamp. It groups
 - Ordinary descriptive content needs matching reviewed EN/ID versions. Internal notes, cancellation reasons and existing free-text display titles still need classification/legacy policy; this deck does not translate actual user records or identity names.
 - Existing limits and consequences are taken from current copy, validation and feature rules. They must stay tied to their owning constants. A draft marked **Future surface** is not approved for implementation without its feature spec and Pencil exports.
 - This is a static editorial draft, not a browser, layout or accessibility verification. Recipient-language, persistence, readiness and historical-data decisions remain open under [localization policy](../../product/localization.md).
+
+## Product-message review — 2026-10-06
+
+The headline’s job is to help a photographer recognize a concrete task, not promise a complete business system. The recommended auth headline is **“Keep each shoot’s details together.” / “Catat detail tiap pemotretan di satu tempat.”** Its support names the actual project record: package, agreed price and schedule. Page headings and action labels remain direct; they are not turned into slogans.
+
+Product authority: [overview](../../product/overview.md), [scope](../../product/scope.md), [journeys](../../product/user-journeys.md), [feature availability](../../product/feature-map.md), [localization policy](../../product/localization.md), and [pricing caveats](../../product/pricing-and-costs.md). Product scope is intent; it is not evidence that every capability is available today.
+
+| Finding / previous wording | Editorial decision | Evidence / boundary |
+|---|---|---|
+| “Keep your photography work in order” / “lebih rapi” | Replace a broad outcome with recording each shoot’s details; support with package, agreed price and schedule. | Existing F-07 project record; BR-PRJ-008/009. No measured productivity claim. |
+| “Manage your bookings, galleries and invoices” on auth | Remove invoicing from the current auth pitch; it is not implemented in this branch. | F-14/F-15 TODO in the feature map; existing Owner gallery is not the complete client journey. |
+| “This workspace is still empty” / promised project and invoice summaries | Use settings guidance and real navigation. Do not infer that the user has no records or announce an unapproved dashboard release. | Dashboard component receives identity, not project counts; dashboard remains a placeholder. |
+| “One place per brand” / “Ruang terpisah” | Explain separate client/project records for each brand, without implying freelancer/team access. | BR-WS-002/003; BR-TEAM-001. |
+| “The agreed deal never drifts” / “frozen” | Catalog changes do not rewrite project records; explicit project edits remain possible until shooting. | C-102, BR-CAT-003, BR-PRJ-009. |
+| “No upload/storage cost” | Originals stay in Drive; no free-storage or zero-cost claim. | Provider storage costs and Shutrly pricing are separate; pricing remains undecided. |
+| “Private gallery” without qualification | Describe app-level link/password access and disclose public Drive/image-link limits nearby. | BR-ACC-005, BR-SRC-004, ADR-019. Do not claim complete media revocation. |
+| Root-only selection-photo guide | Ordinary session subfolders are supported; reserve `edited`/`print` for final files. | BR-GAL-007. Folder names are identifiers, not translated UI labels. |
+| Sync errors say “existing photos unchanged” | Say sync could not finish, with a retry action; do not promise rollback. | ADR-019: completed earlier sync steps may already be saved. |
+| “Only booked projects” | Confirm booking before creating a gallery; do not imply later live stages are ineligible. | BR-GAL-009 allows BOOKED through COMPLETED, excluding DRAFT/CANCELLED. |
+| “Variables” as the main editor explanation | Explain inserting project details and checking the sample message. Preserve exact placeholder syntax in the detailed helper. | F-03 renderer includes client, brand, gallery and invoice values; no automatic sending. |
+| Cost/competitor assumptions as proof | Keep dated research out of public copy. Do not treat a free-plan scenario as an approved offer or a tenant-capacity guarantee. | Pricing document is historical/draft; staging runtime changed under ADR-020. |
+
+### Plain-language guardrails
+
+Use **project details**, **agreed price**, **shoot schedule**, **photo allowance** and **insert project details** in explanatory copy. Avoid “operational platform”, “entitlement-aware”, “snapshot” and “idempotent” in customer headlines; their precise technical meanings belong in specs. Keep essential UI terms such as Project, Service and Workspace, with a task-specific explanation on first use. Names of fields, statuses and irreversible actions stay exact.
+
+Descriptions explain an action and its useful result only where supported. Do not add “all-in-one”, automatic reminders/sync, guaranteed time savings, faster payment, team collaboration or complete end-to-end availability. No new landing page or capability is introduced by this review. Longer revised descriptions still need both-language text-fit review in approved Pencil frames.
 
 ## Page map
 
@@ -109,17 +136,17 @@ This is the single editorial review document for the bilingual revamp. It groups
 | Collapse sidebar | Collapse sidebar | Ciutkan navigasi samping |
 | Expand sidebar | Expand sidebar | Buka navigasi samping |
 | Breadcrumb accessible name | Page location | Lokasi halaman |
-| Dashboard subtitle | An overview of {workspaceName}. | Ringkasan {workspaceName}. |
-| Projects subtitle | Your shoots, from draft to completion. | Pemotretanmu, dari draf sampai selesai. |
-| Projects mobile subtitle | Shoots from draft to completion. | Pemotretan dari draf sampai selesai. |
-| Clients subtitle | Add the people booking your shoots, then choose them for a project. | Catat klien yang memesan sesi foto, lalu pilih saat membuat proyek. |
+| Dashboard subtitle | Your workspace: {workspaceName}. | Ruang kerjamu: {workspaceName}. |
+| Projects subtitle | Check each shoot’s package, agreed price and schedule. | Cek paket, harga sepakat, dan jadwal tiap pemotretan. |
+| Projects mobile subtitle | Project details and shoot schedules. | Detail proyek dan jadwal pemotretan. |
+| Clients subtitle | Save client contacts so you can choose them when creating a project. | Simpan kontak klien agar bisa dipilih saat membuat proyek. |
 | Clients mobile subtitle | People booking your shoots. | Klien yang memesan sesi foto. |
-| Services subtitle | The packages you offer. New projects copy the package details when created. | Paket yang kamu jual. Isi paket disalin saat proyek baru dibuat. |
-| Team subtitle | Add freelancers, then assign them to project sessions. | Catat pekerja lepas, lalu tugaskan di jadwal proyek. |
-| Team mobile subtitle | People you work with on shoots. | Tim yang kamu ajak bertugas. |
-| Settings subtitle | Manage this workspace’s brand, contacts and invoice numbering. | Atur identitas merek, kontak, dan nomor tagihan ruang kerja ini. |
-| Templates subtitle | WhatsApp messages for clients. You send each message yourself. | Pesan WhatsApp untuk klien. Kamu tetap mengirimnya sendiri. |
-| Sources subtitle | Where your gallery photos are stored. Shutrly reads the files without changing them. | Tempat foto galerimu disimpan. Shutrly membaca file tanpa mengubahnya. |
+| Services subtitle | Set up packages once, then copy their details into new projects. | Siapkan paket layanan, lalu salin isinya saat membuat proyek baru. |
+| Team subtitle | Record who works each session and their role. | Catat siapa yang bertugas di tiap sesi dan perannya. |
+| Team mobile subtitle | Team members and session roles. | Anggota tim dan peran tiap sesi. |
+| Settings subtitle | Set the brand name, contact details and invoice prefix for this workspace. | Atur nama merek, kontak, dan awalan nomor tagihan ruang kerja ini. |
+| Templates subtitle | Write reusable client messages. Sharing them through WhatsApp is a separate step. | Siapkan teks pesan klien untuk dipakai ulang. Membagikannya lewat WhatsApp adalah langkah terpisah. |
+| Sources subtitle | Set up a Google Drive source to link photo folders to galleries. | Siapkan sumber Google Drive untuk menautkan folder foto ke galeri. |
 | Coming-soon page title | Coming soon | Segera hadir |
 | Coming-soon body | This feature isn’t available yet. | Fitur ini belum tersedia. |
 | Coming-soon back | Back to dashboard | Kembali ke dasbor |
@@ -160,7 +187,7 @@ Sources: `src/features/auth/ui/*/*.copy.ts`, `src/ui/patterns/split-layout`, `ed
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Page title | Welcome back | Selamat datang kembali |
-| Lead | Sign in to manage your photography work. | Masuk untuk mengelola pekerjaan fotografimu. |
+| Lead | Sign in to check your project details and shoot schedule. | Masuk untuk cek detail proyek dan jadwal pemotretanmu. |
 | Email label | Email | Email |
 | Email placeholder | you@studio.com | nama@studio.com |
 | Password label | Password | Kata sandi |
@@ -171,15 +198,15 @@ Sources: `src/features/auth/ui/*/*.copy.ts`, `src/ui/patterns/split-layout`, `ed
 | Google CTA | Continue with Google | Lanjutkan dengan Google |
 | Register prompt | New to Shutrly? | Baru di Shutrly? |
 | Register link | Create an account | Buat akun |
-| Shared editorial headline | Keep your photography work in order. | Biar pekerjaan fotografimu lebih rapi. |
-| Shared editorial description | Manage your bookings, galleries and invoices in Shutrly. | Kelola pemesanan, galeri, dan tagihan di Shutrly. |
+| Shared editorial headline | Keep each shoot’s details together. | Catat detail tiap pemotretan di satu tempat. |
+| Shared editorial description | Record the client’s package, agreed price and shoot schedule in one project. | Catat paket klien, harga sepakat, dan jadwal pemotretan dalam satu proyek. |
 
 ### 2.2 Registration — `/register`
 
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Page title | Create your account | Buat akunmu |
-| Lead | Start organizing your clients, packages and shoots. | Mulai rapikan klien, paket, dan jadwal pemotretanmu. |
+| Lead | Start recording what each client has booked and when you’ll shoot. | Mulai catat paket yang dipesan tiap klien dan jadwal pemotretannya. |
 | Name label | Your name | Namamu |
 | Name placeholder | Full name | Nama lengkap |
 | Email | Email | Email |
@@ -312,14 +339,14 @@ Sources: `src/features/workspace/ui/*/*.copy.ts`, owner profile/workspace layout
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Page title | Set up your first workspace | Siapkan ruang kerja pertamamu |
-| Lead | Start with your brand’s name. You can fill in the rest later. | Mulai dari nama merekmu. Sisanya bisa dilengkapi nanti. |
+| Lead | Create a workspace for this brand’s clients and projects. Start with its name. | Buat ruang kerja untuk klien dan proyek merek ini. Mulai dari namanya. |
 | Name label | Workspace name | Nama ruang kerja |
 | Name placeholder | e.g. Aster Wedding | Contoh: Aster Wedding |
 | Main CTA | Create workspace | Buat ruang kerja |
 | Preview label | Your workspace | Ruang kerjamu |
 | Benefits accessible heading | What’s included | Yang kamu dapatkan |
-| Separation benefit | A separate space | Ruang terpisah |
-| Separation body | This brand’s clients, projects, galleries and invoices stay separate from your other brands. | Klien, proyek, galeri, dan tagihan merek ini terpisah dari merekmu yang lain. |
+| Separation benefit | Separate records for each brand | Catatan terpisah untuk tiap merek |
+| Separation body | Keep this brand’s client and project records separate from your other brands. | Pisahkan catatan klien dan proyek merek ini dari merekmu yang lain. |
 | Invoice-prefix benefit; AW only for Aster Wedding preview | Invoice prefix: {prefix} | Awalan nomor tagihan: {prefix} |
 | Invoice-prefix body | Created from the name. You can change it in workspace settings. | Dibuat dari nama. Bisa diubah di pengaturan ruang kerja. |
 | Currency benefit | Indonesian rupiah (IDR) | Rupiah Indonesia (IDR) |
@@ -333,7 +360,7 @@ Sources: `src/features/workspace/ui/*/*.copy.ts`, owner profile/workspace layout
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Create dialog title | Create workspace | Buat ruang kerja |
-| Create description | One workspace for each brand. Clients, projects and invoices stay separate. | Satu ruang kerja untuk tiap merek. Klien, proyek, dan tagihannya terpisah. |
+| Create description | Create a separate workspace for another brand’s clients and projects. | Buat ruang kerja terpisah untuk klien dan proyek merek lain. |
 | Name label | Workspace name | Nama ruang kerja |
 | Placeholder | e.g. Aster Family | Contoh: Aster Family |
 | Helper | The invoice prefix comes from the name. You can change it later. | Awalan nomor tagihan dibuat dari nama. Bisa diubah nanti. |
@@ -353,9 +380,9 @@ Sources: `src/features/workspace/ui/*/*.copy.ts`, owner profile/workspace layout
 | Title | Dashboard | Dasbor |
 | Welcome, complete message | Welcome to {workspaceName} | Selamat datang di {workspaceName} |
 | Created toast | Workspace created | Ruang kerja dibuat |
-| Description; existing placeholder dashboard | Project and invoice summaries will appear here. | Ringkasan proyek dan tagihan akan tampil di sini. |
-| Empty title | This workspace is still empty | Ruang kerja ini masih kosong |
-| Empty body | Add your brand name, contact details and invoice prefix for clients to see. | Lengkapi nama merek, kontak, dan awalan nomor tagihan yang akan dilihat klien. |
+| Description; existing placeholder dashboard | Use the navigation to open your projects, clients or services. | Buka proyek, klien, atau layanan lewat navigasi. |
+| Empty title | Set up this workspace’s brand details | Lengkapi identitas merek ruang kerja ini |
+| Empty body | Open settings to add the brand name, contact details and invoice prefix. | Buka pengaturan untuk melengkapi nama merek, kontak, dan awalan nomor tagihan. |
 | Empty CTA | Set up branding | Lengkapi identitas merek |
 
 ### 4.4 Workspace settings — `{workspace}/settings`
@@ -363,12 +390,12 @@ Sources: `src/features/workspace/ui/*/*.copy.ts`, owner profile/workspace layout
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Brand section | Brand identity | Identitas merek |
-| Brand description | The name clients see on galleries and invoices. | Nama yang dilihat klien di galeri dan tagihan. |
+| Brand description | Set the brand name for this workspace’s client-facing pages. | Atur nama merek untuk halaman ruang kerja ini yang dilihat klien. |
 | Workspace name | Workspace name | Nama ruang kerja |
 | Brand name | Brand name | Nama merek |
 | Brand-name helper | Leave blank to use the workspace name. | Kosongkan untuk memakai nama ruang kerja. |
 | Contact section | Contact details | Kontak |
-| Contact description | Shown on invoices so clients can reach you. | Ditampilkan di tagihan agar klien bisa menghubungimu. |
+| Contact description | Save the contact details to use on invoices when billing is available. | Simpan kontak untuk ditampilkan di tagihan saat fitur penagihan tersedia. |
 | Contact email | Contact email | Email kontak |
 | Phone | Phone number | Nomor telepon |
 | Address | Address | Alamat |
@@ -381,7 +408,7 @@ Sources: `src/features/workspace/ui/*/*.copy.ts`, owner profile/workspace layout
 | Currency helper | Only IDR is supported at the moment. | Saat ini hanya IDR yang didukung. |
 | Save CTA | Save changes | Simpan perubahan |
 | Saved title | Changes saved | Perubahan disimpan |
-| Saved body | Workspace navigation and client-facing branding have been updated. | Nama di navigasi dan identitas merek untuk klien sudah diperbarui. |
+| Saved body | This workspace’s settings have been updated. | Pengaturan ruang kerja ini sudah diperbarui. |
 | Server error body | Your entries are still here. Try saving again. | Isianmu masih ada. Coba simpan lagi. |
 
 ### 4.5 Workspace field validation
@@ -416,7 +443,7 @@ Sources: `src/features/workspace/ui/*/*.copy.ts`, owner profile/workspace layout
 | Service empty body | Create a category, then add a service with its price and package details. | Buat kategori dulu, lalu tambahkan layanan dengan harga dan isi paketnya. |
 | Category-specific empty body | Add a service to this category with its price and package details. | Tambahkan layanan ke kategori ini dengan harga dan isi paketnya. |
 | Category heading | Categories | Kategori |
-| Category description | Group your services by category. | Kelompokkan layananmu berdasarkan kategori. |
+| Category description | Group similar services so they’re easier to find. | Kelompokkan layanan sejenis agar lebih mudah dicari. |
 | Category empty title | No categories yet | Belum ada kategori |
 | Category empty body | Add a category, such as Graduation or Family, to group your services. | Tambahkan kategori, misalnya Wisuda atau Keluarga, untuk mengelompokkan layanan. |
 | Service count | {count} services | {count} layanan |
@@ -468,13 +495,13 @@ Use a translated entity type in the archive message, not an English enum or a ra
 | Package section | Package items | Isi paket |
 | Package description | Copied to new projects in this order. | Disalin ke proyek baru dalam urutan ini. |
 | Package empty body | Add package items, such as 25 edited photos or 1–2 people. | Tambahkan isi paket, misalnya 25 foto edit atau 1–2 orang. |
-| Client-choice group title | Client selections | Pilihan klien |
-| Client-choice description | Sets the client’s photo selection allowance. Whole numbers only. | Menentukan jatah pilihan foto klien. Harus berupa angka bulat. |
+| Client-choice group title | Photos the client chooses | Foto yang dipilih klien |
+| Client-choice description | Set how many photos or prints the client can choose. Use whole numbers. | Atur jatah foto atau jumlah cetak yang bisa dipilih klien. Gunakan angka bulat. |
 | Other-items group | Other package items | Isi paket lainnya |
 | Other-items description | Package details that don’t require client photo selections. | Keterangan paket yang tidak dipilih klien. |
-| Booking-fields section | Booking fields | Kolom pemesanan |
-| Booking-fields description | Filled in when creating a project from this service. | Diisi saat membuat proyek dari layanan ini. |
-| Booking-fields empty | Add fields if a project needs more details, such as a university name. | Tambahkan kolom kalau proyek butuh info tambahan, misalnya nama kampus. |
+| Booking-fields section | Booking details | Detail pemesanan |
+| Booking-fields description | Ask for details you need when creating a project, such as a university name. | Tambahkan detail yang perlu diisi saat membuat proyek, misalnya nama kampus. |
+| Booking-fields empty | No extra booking details yet. Add a field if this service needs one. | Belum ada detail pemesanan tambahan. Tambahkan kolom kalau layanan ini membutuhkannya. |
 | Add package item | Add package item | Tambah isi paket |
 | Edit item value | Edit value | Ubah nilai |
 | Remove item action | Remove from service | Hapus dari layanan |
@@ -493,10 +520,10 @@ Use a translated entity type in the archive message, not an English enum or a ra
 |---|---|---|
 | Add-definition title | Add package item | Tambah isi paket |
 | Edit-definition title | Edit package item | Ubah isi paket |
-| Definition description | Reuse this item across services in this workspace. | Pakai ulang item ini di berbagai layanan ruang kerja ini. |
+| Definition description | Create an item once, then use it in different service packages. | Buat item sekali, lalu pakai di berbagai paket layanan. |
 | Item name | Item name | Nama item |
 | Item-name example | e.g. Number of people | Contoh: Jumlah orang |
-| Value type | Value type | Tipe nilai |
+| Value type | Value format | Format nilai |
 | Number type | Number | Angka |
 | Number description | One value, such as 25 photos or 2 hours. | Satu nilai, misalnya 25 foto atau 2 jam. |
 | Range type | Range | Rentang |
@@ -792,7 +819,7 @@ Instagram, TikTok, Facebook, YouTube, X and WhatsApp are brand names in both lan
 | Schedule helper | Add at least one shoot session to create the project. | Tambahkan minimal satu sesi pemotretan untuk membuat proyek. |
 | Schedule empty title | No sessions yet | Belum ada sesi |
 | Schedule empty body | Add the date, time and location. You can save a draft without sessions. | Catat tanggal, jam, dan lokasi. Draf bisa disimpan tanpa sesi. |
-| Booking-fields section | Booking fields | Kolom pemesanan |
+| Booking-fields section | Booking details | Detail pemesanan |
 | Booking-fields description | From {serviceName}. Fields without “optional” are required, including for drafts. | Dari {serviceName}. Kolom tanpa “opsional” wajib diisi, termasuk untuk draf. |
 | Field choice placeholder | Choose {fieldName} | Pilih {fieldName} |
 | Boolean true | Yes | Ya |
@@ -1116,7 +1143,7 @@ The final generic error intentionally avoids assuming every field is numeric. `{
 | Mobile description | Choose a source when creating a gallery. | Pilih sumber saat membuat galeri. |
 | Loading announcement | Loading photo sources… | Memuat sumber foto… |
 | Add CTA | Add source | Tambah sumber |
-| Google Drive description | Shared folders, read only. | Folder yang dibagikan lewat tautan, hanya dibaca. |
+| Google Drive description | Link-shared photo folders. Shutrly doesn’t edit the files. | Folder foto yang dibagikan lewat tautan. Shutrly tidak mengubah file. |
 | Custom-URL provider label, unavailable option | Custom link | Tautan khusus |
 | Active status | Active | Aktif |
 | Inactive status | Inactive | Nonaktif |
@@ -1124,20 +1151,22 @@ The final generic error intentionally avoids assuming every field is numeric. `{
 | Empty title | No photo sources yet | Belum ada sumber foto |
 | Empty body | Add Google Drive to link photos to your galleries. | Tambahkan Google Drive agar foto bisa ditautkan ke galeri. |
 | Guide title | Set up your Google Drive folder | Siapkan folder Google Drive |
-| Guide description | Shutrly only reads photos in folders you share. Paste the folder link when setting up a gallery. | Shutrly hanya membaca foto di folder yang kamu bagikan. Tempel tautannya saat menyiapkan galeri. |
+| Guide description | Share a Drive folder by link, then connect it to a gallery. Shutrly reads it without changing your files. | Bagikan folder Drive lewat tautan, lalu hubungkan ke galeri. Shutrly membacanya tanpa mengubah filemu. |
 | Guide mobile description | Paste the folder link when setting up a gallery. | Tempel tautan folder saat menyiapkan galeri. |
-| Step 1 | Create one main folder for each project. | Buat satu folder utama untuk setiap proyek. |
-| Step 2 | Put photos for client selection directly in the main folder, outside subfolders. | Taruh foto pilihan langsung di folder utama, bukan di subfolder. |
+| Step 1 | Start with a main folder for each project. | Mulai dengan satu folder utama untuk tiap proyek. |
+| Step 2 | Put photos for selection in the main folder or session subfolders. | Taruh foto pilihan di folder utama atau subfolder sesi. |
 | Step 3 | For final delivery, add subfolders named `edited` and `print` later. | Untuk hasil akhir, tambahkan subfolder bernama `edited` dan `print` nanti. |
 | Step 4 | Share the main folder: General access → Anyone with the link → Viewer. | Bagikan folder utama: Akses umum → Siapa saja yang memiliki link → Pelihat. |
 | Folder-tree accessible name | Example folder structure | Contoh struktur folder |
 | Root example name | Rina & Dimas | Rina & Dimas |
-| Root example annotation | Photos for selection go here | Foto pilihan langsung di sini |
+| Root example annotation | Selection photos or session subfolders | Foto pilihan atau subfolder sesi |
 | `edited` annotation | Edited files, added later | Hasil edit, ditambahkan nanti |
 | `print` annotation | Print files, added later | File cetak, ditambahkan nanti |
 | Public-link warning title | Drive links bypass the gallery password | Tautan Drive melewati kata sandi galeri |
 | Public-link warning body | Anyone with the Drive folder link can view its photos directly without the gallery password. Share only the Shutrly gallery link with clients. | Siapa pun yang punya tautan folder Drive bisa melihat fotonya langsung tanpa kata sandi galeri. Ke klien, bagikan hanya tautan galeri Shutrly. |
 | Warning mobile body | Anyone with the Drive link can view the photos directly. Share only the Shutrly gallery link with clients. | Siapa pun yang punya tautan Drive bisa melihat fotonya langsung. Ke klien, bagikan hanya tautan galeri Shutrly. |
+
+Drive folder classification follows BR-GAL-007: the nearest ancestor named `edited` or `print` determines final-file kind; other photos, including ordinary session subfolders, are selectable photos in the intended selection feature. Sync occurs when you link a folder or request it, not continuously or on a schedule.
 
 Google Drive sharing labels refer to Drive’s own language. The Indonesian `link` in step 4 is its exact setting name; do not rename the external setting or actual `edited`/`print` folder names to match display terminology.
 
@@ -1146,7 +1175,7 @@ Google Drive sharing labels refer to Drive’s own language. The Indonesian `lin
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Add-dialog title | Add photo source | Tambah sumber foto |
-| Add description | Choose where your photos are stored. Shutrly currently supports Google Drive. | Pilih tempat foto disimpan. Saat ini Shutrly mendukung Google Drive. |
+| Add description | Add a Google Drive source for your gallery folders. Other providers aren’t available yet. | Tambahkan sumber Google Drive untuk folder galerimu. Penyedia lain belum tersedia. |
 | Provider label | Provider | Penyedia |
 | Source-name label | Source name | Nama sumber |
 | Name placeholder | e.g. Google Drive Archive | Contoh: Arsip Google Drive |
@@ -1220,6 +1249,8 @@ Google Drive sharing labels refer to Drive’s own language. The Indonesian `lin
 | Failed-folders card title | {count} folders couldn’t be synced | {count} folder belum bisa disinkronkan |
 | Failed-folders card body | {names} couldn’t be read. Open the gallery for details. | {names} belum bisa dibaca. Buka galeri untuk melihat penyebabnya. |
 
+Client-dependent visibility and sharing rows describe the intended F-10–F-15 behavior. They must not be presented as usable client access while those features are unavailable; publishing the Owner gallery alone does not deliver the complete client journey.
+
 The missing-count summary replaces word-based `.replace(" proof", …)` processing with a whole-message editorial contract; implementation is still pending.
 
 ### 10.2 Create gallery and client-access settings
@@ -1228,6 +1259,7 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 |---|---|---|
 | Create-dialog title | Create gallery | Buat galeri |
 | Access description | Clients use the gallery link and this password to open the gallery. | Klien membuka galeri dengan tautan dan kata sandi ini. |
+| Access-limit note; beside access settings and public-link warnings | The password controls access to the Shutrly gallery. Direct Drive links and saved image URLs may still open outside Shutrly. | Kata sandi membatasi akses ke galeri Shutrly. Tautan Drive dan alamat gambar yang sudah disimpan bisa tetap dibuka di luar Shutrly. |
 | Future sharing helper, only when sharing is implemented | The password is filled in when you prepare a gallery-sharing message. | Kata sandi terisi saat kamu menyiapkan pesan untuk membagikan galeri. |
 | Password label | Gallery password | Kata sandi galeri |
 | Password helper | Generated for you. You can change it to 6–64 characters and view it on this page. | Dibuat otomatis. Bisa diganti dengan 6–64 karakter dan dilihat di halaman ini. |
@@ -1253,12 +1285,12 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Sources section | Photo sources | Sumber foto |
-| Sources description | Google Drive folders shared with “Anyone with the link”. | Folder Google Drive yang dibagikan sebagai “Siapa saja yang memiliki link”. |
+| Sources description | Link publicly shared Drive folders, then sync to read their photos. | Tautkan folder Drive yang dibagikan lewat tautan publik, lalu sinkronkan untuk membaca fotonya. |
 | Empty title | No folders yet | Belum ada folder |
-| Empty body | Link the project’s Google Drive folder. Photos in the main folder are for selection; `edited` and `print` subfolders hold final files. | Tautkan folder Google Drive proyek ini. Foto utama untuk pilihan klien; subfolder `edited` dan `print` untuk hasil akhir. |
+| Empty body | Link a project folder. Photos outside `edited` and `print` folders are for selection; those named folders hold final files. | Tautkan folder proyek. Foto di luar folder `edited` dan `print` untuk pilihan klien; kedua folder itu untuk hasil akhir. |
 | Empty body mobile | Link the project’s Google Drive folder. | Tautkan folder Google Drive proyek ini. |
 | Add-folder title/action | Add folder | Tambah folder |
-| Add description | Main-folder photos are for selection. Files in `edited` and `print` subfolders are for final delivery. | Foto di folder utama untuk pilihan klien. File di subfolder `edited` dan `print` untuk hasil akhir. |
+| Add description | Files in `edited` or `print` folders are final files. Other photos, including session subfolders, are for selection. | File di folder `edited` atau `print` adalah hasil akhir. Foto lainnya, termasuk di subfolder sesi, untuk pilihan klien. |
 | Source label | Source | Sumber |
 | Source helper | Active sources only. | Hanya sumber aktif. |
 | Folder-link label | Google Drive folder link | Tautan folder Google Drive |
@@ -1303,13 +1335,15 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 | Excessive-depth count | {count} folders exceed the depth limit | {count} folder melewati batas kedalaman |
 | Incomplete-sync message | Sync stopped before finishing. | Sinkronisasi berhenti sebelum selesai. |
 | Private/unreadable folder | Share the folder with “Anyone with the link”, then sync again. | Bagikan folder sebagai “Siapa saja yang memiliki link”, lalu sinkronkan lagi. |
-| Drive rate limited | Google Drive is busy. Existing photos are unchanged. Try again later. | Google Drive sedang sibuk. Foto yang ada tidak berubah. Coba lagi nanti. |
-| Drive unavailable | Google Drive can’t be reached. Existing photos are unchanged. Try again later. | Google Drive belum bisa dihubungi. Foto yang ada tidak berubah. Coba lagi nanti. |
+| Drive rate limited | Google Drive is limiting requests. Sync couldn’t finish. Try again later. | Google Drive sedang membatasi permintaan. Sinkronisasi belum selesai. Coba lagi nanti. |
+| Drive unavailable | Google Drive can’t be reached. Sync couldn’t finish. Try again later. | Google Drive belum bisa dihubungi. Sinkronisasi belum selesai. Coba lagi nanti. |
 | Folder too large | This folder is too large to sync. Split it into smaller folders, then add them. | Folder ini terlalu besar untuk disinkronkan. Pecah menjadi beberapa folder, lalu tambahkan lagi. |
 | Completed title | Sync complete | Sinkronisasi selesai |
 | Completed body | {count} folders synced. | {count} folder disinkronkan. |
 | Failed title | Sync failed | Sinkronisasi gagal |
 | Failed folder names | Couldn’t read {names}. | {names} belum bisa dibaca. |
+
+A failed multi-step sync may have already saved earlier steps. These error messages do not promise rollback or that stored metadata is unchanged. Files in Google Drive are not edited by Shutrly (ADR-019).
 
 ### 10.5 Photos, folder browsing and previews
 
@@ -1419,7 +1453,7 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 | Source inactive | This source is no longer active. Choose another source. | Sumber ini sudah tidak aktif. Pilih sumber lain. |
 | Label too long | Use no more than 60 characters for the label. | Label maksimal 60 karakter. |
 | Link too long | This link is too long. | Tautan ini terlalu panjang. |
-| Project not allowed | Galleries can only be created for booked projects. | Galeri hanya bisa dibuat untuk proyek yang sudah dipesan. |
+| Project not allowed | Confirm the project’s booking before creating a gallery. | Konfirmasi pemesanan proyek sebelum membuat galeri. |
 | Gallery already exists | This project already has a gallery. | Proyek ini sudah punya galeri. |
 | Invalid state | The gallery has changed. Reload the page. | Galeri sudah berubah. Muat ulang halaman. |
 | Sync already running | This folder is already syncing. | Folder ini sedang disinkronkan. |
@@ -1458,12 +1492,12 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Content heading/label | Message content | Isi pesan |
-| Content description | Variables are replaced with client details when you prepare a message. | Variabel diganti dengan data klien saat kamu menyiapkan pesan. |
+| Content description | Placeholders are replaced with project details when you prepare a message. | Penanda diganti dengan data proyek saat kamu menyiapkan pesan. |
 | Mobile heading | Message | Pesan |
 | Variable-syntax helper | Copy variables exactly as shown below, including the double braces. | Tulis variabel persis seperti di bawah, termasuk kurung kurawal gandanya. |
 | Mobile syntax helper | Copy variables exactly as shown below. | Tulis variabel persis seperti di bawah. |
 | Character count | {length} / {max} | {length} / {max} |
-| Variable section | Insert a variable | Sisipkan variabel |
+| Variable section | Insert project details | Sisipkan data proyek |
 | Desktop insert helper | Click to insert at the cursor. Required variables must be included. | Klik untuk menyisipkan di posisi kursor. Variabel wajib harus ada di pesan. |
 | Mobile insert helper | Tap to insert at the cursor. | Ketuk untuk menyisipkan di posisi kursor. |
 | Required-variable marker | Required | Wajib |
@@ -1472,7 +1506,7 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 | View tabs accessible name | Message view | Tampilan pesan |
 | Edit tab | Edit | Ubah |
 | Preview tab/title | Preview | Pratinjau |
-| Preview description | Uses sample details, not a real client’s data. | Memakai data contoh, bukan data klien sebenarnya. |
+| Preview description | Check how the message reads using sample project details. | Cek tampilan pesan dengan data proyek contoh. |
 | Preview region accessible name | Message preview | Pratinjau pesan |
 | Preview password note | The gallery password is filled in when you prepare the sharing message. | Kata sandi galeri terisi saat kamu menyiapkan pesan untuk dibagikan. |
 | Preview error | Fix the template to see the preview again. | Perbaiki isi templat agar pratinjau muncul lagi. |
@@ -1778,7 +1812,7 @@ The root `/` is currently a scaffold placeholder. Proposed replacement for its e
 
 | Element | English | Bahasa Indonesia |
 |---|---|---|
-| Existing root placeholder status | Photography workspace | Ruang kerja fotografi |
+| Existing root placeholder status | Record your shoot details | Catat detail pemotretanmu |
 
 This is wording for the existing placeholder only, not a new landing-page design, CTA or redirect. The wordmark `shutrly.` and copyright retain brand identity.
 

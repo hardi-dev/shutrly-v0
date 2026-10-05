@@ -1,5 +1,7 @@
 # User Journeys
 
+These describe the intended complete MVP. They are workflow requirements, not evidence that all steps are currently available. Check [feature-map.md](feature-map.md) and owning feature verification before using them in present-tense product claims. Arrows do not imply scheduled or automatic actions.
+
 ## J-01 — Owner onboarding
 
 **Actor:** Owner · **Entry:** no account · **Goal:** reach the dashboard of a first workspace.
@@ -24,7 +26,7 @@ flowchart LR
 
 ## J-03 — Booking a project
 
-**Actor:** Owner · **Goal:** a project whose agreed deal is frozen.
+**Actor:** Owner · **Goal:** record the client’s package, price and sessions independently of later catalog edits; explicitly adjust the deal until shooting starts, then lock it (BR-PRJ-009).
 
 ```mermaid
 flowchart LR
@@ -33,7 +35,7 @@ flowchart LR
 
 ## J-04 — Proofing and selection
 
-**Actors:** Owner, Client · **Goal:** client submits selections within entitlement.
+**Actors:** Owner, Client · **Goal:** client submits photo choices within each selection group’s allowance.
 
 ```mermaid
 flowchart LR
@@ -42,11 +44,11 @@ flowchart LR
     H --> I[Owner reviews, locks]
 ```
 
-**Alternate:** limit exceeded / concurrent change → client revises; wrong password → rate-limited retry; Owner rotates password → old sessions invalidated.
+**Alternate:** limit exceeded / concurrent change → client revises; wrong password → rate-limited retry; Owner rotates password → old Shutrly gallery sessions invalidated. Submitted groups cannot be reopened. Public Drive links and retained public image URLs are outside gallery password/expiry enforcement (BR-ACC-005); do not imply complete media revocation.
 
 ## J-05 — Add-on
 
-**Actors:** Client (asks), Owner · **Goal:** extra entitlement billed consistently.
+**Actors:** Client (asks), Owner · **Goal:** record extra package quantities/charges and update the affected selection allowance and draft invoice under BR-ADD-*. This is an explicit Owner approval flow, not automatic billing from a client’s selection.
 
 ```mermaid
 flowchart LR
@@ -64,7 +66,7 @@ flowchart LR
 
 ## J-07 — Billing
 
-**Actors:** Owner, Client · **Goal:** invoice issued, paid, status correct.
+**Actors:** Owner, Client · **Goal:** issue an invoice and track its balance from payments the Owner records. Shutrly does not collect or verify payment through a gateway in MVP.
 
 ```mermaid
 flowchart LR

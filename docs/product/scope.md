@@ -3,13 +3,16 @@
 Status: ACCEPTED (migrated from `_source/` on 2026-09-25)
 
 ## MVP
+
+This is the intended completion scope, not a release announcement. TODO features in [feature-map.md](feature-map.md) remain future scope. For partially built features, describe only the implemented, verified behavior and its limits; a partial implementation does not establish complete feature availability. Check the owning spec, acceptance and release evidence before public claims.
+
 - Owner account: register, verify email (link), login/logout, Google sign-in (identity only, auto-linked by email), forgot/reset/change password, update profile (display name only). Transactional auth emails sent by the platform to the Owner.
 - Multiple Workspaces (brands) per Owner; branding (name, brand name, contact email/phone/address — no logo), invoice prefix, default currency (IDR). Create, edit and switch only.
 - Workspace message templates (WhatsApp channel) and source configuration (Google Drive).
 - Service catalog: categories, reusable item definitions (four seeded per workspace), services with item values (`NUMBER`/`RANGE`), service-specific booking fields; archive/unarchive, delete only when unreferenced (F-05, Owner 2026-10-02).
 - Clients.
-- Projects created from a service, with immutable item and booking-field snapshots, customizable deal, sessions, team members (freelancers without login) and per-session assignments with a role (F-08, Owner 2026-10-03).
-- One private Gallery per Project backed by one or more public Google Drive folder links; idempotent metadata sync.
+- Projects created from a service with copied package items and booking-field metadata that stay independent of later catalog changes. The Owner may customize item/booking values and the agreed price before shooting; the deal is read-only from `SHOOTING` onward (BR-PRJ-001/009). Sessions, team members (freelancers without login) and per-session assignments with a role are included (F-08, Owner 2026-10-03).
+- One access-controlled Shutrly gallery per project, backed by one or more publicly link-shared Google Drive folders. The Owner links folders and initiates metadata sync; there is no scheduled automatic sync. Page access controls do not protect direct public Drive/image links (BR-ACC-005).
 - Client access via Project token + required Gallery password; password rotation; token rotation.
 - Selection groups derived from project items; quantity-aware selection; one-time submit; Owner lock.
 - Final delivery through the same Gallery from Owner-created `edited` / `print` Drive subfolders.
@@ -35,8 +38,8 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25)
 - Automatic Project completion from payment or delivery.
 
 ## Constraints
-- Stack fixed by the Owner: Next.js, Better Auth, Drizzle ORM, Neon PostgreSQL, Cloudflare (see [tech-stack](../architecture/tech-stack.md)).
-- Drive folders are link-shared publicly; anyone holding a direct Drive link bypasses app-level protection. Owners must be warned.
+- Stack fixed by the Owner: Next.js, Better Auth, Drizzle ORM and Neon PostgreSQL; Cloudflare runtime support is retained, staging is on Netlify under ADR-020, and the production host remains undecided (see [tech-stack](../architecture/tech-stack.md)).
+- Drive folders are link-shared publicly; anyone holding a direct Drive link bypasses app-level protection. Retained public image URLs may remain usable after gallery expiry or password rotation (BR-ACC-005). Owners must be warned; never describe the underlying files as fully private or access-revocable.
 - Primary market: Indonesia (IDR, WhatsApp-first communication).
 
 ## Later
@@ -50,9 +53,9 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25)
 
 ## MVP Completion Criteria
 The MVP is ready when:
-1. An Owner can register, verify email, create/select a workspace, and reach a dashboard.
+1. An Owner can register, verify email, create a first workspace, and reach its dashboard. Returning Owners open their last-used workspace and switch from the shell; there is no standalone workspace-selection step (BR-WS-006).
 2. All domain reads and writes are workspace-isolated.
-3. A service can produce a project with immutable item and booking-field snapshots.
+3. A service produces independent project item/booking-field snapshots; later catalog edits do not rewrite them. Explicit Owner edits follow the pre-shooting rules, and the deal locks from `SHOOTING` onward.
 4. A project can have sessions, team assignments, one gallery, and multiple external sources.
 5. Google Drive metadata sync is idempotent and never exposes provider credentials.
 6. A client can open a gallery with the Project token + password, see issued invoices through the same token, select photos by selection group, set print quantities, and submit once.

@@ -70,3 +70,7 @@ New rules BR-PRJ-008..010; BR-PRJ-004's gap is resolved and BR-DEL-003 updated. 
 **Before the first `/sdv:ship`:** schedule CI (GitHub Actions) and the Cloudflare deploy.
 
 **F-06 Clients** — DONE 2026-10-03 ([spec.md](../features/clients/spec.md), AC-CLI-001…021). The client domain, migration 0008, repository/actions/routes, responsive list and dialog UI, lifecycle actions, search/paging, browser journeys and accessibility coverage are implemented on `codex/clients` and merged to `main`. The Owner accepted it as done after a browser review and the full unit/E2E/axe gate; integration tests were skipped by the Owner and AC-CLI-015's real-FK check stays with F-07. See the [implementation record](../features/clients/technical-design.md#implementation-record--2026-10-03).
+
+## Product-copy availability gate
+
+This map tracks the feature lifecycle; inclusion in MVP scope does not mean a feature is shipped. Use the [product overview](overview.md) for problem/mechanism wording, and verify the feature’s release/acceptance evidence before public present-tense claims. F-10–F-15 remain future client-selection/delivery/add-on/billing/sharing surfaces on this branch. F-03 edits templates; it does not send real project messages. F-08 records assignments, not staff logins, availability or payouts. The existing dashboard is a placeholder, not a verified project/invoice summary. Feature statuses above are preserved by this editorial review.

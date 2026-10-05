@@ -108,7 +108,7 @@ Covers: BR-SEL-001, BR-SEL-002, BR-SEL-007 (A-13, A-24)
 
 **Given** the fixture
 **When** the client enters the password
-**Then** they land on Beranda with the cards *Foto edit 0 / 3 foto · Terbuka*, *Foto cetak 0 / 2 lembar · Terbuka*, *Semua foto* and a disabled *Hasil akhir · Belum tersedia*, with no separate add-on figure
+**Then** they land on Beranda with *Semua foto* and *Hasil akhir · Belum tersedia* first, then the cards *Foto edit 0 / 3 foto · Terbuka* and *Foto cetak 0 / 2 lembar · Terbuka*, with no separate add-on figure
 
 ## AC-SEL-002 — Pick and un-pick are saved at once
 Covers: BR-SEL-004, BR-SEL-006 (A-7)

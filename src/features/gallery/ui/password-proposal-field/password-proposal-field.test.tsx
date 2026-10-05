@@ -33,12 +33,11 @@ describe("PasswordProposalField", () => {
     expect(props.onRegenerate).toHaveBeenCalled();
   });
 
-  it("AC-GAL-001 keeps the button level with the input, not with the helper text", () => {
+  it("AC-GAL-001 puts the button inside the input, so it never drifts from it", () => {
     renderField();
     const button = screen.getByRole("button", { name: "Buat ulang" });
-    // The offset class pushes the button down by the label height plus the label-to-input gap.
-    expect(button.parentElement?.className).toContain("mt-[calc(");
-    expect(button.parentElement?.parentElement?.className).toContain("items-start");
+    const input = screen.getByRole("textbox", { name: "Password galeri" });
+    expect(input.parentElement?.contains(button)).toBe(true);
   });
 
   it("C-007 disables the button while a new proposal is loading", () => {
@@ -46,8 +45,14 @@ describe("PasswordProposalField", () => {
     expect(screen.getByRole("button", { name: "Buat ulang" })).toBeDisabled();
   });
 
-  it("AC-GAL-002 shows a field error in place of the helper", () => {
+  it("AC-GAL-002 shows a field error in place of the helper, and keeps the button that fixes it", () => {
     renderField({ errorMessage: "Minimal 6 karakter." });
     expect(screen.getByText("Minimal 6 karakter.")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Buat ulang" })).toBeEnabled();
+  });
+
+  it("C-007 leaves the field itself editable while a new proposal is loading", () => {
+    renderField({ isRegenerating: true });
+    expect(screen.getByRole("textbox", { name: "Password galeri" })).toBeEnabled();
   });
 });

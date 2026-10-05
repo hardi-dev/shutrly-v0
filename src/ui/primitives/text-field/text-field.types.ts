@@ -22,6 +22,8 @@ export type TextFieldProps = FieldNameProps & {
   readonly iconLeadingAction?: InputIconAction;
   readonly iconTrailing?: InputIconName;
   readonly iconTrailingAction?: InputIconAction;
+  /** Keeps the trailing icon and its action when the field is invalid, for an action that fixes the error (for example *Buat ulang*); otherwise the error icon replaces them. */
+  readonly keepTrailingOnError?: boolean;
   readonly shortcut?: string;
   readonly value: string;
   readonly onChange: (value: string) => void;

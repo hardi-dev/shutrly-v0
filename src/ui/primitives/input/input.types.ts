@@ -14,11 +14,14 @@ export type InputIconName = Extract<
   | "eye"
   | "eye-off"
   | "circle-alert"
+  | "refresh-cw"
 >;
 
 export interface InputIconAction {
   label: string;
   onPress: () => void;
+  /** Disables only this button, not the field (for example while a new value is loading). */
+  isDisabled?: boolean;
 }
 
 export interface InputIconProps {

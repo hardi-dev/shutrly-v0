@@ -83,6 +83,38 @@ describe("TextField", () => {
     expect(screen.getByTestId("input-icon-trailing")).toBeInTheDocument();
   });
 
+  it("keeps the trailing action on an invalid field only when asked to", () => {
+    const action = { label: "Buat ulang", onPress: vi.fn() };
+    const { unmount } = render(
+      <TextField
+        label="Password"
+        name="p"
+        value="abc"
+        onChange={vi.fn()}
+        onBlur={vi.fn()}
+        errorMessage="Terlalu pendek"
+        iconTrailing="refresh-cw"
+        iconTrailingAction={action}
+      />,
+    );
+    expect(screen.queryByRole("button", { name: "Buat ulang" })).toBeNull();
+    unmount();
+    render(
+      <TextField
+        label="Password"
+        name="p"
+        value="abc"
+        onChange={vi.fn()}
+        onBlur={vi.fn()}
+        errorMessage="Terlalu pendek"
+        iconTrailing="refresh-cw"
+        iconTrailingAction={action}
+        keepTrailingOnError
+      />,
+    );
+    expect(screen.getByRole("button", { name: "Buat ulang" })).toBeInTheDocument();
+  });
+
   it("uses an aria-label without rendering a visible label", () => {
     const { container } = render(
       <TextField

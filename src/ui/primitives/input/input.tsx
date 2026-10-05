@@ -195,7 +195,7 @@ function InputAdornmentIcon({ name, side, action, isDisabled }: Readonly<InputAd
       type="button"
       aria-label={action.label}
       onPress={action.onPress}
-      isDisabled={isDisabled}
+      isDisabled={isDisabled || action.isDisabled}
       className="pointer-events-auto flex size-(--space-6) items-center justify-center rounded-(--component-input-radius) outline-none focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
     >
       {icon}

@@ -91,6 +91,18 @@ describe("Input", () => {
     expect(onTrailingPress).toHaveBeenCalledTimes(1);
   });
 
+  it("disables only the trailing action when the action says so, not the field", () => {
+    render(
+      <Input
+        aria-label="Password"
+        iconTrailing="refresh-cw"
+        iconTrailingAction={{ label: "Buat ulang", onPress: vi.fn(), isDisabled: true }}
+      />,
+    );
+    expect(screen.getByRole("button", { name: "Buat ulang" })).toBeDisabled();
+    expect(screen.getByLabelText("Password")).toBeEnabled();
+  });
+
   it("reports string changes and preserves disabled behavior", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();

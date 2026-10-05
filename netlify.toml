@@ -1,0 +1,9 @@
+# Netlify build. The Next.js runtime is detected and installed by Netlify; no plugin entry is needed.
+# Runtime variables (DATABASE_URL, BETTER_AUTH_*, Resend, Drive, gallery key, APP_STAGE) are set
+# in the Netlify site settings or with `netlify env:set`, never here.
+[build]
+  command = "pnpm build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"

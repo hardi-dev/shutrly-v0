@@ -161,6 +161,48 @@
               "fontFamily": "$3:font/family/base",
               "fontSize": "$3:font/size/caption",
               "fontWeight": "$3:font/weight/regular"
+            },
+            {
+              "type": "frame",
+              "id": "dz052",
+              "x": 0,
+              "y": 0,
+              "name": "Note row",
+              "enabled": false,
+              "width": "fill_container(0)",
+              "layout": "vertical",
+              "padding": [
+                "$3:space/2-5",
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "n2Txjq",
+                  "type": "ref",
+                  "ref": "3:S5bhVn",
+                  "name": "Note alert",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:k7lq2": {
+                      "icon": "message-square-text"
+                    },
+                    "3:m0dqT6": {
+                      "content": "Catatan klien"
+                    },
+                    "3:fhch4": {
+                      "content": "Hapus jerawat di dahi, cerahkan sedikit."
+                    },
+                    "3:M54Ca": {
+                      "enabled": false
+                    },
+                    "3:IXhZl": {
+                      "enabled": false
+                    }
+                  }
+                }
+              ]
             }
           ]
         }
@@ -3499,214 +3541,308 @@
                               "fontWeight": "$3:font/weight/bold"
                             }
                           ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "F7IiCu",
+                          "name": "Catatan",
+                          "layout": "vertical",
+                          "gap": "$3:space/1",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ixSIf",
+                              "name": "Label",
+                              "fill": "$3:color/semantic/text/secondary",
+                              "content": "Catatan",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/label",
+                              "fontWeight": "$3:font/weight/semibold"
+                            },
+                            {
+                              "type": "text",
+                              "id": "qwsqH",
+                              "name": "Value",
+                              "fill": "$3:color/semantic/text/primary",
+                              "content": "3 foto bercatatan",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/subtitle",
+                              "fontWeight": "$3:font/weight/bold"
+                            }
+                          ]
                         }
                       ]
                     }
                   }
                 },
                 {
-                  "type": "frame",
-                  "id": "r9oYd",
-                  "name": "Grid",
+                  "id": "k2jXT",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Foto pilihan",
                   "width": "fill_container",
-                  "layout": "vertical",
-                  "gap": "$3:space/4",
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "H8NBh",
-                      "name": "Row 1",
-                      "width": "fill_container",
-                      "gap": "$3:space/4",
-                      "children": [
-                        {
-                          "id": "BU2W1",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_001.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_001.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "P1v1w",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_004.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_004.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "n5i5O",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_007.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_007.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "YY8oC",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_010.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_010.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        }
-                      ]
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Foto pilihan"
                     },
-                    {
+                    "3:nHCW8": {
+                      "content": "8 foto · 3 dengan catatan"
+                    },
+                    "3:QcKHK": {
+                      "enabled": false
+                    },
+                    "3:DElnV": {
                       "type": "frame",
-                      "id": "z9t7wS",
-                      "name": "Row 2",
+                      "id": "w2d9b",
+                      "name": "Content",
                       "width": "fill_container",
-                      "gap": "$3:space/4",
+                      "layout": "vertical",
+                      "gap": "$3:component/section-card/content/gap",
+                      "padding": "$3:component/section-card/content/padding",
                       "children": [
                         {
-                          "id": "rAWtY",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_013.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
+                          "type": "frame",
+                          "id": "x0QVYM",
+                          "name": "Grid",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/4",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "PpIPh",
+                              "name": "Row 1",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "Qlx0a",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_001.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_001.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "T6Sd2i",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_004.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "FagWc": {
+                                      "enabled": true
+                                    },
+                                    "c4riG": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_004.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    },
+                                    "dz052": {
+                                      "enabled": true
+                                    },
+                                    "n2Txjq/3:fhch4": {
+                                      "content": "Hapus jerawat di dahi, cerahkan sedikit."
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "WWQLJ",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_007.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_007.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "RhTZa",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_010.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "FagWc": {
+                                      "enabled": true
+                                    },
+                                    "c4riG": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_010.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    },
+                                    "dz052": {
+                                      "enabled": true
+                                    },
+                                    "n2Txjq/3:fhch4": {
+                                      "content": "Tolong rapikan rambut yang berantakan."
+                                    }
+                                  }
+                                }
+                              ]
                             },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_013.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
+                            {
+                              "type": "frame",
+                              "id": "WaLQt",
+                              "name": "Row 2",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "T3J4eF",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_013.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_013.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "IHAhX",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_016.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_016.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "Hy25y",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_019.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "FagWc": {
+                                      "enabled": true
+                                    },
+                                    "c4riG": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_019.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    },
+                                    "dz052": {
+                                      "enabled": true
+                                    },
+                                    "n2Txjq/3:fhch4": {
+                                      "content": "Buat warna lebih hangat seperti foto lain."
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "sNe5h",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_022.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_022.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                }
+                              ]
                             }
-                          }
-                        },
-                        {
-                          "id": "vwL39",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_016.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_016.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "K3yF6f",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_019.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_019.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "F25WBd",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_022.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_022.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
+                          ]
                         }
                       ]
                     }
-                  ]
+                  }
                 }
               ]
             }
@@ -3958,95 +4094,172 @@
                               "fontWeight": "$3:font/weight/bold"
                             }
                           ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "F4aDhY",
+                          "name": "Catatan",
+                          "layout": "vertical",
+                          "gap": "$3:space/1",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nFeMz",
+                              "name": "Label",
+                              "fill": "$3:color/semantic/text/secondary",
+                              "content": "Catatan",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/label",
+                              "fontWeight": "$3:font/weight/semibold"
+                            },
+                            {
+                              "type": "text",
+                              "id": "KXiWt",
+                              "name": "Value",
+                              "fill": "$3:color/semantic/text/primary",
+                              "content": "1 foto bercatatan",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/subtitle",
+                              "fontWeight": "$3:font/weight/bold"
+                            }
+                          ]
                         }
                       ]
                     }
                   }
                 },
                 {
-                  "type": "frame",
-                  "id": "Qv9Af",
-                  "name": "Grid",
+                  "id": "bcoyq",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Foto pilihan",
                   "width": "fill_container",
-                  "layout": "vertical",
-                  "gap": "$3:space/4",
-                  "children": [
-                    {
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Foto pilihan"
+                    },
+                    "3:nHCW8": {
+                      "content": "3 foto · 1 dengan catatan"
+                    },
+                    "3:QcKHK": {
+                      "enabled": false
+                    },
+                    "3:DElnV": {
                       "type": "frame",
-                      "id": "qa8n0",
-                      "name": "Row 1",
+                      "id": "brfjc",
+                      "name": "Content",
                       "width": "fill_container",
-                      "gap": "$3:space/4",
+                      "layout": "vertical",
+                      "gap": "$3:component/section-card/content/gap",
+                      "padding": "$3:component/section-card/content/padding",
                       "children": [
                         {
-                          "id": "PZgsm",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_001.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_001.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
+                          "type": "frame",
+                          "id": "ribhX",
+                          "name": "Grid",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/4",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "NVr7a",
+                              "name": "Row 1",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "b0mh6R",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_001.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_001.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "b0gYWE",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_004.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "FagWc": {
+                                      "enabled": true
+                                    },
+                                    "c4riG": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_004.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    },
+                                    "dz052": {
+                                      "enabled": true
+                                    },
+                                    "n2Txjq/3:fhch4": {
+                                      "content": "Hapus jerawat di dahi, cerahkan sedikit."
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "Sp7kh",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_007.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_007.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "ifyiO",
+                                  "name": "Spacer",
+                                  "width": "fill_container",
+                                  "height": 1
+                                }
+                              ]
                             }
-                          }
-                        },
-                        {
-                          "id": "Ykx3z",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_004.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_004.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "M8gMd",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_007.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_007.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
+                          ]
                         }
                       ]
                     }
-                  ]
+                  }
                 }
               ]
             }
@@ -4059,7 +4272,7 @@
       "type": "ref",
       "ref": "3:y9uBJl",
       "name": "Pilihan · dikunci · Desktop",
-      "x": 36240,
+      "x": 38370,
       "y": 37325,
       "height": 1240,
       "descendants": {
@@ -4268,214 +4481,308 @@
                               "fontWeight": "$3:font/weight/bold"
                             }
                           ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "aD3ft",
+                          "name": "Catatan",
+                          "layout": "vertical",
+                          "gap": "$3:space/1",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ZdXHh",
+                              "name": "Label",
+                              "fill": "$3:color/semantic/text/secondary",
+                              "content": "Catatan",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/label",
+                              "fontWeight": "$3:font/weight/semibold"
+                            },
+                            {
+                              "type": "text",
+                              "id": "uzCFc",
+                              "name": "Value",
+                              "fill": "$3:color/semantic/text/primary",
+                              "content": "3 foto bercatatan",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/subtitle",
+                              "fontWeight": "$3:font/weight/bold"
+                            }
+                          ]
                         }
                       ]
                     }
                   }
                 },
                 {
-                  "type": "frame",
-                  "id": "bXjmn",
-                  "name": "Grid",
+                  "id": "V5DgX",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Foto pilihan",
                   "width": "fill_container",
-                  "layout": "vertical",
-                  "gap": "$3:space/4",
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "wZLwr",
-                      "name": "Row 1",
-                      "width": "fill_container",
-                      "gap": "$3:space/4",
-                      "children": [
-                        {
-                          "id": "b4ztSV",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_001.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_001.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "XpyAa",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_004.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_004.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "U9zhwW",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_007.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_007.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "QQEd2",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_010.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_010.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        }
-                      ]
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Foto pilihan"
                     },
-                    {
+                    "3:nHCW8": {
+                      "content": "8 foto · 3 dengan catatan"
+                    },
+                    "3:QcKHK": {
+                      "enabled": false
+                    },
+                    "3:DElnV": {
                       "type": "frame",
-                      "id": "o0PaHK",
-                      "name": "Row 2",
+                      "id": "R0I3P",
+                      "name": "Content",
                       "width": "fill_container",
-                      "gap": "$3:space/4",
+                      "layout": "vertical",
+                      "gap": "$3:component/section-card/content/gap",
+                      "padding": "$3:component/section-card/content/padding",
                       "children": [
                         {
-                          "id": "H1p6V",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_013.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
+                          "type": "frame",
+                          "id": "ihXZx",
+                          "name": "Grid",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/4",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "uiwky",
+                              "name": "Row 1",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "mxxDd",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_001.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_001.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "nJxPo",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_004.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "FagWc": {
+                                      "enabled": true
+                                    },
+                                    "c4riG": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_004.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    },
+                                    "dz052": {
+                                      "enabled": true
+                                    },
+                                    "n2Txjq/3:fhch4": {
+                                      "content": "Hapus jerawat di dahi, cerahkan sedikit."
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "h2eFD",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_007.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_007.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "v9d5eI",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_010.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "FagWc": {
+                                      "enabled": true
+                                    },
+                                    "c4riG": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_010.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    },
+                                    "dz052": {
+                                      "enabled": true
+                                    },
+                                    "n2Txjq/3:fhch4": {
+                                      "content": "Tolong rapikan rambut yang berantakan."
+                                    }
+                                  }
+                                }
+                              ]
                             },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_013.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
+                            {
+                              "type": "frame",
+                              "id": "wVT84",
+                              "name": "Row 2",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "rYauh",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_013.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_013.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "V64C6",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_016.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_016.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "g2zL2q",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_019.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "FagWc": {
+                                      "enabled": true
+                                    },
+                                    "c4riG": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_019.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    },
+                                    "dz052": {
+                                      "enabled": true
+                                    },
+                                    "n2Txjq/3:fhch4": {
+                                      "content": "Buat warna lebih hangat seperti foto lain."
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "DKnvY",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_022.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_022.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                }
+                              ]
                             }
-                          }
-                        },
-                        {
-                          "id": "I8V5dA",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_016.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_016.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "Hdg6j",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_019.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_019.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "V9hWD",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_022.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_022.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
+                          ]
                         }
                       ]
                     }
-                  ]
+                  }
                 }
               ]
             }
@@ -4488,7 +4795,7 @@
       "type": "ref",
       "ref": "3:y9uBJl",
       "name": "Pilihan · foto hilang · Desktop",
-      "x": 26490,
+      "x": 28620,
       "y": 37325,
       "height": 1240,
       "descendants": {
@@ -4733,204 +5040,233 @@
                   }
                 },
                 {
-                  "type": "frame",
-                  "id": "PsSJZ",
-                  "name": "Grid",
+                  "id": "dbn6x",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Foto pilihan",
                   "width": "fill_container",
-                  "layout": "vertical",
-                  "gap": "$3:space/4",
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "c7bdRt",
-                      "name": "Row 1",
-                      "width": "fill_container",
-                      "gap": "$3:space/4",
-                      "children": [
-                        {
-                          "id": "l2g3YV",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_001.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_001.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "C2T2Y",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_004.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_004.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "g44C8j",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_007.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_007.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "VtUQI",
-                          "type": "ref",
-                          "ref": "3:HEwJS",
-                          "name": "IMG_010.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "3:vnyor": {
-                              "height": 200
-                            },
-                            "3:dTxmf": {
-                              "content": "IMG_010.jpg"
-                            },
-                            "3:erGMi": {
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        }
-                      ]
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Foto pilihan"
                     },
-                    {
+                    "3:nHCW8": {
+                      "content": "8 foto"
+                    },
+                    "3:QcKHK": {
+                      "enabled": false
+                    },
+                    "3:DElnV": {
                       "type": "frame",
-                      "id": "wH2s1",
-                      "name": "Row 2",
+                      "id": "h4R6Xg",
+                      "name": "Content",
                       "width": "fill_container",
-                      "gap": "$3:space/4",
+                      "layout": "vertical",
+                      "gap": "$3:component/section-card/content/gap",
+                      "padding": "$3:component/section-card/content/padding",
                       "children": [
                         {
-                          "id": "BSGQl",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_013.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
+                          "type": "frame",
+                          "id": "lhrFz",
+                          "name": "Grid",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/4",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "K97g19",
+                              "name": "Row 1",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "xPruF",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_001.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_001.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "b1loP1",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_004.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_004.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "Ic2Ib",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_007.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_007.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "cBxQP",
+                                  "type": "ref",
+                                  "ref": "3:HEwJS",
+                                  "name": "IMG_010.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "height": 200
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_010.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                }
+                              ]
                             },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_013.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
+                            {
+                              "type": "frame",
+                              "id": "lctOk",
+                              "name": "Row 2",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "MdZLr",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_013.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_013.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "edaqC",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_016.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_016.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "Bkz4C",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_019.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_019.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "OHYpT",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_022.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_022.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                }
+                              ]
                             }
-                          }
-                        },
-                        {
-                          "id": "BqcHB",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_016.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_016.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "w9sqX",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_019.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_019.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "f2zZmU",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_022.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "sxpxx": {
-                              "content": "IMG_022.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
+                          ]
                         }
                       ]
                     }
-                  ]
+                  }
                 }
               ]
             }
@@ -4943,7 +5279,7 @@
       "type": "ref",
       "ref": "3:y9uBJl",
       "name": "Pilihan · cetak · Desktop",
-      "x": 24810,
+      "x": 26940,
       "y": 37325,
       "height": 960,
       "descendants": {
@@ -5173,110 +5509,146 @@
                   }
                 },
                 {
-                  "type": "frame",
-                  "id": "RKLTK",
-                  "name": "Grid",
+                  "id": "l9wI48",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Foto pilihan",
                   "width": "fill_container",
-                  "layout": "vertical",
-                  "gap": "$3:space/4",
-                  "children": [
-                    {
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Foto pilihan"
+                    },
+                    "3:nHCW8": {
+                      "content": "3 foto · jumlah cetak tertulis di tiap foto"
+                    },
+                    "3:QcKHK": {
+                      "enabled": false
+                    },
+                    "3:DElnV": {
                       "type": "frame",
-                      "id": "SV6Pd",
-                      "name": "Row 1",
+                      "id": "aEiYn",
+                      "name": "Content",
                       "width": "fill_container",
-                      "gap": "$3:space/4",
+                      "layout": "vertical",
+                      "gap": "$3:component/section-card/content/gap",
+                      "padding": "$3:component/section-card/content/padding",
                       "children": [
                         {
-                          "id": "t92cZ",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_001.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "XKVzi": {
-                              "enabled": true,
-                              "y": 170
-                            },
-                            "rTZvo": {
-                              "content": "× 2"
-                            },
-                            "sxpxx": {
-                              "content": "IMG_001.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
+                          "type": "frame",
+                          "id": "o1nX9",
+                          "name": "Grid",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/4",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "ben3V",
+                              "name": "Row 1",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "Coe2S",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_001.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "XKVzi": {
+                                      "enabled": true,
+                                      "y": 170
+                                    },
+                                    "rTZvo": {
+                                      "content": "× 2"
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_001.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "pE07E",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_004.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "XKVzi": {
+                                      "enabled": true,
+                                      "y": 170
+                                    },
+                                    "rTZvo": {
+                                      "content": "× 2"
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_004.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "kLKBe",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_007.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 200
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "XKVzi": {
+                                      "enabled": true,
+                                      "y": 170
+                                    },
+                                    "rTZvo": {
+                                      "content": "× 1"
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_007.jpg"
+                                    },
+                                    "BKu1U": {
+                                      "enabled": true,
+                                      "content": "Rina-Wisuda › Akad"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "l8rjFx",
+                                  "name": "Spacer",
+                                  "width": "fill_container",
+                                  "height": 1
+                                }
+                              ]
                             }
-                          }
-                        },
-                        {
-                          "id": "yaxUg",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_004.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "XKVzi": {
-                              "enabled": true,
-                              "y": 170
-                            },
-                            "rTZvo": {
-                              "content": "× 2"
-                            },
-                            "sxpxx": {
-                              "content": "IMG_004.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
-                        },
-                        {
-                          "id": "yvHFN",
-                          "type": "ref",
-                          "ref": "j1xyVG",
-                          "name": "IMG_007.jpg",
-                          "width": 262,
-                          "descendants": {
-                            "ZlGuS": {
-                              "height": 200
-                            },
-                            "f4Yby3": {
-                              "enabled": false
-                            },
-                            "XKVzi": {
-                              "enabled": true,
-                              "y": 170
-                            },
-                            "rTZvo": {
-                              "content": "× 1"
-                            },
-                            "sxpxx": {
-                              "content": "IMG_007.jpg"
-                            },
-                            "BKu1U": {
-                              "enabled": true,
-                              "content": "Rina-Wisuda › Akad"
-                            }
-                          }
+                          ]
                         }
                       ]
                     }
-                  ]
+                  }
                 }
               ]
             }
@@ -5289,7 +5661,7 @@
       "type": "ref",
       "ref": "3:y9uBJl",
       "name": "Pilihan · kosong · Desktop",
-      "x": 28170,
+      "x": 30300,
       "y": 37325,
       "height": 960,
       "descendants": {
@@ -5534,7 +5906,7 @@
       "type": "frame",
       "id": "vkFKg",
       "x": 22210,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog tambah add-on · Desktop",
       "clip": true,
       "width": 1440,
@@ -5710,7 +6082,7 @@
       "type": "frame",
       "id": "I94a1f",
       "x": 23710,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog tambah add-on · Phone",
       "clip": true,
       "width": 390,
@@ -5884,7 +6256,7 @@
       "type": "frame",
       "id": "fKZng",
       "x": 24340,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog tambah add-on error · Desktop",
       "clip": true,
       "width": 1440,
@@ -6060,7 +6432,7 @@
       "type": "frame",
       "id": "jhp7x",
       "x": 25840,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog tambah add-on error · Phone",
       "clip": true,
       "width": 390,
@@ -6234,7 +6606,7 @@
       "type": "frame",
       "id": "AN4pY",
       "x": 26470,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog setujui add-on kirim · Desktop",
       "clip": true,
       "width": 1440,
@@ -6273,7 +6645,7 @@
       "type": "frame",
       "id": "OuXAq",
       "x": 27970,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog setujui add-on kirim · Phone",
       "clip": true,
       "width": 390,
@@ -6310,7 +6682,7 @@
       "type": "frame",
       "id": "Rb9xp",
       "x": 28600,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog setujui add-on terbuka · Desktop",
       "clip": true,
       "width": 1440,
@@ -6349,7 +6721,7 @@
       "type": "frame",
       "id": "mmEgd",
       "x": 30100,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog setujui add-on terbuka · Phone",
       "clip": true,
       "width": 390,
@@ -6386,7 +6758,7 @@
       "type": "frame",
       "id": "T4teC",
       "x": 34070,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog batalkan add-on · Desktop",
       "clip": true,
       "width": 1440,
@@ -6433,7 +6805,7 @@
       "type": "frame",
       "id": "Noxsi",
       "x": 35570,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog batalkan add-on · Phone",
       "clip": true,
       "width": 390,
@@ -6483,7 +6855,7 @@
       "type": "frame",
       "id": "Lrxus",
       "x": 36200,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog batalkan add-on ditolak · Desktop",
       "clip": true,
       "width": 1440,
@@ -6525,7 +6897,7 @@
       "type": "frame",
       "id": "fDHWi",
       "x": 37700,
-      "y": 41247,
+      "y": 43018,
       "name": "Dialog batalkan add-on ditolak · Phone",
       "clip": true,
       "width": 390,
@@ -6561,7 +6933,7 @@
     {
       "type": "frame",
       "id": "t1goVj",
-      "x": 29850,
+      "x": 31980,
       "y": 37325,
       "name": "Dialog kunci pilihan · Desktop",
       "clip": true,
@@ -6600,7 +6972,7 @@
     {
       "type": "frame",
       "id": "BEgqG",
-      "x": 31350,
+      "x": 33480,
       "y": 37325,
       "name": "Dialog kunci pilihan · Phone",
       "clip": true,
@@ -6637,7 +7009,7 @@
     {
       "type": "frame",
       "id": "rYTOm",
-      "x": 31980,
+      "x": 34110,
       "y": 37325,
       "name": "Dialog tutup pilihan · Desktop",
       "clip": true,
@@ -6676,7 +7048,7 @@
     {
       "type": "frame",
       "id": "O6ldJt",
-      "x": 33480,
+      "x": 35610,
       "y": 37325,
       "name": "Dialog tutup pilihan · Phone",
       "clip": true,
@@ -6714,7 +7086,7 @@
       "type": "frame",
       "id": "F9X1a",
       "x": 22210,
-      "y": 44693,
+      "y": 46464,
       "name": "Dialog publikasikan hasil akhir · Desktop",
       "clip": true,
       "width": 1440,
@@ -6753,7 +7125,7 @@
       "type": "frame",
       "id": "f9eIWy",
       "x": 23710,
-      "y": 44693,
+      "y": 46464,
       "name": "Dialog publikasikan hasil akhir · Phone",
       "clip": true,
       "width": 390,
@@ -6790,7 +7162,7 @@
       "type": "frame",
       "id": "FjMco",
       "x": 24340,
-      "y": 44693,
+      "y": 46464,
       "name": "Dialog hasil akhir ditolak · Desktop",
       "clip": true,
       "width": 1440,
@@ -6869,7 +7241,7 @@
       "type": "frame",
       "id": "amshA",
       "x": 25840,
-      "y": 44693,
+      "y": 46464,
       "name": "Dialog hasil akhir ditolak · Phone",
       "clip": true,
       "width": 390,
@@ -6943,7 +7315,7 @@
       "type": "frame",
       "id": "ZHOq1",
       "x": 28600,
-      "y": 44693,
+      "y": 46464,
       "name": "Dialog tandai selesai · Desktop",
       "clip": true,
       "width": 1440,
@@ -6982,7 +7354,7 @@
       "type": "frame",
       "id": "o7DEB",
       "x": 30100,
-      "y": 44693,
+      "y": 46464,
       "name": "Dialog tandai selesai · Phone",
       "clip": true,
       "width": 390,
@@ -7019,7 +7391,7 @@
       "type": "frame",
       "id": "V0gYsZ",
       "x": 21000,
-      "y": 48139,
+      "y": 49910,
       "name": "Dialog ganti link · Desktop",
       "clip": true,
       "width": 1440,
@@ -7066,7 +7438,7 @@
       "type": "frame",
       "id": "h2Ifa",
       "x": 22500,
-      "y": 48139,
+      "y": 49910,
       "name": "Dialog ganti link · Phone",
       "clip": true,
       "width": 390,
@@ -7116,7 +7488,7 @@
       "type": "frame",
       "id": "wVCqi",
       "x": 23130,
-      "y": 48139,
+      "y": 49910,
       "name": "Dialog ganti link memproses · Desktop",
       "clip": true,
       "width": 1440,
@@ -7161,7 +7533,7 @@
       "type": "frame",
       "id": "uFgsX",
       "x": 24630,
-      "y": 48139,
+      "y": 49910,
       "name": "Dialog ganti link memproses · Phone",
       "clip": true,
       "width": 390,
@@ -11880,7 +12252,7 @@
       "type": "frame",
       "id": "LWeFq",
       "x": 30730,
-      "y": 41247,
+      "y": 43018,
       "name": "Toast add-on disetujui · Desktop",
       "clip": true,
       "width": 1440,
@@ -11912,7 +12284,7 @@
       "type": "frame",
       "id": "hAUS4",
       "x": 32230,
-      "y": 41247,
+      "y": 43018,
       "name": "Toast add-on disetujui · Phone",
       "clip": true,
       "width": 390,
@@ -11944,7 +12316,7 @@
       "type": "frame",
       "id": "Z3zcE",
       "x": 38330,
-      "y": 41247,
+      "y": 43018,
       "name": "Toast add-on dibatalkan · Desktop",
       "clip": true,
       "width": 1440,
@@ -11976,7 +12348,7 @@
       "type": "frame",
       "id": "tIBxa",
       "x": 39830,
-      "y": 41247,
+      "y": 43018,
       "name": "Toast add-on dibatalkan · Phone",
       "clip": true,
       "width": 390,
@@ -12007,7 +12379,7 @@
     {
       "type": "frame",
       "id": "ROjxI",
-      "x": 34110,
+      "x": 36240,
       "y": 37325,
       "name": "Toast pilihan dikunci · Desktop",
       "clip": true,
@@ -12039,7 +12411,7 @@
     {
       "type": "frame",
       "id": "x5YUa",
-      "x": 35610,
+      "x": 37740,
       "y": 37325,
       "name": "Toast pilihan dikunci · Phone",
       "clip": true,
@@ -12072,7 +12444,7 @@
       "type": "frame",
       "id": "b5DiaA",
       "x": 26470,
-      "y": 44693,
+      "y": 46464,
       "name": "Toast hasil akhir dipublikasikan · Desktop",
       "clip": true,
       "width": 1440,
@@ -12104,7 +12476,7 @@
       "type": "frame",
       "id": "EvB6o",
       "x": 27970,
-      "y": 44693,
+      "y": 46464,
       "name": "Toast hasil akhir dipublikasikan · Phone",
       "clip": true,
       "width": 390,
@@ -12136,7 +12508,7 @@
       "type": "frame",
       "id": "nKZE9",
       "x": 30730,
-      "y": 44693,
+      "y": 46464,
       "name": "Toast proyek selesai · Desktop",
       "clip": true,
       "width": 1440,
@@ -12168,7 +12540,7 @@
       "type": "frame",
       "id": "x4bhZ7",
       "x": 32230,
-      "y": 44693,
+      "y": 46464,
       "name": "Toast proyek selesai · Phone",
       "clip": true,
       "width": 390,
@@ -12200,7 +12572,7 @@
       "type": "frame",
       "id": "UPDpQ",
       "x": 25260,
-      "y": 48139,
+      "y": 49910,
       "name": "Toast link diganti · Desktop",
       "clip": true,
       "width": 1440,
@@ -12232,7 +12604,7 @@
       "type": "frame",
       "id": "olg9k",
       "x": 26760,
-      "y": 48139,
+      "y": 49910,
       "name": "Toast link diganti · Phone",
       "clip": true,
       "width": 390,
@@ -12264,7 +12636,7 @@
       "type": "frame",
       "id": "j6GL8r",
       "x": 22530,
-      "y": 51585,
+      "y": 53356,
       "name": "Item paket · pilihan mati · Desktop",
       "clip": true,
       "width": 1440,
@@ -12390,7 +12762,7 @@
       "type": "frame",
       "id": "E7KkOR",
       "x": 24030,
-      "y": 51585,
+      "y": 53356,
       "name": "Item paket · pilihan mati · Phone",
       "clip": true,
       "width": 390,
@@ -12514,7 +12886,7 @@
       "type": "frame",
       "id": "AT5Aw",
       "x": 24660,
-      "y": 51585,
+      "y": 53356,
       "name": "Item paket · hitung foto · Desktop",
       "clip": true,
       "width": 1440,
@@ -12694,7 +13066,7 @@
       "type": "frame",
       "id": "trGFW",
       "x": 26160,
-      "y": 51585,
+      "y": 53356,
       "name": "Item paket · hitung foto · Phone",
       "clip": true,
       "width": 390,
@@ -12872,7 +13244,7 @@
       "type": "frame",
       "id": "GguU9",
       "x": 26790,
-      "y": 51585,
+      "y": 53356,
       "name": "Item paket · jumlah per foto · Desktop",
       "clip": true,
       "width": 1440,
@@ -13052,7 +13424,7 @@
       "type": "frame",
       "id": "yvL3e",
       "x": 28290,
-      "y": 51585,
+      "y": 53356,
       "name": "Item paket · jumlah per foto · Phone",
       "clip": true,
       "width": 390,
@@ -13230,7 +13602,7 @@
       "type": "frame",
       "id": "Sa0dG",
       "x": 28920,
-      "y": 51585,
+      "y": 53356,
       "name": "Item paket · dikunci · Desktop",
       "clip": true,
       "width": 1440,
@@ -13425,7 +13797,7 @@
       "type": "frame",
       "id": "QsOoK",
       "x": 30420,
-      "y": 51585,
+      "y": 53356,
       "name": "Item paket · dikunci · Phone",
       "clip": true,
       "width": 390,
@@ -14005,7 +14377,7 @@
       "name": "Pilihan · dikirim · Phone",
       "clip": true,
       "width": 390,
-      "height": 1500,
+      "height": 3271,
       "fill": "$3:color/semantic/surface/canvas",
       "layout": "vertical",
       "children": [
@@ -14114,200 +14486,279 @@
                       "fontFamily": "$3:font/family/base",
                       "fontSize": "$3:font/size/body-sm",
                       "fontWeight": "$3:font/weight/regular"
+                    },
+                    {
+                      "type": "text",
+                      "id": "j6oWLo",
+                      "name": "Catatan",
+                      "fill": "$3:color/semantic/text/primary",
+                      "content": "3 foto bercatatan",
+                      "fontFamily": "$3:font/family/base",
+                      "fontSize": "$3:font/size/subtitle",
+                      "fontWeight": "$3:font/weight/bold"
                     }
                   ]
                 }
               }
             },
             {
-              "type": "frame",
-              "id": "r0UEg",
-              "name": "Grid",
+              "id": "j1HlyZ",
+              "type": "ref",
+              "ref": "3:lYGAJ",
+              "name": "Foto pilihan",
               "width": "fill_container",
-              "layout": "vertical",
-              "gap": "$3:space/4",
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "WQbMr",
-                  "name": "Row 1",
-                  "width": "fill_container",
-                  "gap": "$3:space/2",
-                  "children": [
-                    {
-                      "id": "yHSyX",
-                      "type": "ref",
-                      "ref": "j1xyVG",
-                      "name": "IMG_001.jpg",
-                      "width": 175,
-                      "descendants": {
-                        "ZlGuS": {
-                          "height": 150
-                        },
-                        "f4Yby3": {
-                          "enabled": false
-                        },
-                        "sxpxx": {
-                          "content": "IMG_001.jpg"
-                        }
-                      }
-                    },
-                    {
-                      "id": "IPcXt",
-                      "type": "ref",
-                      "ref": "j1xyVG",
-                      "name": "IMG_004.jpg",
-                      "width": 175,
-                      "descendants": {
-                        "ZlGuS": {
-                          "height": 150
-                        },
-                        "f4Yby3": {
-                          "enabled": false
-                        },
-                        "sxpxx": {
-                          "content": "IMG_004.jpg"
-                        }
-                      }
-                    }
-                  ]
+              "descendants": {
+                "3:BXWnC": {
+                  "content": "Foto pilihan"
                 },
-                {
-                  "type": "frame",
-                  "id": "Mf0XI",
-                  "name": "Row 2",
-                  "width": "fill_container",
-                  "gap": "$3:space/2",
-                  "children": [
-                    {
-                      "id": "zJkye",
-                      "type": "ref",
-                      "ref": "j1xyVG",
-                      "name": "IMG_007.jpg",
-                      "width": 175,
-                      "descendants": {
-                        "ZlGuS": {
-                          "height": 150
-                        },
-                        "f4Yby3": {
-                          "enabled": false
-                        },
-                        "sxpxx": {
-                          "content": "IMG_007.jpg"
-                        }
-                      }
-                    },
-                    {
-                      "id": "nRH6N",
-                      "type": "ref",
-                      "ref": "3:HEwJS",
-                      "name": "IMG_010.jpg",
-                      "width": 175,
-                      "descendants": {
-                        "3:vnyor": {
-                          "height": 150
-                        },
-                        "3:dTxmf": {
-                          "content": "IMG_010.jpg"
-                        },
-                        "3:erGMi": {
-                          "content": "Hilang di Drive"
-                        }
-                      }
-                    }
-                  ]
+                "3:nHCW8": {
+                  "content": "8 foto · 3 dengan catatan"
                 },
-                {
-                  "type": "frame",
-                  "id": "DR94Q",
-                  "name": "Row 3",
-                  "width": "fill_container",
-                  "gap": "$3:space/2",
-                  "children": [
-                    {
-                      "id": "Zww9V",
-                      "type": "ref",
-                      "ref": "j1xyVG",
-                      "name": "IMG_013.jpg",
-                      "width": 175,
-                      "descendants": {
-                        "ZlGuS": {
-                          "height": 150
-                        },
-                        "f4Yby3": {
-                          "enabled": false
-                        },
-                        "sxpxx": {
-                          "content": "IMG_013.jpg"
-                        }
-                      }
-                    },
-                    {
-                      "id": "BqmbV",
-                      "type": "ref",
-                      "ref": "j1xyVG",
-                      "name": "IMG_016.jpg",
-                      "width": 175,
-                      "descendants": {
-                        "ZlGuS": {
-                          "height": 150
-                        },
-                        "f4Yby3": {
-                          "enabled": false
-                        },
-                        "sxpxx": {
-                          "content": "IMG_016.jpg"
-                        }
-                      }
-                    }
-                  ]
+                "3:QcKHK": {
+                  "enabled": false
                 },
-                {
+                "3:DElnV": {
                   "type": "frame",
-                  "id": "a20KF",
-                  "name": "Row 4",
+                  "id": "iiBla",
+                  "name": "Content",
                   "width": "fill_container",
-                  "gap": "$3:space/2",
+                  "layout": "vertical",
+                  "gap": "$3:component/section-card/content/gap",
+                  "padding": "$3:component/section-card/compact/content/padding",
                   "children": [
                     {
-                      "id": "uI2gg",
-                      "type": "ref",
-                      "ref": "j1xyVG",
-                      "name": "IMG_019.jpg",
-                      "width": 175,
-                      "descendants": {
-                        "ZlGuS": {
-                          "height": 150
+                      "type": "frame",
+                      "id": "cjP2L",
+                      "name": "Grid",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/8",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "NyY6O",
+                          "name": "Row 1",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/8",
+                          "children": [
+                            {
+                              "id": "iqYZ3",
+                              "type": "ref",
+                              "ref": "j1xyVG",
+                              "name": "IMG_001.jpg",
+                              "width": "fill_container",
+                              "descendants": {
+                                "ZlGuS": {
+                                  "height": 240
+                                },
+                                "f4Yby3": {
+                                  "enabled": false
+                                },
+                                "sxpxx": {
+                                  "content": "IMG_001.jpg"
+                                }
+                              }
+                            },
+                            {
+                              "id": "ONpZR",
+                              "type": "ref",
+                              "ref": "j1xyVG",
+                              "name": "IMG_004.jpg",
+                              "width": "fill_container",
+                              "descendants": {
+                                "ZlGuS": {
+                                  "height": 240
+                                },
+                                "f4Yby3": {
+                                  "enabled": false
+                                },
+                                "FagWc": {
+                                  "enabled": true
+                                },
+                                "c4riG": {
+                                  "enabled": false
+                                },
+                                "sxpxx": {
+                                  "content": "IMG_004.jpg"
+                                },
+                                "dz052": {
+                                  "enabled": true
+                                },
+                                "n2Txjq/3:fhch4": {
+                                  "content": "Hapus jerawat di dahi, cerahkan sedikit."
+                                }
+                              }
+                            }
+                          ]
                         },
-                        "f4Yby3": {
-                          "enabled": false
+                        {
+                          "type": "frame",
+                          "id": "j8k1S",
+                          "name": "Row 2",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/8",
+                          "children": [
+                            {
+                              "id": "nil35",
+                              "type": "ref",
+                              "ref": "j1xyVG",
+                              "name": "IMG_007.jpg",
+                              "width": "fill_container",
+                              "descendants": {
+                                "ZlGuS": {
+                                  "height": 240
+                                },
+                                "f4Yby3": {
+                                  "enabled": false
+                                },
+                                "sxpxx": {
+                                  "content": "IMG_007.jpg"
+                                }
+                              }
+                            },
+                            {
+                              "id": "S4NoZP",
+                              "type": "ref",
+                              "ref": "3:HEwJS",
+                              "name": "IMG_010.jpg",
+                              "width": "fill_container",
+                              "descendants": {
+                                "3:vnyor": {
+                                  "height": 240
+                                },
+                                "3:dTxmf": {
+                                  "content": "IMG_010.jpg"
+                                },
+                                "3:erGMi": {
+                                  "content": "Hilang di Drive"
+                                }
+                              }
+                            }
+                          ]
                         },
-                        "sxpxx": {
-                          "content": "IMG_019.jpg"
+                        {
+                          "type": "frame",
+                          "id": "zhUlc",
+                          "name": "Row 3",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/8",
+                          "children": [
+                            {
+                              "id": "eC4Mf",
+                              "type": "ref",
+                              "ref": "j1xyVG",
+                              "name": "IMG_013.jpg",
+                              "width": "fill_container",
+                              "descendants": {
+                                "ZlGuS": {
+                                  "height": 240
+                                },
+                                "f4Yby3": {
+                                  "enabled": false
+                                },
+                                "FagWc": {
+                                  "enabled": true
+                                },
+                                "c4riG": {
+                                  "enabled": false
+                                },
+                                "sxpxx": {
+                                  "content": "IMG_013.jpg"
+                                },
+                                "dz052": {
+                                  "enabled": true
+                                },
+                                "n2Txjq/3:fhch4": {
+                                  "content": "Tolong rapikan rambut yang berantakan."
+                                }
+                              }
+                            },
+                            {
+                              "id": "p2IhO6",
+                              "type": "ref",
+                              "ref": "j1xyVG",
+                              "name": "IMG_016.jpg",
+                              "width": "fill_container",
+                              "descendants": {
+                                "ZlGuS": {
+                                  "height": 240
+                                },
+                                "f4Yby3": {
+                                  "enabled": false
+                                },
+                                "sxpxx": {
+                                  "content": "IMG_016.jpg"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "DxfWF",
+                          "name": "Row 4",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/8",
+                          "children": [
+                            {
+                              "id": "NbQWJ",
+                              "type": "ref",
+                              "ref": "j1xyVG",
+                              "name": "IMG_019.jpg",
+                              "width": "fill_container",
+                              "descendants": {
+                                "ZlGuS": {
+                                  "height": 240
+                                },
+                                "f4Yby3": {
+                                  "enabled": false
+                                },
+                                "FagWc": {
+                                  "enabled": true
+                                },
+                                "c4riG": {
+                                  "enabled": false
+                                },
+                                "sxpxx": {
+                                  "content": "IMG_019.jpg"
+                                },
+                                "dz052": {
+                                  "enabled": true
+                                },
+                                "n2Txjq/3:fhch4": {
+                                  "content": "Buat warna lebih hangat seperti foto lain."
+                                }
+                              }
+                            },
+                            {
+                              "id": "lofKe",
+                              "type": "ref",
+                              "ref": "j1xyVG",
+                              "name": "IMG_022.jpg",
+                              "width": "fill_container",
+                              "descendants": {
+                                "ZlGuS": {
+                                  "height": 240
+                                },
+                                "f4Yby3": {
+                                  "enabled": false
+                                },
+                                "sxpxx": {
+                                  "content": "IMG_022.jpg"
+                                }
+                              }
+                            }
+                          ]
                         }
-                      }
-                    },
-                    {
-                      "id": "KqDMR",
-                      "type": "ref",
-                      "ref": "j1xyVG",
-                      "name": "IMG_022.jpg",
-                      "width": 175,
-                      "descendants": {
-                        "ZlGuS": {
-                          "height": 150
-                        },
-                        "f4Yby3": {
-                          "enabled": false
-                        },
-                        "sxpxx": {
-                          "content": "IMG_022.jpg"
-                        }
-                      }
+                      ]
                     }
                   ]
                 }
-              ]
+              }
             }
           ]
         },
@@ -14360,7 +14811,7 @@
       "type": "frame",
       "id": "G1z3T",
       "x": 21000,
-      "y": 51585,
+      "y": 53356,
       "name": "Item paket · daftar · Desktop",
       "width": 840,
       "fill": "$3:color/semantic/surface/canvas",
@@ -14514,7 +14965,7 @@
       "type": "frame",
       "id": "m6TE1",
       "x": 21900,
-      "y": 51585,
+      "y": 53356,
       "name": "Item paket · daftar · Phone",
       "width": 390,
       "fill": "$3:color/semantic/surface/canvas",
@@ -14668,7 +15119,7 @@
       "type": "frame",
       "id": "Q45ZqR",
       "x": 21000,
-      "y": 41247,
+      "y": 43018,
       "name": "Menu add-on · draf · Desktop",
       "width": 520,
       "height": 280,
@@ -14742,7 +15193,7 @@
       "type": "frame",
       "id": "lCib1",
       "x": 21580,
-      "y": 41247,
+      "y": 43018,
       "name": "Menu add-on · draf · Phone",
       "clip": true,
       "width": 390,
@@ -14818,7 +15269,7 @@
       "type": "frame",
       "id": "DFYKy",
       "x": 32860,
-      "y": 41247,
+      "y": 43018,
       "name": "Menu add-on · disetujui · Desktop",
       "width": 520,
       "height": 280,
@@ -14876,7 +15327,7 @@
       "type": "frame",
       "id": "lfOW1",
       "x": 33440,
-      "y": 41247,
+      "y": 43018,
       "name": "Menu add-on · disetujui · Phone",
       "clip": true,
       "width": 390,
@@ -14934,7 +15385,7 @@
       "type": "frame",
       "id": "k5mu5",
       "x": 21000,
-      "y": 44693,
+      "y": 46464,
       "name": "Menu hasil akhir · proyek dikirim · Desktop",
       "width": 520,
       "height": 280,
@@ -14992,7 +15443,7 @@
       "type": "frame",
       "id": "VdXx4",
       "x": 21580,
-      "y": 44693,
+      "y": 46464,
       "name": "Menu hasil akhir · proyek dikirim · Phone",
       "clip": true,
       "width": 390,
@@ -40979,7 +41430,7 @@
       "x": 21000,
       "y": 36503,
       "name": "Grup · OWNER 3 · DETAIL PILIHAN GRUP",
-      "width": 16680,
+      "width": 18810,
       "fill": "$3:color/semantic/action/primary",
       "cornerRadius": 48,
       "layout": "vertical",
@@ -41021,7 +41472,7 @@
           "fill": "$3:color/semantic/action/on-primary",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "1 Terbuka  →  2 Dikirim  →  3 Grup cetak  →  4 Foto hilang  →  5 Kosong  →  6 Kunci pilihan  →  7 Tutup tanpa kiriman  →  8 Dikunci  →  9 Hasil: dikunci",
+          "content": "1 Terbuka  →  2 Dikirim  →  3 Salin nama file + catatan  →  4 Grup cetak  →  5 Foto hilang  →  6 Kosong  →  7 Kunci pilihan  →  8 Tutup tanpa kiriman  →  9 Dikunci  →  10 Hasil: dikunci",
           "fontFamily": "$3:font/family/base",
           "fontSize": 40,
           "fontWeight": "$3:font/weight/regular"
@@ -41102,9 +41553,9 @@
     {
       "type": "frame",
       "id": "xhn44",
-      "x": 24810,
+      "x": 26940,
       "y": 37165,
-      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 3",
+      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 4",
       "width": 1440,
       "layout": "vertical",
       "gap": 8,
@@ -41116,7 +41567,7 @@
           "fill": "$3:color/semantic/text/primary",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "3 · Grup cetak",
+          "content": "4 · Grup cetak",
           "fontFamily": "$3:font/family/base",
           "fontSize": 56,
           "fontWeight": "$3:font/weight/bold"
@@ -41137,9 +41588,9 @@
     {
       "type": "frame",
       "id": "TUAKN",
-      "x": 26490,
+      "x": 28620,
       "y": 37165,
-      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 4",
+      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 5",
       "width": 1440,
       "layout": "vertical",
       "gap": 8,
@@ -41151,7 +41602,7 @@
           "fill": "$3:color/semantic/text/primary",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "4 · Foto hilang",
+          "content": "5 · Foto hilang",
           "fontFamily": "$3:font/family/base",
           "fontSize": 56,
           "fontWeight": "$3:font/weight/bold"
@@ -41172,9 +41623,9 @@
     {
       "type": "frame",
       "id": "wsOQU",
-      "x": 28170,
+      "x": 30300,
       "y": 37165,
-      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 5",
+      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 6",
       "width": 1440,
       "layout": "vertical",
       "gap": 8,
@@ -41186,7 +41637,7 @@
           "fill": "$3:color/semantic/text/primary",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "5 · Kosong",
+          "content": "6 · Kosong",
           "fontFamily": "$3:font/family/base",
           "fontSize": 56,
           "fontWeight": "$3:font/weight/bold"
@@ -41207,9 +41658,9 @@
     {
       "type": "frame",
       "id": "pTisf",
-      "x": 29850,
+      "x": 31980,
       "y": 37165,
-      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 6",
+      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 7",
       "width": 1890,
       "layout": "vertical",
       "gap": 8,
@@ -41221,7 +41672,7 @@
           "fill": "$3:color/semantic/text/primary",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "6 · Kunci pilihan",
+          "content": "7 · Kunci pilihan",
           "fontFamily": "$3:font/family/base",
           "fontSize": 56,
           "fontWeight": "$3:font/weight/bold"
@@ -41243,9 +41694,9 @@
     {
       "type": "frame",
       "id": "Pspap",
-      "x": 31980,
+      "x": 34110,
       "y": 37165,
-      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 7",
+      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 8",
       "width": 1890,
       "layout": "vertical",
       "gap": 8,
@@ -41257,7 +41708,7 @@
           "fill": "$3:color/semantic/text/primary",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "7 · Tutup tanpa kiriman",
+          "content": "8 · Tutup tanpa kiriman",
           "fontFamily": "$3:font/family/base",
           "fontSize": 56,
           "fontWeight": "$3:font/weight/bold"
@@ -41279,9 +41730,9 @@
     {
       "type": "frame",
       "id": "C9pEKH",
-      "x": 34110,
+      "x": 36240,
       "y": 37165,
-      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 8",
+      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 9",
       "width": 1890,
       "layout": "vertical",
       "gap": 8,
@@ -41293,7 +41744,7 @@
           "fill": "$3:color/semantic/text/primary",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "8 · Dikunci",
+          "content": "9 · Dikunci",
           "fontFamily": "$3:font/family/base",
           "fontSize": 56,
           "fontWeight": "$3:font/weight/bold"
@@ -41315,9 +41766,9 @@
     {
       "type": "frame",
       "id": "SJ67N",
-      "x": 36240,
+      "x": 38370,
       "y": 37165,
-      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 9",
+      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 10",
       "width": 1440,
       "layout": "vertical",
       "gap": 8,
@@ -41329,7 +41780,7 @@
           "fill": "$3:color/semantic/text/primary",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "9 · Hasil: dikunci",
+          "content": "10 · Hasil: dikunci",
           "fontFamily": "$3:font/family/base",
           "fontSize": 56,
           "fontWeight": "$3:font/weight/bold"
@@ -41351,7 +41802,7 @@
       "type": "frame",
       "id": "AoPqs",
       "x": 21000,
-      "y": 40425,
+      "y": 42196,
       "name": "Grup · OWNER 4 · ADD-ON",
       "width": 19220,
       "fill": "$3:color/semantic/action/primary",
@@ -41406,7 +41857,7 @@
       "type": "frame",
       "id": "RIos8",
       "x": 21000,
-      "y": 41087,
+      "y": 42858,
       "name": "Langkah · OWNER 4 · ADD-ON · 1",
       "width": 970,
       "layout": "vertical",
@@ -41442,7 +41893,7 @@
       "type": "frame",
       "id": "rkzDi",
       "x": 22210,
-      "y": 41087,
+      "y": 42858,
       "name": "Langkah · OWNER 4 · ADD-ON · 2",
       "width": 1890,
       "layout": "vertical",
@@ -41478,7 +41929,7 @@
       "type": "frame",
       "id": "wnKkp",
       "x": 24340,
-      "y": 41087,
+      "y": 42858,
       "name": "Langkah · OWNER 4 · ADD-ON · 3",
       "width": 1890,
       "layout": "vertical",
@@ -41514,7 +41965,7 @@
       "type": "frame",
       "id": "Hy5m7",
       "x": 26470,
-      "y": 41087,
+      "y": 42858,
       "name": "Langkah · OWNER 4 · ADD-ON · 4",
       "width": 1890,
       "layout": "vertical",
@@ -41550,7 +42001,7 @@
       "type": "frame",
       "id": "TInsc",
       "x": 28600,
-      "y": 41087,
+      "y": 42858,
       "name": "Langkah · OWNER 4 · ADD-ON · 5",
       "width": 1890,
       "layout": "vertical",
@@ -41586,7 +42037,7 @@
       "type": "frame",
       "id": "pFltF",
       "x": 30730,
-      "y": 41087,
+      "y": 42858,
       "name": "Langkah · OWNER 4 · ADD-ON · 6",
       "width": 1890,
       "layout": "vertical",
@@ -41622,7 +42073,7 @@
       "type": "frame",
       "id": "S3iJi",
       "x": 32860,
-      "y": 41087,
+      "y": 42858,
       "name": "Langkah · OWNER 4 · ADD-ON · 7",
       "width": 970,
       "layout": "vertical",
@@ -41658,7 +42109,7 @@
       "type": "frame",
       "id": "MezAK",
       "x": 34070,
-      "y": 41087,
+      "y": 42858,
       "name": "Langkah · OWNER 4 · ADD-ON · 8",
       "width": 1890,
       "layout": "vertical",
@@ -41694,7 +42145,7 @@
       "type": "frame",
       "id": "QgTjx",
       "x": 36200,
-      "y": 41087,
+      "y": 42858,
       "name": "Langkah · OWNER 4 · ADD-ON · 9",
       "width": 1890,
       "layout": "vertical",
@@ -41730,7 +42181,7 @@
       "type": "frame",
       "id": "wSTxb",
       "x": 38330,
-      "y": 41087,
+      "y": 42858,
       "name": "Langkah · OWNER 4 · ADD-ON · 10",
       "width": 1890,
       "layout": "vertical",
@@ -41766,7 +42217,7 @@
       "type": "frame",
       "id": "yIefo",
       "x": 21000,
-      "y": 43871,
+      "y": 45642,
       "name": "Grup · OWNER 5 · HASIL AKHIR & SELESAI",
       "width": 11620,
       "fill": "$3:color/semantic/action/primary",
@@ -41821,7 +42272,7 @@
       "type": "frame",
       "id": "SRMQr",
       "x": 21000,
-      "y": 44533,
+      "y": 46304,
       "name": "Langkah · OWNER 5 · HASIL AKHIR & SELESAI · 1",
       "width": 970,
       "layout": "vertical",
@@ -41857,7 +42308,7 @@
       "type": "frame",
       "id": "OBj9M",
       "x": 22210,
-      "y": 44533,
+      "y": 46304,
       "name": "Langkah · OWNER 5 · HASIL AKHIR & SELESAI · 2",
       "width": 1890,
       "layout": "vertical",
@@ -41893,7 +42344,7 @@
       "type": "frame",
       "id": "x9PoHJ",
       "x": 24340,
-      "y": 44533,
+      "y": 46304,
       "name": "Langkah · OWNER 5 · HASIL AKHIR & SELESAI · 3",
       "width": 1890,
       "layout": "vertical",
@@ -41929,7 +42380,7 @@
       "type": "frame",
       "id": "VoGfc",
       "x": 26470,
-      "y": 44533,
+      "y": 46304,
       "name": "Langkah · OWNER 5 · HASIL AKHIR & SELESAI · 4",
       "width": 1890,
       "layout": "vertical",
@@ -41965,7 +42416,7 @@
       "type": "frame",
       "id": "oRclp",
       "x": 28600,
-      "y": 44533,
+      "y": 46304,
       "name": "Langkah · OWNER 5 · HASIL AKHIR & SELESAI · 5",
       "width": 1890,
       "layout": "vertical",
@@ -42001,7 +42452,7 @@
       "type": "frame",
       "id": "lNcUi",
       "x": 30730,
-      "y": 44533,
+      "y": 46304,
       "name": "Langkah · OWNER 5 · HASIL AKHIR & SELESAI · 6",
       "width": 1890,
       "layout": "vertical",
@@ -42037,7 +42488,7 @@
       "type": "frame",
       "id": "OB563",
       "x": 21000,
-      "y": 47317,
+      "y": 49088,
       "name": "Grup · OWNER 6 · GANTI LINK",
       "width": 6150,
       "fill": "$3:color/semantic/action/primary",
@@ -42092,7 +42543,7 @@
       "type": "frame",
       "id": "gFQc9",
       "x": 21000,
-      "y": 47979,
+      "y": 49750,
       "name": "Langkah · OWNER 6 · GANTI LINK · 1",
       "width": 1890,
       "layout": "vertical",
@@ -42128,7 +42579,7 @@
       "type": "frame",
       "id": "L30ox",
       "x": 23130,
-      "y": 47979,
+      "y": 49750,
       "name": "Langkah · OWNER 6 · GANTI LINK · 2",
       "width": 1890,
       "layout": "vertical",
@@ -42164,7 +42615,7 @@
       "type": "frame",
       "id": "gSKl8",
       "x": 25260,
-      "y": 47979,
+      "y": 49750,
       "name": "Langkah · OWNER 6 · GANTI LINK · 3",
       "width": 1890,
       "layout": "vertical",
@@ -42200,7 +42651,7 @@
       "type": "frame",
       "id": "GMBbw",
       "x": 21000,
-      "y": 50763,
+      "y": 52534,
       "name": "Grup · OWNER 7 · KATALOG ITEM PAKET",
       "width": 9810,
       "fill": "$3:color/semantic/action/primary",
@@ -42255,7 +42706,7 @@
       "type": "frame",
       "id": "k97UQ",
       "x": 21000,
-      "y": 51425,
+      "y": 53196,
       "name": "Langkah · OWNER 7 · KATALOG ITEM PAKET · 1",
       "width": 1290,
       "layout": "vertical",
@@ -42291,7 +42742,7 @@
       "type": "frame",
       "id": "ycENi",
       "x": 22530,
-      "y": 51425,
+      "y": 53196,
       "name": "Langkah · OWNER 7 · KATALOG ITEM PAKET · 2",
       "width": 1890,
       "layout": "vertical",
@@ -42327,7 +42778,7 @@
       "type": "frame",
       "id": "laQjh",
       "x": 24660,
-      "y": 51425,
+      "y": 53196,
       "name": "Langkah · OWNER 7 · KATALOG ITEM PAKET · 3",
       "width": 1890,
       "layout": "vertical",
@@ -42363,7 +42814,7 @@
       "type": "frame",
       "id": "oRFFC",
       "x": 26790,
-      "y": 51425,
+      "y": 53196,
       "name": "Langkah · OWNER 7 · KATALOG ITEM PAKET · 4",
       "width": 1890,
       "layout": "vertical",
@@ -42399,7 +42850,7 @@
       "type": "frame",
       "id": "z2coyF",
       "x": 28920,
-      "y": 51425,
+      "y": 53196,
       "name": "Langkah · OWNER 7 · KATALOG ITEM PAKET · 5",
       "width": 1890,
       "layout": "vertical",
@@ -44047,6 +44498,106 @@
         {
           "type": "text",
           "id": "pOrhy",
+          "name": "Text",
+          "fill": "$3:color/semantic/text/secondary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Desktop · Phone",
+          "fontFamily": "$3:font/family/base",
+          "fontSize": 28,
+          "fontWeight": "$3:font/weight/regular"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "aLXT9",
+      "x": 24810,
+      "y": 37325,
+      "name": "Toast nama file disalin · Desktop",
+      "clip": true,
+      "width": 1440,
+      "height": 1024,
+      "fill": "$3:color/semantic/surface/canvas",
+      "layout": "vertical",
+      "padding": "$3:space/6",
+      "justifyContent": "end",
+      "alignItems": "end",
+      "children": [
+        {
+          "id": "l6Vup7",
+          "type": "ref",
+          "ref": "3:QCuMb",
+          "name": "Toast",
+          "width": 420,
+          "descendants": {
+            "3:m0dqT6": {
+              "content": "Nama file disalin"
+            },
+            "3:fhch4": {
+              "content": "8 nama file, 3 dengan catatan, siap ditempel. Contoh: IMG_004.jpg — Hapus jerawat di dahi, cerahkan sedikit."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "FW3QC",
+      "x": 26310,
+      "y": 37325,
+      "name": "Toast nama file disalin · Phone",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$3:color/semantic/surface/canvas",
+      "layout": "vertical",
+      "padding": "$3:space/4",
+      "justifyContent": "end",
+      "alignItems": "center",
+      "children": [
+        {
+          "id": "y2trCg",
+          "type": "ref",
+          "ref": "3:QCuMb",
+          "name": "Toast",
+          "width": "fill_container",
+          "descendants": {
+            "3:m0dqT6": {
+              "content": "Nama file disalin"
+            },
+            "3:fhch4": {
+              "content": "8 nama file, 3 dengan catatan, siap ditempel. Contoh: IMG_004.jpg — Hapus jerawat di dahi, cerahkan sedikit."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Au8x4",
+      "x": 24810,
+      "y": 37165,
+      "name": "Langkah · OWNER 3 · DETAIL PILIHAN GRUP · 3",
+      "width": 1890,
+      "layout": "vertical",
+      "gap": 8,
+      "children": [
+        {
+          "type": "text",
+          "id": "QMTFR",
+          "name": "Text",
+          "fill": "$3:color/semantic/text/primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "3 · Salin nama file + catatan",
+          "fontFamily": "$3:font/family/base",
+          "fontSize": 56,
+          "fontWeight": "$3:font/weight/bold"
+        },
+        {
+          "type": "text",
+          "id": "y2SNT",
           "name": "Text",
           "fill": "$3:color/semantic/text/secondary",
           "textGrowth": "fixed-width",

@@ -180,6 +180,13 @@ Covers: BR-SEL-005, BR-AUD-001 (A-12)
 **When** the Owner locks *Foto edit* and closes *Foto cetak*
 **Then** both are `LOCKED` with actor and time recorded, the client sees them read-only with their picks, and no one can reopen them
 
+## AC-SEL-016 — One group per selection item, by type
+Covers: BR-SEL-001, BR-SEL-003, BR-CAT-007 (A-20, A-21)
+
+**Given** a project with items *Foto edit* (`EDIT`, 3, *foto*), *Foto edit bonus* (`EDIT`, 2, *foto*), *Foto cetak* (`PRINT`, 2, *lembar*), *Album* (no selection) and *Foto edit lama* (`EDIT`, 0)
+**When** the client opens the gallery
+**Then** four groups show, each with its own limit and unit, *Album* gives none, *Foto edit* and *Foto edit bonus* count separately, *Foto cetak* sums quantities, and *Foto edit lama* shows *0 / 0* with no picks and no submit
+
 ## AC-SEL-012 — No groups, no selection
 Covers: BR-SEL-001
 

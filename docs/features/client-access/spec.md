@@ -143,6 +143,8 @@ A client who has the project link and the current gallery password can open the 
 - **A-16 Link rotation:** the new token has the same strength and format as the old one (BR-PRJ-003); the old one is never reused.
 - **A-17 Final delivery needs a published gallery:** besides BR-DEL-003, the gallery must be `PUBLISHED`, so the client can actually open it.
 - **A-18 Later finished files:** files synced into `edited` / `print` after delivery are shown without publishing again.
+- **A-20 One group per selection item:** a group is made from a project item with `selectionRequired` and is named after that snapshotted item (BR-PRJ-001), so two items of the same type (for example *Foto edit* and *Foto edit bonus*) are two groups with separate limits. Its type decides the pick: `EDIT` counts photos, `PRINT` sums quantities (BR-SEL-003). The unit text (*foto*, *lembar*) is shown beside the limit.
+- **A-21 Zero limit:** an item with value 0 yields a group with limit 0 that is shown *0 / 0*, offers no picks, and can't be submitted. An add-on can raise it.
 - **A-19 Completion before invoices:** *Tandai selesai* shows no balance warning until F-14 exists; BR-PRJ-005 never blocks on balances anyway.
 
 ## Flagged Concerns

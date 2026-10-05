@@ -143,7 +143,7 @@ A service uses each item definition at most once.
 Booking field types: `TEXT` | `NUMBER` | `DATE` | `BOOLEAN` | `SELECT` | `TEXTAREA`. Booking fields are independent from package item value types.
 
 ### BR-CAT-007 — Selection types
-A definition has a `selectionType` exactly when `selectionRequired = true`. In MVP the only selection types are `EDIT` and `PRINT`; others (album, frame, custom) are added only when their selection behavior is specified (BR-SEL-003). *(F-05 discovery, Owner 2026-10-02.)*
+A definition has a `pickMode` exactly when `selectionRequired = true`. The pick mode is `COUNT` (each picked photo uses one place) or `QUANTITY` (each picked photo has a quantity), and the Owner chooses it per definition, so a studio can add its own selection items (album, frame, canvas…) without a code change (BR-SEL-003). *(F-05 discovery, Owner 2026-10-02; the fixed `EDIT`/`PRINT` types were replaced by a pick mode in F-10 discovery, Owner 2026-10-05.)*
 
 ### BR-CAT-008 — Catalog lifecycle: active, archived, deleted
 Categories, item definitions and services are created active. The Owner may archive and unarchive them at any time; archived records keep their data but are not offered for new services, new service items or new projects, and existing services keep using them until changed. A record may be deleted only while nothing refers to it: a category with no services, a definition used by no service and no snapshot, a service from which no project was created. Otherwise it can only be archived (BR-CAT-004). There is no draft or publish step. *(F-05 discovery, Owner 2026-10-02.)*
@@ -152,10 +152,10 @@ Categories, item definitions and services are created active. The Owner may arch
 Category, item-definition and service names are 1–60 characters after trimming and unique per workspace among records of the same kind, ignoring case, archived records included. A booking field's name is unique within its service, ignoring case. *(F-05 discovery, 2026-10-02.)*
 
 ### BR-CAT-010 — Definition type is fixed once used
-A definition's `valueType`, `selectionRequired` and `selectionType` cannot change while any service item uses it; its name and unit can. This keeps every stored service-item value valid (BR-CAT-001, BR-CAT-002). *(F-05 discovery, 2026-10-02.)*
+A definition's `valueType`, `selectionRequired` and `pickMode` cannot change while any service item uses it; its name and unit can. This keeps every stored service-item value valid (BR-CAT-001, BR-CAT-002). *(F-05 discovery, 2026-10-02.)*
 
 ### BR-CAT-011 — Seeded item definitions
-Every workspace starts with active item definitions *Foto edit* (`NUMBER`, unit *foto*, selection `EDIT`), *Foto cetak* (`NUMBER`, unit *lembar*, selection `PRINT`), *Jumlah orang* (`RANGE`, unit *orang*) and *Durasi pemotretan* (`NUMBER`, unit *jam*). They are created with the workspace and backfilled for workspaces that exist before F-05; the backfill skips a workspace that already has a definition with the same name. They are ordinary definitions: the Owner may edit, archive or delete them. No categories or services are seeded. *(F-05 discovery, Owner 2026-10-02.)*
+Every workspace starts with active item definitions *Foto edit* (`NUMBER`, unit *foto*, pick mode `COUNT`), *Foto cetak* (`NUMBER`, unit *lembar*, pick mode `QUANTITY`), *Jumlah orang* (`RANGE`, unit *orang*) and *Durasi pemotretan* (`NUMBER`, unit *jam*). They are created with the workspace and backfilled for workspaces that exist before F-05; the backfill skips a workspace that already has a definition with the same name. They are ordinary definitions: the Owner may edit, archive or delete them. No categories or services are seeded. *(F-05 discovery, Owner 2026-10-02.)*
 
 ---
 
@@ -175,7 +175,7 @@ The Owner may archive a client and restore it. An archived client keeps its data
 ## Project (PRJ)
 
 ### BR-PRJ-001 — Snapshot on creation
-Creating a project from a service atomically copies every service item (with name, valueType, value, unit, selectionRequired, selectionType) into `ProjectItem`s and every booking value (with fieldKey, fieldName, fieldType) into `ProjectFieldValue`s. While creating the project, the Owner may already adjust the deal as BR-PRJ-009 allows (item values, removing items, adding items from active definitions), and the snapshot stores the adjusted items in the same transaction. *(F-07 design, Owner 2026-10-02.)* Snapshots are the authoritative deal; `serviceId` is only an origin reference.
+Creating a project from a service atomically copies every service item (with name, valueType, value, unit, selectionRequired, pickMode) into `ProjectItem`s and every booking value (with fieldKey, fieldName, fieldType) into `ProjectFieldValue`s. While creating the project, the Owner may already adjust the deal as BR-PRJ-009 allows (item values, removing items, adding items from active definitions), and the snapshot stores the adjusted items in the same transaction. *(F-07 design, Owner 2026-10-02.)* Snapshots are the authoritative deal; `serviceId` is only an origin reference.
 
 ### BR-PRJ-002 — One value per booking field
 A project has at most one value per logical booking `fieldKey`. Required booking fields must be valid on creation.
@@ -308,14 +308,14 @@ Groups exist from the moment the gallery is first published, so the client can s
 `effectiveLimit = baseLimit + extraLimit`, never stored. `extraLimit` = sum of `quantity` of approved add-ons targeting the group, maintained transactionally.
 
 ### BR-SEL-003 — Usage
-Every selection type has one pick mode, which decides how usage is counted:
+A group's usage depends on the pick mode of its project item (BR-CAT-007):
 
-| Selection type | Pick mode | Usage | A pick has |
+| Pick mode | Usage | A pick has | Typical item |
 |---|---|---|---|
-| `EDIT` | `COUNT` | number of picked photos | quantity fixed at 1 |
-| `PRINT` | `QUANTITY` | sum of pick quantities | a whole-number quantity ≥ 1 |
+| `COUNT` | number of picked photos | quantity fixed at 1 | *Foto edit*, *Foto album* |
+| `QUANTITY` | sum of pick quantities | a whole-number quantity ≥ 1 | *Foto cetak*, *Foto bingkai* |
 
-Usage may never exceed `effectiveLimit`. A new selection type is added only together with its row in this table (BR-CAT-007). *(F-10 discovery, Owner 2026-10-05; closes the SPEC GAP deferred from F-05.)*
+Usage may never exceed `effectiveLimit`. Any number of selection items, each with its own name, unit and mode, may exist; each becomes its own group (BR-SEL-001). *(F-10 discovery, Owner 2026-10-05; closes the SPEC GAP deferred from F-05.)*
 
 ### BR-SEL-004 — Only proof photos are selectable
 A selection references a `PROOF` photo from the gallery of the group's own project. One row per `(group, photo)`; quantity > 0. A photo may be selected in several groups.

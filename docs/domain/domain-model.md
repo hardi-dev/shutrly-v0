@@ -12,7 +12,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25). Business-oriented; pe
 
 **Catalog (templates)**
 - **ServiceCategory** — grouping of services (Wedding, Family…). Categories, definitions and services are active or archived (BR-CAT-008).
-- **ServiceItemDefinition** — reusable *what* a package benefit is (Edited Photos, Person), with value type, unit, and whether it creates a selection entitlement (`EDIT` | `PRINT`, BR-CAT-007). Four starter definitions are seeded per workspace (BR-CAT-011).
+- **ServiceItemDefinition** — reusable *what* a package benefit is (Edited Photos, Person), with value type, unit, and whether it creates a selection entitlement, with its pick mode (`COUNT` | `QUANTITY`, BR-CAT-007). Four starter definitions are seeded per workspace (BR-CAT-011).
 - **Service** — a sellable package with base price.
 - **ServiceItem** — *how much* of a definition a service includes (`{value}` or `{min,max}`).
 - **ServiceFieldDefinition** — extra booking input a service needs (Campus Name, Graduation Date).

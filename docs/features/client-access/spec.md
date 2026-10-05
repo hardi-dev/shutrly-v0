@@ -23,7 +23,7 @@ A client who has the project link and the current gallery password can open the 
 - Owner actions run behind the Owner session and workspace check (C-101, BR-WS-003).
 
 ## Inputs
-- **Client:** the token in the URL; the gallery password; a pick or un-pick of a proof photo per group; a print quantity per picked photo (quantity-based groups, BR-SEL-003); a submit per group; download choices.
+- **Client:** the token in the URL; the gallery password; a pick or un-pick of a proof photo per group; a quantity per picked photo (`QUANTITY` groups, BR-SEL-003); a submit per group; download choices.
 - **Owner:** lock a group; add-on fields (description, optional target group, quantity, unit price); approve or cancel an add-on; publish final delivery; rotate the link.
 
 ## Main Flow
@@ -38,7 +38,7 @@ A client who has the project link and the current gallery password can open the 
 
 ### 2. Select (client)
 1. If the project has selection groups, the gallery shows each group with *used / effective limit* (BR-SEL-007), for example *Foto edit 12 / 40*.
-2. The client picks a proof photo for a group. For a quantity-based group (`PRINT`) they also set a quantity, starting at 1 (BR-SEL-003, BR-SEL-004).
+2. The client picks a proof photo for a group. For a `QUANTITY` group they also set a quantity, starting at 1 (BR-SEL-003, BR-SEL-004).
 3. Every pick, un-pick and quantity change is saved at once, checked server-side under a lock on the group (BR-SEL-006, A-7). A change that would exceed the limit is refused with *Batas pilihan tercapai*.
 4. A photo may be picked in several groups (BR-SEL-004).
 5. The client can filter the gallery to the photos picked in a group.
@@ -102,14 +102,15 @@ A client who has the project link and the current gallery password can open the 
 - BR-SEL-001 (amended: groups from first publish) … BR-SEL-007
 - BR-DEL-001 … BR-DEL-004 (BR-DEL-004 amended: download modes)
 - BR-ADD-001 … BR-ADD-006 (BR-ADD-004 amended: invoice line deferred to F-14)
-- BR-CAT-002, BR-CAT-007 (whole-number limits, `EDIT` and `PRINT` only)
+- BR-CAT-002, BR-CAT-007, BR-CAT-010, BR-CAT-011 (whole-number limits; pick mode per definition, amended)
 - BR-CUR-001 … BR-CUR-003, BR-PRJ-007 (add-on money)
 - BR-AUD-001 (token rotation, selection lock, add-on approval and cancellation)
 - BR-WS-002, BR-WS-003 (Owner side)
 - Constitution C-004, C-005, C-006, C-007, C-008, C-101, C-103, C-104, C-105
 
 ## Dependencies
-- F-07: `project.client_access_token` (write-once today; rotation makes it replaceable), project items and status transitions.
+- F-05 `catalog` (follow-up inside this feature): the item-definition form, seed and `service_item` replace the `EDIT`/`PRINT` selection type with a pick mode (BR-CAT-007, BR-CAT-010, BR-CAT-011); migration maps `EDIT`→`COUNT`, `PRINT`→`QUANTITY`.
+- F-07: `project_item` snapshots the pick mode (BR-PRJ-001); `client_access_token` (write-once today; rotation makes it replaceable), project items and status transitions.
 - F-09: gallery status and expiry, password hash and `passwordVersion`, photo kinds and missing state, the media route, `contentVersion` (ADR-019 point 5).
 - ADR-004 / ADR-017 (token and password), ADR-013 (public endpoints choose their own rate-limit mechanism), ADR-016 (cross-feature transactions: delivery → project status, add-on → group), ADR-018 (Workers Free budget), ADR-019 (images from Google, gallery data cached by `contentVersion`).
 - ADR-019 point 5 lists the events that bump `contentVersion`. The client data in this feature also changes on final-delivery publish and token rotation; the technical design adds them, in line with the ADR's purpose (no stale entry is ever read).
@@ -120,7 +121,6 @@ A client who has the project link and the current gallery password can open the 
 - Project cancellation (F-07); the outstanding-balance warning on completion (F-14, A-19).
 - Client requests for add-ons inside the app (A-4), notifications to the Owner, and comments or favourites on photos.
 - Re-opening a submitted or locked group (BR-SEL-005).
-- Selection types other than `EDIT` and `PRINT` (BR-CAT-007).
 - Proof downloads; downloads of photos that aren't `EDITED` or `PRINT`.
 - Gallery slug (BR-GAL-008); client accounts; providers other than Google Drive.
 
@@ -143,7 +143,7 @@ A client who has the project link and the current gallery password can open the 
 - **A-16 Link rotation:** the new token has the same strength and format as the old one (BR-PRJ-003); the old one is never reused.
 - **A-17 Final delivery needs a published gallery:** besides BR-DEL-003, the gallery must be `PUBLISHED`, so the client can actually open it.
 - **A-18 Later finished files:** files synced into `edited` / `print` after delivery are shown without publishing again.
-- **A-20 One group per selection item:** a group is made from a project item with `selectionRequired` and is named after that snapshotted item (BR-PRJ-001), so two items of the same type (for example *Foto edit* and *Foto edit bonus*) are two groups with separate limits. Its type decides the pick mode: `EDIT` is `COUNT`, `PRINT` is `QUANTITY` (BR-SEL-003 table). The unit text (*foto*, *lembar*) is shown beside the limit.
+- **A-20 One group per selection item:** a group is made from a project item with `selectionRequired` and is named after that snapshotted item (BR-PRJ-001), so two items of the same type (for example *Foto edit* and *Foto edit bonus*) are two groups with separate limits. Its pick mode, set by the Owner on the item definition, decides how usage counts: `COUNT` or `QUANTITY` (BR-SEL-003). The unit text (*foto*, *lembar*) is shown beside the limit.
 - **A-21 Zero limit:** an item with value 0 yields a group with limit 0 that is shown *0 / 0*, offers no picks, and can't be submitted. An add-on can raise it.
 - **A-19 Completion before invoices:** *Tandai selesai* shows no balance warning until F-14 exists; BR-PRJ-005 never blocks on balances anyway.
 
@@ -158,10 +158,12 @@ Checked against the constitution (C-001..C-106), BR-ACC/SEL/DEL/ADD/PRJ/GAL/CAT/
 | FC-004 | The scope merges four features the feature map listed separately. | Feature map F-10..F-13 | Merged into F-10 `client-access` (Owner 2026-10-05). Recorded in the feature map and the intent. | RESOLVED |
 | FC-005 | Token rotation was in product scope but owned by no feature. | scope.md, BR-PRJ-003 ↔ F-09 out of scope | Built here, with an audit record (Owner 2026-10-05). | RESOLVED |
 | FC-006 | Project completion (old F-12) was left out of the accepted intent, so no feature built it. | Feature map F-12 ↔ intent out of scope | Included here; the balance warning comes with F-14 (Owner 2026-10-05). Intent updated. | RESOLVED |
+| FC-007 | Studios want their own selection items, but BR-CAT-007 and scope.md fixed the types to `EDIT` and `PRINT`, and BR-SEL-003 left the other types undefined. | BR-CAT-007, BR-SEL-003, scope.md ↔ product need | Replace the fixed types by a pick mode (`COUNT` / `QUANTITY`) chosen per item definition, built inside F-10 with a catalog follow-up (Owner 2026-10-05). Recorded in BR-CAT-007, -010, -011, BR-PRJ-001, BR-SEL-003, domain model and scope. | RESOLVED |
 
 ## Open Questions / SPEC GAPS
 None blocking. For the technical design:
 - **R-1 Original-file downloads by file ID:** BR-ACC-005 allows a server-controlled URL or Google's image host by file ID. Check that the image host serves full-resolution originals, and how *several* and *all* are bundled in the browser (for example a client-side zip or sequential downloads) inside the Workers Free budget (ADR-018). If originals need another Google URL, that is a BR-ACC-005 change for the Owner.
 - **R-2 Rate-limit storage and the cache:** where A-2 counters live, and whether Workers Cache API calls count toward the 50-subrequest limit (ADR-019 point 5).
+- **R-4 Pick-mode migration:** about 39 files in `src` use `selectionType` (catalog and booking schema, domain, forms, tests). The plan lists them; the migration is safe for other branches on the shared database (add `pick_mode`, backfill, keep the old column until the code stops using it).
 - **R-3 Token rotation in code:** `client_access_token` is write-once today (F-07 TD D-6).
 - **Carried, not blocking:** GAP-04 client mobile layout (design); the *SELECTION_REMINDER* deadline variable (business-rules, MSG catalogue; F-15).

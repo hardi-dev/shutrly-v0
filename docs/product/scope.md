@@ -31,7 +31,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25)
 - Payment gateway, payment proof upload, refunds, overpayment.
 - Coupons, percentage or per-line discounts.
 - Currencies other than IDR, exchange rates, mixed-currency invoices, automatic tax.
-- Package item value types other than `NUMBER` and `RANGE`; selection types other than `EDIT` and `PRINT`; a draft/publish step for services (Owner 2026-10-02).
+- Package item value types other than `NUMBER` and `RANGE`; a draft/publish step for services (Owner 2026-10-02).
 - Automatic Project completion from payment or delivery.
 
 ## Constraints

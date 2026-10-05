@@ -110,6 +110,7 @@ stateDiagram-v2
       [*] --> OPEN
       OPEN --> SUBMITTED : client submits
       SUBMITTED --> LOCKED : Owner
+      SUBMITTED --> OPEN : add-on approved
       OPEN --> LOCKED : Owner closes
     }
     state Gallery {

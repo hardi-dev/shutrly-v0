@@ -321,7 +321,7 @@ Usage may never exceed `effectiveLimit`. Any number of selection items, each wit
 A selection references a `PROOF` photo from the gallery of the group's own project. One row per `(group, photo)`; quantity > 0. A photo may be selected in several groups.
 
 ### BR-SEL-005 — Group lifecycle
-`OPEN → SUBMITTED → LOCKED`; `OPEN → LOCKED` (Owner closes without submission). Clients may change selections only while `OPEN`. Submission happens once and cannot be reopened by anyone in MVP. Status lives only on the group.
+`OPEN → SUBMITTED → LOCKED`; `OPEN → LOCKED` (Owner closes without submission). Clients may change selections only while `OPEN`. A group is submitted once per `OPEN` period. A `SUBMITTED` group returns to `OPEN` only when an add-on that targets it is approved (BR-ADD-004), so the client can use the extra places and submit again; picks already made are kept. A `LOCKED` group never reopens, and nothing else reopens a group. Status lives only on the group. *(F-10 modelling, Owner 2026-10-05.)*
 
 ### BR-SEL-006 — Concurrency-safe submission
 Selection changes and submission validate limits inside one transaction holding a lock on the group, so concurrent requests cannot exceed entitlement.
@@ -360,6 +360,7 @@ An add-on that changes selection entitlement must target a selection group (`sel
 
 ### BR-ADD-004 — Approval effects are atomic
 Approval, in one transaction: increases the target group's `extraLimit` (if selection-related) and adds an invoice line to the project's sole draft invoice, creating one if none exists; invoice totals are recalculated.
+Approving an add-on on a `SUBMITTED` group also returns that group to `OPEN` (BR-SEL-005); a `LOCKED` group can't be targeted. *(F-10 modelling, Owner 2026-10-05.)*
 Until invoices exist (F-14), approval only increases `extraLimit` and keeps quantity, unit price and total on the add-on. When F-14 ships, every approved add-on that is not yet on an invoice is added to the project's draft invoice under this rule. *(F-10 discovery, Owner 2026-10-05.)*
 
 ### BR-ADD-005 — Safe cancellation

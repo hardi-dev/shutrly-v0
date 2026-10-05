@@ -52,8 +52,8 @@ A client who has the project link and the current gallery password can open the 
 ### 4. Add-ons (Owner)
 1. The client asks for more off-app, for example on WhatsApp (A-4).
 2. The Owner creates a `DRAFT` add-on: description, optional target group, quantity, unit price; total = quantity × unit price, computed server-side in the project currency (BR-ADD-001, BR-ADD-002, BR-ADD-006, C-105).
-3. The Owner approves it. In one transaction the target group's `extraLimit` grows by the quantity (BR-ADD-004, BR-SEL-002); no invoice line is created until F-14 (BR-ADD-004 amendment). Actor and time are recorded (BR-AUD-001).
-4. The client sees the new effective limit the next time the group is loaded (BR-SEL-007).
+3. The Owner approves it. In one transaction the target group's `extraLimit` grows by the quantity and a `SUBMITTED` group returns to `OPEN` (BR-ADD-004, BR-SEL-002, BR-SEL-005); no invoice line is created until F-14 (BR-ADD-004 amendment). Actor and time are recorded (BR-AUD-001).
+4. The client sees the new effective limit the next time the group is loaded (BR-SEL-007). A reopened group keeps its picks; the client adds the extra photos and submits again (A-22).
 5. The Owner may cancel a `DRAFT` add-on, or an `APPROVED` one when the reduced limit stays ≥ usage (BR-ADD-003, BR-ADD-005).
 
 ### 5. Final delivery
@@ -120,7 +120,7 @@ A client who has the project link and the current gallery password can open the 
 - WhatsApp sharing and the project-menu items (F-15).
 - Project cancellation (F-07); the outstanding-balance warning on completion (F-14, A-19).
 - Client requests for add-ons inside the app (A-4), notifications to the Owner, and comments or favourites on photos.
-- Re-opening a submitted or locked group (BR-SEL-005).
+- Re-opening a group by any means other than an approved add-on, and re-opening a `LOCKED` group (BR-SEL-005).
 - Proof downloads; downloads of photos that aren't `EDITED` or `PRINT`.
 - Gallery slug (BR-GAL-008); client accounts; providers other than Google Drive.
 
@@ -134,7 +134,7 @@ A client who has the project link and the current gallery password can open the 
 - **A-7 Autosave:** every pick change is saved immediately; there is no separate draft or *Simpan* button.
 - **A-8 Missing picked photo:** stays selected and counted; the client sees it as unavailable and can un-pick it while the group is `OPEN`.
 - **A-9 Quantities:** a print quantity is a whole number from 1 up to the group's remaining places.
-- **A-10 Add-on fields:** description 1–100 characters; quantity a whole number ≥ 1; unit price whole IDR ≥ 0. A target group is required for an add-on that adds picks and must be `OPEN`, because a submitted group can't be reopened (BR-SEL-005). An add-on with no target adds a service only.
+- **A-10 Add-on fields:** description 1–100 characters; quantity a whole number ≥ 1; unit price whole IDR ≥ 0. A target group is required for an add-on that adds picks and must be `OPEN` or `SUBMITTED`; a `LOCKED` group can't be targeted (BR-SEL-005). An add-on with no target adds a service only.
 - **A-11 Add-on statuses:** add-ons can be created on `BOOKED` … `DELIVERED` projects.
 - **A-12 Groups after lock:** a locked group stays visible to the client, read-only, with its picks.
 - **A-13 Group names:** a group is named after its project item (for example *Foto edit*, *Foto cetak*).
@@ -145,6 +145,8 @@ A client who has the project link and the current gallery password can open the 
 - **A-18 Later finished files:** files synced into `edited` / `print` after delivery are shown without publishing again.
 - **A-20 One group per selection item:** a group is made from a project item with `selectionRequired` and is named after that snapshotted item (BR-PRJ-001), so two items of the same type (for example *Foto edit* and *Foto edit bonus*) are two groups with separate limits. Its pick mode, set by the Owner on the item definition, decides how usage counts: `COUNT` or `QUANTITY` (BR-SEL-003). The unit text (*foto*, *lembar*) is shown beside the limit.
 - **A-21 Zero limit:** an item with value 0 yields a group with limit 0 that is shown *0 / 0*, offers no picks, and can't be submitted. An add-on can raise it.
+- **A-22 Reopened group:** reopening by an add-on keeps every pick; submitting again follows A-5. Cancelling that add-on later never changes the group's status, only its limit (BR-ADD-005). If the Owner locks a group while an add-on is `DRAFT`, approving it is refused (the target is `LOCKED`).
+- **A-23 Groups for galleries published before this feature:** a published gallery with no groups gets them when F-10 is deployed (a backfill in the migration), so it behaves like one published after.
 - **A-19 Completion before invoices:** *Tandai selesai* shows no balance warning until F-14 exists; BR-PRJ-005 never blocks on balances anyway.
 
 ## Flagged Concerns
@@ -159,6 +161,7 @@ Checked against the constitution (C-001..C-106), BR-ACC/SEL/DEL/ADD/PRJ/GAL/CAT/
 | FC-005 | Token rotation was in product scope but owned by no feature. | scope.md, BR-PRJ-003 ↔ F-09 out of scope | Built here, with an audit record (Owner 2026-10-05). | RESOLVED |
 | FC-006 | Project completion (old F-12) was left out of the accepted intent, so no feature built it. | Feature map F-12 ↔ intent out of scope | Included here; the balance warning comes with F-14 (Owner 2026-10-05). Intent updated. | RESOLVED |
 | FC-007 | Studios want their own selection items, but BR-CAT-007 and scope.md fixed the types to `EDIT` and `PRINT`, and BR-SEL-003 left the other types undefined. | BR-CAT-007, BR-SEL-003, scope.md ↔ product need | Replace the fixed types by a pick mode (`COUNT` / `QUANTITY`) chosen per item definition, built inside F-10 with a catalog follow-up (Owner 2026-10-05). Recorded in BR-CAT-007, -010, -011, BR-PRJ-001, BR-SEL-003, domain model and scope. | RESOLVED |
+| FC-008 | A client who submitted and then buys extra picks could not use them: a submitted group never reopens (BR-SEL-005) and add-ons needed an `OPEN` target. | BR-SEL-005, BR-ADD-002, BR-ADD-004 ↔ J-05 | An approved add-on returns a `SUBMITTED` group to `OPEN`; `LOCKED` stays final (Owner 2026-10-05). Recorded in BR-SEL-005, BR-ADD-004 and the domain model. | RESOLVED |
 
 ## Open Questions / SPEC GAPS
 None blocking. For the technical design:

@@ -234,9 +234,16 @@ Covers: BR-ADD-001, BR-ADD-002, BR-ADD-003, BR-ADD-004, BR-ADD-006, BR-SEL-002, 
 ## AC-ADD-002 — Target rules
 Covers: BR-ADD-002 (A-10)
 
-**Given** *Foto cetak* is `SUBMITTED`, and *Wisuda Sari* has its own groups
+**Given** *Foto cetak* is `LOCKED`, and *Wisuda Sari* has its own groups
 **When** the Owner targets *Foto cetak*, or a group of *Wisuda Sari*, from an add-on of *Wisuda Rina*
 **Then** both are refused
+
+## AC-ADD-007 — An add-on reopens a submitted group
+Covers: BR-ADD-004, BR-SEL-005, BR-SEL-002 (A-22)
+
+**Given** *Foto edit* is `SUBMITTED` with 3 of 3 picks
+**When** the Owner approves an add-on of 5 targeting *Foto edit*
+**Then** in one transaction the limit becomes 8 and the group is `OPEN` with its 3 picks kept; the client picks 2 more and submits again; a `LOCKED` group is never reopened by an add-on
 
 ## AC-ADD-003 — Add-on without a target
 Covers: BR-ADD-001, BR-ADD-006 (A-10)

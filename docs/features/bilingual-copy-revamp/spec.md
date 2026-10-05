@@ -1,6 +1,6 @@
 # Bilingual copy revamp
 
-Status: DRAFT — voice and bilingual scope approved; language behavior requires review.
+Status: DRAFT — voice, complete bilingual scope and bilingual user-authored copy approved; language behavior and legacy-data transition require review.
 Date: 2026-10-06
 Base: staging `bdab2c2`; branch `codex/bilingual-copy-revamp`.
 
@@ -10,6 +10,7 @@ Base: staging `bdab2c2`; branch `codex/bilingual-copy-revamp`.
 - Users can switch between English and Bahasa Indonesia, one language per screen.
 - Both the photographer dashboard and client galleries support switching.
 - All system-owned user-facing content must be localized; no page may mix English and Indonesian system copy (Owner 2026-10-06). This includes content outside `.copy.ts`, validation, loading, accessibility text, library-generated text, display formatting and platform-default content.
+- User-authored descriptive content, including service/package descriptions and custom WhatsApp templates, must support both EN and ID versions (Owner 2026-10-06). Identity names and identifiers are preserved.
 - Voice is casual and friendly. Indonesian addresses the reader as `kamu` or `-mu` when useful.
 - Use natural local startup language: warmth, everyday verbs, concise task instructions, and clear recovery guidance.
 
@@ -17,7 +18,7 @@ Base: staging `bdab2c2`; branch `codex/bilingual-copy-revamp`.
 
 Make existing Shutrly journeys easy to understand in either language without changing business behavior. Rewrite navigation, forms, helper text, state messages, confirmations, accessible labels and existing client-gallery text. Include existing auth emails and generated WhatsApp messages in localization coverage. Their recipient-language selection and treatment of existing customized templates must be specified before implementation; this is a behavior decision, not an exclusion from localization.
 
-User-entered client names, project names, service names, package descriptions and custom message templates require an explicit content-language policy. Do not automatically translate, overwrite or silently reclassify them as system copy. System-owned default names, units, roles and templates must have EN/ID equivalents. Brand names such as Shutrly, WhatsApp and Google Drive remain brand names in both locales. The Owner’s no-mixed-language requirement is mandatory for system copy; clarify whether arbitrary user-entered content must also have bilingual versions. Language selection must not silently change currency, financial rules, timezone, entitlements, project stages or permissions. No unrelated visual redesign, new marketing claims, dependency choice or schema change is approved by this document.
+User-authored descriptive text, including service/package descriptions and custom message templates, supports paired EN/ID versions. Rendering selects the active language; it must not fall back to the other language. Preserve client names, brand names, project names, identifiers and external filenames. Brand names such as Shutrly, WhatsApp and Google Drive remain brand names in both locales. Existing free-text service/item/role titles require classification as an identity name or localizable display label before technical design; do not infer this from the current field name. Do not automatically translate or overwrite user content. System-owned default names, units, roles and templates must have EN/ID equivalents. Language selection must not silently change currency, financial rules, timezone, entitlements, project stages or permissions. No unrelated visual redesign, new marketing claims, dependency choice or schema change is approved by this document.
 
 ## Voice and writing rules
 
@@ -59,6 +60,16 @@ Use one term per concept, aligned with the domain glossary. UI wording may be si
 | Add-on | Tambahan | Qualify by feature context |
 | Finished files | Hasil akhir | Separate from selectable proof photos |
 
+## User-authored bilingual content
+
+Approved scope: store and render EN/ID versions of descriptive product content and custom message templates. Values in template placeholders, such as client names, links, passwords and invoice identifiers, remain unchanged. Keep the same supported variables and business meaning in both versions.
+
+Proposed authoring flow, pending approval: expose two clearly labeled language fields/tabs, show completeness status, and require both versions before content becomes available in both languages. The Owner writes or reviews each version. No automatic translation provider or AI translation workflow is approved. Whether incomplete bilingual content may be saved as a draft remains a product decision.
+
+Existing records need a deliberate migration and review process: identify their source language, collect the missing version and validate completeness before enabling bilingual exposure. Do not relabel Indonesian data as English, use cross-language fallback, erase user edits, or rewrite immutable project/invoice snapshots. Historical content that has only one language is an unresolved compatibility constraint; define an Owner-approved viewing/rollout policy before shipping.
+
+Message template language is selected for the recipient, separately from the dashboard language. The two template versions must preserve the same required placeholder contract and be reviewed before use. Auth-email recipient locale and persistence across sessions remain separate decisions.
+
 ## Language behavior proposal — unresolved
 
 All visible platform-owned defaults, including catalog item names/units, team-role defaults and default WhatsApp templates, must render in the active content language without overwriting customized data or immutable snapshots. Storage/versioning and recipient-language behavior still need design.
@@ -97,7 +108,8 @@ Keep copy co-located in sibling `.copy.ts` modules and preserve the fixed archit
 - Accessible labels, errors, toasts, loading text and confirmation dialogs use the active language.
 - Dynamic values, counts and verified limits render correctly in both languages.
 - Text fits approved desktop and mobile layouts; buttons remain readable and focus/keyboard behavior works.
-- User-entered content, currency and business invariants retain their meaning.
+- Bilingual user-authored content renders the matching version, preserves template-variable contracts and has no cross-language fallback. Existing records and immutable snapshots follow the approved transition policy.
+- Identity names, currency and business invariants retain their meaning.
 - Generated messages and emails follow their separately approved recipient-language policy.
 - Meaningful locale behavior tests, representative end-to-end journeys and visual/accessibility checks pass before claiming completion.
 

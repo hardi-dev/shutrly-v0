@@ -88,7 +88,7 @@ Proposal for later tooling work: add targeted checks for label-bearing option/co
 
 ## Owner coverage decision — 2026-10-06
 
-All OCM-01–22 findings are mandatory localization scope. A page must not mix English and Indonesian system copy. No item is deferred merely because it lives outside `.copy.ts` or originates in a library/default-data record. The exclusions above distinguish brand names, developer-only strings, stable keys and user data; they do not permit untranslated system text. Existing customized data and immutable snapshots need an explicit content-language policy before implementation.
+All OCM-01–22 findings are mandatory localization scope. A page must not mix English and Indonesian system copy. No item is deferred merely because it lives outside `.copy.ts` or originates in a library/default-data record. The exclusions above distinguish brand names, developer-only strings, stable keys and user data; they do not permit untranslated system text. Owner also approved EN/ID versions for user-authored descriptions and custom templates. Identity names remain unchanged. Existing customized data and immutable snapshots need an explicit transition policy before implementation.
 
 ## Revamp order
 

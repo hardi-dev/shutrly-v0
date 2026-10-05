@@ -13,7 +13,7 @@
   7. **Page header:** desktop client pages show a **breadcrumb** (*Beranda › … › page*; utilities off, aligned with the title) instead of back buttons. Phones keep a *Beranda* / *Kembali* button at the top of the content, because the library Mobile Header has no breadcrumb. Beranda greets the client by first name (*Halo, Rina*); there are no tabs on any client page.
   8. **Hasil akhir downloads (option A, 2026-10-06):** an **Unduh ▾** button in the Page Header opens a menu with *Unduh semua (n)* and *Pilih beberapa* (a bottom sheet on phones). While picking several, the header shows *n foto dipilih · Batal · Unduh n foto*. The card header keeps only the *Edited / Print* switch.
   9. **Owner pages** follow the dashboard patterns: each F-10 card on the project page starts its own flow (Pilihan klien, Add-on, Hasil akhir & selesai, Akses klien & ganti link).
-- **Status:** **DRAFT, waiting for Owner approval.**
+- **Status:** **APPROVED 2026-10-06** (Owner: "approve").
 - **Exports (2026-10-06):** 125 HTML exports (html-tailwind, through Pencil MCP) in [`exports/`](exports/), one subfolder per flow group (`klien-1-gerbang/` … `owner-6-katalog/`), named `<screen>-<state>-<device>-<frameId>.html`. Only states with their own layout are exported (Owner: "export yang perlu saja"). Not exported, because they reuse an exported layout with different copy or a library state: *memeriksa* (button loading), Beranda *dibuka lagi*, Semua foto *cari kosong* / *tanpa foto* (Empty State), Pratinjau *catatan*, Pilih *sudah dikirim*, Tinjau *mengirim*, Beranda *pilihan dikirim*, Hasil akhir *tanpa print*, Owner *dikunci* / *tanpa grup* / *galeri belum terbit* / *kosong* / *setujui (grup terbuka)* / *memproses*, and every toast.
 - **Export index:** `python3 scripts/sdv/index-exports.py client-access` wrote [`exports/INDEX.md`](exports/INDEX.md), grouped by subfolder (the script now reads subfolders; flat folders such as `gallery/exports` index as before). `--check` passes.
 
@@ -200,6 +200,6 @@ Two boards on the canvas show the split; use them when reading the exports.
 
 ## Approval
 
-- [ ] Owner reviewed the frames and approved them.
+- [x] Owner reviewed the frames and approved them, 2026-10-06 ("approve").
 - [x] `client-access.pen` saved: 1,809,765 bytes, 2026-10-06 01:31, imports the worktree library under `3:` (626 variables).
 - [x] HTML exports written to `exports/` (125 files, by flow group), and `index-exports.py client-access` run (`--check` passes).

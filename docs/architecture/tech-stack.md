@@ -52,7 +52,8 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 ## Deployment
 - Cloudflare; preview deployment per git branch, all previews share the non-production Neon database
 - **Plan (Owner 2026-10-05):** free plans of Workers, Neon and Resend, with a CPU check before ship and upgrade triggers ([ADR-018](decisions/ADR-018-free-tier-runtime-budget.md), Accepted)
-- Two Neon databases only: **production** and one shared **non-production** (dev, CI, previews)
+- Three Neon databases only: **production**, one shared **non-production** (dev, CI, previews) and **staging** ([ADR-009](decisions/ADR-009-neon-serverless-driver.md), amended Owner 2026-10-05)
+- **Staging (Owner 2026-10-05):** Worker `shutrly-staging` at `https://shutrly-staging.shutrly.workers.dev` (`wrangler.jsonc` env `staging`), deployed by hand from the `staging` git branch with `pnpm deploy:staging`. Its database is the Neon branch `staging` of project `shutrly-v0`. Secrets are Worker secrets; `BETTER_AUTH_URL`, `APP_STAGE` and `AUTH_EMAIL_FROM` are vars in `wrangler.jsonc`. Staging gets only migrations already merged to `main`.
 - Migrations run from `main` via CI only; preview deploys never migrate the shared database
   - **Interim (Owner 2026-09-26, until CI exists):** the Owner runs `pnpm db:migrate` by hand from a clean, up-to-date `main` checkout.
   - **During development (Owner 2026-10-02):** an agent may run `pnpm db:migrate` against the shared **non-production** database (`DATABASE_URL_UNPOOLED` in `.dev.vars`), including from a feature branch, when:

@@ -2,12 +2,10 @@
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BreadcrumbTrail } from "@/ui/patterns/page-header/breadcrumb-trail";
-import { TextField } from "@/ui/primitives/text-field/text-field";
+import { Input } from "@/ui/primitives/input/input";
 
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import type { BrowseToolbarProps, BrowseTrailProps } from "./browse-toolbar.types";
-
-const noop = () => undefined;
 
 function BrowseTrail({ location, page, crumbs, onNavigate }: Readonly<BrowseTrailProps>) {
   if (location.search !== "") {
@@ -44,17 +42,23 @@ function BrowseTrail({ location, page, crumbs, onNavigate }: Readonly<BrowseTrai
 /** *Semua foto*'s toolbar: the breadcrumb (or the search summary) and *Cari nama file*; phones put the search first (AC-GAL-028, 029). */
 export function BrowseToolbar(props: Readonly<BrowseToolbarProps>) {
   const isMobile = useMobileViewport();
+  const { searchText, onSearch } = props;
+  const handleClear = () => {
+    onSearch("");
+  };
   const search = (
     <div className="w-full md:w-[280px]">
-      <TextField
+      <Input
+        variant="search"
         aria-label={GALLERY_COPY.searchLabel}
-        name="search"
-        type="search"
         placeholder={GALLERY_COPY.searchLabel}
         iconLeading="search"
-        value={props.searchText}
-        onChange={props.onSearch}
-        onBlur={noop}
+        iconTrailing={searchText ? "x" : undefined}
+        iconTrailingAction={
+          searchText ? { label: GALLERY_COPY.clearSearch, onPress: handleClear } : undefined
+        }
+        value={searchText}
+        onChange={onSearch}
       />
     </div>
   );

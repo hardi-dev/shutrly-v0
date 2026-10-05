@@ -7,6 +7,7 @@ import {
   ArrowDown01Icon,
   ArrowHorizontalIcon,
   ArrowLeft01Icon,
+  ArrowRight01Icon,
   ArrowRight05Icon,
   ArrowUp01Icon,
   BellIcon,
@@ -158,6 +159,7 @@ export const ICON_NAMES: readonly IconName[] = [
   "image-off",
   "external-link",
   "arrow-left",
+  "arrow-right-01",
   "user-plus",
 ];
 
@@ -239,4 +241,6 @@ export const ICON_REGISTRY: Record<IconName, IconSvgElement> = {
   "image-off": ImageNotFound01Icon,
   "external-link": LinkSquare02Icon,
   "arrow-left": ArrowLeft01Icon,
+  // The chevron pair of `arrow-left` (`arrow-right` is the long arrow of the buttons).
+  "arrow-right-01": ArrowRight01Icon,
 };

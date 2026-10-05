@@ -270,6 +270,7 @@ export const GALLERY_COPY = {
       : `· ${String(photos)} foto`,
   folderCount: (count: number) => `${String(count)} foto`,
   searchLabel: "Cari nama file",
+  clearSearch: "Hapus pencarian",
   searchSummary: (count: number, text: string) => `${String(count)} foto cocok dengan “${text}”`,
   searchEmptyTitle: (text: string) => `Tidak ada foto bernama “${text}”`,
   searchEmptyBody:

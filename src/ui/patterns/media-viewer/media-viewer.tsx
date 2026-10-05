@@ -159,7 +159,7 @@ function Arrows({ index, count, nav }: Readonly<ArrowsProps>) {
         onPress={nav.handleNext}
         className={cn(ARROW, "right-(--component-media-viewer-nav-inset)")}
       >
-        <Icon name="arrow-right" aria-hidden="true" />
+        <Icon name="arrow-right-01" aria-hidden="true" />
       </AriaButton>
     </>
   );

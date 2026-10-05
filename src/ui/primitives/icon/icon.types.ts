@@ -54,6 +54,7 @@ export type IconName =
   | "image-off"
   | "external-link"
   | "arrow-left"
+  | "arrow-right-01"
   | "hard-drive"
   | "folder-open"
   | "folder"

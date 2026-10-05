@@ -184,6 +184,7 @@ Keep heavily tested logic (selection limits, invoice totals, lifecycle transitio
   - Features never hand-roll dialogs, menus, selects or grids.
   - React Aria's default styles are never a visual source.
   - Style states through React Aria `data-*` attributes.
+- The pointer cursor on an enabled control (buttons, menu items, tabs, options, switches, radios, checkboxes) comes from one base rule in `src/app/globals.css`, because Tailwind v4 resets buttons to the default cursor. Don't add `cursor-pointer` per component; a component that needs another cursor sets it with a utility, which wins. A new kind of pressable element must have a matching `role` or be a `button`.
 - Focus rings use `color.semantic.focus.ring` (+ `focus.glow`). Modals and toasts render only through the App Shell's overlay slot (F-02).
 - Pixel/visual truth is the approved Pencil design referenced in the feature's `design.md`.
 - UI is built from **HTML exports** of the approved frames (Owner, 2026-09-27):

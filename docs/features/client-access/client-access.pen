@@ -2389,7 +2389,7 @@
                       "content": "Foto edit"
                     },
                     "3:nHCW8": {
-                      "content": "8 dari 8 foto · dikirim 5 Okt 2026, 14.20"
+                      "content": "8 dari 8 foto · 3 catatan · dikirim 5 Okt 2026, 14.20"
                     },
                     "3:QcKHK": {
                       "type": "frame",
@@ -2795,7 +2795,7 @@
                       "content": "Foto edit"
                     },
                     "3:nHCW8": {
-                      "content": "8 dari 8 foto · dikunci 5 Okt 2026, 16.05"
+                      "content": "8 dari 8 foto · 3 catatan · dikunci 5 Okt 2026, 16.05"
                     },
                     "3:QcKHK": {
                       "type": "frame",
@@ -5876,23 +5876,51 @@
                   }
                 },
                 {
-                  "id": "UnCaY",
+                  "id": "Jzn7w",
                   "type": "ref",
-                  "ref": "3:E9A74J",
-                  "name": "Empty",
+                  "ref": "3:rHONT",
+                  "name": "Foto pilihan",
                   "width": "fill_container",
                   "descendants": {
-                    "3:zOUao": {
-                      "icon": "image"
+                    "3:BXWnC": {
+                      "content": "Foto pilihan"
                     },
-                    "3:c8Y4Ky": {
-                      "content": "Belum ada foto dipilih"
+                    "3:nHCW8": {
+                      "content": "0 foto"
                     },
-                    "3:FCyNB": {
-                      "content": "Klien belum memilih foto untuk bagian ini."
-                    },
-                    "3:SzhQW": {
+                    "3:QcKHK": {
                       "enabled": false
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "u4K9u",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "id": "Iuoaw",
+                          "type": "ref",
+                          "ref": "3:E9A74J",
+                          "name": "Kosong",
+                          "width": "fill_container",
+                          "descendants": {
+                            "3:zOUao": {
+                              "icon": "images"
+                            },
+                            "3:c8Y4Ky": {
+                              "content": "Belum ada foto dipilih"
+                            },
+                            "3:FCyNB": {
+                              "content": "Klien belum memilih foto untuk bagian ini."
+                            },
+                            "3:SzhQW": {
+                              "enabled": false
+                            }
+                          }
+                        }
+                      ]
                     }
                   }
                 }
@@ -7933,7 +7961,7 @@
                               "fill": "$3:color/semantic/text/secondary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "8 dari 8 foto · dikirim 5 Okt 2026",
+                              "content": "8 dari 8 foto · 3 catatan · dikirim 5 Okt 2026",
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body-sm",
                               "fontWeight": "$3:font/weight/regular"
@@ -8111,7 +8139,7 @@
                               "fill": "$3:color/semantic/text/secondary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "8 dari 8 foto",
+                              "content": "8 dari 8 foto · 3 catatan",
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body-sm",
                               "fontWeight": "$3:font/weight/regular"
@@ -10211,7 +10239,7 @@
                               "fill": "$3:color/semantic/text/secondary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "8 dari 8 foto · dikirim 5 Okt 2026",
+                              "content": "8 dari 8 foto · 3 catatan · dikirim 5 Okt 2026",
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body-sm",
                               "fontWeight": "$3:font/weight/regular"
@@ -10400,7 +10428,7 @@
                               "fill": "$3:color/semantic/text/secondary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "8 dari 8 foto",
+                              "content": "8 dari 8 foto · 3 catatan",
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body-sm",
                               "fontWeight": "$3:font/weight/regular"
@@ -14256,7 +14284,7 @@
                   "content": "Foto edit"
                 },
                 "3:nHCW8": {
-                  "content": "8 dari 8 foto · dikirim 5 Okt 2026"
+                  "content": "8 dari 8 foto · 3 catatan · dikirim 5 Okt 2026"
                 },
                 "3:QcKHK": {
                   "type": "frame",

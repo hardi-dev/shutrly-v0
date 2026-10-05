@@ -94,7 +94,7 @@
               "name": "Note",
               "enabled": false,
               "height": 28,
-              "fill": "$3:color/semantic/surface/panel",
+              "fill": "$3:color/semantic/surface/on-media",
               "cornerRadius": "$3:radius/full",
               "gap": "$3:space/1",
               "padding": [

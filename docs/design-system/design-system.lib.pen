@@ -6061,6 +6061,181 @@
                   "height": 1
                 }
               ]
+            },
+            {
+              "type": "frame",
+              "id": "b3OTV",
+              "name": "Alpha row",
+              "width": "fill_container",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "zALSp",
+                  "name": "alpha.neutral-0-a80",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "L4q4GC",
+                      "name": "Swatch",
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": 64,
+                      "cornerRadius": "$radius/sm",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Gybu4",
+                          "name": "On light",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "fill": "#FFFFFF",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "LPCEB",
+                              "name": "Tint",
+                              "fill": "$color/primitive/alpha/neutral-0-a80",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "YPUPO",
+                          "name": "On dark",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "fill": "#18181B",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "Lh2LR",
+                              "name": "Tint",
+                              "fill": "$color/primitive/alpha/neutral-0-a80",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "P9VsjV",
+                      "name": "Step",
+                      "fill": "$color/semantic/text/primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "neutral-0-a80",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font/family/base",
+                      "fontSize": 12,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "P4M5xE",
+                      "name": "Hex",
+                      "fill": "$color/semantic/text/secondary",
+                      "content": "#FFFFFFCC",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ugION",
+                  "name": "alpha.neutral-850-a80",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "dcyUo",
+                      "name": "Swatch",
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": 64,
+                      "cornerRadius": "$radius/sm",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "I5S3n",
+                          "name": "On light",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "fill": "#FFFFFF",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "qwl4D",
+                              "name": "Tint",
+                              "fill": "$color/primitive/alpha/neutral-850-a80",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "oGyV9",
+                          "name": "On dark",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "fill": "#18181B",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "o9qGaE",
+                              "name": "Tint",
+                              "fill": "$color/primitive/alpha/neutral-850-a80",
+                              "width": "fill_container",
+                              "height": "fill_container"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "QjSG1",
+                      "name": "Step",
+                      "fill": "$color/semantic/text/primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "neutral-850-a80",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font/family/base",
+                      "fontSize": 12,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "hVDuZ",
+                      "name": "Hex",
+                      "fill": "$color/semantic/text/secondary",
+                      "content": "#1F1F23CC",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -7511,6 +7686,190 @@
                       "name": "Dark alias",
                       "fill": "$color/semantic/text/muted",
                       "content": "dark  → neutral/50",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "OipvM",
+              "name": "surface/on-media",
+              "width": "fill_container",
+              "stroke": "$color/semantic/border/subtle",
+              "strokeWidth": {
+                "bottom": 1
+              },
+              "gap": 16,
+              "padding": [
+                12,
+                0
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "NWQyp",
+                  "name": "Token",
+                  "width": 300,
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "JVtXb",
+                      "name": "Name",
+                      "fill": "$color/semantic/text/primary",
+                      "content": "surface.on-media",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "w5ufnt",
+                      "name": "Usage",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "Small controls laid over a photo: pick-tile note button (F-10). Pair with text.primary.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font/family/base",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "vdyjo",
+                  "name": "light preview",
+                  "theme": {
+                    "mode": "light"
+                  },
+                  "width": 260,
+                  "height": 56,
+                  "fill": "$color/semantic/surface/panel",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "gap": 10,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": "$radius/xs",
+                      "id": "mD7iz",
+                      "name": "Fill",
+                      "fill": "$color/semantic/surface/on-media",
+                      "width": 96,
+                      "height": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "GCDJF",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "gkx6I",
+                          "name": "Hex",
+                          "fill": "$color/semantic/text/secondary",
+                          "content": "#FFFFFFCC",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "u3x4uB",
+                  "name": "dark preview",
+                  "theme": {
+                    "mode": "dark"
+                  },
+                  "width": 260,
+                  "height": 56,
+                  "fill": "$color/semantic/surface/panel",
+                  "cornerRadius": "$radius/sm",
+                  "stroke": "$color/semantic/border/default",
+                  "strokeWidth": 1,
+                  "gap": 10,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": "$radius/xs",
+                      "id": "y7Ppv5",
+                      "name": "Fill",
+                      "fill": "$color/semantic/surface/on-media",
+                      "width": 96,
+                      "height": "fill_container",
+                      "stroke": "$color/semantic/border/default",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ObSeE",
+                      "name": "Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ZHo90",
+                          "name": "Hex",
+                          "fill": "$color/semantic/text/secondary",
+                          "content": "#1F1F23CC",
+                          "lineHeight": 1.35,
+                          "fontFamily": "IBM Plex Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "J8Jhp",
+                  "name": "Alias",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "MTNBb",
+                      "name": "Light alias",
+                      "fill": "$color/semantic/text/secondary",
+                      "content": "light → alpha/neutral-0-a80",
+                      "lineHeight": 1.35,
+                      "fontFamily": "IBM Plex Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "G1cEap",
+                      "name": "Dark alias",
+                      "fill": "$color/semantic/text/muted",
+                      "content": "dark  → alpha/neutral-850-a80",
                       "lineHeight": 1.35,
                       "fontFamily": "IBM Plex Mono",
                       "fontSize": 11,
@@ -118210,6 +118569,31 @@
     "component/media-viewer/thumb-inactive-opacity": {
       "type": "number",
       "value": "$opacity/media-inactive"
+    },
+    "color/primitive/alpha/neutral-0-a80": {
+      "type": "color",
+      "value": "#FFFFFFCC"
+    },
+    "color/primitive/alpha/neutral-850-a80": {
+      "type": "color",
+      "value": "#1F1F23CC"
+    },
+    "color/semantic/surface/on-media": {
+      "type": "color",
+      "value": [
+        {
+          "value": "$color/primitive/alpha/neutral-0-a80",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "$color/primitive/alpha/neutral-850-a80",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
     }
   },
   "fileToken": "a25701b4-4c5b-41fc-8af0-91535884d9bf"

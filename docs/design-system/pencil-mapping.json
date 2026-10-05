@@ -37,6 +37,8 @@
     "color/primitive/alpha/lime-300-a16": "color.primitive.alpha.lime-300-a16",
     "color/primitive/alpha/lime-300-a33": "color.primitive.alpha.lime-300-a33",
     "color/primitive/alpha/lime-800-a25": "color.primitive.alpha.lime-800-a25",
+    "color/primitive/alpha/neutral-0-a80": "color.primitive.alpha.neutral-0-a80",
+    "color/primitive/alpha/neutral-850-a80": "color.primitive.alpha.neutral-850-a80",
     "color/primitive/alpha/neutral-900-a08": "color.primitive.alpha.neutral-900-a08",
     "color/primitive/alpha/neutral-900-a14": "color.primitive.alpha.neutral-900-a14",
     "color/primitive/alpha/neutral-950-a50": "color.primitive.alpha.neutral-950-a50",
@@ -130,6 +132,7 @@
     "color/semantic/surface/canvas": "color.semantic.surface.canvas",
     "color/semantic/surface/inverse": "color.semantic.surface.inverse",
     "color/semantic/surface/muted": "color.semantic.surface.muted",
+    "color/semantic/surface/on-media": "color.semantic.surface.on-media",
     "color/semantic/surface/panel": "color.semantic.surface.panel",
     "color/semantic/surface/panel-subtle": "color.semantic.surface.panel-subtle",
     "color/semantic/surface/subtle": "color.semantic.surface.subtle",
@@ -645,12 +648,12 @@
     "space/9": "space.9"
   },
   "counts": {
-    "total": 623,
-    "primitive": 64,
-    "semantic": 55,
+    "total": 626,
+    "primitive": 66,
+    "semantic": 56,
     "component": 437,
     "scale": 67,
-    "themed": 62
+    "themed": 63
   },
   "transforms": {
     "opacity/*": "Pencil value = token $value × 100 (Pencil opacity variables are percent; literal node opacity is 0–1)"
@@ -4411,7 +4414,7 @@
   },
   "checksum": {
     "algorithm": "fnv1a-32 over sorted 'name|type|canonical-value' lines",
-    "total": "c2c0a40b",
-    "count": 623
+    "total": "78563812",
+    "count": 626
   }
 }

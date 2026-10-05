@@ -201,5 +201,5 @@ Two boards on the canvas show the split; use them when reading the exports.
 ## Approval
 
 - [ ] Owner reviewed the frames and approved them.
-- [ ] `client-access.pen` saved (⌘S) after the last edits; size and time recorded here.
+- [x] `client-access.pen` saved: 1,809,765 bytes, 2026-10-06 01:31, imports the worktree library under `3:` (626 variables).
 - [x] HTML exports written to `exports/` (125 files, by flow group), and `index-exports.py client-access` run (`--check` passes).

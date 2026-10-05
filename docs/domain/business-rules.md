@@ -308,8 +308,14 @@ Groups exist from the moment the gallery is first published, so the client can s
 `effectiveLimit = baseLimit + extraLimit`, never stored. `extraLimit` = sum of `quantity` of approved add-ons targeting the group, maintained transactionally.
 
 ### BR-SEL-003 — Usage
-Usage for quantity-based groups (e.g. `PRINT`) = sum of selection quantities; otherwise = count of selections. Usage may never exceed `effectiveLimit`.
-**SPEC GAP (deferred to F-11 discovery):** exact rule deciding quantity-based vs count-based per `selectionType` (only EDIT→count and PRINT→sum are stated; ALBUM, FRAME, custom types unspecified). F-05 limits MVP selection types to `EDIT` and `PRINT` (BR-CAT-007), so the gap only matters when a new type is added.
+Every selection type has one pick mode, which decides how usage is counted:
+
+| Selection type | Pick mode | Usage | A pick has |
+|---|---|---|---|
+| `EDIT` | `COUNT` | number of picked photos | quantity fixed at 1 |
+| `PRINT` | `QUANTITY` | sum of pick quantities | a whole-number quantity ≥ 1 |
+
+Usage may never exceed `effectiveLimit`. A new selection type is added only together with its row in this table (BR-CAT-007). *(F-10 discovery, Owner 2026-10-05; closes the SPEC GAP deferred from F-05.)*
 
 ### BR-SEL-004 — Only proof photos are selectable
 A selection references a `PROOF` photo from the gallery of the group's own project. One row per `(group, photo)`; quantity > 0. A photo may be selected in several groups.

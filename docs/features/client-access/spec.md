@@ -143,7 +143,7 @@ A client who has the project link and the current gallery password can open the 
 - **A-16 Link rotation:** the new token has the same strength and format as the old one (BR-PRJ-003); the old one is never reused.
 - **A-17 Final delivery needs a published gallery:** besides BR-DEL-003, the gallery must be `PUBLISHED`, so the client can actually open it.
 - **A-18 Later finished files:** files synced into `edited` / `print` after delivery are shown without publishing again.
-- **A-20 One group per selection item:** a group is made from a project item with `selectionRequired` and is named after that snapshotted item (BR-PRJ-001), so two items of the same type (for example *Foto edit* and *Foto edit bonus*) are two groups with separate limits. Its type decides the pick: `EDIT` counts photos, `PRINT` sums quantities (BR-SEL-003). The unit text (*foto*, *lembar*) is shown beside the limit.
+- **A-20 One group per selection item:** a group is made from a project item with `selectionRequired` and is named after that snapshotted item (BR-PRJ-001), so two items of the same type (for example *Foto edit* and *Foto edit bonus*) are two groups with separate limits. Its type decides the pick mode: `EDIT` is `COUNT`, `PRINT` is `QUANTITY` (BR-SEL-003 table). The unit text (*foto*, *lembar*) is shown beside the limit.
 - **A-21 Zero limit:** an item with value 0 yields a group with limit 0 that is shown *0 / 0*, offers no picks, and can't be submitted. An add-on can raise it.
 - **A-19 Completion before invoices:** *Tandai selesai* shows no balance warning until F-14 exists; BR-PRJ-005 never blocks on balances anyway.
 
@@ -164,4 +164,4 @@ None blocking. For the technical design:
 - **R-1 Original-file downloads by file ID:** BR-ACC-005 allows a server-controlled URL or Google's image host by file ID. Check that the image host serves full-resolution originals, and how *several* and *all* are bundled in the browser (for example a client-side zip or sequential downloads) inside the Workers Free budget (ADR-018). If originals need another Google URL, that is a BR-ACC-005 change for the Owner.
 - **R-2 Rate-limit storage and the cache:** where A-2 counters live, and whether Workers Cache API calls count toward the 50-subrequest limit (ADR-019 point 5).
 - **R-3 Token rotation in code:** `client_access_token` is write-once today (F-07 TD D-6).
-- **Carried, not blocking:** BR-SEL-003's rule for selection types beyond `EDIT` and `PRINT` (only matters when a new type is added, BR-CAT-007); GAP-04 client mobile layout (design).
+- **Carried, not blocking:** GAP-04 client mobile layout (design); the *SELECTION_REMINDER* deadline variable (business-rules, MSG catalogue; F-15).

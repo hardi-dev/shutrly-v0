@@ -102,3 +102,7 @@ Snapshot: 2026-10-06, staging base `bdab2c2`.
 | `src/ui/primitives/textarea/textarea.copy.ts` | Product |
 | `src/ui/primitives/time-field/time-field.stories.copy.ts` | Internal/demo |
 | `src/ui/primitives/tooltip/tooltip.copy.ts` | Product |
+
+## Outside-copy-module audit
+
+See [copy-outside-modules-audit.md](copy-outside-modules-audit.md): 22 source files requiring direct-copy, persisted-default, string-composition or locale review, plus three historical SQL backfill duplicates. Static review only; application copy remains unchanged.

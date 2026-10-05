@@ -7,7 +7,7 @@ Sources: [spec.md](spec.md), [acceptance-criteria.md](acceptance-criteria.md) (A
 ## Scope of this run
 
 - **Run:** typecheck; ESLint on the gallery code, its adapters, composition, the shared units it touches and the gallery tests and scripts; unit/dom tests for those; `tests/integration/gallery`; an AC-to-test coverage check.
-- **Not run, on purpose:** `pnpm test` (full suite), `pnpm build`, the full E2E suite, the real-Drive smoke spec. Before the Owner's manual test on 2026-10-05, `gallery-sync.spec.ts` (fake Drive) and `gallery-drive-smoke.spec.ts` (real Drive) passed, and `opennextjs-cloudflare build` succeeded. The UI fixes from that manual test (password field, search clear button, viewer arrows, cursor) were covered by unit tests only; the gallery E2E specs were **not re-run after them**.
+- **Not run, on purpose:** `pnpm test` (full suite), the full E2E suite. The ship run (same day, after the Owner's manual-test UI fixes) added `pnpm build` (PASS) and `gallery-create.spec.ts` + `gallery-sync.spec.ts` against the fixture Drive (PASS). `gallery-drive-smoke.spec.ts` (real Drive) passed before those fixes.
 
 ## Quality gate (related checks)
 
@@ -55,4 +55,4 @@ Checked by searching the test files for each AC ID. Every one of AC-GAL-001…03
 
 ## Result
 
-The rework meets its design and all 36 acceptance criteria have tests that pass. Open before shipping: the Owner's acceptance, the gallery E2E specs once more if wanted (UI fixes since their last run), and FND-001 for the auth path on Workers.
+The rework meets its design and all 36 acceptance criteria have tests that pass. Open before production: the Owner's acceptance, the production secrets and migrations (see the release notes), and FND-001 for the auth path on Workers.

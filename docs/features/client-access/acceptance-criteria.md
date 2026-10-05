@@ -227,8 +227,8 @@ Covers: BR-SEL-001, BR-DEL-001 (A-24, A-31)
 Covers: BR-CAT-007, BR-SEL-004, BR-SEL-005 (A-32)
 
 **Given** *Foto edit* (notes on) is `OPEN` with `IMG_001` and `IMG_002`, and *Foto cetak* (notes off) has `IMG_003`
-**When** the client, on Pilih for *Foto edit*, writes the note *hapus jerawat, cerahkan sedikit* for `IMG_002`, reloads, tries a 501-character note on `IMG_001`, opens Tinjau, then submits; and picks a photo in *Foto cetak*
-**Then** the note is kept after the reload and `IMG_002` shows a note marker, the 501-character note is refused with nothing stored, Tinjau shows the note read-only with no way to add one there, after submit the note can't be changed, and *Foto cetak* offers no note; removing a pick while `OPEN` deletes its note
+**When** the client, on Pilih for *Foto edit*, writes the note *hapus jerawat, cerahkan sedikit* for `IMG_002`, reloads, tries a 501-character note on `IMG_001`, changes that note from the photo viewer's *Catatan*, opens Tinjau, then submits; and picks a photo in *Foto cetak*
+**Then** the note is kept after the reload and `IMG_002` shows a note marker, the viewer change replaces it, the 501-character note is refused with nothing stored, Tinjau shows the note read-only with no way to add one there, after submit the note can't be changed, and *Foto cetak* offers no note; removing a pick while `OPEN` deletes its note
 
 ## AC-SEL-012 — No groups, no selection
 Covers: BR-SEL-001

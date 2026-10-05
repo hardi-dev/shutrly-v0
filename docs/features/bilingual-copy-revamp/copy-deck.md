@@ -17,13 +17,13 @@ This is the single editorial review document for the bilingual revamp. It groups
 
 ## Product-message review — 2026-10-06
 
-The headline’s job is to help a photographer recognize a concrete task, not promise a complete business system. The recommended auth headline is **“Keep each shoot’s details together.” / “Catat detail tiap pemotretan di satu tempat.”** Its support names the actual project record: package, agreed price and schedule. Page headings and action labels remain direct; they are not turned into slogans.
+The Owner’s product emphasis is the photo-choice handoff: help the photographer know which photos the client wants edited. F-09/F-10/F-11/F-12 form that core workflow; project administration supports it. The previous project-record headline was too narrow as overall positioning. The selection-led product headline below is the recommended intended-product direction; the project-record headline remains interim wording for existing capabilities. Page headings and action labels remain direct.
 
 Product authority: [overview](../../product/overview.md), [scope](../../product/scope.md), [journeys](../../product/user-journeys.md), [feature availability](../../product/feature-map.md), [localization policy](../../product/localization.md), and [pricing caveats](../../product/pricing-and-costs.md). Product scope is intent; it is not evidence that every capability is available today.
 
 | Finding / previous wording | Editorial decision | Evidence / boundary |
 |---|---|---|
-| “Keep your photography work in order” / “lebih rapi” | Replace a broad outcome with recording each shoot’s details; support with package, agreed price and schedule. | Existing F-07 project record; BR-PRJ-008/009. No measured productivity claim. |
+| Project-record headline treated as the main product promise | Lead intended-product copy with the gallery/client-selection handoff; retain project-record copy only as an interim current-capability message. | Owner emphasis 2026-10-06; F-09–F-12 and J-04/J-06. No new selection actor or feature is inferred. |
 | “Manage your bookings, galleries and invoices” on auth | Remove invoicing from the current auth pitch; it is not implemented in this branch. | F-14/F-15 TODO in the feature map; existing Owner gallery is not the complete client journey. |
 | “This workspace is still empty” / promised project and invoice summaries | Use settings guidance and real navigation. Do not infer that the user has no records or announce an unapproved dashboard release. | Dashboard component receives identity, not project counts; dashboard remains a placeholder. |
 | “One place per brand” / “Ruang terpisah” | Explain separate client/project records for each brand, without implying freelancer/team access. | BR-WS-002/003; BR-TEAM-001. |
@@ -35,6 +35,19 @@ Product authority: [overview](../../product/overview.md), [scope](../../product/
 | “Only booked projects” | Confirm booking before creating a gallery; do not imply later live stages are ineligible. | BR-GAL-009 allows BOOKED through COMPLETED, excluding DRAFT/CANCELLED. |
 | “Variables” as the main editor explanation | Explain inserting project details and checking the sample message. Preserve exact placeholder syntax in the detailed helper. | F-03 renderer includes client, brand, gallery and invoice values; no automatic sending. |
 | Cost/competitor assumptions as proof | Keep dated research out of public copy. Do not treat a free-plan scenario as an approved offer or a tenant-capacity guarantee. | Pricing document is historical/draft; staging runtime changed under ADR-020. |
+
+### Primary product headline — intended F-10/F-11 experience
+
+**Placement:** overall product introduction and shared auth editorial panel once client gallery access and selection are available. These are draft text replacements for existing editorial slots, not a new page or implementation approval. Do not publish the present-tense support as an available capability before F-10/F-11 are verified.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Primary product headline | Help clients choose the photos to edit. | Bantu klien memilih foto untuk diedit. |
+| Primary supporting copy | Clients choose photos in your gallery within their package allowance. Review their selections to see which photos to edit. | Klien memilih foto di galerimu sesuai jatah paket. Cek pilihannya untuk tahu foto mana yang perlu kamu edit. |
+| Drive mechanism, supporting line | Link the project’s Drive photos to a gallery for client selection. | Tautkan foto proyek dari Drive ke galeri untuk dipilih klien. |
+| Delivery continuation, only with F-12 | Share the finished photos through the same gallery. | Bagikan hasil akhir lewat galeri yang sama. |
+
+The photographer benefit is clarity about the photos to work on; the client’s action is selecting them. The feature map does not approve automatic photo ranking, an editing tool, automatic filename matching, a photographer-only culling UI or an exported selection list. Do not add those promises to the copy. F-11 review UI details still require its own discovery/design; this headline expresses the documented journey, not a new control.
 
 ### Plain-language guardrails
 
@@ -198,8 +211,8 @@ Sources: `src/features/auth/ui/*/*.copy.ts`, `src/ui/patterns/split-layout`, `ed
 | Google CTA | Continue with Google | Lanjutkan dengan Google |
 | Register prompt | New to Shutrly? | Baru di Shutrly? |
 | Register link | Create an account | Buat akun |
-| Shared editorial headline | Keep each shoot’s details together. | Catat detail tiap pemotretan di satu tempat. |
-| Shared editorial description | Record the client’s package, agreed price and shoot schedule in one project. | Catat paket klien, harga sepakat, dan jadwal pemotretan dalam satu proyek. |
+| Interim editorial headline; existing project capabilities, not the primary product positioning | Keep each shoot’s details together. | Catat detail tiap pemotretan di satu tempat. |
+| Interim editorial description; existing project capabilities | Record the client’s package, agreed price and shoot schedule in one project. | Catat paket klien, harga sepakat, dan jadwal pemotretan dalam satu proyek. |
 
 ### 2.2 Registration — `/register`
 

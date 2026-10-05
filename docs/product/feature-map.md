@@ -27,6 +27,12 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-18 | Team fees: freelancer rates, a fee per assignment, paid / unpaid tracking, what the Owner still owes (split out of F-08, Owner 2026-10-03; BR-TEAM-007 deprecated until then) | `team-fees` | — | — | TODO (not scheduled) |
 | F-19 | Bilingual copy revamp: English default, EN/ID switching, complete copy and authored content coverage | `bilingual-copy-revamp` | BR-L10N-001..006 | J-01..J-07 | SPECIFIED (scope and library accepted 2026-10-06; behavior gaps, design and implementation pending) |
 
+## Core product emphasis — photo selection to editing (Owner 2026-10-06)
+
+The primary benefit is helping the photographer know which photos the client wants edited. F-09 supplies the gallery/photo records, F-10 provides client access, F-11 records choices within each package allowance for Owner review, and F-12 delivers the finished photos. This follows J-04 → J-06. Catalog, projects, sessions, team and billing support that workflow; administrative organization is a supporting benefit.
+
+This records product emphasis, not a new capability or status change. F-11 specifies client selection and Owner review; it does not establish a separate photographer-culling tool, automatic best-photo selection, photo editing or an export to editing software. Selection remains TODO here.
+
 ## Project menu (F-07 row and detail menu)
 F-07 defines one menu per project (row ⋯ on the list and the detail page menu) with a **Kirim ke klien** group (Owner 2026-10-02). Its items are named after the message template they load. Later features add their items to that menu, shown only when their condition holds; each template message shows a preview (`communications/ui/message-preview`) before opening WhatsApp (BR-MSG-001). *Chat WhatsApp* (no template) shows only when no template item applies; in F-07 that is always. Target menus: `docs/features/projects/projects.pen` › *Row menu per status / Target*.
 

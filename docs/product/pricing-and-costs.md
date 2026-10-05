@@ -43,7 +43,7 @@ In the historical scenario, Rp 29,000/month × 26 paying tenants generates Rp 75
 ## Open questions for the Owner
 - **Business model:** free for the Owner's studio only, a trial then subscription, or freemium (for example free up to N projects).
 - **Price point** against Fastpik (Rp 29k/month) and the others it lists (130k + 15k/year, 149k/month).
-- **Positioning:** test whether recording each shoot’s agreed package, price and schedule is useful to photographers. Invoicing and template-based sharing remain planned on this branch; do not imply current complete-MVP coverage or superiority over competitors.
+- **Positioning:** emphasize helping photographers review which photos clients want edited through the gallery/selection workflow. Project/package records and schedules support that benefit. F-10/F-11, invoicing and template-based sharing remain planned on this branch; do not imply current complete-MVP coverage or superiority over competitors.
 - **Shutrly subscription payment method, if a paid plan is approved:** this commercial question is separate from the MVP’s client-invoice payments, which are recorded manually and have no gateway.
 - **Scope comparison:** live selection tracking, size-specific print quotas, custom domains and Telegram reminders are not approved Shutrly MVP features. Client downloads are already planned in F-12, though not implemented here. Compare availability separately from intent before proposing additions.
 - **When to add a paid plan:** at the ADR-018 upgrade triggers, or earlier.

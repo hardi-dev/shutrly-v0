@@ -35,7 +35,7 @@ flowchart LR
 
 ## J-04 — Proofing and selection
 
-**Actors:** Owner, Client · **Goal:** client submits photo choices within each selection group’s allowance.
+**Actors:** Owner, Client · **Goal:** give the photographer a clear record of which gallery photos the client wants edited or printed. The client chooses within each selection group’s allowance; the Owner reviews the submitted choices before production. This is the central photo-selection handoff, supported by project/package setup.
 
 ```mermaid
 flowchart LR

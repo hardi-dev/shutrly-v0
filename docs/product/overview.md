@@ -4,7 +4,9 @@ Status: ACCEPTED product intent (migrated from `_source/` on 2026-09-25); wordin
 
 ## Product
 
-Shutrly helps a photographer record the package, agreed price and schedule for each client project. Each brand has its own workspace. The intended MVP extends this project record through client photo selection, final delivery and invoicing, with payments recorded by the Owner and WhatsApp messages sent manually.
+Shutrly’s central product goal is to help photographers move from a shoot’s photos to a clear record of which photos their client wants edited. The intended workflow links photos from Google Drive to a project gallery, lets the client choose within the package allowance, and lets the photographer review those choices before editing. Finished files are delivered through the same gallery.
+
+Package details, agreed price, scheduling, brand workspaces, team assignments and billing support that photography workflow. They are not the primary positioning. Payments remain manually recorded and WhatsApp messages manually sent.
 
 This describes product intent, not a claim that the complete MVP is already available. Consult the feature map and owning feature verification before describing a capability as usable today. In the bilingual worktree, client access/selection, final delivery, add-ons, billing and real template-based WhatsApp sharing remain future surfaces.
 
@@ -14,7 +16,13 @@ This describes product intent, not a claim that the complete MVP is already avai
 
 Secondary: **Client** — the photographer’s customer, who uses project-specific links in the intended client journey without creating an account.
 
-## Problem and Product Response
+## Central Problem — Knowing Which Photos to Edit
+
+When a client communicates photo choices through chat messages or separate lists, the photographer has to connect those choices to the right files and check the package allowance. The product addresses that handoff with choices recorded against photos in the project’s gallery. This is the product-discovery problem, not a measured claim of hours saved.
+
+Feature chain: **F-09** links and displays Drive photos → **F-10** grants client gallery access → **F-11** records client selections per package group for Owner review → **F-12** delivers final photos. J-04 describes the selection/review handoff; J-06 continues with final delivery. The client chooses; the photographer reviews and edits outside Shutrly. An independent photographer-culling workflow, AI image ranking, editing software integration or an exported editing checklist is not specified by the feature map.
+
+## Supporting Problems and Product Response
 
 These situations come from the original product discovery and describe the problem the product is intended to address. They are not measured customer outcomes or evidence of time/revenue savings.
 
@@ -29,6 +37,8 @@ These situations come from the original product discovery and describe the probl
 
 ## Value Proposition and Claim Boundaries
 
+- **Know which photos the client wants edited:** in the intended F-11 workflow, client choices refer to gallery photo records and stay within their group’s package allowance. The photographer reviews the selections before working on the files. This is the main product benefit, not a claim that F-11 is already implemented.
+
 - **A project record for each shoot:** the client’s package, agreed price and sessions can be checked together. Do not promise that the entire photography business is automated or that no other tools are needed.
 - **Catalog changes do not rewrite existing projects:** distinguish independence from the service template from the Owner’s permitted project edits. Avoid “the agreement never changes”.
 - **Separate records for each brand:** workspace isolation does not imply staff accounts, shared team access or collaborative editing.
@@ -38,9 +48,9 @@ These situations come from the original product discovery and describe the probl
 
 ## Message Direction
 
-Lead product explanations with a specific photographer task and its mechanism: record what the client booked, check the agreed price, see the shoot schedule or assign who works a session. Use a nearby limitation when it affects the claim. Short page titles and CTAs remain literal and actionable; they do not need a slogan.
+Lead overall product positioning with the photo-choice handoff: the client chooses photos in the gallery and the photographer reviews what to edit. Explain the mechanism with Drive photos, gallery selections and package allowances. Use project, scheduling and billing benefits as supporting context. Page-specific copy still explains its own task; not every screen needs a selection headline. Short page titles and CTAs remain literal and actionable.
 
-Avoid unverified time savings, more bookings, faster payment, “all-in-one”, “secure photos”, “free storage”, automatic reminders, or claims that the complete intended journey is already shipped. Current auth/editorial copy should focus on the existing project record. [The copy deck](../features/bilingual-copy-revamp/copy-deck.md) contains proposed EN/ID wording and its claim review.
+Avoid unverified time savings, more bookings, faster payment, “all-in-one”, “secure photos”, “free storage”, automatic reminders, or claims that the complete intended journey is already shipped. Selection-led product/editorial copy is a draft for the intended F-10/F-11 experience and must wait for those features before implying present availability. Interim auth copy can describe the existing project record; current implementation order does not change the central product goal. [The copy deck](../features/bilingual-copy-revamp/copy-deck.md) contains proposed EN/ID wording and its claim review.
 
 ## Primary Journey
 

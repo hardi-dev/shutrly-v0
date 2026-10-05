@@ -2,7 +2,7 @@
 
 Author: Owner (hardi-dev)
 Source: IDEA
-Status: DRAFT
+Status: ACCEPTED (Owner, 2026-10-05; open questions carry into discovery)
 
 Scope decision (Owner, 2026-10-05): F-10 *Client gallery access*, F-11 *Selection*, F-12 *Final delivery* and F-13 *Add-ons* become one feature, `client-access`. Invoices (F-14) stay separate; see Open questions.
 

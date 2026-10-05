@@ -169,9 +169,9 @@ Covers: BR-SEL-005 (A-5)
 ## AC-SEL-010 — Owner reviews the picks
 Covers: BR-SEL-003 (A-6)
 
-**Given** *Foto edit* is `SUBMITTED` with `IMG_001`, `IMG_002` and *Foto cetak* has `IMG_003 × 2`
+**Given** *Foto edit* is `SUBMITTED` with `IMG_001`, `IMG_002` (note *hapus jerawat*) and *Foto cetak* has `IMG_003 × 2`
 **When** the Owner opens the groups on the project
-**Then** each group shows its status, *used / limit*, and the picked photos with file name and folder path, and *Salin nama file* copies `IMG_001`, `IMG_002` for edit and `IMG_003 × 2` for print
+**Then** each group shows its status, *used / limit*, and the picked photos with file name and folder path, the note shows under `IMG_002`, and *Salin nama file* copies `IMG_001`, `IMG_002 — hapus jerawat` for edit and `IMG_003 × 2` for print
 
 ## AC-SEL-011 — Owner locks or closes a group
 Covers: BR-SEL-005, BR-AUD-001 (A-12)
@@ -191,8 +191,8 @@ Covers: BR-SEL-001, BR-SEL-003, BR-CAT-007, BR-CAT-011 (A-20, A-21)
 Covers: BR-CAT-007, BR-CAT-010, BR-CAT-011, BR-PRJ-001, BR-SEL-003
 
 **Given** the workspace has the seeded *Foto edit* (`COUNT`) and *Foto cetak* (`QUANTITY`)
-**When** the Owner adds an item definition *Bingkai* (`NUMBER`, unit *buah*, used for client selection, pick mode `QUANTITY`), puts it in a service, and creates a project from it
-**Then** the project snapshots *Bingkai* with its pick mode, and its group counts quantities; once a service uses *Bingkai*, its pick mode can no longer be changed
+**When** the Owner adds an item definition *Bingkai* (`NUMBER`, unit *buah*, used for client selection, pick mode `QUANTITY`, client notes off), puts it in a service, and creates a project from it
+**Then** the project snapshots *Bingkai* with its pick mode, and its group counts quantities; once a service uses *Bingkai*, its pick mode can no longer be changed; the seeded *Foto edit* has client notes on and *Foto cetak* off
 
 ## AC-SEL-017 — Beranda shows every group and opens one task at a time
 Covers: BR-SEL-005, BR-SEL-007 (A-12, A-24, A-25, A-27)
@@ -221,6 +221,14 @@ Covers: BR-SEL-001, BR-DEL-001 (A-24, A-31)
 **Given** a published gallery whose project has no selection item and no final delivery
 **When** the client enters the password, and later the Owner publishes final delivery
 **Then** the client first lands on *Semua foto* with no select controls and no *Pilih untuk…*; after the publish they land on Beranda with *Hasil akhir* as the top card
+
+
+## AC-SEL-021 — A note per picked photo
+Covers: BR-CAT-007, BR-SEL-004, BR-SEL-005 (A-32)
+
+**Given** *Foto edit* (notes on) is `OPEN` with `IMG_001` and `IMG_002`, and *Foto cetak* (notes off) has `IMG_003`
+**When** the client opens Tinjau for *Foto edit*, adds the note *hapus jerawat, cerahkan sedikit* to `IMG_002`, reloads, tries a 501-character note on `IMG_001`, then submits; and opens Tinjau for *Foto cetak*
+**Then** the note is kept after the reload, the 501-character note is refused with nothing stored, after submit the note is read-only, and *Foto cetak* rows offer no *Tambah catatan*; removing a pick while `OPEN` deletes its note
 
 ## AC-SEL-012 — No groups, no selection
 Covers: BR-SEL-001

@@ -42,13 +42,13 @@ A client who has the project link and the current gallery password can open the 
 2. **Pilih** is one screen per group (A-25): its title is the group name, the back control returns to Beranda, and the grid of `PROOF` photos (folder filter and search as in *Semua foto*) has a select control on every tile. A summary bar above the grid shows the group, its status, *used / limit* and the button *Tinjau*. Tapping a tile picks or un-picks it; in a `QUANTITY` group a pick starts at quantity 1 and the tile shows *× n* (BR-SEL-003, BR-SEL-004). A photo picked in another group shows that group's marker. The client can filter the grid to this group's picks.
 3. Every pick, un-pick and quantity change is saved at once, checked server-side under a lock on the group (BR-SEL-006, A-7). A change that would exceed the limit is refused with *Batas pilihan tercapai*.
 4. A photo may be picked in several groups (BR-SEL-004). From the photo viewer in *Semua foto*, *Pilih untuk…* picks or un-picks the photo in any `OPEN` group (A-30), with the same checks.
-5. **Tinjau** (A-29) lists the group's picks with thumbnail and file name, *used / limit* and the places left. In a `QUANTITY` group each row has a quantity stepper; quantities are changed only here. A pick can be removed here. *Tambah foto lagi* returns to Pilih with all picks kept.
+5. **Tinjau** (A-29) lists the group's picks with thumbnail and file name, *used / limit* and the places left. In a `QUANTITY` group each row has a quantity stepper; quantities are changed only here. A pick can be removed here. When the group's item allows pick notes (A-32), each row has *Tambah catatan*, which opens a text field under the row for a note to the photographer (for example *hapus jerawat, cerahkan sedikit*); notes are saved at once like picks. *Tambah foto lagi* returns to Pilih with all picks kept.
 6. *Kirim n foto* (or *n lembar*) submits the group (A-5). Below the limit a confirmation names the remaining places. The group becomes `SUBMITTED`, its picks are read-only for everyone (BR-SEL-005), and the client returns to Beranda, where the card shows *Dikirim · menunggu fotografer*.
 7. One group is one task: to work on another group the client goes back to Beranda and opens that card (A-27).
 
 ### 3. Review and lock (Owner)
 1. On the project, the Owner sees each group with its status (*Terbuka*, *Dikirim*, *Dikunci*) and *used / effective limit*.
-2. The Owner opens a group and sees the picked photos with file name, folder path and quantity, and can copy the list of file names (A-6).
+2. The Owner opens a group and sees the picked photos with file name, folder path, quantity and the client's note, and can copy the list of file names with their notes (A-6).
 3. The Owner locks a `SUBMITTED` group, or closes an `OPEN` group without submission; both make it `LOCKED` and record actor and time (BR-SEL-005, BR-AUD-001).
 
 ### 4. Add-ons (Owner)
@@ -111,7 +111,7 @@ A client who has the project link and the current gallery password can open the 
 - Constitution C-004, C-005, C-006, C-007, C-008, C-101, C-103, C-104, C-105
 
 ## Dependencies
-- F-05 `catalog` (follow-up inside this feature): the item-definition form, seed and `service_item` replace the `EDIT`/`PRINT` selection type with a pick mode (BR-CAT-007, BR-CAT-010, BR-CAT-011); migration maps `EDIT`→`COUNT`, `PRINT`→`QUANTITY`.
+- F-05 `catalog` (follow-up inside this feature): the item-definition form, seed and `service_item` replace the `EDIT`/`PRINT` selection type with a pick mode and add *Klien bisa memberi catatan* (`allowsPickNotes`) (BR-CAT-007, BR-CAT-010, BR-CAT-011); migration maps `EDIT`→`COUNT` with notes on, `PRINT`→`QUANTITY` with notes off.
 - F-07: `project_item` snapshots the pick mode (BR-PRJ-001); `client_access_token` (write-once today; rotation makes it replaceable), project items and status transitions.
 - F-09: gallery status and expiry, password hash and `passwordVersion`, photo kinds and missing state, the media route, `contentVersion` (ADR-019 point 5).
 - ADR-004 / ADR-017 (token and password), ADR-013 (public endpoints choose their own rate-limit mechanism), ADR-016 (cross-feature transactions: delivery → project status, add-on → group), ADR-018 (Workers Free budget), ADR-019 (images from Google, gallery data cached by `contentVersion`).
@@ -121,7 +121,7 @@ A client who has the project link and the current gallery password can open the 
 - Invoices, payments and `/i/{token}/{invoiceId}` (F-14), including putting approved add-ons on an invoice.
 - WhatsApp sharing and the project-menu items (F-15).
 - Project cancellation (F-07); the outstanding-balance warning on completion (F-14, A-19).
-- Client requests for add-ons inside the app (A-4), notifications to the Owner, and comments or favourites on photos.
+- Client requests for add-ons inside the app (A-4), notifications to the Owner, comments on photos other than the per-pick note (A-32), and favourites.
 - Re-opening a group by any means other than an approved add-on, and re-opening a `LOCKED` group (BR-SEL-005).
 - Proof downloads; downloads of photos that aren't `EDITED` or `PRINT`.
 - Gallery slug (BR-GAL-008); client accounts; providers other than Google Drive.
@@ -132,7 +132,7 @@ A client who has the project link and the current gallery password can open the 
 - **A-3 Neutral page:** an expired gallery shows the same page as a wrong link, with no contact hint (Owner chose one page for every case, 2026-10-05).
 - **A-4 Add-on requests:** the client asks off-app; there is no request button.
 - **A-5 Submit per group:** each group is submitted on its own, needs at least one pick, and may be submitted below its limit after a confirmation.
-- **A-6 Owner review:** the copyable list is one file name per line, with `× n` for print quantities.
+- **A-6 Owner review:** the copyable list is one file name per line, with `× n` for print quantities and ` — note` when the pick has a note (line breaks in a note become spaces).
 - **A-7 Autosave:** every pick change is saved immediately; there is no separate draft or *Simpan* button.
 - **A-8 Missing picked photo:** stays selected and counted; the client sees it as unavailable and can un-pick it while the group is `OPEN`.
 - **A-9 Quantities:** a print quantity is a whole number from 1 up to the group's remaining places.
@@ -157,6 +157,7 @@ A client who has the project link and the current gallery password can open the 
 - **A-31 Skipping Beranda:** a project with no selection group and no published final delivery opens *Semua foto* directly, because Beranda would hold only one card. Once final delivery is published the client lands on Beranda.
 - **A-22 Reopened group:** reopening by an add-on keeps every pick; submitting again follows A-5. Cancelling that add-on later never changes the group's status, only its limit (BR-ADD-005). If the Owner locks a group while an add-on is `DRAFT`, approving it is refused (the target is `LOCKED`).
 - **A-23 Groups for galleries published before this feature:** a published gallery with no groups gets them when F-10 is deployed (a backfill in the migration), so it behaves like one published after.
+- **A-32 Pick notes:** a group whose item has `allowsPickNotes` lets the client add one optional note per pick, up to 500 characters, on Tinjau only (not on Pilih or the viewer). Notes are saved at once (A-7), editable while the group is `OPEN` and read-only after submit; removing a pick deletes its note. A photo picked in two groups has a separate note in each (Owner 2026-10-05).
 - **A-19 Completion before invoices:** *Tandai selesai* shows no balance warning until F-14 exists; BR-PRJ-005 never blocks on balances anyway.
 
 ## Flagged Concerns
@@ -172,6 +173,7 @@ Checked against the constitution (C-001..C-106), BR-ACC/SEL/DEL/ADD/PRJ/GAL/CAT/
 | FC-006 | Project completion (old F-12) was left out of the accepted intent, so no feature built it. | Feature map F-12 ↔ intent out of scope | Included here; the balance warning comes with F-14 (Owner 2026-10-05). Intent updated. | RESOLVED |
 | FC-007 | Studios want their own selection items, but BR-CAT-007 and scope.md fixed the types to `EDIT` and `PRINT`, and BR-SEL-003 left the other types undefined. | BR-CAT-007, BR-SEL-003, scope.md ↔ product need | Replace the fixed types by a pick mode (`COUNT` / `QUANTITY`) chosen per item definition, built inside F-10 with a catalog follow-up (Owner 2026-10-05). Recorded in BR-CAT-007, -010, -011, BR-PRJ-001, BR-SEL-003, domain model and scope. | RESOLVED |
 | FC-008 | A client who submitted and then buys extra picks could not use them: a submitted group never reopens (BR-SEL-005) and add-ons needed an `OPEN` target. | BR-SEL-005, BR-ADD-002, BR-ADD-004 ↔ J-05 | An approved add-on returns a `SUBMITTED` group to `OPEN`; `LOCKED` stays final (Owner 2026-10-05). Recorded in BR-SEL-005, BR-ADD-004 and the domain model. | RESOLVED |
+| FC-009 | Clients need to tell the photographer how to edit each picked photo, but notes on photos were out of scope and the catalog had no way to say which items take notes. | Spec out-of-scope list, BR-CAT-007, BR-SEL-004 ↔ Owner need | Optional per-pick note (≤ 500 characters) for items whose definition has *Klien bisa memberi catatan*; written on Tinjau; seeded *Foto edit* on, *Foto cetak* off (Owner 2026-10-05). Recorded in BR-CAT-007, BR-CAT-011, BR-PRJ-001, BR-SEL-004 and the domain model. | RESOLVED |
 
 ## Open Questions / SPEC GAPS
 None blocking. For the technical design:

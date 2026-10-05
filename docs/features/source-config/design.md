@@ -1,5 +1,7 @@
 # F-04 Source configuration — design
 
+> Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
+
 - Pencil file: [source-config.pen](source-config.pen). It imports `design-system.lib.pen` with the prefix `W:`; the library link is live (549 variables, every library component).
 - Rules: `docs/design-system/token-usage.md` v3.1 (APPROVED).
 - Direction: the F-03 v3 structure (App Shell C30 / Mobile App Shell C35, Page Header C40, Section Card C43, List Card Item/Two-line), applied to the rescoped spec (Owner 2026-10-01: Owner-managed sources, no link checker).

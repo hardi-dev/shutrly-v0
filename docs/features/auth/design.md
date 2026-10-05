@@ -1,5 +1,7 @@
 # F-01 Auth — Visual design
 
+> Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
+
 Status: DESIGNED (Owner approved 2026-09-26). Remaining review items below are follow-ups, not blockers. Pencil source: [auth.pen](auth.pen). The Owner chose a split layout. The frames were drawn in English, but the UI language is **Indonesian** (CONFLICT-1, Owner 2026-09-27), so the frame text is translated before implementation (see *HTML exports for implementation*). Desktop right panels use the chosen editorial panel (see *Editorial panel decision*).
 
 ## Direction

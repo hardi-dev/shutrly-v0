@@ -1,5 +1,7 @@
 # Feature: Projects
 
+> Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
+
 ID: F-07 · Slug: `projects`
 Status: PLANNED (2026-10-02, [technical-design.md](technical-design.md) · [plan.md](plan.md)); designed 2026-10-02 ([design.md](design.md)); specified 2026-10-02 · Journeys: J-03 (*Create / pick client → Pick service → Fill booking fields → Snapshot → Customize deal & price → Confirm → BOOKED*; sessions are F-07 since the design review, team stays F-08)
 Consumer: F-08 `team-sessions` (assignments on a project's sessions; deleting a session or a draft also deletes its assignments, BR-TEAM-006), F-09 `gallery` (one gallery per project), F-10 `client-access` (the project token), F-11 `selection` (groups from project items), F-12 `final-delivery` (`DELIVERED`, `COMPLETED`), F-13 `add-ons`, F-14 `billing` (project currency and price), F-15 `whatsapp-share` (`{{projectTitle}}`)

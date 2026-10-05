@@ -1,5 +1,7 @@
 # Feature: Gallery
 
+> Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
+
 ID: F-09 · Slug: `gallery`
 Status: SPECIFIED (2026-10-04) · Intent: [intent.md](intent.md) (ACCEPTED 2026-10-04) · Journeys: J-04, the Owner half (*Share Drive folder → Paste link, sync PROOF photos → Set password, publish gallery*)
 Consumer: F-10 `client-access` (the published gallery, password hash and `passwordVersion`, the media endpoint), F-15 `whatsapp-share` (the decrypted password for `{{galleryPassword}}`, BR-MSG-003), F-11 `selection` (`PROOF` photos), F-12 `final-delivery` (`EDITED` / `PRINT` photos) and `galleryUrl`

@@ -155,3 +155,7 @@ stateDiagram-v2
 
 ## Notes
 Better Auth, Drizzle, Neon, Next.js, Cloudflare, and Google Drive are not domain concepts.
+
+## Localized content (Owner 2026-10-06)
+
+A localized descriptive value has reviewed English and Indonesian versions with equivalent business meaning. It is distinct from identity names and stable identifiers. Custom message content uses the same supported variable contract in each version; versions belong to one logical template, not extra template types/channels. Translation readiness does not introduce a new service lifecycle. Storage, legacy conversion and historical snapshot viewing are pending technical/product design; existing snapshot immutability remains authoritative. See BR-L10N-* and [localization policy](../product/localization.md).

@@ -1,5 +1,7 @@
 # F-09 Gallery — design
 
+> Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
+
 - **Pencil file:** [gallery.pen](gallery.pen), copied from the `feature-consumer.pen` template on 2026-10-04.
 - **Library:** imports the worktree's `docs/design-system/design-system.lib.pen` (relative `../../design-system/design-system.lib.pen`) with the prefix **`r:`** (`clients.pen` uses `Y:`, `projects.pen` uses `H:`). The link is live: 623 variables (checksum `c2c0a40b`) and every library component listed below, including C46–C48.
   - The first import pointed at the main checkout's library under `s:`. On 2026-10-04 every ref and token was remapped to `r:` through MCP, and the frame IDs changed then; the IDs below are current. See `CLAUDE.md` › Mistakes to avoid.

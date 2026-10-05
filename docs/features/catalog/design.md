@@ -1,5 +1,7 @@
 # F-05 Service catalog — design
 
+> Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
+
 - Pencil file: [catalog.pen](catalog.pen) (created 2026-10-02 from the SDV feature-consumer template). It imports `design-system.lib.pen` with the prefix **`v:`** (Pen assigned it; F-03/F-04 use `W:`, same component IDs).
 - Rules: `docs/design-system/token-usage.md` v3.1 (APPROVED). Library: 596 tokens, checksum `986ecbcb` after the F-05 promotion (below).
 - Direction: **Option A2** from `exploration.pen` board 12 (Owner 2026-10-02: "ok i like it"): the F-03/F-04 v3 structure (App Shell C30, Page Header C40, Section Card C43, List Card Item/Two-line C42) with **underline tabs attached to the Page Header**, the tab row aligned with the title (the 720-column alignment was tried and reverted). Rejected: B (table + summary), C (master–detail), D (package cards), A (Segmented tabs).

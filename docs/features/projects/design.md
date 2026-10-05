@@ -1,5 +1,7 @@
 # F-07 Projects — design
 
+> Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
+
 - Pencil file: [projects.pen](projects.pen). It imports `design-system.lib.pen` with the prefix **`H:`** (not `Y:` as in `clients.pen`). The library link is live: 597 variables (checksum `d09d3751` in `tokens.json`), plus every library component used below.
 - Rules: `docs/design-system/token-usage.md` v3.1 (APPROVED).
 - Direction: the F-05/F-06 structure.

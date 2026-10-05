@@ -1,5 +1,7 @@
 # F-06 Clients — design
 
+> Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
+
 - Pencil file: [clients.pen](clients.pen). It imports `design-system.lib.pen` with the prefix `Y:`; the library link is live (597 variables, every library component, including the F-05 promotion merged from `feat/catalog` `2dc3da6` and the F-06 `surface.panel-subtle` table header).
 - Rules: `docs/design-system/token-usage.md` v3.1 (APPROVED).
 - Direction: the F-04 structure (App Shell C30 / Mobile App Shell C35, Page Header C40, Section Card C43, List Card Item/Two-line), with the library **Table** for the desktop list. The table sits in the centred 720 column (`size.content-narrow`), like F-05 (Owner 2026-10-02: "samakan dengan catalog"); this is a deliberate exception to token-usage §4.5, which puts tables in the full container.

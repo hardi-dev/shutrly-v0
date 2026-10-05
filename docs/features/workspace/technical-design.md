@@ -1,5 +1,7 @@
 # Technical Design — F-02 Workspace
 
+> Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
+
 Status: DONE (verified 2026-09-28; implementation, dedicated E2E and documentation write-back complete). The build was split into **two batches**:
 - **Batch A (iterations 1–4)** builds the design-system components F-02 needs that aren't in code yet ([design.md](design.md) › *Component usage*, ❌/⚠️ rows). It is feature-agnostic `src/ui` work.
 - **Batch B (iterations 5–12)** builds the workspace feature on top of it.

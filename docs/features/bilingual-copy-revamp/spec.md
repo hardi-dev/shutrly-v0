@@ -18,7 +18,7 @@ Base: staging `bdab2c2`; branch `codex/bilingual-copy-revamp`.
 
 Make existing Shutrly journeys easy to understand in either language without changing business behavior. Rewrite navigation, forms, helper text, state messages, confirmations, accessible labels and existing client-gallery text. Include existing auth emails and generated WhatsApp messages in localization coverage. Their recipient-language selection and treatment of existing customized templates must be specified before implementation; this is a behavior decision, not an exclusion from localization.
 
-User-authored descriptive text, including service/package descriptions and custom message templates, supports paired EN/ID versions. Rendering selects the active language; it must not fall back to the other language. Preserve client names, brand names, project names, identifiers and external filenames. Brand names such as Shutrly, WhatsApp and Google Drive remain brand names in both locales. Existing free-text service/item/role titles require classification as an identity name or localizable display label before technical design; do not infer this from the current field name. Do not automatically translate or overwrite user content. System-owned default names, units, roles and templates must have EN/ID equivalents. Language selection must not silently change currency, financial rules, timezone, entitlements, project stages or permissions. No unrelated visual redesign, new marketing claims, dependency choice or schema change is approved by this document.
+User-authored descriptive text, including service/package descriptions and custom message templates, supports paired EN/ID versions. Rendering selects the active language; it must not fall back to the other language. Preserve client names, brand names, project names, identifiers and external filenames. Brand names such as Shutrly, WhatsApp and Google Drive remain brand names in both locales. Existing free-text service/item/role titles require classification as an identity name or localizable display label before technical design; do not infer this from the current field name. Do not automatically translate or overwrite user content. System-owned default names, units, roles and templates must have EN/ID equivalents. Language selection must not silently change currency, financial rules, timezone, entitlements, project stages or permissions. No unrelated visual redesign, new marketing claims, schema change is approved by this document.
 
 ## Voice and writing rules
 
@@ -64,7 +64,7 @@ Use one term per concept, aligned with the domain glossary. UI wording may be si
 
 Approved scope: store and render EN/ID versions of descriptive product content and custom message templates. Values in template placeholders, such as client names, links, passwords and invoice identifiers, remain unchanged. Keep the same supported variables and business meaning in both versions.
 
-Proposed authoring flow, pending approval: expose two clearly labeled language fields/tabs, show completeness status, and require both versions before content becomes available in both languages. The Owner writes or reviews each version. No automatic translation provider or AI translation workflow is approved. Whether incomplete bilingual content may be saved as a draft remains a product decision.
+Approved authoring direction: clearly label language fields/tabs, show completeness, and require both reviewed versions before bilingual exposure. Incomplete translation drafts may be retained; exact save/edit/readiness behavior needs design. This does not add a service draft/publish lifecycle, which remains outside catalog scope. The Owner writes or reviews each version. No automatic translation provider or AI translation workflow is approved.
 
 Existing records need a deliberate migration and review process: identify their source language, collect the missing version and validate completeness before enabling bilingual exposure. Do not relabel Indonesian data as English, use cross-language fallback, erase user edits, or rewrite immutable project/invoice snapshots. Historical content that has only one language is an unresolved compatibility constraint; define an Owner-approved viewing/rollout policy before shipping.
 
@@ -80,17 +80,17 @@ Separately decide language for generated WhatsApp messages, auth emails and exis
 
 ## Source-of-truth alignment
 
-CONFLICT: coding-rules.md currently requires Indonesian-only MVP UI and workspace-language precedence. The new Owner decision is recorded here; do not silently amend the higher-authority rule. Obtain an explicit instruction to update its Copy and Language sections before implementation.
+Owner authorization on 2026-10-06 aligns the higher-authority documents. [Localization policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede earlier Indonesian-only/default-fallback instructions. Historical verification and release records are preserved.
 
 Review affected feature specs, acceptance criteria and domain glossary for approved wording and language behavior. Preserve constitutional rules, especially truthful security copy and C-106: Shutrly builds messages; the Owner sends them.
 
 Approved Pencil frames remain the visual authority. Update copy through Pencil tools only, then refresh the required HTML exports and INDEX before implementing affected screens. Missing exports are a stop condition. Layout fidelity work may change only class names and element nesting under repository rules.
 
-Keep copy co-located in sibling `.copy.ts` modules and preserve the fixed architecture. Design the locale mechanism only after product decisions are settled and the installed Next.js guides have been read. No localization library is selected here.
+Keep copy co-located in sibling `.copy.ts` modules and preserve the fixed architecture. Design the locale mechanism only after product decisions are settled and the installed Next.js guides have been read. Use next-intl under ADR-021; selection does not approve a persistence policy or schema. The dependency is not yet installed.
 
 ## Proposed execution sequence
 
-1. Approve terminology and remaining language behavior; explicitly authorize the coding-rules change.
+1. Resolve terminology, preference persistence, recipient language, content readiness and legacy-data behavior.
 2. Audit existing copy using [copy-inventory.md](copy-inventory.md), recording current string, context, proposed EN/ID pair, behavior source and review status. Inspect strings outside copy modules too.
 3. Review shell, authentication and workspace copy first, then existing catalog/client/project/team flows, then client access/gallery and communications. Existing invoices are included where present; future features receive writing guidance only.
 4. Review copy against behavior, update affected owning documents and Pencil frames, and refresh exports.

@@ -70,3 +70,7 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 - Server is the only authority for integrity/security rules.
 - Workspace isolation is enforced in both queries and schema ([ADR-003](decisions/ADR-003-workspace-isolation.md)).
 - Provider integrations sit behind interfaces.
+
+## Localization (Owner 2026-10-06)
+
+Selected: **next-intl**, alongside React Aria's locale provider, under [ADR-021](decisions/ADR-021-next-intl-bilingual-localization.md). English default with English/Indonesian switching; no cross-language fallback. Researched release: 4.14.9; installation, version pinning and integration verification are pending. This docs update does not change package manifests or replace React Aria. Read the installed Next.js guides before implementation.

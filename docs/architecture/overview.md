@@ -107,3 +107,7 @@ Structured logs with workspace/project IDs; never log passwords, tokens, WhatsAp
 - Media served via controlled proxy/short-lived URLs; no provider credentials to the browser.
 - Audit fields on sensitive owner actions (BR-AUD-001).
 - Backup/restore and retention policy for Neon defined before production.
+
+## Localization boundaries
+
+[ADR-021](decisions/ADR-021-next-intl-bilingual-localization.md) selects next-intl. Request-scoped locale resolution and message assembly belong to composition; framework adapters and UI translate stable domain errors. Feature messages stay in sibling `*.copy.ts` units. Domain code accepts plain values/types when needed and imports no translation framework. No new top-level architecture folder is introduced. HTML, next-intl and React Aria share the active locale; paired authored content stays owned by its feature. Persistence/schema, safe formatting/parsing and legacy rollout require technical design before implementation.

@@ -30,3 +30,7 @@ Visual truth lives in Pencil; code must match it closely. The constitution targe
 - Constitution: C-007, C-008
 - Coding rules: UI / Components
 - Folder architecture: `docs/superpowers/specs/2026-09-26-project-folder-architecture-design.md`
+
+## Amendment — 2026-10-06
+
+[ADR-021](ADR-021-next-intl-bilingual-localization.md) supersedes only this ADR's Indonesian default and English fallback. Current policy is English default, EN/ID switching and no cross-language fallback. React Aria's provider follows the resolved active formatting locale rather than fixed `id-ID`. Tailwind and React Aria selection remain accepted. Earlier context above records the original decision, not current language behavior.

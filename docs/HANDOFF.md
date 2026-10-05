@@ -1,11 +1,17 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-05 (F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `feat/gallery-free-tier` (F-09 free-tier rework, worktree `.claude/worktrees/gallery-free-tier`). F-07 is on `feat/projects`; F-08 Team designed on `feat/team-sessions`.
+Last updated: 2026-10-06 · Active: bilingual documentation and pending design decisions. Read this first, then [docs/README.md](README.md).
+Branch: `codex/bilingual-copy-revamp`; worktree `.claude/worktrees/bilingual-copy-revamp`. Previous gallery delivery context is preserved below.
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-09 free-tier rework PLANNED (2026-10-05)
+## Current handoff — F-19 bilingual revamp SPECIFIED (2026-10-06)
+
+- [Policy](product/localization.md), BR-L10N-* and [ADR-021](architecture/decisions/ADR-021-next-intl-bilingual-localization.md) approved: English default, EN/ID switches, full system/authored-content coverage. Docs aligned; app, dependency, schema and exports unchanged.
+- Read [spec](features/bilingual-copy-revamp/spec.md), [criteria](features/bilingual-copy-revamp/acceptance-criteria.md) and [audit](features/bilingual-copy-revamp/copy-outside-modules-audit.md).
+- Resume at: resolve preference persistence, recipient/reset language, title classification, readiness and legacy snapshots with Owner; then Pencil/exports, technical design and plan. Prior gallery actions remain outstanding below.
+
+## Previous delivery context — F-09 free-tier rework PLANNED (2026-10-05)
 
 - **Staging moved to Netlify (Owner 2026-10-06, [ADR-020](architecture/decisions/ADR-020-staging-on-netlify.md)):** the Cloudflare staging Worker hit error 1102. Staging is now `https://staging--shutrly.netlify.app` (Netlify Free, deployed by hand with `netlify deploy --build --alias staging`) on the empty Neon project `shutrly-staging-us` (us-east-2). **Owner to do:** register the owner and link a gallery folder again on staging; add `<alias>/api/auth/callback/google` to the Google OAuth redirect URIs; rotate the staging secrets if the setup transcript is shared (the Netlify CLI printed them once); delete the old staging branch and Worker when no longer needed. Latency is ~0.5 s above the edge (Ohio functions on Free). The production host is still open.
 
@@ -44,7 +50,7 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 - GAP-02 loading states (button, switch) and states beyond those drawn
 - GAP-03 workspace brand-override rules
 - GAP-04 client gallery (mobile) — frame now exists (C33 Mobile Shell); screens, bottom navigation and breakpoints still open
-- GAP-05 EN/ID copy mix (id-ID assumed)
+- GAP-05 bilingual implementation pending: scope resolved by [localization policy](product/localization.md) and ADR-021; English default, complete EN/ID coverage, no cross-language fallback.
 - Tabular figures for money and time
 - No negative (red) metric delta tone
 - Menu components have no legacy evidence

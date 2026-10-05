@@ -194,7 +194,9 @@ Keep heavily tested logic (selection limits, invoice totals, lifecycle transitio
 
 ### Copy
 - **(lint)** User-facing copy is never inline in JSX. JSX text and copy props (`label`, `description`, `errorMessage`, `placeholder`, `title`, `alt`, `aria-label`, `message`) take a constant from a sibling `*.copy.ts`. Copy not drawn in Pencil carries `// not in Pencil`. Rule: `local/ui-copy`, applied to `src/**/*.tsx` except tests.
-- Copy follows the workspace language. The MVP UI language is Indonesian (Owner decision, auth CONFLICT-1, 2026-09-27). Frames drawn in another language are translated in `*.copy.ts` and in Pencil before export.
+- Copy follows the resolved active language: English by default, with an explicit English/Bahasa Indonesia switch on dashboard and client galleries (Owner 2026-10-06). Follow [localization policy](product/localization.md) and [ADR-021](architecture/decisions/ADR-021-next-intl-bilingual-localization.md). All system copy and Owner-authored descriptions/templates support both versions; never fall back to the other language. Preserve identity names and business values.
+- Keep EN/ID messages co-located in sibling `*.copy.ts` modules, including labels consumed outside JSX. Translate domain error mappings, option arrays, loading text, accessible names and defaults. Use grammatical interpolation/plurals rather than translated sentence fragments. Update approved Pencil copy and exports before screen implementation.
+- HTML language, next-intl, React Aria and display formatters use one resolved locale. Remove conflicting local overrides during implementation. Locale preferences and recipient language follow the approved product policy; never infer either from workspace membership alone.
 
 ## UI States
 Cover idle, loading, empty, success, validation error, domain/server error, retry, and disabled states where applicable (C-007).
@@ -228,7 +230,7 @@ Cover idle, loading, empty, success, validation error, domain/server error, retr
 |---|---|
 | Project docs (`docs/`) | English |
 | Code, identifiers, DB names, comments, JSDoc, commit messages, developer error messages | English |
-| UI copy | Indonesian (MVP; auth CONFLICT-1 resolved 2026-09-27); lives in `*.copy.ts` |
+| UI copy | English and Bahasa Indonesia, English default; co-located in `*.copy.ts`; one active language per reader page (Owner 2026-10-06) |
 
 ## Git
 - [Conventional commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`, `chore:`, `test:`; a scope is optional, e.g. `feat(auth):`), in English, lowercase, with no trailing period.

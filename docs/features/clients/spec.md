@@ -1,5 +1,7 @@
 # Feature: Clients
 
+> Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
+
 ID: F-06 · Slug: `clients`
 Status: DONE (2026-10-03) · Technical design: [technical-design.md](technical-design.md) · Plan: [plan.md](plan.md) · Journeys: J-03 (*Create / pick client*)
 Consumer: F-07 `projects` (a project belongs to one active client; the client picker), F-15 `whatsapp-share` (the client's WhatsApp number)

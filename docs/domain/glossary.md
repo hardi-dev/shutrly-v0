@@ -27,3 +27,12 @@ Use these terms in code, UI copy, and docs. Indonesian equivalents come from the
 | Final delivery | Publishing finished files in the same gallery | Final delivery |
 | Client access token | Per-project secret in gallery/invoice links | Token akses klien |
 | Void (payment) | Mark a mistaken payment as excluded, keep row | Void |
+
+## Localization terminology
+
+- **Active language**: the one language selected for a reader page; English by default, with English/Indonesian switching.
+- **Localized descriptive content**: paired reviewed EN/ID versions; distinct from an identity name.
+- **Translation readiness**: completeness of reviewed language versions before bilingual exposure; not a service draft/publish lifecycle.
+- **Recipient language**: language selected for an email/message recipient, independent of dashboard language.
+
+Existing Indonesian source labels explain domain concepts; final UI terminology is proposed in the [bilingual spec](../features/bilingual-copy-revamp/spec.md) and must be reviewed before adoption. Domain identifiers and meanings remain unchanged.

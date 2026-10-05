@@ -232,3 +232,7 @@ Research basis: [Atlassian design tokens](https://atlassian.design/foundations/d
 ### F-17 validation amendment (2026-09-29)
 
 - **Muted text on muted surfaces:** `text.muted` must not carry text on `surface.muted` (3.8:1). Use `text.secondary`. `component.nav.group-label` now aliases `text.secondary`; tokens 531, checksum `ee680c2a`.
+
+## Copy and localization
+
+Follow [localization policy](../product/localization.md) and the [bilingual feature spec](../features/bilingual-copy-revamp/spec.md). Review text fit in both languages at approved desktop/mobile sizes, including labels, dialogs, loading/error states and accessible names. Existing single-language examples are visual references. Update frames through Pencil and regenerate required exports before implementation; this documentation change does not approve new frames or exports.

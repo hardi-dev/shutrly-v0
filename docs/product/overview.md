@@ -28,3 +28,7 @@ MVP works when the criteria in [scope.md § MVP Completion Criteria](scope.md#mv
 
 ## Open Questions
 None blocking MVP. Deferred topics are listed in [scope.md § Later](scope.md#later).
+
+## Bilingual experience (Owner 2026-10-06)
+
+All dashboard and client-gallery journeys follow [localization policy](localization.md): English default, explicit EN/ID switching, complete single-language presentation, bilingual descriptive content and templates, preserved identity/business values. Existing workflows and manual sending remain unchanged. Preference persistence, recipient-language choice and legacy-data rollout must be resolved before implementation. Localization applies to implemented features now and future journey surfaces when they are built.

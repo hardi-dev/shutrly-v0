@@ -1,5 +1,7 @@
 # Technical Design — F-01 Auth & Account
 
+> Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
+
 Status: DONE (verified 2026-09-27, [verification-report.md](verification-report.md)): revised for coding rules v2.0 and the implemented F-00. Remaining follow-ups and ship blockers are in the report.
 
 ## Context

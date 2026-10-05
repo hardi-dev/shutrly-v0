@@ -3,9 +3,11 @@ import type { PhotoKind, PhotoPlacement } from "./photo-classification.types";
 // A-14 and A-T1 (TD D-7, R-1): depth below the source, and the per-run photo limit.
 export const SYNC_MAX_DEPTH = 5;
 export const MAX_SYNC_PHOTOS = 20_000;
-// ADR-018, ADR-019, TD D-7: one sync step stays within 50 subrequests and 10 ms CPU (A-T3, tuned by R-6).
+// ADR-018, ADR-019, TD D-7: one sync step stays within 50 subrequests. The entry cap is one full
+// Drive page: a step's own cost is about 95 ms of request overhead plus about 32 ms per 1,000 photo
+// rows it writes, so a bigger cap only makes each request heavier (TD R-6, A-T3).
 export const SYNC_STEP_MAX_LIST_CALLS = 40;
-export const SYNC_STEP_MAX_ENTRIES = 3000;
+export const SYNC_STEP_MAX_ENTRIES = 1000;
 // TD D-20: bounds on the stored cursor, so a damaged value can't grow a source row.
 export const CURSOR_MAX_QUEUE = 50_000;
 export const CURSOR_MAX_TEXT = 2048;

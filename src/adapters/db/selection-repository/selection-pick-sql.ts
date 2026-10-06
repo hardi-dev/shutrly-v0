@@ -46,7 +46,7 @@ async function findGroupPhoto(tx: DbExecutor, scope: LockedGroupScope, photoId: 
   return { kind, missing: row.missingAt !== null, sourceRemoved: row.removedAt !== null };
 }
 
-/** The group's status writes under the lock: submitted by the client, locked by the Owner (BR-SEL-005, BR-AUD-001). @param tx - the transaction holding the group lock @param scope - workspace, group and its gallery @returns the status writer */
+/** The group's status writes under the lock: submitted by the client, locked by the Owner, limit changed by an add-on (BR-SEL-005, BR-ADD-004, BR-AUD-001). @param tx - the transaction holding the group lock @param scope - workspace, group and its gallery @returns the status writer */
 function groupStatusWriter(tx: DbExecutor, scope: LockedGroupScope) {
   const { context, groupId } = scope;
   const group = and(
@@ -62,6 +62,14 @@ function groupStatusWriter(tx: DbExecutor, scope: LockedGroupScope) {
     },
     async markSubmitted(at: Date) {
       await tx.update(selectionGroup).set({ status: "SUBMITTED", submittedAt: at }).where(group);
+    },
+    async setExtraLimit(extraLimit: number, reopen: boolean) {
+      // A reopened group keeps submitted_at, so "sent before, open again" stays visible (A-22).
+      const status = reopen ? { status: "OPEN" } : {};
+      await tx
+        .update(selectionGroup)
+        .set({ extraLimit, ...status, updatedAt: new Date() })
+        .where(group);
     },
   };
 }

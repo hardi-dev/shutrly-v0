@@ -55,6 +55,8 @@ export interface PickWriter {
   readonly markSubmitted: (at: Date) => Promise<void>;
   /** Moves the locked group to `LOCKED` with who and when (BR-SEL-005, BR-AUD-001). */
   readonly markLocked: (actorId: string, at: Date) => Promise<void>;
+  /** Sets the stored add-on sum and, on approval of a submitted group, reopens it (BR-SEL-002, BR-ADD-004). */
+  readonly setExtraLimit: (extraLimit: number, reopen: boolean) => Promise<void>;
 }
 
 /** A pick with the photo facts the client views need (Pilih, Tinjau, markers). */

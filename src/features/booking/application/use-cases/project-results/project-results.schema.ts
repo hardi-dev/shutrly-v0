@@ -22,5 +22,8 @@ export const projectFieldErrorKeySchema = z
     "REASON_REQUIRED",
     "TO_BEFORE_FROM",
     "TEAM_INVALID",
+    // F-10 add-ons (AC-ADD-002, AC-ADD-006).
+    "TOO_SMALL",
+    "TARGET_LOCKED",
   ])
   .catch("INVALID");

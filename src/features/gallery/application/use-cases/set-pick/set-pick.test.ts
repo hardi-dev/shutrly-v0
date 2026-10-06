@@ -59,6 +59,7 @@ function writer(setup: Setup): PickWriter {
     setNote: vi.fn(() => Promise.resolve()),
     markSubmitted: vi.fn(() => Promise.resolve()),
     markLocked: vi.fn(() => Promise.resolve()),
+    setExtraLimit: vi.fn(() => Promise.resolve()),
   };
 }
 

@@ -1,11 +1,13 @@
 import { TEST_APP_ENV } from "@tests/support/env/test-app-env";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@opennextjs/cloudflare", () => ({ getCloudflareContext: vi.fn() }));
 vi.mock("next/headers", () => ({ headers: vi.fn() }));
+vi.mock("next/server", () => ({ after: vi.fn() }));
 
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { headers } from "next/headers";
+import { after } from "next/server";
 
 import { getRequestContext } from "./request-context";
 
@@ -59,5 +61,38 @@ describe("getRequestContext", () => {
     const promise = Promise.resolve();
     (await getRequestContext()).waitUntil(promise);
     expect(waitUntil).toHaveBeenCalledWith(promise);
+  });
+});
+
+describe("getRequestContext on a production Node host (Netlify)", () => {
+  beforeEach(() => {
+    vi.stubEnv("NODE_ENV", "production");
+    for (const [key, value] of Object.entries(TEST_APP_ENV)) vi.stubEnv(key, value);
+  });
+  afterEach(() => vi.unstubAllEnvs());
+
+  it("reads the bindings from process.env, not the Cloudflare context", async () => {
+    vi.mocked(headers).mockResolvedValue(new Headers());
+    const rc = await getRequestContext();
+    expect(rc.env).toEqual(TEST_APP_ENV);
+    expect(getCloudflareContext).not.toHaveBeenCalled();
+  });
+
+  it("hands waitUntil work to next's after()", async () => {
+    vi.mocked(headers).mockResolvedValue(new Headers());
+    const promise = Promise.resolve();
+    (await getRequestContext()).waitUntil(promise);
+    const callback = vi.mocked(after).mock.calls[0]?.[0] as () => Promise<unknown>;
+    expect(await callback()).toBeUndefined();
+    expect(callback()).toBe(promise);
+  });
+
+  it("uses the Netlify client IP and request ID headers", async () => {
+    vi.mocked(headers).mockResolvedValue(
+      new Headers({ "x-nf-client-connection-ip": "203.0.113.9", "x-nf-request-id": "01ABC" }),
+    );
+    const rc = await getRequestContext();
+    expect(rc.ip).toBe("203.0.113.9");
+    expect(rc.requestId).toBe("01ABC");
   });
 });

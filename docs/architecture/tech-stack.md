@@ -31,7 +31,7 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 - Client gallery access: a signed, path-scoped cookie per project link and public rate limits on the Neon counters ([ADR-020](decisions/ADR-020-client-gallery-sessions-and-public-limits.md), Accepted)
 - Storage: none owned; photos stay in Google Drive and load from Google's image host by file ID ([ADR-019](decisions/ADR-019-gallery-media-and-sync-on-free-tier.md))
 - Transactional email (auth only): Resend ([ADR-011](decisions/ADR-011-resend-transactional-email.md))
-- Hosting runtime: Cloudflare Workers via OpenNext adapter (`@opennextjs/cloudflare`) ([ADR-008](decisions/ADR-008-cloudflare-runtime.md))
+- Hosting runtime: Cloudflare Workers via OpenNext adapter (`@opennextjs/cloudflare`) ([ADR-008](decisions/ADR-008-cloudflare-runtime.md)); **staging runs the same build on Netlify (Node)** ([ADR-020](decisions/ADR-020-staging-on-netlify.md)), with the bindings source chosen in `src/composition/request-context`
 
 ## Validation
 - Zod schemas at every trust boundary (forms, server actions, route handlers, provider responses, JSONB values)
@@ -53,7 +53,10 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 ## Deployment
 - Cloudflare; preview deployment per git branch, all previews share the non-production Neon database
 - **Plan (Owner 2026-10-05):** free plans of Workers, Neon and Resend, with a CPU check before ship and upgrade triggers ([ADR-018](decisions/ADR-018-free-tier-runtime-budget.md), Accepted)
-- Two Neon databases only: **production** and one shared **non-production** (dev, CI, previews)
+- Three Neon databases only: **production**, one shared **non-production** (dev, CI, previews) and **staging** ([ADR-009](decisions/ADR-009-neon-serverless-driver.md), amended Owner 2026-10-05)
+- **Staging (Owner 2026-10-06, [ADR-020](decisions/ADR-020-staging-on-netlify.md)):** moved to Netlify Free after the Worker hit Cloudflare error 1102. Site `shutrly`, deployed by hand from the `staging` branch with `netlify deploy --build --alias staging` to `https://staging--shutrly.netlify.app` (`netlify.toml`; variables are Netlify site env vars, visitor access public). Database: Neon project `shutrly-staging-us` (`aws-us-east-2`, created empty, migrations `0000`–`0014` applied with drizzle-kit over its direct connection). Functions run in `us-east-2` on the Free plan (region not configurable), so latency is ~0.5 s per request above the edge.
+- **Deploy scripts:** `pnpm deploy:staging` (draft deploy with the `staging` alias) and `pnpm deploy:prod` (main URL; only from a clean, up-to-date `main`, asks first; `--yes` skips the prompt, `--dry-run` prints the command). Both are `scripts/deploy/netlify-deploy.sh`, need `netlify login` and `netlify init` once, and refuse a dirty working tree. Production also needs its own Netlify variables for the production context (database, `BETTER_AUTH_URL`, `APP_STAGE=production`) before first use.
+- **Staging, previous setup (Owner 2026-10-05, kept, not in use):** Worker `shutrly-staging` at `https://shutrly-staging.shutrly.workers.dev` (`wrangler.jsonc` env `staging`), deployed by hand with `opennextjs-cloudflare build` and `opennextjs-cloudflare deploy --env staging` (the `pnpm preview` and old `pnpm deploy:staging` scripts were removed on 2026-10-06). Its database is the Neon branch `staging` of project `shutrly-v0`. Secrets are Worker secrets; `BETTER_AUTH_URL`, `APP_STAGE` and `AUTH_EMAIL_FROM` are vars in `wrangler.jsonc`. Staging gets only migrations already merged to `main`.
 - Migrations run from `main` via CI only; preview deploys never migrate the shared database
   - **Interim (Owner 2026-09-26, until CI exists):** the Owner runs `pnpm db:migrate` by hand from a clean, up-to-date `main` checkout.
   - **During development (Owner 2026-10-02):** an agent may run `pnpm db:migrate` against the shared **non-production** database (`DATABASE_URL_UNPOOLED` in `.dev.vars`), including from a feature branch, when:

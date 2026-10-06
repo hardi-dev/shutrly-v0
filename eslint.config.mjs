@@ -175,6 +175,11 @@ export default defineConfig([
       ],
     },
   },
+  {
+    // The one place that turns host bindings into AppEnv; on a Node host (Netlify) they are process.env.
+    files: ["src/composition/request-context/request-context.ts"],
+    rules: { "no-restricted-properties": "off" },
+  },
   banPackages(["src/features/*/domain/**"], [...FRAMEWORK, ...RAC, ...VENDOR_BACKEND, ...RUNTIME]),
   banPackages(
     ["src/features/**", "src/app/**", "src/shared/**"],

@@ -11,7 +11,9 @@ The app runs on Cloudflare Workers ([ADR-008](ADR-008-cloudflare-runtime.md)) ag
 - Create the `Pool` **per request** and close it with `ctx.waitUntil(pool.end())`; never hold a module-level pool.
 - App runtime uses Neon's **pooled** connection string; Drizzle migrations use the **direct** (unpooled) connection string.
 - Neon's HTTP mode (`neon-http`) is not used in MVP. It may be added later only for single-statement reads after measurement; never where a transaction or row lock is needed.
-- Two Neon databases: **production** and a single shared **non-production** branch used by local dev, integration tests, and all preview deploys. No per-developer / per-CI / per-preview branches.
+- Three Neon databases: **production**, a single shared **non-production** branch used by local dev, integration tests, and all preview deploys, and a **staging** branch used only by the `shutrly-staging` Worker. No per-developer / per-CI / per-preview branches.
+- **Amendment (Owner 2026-10-06, [ADR-020](ADR-020-staging-on-netlify.md)):** staging moved to its own Neon project `shutrly-staging-us` (`aws-us-east-2`), created empty and migrated from the committed files, so it sits next to the Netlify function. The `staging` branch of `shutrly-v0` below is kept until the Owner deletes it.
+- **Amendment (Owner 2026-10-05):** staging is a Neon branch (`staging`, parent `main` of project `shutrly-v0`), created from non-production so it starts with its schema and data. It receives only migrations already merged to `main`, applied in order with its direct connection string, before the matching staging deploy. Never reset it from non-production while staging is in use without telling the Owner.
 - Because the non-production database is shared: tests create their own workspace/user with unique IDs and assert only on that data (no table truncation); CI integration runs are serialized; schema migrations are applied only from `main` via CI, never by a preview deploy.
 
 ## Alternatives Considered
@@ -22,6 +24,7 @@ The app runs on Cloudflare Workers ([ADR-008](ADR-008-cloudflare-runtime.md)) ag
 ### Positive
 - One Neon-native driver; full transaction + row-lock support.
 - One non-production database is simple to operate and cheap.
+- Staging data is isolated from dev and test traffic, so a staging smoke test isn't broken by test leftovers or unmerged migrations.
 ### Negative / Trade-offs
 - WebSocket + Postgres handshake on every request adds latency; keep queries per request low and revisit (HTTP reads or Hyperdrive) if p95 suffers.
 - Integration tests need network access to Neon; a local container would require Neon's WebSocket proxy.

@@ -5,4 +5,15 @@
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "env": {
+    // Staging: Worker "shutrly-staging" on the shared non-production database.
+    // Secrets (DATABASE_URL, auth, Resend, Drive, gallery key) are Worker secrets, never here.
+    "staging": {
+      "vars": {
+        "APP_STAGE": "development",
+        "BETTER_AUTH_URL": "https://shutrly-staging.shutrly.workers.dev",
+        "AUTH_EMAIL_FROM": "Shutrly <onboarding@resend.dev>",
+      },
+    },
+  },
 }

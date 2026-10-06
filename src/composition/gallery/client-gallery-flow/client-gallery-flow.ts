@@ -29,10 +29,32 @@ export interface SignedOut {
 }
 
 const SIGNED_OUT: SignedOut = { kind: "SIGNED_OUT" };
+const ROOT_QUERY = { kind: "PROOF", sourceId: null, path: "", search: "", cursor: null };
+
+/** What the *Semua foto* page loads on the server. */
+export interface ClientBrowseLoad {
+  readonly home: ClientHomeView;
+  readonly firstPage: ClientBrowsePageView | null;
+}
 
 /** Loads Beranda (or the landing decision) for a client page (A-24, A-31). @param rawToken - the untrusted route token @returns the gate outcome with the home view */
 export function loadClientHomeEntry(rawToken: string): Promise<ClientScopeResult<ClientHomeView>> {
   return withSignedInClient(rawToken, (client, scope) => getClientHome(scope, client));
+}
+
+/** Loads the *Semua foto* page: the landing decision for its breadcrumb and the root page; a failed first page becomes null so the page shows its retry state (A-31, D-15). @param rawToken - the untrusted route token @returns the gate outcome with both */
+export function loadClientBrowseEntry(
+  rawToken: string,
+): Promise<ClientScopeResult<ClientBrowseLoad>> {
+  return withSignedInClient(rawToken, async (client, scope) => {
+    const home = await getClientHome(scope, client);
+    try {
+      return { home, firstPage: await browseClientPhotos(scope, client, ROOT_QUERY) };
+    } catch {
+      logger.error("client.browse_failed", { workspaceId: client.workspaceId });
+      return { home, firstPage: null };
+    }
+  });
 }
 
 /** Reads one *Semua foto* page for the signed-in client (D-15, AC-ACC-011). @param rawToken - the untrusted route token @param query - untrusted browse query @returns the page, or SIGNED_OUT */

@@ -1,5 +1,6 @@
 import { expect, type Page, test } from "@playwright/test";
 
+import { CLIENT_BROWSE_COPY } from "@/features/gallery/ui/client-browse-screen/client-browse-screen.copy";
 import { CLIENT_GATE_SCREEN_COPY } from "@/features/gallery/ui/client-gate-screen/client-gate-screen.copy";
 import { CLIENT_PASSWORD_FORM_COPY } from "@/features/gallery/ui/client-password-form/client-password-form.copy";
 import { CLIENT_UNAVAILABLE_COPY } from "@/features/gallery/ui/client-unavailable/client-unavailable.copy";
@@ -38,10 +39,14 @@ test("AC-ACC-001 AC-ACC-002 AC-ACC-004 AC-ACC-007 AC-ACC-012 the client gate end
     await expect(visitor.getByText(CLIENT_PASSWORD_FORM_COPY.wrongPassword)).toBeVisible();
     await expectGalleryA11y(visitor);
 
+    // A-31: the default service has no selection item, so the client lands on Semua foto.
     await enterPassword(visitor, GALLERY_PASSWORD);
-    await expect(visitor.getByRole("heading", { name: /^Halo, / })).toBeVisible();
+    await expect(visitor).toHaveURL(`${clientPath}/foto`);
     await visitor.reload();
-    await expect(visitor.getByRole("heading", { name: /^Halo, / })).toBeVisible();
+    await expect(visitor).toHaveURL(`${clientPath}/foto`);
+    await expect(
+      visitor.getByText(CLIENT_BROWSE_COPY.cardTitle, { exact: true }).first(),
+    ).toBeVisible();
     const cookie = (await client.cookies()).find((item) => item.name === "shutrly_gallery");
     expect(cookie).toMatchObject({ httpOnly: true, secure: true, path: clientPath });
 

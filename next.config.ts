@@ -7,9 +7,20 @@ const CLIENT_GALLERY_HEADERS = [
   { key: "X-Robots-Tag", value: "noindex" },
 ];
 
+// The image fallback route may sit in the browser's private cache like F-09's (D-8, D-10).
+const CLIENT_MEDIA_HEADERS = [
+  { key: "Cache-Control", value: "private, max-age=600" },
+  { key: "X-Robots-Tag", value: "noindex" },
+];
+
 const nextConfig: NextConfig = {
   devIndicators: false,
-  headers: () => Promise.resolve([{ source: "/g/:path*", headers: CLIENT_GALLERY_HEADERS }]),
+  // Later rules win for the same header, so the media rule comes last.
+  headers: () =>
+    Promise.resolve([
+      { source: "/g/:path*", headers: CLIENT_GALLERY_HEADERS },
+      { source: "/g/:token/media/:path*", headers: CLIENT_MEDIA_HEADERS },
+    ]),
 };
 
 export default nextConfig;

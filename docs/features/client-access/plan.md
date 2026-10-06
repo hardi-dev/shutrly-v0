@@ -446,9 +446,9 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 **Components:** `delivery-screen` (Edited / Print switch, grid with per-tile download, `Unduh ▾` Menu / Bottom Sheet, *Unduh semua n foto?* confirm, progress card with *Batalkan*, failure alert with *Coba lagi* and *Gagal* tiles, *Pilih beberapa* mode in the Page Header, preview with *Unduh foto*); hook `use-sequential-download`.
 
 **Steps**
-- [ ] **9.1** Download route + integration `tests/integration/gallery/client-access/downloads.test.ts` (before delivery 404, proof 404, missing 404, headers, no folder ID anywhere; AC-DEL-004, -006). Commit `feat(delivery): serve finished files to the client`.
-- [ ] **9.2** `use-sequential-download` with dom tests (progress, cancel, one failure, retry). Commit `feat(delivery): download several files one by one`.
-- [ ] **9.3** Hasil akhir screen and preview from the eight exports; E2E download one, several, all with the fake Drive (AC-DEL-003, -005). Commit `feat(client-access): add hasil akhir`.
+- [x] **9.1** Download route + integration `tests/integration/gallery/client-access/downloads.test.ts` (before delivery 404, proof 404, missing 404, headers, no folder ID anywhere; AC-DEL-004, -006). Commit `feat(delivery): serve finished files to the client`.
+- [x] **9.2** `use-sequential-download` with dom tests (progress, cancel, one failure, retry). Commit `feat(delivery): download several files one by one`.
+- [x] **9.3** Hasil akhir screen and preview from the eight exports; E2E download one, several, all with the fake Drive (AC-DEL-003, -005). Commit `feat(client-access): add hasil akhir`.
 
 **Done check:** the client downloads one file, two chosen files and all files of a kind with progress; a missing file shows *Gagal* and *Coba lagi*; check one phone browser for R-6.
 

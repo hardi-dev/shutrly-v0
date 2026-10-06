@@ -16,8 +16,8 @@ import type { AppEnv } from "@/shared/env/app-env.types";
 import { withRequestDb } from "../../request-db/request-db";
 import type { GalleryScope } from "./gallery-scope.types";
 
-// E2E_FAKE_DRIVE is refused on production by appEnvSchema (TD › Testing Strategy).
-function providerFor(env: AppEnv): GallerySourceProviderPort {
+/** The Drive provider, or the fixture under E2E_FAKE_DRIVE, which appEnvSchema refuses on production (TD › Testing Strategy). @param env - the Worker env @returns the provider */
+export function providerFor(env: AppEnv): GallerySourceProviderPort {
   return env.E2E_FAKE_DRIVE === "1"
     ? createFixtureDriveProvider()
     : createGoogleDriveProvider(env.GOOGLE_DRIVE_API_KEY);

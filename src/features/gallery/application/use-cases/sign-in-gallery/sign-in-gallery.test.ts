@@ -10,7 +10,7 @@ import type { SignInGalleryDeps } from "./sign-in-gallery.types";
 
 const TOKEN = "A".repeat(43);
 const RECORD: ClientAccessRecord = {
-  workspaceId: "ws",
+  workspaceId: "00000000-0000-4000-8000-0000000000aa",
   projectId: "00000000-0000-4000-8000-000000000001",
   projectStatus: "POST_PROCESSING",
   projectTitle: "Wisuda Rina",
@@ -22,6 +22,7 @@ const RECORD: ClientAccessRecord = {
   passwordHash: "hash(mawar-4821)",
   passwordVersion: 1,
   contentVersion: 1,
+  finalDeliveryPublishedAt: null,
 };
 
 function deps(isOver: (key: string) => boolean = () => false): SignInGalleryDeps {

@@ -51,6 +51,7 @@ export function createDrizzleClientAccessRepository(db: DbExecutor): ClientAcces
             passwordHash: gallery.passwordHash,
             passwordVersion: gallery.passwordVersion,
             contentVersion: gallery.contentVersion,
+            finalDeliveryPublishedAt: gallery.finalDeliveryPublishedAt,
           })
           .from(project)
           .innerJoin(

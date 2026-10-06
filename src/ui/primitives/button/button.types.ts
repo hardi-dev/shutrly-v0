@@ -21,6 +21,8 @@ export type ButtonIconName = Extract<
   | "refresh-cw"
   | "copy"
   | "images"
+  | "download"
+  | "arrow-left"
   | "external-link"
   | "user-round-cog"
   | "user-plus"

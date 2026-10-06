@@ -52,6 +52,7 @@ export type IconName =
   | "copy"
   | "images"
   | "layers"
+  | "download"
   | "image-off"
   | "external-link"
   | "arrow-left"

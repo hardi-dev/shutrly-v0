@@ -4,6 +4,7 @@ import { UNKNOWN_TOKEN_PER_ADDRESS } from "@/features/gallery/domain/client-acce
 import { isAvailableToClient } from "@/features/gallery/domain/client-gallery-availability/client-gallery-availability";
 import { isSessionValid } from "@/features/gallery/domain/client-session/client-session";
 import { isWellFormedToken } from "@/features/gallery/domain/client-token/client-token";
+import { asWorkspaceId } from "@/shared/workspace-context/workspace-context";
 
 import type { ClientAccessRecord } from "../../ports/client-access-repository/client-access-repository.port";
 import { tokenHashOf, unknownTokenKey } from "../client-access-keys/client-access-keys";
@@ -73,12 +74,13 @@ export async function resolveClientAccess(
     kind: "SIGNED_IN",
     gate,
     context: {
-      workspaceId: record.workspaceId,
+      workspaceId: asWorkspaceId(record.workspaceId),
       projectId: record.projectId,
       galleryId: record.galleryId,
       sessionId: payload.sid,
       token: request.token,
       contentVersion: record.contentVersion ?? 1,
+      finalDeliveryPublished: record.finalDeliveryPublishedAt !== null,
     },
   };
 }

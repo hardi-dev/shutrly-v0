@@ -15,6 +15,7 @@ export interface ClientAccessRecord {
   readonly passwordHash: string | null;
   readonly passwordVersion: number | null;
   readonly contentVersion: number | null;
+  readonly finalDeliveryPublishedAt: Date | null;
 }
 
 export interface ClientAccessRepositoryPort {

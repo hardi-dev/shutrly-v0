@@ -1,16 +1,19 @@
+import type { WorkspaceId } from "@/shared/workspace-context/workspace-context.types";
+
 import type { ClientAccessRepositoryPort } from "../../ports/client-access-repository/client-access-repository.port";
 import type { ClientSessionSignerPort } from "../../ports/client-session-signer/client-session-signer.port";
 import type { GalleryRateLimiterPort } from "../../ports/gallery-rate-limiter/gallery-rate-limiter.port";
 
 /** The resolved, signed-in context every client use case receives (D-4). */
 export interface ClientContext {
-  readonly workspaceId: string;
+  readonly workspaceId: WorkspaceId;
   readonly projectId: string;
   readonly galleryId: string;
   readonly sessionId: string;
   /** Used only to build same-origin URLs; never logged. */
   readonly token: string;
   readonly contentVersion: number;
+  readonly finalDeliveryPublished: boolean;
 }
 
 /** What the password screen and the client header show. */

@@ -1,4 +1,4 @@
-export type PhotoKind = "PROOF" | "EDITED" | "PRINT";
+import type { PhotoKind } from "../photo-classification/photo-classification.types";
 
 export interface ClientPhotoFacts {
   readonly kind: PhotoKind;

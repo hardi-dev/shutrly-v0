@@ -7,8 +7,6 @@ import { createWebCryptoClientSessionSigner } from "@/adapters/crypto/client-ses
 import { createBetterAuthPasswordHasher } from "@/adapters/crypto/password-hasher/better-auth-password-hasher";
 import { createDrizzleClientAccessRepository } from "@/adapters/db/gallery-repository/drizzle-client-access-repository";
 import { createNeonRateLimiter } from "@/adapters/db/rate-limiter/neon-rate-limiter";
-import { resolveClientAccess } from "@/features/gallery/application/use-cases/resolve-client-access/resolve-client-access";
-import type { ClientGateResult } from "@/features/gallery/application/use-cases/resolve-client-access/resolve-client-access.types";
 import { signInGallery } from "@/features/gallery/application/use-cases/sign-in-gallery/sign-in-gallery";
 import type {
   ClientSignInActionResult,
@@ -37,14 +35,6 @@ export function withClientScope<T>(
       },
       rc,
     ),
-  );
-}
-
-/** Runs the client gate for a page: neutral page, password screen or signed in (D-4). @param rawToken - the untrusted route token @returns the gate result */
-export async function loadClientGate(rawToken: string): Promise<ClientGateResult> {
-  const cookie = (await cookies()).get(CLIENT_SESSION_COOKIE)?.value ?? null;
-  return withClientScope((deps, rc) =>
-    resolveClientAccess(deps, { token: rawToken, ip: rc.ip, cookie }),
   );
 }
 

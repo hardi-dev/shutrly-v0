@@ -43,6 +43,7 @@ describe("Icon", () => {
         "share-2",
         "image",
         "layers",
+        "download",
         "hourglass",
         "package-check",
         "wallet",

@@ -397,8 +397,8 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 **Components:** `selection-card` (states A–E of the card export), `selection-groups-screen`, `selection-group-screen` (grid 4 columns desktop / 1 column phone with notes, *Hilang* badge, *Salin nama file* + toast, *Kunci pilihan* / *Tutup pilihan* confirms).
 
 **Steps**
-- [ ] **6.1** `pick-list` + lock use case + integration (AC-SEL-010, -011, -015 Owner part). Commit `feat(selection): review, copy and lock picks`.
-- [ ] **6.2** Card + pages + dialogs from the exports. Commit `feat(selection): add the owner selection pages`.
+- [x] **6.1** `pick-list` + lock use case + integration (AC-SEL-010, -011, -015 Owner part). Commit `feat(selection): review, copy and lock picks`.
+- [x] **6.2** Card + pages + dialogs from the exports. Commit `feat(selection): add the owner selection pages`.
 
 **Done check:** the Owner sees the card on the project page, opens a group, copies the file list with notes, locks a submitted group and closes an open one; the client then sees both read-only.
 

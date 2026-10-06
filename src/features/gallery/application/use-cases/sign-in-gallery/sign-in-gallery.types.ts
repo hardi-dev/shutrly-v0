@@ -19,3 +19,6 @@ export type SignInGalleryResult =
   | { readonly kind: "WRONG_PASSWORD" }
   | { readonly kind: "TOO_MANY_ATTEMPTS"; readonly minutes: number }
   | { readonly kind: "SIGNED_IN"; readonly cookie: string; readonly maxAgeSeconds: number };
+
+/** What the sign-in action returns to the form; on success it redirects instead (D-5). */
+export type ClientSignInActionResult = Exclude<SignInGalleryResult, { readonly kind: "SIGNED_IN" }>;

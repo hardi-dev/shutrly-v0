@@ -10,6 +10,12 @@ describe("proxy (early redirect only)", () => {
     expect(isPublicPath("/profile")).toBe(false);
   });
 
+  it("AC-ACC-007 lets client gallery links through without an Owner session", () => {
+    expect(isPublicPath("/g/abc")).toBe(true);
+    expect(isPublicPath("/g/abc/foto")).toBe(true);
+    expect(isPublicPath("/gallery")).toBe(false);
+  });
+
   it("AC-AUTH-014 redirects an owner page without a session cookie to /login", () => {
     const response = proxy(new NextRequest("http://localhost:3000/profile"));
     expect(response.headers.get("location")).toBe("http://localhost:3000/login");

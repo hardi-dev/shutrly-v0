@@ -1,7 +1,6 @@
 import "server-only";
 
-import { effectiveLimit } from "@/features/gallery/domain/selection-usage/selection-usage";
-
+import { toPickGroupView } from "../get-pick-view/pick-views";
 import type { ClientContext } from "../resolve-client-access/resolve-client-access.types";
 import type { PickTargets, PickTargetsDeps } from "./list-pick-targets.types";
 
@@ -22,16 +21,7 @@ export async function listPickTargets(
     deps.selections.listPickedPhotos(context, client.projectId),
   ]);
   return {
-    groups: groups.map((group) => ({
-      id: group.id,
-      name: group.name,
-      unit: group.unit,
-      mode: group.mode,
-      allowsPickNotes: group.allowsPickNotes,
-      limit: effectiveLimit(group.baseLimit, group.extraLimit),
-      usage: group.usage,
-      status: group.status,
-    })),
+    groups: groups.map(toPickGroupView),
     picks: picked.map(({ groupId, photoId, quantity, note }) => ({
       groupId,
       photoId,

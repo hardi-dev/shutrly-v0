@@ -12,6 +12,8 @@ export interface GroupSummaryProps {
   readonly progress: number;
   /** Usage reached the limit: the bar shows the warning tone (pilih-batas-tercapai). */
   readonly isFull?: boolean;
+  /** Tinjau: an `OPEN` group shows *· sisa n* instead of *dipilih* (tinjau exports). */
+  readonly remaining?: number;
   readonly action?: ReactNode;
   readonly className?: string;
 }

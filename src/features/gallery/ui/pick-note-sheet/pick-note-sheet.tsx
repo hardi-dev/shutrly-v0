@@ -4,32 +4,20 @@ import { useRouter } from "next/navigation";
 import { type SyntheticEvent, useState } from "react";
 
 import { PICK_NOTE_MAX } from "@/features/gallery/domain/client-access-limits/client-access-limits";
-import { useImageFallback } from "@/ui/hooks/use-image-fallback/use-image-fallback";
 import { Button } from "@/ui/primitives/button/button";
 import { Textarea } from "@/ui/primitives/textarea/textarea";
 
 import { GalleryDialogShell } from "../gallery-dialog-shell/gallery-dialog-shell";
+import { PhotoThumb } from "../photo-thumb/photo-thumb";
 import { PICK_NOTE_COPY as COPY } from "./pick-note-sheet.copy";
 import type { NotePhotoProps, PickNoteSheetProps, SaveOutcome } from "./pick-note-sheet.types";
 
 const FORM_ID = "pick-note-form";
 
 function NotePhoto({ photo, groupName }: Readonly<NotePhotoProps>) {
-  const image = useImageFallback(photo.thumb.src, photo.thumb.fallbackSrc);
   return (
     <div className="flex items-center gap-(--space-3)">
-      <span className="size-12 shrink-0 overflow-hidden rounded-(--radius-sm) bg-(--component-photo-tile-image-background)">
-        {image.src === null ? null : (
-          // eslint-disable-next-line @next/next/no-img-element -- the private media route must not go through the image optimiser
-          <img
-            src={image.src}
-            alt=""
-            referrerPolicy="no-referrer"
-            onError={image.onError}
-            className="size-full object-cover"
-          />
-        )}
-      </span>
+      <PhotoThumb image={photo.thumb} size="md" />
       <span className="flex min-w-0 flex-1 flex-col gap-(--space-0-5)">
         <span className="truncate text-(length:--font-size-body) font-medium text-(--color-semantic-text-primary)">
           {photo.fileName}

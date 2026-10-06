@@ -4,6 +4,8 @@ import { browsePickPhotos } from "@/features/gallery/application/use-cases/brows
 import type { PickPhotosPage } from "@/features/gallery/application/use-cases/browse-pick-photos/browse-pick-photos.types";
 import { getPickView } from "@/features/gallery/application/use-cases/get-pick-view/get-pick-view";
 import type { PickViewResult } from "@/features/gallery/application/use-cases/get-pick-view/get-pick-view.types";
+import { getReview } from "@/features/gallery/application/use-cases/get-review/get-review";
+import type { ReviewResult } from "@/features/gallery/application/use-cases/get-review/get-review.types";
 import { listPickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets";
 import type { PickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets.types";
 import { setPick } from "@/features/gallery/application/use-cases/set-pick/set-pick";
@@ -12,6 +14,8 @@ import type {
   SetPickResult,
 } from "@/features/gallery/application/use-cases/set-pick/set-pick.types";
 import { setPickNote } from "@/features/gallery/application/use-cases/set-pick-note/set-pick-note";
+import { submitSelectionGroup } from "@/features/gallery/application/use-cases/submit-selection-group/submit-selection-group";
+import type { SubmitSelectionGroupResult } from "@/features/gallery/application/use-cases/submit-selection-group/submit-selection-group.types";
 import { logger } from "@/shared/logging/logger";
 
 import type { SignedOut } from "../client-gallery-flow/client-gallery-flow";
@@ -86,6 +90,36 @@ export async function setPickNoteEntry(
 ): Promise<SetPickNoteResult | SignedOut> {
   const result = await withSignedInClient(rawToken, (client, scope) =>
     setPickNote(scope, client, input),
+  );
+  return result.kind === "SIGNED_IN" ? result.value : SIGNED_OUT;
+}
+
+/** Loads Tinjau, or the read-only *Lihat pilihan* when the group is no longer open (A-29, D-2). @param rawToken - the untrusted route token @param rawGroupId - the untrusted route group id @returns the gate outcome with the review */
+export function loadReviewEntry(
+  rawToken: string,
+  rawGroupId: string,
+): Promise<ClientScopeResult<ReviewResult>> {
+  return withSignedInClient(rawToken, (client, scope) => getReview(scope, client, rawGroupId));
+}
+
+/** Re-reads Tinjau after a refused change, so the screen shows the stored picks (D-12). @param rawToken - the untrusted route token @param rawGroupId - untrusted group id @returns the review, or SIGNED_OUT */
+export async function reloadReviewEntry(
+  rawToken: string,
+  rawGroupId: unknown,
+): Promise<ReviewResult | SignedOut> {
+  const result = await withSignedInClient(rawToken, (client, scope) =>
+    getReview(scope, client, rawGroupId),
+  );
+  return result.kind === "SIGNED_IN" ? result.value : SIGNED_OUT;
+}
+
+/** Sends one group to the photographer for the signed-in client (D-13, A-5, AC-SEL-008/009). @param rawToken - the untrusted route token @param input - untrusted `{ groupId, confirmBelowLimit }` @returns the result, or SIGNED_OUT */
+export async function submitSelectionGroupEntry(
+  rawToken: string,
+  input: unknown,
+): Promise<SubmitSelectionGroupResult | SignedOut> {
+  const result = await withSignedInClient(rawToken, (client, scope) =>
+    submitSelectionGroup(scope, client, input, scope.now),
   );
   return result.kind === "SIGNED_IN" ? result.value : SIGNED_OUT;
 }

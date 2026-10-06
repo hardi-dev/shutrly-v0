@@ -6,10 +6,11 @@ import type { GroupSummaryProps } from "./group-summary.types";
 
 const TONES = { OPEN: "info", SUBMITTED: "warning", LOCKED: "neutral" } as const;
 
-function usageText({ status, usage, limit, unit }: Readonly<GroupSummaryProps>): string {
+function usageText({ status, usage, limit, unit, remaining }: Readonly<GroupSummaryProps>): string {
   const label = unit ?? CLIENT_COPY.defaultUnit;
   if (status === "SUBMITTED") return CLIENT_COPY.usageSubmitted(usage, label);
   if (status === "LOCKED") return CLIENT_COPY.usageLocked(usage, label);
+  if (remaining !== undefined) return CLIENT_COPY.usageReview(usage, limit, label, remaining);
   return CLIENT_COPY.usageOpen(usage, limit, label);
 }
 

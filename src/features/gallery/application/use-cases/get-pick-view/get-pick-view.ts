@@ -1,33 +1,13 @@
 import "server-only";
 
-import { effectiveLimit } from "@/features/gallery/domain/selection-usage/selection-usage";
-
 import type {
   PickedPhotoRecord,
   SelectionGroupRecord,
 } from "../../ports/selection-repository/selection-repository.port";
 import { selectionGroupIdSchema } from "../../schemas/gallery-ids/gallery-ids.schema";
-import { toClientPhotoView } from "../client-views/client-views";
 import type { ClientContext } from "../resolve-client-access/resolve-client-access.types";
-import type {
-  OtherGroupPick,
-  PickedPhotoView,
-  PickViewDeps,
-  PickViewResult,
-} from "./get-pick-view.types";
-
-function toPicked(
-  record: PickedPhotoRecord,
-  token: string,
-  directImages: boolean,
-): PickedPhotoView {
-  const source = { ...record, id: record.photoId };
-  return {
-    photo: toClientPhotoView(source, token, directImages),
-    quantity: record.quantity,
-    note: record.note,
-  };
-}
+import type { OtherGroupPick, PickViewDeps, PickViewResult } from "./get-pick-view.types";
+import { toPickedView, toPickGroupView } from "./pick-views";
 
 function toOther(record: PickedPhotoRecord, groups: readonly SelectionGroupRecord[]) {
   const group = groups.find((candidate) => candidate.id === record.groupId);
@@ -69,17 +49,8 @@ export async function getPickView(
   return {
     kind: "VIEW",
     view: {
-      group: {
-        id: group.id,
-        name: group.name,
-        unit: group.unit,
-        mode: group.mode,
-        allowsPickNotes: group.allowsPickNotes,
-        limit: effectiveLimit(group.baseLimit, group.extraLimit),
-        usage: group.usage,
-        status: group.status,
-      },
-      picks: own.map((record) => toPicked(record, client.token, deps.directImages)),
+      group: toPickGroupView(group),
+      picks: own.map((record) => toPickedView(record, client.token, deps.directImages)),
       otherPicks: others.flatMap((record) => toOther(record, groups)),
     },
   };

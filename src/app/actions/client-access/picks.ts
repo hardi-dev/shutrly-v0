@@ -5,16 +5,20 @@ import {
   browsePickPhotosEntry,
   reloadPickEntry,
   reloadPickTargetsEntry,
+  reloadReviewEntry,
   setPickEntry,
   setPickNoteEntry,
+  submitSelectionGroupEntry,
 } from "@/composition/gallery/client-selection-flow/client-selection-flow";
 import type { PickPhotosPage } from "@/features/gallery/application/use-cases/browse-pick-photos/browse-pick-photos.types";
 import type { PickViewResult } from "@/features/gallery/application/use-cases/get-pick-view/get-pick-view.types";
+import type { ReviewResult } from "@/features/gallery/application/use-cases/get-review/get-review.types";
 import type { PickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets.types";
 import type {
   SetPickNoteResult,
   SetPickResult,
 } from "@/features/gallery/application/use-cases/set-pick/set-pick.types";
+import type { SubmitSelectionGroupResult } from "@/features/gallery/application/use-cases/submit-selection-group/submit-selection-group.types";
 
 export async function setPickAction(
   token: string,
@@ -46,4 +50,18 @@ export async function reloadPickViewAction(
 
 export async function reloadPickTargetsAction(token: string): Promise<PickTargets | SignedOut> {
   return reloadPickTargetsEntry(token);
+}
+
+export async function reloadReviewAction(
+  token: string,
+  groupId: unknown,
+): Promise<ReviewResult | SignedOut> {
+  return reloadReviewEntry(token, groupId);
+}
+
+export async function submitSelectionGroupAction(
+  token: string,
+  input: unknown,
+): Promise<SubmitSelectionGroupResult | SignedOut> {
+  return submitSelectionGroupEntry(token, input);
 }

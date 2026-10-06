@@ -3,9 +3,13 @@ import { fakeHasher } from "@tests/support/gallery/fake-gallery-crypto";
 
 import type { Db } from "@/adapters/db/client/client.types";
 import { user } from "@/adapters/db/schema/auth/auth";
-import { service, serviceCategory } from "@/adapters/db/schema/booking/catalog";
+import {
+  service,
+  serviceCategory,
+  serviceItemDefinition,
+} from "@/adapters/db/schema/booking/catalog";
 import { client } from "@/adapters/db/schema/booking/client";
-import { project } from "@/adapters/db/schema/booking/project";
+import { project, projectItem } from "@/adapters/db/schema/booking/project";
 import { gallery } from "@/adapters/db/schema/gallery/gallery";
 import { workspace } from "@/adapters/db/schema/workspace/workspace";
 import { asWorkspaceId } from "@/shared/workspace-context/workspace-context";
@@ -16,6 +20,7 @@ export const GALLERY_PASSWORD = "mawar-4821";
 export interface ClientAccessFixture {
   readonly context: WorkspaceContext;
   readonly ownerId: string;
+  readonly serviceId: string;
   /** Wisuda Rina, POST_PROCESSING, published gallery. */
   readonly t1: string;
   readonly projectId: string;
@@ -129,10 +134,57 @@ export async function seedClientAccess(db: Db): Promise<ClientAccessFixture> {
   return {
     context: { workspaceId: asWorkspaceId(studio.workspaceId) },
     ownerId: studio.ownerId,
+    serviceId: studio.serviceId,
     t1: rina.token,
     projectId: rina.projectId,
     galleryId: rina.galleryId,
     t2: sari.token,
     t3: t3.token,
   };
+}
+
+export interface ItemSeed {
+  readonly name: string;
+  readonly value: number;
+  readonly unit?: string;
+  /** null for an item the client doesn't pick for. */
+  readonly pickMode: "COUNT" | "QUANTITY" | null;
+  readonly allowsPickNotes?: boolean;
+}
+
+/** Adds snapshotted project items, each with its own definition, in the given order (BR-PRJ-001). @returns the item ids by name */
+export async function addProjectItems(
+  db: Db,
+  target: { readonly workspaceId: string; readonly projectId: string },
+  items: readonly ItemSeed[],
+): Promise<Record<string, string>> {
+  const ids: Record<string, string> = {};
+  for (const [index, item] of items.entries()) {
+    const selection = item.pickMode !== null;
+    const shape = {
+      workspaceId: target.workspaceId,
+      valueType: "NUMBER",
+      unit: item.unit ?? "foto",
+      selectionRequired: selection,
+      pickMode: item.pickMode,
+      allowsPickNotes: item.allowsPickNotes ?? false,
+    };
+    const [definition] = await db
+      .insert(serviceItemDefinition)
+      .values({ ...shape, name: `${item.name} ${crypto.randomUUID().slice(0, 8)}` })
+      .returning({ id: serviceItemDefinition.id });
+    const [row] = await db
+      .insert(projectItem)
+      .values({
+        ...shape,
+        projectId: target.projectId,
+        definitionId: definition.id,
+        name: item.name,
+        value: { type: "NUMBER", value: String(item.value) },
+        sortOrder: index,
+      })
+      .returning({ id: projectItem.id });
+    ids[item.name] = row.id;
+  }
+  return ids;
 }

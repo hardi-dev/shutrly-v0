@@ -157,13 +157,9 @@ describe("client gate (D-4, D-5)", () => {
 });
 
 async function freshProject() {
-  const [row] = await db
-    .select({ workspaceId: project.workspaceId, serviceId: project.serviceId })
-    .from(project)
-    .where(eq(project.id, fixture.projectId));
   return seedProjectWithGallery(db, {
-    workspaceId: row.workspaceId,
-    serviceId: row.serviceId,
+    workspaceId: fixture.context.workspaceId,
+    serviceId: fixture.serviceId,
     clientName: "Rina",
     title: "Wisuda Rina",
     status: "POST_PROCESSING",

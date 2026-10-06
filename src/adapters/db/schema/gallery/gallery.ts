@@ -47,6 +47,11 @@ export const gallery = pgTable(
     expiresAt: timestamp("expires_at", { withTimezone: true }),
     expiryDays: integer("expiry_days"),
     publishedAt: timestamp("published_at", { withTimezone: true }),
+    // F-10 BR-DEL-001, BR-AUD-001.
+    finalDeliveryPublishedAt: timestamp("final_delivery_published_at", { withTimezone: true }),
+    finalDeliveryPublishedBy: text("final_delivery_published_by").references(() => user.id, {
+      onDelete: "set null",
+    }),
     archivedAt: timestamp("archived_at", { withTimezone: true }),
     archivedBy: text("archived_by").references(() => user.id, { onDelete: "set null" }),
     createdBy: text("created_by").references(() => user.id, { onDelete: "set null" }),
@@ -74,6 +79,10 @@ export const gallery = pgTable(
     check("gallery_expiry_days_draft_ck", sql`${t.expiryDays} is null or ${t.status} = 'DRAFT'`),
     check("gallery_published_ck", sql`(${t.status} = 'DRAFT') = (${t.publishedAt} is null)`),
     check("gallery_archived_ck", sql`(${t.status} = 'ARCHIVED') = (${t.archivedAt} is not null)`),
+    check(
+      "gallery_final_delivery_ck",
+      sql`${t.finalDeliveryPublishedAt} is null or ${t.status} <> 'DRAFT'`,
+    ),
   ],
 );
 
@@ -156,6 +165,7 @@ export const galleryPhoto = pgTable(
     ...auditColumns(),
   },
   (t) => [
+    tenantKey(t),
     tenantRef(
       { workspaceId: t.workspaceId, column: t.galleryId },
       { workspaceId: gallery.workspaceId, id: gallery.id },

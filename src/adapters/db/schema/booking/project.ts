@@ -43,6 +43,11 @@ export const project = pgTable(
     currency: text("currency").notNull().default("IDR"),
     status: text("status").notNull(),
     clientAccessToken: text("client_access_token").notNull(),
+    // F-10 BR-PRJ-005, BR-PRJ-003, BR-AUD-001.
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+    completedBy: text("completed_by").references(() => user.id, { onDelete: "set null" }),
+    tokenRotatedAt: timestamp("token_rotated_at", { withTimezone: true }),
+    tokenRotatedBy: text("token_rotated_by").references(() => user.id, { onDelete: "set null" }),
     cancelledAt: timestamp("cancelled_at", { withTimezone: true }),
     cancelledBy: text("cancelled_by").references(() => user.id, { onDelete: "set null" }),
     cancelReason: text("cancel_reason"),
@@ -81,6 +86,10 @@ export const project = pgTable(
     check("project_token_ck", sql`${t.clientAccessToken} ~ '^[A-Za-z0-9_-]{43}$'`),
     check("project_cancel_ck", sql`(${t.status} = 'CANCELLED') = (${t.cancelledAt} is not null)`),
     check(
+      "project_completed_ck",
+      sql`(${t.status} = 'COMPLETED') = (${t.completedAt} is not null)`,
+    ),
+    check(
       "project_cancel_reason_ck",
       sql`${t.cancelReason} is null or char_length(${t.cancelReason}) <= 500`,
     ),
@@ -108,6 +117,7 @@ export const projectItem = pgTable(
     ...auditColumns(),
   },
   (t) => [
+    tenantKey(t),
     tenantRef(
       { workspaceId: t.workspaceId, column: t.projectId },
       { workspaceId: project.workspaceId, id: project.id },

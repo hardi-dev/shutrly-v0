@@ -14,6 +14,7 @@ import { itemLimitSql } from "../gallery-repository/selection-group-sql";
 import { project, projectItem } from "../schema/booking/project";
 import { gallery } from "../schema/gallery/gallery";
 import { photoSelection, selectionGroup } from "../schema/gallery/selection";
+import { pickWriter, selectPickedPhotos } from "./selection-pick-sql";
 
 const groupColumns = {
   id: selectionGroup.id,
@@ -168,5 +169,23 @@ export function createDrizzleSelectionRepository(db: DbExecutor): SelectionRepos
     async deleteGroup(context, groupId) {
       await db.delete(selectionGroup).where(groupScope(context, groupId));
     },
+    withLockedGroup: (context, projectId, groupId, work) =>
+      db.transaction(async (tx) => {
+        const locked = await tx
+          .select({ galleryId: selectionGroup.galleryId })
+          .from(selectionGroup)
+          .where(and(groupScope(context, groupId), eq(selectionGroup.projectId, projectId)))
+          .for("update");
+        const galleryId = locked.at(0)?.galleryId;
+        if (!galleryId) return "NOT_FOUND" as const;
+        const row = (
+          await groupsQuery(tx)
+            .where(groupScope(context, groupId))
+            .groupBy(selectionGroup.id, projectItem.id)
+        ).at(0);
+        if (!row) return "NOT_FOUND" as const;
+        return work(toGroupRecord(row), pickWriter(tx, { context, groupId, galleryId }));
+      }),
+    listPickedPhotos: (context, projectId) => selectPickedPhotos(db, context, projectId),
   };
 }

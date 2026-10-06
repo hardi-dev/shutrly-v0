@@ -36,6 +36,8 @@ function repository(group: SelectionGroupRecord | null, limit: number): Selectio
     createGroupForItem: vi.fn(() => Promise.resolve()),
     setBaseLimit: vi.fn(() => Promise.resolve()),
     deleteGroup: vi.fn(() => Promise.resolve()),
+    withLockedGroup: vi.fn(),
+    listPickedPhotos: vi.fn(),
   };
 }
 

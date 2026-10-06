@@ -316,11 +316,11 @@ export const remainingPlaces = (limit: number, usage: number): number => Math.ma
 **Components:** `client-home-screen`, `group-summary` (Beranda variant: status chip, bar, text, action *Mulai memilih* / *Lanjut memilih* / *Lihat pilihan*), `client-browse-screen` (folders, search, grid 4/2, skeleton, empty, error with retry), the viewer from `MediaViewer` (read-only this slice). Breadcrumb *Beranda › Semua foto* on desktop; *Beranda* button on phones (A-26).
 
 **Steps**
-- [ ] **3.1** Schema + migration `0016` with backfills; integration test that the backfill creates groups for a published gallery and none for a draft. Migrate non-prod. Commit `feat(selection): add selection groups and picks`.
-- [ ] **3.2** `selection-usage`, `client-photo-visibility`, `client-home` with unit tests. Commit `feat(selection): add usage and visibility rules`.
-- [ ] **3.3** Groups at publish + deal-edit scope with integration tests (AC-SEL-001, -013, -014, -016). Commit `feat(selection): create groups at publish and follow deal edits`.
-- [ ] **3.4** Beranda + landing (A-31) from the beranda exports; integration for AC-SEL-012, -020 (landing part). Commit `feat(client-access): add beranda`.
-- [ ] **3.5** Semua foto + media route + read-only viewer from the semua-foto and pratinjau-lihat exports; integration for AC-ACC-011, -013 (hidden photos never in page, JSON or URLs; the route serves only visible photos). Commit `feat(client-access): browse all photos`.
+- [x] **3.1** Schema + migration `0016` with backfills; integration test that the backfill creates groups for a published gallery and none for a draft. Migrate non-prod. Commit `feat(selection): add selection groups and picks`.
+- [x] **3.2** `selection-usage`, `client-photo-visibility`, `client-home` with unit tests. Commit `feat(selection): add usage and visibility rules`.
+- [x] **3.3** Groups at publish + deal-edit scope with integration tests (AC-SEL-001, -013, -014, -016). Commit `feat(selection): create groups at publish and follow deal edits`.
+- [x] **3.4** Beranda + landing (A-31) from the beranda exports; integration for AC-SEL-012, -020 (landing part). Commit `feat(client-access): add beranda`.
+- [x] **3.5** Semua foto + media route + read-only viewer from the semua-foto and pratinjau-lihat exports; integration for AC-ACC-011, -013 (hidden photos never in page, JSON or URLs; the route serves only visible photos). Commit `feat(client-access): browse all photos`.
 
 **Done check:** a signed-in client sees Beranda with the right cards and usage, browses folders and search on both widths, opens the viewer, and images fall back to the media route when Google fails; an Owner edit that lowers a value below usage is refused with the usage.
 

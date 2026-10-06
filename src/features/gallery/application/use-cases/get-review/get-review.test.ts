@@ -53,6 +53,7 @@ const pick = (groupId: string, photoId: string, patch: Partial<PickedPhotoRecord
   externalFileId: `ext-${photoId}`,
   provider: "GOOGLE_DRIVE" as const,
   missing: false,
+  changedAt: new Date("2026-10-05T06:52:00Z"),
   ...patch,
 });
 

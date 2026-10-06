@@ -37,6 +37,7 @@ const pick = (n: number, missing = false): PickedPhotoRecord => ({
   externalFileId: `x${String(n)}`,
   provider: "GOOGLE_DRIVE",
   missing,
+  changedAt: new Date("2026-10-05T06:52:00Z"),
 });
 
 describe("listSelectionGroups (owner-1 exports)", () => {

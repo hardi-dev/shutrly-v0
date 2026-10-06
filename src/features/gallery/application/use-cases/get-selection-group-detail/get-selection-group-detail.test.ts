@@ -43,6 +43,7 @@ const pick = (
   externalFileId: id,
   provider: "GOOGLE_DRIVE",
   missing: false,
+  changedAt: new Date("2026-10-05T06:52:00Z"),
   ...patch,
 });
 
@@ -83,6 +84,7 @@ describe("getSelectionGroupDetail (A-34)", () => {
       },
     ]);
     expect(JSON.stringify(detail)).not.toContain("externalFileId");
+    expect(detail.changedAt).toBe("2026-10-05T06:52:00.000Z");
   });
 
   it("AC-SEL-015 flags missing photos and names them", async () => {

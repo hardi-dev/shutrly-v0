@@ -68,6 +68,8 @@ export interface PickedPhotoRecord {
   readonly externalFileId: string;
   readonly provider: SourceProvider;
   readonly missing: boolean;
+  /** When the pick or its note last changed. */
+  readonly changedAt: Date;
 }
 
 /** What a deal edit did to a project item, so the group can follow (D-10c). */

@@ -13,12 +13,15 @@ import {
 } from "@/composition/booking/project-flow/project-flow";
 import { loadAssignableMembers } from "@/composition/booking/team-flow/team-flow";
 import { loadGalleryCard } from "@/composition/gallery/gallery-flow/gallery-flow";
+import { loadSelectionCard } from "@/composition/gallery/selection-owner-flow/selection-owner-flow";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { ProjectDetailScreen } from "@/features/booking/ui/project-detail-screen/project-detail-screen";
 import { projectMetaText } from "@/features/booking/ui/project-session-summary/project-session-summary";
 import { projectStatusChip } from "@/features/booking/ui/project-status-chip/project-status-props";
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
+import type { SelectionCardView } from "@/features/gallery/application/use-cases/owner-selection-views/owner-selection-views.types";
 import { GalleryCard } from "@/features/gallery/ui/gallery-card/gallery-card";
+import { SelectionCard } from "@/features/gallery/ui/selection-card/selection-card";
 import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
 import { ToastOnMount } from "@/ui/patterns/toast/toast";
 
@@ -31,11 +34,12 @@ export default async function ProjectDetailPage({
 }>) {
   const { workspaceId, projectId } = await params;
   const { state } = await searchParams;
-  const [project, definitions, assignableMembers, galleryCard] = await Promise.all([
+  const [project, definitions, assignableMembers, galleryCard, selectionCard] = await Promise.all([
     loadProjectDetail(workspaceId, projectId),
     loadProjectDefinitions(workspaceId),
     loadAssignableMembers(workspaceId),
     loadGalleryCard(workspaceId, projectId),
+    loadSelectionCard(workspaceId, projectId),
   ]);
   const toast = resolveToast(state, project.title);
   return (
@@ -54,6 +58,7 @@ export default async function ProjectDetailPage({
         editActions={PROJECT_EDIT_ACTIONS}
         definitions={definitions}
         galleryCard={galleryCardSlot(workspaceId, galleryCard)}
+        selectionCard={selectionCardSlot(workspaceId, projectId, selectionCard)}
         assignableMembers={assignableMembers}
         addAssignmentAction={addSessionAssignmentAction}
         removeAssignmentAction={removeSessionAssignmentAction}
@@ -68,6 +73,10 @@ export default async function ProjectDetailPage({
       ) : null}
     </>
   );
+}
+
+function selectionCardSlot(workspaceId: string, projectId: string, card: SelectionCardView) {
+  return <SelectionCard workspaceId={workspaceId} projectId={projectId} card={card} />;
 }
 
 function galleryCardSlot(workspaceId: string, card: GalleryCardView) {

@@ -29,6 +29,9 @@ export type ButtonIconName = Extract<
   // F-10 viewer: *Pilih untuk…* and *Catatan* (pratinjau exports).
   | "list-checks"
   | "message-square-text"
+  // F-10 Owner selection pages: *Lihat pilihan* and *Kunci pilihan* (owner exports).
+  | "eye"
+  | "lock"
 >;
 
 export interface ButtonIconProps {

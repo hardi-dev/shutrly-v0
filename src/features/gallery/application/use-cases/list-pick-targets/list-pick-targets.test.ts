@@ -46,6 +46,7 @@ const PICK: PickedPhotoRecord = {
   externalFileId: "drive-7",
   provider: "GOOGLE_DRIVE",
   missing: false,
+  changedAt: new Date("2026-10-05T06:52:00Z"),
 };
 
 describe("listPickTargets (A-30)", () => {

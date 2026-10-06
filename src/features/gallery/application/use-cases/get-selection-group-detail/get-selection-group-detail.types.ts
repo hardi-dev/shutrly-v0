@@ -15,6 +15,8 @@ export interface SelectionGroupDetailView {
   readonly group: OwnerGroupView;
   /** Picks in file-name order, missing photos included: they still count (A-8). */
   readonly picks: readonly OwnerPickView[];
+  /** The latest change to any pick of the group, ISO; null with no picks (the *Waktu* of an open group). */
+  readonly changedAt: string | null;
   readonly missingCount: number;
   readonly missingNames: readonly string[];
 }

@@ -11,7 +11,7 @@ export function PhotoThumb({ image, size }: Readonly<PhotoThumbProps>) {
   return (
     <span
       className={cn(
-        "shrink-0 overflow-hidden rounded-(--radius-sm) bg-(--component-photo-tile-image-background)",
+        "block shrink-0 overflow-hidden rounded-(--radius-sm) bg-(--component-photo-tile-image-background)",
         size === "md" ? "size-12" : "size-14",
       )}
     >

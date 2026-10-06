@@ -122,6 +122,7 @@ function DetailBody({
   project,
   menuActions,
   galleryCard,
+  selectionCard,
   api,
   edit,
   team,
@@ -175,6 +176,7 @@ function DetailBody({
         button={button}
         edit={edit}
         galleryCard={galleryCard}
+        selectionCard={selectionCard}
         team={team}
       />
     </>
@@ -188,6 +190,7 @@ function DetailCards({
   button,
   edit,
   galleryCard,
+  selectionCard,
   team,
 }: Readonly<{
   project: ProjectDetailScreenProps["project"];
@@ -196,6 +199,7 @@ function DetailCards({
   button: ReactNode;
   edit: DetailEditHandlers;
   galleryCard: ReactNode;
+  selectionCard: ReactNode;
   team: SessionTeamHandlers;
 }>) {
   return (
@@ -209,6 +213,7 @@ function DetailCards({
       {project.cancellation ? <ProjectCancelledAlert cancellation={project.cancellation} /> : null}
       <ProjectInfoCard project={project} isMobile={isMobile} onEdit={onEditInfo} />
       {galleryCard}
+      {selectionCard}
       <ProjectPackageCard project={project} isMobile={isMobile} edit={edit} />
       <ProjectScheduleCard project={project} isMobile={isMobile} edit={edit} team={team} />
       <ProjectFieldsReadCard project={project} isMobile={isMobile} edit={edit} />

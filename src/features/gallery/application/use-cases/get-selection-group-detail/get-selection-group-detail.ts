@@ -44,10 +44,15 @@ export async function getSelectionGroupDetail(
       missing,
     }));
   const missing = picks.filter((pick) => pick.missing);
+  const latest = Math.max(
+    0,
+    ...picked.filter((pick) => pick.groupId === group.id).map((pick) => pick.changedAt.getTime()),
+  );
   return {
     projectTitle: facts.projectTitle,
     group: toOwnerGroupView(group),
     picks,
+    changedAt: latest === 0 ? null : new Date(latest).toISOString(),
     missingCount: missing.length,
     missingNames: missing.map((pick) => pick.fileName),
   };

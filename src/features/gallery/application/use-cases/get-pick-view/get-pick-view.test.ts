@@ -54,6 +54,7 @@ function picked(groupId: string, photoId: string, patch: Partial<PickedPhotoReco
     externalFileId: `ext-${photoId}`,
     provider: "GOOGLE_DRIVE",
     missing: false,
+    changedAt: new Date("2026-10-05T06:52:00Z"),
     ...patch,
   };
   return record;

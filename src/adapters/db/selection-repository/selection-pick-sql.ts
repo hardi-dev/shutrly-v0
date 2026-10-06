@@ -108,6 +108,13 @@ export function pickWriter(tx: DbExecutor, scope: LockedGroupScope): PickWriter 
   };
 }
 
+// Picks by group, then in file-name order (A-25).
+const PICK_ORDER = [
+  asc(photoSelection.selectionGroupId),
+  asc(galleryPhoto.nameSortKey),
+  asc(galleryPhoto.id),
+];
+
 /** Every pick of a project's groups with its photo facts, in group then file-name order (A-8, A-25). @param db - the executor @param context - verified workspace @param projectId - the project @returns the picks */
 export async function selectPickedPhotos(
   db: DbExecutor,
@@ -120,6 +127,7 @@ export async function selectPickedPhotos(
       photoId: photoSelection.photoId,
       quantity: photoSelection.quantity,
       note: photoSelection.note,
+      changedAt: photoSelection.updatedAt,
       fileName: galleryPhoto.fileName,
       folderPath: galleryPhoto.folderPath,
       externalFileId: galleryPhoto.externalFileId,
@@ -149,11 +157,7 @@ export async function selectPickedPhotos(
         eq(selectionGroup.projectId, projectId),
       ),
     )
-    .orderBy(
-      asc(photoSelection.selectionGroupId),
-      asc(galleryPhoto.nameSortKey),
-      asc(galleryPhoto.id),
-    );
+    .orderBy(...PICK_ORDER);
   return rows.flatMap(({ missingAt, provider, ...row }) => {
     const known = SOURCE_PROVIDERS.find((candidate) => candidate === provider);
     return known ? [{ ...row, provider: known, missing: missingAt !== null }] : [];

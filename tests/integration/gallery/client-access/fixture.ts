@@ -1,0 +1,138 @@
+import { uniqueEmail } from "@tests/support/auth/unique";
+import { fakeHasher } from "@tests/support/gallery/fake-gallery-crypto";
+
+import type { Db } from "@/adapters/db/client/client.types";
+import { user } from "@/adapters/db/schema/auth/auth";
+import { service, serviceCategory } from "@/adapters/db/schema/booking/catalog";
+import { client } from "@/adapters/db/schema/booking/client";
+import { project } from "@/adapters/db/schema/booking/project";
+import { gallery } from "@/adapters/db/schema/gallery/gallery";
+import { workspace } from "@/adapters/db/schema/workspace/workspace";
+import { asWorkspaceId } from "@/shared/workspace-context/workspace-context";
+import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
+
+export const GALLERY_PASSWORD = "mawar-4821";
+
+export interface ClientAccessFixture {
+  readonly context: WorkspaceContext;
+  readonly ownerId: string;
+  /** Wisuda Rina, POST_PROCESSING, published gallery. */
+  readonly t1: string;
+  readonly projectId: string;
+  readonly galleryId: string;
+  /** Wisuda Sari, BOOKED, same workspace, its own published gallery. */
+  readonly t2: string;
+  /** A project in another workspace. */
+  readonly t3: string;
+}
+
+/** A random 43-character base64url token, like the generator's (BR-PRJ-003). */
+export function randomToken(): string {
+  return Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString("base64url");
+}
+
+/** A private-range address of its own, so counters never collide between tests (ADR-009). */
+export function randomIp(): string {
+  const [a, b, c] = crypto.getRandomValues(new Uint8Array(3));
+  return `10.${String(a)}.${String(b)}.${String(c)}`;
+}
+
+async function seedStudio(db: Db, brandName: string) {
+  const ownerId = crypto.randomUUID();
+  await db.insert(user).values({ id: ownerId, name: "Client Owner", email: uniqueEmail() });
+  const [ws] = await db
+    .insert(workspace)
+    .values({
+      ownerUserId: ownerId,
+      name: `Client ${crypto.randomUUID()}`,
+      brandName,
+      invoicePrefix: "CLI",
+    })
+    .returning({ id: workspace.id });
+  const [category] = await db
+    .insert(serviceCategory)
+    .values({ workspaceId: ws.id, name: "Wisuda" })
+    .returning({ id: serviceCategory.id });
+  const [basic] = await db
+    .insert(service)
+    .values({ workspaceId: ws.id, categoryId: category.id, name: "Wisuda", basePrice: "700000" })
+    .returning({ id: service.id });
+  return { ownerId, workspaceId: ws.id, serviceId: basic.id };
+}
+
+interface ProjectSeed {
+  readonly workspaceId: string;
+  readonly serviceId: string;
+  readonly clientName: string;
+  readonly title: string;
+  readonly status: string;
+}
+
+/** Inserts a client, its project and a published gallery with the fixture password. */
+export async function seedProjectWithGallery(db: Db, seed: ProjectSeed) {
+  const token = randomToken();
+  const [person] = await db
+    .insert(client)
+    .values({ workspaceId: seed.workspaceId, name: seed.clientName })
+    .returning({ id: client.id });
+  const [row] = await db
+    .insert(project)
+    .values({
+      workspaceId: seed.workspaceId,
+      clientId: person.id,
+      serviceId: seed.serviceId,
+      agreedPrice: "700000",
+      title: seed.title,
+      status: seed.status,
+      clientAccessToken: token,
+    })
+    .returning({ id: project.id });
+  const [created] = await db
+    .insert(gallery)
+    .values({
+      workspaceId: seed.workspaceId,
+      projectId: row.id,
+      status: "PUBLISHED",
+      publishedAt: new Date(),
+      passwordCiphertext: "enc",
+      passwordIv: "iv",
+      passwordHash: await fakeHasher.hash(GALLERY_PASSWORD),
+    })
+    .returning({ id: gallery.id });
+  return { token, projectId: row.id, galleryId: created.id };
+}
+
+/** Seeds the AC shared fixture's gate part: T1, T2 in one studio, T3 in another (ADR-009: own rows only). */
+export async function seedClientAccess(db: Db): Promise<ClientAccessFixture> {
+  const studio = await seedStudio(db, "Studio Senja");
+  const base = { workspaceId: studio.workspaceId, serviceId: studio.serviceId };
+  const rina = await seedProjectWithGallery(db, {
+    ...base,
+    clientName: "Rina Saputri",
+    title: "Wisuda Rina",
+    status: "POST_PROCESSING",
+  });
+  const sari = await seedProjectWithGallery(db, {
+    ...base,
+    clientName: "Sari",
+    title: "Wisuda Sari",
+    status: "BOOKED",
+  });
+  const other = await seedStudio(db, "Studio Lain");
+  const t3 = await seedProjectWithGallery(db, {
+    workspaceId: other.workspaceId,
+    serviceId: other.serviceId,
+    clientName: "Dewi",
+    title: "Wisuda Dewi",
+    status: "BOOKED",
+  });
+  return {
+    context: { workspaceId: asWorkspaceId(studio.workspaceId) },
+    ownerId: studio.ownerId,
+    t1: rina.token,
+    projectId: rina.projectId,
+    galleryId: rina.galleryId,
+    t2: sari.token,
+    t3: t3.token,
+  };
+}

@@ -49,7 +49,7 @@ async function galleryWith(seed: GallerySeed, provider: FakeDriveProvider, folde
   const deps = {
     sources: createDrizzleGallerySourceRepository(db),
     provider,
-    rateLimiter: { hit: () => Promise.resolve(true) },
+    rateLimiter: { hit: () => Promise.resolve(true), peek: () => Promise.resolve(true) },
     now: new Date(),
   };
   const sourceIds: string[] = [];

@@ -44,7 +44,7 @@ function deps() {
   return {
     sources: createDrizzleGallerySourceRepository(db),
     provider,
-    rateLimiter: { hit: () => Promise.resolve(true) },
+    rateLimiter: { hit: () => Promise.resolve(true), peek: () => Promise.resolve(true) },
     cipher,
     hasher: fakeHasher,
     now: new Date(),

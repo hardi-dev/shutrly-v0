@@ -36,7 +36,7 @@ beforeAll(async () => {
 });
 afterAll(() => close());
 
-const allow = { hit: () => Promise.resolve(true) };
+const allow = { hit: () => Promise.resolve(true), peek: () => Promise.resolve(true) };
 
 function deps(provider: FakeDriveProvider) {
   return {

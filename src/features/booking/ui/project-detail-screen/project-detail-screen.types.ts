@@ -18,6 +18,8 @@ export interface ProjectDetailScreenProps {
   readonly galleryCard?: ReactNode;
   /** The F-10 *Pilihan klien* card, rendered right after the Galeri card (client-access TD D-20). */
   readonly selectionCard?: ReactNode;
+  /** F-10 Slice 7: the *Add-on* card, after *Pilihan klien* (D-20). */
+  readonly addOnCard?: ReactNode;
   /** Active members with their roles, for the Penugasan form (D-13). */
   readonly assignableMembers: readonly AssignableMember[];
   readonly addAssignmentAction: AssignmentDialogProps["addAction"];

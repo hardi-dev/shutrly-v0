@@ -5,6 +5,7 @@ import type { AddOnTargetPort } from "../../ports/add-on-target/add-on-target.po
 import type { createAddOnSchema } from "./create-add-on.schema";
 
 export type CreateAddOnInput = z.input<typeof createAddOnSchema>;
+export type CreateAddOnFields = z.output<typeof createAddOnSchema>;
 
 export interface CreateAddOnDeps {
   readonly addOns: AddOnRepositoryPort;

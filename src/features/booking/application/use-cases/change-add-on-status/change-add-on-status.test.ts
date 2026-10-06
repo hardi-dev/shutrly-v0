@@ -23,6 +23,7 @@ function setup(status: AddOnStatus | null, selectionGroupId: string | null = "g"
     unitPrice: "20000",
     totalAmount: "100000",
     status,
+    approvedAt: null,
     createdAt: NOW,
   };
   const setStatus = vi.fn(() => Promise.resolve());

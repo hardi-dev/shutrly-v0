@@ -26,6 +26,7 @@ const addOnColumns = {
   unitPrice: projectAddOn.unitPrice,
   totalAmount: projectAddOn.totalAmount,
   status: projectAddOn.status,
+  approvedAt: projectAddOn.approvedAt,
   createdAt: projectAddOn.createdAt,
 };
 

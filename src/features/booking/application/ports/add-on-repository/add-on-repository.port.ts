@@ -13,6 +13,7 @@ export interface AddOnRecord {
   readonly unitPrice: string;
   readonly totalAmount: string;
   readonly status: AddOnStatus;
+  readonly approvedAt: Date | null;
   readonly createdAt: Date;
 }
 

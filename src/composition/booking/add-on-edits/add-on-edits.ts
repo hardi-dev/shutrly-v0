@@ -1,6 +1,5 @@
 import "server-only";
 
-import type { AddOnTargetPort } from "@/features/booking/application/ports/add-on-target/add-on-target.port";
 import type {
   AddOnStatusResult,
   AddOnWriteResult,
@@ -10,10 +9,10 @@ import { approveAddOn } from "@/features/booking/application/use-cases/approve-a
 import { cancelAddOn } from "@/features/booking/application/use-cases/cancel-add-on/cancel-add-on";
 import { createAddOn } from "@/features/booking/application/use-cases/create-add-on/create-add-on";
 import { adjustExtraLimit } from "@/features/gallery/application/use-cases/adjust-extra-limit/adjust-extra-limit";
-import { checkAddOnTarget } from "@/features/gallery/application/use-cases/check-add-on-target/check-add-on-target";
 
 import { AddOnRefusal } from "../add-on-scope/add-on-scope";
 import type { AddOnScope } from "../add-on-scope/add-on-scope.types";
+import { addOnTargetsOf } from "../add-on-targets/add-on-targets";
 import type { AddOnTarget } from "./add-on-edits.types";
 
 async function applyEffect(
@@ -34,9 +33,7 @@ export function createAddOnWithTarget(
   target: AddOnTarget,
   values: unknown,
 ): Promise<CreateAddOnResult> {
-  const targets: AddOnTargetPort = {
-    check: (context, projectId, groupId) => checkAddOnTarget(scope, context, projectId, groupId),
-  };
+  const targets = addOnTargetsOf(scope.selections);
   return createAddOn(
     { addOns: scope.addOns, targets },
     target.context,

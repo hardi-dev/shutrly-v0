@@ -58,6 +58,7 @@ function writer(setup: Setup): PickWriter {
     deletePick: vi.fn(() => Promise.resolve()),
     setNote: vi.fn(() => Promise.resolve()),
     markSubmitted: vi.fn(() => Promise.resolve()),
+    markLocked: vi.fn(() => Promise.resolve()),
   };
 }
 

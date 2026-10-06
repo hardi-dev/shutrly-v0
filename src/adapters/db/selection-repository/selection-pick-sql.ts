@@ -46,6 +46,26 @@ async function findGroupPhoto(tx: DbExecutor, scope: LockedGroupScope, photoId: 
   return { kind, missing: row.missingAt !== null, sourceRemoved: row.removedAt !== null };
 }
 
+/** The group's status writes under the lock: submitted by the client, locked by the Owner (BR-SEL-005, BR-AUD-001). @param tx - the transaction holding the group lock @param scope - workspace, group and its gallery @returns the status writer */
+function groupStatusWriter(tx: DbExecutor, scope: LockedGroupScope) {
+  const { context, groupId } = scope;
+  const group = and(
+    eq(selectionGroup.workspaceId, context.workspaceId),
+    eq(selectionGroup.id, groupId),
+  );
+  return {
+    async markLocked(actorId: string, at: Date) {
+      await tx
+        .update(selectionGroup)
+        .set({ status: "LOCKED", lockedAt: at, lockedBy: actorId })
+        .where(group);
+    },
+    async markSubmitted(at: Date) {
+      await tx.update(selectionGroup).set({ status: "SUBMITTED", submittedAt: at }).where(group);
+    },
+  };
+}
+
 /** Pick writes for a group locked in `tx` (D-12). @param tx - the transaction holding the group lock @param scope - workspace, group and its gallery @returns the writer */
 export function pickWriter(tx: DbExecutor, scope: LockedGroupScope): PickWriter {
   const { context, groupId } = scope;
@@ -84,14 +104,7 @@ export function pickWriter(tx: DbExecutor, scope: LockedGroupScope): PickWriter 
     async setNote(photoId, note) {
       await tx.update(photoSelection).set({ note, updatedAt: new Date() }).where(pickOf(photoId));
     },
-    async markSubmitted(at) {
-      await tx
-        .update(selectionGroup)
-        .set({ status: "SUBMITTED", submittedAt: at })
-        .where(
-          and(eq(selectionGroup.workspaceId, context.workspaceId), eq(selectionGroup.id, groupId)),
-        );
-    },
+    ...groupStatusWriter(tx, scope),
   };
 }
 

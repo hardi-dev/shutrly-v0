@@ -53,6 +53,8 @@ export interface PickWriter {
   readonly setNote: (photoId: string, note: string | null) => Promise<void>;
   /** Moves the locked group to `SUBMITTED` (BR-SEL-005). */
   readonly markSubmitted: (at: Date) => Promise<void>;
+  /** Moves the locked group to `LOCKED` with who and when (BR-SEL-005, BR-AUD-001). */
+  readonly markLocked: (actorId: string, at: Date) => Promise<void>;
 }
 
 /** A pick with the photo facts the client views need (Pilih, Tinjau, markers). */

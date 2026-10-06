@@ -357,9 +357,9 @@ export const remainingPlaces = (limit: number, usage: number): number => Math.ma
 **Components:** `Stepper` primitive in `src/ui/primitives/stepper` (React Aria `NumberField`, min 1, max from props, labels, story, dom tests); `pick-row` (local, Alert/Info note with *Ubah catatan* / *Tambah catatan*, remove or stepper, read-only variant); `review-screen` (720 narrow on desktop, summary, footer *Tambah foto lagi* / *Kirim n foto* or *n lembar*, below-limit confirm, *Mengirim…* pending, empty state).
 
 **Steps**
-- [ ] **5.1** `Stepper` primitive + story + tests. Commit `feat(ui): add the stepper`.
-- [ ] **5.2** Submit use case + integration (AC-SEL-008, -009, -018). Commit `feat(selection): submit a group`.
-- [ ] **5.3** Tinjau + Lihat pilihan from the exports, Beranda toast after submit. Commit `feat(client-access): review and send picks`.
+- [x] **5.1** `Stepper` primitive + story + tests. Commit `feat(ui): add the stepper`.
+- [x] **5.2** Submit use case + integration (AC-SEL-008, -009, -018). Commit `feat(selection): submit a group`.
+- [x] **5.3** Tinjau + Lihat pilihan from the exports, Beranda toast after submit. Commit `feat(client-access): review and send picks`.
 
 **Done check:** the client reviews picks, changes print quantities with the stepper up to the places left, edits notes, sends below the limit after the confirm, returns to Beranda with *Dikirim · menunggu fotografer*, and the group's picks are read-only afterwards.
 

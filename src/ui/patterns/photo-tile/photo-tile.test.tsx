@@ -55,3 +55,64 @@ describe("PhotoTile (C46)", () => {
     expect(screen.getByRole("button", { name: "IMG_001.jpg" })).toHaveClass("w-full");
   });
 });
+
+describe("PhotoTile selectable (F-10 Photo Tile/Selectable, A-25, A-32)", () => {
+  it("AC-SEL-002 toggles the pick from the whole tile and exposes the state", async () => {
+    const onChange = vi.fn();
+    render(
+      <PhotoTile
+        fileName="IMG_001.jpg"
+        imageSrc="/x.jpg"
+        selection={{ isSelected: false, onChange }}
+      />,
+    );
+    const tile = screen.getByRole("button", { name: "IMG_001.jpg" });
+    expect(tile).toHaveAttribute("aria-pressed", "false");
+    await userEvent.setup().click(tile);
+    expect(onChange).toHaveBeenCalledWith(true);
+  });
+
+  it("AC-SEL-003 disables unpicked tiles when the group is full, but keeps picked ones", () => {
+    render(
+      <>
+        <PhotoTile
+          fileName="IMG_001.jpg"
+          imageSrc="/x.jpg"
+          selection={{ isSelected: false, isDisabled: true, onChange: vi.fn() }}
+        />
+        <PhotoTile
+          fileName="IMG_002.jpg"
+          imageSrc="/x.jpg"
+          selection={{ isSelected: true, isDisabled: true, onChange: vi.fn() }}
+        />
+      </>,
+    );
+    expect(screen.getByRole("button", { name: "IMG_001.jpg" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "IMG_002.jpg" })).toBeEnabled();
+  });
+
+  it("AC-SEL-021 shows the quantity chip and opens the note from its own button", async () => {
+    const onNote = vi.fn();
+    const onChange = vi.fn();
+    render(
+      <PhotoTile
+        fileName="IMG_002.jpg"
+        imageSrc="/x.jpg"
+        selection={{ isSelected: true, onChange }}
+        badge={{ label: "× 1", tone: "info" }}
+        note={{
+          hasNote: true,
+          label: "Catatan",
+          accessibleLabel: "Catatan untuk IMG_002.jpg",
+          onPress: onNote,
+        }}
+      />,
+    );
+    expect(screen.getByText("× 1")).toBeVisible();
+    await userEvent
+      .setup()
+      .click(screen.getByRole("button", { name: "Catatan untuk IMG_002.jpg" }));
+    expect(onNote).toHaveBeenCalledOnce();
+    expect(onChange).not.toHaveBeenCalled();
+  });
+});

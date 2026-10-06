@@ -1,6 +1,6 @@
 "use client";
 
-import { Button as AriaButton } from "react-aria-components";
+import { Button as AriaButton, ToggleButton } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
 import { useImageFallback } from "@/ui/hooks/use-image-fallback/use-image-fallback";
@@ -8,6 +8,7 @@ import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { PHOTO_TILE_COPY } from "./photo-tile.copy";
 import type { PhotoTileImageProps, PhotoTileProps } from "./photo-tile.types";
+import { NoteButton, SelectIndicator, TileBadge } from "./photo-tile-overlays";
 
 // C46: the image height is a literal per grid, 104 on phones and 220 on desktop (photo-tile.md › Gaps).
 const IMAGE =
@@ -18,7 +19,13 @@ const META = "truncate text-(length:--font-size-caption) text-(--component-photo
 const FOCUS =
   "outline-none data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-(--color-semantic-focus-ring)";
 
-function PhotoTileImage({ imageSrc, fallbackSrc, isMissing }: Readonly<PhotoTileImageProps>) {
+function PhotoTileImage({
+  imageSrc,
+  fallbackSrc,
+  isMissing,
+  badge,
+  selection,
+}: Readonly<PhotoTileImageProps>) {
   const image = useImageFallback(imageSrc, fallbackSrc);
   return (
     <span className={IMAGE}>
@@ -40,28 +47,66 @@ function PhotoTileImage({ imageSrc, fallbackSrc, isMissing }: Readonly<PhotoTile
           <StatusChip tone="warning" label={PHOTO_TILE_COPY.missingBadge} hasDot />
         </span>
       ) : null}
+      {selection ? <SelectIndicator selection={selection} /> : null}
+      {badge ? <TileBadge badge={badge} /> : null}
     </span>
   );
 }
 
-/** One photo in a grid: thumbnail, file name and an optional meta line; a missing file shows *Hilang* (C46). @param props - file, image and press handler @returns the tile */
-export function PhotoTile({
+function SelectablePhotoTile(props: Readonly<PhotoTileProps>) {
+  const { fileName, isMissing = false, selection, note } = props;
+  if (!selection) return null;
+  const label = isMissing ? `${fileName}, ${PHOTO_TILE_COPY.missingSuffix}` : fileName;
+  return (
+    <div className="relative min-w-0">
+      <ToggleButton
+        aria-label={label}
+        isSelected={selection.isSelected}
+        isDisabled={selection.isDisabled === true && !selection.isSelected}
+        onChange={selection.onChange}
+        className={cn(
+          "flex w-full min-w-0 cursor-pointer flex-col gap-(--component-photo-tile-gap) rounded-(--component-photo-tile-image-radius) data-disabled:cursor-default",
+          FOCUS,
+        )}
+      >
+        <TileContent {...props} />
+      </ToggleButton>
+      {note ? <NoteButton note={note} /> : null}
+    </div>
+  );
+}
+
+function TileContent({
   fileName,
   meta,
   imageSrc,
   fallbackSrc,
   isMissing = false,
-  onPress,
+  badge,
+  selection,
 }: Readonly<PhotoTileProps>) {
-  const content = (
+  return (
     <>
-      <PhotoTileImage imageSrc={imageSrc} fallbackSrc={fallbackSrc} isMissing={isMissing} />
+      <PhotoTileImage
+        imageSrc={imageSrc}
+        fallbackSrc={fallbackSrc}
+        isMissing={isMissing}
+        badge={badge}
+        selection={selection}
+      />
       <span className="flex w-full min-w-0 flex-col gap-(--component-photo-tile-text-gap) text-left">
         <span className={NAME}>{fileName}</span>
         {meta ? <span className={META}>{meta}</span> : null}
       </span>
     </>
   );
+}
+
+/** One photo in a grid: thumbnail, file name and an optional meta line; a missing file shows *Hilang* (C46). With `selection` the whole tile toggles a pick, with a select control, an optional chip and *Catatan* button (Photo Tile/Selectable, F-10). @param props - file, image, press handler or selection @returns the tile */
+export function PhotoTile(props: Readonly<PhotoTileProps>) {
+  const { fileName, isMissing = false, onPress, selection } = props;
+  if (selection) return <SelectablePhotoTile {...props} />;
+  const content = <TileContent {...props} />;
   const label = isMissing ? `${fileName}, ${PHOTO_TILE_COPY.missingSuffix}` : fileName;
   if (!onPress) {
     return <div className="flex min-w-0 flex-col gap-(--component-photo-tile-gap)">{content}</div>;

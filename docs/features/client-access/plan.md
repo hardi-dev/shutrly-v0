@@ -193,10 +193,10 @@ Every slice has: **Read first** (exact IDs, sections and exports, so the build l
 **Components:** `item-definition-dialog`: replace the selection-type control with *Mode pilihan* (`Radio`/`OptionCard`: *Hitung foto* = COUNT, *Jumlah per foto* = QUANTITY) and *Klien bisa memberi catatan* (`Switch`), shown only with *Dipakai untuk pilihan klien*; both disabled with the locked note when in use. Update the list (`item-definitions-screen`), `definition-icon`, `package-items-card`, `service-items-card`, create-project package UI and their copy to the new fields.
 
 **Steps**
-- [ ] **1.1** Domain + schema + migration test (`item-definition-type.test.ts`, `catalog-schemas.test.ts`); generate `0015`, review, migrate non-prod. Commit `feat(catalog): replace selection type with pick mode and pick notes`.
-- [ ] **1.2** Use cases, seed, snapshot and repositories, with tests (`add-item-definition.test.ts`, `update-item-definition.test.ts`, `seed-default-item-definitions.test.ts`, `edit-project.test.ts`, integration `tests/integration/booking/catalog/pick-mode.test.ts` for AC-CAT-001). Commit `feat(catalog): snapshot pick mode and notes into projects`.
-- [ ] **1.3** UI from the five exports, dom tests for the dialog states. Commit `feat(catalog): choose pick mode and client notes per item definition`.
-- [ ] **1.4** Sweep the remaining `selectionType` uses (`grep -rn selectionType src tests`): only the dual-write mapping may remain. Commit `refactor(catalog): read pick mode everywhere`.
+- [x] **1.1** Domain + schema + migration test (`item-definition-type.test.ts`, `catalog-schemas.test.ts`); generate `0015`, review, migrate non-prod. Commit `feat(catalog): replace selection type with pick mode and pick notes`.
+- [x] **1.2** Use cases, seed, snapshot and repositories, with tests (`add-item-definition.test.ts`, `update-item-definition.test.ts`, `seed-default-item-definitions.test.ts`, `edit-project.test.ts`, integration `tests/integration/booking/catalog/pick-mode.test.ts` for AC-CAT-001). Commit `feat(catalog): snapshot pick mode and notes into projects`.
+- [x] **1.3** UI from the five exports, dom tests for the dialog states. Commit `feat(catalog): choose pick mode and client notes per item definition`.
+- [x] **1.4** Sweep the remaining `selectionType` uses (`grep -rn selectionType src tests`): only the dual-write mapping may remain. Commit `refactor(catalog): read pick mode everywhere`.
 
 **Done check:** AC-CAT-001 passes in integration; the dialog matches the exports at both widths; `grep -rn "selectionType" src` shows only the legacy mapping and the schema.
 

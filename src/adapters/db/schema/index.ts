@@ -1,5 +1,6 @@
 // Schema barrel: each feature re-exports its table file here, e.g. `export * from "./auth/auth"`.
 export * from "./auth/auth";
+export * from "./booking/add-on";
 export * from "./booking/catalog";
 export * from "./booking/client";
 export * from "./booking/project";

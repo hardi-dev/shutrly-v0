@@ -1,15 +1,16 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-06 (F-10 client-access DESIGNED; F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-06 (F-10 client-access IN PROGRESS, Slices 0–3 built; F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/gallery-free-tier` (F-09 free-tier rework, worktree `.claude/worktrees/gallery-free-tier`). F-07 is on `feat/projects`; F-08 Team designed on `feat/team-sessions`.
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-10 client-access PLANNED (2026-10-06)
+## Current handoff — WIP: F-10 client-access IN PROGRESS (2026-10-06)
 
-Branch `feat/client-access` (worktree `.claude/worktrees/pull-branch-main-21161f`). F-10 merges old F-10..F-13 (gallery access, selection, final delivery, add-ons, completion, token rotation; Owner 2026-10-05). Feature map: `PLANNED`.
+Branch `feat/client-access` (worktree `.claude/worktrees/pull-branch-main-21161f`). F-10 merges old F-10..F-13 (gallery access, selection, final delivery, add-ons, completion, token rotation; Owner 2026-10-05). Feature map: `IN PROGRESS`.
 
-- **Resume at:** `/sdv:build-feature client-access 0` (plan approved 2026-10-06 under the Owner's delegation: "jawab sesuai rekomendasi kamu").
+- **Resume at:** `/sdv:build-feature client-access 4` (Owner goal 2026-10-06: build all slices). Slices 0–3 are built, recorded in technical-design › Implementation record and pushed; migrations `0015`, `0016` applied to the non-production database. Main was merged in Slice 0; this feature's ADR is now **ADR-021** (main's ADR-020 is staging on Netlify).
+- **Local setup done:** `.dev.vars` (from the F-09 worktree, + `CLIENT_SESSION_KEY`) and `.env.test` copied; not committed. Playwright browsers are not installed on this machine, so E2E specs are written but verified by an in-app browser pass (F-09 precedent). A throwaway studio (*Studio Senja*, project *Wisuda Rina*, password *mawar-4821*) was seeded on non-prod for browser checks.
 - **Done:** design APPROVED 2026-10-06 ([design.md](features/client-access/design.md), 125 exports by flow group in `exports/`). [technical-design.md](features/client-access/technical-design.md) (D-1…D-24) and [plan.md](features/client-access/plan.md) (Slices 0–11, each with a Read first list) written. New [ADR-021](architecture/decisions/ADR-021-client-gallery-sessions-and-public-limits.md) (Accepted): signed path-scoped client cookie, public limits on the Neon counters.
 - **Shape:** client access, selection, delivery reads and client screens in `features/gallery`; add-ons, completion, link rotation and pick mode in `features/booking`; ADR-016 scopes for deal edits with groups, add-on approve/cancel and final delivery. Migrations `0015_pick_mode`, `0016_selection`, `0017_add_on` (all additive; `selection_type` dual-written until a later drop).
 - **Decided 2026-10-06 (delegated to my recommendations):** ADR-021 Accepted; *Hapus draf* deletes a draft add-on (spec A-35). **Still for the Owner:** provision `CLIENT_SESSION_KEY` for production before ship; the worktree has no `.dev.vars` (Slice 0.0 copies it from the main checkout and adds the key); promote *Photo Tile/Selectable* in the library when Slice 4 lands.

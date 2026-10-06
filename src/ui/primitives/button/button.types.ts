@@ -26,6 +26,9 @@ export type ButtonIconName = Extract<
   | "external-link"
   | "user-round-cog"
   | "user-plus"
+  // F-10 viewer: *Pilih untuk…* and *Catatan* (pratinjau exports).
+  | "list-checks"
+  | "message-square-text"
 >;
 
 export interface ButtonIconProps {

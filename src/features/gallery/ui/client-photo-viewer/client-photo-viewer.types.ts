@@ -10,4 +10,8 @@ export interface ClientPhotoViewerProps {
   readonly onClose: () => void;
   /** Pick controls for the open photo (Slice 4); none in the read-only viewer. */
   readonly renderActions?: (photo: ClientPhotoView) => ReactNode;
+  /** The phone pick bar under the photo (pratinjau-pilih-untuk CV94I). */
+  readonly renderFooter?: (photo: ClientPhotoView) => ReactNode;
+  /** Replaces the folder line, e.g. *Dipilih di: Foto cetak × 1* (A-30). */
+  readonly metaOf?: (photo: ClientPhotoView) => string | null;
 }

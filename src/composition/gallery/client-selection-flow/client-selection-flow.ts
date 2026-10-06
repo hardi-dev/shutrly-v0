@@ -4,6 +4,8 @@ import { browsePickPhotos } from "@/features/gallery/application/use-cases/brows
 import type { PickPhotosPage } from "@/features/gallery/application/use-cases/browse-pick-photos/browse-pick-photos.types";
 import { getPickView } from "@/features/gallery/application/use-cases/get-pick-view/get-pick-view";
 import type { PickViewResult } from "@/features/gallery/application/use-cases/get-pick-view/get-pick-view.types";
+import { listPickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets";
+import type { PickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets.types";
 import { setPick } from "@/features/gallery/application/use-cases/set-pick/set-pick";
 import type {
   SetPickNoteResult,
@@ -43,6 +45,14 @@ export async function reloadPickEntry(
 ): Promise<PickViewResult | SignedOut> {
   const result = await withSignedInClient(rawToken, (client, scope) =>
     getPickView(scope, client, rawGroupId),
+  );
+  return result.kind === "SIGNED_IN" ? result.value : SIGNED_OUT;
+}
+
+/** Re-reads the viewer's *Pilih untuk…* groups and picks after a refused change (A-30). @param rawToken - the untrusted route token @returns the targets, or SIGNED_OUT */
+export async function reloadPickTargetsEntry(rawToken: string): Promise<PickTargets | SignedOut> {
+  const result = await withSignedInClient(rawToken, (client, scope) =>
+    listPickTargets(scope, client),
   );
   return result.kind === "SIGNED_IN" ? result.value : SIGNED_OUT;
 }

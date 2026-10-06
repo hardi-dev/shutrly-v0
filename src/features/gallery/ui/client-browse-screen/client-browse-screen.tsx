@@ -10,10 +10,10 @@ import { Input } from "@/ui/primitives/input/input";
 
 import { ClientBrowseGrid } from "../client-browse-grid/client-browse-grid";
 import { CLIENT_COPY } from "../client-copy/client-copy.copy";
-import { ClientPhotoViewer } from "../client-photo-viewer/client-photo-viewer";
 import { ClientShell } from "../client-shell/client-shell";
 import type { ClientPageHeader } from "../client-shell/client-shell.types";
 import { CLIENT_BROWSE_START, useClientBrowse } from "../use-client-browse/use-client-browse";
+import { BrowseViewer } from "./browse-viewer";
 import { CLIENT_BROWSE_COPY as COPY } from "./client-browse-screen.copy";
 import type {
   BrowseCardProps,
@@ -124,6 +124,8 @@ export function ClientBrowseScreen({
   hasHome,
   initialPage,
   browseAction,
+  targets,
+  pickActions,
 }: Readonly<ClientBrowseScreenProps>) {
   const browse = useClientBrowse(browseAction, initialPage);
   const [open, setOpen] = useState<number | null>(null);
@@ -144,11 +146,13 @@ export function ClientBrowseScreen({
         />
       ) : null}
       <BrowseCard browse={browse} onOpenPhoto={setOpen} />
-      <ClientPhotoViewer
+      <BrowseViewer
         photos={browse.state.photos}
         index={open}
         onIndexChange={setOpen}
         onClose={close}
+        targets={targets}
+        pickActions={pickActions}
       />
     </ClientShell>
   );

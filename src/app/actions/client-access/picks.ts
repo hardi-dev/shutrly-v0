@@ -4,11 +4,13 @@ import type { SignedOut } from "@/composition/gallery/client-gallery-flow/client
 import {
   browsePickPhotosEntry,
   reloadPickEntry,
+  reloadPickTargetsEntry,
   setPickEntry,
   setPickNoteEntry,
 } from "@/composition/gallery/client-selection-flow/client-selection-flow";
 import type { PickPhotosPage } from "@/features/gallery/application/use-cases/browse-pick-photos/browse-pick-photos.types";
 import type { PickViewResult } from "@/features/gallery/application/use-cases/get-pick-view/get-pick-view.types";
+import type { PickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets.types";
 import type {
   SetPickNoteResult,
   SetPickResult,
@@ -40,4 +42,8 @@ export async function reloadPickViewAction(
   groupId: unknown,
 ): Promise<PickViewResult | SignedOut> {
   return reloadPickEntry(token, groupId);
+}
+
+export async function reloadPickTargetsAction(token: string): Promise<PickTargets | SignedOut> {
+  return reloadPickTargetsEntry(token);
 }

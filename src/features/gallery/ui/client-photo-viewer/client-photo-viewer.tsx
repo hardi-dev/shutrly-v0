@@ -14,12 +14,14 @@ export function ClientPhotoViewer({
   onIndexChange,
   onClose,
   renderActions,
+  renderFooter,
+  metaOf,
 }: Readonly<ClientPhotoViewerProps>) {
   const byId = new Map(photos.map((photo) => [photo.id, photo]));
   const items: MediaViewerItem[] = photos.map((photo) => ({
     id: photo.id,
     title: photo.fileName,
-    meta: photo.folderPath,
+    meta: metaOf?.(photo) ?? photo.folderPath,
     isMissing: photo.missing,
   }));
   const imageOf = (item: MediaViewerItem, size: "stage" | "thumb") => {
@@ -34,6 +36,10 @@ export function ClientPhotoViewer({
     const photo: ClientPhotoView | undefined = byId.get(item.id);
     return photo && renderActions ? renderActions(photo) : null;
   };
+  const footerFor = (item: MediaViewerItem) => {
+    const photo = byId.get(item.id);
+    return photo && renderFooter ? renderFooter(photo) : null;
+  };
   return (
     <MediaViewer
       items={items}
@@ -44,6 +50,7 @@ export function ClientPhotoViewer({
       imageFallbackSrc={stageFallback}
       missingText={CLIENT_BROWSE_COPY.viewerMissing}
       renderActions={renderActions ? actionsFor : undefined}
+      renderFooter={renderFooter ? footerFor : undefined}
     />
   );
 }

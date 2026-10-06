@@ -80,6 +80,7 @@ export type IconName =
   | "align-left"
   | "toggle-left"
   | "list"
+  | "list-checks"
   | "user-plus";
 
 export type IconSize = "sm" | "md" | "lg";

@@ -1,6 +1,11 @@
 import { notFound } from "next/navigation";
 
 import { browseClientPhotosAction } from "@/app/actions/client-access/browse";
+import {
+  reloadPickTargetsAction,
+  setPickAction,
+  setPickNoteAction,
+} from "@/app/actions/client-access/picks";
 import { signInGalleryAction } from "@/app/actions/client-access/sign-in";
 import { loadClientBrowseEntry } from "@/composition/gallery/client-gallery-flow/client-gallery-flow";
 import { ClientBrowseScreen } from "@/features/gallery/ui/client-browse-screen/client-browse-screen";
@@ -20,6 +25,12 @@ export default async function ClientPhotosPage({ params }: Readonly<PageProps<"/
       hasHome={result.value.home.landing === "HOME"}
       initialPage={result.value.firstPage}
       browseAction={browseClientPhotosAction.bind(null, token)}
+      targets={result.value.targets}
+      pickActions={{
+        setPick: setPickAction.bind(null, token),
+        setNote: setPickNoteAction.bind(null, token),
+        reload: reloadPickTargetsAction.bind(null, token),
+      }}
     />
   );
 }

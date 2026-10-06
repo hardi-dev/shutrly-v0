@@ -39,6 +39,8 @@ function renderScreen(action: ClientBrowseAction, initialPage: ClientBrowsePageV
       hasHome
       initialPage={initialPage}
       browseAction={action}
+      targets={{ groups: [], picks: [] }}
+      pickActions={{ setPick: vi.fn(), setNote: vi.fn(), reload: vi.fn() }}
     />,
   );
 }

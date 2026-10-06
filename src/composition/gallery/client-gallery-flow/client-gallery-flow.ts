@@ -8,6 +8,8 @@ import { browseClientPhotos } from "@/features/gallery/application/use-cases/bro
 import type { ClientBrowsePageView } from "@/features/gallery/application/use-cases/browse-client-photos/browse-client-photos.types";
 import { getClientHome } from "@/features/gallery/application/use-cases/get-client-home/get-client-home";
 import type { ClientHomeView } from "@/features/gallery/application/use-cases/get-client-home/get-client-home.types";
+import { listPickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets";
+import type { PickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets.types";
 import { serveClientPhoto } from "@/features/gallery/application/use-cases/serve-client-photo/serve-client-photo";
 import { logger } from "@/shared/logging/logger";
 
@@ -35,6 +37,8 @@ const ROOT_QUERY = { kind: "PROOF", sourceId: null, path: "", search: "", cursor
 export interface ClientBrowseLoad {
   readonly home: ClientHomeView;
   readonly firstPage: ClientBrowsePageView | null;
+  /** The groups and picks behind the viewer's *Pilih untuk…* (A-30). */
+  readonly targets: PickTargets;
 }
 
 /** Loads Beranda (or the landing decision) for a client page (A-24, A-31). @param rawToken - the untrusted route token @returns the gate outcome with the home view */
@@ -47,12 +51,15 @@ export function loadClientBrowseEntry(
   rawToken: string,
 ): Promise<ClientScopeResult<ClientBrowseLoad>> {
   return withSignedInClient(rawToken, async (client, scope) => {
-    const home = await getClientHome(scope, client);
+    const [home, targets] = await Promise.all([
+      getClientHome(scope, client),
+      listPickTargets(scope, client),
+    ]);
     try {
-      return { home, firstPage: await browseClientPhotos(scope, client, ROOT_QUERY) };
+      return { home, targets, firstPage: await browseClientPhotos(scope, client, ROOT_QUERY) };
     } catch {
       logger.error("client.browse_failed", { workspaceId: client.workspaceId });
-      return { home, firstPage: null };
+      return { home, targets, firstPage: null };
     }
   });
 }

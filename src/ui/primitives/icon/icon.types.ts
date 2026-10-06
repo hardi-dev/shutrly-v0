@@ -8,6 +8,7 @@ export type IconName =
   | "eye-off"
   | "circle-alert"
   | "plus"
+  | "minus"
   | "send"
   | "arrow-right"
   | "trash-2"

@@ -413,9 +413,9 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 **Components** (`features/booking/ui/`): `add-on-card` (empty, list with chips, locked-group note), `add-on-dialog` (React Hook Form + `createAddOnSchema`, target select listing `OPEN`/`SUBMITTED` groups, live total), `add-on-menu` (*Setujui*, *Hapus draf*, *Batalkan add-on*), confirm dialogs (approve with reopen note, cancel, cancel refused).
 
 **Steps**
-- [ ] **7.1** Schema + migration + domain with unit tests. Migrate non-prod. Commit `feat(add-ons): add project add-ons`.
-- [ ] **7.2** Use cases + scope + integration `tests/integration/booking/add-ons/add-ons.test.ts` (AC-ADD-001…007, `extra_limit` = sum of approved after every step). Commit `feat(add-ons): approve and cancel add-ons with the group limit`.
-- [ ] **7.3** Card, dialogs and menus from the exports. Commit `feat(add-ons): add the add-on card`.
+- [x] **7.1** Schema + migration + domain with unit tests. Migrate non-prod. Commit `feat(add-ons): add project add-ons`.
+- [x] **7.2** Use cases + scope + integration `tests/integration/booking/add-ons/add-ons.test.ts` (AC-ADD-001…007, `extra_limit` = sum of approved after every step). Commit `feat(add-ons): approve and cancel add-ons with the group limit`.
+- [x] **7.3** Card, dialogs and menus from the exports. Commit `feat(add-ons): add the add-on card`.
 
 **Done check:** the Owner adds *Tambahan 5 foto edit* (total Rp 100.000), approves it, and the client sees *3 / 8* with a submitted group reopened; cancelling below usage is refused with the usage.
 

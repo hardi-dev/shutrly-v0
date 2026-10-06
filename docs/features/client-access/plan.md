@@ -258,11 +258,11 @@ Gate order in `resolveClientAccess` (D-4): validate token format → `peek(unkno
 **Components** (`features/gallery/ui/`): `client-shell` (desktop + phone, per D-21), `client-header`, `client-unavailable`, `password-form` (React Hook Form, *Masuk*, error *Password salah*, *Terlalu banyak percobaan…*, pending state *Memeriksa…*).
 
 **Steps**
-- [ ] **2.1** Env key, limits, session and availability domain with unit tests (cases: each field mismatch, expiry edge, each unavailable case). Commit `feat(client-access): add client session and availability rules`.
-- [ ] **2.2** Signer adapter + tests (round trip, tampered payload, tampered MAC, wrong key). Commit `feat(client-access): sign client sessions with hmac`.
-- [ ] **2.3** Repository + use cases + integration tests `tests/integration/gallery/client-access/gate.test.ts` (AC-ACC-001…008, -010; unknown-token limit with a spy that proves no lookup; hash not called when over the limit). Commit `feat(client-access): resolve tokens and sign clients in`.
-- [ ] **2.4** Route group, proxy, headers, page, action, components from the gerbang exports; dom tests for the password form. Commit `feat(client-access): add the gallery password page`.
-- [ ] **2.5** E2E `tests/e2e/client-access/gate.spec.ts`: open with link + password, wrong password, neutral page for an unknown token, Owner session still sees the gate, axe on both widths. Commit `test(client-access): cover the client gate end to end`.
+- [x] **2.1** Env key, limits, session and availability domain with unit tests (cases: each field mismatch, expiry edge, each unavailable case). Commit `feat(client-access): add client session and availability rules`.
+- [x] **2.2** Signer adapter + tests (round trip, tampered payload, tampered MAC, wrong key). Commit `feat(client-access): sign client sessions with hmac`.
+- [x] **2.3** Repository + use cases + integration tests `tests/integration/gallery/client-access/gate.test.ts` (AC-ACC-001…008, -010; unknown-token limit with a spy that proves no lookup; hash not called when over the limit). Commit `feat(client-access): resolve tokens and sign clients in`.
+- [x] **2.4** Route group, proxy, headers, page, action, components from the gerbang exports; dom tests for the password form. Commit `feat(client-access): add the gallery password page`.
+- [x] **2.5** E2E `tests/e2e/client-access/gate.spec.ts`: open with link + password, wrong password, neutral page for an unknown token, Owner session still sees the gate, axe on both widths. Commit `test(client-access): cover the client gate end to end`.
 
 **Done check:** in the browser, `/g/<token>` shows the password page, a wrong password and the lockout message, the neutral page for bad links, and after the password a placeholder home; reload stays signed in; rotating the password in the Owner gallery page sends the client back to the gate. Responses carry `private, no-store`.
 

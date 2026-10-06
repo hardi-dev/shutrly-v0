@@ -63,6 +63,10 @@ export interface GalleryLifecycleWriter {
   readonly deleteGallery: () => Promise<void>;
   /** Creates one OPEN group per selection item that has none yet (F-10 D-10a); returns how many. */
   readonly createSelectionGroups: () => Promise<number>;
+  /** Visible, not-missing EDITED and PRINT photos of active sources (BR-DEL-003, F-10 D-17). */
+  readonly countFinishedFiles: () => Promise<number>;
+  /** Records final delivery with who and when and bumps content_version (BR-AUD-001, D-17, D-22). */
+  readonly publishFinalDelivery: (actorId: string, now: Date) => Promise<void>;
 }
 
 export interface GallerySourceWriter extends GalleryLifecycleWriter {

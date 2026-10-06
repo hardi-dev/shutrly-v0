@@ -261,6 +261,15 @@ export interface ProjectRepositoryPort {
     id: string,
     change: (locked: LockedProject, writer: ProjectWriter) => Promise<T>,
   ) => Promise<T | "NOT_FOUND">;
+  /** The project's status, locked FOR UPDATE in the caller's transaction (F-10 D-17: project first). */
+  readonly lockStatus: (context: WorkspaceContext, id: string) => Promise<ProjectStatus | null>;
+  /** DELIVERED → COMPLETED with who and when; STALE when the project is no longer DELIVERED (BR-PRJ-005). */
+  readonly markCompleted: (
+    context: WorkspaceContext,
+    id: string,
+    actorId: string,
+    at: Date,
+  ) => Promise<MoveStatusResult>;
   /** Null when the project does not exist in the workspace. */
   readonly countSessions: (context: WorkspaceContext, id: string) => Promise<number | null>;
   readonly listActiveServiceOptions: (

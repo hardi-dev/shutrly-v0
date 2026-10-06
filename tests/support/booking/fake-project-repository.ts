@@ -328,6 +328,17 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
     return change(locked, writer);
   }
 
+  async lockStatus(context: WorkspaceContext, id: string): Promise<ProjectStatus | null> {
+    const stored = this.projects.find(
+      (row) => row.id === id && row.workspaceId === context.workspaceId,
+    );
+    return stored ? stored.status : null;
+  }
+
+  async markCompleted(context: WorkspaceContext, id: string): Promise<MoveStatusResult> {
+    return this.moveStatus(context, id, { from: "DELIVERED", to: "COMPLETED" });
+  }
+
   async countSessions(context: WorkspaceContext, id: string): Promise<number | null> {
     const stored = this.projects.find(
       (row) => row.id === id && row.workspaceId === context.workspaceId,

@@ -102,6 +102,9 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
         this.selectionGroupCalls += 1;
         return 0;
       },
+      // F-10 final delivery is tested against Postgres; the fake never publishes it.
+      countFinishedFiles: async () => 0,
+      publishFinalDelivery: async () => undefined,
     };
   }
 

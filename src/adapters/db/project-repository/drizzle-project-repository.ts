@@ -43,6 +43,7 @@ import { client } from "../schema/booking/client";
 import { project, projectFieldValue, projectItem, projectSession } from "../schema/booking/project";
 import { sessionAssignment, teamMember, teamRole } from "../schema/booking/team";
 import { createSnapshot } from "./drizzle-project-snapshot";
+import { lockProjectStatus, markProjectCompleted } from "./project-delivery-sql";
 
 const LIKE_SPECIAL = /[\\%_]/g;
 const TIME_LENGTH = 5;
@@ -663,6 +664,8 @@ export function createDrizzleProjectRepository(db: DbExecutor): ProjectRepositor
     moveStatus: (context, id, transition, actorId) =>
       moveStatus(db, context, id, transition, actorId),
     countSessions: (context, id) => countSessions(db, context, id),
+    lockStatus: (context, id) => lockProjectStatus(db, context, id),
+    markCompleted: (context, id, actorId, at) => markProjectCompleted(db, context, id, actorId, at),
     withLockedProject: (context, id, change) => withLockedProject(db, context, id, change),
     listActiveDefinitions: (context) => listActiveDefinitions(db, context),
     findFilterClient: (context, id) => findFilterClient(db, context, id),

@@ -430,8 +430,8 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 **Components:** `delivery-card` (states A–E), menu (*Tandai selesai*), dialogs *Publikasikan hasil akhir?*, *Hasil akhir ditolak* (reason), *Tandai proyek selesai?*; toasts.
 
 **Steps**
-- [ ] **8.1** Domain + use cases + scope + integration (AC-DEL-001, -002 each refusal, -007; rollback when either side refuses). Commit `feat(delivery): publish final delivery and complete projects`.
-- [ ] **8.2** Card, menu and dialogs from the exports. Commit `feat(delivery): add the hasil akhir card`.
+- [x] **8.1** Domain + use cases + scope + integration (AC-DEL-001, -002 each refusal, -007; rollback when either side refuses). Commit `feat(delivery): publish final delivery and complete projects`.
+- [x] **8.2** Card, menu and dialogs from the exports. Commit `feat(delivery): add the hasil akhir card`.
 
 **Done check:** publishing moves the project to *Terkirim* and the client's Beranda shows *Hasil akhir siap* at the top; publishing without a finished file shows the reason; *Tandai selesai* completes a delivered project.
 

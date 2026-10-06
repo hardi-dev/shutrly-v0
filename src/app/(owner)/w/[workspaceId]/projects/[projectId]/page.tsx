@@ -12,6 +12,7 @@ import {
   addSessionAssignmentAction,
   removeSessionAssignmentAction,
 } from "@/app/actions/booking/session-team";
+import { completeProjectAction, publishFinalDeliveryAction } from "@/app/actions/gallery/delivery";
 import { createGalleryAction, proposeGalleryPasswordAction } from "@/app/actions/gallery/galleries";
 import { loadAddOnCard } from "@/composition/booking/add-on-flow/add-on-flow";
 import {
@@ -19,6 +20,7 @@ import {
   loadProjectDetail,
 } from "@/composition/booking/project-flow/project-flow";
 import { loadAssignableMembers } from "@/composition/booking/team-flow/team-flow";
+import { loadDeliveryCard } from "@/composition/gallery/delivery-flow/delivery-flow";
 import { loadGalleryCard } from "@/composition/gallery/gallery-flow/gallery-flow";
 import { loadSelectionCard } from "@/composition/gallery/selection-owner-flow/selection-owner-flow";
 import type { AddOnCardView } from "@/features/booking/application/use-cases/list-add-ons/list-add-ons.types";
@@ -28,7 +30,9 @@ import { ProjectDetailScreen } from "@/features/booking/ui/project-detail-screen
 import { projectMetaText } from "@/features/booking/ui/project-session-summary/project-session-summary";
 import { projectStatusChip } from "@/features/booking/ui/project-status-chip/project-status-props";
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
+import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
 import type { SelectionCardView } from "@/features/gallery/application/use-cases/owner-selection-views/owner-selection-views.types";
+import { DeliveryCard } from "@/features/gallery/ui/delivery-card/delivery-card";
 import { GalleryCard } from "@/features/gallery/ui/gallery-card/gallery-card";
 import { SelectionCard } from "@/features/gallery/ui/selection-card/selection-card";
 import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
@@ -43,8 +47,7 @@ export default async function ProjectDetailPage({
 }>) {
   const { workspaceId, projectId } = await params;
   const { state } = await searchParams;
-  const [project, definitions, assignableMembers, galleryCard, selectionCard, addOnCard] =
-    await loadPage(workspaceId, projectId);
+  const { project, definitions, assignableMembers, cards } = await loadPage(workspaceId, projectId);
   const toast = resolveToast(state, project.title);
   return (
     <>
@@ -61,9 +64,7 @@ export default async function ProjectDetailPage({
         menuActions={PROJECT_MENU_ACTIONS}
         editActions={PROJECT_EDIT_ACTIONS}
         definitions={definitions}
-        galleryCard={galleryCardSlot(workspaceId, galleryCard)}
-        selectionCard={selectionCardSlot(workspaceId, projectId, selectionCard)}
-        addOnCard={addOnCardSlot(workspaceId, projectId, addOnCard)}
+        {...cards}
         assignableMembers={assignableMembers}
         addAssignmentAction={addSessionAssignmentAction}
         removeAssignmentAction={removeSessionAssignmentAction}
@@ -80,15 +81,24 @@ export default async function ProjectDetailPage({
   );
 }
 
-function loadPage(workspaceId: string, projectId: string) {
-  return Promise.all([
-    loadProjectDetail(workspaceId, projectId),
-    loadProjectDefinitions(workspaceId),
-    loadAssignableMembers(workspaceId),
-    loadGalleryCard(workspaceId, projectId),
-    loadSelectionCard(workspaceId, projectId),
-    loadAddOnCard(workspaceId, projectId),
-  ]);
+async function loadPage(workspaceId: string, projectId: string) {
+  const [project, definitions, assignableMembers, gallery, selection, addOn, delivery] =
+    await Promise.all([
+      loadProjectDetail(workspaceId, projectId),
+      loadProjectDefinitions(workspaceId),
+      loadAssignableMembers(workspaceId),
+      loadGalleryCard(workspaceId, projectId),
+      loadSelectionCard(workspaceId, projectId),
+      loadAddOnCard(workspaceId, projectId),
+      loadDeliveryCard(workspaceId, projectId),
+    ]);
+  const cards = {
+    galleryCard: galleryCardSlot(workspaceId, gallery),
+    selectionCard: selectionCardSlot(workspaceId, projectId, selection),
+    addOnCard: addOnCardSlot(workspaceId, projectId, addOn),
+    deliveryCard: deliveryCardSlot(workspaceId, projectId, delivery),
+  };
+  return { project, definitions, assignableMembers, cards };
 }
 
 function selectionCardSlot(workspaceId: string, projectId: string, card: SelectionCardView) {
@@ -111,6 +121,23 @@ function addOnCardSlot(workspaceId: string, projectId: string, card: AddOnCardVi
       projectId={projectId}
       card={card}
       actions={ADD_ON_ACTIONS}
+    />
+  );
+}
+
+const DELIVERY_ACTIONS = {
+  publishAction: publishFinalDeliveryAction,
+  completeAction: completeProjectAction,
+};
+
+function deliveryCardSlot(workspaceId: string, projectId: string, card: DeliveryCardView) {
+  if (!card.isShown) return null;
+  return (
+    <DeliveryCard
+      workspaceId={workspaceId}
+      projectId={projectId}
+      card={card}
+      actions={DELIVERY_ACTIONS}
     />
   );
 }

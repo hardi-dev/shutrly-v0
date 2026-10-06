@@ -43,5 +43,6 @@ export async function getDeliveryCard(
     publishedAt: publishedAt?.toISOString() ?? null,
     completedAt: facts.completedAt?.toISOString() ?? null,
     canComplete: facts.projectStatus === "DELIVERED",
+    isShown: facts.projectStatus !== "DRAFT" && facts.projectStatus !== "CANCELLED",
   };
 }

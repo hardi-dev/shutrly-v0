@@ -18,4 +18,6 @@ export interface DeliveryCardView {
   readonly completedAt: string | null;
   /** *Tandai selesai* is offered only on a DELIVERED project (AC-DEL-007). */
   readonly canComplete: boolean;
+  /** False for a draft or cancelled project, where final delivery never applies (BR-DEL-003). */
+  readonly isShown: boolean;
 }

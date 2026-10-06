@@ -20,6 +20,8 @@ export interface ProjectDetailScreenProps {
   readonly selectionCard?: ReactNode;
   /** F-10 Slice 7: the *Add-on* card, after *Pilihan klien* (D-20). */
   readonly addOnCard?: ReactNode;
+  /** F-10 Slice 8: the *Hasil akhir* card, after *Add-on* (D-20). */
+  readonly deliveryCard?: ReactNode;
   /** Active members with their roles, for the Penugasan form (D-13). */
   readonly assignableMembers: readonly AssignableMember[];
   readonly addAssignmentAction: AssignmentDialogProps["addAction"];

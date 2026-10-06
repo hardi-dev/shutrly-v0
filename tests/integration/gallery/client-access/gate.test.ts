@@ -6,9 +6,11 @@ import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { createWebCryptoClientSessionSigner } from "@/adapters/crypto/client-session-signer/web-crypto-client-session-signer";
 import type { Db } from "@/adapters/db/client/client.types";
 import { createDrizzleClientAccessRepository } from "@/adapters/db/gallery-repository/drizzle-client-access-repository";
+import { createDrizzleProjectRepository } from "@/adapters/db/project-repository/drizzle-project-repository";
 import { createNeonRateLimiter } from "@/adapters/db/rate-limiter/neon-rate-limiter";
 import { project } from "@/adapters/db/schema/booking/project";
 import { gallery } from "@/adapters/db/schema/gallery/gallery";
+import { rotateClientAccessToken } from "@/features/booking/application/use-cases/rotate-client-access-token/rotate-client-access-token";
 import { resolveClientAccess } from "@/features/gallery/application/use-cases/resolve-client-access/resolve-client-access";
 import type { ClientGateDeps } from "@/features/gallery/application/use-cases/resolve-client-access/resolve-client-access.types";
 import { signInGallery } from "@/features/gallery/application/use-cases/sign-in-gallery/sign-in-gallery";
@@ -142,6 +144,66 @@ describe("client gate (D-4, D-5)", () => {
     expect((await resolve(token, cookie)).kind).toBe("PASSWORD");
     expect((await signIn(token, randomIp())).kind).toBe("WRONG_PASSWORD");
     expect((await signIn(token, randomIp(), "melati-1234")).kind).toBe("SIGNED_IN");
+  });
+
+  it("AC-ACC-009 Ganti link ends the old link and its sessions; the new link opens with the same password", async () => {
+    const { token, projectId } = await freshProject();
+    const cookie = await cookieFor(token);
+    const at = new Date("2026-10-07T10:00:00Z");
+    const fresh = randomToken();
+    const result = await rotateClientAccessToken(
+      { projects: createDrizzleProjectRepository(db), generateToken: () => fresh, now: at },
+      fixture.context,
+      fixture.ownerId,
+      projectId,
+    );
+    expect(result).toEqual({ ok: true, token: fresh });
+    const [row] = await db
+      .select({ by: project.tokenRotatedBy, at: project.tokenRotatedAt })
+      .from(project)
+      .where(eq(project.id, projectId));
+    expect([row.by, row.at?.toISOString()]).toEqual([fixture.ownerId, at.toISOString()]);
+    expect(await resolve(token, cookie)).toEqual({ kind: "NEUTRAL" });
+    expect((await resolve(fresh, cookie)).kind).toBe("PASSWORD");
+    expect((await signIn(fresh, randomIp())).kind).toBe("SIGNED_IN");
+  });
+
+  it("R-3 a token already used by another project is retried, never shared", async () => {
+    const { projectId } = await freshProject();
+    const taken = (await freshProject()).token;
+    const fresh = randomToken();
+    const tokens = [taken, fresh];
+    const result = await rotateClientAccessToken(
+      {
+        projects: createDrizzleProjectRepository(db),
+        generateToken: () => tokens.shift() ?? randomToken(),
+        now: new Date(),
+      },
+      fixture.context,
+      fixture.ownerId,
+      projectId,
+    );
+    expect(result).toEqual({ ok: true, token: fresh });
+  });
+
+  it("D-19 a cancelled project's link is not rotated", async () => {
+    const { token, projectId } = await freshProject();
+    await db
+      .update(project)
+      .set({ status: "CANCELLED", cancelledAt: new Date() })
+      .where(eq(project.id, projectId));
+    const result = await rotateClientAccessToken(
+      { projects: createDrizzleProjectRepository(db), generateToken: randomToken, now: new Date() },
+      fixture.context,
+      fixture.ownerId,
+      projectId,
+    );
+    expect(result).toEqual({ ok: false, code: "PROJECT_CANCELLED" });
+    const [row] = await db
+      .select({ token: project.clientAccessToken })
+      .from(project)
+      .where(eq(project.id, projectId));
+    expect(row.token).toBe(token);
   });
 
   it("AC-ACC-010 expiry closes a signed-in session; removing it reopens the same session", async () => {

@@ -188,6 +188,8 @@ export interface ProjectWriter {
   ) => Promise<boolean>;
   /** False when the session is not in this project. */
   readonly deleteSession: (sessionId: string) => Promise<boolean>;
+  /** Stores a new client token with who and when; false when the token is already taken (F-10 D-19, R-3). */
+  readonly rotateToken: (token: string, actorId: string, at: Date) => Promise<boolean>;
 }
 
 export type AddItemOutcome = "ADDED" | "DEFINITION_INACTIVE" | "DUPLICATE_DEFINITION" | "NOT_FOUND";

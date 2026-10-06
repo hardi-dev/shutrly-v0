@@ -50,3 +50,46 @@ export async function markProjectCompleted(
   const existing = await db.select({ id: project.id }).from(project).where(scopeOf(context, id));
   return existing.length > 0 ? "STALE" : "NOT_FOUND";
 }
+
+const UNIQUE_VIOLATION = "23505";
+
+interface TokenRotation {
+  readonly token: string;
+  readonly actorId: string;
+  readonly at: Date;
+}
+
+// Drizzle wraps the driver error; the Postgres code sits on it or on its cause.
+function isUniqueViolation(error: unknown): boolean {
+  if (typeof error !== "object" || error === null) return false;
+  const code: unknown = Reflect.get(error, "code");
+  const cause: unknown = Reflect.get(error, "cause");
+  return code === UNIQUE_VIOLATION || (cause !== error && isUniqueViolation(cause));
+}
+
+/** Writes a new client token with who and when in a savepoint, so a collision on the unique index leaves the outer transaction usable for a retry (F-10 D-19, R-3). @param db - the transaction holding the project lock @param context - verified workspace @param id - the project id @param change - token, actor and time @returns false when the token is already taken */
+export async function rotateProjectToken(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  id: string,
+  change: TokenRotation,
+): Promise<boolean> {
+  try {
+    await db.transaction((savepoint) =>
+      savepoint
+        .update(project)
+        .set({
+          clientAccessToken: change.token,
+          tokenRotatedAt: change.at,
+          tokenRotatedBy: change.actorId,
+          updatedBy: change.actorId,
+          updatedAt: change.at,
+        })
+        .where(scopeOf(context, id)),
+    );
+    return true;
+  } catch (error) {
+    if (isUniqueViolation(error)) return false;
+    throw error;
+  }
+}

@@ -43,7 +43,11 @@ import { client } from "../schema/booking/client";
 import { project, projectFieldValue, projectItem, projectSession } from "../schema/booking/project";
 import { sessionAssignment, teamMember, teamRole } from "../schema/booking/team";
 import { createSnapshot } from "./drizzle-project-snapshot";
-import { lockProjectStatus, markProjectCompleted } from "./project-delivery-sql";
+import {
+  lockProjectStatus,
+  markProjectCompleted,
+  rotateProjectToken,
+} from "./project-delivery-sql";
 
 const LIKE_SPECIAL = /[\\%_]/g;
 const TIME_LENGTH = 5;
@@ -444,6 +448,8 @@ function sessionWriter(
 function writerFor(db: DbExecutor, context: WorkspaceContext, id: string): ProjectWriter {
   const scope = and(eq(project.workspaceId, context.workspaceId), eq(project.id, id));
   return {
+    rotateToken: (token, actorId, at) =>
+      rotateProjectToken(db, context, id, { token, actorId, at }),
     async updateInfo(input) {
       await db
         .update(project)

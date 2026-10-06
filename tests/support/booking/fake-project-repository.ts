@@ -55,6 +55,7 @@ export interface StoredProject {
 }
 
 export class FakeProjectRepository implements ProjectRepositoryPort {
+  readonly rotatedTokens: string[] = [];
   readonly clients: FakeClient[] = [];
   readonly definitions: FakeDefinition[] = [];
   readonly services: FakeServiceRow[] = [];
@@ -259,6 +260,11 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       sessionCount: stored.sessions.length,
     };
     const writer: ProjectWriter = {
+      // Collisions are tested against Postgres; the fake records the last token.
+      rotateToken: async (token) => {
+        this.rotatedTokens.push(token);
+        return true;
+      },
       updateInfo: async (input) => {
         stored.input = {
           ...stored.input,

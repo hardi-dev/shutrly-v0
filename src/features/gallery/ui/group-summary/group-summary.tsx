@@ -15,7 +15,7 @@ function usageText({ status, usage, limit, unit }: Readonly<GroupSummaryProps>):
 
 /** One selection group's status, usage bar and next action (local *Group Summary* SBwD1, BR-SEL-007, AC-SEL-001). @param props - group facts and the action @returns the summary */
 export function GroupSummary(props: Readonly<GroupSummaryProps>) {
-  const { name, status, progress, action, className } = props;
+  const { name, status, progress, isFull = false, action, className } = props;
   return (
     <div className={cn("flex flex-col gap-(--space-3) p-(--space-3)", className)}>
       <div className="flex items-center justify-between gap-(--space-2)">
@@ -29,7 +29,13 @@ export function GroupSummary(props: Readonly<GroupSummaryProps>) {
         className="h-(--space-1-5) w-full overflow-hidden rounded-(--radius-full) bg-(--color-semantic-surface-subtle)"
       >
         <div
-          className="h-full rounded-(--radius-full) bg-(--color-semantic-progress-positive)"
+          className={cn(
+            "h-full rounded-(--radius-full)",
+            // pilih-batas-tercapai: the bar turns warning once the group is full.
+            isFull
+              ? "bg-(--color-semantic-status-warning-fg)"
+              : "bg-(--color-semantic-progress-positive)",
+          )}
           style={{ width: `${String(Math.round(progress * 100))}%` }}
         />
       </div>

@@ -10,6 +10,8 @@ export interface GroupSummaryProps {
   readonly unit: string | null;
   /** 0…1 */
   readonly progress: number;
+  /** Usage reached the limit: the bar shows the warning tone (pilih-batas-tercapai). */
+  readonly isFull?: boolean;
   readonly action?: ReactNode;
   readonly className?: string;
 }

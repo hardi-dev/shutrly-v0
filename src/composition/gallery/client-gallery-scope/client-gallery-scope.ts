@@ -21,6 +21,7 @@ import type { ClientGalleryScope, ClientScopeResult } from "./client-gallery-sco
 function scopeFor(db: Db, rc: RequestContext, now: Date): ClientGalleryScope {
   return {
     selections: createDrizzleSelectionRepository(db),
+    rateLimiter: createNeonRateLimiter(db),
     browse: createDrizzleGalleryBrowseReader(db, { client: true }),
     reader: createDrizzleClientGalleryReader(db),
     provider: providerFor(rc.env),

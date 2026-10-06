@@ -51,6 +51,8 @@ export interface PickWriter {
   /** Deletes the pick and its note (A-32). */
   readonly deletePick: (photoId: string) => Promise<void>;
   readonly setNote: (photoId: string, note: string | null) => Promise<void>;
+  /** Moves the locked group to `SUBMITTED` (BR-SEL-005). */
+  readonly markSubmitted: (at: Date) => Promise<void>;
 }
 
 /** A pick with the photo facts the client views need (Pilih, Tinjau, markers). */

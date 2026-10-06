@@ -57,6 +57,7 @@ function writer(setup: Setup): PickWriter {
     updateQuantity: vi.fn(() => Promise.resolve()),
     deletePick: vi.fn(() => Promise.resolve()),
     setNote: vi.fn(() => Promise.resolve()),
+    markSubmitted: vi.fn(() => Promise.resolve()),
   };
 }
 

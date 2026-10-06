@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { checkPickChange, effectiveLimit, remainingPlaces, usageOf } from "./selection-usage";
+import {
+  canSubmit,
+  checkPickChange,
+  effectiveLimit,
+  remainingPlaces,
+  usageOf,
+} from "./selection-usage";
 import type { PickChange } from "./selection-usage.types";
 
 const count = (usage: number, current: number, next: number, limit = 3): PickChange => ({
@@ -53,5 +59,20 @@ describe("selection usage (BR-SEL-002, BR-SEL-003, A-8, A-9)", () => {
     expect(remainingPlaces(3, 5)).toBe(0);
     expect(usageOf("COUNT", [1, 1, 1])).toBe(3);
     expect(usageOf("QUANTITY", [2, 1])).toBe(3);
+  });
+});
+
+describe("canSubmit (BR-SEL-005, A-5)", () => {
+  it("AC-SEL-008 lets an OPEN group with a pick be submitted, below its limit or not", () => {
+    expect(canSubmit({ status: "OPEN", pickCount: 2 })).toBe("OK");
+  });
+
+  it("AC-SEL-009 refuses a group with no picks", () => {
+    expect(canSubmit({ status: "OPEN", pickCount: 0 })).toBe("NO_PICKS");
+  });
+
+  it("BR-SEL-005 refuses a group that is already submitted or locked", () => {
+    expect(canSubmit({ status: "SUBMITTED", pickCount: 2 })).toBe("NOT_OPEN");
+    expect(canSubmit({ status: "LOCKED", pickCount: 2 })).toBe("NOT_OPEN");
   });
 });

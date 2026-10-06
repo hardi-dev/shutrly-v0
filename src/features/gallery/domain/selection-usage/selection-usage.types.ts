@@ -14,3 +14,10 @@ export interface PickChange {
 }
 
 export type PickCheck = "OK" | "LIMIT_REACHED" | "INVALID_QUANTITY";
+
+export interface SubmitFacts {
+  readonly status: SelectionGroupStatus;
+  readonly pickCount: number;
+}
+
+export type SubmitCheck = "OK" | "NOT_OPEN" | "NO_PICKS";

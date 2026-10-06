@@ -2,24 +2,14 @@ import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import type { Db } from "@/adapters/db/client/client.types";
-import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
-import { createNeonRateLimiter } from "@/adapters/db/rate-limiter/neon-rate-limiter";
 import { galleryPhoto } from "@/adapters/db/schema/gallery/gallery";
 import { selectionGroup } from "@/adapters/db/schema/gallery/selection";
-import { createDrizzleSelectionRepository } from "@/adapters/db/selection-repository/drizzle-selection-repository";
-import type { ClientContext } from "@/features/gallery/application/use-cases/resolve-client-access/resolve-client-access.types";
 import { setPick } from "@/features/gallery/application/use-cases/set-pick/set-pick";
 import { setPickNote } from "@/features/gallery/application/use-cases/set-pick-note/set-pick-note";
 
 import { openTestDb } from "../../helpers/test-db";
-import { clientContextOf } from "./client-context";
-import {
-  addProjectItems,
-  type ClientAccessFixture,
-  seedClientAccess,
-  seedPhotos,
-  seedProjectWithGallery,
-} from "./fixture";
+import { type ClientAccessFixture, seedClientAccess } from "./fixture";
+import { groupUsage, seedWorld, selectionDeps, type World } from "./selection-world";
 
 let db: Db;
 let close: () => Promise<void>;
@@ -31,75 +21,15 @@ beforeAll(async () => {
 });
 afterAll(() => close());
 
-interface World {
-  readonly client: ClientContext;
-  readonly edit: string;
-  readonly print: string;
-  readonly photo: Record<string, string>;
-  readonly sariPhoto: string;
-}
+const world = () => seedWorld(db, fixture);
 
-/** A fresh *Wisuda Rina* with Foto edit (COUNT 3, notes) and Foto cetak (QUANTITY 2), per test. */
-async function world(): Promise<World> {
-  const workspaceId = fixture.context.workspaceId;
-  const base = { workspaceId, serviceId: fixture.serviceId };
-  const rina = await seedProjectWithGallery(db, {
-    ...base,
-    clientName: "Rina",
-    title: "Wisuda Rina",
-    status: "POST_PROCESSING",
-  });
-  const target = { ...rina, workspaceId };
-  await addProjectItems(db, target, [
-    { name: "Foto edit", value: 3, pickMode: "COUNT", allowsPickNotes: true },
-    { name: "Foto cetak", value: 2, unit: "lembar", pickMode: "QUANTITY" },
-  ]);
-  await createDrizzleGallerySourceRepository(db).withLockedGallery(
-    fixture.context,
-    rina.galleryId,
-    (_gallery, writer) => writer.createSelectionGroups(),
-  );
-  const { photoIds } = await seedPhotos(db, target, [
-    ...Array.from({ length: 9 }, (_, index) => ({ fileName: `IMG_00${String(index + 1)}.jpg` })),
-    { fileName: "IMG_010.jpg", missing: true },
-    { fileName: "E_001.jpg", kind: "EDITED" as const },
-  ]);
-  const sari = await seedProjectWithGallery(db, {
-    ...base,
-    clientName: "Sari",
-    title: "Sari",
-    status: "BOOKED",
-  });
-  const other = await seedPhotos(db, { workspaceId, galleryId: sari.galleryId }, [
-    { fileName: "S_001.jpg" },
-  ]);
-  const client = { ...clientContextOf(target), sessionId: crypto.randomUUID().replaceAll("-", "") };
-  const [edit, print] = await createDrizzleSelectionRepository(db).listGroups(
-    fixture.context,
-    rina.projectId,
-  );
-  return {
-    client,
-    edit: edit.id,
-    print: print.id,
-    photo: photoIds,
-    sariPhoto: other.photoIds["S_001.jpg"],
-  };
-}
-
-const deps = () => ({
-  selections: createDrizzleSelectionRepository(db),
-  rateLimiter: createNeonRateLimiter(db),
-});
+const deps = () => selectionDeps(db);
 
 function pick(w: World, groupId: string, name: string, quantity = 1) {
   return setPick(deps(), w.client, { groupId, photoId: w.photo[name] ?? name, quantity });
 }
 
-async function usage(w: World, groupId: string) {
-  const groups = await deps().selections.listGroups(fixture.context, w.client.projectId);
-  return groups.find((group) => group.id === groupId)?.usage;
-}
+const usage = (w: World, groupId: string) => groupUsage(db, fixture, w, groupId);
 
 describe("picks (D-12)", () => {
   it("AC-SEL-002 saves picks and un-picks at once", async () => {

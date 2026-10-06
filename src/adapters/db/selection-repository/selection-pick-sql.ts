@@ -84,6 +84,14 @@ export function pickWriter(tx: DbExecutor, scope: LockedGroupScope): PickWriter 
     async setNote(photoId, note) {
       await tx.update(photoSelection).set({ note, updatedAt: new Date() }).where(pickOf(photoId));
     },
+    async markSubmitted(at) {
+      await tx
+        .update(selectionGroup)
+        .set({ status: "SUBMITTED", submittedAt: at })
+        .where(
+          and(eq(selectionGroup.workspaceId, context.workspaceId), eq(selectionGroup.id, groupId)),
+        );
+    },
   };
 }
 

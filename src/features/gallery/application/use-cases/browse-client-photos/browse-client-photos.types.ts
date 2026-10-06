@@ -10,6 +10,9 @@ import type { ClientPhotoView } from "../client-views/client-views.types";
 export interface ClientBrowsePageView {
   readonly mode: "SOURCES" | "FOLDER" | "SEARCH";
   readonly proofTotal: number;
+  /** Visible finished files, 0 until final delivery is published (BR-DEL-002). */
+  readonly editedTotal: number;
+  readonly printTotal: number;
   readonly sourceId: string | null;
   readonly isSingleSource: boolean;
   readonly folders: readonly FolderTileView[];

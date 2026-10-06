@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { isInAllPhotos, isInFinalDelivery, isServableToClient } from "./client-photo-visibility";
+import {
+  clientBrowseKind,
+  isInAllPhotos,
+  isInFinalDelivery,
+  isServableToClient,
+} from "./client-photo-visibility";
 import type { ClientPhotoFacts } from "./client-photo-visibility.types";
 
 const proof: ClientPhotoFacts = { kind: "PROOF", isMissing: false, isSourceRemoved: false };
@@ -22,5 +27,17 @@ describe("client photo visibility (BR-DEL-002, BR-GAL-006, D-15)", () => {
     expect(isInFinalDelivery(proof, true)).toBe(false);
     expect(isInFinalDelivery({ ...edited, isMissing: true }, true)).toBe(false);
     expect(isServableToClient(edited, true)).toBe(true);
+  });
+});
+
+describe("clientBrowseKind (BR-DEL-002)", () => {
+  it("AC-DEL-001 opens Edited and Print once final delivery is published", () => {
+    expect(clientBrowseKind("EDITED", true)).toBe("EDITED");
+    expect(clientBrowseKind("PRINT", true)).toBe("PRINT");
+  });
+
+  it("AC-ACC-011 keeps a client on proofs before delivery, whatever the page asks", () => {
+    expect(clientBrowseKind("EDITED", false)).toBe("PROOF");
+    expect(clientBrowseKind("PROOF", true)).toBe("PROOF");
   });
 });

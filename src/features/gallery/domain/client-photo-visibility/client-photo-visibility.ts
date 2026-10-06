@@ -1,3 +1,4 @@
+import type { PhotoKind } from "../photo-classification/photo-classification.types";
 import type { ClientPhotoFacts } from "./client-photo-visibility.types";
 
 /** Whether *Semua foto* lists a photo: visible proofs only (BR-DEL-002, BR-GAL-006, D-15). @param photo - kind, missing and source facts @returns true for a present proof of a linked source */
@@ -21,4 +22,9 @@ export function isServableToClient(
   finalDeliveryPublished: boolean,
 ): boolean {
   return isInAllPhotos(photo) || isInFinalDelivery(photo, finalDeliveryPublished);
+}
+
+/** Which kind a client's browse query may read: EDITED or PRINT only after final delivery, PROOF otherwise (BR-DEL-002, D-15). @param requested - the kind the page asked for @param finalDeliveryPublished - whether the Owner published final delivery @returns the kind to read */
+export function clientBrowseKind(requested: PhotoKind, finalDeliveryPublished: boolean): PhotoKind {
+  return requested !== "PROOF" && finalDeliveryPublished ? requested : "PROOF";
 }

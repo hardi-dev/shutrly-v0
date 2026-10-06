@@ -23,6 +23,8 @@ const photo = (n: number) => ({
 const ROOT: ClientBrowsePageView = {
   mode: "FOLDER",
   proofTotal: 24,
+  editedTotal: 0,
+  printTotal: 0,
   sourceId: "s-1",
   isSingleSource: true,
   folders: [{ name: "Akad", count: 12, sourceId: "s-1", path: "Akad" }],

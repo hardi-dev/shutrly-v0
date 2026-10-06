@@ -10,9 +10,11 @@ import { getClientHome } from "@/features/gallery/application/use-cases/get-clie
 import type { ClientHomeView } from "@/features/gallery/application/use-cases/get-client-home/get-client-home.types";
 import { listPickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets";
 import type { PickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets.types";
+import { serveClientFile } from "@/features/gallery/application/use-cases/serve-client-file/serve-client-file";
 import { serveClientPhoto } from "@/features/gallery/application/use-cases/serve-client-photo/serve-client-photo";
 import { logger } from "@/shared/logging/logger";
 
+import { clientFileHeaders } from "../client-file-headers/client-file-headers";
 import { withSignedInClient } from "../client-gallery-scope/client-gallery-scope";
 import type { ClientScopeResult } from "../client-gallery-scope/client-gallery-scope.types";
 
@@ -96,4 +98,23 @@ export async function serveClientPhotoEntry(
   return new Response(result.value.body, {
     headers: { ...CLIENT_MEDIA_HEADERS, "Content-Type": result.value.contentType },
   });
+}
+
+/** Streams one original finished file to the signed-in client as an attachment; anything else is an empty 404 (D-18, AC-DEL-003…005). @param rawToken - the untrusted route token @param rawPhotoId - untrusted photo id @returns the file response */
+export async function serveClientFileEntry(
+  rawToken: string,
+  rawPhotoId: string,
+): Promise<Response> {
+  const photoId = photoIdSchema.safeParse(rawPhotoId);
+  if (!photoId.success) notFound();
+  const result = await withSignedInClient(rawToken, async (client, scope) => {
+    try {
+      return await serveClientFile(scope, client, photoId.data);
+    } catch {
+      logger.error("client.download_failed", { workspaceId: client.workspaceId });
+      return { ok: false } as const;
+    }
+  });
+  if (result.kind !== "SIGNED_IN" || !result.value.ok) notFound();
+  return new Response(result.value.body, { headers: clientFileHeaders(result.value) });
 }

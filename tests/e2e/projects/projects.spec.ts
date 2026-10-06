@@ -234,14 +234,14 @@ test("AC-PRJ-013 AC-PRJ-008 AC-PRJ-030 creates a client inline, edits the packag
 
   await addItem(page, "Foto edit", "30");
   await addItem(page, "Foto cetak", "10");
-  await expect(page.getByText("30 foto · pilihan edit")).toBeVisible();
+  await expect(page.getByText("30 foto · hitung foto")).toBeVisible();
   await expectProjectsA11y(page);
 
   await addSession(page);
   await page.getByRole("button", { name: PROJECT_COPY.create }).click();
   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=created$/);
-  await expect(visibleText(page, "30 foto · pilihan edit")).toBeVisible();
-  await expect(visibleText(page, "10 lembar · pilihan cetak")).toBeVisible();
+  await expect(visibleText(page, "30 foto · hitung foto")).toBeVisible();
+  await expect(visibleText(page, "10 lembar · jumlah per foto")).toBeVisible();
 });
 
 test("AC-PRJ-009 AC-PRJ-029 a draft without a session asks for one, then books", async ({

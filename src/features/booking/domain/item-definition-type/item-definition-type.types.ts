@@ -1,11 +1,16 @@
 export type ValueType = "NUMBER" | "RANGE";
-export type SelectionType = "EDIT" | "PRINT";
+export type PickMode = "COUNT" | "QUANTITY";
+export type LegacySelectionType = "EDIT" | "PRINT";
 
 export interface DefinitionType {
   readonly valueType: ValueType;
   readonly selectionRequired: boolean;
-  readonly selectionType: SelectionType | null;
+  readonly pickMode: PickMode | null;
+  readonly allowsPickNotes: boolean;
 }
 
 export type DefinitionTypeProblem =
-  "SELECTION_NEEDS_NUMBER" | "SELECTION_TYPE_REQUIRED" | "SELECTION_TYPE_UNEXPECTED";
+  | "SELECTION_NEEDS_NUMBER"
+  | "PICK_MODE_REQUIRED"
+  | "PICK_MODE_UNEXPECTED"
+  | "PICK_NOTES_UNEXPECTED";

@@ -44,13 +44,23 @@ export const CATALOG_COPY = {
   otherGroupTitle: "Item lainnya",
   otherGroupDescription: "Keterangan paket yang tidak dipilih klien.",
   valueTypes: { NUMBER: "Angka", RANGE: "Rentang" },
-  selectionTypes: { EDIT: "Foto edit", PRINT: "Foto cetak" },
-  selectionTypeDescriptions: {
-    EDIT: "Klien memilih foto untuk diedit. Dihitung per foto.",
-    PRINT: "Klien memilih foto dan jumlah cetaknya.",
+  pickModes: { COUNT: "Hitung foto", QUANTITY: "Jumlah per foto" },
+  pickModeDescriptions: {
+    COUNT: "Tiap foto dipilih memakai 1 tempat. Cocok untuk foto edit dan album.",
+    QUANTITY: "Klien menentukan jumlah tiap foto. Cocok untuk foto cetak dan bingkai.",
   },
-  definitionMeta: (valueType: string, unit: string | null, usage: number) =>
-    [valueType, unit, usage > 0 ? `dipakai di ${String(usage)} layanan` : "belum dipakai"]
+  definitionMeta: (
+    valueType: string,
+    unit: string | null,
+    usage: number,
+    pickMode?: string | null,
+  ) =>
+    [
+      valueType,
+      unit,
+      pickMode ? `Pilihan klien: ${pickMode}` : null,
+      usage > 0 ? `dipakai di ${String(usage)} layanan` : "belum dipakai",
+    ]
       .filter(Boolean)
       .join(" · "),
   definitionUsage: (count: number) => `${String(count)} layanan memakai item ini`,
@@ -62,7 +72,12 @@ export const CATALOG_COPY = {
   },
   unitHelp: "Ditulis setelah nilai, mis. 2 buah.",
   selectionSwitch: "Dipakai untuk pilihan foto klien",
-  selectionType: "Jenis pilihan",
+  pickMode: "Cara klien memilih",
+  pickLockedTitle: "Pengaturan pilihan dikunci",
+  pickLockedBody: "Item ini dipakai paket atau proyek. Nama dan satuan masih bisa diubah.",
+  pickNotesSwitch: "Klien bisa memberi catatan",
+  pickNotesHelp:
+    "Klien bisa menulis instruksi untuk tiap foto yang dipilih, mis. “hapus jerawat, cerahkan sedikit”.",
   definitionDialogAddTitle: "Tambah item paket",
   definitionDialogEditTitle: "Ubah item paket",
   definitionDialogDescription: "Dipakai ulang di semua layanan workspace ini.",
@@ -160,8 +175,9 @@ export const CATALOG_COPY = {
     NAME_TAKEN: "Nama ini sudah dipakai.",
     UNIT_TOO_LONG: "Satuan maksimal 20 karakter.",
     SELECTION_NEEDS_NUMBER: "Pilihan klien hanya untuk tipe Angka.",
-    SELECTION_TYPE_REQUIRED: "Pilih jenis pilihan.",
-    SELECTION_TYPE_UNEXPECTED: "Jenis pilihan hanya untuk item yang dipilih klien.",
+    PICK_MODE_REQUIRED: "Pilih cara klien memilih.",
+    PICK_MODE_UNEXPECTED: "Cara memilih hanya untuk item yang dipilih klien.",
+    PICK_NOTES_UNEXPECTED: "Catatan klien hanya untuk item yang dipilih klien.",
     LOCKED: "Tipe nilai tidak bisa diubah karena sudah dipakai layanan.",
     CATEGORY_REQUIRED: "Pilih kategori.",
     INACTIVE_REFERENCE: "Pilihan ini sudah diarsipkan.",

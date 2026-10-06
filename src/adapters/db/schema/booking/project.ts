@@ -99,7 +99,10 @@ export const projectItem = pgTable(
     value: jsonb("value").notNull(),
     unit: text("unit"),
     selectionRequired: boolean("selection_required").notNull(),
+    // Legacy column, dual-written from pickMode until a cleanup migration drops it (F-10 R-4).
     selectionType: text("selection_type"),
+    pickMode: text("pick_mode"),
+    allowsPickNotes: boolean("allows_pick_notes").notNull().default(false),
     sortOrder: integer("sort_order").notNull(),
     updatedBy: text("updated_by").references(() => user.id, { onDelete: "set null" }),
     ...auditColumns(),
@@ -118,9 +121,11 @@ export const projectItem = pgTable(
     check("project_item_value_type_ck", sql`${t.valueType} in ('NUMBER','RANGE')`),
     check("project_item_value_ck", sql`jsonb_typeof(${t.value}) = 'object'`),
     check(
-      "project_item_selection_ck",
-      sql`${t.selectionRequired} = (${t.selectionType} is not null)`,
+      "project_item_pick_mode_ck",
+      sql`${t.pickMode} is null or ${t.pickMode} in ('COUNT','QUANTITY')`,
     ),
+    check("project_item_pick_ck", sql`${t.selectionRequired} = (${t.pickMode} is not null)`),
+    check("project_item_pick_notes_ck", sql`not ${t.allowsPickNotes} or ${t.selectionRequired}`),
     check(
       "project_item_selection_type_ck",
       sql`${t.selectionType} is null or ${t.selectionType} in ('EDIT','PRINT')`,

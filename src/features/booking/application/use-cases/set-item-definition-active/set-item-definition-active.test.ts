@@ -16,7 +16,8 @@ describe("setItemDefinitionActive", () => {
       valueType: "NUMBER",
       unit: "buah",
       selectionRequired: false,
-      selectionType: null,
+      pickMode: null,
+      allowsPickNotes: false,
       editorUserId: "user",
     });
     expect(created).toBe("CREATED");

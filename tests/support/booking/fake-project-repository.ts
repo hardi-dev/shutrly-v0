@@ -34,7 +34,8 @@ export interface FakeClient {
 export interface FakeDefinition extends DefinitionRules {
   readonly name: string;
   readonly unit: string | null;
-  readonly selectionType: "EDIT" | "PRINT" | null;
+  readonly pickMode: "COUNT" | "QUANTITY" | null;
+  readonly allowsPickNotes: boolean;
 }
 
 export interface FakeServiceRow extends ServiceSnapshotSource {
@@ -121,7 +122,8 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       unit: definition?.unit ?? null,
       valueType: definition?.valueType ?? "NUMBER",
       selectionRequired: definition?.selectionRequired ?? false,
-      selectionType: definition?.selectionType ?? null,
+      pickMode: definition?.pickMode ?? null,
+      allowsPickNotes: definition?.allowsPickNotes ?? false,
       value: item.value,
       order: index,
     } satisfies ProjectItemRecord & { order: number };
@@ -227,7 +229,8 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
         unit: row.unit,
         valueType: row.valueType,
         selectionRequired: row.selectionRequired,
-        selectionType: row.selectionType,
+        pickMode: row.pickMode,
+        allowsPickNotes: row.allowsPickNotes,
       }));
   }
 

@@ -78,7 +78,8 @@ export function PackageEditing({
         unit: definition.unit,
         valueType: definition.valueType,
         selectionRequired: definition.selectionRequired,
-        selectionType: definition.selectionType,
+        pickMode: definition.pickMode,
+        allowsPickNotes: definition.allowsPickNotes,
         value: checked.value,
       },
     });

@@ -120,6 +120,8 @@ async function insertItems(
         unit: definition.unit,
         selectionRequired: definition.selectionRequired,
         selectionType: definition.selectionType,
+        pickMode: definition.pickMode,
+        allowsPickNotes: definition.allowsPickNotes,
         sortOrder: index,
         updatedBy: input.actorId,
       },

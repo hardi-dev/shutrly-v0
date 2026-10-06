@@ -20,6 +20,7 @@ import type {
   ServiceSnapshotSource,
 } from "@/features/booking/application/ports/project-repository/project-repository.port";
 import { canonicalIdrAmount } from "@/features/booking/domain/idr-amount/idr-amount";
+import { parsePickMode } from "@/features/booking/domain/item-definition-type/item-definition-type";
 import { PROJECT_STATUSES } from "@/features/booking/domain/project-status/project-status";
 import type { StepTransition } from "@/features/booking/domain/project-status/project-status.types";
 import { compareSessions } from "@/features/booking/domain/session/session";
@@ -49,9 +50,6 @@ const TIME_LENGTH = 5;
 function toItem(row: typeof projectItem.$inferSelect): ProjectItemRecord | null {
   const value = toPackageValue(row.value);
   if (!value || (row.valueType !== "NUMBER" && row.valueType !== "RANGE")) return null;
-  if (row.selectionType !== null && row.selectionType !== "EDIT" && row.selectionType !== "PRINT") {
-    return null;
-  }
   return {
     id: row.id,
     definitionId: row.definitionId,
@@ -59,7 +57,8 @@ function toItem(row: typeof projectItem.$inferSelect): ProjectItemRecord | null 
     unit: row.unit,
     valueType: row.valueType,
     selectionRequired: row.selectionRequired,
-    selectionType: row.selectionType,
+    pickMode: parsePickMode(row.pickMode),
+    allowsPickNotes: row.allowsPickNotes,
     value,
   };
 }
@@ -264,10 +263,8 @@ async function listActiveDefinitions(
             unit: row.unit,
             valueType: row.valueType,
             selectionRequired: row.selectionRequired,
-            selectionType:
-              row.selectionType === "EDIT" || row.selectionType === "PRINT"
-                ? row.selectionType
-                : null,
+            pickMode: parsePickMode(row.pickMode),
+            allowsPickNotes: row.allowsPickNotes,
           },
         ]
       : [],
@@ -331,6 +328,8 @@ async function addItemRow(
     unit: definition.unit,
     selectionRequired: definition.selectionRequired,
     selectionType: definition.selectionType,
+    pickMode: definition.pickMode,
+    allowsPickNotes: definition.allowsPickNotes,
     sortOrder: Math.max(-1, ...existing.map((row) => row.sortOrder)) + 1,
     updatedBy: input.actorId,
   });

@@ -51,6 +51,7 @@ export type IconName =
   | "pencil"
   | "copy"
   | "images"
+  | "layers"
   | "image-off"
   | "external-link"
   | "arrow-left"

@@ -10,7 +10,8 @@ const FOTO_EDIT = {
   unit: "foto",
   valueType: "NUMBER" as const,
   selectionRequired: true,
-  selectionType: "EDIT" as const,
+  pickMode: "COUNT" as const,
+  allowsPickNotes: true,
   value: { type: "NUMBER" as const, value: "25" },
 };
 const JUMLAH = {
@@ -20,7 +21,8 @@ const JUMLAH = {
   unit: "orang",
   valueType: "RANGE" as const,
   selectionRequired: false,
-  selectionType: null,
+  pickMode: null,
+  allowsPickNotes: false,
   value: { type: "RANGE" as const, min: "1", max: "3" },
 };
 
@@ -29,7 +31,7 @@ describe("PackageItemsCard (AC-PRJ-007)", () => {
     render(
       <PackageItemsCard serviceName="Wisuda Basic" items={[FOTO_EDIT, JUMLAH]} isMobile={false} />,
     );
-    expect(screen.getByText("25 foto · pilihan edit")).toBeInTheDocument();
+    expect(screen.getByText("25 foto · hitung foto")).toBeInTheDocument();
     expect(screen.getByText("1–3 orang")).toBeInTheDocument();
     expect(
       screen.getByText("Disalin dari Wisuda Basic. Perubahan hanya berlaku untuk proyek ini."),

@@ -2,9 +2,13 @@
 
 import { useState } from "react";
 
+import type { PickMode } from "@/features/booking/domain/item-definition-type/item-definition-type.types";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
+import { Alert } from "@/ui/patterns/alert/alert";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
+import { OptionCardGroup } from "@/ui/patterns/option-card/option-card-group";
+import type { OptionCardOption } from "@/ui/patterns/option-card/option-card-group.types";
 import { Select } from "@/ui/patterns/select/select";
 import type { SelectOption } from "@/ui/patterns/select/select.types";
 import { showToast } from "@/ui/patterns/toast/toast";
@@ -16,6 +20,8 @@ import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogFieldError } from "../catalog-field-error/catalog-field-error";
 import { showCatalogSaveFailure } from "../catalog-save-feedback/catalog-save-feedback";
 import type {
+  DefinitionSelectionFieldsProps,
+  DefinitionTypeFieldsProps,
   ItemDefinitionDialogProps,
   ItemDefinitionFieldsProps,
   ItemDefinitionSubmitArgs,
@@ -37,20 +43,24 @@ const VALUE_OPTIONS: readonly SelectOption[] = [
     icon: "move-horizontal",
   },
 ];
-const SELECTION_OPTIONS: readonly SelectOption[] = [
+const PICK_MODE_OPTIONS: readonly OptionCardOption[] = [
   {
-    id: "EDIT",
-    label: CATALOG_COPY.selectionTypes.EDIT,
-    description: CATALOG_COPY.selectionTypeDescriptions.EDIT,
-    icon: "image",
+    value: "COUNT",
+    title: CATALOG_COPY.pickModes.COUNT,
+    description: CATALOG_COPY.pickModeDescriptions.COUNT,
+    icon: "images",
   },
   {
-    id: "PRINT",
-    label: CATALOG_COPY.selectionTypes.PRINT,
-    description: CATALOG_COPY.selectionTypeDescriptions.PRINT,
-    icon: "printer",
+    value: "QUANTITY",
+    title: CATALOG_COPY.pickModes.QUANTITY,
+    description: CATALOG_COPY.pickModeDescriptions.QUANTITY,
+    icon: "layers",
   },
 ];
+const LOCKED_PICK_MODE_OPTIONS: readonly OptionCardOption[] = PICK_MODE_OPTIONS.map((option) => ({
+  ...option,
+  isDisabled: true,
+}));
 function noop(): void {}
 
 export function ItemDefinitionDialog(props: Readonly<ItemDefinitionDialogProps>) {
@@ -98,7 +108,8 @@ function useItemDefinitionForm(props: Readonly<ItemDefinitionDialogProps>) {
       valueType: state.valueType,
       unit: state.unit,
       selectionRequired: state.selectionRequired,
-      selectionType: state.selectionType,
+      pickMode: state.pickMode,
+      allowsPickNotes: state.allowsPickNotes,
       updateAction,
       action,
       onOpenChange: handleOpenChange,
@@ -123,18 +134,21 @@ function useItemDefinitionValues(
   const initialValueType = definition?.valueType ?? "NUMBER";
   const initialUnit = definition?.unit ?? "";
   const initialSelectionRequired = definition?.selectionRequired ?? false;
-  const initialSelectionType = definition?.selectionType ?? null;
+  const initialPickMode = definition?.pickMode ?? "COUNT";
+  const initialPickNotes = definition?.allowsPickNotes ?? false;
   const [name, setName] = useState(initialName);
   const [valueType, setValueType] = useState<"NUMBER" | "RANGE">(initialValueType);
   const [unit, setUnit] = useState(initialUnit);
   const [selectionRequired, setSelectionRequired] = useState(initialSelectionRequired);
-  const [selectionType, setSelectionType] = useState<"EDIT" | "PRINT" | null>(initialSelectionType);
+  const [pickMode, setPickMode] = useState<PickMode>(initialPickMode);
+  const [allowsPickNotes, setAllowsPickNotes] = useState(initialPickNotes);
   function reset(): void {
     setName(initialName);
     setValueType(initialValueType);
     setUnit(initialUnit);
     setSelectionRequired(initialSelectionRequired);
-    setSelectionType(initialSelectionType);
+    setPickMode(initialPickMode);
+    setAllowsPickNotes(initialPickNotes);
   }
   return {
     name,
@@ -145,8 +159,10 @@ function useItemDefinitionValues(
     setUnit,
     selectionRequired,
     setSelectionRequired,
-    selectionType,
-    setSelectionType,
+    pickMode,
+    setPickMode,
+    allowsPickNotes,
+    setAllowsPickNotes,
     reset,
   };
 }
@@ -173,7 +189,8 @@ async function submitItemDefinition(args: ItemDefinitionSubmitArgs): Promise<voi
     valueType,
     unit,
     selectionRequired,
-    selectionType,
+    pickMode,
+    allowsPickNotes,
     updateAction,
     action,
     onOpenChange,
@@ -188,7 +205,8 @@ async function submitItemDefinition(args: ItemDefinitionSubmitArgs): Promise<voi
       valueType,
       unit,
       selectionRequired,
-      selectionType: selectionRequired ? selectionType : null,
+      pickMode: selectionRequired ? pickMode : null,
+      allowsPickNotes: selectionRequired && allowsPickNotes,
     };
     const result =
       definition && updateAction
@@ -196,7 +214,10 @@ async function submitItemDefinition(args: ItemDefinitionSubmitArgs): Promise<voi
         : await action(workspaceId, values);
     if (result?.ok === false) {
       setError(
-        result.fieldErrors.name ?? result.fieldErrors.valueType ?? result.fieldErrors.selectionType,
+        result.fieldErrors.name ??
+          result.fieldErrors.valueType ??
+          result.fieldErrors.pickMode ??
+          result.fieldErrors.allowsPickNotes,
       );
       return;
     }
@@ -212,16 +233,10 @@ async function submitItemDefinition(args: ItemDefinitionSubmitArgs): Promise<voi
 function ItemDefinitionFields({
   name,
   setName,
-  valueType,
-  setValueType,
   unit,
   setUnit,
-  selectionRequired,
-  setSelectionRequired,
-  selectionType,
-  setSelectionType,
-  locked,
   error,
+  ...typeFields
 }: Readonly<ItemDefinitionFieldsProps>) {
   return (
     <div className="flex flex-col gap-(--space-4)">
@@ -244,15 +259,7 @@ function ItemDefinitionFields({
         isOptional
         description={CATALOG_COPY.unitHelp}
       />
-      <DefinitionTypeFields
-        valueType={valueType}
-        setValueType={setValueType}
-        selectionRequired={selectionRequired}
-        setSelectionRequired={setSelectionRequired}
-        selectionType={selectionType}
-        setSelectionType={setSelectionType}
-        locked={locked}
-      />
+      <DefinitionTypeFields {...typeFields} />
       <CatalogFieldError errorKey={error} />
     </div>
   );
@@ -261,23 +268,8 @@ function ItemDefinitionFields({
 function DefinitionTypeFields({
   valueType,
   setValueType,
-  selectionRequired,
-  setSelectionRequired,
-  selectionType,
-  setSelectionType,
-  locked,
-}: Readonly<
-  Pick<
-    ItemDefinitionFieldsProps,
-    | "valueType"
-    | "setValueType"
-    | "selectionRequired"
-    | "setSelectionRequired"
-    | "selectionType"
-    | "setSelectionType"
-    | "locked"
-  >
->) {
+  ...selection
+}: Readonly<DefinitionTypeFieldsProps>) {
   function changeValueType(id: string): void {
     setValueType(id === "RANGE" ? "RANGE" : "NUMBER");
   }
@@ -286,18 +278,12 @@ function DefinitionTypeFields({
       <Select
         label={CATALOG_COPY.valueType}
         value={valueType}
-        isDisabled={locked || selectionRequired}
-        description={locked ? CATALOG_COPY.lockedDefinitionDescription : undefined}
+        isDisabled={selection.locked || selection.selectionRequired}
+        description={selection.locked ? CATALOG_COPY.lockedDefinitionDescription : undefined}
         options={VALUE_OPTIONS}
         onChange={changeValueType}
       />
-      <DefinitionSelectionFields
-        selectionRequired={selectionRequired}
-        setSelectionRequired={setSelectionRequired}
-        selectionType={selectionType}
-        setSelectionType={setSelectionType}
-        locked={locked}
-      />
+      <DefinitionSelectionFields {...selection} />
     </>
   );
 }
@@ -305,21 +291,14 @@ function DefinitionTypeFields({
 function DefinitionSelectionFields({
   selectionRequired,
   setSelectionRequired,
-  selectionType,
-  setSelectionType,
+  pickMode,
+  setPickMode,
+  allowsPickNotes,
+  setAllowsPickNotes,
   locked,
-}: Readonly<
-  Pick<
-    ItemDefinitionFieldsProps,
-    "selectionRequired" | "setSelectionRequired" | "selectionType" | "setSelectionType" | "locked"
-  >
->) {
-  function changeSelectionType(id: string): void {
-    setSelectionType(id === "PRINT" ? "PRINT" : "EDIT");
-  }
-  function changeSelection(selected: boolean): void {
-    setSelectionRequired(selected);
-    if (!selected) setSelectionType("EDIT");
+}: Readonly<DefinitionSelectionFieldsProps>) {
+  function changePickMode(value: string): void {
+    setPickMode(value === "QUANTITY" ? "QUANTITY" : "COUNT");
   }
   return (
     <>
@@ -327,16 +306,32 @@ function DefinitionSelectionFields({
         label={CATALOG_COPY.selectionSwitch}
         isSelected={selectionRequired}
         isDisabled={locked}
-        onChange={changeSelection}
+        onChange={setSelectionRequired}
       />
       {selectionRequired ? (
-        <Select
-          label={CATALOG_COPY.selectionType}
-          value={selectionType}
-          isDisabled={locked}
-          options={SELECTION_OPTIONS}
-          onChange={changeSelectionType}
-        />
+        <>
+          <OptionCardGroup
+            label={CATALOG_COPY.pickMode}
+            isLabelVisible
+            options={locked ? LOCKED_PICK_MODE_OPTIONS : PICK_MODE_OPTIONS}
+            value={pickMode}
+            onChange={changePickMode}
+          />
+          {locked ? (
+            <Alert
+              tone="info"
+              title={CATALOG_COPY.pickLockedTitle}
+              body={CATALOG_COPY.pickLockedBody}
+            />
+          ) : null}
+          <Switch
+            label={CATALOG_COPY.pickNotesSwitch}
+            description={CATALOG_COPY.pickNotesHelp}
+            isSelected={allowsPickNotes}
+            isDisabled={locked}
+            onChange={setAllowsPickNotes}
+          />
+        </>
       ) : null}
     </>
   );

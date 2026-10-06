@@ -2,6 +2,7 @@ import "server-only";
 
 import type { SnapshotField } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
 import type { BookingValue } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
+import type { PickMode } from "@/features/booking/domain/item-definition-type/item-definition-type.types";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
 import type {
   ProjectStatus,
@@ -22,7 +23,8 @@ export interface ProjectItemRecord {
   readonly unit: string | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
-  readonly selectionType: "EDIT" | "PRINT" | null;
+  readonly pickMode: PickMode | null;
+  readonly allowsPickNotes: boolean;
   readonly value: PackageValue;
 }
 
@@ -196,7 +198,8 @@ export interface ActiveDefinition {
   readonly unit: string | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
-  readonly selectionType: "EDIT" | "PRINT" | null;
+  readonly pickMode: PickMode | null;
+  readonly allowsPickNotes: boolean;
 }
 
 export type MoveStatusResult = "MOVED" | "STALE" | "NOT_FOUND";

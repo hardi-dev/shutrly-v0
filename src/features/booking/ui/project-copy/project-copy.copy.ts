@@ -42,9 +42,8 @@ export const PROJECT_COPY = {
   packageEmptyTitle: "Layanan ini belum punya item paket",
   packageEmptyBody:
     "Tambahkan item bila perlu. Item yang kamu tambah hanya berlaku untuk proyek ini.",
-  selectionEdit: "pilihan edit",
   // not in Pencil
-  selectionPrint: "pilihan cetak",
+  pickModes: { COUNT: "hitung foto", QUANTITY: "jumlah per foto" },
   detailTitle: "Detail proyek",
   titleLabel: "Judul proyek",
   titlePlaceholderDesktop: "Terisi otomatis setelah memilih layanan",

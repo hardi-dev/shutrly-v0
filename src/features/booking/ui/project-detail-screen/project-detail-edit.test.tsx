@@ -28,7 +28,8 @@ const DEFINITIONS = [
     unit: "foto",
     valueType: "NUMBER",
     selectionRequired: true,
-    selectionType: "PRINT",
+    pickMode: "QUANTITY",
+    allowsPickNotes: false,
   },
 ] as const;
 

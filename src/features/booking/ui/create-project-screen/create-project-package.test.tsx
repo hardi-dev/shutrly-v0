@@ -42,7 +42,8 @@ const definitions = [
     unit: "foto",
     valueType: "NUMBER",
     selectionRequired: true,
-    selectionType: "EDIT",
+    pickMode: "COUNT",
+    allowsPickNotes: true,
   },
   {
     id: PROJECT_IDS.fotoCetak,
@@ -50,7 +51,8 @@ const definitions = [
     unit: "foto",
     valueType: "NUMBER",
     selectionRequired: true,
-    selectionType: "PRINT",
+    pickMode: "QUANTITY",
+    allowsPickNotes: false,
   },
 ] as const;
 
@@ -90,7 +92,7 @@ describe("Proyek baru package edits (AC-PRJ-030)", () => {
     await userEvent.clear(field);
     await userEvent.type(field, "30");
     await userEvent.click(within(dialog).getByRole("button", { name: "Simpan" }));
-    expect(screen.getByText("30 foto · pilihan edit")).toBeInTheDocument();
+    expect(screen.getByText("30 foto · hitung foto")).toBeInTheDocument();
   });
 
   it("AC-PRJ-017 refuses a decimal on a selection item and leaves the draft unchanged", async () => {
@@ -104,7 +106,7 @@ describe("Proyek baru package edits (AC-PRJ-030)", () => {
     await userEvent.type(field, "2,5");
     await userEvent.click(within(dialog).getByRole("button", { name: "Simpan" }));
     expect(within(dialog).getByText("Harus angka bulat.")).toBeInTheDocument();
-    expect(screen.getByText("25 foto · pilihan edit")).toBeInTheDocument();
+    expect(screen.getByText("25 foto · hitung foto")).toBeInTheDocument();
   });
 
   it("AC-PRJ-030 removes an item after confirming", async () => {

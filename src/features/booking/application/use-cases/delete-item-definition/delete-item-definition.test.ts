@@ -16,7 +16,8 @@ describe("deleteItemDefinition", () => {
       valueType: "NUMBER",
       unit: "foto",
       selectionRequired: true,
-      selectionType: "EDIT",
+      pickMode: "COUNT",
+      allowsPickNotes: true,
       editorUserId: "user",
     });
     await repository.create(context, {
@@ -24,7 +25,8 @@ describe("deleteItemDefinition", () => {
       valueType: "NUMBER",
       unit: "buah",
       selectionRequired: false,
-      selectionType: null,
+      pickMode: null,
+      allowsPickNotes: false,
       editorUserId: "user",
     });
     const usedId = repository.rows[0]?.id;

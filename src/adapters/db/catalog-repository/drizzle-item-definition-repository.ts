@@ -6,6 +6,10 @@ import type {
   ItemDefinitionRecord,
   ItemDefinitionRepositoryPort,
 } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
+import {
+  legacySelectionType,
+  parsePickMode,
+} from "@/features/booking/domain/item-definition-type/item-definition-type";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { DbExecutor } from "../client/client.types";
@@ -20,22 +24,22 @@ interface DefinitionRow {
   readonly valueType: string;
   readonly unit: string | null;
   readonly selectionRequired: boolean;
-  readonly selectionType: string | null;
+  readonly pickMode: string | null;
+  readonly allowsPickNotes: boolean;
   readonly isActive: boolean;
   readonly usageCount: number | string;
 }
 
 function toRecord(row: DefinitionRow): ItemDefinitionRecord | null {
   if (row.valueType !== "NUMBER" && row.valueType !== "RANGE") return null;
-  if (row.selectionType !== null && row.selectionType !== "EDIT" && row.selectionType !== "PRINT")
-    return null;
   return {
     id: row.id,
     name: row.name,
     valueType: row.valueType,
     unit: row.unit,
     selectionRequired: row.selectionRequired,
-    selectionType: row.selectionType,
+    pickMode: parsePickMode(row.pickMode),
+    allowsPickNotes: row.allowsPickNotes,
     isActive: row.isActive,
     usageCount: Number(row.usageCount),
   };
@@ -47,7 +51,8 @@ const columns = {
   valueType: serviceItemDefinition.valueType,
   unit: serviceItemDefinition.unit,
   selectionRequired: serviceItemDefinition.selectionRequired,
-  selectionType: serviceItemDefinition.selectionType,
+  pickMode: serviceItemDefinition.pickMode,
+  allowsPickNotes: serviceItemDefinition.allowsPickNotes,
   isActive: serviceItemDefinition.isActive,
   usageCount: sql<number>`count(${serviceItem.id})`,
 };
@@ -92,7 +97,9 @@ export function createDrizzleItemDefinitionRepository(
           valueType: input.valueType,
           unit: input.unit,
           selectionRequired: input.selectionRequired,
-          selectionType: input.selectionType,
+          selectionType: legacySelectionType(input.pickMode),
+          pickMode: input.pickMode,
+          allowsPickNotes: input.allowsPickNotes,
           updatedBy: input.editorUserId,
         });
         return "CREATED";
@@ -110,7 +117,9 @@ export function createDrizzleItemDefinitionRepository(
             valueType: input.valueType,
             unit: input.unit,
             selectionRequired: input.selectionRequired,
-            selectionType: input.selectionType,
+            selectionType: legacySelectionType(input.pickMode),
+            pickMode: input.pickMode,
+            allowsPickNotes: input.allowsPickNotes,
             updatedBy: input.editorUserId,
             updatedAt: new Date(),
           })
@@ -121,7 +130,8 @@ export function createDrizzleItemDefinitionRepository(
               sql`(
                 (${serviceItemDefinition.valueType} = ${input.valueType}
                   and ${serviceItemDefinition.selectionRequired} = ${input.selectionRequired}
-                  and ${serviceItemDefinition.selectionType} is not distinct from ${input.selectionType})
+                  and ${serviceItemDefinition.pickMode} is not distinct from ${input.pickMode}
+                  and ${serviceItemDefinition.allowsPickNotes} = ${input.allowsPickNotes})
                 or not exists (
                   select 1 from ${serviceItem}
                   where ${serviceItem.workspaceId} = ${context.workspaceId}
@@ -189,7 +199,9 @@ export function createDrizzleItemDefinitionRepository(
             valueType: input.valueType,
             unit: input.unit,
             selectionRequired: input.selectionRequired,
-            selectionType: input.selectionType,
+            selectionType: legacySelectionType(input.pickMode),
+            pickMode: input.pickMode,
+            allowsPickNotes: input.allowsPickNotes,
             updatedBy: input.editorUserId,
           })),
         )

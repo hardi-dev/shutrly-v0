@@ -42,6 +42,7 @@ describe("Icon", () => {
         "message-square-text",
         "share-2",
         "image",
+        "layers",
         "hourglass",
         "package-check",
         "wallet",

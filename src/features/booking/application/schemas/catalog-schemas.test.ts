@@ -6,14 +6,19 @@ import { itemDefinitionSchema } from "./item-definition/item-definition.schema";
 describe("catalog schemas", () => {
   it.each([
     [
-      { valueType: "RANGE", selectionRequired: true, selectionType: "EDIT" },
+      { valueType: "RANGE", selectionRequired: true, pickMode: "COUNT", allowsPickNotes: true },
       "valueType",
       "SELECTION_NEEDS_NUMBER",
     ],
     [
-      { valueType: "NUMBER", selectionRequired: true, selectionType: null },
-      "selectionType",
-      "SELECTION_TYPE_REQUIRED",
+      { valueType: "NUMBER", selectionRequired: true, pickMode: null, allowsPickNotes: false },
+      "pickMode",
+      "PICK_MODE_REQUIRED",
+    ],
+    [
+      { valueType: "NUMBER", selectionRequired: false, pickMode: null, allowsPickNotes: true },
+      "allowsPickNotes",
+      "PICK_NOTES_UNEXPECTED",
     ],
   ])("AC-CAT-007 rejects invalid definition settings", (input, path, message) => {
     const result = itemDefinitionSchema.safeParse({ name: "Album", unit: "buah", ...input });

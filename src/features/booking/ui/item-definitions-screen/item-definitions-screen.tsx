@@ -231,6 +231,7 @@ function DefinitionRow({
         labelForType(definition.valueType),
         definition.unit,
         definition.usageCount,
+        definition.pickMode ? CATALOG_COPY.pickModes[definition.pickMode] : null,
       )}
       isLast={isLast}
       trailing={
@@ -261,13 +262,6 @@ function DefinitionRowTrailing({
 }>) {
   return (
     <span className="flex items-center gap-(--space-2)">
-      {definition.selectionType ? (
-        <StatusChip
-          tone="info"
-          label={CATALOG_COPY.selectionTypes[definition.selectionType]}
-          hasDot={false}
-        />
-      ) : null}
       {!definition.isActive ? (
         <StatusChip tone="neutral" label={CATALOG_COPY.archived} hasDot={false} />
       ) : null}

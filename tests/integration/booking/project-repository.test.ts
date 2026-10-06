@@ -62,7 +62,8 @@ async function seedCatalog(workspaceId: string, ownerId: string) {
         valueType: "NUMBER",
         unit: "foto",
         selectionRequired: true,
-        selectionType: "EDIT",
+        pickMode: "COUNT",
+        allowsPickNotes: true,
       },
       { workspaceId, name: "Jumlah orang", valueType: "RANGE", unit: "orang" },
       { workspaceId, name: "Album lama", valueType: "NUMBER", isActive: false },
@@ -590,7 +591,8 @@ describe("Drizzle project repository", () => {
         valueType: "NUMBER",
         unit: "foto",
         selectionRequired: true,
-        selectionType: "PRINT",
+        pickMode: "QUANTITY",
+        allowsPickNotes: false,
       })
       .returning({ id: serviceItemDefinition.id });
     const repository = createDrizzleProjectRepository(db);
@@ -605,9 +607,9 @@ describe("Drizzle project repository", () => {
     );
     if (created.status !== "CREATED") throw new Error("not created");
     const detail = await repository.findDetail(context, created.id);
-    expect(detail?.items.map((item) => [item.name, item.value, item.selectionType])).toEqual([
-      ["Foto edit", { type: "NUMBER", value: "30" }, "EDIT"],
-      ["Foto cetak", { type: "NUMBER", value: "10" }, "PRINT"],
+    expect(detail?.items.map((item) => [item.name, item.value, item.pickMode])).toEqual([
+      ["Foto edit", { type: "NUMBER", value: "30" }, "COUNT"],
+      ["Foto cetak", { type: "NUMBER", value: "10" }, "QUANTITY"],
     ]);
     const template = await db
       .select({ value: serviceItem.value })

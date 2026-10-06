@@ -27,7 +27,8 @@ export const fotoEditItem = {
   unit: "foto",
   valueType: "NUMBER",
   selectionRequired: true,
-  selectionType: "EDIT",
+  pickMode: "COUNT",
+  allowsPickNotes: true,
   value: { type: "NUMBER", value: "25" },
 } as const;
 
@@ -38,7 +39,8 @@ export const jumlahOrangItem = {
   unit: "orang",
   valueType: "RANGE",
   selectionRequired: false,
-  selectionType: null,
+  pickMode: null,
+  allowsPickNotes: false,
   value: { type: "RANGE", min: "1", max: "3" },
 } as const;
 
@@ -51,9 +53,9 @@ export function projectFixture(): FakeProjectRepository {
     { id: PROJECT_IDS.sari, name: "Sari", whatsappNumber: null, isArchived: false },
   );
   repository.definitions.push(
-    definition(PROJECT_IDS.fotoEdit, "Foto edit", "NUMBER", "foto", "EDIT", true),
+    definition(PROJECT_IDS.fotoEdit, "Foto edit", "NUMBER", "foto", "COUNT", true),
     definition(PROJECT_IDS.jumlahOrang, "Jumlah orang", "RANGE", "orang", null, true),
-    definition(PROJECT_IDS.fotoCetak, "Foto cetak", "NUMBER", "foto", "PRINT", true),
+    definition(PROJECT_IDS.fotoCetak, "Foto cetak", "NUMBER", "foto", "QUANTITY", true),
     definition(PROJECT_IDS.albumLama, "Album lama", "NUMBER", null, null, false),
   );
   repository.services.push(
@@ -108,7 +110,7 @@ function definition(
   name: string,
   valueType: "NUMBER" | "RANGE",
   unit: string | null,
-  selectionType: "EDIT" | "PRINT" | null,
+  pickMode: "COUNT" | "QUANTITY" | null,
   isActive: boolean,
 ) {
   return {
@@ -116,8 +118,9 @@ function definition(
     name,
     valueType,
     unit,
-    selectionType,
-    selectionRequired: selectionType !== null,
+    pickMode,
+    allowsPickNotes: pickMode === "COUNT",
+    selectionRequired: pickMode !== null,
     isActive,
   };
 }

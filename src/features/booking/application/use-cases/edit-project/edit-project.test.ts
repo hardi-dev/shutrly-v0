@@ -87,7 +87,8 @@ describe("deal edits", () => {
     expect(stored.items.at(-1)).toMatchObject({
       name: "Foto cetak",
       unit: "foto",
-      selectionType: "PRINT",
+      pickMode: "QUANTITY",
+      allowsPickNotes: false,
       value: { type: "NUMBER", value: "10" },
     });
   });

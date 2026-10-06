@@ -25,7 +25,8 @@ export async function serviceFixture() {
     valueType: "NUMBER",
     unit: "foto",
     selectionRequired: true,
-    selectionType: "EDIT",
+    pickMode: "COUNT",
+    allowsPickNotes: true,
     editorUserId: "user",
   });
   await definitions.create(bookingContext, {
@@ -33,7 +34,8 @@ export async function serviceFixture() {
     valueType: "NUMBER",
     unit: "lembar",
     selectionRequired: true,
-    selectionType: "PRINT",
+    pickMode: "QUANTITY",
+    allowsPickNotes: false,
     editorUserId: "user",
   });
   await definitions.create(bookingContext, {
@@ -41,7 +43,8 @@ export async function serviceFixture() {
     valueType: "RANGE",
     unit: "orang",
     selectionRequired: false,
-    selectionType: null,
+    pickMode: null,
+    allowsPickNotes: false,
     editorUserId: "user",
   });
   const service = await services.create(bookingContext, {

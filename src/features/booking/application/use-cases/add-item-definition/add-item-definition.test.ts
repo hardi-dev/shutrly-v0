@@ -11,7 +11,8 @@ const valid = {
   valueType: "NUMBER" as const,
   unit: "buah",
   selectionRequired: false,
-  selectionType: null,
+  pickMode: null,
+  allowsPickNotes: false,
 };
 
 describe("addItemDefinition", () => {
@@ -28,7 +29,8 @@ describe("addItemDefinition", () => {
         ...valid,
         valueType: "RANGE",
         selectionRequired: true,
-        selectionType: "EDIT",
+        pickMode: "COUNT",
+        allowsPickNotes: true,
       }),
     ).toEqual({
       ok: false,

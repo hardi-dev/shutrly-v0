@@ -1,33 +1,37 @@
 import type { DefaultItemDefinition } from "./default-item-definitions.types";
 
-// Seeded per workspace and backfilled by migration 0007 (BR-CAT-011).
+// Seeded per workspace and backfilled by migration 0007; pick modes and notes by 0015 (BR-CAT-011).
 export const DEFAULT_ITEM_DEFINITIONS: readonly DefaultItemDefinition[] = [
   {
     name: "Foto edit",
     valueType: "NUMBER",
     unit: "foto",
     selectionRequired: true,
-    selectionType: "EDIT",
+    pickMode: "COUNT",
+    allowsPickNotes: true,
   },
   {
     name: "Foto cetak",
     valueType: "NUMBER",
     unit: "lembar",
     selectionRequired: true,
-    selectionType: "PRINT",
+    pickMode: "QUANTITY",
+    allowsPickNotes: false,
   },
   {
     name: "Jumlah orang",
     valueType: "RANGE",
     unit: "orang",
     selectionRequired: false,
-    selectionType: null,
+    pickMode: null,
+    allowsPickNotes: false,
   },
   {
     name: "Durasi pemotretan",
     valueType: "NUMBER",
     unit: "jam",
     selectionRequired: false,
-    selectionType: null,
+    pickMode: null,
+    allowsPickNotes: false,
   },
 ];

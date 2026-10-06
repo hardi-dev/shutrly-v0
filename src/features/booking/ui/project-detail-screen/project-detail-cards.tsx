@@ -101,7 +101,7 @@ export function ProjectPackageCard({
           {project.items.map((item, index) => (
             <ListCardItem
               key={item.id}
-              icon={item.selectionType ? "image" : "package"}
+              icon={item.pickMode ? "images" : "package"}
               title={item.name}
               meta={describePackageItem({ ...item, definitionName: item.name })}
               isLast={index === project.items.length - 1}

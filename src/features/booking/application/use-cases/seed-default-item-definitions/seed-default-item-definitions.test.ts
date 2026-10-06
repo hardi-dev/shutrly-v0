@@ -15,7 +15,8 @@ describe("seedDefaultItemDefinitions", () => {
       valueType: "NUMBER",
       unit: "custom",
       selectionRequired: true,
-      selectionType: "EDIT",
+      pickMode: "COUNT",
+      allowsPickNotes: true,
       editorUserId: "owner",
     });
     await seedDefaultItemDefinitions(repository, context);

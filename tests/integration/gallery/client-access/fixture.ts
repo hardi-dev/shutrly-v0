@@ -1,5 +1,6 @@
 import { uniqueEmail } from "@tests/support/auth/unique";
 import { fakeHasher } from "@tests/support/gallery/fake-gallery-crypto";
+import { eq } from "drizzle-orm";
 
 import type { Db } from "@/adapters/db/client/client.types";
 import { user } from "@/adapters/db/schema/auth/auth";
@@ -10,7 +11,9 @@ import {
 } from "@/adapters/db/schema/booking/catalog";
 import { client } from "@/adapters/db/schema/booking/client";
 import { project, projectItem } from "@/adapters/db/schema/booking/project";
-import { gallery } from "@/adapters/db/schema/gallery/gallery";
+import { gallery, galleryPhoto, gallerySource } from "@/adapters/db/schema/gallery/gallery";
+import { photoSelection } from "@/adapters/db/schema/gallery/selection";
+import { workspaceSourceConfig } from "@/adapters/db/schema/gallery/workspace-source-config";
 import { workspace } from "@/adapters/db/schema/workspace/workspace";
 import { asWorkspaceId } from "@/shared/workspace-context/workspace-context";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
@@ -187,4 +190,81 @@ export async function addProjectItems(
     ids[item.name] = row.id;
   }
   return ids;
+}
+
+export interface PhotoSeed {
+  readonly fileName: string;
+  readonly kind?: "PROOF" | "EDITED" | "PRINT";
+  readonly folderPath?: string;
+  readonly missing?: boolean;
+}
+
+/** Links one Drive source to the gallery and inserts its photos, as a finished sync would (F-09). @returns the source id and the photo ids by file name */
+export async function seedPhotos(
+  db: Db,
+  target: { readonly workspaceId: string; readonly galleryId: string },
+  photos: readonly PhotoSeed[],
+) {
+  const inserted = await db
+    .insert(workspaceSourceConfig)
+    .values({ workspaceId: target.workspaceId, provider: "GOOGLE_DRIVE", displayName: "Drive" })
+    .onConflictDoNothing()
+    .returning({ id: workspaceSourceConfig.id });
+  const configId =
+    inserted.at(0)?.id ??
+    (
+      await db
+        .select({ id: workspaceSourceConfig.id })
+        .from(workspaceSourceConfig)
+        .where(eq(workspaceSourceConfig.workspaceId, target.workspaceId))
+    )[0].id;
+  const [source] = await db
+    .insert(gallerySource)
+    .values({
+      workspaceId: target.workspaceId,
+      galleryId: target.galleryId,
+      workspaceSourceId: configId,
+      providerFolderId: `folder${crypto.randomUUID().replaceAll("-", "")}`,
+      folderName: "Rina-Wisuda",
+      syncStatus: "SUCCEEDED",
+    })
+    .returning({ id: gallerySource.id });
+  const ids: Record<string, string> = {};
+  for (const photo of photos) {
+    const [row] = await db
+      .insert(galleryPhoto)
+      .values({
+        workspaceId: target.workspaceId,
+        galleryId: target.galleryId,
+        gallerySourceId: source.id,
+        externalFileId: `file${crypto.randomUUID().replaceAll("-", "")}`,
+        fileName: photo.fileName,
+        mimeType: "image/jpeg",
+        nameSortKey: photo.fileName.toLowerCase(),
+        kind: photo.kind ?? "PROOF",
+        folderPath: photo.folderPath ?? "",
+        browsePath: photo.folderPath ?? "",
+        missingAt: photo.missing ? new Date() : null,
+      })
+      .returning({ id: galleryPhoto.id });
+    ids[photo.fileName] = row.id;
+  }
+  return { sourceId: source.id, photoIds: ids };
+}
+
+/** Inserts picks straight into a group (later slices add the use cases). */
+export async function seedPicks(
+  db: Db,
+  target: { readonly workspaceId: string; readonly groupId: string },
+  photoIds: readonly string[],
+  quantity = 1,
+) {
+  for (const photoId of photoIds) {
+    await db.insert(photoSelection).values({
+      workspaceId: target.workspaceId,
+      selectionGroupId: target.groupId,
+      photoId,
+      quantity,
+    });
+  }
 }

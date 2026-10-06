@@ -7,6 +7,7 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import type { DbExecutor } from "../client/client.types";
 import { gallery, gallerySource } from "../schema/gallery/gallery";
+import { insertSelectionGroups } from "./selection-group-sql";
 
 type SourceWrites = Pick<GalleryLifecycleWriter, "countActiveSources" | "removeSource">;
 type StatusWrites = Pick<
@@ -97,6 +98,7 @@ export function lifecycleWriter(
   return {
     ...sourceWrites(tx, context, galleryId),
     ...statusWrites(tx, scope),
+    createSelectionGroups: () => insertSelectionGroups(tx, context, galleryId),
     async rotatePassword(rotated, actorId, now) {
       await tx
         .update(gallery)

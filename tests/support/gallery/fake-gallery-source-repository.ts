@@ -98,10 +98,15 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
       deleteGallery: async () => {
         set({ deleted: true });
       },
+      createSelectionGroups: async () => {
+        this.selectionGroupCalls += 1;
+        return 0;
+      },
     };
   }
 
   readonly galleryByProject = new Map<string, string>();
+  selectionGroupCalls = 0;
 
   async findGalleryIdByProject(context: WorkspaceContext, projectId: string) {
     const id = this.galleryByProject.get(projectId) ?? null;

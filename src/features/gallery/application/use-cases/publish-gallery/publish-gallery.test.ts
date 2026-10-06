@@ -13,6 +13,12 @@ describe("publishGallery", () => {
     expect(sources.galleries.get(GALLERY_ID)?.status).toBe("PUBLISHED");
   });
 
+  it("AC-SEL-001 BR-SEL-001 creates the selection groups with the publish", async () => {
+    const { deps, sources } = await lifecycleSetup();
+    await publishGallery(deps, WORKSPACE, OWNER_ID, GALLERY_ID);
+    expect(sources.selectionGroupCalls).toBe(1);
+  });
+
   it("AC-GAL-018 turns 30 days into publish time + 30 days", async () => {
     const { deps, sources } = await lifecycleSetup({ expiryDays: 30 });
     await publishGallery(deps, WORKSPACE, OWNER_ID, GALLERY_ID);

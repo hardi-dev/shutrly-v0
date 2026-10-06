@@ -44,6 +44,13 @@ export const PROJECT_COPY = {
     "Tambahkan item bila perlu. Item yang kamu tambah hanya berlaku untuk proyek ini.",
   // not in Pencil
   pickModes: { COUNT: "hitung foto", QUANTITY: "jumlah per foto" },
+  // not in Pencil: F-10 D-10c refusals
+  selectionInUseTitle: "Klien sudah memilih foto untuk item ini",
+  selectionInUseBody: (usage: number, unit: string | null) =>
+    `Sudah dipilih ${[String(usage), unit].filter(Boolean).join(" ")}. Nilai tidak bisa di bawah itu, dan item tidak bisa dihapus.`,
+  // not in Pencil
+  selectionClosedTitle: "Pilihan klien untuk item ini sudah dikirim",
+  selectionClosedBody: "Ubah item ini setelah membuka lagi pilihannya.",
   detailTitle: "Detail proyek",
   titleLabel: "Judul proyek",
   titlePlaceholderDesktop: "Terisi otomatis setelah memilih layanan",

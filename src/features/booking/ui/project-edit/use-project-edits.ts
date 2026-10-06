@@ -20,7 +20,7 @@ export function useProjectEdits() {
         return null;
       }
       if (result.code === "VALIDATION_FAILED") return result.fieldErrors;
-      showFailure(result.code);
+      showFailure(result);
       router.refresh();
       return null;
     } catch {
@@ -35,8 +35,21 @@ export function useProjectEdits() {
   return { run };
 }
 
-function showFailure(code: Exclude<ProjectWriteResult, undefined>["code"]): void {
-  if (code === "LAST_SESSION") {
+function showFailure(result: Exclude<ProjectWriteResult, undefined>): void {
+  const { code } = result;
+  if (result.code === "SELECTION_IN_USE") {
+    showToast({
+      tone: "danger",
+      title: PROJECT_COPY.selectionInUseTitle,
+      body: PROJECT_COPY.selectionInUseBody(result.usage, result.unit),
+    });
+  } else if (code === "SELECTION_CLOSED") {
+    showToast({
+      tone: "danger",
+      title: PROJECT_COPY.selectionClosedTitle,
+      body: PROJECT_COPY.selectionClosedBody,
+    });
+  } else if (code === "LAST_SESSION") {
     showToast({ tone: "danger", title: PROJECT_COPY.lastSessionToast });
   } else if (code === "DEAL_LOCKED") {
     showToast({

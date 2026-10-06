@@ -61,6 +61,8 @@ export interface GalleryLifecycleWriter {
   readonly archive: (actorId: string, now: Date) => Promise<void>;
   /** Deletes the gallery with its sources and photo records (cascade). */
   readonly deleteGallery: () => Promise<void>;
+  /** Creates one OPEN group per selection item that has none yet (F-10 D-10a); returns how many. */
+  readonly createSelectionGroups: () => Promise<number>;
 }
 
 export interface GallerySourceWriter extends GalleryLifecycleWriter {

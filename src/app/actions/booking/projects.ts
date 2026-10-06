@@ -5,6 +5,10 @@ import { revalidatePath } from "next/cache";
 import { loadClientForEdit } from "@/composition/booking/client-flow/client-flow";
 import {
   addProjectItemEntry,
+  removeProjectItemEntry,
+  updateProjectItemValueEntry,
+} from "@/composition/booking/project-deal-edit-flow/project-deal-edit-flow";
+import {
   addSessionEntry,
   advanceProjectEntry,
   cancelProjectEntry,
@@ -13,12 +17,10 @@ import {
   deleteSessionEntry,
   loadMoreProjectsEntry,
   loadProjectDetail,
-  removeProjectItemEntry,
   searchClientsEntry,
   searchFilterClientsEntry,
   updateProjectFieldValuesEntry,
   updateProjectInfoEntry,
-  updateProjectItemValueEntry,
   updateSessionEntry,
 } from "@/composition/booking/project-flow/project-flow";
 

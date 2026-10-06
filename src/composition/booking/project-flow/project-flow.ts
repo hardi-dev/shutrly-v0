@@ -17,11 +17,6 @@ import {
   updateProjectFieldValues,
   updateProjectSession,
 } from "@/features/booking/application/use-cases/edit-project/project-field-and-session-edits";
-import {
-  addProjectItem,
-  removeProjectItem,
-  updateProjectItemValue,
-} from "@/features/booking/application/use-cases/edit-project/project-item-edits";
 import { getProjectDetail } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail";
 import { listProjects } from "@/features/booking/application/use-cases/list-projects/list-projects";
 import { loadCreateOptions } from "@/features/booking/application/use-cases/load-create-options/load-create-options";
@@ -268,29 +263,6 @@ async function runEdit(
   } catch (error) {
     return saveError(error, verified.context.workspaceId, operation);
   }
-}
-
-export function addProjectItemEntry(ws: string, id: string, values: unknown) {
-  return runEdit(ws, id, "add-item", (projects, context, actor, projectId) =>
-    addProjectItem(projects, context, actor, projectId, values),
-  );
-}
-
-export function updateProjectItemValueEntry(
-  ws: string,
-  id: string,
-  itemId: string,
-  values: unknown,
-) {
-  return runEdit(ws, id, "update-item", (projects, context, actor, projectId) =>
-    updateProjectItemValue(projects, context, actor, projectId, idOrNotFound(itemId), values),
-  );
-}
-
-export function removeProjectItemEntry(ws: string, id: string, itemId: string) {
-  return runEdit(ws, id, "remove-item", (projects, context, _actor, projectId) =>
-    removeProjectItem(projects, context, projectId, idOrNotFound(itemId)),
-  );
 }
 
 export function updateProjectFieldValuesEntry(ws: string, id: string, values: unknown) {

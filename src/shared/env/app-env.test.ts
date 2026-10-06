@@ -37,6 +37,12 @@ describe("parseAppEnv", () => {
     expect(message).not.toContain("supersecret123");
   });
 
+  it("ADR-021 refuses a client session key that isn't 32 bytes", () => {
+    expect(() => parseAppEnv({ ...valid, CLIENT_SESSION_KEY: "short" })).toThrow(
+      "Invalid environment: CLIENT_SESSION_KEY",
+    );
+  });
+
   it("ADR-017 refuses a gallery password key that isn't 32 bytes", () => {
     expect(() => parseAppEnv({ ...valid, GALLERY_PASSWORD_KEY: "A".repeat(42) })).toThrow(
       "Invalid environment: GALLERY_PASSWORD_KEY",

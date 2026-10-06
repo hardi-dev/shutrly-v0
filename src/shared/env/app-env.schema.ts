@@ -18,6 +18,8 @@ export const appEnvSchema = z
     GOOGLE_DRIVE_API_KEY: z.string().min(1),
     // base64url of exactly 32 bytes: 43 characters, and the last one carries only 4 bits.
     GALLERY_PASSWORD_KEY: z.string().regex(/^[\w-]{42}[AEIMQUYcgkosw048]$/),
+    // F-10 Client access (ADR-021): HMAC key for the client session cookie, same format.
+    CLIENT_SESSION_KEY: z.string().regex(/^[\w-]{42}[AEIMQUYcgkosw048]$/),
     // E2E only: "1" wires the fixture Drive provider. Refused on production.
     E2E_FAKE_DRIVE: z.enum(["1"]).optional(),
   })

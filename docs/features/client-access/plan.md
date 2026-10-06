@@ -339,10 +339,10 @@ export const remainingPlaces = (limit: number, usage: number): number => Math.ma
 **Components:** `PhotoTile` selectable variant in `src/ui/patterns/photo-tile` (props per technical design; stories for unselected, selected, quantity, with note, locked, missing); `pick-screen` (summary bar with *Tinjau*, filter *Semua foto / Dipilih*, limit alert); `pick-note-sheet` (Modal MD / Bottom Sheet Form, counter, *Batal* / *Simpan catatan*); viewer actions *Pilih untuk…* (Menu / Bottom Sheet Actions listing groups with usage and checks, disabled for non-`OPEN`) and *Catatan*.
 
 **Steps**
-- [ ] **4.1** `pick-note` + `PhotoTile` selectable with dom tests and stories. Commit `feat(ui): add a selectable photo tile`.
-- [ ] **4.2** Repository write side + `set-pick` + `set-pick-note` + integration `tests/integration/gallery/client-access/picks.test.ts`: AC-SEL-002…007 (including **two parallel picks**, exactly one wins), -015, -021 (Pilih part). Commit `feat(selection): pick, un-pick and note photos`.
-- [ ] **4.3** Pilih screen from the five pilih exports, optimistic UI that reverts on refusal and refreshes the group. Commit `feat(client-access): add the pilih screen`.
-- [ ] **4.4** *Pilih untuk…* and *Catatan* in the viewer (AC-SEL-019), from the pratinjau exports. Commit `feat(client-access): pick and note from the viewer`.
+- [x] **4.1** `pick-note` + `PhotoTile` selectable with dom tests and stories. Commit `feat(ui): add a selectable photo tile`.
+- [x] **4.2** Repository write side + `set-pick` + `set-pick-note` + integration `tests/integration/gallery/client-access/picks.test.ts`: AC-SEL-002…007 (including **two parallel picks**, exactly one wins), -015, -021 (Pilih part). Commit `feat(selection): pick, un-pick and note photos`.
+- [x] **4.3** Pilih screen from the five pilih exports, optimistic UI that reverts on refusal and refreshes the group. Commit `feat(client-access): add the pilih screen`.
+- [x] **4.4** *Pilih untuk…* and *Catatan* in the viewer (AC-SEL-019), from the pratinjau exports. Commit `feat(client-access): pick and note from the viewer`.
 
 **Done check:** in the browser the client picks and un-picks with autosave, hits *Batas pilihan tercapai*, writes a note on a tile and in the viewer, picks from *Semua foto*'s viewer into another group, and two tabs picking at once never exceed the limit.
 

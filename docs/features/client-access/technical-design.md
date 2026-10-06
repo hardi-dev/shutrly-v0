@@ -312,3 +312,11 @@ See [plan.md](plan.md): Slice 0 (base, spikes, inventory) and Slices 1–11, eac
 
 - **R-1 downloads:** Drive v3 `files.get?alt=media&key=…` on a link-shared 8.5 MB JPEG from the Owner's test folder returned 200, `image/jpeg`, a `content-length` equal to the file size, and bytes whose MD5 equals Drive's `md5Checksum` (the original, EXIF included), in ~3 s from Indonesia. `lh3.googleusercontent.com/d/<id>=s0-d` answered **429** (HTML) on the same file. **Decision for D-18:** download through Drive `alt=media` only, streaming the upstream body into the response (`new Response(upstream.body)`, no buffering); no lh3 fallback. A Drive error maps to a *Gagal* tile on the client (AC-DEL-005).
 - **R-2 Cache API:** Cloudflare's limits page says Cache API `put()`/`match()`/`delete()` calls "share the same quota as subrequests" (50 per request on Free). A miss costs 2 (match + put), a hit 1, so D-22 fits. Since ADR-020 (main, 2026-10-06) staging runs the same build on Netlify (Node), where `caches` doesn't exist. **Decision for D-22 (Slice 11):** use `globalThis.caches?.default` when present and skip caching otherwise; behaviour never depends on the cache.
+
+## Implementation record
+
+### Slice 0 (2026-10-06)
+- Merged `main` (staging on Netlify, PRs #9–#11). Main's new ADR-020 is *staging on Netlify*, so this feature's ADR was renumbered **ADR-021** everywhere.
+- `.dev.vars` copied from the F-09 worktree (same non-production database as the main checkout, plus `GALLERY_PASSWORD_KEY` and `GOOGLE_DRIVE_API_KEY`) and `CLIENT_SESSION_KEY` generated; `.env.test` copied. Neither is committed.
+- Base gate: `pnpm typecheck` and `pnpm lint` pass. Spikes recorded above (Drive `alt=media` only; Cache API guarded). Inventory: [component-inventory.md](component-inventory.md).
+- **Deviation:** the spike script stayed in the session scratchpad instead of `scripts/spikes/` (throwaway, holds no output worth keeping).

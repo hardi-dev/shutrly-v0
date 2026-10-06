@@ -461,8 +461,8 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 **Backend:** booking `rotate-client-access-token` (lock, refuse `CANCELLED`, retry on unique collision, audit columns); `get-access-card` (masked link, password via F-09's Owner-only read, expiry); action; `ProjectDetailScreen` slot `accessCard` (Ganti password reuses F-09's rotate dialog).
 
 **Steps**
-- [ ] **10.1** Use case + integration (AC-ACC-009: old link neutral, old cookie rejected, new link + same password works, audit). Commit `feat(client-access): rotate the client link`.
-- [ ] **10.2** Card and *Ganti link* dialog from the exports. Commit `feat(client-access): add the akses klien card`.
+- [x] **10.1** Use case + integration (AC-ACC-009: old link neutral, old cookie rejected, new link + same password works, audit). Commit `feat(client-access): rotate the client link`.
+- [x] **10.2** Card and *Ganti link* dialog from the exports. Commit `feat(client-access): add the akses klien card`.
 
 **Done check:** after *Ganti link* the old link shows the neutral page, a signed-in client is signed out, and the new link works with the same password.
 

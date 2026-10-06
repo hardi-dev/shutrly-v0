@@ -32,6 +32,9 @@ export type ButtonIconName = Extract<
   // F-10 Owner selection pages: *Lihat pilihan* and *Kunci pilihan* (owner exports).
   | "eye"
   | "lock"
+  // F-10 *Akses klien*: *Ganti link* and *Ganti password* (aksesklien-kartu).
+  | "link"
+  | "key-round"
 >;
 
 export interface ButtonIconProps {

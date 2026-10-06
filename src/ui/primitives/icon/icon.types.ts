@@ -82,7 +82,8 @@ export type IconName =
   | "toggle-left"
   | "list"
   | "list-checks"
-  | "user-plus";
+  | "user-plus"
+  | "key-round";
 
 export type IconSize = "sm" | "md" | "lg";
 

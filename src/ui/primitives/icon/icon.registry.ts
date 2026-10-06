@@ -42,6 +42,7 @@ import {
   Image02Icon,
   ImageNotFound01Icon,
   InformationCircleIcon,
+  KeyRoundIcon,
   Layers01Icon,
   LayoutGridFreeIcons,
   LeftToRightListBulletIcon,
@@ -169,6 +170,8 @@ export const ICON_NAMES: readonly IconName[] = [
   "arrow-left",
   "arrow-right-01",
   "user-plus",
+  // F-10 *Akses klien*: *Ganti password* (aksesklien-kartu).
+  "key-round",
 ];
 
 export const ICON_REGISTRY: Record<IconName, IconSvgElement> = {
@@ -223,6 +226,7 @@ export const ICON_REGISTRY: Record<IconName, IconSvgElement> = {
   package: PackageFreeIcons,
   "user-round-cog": UserRoundCogFreeIcons,
   "user-plus": UserAdd01Icon,
+  "key-round": KeyRoundIcon,
   "message-square-text": MessageSquareTextFreeIcons,
   "message-circle": MessageCircleIcon,
   "share-2": Share2,

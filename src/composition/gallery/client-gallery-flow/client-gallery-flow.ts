@@ -8,6 +8,8 @@ import { browseClientPhotos } from "@/features/gallery/application/use-cases/bro
 import type { ClientBrowsePageView } from "@/features/gallery/application/use-cases/browse-client-photos/browse-client-photos.types";
 import { getClientHome } from "@/features/gallery/application/use-cases/get-client-home/get-client-home";
 import type { ClientHomeView } from "@/features/gallery/application/use-cases/get-client-home/get-client-home.types";
+import { getDeliveryFiles } from "@/features/gallery/application/use-cases/get-delivery-files/get-delivery-files";
+import type { DeliveryFilesView } from "@/features/gallery/application/use-cases/get-delivery-files/get-delivery-files.types";
 import { listPickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets";
 import type { PickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets.types";
 import { serveClientFile } from "@/features/gallery/application/use-cases/serve-client-file/serve-client-file";
@@ -46,6 +48,13 @@ export interface ClientBrowseLoad {
 /** Loads Beranda (or the landing decision) for a client page (A-24, A-31). @param rawToken - the untrusted route token @returns the gate outcome with the home view */
 export function loadClientHomeEntry(rawToken: string): Promise<ClientScopeResult<ClientHomeView>> {
   return withSignedInClient(rawToken, (client, scope) => getClientHome(scope, client));
+}
+
+/** Loads *Hasil akhir*: the finished files by kind, or null before final delivery (BR-DEL-001/002, D-15). @param rawToken - the untrusted route token @returns the gate outcome with the files */
+export function loadClientDeliveryEntry(
+  rawToken: string,
+): Promise<ClientScopeResult<DeliveryFilesView | null>> {
+  return withSignedInClient(rawToken, (client, scope) => getDeliveryFiles(scope, client));
 }
 
 /** Loads the *Semua foto* page: the landing decision for its breadcrumb and the root page; a failed first page becomes null so the page shows its retry state (A-31, D-15). @param rawToken - the untrusted route token @returns the gate outcome with both */

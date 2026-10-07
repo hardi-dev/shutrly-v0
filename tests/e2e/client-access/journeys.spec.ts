@@ -159,14 +159,17 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
     await pick(client, "IMG_002.jpg");
     await send(client);
 
-    // J-04 end: the Owner locks the sent group.
-    await page.goto(`${projectPath}/pilihan`);
+    // J-04 end: the Owner opens the picks from the gallery page (A-34) and locks the sent group.
+    expect((await page.request.get(`${projectPath}/pilihan`)).status()).toBe(404);
+    await page.goto(`${projectPath}/gallery`);
+    await page.getByRole("link", { name: SELECTION_OWNER_COPY.reviewPicks }).first().click();
+    await expect(page).toHaveURL(`${projectPath}/gallery/pilihan`);
     const lock = page.getByRole("button", { name: SELECTION_OWNER_COPY.lockPicks }).first();
     await openAndConfirm(page, lock, SELECTION_OWNER_COPY.lockPicks);
     await expect(visibleText(page, SELECTION_OWNER_COPY.status.LOCKED)).toBeVisible();
 
-    // J-06: the Owner publishes final delivery; the client downloads one file and then all.
-    await page.goto(projectPath);
+    // J-06: the Owner publishes final delivery from the gallery page; the client downloads one file and then all.
+    await page.goto(`${projectPath}/gallery`);
     const publish = page.getByRole("button", { name: DELIVERY_COPY.publish }).first();
     await openAndConfirm(page, publish, DELIVERY_COPY.publishConfirm);
     await expect(visibleText(page, DELIVERY_COPY.publishedToast)).toBeVisible();
@@ -191,8 +194,9 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
     });
     await expectGalleryA11y(client);
 
-    // J-06 end: Tandai selesai.
+    // J-06 end: Tandai selesai, the project header's action on a delivered project (A-34).
     await page.goto(projectPath);
+    await expect(visibleText(page, DELIVERY_COPY.headerMeta("").trim())).toBeVisible();
     const complete = page.getByRole("button", { name: DELIVERY_COPY.complete }).first();
     await openAndConfirm(page, complete, DELIVERY_COPY.complete);
     await expect(visibleText(page, DELIVERY_COPY.completedToast)).toBeVisible();

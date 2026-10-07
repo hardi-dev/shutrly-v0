@@ -6,11 +6,12 @@ import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-vie
 import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
+import { DeleteFolderDialog } from "../delete-folder-dialog/delete-folder-dialog";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import type { GalleryMenuEntry } from "../gallery-row-menu/gallery-row-menu.types";
 import { GallerySourceRow } from "../gallery-source-row/gallery-source-row";
 import { LinkSourceDialog } from "../link-source-dialog/link-source-dialog";
-import { RemoveSourceDialog } from "../remove-source-dialog/remove-source-dialog";
+import { RenameFolderDialog } from "../rename-folder-dialog/rename-folder-dialog";
 import { SourcesCard } from "../sources-card/sources-card";
 import { useGallerySync } from "../use-gallery-sync/use-gallery-sync";
 import { useSourceDialogs } from "../use-source-dialogs/use-source-dialogs";
@@ -54,7 +55,8 @@ export function GallerySourcesSection({
           isEditable={isEditable}
           isArchived={page.gallery.status === "ARCHIVED"}
           isLastLocked={isLastLocked}
-          onRemove={dialogs.setRemoving}
+          onDelete={dialogs.setDeleting}
+          onRename={dialogs.setRenaming}
         />
       </SourcesCard>
       <SourceDialogs
@@ -62,10 +64,12 @@ export function GallerySourcesSection({
         page={page}
         actions={actions}
         isLinking={dialogs.isLinking}
-        removing={dialogs.removing}
+        deleting={dialogs.deleting}
+        renaming={dialogs.renaming}
         onLinkingChange={dialogs.setIsLinking}
         onLinked={handleLinked}
-        onCloseRemove={dialogs.closeRemoving}
+        onCloseDelete={dialogs.closeDeleting}
+        onCloseRename={dialogs.closeRenaming}
       />
     </>
   );
@@ -75,12 +79,20 @@ function SourceDialogs(props: Readonly<SourceDialogsProps>) {
   const { workspaceId, page, actions } = props;
   return (
     <>
-      {props.removing ? (
-        <RemoveSourceDialog
+      {props.deleting ? (
+        <DeleteFolderDialog
           workspaceId={workspaceId}
-          source={props.removing}
-          removeSourceAction={actions.removeSourceAction}
-          onClose={props.onCloseRemove}
+          source={props.deleting}
+          deleteSourceAction={actions.deleteSourceAction}
+          onClose={props.onCloseDelete}
+        />
+      ) : null}
+      {props.renaming ? (
+        <RenameFolderDialog
+          workspaceId={workspaceId}
+          source={props.renaming}
+          renameSourceAction={actions.renameSourceAction}
+          onClose={props.onCloseRename}
         />
       ) : null}
       {props.isLinking ? (
@@ -99,39 +111,42 @@ function SourceDialogs(props: Readonly<SourceDialogsProps>) {
   );
 }
 
-function SourceList({
-  sources,
-  sync,
-  isEditable,
-  isArchived,
-  isLastLocked,
-  onRemove,
-}: Readonly<SourceListProps>) {
-  const entriesFor = (source: GallerySourceView): GalleryMenuEntry[] => {
-    if (!isEditable || source.removed) return [];
-    const handleSync = () => {
-      sync.syncOne(source);
-    };
-    const handleRemove = () => {
-      onRemove(source);
-    };
-    return [
-      {
-        label: GALLERY_COPY.sync,
-        icon: "refresh-cw",
-        isDisabled: sync.isRunning,
-        onSelect: handleSync,
-      },
-      {
-        label: GALLERY_COPY.removeSource,
-        icon: "trash-2",
-        isDestructive: true,
-        isDisabled: isLastLocked,
-        description: GALLERY_COPY.removeLastHint,
-        onSelect: handleRemove,
-      },
-    ];
+/** The ⋯ entries of one folder row: *Sinkronkan*, *Ganti nama* and *Hapus* (AC-GAL-007, AC-GAL-013, AC-GAL-037). @param source - the row @param list - the list's state and handlers @returns the entries, none when read-only */
+function folderMenuEntries(
+  source: GallerySourceView,
+  { sync, isEditable, isLastLocked, onDelete, onRename }: Readonly<SourceListProps>,
+): GalleryMenuEntry[] {
+  if (!isEditable || source.removed) return [];
+  const handleSync = () => {
+    sync.syncOne(source);
   };
+  const handleRename = () => {
+    onRename(source);
+  };
+  const handleDelete = () => {
+    onDelete(source);
+  };
+  return [
+    {
+      label: GALLERY_COPY.sync,
+      icon: "refresh-cw",
+      isDisabled: sync.isRunning,
+      onSelect: handleSync,
+    },
+    { label: GALLERY_COPY.renameFolder, icon: "pencil", onSelect: handleRename },
+    {
+      label: GALLERY_COPY.deleteFolder,
+      icon: "trash-2",
+      isDestructive: true,
+      isDisabled: isLastLocked,
+      description: GALLERY_COPY.deleteLastHint,
+      onSelect: handleDelete,
+    },
+  ];
+}
+
+function SourceList(props: Readonly<SourceListProps>) {
+  const { sources, sync, isEditable, isArchived } = props;
   return (
     <ul aria-label={GALLERY_COPY.sourcesTitle} className="px-(--space-1) md:px-(--space-3)">
       {sources.map((source, index) => (
@@ -142,7 +157,7 @@ function SourceList({
           progress={sync.progressOf(source.id)}
           isArchived={isArchived}
           isReadOnly={!isEditable}
-          menuEntries={entriesFor(source)}
+          menuEntries={folderMenuEntries(source, props)}
           isLast={index === sources.length - 1}
         />
       ))}

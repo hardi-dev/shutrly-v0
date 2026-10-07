@@ -3,21 +3,21 @@
 import { GalleryConfirmDialog } from "../gallery-confirm-dialog/gallery-confirm-dialog";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { useLifecycleRunner } from "../use-lifecycle-runner/use-lifecycle-runner";
-import type { RemoveSourceDialogProps } from "./remove-source-dialog.types";
+import type { DeleteFolderDialogProps } from "./delete-folder-dialog.types";
 
-/** *Lepas {folder}?*: the folder's photos are hidden from the client, nothing is deleted (BR-GAL-009, A-6, AC-GAL-013). */
-export function RemoveSourceDialog({
+/** *Hapus {folder}?*: the folder and its photos are deleted; a client pick or the last active folder of a live gallery refuses it (BR-GAL-009, AC-GAL-013). */
+export function DeleteFolderDialog({
   workspaceId,
   source,
-  removeSourceAction,
+  deleteSourceAction,
   onClose,
-}: Readonly<RemoveSourceDialogProps>) {
+}: Readonly<DeleteFolderDialogProps>) {
   const runner = useLifecycleRunner();
   const name = source.name ?? GALLERY_COPY.sourceFallbackName;
   const photos = source.proofCount + source.editedCount + source.printCount;
   const handleConfirm = async () => {
-    const result = await runner.run(() => removeSourceAction(workspaceId, source.id), {
-      title: GALLERY_COPY.removedTitle,
+    const result = await runner.run(() => deleteSourceAction(workspaceId, source.id), {
+      title: GALLERY_COPY.folderDeletedTitle,
     });
     if (result?.ok) onClose();
   };
@@ -26,9 +26,9 @@ export function RemoveSourceDialog({
   };
   return (
     <GalleryConfirmDialog
-      title={GALLERY_COPY.removeDialogTitle(name)}
-      description={GALLERY_COPY.removeDialogBody(photos)}
-      confirmLabel={GALLERY_COPY.removeSource}
+      title={GALLERY_COPY.deleteFolderTitle(name)}
+      description={GALLERY_COPY.deleteFolderBody(photos)}
+      confirmLabel={GALLERY_COPY.deleteFolder}
       isDestructive
       isPending={runner.isPending}
       onConfirm={handlePress}

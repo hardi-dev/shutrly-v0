@@ -1,5 +1,6 @@
 import type { BrowseQuery } from "@/features/gallery/application/schemas/browse-query/browse-query.types";
 import type { LinkGallerySourceInput } from "@/features/gallery/application/schemas/link-gallery-source/link-gallery-source.types";
+import type { RenameGallerySourceInput } from "@/features/gallery/application/schemas/rename-gallery-source/rename-gallery-source.types";
 import type { RotateGalleryPasswordInput } from "@/features/gallery/application/schemas/rotate-gallery-password/rotate-gallery-password.types";
 import type { SetGalleryExpiryInput } from "@/features/gallery/application/schemas/set-gallery-expiry/set-gallery-expiry.types";
 import type { BrowsePageView } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos.types";
@@ -39,9 +40,14 @@ export interface GalleryPageActions {
     galleryId: string,
     values: RotateGalleryPasswordInput,
   ) => Promise<GalleryWriteResult>;
-  readonly removeSourceAction: (
+  readonly deleteSourceAction: (
     workspaceId: string,
     sourceId: string,
+  ) => Promise<GalleryWriteResult>;
+  readonly renameSourceAction: (
+    workspaceId: string,
+    sourceId: string,
+    values: RenameGallerySourceInput,
   ) => Promise<GalleryWriteResult>;
   readonly archiveAction: (workspaceId: string, galleryId: string) => Promise<GalleryWriteResult>;
   readonly deleteDraftAction: (

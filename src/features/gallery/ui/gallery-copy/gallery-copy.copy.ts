@@ -227,12 +227,19 @@ export const GALLERY_COPY = {
   rotateHelper: "Dibuat otomatis. Boleh diganti (6–64 karakter).",
   rotatedTitle: "Password diganti",
   rotatedBody: "Bagikan password baru ke klien. Password lama tidak berlaku lagi.",
-  removeSource: "Lepas folder",
-  removeDialogTitle: (name: string) => `Lepas ${name}?`,
-  removeDialogBody: (count: number) =>
-    `${String(count)} foto dari folder ini disembunyikan dari klien. Folder di Google Drive tidak berubah. Folder yang dilepas tidak bisa dipasang lagi; tambahkan sebagai folder baru bila perlu.`,
-  removeLastHint: "Galeri yang dipublikasikan butuh minimal satu folder aktif.",
-  removedTitle: "Folder dilepas", // not in Pencil
+  // Revision OT #4 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
+  deleteFolder: "Hapus",
+  deleteFolderTitle: (name: string) => `Hapus ${name}?`,
+  deleteFolderBody: (count: number) =>
+    `Folder ini dan ${String(count)} fotonya dihapus dari galeri. Folder di Google Drive tidak berubah. Tindakan ini tidak bisa dibatalkan.`,
+  deleteLastHint: "Galeri yang dipublikasikan butuh minimal satu folder aktif.",
+  folderDeletedTitle: "Folder dihapus",
+  renameFolder: "Ganti nama",
+  renameDialogTitle: "Ganti nama folder",
+  renameDialogDescription: "Nama ini hanya dipakai di galeri ini.",
+  renamedTitle: "Nama folder diganti",
+  save: "Simpan",
+  saving: "Menyimpan…",
   archiveDialogTitle: "Arsipkan galeri?",
   archiveDialogBody:
     "Klien tidak bisa membuka galeri lagi. Galeri yang diarsipkan tidak bisa dipublikasikan kembali.",

@@ -3,10 +3,11 @@ import "server-only";
 import { archiveGallery } from "@/features/gallery/application/use-cases/archive-gallery/archive-gallery";
 import { browseGalleryPhotos } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos";
 import { deleteDraftGallery } from "@/features/gallery/application/use-cases/delete-draft-gallery/delete-draft-gallery";
+import { deleteGallerySource } from "@/features/gallery/application/use-cases/delete-gallery-source/delete-gallery-source";
 import { findFolderUse } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
 import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
-import { removeGallerySource } from "@/features/gallery/application/use-cases/remove-gallery-source/remove-gallery-source";
+import { renameGallerySource } from "@/features/gallery/application/use-cases/rename-gallery-source/rename-gallery-source";
 import { rotateGalleryPassword } from "@/features/gallery/application/use-cases/rotate-gallery-password/rotate-gallery-password";
 import { setGalleryExpiry } from "@/features/gallery/application/use-cases/set-gallery-expiry/set-gallery-expiry";
 import { syncGallerySourceStep } from "@/features/gallery/application/use-cases/sync-gallery-source-step/sync-gallery-source-step";
@@ -134,17 +135,35 @@ export async function rotateGalleryPasswordEntry(
   }
 }
 
-/** Removes a folder from the gallery (AC-GAL-013). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @returns the write result */
-export async function removeGallerySourceEntry(rawWorkspaceId: string, rawSourceId: string) {
+/** Deletes a folder with its photos (AC-GAL-013). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @returns the write result */
+export async function deleteGallerySourceEntry(rawWorkspaceId: string, rawSourceId: string) {
   const sourceId = galleryIdOrNotFound(rawSourceId);
-  const account = await requireOwnerOrRedirect();
+  await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
     return await withGalleryScope((scope) =>
-      removeGallerySource(scope, verified.context, account.id, sourceId),
+      deleteGallerySource(scope, verified.context, sourceId),
     );
   } catch (error) {
-    return gallerySaveError(error, verified.context.workspaceId, "remove-source");
+    return gallerySaveError(error, verified.context.workspaceId, "delete-source");
+  }
+}
+
+/** Renames a folder's label (AC-GAL-037). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @param values - untrusted `{ label }` @returns the write result */
+export async function renameGallerySourceEntry(
+  rawWorkspaceId: string,
+  rawSourceId: string,
+  values: unknown,
+) {
+  const sourceId = galleryIdOrNotFound(rawSourceId);
+  await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withGalleryScope((scope) =>
+      renameGallerySource(scope, verified.context, sourceId, values),
+    );
+  } catch (error) {
+    return gallerySaveError(error, verified.context.workspaceId, "rename-source");
   }
 }
 

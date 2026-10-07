@@ -5,6 +5,7 @@ import { sourceRowText } from "./source-text";
 const SOURCE = {
   id: "s-1",
   name: "Rina-Wisuda",
+  label: null,
   workspaceSourceName: "Google Drive",
   removed: false,
   removedAt: null,

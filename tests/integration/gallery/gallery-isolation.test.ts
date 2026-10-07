@@ -14,12 +14,13 @@ import { archiveGallery } from "@/features/gallery/application/use-cases/archive
 import { browseGalleryPhotos } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos";
 import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { deleteDraftGallery } from "@/features/gallery/application/use-cases/delete-draft-gallery/delete-draft-gallery";
+import { deleteGallerySource } from "@/features/gallery/application/use-cases/delete-gallery-source/delete-gallery-source";
 import { findFolderUse } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use";
 import { getGalleryCard } from "@/features/gallery/application/use-cases/get-gallery-card/get-gallery-card";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
 import { proposeGalleryPassword } from "@/features/gallery/application/use-cases/propose-gallery-password/propose-gallery-password";
 import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
-import { removeGallerySource } from "@/features/gallery/application/use-cases/remove-gallery-source/remove-gallery-source";
+import { renameGallerySource } from "@/features/gallery/application/use-cases/rename-gallery-source/rename-gallery-source";
 import { rotateGalleryPassword } from "@/features/gallery/application/use-cases/rotate-gallery-password/rotate-gallery-password";
 import { serveOwnerPhoto } from "@/features/gallery/application/use-cases/serve-owner-photo/serve-owner-photo";
 import { setGalleryExpiry } from "@/features/gallery/application/use-cases/set-gallery-expiry/set-gallery-expiry";
@@ -140,9 +141,10 @@ describe("AC-GAL-025 workspace isolation", () => {
         rotateGalleryPassword(deps(), intruder.context, intruder.ownerId, galleryId, {
           password: "baru2026",
         }),
-      remove: () => removeGallerySource(deps(), intruder.context, intruder.ownerId, sourceId),
+      delete: () => deleteGallerySource(deps(), intruder.context, sourceId),
+      rename: () => renameGallerySource(deps(), intruder.context, sourceId, { label: "x" }),
       archive: () => archiveGallery(deps(), intruder.context, intruder.ownerId, galleryId),
-      delete: () => deleteDraftGallery(deps(), intruder.context, galleryId),
+      deleteDraft: () => deleteDraftGallery(deps(), intruder.context, galleryId),
     };
     for (const [name, attempt] of Object.entries(attempts)) {
       await expect(attempt(), name).rejects.toMatchObject({ code: "NOT_FOUND" });

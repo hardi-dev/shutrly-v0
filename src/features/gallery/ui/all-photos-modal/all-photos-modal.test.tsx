@@ -40,6 +40,7 @@ const PAGE = {
     {
       id: SOURCE_ID,
       name: "Rina-Wisuda",
+      label: null,
       workspaceSourceName: "Google Drive",
       removed: false,
       removedAt: null,

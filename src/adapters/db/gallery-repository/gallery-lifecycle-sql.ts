@@ -11,7 +11,7 @@ import { photoSelection } from "../schema/gallery/selection";
 import { finalDeliveryWrites } from "./final-delivery-sql";
 import { insertSelectionGroups } from "./selection-group-sql";
 
-type SourceWrites = Pick<GalleryLifecycleWriter, "countActiveSources" | "removeSource">;
+type SourceWrites = Pick<GalleryLifecycleWriter, "countActiveSources">;
 type SourceEditWrites = Pick<
   GalleryLifecycleWriter,
   "countSourcePicks" | "deleteSource" | "renameSource"
@@ -48,22 +48,11 @@ function sourceScope(tx: DbExecutor, context: WorkspaceContext, galleryId: strin
   };
 }
 
-function sourceWrites({ tx, active, bumpContentVersion }: SourceScope): SourceWrites {
+function sourceWrites({ tx, active }: SourceScope): SourceWrites {
   return {
     async countActiveSources() {
       const rows = await tx.select({ total: count() }).from(gallerySource).where(active);
       return rows.at(0)?.total ?? 0;
-    },
-    async removeSource(sourceId, actorId, now) {
-      const rows = await tx
-        .update(gallerySource)
-        .set({ removedAt: now, removedBy: actorId, updatedAt: now })
-        .where(and(active, eq(gallerySource.id, sourceId)))
-        .returning({ id: gallerySource.id });
-      if (rows.length === 0) return false;
-      // Removing a folder hides its photos from the client (BR-GAL-009, D-24).
-      await bumpContentVersion(now);
-      return true;
     },
   };
 }

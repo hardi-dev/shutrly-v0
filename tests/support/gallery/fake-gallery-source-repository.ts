@@ -77,11 +77,6 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
     };
     return {
       countActiveSources: async () => active().length,
-      removeSource: async (sourceId: string) => {
-        const source = active().find((row) => row.id === sourceId);
-        if (source) source.removed = true;
-        return source !== undefined;
-      },
       countSourcePicks: async (sourceId: string) => (this.pickedSources.has(sourceId) ? 1 : 0),
       deleteSource: async (sourceId: string) => {
         const index = this.sources.findIndex(

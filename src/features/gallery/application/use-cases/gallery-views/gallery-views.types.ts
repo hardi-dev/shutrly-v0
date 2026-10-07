@@ -39,6 +39,8 @@ export interface GalleryCardView {
 export interface GallerySourceView {
   readonly id: string;
   readonly name: string | null;
+  /** The Owner's label, null when the row shows the Drive folder name (AC-GAL-037). */
+  readonly label: string | null;
   readonly workspaceSourceName: string;
   readonly removed: boolean;
   readonly removedAt: string | null;

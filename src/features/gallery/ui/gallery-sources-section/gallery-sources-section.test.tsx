@@ -1,8 +1,10 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { fakePageActions } from "@tests/support/gallery/fake-page-actions";
 import { stubViewport } from "@tests/support/gallery/viewport";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { showToast } from "@/ui/patterns/toast/toast";
 
 import { GallerySourcesSection } from "./gallery-sources-section";
 
@@ -12,6 +14,7 @@ vi.mock("next/navigation", () => ({ useRouter: () => ({ refresh: vi.fn() }) }));
 const SOURCE = {
   id: "s-1",
   name: "Rina-Wisuda",
+  label: null,
   workspaceSourceName: "Google Drive",
   removed: false,
   removedAt: null,
@@ -138,5 +141,67 @@ describe("GallerySourcesSection", () => {
     render(<GallerySourcesSection workspaceId="ws-1" page={archived} actions={actions} />);
     expect(screen.queryByRole("button", { name: "Sinkronkan semua" })).not.toBeInTheDocument();
     expect(screen.getAllByText("Arsip")).toHaveLength(2);
+  });
+
+  it("Revision OT #4 the folder menu offers Sinkronkan, Ganti nama and Hapus", async () => {
+    const user = userEvent.setup();
+    render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={fakePageActions()} />);
+    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    const items = screen.getAllByRole("menuitem").map((item) => item.textContent);
+    expect(items).toEqual([
+      expect.stringContaining("Sinkronkan"),
+      expect.stringContaining("Ganti nama"),
+      expect.stringContaining("Hapus"),
+    ]);
+    expect(screen.queryByText("Lepas folder")).not.toBeInTheDocument();
+  });
+
+  it("AC-GAL-013 Hapus asks first, deletes the folder and toasts", async () => {
+    const user = userEvent.setup();
+    const deleteSourceAction = vi.fn(() => Promise.resolve({ ok: true as const }));
+    const actions = fakePageActions({ deleteSourceAction });
+    render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
+    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("menuitem", { name: /Hapus/ }));
+    const dialog = screen.getByRole("alertdialog", { name: "Hapus Rina-Wisuda?" });
+    expect(dialog).toHaveTextContent("8 fotonya dihapus dari galeri");
+    await user.click(screen.getByRole("button", { name: "Hapus" }));
+    await waitFor(() => {
+      expect(deleteSourceAction).toHaveBeenCalledWith("ws-1", "s-1");
+    });
+    expect(showToast).toHaveBeenCalledWith({ tone: "success", title: "Folder dihapus" });
+  });
+
+  it("AC-GAL-013 BR-GAL-009 a refused Hapus explains the client picks", async () => {
+    const user = userEvent.setup();
+    const deleteSourceAction = vi.fn(() =>
+      Promise.resolve({ ok: false as const, code: "HAS_PICKS" as const }),
+    );
+    const actions = fakePageActions({ deleteSourceAction });
+    render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
+    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("menuitem", { name: /Hapus/ }));
+    await user.click(screen.getByRole("button", { name: "Hapus" }));
+    await waitFor(() => {
+      expect(showToast).toHaveBeenCalledWith({
+        tone: "danger",
+        title: "Ada foto dari folder ini yang sudah dipilih klien.",
+      });
+    });
+  });
+
+  it("AC-GAL-037 Ganti nama saves the new label", async () => {
+    const user = userEvent.setup();
+    const renameSourceAction = vi.fn(() => Promise.resolve({ ok: true as const }));
+    const actions = fakePageActions({ renameSourceAction });
+    render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
+    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("menuitem", { name: /Ganti nama/ }));
+    const dialog = screen.getByRole("dialog", { name: "Ganti nama folder" });
+    await user.type(within(dialog).getByRole("textbox", { name: /Label/ }), "Softball");
+    await user.click(within(dialog).getByRole("button", { name: "Simpan" }));
+    await waitFor(() => {
+      expect(renameSourceAction).toHaveBeenCalledWith("ws-1", "s-1", { label: "Softball" });
+    });
   });
 });

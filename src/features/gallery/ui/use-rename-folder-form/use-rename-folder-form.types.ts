@@ -2,9 +2,9 @@ import type { GallerySourceView } from "@/features/gallery/application/use-cases
 
 import type { GalleryPageActions } from "../gallery-actions/gallery-actions.types";
 
-export interface RemoveSourceDialogProps {
+export interface UseRenameFolderFormInput {
   readonly workspaceId: string;
   readonly source: GallerySourceView;
-  readonly removeSourceAction: GalleryPageActions["removeSourceAction"];
+  readonly renameSourceAction: GalleryPageActions["renameSourceAction"];
   readonly onClose: () => void;
 }

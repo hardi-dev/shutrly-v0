@@ -53,8 +53,6 @@ export interface ActiveSourceRecord {
 // Lifecycle writes under the gallery lock (BR-GAL-003…005, BR-GAL-009, BR-AUD-001, D-18).
 export interface GalleryLifecycleWriter {
   readonly countActiveSources: () => Promise<number>;
-  /** Marks an active source removed; false when it isn't an active source of this gallery. */
-  readonly removeSource: (sourceId: string, actorId: string, now: Date) => Promise<boolean>;
   /** Client picks of photos from this source (BR-GAL-009: they block deleting it). */
   readonly countSourcePicks: (sourceId: string) => Promise<number>;
   /** Deletes an active source with its photos (cascade); false when it isn't an active source of this gallery. */

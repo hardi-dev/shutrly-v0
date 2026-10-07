@@ -16,6 +16,7 @@ vi.mock("@/ui/patterns/page-actions/page-actions", () => ({
 const SOURCE = {
   id: "s-1",
   name: "Rina-Wisuda",
+  label: null,
   workspaceSourceName: "Google Drive",
   removed: false,
   removedAt: null,
@@ -168,7 +169,7 @@ describe("GalleryLifecycle", () => {
     });
   });
 
-  it("AC-GAL-013 the last folder of a published gallery can't be removed", async () => {
+  it("AC-GAL-013 the last folder of a published gallery can't be deleted", async () => {
     render(
       <GalleryPageScreen
         workspaceId="ws-1"
@@ -177,7 +178,7 @@ describe("GalleryLifecycle", () => {
       />,
     );
     await userEvent.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
-    expect(await screen.findByRole("menuitem", { name: /Lepas folder/ })).toHaveAttribute(
+    expect(await screen.findByRole("menuitem", { name: /Hapus/ })).toHaveAttribute(
       "aria-disabled",
       "true",
     );

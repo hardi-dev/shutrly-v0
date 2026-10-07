@@ -36,4 +36,6 @@ export interface PageHeaderProps {
   action?: ReactNode;
   utilities?: ReactNode;
   tabs?: { readonly label: string; readonly tabs: readonly TabLink[] };
+  /** No horizontal padding and no outer border: the page puts it in a bordered band whose column already lines it up (client shell, `ra85A`). */
+  isFlush?: boolean;
 }

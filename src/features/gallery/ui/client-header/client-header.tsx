@@ -3,7 +3,7 @@ import type { ClientHeaderProps } from "./client-header.types";
 /** The client brand bar: studio mark and name, and the project title (local *Client Header* gloCE / Qk0C6, D-21). @param props - studio and project names @returns the header */
 export function ClientHeader({ studioName, projectTitle }: Readonly<ClientHeaderProps>) {
   return (
-    <header className="w-full shrink-0 border-b border-(--color-semantic-border-subtle) bg-(--color-semantic-surface-panel) p-(--space-4)">
+    <header className="w-full shrink-0 border-b border-(--color-semantic-border-subtle) bg-(--color-semantic-surface-panel) p-(--space-4) md:px-(--space-10)">
       <div className="mx-auto flex w-full max-w-(--size-content-max) items-center justify-between gap-(--space-3)">
         <div className="flex min-w-0 items-center gap-(--space-2)">
           <span

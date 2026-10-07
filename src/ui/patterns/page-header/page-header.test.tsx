@@ -78,4 +78,19 @@ describe("PageHeader", () => {
     expect(screen.getByText("Rina · Belum ada jadwal")).toBeInTheDocument();
     expect(screen.queryByText("Tidak dipakai")).not.toBeInTheDocument();
   });
+
+  it("isFlush lines the breadcrumb and hero up with the column, leaving the border to the band", () => {
+    const { container } = render(
+      <PageHeader parent="Beranda" current="Semua foto" title="Semua foto" isFlush />,
+    );
+    const header = container.querySelector("header");
+    expect(header?.className).not.toContain("border-b");
+    const [breadcrumbRow, hero] = Array.from(header?.children ?? []);
+    expect(breadcrumbRow.className).toContain("px-0");
+    expect(breadcrumbRow.className).not.toContain(
+      "pl-(--component-page-header-breadcrumb-padding-x)",
+    );
+    expect(hero.className).toContain("px-0");
+    expect(hero.className).not.toContain("px-(--component-page-header-hero-padding-x)");
+  });
 });

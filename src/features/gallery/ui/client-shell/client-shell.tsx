@@ -12,9 +12,10 @@ export function ClientShell({ gate, header, width, children }: Readonly<ClientSh
   return (
     <div className="flex min-h-dvh flex-col bg-(--color-semantic-surface-canvas)">
       <ClientHeader studioName={gate.studioName} projectTitle={gate.projectTitle} />
-      <div className="hidden border-b border-(--color-semantic-border-subtle) bg-(--color-semantic-surface-panel) md:block">
+      <div className="hidden border-b border-(--color-semantic-border-subtle) bg-(--color-semantic-surface-panel) md:block md:px-(--space-10)">
         <div className="mx-auto w-full max-w-(--size-content-max)">
           <PageHeader
+            isFlush
             parent={header.breadcrumbs.at(0)?.label ?? current}
             current={current}
             breadcrumbs={header.breadcrumbs}

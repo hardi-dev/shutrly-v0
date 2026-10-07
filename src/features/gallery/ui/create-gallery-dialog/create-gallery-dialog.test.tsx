@@ -14,7 +14,9 @@ function renderDialog() {
     workspaceId: "ws-1",
     projectId: "p-1",
     initialPassword: "mawar-4821",
-    createAction: vi.fn(() => Promise.resolve({ ok: true as const, galleryId: "g-1" })),
+    createAction: vi.fn(() =>
+      Promise.resolve({ ok: true as const, galleryId: "g-1", sourceId: null }),
+    ),
     proposeAction: vi.fn(() => Promise.resolve("melati-2345")),
     onCreated: vi.fn(),
   };

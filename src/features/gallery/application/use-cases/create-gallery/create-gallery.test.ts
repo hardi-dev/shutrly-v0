@@ -38,7 +38,7 @@ describe("createGallery", () => {
       password: "  mawar-4821 ",
       expiry: NONE,
     });
-    expect(result).toEqual({ ok: true, galleryId: "gallery-1" });
+    expect(result).toEqual({ ok: true, galleryId: "gallery-1", sourceId: null });
     const stored = galleries.galleries[0];
     expect(stored.status).toBe("DRAFT");
     expect(stored.passwordVersion).toBe(1);
@@ -124,5 +124,64 @@ describe("createGallery", () => {
         expiry: NONE,
       }),
     ).rejects.toMatchObject({ code: "NOT_FOUND" });
+  });
+
+  describe("Revision OT #3 with the first folder", () => {
+    const SOURCE = "66666666-6666-4666-8666-666666666666";
+    const folder = (link: string, workspaceSourceId = SOURCE) => ({
+      workspaceSourceId,
+      link,
+      label: " Rina ",
+    });
+    const RINA = "https://drive.google.com/drive/folders/fixtureRinaWisuda01";
+
+    it("AC-GAL-001 creates the gallery with its folder linked", async () => {
+      const { galleries, deps } = setup();
+      galleries.activeWorkspaceSources.add(SOURCE);
+      const result = await createGallery(deps, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, {
+        password: "mawar-4821",
+        expiry: NONE,
+        folder: folder(RINA),
+      });
+      expect(result).toEqual({ ok: true, galleryId: "gallery-1", sourceId: "source-1" });
+      expect(galleries.linkedFolders).toEqual([
+        {
+          galleryId: "gallery-1",
+          workspaceSourceId: SOURCE,
+          folder: { folderId: "fixtureRinaWisuda01", resourceKey: null },
+          label: "Rina",
+          actorId: OWNER_ID,
+        },
+      ]);
+    });
+
+    it("AC-GAL-001 AC-GAL-009 refuses a file link and creates nothing", async () => {
+      const { galleries, deps } = setup();
+      galleries.activeWorkspaceSources.add(SOURCE);
+      const result = await createGallery(deps, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, {
+        password: "mawar-4821",
+        expiry: NONE,
+        folder: folder("https://drive.google.com/file/d/abcdefghij1234/view"),
+      });
+      expect(result).toMatchObject({ ok: false, code: "VALIDATION_FAILED" });
+      expect(Object.keys((result as { fieldErrors: object }).fieldErrors)).toEqual(["folder.link"]);
+      expect(galleries.galleries).toHaveLength(0);
+    });
+
+    it("AC-GAL-001 BR-SRC-006 refuses an inactive source and creates nothing", async () => {
+      const { galleries, deps } = setup();
+      const result = await createGallery(deps, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, {
+        password: "mawar-4821",
+        expiry: NONE,
+        folder: folder(RINA),
+      });
+      expect(result).toEqual({
+        ok: false,
+        code: "VALIDATION_FAILED",
+        fieldErrors: { "folder.workspaceSourceId": "SOURCE_NOT_ACTIVE" },
+      });
+      expect(galleries.galleries).toHaveLength(0);
+      expect(galleries.linkedFolders).toHaveLength(0);
+    });
   });
 });

@@ -5,7 +5,6 @@ import { and, eq, isNull, ne, sql } from "drizzle-orm";
 import type {
   GallerySourceRepositoryPort,
   GallerySourceWriter,
-  NewGallerySource,
   SyncTarget,
 } from "@/features/gallery/application/ports/gallery-source-repository/gallery-source-repository.port";
 import {
@@ -18,10 +17,10 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 import type { DbExecutor } from "../client/client.types";
 import { project } from "../schema/booking/project";
 import { gallery, gallerySource } from "../schema/gallery/gallery";
-import { workspaceSourceConfig } from "../schema/gallery/workspace-source-config";
 import { lifecycleWriter } from "./gallery-lifecycle-sql";
 import { lockGallery } from "./gallery-lock-sql";
 import { toGalleryStatus, toProjectStatus } from "./gallery-rows";
+import { insertGallerySource, isWorkspaceSourceActive } from "./gallery-source-link-sql";
 import { claimStep, heldClaim, holdsClaim, releaseRun, writeStep } from "./gallery-sync-sql";
 
 function sourceWriter(
@@ -31,39 +30,9 @@ function sourceWriter(
 ): GallerySourceWriter {
   return {
     ...lifecycleWriter(tx, context, galleryId),
-    async isWorkspaceSourceActive(workspaceSourceId) {
-      const rows = await tx
-        .select({ isActive: workspaceSourceConfig.isActive })
-        .from(workspaceSourceConfig)
-        .where(
-          and(
-            eq(workspaceSourceConfig.workspaceId, context.workspaceId),
-            eq(workspaceSourceConfig.id, workspaceSourceId),
-          ),
-        );
-      return rows.at(0)?.isActive === true;
-    },
-    async insertSource(source: NewGallerySource) {
-      // The partial unique index decides a concurrent duplicate too (AC-GAL-010).
-      const rows = await tx
-        .insert(gallerySource)
-        .values({
-          workspaceId: context.workspaceId,
-          galleryId,
-          workspaceSourceId: source.workspaceSourceId,
-          providerFolderId: source.folder.folderId,
-          resourceKey: source.folder.resourceKey,
-          label: source.label,
-          createdBy: source.actorId,
-        })
-        .onConflictDoNothing({
-          target: [gallerySource.galleryId, gallerySource.providerFolderId],
-          where: sql`removed_at is null`,
-        })
-        .returning({ id: gallerySource.id });
-      const row = rows.at(0);
-      return row ? { sourceId: row.id } : "FOLDER_ALREADY_LINKED";
-    },
+    isWorkspaceSourceActive: (workspaceSourceId) =>
+      isWorkspaceSourceActive(tx, context, workspaceSourceId),
+    insertSource: (source) => insertGallerySource(tx, context, galleryId, source),
   };
 }
 

@@ -9,6 +9,10 @@ import type { SourceProvider } from "@/features/gallery/domain/source-provider/s
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { EncryptedPassword } from "../gallery-password-cipher/gallery-password-cipher.port";
+import type {
+  InsertedSource,
+  NewGallerySource,
+} from "../gallery-source-repository/gallery-source-repository.port";
 
 // Project facts the gallery needs, read through its own port (D-14).
 export interface GalleryProjectFacts {
@@ -30,6 +34,13 @@ export interface NewGallery {
 
 export interface GalleryCreateWriter {
   readonly insert: (gallery: NewGallery) => Promise<"CREATED" | "ALREADY_EXISTS">;
+  /** True when the workspace source exists and is active (BR-SRC-006). */
+  readonly isWorkspaceSourceActive: (workspaceSourceId: string) => Promise<boolean>;
+  /** Links the first folder of the gallery inserted in this transaction (Revision OT #3). */
+  readonly insertSource: (
+    galleryId: string,
+    source: NewGallerySource,
+  ) => Promise<InsertedSource | "FOLDER_ALREADY_LINKED">;
 }
 
 export interface GalleryPhotoCounts {

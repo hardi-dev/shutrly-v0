@@ -10,6 +10,7 @@ import type {
   GallerySummaryRecord,
   NewGallery,
 } from "@/features/gallery/application/ports/gallery-repository/gallery-repository.port";
+import type { NewGallerySource } from "@/features/gallery/application/ports/gallery-source-repository/gallery-source-repository.port";
 import type { GalleryStoredStatus } from "@/features/gallery/domain/gallery-status/gallery-status.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
@@ -29,6 +30,10 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
   readonly projects: StoredProject[] = [];
   readonly galleries: StoredGallery[] = [];
   readonly sources: (GallerySourceRecord & { galleryId: string })[] = [];
+  /** Workspace sources that are active (BR-SRC-006). */
+  readonly activeWorkspaceSources = new Set<string>();
+  /** Folders linked while creating a gallery (Revision OT #3). */
+  readonly linkedFolders: (NewGallerySource & { galleryId: string })[] = [];
   readonly photos: (GalleryPhotoRecord & { galleryId: string; workspaceId: string })[] = [];
 
   addProject(project: StoredProject): void {
@@ -89,6 +94,12 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
           archivedAt: null,
         });
         return "CREATED" as const;
+      },
+      isWorkspaceSourceActive: async (workspaceSourceId: string) =>
+        this.activeWorkspaceSources.has(workspaceSourceId),
+      insertSource: async (galleryId: string, source: NewGallerySource) => {
+        this.linkedFolders.push({ ...source, galleryId });
+        return { sourceId: `source-${String(this.linkedFolders.length)}` };
       },
     };
     return (await work(project, writer)) as T;

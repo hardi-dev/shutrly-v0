@@ -62,7 +62,9 @@ function renderCard(
   const props = {
     workspaceId: "ws-1",
     card,
-    createAction: vi.fn(() => Promise.resolve({ ok: true as const, galleryId: "g-1" })),
+    createAction: vi.fn(() =>
+      Promise.resolve({ ok: true as const, galleryId: "g-1", sourceId: null }),
+    ),
     proposeAction: vi.fn(() => Promise.resolve("mawar-4821")),
     ...overrides,
   };

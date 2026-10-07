@@ -509,3 +509,114 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 - [x] **12.5** `tests/e2e/client-access/journeys.spec.ts`: lock from `gallery/pilihan`, publish from the gallery page, complete from the project header. Screenshot the gallery and project pages at 1440 and 390 against the four exports; record the slice in technical-design and `docs/HANDOFF.md`. Commits `test(client-access): follow the cards to the gallery page`, `docs(client-access): record slice 12`.
 
 **Done check:** the gallery page shows *Akses klien → Pilihan klien → Hasil akhir → Sumber foto → Foto* at 720; the project page shows *Info, Galeri* (with both summary rows) and *Add-on*, and *Tandai selesai* in the header of a delivered project; `/projects/[id]/pilihan` is 404; typecheck, lint, the touched dom/unit tests and the journeys E2E pass.
+
+---
+
+## Revision OT: Owner manual test (2026-10-07)
+
+**Source:** [manual-test-findings.md](manual-test-findings.md) #1–#7, every one decided by the Owner on 2026-10-07. The fixes land on `feat/client-access`, because the Owner tested this branch; #1–#2 touch F-08 Team (`features/booking`) and #3–#5 touch F-09 Gallery (`features/gallery`), so their commits use those scopes.
+
+**Gates before code (sdv authority order):**
+
+| Finding | Kind | Gate before building |
+|---|---|---|
+| #7 English routes | refactor, no rule or UI change | none: build now (Slice 13) |
+| #4 *Hapus* / *Ganti nama* folder | **amends BR-GAL-009** (photos deleted, not hidden) + new UI | BR amendment and AC (Owner-approved), Pencil frames → Slice 14 |
+| #1, #2 add a member from a session | UX within the existing rules | Pencil frames → Slice 15 |
+| #3 Drive folder in *Buat galeri* | amends F-09 spec/AC-GAL-001 (one more field), reuses BR-GAL-009 | spec/AC update, Pencil frames → Slice 16 |
+| #6 proof download + bulk *Pilih untuk…* on the client photo grid | **spec change**: proof downloads are out of scope today (spec › Out of scope; BR-DEL-002/004 cover finished files only) | `/sdv:capture-intent client-proof-downloads` → discover → design → plan; not sliced here |
+| #5 map Drive subfolders to package items | **replaces BR-GAL-007**, changes the photo-kind model and final delivery | `/sdv:capture-intent delivery-folder-mapping` → discover → model → design → plan; its own feature, after Slice 14 (its *Edit* dialog grows the mapping) |
+
+**Pencil frames the Owner draws (one session, desktop + mobile each), then `python3 scripts/sdv/index-exports.py <slug>`:**
+- F-09 `gallery`: folder row menu *Sinkronkan · Ganti nama · Hapus*; *Ganti nama folder* dialog; *Hapus folder?* confirm; *Hapus* refused (client picks / last active folder); *Buat galeri* with the optional folder section (default, link error, *folder dipakai proyek lain* step).
+- F-08 `team-sessions`: *Tambah sesi* › *Tim* empty state with *Tambah anggota*; *Tambah anggota · <sesi>* empty state with *Tambah anggota* instead of *Buka Tim*; the add-member dialog stacked over each.
+
+**Order:** 13 → 14 → 15 → 16 (14–16 each wait for their frames; 15 and 16 are independent of 14). #6 and #5 follow their own sdv pipelines.
+
+---
+
+## Slice 13: English route segments (#7)
+
+**Read first:** manual-test-findings #7; `docs/coding-rules.md` (naming section); `src/proxy.ts` and `src/proxy.test.ts`; the 30 files listed by `grep -rlnE "/foto[\"'\`/?]|hasil-akhir|/pilih[\"'\`/]|/tinjau|/unduh[\"'\`/]|gallery/pilihan" src tests scripts`; Next.js 16 docs on typed routes (`RouteContext<"/g/[token]/…">` strings must follow the folders).
+
+**Decisions:** no redirects; the old paths become 404 (Owner 2026-10-07). `/g/<token>` itself doesn't change, so shared client links keep working. UI copy stays Indonesian; only URL segments change.
+
+| Old | New |
+|---|---|
+| `/g/[token]/foto` | `/g/[token]/photos` |
+| `/g/[token]/hasil-akhir` | `/g/[token]/final` |
+| `/g/[token]/pilih/[groupId]` | `/g/[token]/picks/[groupId]` |
+| `/g/[token]/pilih/[groupId]/tinjau` | `/g/[token]/picks/[groupId]/review` |
+| `/g/[token]/unduh/[photoId]` | `/g/[token]/download/[photoId]` |
+| `/w/[workspaceId]/projects/[projectId]/gallery/pilihan[/[groupId]]` | `…/gallery/picks[/[groupId]]` |
+
+**Steps**
+- [ ] **13.1** Add the rule to `docs/coding-rules.md`: *URL path segments are English kebab-case; UI copy is Indonesian.* Commit `docs(coding-rules): require english url segments`.
+- [ ] **13.2** Client routes: update the dom/unit tests that assert hrefs first (`client-home-screen`, `pick-screen`, `review-screen`, `selection-card`, `selection-groups-screen`, `delivery-screen`, `use-sequential-download`, `get-delivery-files`, `proxy.test.ts`), then `git mv` the five client folders and fix every href, `RouteContext` string and copy-held path (`delivery.copy.ts`, `delivery-screen.copy.ts`, `review-text.ts`, `use-pick-screen.ts`, `get-delivery-files.ts`). Commit `refactor(client-access): use english client route segments`.
+- [ ] **13.3** Owner picks routes: `git mv …/gallery/pilihan …/gallery/picks`; fix `SelectionCard`, `SelectionGroupsScreen` and breadcrumb links (tests first). Commit `refactor(client-access): use english owner picks route`.
+- [ ] **13.4** E2E and docs: update `tests/e2e/client-access/journeys.spec.ts` and `gate.spec.ts`; delete the throwaway `zz-owner7-*.spec.ts` (HANDOFF › Resume at (1)); replace the paths in `technical-design.md`, this plan's *Revision OT* table stays as history. Commit `test(client-access): follow the english routes`, `docs(client-access): record the english routes`.
+
+**Done check:** `grep` above returns nothing in `src`/`tests` (docs history excepted); `/g/<token>/foto` is 404 and `/g/<token>/photos` renders; typecheck, lint on changed files, the touched dom/unit tests and `journeys.spec.ts` pass.
+
+---
+
+## Slice 14: Delete and rename a gallery folder (#4)
+
+**Read first:** manual-test-findings #4; BR-GAL-004, BR-GAL-006, **BR-GAL-009**; F-09 AC-GAL-013; `remove-gallery-source` (lock, `canEditSources`, `LAST_ACTIVE_SOURCE`); `rename-workspace-source` and `rename-source-dialog` (pattern only); schema `gallery_source`, `gallery_photo` (`ON DELETE CASCADE` from source), `photo_selection.photo_id` (`RESTRICT`); `gallery-row-menu`, `gallery-source-row`, `gallery-sources-section`, `gallery-copy` (`removeSource`); the new exports (Owner).
+
+**Gate:** amend BR-GAL-009 in `docs/domain/business-rules.md` and AC-GAL-013 (Owner approves the wording): *the Owner may delete a folder from a non-archived gallery; its record and its photos are deleted. Deletion is refused while a client pick references one of its photos, and when it would leave a published or expired gallery without an active folder. Another gallery's link to the same Drive folder is unaffected.* Add AC for the label rename (1–60 chars, trimmed, empty → folder name).
+
+**Rule code:**
+
+| Case | Result | Copy (to confirm in Pencil) |
+|---|---|---|
+| draft gallery, no picks | deleted with its photos | — |
+| a photo of the folder is in `photo_selection` | `HAS_PICKS`, nothing deleted | *Ada foto dari folder ini yang sudah dipilih klien.* |
+| last active folder of a `PUBLISHED`/`EXPIRED` gallery | `LAST_ACTIVE_SOURCE` (as today) | existing copy |
+| `ARCHIVED` gallery or `CANCELLED` project | `INVALID_STATE` (as today) | existing copy |
+| folder currently syncing | delete wins; the sync step finds no source and stops | — |
+
+**Steps**
+- [ ] **14.1** Docs gate above. Commit `docs(gallery): delete a folder with its photos`.
+- [ ] **14.2** `delete-gallery-source` use case (unit tests first): same lock and state checks as `removeGallerySource`; `writer.countPicksForSource(sourceId)` > 0 → `HAS_PICKS`; else `writer.deleteSource(sourceId)` (hard delete, photos cascade) and whatever cache/version bump `removeSource` does. Repository methods with integration tests in `tests/integration/gallery` (picks present → refused, nothing deleted; no picks → source and photos gone; other gallery's row for the same folder untouched). Commit `feat(gallery): delete a folder and its photos`.
+- [ ] **14.3** `rename-gallery-source` use case + schema (label 1–60, trimmed, empty clears to `folder_name`; unit + integration). Commit `feat(gallery): rename a gallery folder`.
+- [ ] **14.4** UI from the exports: row menu *Sinkronkan · Ganti nama · Hapus*; rename dialog; delete confirm; refused messages; server actions in `src/app/actions/gallery/gallery-page-actions.ts`. Remove `removeSource` copy and the unused remove path if nothing else calls it. Dom tests first. Commit `feat(gallery): edit and delete folders from the gallery page`.
+- [ ] **14.5** E2E (fake Drive): rename a folder; delete a folder without picks; delete refused with a pick. Record the slice. Commits `test(gallery): …`, `docs(client-access): record slice 14`.
+
+**Done check:** the folder menu matches the exports; delete removes the row and its photos from *Foto*; a picked photo blocks it with the message; typecheck, lint, touched tests, one integration file and the E2E pass.
+
+---
+
+## Slice 15: Add a team member from a session (#1, #2)
+
+**Read first:** manual-test-findings #1, #2; `team-member-dialog` (props: `roles`, `addAction`, `updateAction`, `addRoleAction`); `session-team-field`, `session-team-host`, `session-team-flow.ts`, `assignment-dialog`, `team-members-empty-state`, `project-copy.copy.ts` (`sessionTeamNone`, *Buka Tim*); the team actions in `src/app/actions/booking/`; `src/ui/patterns/modal` (nested modal behaviour in react-aria); the new exports (Owner).
+
+**Decisions:** the add-member dialog stacks on top of *Tambah sesi* / *Tambah anggota*; after a save it closes, the member list refreshes and the new member is selected in the dialog underneath; cancel returns to it unchanged; the unsaved project form is never lost (Owner 2026-10-07).
+
+**Steps**
+- [ ] **15.1** Check the nested modal: focus returns to the first dialog, Escape closes only the top one, the underlay doesn't double (dom test on `Modal` first; fix in `src/ui/patterns/modal` if needed). Commit `fix(ui): stack a modal over another`.
+- [ ] **15.2** Load the workspace roles where sessions are edited (new project and project detail) and pass `roles`, `addAction`, `addRoleAction` down to the session dialogs. Commit `feat(booking): load roles for adding a member from a session`.
+- [ ] **15.3** *Tim* field empty state: *Tambah anggota* button opens `TeamMemberDialog` (add mode); on success the new member is added to the options and selected. Dom tests first. Commit `feat(booking): add a team member from the session form`.
+- [ ] **15.4** *Tambah anggota · <sesi>* empty state: replace *Buka Tim* with the same button and flow; drop the now-unused copy. Commit `feat(booking): add a team member from the assignment dialog`.
+- [ ] **15.5** E2E: no members → add one from *Tambah sesi* → it is selected → project saves with it. Record the slice.
+
+**Done check:** both empty states match the exports; the project form keeps its values through the stacked dialog; typecheck, lint, touched tests and the E2E pass.
+
+---
+
+## Slice 16: Link a Drive folder while creating a gallery (#3)
+
+**Read first:** manual-test-findings #3; F-09 AC-GAL-001, -005, -009–011; BR-GAL-009, BR-SRC-002, BR-SRC-004, BR-SRC-006; `create-gallery` and `link-gallery-source` use cases; `create-gallery-dialog`, `use-create-gallery-form`, `use-create-gallery-launcher`; `link-source-dialog` (`LinkSourceFields`, `FolderInUseDialog`) and `use-link-source-form`; gallery exports `proyek-dialog-buat-galeri*` and `galeri-dialog-tambah-folder*`, plus the new frames (Owner).
+
+**Gate:** amend F-09 spec/AC-GAL-001: *Buat galeri* has an optional folder section with the *Tambah folder* fields; leaving it empty creates a draft gallery with no folder, as today.
+
+**Decisions:** reuse the *Tambah folder* flow as is (Owner 2026-10-07): *Sumber* (active workspace sources), Drive folder link, optional label, public-link warning, the *folder dipakai proyek lain* confirm, then sync. One submit creates the gallery and links the folder; if the link step fails validation, nothing is created and the error shows on the field.
+
+**Steps**
+- [ ] **16.1** Docs gate. Commit `docs(gallery): link a folder while creating a gallery`.
+- [ ] **16.2** Extract `LinkSourceFields` so both dialogs use it (no behaviour change; existing dom tests stay green). Commit `refactor(gallery): share the folder fields`.
+- [ ] **16.3** `createGallery` accepts an optional folder; validates it like `linkGallerySource` before writing; creates both in one transaction; returns the in-use warning the same way (unit + integration tests first). Commit `feat(gallery): create a gallery with its first folder`.
+- [ ] **16.4** *Buat galeri* UI from the exports, with the in-use step and the sync start after success (dom tests first). Commit `feat(gallery): pick a drive folder in buat galeri`.
+- [ ] **16.5** E2E (fake Drive): create with a folder → photos sync; create without → draft as today. Record the slice.
+
+**Done check:** the dialog matches the new frames; both paths work; typecheck, lint, touched tests, one integration file and the E2E pass.

@@ -12,9 +12,11 @@ export interface FolderMappingState {
   /** Null while loading or after a failed load. */
   readonly view: FolderMappingView | null;
   readonly hasFailed: boolean;
-  /** The item chosen for a subfolder, or null for *Tetap foto proof*. */
-  readonly itemOf: (path: string) => string | null;
-  readonly choose: (path: string, projectItemId: string | null) => void;
+  /** The subfolder chosen for a package item, or null for none. */
+  readonly folderOf: (itemId: string) => string | null;
+  /** Whether another item already has this subfolder; one subfolder serves one item. */
+  readonly isTakenByOther: (path: string, itemId: string) => boolean;
+  readonly chooseFolder: (itemId: string, path: string | null) => void;
   readonly isDirty: boolean;
   readonly entries: () => { path: string; projectItemId: string }[];
 }

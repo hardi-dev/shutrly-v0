@@ -6,23 +6,26 @@ import { Alert } from "@/ui/patterns/alert/alert";
 import { Select } from "@/ui/patterns/select/select";
 
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
-import type { FolderMappingFieldsProps, FolderRowProps } from "./folder-mapping-fields.types";
+import type { FolderMappingFieldsProps, ItemRowProps } from "./folder-mapping-fields.types";
 
-const PROOF = "proof";
+const NONE = "none";
 
-function FolderRow({ path, mapping }: Readonly<FolderRowProps>) {
+function ItemRow({ item, mapping }: Readonly<ItemRowProps>) {
+  const folders = (mapping.view?.folders ?? []).filter(
+    (path) => !mapping.isTakenByOther(path, item.id),
+  );
   const options = [
-    { id: PROOF, label: GALLERY_COPY.mappingProof },
-    ...(mapping.view?.items ?? []).map((item) => ({ id: item.id, label: item.name })),
+    { id: NONE, label: GALLERY_COPY.mappingNone },
+    ...folders.map((path) => ({ id: path, label: path })),
   ];
   const change = (id: string) => {
-    mapping.choose(path, id === PROOF ? null : id);
+    mapping.chooseFolder(item.id, id === NONE ? null : id);
   };
   return (
     <Select
-      label={GALLERY_COPY.mappingFolderLabel(path)}
+      label={item.name}
       options={options}
-      value={mapping.itemOf(path) ?? PROOF}
+      value={mapping.folderOf(item.id) ?? NONE}
       onChange={change}
     />
   );
@@ -55,10 +58,9 @@ function Notice({ mapping, packageHref }: Readonly<FolderMappingFieldsProps>) {
   return null;
 }
 
-/** *Subfolder hasil akhir* in the folder *Edit*: one item choice per subfolder, *Tetap foto proof* by default (F-20, Owner 2026-10-07). @param props - the mapping state and the project page link @returns the fields */
+/** *Subfolder hasil akhir* in the folder *Edit*: each package item picks its subfolder, none by default; unpicked subfolders stay proofs (F-20, Owner 2026-10-07). @param props - the mapping state and the project page link @returns the fields */
 export function FolderMappingFields({ mapping, packageHref }: Readonly<FolderMappingFieldsProps>) {
-  const folders =
-    mapping.view !== null && mapping.view.items.length > 0 ? mapping.view.folders : [];
+  const items = mapping.view !== null && mapping.view.folders.length > 0 ? mapping.view.items : [];
   return (
     <fieldset className="flex flex-col gap-(--space-4)">
       <legend className="flex flex-col gap-(--space-1) pb-(--space-3)">
@@ -70,8 +72,8 @@ export function FolderMappingFields({ mapping, packageHref }: Readonly<FolderMap
         </span>
       </legend>
       <Notice mapping={mapping} packageHref={packageHref} />
-      {folders.map((path) => (
-        <FolderRow key={path} path={path} mapping={mapping} />
+      {items.map((item) => (
+        <ItemRow key={item.id} item={item} mapping={mapping} />
       ))}
     </fieldset>
   );

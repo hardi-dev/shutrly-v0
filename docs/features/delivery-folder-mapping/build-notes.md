@@ -9,7 +9,7 @@ Built 2026-10-07 on `feat/client-access` straight from the accepted [intent](int
 - Client *Hasil akhir*: one tab per package item (was *Edited / Print*); files synced before F-20 without an item fall back to an *Edited* / *Print* tab.
 
 ## Rules (Owner 2026-10-07)
-- Per linked folder; items offered are this project's selection items only; one subfolder → one item, one item → many subfolders; mapping is optional and may come before the subfolder exists.
+- Per linked folder; items offered are this project's selection items only; one subfolder → one item; *Edit folder* lists the package items and each picks one subfolder or none (Owner manual test 2026-10-07: item first, not subfolder first), and a subfolder another item has is not offered; mapping is optional and may come before the subfolder exists.
 - `COUNT` item → `EDITED`, `QUANTITY` item → `PRINT`; the longest mapped folder wins; the mapped level is folded out of the browse path.
 - No name is recognised by itself any more (`edited` / `print` included). Unmapped subfolders stay proofs and still show in the grid.
 - A client pick of a photo that becomes a finished file stays. No migration of old data (still in development).

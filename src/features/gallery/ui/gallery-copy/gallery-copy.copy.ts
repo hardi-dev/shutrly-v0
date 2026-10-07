@@ -245,9 +245,8 @@ export const GALLERY_COPY = {
   // F-20 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
   mappingTitle: "Subfolder hasil akhir",
   mappingHelper:
-    "Pilih item paket untuk subfolder yang berisi hasil akhir. Subfolder lain tetap foto proof.",
-  mappingProof: "Tetap foto proof",
-  mappingFolderLabel: (path: string) => `Subfolder ${path}`,
+    "Pilih subfolder Drive untuk tiap item paket. Subfolder yang tidak dipilih tetap foto proof.",
+  mappingNone: "Belum dipilih",
   mappingNoFolders: "Belum ada subfolder. Sinkronkan folder ini dulu, lalu petakan di sini.",
   mappingNoItemsTitle: "Paket proyek ini belum punya item untuk pilihan foto",
   mappingNoItemsBody: "Tambahkan item di Isi paket dulu.",

@@ -227,14 +227,17 @@ describe("GallerySourcesSection", () => {
     expect(syncSourceAction).toHaveBeenCalledTimes(1);
   });
 
-  it("F-20 Edit folder maps a subfolder to a package item and saves it with the name", async () => {
+  it("F-20 Edit folder picks a subfolder for each package item and saves it with the name", async () => {
     const user = userEvent.setup();
     const renameSourceAction = vi.fn(() => Promise.resolve({ ok: true as const }));
     const setFolderMappingAction = vi.fn(() => Promise.resolve({ ok: true as const }));
     const folderMappingAction = vi.fn(() =>
       Promise.resolve({
         folders: ["Akad", "Hasil Edit"],
-        items: [{ id: "item-edit", name: "Foto edit", pickMode: "COUNT" as const }],
+        items: [
+          { id: "item-edit", name: "Foto edit", pickMode: "COUNT" as const },
+          { id: "item-print", name: "Foto cetak", pickMode: "QUANTITY" as const },
+        ],
         mappings: [],
       }),
     );
@@ -246,12 +249,18 @@ describe("GallerySourcesSection", () => {
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
     await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
     await user.click(screen.getByRole("menuitem", { name: /Edit folder/ }));
-    await user.click(await screen.findByRole("button", { name: /Subfolder Hasil Edit/ }));
-    await user.click(screen.getByRole("option", { name: "Foto edit" }));
+    await user.click(await screen.findByRole("button", { name: /Foto edit/ }));
+    await user.click(screen.getByRole("option", { name: "Hasil Edit" }));
+    await user.click(screen.getByRole("button", { name: /Foto cetak/ }));
+    expect(screen.queryByRole("option", { name: "Hasil Edit" })).toBeNull();
+    await user.click(screen.getByRole("option", { name: "Akad" }));
     await user.click(screen.getByRole("button", { name: "Simpan" }));
     await waitFor(() => {
       expect(setFolderMappingAction).toHaveBeenCalledWith("ws-1", "s-1", {
-        mappings: [{ path: "Hasil Edit", projectItemId: "item-edit" }],
+        mappings: [
+          { path: "Hasil Edit", projectItemId: "item-edit" },
+          { path: "Akad", projectItemId: "item-print" },
+        ],
       });
     });
     expect(renameSourceAction).toHaveBeenCalledWith("ws-1", "s-1", { label: "" });

@@ -577,9 +577,9 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 | folder currently syncing | delete wins; the sync step finds no source and stops | — |
 
 **Steps**
-- [ ] **14.1** Docs gate above. Commit `docs(gallery): delete a folder with its photos`.
-- [ ] **14.2** `delete-gallery-source` use case (unit tests first): same lock and state checks as `removeGallerySource`; `writer.countPicksForSource(sourceId)` > 0 → `HAS_PICKS`; else `writer.deleteSource(sourceId)` (hard delete, photos cascade) and whatever cache/version bump `removeSource` does. Repository methods with integration tests in `tests/integration/gallery` (picks present → refused, nothing deleted; no picks → source and photos gone; other gallery's row for the same folder untouched). Commit `feat(gallery): delete a folder and its photos`.
-- [ ] **14.3** `rename-gallery-source` use case + schema (label 1–60, trimmed, empty clears to `folder_name`; unit + integration). Commit `feat(gallery): rename a gallery folder`.
+- [x] **14.1** Docs gate above. Commit `docs(gallery): delete a folder with its photos`.
+- [x] **14.2** `delete-gallery-source` use case (unit tests first): same lock and state checks as `removeGallerySource`; `writer.countPicksForSource(sourceId)` > 0 → `HAS_PICKS`; else `writer.deleteSource(sourceId)` (hard delete, photos cascade) and whatever cache/version bump `removeSource` does. Repository methods with integration tests in `tests/integration/gallery` (picks present → refused, nothing deleted; no picks → source and photos gone; other gallery's row for the same folder untouched). Commit `feat(gallery): delete a folder and its photos`.
+- [x] **14.3** `rename-gallery-source` use case + schema (label 1–60, trimmed, empty clears to `folder_name`; unit + integration). Commit `feat(gallery): rename a gallery folder`.
 - [ ] **14.4** UI from the exports: row menu *Sinkronkan · Ganti nama · Hapus*; rename dialog; delete confirm; refused messages; server actions in `src/app/actions/gallery/gallery-page-actions.ts`. Remove `removeSource` copy and the unused remove path if nothing else calls it. Dom tests first. Commit `feat(gallery): edit and delete folders from the gallery page`.
 - [ ] **14.5** E2E (fake Drive): rename a folder; delete a folder without picks; delete refused with a pick. Record the slice. Commits `test(gallery): …`, `docs(client-access): record slice 14`.
 
@@ -594,7 +594,7 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 **Decisions:** the add-member dialog stacks on top of *Tambah sesi* / *Tambah anggota*; after a save it closes, the member list refreshes and the new member is selected in the dialog underneath; cancel returns to it unchanged; the unsaved project form is never lost (Owner 2026-10-07).
 
 **Steps**
-- [ ] **15.1** Check the nested modal: focus returns to the first dialog, Escape closes only the top one, the underlay doesn't double (dom test on `Modal` first; fix in `src/ui/patterns/modal` if needed). Commit `fix(ui): stack a modal over another`.
+- [x] **15.1** Check the nested modal: focus returns to the first dialog, Escape closes only the top one, the underlay doesn't double (dom test on `Modal` first; fix in `src/ui/patterns/modal` if needed). Commit `fix(ui): stack a modal over another`.
 - [ ] **15.2** Load the workspace roles where sessions are edited (new project and project detail) and pass `roles`, `addAction`, `addRoleAction` down to the session dialogs. Commit `feat(booking): load roles for adding a member from a session`.
 - [ ] **15.3** *Tim* field empty state: *Tambah anggota* button opens `TeamMemberDialog` (add mode); on success the new member is added to the options and selected. Dom tests first. Commit `feat(booking): add a team member from the session form`.
 - [ ] **15.4** *Tambah anggota · <sesi>* empty state: replace *Buka Tim* with the same button and flow; drop the now-unused copy. Commit `feat(booking): add a team member from the assignment dialog`.
@@ -613,9 +613,9 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 **Decisions:** reuse the *Tambah folder* flow as is (Owner 2026-10-07): *Sumber* (active workspace sources), Drive folder link, optional label, public-link warning, the *folder dipakai proyek lain* confirm, then sync. One submit creates the gallery and links the folder; if the link step fails validation, nothing is created and the error shows on the field.
 
 **Steps**
-- [ ] **16.1** Docs gate. Commit `docs(gallery): link a folder while creating a gallery`.
+- [x] **16.1** Docs gate. Commit `docs(gallery): link a folder while creating a gallery`.
 - [ ] **16.2** Extract `LinkSourceFields` so both dialogs use it (no behaviour change; existing dom tests stay green). Commit `refactor(gallery): share the folder fields`.
-- [ ] **16.3** `createGallery` accepts an optional folder; validates it like `linkGallerySource` before writing; creates both in one transaction; returns the in-use warning the same way (unit + integration tests first). Commit `feat(gallery): create a gallery with its first folder`.
+- [x] **16.3** `createGallery` accepts an optional folder; validates it like `linkGallerySource` before writing; creates both in one transaction; returns the in-use warning the same way (unit + integration tests first). Commit `feat(gallery): create a gallery with its first folder`.
 - [ ] **16.4** *Buat galeri* UI from the exports, with the in-use step and the sync start after success (dom tests first). Commit `feat(gallery): pick a drive folder in buat galeri`.
 - [ ] **16.5** E2E (fake Drive): create with a folder → photos sync; create without → draft as today. Record the slice.
 

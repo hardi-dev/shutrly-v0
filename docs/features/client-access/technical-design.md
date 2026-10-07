@@ -406,3 +406,11 @@ See [plan.md](plan.md): Slice 0 (base, spikes, inventory) and Slices 1–11, eac
 - E2E notes: the dev database answered in 1–3 s per query that day, so the run used a throwaway config with a 20 s `expect` timeout (not committed); with the repo's 5 s, project creation timed out before any renamed route. On a cold server the first attempt timed out at the *Lihat pilihan* click on the gallery page (the page rendered correctly when opened by hand); the retry passed the whole journey, including the old-path 404 checks.
 - Deleted the throwaway `zz-owner7-*.spec.ts` (HANDOFF › Resume at (1)). Not run: `gate.spec.ts` (real Drive), the full suite (project rule).
 
+### Revision OT · server side of Slices 14–16 (2026-10-07, UI waits for Pencil exports)
+
+- Slice 14 (14.1–14.3): BR-GAL-009 and AC-GAL-013 amended (delete with photos; refused with a client pick or for the last active folder of a live gallery), AC-GAL-037 added (rename). Use cases `delete-gallery-source` (`HAS_PICKS`, `LAST_ACTIVE_SOURCE`, `INVALID_STATE`) and `rename-gallery-source` (label 1–60, empty → folder name); writer `countSourcePicks`, `deleteSource` (cascade, content version +1), `renameSource`. One commit for both (`50a25f1`) instead of two: they share the port, adapter and fake. Copy `HAS_PICKS` is marked *not in Pencil yet*.
+- Slice 15 (15.1): a stacked `Modal` already closes only the top one on Escape and returns focus below; test added, no fix needed. 15.2 is held back with 15.3 so no unused plumbing lands.
+- Slice 16 (16.1, 16.3): AC-GAL-001 and the F-09 spec flow amended; `createGallery` takes an optional `folder` (validated like *Tambah folder*, source checked before the insert, gallery and folder in one transaction, result `sourceId`). Shared SQL `gallery-source-link-sql.ts`. 16.2 (shared `LinkSourceFields`) moves to 16.4, where it is used.
+- Checks: typecheck PASS; ESLint on changed files PASS; unit/dom for delete, rename, remove, create, link, gallery-card, create-gallery-dialog, modal PASS; integration `client-access/source-delete.test.ts` (5), `gallery-lifecycle.test.ts` (6), `gallery-repository.test.ts` PASS.
+- Waiting on the Owner: Pencil frames + exports for 14.4–14.5, 15.2–15.5, 16.2, 16.4–16.5 (list in plan › Revision OT). Intents drafted for #6 (`client-proof-downloads`, F-19) and #5 (`delivery-folder-mapping`, F-20), both `DRAFT`.
+

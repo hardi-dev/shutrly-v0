@@ -1,5 +1,5 @@
 // Seeds one demo studio on a NON-production database through the app's own use cases: an Owner
-// who signs in with email and password, a workspace with its defaults, a catalog, two clients, a
+// registered and verified through Better Auth (signUpEmail, then the verification link), a workspace with its defaults, a catalog, two clients, a
 // booked project with a gallery synced from a real public Drive folder and published, and a draft
 // project. Final delivery is published too when the folder has `edited` or `print` subfolders.
 // It never deletes or overwrites: it stops when the Owner's email already exists.
@@ -11,14 +11,17 @@
 import { randomBytes } from "node:crypto";
 import { writeFileSync } from "node:fs";
 
-import { hashPassword } from "better-auth/crypto";
 import { config } from "dotenv";
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
+import type { AuthEnv } from "@/adapters/auth/create-auth/create-auth.types";
+import { createBetterAuthIdentity } from "@/adapters/auth/identity/better-auth-identity";
 import { createWebCryptoAccessTokenGenerator } from "@/adapters/crypto/access-token-generator/web-crypto-access-token-generator";
 import { createWebCryptoGalleryPasswordCipher } from "@/adapters/crypto/gallery-password-cipher/web-crypto-gallery-password-cipher";
 import { createBetterAuthPasswordHasher } from "@/adapters/crypto/password-hasher/better-auth-password-hasher";
 import { createWebCryptoRandomInt } from "@/adapters/crypto/random-int/web-crypto-random-int";
+import { createDrizzleAccountDirectory } from "@/adapters/db/account-directory/drizzle-account-directory";
+import { createBetterAuthDatabase } from "@/adapters/db/better-auth-database/better-auth-database";
 import { createDrizzleCategoryRepository } from "@/adapters/db/catalog-repository/drizzle-category-repository";
 import { createDrizzleItemDefinitionRepository } from "@/adapters/db/catalog-repository/drizzle-item-definition-repository";
 import { createDrizzleServiceRepository } from "@/adapters/db/catalog-repository/drizzle-service-repository";
@@ -28,10 +31,10 @@ import { createDrizzleClientRepository } from "@/adapters/db/client-repository/d
 import { createDrizzleGalleryBrowseReader } from "@/adapters/db/gallery-repository/drizzle-gallery-browse-reader";
 import { createDrizzleGalleryRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-repository";
 import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
+import { createDrizzleLinkRegistry } from "@/adapters/db/link-registry/drizzle-link-registry";
 import { createDrizzleMessageTemplateRepository } from "@/adapters/db/message-template-repository/drizzle-message-template-repository";
 import { createDrizzleProjectRepository } from "@/adapters/db/project-repository/drizzle-project-repository";
 import { createNeonRateLimiter } from "@/adapters/db/rate-limiter/neon-rate-limiter";
-import { account, user } from "@/adapters/db/schema/auth/auth";
 import { serviceItemDefinition } from "@/adapters/db/schema/booking/catalog";
 import { project } from "@/adapters/db/schema/booking/project";
 import { gallerySource } from "@/adapters/db/schema/gallery/gallery";
@@ -42,6 +45,8 @@ import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-
 import { createGoogleDriveProvider } from "@/adapters/source/google-drive-provider/google-drive-provider";
 import { runFinalDeliveryTransaction } from "@/composition/gallery/final-delivery-scope/final-delivery-scope";
 import type { GalleryScope } from "@/composition/gallery/gallery-scope/gallery-scope.types";
+import type { AuthLink } from "@/features/auth/application/ports/auth-email/auth-email.port";
+import { normaliseEmail } from "@/features/auth/domain/credentials/credentials";
 import { addCategory } from "@/features/booking/application/use-cases/add-category/add-category";
 import { addClient } from "@/features/booking/application/use-cases/add-client/add-client";
 import { addService } from "@/features/booking/application/use-cases/add-service/add-service";
@@ -65,6 +70,7 @@ const MAX_SYNC_STEPS = 200;
 
 interface SeedEnv {
   readonly databaseUrl: string;
+  readonly auth: AuthEnv;
   readonly galleryPasswordKey: string;
   readonly driveApiKey: string;
   readonly ownerEmail: string;
@@ -95,6 +101,12 @@ function readEnv(): SeedEnv {
   if (process.env.APP_STAGE === "production") throw new Error("Refusing to seed production.");
   return {
     databaseUrl: required("DATABASE_URL"),
+    auth: {
+      BETTER_AUTH_SECRET: required("BETTER_AUTH_SECRET"),
+      BETTER_AUTH_URL: required("BETTER_AUTH_URL"),
+      GOOGLE_CLIENT_ID: required("GOOGLE_CLIENT_ID"),
+      GOOGLE_CLIENT_SECRET: required("GOOGLE_CLIENT_SECRET"),
+    },
     galleryPasswordKey: required("GALLERY_PASSWORD_KEY"),
     driveApiKey: required("GOOGLE_DRIVE_API_KEY"),
     ownerEmail: process.env.SEED_OWNER_EMAIL ?? "owner@shutrly.test",
@@ -123,29 +135,33 @@ function present<T>(label: string, value: T | undefined): T {
   return value;
 }
 
-async function createOwner(db: Db, email: string, password: string): Promise<string> {
-  const existing = (
-    await db
-      .select({ id: user.id })
-      .from(user)
-      .where(sql`lower(${user.email}) = lower(${email})`)
-  ).at(0);
-  if (existing) throw new Error(`${email} already exists; nothing was changed.`);
-  const id = crypto.randomUUID();
-  const now = new Date();
-  await db.transaction(async (tx) => {
-    await tx
-      .insert(user)
-      .values({ id, name: "Owner Contoh", email, emailVerified: true, emailVerifiedAt: now });
-    await tx.insert(account).values({
-      id: crypto.randomUUID(),
-      accountId: id,
-      providerId: "credential",
-      userId: id,
-      password: await hashPassword(password),
-    });
-  });
-  return id;
+function ownerIdentity(db: Db, env: SeedEnv, onLink: (link: AuthLink) => void) {
+  return createBetterAuthIdentity({
+    database: createBetterAuthDatabase(db),
+    env: env.auth,
+    accounts: createDrizzleAccountDirectory(db),
+    links: createDrizzleLinkRegistry(db),
+    onLink,
+  }).identity;
+}
+
+/** Registers the Owner through Better Auth (`signUpEmail`), then verifies the email with the link it issues, as a new Owner would. */
+async function createOwner(db: Db, env: SeedEnv): Promise<string> {
+  const links: AuthLink[] = [];
+  const identity = ownerIdentity(db, env, (link) => links.push(link));
+  const email = normaliseEmail(env.ownerEmail);
+  const password = env.ownerPassword;
+  const created = await identity.createPasswordUser({ name: "Owner Contoh", email, password });
+  if (!created.created) throw new Error(`${email} already exists; nothing was changed.`);
+  await identity.sendVerificationLink(email);
+  const link = present("verification link", links.at(-1));
+  const token = present(
+    "verification token",
+    new URL(link.url).searchParams.get("token") ?? undefined,
+  );
+  const verified = await identity.verifyEmail(token);
+  if (!verified.ok) throw new Error("email verification failed");
+  return verified.userId;
 }
 
 async function createStudio(db: Db, ownerId: string): Promise<WorkspaceContext> {
@@ -401,7 +417,7 @@ function writeCredentials(env: SeedEnv, lines: Readonly<Record<string, string>>)
 }
 
 async function seed(db: Db, env: SeedEnv) {
-  const ownerId = await createOwner(db, env.ownerEmail, env.ownerPassword);
+  const ownerId = await createOwner(db, env);
   const studio: Studio = { db, ownerId, context: await createStudio(db, ownerId) };
   console.log(`Owner ${env.ownerEmail} and workspace ${studio.context.workspaceId}`);
   const serviceId = await seedCatalog(studio);

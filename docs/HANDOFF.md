@@ -17,7 +17,8 @@ History (previous handoffs, early status table, component-library notes): [HANDO
   - R-6 (bulk downloads on iOS Safari) needs a real phone. Tablet and dark mode are not drawn (GAP-01, GAP-04).
   - Running the fixture-Drive E2E needs `E2E_FAKE_DRIVE=1` in this worktree's `.dev.vars` for the run (restore it after; the shared helpers are slow on a cold server, hence `retries: 2`).
   - The main checkout's `.claude/launch.json` has an uncommitted `dev-client-access` entry (runs this worktree's dev server on port 3000).
-- **Next:** `/sdv:verify-feature client-access`, then `/sdv:ship`.
+- **Design revision (Owner 2026-10-07, not built yet):** *Akses klien*, *Pilihan klien* and *Hasil akhir* move from the project page to the gallery page (720 column, *Foto* preview 6 photos in 3 columns); the project page keeps *Add-on*, its *Galeri* card gains *Pilihan klien* / *Hasil akhir* summary rows, and *Tandai selesai* becomes the header action on a `DELIVERED` project. Drawn in `client-access.pen` › Owner 7 (`HT8V6`, `iGwTx`, `r71J5`, `QUSVb`), exported to `exports/owner-7-galeri/`; spec A-34 (§3, §5, §6, §7), design.md and technical-design D-20 are synced. The code still shows the four cards on the project page.
+- **Next:** plan and build the Owner 7 revision as a new slice (`/sdv:plan-feature client-access` for the slice, then `/sdv:build-feature`), then `/sdv:verify-feature client-access` and `/sdv:ship`.
 
 ## Key decisions (Owner)
 

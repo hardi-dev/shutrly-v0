@@ -4,7 +4,7 @@
 
 Raw Pencil HTML exports, one complete frame per file. Read only the states your task names,
 one file at a time. *Design note* and *AC* come from [design.md](../design.md).
-Total: 125 files, 3839 KB.
+Total: 129 files, 4191 KB.
 
 ## klien-1-gerbang
 
@@ -86,7 +86,7 @@ Total: 125 files, 3839 KB.
 | State | Desktop | Mobile | Design note | AC |
 |---|---|---|---|---|
 | `pilihanklien-dikirim` | [`X6hz46`](owner-1-pilihan-klien/pilihanklien-dikirim-desktop-X6hz46.html) · 89 KB | [`t3YWpu`](owner-1-pilihan-klien/pilihanklien-dikirim-mobile-t3YWpu.html) · 57 KB | Some groups submitted | AC-SEL-010 |
-| `pilihanklien-kartu` | [`hu4V8`](owner-1-pilihan-klien/pilihanklien-kartu-desktop-hu4V8.html) · 24 KB | [`pVhF3`](owner-1-pilihan-klien/pilihanklien-kartu-mobile-pVhF3.html) · 24 KB | *Pilihan klien* card on the project page | AC-SEL-010 |
+| `pilihanklien-kartu` | [`hu4V8`](owner-1-pilihan-klien/pilihanklien-kartu-desktop-hu4V8.html) · 24 KB | [`pVhF3`](owner-1-pilihan-klien/pilihanklien-kartu-mobile-pVhF3.html) · 24 KB | *Pilihan klien* card (gallery page since Owner 7) | AC-SEL-010 |
 | `pilihanklien-menunggu` | [`V8hUXM`](owner-1-pilihan-klien/pilihanklien-menunggu-desktop-V8hUXM.html) · 87 KB | — | Waiting for the client | AC-SEL-010 |
 
 ## owner-2-detail-pilihan
@@ -121,7 +121,7 @@ Total: 125 files, 3839 KB.
 | `hasilakhirowner-dialog-ditolak` | [`FjMco`](owner-4-hasil-akhir/hasilakhirowner-dialog-ditolak-desktop-FjMco.html) · 5 KB | [`amshA`](owner-4-hasil-akhir/hasilakhirowner-dialog-ditolak-mobile-amshA.html) · 6 KB | Publishing refused | AC-DEL-002 |
 | `hasilakhirowner-dialog-publikasikan` | [`F9X1a`](owner-4-hasil-akhir/hasilakhirowner-dialog-publikasikan-desktop-F9X1a.html) · 6 KB | [`f9eIWy`](owner-4-hasil-akhir/hasilakhirowner-dialog-publikasikan-mobile-f9eIWy.html) · 6 KB | Confirm publishing | AC-DEL-001 |
 | `hasilakhirowner-dialog-tandai-selesai` | [`ZHOq1`](owner-4-hasil-akhir/hasilakhirowner-dialog-tandai-selesai-desktop-ZHOq1.html) · 6 KB | [`o7DEB`](owner-4-hasil-akhir/hasilakhirowner-dialog-tandai-selesai-mobile-o7DEB.html) · 6 KB | Confirm *Tandai selesai* | AC-DEL-007 |
-| `hasilakhirowner-kartu` | [`bLPAH`](owner-4-hasil-akhir/hasilakhirowner-kartu-desktop-bLPAH.html) · 21 KB | [`d3iypK`](owner-4-hasil-akhir/hasilakhirowner-kartu-mobile-d3iypK.html) · 22 KB | *Hasil akhir* card on the project page | AC-DEL-001 |
+| `hasilakhirowner-kartu` | [`bLPAH`](owner-4-hasil-akhir/hasilakhirowner-kartu-desktop-bLPAH.html) · 21 KB | [`d3iypK`](owner-4-hasil-akhir/hasilakhirowner-kartu-mobile-d3iypK.html) · 22 KB | *Hasil akhir* card (gallery page since Owner 7; state C/D no longer offers *Tandai selesai*) | AC-DEL-001 |
 | `hasilakhirowner-menu` | [`k5mu5`](owner-4-hasil-akhir/hasilakhirowner-menu-desktop-k5mu5.html) · 4 KB | [`VdXx4`](owner-4-hasil-akhir/hasilakhirowner-menu-mobile-VdXx4.html) · 5 KB | Menu | AC-DEL-001, 007 |
 
 ## owner-5-akses-klien
@@ -129,7 +129,7 @@ Total: 125 files, 3839 KB.
 | State | Desktop | Mobile | Design note | AC |
 |---|---|---|---|---|
 | `aksesklien-dialog-ganti-link` | [`V0gYsZ`](owner-5-akses-klien/aksesklien-dialog-ganti-link-desktop-V0gYsZ.html) · 6 KB | [`h2Ifa`](owner-5-akses-klien/aksesklien-dialog-ganti-link-mobile-h2Ifa.html) · 6 KB | Confirm *Ganti link* | AC-ACC-009 |
-| `aksesklien-kartu` | [`zMo79`](owner-5-akses-klien/aksesklien-kartu-desktop-zMo79.html) · 39 KB | [`DIPEh`](owner-5-akses-klien/aksesklien-kartu-mobile-DIPEh.html) · 40 KB | *Akses klien* card on the project page | AC-ACC-009 |
+| `aksesklien-kartu` | [`zMo79`](owner-5-akses-klien/aksesklien-kartu-desktop-zMo79.html) · 39 KB | [`DIPEh`](owner-5-akses-klien/aksesklien-kartu-mobile-DIPEh.html) · 40 KB | *Akses klien* card (gallery page since Owner 7, replacing F-09's card) | AC-ACC-009 |
 
 ## owner-6-katalog
 
@@ -140,3 +140,10 @@ Total: 125 files, 3839 KB.
 | `katalog-hitung-foto` | [`AT5Aw`](owner-6-katalog/katalog-hitung-foto-desktop-AT5Aw.html) · 24 KB | [`trGFW`](owner-6-katalog/katalog-hitung-foto-mobile-trGFW.html) · 24 KB | Count photos (notes on) | AC-CAT-001, AC-SEL-021 |
 | `katalog-jumlah-per-foto` | [`GguU9`](owner-6-katalog/katalog-jumlah-per-foto-desktop-GguU9.html) · 24 KB | [`yvL3e`](owner-6-katalog/katalog-jumlah-per-foto-mobile-yvL3e.html) · 24 KB | Quantity per photo (notes off) | AC-CAT-001 |
 | `katalog-pilihan-mati` | [`j6GL8r`](owner-6-katalog/katalog-pilihan-mati-desktop-j6GL8r.html) · 13 KB | [`E7KkOR`](owner-6-katalog/katalog-pilihan-mati-mobile-E7KkOR.html) · 13 KB | Selection off | AC-CAT-001 |
+
+## owner-7-galeri
+
+| State | Desktop | Mobile | Design note | AC |
+|---|---|---|---|---|
+| `galeri-dipublikasikan` | [`HT8V6`](owner-7-galeri/galeri-dipublikasikan-desktop-HT8V6.html) · 137 KB | [`iGwTx`](owner-7-galeri/galeri-dipublikasikan-mobile-iGwTx.html) · 78 KB | Gallery page, published: *Akses klien* → *Pilihan klien* → *Hasil akhir* → *Sumber foto* → *Foto*, all 720 wide, preview 6 photos in 3 columns | AC-ACC-009, AC-SEL-010, AC-DEL-001 |
+| `proyek-terkirim` | [`r71J5`](owner-7-galeri/proyek-terkirim-desktop-r71J5.html) · 94 KB | [`QUSVb`](owner-7-galeri/proyek-terkirim-mobile-QUSVb.html) · 40 KB | Project page, delivered: *Galeri* card with *Pilihan klien* and *Hasil akhir* summary rows, *Add-on* card, *Tandai selesai* in the header (action bar on phones) | AC-DEL-007 |

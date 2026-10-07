@@ -1573,7 +1573,7 @@
           }
         },
         "3:Sw0yD/3:MST3f/3:EPpbd": {
-          "content": "Wisuda Rina"
+          "content": "Galeri"
         },
         "3:Sw0yD/3:MST3f/3:Hh5tj": {
           "content": "Pilihan klien"
@@ -1924,7 +1924,7 @@
           }
         },
         "3:Sw0yD/3:MST3f/3:EPpbd": {
-          "content": "Wisuda Rina"
+          "content": "Galeri"
         },
         "3:Sw0yD/3:MST3f/3:Hh5tj": {
           "content": "Pilihan klien"
@@ -2345,7 +2345,7 @@
           }
         },
         "3:Sw0yD/3:MST3f/3:EPpbd": {
-          "content": "Wisuda Rina"
+          "content": "Galeri"
         },
         "3:Sw0yD/3:MST3f/3:Hh5tj": {
           "content": "Pilihan klien"
@@ -2735,7 +2735,7 @@
           }
         },
         "3:Sw0yD/3:MST3f/3:EPpbd": {
-          "content": "Wisuda Rina"
+          "content": "Galeri"
         },
         "3:Sw0yD/3:MST3f/3:Hh5tj": {
           "content": "Pilihan klien"
@@ -2846,7 +2846,7 @@
           }
         },
         "3:Sw0yD/3:MST3f/3:EPpbd": {
-          "content": "Wisuda Rina"
+          "content": "Galeri"
         },
         "3:Sw0yD/3:MST3f/3:Hh5tj": {
           "content": "Pilihan klien"
@@ -48763,6 +48763,3707 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "y4ypy5",
+      "x": 21000,
+      "y": 53200,
+      "name": "Grup · OWNER 7 · GALERI (REVISI 2026-10-07)",
+      "width": 4020,
+      "fill": "$3:color/semantic/action/primary",
+      "cornerRadius": 48,
+      "layout": "vertical",
+      "gap": 20,
+      "padding": [
+        72,
+        96
+      ],
+      "justifyContent": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "R9AGOx",
+          "name": "Text",
+          "fill": "$3:color/semantic/action/on-primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "OWNER 7 · GALERI (REVISI 2026-10-07)",
+          "fontFamily": "$3:font/family/base",
+          "fontSize": 180,
+          "fontWeight": "$3:font/weight/bold"
+        },
+        {
+          "type": "text",
+          "id": "MytZl",
+          "name": "Text",
+          "fill": "$3:color/semantic/action/on-primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Akses klien, Pilihan klien dan Hasil akhir pindah ke halaman galeri; halaman proyek hanya meringkas",
+          "fontFamily": "$3:font/family/base",
+          "fontSize": 64,
+          "fontWeight": "$3:font/weight/medium"
+        },
+        {
+          "type": "text",
+          "id": "mP4Su",
+          "name": "Text",
+          "fill": "$3:color/semantic/action/on-primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "1 Halaman galeri  →  2 Kartu Galeri di proyek  →  3 Tandai selesai di header proyek",
+          "fontFamily": "$3:font/family/base",
+          "fontSize": 40,
+          "fontWeight": "$3:font/weight/regular"
+        }
+      ]
+    },
+    {
+      "id": "iGwTx",
+      "type": "ref",
+      "ref": "3:c6qPz7",
+      "width": 390,
+      "height": 1790,
+      "theme": {
+        "3:mode": "light"
+      },
+      "name": "Galeri · dipublikasikan · F-10 · Phone",
+      "x": 22500,
+      "y": 54022,
+      "descendants": {
+        "3:n0MP5": {
+          "id": "qju5A",
+          "type": "ref",
+          "ref": "3:J3Ppgp",
+          "name": "Compact Bar",
+          "width": "fill_container",
+          "descendants": {
+            "3:I0gdll": {
+              "content": "Galeri"
+            },
+            "3:jbTiE": {
+              "content": "Wisuda Basic — Rina"
+            },
+            "3:wS30M": {
+              "children": [
+                {
+                  "id": "G3AuYk",
+                  "type": "ref",
+                  "ref": "3:rXttF",
+                  "name": "Menu galeri"
+                }
+              ]
+            }
+          }
+        },
+        "3:HvRky": {
+          "type": "frame",
+          "id": "Ii62y",
+          "name": "Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$3:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$3:component/panel/app/radius",
+            "$3:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "R7rvW",
+              "name": "Body",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": "$3:space/4",
+              "padding": [
+                "$3:space/5",
+                "$3:space/4"
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "JpGUq",
+                  "name": "Header",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$3:space/2",
+                  "children": [
+                    {
+                      "id": "dC5zu",
+                      "type": "ref",
+                      "ref": "3:GyfYn",
+                      "name": "Status",
+                      "descendants": {
+                        "3:SD1o7": {
+                          "content": "Dipublikasikan"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "h44So",
+                      "name": "Meta",
+                      "fill": "$3:color/semantic/text/secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "2 folder · 8 proof · Tanpa kedaluwarsa",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$3:font/family/base",
+                      "fontSize": "$3:font/size/body-sm",
+                      "fontWeight": "$3:font/weight/regular"
+                    }
+                  ]
+                },
+                {
+                  "id": "dYDdy",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Akses klien",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Akses klien"
+                    },
+                    "3:nHCW8": {
+                      "content": "Link dan password untuk klien."
+                    },
+                    "3:QcKHK": {
+                      "type": "frame",
+                      "id": "gesGd",
+                      "name": "Actions",
+                      "width": "fit_content(0)",
+                      "height": "fit_content(0)",
+                      "gap": "$3:space/2",
+                      "alignItems": "center"
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "AzZxj",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/3",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "VJ6mW",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "XkKuH",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Yw38c",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Link",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "tGDM9",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "shutrly.app/g/••••••••3kQ9",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "xQtDG",
+                              "type": "ref",
+                              "ref": "3:VA96y",
+                              "name": "Salin",
+                              "descendants": {
+                                "3:wSyzB": {
+                                  "icon": "copy"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "IzPhR",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "j5wNlM",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "hCRCP",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Password",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "FsmPZ",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "mawar-4821",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "A7uz3u",
+                              "type": "ref",
+                              "ref": "3:VA96y",
+                              "name": "Salin",
+                              "descendants": {
+                                "3:wSyzB": {
+                                  "icon": "copy"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "KYgSP",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "wOLIY",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "qeOmZ",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Kedaluwarsa",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "x6RcYQ",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Tidak ada",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "IdbpG",
+                          "name": "Tombol",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/2",
+                          "children": [
+                            {
+                              "id": "A4Dbr",
+                              "type": "ref",
+                              "ref": "3:JmfmZ",
+                              "name": "Ganti link",
+                              "width": "fill_container",
+                              "descendants": {
+                                "3:fMNO1": {
+                                  "enabled": true,
+                                  "icon": "link"
+                                },
+                                "3:xnhuK": {
+                                  "content": "Ganti link"
+                                }
+                              }
+                            },
+                            {
+                              "id": "YDI9E",
+                              "type": "ref",
+                              "ref": "3:JmfmZ",
+                              "name": "Ganti password",
+                              "width": "fill_container",
+                              "descendants": {
+                                "3:fMNO1": {
+                                  "enabled": true,
+                                  "icon": "key-round"
+                                },
+                                "3:xnhuK": {
+                                  "content": "Ganti password"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "CsRki",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Pilihan klien",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Pilihan klien"
+                    },
+                    "3:nHCW8": {
+                      "content": "Pilihan sudah final."
+                    },
+                    "3:QcKHK": {
+                      "type": "frame",
+                      "id": "U991n",
+                      "name": "Actions",
+                      "width": "fit_content(0)",
+                      "height": "fit_content(0)",
+                      "gap": "$3:space/2",
+                      "alignItems": "center"
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "Vi1uP",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/3",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "gd5ge",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "C2wbZ",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "w2OR7N",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Foto edit",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "V6pOyx",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "8 dari 8 foto · 3 catatan",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "oQpjM",
+                              "type": "ref",
+                              "ref": "3:w7OAR",
+                              "name": "Status",
+                              "descendants": {
+                                "3:SD1o7": {
+                                  "content": "Dikunci"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Bkv63",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "PMk7J",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "OvLsS",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Foto cetak",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Qfxnc",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "2 dari 2 lembar",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "mzKqT",
+                              "type": "ref",
+                              "ref": "3:w7OAR",
+                              "name": "Status",
+                              "descendants": {
+                                "3:SD1o7": {
+                                  "content": "Dikunci"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "pk63d",
+                          "name": "Tombol",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/2",
+                          "children": [
+                            {
+                              "id": "AL4f7",
+                              "type": "ref",
+                              "ref": "3:JmfmZ",
+                              "name": "Lihat pilihan",
+                              "width": "fill_container",
+                              "descendants": {
+                                "3:xnhuK": {
+                                  "content": "Lihat pilihan"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "yq7px",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Hasil akhir",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Hasil akhir"
+                    },
+                    "3:nHCW8": {
+                      "content": "Unduhan untuk klien."
+                    },
+                    "3:QcKHK": {
+                      "type": "frame",
+                      "id": "UYKLb",
+                      "name": "Actions",
+                      "width": "fit_content(0)",
+                      "height": "fit_content(0)",
+                      "gap": "$3:space/2",
+                      "alignItems": "center"
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "PRPi5",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/3",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "o6YcE",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "UE8UH",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "VNyQ4",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Edited",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Q9HSi",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "24 foto",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "t2ClC",
+                              "type": "ref",
+                              "ref": "3:D7LAk7",
+                              "name": "Status",
+                              "descendants": {
+                                "3:SD1o7": {
+                                  "content": "Siap"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "K1wvp",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "vECCr",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "kZCtL",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Print",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "AuRkg",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "6 file",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "VJmxR",
+                              "type": "ref",
+                              "ref": "3:D7LAk7",
+                              "name": "Status",
+                              "descendants": {
+                                "3:SD1o7": {
+                                  "content": "Siap"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ugokg",
+                          "name": "Tombol",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/2",
+                          "children": [
+                            {
+                              "id": "bTnZV",
+                              "type": "ref",
+                              "ref": "3:Q49yf7",
+                              "name": "Publikasikan hasil akhir",
+                              "width": "fill_container",
+                              "descendants": {
+                                "3:xnhuK": {
+                                  "content": "Publikasikan hasil akhir"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "Zv6JL",
+                  "type": "ref",
+                  "ref": "3:Q82mo",
+                  "name": "Sumber foto",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Sumber foto"
+                    },
+                    "3:nHCW8": {
+                      "content": "Folder Google Drive publik.",
+                      "enabled": false
+                    },
+                    "3:QcKHK": {
+                      "children": [
+                        {
+                          "id": "VM4Ul",
+                          "type": "ref",
+                          "ref": "3:m9dUlL",
+                          "name": "Sinkronkan semua",
+                          "descendants": {
+                            "3:wSyzB": {
+                              "icon": "refresh-cw"
+                            }
+                          }
+                        },
+                        {
+                          "id": "yFOTu",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Tambah folder",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "plus"
+                            },
+                            "3:xnhuK": {
+                              "content": "Tambah"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:AdZ4y": {
+                      "type": "frame",
+                      "id": "Ygxyt",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        "$3:component/section-card/flush/padding-y",
+                        "$3:component/section-card/compact/flush/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "UVnYv",
+                          "type": "ref",
+                          "ref": "3:PV6HB",
+                          "name": "Source Rina-Wisuda",
+                          "width": "fill_container",
+                          "descendants": {
+                            "3:c4tOj9": {
+                              "enabled": false
+                            },
+                            "3:O7pUR": {
+                              "content": "Rina-Wisuda"
+                            },
+                            "3:k9OCFf": {
+                              "content": "5 proof · 2 edited · 1 print · 10.12"
+                            },
+                            "3:zUF3j": {
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "X2vNZ",
+                                  "name": "Trailing",
+                                  "gap": "$3:space/1",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "rqCQ5",
+                                      "type": "ref",
+                                      "ref": "3:GyfYn",
+                                      "name": "Sync status",
+                                      "descendants": {
+                                        "3:SD1o7": {
+                                          "content": "Berhasil"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "i6rZgU",
+                                      "type": "ref",
+                                      "ref": "3:tgN4c",
+                                      "name": "Source actions"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "Q8RQn7",
+                          "type": "ref",
+                          "ref": "3:Bf3eg",
+                          "name": "Source Rina-Keluarga",
+                          "width": "fill_container",
+                          "descendants": {
+                            "3:c4tOj9": {
+                              "enabled": false
+                            },
+                            "3:O7pUR": {
+                              "content": "Rina-Keluarga"
+                            },
+                            "3:k9OCFf": {
+                              "content": "3 proof · 10.13"
+                            },
+                            "3:zUF3j": {
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "yFEQg",
+                                  "name": "Trailing",
+                                  "gap": "$3:space/1",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "R2LAd9",
+                                      "type": "ref",
+                                      "ref": "3:GyfYn",
+                                      "name": "Sync status",
+                                      "descendants": {
+                                        "3:SD1o7": {
+                                          "content": "Berhasil"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "p64zm",
+                                      "type": "ref",
+                                      "ref": "3:tgN4c",
+                                      "name": "Source actions"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "bnmaj",
+                  "type": "ref",
+                  "ref": "3:lYGAJ",
+                  "name": "Foto",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Foto"
+                    },
+                    "3:nHCW8": {
+                      "enabled": false
+                    },
+                    "3:QcKHK": {
+                      "children": [
+                        {
+                          "id": "E7VVF",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Lihat semua foto",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "images"
+                            },
+                            "3:xnhuK": {
+                              "content": "Semua"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "wvwQp",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/4",
+                      "padding": "$3:component/section-card/compact/content/padding",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QjZ6Z",
+                          "name": "Counts",
+                          "fill": "$3:color/semantic/text/primary",
+                          "content": "8 proof · 2 edited · 1 print",
+                          "fontFamily": "$3:font/family/base",
+                          "fontSize": "$3:font/size/body",
+                          "fontWeight": "$3:font/weight/semibold"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "g30r3",
+                          "name": "Visibility",
+                          "width": "fill_container",
+                          "gap": "$3:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "h2eoYX",
+                              "name": "Icon",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "eye",
+                              "library": "lucide",
+                              "fill": "$3:color/semantic/text/secondary"
+                            },
+                            {
+                              "type": "text",
+                              "id": "D4gTiv",
+                              "name": "Text",
+                              "fill": "$3:color/semantic/text/secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Terlihat oleh klien sekarang.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body-sm",
+                              "fontWeight": "$3:font/weight/regular"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "C6tm2M",
+                          "name": "Preview grid",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/4",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "XrjsG",
+                              "name": "Row 1",
+                              "width": "fill_container",
+                              "gap": "$3:space/3",
+                              "children": [
+                                {
+                                  "id": "nx6l0",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_001.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1763673404916-0b9eb4b30e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 104
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_001.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "NQeLQ",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_002.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1625321482818-d13675fea97b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 104
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_002.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "A5DHGQ",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_003.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1566055390879-c1e70dc0c836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 104
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_003.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "vW7in",
+                              "name": "Row 2",
+                              "width": "fill_container",
+                              "gap": "$3:space/3",
+                              "children": [
+                                {
+                                  "id": "bMpi3",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_010.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1589696709339-dba99b8925c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 104
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_010.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "v2Dft",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_011.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1612215840919-d7eba2ab6e26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 104
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_011.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "Iy0KX",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_014.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1790339605378-e3c452b15a79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 104
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_014.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "3:SpGXb": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "id": "r71J5",
+      "type": "ref",
+      "ref": "3:y9uBJl",
+      "height": 1240,
+      "name": "Proyek · terkirim · ringkasan galeri · F-10 · Desktop",
+      "x": 23130,
+      "y": 54022,
+      "descendants": {
+        "3:fNszT/3:rAUNw": {
+          "content": "Aster Wedding"
+        },
+        "3:fNszT/3:llfv5": {
+          "id": "b17rw",
+          "type": "ref",
+          "ref": "3:K0UQ06",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "3:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "3:m6S2m": {
+              "content": "Dasbor"
+            },
+            "3:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "3:fNszT/3:nHXqh": {
+          "id": "Y3Cgj",
+          "type": "ref",
+          "ref": "3:CInVy",
+          "name": "Nav Proyek",
+          "width": "fill_container",
+          "descendants": {
+            "3:MpR9k": {
+              "icon": "folder-kanban"
+            },
+            "3:m6S2m": {
+              "content": "Proyek"
+            },
+            "3:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "3:fNszT/3:wwfj3/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:lz7Bj/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:P4ZpeX/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:V2Udn4/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:f1BvVe/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:I3aJo/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:E2Dl5F/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:aXcVC/3:DloPs": {
+          "content": "RS"
+        },
+        "3:fNszT/3:EpYE1": {
+          "content": "Rina Saputri"
+        },
+        "3:fNszT/3:pMF7b": {
+          "content": "rina@asterstudio.id"
+        },
+        "3:Sw0yD": {
+          "height": "fill_container"
+        },
+        "3:Sw0yD/3:MST3f/3:EPpbd": {
+          "content": "Proyek"
+        },
+        "3:Sw0yD/3:MST3f/3:Hh5tj": {
+          "content": "Wisuda Basic — Rina"
+        },
+        "3:Sw0yD/3:MST3f/3:ami8m": {
+          "type": "frame",
+          "id": "k4RLRV",
+          "name": "Heading",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": "$3:space/1-5",
+          "children": [
+            {
+              "type": "frame",
+              "id": "MwEJI",
+              "name": "Title row",
+              "gap": "$3:space/3",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "T8dK2",
+                  "name": "Title",
+                  "fill": "$3:component/page-header/title",
+                  "content": "Wisuda Basic — Rina",
+                  "fontFamily": "$3:font/family/base",
+                  "fontSize": "$3:font/size/display",
+                  "fontWeight": "$3:font/weight/bold",
+                  "letterSpacing": -1
+                },
+                {
+                  "id": "fv2gL",
+                  "type": "ref",
+                  "ref": "3:h4md7",
+                  "name": "Status",
+                  "descendants": {
+                    "3:SD1o7": {
+                      "content": "Terkirim"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "fIQre",
+              "name": "Meta",
+              "fill": "$3:component/page-header/subtitle",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Rina · Hasil akhir dipublikasikan Min, 5 Okt 2026",
+              "fontFamily": "$3:font/family/base",
+              "fontSize": "$3:font/size/body",
+              "fontWeight": "$3:font/weight/regular"
+            }
+          ]
+        },
+        "3:Sw0yD/3:MST3f/3:U9JxE": {
+          "type": "frame",
+          "id": "AqTiI",
+          "name": "Actions",
+          "gap": "$3:component/page-header/hero/gap",
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "yy2yN",
+              "type": "ref",
+              "ref": "3:Q49yf7",
+              "name": "Tandai selesai",
+              "descendants": {
+                "3:fMNO1": {
+                  "enabled": true,
+                  "icon": "circle-check-big"
+                },
+                "3:xnhuK": {
+                  "content": "Tandai selesai"
+                }
+              }
+            },
+            {
+              "id": "M40c6",
+              "type": "ref",
+              "ref": "3:rXttF",
+              "name": "Menu proyek"
+            }
+          ]
+        },
+        "3:Sw0yD/3:MST3f/3:Iu4gK": {
+          "enabled": false
+        },
+        "3:Sw0yD/3:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "i4KxvK",
+              "name": "Container",
+              "width": 720,
+              "layout": "vertical",
+              "gap": "$3:space/6",
+              "children": [
+                {
+                  "id": "kG3br",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Info",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Info"
+                    },
+                    "3:nHCW8": {
+                      "enabled": false
+                    },
+                    "3:QcKHK": {
+                      "children": [
+                        {
+                          "id": "QQEAi",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Ubah info",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "pencil"
+                            },
+                            "3:xnhuK": {
+                              "content": "Ubah info"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "wWOl3",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/5",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Ok8tv",
+                          "name": "Facts",
+                          "width": "fill_container",
+                          "gap": "$3:space/8",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "aOik6",
+                              "name": "Klien",
+                              "layout": "vertical",
+                              "gap": "$3:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n5b6v",
+                                  "name": "Label",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "content": "Klien",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "XDlys",
+                                  "name": "Value",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "content": "Rina · +62 812-3456-7890",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "eWvPu",
+                              "name": "Layanan",
+                              "layout": "vertical",
+                              "gap": "$3:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "jIYch",
+                                  "name": "Label",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "content": "Layanan",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Xzdbt",
+                                  "name": "Value",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "content": "Wisuda Basic",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "K4xYG",
+                              "name": "Harga sepakat",
+                              "layout": "vertical",
+                              "gap": "$3:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Y6LDn",
+                                  "name": "Label",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "content": "Harga sepakat",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "rTC5T",
+                                  "name": "Value",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "content": "Rp 700.000",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/semibold"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "aQcr3",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Galeri",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Galeri"
+                    },
+                    "3:nHCW8": {
+                      "enabled": false
+                    },
+                    "3:QcKHK": {
+                      "children": [
+                        {
+                          "id": "kyoXU",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Kelola galeri",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "arrow-right"
+                            },
+                            "3:xnhuK": {
+                              "content": "Kelola galeri"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "M8hTv",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/5",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Iqz6t",
+                          "name": "Facts",
+                          "width": "fill_container",
+                          "gap": "$3:space/8",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "Mwere",
+                              "name": "Status",
+                              "layout": "vertical",
+                              "gap": "$3:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "kEWLv",
+                                  "name": "Label",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "content": "Status",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                },
+                                {
+                                  "id": "lt4t9",
+                                  "type": "ref",
+                                  "ref": "3:GyfYn",
+                                  "name": "Status",
+                                  "descendants": {
+                                    "3:SD1o7": {
+                                      "content": "Dipublikasikan"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "g9jet",
+                              "name": "Sumber",
+                              "layout": "vertical",
+                              "gap": "$3:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "pkBKK",
+                                  "name": "Label",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "content": "Sumber",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "e1EZK2",
+                                  "name": "Value",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "content": "2 folder",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "PqNLL",
+                              "name": "Foto",
+                              "layout": "vertical",
+                              "gap": "$3:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "riACv",
+                                  "name": "Label",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "content": "Foto",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "jBHP0",
+                                  "name": "Value",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "content": "8 proof · 2 edited · 1 print",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "UVv2w",
+                              "name": "Kedaluwarsa",
+                              "layout": "vertical",
+                              "gap": "$3:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "mM5Tv",
+                                  "name": "Label",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "content": "Kedaluwarsa",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "E9YJGU",
+                                  "name": "Value",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "content": "Tidak ada",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/semibold"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "o2Dqc9",
+                          "name": "Ringkasan",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/3",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "oXuoK",
+                              "name": "Ringkasan Pilihan klien",
+                              "width": "fill_container",
+                              "gap": "$3:space/3",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "JJsMF",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": "$3:space/0-5",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "NDVVD",
+                                      "name": "Title",
+                                      "fill": "$3:color/semantic/text/primary",
+                                      "content": "Pilihan klien",
+                                      "fontFamily": "$3:font/family/base",
+                                      "fontSize": "$3:font/size/body",
+                                      "fontWeight": "$3:font/weight/medium"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "diCCV",
+                                      "name": "Meta",
+                                      "fill": "$3:color/semantic/text/secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Foto edit 10/10 · Foto cetak 5/5 · semua dikunci",
+                                      "fontFamily": "$3:font/family/base",
+                                      "fontSize": "$3:font/size/body-sm",
+                                      "fontWeight": "$3:font/weight/regular"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "id": "FZn2r",
+                                  "type": "ref",
+                                  "ref": "3:w7OAR",
+                                  "name": "Status",
+                                  "descendants": {
+                                    "3:SD1o7": {
+                                      "content": "Dikunci"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "wj3G2",
+                              "name": "Ringkasan Hasil akhir",
+                              "width": "fill_container",
+                              "gap": "$3:space/3",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "HbJyh",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": "$3:space/0-5",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "wkKTn",
+                                      "name": "Title",
+                                      "fill": "$3:color/semantic/text/primary",
+                                      "content": "Hasil akhir",
+                                      "fontFamily": "$3:font/family/base",
+                                      "fontSize": "$3:font/size/body",
+                                      "fontWeight": "$3:font/weight/medium"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "HUL28",
+                                      "name": "Meta",
+                                      "fill": "$3:color/semantic/text/secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Dipublikasikan Min, 5 Okt 2026 · 2 edited · 1 print",
+                                      "fontFamily": "$3:font/family/base",
+                                      "fontSize": "$3:font/size/body-sm",
+                                      "fontWeight": "$3:font/weight/regular"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "id": "SCv6x",
+                                  "type": "ref",
+                                  "ref": "3:GyfYn",
+                                  "name": "Status",
+                                  "descendants": {
+                                    "3:SD1o7": {
+                                      "content": "Dipublikasikan"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "N5QMn",
+                  "type": "ref",
+                  "ref": "3:G8WO8q",
+                  "name": "Add-on (tetap di proyek)",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Add-on"
+                    },
+                    "3:nHCW8": {
+                      "content": "Tambahan di luar paket, disetujui klien."
+                    },
+                    "3:QcKHK": {
+                      "children": [
+                        {
+                          "id": "bahPf",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Tambah add-on",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "plus"
+                            },
+                            "3:xnhuK": {
+                              "content": "Tambah add-on"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:f60zS": {
+                      "type": "frame",
+                      "id": "YDNFf",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        "$3:component/section-card/flush/padding-y",
+                        "$3:component/section-card/flush/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "y84Bx6",
+                          "type": "ref",
+                          "ref": "3:Bf3eg",
+                          "name": "Row add-on",
+                          "width": "fill_container",
+                          "descendants": {
+                            "3:c4tOj9": {
+                              "enabled": false
+                            },
+                            "3:O7pUR": {
+                              "content": "Tambahan 2 foto edit"
+                            },
+                            "3:k9OCFf": {
+                              "content": "2 × Rp 25.000 · Foto edit"
+                            },
+                            "3:zUF3j": {
+                              "children": [
+                                {
+                                  "id": "AHAB5",
+                                  "type": "ref",
+                                  "ref": "3:GyfYn",
+                                  "name": "Status",
+                                  "descendants": {
+                                    "3:SD1o7": {
+                                      "content": "Disetujui"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "QUSVb",
+      "type": "ref",
+      "ref": "3:c6qPz7",
+      "width": 390,
+      "height": 1000,
+      "name": "Proyek · terkirim · ringkasan galeri · F-10 · Phone",
+      "x": 24630,
+      "y": 54022,
+      "descendants": {
+        "3:n0MP5": {
+          "id": "NQSK9",
+          "type": "ref",
+          "ref": "3:J3Ppgp",
+          "name": "Compact Bar",
+          "width": "fill_container",
+          "descendants": {
+            "3:I0gdll": {
+              "content": "Wisuda Basic — Rina"
+            },
+            "3:jbTiE": {
+              "content": "Proyek"
+            },
+            "3:wS30M": {
+              "children": [
+                {
+                  "id": "ZT4Dd",
+                  "type": "ref",
+                  "ref": "3:rXttF",
+                  "name": "Menu proyek"
+                }
+              ]
+            }
+          }
+        },
+        "3:HvRky": {
+          "type": "frame",
+          "id": "Z9kjW",
+          "name": "Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$3:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$3:component/panel/app/radius",
+            "$3:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Vrl2F",
+              "name": "Body",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": "$3:space/4",
+              "padding": [
+                "$3:space/5",
+                "$3:space/4"
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nPH7s",
+                  "name": "Header",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$3:space/2",
+                  "children": [
+                    {
+                      "id": "dJDtQ",
+                      "type": "ref",
+                      "ref": "3:h4md7",
+                      "name": "Status",
+                      "descendants": {
+                        "3:SD1o7": {
+                          "content": "Terkirim"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "svvQP",
+                      "name": "Meta",
+                      "fill": "$3:color/semantic/text/secondary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Hasil akhir dipublikasikan Min, 5 Okt 2026",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$3:font/family/base",
+                      "fontSize": "$3:font/size/body-sm",
+                      "fontWeight": "$3:font/weight/regular"
+                    }
+                  ]
+                },
+                {
+                  "id": "OsAB4",
+                  "type": "ref",
+                  "ref": "3:lYGAJ",
+                  "name": "Info",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Info"
+                    },
+                    "3:nHCW8": {
+                      "enabled": false
+                    },
+                    "3:QcKHK": {
+                      "children": [
+                        {
+                          "id": "IjMtc",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Ubah info",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "pencil"
+                            },
+                            "3:xnhuK": {
+                              "content": "Ubah"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "CPzns",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/4",
+                      "padding": "$3:component/section-card/compact/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "MQiSY",
+                          "name": "Klien",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/1",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "n0iVyz",
+                              "name": "Label",
+                              "fill": "$3:color/semantic/text/secondary",
+                              "content": "Klien",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body-sm",
+                              "fontWeight": "$3:font/weight/regular"
+                            },
+                            {
+                              "type": "text",
+                              "id": "TRAlt",
+                              "name": "Value",
+                              "fill": "$3:color/semantic/text/primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Rina · +62 812-3456-7890",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body",
+                              "fontWeight": "$3:font/weight/semibold"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Zqebb",
+                          "name": "Layanan",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/1",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "p5yNE8",
+                              "name": "Label",
+                              "fill": "$3:color/semantic/text/secondary",
+                              "content": "Layanan",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body-sm",
+                              "fontWeight": "$3:font/weight/regular"
+                            },
+                            {
+                              "type": "text",
+                              "id": "s3aME7",
+                              "name": "Value",
+                              "fill": "$3:color/semantic/text/primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Wisuda Basic",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body",
+                              "fontWeight": "$3:font/weight/semibold"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "J73po",
+                          "name": "Harga sepakat",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/1",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "cnjbT",
+                              "name": "Label",
+                              "fill": "$3:color/semantic/text/secondary",
+                              "content": "Harga sepakat",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body-sm",
+                              "fontWeight": "$3:font/weight/regular"
+                            },
+                            {
+                              "type": "text",
+                              "id": "C3Yos",
+                              "name": "Value",
+                              "fill": "$3:color/semantic/text/primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Rp 700.000",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body",
+                              "fontWeight": "$3:font/weight/semibold"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "v2kPy",
+                  "type": "ref",
+                  "ref": "3:lYGAJ",
+                  "name": "Galeri",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Galeri"
+                    },
+                    "3:nHCW8": {
+                      "enabled": false
+                    },
+                    "3:QcKHK": {
+                      "children": [
+                        {
+                          "id": "b9Pe7",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Kelola galeri",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "arrow-right"
+                            },
+                            "3:xnhuK": {
+                              "content": "Kelola"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "T3axS",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/4",
+                      "padding": "$3:component/section-card/compact/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "D5zOp",
+                          "name": "Status",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/1",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "FPFOm",
+                              "name": "Label",
+                              "fill": "$3:color/semantic/text/secondary",
+                              "content": "Status",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body-sm",
+                              "fontWeight": "$3:font/weight/regular"
+                            },
+                            {
+                              "id": "P2xCO7",
+                              "type": "ref",
+                              "ref": "3:GyfYn",
+                              "name": "Status",
+                              "descendants": {
+                                "3:SD1o7": {
+                                  "content": "Dipublikasikan"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "EIsaK",
+                          "name": "Foto",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/1",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "hqpjs",
+                              "name": "Label",
+                              "fill": "$3:color/semantic/text/secondary",
+                              "content": "Foto",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body-sm",
+                              "fontWeight": "$3:font/weight/regular"
+                            },
+                            {
+                              "type": "text",
+                              "id": "ParNH",
+                              "name": "Value",
+                              "fill": "$3:color/semantic/text/primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "8 proof · 2 edited · 1 print",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body",
+                              "fontWeight": "$3:font/weight/semibold"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "F4j6EV",
+                          "name": "Ringkasan",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/3",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "pjY2A",
+                              "name": "Ringkasan Pilihan klien",
+                              "width": "fill_container",
+                              "gap": "$3:space/3",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "D9epBl",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": "$3:space/0-5",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "eZsHR",
+                                      "name": "Title",
+                                      "fill": "$3:color/semantic/text/primary",
+                                      "content": "Pilihan klien",
+                                      "fontFamily": "$3:font/family/base",
+                                      "fontSize": "$3:font/size/body",
+                                      "fontWeight": "$3:font/weight/medium"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "JFKsO",
+                                      "name": "Meta",
+                                      "fill": "$3:color/semantic/text/secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Semua grup dikunci",
+                                      "lineHeight": 1.5,
+                                      "fontFamily": "$3:font/family/base",
+                                      "fontSize": "$3:font/size/body-sm",
+                                      "fontWeight": "$3:font/weight/regular"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "id": "cLuGO",
+                                  "type": "ref",
+                                  "ref": "3:w7OAR",
+                                  "name": "Status",
+                                  "descendants": {
+                                    "3:SD1o7": {
+                                      "content": "Dikunci"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "GwNZt",
+                              "name": "Ringkasan Hasil akhir",
+                              "width": "fill_container",
+                              "gap": "$3:space/3",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "q0NR16",
+                                  "name": "Text",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "gap": "$3:space/0-5",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "M4R3s",
+                                      "name": "Title",
+                                      "fill": "$3:color/semantic/text/primary",
+                                      "content": "Hasil akhir",
+                                      "fontFamily": "$3:font/family/base",
+                                      "fontSize": "$3:font/size/body",
+                                      "fontWeight": "$3:font/weight/medium"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "aidQp",
+                                      "name": "Meta",
+                                      "fill": "$3:color/semantic/text/secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Dipublikasikan Min, 5 Okt 2026",
+                                      "lineHeight": 1.5,
+                                      "fontFamily": "$3:font/family/base",
+                                      "fontSize": "$3:font/size/body-sm",
+                                      "fontWeight": "$3:font/weight/regular"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "id": "wOq2r",
+                                  "type": "ref",
+                                  "ref": "3:GyfYn",
+                                  "name": "Status",
+                                  "descendants": {
+                                    "3:SD1o7": {
+                                      "content": "Dipublikasikan"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "X4FpHa",
+                  "type": "ref",
+                  "ref": "3:lYGAJ",
+                  "name": "Add-on (tetap di proyek)",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Add-on"
+                    },
+                    "3:nHCW8": {
+                      "enabled": false
+                    },
+                    "3:QcKHK": {
+                      "children": [
+                        {
+                          "id": "I8VQW",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Tambah add-on",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "plus"
+                            },
+                            "3:xnhuK": {
+                              "content": "Tambah"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "MG70w",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/4",
+                      "padding": "$3:component/section-card/compact/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "mqh11",
+                          "name": "Ringkasan Tambahan 2 foto edit",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "Pnp25",
+                              "name": "Text",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "u0yyqY",
+                                  "name": "Title",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "content": "Tambahan 2 foto edit",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "m9Rmz",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "2 × Rp 25.000 · Foto edit",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "HjLFW",
+                              "type": "ref",
+                              "ref": "3:GyfYn",
+                              "name": "Status",
+                              "descendants": {
+                                "3:SD1o7": {
+                                  "content": "Disetujui"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "d2Kqu",
+              "name": "Action bar",
+              "width": "fill_container",
+              "fill": "$3:color/semantic/surface/panel",
+              "stroke": "$3:color/semantic/border/default",
+              "strokeWidth": {
+                "top": 1
+              },
+              "gap": "$3:space/3",
+              "padding": [
+                "$3:space/3",
+                "$3:space/4",
+                "$3:space/6",
+                "$3:space/4"
+              ],
+              "children": [
+                {
+                  "id": "h0ABUv",
+                  "type": "ref",
+                  "ref": "3:Q49yf7",
+                  "name": "Tandai selesai",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:fMNO1": {
+                      "enabled": true,
+                      "icon": "circle-check-big"
+                    },
+                    "3:xnhuK": {
+                      "content": "Tandai selesai"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "3:SpGXb": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "type": "frame",
+      "id": "O7x9a",
+      "x": 21000,
+      "y": 53862,
+      "name": "Langkah · OWNER 7 · GALERI · 1",
+      "width": 1890,
+      "layout": "vertical",
+      "gap": 8,
+      "children": [
+        {
+          "type": "text",
+          "id": "S3r6JU",
+          "name": "Text",
+          "fill": "$3:color/semantic/text/primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "1 · Halaman galeri (urutan kartu baru)",
+          "fontFamily": "$3:font/family/base",
+          "fontSize": 56,
+          "fontWeight": "$3:font/weight/bold"
+        },
+        {
+          "type": "text",
+          "id": "Y6jh9",
+          "name": "Text",
+          "fill": "$3:color/semantic/text/secondary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Desktop · Phone",
+          "fontFamily": "$3:font/family/base",
+          "fontSize": 28,
+          "fontWeight": "$3:font/weight/regular"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "PtVQj",
+      "x": 23130,
+      "y": 53862,
+      "name": "Langkah · OWNER 7 · GALERI · 2",
+      "width": 1890,
+      "layout": "vertical",
+      "gap": 8,
+      "children": [
+        {
+          "type": "text",
+          "id": "cR8sn",
+          "name": "Text",
+          "fill": "$3:color/semantic/text/primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "2 · Halaman proyek (ringkasan + Tandai selesai)",
+          "fontFamily": "$3:font/family/base",
+          "fontSize": 56,
+          "fontWeight": "$3:font/weight/bold"
+        },
+        {
+          "type": "text",
+          "id": "v4vOG",
+          "name": "Text",
+          "fill": "$3:color/semantic/text/secondary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Desktop · Phone",
+          "fontFamily": "$3:font/family/base",
+          "fontSize": 28,
+          "fontWeight": "$3:font/weight/regular"
+        }
+      ]
+    },
+    {
+      "id": "HT8V6",
+      "type": "ref",
+      "ref": "3:y9uBJl",
+      "name": "Galeri · dipublikasikan · F-10 · Desktop",
+      "x": 21000,
+      "y": 54022,
+      "height": 2070,
+      "theme": {
+        "3:mode": "light"
+      },
+      "descendants": {
+        "3:fNszT/3:rAUNw": {
+          "content": "Aster Wedding"
+        },
+        "3:fNszT/3:llfv5": {
+          "id": "o74aLq",
+          "type": "ref",
+          "ref": "3:K0UQ06",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "3:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "3:m6S2m": {
+              "content": "Dasbor"
+            },
+            "3:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "3:fNszT/3:nHXqh": {
+          "id": "gjeLi",
+          "type": "ref",
+          "ref": "3:CInVy",
+          "name": "Nav Proyek",
+          "width": "fill_container",
+          "descendants": {
+            "3:MpR9k": {
+              "icon": "folder-kanban"
+            },
+            "3:m6S2m": {
+              "content": "Proyek"
+            },
+            "3:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "3:fNszT/3:wwfj3/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:lz7Bj/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:P4ZpeX/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:V2Udn4/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:f1BvVe/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:I3aJo/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:E2Dl5F/3:E6JiYt": {
+          "enabled": false
+        },
+        "3:fNszT/3:aXcVC/3:DloPs": {
+          "content": "RS"
+        },
+        "3:fNszT/3:EpYE1": {
+          "content": "Rina Saputri"
+        },
+        "3:fNszT/3:pMF7b": {
+          "content": "rina@asterstudio.id"
+        },
+        "3:Sw0yD": {
+          "height": "fill_container"
+        },
+        "3:Sw0yD/3:MST3f/3:EPpbd": {
+          "content": "Wisuda Basic — Rina"
+        },
+        "3:Sw0yD/3:MST3f/3:Hh5tj": {
+          "content": "Galeri"
+        },
+        "3:Sw0yD/3:MST3f/3:ami8m": {
+          "type": "frame",
+          "id": "eq4io",
+          "name": "Heading",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": "$3:space/1-5",
+          "children": [
+            {
+              "type": "frame",
+              "id": "LBt11",
+              "name": "Title row",
+              "gap": "$3:space/3",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "L2kNy4",
+                  "name": "Title",
+                  "fill": "$3:component/page-header/title",
+                  "content": "Galeri",
+                  "fontFamily": "$3:font/family/base",
+                  "fontSize": "$3:font/size/display",
+                  "fontWeight": "$3:font/weight/bold",
+                  "letterSpacing": -1
+                },
+                {
+                  "id": "XcMFY",
+                  "type": "ref",
+                  "ref": "3:GyfYn",
+                  "name": "Status",
+                  "descendants": {
+                    "3:SD1o7": {
+                      "content": "Dipublikasikan"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "lcBLE",
+              "name": "Meta",
+              "fill": "$3:component/page-header/subtitle",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Wisuda Basic — Rina · 2 folder · 8 proof · Tanpa kedaluwarsa",
+              "fontFamily": "$3:font/family/base",
+              "fontSize": "$3:font/size/body",
+              "fontWeight": "$3:font/weight/regular"
+            }
+          ]
+        },
+        "3:Sw0yD/3:MST3f/3:U9JxE": {
+          "type": "frame",
+          "id": "j79ALh",
+          "name": "Actions",
+          "gap": "$3:component/page-header/hero/gap",
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "iWEwL",
+              "type": "ref",
+              "ref": "3:rXttF",
+              "name": "Menu galeri"
+            }
+          ]
+        },
+        "3:Sw0yD/3:MST3f/3:Iu4gK": {
+          "enabled": false
+        },
+        "3:Sw0yD/3:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "tjONz",
+              "name": "Container",
+              "width": 720,
+              "layout": "vertical",
+              "gap": "$3:space/6",
+              "children": [
+                {
+                  "id": "zv9i0",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Akses klien",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Akses klien"
+                    },
+                    "3:nHCW8": {
+                      "content": "Link dan password untuk klien."
+                    },
+                    "3:QcKHK": {
+                      "type": "frame",
+                      "id": "cUKJe",
+                      "name": "Actions",
+                      "gap": "$3:space/2",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "zETqi",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Ganti link",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "link"
+                            },
+                            "3:xnhuK": {
+                              "content": "Ganti link"
+                            }
+                          }
+                        },
+                        {
+                          "id": "zJRYt",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Ganti password",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "key-round"
+                            },
+                            "3:xnhuK": {
+                              "content": "Ganti password"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "j9Og2",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/3",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "P9Bm5",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "yrkQ8",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Y1ew43",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Link",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "qJuFf",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "shutrly.app/g/••••••••3kQ9",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "oZ9yQ",
+                              "type": "ref",
+                              "ref": "3:VA96y",
+                              "name": "Salin",
+                              "descendants": {
+                                "3:wSyzB": {
+                                  "icon": "copy"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "queQq",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "sy1Me",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "p0yQs",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Password",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "FW8O7",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "mawar-4821",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "SnVmT",
+                              "type": "ref",
+                              "ref": "3:VA96y",
+                              "name": "Salin",
+                              "descendants": {
+                                "3:wSyzB": {
+                                  "icon": "copy"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "N29da",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "bNHQH",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "EIO86",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Kedaluwarsa",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "G58YdP",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Tidak ada",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "R5ySGy",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Pilihan klien",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Pilihan klien"
+                    },
+                    "3:nHCW8": {
+                      "content": "Pilihan sudah final."
+                    },
+                    "3:QcKHK": {
+                      "type": "frame",
+                      "id": "uYVDP",
+                      "name": "Actions",
+                      "gap": "$3:space/2",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "X3MXu",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Lihat pilihan",
+                          "descendants": {
+                            "3:xnhuK": {
+                              "content": "Lihat pilihan"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "oBDUZ",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/3",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "n0DSt",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "JWLAG",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "sjoH6",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Foto edit",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "bxoaO",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "8 dari 8 foto · 3 catatan",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "K3zFm",
+                              "type": "ref",
+                              "ref": "3:w7OAR",
+                              "name": "Status",
+                              "descendants": {
+                                "3:SD1o7": {
+                                  "content": "Dikunci"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "L3lrR",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "MeGnl",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "YKCfg",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Foto cetak",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "jHPXr",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "2 dari 2 lembar",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "XKd8v",
+                              "type": "ref",
+                              "ref": "3:w7OAR",
+                              "name": "Status",
+                              "descendants": {
+                                "3:SD1o7": {
+                                  "content": "Dikunci"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "XRFO0",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Hasil akhir",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Hasil akhir"
+                    },
+                    "3:nHCW8": {
+                      "content": "Unduhan untuk klien."
+                    },
+                    "3:QcKHK": {
+                      "type": "frame",
+                      "id": "w6J54V",
+                      "name": "Actions",
+                      "gap": "$3:space/2",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "ae95I",
+                          "type": "ref",
+                          "ref": "3:Q49yf7",
+                          "name": "Publikasikan hasil akhir",
+                          "descendants": {
+                            "3:xnhuK": {
+                              "content": "Publikasikan hasil akhir"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "EsHQY",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/3",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "YKX90",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "T5RmY",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "d4eE0r",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Edited",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "kOsgk",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "24 foto",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "iYVso",
+                              "type": "ref",
+                              "ref": "3:D7LAk7",
+                              "name": "Status",
+                              "descendants": {
+                                "3:SD1o7": {
+                                  "content": "Siap"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "U3J9M",
+                          "name": "Baris",
+                          "width": "fill_container",
+                          "gap": "$3:space/3",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "VeIWD",
+                              "name": "Teks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": "$3:space/0-5",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "LFVF4",
+                                  "name": "Judul",
+                                  "fill": "$3:color/semantic/text/primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Print",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body",
+                                  "fontWeight": "$3:font/weight/medium"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "ayQGo",
+                                  "name": "Meta",
+                                  "fill": "$3:color/semantic/text/secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "6 file",
+                                  "fontFamily": "$3:font/family/base",
+                                  "fontSize": "$3:font/size/body-sm",
+                                  "fontWeight": "$3:font/weight/regular"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "qnVSK",
+                              "type": "ref",
+                              "ref": "3:D7LAk7",
+                              "name": "Status",
+                              "descendants": {
+                                "3:SD1o7": {
+                                  "content": "Siap"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "il0M3",
+                  "type": "ref",
+                  "ref": "3:G8WO8q",
+                  "name": "Sumber foto",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Sumber foto"
+                    },
+                    "3:nHCW8": {
+                      "content": "Folder Google Drive yang dibagikan sebagai “Siapa saja yang memiliki link”."
+                    },
+                    "3:QcKHK": {
+                      "children": [
+                        {
+                          "id": "mexex",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Sinkronkan semua",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "refresh-cw"
+                            },
+                            "3:xnhuK": {
+                              "content": "Sinkronkan semua"
+                            }
+                          }
+                        },
+                        {
+                          "id": "J2ilW",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Tambah folder",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "plus"
+                            },
+                            "3:xnhuK": {
+                              "content": "Tambah folder"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:f60zS": {
+                      "type": "frame",
+                      "id": "Ri0GJ",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        "$3:component/section-card/flush/padding-y",
+                        "$3:component/section-card/flush/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "e9tSO9",
+                          "type": "ref",
+                          "ref": "3:PV6HB",
+                          "name": "Source Rina-Wisuda",
+                          "width": "fill_container",
+                          "descendants": {
+                            "3:wDTkG": {
+                              "icon": "folder"
+                            },
+                            "3:O7pUR": {
+                              "content": "Rina-Wisuda"
+                            },
+                            "3:k9OCFf": {
+                              "content": "Google Drive · Disinkronkan Sab, 4 Okt 2026 · 10.12 · 5 proof · 2 edited · 1 print · 2 diabaikan"
+                            },
+                            "3:zUF3j": {
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "DrgZI",
+                                  "name": "Trailing",
+                                  "gap": "$3:space/2",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "vQMQC",
+                                      "type": "ref",
+                                      "ref": "3:GyfYn",
+                                      "name": "Sync status",
+                                      "descendants": {
+                                        "3:SD1o7": {
+                                          "content": "Berhasil"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "tRPj3",
+                                      "type": "ref",
+                                      "ref": "3:tgN4c",
+                                      "name": "Source actions"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "q03Bj3",
+                          "type": "ref",
+                          "ref": "3:Bf3eg",
+                          "name": "Source Rina-Keluarga",
+                          "width": "fill_container",
+                          "descendants": {
+                            "3:wDTkG": {
+                              "icon": "folder"
+                            },
+                            "3:O7pUR": {
+                              "content": "Rina-Keluarga"
+                            },
+                            "3:k9OCFf": {
+                              "content": "Google Drive · Disinkronkan Sab, 4 Okt 2026 · 10.13 · 3 proof"
+                            },
+                            "3:zUF3j": {
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "n2UWO",
+                                  "name": "Trailing",
+                                  "gap": "$3:space/2",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "D2vh7",
+                                      "type": "ref",
+                                      "ref": "3:GyfYn",
+                                      "name": "Sync status",
+                                      "descendants": {
+                                        "3:SD1o7": {
+                                          "content": "Berhasil"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "Wh13o",
+                                      "type": "ref",
+                                      "ref": "3:tgN4c",
+                                      "name": "Source actions"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "ef8Vg",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Foto",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Foto"
+                    },
+                    "3:nHCW8": {
+                      "content": "Cuplikan 6 foto pertama. Buka semua untuk menjelajah folder, mencari, dan melihat preview."
+                    },
+                    "3:QcKHK": {
+                      "children": [
+                        {
+                          "id": "wvCAN",
+                          "type": "ref",
+                          "ref": "3:JmfmZ",
+                          "name": "Lihat semua foto",
+                          "descendants": {
+                            "3:fMNO1": {
+                              "enabled": true,
+                              "icon": "images"
+                            },
+                            "3:xnhuK": {
+                              "content": "Lihat semua foto"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "mWgI1",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/5",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "OrOi0",
+                          "name": "Counts",
+                          "fill": "$3:color/semantic/text/primary",
+                          "content": "8 proof · 2 edited · 1 print",
+                          "fontFamily": "$3:font/family/base",
+                          "fontSize": "$3:font/size/body",
+                          "fontWeight": "$3:font/weight/semibold"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "qQ9dE",
+                          "name": "Visibility",
+                          "width": "fill_container",
+                          "gap": "$3:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "BI1Hh",
+                              "name": "Icon",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "eye",
+                              "library": "lucide",
+                              "fill": "$3:color/semantic/text/secondary"
+                            },
+                            {
+                              "type": "text",
+                              "id": "ZkIQG",
+                              "name": "Text",
+                              "fill": "$3:color/semantic/text/secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Terlihat oleh klien sekarang.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body-sm",
+                              "fontWeight": "$3:font/weight/regular"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "HH2Iq",
+                          "name": "Preview grid",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/5",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "B7mB2W",
+                              "name": "Row 1",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "jkJVR",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_001.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1763673404916-0b9eb4b30e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 220
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_001.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "aArLi",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_002.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1625321482818-d13675fea97b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 220
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_002.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "AZxcZ",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_003.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1566055390879-c1e70dc0c836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 220
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_003.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "bunyN",
+                              "name": "Row 2",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "j2Eqg",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_011.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1612215840919-d7eba2ab6e26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 220
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_011.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "AGy94",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_014.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1790339605378-e3c452b15a79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 220
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_014.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "CgGEv",
+                                  "type": "ref",
+                                  "ref": "3:AzJU9",
+                                  "name": "Photo IMG_015.jpg",
+                                  "width": "fill_container",
+                                  "descendants": {
+                                    "3:vnyor": {
+                                      "fill": {
+                                        "type": "image",
+                                        "enabled": true,
+                                        "url": "https://images.unsplash.com/photo-1591766814407-adbc542893c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+                                        "mode": "cover"
+                                      },
+                                      "height": 220
+                                    },
+                                    "3:gj2DD": {
+                                      "enabled": false
+                                    },
+                                    "3:dTxmf": {
+                                      "content": "IMG_015.jpg"
+                                    },
+                                    "3:erGMi": {
+                                      "enabled": false
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
     }
   ],
   "themes": {

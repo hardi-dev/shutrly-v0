@@ -47,7 +47,7 @@ A client who has the project link and the current gallery password can open the 
 7. One group is one task: to work on another group the client goes back to Beranda and opens that card (A-27).
 
 ### 3. Review and lock (Owner)
-1. On the project page, the *Pilihan klien* card shows each group with its status (*Terbuka*, *Dikirim*, *Dikunci*), *used / effective limit* and the number of notes; it opens the *Pilihan klien* page, which lists the groups with *Lihat pilihan* and *Kunci pilihan* (A-34).
+1. On the gallery page, the *Pilihan klien* card shows each group with its status (*Terbuka*, *Dikirim*, *Dikunci*), *used / effective limit* and the number of notes; it opens the *Pilihan klien* page, which lists the groups with *Lihat pilihan* and *Kunci pilihan* (A-34).
 2. The Owner opens a group and sees the picked photos with file name, folder path, quantity and the client's note, and can copy the list of file names with their notes (A-6).
 3. The Owner locks a `SUBMITTED` group, or closes an `OPEN` group without submission; both make it `LOCKED` and record actor and time (BR-SEL-005, BR-AUD-001).
 
@@ -59,18 +59,18 @@ A client who has the project link and the current gallery password can open the 
 5. The Owner may delete a `DRAFT` add-on (*Hapus draf*, A-35), or cancel an `APPROVED` one when the reduced limit stays ≥ usage (BR-ADD-003, BR-ADD-005).
 
 ### 5. Final delivery
-1. The Owner publishes final delivery with *Publikasikan hasil akhir* on the *Hasil akhir* card of the project page, after a confirmation, when BR-DEL-003 and A-17 hold. Shutrly records `finalDeliveryPublishedAt` and moves the project to `DELIVERED` in the same transaction (BR-PRJ-004).
+1. The Owner publishes final delivery with *Publikasikan hasil akhir* on the *Hasil akhir* card of the gallery page, after a confirmation, when BR-DEL-003 and A-17 hold. Shutrly records `finalDeliveryPublishedAt` and moves the project to `DELIVERED` in the same transaction (BR-PRJ-004).
 2. The same link and password now also show the finished files: the *Hasil akhir* card moves to the top of Beranda and opens the files by kind (*Edited*, *Print*), excluding missing ones (BR-DEL-001, BR-DEL-002, A-26).
 3. The client downloads one file (from its tile or the preview), several chosen files, or all finished files of the open kind (BR-DEL-004, A-33). Files are the originals. A bulk download never sends the folder link or folder ID to the browser (BR-ACC-005).
 4. Files synced later into `edited` / `print` folders appear for the client after the next sync (A-18).
 
 ### 6. Mark the project complete (Owner)
-1. On a `DELIVERED` project the Owner chooses *Tandai selesai* on the *Hasil akhir* card and confirms.
+1. On a `DELIVERED` project the Owner chooses *Tandai selesai*, the main action in the project page header (the phone action bar), and confirms (A-34).
 2. The project becomes `COMPLETED`, with actor and time recorded (BR-PRJ-005, BR-AUD-001). Invoice state plays no part (BR-PRJ-006); the outstanding-balance warning arrives with F-14 (A-19).
 3. The client keeps access while the gallery stays published and not expired (BR-ACC-001).
 
 ### 7. Rotate the link (Owner)
-1. The Owner chooses *Ganti link* on the *Akses klien* card of the project page (beside F-09's *Ganti password*) and confirms a warning that every shared link stops working.
+1. The Owner chooses *Ganti link* on the *Akses klien* card of the gallery page (beside F-09's *Ganti password*) and confirms a warning that every shared link stops working.
 2. Shutrly replaces the project token, records actor and time (BR-PRJ-003, BR-AUD-001), and shows the new link.
 3. Old links show the neutral unavailable page and existing client sessions end (A-1). The password is unchanged.
 
@@ -159,7 +159,7 @@ A client who has the project link and the current gallery password can open the 
 - **A-23 Groups for galleries published before this feature:** a published gallery with no groups gets them when F-10 is deployed (a backfill in the migration), so it behaves like one published after.
 - **A-32 Pick notes:** a group whose item has `allowsPickNotes` lets the client add one optional note per pick, up to 500 characters, written while picking, because the client already knows what they want changed when they choose the photo (Owner 2026-10-05). Picking stays one tap; each picked tile in such a group shows a *Catatan* button (＋ when empty, a note icon when filled) that opens a note sheet (a dialog on desktop) with *Batal* and *Simpan catatan* (Owner chose option B, 2026-10-05). The photo viewer also has *Catatan* next to *Pilih untuk…* when the photo is picked in a group with notes, opening the same sheet to write or change the note (Owner 2026-10-05). Tinjau shows each note with *Ubah catatan* (or *Tambah catatan* when empty), opening the same sheet; the read-only picks view after submit shows notes without actions. A tile with a note shows a note marker. Notes are saved at once (A-7), editable while the group is `OPEN` and read-only after submit; removing a pick deletes its note. A photo picked in two groups has a separate note in each (Owner 2026-10-05).
 - **A-33 Hasil akhir downloads:** the page shows one kind at a time (*Edited · n* / *Print · n* switch). Each tile has a download button and the preview has *Unduh foto*. The Page Header holds *Unduh ▾* (a bottom sheet on phones) with *Unduh semua (n)* and *Pilih beberapa* (Owner chose option A, 2026-10-06). *Unduh semua* covers the open kind only (Owner 2026-10-06: follow the design) and asks first (*Unduh semua n foto?*, the browser downloads the files one by one and may ask to allow several downloads); a progress card shows *n dari m foto selesai* with *Batalkan*, and a failed file is marked *Gagal* with *Coba lagi* on the card. *Pilih beberapa* turns the tiles into checkboxes and the Page Header into *n foto dipilih · Batal · Unduh n foto*.
-- **A-34 Owner surfaces:** F-10 adds four cards to the Owner's project page, each starting its own flow: *Pilihan klien* (opens the *Pilihan klien* page and each group's detail), *Add-on* (list, *Tambah add-on*, a menu per add-on), *Hasil akhir* (*Publikasikan hasil akhir*, then *Tandai selesai*) and *Akses klien* (link, password, expiry, *Ganti link*) (Owner 2026-10-06).
+- **A-34 Owner surfaces (revised Owner 2026-10-07; first version 2026-10-06):** client access, the client's picks and final delivery belong to the gallery, so they live on the **gallery page**, in this order: *Akses klien* (link, password, expiry, *Ganti link*, *Ganti password*; it replaces F-09's *Akses klien* card), *Pilihan klien* (opens the *Pilihan klien* page and each group's detail, now under the gallery: breadcrumb *Galeri › Pilihan klien*), *Hasil akhir* (*Publikasikan hasil akhir*), then F-09's *Sumber foto* and *Foto*. Every card on the gallery page uses the 720 narrow column, and the *Foto* preview shows the first 6 photos in 3 columns. The **project page** keeps *Add-on* (money belongs to the booking), and its *Galeri* card summarises the gallery with two rows, *Pilihan klien* and *Hasil akhir*, each with a status chip, beside *Kelola galeri*. *Tandai selesai* is the project page's main header action on a `DELIVERED` project (the action bar on phones), where the other stage steps sit.
 - **A-35 Deleting a draft add-on:** *Hapus draf* removes a `DRAFT` add-on permanently; a draft never changed a limit or an invoice, so nothing needs an audit record. An `APPROVED` add-on is never deleted, only cancelled (BR-ADD-003, BR-ADD-005) (Owner 2026-10-06, delegated: "jawab sesuai rekomendasi kamu").
 - **A-19 Completion before invoices:** *Tandai selesai* shows no balance warning until F-14 exists; BR-PRJ-005 never blocks on balances anyway.
 

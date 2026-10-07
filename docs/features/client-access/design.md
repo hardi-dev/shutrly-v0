@@ -12,7 +12,7 @@
   6. **Pick notes (A-32, FC-009):** optional, up to 500 characters, only for items with `allowsPickNotes`. Written while picking via a *Catatan* button on each picked tile (option B), from the viewer next to *Pilih untuk…*, and on Tinjau (*Ubah catatan* / *Tambah catatan*). Notes show in an **Alert/Info** inside Pick Row; read-only after submit. The *Catatan* button on the photo uses `surface.on-media` (80 % surface).
   7. **Page header:** desktop client pages show a **breadcrumb** (*Beranda › … › page*; utilities off, aligned with the title) instead of back buttons. Phones keep a *Beranda* / *Kembali* button at the top of the content, because the library Mobile Header has no breadcrumb. Beranda greets the client by first name (*Halo, Rina*); there are no tabs on any client page.
   8. **Hasil akhir downloads (option A, 2026-10-06):** an **Unduh ▾** button in the Page Header opens a menu with *Unduh semua (n)* and *Pilih beberapa* (a bottom sheet on phones). While picking several, the header shows *n foto dipilih · Batal · Unduh n foto*. The card header keeps only the *Edited / Print* switch.
-  9. **Owner pages** follow the dashboard patterns: each F-10 card on the project page starts its own flow (Pilihan klien, Add-on, Hasil akhir & selesai, Akses klien & ganti link).
+  9. **Owner pages** follow the dashboard patterns: each F-10 card starts its own flow. Revised 2026-10-07 (Owner 7): *Akses klien*, *Pilihan klien* and *Hasil akhir* sit on the **gallery page**; the project page keeps *Add-on*, summarises the gallery in its *Galeri* card, and shows *Tandai selesai* as its header action.
 - **Status:** **APPROVED 2026-10-06** (Owner: "approve").
 - **Exports (2026-10-06):** 125 HTML exports (html-tailwind, through Pencil MCP) in [`exports/`](exports/), one subfolder per flow group (`klien-1-gerbang/` … `owner-6-katalog/`), named `<screen>-<state>-<device>-<frameId>.html`. Only states with their own layout are exported (Owner: "export yang perlu saja"). Not exported, because they reuse an exported layout with different copy or a library state: *memeriksa* (button loading), Beranda *dibuka lagi*, Semua foto *cari kosong* / *tanpa foto* (Empty State), Pratinjau *catatan*, Pilih *sudah dikirim*, Tinjau *mengirim*, Beranda *pilihan dikirim*, Hasil akhir *tanpa print*, Owner *dikunci* / *tanpa grup* / *galeri belum terbit* / *kosong* / *setujui (grup terbuka)* / *memproses*, and every toast.
 - **Export index:** `python3 scripts/sdv/index-exports.py client-access` wrote [`exports/INDEX.md`](exports/INDEX.md), grouped by subfolder (the script now reads subfolders; flat folders such as `gallery/exports` index as before). `--check` passes.
@@ -100,7 +100,7 @@
 ### Owner 1 · Pilihan klien
 | Step | Desktop | Phone | AC |
 |---|---|---|---|
-| *Pilihan klien* card on the project page | `hu4V8` | `pVhF3` | AC-SEL-010 |
+| *Pilihan klien* card (gallery page since Owner 7) | `hu4V8` | `pVhF3` | AC-SEL-010 |
 | Waiting for the client | `V8hUXM` | — | AC-SEL-010 |
 | Some groups submitted | `X6hz46` | `t3YWpu` | AC-SEL-010 |
 | All locked | `POazf` | — | AC-SEL-011 |
@@ -139,7 +139,7 @@
 ### Owner 4 · Hasil akhir & selesai
 | Step | Desktop | Phone | AC |
 |---|---|---|---|
-| *Hasil akhir* card on the project page | `bLPAH` | `d3iypK` | AC-DEL-001 |
+| *Hasil akhir* card (gallery page since Owner 7; state C/D no longer offers *Tandai selesai*) | `bLPAH` | `d3iypK` | AC-DEL-001 |
 | Menu | `k5mu5` | `VdXx4` | AC-DEL-001, 007 |
 | Confirm publishing | `F9X1a` | `f9eIWy` | AC-DEL-001 |
 | Publishing refused | `FjMco` | `amshA` | AC-DEL-002 |
@@ -150,7 +150,7 @@
 ### Owner 5 · Akses klien & ganti link
 | Step | Desktop | Phone | AC |
 |---|---|---|---|
-| *Akses klien* card on the project page | `zMo79` | `DIPEh` | AC-ACC-009 |
+| *Akses klien* card (gallery page since Owner 7, replacing F-09's card) | `zMo79` | `DIPEh` | AC-ACC-009 |
 | Confirm *Ganti link* | `V0gYsZ` | `h2Ifa` | AC-ACC-009 |
 | Processing | `wVCqi` | `uFgsX` | AC-ACC-009 |
 | Toast *link diganti* | `UPDpQ` | `olg9k` | AC-ACC-009 |
@@ -163,6 +163,18 @@
 | Count photos (notes on) | `AT5Aw` | `trGFW` | AC-CAT-001, AC-SEL-021 |
 | Quantity per photo (notes off) | `GguU9` | `yvL3e` | AC-CAT-001 |
 | Locked (item in use) | `Sa0dG` | `QsOoK` | AC-CAT-001 |
+
+### Owner 7 · Galeri (revision, Owner 2026-10-07)
+Client access, the picks and final delivery are part of the gallery, so their cards move from the project page to the gallery page. The card boards of Owner 1, 4 and 5 still define every card state; only the placement changes.
+
+| Step | Desktop | Phone | AC |
+|---|---|---|---|
+| Gallery page, published: *Akses klien* → *Pilihan klien* → *Hasil akhir* → *Sumber foto* → *Foto*, all 720 wide, preview 6 photos in 3 columns | `HT8V6` | `iGwTx` | AC-ACC-009, AC-SEL-010, AC-DEL-001 |
+| Project page, delivered: *Galeri* card with *Pilihan klien* and *Hasil akhir* summary rows, *Add-on* card, *Tandai selesai* in the header (action bar on phones) | `r71J5` | `QUSVb` | AC-DEL-007 |
+
+- **Width (Owner 2026-10-07, option A of two):** every card on the gallery page uses the 720 narrow column (`size.content-narrow`, token-usage › Centered narrow content), the *Foto* card included, so its preview grid has 3 columns and shows 6 photos. Option B (cards 720, *Foto* 1096) was drawn and dropped.
+- ***Pilihan klien* pages:** the breadcrumb parent is now *Galeri* (`V8hUXM`, `X6hz46` and the other three states), because the page belongs to the gallery.
+- ***Tandai selesai*:** a project status step, so it is the header's main action on a `DELIVERED` project, like *Selesai pemotretan*; the *Hasil akhir* card on the gallery page only publishes.
 
 ### Defined but not drawn separately
 - **Owner pages on phones:** only *Pilihan klien · dikirim* and *Pilihan · dikirim* are drawn. The other Owner page states use the same Mobile App Shell + Section Card/Compact pattern as F-07/F-09.

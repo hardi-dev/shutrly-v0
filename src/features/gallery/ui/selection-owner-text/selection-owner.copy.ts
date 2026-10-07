@@ -4,7 +4,6 @@ export const SELECTION_OWNER_COPY = {
   pageMeta: "Lihat pilihan foto klien dan kunci setelah selesai.",
   cardNotPublished: "Klien memilih foto lewat galeri.",
   cardNotPublishedNote: "Klien baru bisa memilih setelah galeri dipublikasikan.",
-  openGallery: "Buka galeri",
   cardNoItems: "Paket proyek ini tidak punya item pilihan foto.",
   cardOpen: "Pilihan per bagian paket.",
   cardReview: (count: number) =>

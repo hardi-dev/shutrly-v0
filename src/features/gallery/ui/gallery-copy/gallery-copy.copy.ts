@@ -106,8 +106,7 @@ export const GALLERY_COPY = {
   photosDescriptionMobile: "Urut nama file.",
   photosEmptyTitle: "Belum ada foto",
   photosDescription:
-    "Cuplikan 8 foto pertama. Buka semua untuk menjelajah folder, mencari, dan melihat preview.",
-  photosDescriptionPreviewMobile: "Cuplikan foto pertama.", // not in Pencil
+    "Cuplikan 6 foto pertama. Buka semua untuk menjelajah folder, mencari, dan melihat preview.",
   viewAll: "Lihat semua foto",
   viewAllMobile: "Semua",
   visibility: {

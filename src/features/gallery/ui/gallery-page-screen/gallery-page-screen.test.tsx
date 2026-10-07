@@ -34,12 +34,31 @@ describe("GalleryPageScreen", () => {
     stubViewport(false);
   });
 
-  it("AC-GAL-027 AC-GAL-014 shows the password, an empty Sumber foto and no photos yet", () => {
+  it("AC-GAL-014 shows an empty Sumber foto and no photos yet", () => {
     render(<GalleryPageScreen workspaceId="ws-1" page={PAGE} actions={ACTIONS} />);
-    expect(screen.getByText("mawar-4821")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Salin password" })).toBeInTheDocument();
     expect(screen.getByText("Belum ada folder")).toBeInTheDocument();
     expect(screen.getByText("Belum ada foto")).toBeInTheDocument();
+  });
+
+  it("A-34 puts Akses klien, Pilihan klien and Hasil akhir before Sumber foto in the 720 column", () => {
+    render(
+      <GalleryPageScreen
+        workspaceId="ws-1"
+        page={PAGE}
+        actions={ACTIONS}
+        accessCard={<section>Akses klien</section>}
+        selectionCard={<section>Pilihan klien</section>}
+        deliveryCard={<section>Hasil akhir</section>}
+      />,
+    );
+    const main = screen.getByRole("main");
+    expect(main.className).toContain("max-w-(--size-content-narrow)");
+    const order = ["Akses klien", "Pilihan klien", "Hasil akhir", "Sumber foto"].map((text) =>
+      main.textContent.indexOf(text),
+    );
+    expect(order.every((at) => at >= 0)).toBe(true);
+    expect([...order].sort((a, b) => a - b)).toEqual(order);
+    expect(screen.queryByRole("button", { name: "Salin password" })).not.toBeInTheDocument();
   });
 
   it("design shows the status and meta in the phone header block", () => {

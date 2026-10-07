@@ -333,8 +333,6 @@ describe("gallery sync against Postgres", () => {
       "R_001.jpg",
       "E_001.jpg",
       "E_002.jpg",
-      "X_001.jpg",
-      "P_001.jpg",
     ]);
     expect(JSON.stringify(page)).not.toMatch(/googleusercontent|googleapis/);
     // The photo's provider comes from its workspace source, so a new provider needs no reader change.

@@ -35,12 +35,10 @@ function renderCard(view: SelectionCardView) {
 }
 
 describe("SelectionCard (card export states A–E)", () => {
-  it("A: tells the Owner to publish the gallery first and links to it", () => {
+  it("A: tells the Owner to publish the gallery first, with no link (the card is on the gallery page, A-34)", () => {
     renderCard(card({ state: "NOT_PUBLISHED", galleryExists: false }));
     expect(screen.getByText("Klien baru bisa memilih setelah galeri dipublikasikan.")).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Buka galeri" }).getAttribute("href")).toBe(
-      "/w/w1/projects/p1/gallery",
-    );
+    expect(screen.queryByRole("link")).toBeNull();
   });
 
   it("B: lists each group with usage and status and links to Lihat pilihan", () => {

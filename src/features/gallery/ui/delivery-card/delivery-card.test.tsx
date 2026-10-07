@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
@@ -70,21 +70,15 @@ describe("DeliveryCard (hasilakhirowner-kartu A–E)", () => {
     expect(screen.getByText("Galeri harus berstatus dipublikasikan.")).toBeTruthy();
   });
 
-  it("AC-DEL-007 C: a delivered project offers Tandai selesai with its confirm", async () => {
-    const actions = renderCard({
+  it("C: a published delivery shows its date and no button (Tandai selesai moved to the project header, A-34)", () => {
+    renderCard({
       ...READY,
       state: "PUBLISHED",
       publishedAt: "2026-10-05T10:10:00Z",
       canComplete: true,
     });
     expect(screen.getByText("Dipublikasikan 5 Okt 2026, 17.10")).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "Tandai selesai" }));
-    expect(await screen.findByText("Proyek Wisuda Rina akan berstatus Selesai.")).toBeTruthy();
-    const dialog = screen.getByRole("dialog");
-    fireEvent.click(within(dialog).getByRole("button", { name: "Tandai selesai" }));
-    await vi.waitFor(() => {
-      expect(actions.completeAction).toHaveBeenCalledWith("w1", "p1");
-    });
+    expect(screen.queryByRole("button")).toBeNull();
   });
 
   it("D: a completed project shows the date and no button", () => {

@@ -11,14 +11,7 @@ import {
 import type { SelectionCardActionProps, SelectionCardProps } from "./selection-card.types";
 
 function CardAction({ card, base }: Readonly<SelectionCardActionProps>) {
-  if (card.state === "NO_ITEMS") return null;
-  if (card.state === "NOT_PUBLISHED") {
-    return (
-      <Button variant="secondary" href={`${base}/gallery`}>
-        {COPY.openGallery}
-      </Button>
-    );
-  }
+  if (card.state === "NO_ITEMS" || card.state === "NOT_PUBLISHED") return null;
   const isReview = card.state === "REVIEW";
   return (
     <Button variant={isReview ? "primary" : "secondary"} href={`${base}/gallery/pilihan`}>
@@ -54,7 +47,7 @@ function CardBody({ card }: Readonly<Pick<SelectionCardProps, "card">>) {
   );
 }
 
-/** The project page's *Pilihan klien* card: its state (not published, open, needs review, final, no selection items) with one row per group, and the button into the groups page (card export states A–E, A-34, AC-SEL-010). @param props - workspace, project and the card view @returns the card */
+/** The gallery page's *Pilihan klien* card: its state (not published, open, needs review, final, no selection items) with one row per group, and the button into the groups page (card export states A–E, A-34, AC-SEL-010). @param props - workspace, project and the card view @returns the card */
 export function SelectionCard({ workspaceId, projectId, card }: Readonly<SelectionCardProps>) {
   const base = `/w/${workspaceId}/projects/${projectId}`;
   const submitted = card.groups.filter((group) => group.status === "SUBMITTED").length;

@@ -14,7 +14,7 @@ import type { DeliveryCardButtonProps, DeliveryCardProps } from "./delivery-card
 
 const MUTED = "text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)";
 
-/** The project page's *Hasil akhir* card: no file yet, ready, published, completed or gallery not active, with *Publikasikan hasil akhir* or *Tandai selesai* (hasilakhirowner-kartu A–E, spec §5–6, AC-DEL-001, -007). @param props - workspace, project, the card view and the server actions @returns the card */
+/** The gallery page's *Hasil akhir* card: no file yet, ready, published, completed or gallery not active, with *Publikasikan hasil akhir*; *Tandai selesai* lives in the project header (hasilakhirowner-kartu A–E, Owner 7, A-34, AC-DEL-001). @param props - workspace, project, the card view and the server actions @returns the card */
 export function DeliveryCard(props: Readonly<DeliveryCardProps>) {
   const isMobile = useMobileViewport();
   const flows = useDeliveryActions(props);
@@ -57,15 +57,7 @@ export function DeliveryCard(props: Readonly<DeliveryCardProps>) {
 
 function CardButton({ card, flows, isMobile }: Readonly<DeliveryCardButtonProps>) {
   const size = isMobile ? "lg" : "md";
-  if (card.state === "PUBLISHED") {
-    if (!card.canComplete) return null;
-    return (
-      <Button size={size} className="max-md:w-full" onPress={flows.startComplete}>
-        {COPY.complete}
-      </Button>
-    );
-  }
-  if (card.state === "COMPLETED") return null;
+  if (card.state === "PUBLISHED" || card.state === "COMPLETED") return null;
   return (
     <Button
       variant={card.state === "READY" ? "primary" : "secondary"}

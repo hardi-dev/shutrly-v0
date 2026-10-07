@@ -37,7 +37,7 @@ const PAGE = {
   sources: [],
   linkableSources: [],
   directImages: false,
-  previewPhotos: Array.from({ length: 8 }, (_, index) => photo(index + 1, index === 1)),
+  previewPhotos: Array.from({ length: 6 }, (_, index) => photo(index + 1, index === 1)),
 };
 
 describe("GalleryPhotosSection", () => {
@@ -45,7 +45,7 @@ describe("GalleryPhotosSection", () => {
     stubViewport(false);
   });
 
-  it("AC-GAL-014 shows the counts, the visibility line and 8 tiles with Hilang", () => {
+  it("AC-GAL-014 shows the counts, the visibility line and 6 tiles with Hilang", () => {
     const { container } = render(
       <GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />,
     );
@@ -53,7 +53,7 @@ describe("GalleryPhotosSection", () => {
     expect(
       screen.getByText(/Terlihat oleh klien setelah galeri dipublikasikan\. Foto bertanda Hilang/),
     ).toBeInTheDocument();
-    expect(container.querySelectorAll("img")).toHaveLength(8);
+    expect(container.querySelectorAll("img")).toHaveLength(6);
     expect(screen.getByText("Hilang")).toBeInTheDocument();
   });
 
@@ -86,19 +86,24 @@ describe("GalleryPhotosSection", () => {
     expect(container.innerHTML).not.toMatch(/googleusercontent|drive\.google/);
   });
 
-  it("design shows 6 tiles on phones", () => {
-    stubViewport(true);
-    const { container } = render(
+  it("Owner 7 previews the photos in 3 columns at every width, described on desktop only", () => {
+    const { container, unmount } = render(
       <GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />,
     );
-    expect(container.querySelectorAll("img")).toHaveLength(6);
+    expect(container.querySelector("ul")?.className).toContain("grid-cols-3");
+    expect(container.querySelector("ul")?.className).not.toContain("md:grid-cols-4");
+    expect(screen.getByText(/^Cuplikan 6 foto pertama\./)).toBeInTheDocument();
+    unmount();
+    stubViewport(true);
+    render(<GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />);
+    expect(screen.queryByText(/^Cuplikan/)).not.toBeInTheDocument();
   });
 
   it("AC-GAL-031 previews a card photo with its meta and the Drive link, and a missing one without it", async () => {
     render(<GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />);
     await userEvent.click(screen.getByRole("button", { name: "IMG_001.jpg" }));
     const viewer = await screen.findByRole("dialog", { name: "Preview IMG_001.jpg" });
-    expect(within(viewer).getByText("Rina-Wisuda · Proof · 1 dari 8")).toBeInTheDocument();
+    expect(within(viewer).getByText("Rina-Wisuda · Proof · 1 dari 6")).toBeInTheDocument();
     expect(within(viewer).getByRole("img", { name: "IMG_001.jpg" })).toHaveAttribute(
       "src",
       "/api/w/ws-1/gallery-photos/p-1/preview",
@@ -108,7 +113,7 @@ describe("GalleryPhotosSection", () => {
     const missing = await screen.findByRole("dialog", { name: "Preview IMG_002.jpg" });
     expect(within(missing).getByText("File tidak ditemukan di Google Drive")).toBeInTheDocument();
     expect(
-      within(missing).getByText("Rina-Wisuda · Proof · Hilang · 2 dari 8"),
+      within(missing).getByText("Rina-Wisuda · Proof · Hilang · 2 dari 6"),
     ).toBeInTheDocument();
     expect(
       within(missing).queryByRole("link", { name: "Buka di Google Drive" }),

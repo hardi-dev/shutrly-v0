@@ -31,13 +31,33 @@ function ItemRow({ item, mapping }: Readonly<ItemRowProps>) {
   );
 }
 
+const SKELETON_ROWS = ["first", "second"];
+
+/** Two item rows while the subfolders load: a label bar over a select-height bar. @returns the hidden placeholder */
+function MappingSkeleton() {
+  return (
+    <div
+      aria-hidden="true"
+      data-testid="folder-mapping-skeleton"
+      className="flex flex-col gap-(--space-4)"
+    >
+      {SKELETON_ROWS.map((row) => (
+        <div key={row} className="flex animate-pulse flex-col gap-(--space-2)">
+          <span className="h-3 w-24 rounded-(--radius-sm) bg-(--component-table-skeleton)" />
+          <span className="h-(--component-input-height) rounded-(--component-input-radius) bg-(--component-table-skeleton)" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Notice({ mapping, packageHref }: Readonly<FolderMappingFieldsProps>) {
   const router = useRouter();
   const openPackage = () => {
     router.push(packageHref);
   };
   if (mapping.hasFailed) return <Alert tone="danger" title={GALLERY_COPY.mappingLoadFailed} />;
-  if (mapping.view === null) return null;
+  if (mapping.view === null) return <MappingSkeleton />;
   if (mapping.view.items.length === 0) {
     return (
       <Alert

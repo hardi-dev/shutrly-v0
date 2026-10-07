@@ -266,6 +266,16 @@ describe("GallerySourcesSection", () => {
     expect(renameSourceAction).toHaveBeenCalledWith("ws-1", "s-1", { label: "" });
   });
 
+  it("F-20 Edit folder shows a skeleton while the subfolders load", async () => {
+    const user = userEvent.setup();
+    const folderMappingAction = vi.fn(() => new Promise<never>(() => undefined));
+    const actions = fakePageActions({ folderMappingAction });
+    render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
+    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("menuitem", { name: /Edit folder/ }));
+    expect(await screen.findByTestId("folder-mapping-skeleton")).toBeInTheDocument();
+  });
+
   it("F-20 Edit folder points to Isi paket when the package has no selection item", async () => {
     const user = userEvent.setup();
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={fakePageActions()} />);

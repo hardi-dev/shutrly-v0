@@ -65,9 +65,20 @@ export async function getRequestContext(): Promise<RequestContext> {
 export async function getScopedRequestContext<T>(
   schema: z.ZodType<T>,
 ): Promise<ScopedRequestContext<T>> {
-  const { env } = await getBindings();
+  const env = await getScopedBindings(schema);
   const requestHeaders = await headers();
-  return { env: schema.parse(env), requestId: requestIdOf(requestHeaders) };
+  return { env, requestId: requestIdOf(requestHeaders) };
+}
+
+/**
+ * Only the given bindings, without request headers, for code that runs before a route does
+ * (the proxy's production gate, ADR-021).
+ * @param schema - the bindings to read
+ * @returns the parsed bindings; throws when they don't match
+ */
+export async function getScopedBindings<T>(schema: z.ZodType<T>): Promise<T> {
+  const { env } = await getBindings();
+  return schema.parse(env);
 }
 
 function requestIdOf(requestHeaders: Headers): string {

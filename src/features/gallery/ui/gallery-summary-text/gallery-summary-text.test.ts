@@ -102,7 +102,7 @@ describe("deliverySummary (Owner 7 Galeri card)", () => {
     });
     expect(deliverySummary(ready, true)?.meta).toBe("Siap dipublikasikan");
     expect(deliverySummary({ ...DELIVERY, state: "NO_FILES" }, false)).toMatchObject({
-      meta: "Belum ada file edited atau print yang tersinkron.",
+      meta: "Belum ada hasil akhir yang tersinkron.",
       chip: null,
     });
     expect(deliverySummary({ ...DELIVERY, state: "GALLERY_INACTIVE" }, false)).toMatchObject({

@@ -101,7 +101,7 @@ export const GALLERY_COPY = {
   sourcesDescription: "Folder Google Drive yang dibagikan sebagai “Siapa saja yang memiliki link”.",
   sourcesEmptyTitle: "Belum ada folder",
   sourcesEmptyBody:
-    "Tautkan folder Google Drive berisi foto proyek ini. Foto di folder utama menjadi proof; subfolder edited dan print untuk hasil akhir.",
+    "Tautkan folder Google Drive berisi foto proyek ini. Foto di folder utama menjadi proof; subfolder hasil akhir dipetakan ke item paket lewat Edit folder.",
   sourcesEmptyBodyMobile: "Tautkan folder Google Drive berisi foto proyek ini.",
   addFolder: "Tambah folder",
   addFolderMobile: "Tambah",
@@ -177,7 +177,7 @@ export const GALLERY_COPY = {
     "Google Drive sedang tidak bisa dihubungi. Foto yang ada tidak berubah. Coba lagi sebentar lagi.",
   linkDialogTitle: "Tambah folder",
   linkDialogDescription:
-    "Foto di folder utama menjadi proof. Subfolder edited dan print menjadi hasil akhir.",
+    "Foto di folder utama menjadi proof. Subfolder yang dipetakan ke item paket menjadi hasil akhir.",
   linkSourceLabel: "Sumber",
   linkSourceHelper: "Hanya sumber aktif.",
   linkLabel: "Link folder Google Drive",

@@ -5,7 +5,7 @@ export const DELIVERY_COPY = {
   publish: "Publikasikan hasil akhir",
   complete: "Tandai selesai",
   noFilesNote:
-    "Belum ada file edited atau print yang tersinkron. Buat folder edited atau print di Drive, lalu sinkronkan galeri.",
+    "Belum ada hasil akhir yang tersinkron. Buat subfolder hasil akhir di Drive, petakan ke item paket lewat Edit folder, lalu sinkronkan galeri.",
   inactiveNote: "Galeri harus dipublikasikan lebih dulu supaya klien bisa membuka hasil akhir.",
   edited: "Edited",
   print: "Print",
@@ -34,7 +34,7 @@ export const DELIVERY_COPY = {
   refusedTitle: "Hasil akhir belum bisa dipublikasikan",
   refusedDescription: "Periksa hal berikut lebih dulu.",
   reason: {
-    NO_FINISHED_FILE: "Belum ada file edited atau print yang tersinkron.",
+    NO_FINISHED_FILE: "Belum ada hasil akhir yang tersinkron.",
     GALLERY_NOT_PUBLISHED: "Galeri harus berstatus dipublikasikan.",
     // not in Pencil: the project is no longer BOOKED, SHOOTING or POST_PROCESSING
     PROJECT_STATUS: "Status proyek ini tidak bisa diubah menjadi Terkirim.",

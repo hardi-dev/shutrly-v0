@@ -62,9 +62,7 @@ describe("DeliveryCard (hasilakhirowner-kartu A–E)", () => {
         ),
       },
     );
-    expect(
-      screen.getByText(/Belum ada file edited atau print yang tersinkron\. Buat/),
-    ).toBeTruthy();
+    expect(screen.getByText(/Belum ada hasil akhir yang tersinkron\. Buat/)).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Publikasikan hasil akhir" }));
     expect(await screen.findByText("Hasil akhir belum bisa dipublikasikan")).toBeTruthy();
     expect(screen.getByText("Galeri harus berstatus dipublikasikan.")).toBeTruthy();

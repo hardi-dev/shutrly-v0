@@ -57,9 +57,9 @@ Project without a gallery › *Buat galeri*.
 
 | # | Langkah | Hasil yang diharapkan | Status | Catatan |
 |---|---|---|---|---|
-| 5.1 | Isi link folder Drive › Buat | Halaman galeri terbuka dan langsung sinkron | ⬜ | |
-| 5.2 | Buat tanpa link folder | Galeri tetap terbuat | ⬜ | |
-| 5.3 | Link folder yang dipakai proyek lain | Konfirmasi *Tetap buat galeri* | ⬜ | |
+| 5.1 | Isi link folder Drive › Buat | Halaman galeri terbuka dan langsung sinkron | ✅ | Dites Claude di browser (2026-10-08); toast diperbaiki 81f33d1 |
+| 5.2 | Buat tanpa link folder | Galeri tetap terbuat | ✅ | Dites Claude di browser (2026-10-08) |
+| 5.3 | Link folder yang dipakai proyek lain | Konfirmasi *Tetap buat galeri* | ✅ | Dites Claude di browser (2026-10-08) |
 
 ## 6. Tambah anggota tim dari sesi (#1, #2)
 

@@ -128,15 +128,36 @@ Covers: BR-GAL-006, BR-GAL-007 (A-5)
 - *Rina-Wisuda*'s photos are updated even though the other source failed;
 - *Proof* lists `IMG_001`, `IMG_003`, `IMG_010` … in file-name order, each labelled with its source.
 
-## AC-GAL-013 — Remove a source
-Covers: BR-GAL-009, BR-GAL-004 (A-6)
+## AC-GAL-013 — Delete a source
+Covers: BR-GAL-009, BR-GAL-004 (A-6) · *Amended 2026-10-07 (Owner manual test): delete instead of hide.*
 
-**Given** a `PUBLISHED` gallery with sources *Rina-Wisuda* and *Extra*
-**When** the Owner removes *Extra* and confirms
-**Then** *Extra* and its photos are hidden from the client and shown to the Owner as removed, and they are not deleted.
+**Given** a `PUBLISHED` gallery with sources *Rina-Wisuda* and *Extra*, and no client pick of an *Extra* photo
+**When** the Owner chooses *Hapus* on *Extra* and confirms
+**Then** *Extra* and its photos are deleted: they no longer show to the Owner or the client.
 
-**When** the Owner then tries to remove *Rina-Wisuda*
+**When** the Owner then tries to delete *Rina-Wisuda*
 **Then** it is refused, because a published gallery needs at least one active source.
+
+**Given** a client has picked a photo from *Extra*
+**When** the Owner tries to delete *Extra*
+**Then** it is refused with *Ada foto dari folder ini yang sudah dipilih klien.*, and nothing is deleted.
+
+**Given** another project's gallery links the same Drive folder
+**When** the Owner deletes it from this gallery
+**Then** the other gallery's source and photos are unchanged.
+
+## AC-GAL-037 — Rename a source
+Covers: BR-GAL-009 · *Added 2026-10-07 (Owner manual test).*
+
+**Given** the source *_leansonme | Softball* on a non-archived gallery
+**When** the Owner chooses *Ganti nama*, enters *Softball* and saves
+**Then** the row shows *Softball*.
+
+**When** the Owner saves an empty name
+**Then** the row shows the Drive folder's name again.
+
+**When** the name is longer than 60 characters
+**Then** it is refused with a field error and nothing changes.
 
 ## Owner view
 

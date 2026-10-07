@@ -6,6 +6,7 @@ export * from "./booking/client";
 export * from "./booking/project";
 export * from "./booking/team";
 export * from "./communications/message-template";
+export * from "./gallery/folder-map";
 export * from "./gallery/gallery";
 export * from "./gallery/selection";
 export * from "./gallery/workspace-source-config";

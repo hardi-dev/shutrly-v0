@@ -16,6 +16,8 @@ Built 2026-10-07 on `feat/client-access` straight from the accepted [intent](int
 
 - **Empty subfolders are listed too** (Owner manual test, 2026-10-07: a photographer prepares the folders before uploading). A sync records every subfolder within the depth limit in its cursor and, when the run ends, stores them in `gallery_source.known_folders`. *Edit folder* lists those plus any folder that holds photos, and the new-folders toast names empty ones too. No migration.
 
+- **Owner cards per item** (Owner 2026-10-08): the *Hasil akhir* card lists one row per package item with files and names them in the publish dialog and the Galeri card row (`DeliveryGalleryFacts.items`, reader `selectFinishedItems`); the photo and folder counts read *n proof · m hasil akhir*; saving a mapping refreshes the folder row's stored counts.
+
 ## Code
 - Migration `0018_folder_map` (additive): table `gallery_folder_map`, `gallery_photo.project_item_id`, `gallery_source.known_folders`. Run on the dev database 2026-10-07; the integration database already had it.
 - Domain `classifyPhoto(segments, mappings)`, `kindForPickMode`; sync reads the mappings once per step (`SyncTarget.mappings`) and stores `project_item_id`; a finished run returns `newFolders` (`takeNewFolders`).

@@ -77,3 +77,14 @@ Workspace without active team members.
 | 7.1 | Client: `/photos`, `/final`, `/picks/<id>`, `/picks/<id>/review` | Semua terbuka | ✅ | Dites Claude (2026-10-08): semua 200; /final dialihkan ke Beranda sebelum hasil akhir dipublikasikan |
 | 7.2 | Owner: `/gallery/picks` | Terbuka | ✅ | Dites Claude (2026-10-08): /gallery/picks dan /gallery/picks/<id> 200 |
 | 7.3 | Klik semua link di halaman-halaman itu | Tidak ada 404 | ✅ | Dites Claude (2026-10-08): 23 link internal dari 10 halaman, semua 200; route lama 404 |
+
+## 8. Kartu Hasil akhir owner per item (F-20)
+
+Owner gallery page and project page, gallery with mapped subfolders (*Wisuda Basic*, 179 files in *Foto edit*).
+
+| # | Langkah | Hasil yang diharapkan | Status | Catatan |
+|---|---|---|---|---|
+| 8.1 | Halaman galeri › kartu *Hasil akhir* | Satu baris per item paket yang punya file (siap), atau *Klien bisa mengunduh n file <item>* setelah dipublikasikan; tidak ada *Edited / Print* | ✅ | Dites Claude (2026-10-08): *Klien bisa mengunduh 179 file Foto edit.* |
+| 8.2 | Halaman proyek › kartu *Galeri* › baris *Hasil akhir* | Per item, mis. *Dipublikasikan … · 179 Foto edit* | ✅ | Dites Claude (2026-10-08) |
+| 8.3 | Baris *Foto* dan baris folder di *Sumber foto* | *n proof · m hasil akhir*, termasuk langsung setelah pemetaan disimpan | ✅ | Dites Claude (2026-10-08): *58 proof · 179 hasil akhir* (sebelumnya baris folder masih *237 proof*, diperbaiki 11ccaf6) |
+| 8.4 | Ulang 2.1 di klien `/final` | Tab per item tetap benar | ✅ | Dites Claude (2026-10-08): *Foto edit · 179*, *Foto cetak · 0*, *Premium Retouch · 0* |

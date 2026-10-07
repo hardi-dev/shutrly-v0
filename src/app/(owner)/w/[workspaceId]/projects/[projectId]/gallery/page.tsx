@@ -47,7 +47,12 @@ export default async function GalleryPage({
         actions={GALLERY_PAGE_ACTIONS}
         accessCard={accessCardSlot(workspaceId, access)}
         selectionCard={
-          <SelectionCard workspaceId={workspaceId} projectId={projectId} card={selection} />
+          <SelectionCard
+            key="selection"
+            workspaceId={workspaceId}
+            projectId={projectId}
+            card={selection}
+          />
         }
         deliveryCard={deliveryCardSlot(workspaceId, projectId, delivery)}
       />
@@ -55,6 +60,8 @@ export default async function GalleryPage({
   );
 }
 
+// Each slot carries a key: the screen renders them as siblings, and React 19 dev warns about
+// unkeyed server-built elements there ("passed a child from GalleryPage").
 const ACCESS_ACTIONS = {
   rotateLinkAction: rotateClientLinkAction,
   proposeAction: proposeGalleryPasswordAction,
@@ -63,7 +70,14 @@ const ACCESS_ACTIONS = {
 
 function accessCardSlot(workspaceId: string, card: AccessCardView | null) {
   if (!card) return null;
-  return <ProjectAccessCard workspaceId={workspaceId} card={card} actions={ACCESS_ACTIONS} />;
+  return (
+    <ProjectAccessCard
+      key="access"
+      workspaceId={workspaceId}
+      card={card}
+      actions={ACCESS_ACTIONS}
+    />
+  );
 }
 
 const DELIVERY_ACTIONS = {
@@ -75,6 +89,7 @@ function deliveryCardSlot(workspaceId: string, projectId: string, card: Delivery
   if (!card.isShown) return null;
   return (
     <DeliveryCard
+      key="delivery"
       workspaceId={workspaceId}
       projectId={projectId}
       card={card}

@@ -49,11 +49,11 @@ function AccessRows({ card }: Readonly<Pick<ProjectAccessCardProps, "card">>) {
 
 function AccessButtons({ onRotateLink, onRotatePassword }: Readonly<AccessButtonsProps>) {
   return (
-    <div className="flex gap-(--space-2) max-md:w-full">
+    <div className="flex gap-(--space-2) max-md:w-full max-md:flex-col">
       <Button
         variant="secondary"
         iconLeading="link"
-        className="max-md:flex-1"
+        className="max-md:w-full"
         onPress={onRotateLink}
       >
         {COPY.rotateLink}
@@ -61,7 +61,7 @@ function AccessButtons({ onRotateLink, onRotatePassword }: Readonly<AccessButton
       <Button
         variant="secondary"
         iconLeading="key-round"
-        className="max-md:flex-1"
+        className="max-md:w-full"
         onPress={onRotatePassword}
       >
         {COPY.rotatePassword}

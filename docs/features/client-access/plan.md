@@ -472,9 +472,9 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 
 **Read first:** AC-ACC-012, -014; ADR-019 point 5; technical-design › D-22, Security, Testing Strategy; coding rules › Testing (J-04, J-06); Slice 0 *Spike results* (R-2).
 
-- [ ] **11.1** If Slice 0 cleared R-2: cache the client photo-list JSON by `galleryId:contentVersion:…` after the gate (D-22), with an integration test that a sync or final-delivery publish serves fresh data. Otherwise record the skip in the technical design. Commit `perf(client-access): cache client photo lists by content version`.
-- [ ] **11.2** Secrets sweep test: render every client page and action result for the fixture and assert no folder ID, resource key, API key, password, hash or ciphertext, and `private, no-store` on pages (AC-ACC-012). Commit `test(client-access): sweep client responses for secrets`.
-- [ ] **11.3** E2E journeys `tests/e2e/client-access/journeys.spec.ts`: J-04 (open, pick with note, Tinjau, send, Owner locks), J-05 (add-on reopens, client picks more and sends), J-06 (Owner publishes, client downloads, Owner completes), with axe on every client screen at phone and desktop widths (AC-ACC-014). Commit `test(client-access): cover the client journeys`.
-- [ ] **11.4** Update `docs/HANDOFF.md`, the feature map status (`DONE` pending verification) and the implementation records. Commit `docs(client-access): record the build`.
+- [x] **11.1** If Slice 0 cleared R-2: cache the client photo-list JSON by `galleryId:contentVersion:…` after the gate (D-22), with an integration test that a sync or final-delivery publish serves fresh data. Otherwise record the skip in the technical design. Commit `perf(client-access): cache client photo lists by content version`.
+- [x] **11.2** Secrets sweep test: render every client page and action result for the fixture and assert no folder ID, resource key, API key, password, hash or ciphertext, and `private, no-store` on pages (AC-ACC-012). Commit `test(client-access): sweep client responses for secrets`.
+- [x] **11.3** E2E journeys `tests/e2e/client-access/journeys.spec.ts`: J-04 (open, pick with note, Tinjau, send, Owner locks), J-05 (add-on reopens, client picks more and sends), J-06 (Owner publishes, client downloads, Owner completes), with axe on every client screen at phone and desktop widths (AC-ACC-014). Commit `test(client-access): cover the client journeys`.
+- [x] **11.4** Update `docs/HANDOFF.md`, the feature map status (`DONE` pending verification) and the implementation records. Commit `docs(client-access): record the build`.
 
 **Done check:** typecheck, lint, the client-access unit/integration/E2E files and the build pass; every AC in the index maps to a passing test or a documented verification (C-009).

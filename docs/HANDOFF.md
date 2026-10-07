@@ -1,23 +1,23 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-06 (F-10 client-access IN PROGRESS, Slices 0–6 built; F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending Owner acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-07 (F-10 client-access DONE pending verification, Slices 0–11 built; F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending Owner acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/client-access` (F-10, worktree `.claude/worktrees/pull-branch-main-21161f`). F-09 free-tier rework is on `feat/gallery-free-tier`, F-07 on `feat/projects`, F-08 Team designed on `feat/team-sessions`.
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-10 client-access IN PROGRESS, Slices 0–6 built (2026-10-06)
+## Current handoff — F-10 client-access built, pending verification (2026-10-07)
 
-- **State:** feature map `IN PROGRESS`. Branch `feat/client-access` (worktree `.claude/worktrees/pull-branch-main-21161f`), pushed to `origin` (in sync), no PR yet. Slice 7 (Add-ons) was only read (plan slice and the `0017_add_on` design); nothing is written for it.
-- **Done this session:** Slice 4 Pilih, notes and *Pilih untuk…* in the viewer; Slice 5 `Stepper`, submit a group, Tinjau and *Lihat pilihan*; Slice 6 `pick-list`, lock/close use case, the Owner card and pages. Each has an implementation record with its deviations in [technical-design.md](features/client-access/technical-design.md) › Implementation record; checklist ticked in [plan.md](features/client-access/plan.md).
-- **Checks (Slice 6, last run):** typecheck, lint and `pnpm build` pass; 549 related unit/dom tests and the whole `tests/integration/gallery/client-access` folder (8 files, 49 tests) pass. Not run: the full suite (project rule, `CLAUDE.md`) and any E2E (no Playwright browsers on this machine; in-app browser passes stand in, F-09 precedent).
-- **Owner actions:** open the PR when ready; provision `CLIENT_SESSION_KEY` for production before ship; promote *Photo Tile/Selectable* in `design-system.lib.pen`. Slice 7 adds migration `0017_add_on` (additive), to be run on the non-production database only ([AGENTS.md](../AGENTS.md) hard stops).
+- **State:** feature map `DONE, pending verification`. Branch `feat/client-access` (worktree `.claude/worktrees/pull-branch-main-21161f`); Slices 7–11 are committed locally, **not pushed**, no PR. Every slice has an implementation record with its deviations in [technical-design.md](features/client-access/technical-design.md); [plan.md](features/client-access/plan.md) is fully ticked.
+- **Built 2026-10-07:** Slice 7 add-ons (migration `0017_add_on`, applied to non-prod), Slice 8 final delivery and *Tandai selesai*, Slice 9 *Hasil akhir* and downloads, Slice 10 link rotation and the *Akses klien* card, Slice 11 cache by `content_version`, secrets sweep and the J-04/J-05/J-06 E2E with axe. The E2E found and fixed a bulk-download bug (`18b7cbd`).
+- **Checks (last run):** typecheck, lint, build; client-access + add-ons integration (13 files, 80 tests); unit/dom (393 files, 1,622 tests); `tests/e2e/client-access/journeys.spec.ts` passes. Playwright Chromium is now installed on this machine. Not run: `gate.spec.ts` (needs the real-Drive smoke folder, server without the fixture Drive), the full suite (project rule) and the R-6 phone check.
+- **Owner actions:** push and open the PR; provision `CLIENT_SESSION_KEY` for production; run `0017_add_on` on production at ship; promote *Photo Tile/Selectable* in `design-system.lib.pen`; fix two Pencil drifts: the add-on dialog's target field shows the stock *Layanan* label/helper (the code uses *Tambah ke grup*, the node name), and the publish confirm says *Dikirim* where the status label is *Terkirim*.
 - **Open items:**
-  - Slices 7–11 not built (add-ons, final delivery and completion, *Hasil akhir*, link rotation and *Akses klien* card, cache/secrets/accessibility/journeys).
-  - E2E specs for Slices 4–6 are not written; Slice 2's is written but unrun.
-  - The Owner project-page *Pilihan klien* card was not seen on a real project (the throwaway project's fake password ciphertext breaks the Galeri card); its five states have DOM tests.
-  - Copy marked *not in Pencil* is listed per slice in the records. Tablet and dark mode are not drawn (GAP-01, GAP-04).
+  - Removing a package item whose group an add-on targets fails on the FK instead of a clean refusal (a separate task was suggested).
+  - The client *Dibuka lagi* chip for a group reopened by an add-on is not built (`submitted_at` is kept so it can be derived).
+  - R-6 (bulk downloads on iOS Safari) needs a real phone. Tablet and dark mode are not drawn (GAP-01, GAP-04).
+  - Running the fixture-Drive E2E needs `E2E_FAKE_DRIVE=1` in this worktree's `.dev.vars` for the run (restore it after; the shared helpers are slow on a cold server, hence `retries: 2`).
   - The main checkout's `.claude/launch.json` has an uncommitted `dev-client-access` entry (runs this worktree's dev server on port 3000).
-- **Next:** `/sdv:build-feature client-access 7`, starting at step 7.1 (schema `adapters/db/schema/booking/add-on.ts`, migration `0017_add_on`, domain `add-on`).
+- **Next:** `/sdv:verify-feature client-access`, then `/sdv:ship`.
 
 ## Key decisions (Owner)
 

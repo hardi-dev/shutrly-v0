@@ -67,13 +67,13 @@ Workspace without active team members.
 
 | # | Langkah | Hasil yang diharapkan | Status | Catatan |
 |---|---|---|---|---|
-| 6.1 | *Proyek baru* › *Tambah sesi* › *Tambah anggota* | Dialog anggota muncul di atas; setelah simpan, anggota baru terpilih; form sesi tidak ikut tersubmit | ⬜ | |
-| 6.2 | Detail proyek › *Tambah anggota · <sesi>* | Sama seperti 6.1, tanpa diarahkan ke halaman Tim | ⬜ | |
+| 6.1 | *Proyek baru* › *Tambah sesi* › *Tambah anggota* | Dialog anggota muncul di atas; setelah simpan, anggota baru terpilih; form sesi tidak ikut tersubmit | ✅ | Dites Claude di browser (2026-10-08): nama sesi tetap, Uji Asisten Dua langsung terpilih |
+| 6.2 | Detail proyek › *Tambah anggota · <sesi>* | Sama seperti 6.1, tanpa diarahkan ke halaman Tim | ✅ | Dites Claude di browser (2026-10-08): Uji Fotografer Satu terpilih sebagai Fotografer |
 
 ## 7. Route bahasa Inggris (#7)
 
 | # | Langkah | Hasil yang diharapkan | Status | Catatan |
 |---|---|---|---|---|
-| 7.1 | Client: `/photos`, `/final`, `/picks/<id>`, `/picks/<id>/review` | Semua terbuka | ⬜ | |
-| 7.2 | Owner: `/gallery/picks` | Terbuka | ⬜ | |
-| 7.3 | Klik semua link di halaman-halaman itu | Tidak ada 404 | ⬜ | |
+| 7.1 | Client: `/photos`, `/final`, `/picks/<id>`, `/picks/<id>/review` | Semua terbuka | ✅ | Dites Claude (2026-10-08): semua 200; /final dialihkan ke Beranda sebelum hasil akhir dipublikasikan |
+| 7.2 | Owner: `/gallery/picks` | Terbuka | ✅ | Dites Claude (2026-10-08): /gallery/picks dan /gallery/picks/<id> 200 |
+| 7.3 | Klik semua link di halaman-halaman itu | Tidak ada 404 | ✅ | Dites Claude (2026-10-08): 23 link internal dari 10 halaman, semua 200; route lama 404 |

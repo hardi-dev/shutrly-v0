@@ -49,6 +49,12 @@ function showFailure(result: Exclude<ProjectWriteResult, undefined>): void {
       title: PROJECT_COPY.selectionClosedTitle,
       body: PROJECT_COPY.selectionClosedBody,
     });
+  } else if (code === "SELECTION_HAS_ADD_ON") {
+    showToast({
+      tone: "danger",
+      title: PROJECT_COPY.selectionHasAddOnTitle,
+      body: PROJECT_COPY.selectionHasAddOnBody,
+    });
   } else if (code === "LAST_SESSION") {
     showToast({ tone: "danger", title: PROJECT_COPY.lastSessionToast });
   } else if (code === "DEAL_LOCKED") {

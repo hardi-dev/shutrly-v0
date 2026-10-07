@@ -51,6 +51,9 @@ export const PROJECT_COPY = {
   // not in Pencil
   selectionClosedTitle: "Pilihan klien untuk item ini sudah dikirim",
   selectionClosedBody: "Ubah item ini setelah membuka lagi pilihannya.",
+  // not in Pencil
+  selectionHasAddOnTitle: "Item ini dipakai add-on yang sudah disetujui",
+  selectionHasAddOnBody: "Batalkan add-on itu dulu, lalu hapus item ini.",
   detailTitle: "Detail proyek",
   titleLabel: "Judul proyek",
   titlePlaceholderDesktop: "Terisi otomatis setelah memilih layanan",

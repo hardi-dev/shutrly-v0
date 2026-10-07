@@ -107,6 +107,10 @@ export interface SelectionRepositoryPort {
     base: number,
   ) => Promise<void>;
   readonly deleteGroup: (context: WorkspaceContext, groupId: string) => Promise<void>;
+  /** Whether an `APPROVED` add-on targets the group (BR-PRJ-009, BR-ADD-002). */
+  readonly hasApprovedAddOn: (context: WorkspaceContext, groupId: string) => Promise<boolean>;
+  /** Clears the target of the group's `DRAFT` and `CANCELLED` add-ons before the group goes (BR-PRJ-009). */
+  readonly detachAddOns: (context: WorkspaceContext, groupId: string) => Promise<void>;
   /** Locks a group of this project FOR UPDATE in a transaction and runs the work (BR-SEL-006). */
   readonly withLockedGroup: <T>(
     context: WorkspaceContext,

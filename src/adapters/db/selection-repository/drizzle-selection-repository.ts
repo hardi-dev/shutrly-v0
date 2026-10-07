@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, asc, count, eq, sql } from "drizzle-orm";
+import { and, asc, count, eq, ne, sql } from "drizzle-orm";
 
 import type {
   SelectionGroupRecord,
@@ -11,6 +11,7 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import type { DbExecutor } from "../client/client.types";
 import { itemLimitSql } from "../gallery-repository/selection-group-sql";
+import { projectAddOn } from "../schema/booking/add-on";
 import { project, projectItem } from "../schema/booking/project";
 import { gallery } from "../schema/gallery/gallery";
 import { photoSelection, selectionGroup } from "../schema/gallery/selection";
@@ -94,6 +95,14 @@ function groupsQuery(db: DbExecutor) {
     .$dynamic();
 }
 
+// The add-ons targeting a group; the gallery adapter reads project_add_on like project_item (D-10c).
+function addOnScope(context: WorkspaceContext, groupId: string) {
+  return and(
+    eq(projectAddOn.workspaceId, context.workspaceId),
+    eq(projectAddOn.selectionGroupId, groupId),
+  );
+}
+
 // eslint-disable-next-line max-lines-per-function -- exposes the complete selection repository port
 export function createDrizzleSelectionRepository(db: DbExecutor): SelectionRepositoryPort {
   const groupScope = (context: WorkspaceContext, groupId: string) =>
@@ -168,6 +177,20 @@ export function createDrizzleSelectionRepository(db: DbExecutor): SelectionRepos
     },
     async deleteGroup(context, groupId) {
       await db.delete(selectionGroup).where(groupScope(context, groupId));
+    },
+    async hasApprovedAddOn(context, groupId) {
+      const rows = await db
+        .select({ id: projectAddOn.id })
+        .from(projectAddOn)
+        .where(and(addOnScope(context, groupId), eq(projectAddOn.status, "APPROVED")))
+        .limit(1);
+      return rows.length > 0;
+    },
+    async detachAddOns(context, groupId) {
+      await db
+        .update(projectAddOn)
+        .set({ selectionGroupId: null, updatedAt: new Date() })
+        .where(and(addOnScope(context, groupId), ne(projectAddOn.status, "APPROVED")));
     },
     withLockedGroup: (context, projectId, groupId, work) =>
       db.transaction(async (tx) => {

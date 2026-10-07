@@ -20,7 +20,7 @@ import type { DealEditTarget } from "./project-deal-edits.types";
 
 function toFailure(result: SyncGroupResult): ProjectFailure | undefined {
   if (result.ok) return undefined;
-  if (result.code === "SELECTION_CLOSED") return { ok: false, code: "SELECTION_CLOSED" };
+  if (result.code !== "SELECTION_IN_USE") return { ok: false, code: result.code };
   return { ok: false, code: "SELECTION_IN_USE", usage: result.usage, unit: result.unit };
 }
 
@@ -65,7 +65,7 @@ export async function updateItemWithGroup(
   return result;
 }
 
-/** Removes an item after its group; a group with picks or not open refuses it (D-10c). @param scope - transaction-bound repositories @param target - verified workspace, actor and project @param itemId - the item @returns undefined or a failure */
+/** Removes an item after its group; a group with picks, an approved add-on or not open refuses it (D-10c). @param scope - transaction-bound repositories @param target - verified workspace, actor and project @param itemId - the item @returns undefined or a failure */
 export async function removeItemWithGroup(
   scope: ProjectDealEditScope,
   target: DealEditTarget,

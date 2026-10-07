@@ -27,7 +27,11 @@ const GROUP: SelectionGroupRecord = {
   sortOrder: 0,
 };
 
-function repository(group: SelectionGroupRecord | null, limit: number): SelectionRepositoryPort {
+function repository(
+  group: SelectionGroupRecord | null,
+  limit: number,
+  approvedAddOn = false,
+): SelectionRepositoryPort {
   return {
     listGroups: vi.fn(),
     lockProject: vi.fn(() => Promise.resolve(true)),
@@ -36,12 +40,16 @@ function repository(group: SelectionGroupRecord | null, limit: number): Selectio
     createGroupForItem: vi.fn(() => Promise.resolve()),
     setBaseLimit: vi.fn(() => Promise.resolve()),
     deleteGroup: vi.fn(() => Promise.resolve()),
+    hasApprovedAddOn: vi.fn(() => Promise.resolve(approvedAddOn)),
+    detachAddOns: vi.fn(() => Promise.resolve()),
     withLockedGroup: vi.fn(),
     listPickedPhotos: vi.fn(),
   };
 }
 
 const value = { kind: "VALUE", projectId: "project", itemId: "item" } as const;
+const removing = { kind: "REMOVING", projectId: "project", itemId: "item" } as const;
+const unpicked = { ...GROUP, usage: 0, pickCount: 0 };
 
 describe("syncGroupWithItem (D-10c, BR-PRJ-009)", () => {
   it("AC-SEL-013 keeps add-ons in the check: base 2 + extra 1 still covers usage 3", async () => {
@@ -74,6 +82,25 @@ describe("syncGroupWithItem (D-10c, BR-PRJ-009)", () => {
     await syncGroupWithItem({ selections }, CONTEXT, value);
     expect(vi.mocked(selections.lockProject).mock.invocationCallOrder[0]).toBeLessThan(
       vi.mocked(selections.findGroupByItemForUpdate).mock.invocationCallOrder[0],
+    );
+  });
+
+  it("BR-PRJ-009 refuses removing an item whose group has an approved add-on", async () => {
+    const selections = repository(unpicked, 3, true);
+    expect(await syncGroupWithItem({ selections }, CONTEXT, removing)).toEqual({
+      ok: false,
+      code: "SELECTION_HAS_ADD_ON",
+    });
+    expect(selections.detachAddOns).not.toHaveBeenCalled();
+    expect(selections.deleteGroup).not.toHaveBeenCalled();
+  });
+
+  it("BR-PRJ-009 detaches draft and cancelled add-ons before deleting the group", async () => {
+    const selections = repository(unpicked, 3);
+    expect(await syncGroupWithItem({ selections }, CONTEXT, removing)).toEqual({ ok: true });
+    expect(selections.detachAddOns).toHaveBeenCalledWith(CONTEXT, "group");
+    expect(vi.mocked(selections.detachAddOns).mock.invocationCallOrder[0]).toBeLessThan(
+      vi.mocked(selections.deleteGroup).mock.invocationCallOrder[0],
     );
   });
 });

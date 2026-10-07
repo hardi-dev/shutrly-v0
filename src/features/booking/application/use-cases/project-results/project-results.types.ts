@@ -10,7 +10,9 @@ export type ProjectDomainCode =
   | "LAST_SESSION"
   | "PROJECT_CANCELLED"
   // F-10 D-10c: the item's selection group was already sent or locked.
-  | "SELECTION_CLOSED";
+  | "SELECTION_CLOSED"
+  // F-10 D-10c: an approved add-on targets the item's selection group (BR-PRJ-009).
+  | "SELECTION_HAS_ADD_ON";
 export interface ProjectValidationFailure {
   readonly ok: false;
   readonly code: "VALIDATION_FAILED";

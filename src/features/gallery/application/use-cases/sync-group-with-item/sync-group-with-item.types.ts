@@ -2,7 +2,7 @@ import type { SelectionRepositoryPort } from "../../ports/selection-repository/s
 
 export type SyncGroupResult =
   | { readonly ok: true }
-  | { readonly ok: false; readonly code: "SELECTION_CLOSED" }
+  | { readonly ok: false; readonly code: "SELECTION_CLOSED" | "SELECTION_HAS_ADD_ON" }
   | {
       readonly ok: false;
       readonly code: "SELECTION_IN_USE";

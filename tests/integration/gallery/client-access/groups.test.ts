@@ -3,6 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import type { Db } from "@/adapters/db/client/client.types";
 import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
+import { projectAddOn } from "@/adapters/db/schema/booking/add-on";
 import { serviceItemDefinition } from "@/adapters/db/schema/booking/catalog";
 import { selectionGroup } from "@/adapters/db/schema/gallery/selection";
 import { createDrizzleSelectionRepository } from "@/adapters/db/selection-repository/drizzle-selection-repository";
@@ -162,6 +163,55 @@ describe("selection groups (D-10)", () => {
     );
     expect(removed).toBeUndefined();
     expect(await listGroups(target.projectId)).toEqual([]);
+  });
+
+  it("AC-SEL-022 refuses removing an item with an approved add-on and detaches the others", async () => {
+    const target = await bookedProject();
+    const items = await addProjectItems(db, target, [
+      { name: "Foto edit", value: 3, pickMode: "COUNT" },
+    ]);
+    await createGroups(target.galleryId);
+    const [group] = await listGroups(target.projectId);
+    const addOn = (description: string, status: string) => ({
+      workspaceId: target.workspaceId,
+      projectId: target.projectId,
+      selectionGroupId: group.id,
+      description,
+      quantity: 1,
+      unitPrice: "20000",
+      totalAmount: "20000",
+      status,
+      approvedAt: status === "DRAFT" ? null : new Date(),
+      cancelledAt: status === "CANCELLED" ? new Date() : null,
+    });
+    const [approved] = await db
+      .insert(projectAddOn)
+      .values(addOn("Tambahan foto", "APPROVED"))
+      .returning({ id: projectAddOn.id });
+    await db.insert(projectAddOn).values([addOn("Draf", "DRAFT"), addOn("Batal", "CANCELLED")]);
+    const edit = {
+      context: fixture.context,
+      actorId: fixture.ownerId,
+      projectId: target.projectId,
+    };
+    const remove = () =>
+      runDealEditTransaction(db, (scope) => removeItemWithGroup(scope, edit, items["Foto edit"]));
+
+    expect(await remove()).toEqual({ ok: false, code: "SELECTION_HAS_ADD_ON" });
+    expect(await listGroups(target.projectId)).toHaveLength(1);
+
+    await db
+      .update(projectAddOn)
+      .set({ status: "CANCELLED", cancelledAt: new Date() })
+      .where(eq(projectAddOn.id, approved.id));
+    expect(await remove()).toBeUndefined();
+    expect(await listGroups(target.projectId)).toEqual([]);
+    const rows = await db
+      .select({ status: projectAddOn.status, groupId: projectAddOn.selectionGroupId })
+      .from(projectAddOn)
+      .where(eq(projectAddOn.projectId, target.projectId));
+    expect(rows).toHaveLength(3);
+    expect(rows.every((row) => row.groupId === null)).toBe(true);
   });
 
   it("AC-SEL-014 refuses any value change while the group is submitted", async () => {

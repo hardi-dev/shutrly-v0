@@ -110,7 +110,7 @@ function DeliveryViewer({ screen }: Readonly<DeliveryPartProps>) {
   );
   const metaOf = (photo: ClientPhotoView) =>
     viewerMeta(
-      screen.kind,
+      screen.groupName,
       screen.shown.findIndex((file) => file.id === photo.id),
       screen.shown.length,
     );

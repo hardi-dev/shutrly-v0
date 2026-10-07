@@ -1,11 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { failedBody, kindMeta, viewerMeta } from "./delivery-screen-text";
+import { failedBody, groupMeta, viewerMeta } from "./delivery-screen-text";
 
-describe("Hasil akhir text (klien-8)", () => {
-  it("names the open kind's files", () => {
-    expect(kindMeta("EDITED", 24)).toBe("24 foto Edited");
-    expect(kindMeta("PRINT", 6)).toBe("6 file Print");
+describe("Hasil akhir text (klien-8, F-20)", () => {
+  it("F-20 names the open item's files", () => {
+    expect(groupMeta("Foto edit", 24)).toBe("24 file · Foto edit");
   });
 
   it("AC-DEL-005 names the failed files", () => {
@@ -13,6 +12,6 @@ describe("Hasil akhir text (klien-8)", () => {
   });
 
   it("counts the preview's position", () => {
-    expect(viewerMeta("EDITED", 2, 24)).toBe("Hasil akhir · Edited · 3 dari 24");
+    expect(viewerMeta("Foto edit", 2, 24)).toBe("Hasil akhir · Foto edit · 3 dari 24");
   });
 });

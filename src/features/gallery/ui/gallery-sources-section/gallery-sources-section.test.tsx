@@ -146,14 +146,14 @@ describe("GallerySourcesSection", () => {
     expect(screen.getAllByText("Arsip")).toHaveLength(2);
   });
 
-  it("Revision OT #4 the folder menu offers Sinkronkan, Ganti nama and Hapus", async () => {
+  it("Revision OT #4 F-20 the folder menu offers Sinkronkan, Edit folder and Hapus", async () => {
     const user = userEvent.setup();
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={fakePageActions()} />);
     await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
     const items = screen.getAllByRole("menuitem").map((item) => item.textContent);
     expect(items).toEqual([
       expect.stringContaining("Sinkronkan"),
-      expect.stringContaining("Ganti nama"),
+      expect.stringContaining("Edit folder"),
       expect.stringContaining("Hapus"),
     ]);
     expect(screen.queryByText("Lepas folder")).not.toBeInTheDocument();
@@ -199,8 +199,8 @@ describe("GallerySourcesSection", () => {
     const actions = fakePageActions({ renameSourceAction });
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
     await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
-    await user.click(screen.getByRole("menuitem", { name: /Ganti nama/ }));
-    const dialog = screen.getByRole("dialog", { name: "Ganti nama folder" });
+    await user.click(screen.getByRole("menuitem", { name: /Edit folder/ }));
+    const dialog = screen.getByRole("dialog", { name: "Edit folder" });
     await user.type(within(dialog).getByRole("textbox", { name: /Label/ }), "Softball");
     await user.click(within(dialog).getByRole("button", { name: "Simpan" }));
     await waitFor(() => {
@@ -225,5 +225,74 @@ describe("GallerySourcesSection", () => {
       expect(syncSourceAction).toHaveBeenCalledWith("ws-1", "s-1");
     });
     expect(syncSourceAction).toHaveBeenCalledTimes(1);
+  });
+
+  it("F-20 Edit folder maps a subfolder to a package item and saves it with the name", async () => {
+    const user = userEvent.setup();
+    const renameSourceAction = vi.fn(() => Promise.resolve({ ok: true as const }));
+    const setFolderMappingAction = vi.fn(() => Promise.resolve({ ok: true as const }));
+    const folderMappingAction = vi.fn(() =>
+      Promise.resolve({
+        folders: ["Akad", "Hasil Edit"],
+        items: [{ id: "item-edit", name: "Foto edit", pickMode: "COUNT" as const }],
+        mappings: [],
+      }),
+    );
+    const actions = fakePageActions({
+      renameSourceAction,
+      setFolderMappingAction,
+      folderMappingAction,
+    });
+    render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
+    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("menuitem", { name: /Edit folder/ }));
+    await user.click(await screen.findByRole("button", { name: /Subfolder Hasil Edit/ }));
+    await user.click(screen.getByRole("option", { name: "Foto edit" }));
+    await user.click(screen.getByRole("button", { name: "Simpan" }));
+    await waitFor(() => {
+      expect(setFolderMappingAction).toHaveBeenCalledWith("ws-1", "s-1", {
+        mappings: [{ path: "Hasil Edit", projectItemId: "item-edit" }],
+      });
+    });
+    expect(renameSourceAction).toHaveBeenCalledWith("ws-1", "s-1", { label: "" });
+  });
+
+  it("F-20 Edit folder points to Isi paket when the package has no selection item", async () => {
+    const user = userEvent.setup();
+    render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={fakePageActions()} />);
+    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("menuitem", { name: /Edit folder/ }));
+    expect(
+      await screen.findByText("Paket proyek ini belum punya item untuk pilihan foto"),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Buka Isi paket" })).toBeInTheDocument();
+  });
+
+  it("F-20 a sync that finds new subfolders says so with Petakan", async () => {
+    const user = userEvent.setup();
+    const syncSourceAction = vi.fn(() =>
+      Promise.resolve({
+        ok: true as const,
+        status: "SUCCEEDED" as const,
+        newFolders: ["Hasil Edit"],
+      }),
+    );
+    render(
+      <GallerySourcesSection
+        workspaceId="ws-1"
+        page={PAGE}
+        actions={fakePageActions({ syncSourceAction })}
+      />,
+    );
+    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("menuitem", { name: /Sinkronkan/ }));
+    await waitFor(() => {
+      const info = vi
+        .mocked(showToast)
+        .mock.calls.map(([content]) => content)
+        .find((content) => content.tone === "info");
+      expect(info?.title).toBe("1 subfolder baru di Rina-Wisuda");
+      expect(info?.action?.label).toBe("Petakan");
+    });
   });
 });

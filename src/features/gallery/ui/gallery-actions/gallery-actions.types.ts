@@ -1,10 +1,12 @@
 import type { BrowseQuery } from "@/features/gallery/application/schemas/browse-query/browse-query.types";
+import type { SetFolderMappingInput } from "@/features/gallery/application/schemas/folder-mapping/folder-mapping.types";
 import type { LinkGallerySourceInput } from "@/features/gallery/application/schemas/link-gallery-source/link-gallery-source.types";
 import type { RenameGallerySourceInput } from "@/features/gallery/application/schemas/rename-gallery-source/rename-gallery-source.types";
 import type { RotateGalleryPasswordInput } from "@/features/gallery/application/schemas/rotate-gallery-password/rotate-gallery-password.types";
 import type { SetGalleryExpiryInput } from "@/features/gallery/application/schemas/set-gallery-expiry/set-gallery-expiry.types";
 import type { BrowsePageView } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos.types";
 import type { FolderUseResult } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use.types";
+import type { FolderMappingView } from "@/features/gallery/application/use-cases/folder-mapping/folder-mapping.types";
 import type {
   ExpiryResult,
   GalleryWriteResult,
@@ -48,6 +50,16 @@ export interface GalleryPageActions {
     workspaceId: string,
     sourceId: string,
     values: RenameGallerySourceInput,
+  ) => Promise<GalleryWriteResult>;
+  /** F-20: the folder *Edit*'s subfolder mapping. */
+  readonly folderMappingAction: (
+    workspaceId: string,
+    sourceId: string,
+  ) => Promise<FolderMappingView>;
+  readonly setFolderMappingAction: (
+    workspaceId: string,
+    sourceId: string,
+    values: SetFolderMappingInput,
   ) => Promise<GalleryWriteResult>;
   readonly archiveAction: (workspaceId: string, galleryId: string) => Promise<GalleryWriteResult>;
   readonly deleteDraftAction: (

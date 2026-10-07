@@ -6,11 +6,13 @@ import {
   checkFolderInUseAction,
   deleteDraftGalleryAction,
   deleteGallerySourceAction,
+  getFolderMappingAction,
   linkGallerySourceAction,
   proposeGalleryPasswordAction,
   publishGalleryAction,
   renameGallerySourceAction,
   rotateGalleryPasswordAction,
+  setFolderMappingAction,
   setGalleryExpiryAction,
   syncGallerySourceAction,
 } from "./galleries";
@@ -27,6 +29,8 @@ export const GALLERY_PAGE_ACTIONS: GalleryPageActions = {
   rotatePasswordAction: rotateGalleryPasswordAction,
   deleteSourceAction: deleteGallerySourceAction,
   renameSourceAction: renameGallerySourceAction,
+  folderMappingAction: getFolderMappingAction,
+  setFolderMappingAction,
   archiveAction: archiveGalleryAction,
   deleteDraftAction: deleteDraftGalleryAction,
 };

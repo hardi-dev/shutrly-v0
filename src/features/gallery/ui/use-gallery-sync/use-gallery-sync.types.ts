@@ -7,6 +7,8 @@ import type { SourceSyncPhase, SourceSyncProgress } from "../source-text/source-
 export interface UseGallerySyncInput {
   readonly workspaceId: string;
   readonly syncSourceAction: GalleryPageActions["syncSourceAction"];
+  /** Opens *Edit folder* for a source after a sync found new subfolders (F-20). */
+  readonly onMapFolders?: (sourceId: string) => void;
 }
 
 // A folder the loop syncs; a source that was just linked has no row yet, so the name is a fallback.

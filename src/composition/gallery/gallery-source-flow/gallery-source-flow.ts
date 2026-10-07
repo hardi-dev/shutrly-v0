@@ -5,6 +5,10 @@ import { browseGalleryPhotos } from "@/features/gallery/application/use-cases/br
 import { deleteDraftGallery } from "@/features/gallery/application/use-cases/delete-draft-gallery/delete-draft-gallery";
 import { deleteGallerySource } from "@/features/gallery/application/use-cases/delete-gallery-source/delete-gallery-source";
 import { findFolderUse } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use";
+import {
+  getFolderMapping,
+  setFolderMapping,
+} from "@/features/gallery/application/use-cases/folder-mapping/folder-mapping";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
 import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
 import { renameGallerySource } from "@/features/gallery/application/use-cases/rename-gallery-source/rename-gallery-source";
@@ -204,5 +208,35 @@ export async function deleteDraftGalleryEntry(rawWorkspaceId: string, rawGallery
     );
   } catch (error) {
     return gallerySaveError(error, verified.context.workspaceId, "delete-draft");
+  }
+}
+
+/** Loads the folder *Edit*'s subfolder mapping (F-20). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @returns the mapping view */
+export async function getFolderMappingEntry(rawWorkspaceId: string, rawSourceId: string) {
+  const sourceId = galleryIdOrNotFound(rawSourceId);
+  await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withGalleryScope((scope) => getFolderMapping(scope, verified.context, sourceId));
+  } catch (error) {
+    return gallerySaveError(error, verified.context.workspaceId, "folder-mapping");
+  }
+}
+
+/** Saves a folder's subfolder mapping and reclassifies its photos (F-20). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @param values - untrusted `{ mappings }` @returns the write result */
+export async function setFolderMappingEntry(
+  rawWorkspaceId: string,
+  rawSourceId: string,
+  values: unknown,
+) {
+  const sourceId = galleryIdOrNotFound(rawSourceId);
+  await requireOwnerOrRedirect();
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withGalleryScope((scope) =>
+      setFolderMapping(scope, verified.context, sourceId, values),
+    );
+  } catch (error) {
+    return gallerySaveError(error, verified.context.workspaceId, "set-folder-mapping");
   }
 }

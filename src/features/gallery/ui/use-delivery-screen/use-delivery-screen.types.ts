@@ -5,14 +5,14 @@ import type {
 
 import type { SequentialDownload } from "../use-sequential-download/use-sequential-download.types";
 
-export type DeliveryKind = "EDITED" | "PRINT";
-
 /** Everything the *Hasil akhir* page renders from (klien-8 states). */
 export interface DeliveryScreenState {
   readonly files: DeliveryFilesView;
-  readonly kind: DeliveryKind;
-  readonly setKind: (kind: DeliveryKind) => void;
-  /** The open kind's files. */
+  /** The open tab: a package item, or a kind for files without one (F-20). */
+  readonly groupId: string;
+  readonly groupName: string;
+  readonly setGroupId: (groupId: string) => void;
+  /** The open group's files. */
   readonly shown: readonly DeliveryFileView[];
   readonly isSelecting: boolean;
   readonly selectedIds: ReadonlySet<string>;

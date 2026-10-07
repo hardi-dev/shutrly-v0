@@ -8,10 +8,9 @@ import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { CLIENT_GRID } from "../client-browse-grid/client-browse-grid";
-import type { DeliveryKind } from "../use-delivery-screen/use-delivery-screen.types";
 import { DELIVERY_SCREEN_COPY as COPY } from "./delivery-screen.copy";
 import type { DeliveryFileTileProps, DeliveryPartProps } from "./delivery-screen.types";
-import { kindMeta } from "./delivery-screen-text";
+import { groupMeta } from "./delivery-screen-text";
 
 const CORNER = "absolute top-(--component-photo-tile-badge-inset)";
 
@@ -57,27 +56,25 @@ function FileTile({ file, index, screen }: Readonly<DeliveryFileTileProps>) {
   );
 }
 
-/** *Foto hasil akhir*: the *Edited / Print* switch and the grid with a download on each tile, or ticks in *Pilih beberapa* (hasilakhir-siap / -print / -pilih-beberapa, AC-DEL-003, -004). @param props - the screen state @returns the card */
+/** *Foto hasil akhir*: one tab per package item (F-20; was *Edited / Print*) and the grid with a download on each tile, or ticks in *Pilih beberapa* (hasilakhir-siap / -print / -pilih-beberapa, AC-DEL-003, -004). @param props - the screen state @returns the card */
 export function DeliveryFilesCard({ screen }: Readonly<DeliveryPartProps>) {
-  const { files } = screen;
-  const options = [
-    { id: "EDITED", label: COPY.editedTab(files.edited.length) },
-    { id: "PRINT", label: COPY.printTab(files.print.length) },
-  ];
-  const change = (id: string) => {
-    screen.setKind(id === "PRINT" ? "PRINT" : ("EDITED" satisfies DeliveryKind));
-  };
+  const options = screen.files.groups.map((group) => ({
+    id: group.id,
+    label: COPY.groupTab(group.name, group.files.length),
+  }));
   return (
     <SectionCard
       title={COPY.cardTitle}
-      description={kindMeta(screen.kind, screen.shown.length)}
+      description={groupMeta(screen.groupName, screen.shown.length)}
       actions={
-        <SegmentedControl
-          label={COPY.kindLabel}
-          options={options}
-          selectedId={screen.kind}
-          onChange={change}
-        />
+        options.length > 1 ? (
+          <SegmentedControl
+            label={COPY.kindLabel}
+            options={options}
+            selectedId={screen.groupId}
+            onChange={screen.setGroupId}
+          />
+        ) : undefined
       }
     >
       {screen.shown.length === 0 ? (

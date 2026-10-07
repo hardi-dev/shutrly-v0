@@ -2,12 +2,15 @@ import "server-only";
 
 import { and, asc, eq, inArray, isNull } from "drizzle-orm";
 
-import type { ClientGalleryReaderPort } from "@/features/gallery/application/ports/client-gallery-reader/client-gallery-reader.port";
-import type { GalleryPhotoRecord } from "@/features/gallery/application/ports/gallery-repository/gallery-repository.port";
+import type {
+  ClientGalleryReaderPort,
+  FinishedPhotoRecord,
+} from "@/features/gallery/application/ports/client-gallery-reader/client-gallery-reader.port";
 import { PHOTO_KINDS } from "@/features/gallery/domain/photo-classification/photo-classification";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { DbExecutor } from "../client/client.types";
+import { projectItem } from "../schema/booking/project";
 import { galleryPhoto, gallerySource } from "../schema/gallery/gallery";
 import { workspaceSourceConfig } from "../schema/gallery/workspace-source-config";
 import {
@@ -22,12 +25,19 @@ async function selectFinishedPhotos(
   db: DbExecutor,
   context: WorkspaceContext,
   galleryId: string,
-): Promise<readonly GalleryPhotoRecord[]> {
+): Promise<readonly FinishedPhotoRecord[]> {
   const rows = await db
-    .select(PHOTO_COLUMNS)
+    .select({ ...PHOTO_COLUMNS, itemId: projectItem.id, itemName: projectItem.name })
     .from(galleryPhoto)
     .innerJoin(gallerySource, PHOTO_SOURCE_JOIN)
     .innerJoin(workspaceSourceConfig, SOURCE_CONFIG_JOIN)
+    .leftJoin(
+      projectItem,
+      and(
+        eq(projectItem.workspaceId, galleryPhoto.workspaceId),
+        eq(projectItem.id, galleryPhoto.projectItemId),
+      ),
+    )
     .where(
       and(
         eq(galleryPhoto.workspaceId, context.workspaceId),
@@ -37,8 +47,16 @@ async function selectFinishedPhotos(
         isNull(gallerySource.removedAt),
       ),
     )
-    .orderBy(asc(galleryPhoto.kind), asc(galleryPhoto.nameSortKey), asc(galleryPhoto.id));
-  return rows.flatMap((row) => toPhotoRecord(row) ?? []);
+    .orderBy(
+      asc(projectItem.sortOrder),
+      asc(galleryPhoto.kind),
+      asc(galleryPhoto.nameSortKey),
+      asc(galleryPhoto.id),
+    );
+  return rows.flatMap(({ itemId, itemName, ...row }) => {
+    const photo = toPhotoRecord(row);
+    return photo ? [{ ...photo, itemId, itemName }] : [];
+  });
 }
 
 /** Id and name of every visible, not-missing proof of active sources, by name (F-19). @param db - the executor @param context - verified workspace @param galleryId - the gallery @returns the files */

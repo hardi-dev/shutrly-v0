@@ -15,6 +15,8 @@ export function fakePageActions(overrides: Partial<GalleryPageActions> = {}): Ga
     rotatePasswordAction: vi.fn(),
     deleteSourceAction: vi.fn(),
     renameSourceAction: vi.fn(),
+    folderMappingAction: vi.fn(() => Promise.resolve({ folders: [], items: [], mappings: [] })),
+    setFolderMappingAction: vi.fn(),
     archiveAction: vi.fn(),
     deleteDraftAction: vi.fn(),
     ...overrides,

@@ -34,8 +34,7 @@ export function GallerySourcesSection({
   actions,
   initialSyncSourceId,
 }: Readonly<GallerySourcesSectionProps>) {
-  const dialogs = useSourceDialogs();
-  const sync = useGallerySync({ workspaceId, syncSourceAction: actions.syncSourceAction });
+  const { dialogs, sync } = useSectionState(workspaceId, page, actions);
   useInitialSync(sync, page, initialSyncSourceId);
   const handleLinked = (sourceId: string) => {
     dialogs.handleLinked();
@@ -79,6 +78,25 @@ export function GallerySourcesSection({
   );
 }
 
+/** The section's dialogs and sync; a toast's *Petakan* opens the folder's *Edit* (F-20). */
+function useSectionState(
+  workspaceId: string,
+  page: GallerySourcesSectionProps["page"],
+  actions: GallerySourcesSectionProps["actions"],
+) {
+  const dialogs = useSourceDialogs();
+  const openMapping = (sourceId: string) => {
+    const source = page.sources.find((candidate) => candidate.id === sourceId);
+    if (source) dialogs.setRenaming(source);
+  };
+  const sync = useGallerySync({
+    workspaceId,
+    syncSourceAction: actions.syncSourceAction,
+    onMapFolders: openMapping,
+  });
+  return { dialogs, sync };
+}
+
 /** The last active folder of a published or expired gallery can't be deleted (BR-GAL-004). */
 function isLastFolderLocked(page: GallerySourcesSectionProps["page"]): boolean {
   const isLive = page.gallery.status === "PUBLISHED" || page.gallery.status === "EXPIRED";
@@ -120,6 +138,9 @@ function SourceDialogs(props: Readonly<SourceDialogsProps>) {
           workspaceId={workspaceId}
           source={props.renaming}
           renameSourceAction={actions.renameSourceAction}
+          folderMappingAction={actions.folderMappingAction}
+          setFolderMappingAction={actions.setFolderMappingAction}
+          packageHref={`/w/${workspaceId}/projects/${page.project.id}`}
           onClose={props.onCloseRename}
         />
       ) : null}

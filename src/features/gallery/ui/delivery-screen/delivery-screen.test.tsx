@@ -29,8 +29,10 @@ const file = (name: string) => ({
   downloadUrl: `/g/T1/download/${name}`,
 });
 const FILES: DeliveryFilesView = {
-  edited: [file("E_001"), file("E_002")],
-  print: [file("P_001")],
+  groups: [
+    { id: "i-edit", name: "Foto edit", files: [file("E_001"), file("E_002")] },
+    { id: "i-print", name: "Cetak 4R", files: [file("P_001")] },
+  ],
 };
 
 function fakeDownload(patch: Partial<SequentialDownload["progress"]> = {}): SequentialDownload {
@@ -48,10 +50,10 @@ beforeEach(() => {
 });
 
 describe("DeliveryScreen (klien-8)", () => {
-  it("AC-DEL-003 shows Edited with a download link on every tile", () => {
+  it("AC-DEL-003 F-20 shows the first item with a download link on every tile", () => {
     render(<DeliveryScreen gate={GATE} token="T1" files={FILES} />);
     expect(screen.getByText("Hasil akhir sudah tersedia")).toBeTruthy();
-    expect(screen.getByText("2 foto Edited")).toBeTruthy();
+    expect(screen.getByText("2 file · Foto edit")).toBeTruthy();
     expect(screen.getByRole("link", { name: "Unduh E_002.jpg" })).toHaveAttribute(
       "href",
       "/g/T1/download/E_002",
@@ -104,10 +106,10 @@ describe("DeliveryScreen (klien-8)", () => {
     expect(download.current.retry).toHaveBeenCalled();
   });
 
-  it("AC-DEL-004 Print shows the print files", async () => {
+  it("AC-DEL-004 F-20 another item's tab shows its files", async () => {
     render(<DeliveryScreen gate={GATE} token="T1" files={FILES} />);
-    await userEvent.setup().click(screen.getByRole("radio", { name: "Print · 1" }));
-    expect(screen.getByText("1 file Print")).toBeTruthy();
+    await userEvent.setup().click(screen.getByRole("radio", { name: "Cetak 4R · 1" }));
+    expect(screen.getByText("1 file · Cetak 4R")).toBeTruthy();
     expect(screen.getByRole("link", { name: "Unduh P_001.jpg" })).toBeTruthy();
   });
 });

@@ -28,7 +28,14 @@ import { lifecycleWriter } from "./gallery-lifecycle-sql";
 import { lockGallery } from "./gallery-lock-sql";
 import { toGalleryStatus, toProjectStatus } from "./gallery-rows";
 import { insertGallerySource, isWorkspaceSourceActive } from "./gallery-source-link-sql";
-import { claimStep, heldClaim, holdsClaim, releaseRun, writeStep } from "./gallery-sync-sql";
+import {
+  claimStep,
+  heldClaim,
+  holdsClaim,
+  presentCounts,
+  releaseRun,
+  writeStep,
+} from "./gallery-sync-sql";
 
 function sourceWriter(
   tx: DbExecutor,
@@ -43,8 +50,15 @@ function sourceWriter(
     replaceFolderMappings: (sourceId, entries) =>
       replaceFolderMappings(tx, context, sourceId, entries),
     async reclassifySource(sourceId, mappings, now) {
-      // F-20: changed kinds change what the client sees.
+      // F-20: changed kinds change what the client sees and the folder row's counts.
       if ((await reclassifySource(tx, context, sourceId, mappings)) === 0) return;
+      const counts = await presentCounts(tx, context, sourceId);
+      await tx
+        .update(gallerySource)
+        .set({ ...counts, updatedAt: now })
+        .where(
+          and(eq(gallerySource.workspaceId, context.workspaceId), eq(gallerySource.id, sourceId)),
+        );
       await tx
         .update(gallery)
         .set({ contentVersion: sql`${gallery.contentVersion} + 1`, updatedAt: now })

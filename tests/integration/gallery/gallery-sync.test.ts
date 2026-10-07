@@ -157,6 +157,11 @@ describe("gallery sync against Postgres", () => {
     const photos = await photosOf(linked.sourceId);
     expect(photos.filter((photo) => photo.kind === "EDITED")).toHaveLength(3);
     expect(photos.filter((photo) => photo.kind === "PRINT")).toHaveLength(1);
+    const [counted] = await db
+      .select()
+      .from(gallerySource)
+      .where(eq(gallerySource.id, linked.sourceId));
+    expect(counted).toMatchObject({ proofCount: 4, editedCount: 3, printCount: 1 });
     expect(photos.find((photo) => photo.fileName === "P_001.jpg")?.projectItemId).toBe(
       ids["Foto cetak"],
     );

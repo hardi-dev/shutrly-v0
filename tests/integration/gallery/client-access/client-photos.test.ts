@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
+import { createWorkersClientListCache } from "@/adapters/cache/workers-client-list-cache/workers-client-list-cache";
 import type { Db } from "@/adapters/db/client/client.types";
 import { createDrizzleClientGalleryReader } from "@/adapters/db/gallery-repository/drizzle-client-gallery-reader";
 import { createDrizzleGalleryBrowseReader } from "@/adapters/db/gallery-repository/drizzle-gallery-browse-reader";
@@ -67,7 +68,11 @@ afterAll(() => close());
 
 const browse = (query: Record<string, unknown>) =>
   browseClientPhotos(
-    { browse: createDrizzleGalleryBrowseReader(db, { client: true }), directImages: true },
+    {
+      browse: createDrizzleGalleryBrowseReader(db, { client: true }),
+      directImages: true,
+      cache: createWorkersClientListCache(null),
+    },
     clientContextOf(target),
     { kind: "EDITED", sourceId: null, path: "", search: "", cursor: null, ...query },
   );

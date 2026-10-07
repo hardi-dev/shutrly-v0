@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
+import { createWorkersClientListCache } from "@/adapters/cache/workers-client-list-cache/workers-client-list-cache";
 import type { Db } from "@/adapters/db/client/client.types";
 import { createDrizzleClientGalleryReader } from "@/adapters/db/gallery-repository/drizzle-client-gallery-reader";
 import { createDrizzleGalleryBrowseReader } from "@/adapters/db/gallery-repository/drizzle-gallery-browse-reader";
@@ -144,6 +145,7 @@ describe("finished-file downloads (D-18)", () => {
     const browse = {
       browse: createDrizzleGalleryBrowseReader(db, { client: true }),
       directImages: true,
+      cache: createWorkersClientListCache(null),
     };
     const query = { kind: "EDITED", sourceId: null, path: "", search: "", cursor: null };
     const sources = await browseClientPhotos(browse, client, query);
@@ -160,6 +162,7 @@ describe("finished-file downloads (D-18)", () => {
     const browse = {
       browse: createDrizzleGalleryBrowseReader(db, { client: true }),
       directImages: true,
+      cache: createWorkersClientListCache(null),
     };
     const page = await browseClientPhotos(browse, client, {
       kind: "EDITED",
@@ -181,6 +184,7 @@ describe("finished-file downloads (D-18)", () => {
     const browse = {
       browse: createDrizzleGalleryBrowseReader(db, { client: true }),
       directImages: true,
+      cache: createWorkersClientListCache(null),
     };
     const pages = await Promise.all(
       (["EDITED", "PRINT"] as const).map((kind) =>

@@ -2,6 +2,7 @@ import "server-only";
 
 import { cookies } from "next/headers";
 
+import { createWorkersClientListCache } from "@/adapters/cache/workers-client-list-cache/workers-client-list-cache";
 import { createWebCryptoClientSessionSigner } from "@/adapters/crypto/client-session-signer/web-crypto-client-session-signer";
 import type { Db } from "@/adapters/db/client/client.types";
 import { createDrizzleClientAccessRepository } from "@/adapters/db/gallery-repository/drizzle-client-access-repository";
@@ -26,6 +27,7 @@ function scopeFor(db: Db, rc: RequestContext, now: Date): ClientGalleryScope {
     reader: createDrizzleClientGalleryReader(db),
     provider: providerFor(rc.env),
     directImages: rc.env.E2E_FAKE_DRIVE !== "1",
+    cache: createWorkersClientListCache(),
     now,
   };
 }

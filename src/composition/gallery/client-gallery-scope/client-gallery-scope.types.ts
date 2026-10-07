@@ -1,4 +1,5 @@
 import type { ClientGalleryReaderPort } from "@/features/gallery/application/ports/client-gallery-reader/client-gallery-reader.port";
+import type { ClientListCachePort } from "@/features/gallery/application/ports/client-list-cache/client-list-cache.port";
 import type { GalleryBrowseReaderPort } from "@/features/gallery/application/ports/gallery-browse-reader/gallery-browse-reader.port";
 import type { GalleryRateLimiterPort } from "@/features/gallery/application/ports/gallery-rate-limiter/gallery-rate-limiter.port";
 import type { GallerySourceProviderPort } from "@/features/gallery/application/ports/gallery-source-provider/gallery-source-provider.port";
@@ -18,6 +19,8 @@ export interface ClientGalleryScope {
   readonly reader: ClientGalleryReaderPort;
   readonly provider: GallerySourceProviderPort;
   readonly directImages: boolean;
+  /** D-22: client photo lists by content version. */
+  readonly cache: ClientListCachePort;
   readonly now: Date;
 }
 

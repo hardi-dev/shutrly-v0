@@ -1,3 +1,4 @@
+import type { ClientListCachePort } from "../../ports/client-list-cache/client-list-cache.port";
 import type { BrowseCursor } from "../../ports/gallery-browse-reader/gallery-browse-reader.port";
 import type { GalleryBrowseReaderPort } from "../../ports/gallery-browse-reader/gallery-browse-reader.port";
 import type {
@@ -25,4 +26,6 @@ export interface ClientBrowseDeps {
   /** The client mode of the browse reader. */
   readonly browse: GalleryBrowseReaderPort;
   readonly directImages: boolean;
+  /** D-22: the Workers cache, or a no-op where there is none. */
+  readonly cache: ClientListCachePort;
 }

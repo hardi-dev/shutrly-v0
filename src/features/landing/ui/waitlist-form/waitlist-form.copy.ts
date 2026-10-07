@@ -6,9 +6,11 @@ export const WAITLIST_FORM_COPY = {
   submitShort: "Join waitlist",
   submitting: "Joining…", // not in Pencil
   promise: "Get notified when Shutrly launches. No spam.",
-  // not in Pencil: privacy note (AC-LND-011); the removal contact is still open (plan.md)
+  // not in Pencil: privacy note (AC-LND-011), with the removal contact (Owner 2026-10-08)
   privacy:
-    "We only use your email to tell you about the launch. It’s kept with our email provider, never shared, and removed whenever you ask.",
+    "We only use your email to tell you about the launch. It’s kept with our email provider, never shared, and removed whenever you ask at",
+  contactEmail: "hello@shutrly.space",
+  privacyEnd: ".",
   botLabel: "Leave this field empty", // not in Pencil: bot field, hidden from people
   errors: {
     "email.required": "Enter your email address.", // not in Pencil

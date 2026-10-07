@@ -10,6 +10,14 @@ describe("LandingFooter", () => {
     expect(screen.getByRole("link", { name: COPY.privacy })).toHaveAttribute("href", "#privacy");
   });
 
+  it("AC-LND-011 links Contact to the removal and contact address", () => {
+    render(<LandingFooter />);
+    expect(screen.getByRole("link", { name: COPY.contact })).toHaveAttribute(
+      "href",
+      `mailto:${COPY.contactEmail}`,
+    );
+  });
+
   it("shows the copyright year", () => {
     render(<LandingFooter />);
     expect(screen.getByRole("contentinfo")).toHaveTextContent(COPY.copyright);

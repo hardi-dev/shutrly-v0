@@ -24,3 +24,7 @@ export interface WaitlistMessagesProps {
   error: string | undefined;
   formError: string | undefined;
 }
+
+export interface PrivacyNoteProps {
+  className: string;
+}

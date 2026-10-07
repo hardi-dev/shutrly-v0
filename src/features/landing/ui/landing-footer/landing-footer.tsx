@@ -5,8 +5,8 @@ import { LANDING_PAGE_COPY as COPY } from "../landing-page/landing-page.copy";
 const LINK = "text-(--color-semantic-text-secondary)";
 
 /**
- * The landing footer (landing.pen bcn90 / LXKAW). *Privacy* jumps to the privacy note under the
- * form; *Contact* stays text until the Owner sets the removal address (plan.md › Open items).
+ * The landing footer (landing.pen bcn90 / LXKAW). *Contact* writes to the removal and contact
+ * address (AC-LND-011); *Privacy* jumps to the privacy note under the form.
  * @returns the footer
  */
 export function LandingFooter() {
@@ -17,7 +17,12 @@ export function LandingFooter() {
         aria-label={COPY.footerLabel}
         className="flex items-center gap-(--space-5) md:gap-(--space-6)"
       >
-        <span className={LINK}>{COPY.contact}</span>
+        <a
+          href={`mailto:${COPY.contactEmail}`}
+          className={cn(LINK, "hover:text-(--color-semantic-text-primary)")}
+        >
+          {COPY.contact}
+        </a>
         <a href="#privacy" className={cn(LINK, "hover:text-(--color-semantic-text-primary)")}>
           {COPY.privacy}
         </a>

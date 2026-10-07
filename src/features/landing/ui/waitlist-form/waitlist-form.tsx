@@ -8,6 +8,7 @@ import { postWaitlist } from "../post-waitlist/post-waitlist";
 import { useWaitlistForm } from "../use-waitlist-form/use-waitlist-form";
 import { WAITLIST_FORM_COPY as COPY } from "./waitlist-form.copy";
 import type {
+  PrivacyNoteProps,
   WaitlistBotFieldProps,
   WaitlistFormProps,
   WaitlistMessagesProps,
@@ -22,6 +23,22 @@ const FORM_ERROR_TEXT = new Map<string, string>([
 const NOTE = "text-center text-(length:--font-size-label) leading-(--font-line-height-body)";
 const ERROR_NOTE = cn(NOTE, "text-(--color-semantic-status-danger-fg)");
 const MUTED_NOTE = cn(NOTE, "text-(--color-semantic-text-muted)");
+
+// The privacy note with its removal contact as a mail link (AC-LND-011).
+function PrivacyNote({ className }: Readonly<PrivacyNoteProps>) {
+  return (
+    <p id="privacy" className={className}>
+      {COPY.privacy}{" "}
+      <a
+        href={`mailto:${COPY.contactEmail}`}
+        className="font-medium text-(--color-semantic-text-secondary) underline underline-offset-2"
+      >
+        {COPY.contactEmail}
+      </a>
+      {COPY.privacyEnd}
+    </p>
+  );
+}
 
 function WaitlistJoined() {
   const title = useRef<HTMLParagraphElement>(null);
@@ -43,9 +60,7 @@ function WaitlistJoined() {
       <p className="text-(length:--font-size-body) text-(--color-semantic-text-secondary)">
         {COPY.successBody}
       </p>
-      <p id="privacy" className={cn(MUTED_NOTE, "pt-(--space-2)")}>
-        {COPY.privacy}
-      </p>
+      <PrivacyNote className={cn(MUTED_NOTE, "pt-(--space-2)")} />
     </div>
   );
 }
@@ -110,9 +125,7 @@ function WaitlistMessages({ id, error, formError }: Readonly<WaitlistMessagesPro
         </p>
       ) : null}
       <p className={MUTED_NOTE}>{COPY.promise}</p>
-      <p id="privacy" className={MUTED_NOTE}>
-        {COPY.privacy}
-      </p>
+      <PrivacyNote className={MUTED_NOTE} />
     </>
   );
 }

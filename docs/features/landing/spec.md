@@ -100,5 +100,5 @@ Checked against the constitution, the business-rules index (no rule covers this 
 | FC-002 | The waitlist has no `workspace_id`, but the schema conventions put `workspace_id` on tenant rows. | C-101, ADR-003, BR-WS-002 | It's platform-level data, not tenant data, and since ADR-022 it lives in Resend, not in our database. C-101 doesn't change (Owner 2026-10-07). | RESOLVED |
 
 ## Open Questions / SPEC GAPS
-- **Removal contact:** which address does the privacy note give? The Owner decides in design (2026-10-07). Use a placeholder in Pencil, and fill it in before ship.
+- **Removal contact:** RESOLVED (Owner 2026-10-08): `hello@shutrly.space`, linked from the privacy note and the footer *Contact*. Mail is received by Namecheap Private Email (MX and SPF in the Netlify DNS zone).
 - **Copy for features not built yet:** the Owner chose to present the full MVP as available. Production hides the app, so nobody can test a claim yet. Review the copy again before the gate opens.

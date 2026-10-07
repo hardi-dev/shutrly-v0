@@ -53,7 +53,7 @@ describe("WaitlistForm", () => {
     expect(await screen.findByText(COPY.successTitle)).toBeInTheDocument();
     expect(action).toHaveBeenCalledWith({ email: "Rina@Example.com", website: "" });
     expect(screen.queryByLabelText(COPY.emailLabel)).not.toBeInTheDocument();
-    expect(screen.getByText(COPY.privacy)).toHaveAttribute("id", "privacy");
+    expect(screen.getByRole("link", { name: COPY.contactEmail })).toBeInTheDocument();
   });
 
   it("AC-LND-005 disables the button while the request runs", async () => {
@@ -104,8 +104,12 @@ describe("WaitlistForm", () => {
     expect(bot?.closest('[aria-hidden="true"]')).not.toBeNull();
   });
 
-  it("AC-LND-011 shows the privacy note under the button", () => {
+  it("AC-LND-011 shows the privacy note under the button with the removal contact", () => {
     render(<WaitlistForm action={vi.fn()} />);
-    expect(screen.getByText(COPY.privacy)).toBeInTheDocument();
+    expect(screen.getByText(/We only use your email/)).toHaveAttribute("id", "privacy");
+    expect(screen.getByRole("link", { name: COPY.contactEmail })).toHaveAttribute(
+      "href",
+      `mailto:${COPY.contactEmail}`,
+    );
   });
 });

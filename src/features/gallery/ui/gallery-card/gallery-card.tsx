@@ -10,11 +10,12 @@ import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
-import { CopyPasswordButton } from "../copy-password-button/copy-password-button";
 import { CreateGalleryDialog } from "../create-gallery-dialog/create-gallery-dialog";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { GalleryFacts } from "../gallery-facts/gallery-facts";
 import type { GalleryFact } from "../gallery-facts/gallery-facts.types";
+import { deliverySummary, selectionSummary } from "../gallery-summary-text/gallery-summary-text";
+import type { GallerySummaryRow } from "../gallery-summary-text/gallery-summary-text.types";
 import {
   galleryExpiryFact,
   galleryStatusChip,
@@ -27,8 +28,9 @@ import type {
   GallerySummaryFactsProps,
   NoGalleryProps,
 } from "./gallery-card.types";
+import { GallerySummaryRows } from "./gallery-summary-rows";
 
-/** The project detail's Galeri card (board `ZiJzF`): *Buat galeri*, the draft-project hint, or the gallery facts (AC-GAL-001, 003). */
+/** The project detail's Galeri card (board `ZiJzF`, Owner 7): *Buat galeri*, the draft-project hint, or the gallery facts with the *Pilihan klien* and *Hasil akhir* rows (AC-GAL-001, 003, A-34). */
 export function GalleryCard(props: Readonly<GalleryCardProps>) {
   const router = useRouter();
   const isMobile = useMobileViewport();
@@ -49,7 +51,10 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
         </Button>
       }
     >
-      <GallerySummaryFacts gallery={card.gallery} isMobile={isMobile} />
+      <div className="flex flex-col gap-(--space-4) p-(--space-4) md:gap-(--space-5) md:p-(--space-6)">
+        <GallerySummaryFacts gallery={card.gallery} isMobile={isMobile} />
+        <GallerySummaryRows rows={summaryRows(props, isMobile)} />
+      </div>
       {card.gallery.failedSourceCount > 0 ? (
         <div className="px-(--space-4) pb-(--space-4) md:px-(--space-6) md:pb-(--space-6)">
           <Alert
@@ -61,6 +66,17 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
       ) : null}
     </SectionCard>
   );
+}
+
+function summaryRows(
+  { selection, delivery }: Readonly<GalleryCardProps>,
+  isMobile: boolean,
+): GallerySummaryRow[] {
+  const rows = [
+    selection ? selectionSummary(selection, isMobile) : null,
+    delivery ? deliverySummary(delivery, isMobile) : null,
+  ];
+  return rows.filter((row) => row !== null);
 }
 
 function failedNames(names: readonly string[]): string {
@@ -127,32 +143,24 @@ function NoGallery(props: Readonly<NoGalleryProps>) {
 
 function GallerySummaryFacts({ gallery, isMobile }: Readonly<GallerySummaryFactsProps>) {
   const expiry = galleryExpiryFact(gallery);
+  const status: GalleryFact = {
+    label: GALLERY_COPY.factStatus,
+    value: <StatusChip {...galleryStatusChip(gallery.status)} />,
+  };
+  const photos: GalleryFact = {
+    label: GALLERY_COPY.factPhotos,
+    value: photoCountsText(gallery.counts),
+  };
+  if (isMobile) return <GalleryFacts facts={[status, photos]} isFlush />;
   const sources =
     gallery.activeSourceCount === 0
       ? GALLERY_COPY.noSources
       : GALLERY_COPY.sourceCount(gallery.activeSourceCount);
-  const photos = photoCountsText(gallery.counts);
   const facts: GalleryFact[] = [
-    {
-      label: GALLERY_COPY.factStatus,
-      value: <StatusChip {...galleryStatusChip(gallery.status)} />,
-    },
-    {
-      label: GALLERY_COPY.factPassword,
-      value: (
-        <>
-          {gallery.password}
-          <CopyPasswordButton password={gallery.password} />
-        </>
-      ),
-    },
-    ...(isMobile
-      ? [{ label: GALLERY_COPY.factSourcesPhotos, value: `${sources} · ${photos}` }]
-      : [
-          { label: GALLERY_COPY.factSources, value: sources },
-          { label: GALLERY_COPY.factPhotos, value: photos },
-        ]),
+    status,
+    { label: GALLERY_COPY.factSources, value: sources },
+    photos,
     { label: GALLERY_COPY.factExpiry, value: expiry.text, isMuted: expiry.isMuted },
   ];
-  return <GalleryFacts facts={facts} />;
+  return <GalleryFacts facts={facts} isFlush />;
 }

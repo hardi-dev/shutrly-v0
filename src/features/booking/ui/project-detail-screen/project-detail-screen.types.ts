@@ -14,16 +14,10 @@ export interface ProjectDetailScreenProps {
   readonly menuActions: ProjectMenuActions;
   readonly editActions: ProjectEditActions;
   readonly definitions: readonly DefinitionOption[];
-  /** The F-09 Galeri card, rendered right after *Info* (gallery TD D-16). */
+  /** The F-09 Galeri card with the F-10 summary rows, rendered right after *Info* (gallery TD D-16, client-access D-20). */
   readonly galleryCard?: ReactNode;
-  /** The F-10 *Pilihan klien* card, rendered right after the Galeri card (client-access TD D-20). */
-  readonly selectionCard?: ReactNode;
-  /** F-10 Slice 7: the *Add-on* card, after *Pilihan klien* (D-20). */
+  /** F-10 Slice 7: the *Add-on* card, after the Galeri card (D-20, Owner 7). */
   readonly addOnCard?: ReactNode;
-  /** F-10 Slice 8: the *Hasil akhir* card, after *Add-on* (D-20). */
-  readonly deliveryCard?: ReactNode;
-  /** F-10 Slice 10: the *Akses klien* card, after *Hasil akhir* (D-20). */
-  readonly accessCard?: ReactNode;
   /** Active members with their roles, for the Penugasan form (D-13). */
   readonly assignableMembers: readonly AssignableMember[];
   readonly addAssignmentAction: AssignmentDialogProps["addAction"];

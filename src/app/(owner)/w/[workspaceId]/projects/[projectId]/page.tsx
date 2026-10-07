@@ -4,7 +4,6 @@ import {
   createAddOnAction,
   deleteDraftAddOnAction,
 } from "@/app/actions/booking/add-ons";
-import { rotateClientLinkAction } from "@/app/actions/booking/client-link";
 import {
   PROJECT_EDIT_ACTIONS,
   PROJECT_MENU_ACTIONS,
@@ -13,19 +12,13 @@ import {
   addSessionAssignmentAction,
   removeSessionAssignmentAction,
 } from "@/app/actions/booking/session-team";
-import { completeProjectAction, publishFinalDeliveryAction } from "@/app/actions/gallery/delivery";
-import {
-  createGalleryAction,
-  proposeGalleryPasswordAction,
-  rotateGalleryPasswordAction,
-} from "@/app/actions/gallery/galleries";
+import { createGalleryAction, proposeGalleryPasswordAction } from "@/app/actions/gallery/galleries";
 import { loadAddOnCard } from "@/composition/booking/add-on-flow/add-on-flow";
 import {
   loadProjectDefinitions,
   loadProjectDetail,
 } from "@/composition/booking/project-flow/project-flow";
 import { loadAssignableMembers } from "@/composition/booking/team-flow/team-flow";
-import { loadAccessCard } from "@/composition/gallery/access-card-flow/access-card-flow";
 import { loadDeliveryCard } from "@/composition/gallery/delivery-flow/delivery-flow";
 import { loadGalleryCard } from "@/composition/gallery/gallery-flow/gallery-flow";
 import { loadSelectionCard } from "@/composition/gallery/selection-owner-flow/selection-owner-flow";
@@ -36,13 +29,9 @@ import { ProjectDetailScreen } from "@/features/booking/ui/project-detail-screen
 import { projectMetaText } from "@/features/booking/ui/project-session-summary/project-session-summary";
 import { projectStatusChip } from "@/features/booking/ui/project-status-chip/project-status-props";
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
-import type { AccessCardView } from "@/features/gallery/application/use-cases/get-access-card/get-access-card.types";
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
 import type { SelectionCardView } from "@/features/gallery/application/use-cases/owner-selection-views/owner-selection-views.types";
-import { DeliveryCard } from "@/features/gallery/ui/delivery-card/delivery-card";
 import { GalleryCard } from "@/features/gallery/ui/gallery-card/gallery-card";
-import { ProjectAccessCard } from "@/features/gallery/ui/project-access-card/project-access-card";
-import { SelectionCard } from "@/features/gallery/ui/selection-card/selection-card";
 import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
 import { ToastOnMount } from "@/ui/patterns/toast/toast";
 
@@ -90,7 +79,7 @@ export default async function ProjectDetailPage({
 }
 
 async function loadPage(workspaceId: string, projectId: string) {
-  const [project, definitions, assignableMembers, gallery, selection, addOn, delivery, access] =
+  const [project, definitions, assignableMembers, gallery, selection, addOn, delivery] =
     await Promise.all([
       loadProjectDetail(workspaceId, projectId),
       loadProjectDefinitions(workspaceId),
@@ -99,20 +88,12 @@ async function loadPage(workspaceId: string, projectId: string) {
       loadSelectionCard(workspaceId, projectId),
       loadAddOnCard(workspaceId, projectId),
       loadDeliveryCard(workspaceId, projectId),
-      loadAccessCard(workspaceId, projectId),
     ]);
   const cards = {
-    galleryCard: galleryCardSlot(workspaceId, gallery),
-    selectionCard: selectionCardSlot(workspaceId, projectId, selection),
+    galleryCard: galleryCardSlot(workspaceId, { gallery, selection, delivery }),
     addOnCard: addOnCardSlot(workspaceId, projectId, addOn),
-    deliveryCard: deliveryCardSlot(workspaceId, projectId, delivery),
-    accessCard: accessCardSlot(workspaceId, access),
   };
-  return { project, definitions, assignableMembers, cards };
-}
-
-function selectionCardSlot(workspaceId: string, projectId: string, card: SelectionCardView) {
-  return <SelectionCard workspaceId={workspaceId} projectId={projectId} card={card} />;
+  return { project, definitions, assignableMembers, delivery, cards };
 }
 
 const ADD_ON_ACTIONS = {
@@ -135,39 +116,17 @@ function addOnCardSlot(workspaceId: string, projectId: string, card: AddOnCardVi
   );
 }
 
-const DELIVERY_ACTIONS = {
-  publishAction: publishFinalDeliveryAction,
-  completeAction: completeProjectAction,
-};
-
-function deliveryCardSlot(workspaceId: string, projectId: string, card: DeliveryCardView) {
-  if (!card.isShown) return null;
-  return (
-    <DeliveryCard
-      workspaceId={workspaceId}
-      projectId={projectId}
-      card={card}
-      actions={DELIVERY_ACTIONS}
-    />
-  );
-}
-
-const ACCESS_ACTIONS = {
-  rotateLinkAction: rotateClientLinkAction,
-  proposeAction: proposeGalleryPasswordAction,
-  rotatePasswordAction: rotateGalleryPasswordAction,
-};
-
-function accessCardSlot(workspaceId: string, card: AccessCardView | null) {
-  if (!card) return null;
-  return <ProjectAccessCard workspaceId={workspaceId} card={card} actions={ACCESS_ACTIONS} />;
-}
-
-function galleryCardSlot(workspaceId: string, card: GalleryCardView) {
+// The Galeri card summarises the picks and final delivery, which live on the gallery page (A-34).
+function galleryCardSlot(
+  workspaceId: string,
+  views: { gallery: GalleryCardView; selection: SelectionCardView; delivery: DeliveryCardView },
+) {
   return (
     <GalleryCard
       workspaceId={workspaceId}
-      card={card}
+      card={views.gallery}
+      selection={views.selection}
+      delivery={views.delivery}
       createAction={createGalleryAction}
       proposeAction={proposeGalleryPasswordAction}
     />

@@ -1,5 +1,6 @@
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
 import {
+  formatGalleryDate,
   formatGalleryDateAndTime,
   formatGalleryShortDate,
 } from "@/features/gallery/domain/gallery-display/gallery-display";
@@ -73,4 +74,10 @@ export function deliveryRows(card: DeliveryCardView): readonly DeliveryRow[] {
 export function deliveryNote(card: DeliveryCardView): string | null {
   if (card.state === "NO_FILES") return COPY.noFilesNote;
   return card.state === "GALLERY_INACTIVE" ? COPY.inactiveNote : null;
+}
+
+/** The header meta of a delivered project, *Hasil akhir dipublikasikan {date}*, or null in any other state (owner-7 `r71J5`). @param card - the card view @returns the meta */
+export function deliveredHeaderMeta(card: DeliveryCardView): string | null {
+  if (card.state !== "PUBLISHED" || card.publishedAt === null) return null;
+  return COPY.headerMeta(formatGalleryDate(card.publishedAt));
 }

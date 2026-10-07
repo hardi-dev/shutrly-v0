@@ -19,6 +19,8 @@ export const DELIVERY_COPY = {
   completedTitle: (when: string) => `Selesai ${when}`,
   completedMeta: "Galeri tetap terbuka selama masih dipublikasikan.",
   chip: { READY: "Siap", PUBLISHED: "Dipublikasikan", COMPLETED: "Selesai" },
+  // owner-7: the project header of a delivered project
+  headerMeta: (when: string) => `Hasil akhir dipublikasikan ${when}`,
   publishTitle: "Publikasikan hasil akhir?",
   publishDescription: "Klien bisa mengunduh lewat link dan password yang sama.",
   // The export ends with "menjadi Dikirim"; the project status chip says *Terkirim* (drift reported).

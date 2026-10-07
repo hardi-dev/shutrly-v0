@@ -123,6 +123,8 @@ function DetailBody({
   menuActions,
   galleryCard,
   addOnCard,
+  headerAction,
+  headerMeta,
   api,
   edit,
   team,
@@ -149,7 +151,9 @@ function DetailBody({
   };
   const step = project.nextStep;
   const button =
-    step === null ? null : (
+    step === null ? (
+      (headerAction ?? null)
+    ) : (
       <ProjectStepButton
         step={step}
         size={isMobile ? "lg" : "md"}
@@ -177,6 +181,7 @@ function DetailBody({
         edit={edit}
         galleryCard={galleryCard}
         addOnCard={addOnCard}
+        headerMeta={headerMeta}
         team={team}
       />
     </>
@@ -191,6 +196,7 @@ function DetailCards({
   edit,
   galleryCard,
   addOnCard,
+  headerMeta,
   team,
 }: Readonly<{
   project: ProjectDetailScreenProps["project"];
@@ -200,6 +206,7 @@ function DetailCards({
   edit: DetailEditHandlers;
   galleryCard: ReactNode;
   addOnCard: ReactNode;
+  headerMeta?: string;
   team: SessionTeamHandlers;
 }>) {
   return (
@@ -207,7 +214,7 @@ function DetailCards({
       {isMobile ? (
         <header className="flex flex-col items-start gap-(--space-2)">
           <ProjectStatusChip status={project.status} />
-          <ProjectSessionSummaryLine shown={project.shownSession} />
+          <ProjectSessionSummaryLine shown={project.shownSession} meta={headerMeta} />
         </header>
       ) : null}
       {project.cancellation ? <ProjectCancelledAlert cancellation={project.cancellation} /> : null}

@@ -18,6 +18,10 @@ export interface ProjectDetailScreenProps {
   readonly galleryCard?: ReactNode;
   /** F-10 Slice 7: the *Add-on* card, after the Galeri card (D-20, Owner 7). */
   readonly addOnCard?: ReactNode;
+  /** The header's main action when the project has no status step, e.g. *Tandai selesai* on a DELIVERED project (client-access D-20, A-34). */
+  readonly headerAction?: ReactNode;
+  /** Replaces the phone header's session line, e.g. *Hasil akhir dipublikasikan …* (Owner 7). */
+  readonly headerMeta?: string;
   /** Active members with their roles, for the Penugasan form (D-13). */
   readonly assignableMembers: readonly AssignableMember[];
   readonly addAssignmentAction: AssignmentDialogProps["addAction"];

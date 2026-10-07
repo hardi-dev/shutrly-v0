@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
 
-import { deliveryNote, deliveryRows, finishedFiles } from "./delivery-text";
+import { deliveredHeaderMeta, deliveryNote, deliveryRows, finishedFiles } from "./delivery-text";
 
 const CARD: DeliveryCardView = {
   state: "READY",
@@ -47,5 +47,12 @@ describe("delivery text (hasilakhirowner-kartu)", () => {
 
   it("leaves out a kind with no file", () => {
     expect(finishedFiles({ editedCount: 3, printCount: 0 })).toBe("3 foto Edited");
+  });
+
+  it("Owner 7: a delivered project's header says when final delivery was published", () => {
+    const published = { ...CARD, state: "PUBLISHED" as const, publishedAt: "2026-10-05T03:00:00Z" };
+    expect(deliveredHeaderMeta(published)).toBe("Hasil akhir dipublikasikan Sen, 5 Okt 2026");
+    expect(deliveredHeaderMeta({ ...published, state: "COMPLETED" })).toBeNull();
+    expect(deliveredHeaderMeta(CARD)).toBeNull();
   });
 });

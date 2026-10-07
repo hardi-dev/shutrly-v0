@@ -1,0 +1,30 @@
+# F-20 Delivery folder mapping — build notes
+
+Built 2026-10-07 on `feat/client-access` straight from the accepted [intent](intent.md), without spec/AC/Pencil (Owner: "build langsung aja, nanti di catat di akhir"). The rule is BR-GAL-007 (replaced).
+
+## What it does
+- *Sumber foto* › folder ⋯ › *Edit folder*: the name, and *Subfolder hasil akhir* with one choice per subfolder found by the last sync: *Tetap foto proof* or a selection item of this project's package. One *Simpan* saves both; photos are reclassified at once (no re-sync).
+- No selection item in the package: a short notice with *Buka Isi paket* (Owner: keep it simple). No subfolders yet: *Sinkronkan dulu*.
+- A sync that finds subfolders the Owner hasn't seen yet shows a toast *n subfolder baru di {folder}* with *Petakan*, which opens *Edit folder*.
+- Client *Hasil akhir*: one tab per package item (was *Edited / Print*); files synced before F-20 without an item fall back to an *Edited* / *Print* tab.
+
+## Rules (Owner 2026-10-07)
+- Per linked folder; items offered are this project's selection items only; one subfolder → one item, one item → many subfolders; mapping is optional and may come before the subfolder exists.
+- `COUNT` item → `EDITED`, `QUANTITY` item → `PRINT`; the longest mapped folder wins; the mapped level is folded out of the browse path.
+- No name is recognised by itself any more (`edited` / `print` included). Unmapped subfolders stay proofs and still show in the grid.
+- A client pick of a photo that becomes a finished file stays. No migration of old data (still in development).
+
+## Code
+- Migration `0018_folder_map` (additive): table `gallery_folder_map`, `gallery_photo.project_item_id`, `gallery_source.known_folders`. Run on the dev database 2026-10-07; the integration database already had it.
+- Domain `classifyPhoto(segments, mappings)`, `kindForPickMode`; sync reads the mappings once per step (`SyncTarget.mappings`) and stores `project_item_id`; a finished run returns `newFolders` (`takeNewFolders`).
+- Use cases `getFolderMapping` / `setFolderMapping` (gallery lock, items checked against the project, reclassify per folder path, content version +1); actions `getFolderMappingAction` / `setFolderMappingAction`.
+- UI: `use-folder-mapping`, `folder-mapping-fields` in `rename-folder-dialog` (*Edit folder*), toast in `use-gallery-sync`; `get-delivery-files` returns `groups`, *Hasil akhir* tabs per item.
+
+## Checks
+- Unit/dom: classification (6), walk step, sync step (+new folders), folder mapping (4), sources section (+3), delivery screen and text. Integration: `gallery-sync` (+map-after-sync), `gallery-browse`, `gallery-lifecycle`, delivery files; the fixture's folders are mapped through `setFolderMapping` (`helpers/map-fixture-folders.ts`).
+- Browser: not seen (the Owner session had expired; I didn't sign in for it).
+
+## Deviations / open
+- No spec, AC or Pencil frames (Owner override); copy marked *built without a Pencil frame*.
+- Mapping isn't offered inside *Tambah folder* / *Buat galeri*: subfolders are only known after the first sync, so the new-folders toast's *Petakan* is the "map when adding" path.
+- The Owner's *Hasil akhir* card summary still counts *edited · print*; only the client page shows items.

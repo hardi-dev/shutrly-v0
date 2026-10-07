@@ -269,7 +269,7 @@ A gallery can be published only with a password hash and at least one active, ac
 Sync upserts photos by `(gallerySource, externalFileId)` and records sync status, time, and error. Repeated syncs never duplicate photos. Sync runs only when the Owner links a source or asks for it; nothing is scheduled. A photo whose file is no longer found is kept and marked *missing*: it is hidden from the client and flagged to the Owner, and it becomes visible again if a later sync finds the file. Sync errors never record the Drive link (C-103). *(F-09 discovery, Owner 2026-10-04.)*
 
 ### BR-GAL-007 — Folder classification
-A source is synced with its whole folder tree. An image's kind comes from its nearest ancestor folder named `edited` or `print` (case-insensitive, at any depth): that folder makes it `EDITED` or `PRINT`. Every other image, in the source root or in any other subfolder (for example `Akad`, `Resepsi`, `raw`), is `PROOF`. Each photo keeps its folder path, so the Owner can browse the tree. Non-image files are ignored. *(F-09 design review, Owner 2026-10-04.)*
+*(Replaced 2026-10-07, F-20 delivery folder mapping, Owner.)* A source is synced with its whole folder tree. The Owner maps subfolders of a linked folder to selection items of the project's package (*Dipakai untuk pilihan foto klien*); mapping is optional and may be done before the subfolder exists. One subfolder maps to one item; one item may have several subfolders. An image inside a mapped subfolder (at any depth below it; the longest mapped folder wins) is a finished file for that item: `EDITED` for a `COUNT` item, `PRINT` for a `QUANTITY` item. Every other image is a `PROOF`. No folder name is recognised by itself any more (`edited` / `print` included). Saving a mapping reclassifies the stored photos at once; a sync that finds subfolders the Owner hasn't seen yet names them. A client pick of a photo that becomes a finished file stays as it is. A package without selection items has nothing to map; the Owner is pointed to *Isi paket*.
 
 ### BR-GAL-008 — Slug is display-only
 An optional gallery slug never grants access.
@@ -337,13 +337,13 @@ Clients see "used / effective" per group, without a separate add-on bucket.
 Final delivery uses the existing gallery link and password. No separate delivery URL.
 
 ### BR-DEL-002 — Hidden until published
-`EDITED`/`PRINT` files are hidden from clients until final delivery is published. They are never selectable and never count toward limits.
+`EDITED`/`PRINT` files are hidden from clients until final delivery is published. They are never selectable and never count toward limits. *Hasil akhir* shows them per package item (F-20).
 
 ### BR-DEL-003 — Publishing final delivery
 Requires at least one synced `EDITED` or `PRINT` file and a project in `BOOKED`, `SHOOTING` or `POST_PROCESSING` (BR-PRJ-004); records `finalDeliveryPublishedAt` and moves the project to `DELIVERED` (never to `COMPLETED`).
 
 ### BR-DEL-004 — Independent finished files
-Each finished file is an independent download with no link to its original proof photo; no inference from names/paths. The client may download one file, several chosen files, or all finished files at once; a bulk download never exposes the Drive folder link or folder ID (BR-ACC-005). *(Download modes: F-10 discovery, Owner 2026-10-05.)*
+Each finished file is an independent download with no link to its original proof photo; no inference from names/paths. The client may download one file, several chosen files, or all finished files at once; a bulk download never exposes the Drive folder link or folder ID (BR-ACC-005). *(Download modes: F-10 discovery, Owner 2026-10-05.)* **Proofs (F-19, Owner 2026-10-07):** a signed-in client may also download the original of any visible proof of the gallery — one, the selected ones, or all — before and after final delivery, never through the folder link or folder ID; downloads are not tracked.
 
 ---
 

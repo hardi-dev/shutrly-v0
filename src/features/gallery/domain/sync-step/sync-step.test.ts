@@ -122,6 +122,15 @@ describe("walkStep", () => {
     expect(run.photos).toHaveLength(0);
   });
 
+  it("F-20 lists every subfolder within depth, empty ones too, across steps", async () => {
+    const tree = {
+      "root-folder-id": [folder("e", "Edit"), folder("p", "Proof"), file("A.jpg")],
+      p: [folder("q", "Day 1"), file("B.jpg")],
+    };
+    const run = await runToEnd(tree, { ...BUDGET, maxListCalls: 1 });
+    expect(run.cursor.folders).toEqual(["Edit", "Proof", "Proof/Day 1"]);
+  });
+
   it("F-20 AC-GAL-030 classifies by the mapped subfolder, folding it out of the browse path, and skips shortcuts", async () => {
     const tree = {
       "root-folder-id": [

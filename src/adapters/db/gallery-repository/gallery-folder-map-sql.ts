@@ -73,11 +73,12 @@ export async function selectFolderPaths(
   return rows.map((row) => row.path);
 }
 
-/** Returns the folder paths not told to the Owner yet and marks every current one known (F-20). @param db - the executor @param context - verified workspace @param sourceId - the gallery source @returns the new paths */
+/** Stores the subfolders a finished run found, empty ones too, and returns those not told to the Owner yet (F-20, Owner 2026-10-07: a photographer prepares folders before uploading). @param db - the executor @param context - verified workspace @param sourceId - the gallery source @param folders - every subfolder path the run found @returns the new paths */
 export async function takeNewFolders(
   db: DbExecutor,
   context: WorkspaceContext,
   sourceId: string,
+  folders: readonly string[],
 ): Promise<string[]> {
   const scope = and(
     eq(gallerySource.workspaceId, context.workspaceId),
@@ -87,10 +88,11 @@ export async function takeNewFolders(
     await db.select({ known: gallerySource.knownFolders }).from(gallerySource).where(scope)
   ).at(0);
   if (!row) return [];
-  const paths = await selectFolderPaths(db, context, sourceId);
+  const paths = [...new Set(folders)].sort((a, b) => a.localeCompare(b));
   const known = new Set(row.known);
   const fresh = paths.filter((path) => !known.has(path));
-  if (fresh.length > 0) await db.update(gallerySource).set({ knownFolders: paths }).where(scope);
+  if (fresh.length > 0 || paths.length !== known.size)
+    await db.update(gallerySource).set({ knownFolders: paths }).where(scope);
   return fresh;
 }
 
@@ -131,6 +133,11 @@ function selectSavedMappings(db: DbExecutor, context: WorkspaceContext, sourceId
     .orderBy(asc(galleryFolderMap.folderPath));
 }
 
+/** The last run's folders, empty ones too, plus any folder holding photos (a source synced before the run kept its folders). */
+function mergeFolders(known: readonly string[], withPhotos: readonly string[]): string[] {
+  return [...new Set([...known, ...withPhotos])].sort((a, b) => a.localeCompare(b));
+}
+
 /** The folder *Edit*'s mapping view: the source's gallery, its folders, the project's selection items and the saved mapping (F-20). @param db - the executor @param context - verified workspace @param sourceId - the gallery source @returns the record, or null for a missing or removed source */
 export async function selectFolderMapping(
   db: DbExecutor,
@@ -139,7 +146,11 @@ export async function selectFolderMapping(
 ): Promise<FolderMappingRecord | null> {
   const source = (
     await db
-      .select({ galleryId: gallerySource.galleryId, projectId: gallery.projectId })
+      .select({
+        galleryId: gallerySource.galleryId,
+        projectId: gallery.projectId,
+        known: gallerySource.knownFolders,
+      })
       .from(gallerySource)
       .innerJoin(
         gallery,
@@ -159,7 +170,7 @@ export async function selectFolderMapping(
   if (!source) return null;
   return {
     galleryId: source.galleryId,
-    folders: await selectFolderPaths(db, context, sourceId),
+    folders: mergeFolders(source.known, await selectFolderPaths(db, context, sourceId)),
     items: await selectMappableItems(db, context, source.projectId),
     mappings: await selectSavedMappings(db, context, sourceId),
   };

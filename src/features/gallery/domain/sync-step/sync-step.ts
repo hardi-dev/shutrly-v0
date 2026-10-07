@@ -32,6 +32,7 @@ interface StepState {
   queue: CursorFolder[];
   readonly photos: SyncedPhoto[];
   readonly seen: string[];
+  readonly folders: string[];
   ignoredCount: number;
   tooDeepCount: number;
   foldersDone: number;
@@ -50,6 +51,7 @@ export function startCursor(root: DriveFolderRef, folderName: string): SyncCurso
       { folderId: root.folderId, resourceKey: root.resourceKey, segments: [], pageToken: null },
     ],
     seen: [],
+    folders: [],
     ignoredCount: 0,
     tooDeepCount: 0,
     foldersDone: 0,
@@ -71,6 +73,7 @@ function openState(cursor: SyncCursor, mappings: readonly FolderMapping[]): Step
     queue: [...cursor.queue],
     photos: [],
     seen: [...cursor.seen],
+    folders: [...cursor.folders],
     ignoredCount: cursor.ignoredCount,
     tooDeepCount: cursor.tooDeepCount,
     foldersDone: cursor.foldersDone,
@@ -89,6 +92,7 @@ function closeState(state: StepState, cursor: SyncCursor): SyncCursor {
     tooDeepCount: state.tooDeepCount,
     foldersDone: state.foldersDone,
     listCalls: state.listCalls,
+    folders: state.folders,
   };
 }
 
@@ -97,13 +101,15 @@ function place(state: StepState, folder: CursorFolder, entry: FolderEntry): void
   if (entry.mimeType === DRIVE_FOLDER_MIME) {
     const segments = [...folder.segments, entry.name];
     if (segments.length > SYNC_MAX_DEPTH) state.tooDeepCount += 1;
-    else
+    else {
+      state.folders.push(segments.join("/"));
       state.queue.push({
         folderId: entry.id,
         resourceKey: entry.resourceKey,
         segments,
         pageToken: null,
       });
+    }
   } else if (isImageMime(entry.mimeType)) {
     state.photos.push(toPhoto(entry, folder.segments, state.mappings));
     state.seen.push(entry.id);

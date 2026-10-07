@@ -186,10 +186,11 @@ export interface GallerySourceRepositoryPort {
     context: WorkspaceContext,
     sourceId: string,
   ) => Promise<FolderMappingRecord | null>;
-  /** Folder paths with photos that the Owner hasn't been told about yet; marks them known (F-20). */
+  /** Stores the subfolders a finished run found, empty ones too, and returns those the Owner hasn't been told about yet (F-20). */
   readonly takeNewFolders: (
     context: WorkspaceContext,
     sourceId: string,
+    folders: readonly string[],
   ) => Promise<readonly string[]>;
   /** Ends the run as failed and clears its cursor; photos earlier steps wrote stay (D-23). */
   readonly failRun: (

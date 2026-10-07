@@ -71,6 +71,19 @@ describe("syncGallerySourceStep", () => {
     expect(new Set(sources.photos.map((photo) => photo.kind))).toEqual(new Set(["PROOF"]));
   });
 
+  it("F-20 names an empty subfolder too, so a prepared folder can be mapped before upload", async () => {
+    const { deps, sources, provider } = await linked();
+    provider.tree.set(RINA_FOLDER_ID, [folderEntry("empty", "Hasil Edit")]);
+    expect((await syncToEnd(deps)).last).toEqual({
+      ok: true,
+      status: "SUCCEEDED",
+      newFolders: ["Hasil Edit"],
+    });
+    expect((await sources.findFolderMapping(WORKSPACE, "source-1"))?.folders).toEqual([
+      "Hasil Edit",
+    ]);
+  });
+
   it("AC-GAL-008 an unshared folder ends as Gagal with no photos", async () => {
     const { deps, sources, provider } = await linked();
     provider.failures.set(RINA_FOLDER_ID, "NOT_PUBLIC");

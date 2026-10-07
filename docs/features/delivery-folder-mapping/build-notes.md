@@ -14,6 +14,8 @@ Built 2026-10-07 on `feat/client-access` straight from the accepted [intent](int
 - No name is recognised by itself any more (`edited` / `print` included). Unmapped subfolders stay proofs and still show in the grid.
 - A client pick of a photo that becomes a finished file stays. No migration of old data (still in development).
 
+- **Empty subfolders are listed too** (Owner manual test, 2026-10-07: a photographer prepares the folders before uploading). A sync records every subfolder within the depth limit in its cursor and, when the run ends, stores them in `gallery_source.known_folders`. *Edit folder* lists those plus any folder that holds photos, and the new-folders toast names empty ones too. No migration.
+
 ## Code
 - Migration `0018_folder_map` (additive): table `gallery_folder_map`, `gallery_photo.project_item_id`, `gallery_source.known_folders`. Run on the dev database 2026-10-07; the integration database already had it.
 - Domain `classifyPhoto(segments, mappings)`, `kindForPickMode`; sync reads the mappings once per step (`SyncTarget.mappings`) and stores `project_item_id`; a finished run returns `newFolders` (`takeNewFolders`).

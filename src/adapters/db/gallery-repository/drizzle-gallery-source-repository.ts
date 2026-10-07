@@ -198,7 +198,7 @@ export function createDrizzleGallerySourceRepository(db: DbExecutor): GallerySou
     findFolderUse: (context, galleryId, folderId) =>
       findFolderUse(db, context, galleryId, folderId),
     findSyncTarget: (context, sourceId) => findSyncTargetWithMappings(db, context, sourceId),
-    takeNewFolders: (context, sourceId) => takeNewFolders(db, context, sourceId),
+    takeNewFolders: (context, sourceId, folders) => takeNewFolders(db, context, sourceId, folders),
     findFolderMapping: (context, sourceId) => selectFolderMapping(db, context, sourceId),
     findGalleryIdByProject: (context, projectId) => findGalleryIdByProject(db, context, projectId),
     listActiveSources: (context, galleryId) => listActiveSources(db, context, galleryId),

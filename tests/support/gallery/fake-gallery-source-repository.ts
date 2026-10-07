@@ -223,9 +223,10 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
           .map((photo) => photo.folderPath),
       ),
     ].sort((a, b) => a.localeCompare(b));
+    const known = this.knownFolders.get(sourceId) ?? [];
     return {
       galleryId: source.galleryId,
-      folders,
+      folders: [...new Set([...known, ...folders])].sort((a, b) => a.localeCompare(b)),
       items: this.mappableItems,
       mappings: this.savedMappings.get(sourceId) ?? [],
     };
@@ -256,16 +257,8 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
     };
   }
 
-  async takeNewFolders(_context: WorkspaceContext, sourceId: string) {
-    const paths = [
-      ...new Set(
-        this.photos
-          .filter(
-            (photo) => photo.sourceId === sourceId && !photo.missing && photo.folderPath !== "",
-          )
-          .map((photo) => photo.folderPath),
-      ),
-    ].sort((a, b) => a.localeCompare(b));
+  async takeNewFolders(_context: WorkspaceContext, sourceId: string, folders: readonly string[]) {
+    const paths = [...new Set(folders)].sort((a, b) => a.localeCompare(b));
     const known = this.knownFolders.get(sourceId) ?? [];
     this.knownFolders.set(sourceId, paths);
     return paths.filter((path) => !known.includes(path));

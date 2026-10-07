@@ -47,7 +47,11 @@ async function runStep(
   if (!written) return galleryFailure("INVALID_STATE");
   if (step.done) {
     // F-20: subfolders the Owner hasn't seen yet get a toast pointing to the mapping.
-    const newFolders = await deps.sources.takeNewFolders(context, target.sourceId);
+    const newFolders = await deps.sources.takeNewFolders(
+      context,
+      target.sourceId,
+      step.cursor.folders,
+    );
     return { ok: true, status: "SUCCEEDED", newFolders };
   }
   return { ok: true, status: "CONTINUE", ...syncProgress(step.cursor) };

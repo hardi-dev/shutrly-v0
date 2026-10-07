@@ -17,6 +17,8 @@ export interface SyncCursor {
   readonly tooDeepCount: number;
   readonly foldersDone: number;
   readonly listCalls: number;
+  /** Every subfolder path found so far, empty ones too, so the Owner can map a prepared folder (F-20). */
+  readonly folders: readonly string[];
 }
 
 export interface SyncBudget {

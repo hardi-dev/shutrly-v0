@@ -27,6 +27,16 @@ Covers: BR-GAL-001, BR-GAL-002, BR-GAL-009 (A-1, A-11)
 - the Galeri card shows *Draf* and a way to add a source;
 - the database stores the password encrypted and as a hash, never in plain text, with `passwordVersion` 1.
 
+**Given** the create form *(amended 2026-10-07, Owner manual test: link the first folder while creating)*
+**When** the Owner also fills the optional folder section (*Sumber*, Drive folder link, optional label, as *Tambah folder*, AC-GAL-005) and submits
+**Then** the gallery is created in `DRAFT` with that folder linked, and the folder syncs as after *Tambah folder*. Another project's use of the folder asks first (AC-GAL-010).
+
+**When** the folder link is invalid (AC-GAL-009) or its source isn't active
+**Then** the field shows the error and **no gallery is created**.
+
+**When** the Owner leaves the folder section empty
+**Then** the gallery is created with no sources, as above.
+
 ## AC-GAL-002 — Password rules
 Covers: BR-GAL-002
 

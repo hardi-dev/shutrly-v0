@@ -47,9 +47,9 @@ Client link (`SEED_CLIENT_PATH`, password `SEED_GALLERY_PASSWORD`) › `/final`.
 
 | # | Langkah | Hasil yang diharapkan | Status | Catatan |
 |---|---|---|---|---|
-| 4.1 | *Hapus* folder yang fotonya belum dipilih klien | Folder dan fotonya hilang | ⬜ | |
-| 4.2 | *Hapus* folder yang fotonya sudah dipilih klien | Ditolak: *Ada foto dari folder ini yang sudah dipilih klien.* | ⬜ | |
-| 4.3 | *Hapus* folder terakhir di galeri yang sudah dipublikasikan | Ditolak | ⬜ | |
+| 4.1 | *Hapus* folder yang fotonya belum dipilih klien | Folder dan fotonya hilang | ✅ | |
+| 4.2 | *Hapus* folder yang fotonya sudah dipilih klien | Ditolak: *Ada foto dari folder ini yang sudah dipilih klien.* | ✅ | |
+| 4.3 | *Hapus* folder terakhir di galeri yang sudah dipublikasikan | Ditolak | ✅ | |
 
 ## 5. Folder di *Buat galeri* (#3)
 

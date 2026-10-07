@@ -54,7 +54,7 @@ describe("SelectionCard (card export states A–E)", () => {
     expect(screen.getByText("1 dari 2 lembar")).toBeTruthy();
     expect(screen.getAllByText("Terbuka")).toHaveLength(2);
     expect(screen.getByRole("link", { name: "Lihat pilihan" }).getAttribute("href")).toBe(
-      "/w/w1/projects/p1/pilihan",
+      "/w/w1/projects/p1/gallery/pilihan",
     );
   });
 

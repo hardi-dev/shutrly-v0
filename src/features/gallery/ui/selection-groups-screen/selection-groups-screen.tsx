@@ -39,7 +39,7 @@ function GroupActions({ workspaceId, projectId, group, lock }: Readonly<GroupCar
       <Button
         variant="secondary"
         iconLeading="eye"
-        href={`/w/${workspaceId}/projects/${projectId}/pilihan/${group.id}`}
+        href={`/w/${workspaceId}/projects/${projectId}/gallery/pilihan/${group.id}`}
       >
         {COPY.viewPicks}
       </Button>

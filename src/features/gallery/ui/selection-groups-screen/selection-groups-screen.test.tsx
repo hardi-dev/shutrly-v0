@@ -80,7 +80,10 @@ describe("SelectionGroupsScreen (owner-1 exports)", () => {
       screen
         .getAllByRole("link", { name: "Lihat pilihan" })
         .map((link) => link.getAttribute("href")),
-    ).toEqual(["/w/w1/projects/p1/pilihan/g-edit", "/w/w1/projects/p1/pilihan/g-print"]);
+    ).toEqual([
+      "/w/w1/projects/p1/gallery/pilihan/g-edit",
+      "/w/w1/projects/p1/gallery/pilihan/g-print",
+    ]);
   });
 
   it("AC-SEL-011 offers Kunci pilihan for a sent group and Tutup pilihan for an open one only", () => {

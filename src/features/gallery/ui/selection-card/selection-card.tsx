@@ -21,7 +21,7 @@ function CardAction({ card, base }: Readonly<SelectionCardActionProps>) {
   }
   const isReview = card.state === "REVIEW";
   return (
-    <Button variant={isReview ? "primary" : "secondary"} href={`${base}/pilihan`}>
+    <Button variant={isReview ? "primary" : "secondary"} href={`${base}/gallery/pilihan`}>
       {isReview ? COPY.reviewPicks : COPY.viewPicks}
     </Button>
   );

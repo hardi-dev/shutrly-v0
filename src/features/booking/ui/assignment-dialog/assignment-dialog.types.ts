@@ -22,6 +22,18 @@ export interface AssignmentDialogProps {
   ) => Promise<AssignmentWriteResult>;
 }
 
+export interface AssignmentDialogBodyProps extends AssignmentDialogProps {
+  /** The member just added from the empty state, preselected (Revision OT #2). */
+  readonly initialMemberId: string | null;
+  readonly onMemberAdded: (member: AssignableMember) => void;
+}
+
+export interface NoMembersProps {
+  readonly canQuickAdd: boolean;
+  readonly onAdded: (member: AssignableMember) => void;
+  readonly onOpenTeam: () => void;
+}
+
 export interface AssignmentShellProps {
   readonly isOpen: boolean;
   readonly onOpenChange: (isOpen: boolean) => void;

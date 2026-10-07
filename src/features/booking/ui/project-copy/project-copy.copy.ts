@@ -96,6 +96,12 @@ export const PROJECT_COPY = {
   assignEmptyTitle: "Belum ada anggota tim aktif",
   assignEmptyBody: "Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini.",
   assignEmptyAction: "Buka Tim",
+  // Revision OT #1, #2 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
+  addTeamMember: "Tambah anggota",
+  assignEmptyQuickBody:
+    "Tambahkan anggota baru di sini. Setelah disimpan, dia langsung dipilih untuk sesi ini.",
+  sessionTeamNoneQuick:
+    "Belum ada anggota tim aktif. Tambahkan di sini, lalu dia langsung dipilih.",
   assignedToastTitle: "Anggota ditambahkan",
   assignedToastBody: (name: string, session: string, role: string) =>
     `${name} bertugas di ${session} sebagai ${role}.`,

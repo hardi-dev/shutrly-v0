@@ -8,6 +8,8 @@ export interface SessionTeamFieldProps {
   /** The picker the form owns, so it can save a choice the Owner has not added yet. */
   readonly picker: ReturnType<typeof useTeamPicker>;
   readonly isDisabled?: boolean;
+  /** Picks a member just added from the empty state's *Tambah anggota* (Revision OT #1). */
+  readonly onMemberAdded?: (member: AssignableMember) => void;
 }
 
 export interface TeamPickerState {

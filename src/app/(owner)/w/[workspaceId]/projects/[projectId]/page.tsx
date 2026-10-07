@@ -12,6 +12,7 @@ import {
   addSessionAssignmentAction,
   removeSessionAssignmentAction,
 } from "@/app/actions/booking/session-team";
+import { TEAM_QUICK_ADD_ACTIONS } from "@/app/actions/booking/team-quick-add-actions";
 import { completeProjectAction, publishFinalDeliveryAction } from "@/app/actions/gallery/delivery";
 import { createGalleryAction, proposeGalleryPasswordAction } from "@/app/actions/gallery/galleries";
 import { loadAddOnCard } from "@/composition/booking/add-on-flow/add-on-flow";
@@ -19,7 +20,7 @@ import {
   loadProjectDefinitions,
   loadProjectDetail,
 } from "@/composition/booking/project-flow/project-flow";
-import { loadAssignableMembers } from "@/composition/booking/team-flow/team-flow";
+import { loadAssignableMembers, loadTeamRoles } from "@/composition/booking/team-flow/team-flow";
 import { loadDeliveryCard } from "@/composition/gallery/delivery-flow/delivery-flow";
 import { loadGalleryCard } from "@/composition/gallery/gallery-flow/gallery-flow";
 import { loadSelectionCard } from "@/composition/gallery/selection-owner-flow/selection-owner-flow";
@@ -33,6 +34,7 @@ import {
   projectMetaText,
 } from "@/features/booking/ui/project-session-summary/project-session-summary";
 import { projectStatusChip } from "@/features/booking/ui/project-status-chip/project-status-props";
+import { TeamQuickAddProvider } from "@/features/booking/ui/team-quick-add/team-quick-add";
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
 import type { SelectionCardView } from "@/features/gallery/application/use-cases/owner-selection-views/owner-selection-views.types";
@@ -51,7 +53,7 @@ export default async function ProjectDetailPage({
 }>) {
   const { workspaceId, projectId } = await params;
   const { state } = await searchParams;
-  const { project, definitions, assignableMembers, delivery, cards } = await loadPage(
+  const { project, definitions, assignableMembers, roles, delivery, cards } = await loadPage(
     workspaceId,
     projectId,
   );
@@ -66,19 +68,21 @@ export default async function ProjectDetailPage({
         parent={{ label: PROJECT_COPY.parentLabel, href: `/w/${workspaceId}/projects` }}
         hidesBottomNav
       />
-      <ProjectDetailScreen
-        workspaceId={workspaceId}
-        project={project}
-        menuActions={PROJECT_MENU_ACTIONS}
-        editActions={PROJECT_EDIT_ACTIONS}
-        definitions={definitions}
-        {...cards}
-        headerAction={completeSlot(workspaceId, projectId, delivery)}
-        headerMeta={deliveredMeta ?? undefined}
-        assignableMembers={assignableMembers}
-        addAssignmentAction={addSessionAssignmentAction}
-        removeAssignmentAction={removeSessionAssignmentAction}
-      />
+      <TeamQuickAddProvider value={{ workspaceId, roles, ...TEAM_QUICK_ADD_ACTIONS }}>
+        <ProjectDetailScreen
+          workspaceId={workspaceId}
+          project={project}
+          menuActions={PROJECT_MENU_ACTIONS}
+          editActions={PROJECT_EDIT_ACTIONS}
+          definitions={definitions}
+          {...cards}
+          headerAction={completeSlot(workspaceId, projectId, delivery)}
+          headerMeta={deliveredMeta ?? undefined}
+          assignableMembers={assignableMembers}
+          addAssignmentAction={addSessionAssignmentAction}
+          removeAssignmentAction={removeSessionAssignmentAction}
+        />
+      </TeamQuickAddProvider>
       {toast ? (
         <ToastOnMount
           tone="success"
@@ -92,11 +96,12 @@ export default async function ProjectDetailPage({
 }
 
 async function loadPage(workspaceId: string, projectId: string) {
-  const [project, definitions, assignableMembers, gallery, selection, addOn, delivery] =
+  const [project, definitions, assignableMembers, roles, gallery, selection, addOn, delivery] =
     await Promise.all([
       loadProjectDetail(workspaceId, projectId),
       loadProjectDefinitions(workspaceId),
       loadAssignableMembers(workspaceId),
+      loadTeamRoles(workspaceId),
       loadGalleryCard(workspaceId, projectId),
       loadSelectionCard(workspaceId, projectId),
       loadAddOnCard(workspaceId, projectId),
@@ -106,7 +111,7 @@ async function loadPage(workspaceId: string, projectId: string) {
     galleryCard: galleryCardSlot(workspaceId, { gallery, selection, delivery }),
     addOnCard: addOnCardSlot(workspaceId, projectId, addOn),
   };
-  return { project, definitions, assignableMembers, delivery, cards };
+  return { project, definitions, assignableMembers, roles, delivery, cards };
 }
 
 const ADD_ON_ACTIONS = {

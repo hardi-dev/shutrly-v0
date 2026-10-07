@@ -81,8 +81,8 @@ describe("SelectionGroupsScreen (owner-1 exports)", () => {
         .getAllByRole("link", { name: "Lihat pilihan" })
         .map((link) => link.getAttribute("href")),
     ).toEqual([
-      "/w/w1/projects/p1/gallery/pilihan/g-edit",
-      "/w/w1/projects/p1/gallery/pilihan/g-print",
+      "/w/w1/projects/p1/gallery/picks/g-edit",
+      "/w/w1/projects/p1/gallery/picks/g-print",
     ]);
   });
 

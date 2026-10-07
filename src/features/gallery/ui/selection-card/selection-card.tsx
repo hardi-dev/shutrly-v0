@@ -14,7 +14,7 @@ function CardAction({ card, base }: Readonly<SelectionCardActionProps>) {
   if (card.state === "NO_ITEMS" || card.state === "NOT_PUBLISHED") return null;
   const isReview = card.state === "REVIEW";
   return (
-    <Button variant={isReview ? "primary" : "secondary"} href={`${base}/gallery/pilihan`}>
+    <Button variant={isReview ? "primary" : "secondary"} href={`${base}/gallery/picks`}>
       {isReview ? COPY.reviewPicks : COPY.viewPicks}
     </Button>
   );

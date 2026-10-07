@@ -18,7 +18,7 @@ export default async function SelectionGroupPage({
         meta={SELECTION_OWNER_COPY.detailSubtitle}
         parent={{
           label: SELECTION_OWNER_COPY.cardTitle,
-          href: `/w/${workspaceId}/projects/${projectId}/gallery/pilihan`,
+          href: `/w/${workspaceId}/projects/${projectId}/gallery/picks`,
         }}
         hidesBottomNav
       />

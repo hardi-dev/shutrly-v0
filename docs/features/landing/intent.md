@@ -44,10 +44,11 @@ Answered by the Owner on 2026-10-07:
 - **Features that aren't built yet:** the page presents the full MVP as available. It can go live now, because production serves only the landing page during development and visitors can't reach the app anyway.
 - **Registration versus waitlist** (was a SPEC GAP): every route except the landing page is hidden on production during development, `/register` included. This is a release gate, not a scope change.
 - **Waitlist fields:** email only.
+- **Consent and privacy:** the usual terms (Owner asked for a standard choice). The form has no checkbox. A short note under the button says that joining means Shutrly may email the person about the launch, and only that: the email isn't shared or used for anything else, and the person can ask to be removed at any time. Entries are kept until the waitlist is closed or the person asks to be removed. Entries never invited are deleted no later than 12 months after they joined. This follows the usual purpose, consent and deletion-on-request rules of Indonesia's data protection law (UU PDP, UU 27/2022), without legal review.
+- **Owner view:** a database query or an export script is enough for now, with no page in the app.
+- **Brand assets:** the logo, illustrations and screenshots are designed in the design phase (`/sdv:design-feature`).
 
-Still open:
-- **Consent and privacy:** does the form need a consent line or a privacy note, and how long are entries kept?
-- **Owner view:** with the app hidden on production, where does the Owner see entries? Options are a database query, an export script, or a protected page that the route gate allows. Assumption (low risk, reversible): reading them from the database or an export is enough for now, with no in-app page.
+Still open (carry into the spec):
+- **Removal requests:** which contact address does the privacy note give for removal requests? A dedicated address may be needed (Resend sends from the platform domain, ADR-011).
 - **Duplicates:** assumption (low risk, reversible): joining twice with the same email shows the same success message, stores no second entry, and doesn't reveal that the email was already on the list.
 - **Sign-in link:** assumption (low risk, reversible): no *Masuk* link while production hides sign-in. Staging may show one later.
-- **Brand assets:** is there a logo, screenshots or illustration? Without them, the page uses the wordmark and design-system visuals, and screenshots come from the Pencil frames of built features.

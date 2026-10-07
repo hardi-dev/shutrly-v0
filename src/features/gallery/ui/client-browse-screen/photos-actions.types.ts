@@ -14,6 +14,11 @@ export interface GroupPickItemProps extends PhotosPartProps {
   readonly group: PickGroupView;
 }
 
-export interface PhoneDownloadMenuProps extends PhotosPartProps {
+export interface DownloadMenuProps extends PhotosPartProps {
+  /** Secondary while *Pilih foto* is the main action. */
+  readonly isSecondary: boolean;
+}
+
+export interface PhoneDownloadMenuProps extends DownloadMenuProps {
   readonly isBusy: boolean;
 }

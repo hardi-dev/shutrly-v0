@@ -140,14 +140,13 @@ describe("ClientBrowseScreen (D-15, A-26)", () => {
     expect(all.listDownloads).toHaveBeenCalledTimes(1);
   });
 
-  it("F-19 Pilih beberapa then Pilih untuk… picks the selection for a group", async () => {
+  it("F-19 Pilih foto then Masukkan ke… picks the selection for a group", async () => {
     const all = renderScreen(vi.fn());
-    await userEvent.click(screen.getByRole("button", { name: "Unduh" }));
-    await userEvent.click(screen.getByRole("menuitem", { name: "Pilih beberapa" }));
+    await userEvent.click(screen.getByRole("button", { name: "Pilih foto" }));
     await userEvent.click(screen.getByRole("button", { name: "IMG_001.jpg", pressed: false }));
     await userEvent.click(screen.getByRole("button", { name: "IMG_002.jpg", pressed: false }));
     expect(screen.getAllByText("2 foto dipilih").length).toBeGreaterThan(0);
-    await userEvent.click(screen.getByRole("button", { name: "Pilih untuk…" }));
+    await userEvent.click(screen.getByRole("button", { name: "Masukkan ke…" }));
     await userEvent.click(screen.getByRole("menuitem", { name: /Foto edit/ }));
     await waitFor(() => {
       expect(all.setPicks).toHaveBeenCalledWith({ groupId: "g-edit", photoIds: ["p-1", "p-2"] });

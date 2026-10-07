@@ -23,3 +23,7 @@ Built 2026-10-07 on `feat/client-access` straight from the accepted [intent](int
 ## Deviations / open
 - No spec, AC or Pencil frames (Owner override); copy marked *built without a Pencil frame*.
 - *Unduh semua* on a very large gallery is one browser download per file (as *Hasil akhir*, A-33); no zip.
+
+## Owner change (2026-10-08, manual test, option C)
+- Outside select mode the page shows *Unduh ▾* (*Unduh semua*, *Pilih beberapa*) and, while a group is open, **Pilih foto** as the main action. Both open the same select mode.
+- In select mode the main action is **Masukkan ke…** (was *Pilih untuk…*); *Unduh n foto* is secondary. Without an open group only *Unduh ▾* shows and *Unduh n foto* is the main action.

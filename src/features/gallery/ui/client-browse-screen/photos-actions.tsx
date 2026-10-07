@@ -14,24 +14,48 @@ import { Button } from "@/ui/primitives/button/button";
 import { VIEWER_PICK_COPY } from "../viewer-pick-actions/viewer-pick-actions.copy";
 import { CLIENT_BROWSE_COPY as COPY } from "./client-browse-screen.copy";
 import type {
+  DownloadMenuProps,
   GroupPickItemProps,
   PhoneDownloadMenuProps,
   PhotosGroupsProps,
-  PhotosPartProps,
 } from "./photos-actions.types";
 
 // The next action runs once the action sheet has finished its exit (as on *Hasil akhir*).
 const SHEET_HANDOFF_DELAY_MS = 400;
 const ICONS = { COUNT: "images", QUANTITY: "printer" } as const;
 
+/** The page actions outside select mode (F-19, Owner 2026-10-08, option C): *Unduh ▾* and, while a group
+ * can still be picked for, *Pilih foto* as the main action; both open the same select mode. @param props -
+ * the proof downloads state and the groups @returns the actions */
+export function PhotosHeaderActions({ photos, groups }: Readonly<PhotosGroupsProps>) {
+  const isMobile = useMobileViewport();
+  const canPick = groups.some((group) => group.status === "OPEN");
+  return (
+    <div className="flex flex-wrap gap-(--space-2) max-md:w-full">
+      <PhotosDownloadMenu photos={photos} isSecondary={canPick} />
+      {canPick ? (
+        <Button
+          iconLeading="list-checks"
+          size={isMobile ? "lg" : "md"}
+          className="max-md:w-full"
+          onPress={photos.startSelecting}
+        >
+          {COPY.pickPhotos}
+        </Button>
+      ) : null}
+    </div>
+  );
+}
+
 /** *Unduh ▾*: *Unduh semua* and *Pilih beberapa* (F-19, as *Hasil akhir* A-33). */
-export function PhotosDownloadMenu({ photos }: Readonly<PhotosPartProps>) {
+function PhotosDownloadMenu({ photos, isSecondary }: Readonly<DownloadMenuProps>) {
   const isMobile = useMobileViewport();
   const isBusy = photos.download.progress.phase === "RUNNING" || photos.isListing;
   if (!isMobile) {
     return (
       <MenuTrigger label={COPY.download}>
         <Button
+          variant={isSecondary ? "secondary" : "primary"}
           iconLeading="download"
           iconTrailing="chevron-down"
           isPending={photos.isListing}
@@ -46,10 +70,10 @@ export function PhotosDownloadMenu({ photos }: Readonly<PhotosPartProps>) {
       </MenuTrigger>
     );
   }
-  return <PhoneDownloadMenu photos={photos} isBusy={isBusy} />;
+  return <PhoneDownloadMenu photos={photos} isBusy={isBusy} isSecondary={isSecondary} />;
 }
 
-function PhoneDownloadMenu({ photos, isBusy }: Readonly<PhoneDownloadMenuProps>) {
+function PhoneDownloadMenu({ photos, isBusy, isSecondary }: Readonly<PhoneDownloadMenuProps>) {
   const [isOpen, setIsOpen] = useState(false);
   const later = (next: () => void) => () => {
     setIsOpen(false);
@@ -61,6 +85,7 @@ function PhoneDownloadMenu({ photos, isBusy }: Readonly<PhoneDownloadMenuProps>)
   return (
     <>
       <Button
+        variant={isSecondary ? "secondary" : "primary"}
         size="lg"
         className="w-full"
         iconLeading="download"
@@ -127,7 +152,7 @@ function BulkPickMenu({ photos, groups }: Readonly<PhotosGroupsProps>) {
   );
 }
 
-/** Select mode: *Batal*, *Unduh n foto* and, with groups, *Pilih untuk…* (F-19, Owner 2026-10-07). */
+/** Select mode: *Batal*, *Unduh n foto* and, with groups, *Masukkan ke…* as the main action (F-19, Owner 2026-10-07, option C 2026-10-08). */
 export function SelectingActions({ photos, groups }: Readonly<PhotosGroupsProps>) {
   const count = photos.selectedCount;
   return (

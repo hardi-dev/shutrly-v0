@@ -39,7 +39,8 @@ export const CLIENT_BROWSE_COPY = {
   selectedTitle: (count: number) => `${String(count)} foto dipilih`,
   downloadSelected: (count: number) => `Unduh ${String(count)} foto`,
   cancel: "Batal",
-  pickFor: "Pilih untuk…",
+  pickFor: "Masukkan ke…",
+  pickPhotos: "Pilih foto",
   pickedTitle: (count: number, group: string) =>
     count === 0
       ? `Semua foto sudah ada di ${group}`

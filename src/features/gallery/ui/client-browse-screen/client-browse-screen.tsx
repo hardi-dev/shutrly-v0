@@ -27,7 +27,7 @@ import type {
   SearchFieldProps,
 } from "./client-browse-screen.types";
 import { browseCardMeta, browseSummary } from "./client-browse-text";
-import { PhotosDownloadMenu, SelectingActions } from "./photos-actions";
+import { PhotosHeaderActions, SelectingActions } from "./photos-actions";
 import type { PhotosGroupsProps } from "./photos-actions.types";
 import { DownloadAllConfirm, PhotosDownloadStatus } from "./photos-status";
 
@@ -93,13 +93,14 @@ function baseHeader(
   };
 }
 
-// F-19: *Unduh ▾* in the header, or the select-mode title and actions.
+// F-19: *Unduh ▾* and *Pilih foto* in the header, or the select-mode title and actions.
 function browseHeader(
   base: ClientPageHeader,
   photos: ProofDownloads,
   groups: readonly PickGroupView[],
 ): ClientPageHeader {
-  if (!photos.isSelecting) return { ...base, action: <PhotosDownloadMenu photos={photos} /> };
+  if (!photos.isSelecting)
+    return { ...base, action: <PhotosHeaderActions photos={photos} groups={groups} /> };
   return {
     ...base,
     title: COPY.selectedTitle(photos.selectedCount),
@@ -150,7 +151,7 @@ function PhotosTop({ photos, groups }: Readonly<PhotosGroupsProps>) {
     phone = photos.isSelecting ? (
       <SelectingActions photos={photos} groups={groups} />
     ) : (
-      <PhotosDownloadMenu photos={photos} />
+      <PhotosHeaderActions photos={photos} groups={groups} />
     );
   }
   return (

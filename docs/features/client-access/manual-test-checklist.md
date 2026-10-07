@@ -28,8 +28,8 @@ Client link (`SEED_CLIENT_PATH`, password `SEED_GALLERY_PASSWORD`) › `/final`.
 
 | # | Langkah | Hasil yang diharapkan | Status | Catatan |
 |---|---|---|---|---|
-| 2.1 | Buka `/final` | Tab per item paket (nama item), bukan *Edited / Print* | ⬜ | |
-| 2.2 | Buka tiap tab | Fotonya sesuai pemetaan di bagian 1 | ⬜ | |
+| 2.1 | Buka `/final` | Tab per item paket (nama item), bukan *Edited / Print*; semua item pilihan foto tampil, termasuk yang masih kosong | ✅ | |
+| 2.2 | Buka tiap tab | Fotonya sesuai pemetaan di bagian 1 | ✅ | |
 
 ## 3. Download & pilih sekaligus (#6, F-19) — client `/photos`
 

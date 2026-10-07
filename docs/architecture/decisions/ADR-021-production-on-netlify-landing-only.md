@@ -1,6 +1,6 @@
 # ADR-021: Run production on Netlify, serving only the landing page during development
 
-Status: Accepted (Owner, 2026-10-07, F-19 discovery)
+Status: Accepted (Owner, 2026-10-07, F-19 discovery) · Point 2 amended by [ADR-022](ADR-022-waitlist-in-resend-contacts.md): the waitlist lives in Resend Contacts, so production needs no Neon project until the gate opens
 Date: 2026-10-07
 Amends: [ADR-018](ADR-018-free-tier-runtime-budget.md) (production host: point 2 answered with another host, as ADR-020 did for staging), [ADR-020](ADR-020-staging-on-netlify.md) (it left the production host open)
 

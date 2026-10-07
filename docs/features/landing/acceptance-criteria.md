@@ -1,6 +1,6 @@
 # Acceptance Criteria — Landing page (F-19)
 
-Assumption references (A-n) point to [spec.md](spec.md#assumptions-low-risk-reversible--confirm-or-change-anytime). No `BR-*` covers this feature, so each criterion lists the constitution principles, ADRs and assumptions it covers.
+Assumption references (A-n) point to [spec.md](spec.md#assumptions-low-risk-reversible--confirm-or-change-anytime). No `BR-*` covers this feature, so each criterion lists the constitution principles, ADRs and assumptions it covers. Since [ADR-022](../../architecture/decisions/ADR-022-waitlist-in-resend-contacts.md), "the waitlist" means the environment's Resend waitlist audience; tests use a fake `WaitlistStore`.
 
 ## Page
 
@@ -39,7 +39,7 @@ Covers: C-006, C-007
 
 **Given** a visitor on the landing page and an empty waitlist
 **When** they type ` Rina@Example.com ` and submit
-**Then** the button shows a submitting state and can't be pressed again. The form is then replaced by the success message. The waitlist holds one entry, `rina@example.com`, with the time it joined.
+**Then** the button shows a submitting state and can't be pressed again. The form is then replaced by the success message. The waitlist holds one contact, `rina@example.com`, with the time it joined.
 
 ## AC-LND-006 — Invalid email
 Covers: C-006, C-007
@@ -53,12 +53,12 @@ Covers: C-006, A-1
 
 **Given** `rina@example.com` is already on the waitlist
 **When** a visitor submits `RINA@example.com`
-**Then** they see the same success message as a first sign-up, the waitlist still holds exactly one entry for that email, and its join time is unchanged. The response doesn't differ in a way that reveals the email was already there.
+**Then** they see the same success message as a first sign-up, the waitlist still holds exactly one contact for that email, and its join time is unchanged. The response doesn't differ in a way that reveals the email was already there.
 
 ## AC-LND-008 — Too many attempts
-Covers: C-006, A-2
+Covers: C-006, A-2, ADR-022
 
-**Given** 5 submissions from one IP address in the last 10 minutes
+**Given** 5 submissions from one IP address in the last 3 minutes
 **When** a sixth arrives from that address
 **Then** the visitor is asked to try again in a moment, and nothing is stored.
 
@@ -72,16 +72,16 @@ Covers: C-006, A-4
 ## AC-LND-010 — Server failure
 Covers: C-007
 
-**Given** the database is unreachable
+**Given** Resend is unreachable or answers with an error
 **When** a visitor submits a valid email
-**Then** a message under the form says it didn't work and to try again, the email stays in the field, and nothing is stored. Submitting again once the database is back stores exactly one entry.
+**Then** a message under the form says it didn't work and to try again, the email stays in the field, and nothing is stored. Submitting again once Resend is back stores exactly one contact.
 
 ## AC-LND-011 — Privacy note
 Covers: C-006
 
 **Given** the landing page
 **When** a visitor looks at the waitlist form
-**Then** a note under the submit button says the email is used only to tell them about the launch, isn't shared, and can be removed on request through the contact shown. There is no consent checkbox.
+**Then** a note under the submit button says the email is used only to tell them about the launch, is kept with our email provider and not shared otherwise, and can be removed on request through the contact shown. There is no consent checkbox.
 
 ## AC-LND-012 — The email stays private
 Covers: C-006
@@ -106,32 +106,34 @@ Covers: ADR-021
 **When** a visitor requests `/login`, or a signed-in Owner opens `/`
 **Then** `/login` works as before, and `/` shows the landing page with no redirect.
 
-## Owner scripts
+## Owner tasks in Resend
+
+These are done in the Resend dashboard (ADR-022), not by Shutrly code. They are checked by hand once before ship.
 
 ## AC-LND-015 — List and export entries
-Covers: intent (Owner view)
+Covers: intent (Owner view), ADR-022
 
-**Given** a waitlist with 3 entries
-**When** the Owner runs the export script against an environment
-**Then** it outputs every entry (email, joined at), oldest first, in a form a spreadsheet opens, and changes nothing.
+**Given** a waitlist with 3 contacts
+**When** the Owner opens the environment's waitlist audience in Resend
+**Then** they can see and export every contact (email, joined at) as a file a spreadsheet opens.
 
 ## AC-LND-016 — Remove one entry on request
-Covers: C-006, intent (privacy)
+Covers: C-006, intent (privacy), ADR-022
 
 **Given** `rina@example.com` is on the waitlist
-**When** the Owner runs the removal script with `Rina@Example.com`
-**Then** the entry is deleted and the script reports one entry removed. Running it again reports none removed and changes nothing.
+**When** the Owner deletes that contact in Resend
+**Then** it no longer appears in the audience, and a later sign-up with the same email adds it again as new.
 
 ## AC-LND-017 — Delete entries after 12 months
-Covers: C-006, A-3
+Covers: C-006, A-3, ADR-022
 
-**Given** entries that joined 13 months ago and 11 months ago
-**When** the Owner runs the retention script
-**Then** only the 13-month-old entry is deleted, and the script reports how many it removed.
+**Given** contacts that joined 13 months ago and 11 months ago
+**When** the Owner does the retention clean-up in Resend
+**Then** only the 13-month-old contact is deleted.
 
-## AC-LND-018 — Script without a database
-Covers: C-007
+## AC-LND-018 — Missing Resend configuration
+Covers: C-007, ADR-022
 
-**Given** no database URL, or one that can't be reached
-**When** the Owner runs any waitlist script
-**Then** it stops with an error that says what's missing and changes nothing.
+**Given** no waitlist API key or audience ID for the environment, or an invalid one
+**When** a visitor submits a valid email
+**Then** they see the server-failure message from AC-LND-010, nothing is stored, and the server logs the configuration error without the email.

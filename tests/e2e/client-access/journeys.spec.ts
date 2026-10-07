@@ -2,6 +2,7 @@ import { type Browser, expect, type Locator, type Page, test } from "@playwright
 
 import { ADD_ON_COPY } from "@/features/booking/ui/add-on-copy/add-on.copy";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
+import { CLIENT_COPY } from "@/features/gallery/ui/client-copy/client-copy.copy";
 import { CLIENT_HOME_COPY } from "@/features/gallery/ui/client-home-screen/client-home-screen.copy";
 import { CLIENT_PASSWORD_FORM_COPY } from "@/features/gallery/ui/client-password-form/client-password-form.copy";
 import { DELIVERY_COPY } from "@/features/gallery/ui/delivery-copy/delivery.copy";
@@ -82,7 +83,7 @@ async function pick(client: Page, fileName: string): Promise<void> {
   await expect(client.getByRole("button", { name: fileName, pressed: true })).toBeVisible();
 }
 
-/** Tinjau, then *Kirim* and the below-limit confirm. */
+/** Tinjau, then *Kirim* and the below-limit confirm; the group stays open for the places left (Owner 2026-10-07). */
 async function send(client: Page): Promise<void> {
   await client.getByRole("link", { name: PICK_COPY.review }).first().click();
   await expectGalleryA11y(client);
@@ -93,7 +94,8 @@ async function send(client: Page): Promise<void> {
     .click();
   const confirm = client.getByRole("dialog").filter({ visible: true });
   await confirm.getByRole("button", { name: /^Kirim/ }).click();
-  await expect(visibleText(client, SELECTION_OWNER_COPY.status.SUBMITTED)).toBeVisible();
+  await expect(client).toHaveURL(/\/g\/[^/]+$/);
+  await expect(visibleText(client, CLIENT_COPY.groupStatus.OPEN)).toBeVisible();
 }
 
 /** Clicks a trigger until its dialog shows (a click before hydration only focuses the button), then confirms. */
@@ -162,7 +164,8 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
     // J-04 end: the Owner opens the picks from the gallery page (A-34) and locks the sent group.
     expect((await page.request.get(`${projectPath}/pilihan`)).status()).toBe(404);
     await page.goto(`${projectPath}/gallery`);
-    await page.getByRole("link", { name: SELECTION_OWNER_COPY.reviewPicks }).first().click();
+    // Sent below the limit, so the card offers Lihat pilihan and the group Kunci pilihan (AC-SEL-011).
+    await page.getByRole("link", { name: SELECTION_OWNER_COPY.viewPicks }).first().click();
     await expect(page).toHaveURL(`${projectPath}/gallery/pilihan`);
     const lock = page.getByRole("button", { name: SELECTION_OWNER_COPY.lockPicks }).first();
     await openAndConfirm(page, lock, SELECTION_OWNER_COPY.lockPicks);

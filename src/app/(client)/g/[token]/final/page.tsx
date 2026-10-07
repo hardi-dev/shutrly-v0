@@ -7,7 +7,7 @@ import { DeliveryScreen } from "@/features/gallery/ui/delivery-screen/delivery-s
 
 export default async function ClientDeliveryPage({
   params,
-}: Readonly<PageProps<"/g/[token]/hasil-akhir">>) {
+}: Readonly<PageProps<"/g/[token]/final">>) {
   const { token } = await params;
   const result = await loadClientDeliveryEntry(token);
   if (result.kind === "NEUTRAL") notFound();

@@ -14,7 +14,7 @@ export function reviewHeader(
   isEditable: boolean,
 ): ClientPageHeader {
   const home = `/g/${token}`;
-  const pick = `${home}/pilih/${group.id}`;
+  const pick = `${home}/picks/${group.id}`;
   if (isEditable) {
     return {
       title: COPY.title(group.name),

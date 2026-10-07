@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   _request: Request,
-  { params }: RouteContext<"/g/[token]/unduh/[photoId]">,
+  { params }: RouteContext<"/g/[token]/download/[photoId]">,
 ): Promise<Response> {
   const { token, photoId } = await params;
   return serveClientFileEntry(token, photoId);

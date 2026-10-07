@@ -13,7 +13,7 @@ import { ReviewScreen } from "@/features/gallery/ui/review-screen/review-screen"
 
 export default async function ClientReviewPage({
   params,
-}: Readonly<PageProps<"/g/[token]/pilih/[groupId]/tinjau">>) {
+}: Readonly<PageProps<"/g/[token]/picks/[groupId]/review">>) {
   const { token, groupId } = await params;
   const result = await loadReviewEntry(token, groupId);
   if (result.kind === "NEUTRAL") notFound();

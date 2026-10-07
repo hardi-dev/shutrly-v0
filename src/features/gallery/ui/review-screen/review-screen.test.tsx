@@ -115,7 +115,7 @@ describe("ReviewScreen — Tinjau (tinjau exports)", () => {
     expect(screen.getByText("Rina-Wisuda › Resepsi")).toBeTruthy();
     expect(screen.getByRole("button", { name: "Kirim 2 foto" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "Tambah foto lagi" }).getAttribute("href")).toBe(
-      "/g/T1/pilih/g-edit",
+      "/g/T1/picks/g-edit",
     );
   });
 
@@ -131,7 +131,7 @@ describe("ReviewScreen — Tinjau (tinjau exports)", () => {
       ),
     ).toBeTruthy();
     expect(within(dialog).getByRole("link", { name: "Pilih lagi" }).getAttribute("href")).toBe(
-      "/g/T1/pilih/g-edit",
+      "/g/T1/picks/g-edit",
     );
     expect(a.submit).not.toHaveBeenCalled();
     await userEvent.click(within(dialog).getByRole("button", { name: "Kirim 2 foto" }));

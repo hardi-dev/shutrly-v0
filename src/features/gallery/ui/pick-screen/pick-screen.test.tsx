@@ -71,7 +71,7 @@ describe("PickScreen (pilih exports)", () => {
     expect(screen.getAllByText("Foto edit").length).toBeGreaterThan(0);
     expect(screen.getByText("1 dari 3 foto dipilih")).toBeTruthy();
     expect(screen.getByRole("link", { name: "Tinjau" }).getAttribute("href")).toBe(
-      "/g/T1/pilih/g-edit/tinjau",
+      "/g/T1/picks/g-edit/review",
     );
     expect(screen.getByText("Foto cetak × 2")).toBeTruthy();
     expect(screen.getByRole("button", { name: "IMG_001.jpg", pressed: true })).toBeTruthy();
@@ -120,7 +120,7 @@ describe("PickScreen (pilih exports)", () => {
     renderScreen(a);
     await userEvent.click(screen.getByRole("button", { name: "IMG_002.jpg" }));
     await waitFor(() => {
-      expect(replace).toHaveBeenCalledWith("/g/T1/pilih/g-edit/tinjau");
+      expect(replace).toHaveBeenCalledWith("/g/T1/picks/g-edit/review");
     });
   });
 

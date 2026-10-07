@@ -141,7 +141,7 @@ export function ReviewScreen({ gate, token, view, actions }: Readonly<ReviewScre
   const [noteFor, setNoteFor] = useState<string | null>(null);
   const { group, picks } = changes.state;
   const isEditable = view.isEditable;
-  const pickHref = `/g/${token}/pilih/${group.id}`;
+  const pickHref = `/g/${token}/picks/${group.id}`;
   const closeNote = () => {
     setNoteFor(null);
   };

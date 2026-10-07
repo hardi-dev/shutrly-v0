@@ -26,7 +26,7 @@ const file = (name: string) => ({
   thumb: { src: `/g/T1/media/${name}/thumb` },
   preview: { src: `/g/T1/media/${name}/preview` },
   missing: false,
-  downloadUrl: `/g/T1/unduh/${name}`,
+  downloadUrl: `/g/T1/download/${name}`,
 });
 const FILES: DeliveryFilesView = {
   edited: [file("E_001"), file("E_002")],
@@ -54,7 +54,7 @@ describe("DeliveryScreen (klien-8)", () => {
     expect(screen.getByText("2 foto Edited")).toBeTruthy();
     expect(screen.getByRole("link", { name: "Unduh E_002.jpg" })).toHaveAttribute(
       "href",
-      "/g/T1/unduh/E_002",
+      "/g/T1/download/E_002",
     );
   });
 
@@ -67,8 +67,8 @@ describe("DeliveryScreen (klien-8)", () => {
     expect(within(dialog).getByText("Unduh semua 2 foto?")).toBeTruthy();
     await user.click(within(dialog).getByRole("button", { name: "Unduh semua" }));
     expect(download.current.start).toHaveBeenCalledWith([
-      { id: "E_001", url: "/g/T1/unduh/E_001", fileName: "E_001.jpg" },
-      { id: "E_002", url: "/g/T1/unduh/E_002", fileName: "E_002.jpg" },
+      { id: "E_001", url: "/g/T1/download/E_001", fileName: "E_001.jpg" },
+      { id: "E_002", url: "/g/T1/download/E_002", fileName: "E_002.jpg" },
     ]);
   });
 
@@ -81,7 +81,7 @@ describe("DeliveryScreen (klien-8)", () => {
     await user.click(screen.getByRole("button", { name: "E_002.jpg", pressed: false }));
     await user.click(screen.getByRole("button", { name: "Unduh 1 foto" }));
     expect(download.current.start).toHaveBeenCalledWith([
-      { id: "E_002", url: "/g/T1/unduh/E_002", fileName: "E_002.jpg" },
+      { id: "E_002", url: "/g/T1/download/E_002", fileName: "E_002.jpg" },
     ]);
     expect(screen.queryAllByText(/foto dipilih/)).toHaveLength(0);
   });

@@ -13,6 +13,6 @@ export default async function ClientGalleryPage({ params }: Readonly<PageProps<"
     return <ClientGateScreen gate={result.gate} action={signInGalleryAction.bind(null, token)} />;
   }
   // A-31: without groups and final delivery, Beranda would hold one card.
-  if (result.value.landing === "ALL_PHOTOS") redirect(`/g/${token}/foto`);
+  if (result.value.landing === "ALL_PHOTOS") redirect(`/g/${token}/photos`);
   return <ClientHomeScreen gate={result.gate} home={result.value} token={token} />;
 }

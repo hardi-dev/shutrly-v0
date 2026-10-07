@@ -130,7 +130,7 @@ export function PickScreen({ gate, token, view, initialPage, actions }: Readonly
           body={COPY.limitBody(group.name, selection.usage, group.limit)}
         />
       ) : null}
-      <PickSummary selection={selection} reviewHref={`${home}/pilih/${group.id}/tinjau`} />
+      <PickSummary selection={selection} reviewHref={`${home}/picks/${group.id}/review`} />
       <GridFailed grid={grid} />
       <PhotosCard selection={selection} grid={grid} onNote={setNoteFor} />
       {notePick ? (

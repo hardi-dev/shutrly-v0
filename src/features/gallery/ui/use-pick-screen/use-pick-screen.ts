@@ -65,7 +65,7 @@ export function usePickSelection({
     const result = await actions.reload(groupId).catch(() => null);
     if (result === null) showToast({ tone: "danger", title: PICK_COPY.failed });
     else if (result.kind === "VIEW") setState(selectionStateOf(result.view));
-    else if (result.kind === "NOT_OPEN") router.replace(`/g/${token}/pilih/${groupId}/tinjau`);
+    else if (result.kind === "NOT_OPEN") router.replace(`/g/${token}/picks/${groupId}/review`);
     else router.refresh();
   };
   const settle = (outcome: SendOutcome) => {

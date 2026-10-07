@@ -12,8 +12,8 @@ import { clientHomeSubtitle } from "./client-home-subtitle";
 function GroupCard({ group, token, isLast }: Readonly<GroupCardProps>) {
   const href =
     group.action === "VIEW"
-      ? `/g/${token}/pilih/${group.id}/tinjau`
-      : `/g/${token}/pilih/${group.id}`;
+      ? `/g/${token}/picks/${group.id}/review`
+      : `/g/${token}/picks/${group.id}`;
   const action =
     group.action === "NONE" ? null : (
       <Button href={href} variant={group.isPrimary ? "primary" : "secondary"}>
@@ -33,7 +33,7 @@ function FinalReadyCard({ home, token }: Readonly<Omit<ClientHomeScreenProps, "g
       title={COPY.finalReadyTitle}
       description={COPY.finalReadyBody(home.editedCount, home.printCount)}
       actions={
-        <Button href={`/g/${token}/hasil-akhir`} iconLeading="download">
+        <Button href={`/g/${token}/final`} iconLeading="download">
           {COPY.finalReadyAction}
         </Button>
       }
@@ -61,7 +61,7 @@ function PhotosCard({ home, token }: Readonly<Omit<ClientHomeScreenProps, "gate"
           icon="images"
           title={CLIENT_COPY.allPhotos}
           meta={meta}
-          href={`/g/${token}/foto`}
+          href={`/g/${token}/photos`}
           isLast={delivered}
         />
         {delivered ? null : (

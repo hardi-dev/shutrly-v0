@@ -45,7 +45,7 @@ describe("getDeliveryFiles (klien-8)", () => {
     const { value } = deps();
     const files = await getDeliveryFiles(value, CLIENT);
     expect(files?.edited.map((file) => [file.fileName, file.downloadUrl])).toEqual([
-      ["E_001.jpg", "/g/tok/unduh/E_001"],
+      ["E_001.jpg", "/g/tok/download/E_001"],
     ]);
     expect(files?.print.map((file) => file.fileName)).toEqual(["P_001.jpg"]);
   });

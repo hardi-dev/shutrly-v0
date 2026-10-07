@@ -12,7 +12,7 @@ describe("proxy (early redirect only)", () => {
 
   it("AC-ACC-007 lets client gallery links through without an Owner session", () => {
     expect(isPublicPath("/g/abc")).toBe(true);
-    expect(isPublicPath("/g/abc/foto")).toBe(true);
+    expect(isPublicPath("/g/abc/photos")).toBe(true);
     expect(isPublicPath("/gallery")).toBe(false);
   });
 

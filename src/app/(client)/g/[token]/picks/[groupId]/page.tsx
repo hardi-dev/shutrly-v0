@@ -13,7 +13,7 @@ import { PickScreen } from "@/features/gallery/ui/pick-screen/pick-screen";
 
 export default async function ClientPickPage({
   params,
-}: Readonly<PageProps<"/g/[token]/pilih/[groupId]">>) {
+}: Readonly<PageProps<"/g/[token]/picks/[groupId]">>) {
   const { token, groupId } = await params;
   const result = await loadPickEntry(token, groupId);
   if (result.kind === "NEUTRAL") notFound();
@@ -23,7 +23,7 @@ export default async function ClientPickPage({
   const load = result.value;
   if (load.kind === "NOT_FOUND") notFound();
   // D-2: a group that isn't OPEN shows its picks read-only on Tinjau / Lihat pilihan.
-  if (load.kind === "NOT_OPEN") redirect(`/g/${token}/pilih/${groupId}/tinjau`);
+  if (load.kind === "NOT_OPEN") redirect(`/g/${token}/picks/${groupId}/review`);
   return (
     <PickScreen
       gate={result.gate}

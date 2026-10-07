@@ -7,7 +7,7 @@ import { useSequentialDownload } from "./use-sequential-download";
 
 const ITEMS = ["E_001.jpg", "E_002.jpg", "P_001.jpg"].map((fileName, index) => ({
   id: `id-${String(index)}`,
-  url: `/g/t/unduh/id-${String(index)}`,
+  url: `/g/t/download/id-${String(index)}`,
   fileName,
 }));
 
@@ -60,7 +60,7 @@ describe("useSequentialDownload (D-18, A-33)", () => {
     await waitFor(() => {
       expect(hook.result.current.progress).toMatchObject({ phase: "DONE", total: 1 });
     });
-    expect(fetchFn.mock.calls.map((call) => call[0])).toEqual(["/g/t/unduh/id-1"]);
+    expect(fetchFn.mock.calls.map((call) => call[0])).toEqual(["/g/t/download/id-1"]);
   });
 
   it("Batalkan stops before the next file", async () => {

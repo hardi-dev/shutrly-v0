@@ -1,4 +1,4 @@
-/** One file of a bulk download: the same-origin `/g/{token}/unduh/{id}` URL and its name. */
+/** One file of a bulk download: the same-origin `/g/{token}/download/{id}` URL and its name. */
 export interface DownloadItem {
   readonly id: string;
   readonly url: string;

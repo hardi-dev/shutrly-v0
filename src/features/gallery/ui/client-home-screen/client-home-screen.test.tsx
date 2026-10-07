@@ -49,19 +49,22 @@ describe("ClientHomeScreen (A-24)", () => {
   it("AC-SEL-001 greets the client and shows Semua foto, Hasil akhir pending and each group", () => {
     renderHome(BASE);
     expect(screen.getAllByRole("heading", { name: "Halo, Rina" }).length).toBeGreaterThan(0);
-    expect(screen.getByRole("link", { name: /Semua foto/ })).toHaveAttribute("href", "/g/T1/foto");
+    expect(screen.getByRole("link", { name: /Semua foto/ })).toHaveAttribute(
+      "href",
+      "/g/T1/photos",
+    );
     expect(
       screen.getByText("Belum tersedia · muncul di sini setelah foto selesai diedit."),
     ).toBeVisible();
     expect(screen.getByText("3 dari 8 foto dipilih")).toBeVisible();
     expect(screen.getByRole("link", { name: "Lanjut memilih" })).toHaveAttribute(
       "href",
-      "/g/T1/pilih/g-edit",
+      "/g/T1/picks/g-edit",
     );
     expect(screen.getByText("4 lembar dikirim · menunggu fotografer")).toBeVisible();
     expect(screen.getByRole("link", { name: "Lihat pilihan" })).toHaveAttribute(
       "href",
-      "/g/T1/pilih/g-print/tinjau",
+      "/g/T1/picks/g-print/review",
     );
   });
 
@@ -77,7 +80,7 @@ describe("ClientHomeScreen (A-24)", () => {
     expect(within(ready).getByText(/12 foto edit dan 4 foto cetak/)).toBeVisible();
     expect(within(ready).getByRole("link", { name: /Lihat & unduh/ })).toHaveAttribute(
       "href",
-      "/g/T1/hasil-akhir",
+      "/g/T1/final",
     );
     expect(screen.queryByText(/Belum tersedia/)).toBeNull();
   });

@@ -24,7 +24,7 @@ export async function getDeliveryFiles(
       .filter((photo) => photo.kind === kind)
       .map((photo) => ({
         ...toClientPhotoView(photo, client.token, deps.directImages),
-        downloadUrl: `/g/${client.token}/unduh/${photo.id}`,
+        downloadUrl: `/g/${client.token}/download/${photo.id}`,
       }));
   return { edited: view("EDITED"), print: view("PRINT") };
 }

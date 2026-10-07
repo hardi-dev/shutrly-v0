@@ -10,17 +10,17 @@ Gallery page › *Sumber foto*.
 
 | # | Langkah | Hasil yang diharapkan | Status | Catatan |
 |---|---|---|---|---|
-| 1.1 | Buka menu `…` di baris folder | Isinya *Sinkronkan · Edit folder · Hapus* | ⬜ | |
-| 1.2 | *Edit folder* › ubah nama › *Simpan* | Nama baru muncul di daftar | ⬜ | |
-| 1.3 | Buka *Edit folder* | Skeleton tampil selama subfolder dimuat, lalu diganti daftar item | ⬜ | |
-| 1.4 | *Edit folder* di folder yang punya subfolder | Satu baris per item paket; tiap item memilih satu subfolder atau *Belum dipilih* | ⬜ | |
-| 1.5 | Subfolder **kosong** di Drive › *Sinkronkan* › *Edit folder* | Subfolder kosong tetap muncul di pilihan | ⬜ | |
-| 1.6 | Pilih subfolder untuk satu item, lalu buka pilihan item lain | Subfolder yang sudah dipilih tidak ditawarkan lagi | ⬜ | |
-| 1.7 | Petakan subfolder yang berisi foto › *Simpan* | Foto langsung pindah golongan tanpa sinkron ulang | ⬜ | |
-| 1.8 | Buat subfolder baru di Drive › *Sinkronkan* | Toast menyebut subfolder baru, dengan tombol *Petakan* yang membuka *Edit folder* | ⬜ | |
-| 1.9 | Upload foto ke subfolder yang sudah dipetakan › *Sinkronkan* | Foto masuk ke item tersebut | ⬜ | |
-| 1.10 | *Edit folder* di proyek yang paketnya tanpa item pilihan foto | Pesan singkat dengan tombol *Buka Isi paket* | ⬜ | |
-| 1.11 | *Edit folder* di folder tanpa subfolder | Pesan *Belum ada subfolder…* | ⬜ | |
+| 1.1 | Buka menu `…` di baris folder | Isinya *Sinkronkan · Edit folder · Hapus* | ✅ | |
+| 1.2 | *Edit folder* › ubah nama › *Simpan* | Nama baru muncul di daftar | ✅ | |
+| 1.3 | Buka *Edit folder* | Skeleton tampil selama subfolder dimuat, lalu diganti daftar item | ✅ | |
+| 1.4 | *Edit folder* di folder yang punya subfolder | Satu baris per item paket; tiap item memilih satu subfolder atau *Belum dipilih* | ✅ | |
+| 1.5 | Subfolder **kosong** di Drive › *Sinkronkan* › *Edit folder* | Subfolder kosong tetap muncul di pilihan | ✅ | |
+| 1.6 | Pilih subfolder untuk satu item, lalu buka pilihan item lain | Subfolder yang sudah dipilih tidak ditawarkan lagi | ✅ | |
+| 1.7 | Upload hasil edit ke subfolder yang **belum** dipetakan › *Sinkronkan* › lalu petakan subfolder itu ke item › *Simpan* (tanpa sinkron ulang) | Hasil edit langsung pindah ke tab item itu di `/final` dan tidak lagi di `/photos`; foto asli di folder root tetap di `/photos` | ⬜ | |
+| 1.8 | Buat subfolder baru di Drive › *Sinkronkan* | Toast menyebut subfolder baru, dengan tombol *Petakan* yang membuka *Edit folder* | ✅ | |
+| 1.9 | Upload foto ke subfolder yang sudah dipetakan › *Sinkronkan* | Foto masuk ke item tersebut | ✅ | |
+| 1.10 | *Edit folder* di proyek yang paketnya tanpa item pilihan foto | Pesan singkat dengan tombol *Buka Isi paket* | ✅ | |
+| 1.11 | *Edit folder* di folder tanpa subfolder | Pesan *Belum ada subfolder…* | ✅ | |
 
 ## 2. Hasil akhir per item (#5, F-20) — client
 

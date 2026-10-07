@@ -32,6 +32,6 @@ Finished files are found only in Drive subfolders named exactly `edited` or `pri
 
 ## Open questions
 - ~~What happens to a gallery whose final delivery is already published?~~ Nothing to migrate: still in development (Owner, 2026-10-07).
-- What happens to a client pick whose photo becomes a finished file after mapping?
-- A package with no selection item has nothing to map to: what does the Owner see?
-- Can one subfolder map to more than one item, or one item to several subfolders?
+- ~~What happens to a client pick whose photo becomes a finished file?~~ Nothing: the pick stays as it is, it is the same photo (Owner, 2026-10-07).
+- ~~A package with no selection item?~~ Owner (2026-10-07): it always has some, because each workspace is seeded with *Foto edit* and *Foto cetak*. **Still open (found while checking):** those two are seeded as workspace item definitions, not added to every service, and a service can be saved with *Layanan ini belum punya item paket* (seen in the F-10 journeys E2E). Discovery decides whether a project with no selection item gets an empty state or whether services/projects must carry them.
+- ~~Can one subfolder map to more than one item?~~ No: one subfolder maps to one item; one item may have several subfolders (Owner, 2026-10-07).

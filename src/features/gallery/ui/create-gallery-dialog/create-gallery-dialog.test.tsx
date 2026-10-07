@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { stubViewport } from "@tests/support/gallery/viewport";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { showToast } from "@/ui/patterns/toast/toast";
+
 import { CreateGalleryDialog } from "./create-gallery-dialog";
 
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
@@ -112,6 +114,9 @@ describe("CreateGalleryDialog", () => {
       });
       expect(props.checkFolderAction).toHaveBeenCalledWith("ws-1", RINA);
       expect(props.onCreated).toHaveBeenCalledWith("g-1", "s-1");
+      expect(showToast).toHaveBeenCalledWith(
+        expect.objectContaining({ body: "Folder Google Drive sedang disinkronkan." }),
+      );
     });
 
     it("AC-GAL-010 asks first when another project uses the folder", async () => {

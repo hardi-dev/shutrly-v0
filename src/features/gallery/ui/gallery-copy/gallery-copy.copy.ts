@@ -63,6 +63,8 @@ export const GALLERY_COPY = {
   cancel: "Batal",
   createdTitle: "Galeri dibuat",
   createdBody: "Tambahkan folder Google Drive untuk mulai.",
+  // Revision OT #3: the first folder was linked with the gallery and syncs next.
+  createdWithFolderBody: "Folder Google Drive sedang disinkronkan.",
   errors: {
     TOO_SHORT: "Password minimal 6 karakter.",
     TOO_LONG: "Password maksimal 64 karakter.", // not in Pencil

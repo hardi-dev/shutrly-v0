@@ -60,7 +60,8 @@ function applyCreateResult(
     showToast({
       tone: "success",
       title: GALLERY_COPY.createdTitle,
-      body: GALLERY_COPY.createdBody,
+      body:
+        result.sourceId === null ? GALLERY_COPY.createdBody : GALLERY_COPY.createdWithFolderBody,
     });
     onCreated(result.galleryId, result.sourceId);
   } else if (result.code === "VALIDATION_FAILED") setFieldErrors(form, result.fieldErrors);

@@ -2,7 +2,7 @@
 
 Author: Owner (hardi-dev)
 Source: IDEA
-Status: DRAFT
+Status: ACCEPTED (Owner, 2026-10-07)
 
 ## Problem
 Shutrly has no public face. Anyone who opens the root URL sees the F-00 placeholder ("Fondasi siap. Fitur berikutnya: F-01 Auth."), which says nothing about the product. A photographer who hears about Shutrly can't learn what it does, why it differs from the tools they use now (Google Drive, WhatsApp, spreadsheets, Fastpik), or how to show interest. The Owner has no way to collect interested photographers before opening Shutrly to other studios (`docs/product/pricing-and-costs.md` › open questions).

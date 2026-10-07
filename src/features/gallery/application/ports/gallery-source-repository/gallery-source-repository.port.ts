@@ -55,6 +55,12 @@ export interface GalleryLifecycleWriter {
   readonly countActiveSources: () => Promise<number>;
   /** Marks an active source removed; false when it isn't an active source of this gallery. */
   readonly removeSource: (sourceId: string, actorId: string, now: Date) => Promise<boolean>;
+  /** Client picks of photos from this source (BR-GAL-009: they block deleting it). */
+  readonly countSourcePicks: (sourceId: string) => Promise<number>;
+  /** Deletes an active source with its photos (cascade); false when it isn't an active source of this gallery. */
+  readonly deleteSource: (sourceId: string, now: Date) => Promise<boolean>;
+  /** Sets an active source's label, null to show the folder name; false when it isn't an active source of this gallery. */
+  readonly renameSource: (sourceId: string, label: string | null, now: Date) => Promise<boolean>;
   readonly publish: (expiry: GalleryExpiryColumns, actorId: string, now: Date) => Promise<void>;
   readonly setExpiry: (expiry: GalleryExpiryColumns, actorId: string, now: Date) => Promise<void>;
   readonly rotatePassword: (rotated: RotatedPassword, actorId: string, now: Date) => Promise<void>;

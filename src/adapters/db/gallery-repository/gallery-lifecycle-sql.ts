@@ -6,22 +6,49 @@ import type { GalleryLifecycleWriter } from "@/features/gallery/application/port
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { DbExecutor } from "../client/client.types";
-import { gallery, gallerySource } from "../schema/gallery/gallery";
+import { gallery, galleryPhoto, gallerySource } from "../schema/gallery/gallery";
+import { photoSelection } from "../schema/gallery/selection";
 import { finalDeliveryWrites } from "./final-delivery-sql";
 import { insertSelectionGroups } from "./selection-group-sql";
 
 type SourceWrites = Pick<GalleryLifecycleWriter, "countActiveSources" | "removeSource">;
+type SourceEditWrites = Pick<
+  GalleryLifecycleWriter,
+  "countSourcePicks" | "deleteSource" | "renameSource"
+>;
 type StatusWrites = Pick<
   GalleryLifecycleWriter,
   "publish" | "setExpiry" | "archive" | "deleteGallery"
 >;
 
-function sourceWrites(tx: DbExecutor, context: WorkspaceContext, galleryId: string): SourceWrites {
-  const active = and(
-    eq(gallerySource.workspaceId, context.workspaceId),
-    eq(gallerySource.galleryId, galleryId),
-    isNull(gallerySource.removedAt),
-  );
+interface SourceScope {
+  readonly tx: DbExecutor;
+  readonly context: WorkspaceContext;
+  /** The gallery's active sources (BR-GAL-009). */
+  readonly active: SQL | undefined;
+  /** A change a client could see raises the gallery's content version (D-24). */
+  readonly bumpContentVersion: (now: Date) => Promise<void>;
+}
+
+function sourceScope(tx: DbExecutor, context: WorkspaceContext, galleryId: string): SourceScope {
+  return {
+    tx,
+    context,
+    active: and(
+      eq(gallerySource.workspaceId, context.workspaceId),
+      eq(gallerySource.galleryId, galleryId),
+      isNull(gallerySource.removedAt),
+    ),
+    async bumpContentVersion(now) {
+      await tx
+        .update(gallery)
+        .set({ contentVersion: sql`${gallery.contentVersion} + 1`, updatedAt: now })
+        .where(and(eq(gallery.workspaceId, context.workspaceId), eq(gallery.id, galleryId)));
+    },
+  };
+}
+
+function sourceWrites({ tx, active, bumpContentVersion }: SourceScope): SourceWrites {
   return {
     async countActiveSources() {
       const rows = await tx.select({ total: count() }).from(gallerySource).where(active);
@@ -35,11 +62,55 @@ function sourceWrites(tx: DbExecutor, context: WorkspaceContext, galleryId: stri
         .returning({ id: gallerySource.id });
       if (rows.length === 0) return false;
       // Removing a folder hides its photos from the client (BR-GAL-009, D-24).
-      await tx
-        .update(gallery)
-        .set({ contentVersion: sql`${gallery.contentVersion} + 1`, updatedAt: now })
-        .where(and(eq(gallery.workspaceId, context.workspaceId), eq(gallery.id, galleryId)));
+      await bumpContentVersion(now);
       return true;
+    },
+  };
+}
+
+function sourceEditWrites({
+  tx,
+  context,
+  active,
+  bumpContentVersion,
+}: SourceScope): SourceEditWrites {
+  return {
+    async countSourcePicks(sourceId) {
+      const rows = await tx
+        .select({ total: count() })
+        .from(photoSelection)
+        .innerJoin(
+          galleryPhoto,
+          and(
+            eq(galleryPhoto.workspaceId, photoSelection.workspaceId),
+            eq(galleryPhoto.id, photoSelection.photoId),
+          ),
+        )
+        .where(
+          and(
+            eq(photoSelection.workspaceId, context.workspaceId),
+            eq(galleryPhoto.gallerySourceId, sourceId),
+          ),
+        );
+      return rows.at(0)?.total ?? 0;
+    },
+    async deleteSource(sourceId, now) {
+      // Photos go with their source (ON DELETE CASCADE); a pick still referencing one is RESTRICT.
+      const rows = await tx
+        .delete(gallerySource)
+        .where(and(active, eq(gallerySource.id, sourceId)))
+        .returning({ id: gallerySource.id });
+      if (rows.length === 0) return false;
+      await bumpContentVersion(now);
+      return true;
+    },
+    async renameSource(sourceId, label, now) {
+      const rows = await tx
+        .update(gallerySource)
+        .set({ label, updatedAt: now })
+        .where(and(active, eq(gallerySource.id, sourceId)))
+        .returning({ id: gallerySource.id });
+      return rows.length > 0;
     },
   };
 }
@@ -97,7 +168,8 @@ export function lifecycleWriter(
 ): GalleryLifecycleWriter {
   const scope = and(eq(gallery.workspaceId, context.workspaceId), eq(gallery.id, galleryId));
   return {
-    ...sourceWrites(tx, context, galleryId),
+    ...sourceWrites(sourceScope(tx, context, galleryId)),
+    ...sourceEditWrites(sourceScope(tx, context, galleryId)),
     ...statusWrites(tx, scope),
     createSelectionGroups: () => insertSelectionGroups(tx, context, galleryId),
     ...finalDeliveryWrites(tx, context, galleryId),

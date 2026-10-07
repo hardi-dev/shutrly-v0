@@ -25,6 +25,7 @@ export interface FakeSource extends NewGallerySource {
   leaseAt: Date | null;
   cursor: SyncCursor | null;
   folderName: string | null;
+  label: string | null;
 }
 
 export interface FakePhoto extends SyncedPhoto {
@@ -49,6 +50,8 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
   /** Photo rows a step wrote (inserted or changed): an unchanged photo adds none (D-21). */
   photoWrites = 0;
   readonly otherProjectFolders = new Map<string, string[]>();
+  /** Sources with a client pick of one of their photos (BR-GAL-009). */
+  readonly pickedSources = new Set<string>();
   private next = 0;
 
   addGallery(workspaceId: string, gallery: LockedGalleryState): void {
@@ -77,6 +80,22 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
       removeSource: async (sourceId: string) => {
         const source = active().find((row) => row.id === sourceId);
         if (source) source.removed = true;
+        return source !== undefined;
+      },
+      countSourcePicks: async (sourceId: string) => (this.pickedSources.has(sourceId) ? 1 : 0),
+      deleteSource: async (sourceId: string) => {
+        const index = this.sources.findIndex(
+          (row) => row.id === sourceId && row.galleryId === gallery.galleryId && !row.removed,
+        );
+        if (index < 0) return false;
+        this.sources.splice(index, 1);
+        const kept = this.photos.filter((photo) => photo.sourceId !== sourceId);
+        this.photos.splice(0, this.photos.length, ...kept);
+        return true;
+      },
+      renameSource: async (sourceId: string, label: string | null) => {
+        const source = active().find((row) => row.id === sourceId);
+        if (source) source.label = label;
         return source !== undefined;
       },
       publish: async (expiry: { expiresAt: Date | null; expiryDays: number | null }) => {

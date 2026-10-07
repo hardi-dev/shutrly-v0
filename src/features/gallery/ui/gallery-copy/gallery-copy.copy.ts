@@ -87,6 +87,8 @@ export const GALLERY_COPY = {
     ALREADY_EXISTS: "Proyek ini sudah punya galeri.",
     INVALID_STATE: "Galeri sudah berubah. Muat ulang halaman.",
     LAST_ACTIVE_SOURCE: "Galeri yang dipublikasikan butuh minimal satu folder aktif.",
+    // not in Pencil yet (Revision OT Slice 14): a client pick blocks deleting the folder
+    HAS_PICKS: "Ada foto dari folder ini yang sudah dipilih klien.",
     SYNC_IN_PROGRESS: "Folder ini sedang disinkronkan.",
     RATE_LIMITED: "Terlalu banyak sinkronisasi. Coba lagi sebentar lagi.",
   },

@@ -10,6 +10,7 @@ export type GalleryDomainCode =
   | "ALREADY_EXISTS"
   | "INVALID_STATE"
   | "LAST_ACTIVE_SOURCE"
+  | "HAS_PICKS"
   | "SYNC_IN_PROGRESS"
   | "RATE_LIMITED";
 export interface GalleryValidationFailure {

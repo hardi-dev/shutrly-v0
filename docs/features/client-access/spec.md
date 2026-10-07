@@ -43,7 +43,7 @@ A client who has the project link and the current gallery password can open the 
 3. Every pick, un-pick and quantity change is saved at once, checked server-side under a lock on the group (BR-SEL-006, A-7). A change that would exceed the limit is refused with *Batas pilihan tercapai*.
 4. A photo may be picked in several groups (BR-SEL-004). From the photo viewer in *Semua foto*, *Pilih untuk…* picks or un-picks the photo in any `OPEN` group (A-30), with the same checks.
 5. **Tinjau** (A-29) lists the group's picks with thumbnail and file name, *used / limit* and the places left. In a `QUANTITY` group each row has a quantity stepper; quantities are changed only here. A pick can be removed here. When the group's item allows pick notes (A-32), each row shows its note with *Ubah catatan*, and a pick without a note shows *Tambah catatan*; both open the same note sheet as Pilih, so the client can check and fix notes before sending (Owner 2026-10-05). *Tambah foto lagi* returns to Pilih with all picks kept.
-6. *Kirim n foto* (or *n lembar*) submits the group (A-5). Below the limit a confirmation names the remaining places. The group becomes `SUBMITTED`, its picks are read-only for everyone (BR-SEL-005), and the client returns to Beranda, where the card shows *Dikirim · menunggu fotografer*.
+6. *Kirim n foto* (or *n lembar*) submits the group (A-5). At the limit the group becomes `SUBMITTED`, its picks are read-only for everyone (BR-SEL-005), and the client returns to Beranda, where the card shows *Dikirim · menunggu fotografer*. Below the limit a confirmation names the remaining places and says they stay open; the group stays `OPEN` with the send recorded, so the client can still add, remove or change picks and send again until the limit is full or the Owner locks it (Owner 2026-10-07).
 7. One group is one task: to work on another group the client goes back to Beranda and opens that card (A-27).
 
 ### 3. Review and lock (Owner)
@@ -131,7 +131,7 @@ A client who has the project link and the current gallery password can open the 
 - **A-2 Rate limits:** wrong passwords 5 per 15 minutes per token and address, and 20 per hour per token from any address; unknown tokens 30 per hour per address; selection writes 120 per minute per session. Limits are checked server-side; the mechanism is a technical-design choice (ADR-013).
 - **A-3 Neutral page:** an expired gallery shows the same page as a wrong link, with no contact hint (Owner chose one page for every case, 2026-10-05).
 - **A-4 Add-on requests:** the client asks off-app; there is no request button.
-- **A-5 Submit per group:** each group is submitted on its own, needs at least one pick, and may be submitted below its limit after a confirmation.
+- **A-5 Submit per group:** each group is submitted on its own, needs at least one pick, and may be submitted below its limit after a confirmation. A submission below the limit keeps the group open for the remaining places, with the picks still changeable; only a submission at the limit, or the Owner's lock, closes it (Owner 2026-10-07).
 - **A-6 Owner review:** the copyable list is one file name per line, with `× n` for print quantities and ` — note` when the pick has a note (line breaks in a note become spaces).
 - **A-7 Autosave:** every pick change is saved immediately; there is no separate draft or *Simpan* button.
 - **A-8 Missing picked photo:** stays selected and counted; the client sees it as unavailable and can un-pick it while the group is `OPEN`.

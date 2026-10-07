@@ -156,8 +156,10 @@ Covers: BR-SEL-004
 Covers: BR-SEL-005 (A-5)
 
 **Given** *Foto edit* has 2 of 3 picks
-**When** the client chooses *Tinjau*, sees `IMG_001` and `IMG_002` listed with *sisa 1*, chooses *Kirim 2 foto* and confirms the notice that 1 place remains
-**Then** the group is `SUBMITTED`, the client is back on Beranda with *Foto edit · Dikirim*, its picks are read-only, and a later pick, un-pick or second submit is refused with *Pilihan sudah dikirim*
+**When** the client chooses *Tinjau*, sees `IMG_001` and `IMG_002` listed with *sisa 1*, chooses *Kirim 2 foto* and confirms the notice that 1 place remains and stays open
+**Then** the send is recorded and the group stays `OPEN`: the client is back on Beranda with *Foto edit · Terbuka* and can still pick, un-pick and send again
+**When** the client picks `IMG_003` and sends *Kirim 3 foto* (no confirmation at the limit)
+**Then** the group is `SUBMITTED`, the card shows *Foto edit · Dikirim*, its picks are read-only, and a later pick, un-pick or second submit is refused with *Pilihan sudah dikirim* (Owner 2026-10-07)
 
 ## AC-SEL-009 — Submitting needs a pick
 Covers: BR-SEL-005 (A-5)
@@ -176,9 +178,9 @@ Covers: BR-SEL-003 (A-6)
 ## AC-SEL-011 — Owner locks or closes a group
 Covers: BR-SEL-005, BR-AUD-001 (A-12)
 
-**Given** *Foto edit* is `SUBMITTED` and *Foto cetak* is `OPEN`
-**When** the Owner locks *Foto edit* and closes *Foto cetak*
-**Then** both are `LOCKED` with actor and time recorded, the client sees them read-only with their picks, and no one can reopen them
+**Given** *Foto edit* is `SUBMITTED`, *Foto cetak* is `OPEN` and never sent, and *Foto album* is `OPEN` and was sent below its limit
+**When** the Owner locks *Foto edit*, closes *Foto cetak* and locks *Foto album* (its row shows *dikirim {date}* and offers *Kunci pilihan*, not *Tutup pilihan*)
+**Then** all three are `LOCKED` with actor and time recorded, the client sees them read-only with their picks, and no one can reopen them
 
 ## AC-SEL-016 — One group per selection item, by type
 Covers: BR-SEL-001, BR-SEL-003, BR-CAT-007, BR-CAT-011 (A-20, A-21)

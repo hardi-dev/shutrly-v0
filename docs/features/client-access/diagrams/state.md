@@ -7,10 +7,11 @@ Three lifecycles matter here: the selection group, the add-on, and the client se
 ```mermaid
 stateDiagram-v2
     [*] --> OPEN : gallery first published (or item added while BOOKED)
-    OPEN --> SUBMITTED : client submits (>= 1 pick)
+    OPEN --> SUBMITTED : client submits at the limit
+    OPEN --> OPEN : client submits below the limit (sent, still open)
     SUBMITTED --> LOCKED : Owner locks
     SUBMITTED --> OPEN : add-on approved on this group
-    OPEN --> LOCKED : Owner closes without submission
+    OPEN --> LOCKED : Owner locks (sent) or closes (never sent)
     LOCKED --> [*]
 ```
 
@@ -18,10 +19,11 @@ stateDiagram-v2
 |---|---|---|---|
 | (none) | gallery first published | OPEN | the project item has `selectionRequired`; one group per item, limit from the item (BR-SEL-001) |
 | (none) | selection item added while the deal is editable | OPEN | BR-PRJ-009 |
-| OPEN | client submits | SUBMITTED | at least one pick; below the limit needs confirmation (A-5); one transaction under the group lock (BR-SEL-006) |
+| OPEN | client submits at the limit | SUBMITTED | at least one pick; records `submittedAt`; one transaction under the group lock (BR-SEL-006) |
+| OPEN | client submits below the limit | OPEN | needs confirmation (A-5); records `submittedAt`; picks stay changeable and the client may submit again (Owner 2026-10-07) |
 | SUBMITTED | add-on approved on this group | OPEN | extraLimit up in the same transaction; picks kept; the client may submit again (BR-SEL-005, A-22) |
 | SUBMITTED | Owner locks | LOCKED | records actor and time (BR-AUD-001) |
-| OPEN | Owner closes | LOCKED | records actor and time |
+| OPEN | Owner locks (*Kunci pilihan*, sent before) or closes (*Tutup pilihan*, never sent) | LOCKED | records actor and time |
 | OPEN | pick, un-pick, quantity change | OPEN | usage <= effective limit (BR-SEL-003) |
 | SUBMITTED, LOCKED | any client change | unchanged | refused: *Pilihan sudah dikirim* (BR-SEL-005) |
 | OPEN | Owner edits the item | OPEN | refused if it removes the item with picks or with an `APPROVED` add-on on the group, or lowers the value below usage (BR-PRJ-009) |

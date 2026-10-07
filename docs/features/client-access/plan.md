@@ -478,3 +478,34 @@ function formatLine(mode: PickMode, pick: PickListEntry): string {
 - [x] **11.4** Update `docs/HANDOFF.md`, the feature map status (`DONE` pending verification) and the implementation records. Commit `docs(client-access): record the build`.
 
 **Done check:** typecheck, lint, the client-access unit/integration/E2E files and the build pass; every AC in the index maps to a passing test or a documented verification (C-009).
+
+---
+
+## Slice 12: Owner 7 · cards on the gallery page
+
+**Read first:** spec A-34, §3, §5, §6, §7; AC-ACC-009, AC-SEL-010, AC-DEL-001, -007, AC-GAL-027 (password on the gallery screen); technical-design › D-20; design.md › *Owner 7 · Galeri*; exports `owner-7-galeri/` (`galeri-dipublikasikan` desktop `HT8V6` and mobile `iGwTx`, `proyek-terkirim` desktop `r71J5` and mobile `QUSVb`). Existing code: `GalleryPageScreen`, `ProjectDetailScreen`, `GalleryCard`, `DeliveryCard`, `SelectionCard`, `ProjectAccessCard`, the project and gallery route pages.
+
+**Decisions:** the old `/w/[ws]/projects/[id]/pilihan` URLs return 404 with no redirect, because production has no data yet (Owner 2026-10-07). The card boards of Owner 1, 4 and 5 still define every card state; only the placement changes. The Galeri card follows `r71J5`/`QUSVb`: no password (it is on the gallery page's *Akses klien*), facts *Status · Sumber · Foto · Kedaluwarsa* on desktop and *Status · Foto* on phones, then the two summary rows. On a `DELIVERED` project the header meta reads *Hasil akhir dipublikasikan {date}* instead of the session line.
+
+**Rule code** (summary rows; the export draws only the locked and published state, so the other states reuse the card wording):
+
+| Row | State | Meta (desktop) | Meta (phone) | Chip |
+|---|---|---|---|---|
+| *Pilihan klien* | `NO_ITEMS` | row hidden | | |
+| | `NOT_PUBLISHED` | card note | card note | none |
+| | `OPEN` | `Foto edit 2/10 · Foto cetak 0/5 · terbuka` | *Klien sedang memilih* | *Terbuka* info |
+| | `REVIEW` | `… · n dikirim` | *n grup dikirim* | *Dikirim* success |
+| | `FINAL` | `… · semua dikunci` | *Semua grup dikunci* | *Dikunci* neutral |
+| *Hasil akhir* | not shown (`isShown` false) | row hidden | | |
+| | `NO_FILES`, `GALLERY_INACTIVE` | card note | card note | none |
+| | `READY` | `2 edited · 1 print siap` | *Siap dipublikasikan* | *Siap* info |
+| | `PUBLISHED`, `COMPLETED` | `Dipublikasikan Min, 5 Okt 2026 · 2 edited · 1 print` | `Dipublikasikan Min, 5 Okt 2026` | *Dipublikasikan* success |
+
+**Steps**
+- [ ] **12.1** Move the picks pages to `…/[projectId]/gallery/pilihan` and `…/gallery/pilihan/[groupId]` (`git mv`); the groups page's breadcrumb parent is *Galeri* (the gallery page), the group page's is *Pilihan klien*; `SelectionCard` and `SelectionGroupsScreen` link to the new paths (dom tests first). Commit `feat(client-access): move the picks pages under the gallery`.
+- [ ] **12.2** `GalleryPageScreen` gets the slots `accessCard`, `selectionCard` and `deliveryCard`, rendered in that order before *Sumber foto* and replacing F-09's `AccessCard`; the page and its skeleton use `size.content-narrow`; *Foto* previews 6 photos in 3 columns (`PREVIEW_PHOTO_COUNT` 6, copy *Cuplikan 6 foto pertama…*, no description on phones); the gallery route loads the three cards; `DeliveryCard` no longer offers *Tandai selesai* (dom tests first). Commit `feat(gallery): show access, picks and final delivery on the gallery page`.
+- [ ] **12.3** `ProjectDetailScreen` drops `selectionCard`, `deliveryCard` and `accessCard`; `GalleryCard` takes the selection and delivery views and shows the facts and summary rows above (`gallery-summary-text`, unit tests per row). Commit `feat(gallery): summarise picks and final delivery on the galeri card`.
+- [ ] **12.4** `ProjectDetailScreen` gets a `headerAction` slot (desktop page actions; the phone's bottom action bar) and a `headerMeta` override for the phone header; the project route passes `CompleteProjectButton` (gallery UI, reuses `useDeliveryActions` and the *Tandai proyek selesai?* dialog) when `canComplete`, and the delivered meta (dom tests first, AC-DEL-007). Commit `feat(delivery): mark a delivered project complete from the header`.
+- [ ] **12.5** `tests/e2e/client-access/journeys.spec.ts`: lock from `gallery/pilihan`, publish from the gallery page, complete from the project header. Screenshot the gallery and project pages at 1440 and 390 against the four exports; record the slice in technical-design and `docs/HANDOFF.md`. Commits `test(client-access): follow the cards to the gallery page`, `docs(client-access): record slice 12`.
+
+**Done check:** the gallery page shows *Akses klien → Pilihan klien → Hasil akhir → Sumber foto → Foto* at 720; the project page shows *Info, Galeri* (with both summary rows) and *Add-on*, and *Tandai selesai* in the header of a delivered project; `/projects/[id]/pilihan` is 404; typecheck, lint, the touched dom/unit tests and the journeys E2E pass.

@@ -19,7 +19,10 @@ export const PROJECT_ACCESS_COPY = {
   copyLink: "Salin link",
   copyPassword: "Salin password",
   copied: "Disalin",
-  copyFailed: "Belum tersalin. Salin secara manual.",
+  // not in Pencil: the browser refused the clipboard, so the text is shown whole and selected
+  copyFailedTitle: "Belum tersalin",
+  copyFailedBody:
+    "Teksnya sudah ditandai. Salin dengan Ctrl+C atau ⌘C, atau tekan lama lalu Salin.",
   rotatedToast: "Link baru siap. Bagikan ke klien.",
   cancelledToast: "Proyek dibatalkan, link tidak bisa diganti.",
   failedToast: "Gagal mengganti link. Coba lagi.",

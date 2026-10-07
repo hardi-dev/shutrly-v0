@@ -251,6 +251,13 @@ Covers: BR-PRJ-009, BR-SEL-005
 **When** the Owner changes the *Foto edit* value
 **Then** the edit is refused
 
+## AC-SEL-022 — Removing an item whose group has add-ons
+Covers: BR-PRJ-009, BR-ADD-002, BR-ADD-005
+
+**Given** *Wisuda Sari* is `BOOKED`, its *Foto edit* group is `OPEN` with no picks, and an `APPROVED`, a `DRAFT` and a `CANCELLED` add-on target it
+**When** the Owner removes *Foto edit*, then cancels the approved add-on and removes *Foto edit* again
+**Then** the first removal is refused and nothing changes; the second removes the item and its group, and all three add-ons stay with no target
+
 ## AC-SEL-015 — A picked photo goes missing
 Covers: BR-GAL-006, BR-SEL-003 (A-8)
 

@@ -24,7 +24,7 @@ stateDiagram-v2
 | OPEN | Owner closes | LOCKED | records actor and time |
 | OPEN | pick, un-pick, quantity change | OPEN | usage <= effective limit (BR-SEL-003) |
 | SUBMITTED, LOCKED | any client change | unchanged | refused: *Pilihan sudah dikirim* (BR-SEL-005) |
-| OPEN | Owner edits the item | OPEN | refused if it removes the item with picks or lowers the value below usage (BR-PRJ-009) |
+| OPEN | Owner edits the item | OPEN | refused if it removes the item with picks or with an `APPROVED` add-on on the group, or lowers the value below usage (BR-PRJ-009) |
 | SUBMITTED, LOCKED | Owner edits the item | unchanged | refused |
 
 ## Add-on (BR-ADD-003)

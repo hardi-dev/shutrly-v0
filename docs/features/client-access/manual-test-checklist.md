@@ -16,7 +16,7 @@ Gallery page › *Sumber foto*.
 | 1.4 | *Edit folder* di folder yang punya subfolder | Satu baris per item paket; tiap item memilih satu subfolder atau *Belum dipilih* | ✅ | |
 | 1.5 | Subfolder **kosong** di Drive › *Sinkronkan* › *Edit folder* | Subfolder kosong tetap muncul di pilihan | ✅ | |
 | 1.6 | Pilih subfolder untuk satu item, lalu buka pilihan item lain | Subfolder yang sudah dipilih tidak ditawarkan lagi | ✅ | |
-| 1.7 | Upload hasil edit ke subfolder yang **belum** dipetakan › *Sinkronkan* › lalu petakan subfolder itu ke item › *Simpan* (tanpa sinkron ulang) | Hasil edit langsung pindah ke tab item itu di `/final` dan tidak lagi di `/photos`; foto asli di folder root tetap di `/photos` | ⬜ | |
+| 1.7 | Upload hasil edit ke subfolder yang **belum** dipetakan › *Sinkronkan* › lalu petakan subfolder itu ke item › *Simpan* (tanpa sinkron ulang) | Hasil edit langsung pindah ke tab item itu di `/final` dan tidak lagi di `/photos`; foto asli di folder root tetap di `/photos` | ✅ | |
 | 1.8 | Buat subfolder baru di Drive › *Sinkronkan* | Toast menyebut subfolder baru, dengan tombol *Petakan* yang membuka *Edit folder* | ✅ | |
 | 1.9 | Upload foto ke subfolder yang sudah dipetakan › *Sinkronkan* | Foto masuk ke item tersebut | ✅ | |
 | 1.10 | *Edit folder* di proyek yang paketnya tanpa item pilihan foto | Pesan singkat dengan tombol *Buka Isi paket* | ✅ | |

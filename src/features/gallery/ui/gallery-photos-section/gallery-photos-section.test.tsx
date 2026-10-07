@@ -49,7 +49,7 @@ describe("GalleryPhotosSection", () => {
     const { container } = render(
       <GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />,
     );
-    expect(screen.getByText("8 proof (1 hilang) · 2 edited · 1 print")).toBeInTheDocument();
+    expect(screen.getByText("8 proof (1 hilang) · 3 hasil akhir")).toBeInTheDocument();
     expect(
       screen.getByText(/Terlihat oleh klien setelah galeri dipublikasikan\. Foto bertanda Hilang/),
     ).toBeInTheDocument();

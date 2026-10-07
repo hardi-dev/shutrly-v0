@@ -14,6 +14,10 @@ const GALLERY = {
   finalDeliveryPublishedAt: null,
   editedCount: 24,
   printCount: 6,
+  items: [
+    { id: "i-edit", name: "Foto edit", count: 24 },
+    { id: "i-print", name: "Foto cetak", count: 6 },
+  ],
 } as const;
 const FACTS: DeliveryFacts = {
   projectTitle: "Wisuda Rina",
@@ -35,6 +39,10 @@ describe("getDeliveryCard (hasilakhirowner-kartu)", () => {
       state: "READY",
       editedCount: 24,
       printCount: 6,
+      items: [
+        { id: "i-edit", name: "Foto edit", count: 24 },
+        { id: "i-print", name: "Foto cetak", count: 6 },
+      ],
       canComplete: false,
     });
   });

@@ -10,37 +10,27 @@ import type { DeliveryRow } from "./delivery-text.types";
 
 const READY_CHIP = { label: COPY.chip.READY, tone: "info" } as const;
 
-/** "24 foto Edited dan 6 file Print", leaving out a kind with no file. @param card - the card view @returns the phrase */
-export function finishedFiles(card: Pick<DeliveryCardView, "editedCount" | "printCount">): string {
-  const parts: string[] = [];
-  if (card.editedCount > 0) parts.push(COPY.editedFiles(card.editedCount));
-  if (card.printCount > 0) parts.push(COPY.printFiles(card.printCount));
-  return parts.join(COPY.and);
+/** "24 file Foto edit dan 6 file Foto cetak", one part per package item with files (F-20). @param card - the card view @returns the phrase */
+export function finishedFiles(card: Pick<DeliveryCardView, "items">): string {
+  return card.items
+    .filter((item) => item.count > 0)
+    .map((item) => COPY.itemFiles(item.count, item.name))
+    .join(COPY.and);
 }
 
 function readyRows(card: DeliveryCardView): DeliveryRow[] {
-  const rows: DeliveryRow[] = [];
-  if (card.editedCount > 0) {
-    rows.push({
-      key: "edited",
-      title: COPY.edited,
-      meta: COPY.editedCount(card.editedCount),
+  return card.items
+    .filter((item) => item.count > 0)
+    .map((item) => ({
+      key: item.id,
+      title: item.name,
+      meta: COPY.itemCount(item.count),
       chip: READY_CHIP,
-    });
-  }
-  if (card.printCount > 0) {
-    rows.push({
-      key: "print",
-      title: COPY.print,
-      meta: COPY.printCount(card.printCount),
-      chip: READY_CHIP,
-    });
-  }
-  return rows;
+    }));
 }
 
 /**
- * The card's rows for its state: one per finished kind when ready, the publication when published,
+ * The card's rows for its state: one per package item with files when ready (F-20), the publication when published,
  * the completion when completed; none for states A and E, which show a note (hasilakhirowner-kartu).
  * @param card - the card view
  * @returns the rows

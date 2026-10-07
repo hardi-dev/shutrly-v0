@@ -18,6 +18,10 @@ const DELIVERED: DeliveryCardView = {
   projectTitle: "Wisuda Rina",
   editedCount: 2,
   printCount: 1,
+  items: [
+    { id: "i-edit", name: "Foto edit", count: 2 },
+    { id: "i-print", name: "Foto cetak", count: 1 },
+  ],
   publishedAt: "2026-10-05T03:00:00Z",
   completedAt: null,
   canComplete: true,

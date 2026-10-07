@@ -19,8 +19,8 @@ const COPY = GALLERY_COPY;
 function countsText(source: GallerySourceView, withIgnored: boolean): string[] {
   const parts = [COPY.sourceProof(source.proofCount)];
   if (source.missingCount > 0) parts.push(COPY.sourceMissing(source.missingCount));
-  if (source.editedCount > 0) parts.push(COPY.sourceEdited(source.editedCount));
-  if (source.printCount > 0) parts.push(COPY.sourcePrint(source.printCount));
+  const finished = source.editedCount + source.printCount;
+  if (finished > 0) parts.push(COPY.sourceFinished(finished));
   if (withIgnored && source.ignoredCount > 0) parts.push(COPY.sourceIgnored(source.ignoredCount));
   if (withIgnored && source.tooDeepCount > 0) parts.push(COPY.sourceTooDeep(source.tooDeepCount));
   return parts;

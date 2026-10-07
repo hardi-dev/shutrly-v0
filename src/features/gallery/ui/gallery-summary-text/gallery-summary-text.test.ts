@@ -39,6 +39,10 @@ const DELIVERY: DeliveryCardView = {
   projectTitle: "Wisuda Rina",
   editedCount: 2,
   printCount: 1,
+  items: [
+    { id: "i-edit", name: "Foto edit", count: 2 },
+    { id: "i-print", name: "Foto cetak", count: 1 },
+  ],
   publishedAt: "2026-10-05T03:00:00Z",
   completedAt: null,
   canComplete: true,
@@ -85,7 +89,7 @@ describe("deliverySummary (Owner 7 Galeri card)", () => {
   it("r71J5/QUSVb: published, with the kinds on desktop", () => {
     expect(deliverySummary(DELIVERY, false)).toEqual({
       title: "Hasil akhir",
-      meta: "Dipublikasikan Sen, 5 Okt 2026 · 2 edited · 1 print",
+      meta: "Dipublikasikan Sen, 5 Okt 2026 · 2 Foto edit · 1 Foto cetak",
       chip: { label: "Dipublikasikan", tone: "success" },
     });
     expect(deliverySummary(DELIVERY, true)?.meta).toBe("Dipublikasikan Sen, 5 Okt 2026");
@@ -95,9 +99,10 @@ describe("deliverySummary (Owner 7 Galeri card)", () => {
   });
 
   it("shows ready files, the card notes, and hides the row where delivery never applies", () => {
-    const ready = { ...DELIVERY, state: "READY" as const, publishedAt: null, printCount: 0 };
+    const items = [{ id: "i-edit", name: "Foto edit", count: 2 }];
+    const ready = { ...DELIVERY, state: "READY" as const, publishedAt: null, printCount: 0, items };
     expect(deliverySummary(ready, false)).toMatchObject({
-      meta: "2 edited siap",
+      meta: "2 Foto edit siap",
       chip: { label: "Siap", tone: "info" },
     });
     expect(deliverySummary(ready, true)?.meta).toBe("Siap dipublikasikan");

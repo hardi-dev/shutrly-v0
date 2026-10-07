@@ -18,6 +18,10 @@ const READY: DeliveryCardView = {
   projectTitle: "Wisuda Rina",
   editedCount: 24,
   printCount: 6,
+  items: [
+    { id: "i-edit", name: "Foto edit", count: 24 },
+    { id: "i-print", name: "Foto cetak", count: 6 },
+  ],
   publishedAt: null,
   completedAt: null,
   canComplete: false,
@@ -40,7 +44,7 @@ describe("DeliveryCard (hasilakhirowner-kartu A–E)", () => {
     fireEvent.click(screen.getByRole("button", { name: "Publikasikan hasil akhir" }));
     expect(
       await screen.findByText(
-        "24 foto Edited dan 6 file Print akan terlihat oleh klien. Status proyek menjadi Terkirim.",
+        "24 file Foto edit dan 6 file Foto cetak akan terlihat oleh klien. Status proyek menjadi Terkirim.",
       ),
     ).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Publikasikan" }));

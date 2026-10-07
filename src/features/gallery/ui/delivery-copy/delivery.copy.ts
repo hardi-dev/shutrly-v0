@@ -7,12 +7,9 @@ export const DELIVERY_COPY = {
   noFilesNote:
     "Belum ada hasil akhir yang tersinkron. Buat subfolder hasil akhir di Drive, petakan ke item paket lewat Edit folder, lalu sinkronkan galeri.",
   inactiveNote: "Galeri harus dipublikasikan lebih dulu supaya klien bisa membuka hasil akhir.",
-  edited: "Edited",
-  print: "Print",
-  editedCount: (count: number) => `${String(count)} foto`,
-  printCount: (count: number) => `${String(count)} file`,
-  editedFiles: (count: number) => `${String(count)} foto Edited`,
-  printFiles: (count: number) => `${String(count)} file Print`,
+  // F-20: one row and one phrase per package item
+  itemCount: (count: number) => `${String(count)} file`,
+  itemFiles: (count: number, name: string) => `${String(count)} file ${name}`,
   and: " dan ",
   publishedTitle: (when: string) => `Dipublikasikan ${when}`,
   publishedMeta: (files: string) => `Klien bisa mengunduh ${files}.`,

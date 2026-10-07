@@ -40,6 +40,7 @@ export async function getDeliveryCard(
     projectTitle: facts.projectTitle,
     editedCount,
     printCount,
+    items: gallery?.items ?? [],
     publishedAt: publishedAt?.toISOString() ?? null,
     completedAt: facts.completedAt?.toISOString() ?? null,
     canComplete: facts.projectStatus === "DELIVERED",

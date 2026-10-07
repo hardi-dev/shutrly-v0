@@ -9,6 +9,10 @@ const CARD: DeliveryCardView = {
   projectTitle: "Wisuda Rina",
   editedCount: 24,
   printCount: 6,
+  items: [
+    { id: "i-edit", name: "Foto edit", count: 24 },
+    { id: "i-print", name: "Foto cetak", count: 6 },
+  ],
   publishedAt: null,
   completedAt: null,
   canComplete: false,
@@ -16,10 +20,10 @@ const CARD: DeliveryCardView = {
 };
 
 describe("delivery text (hasilakhirowner-kartu)", () => {
-  it("B: one ready row per finished kind", () => {
+  it("B F-20: one ready row per package item with files", () => {
     expect(deliveryRows(CARD).map((row) => [row.title, row.meta, row.chip.label])).toEqual([
-      ["Edited", "24 foto", "Siap"],
-      ["Print", "6 file", "Siap"],
+      ["Foto edit", "24 file", "Siap"],
+      ["Foto cetak", "6 file", "Siap"],
     ]);
   });
 
@@ -28,7 +32,7 @@ describe("delivery text (hasilakhirowner-kartu)", () => {
     expect(rows.map((row) => [row.title, row.meta, row.chip.label])).toEqual([
       [
         "Dipublikasikan 5 Okt 2026, 17.10",
-        "Klien bisa mengunduh 24 foto Edited dan 6 file Print.",
+        "Klien bisa mengunduh 24 file Foto edit dan 6 file Foto cetak.",
         "Dipublikasikan",
       ],
     ]);
@@ -40,13 +44,17 @@ describe("delivery text (hasilakhirowner-kartu)", () => {
   });
 
   it("A and E show a note instead of rows", () => {
-    expect(deliveryNote({ ...CARD, state: "NO_FILES" })).toMatch(/^Belum ada file edited/);
+    expect(deliveryNote({ ...CARD, state: "NO_FILES" })).toMatch(/^Belum ada hasil akhir/);
     expect(deliveryNote({ ...CARD, state: "GALLERY_INACTIVE" })).toMatch(/^Galeri harus/);
     expect(deliveryRows({ ...CARD, state: "NO_FILES" })).toEqual([]);
   });
 
-  it("leaves out a kind with no file", () => {
-    expect(finishedFiles({ editedCount: 3, printCount: 0 })).toBe("3 foto Edited");
+  it("leaves out an item with no file", () => {
+    const items = [
+      { id: "i-edit", name: "Foto edit", count: 3 },
+      { id: "i-print", name: "Foto cetak", count: 0 },
+    ];
+    expect(finishedFiles({ items })).toBe("3 file Foto edit");
   });
 
   it("Owner 7: a delivered project's header says when final delivery was published", () => {

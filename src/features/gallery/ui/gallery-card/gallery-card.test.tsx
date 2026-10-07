@@ -49,6 +49,10 @@ const DELIVERY = {
   projectTitle: "Wisuda Rina",
   editedCount: 2,
   printCount: 1,
+  items: [
+    { id: "i-edit", name: "Foto edit", count: 2 },
+    { id: "i-print", name: "Foto cetak", count: 1 },
+  ],
   publishedAt: "2026-10-05T03:00:00Z",
   completedAt: null,
   canComplete: true,
@@ -98,7 +102,7 @@ describe("GalleryCard", () => {
     renderCard({ project: PROJECT, canCreate: false, gallery: GALLERY });
     expect(screen.getByText("Draf")).toBeInTheDocument();
     expect(screen.getByText("2 folder")).toBeInTheDocument();
-    expect(screen.getByText("8 proof · 2 edited · 1 print")).toBeInTheDocument();
+    expect(screen.getByText("8 proof · 3 hasil akhir")).toBeInTheDocument();
     expect(screen.getByText("Tidak ada")).toBeInTheDocument();
     expect(screen.queryByText("mawar-4821")).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Kelola galeri" }));
@@ -113,7 +117,7 @@ describe("GalleryCard", () => {
     expect(screen.getByText("Foto edit 10/10 · semua dikunci")).toBeInTheDocument();
     expect(screen.getByText("Dikunci")).toBeInTheDocument();
     expect(
-      screen.getByText("Dipublikasikan Sen, 5 Okt 2026 · 2 edited · 1 print"),
+      screen.getByText("Dipublikasikan Sen, 5 Okt 2026 · 2 Foto edit · 1 Foto cetak"),
     ).toBeInTheDocument();
     expect(screen.getAllByText("Dipublikasikan")).toHaveLength(2);
   });
@@ -124,7 +128,7 @@ describe("GalleryCard", () => {
       { project: PROJECT, canCreate: false, gallery: { ...GALLERY, status: "PUBLISHED" } },
       { selection: SELECTION, delivery: DELIVERY },
     );
-    expect(screen.getByText("8 proof · 2 edited · 1 print")).toBeInTheDocument();
+    expect(screen.getByText("8 proof · 3 hasil akhir")).toBeInTheDocument();
     expect(screen.queryByText("Kedaluwarsa")).not.toBeInTheDocument();
     expect(screen.queryByText(/2 folder/)).not.toBeInTheDocument();
     expect(screen.getByText("Semua grup dikunci")).toBeInTheDocument();

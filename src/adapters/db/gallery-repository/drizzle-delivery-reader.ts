@@ -1,15 +1,18 @@
 import "server-only";
 
-import { and, eq, sql } from "drizzle-orm";
+import { and, asc, count, eq, inArray, isNull } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 
 import type {
   DeliveryGalleryFacts,
   DeliveryReaderPort,
+  FinishedItemCount,
 } from "@/features/gallery/application/ports/delivery-reader/delivery-reader.port";
 
 import type { DbExecutor } from "../client/client.types";
 import { project } from "../schema/booking/project";
-import { gallery } from "../schema/gallery/gallery";
+import { projectItem } from "../schema/booking/project";
+import { gallery, galleryPhoto, gallerySource } from "../schema/gallery/gallery";
 import { toGalleryStatus, toProjectStatus } from "./gallery-rows";
 
 // Visible finished files: not missing, from an active source (BR-DEL-001/002, BR-GAL-009).
@@ -17,6 +20,59 @@ const finishedCount = (kind: "EDITED" | "PRINT") => sql<number>`(select count(*)
   from gallery_photo p join gallery_source s on s.workspace_id = p.workspace_id and s.id = p.gallery_source_id
   where p.workspace_id = ${gallery.workspaceId} and p.gallery_id = ${gallery.id}
     and p.kind = ${kind} and p.missing_at is null and s.removed_at is null)`;
+
+// Files synced before F-20 have no item; they count under their kind.
+const KIND_NAMES = { EDITED: "Edited", PRINT: "Print" } as const;
+
+/** Visible finished files per package item, in package order (F-20). @param db - the executor @param workspaceId - the workspace @param galleryId - the gallery @returns the counts */
+async function selectFinishedItems(
+  db: DbExecutor,
+  workspaceId: string,
+  galleryId: string,
+): Promise<FinishedItemCount[]> {
+  const rows = await db
+    .select({
+      kind: galleryPhoto.kind,
+      itemId: projectItem.id,
+      itemName: projectItem.name,
+      sortOrder: projectItem.sortOrder,
+      count: count(),
+    })
+    .from(galleryPhoto)
+    .innerJoin(
+      gallerySource,
+      and(
+        eq(gallerySource.workspaceId, galleryPhoto.workspaceId),
+        eq(gallerySource.id, galleryPhoto.gallerySourceId),
+      ),
+    )
+    .leftJoin(
+      projectItem,
+      and(
+        eq(projectItem.workspaceId, galleryPhoto.workspaceId),
+        eq(projectItem.id, galleryPhoto.projectItemId),
+      ),
+    )
+    .where(
+      and(
+        eq(galleryPhoto.workspaceId, workspaceId),
+        eq(galleryPhoto.galleryId, galleryId),
+        inArray(galleryPhoto.kind, ["EDITED", "PRINT"]),
+        isNull(galleryPhoto.missingAt),
+        isNull(gallerySource.removedAt),
+      ),
+    )
+    .groupBy(galleryPhoto.kind, projectItem.id, projectItem.name, projectItem.sortOrder)
+    .orderBy(asc(projectItem.sortOrder), asc(galleryPhoto.kind));
+  return rows.map((row) => {
+    const kind = row.kind === "PRINT" ? "PRINT" : "EDITED";
+    return {
+      id: row.itemId ?? kind,
+      name: row.itemName ?? KIND_NAMES[kind],
+      count: row.count,
+    };
+  });
+}
 
 interface GalleryRow {
   readonly status: string | null;
@@ -26,7 +82,10 @@ interface GalleryRow {
   readonly printCount: number | null;
 }
 
-function toGalleryFacts(row: GalleryRow): DeliveryGalleryFacts | null {
+function toGalleryFacts(
+  row: GalleryRow,
+  items: readonly FinishedItemCount[],
+): DeliveryGalleryFacts | null {
   const status = row.status ? toGalleryStatus(row.status) : null;
   if (!status) return null;
   return {
@@ -35,6 +94,7 @@ function toGalleryFacts(row: GalleryRow): DeliveryGalleryFacts | null {
     finalDeliveryPublishedAt: row.finalDeliveryPublishedAt,
     editedCount: row.editedCount ?? 0,
     printCount: row.printCount ?? 0,
+    items,
   };
 }
 
@@ -47,6 +107,7 @@ export function createDrizzleDeliveryReader(db: DbExecutor): DeliveryReaderPort 
           title: project.title,
           projectStatus: project.status,
           completedAt: project.completedAt,
+          galleryId: gallery.id,
           status: gallery.status,
           expiresAt: gallery.expiresAt,
           finalDeliveryPublishedAt: gallery.finalDeliveryPublishedAt,
@@ -66,7 +127,10 @@ export function createDrizzleDeliveryReader(db: DbExecutor): DeliveryReaderPort 
         projectTitle: row.title,
         projectStatus,
         completedAt: row.completedAt,
-        gallery: toGalleryFacts(row),
+        gallery: toGalleryFacts(
+          row,
+          row.galleryId ? await selectFinishedItems(db, context.workspaceId, row.galleryId) : [],
+        ),
       };
     },
   };

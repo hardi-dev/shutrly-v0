@@ -1,6 +1,9 @@
 import type { DeliveryCardState } from "@/features/gallery/domain/final-delivery/final-delivery.types";
 
-import type { DeliveryReaderPort } from "../../ports/delivery-reader/delivery-reader.port";
+import type {
+  DeliveryReaderPort,
+  FinishedItemCount,
+} from "../../ports/delivery-reader/delivery-reader.port";
 
 export interface GetDeliveryCardDeps {
   readonly reader: DeliveryReaderPort;
@@ -13,6 +16,8 @@ export interface DeliveryCardView {
   readonly projectTitle: string;
   readonly editedCount: number;
   readonly printCount: number;
+  /** Finished files per package item (F-20); the card lists these instead of Edited / Print. */
+  readonly items: readonly FinishedItemCount[];
   /** ISO instants, null while they don't apply. */
   readonly publishedAt: string | null;
   readonly completedAt: string | null;

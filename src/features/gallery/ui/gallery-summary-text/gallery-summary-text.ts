@@ -44,11 +44,12 @@ export function selectionSummary(
   return { title, meta, chip: groupStatusChip(status) };
 }
 
+// F-20: one part per package item with files, "3 Foto edit · 1 Foto cetak".
 function finishedKinds(card: DeliveryCardView): string {
-  const parts: string[] = [];
-  if (card.editedCount > 0) parts.push(COPY.edited(card.editedCount));
-  if (card.printCount > 0) parts.push(COPY.print(card.printCount));
-  return parts.join(COPY.join);
+  return card.items
+    .filter((item) => item.count > 0)
+    .map((item) => COPY.item(item.count, item.name))
+    .join(COPY.join);
 }
 
 /**

@@ -27,8 +27,9 @@ export const GALLERY_COPY = {
   copyFailedBody: "Salin password secara manual.",
   sourceCount: (count: number) => `${String(count)} folder`,
   noSources: "Belum ada folder",
-  photoCounts: (proof: number, edited: number, print: number) =>
-    `${String(proof)} proof · ${String(edited)} edited · ${String(print)} print`,
+  // F-20: finished files belong to package items, so one count, not Edited / Print
+  photoCounts: (proof: number, finished: number) =>
+    `${String(proof)} proof · ${String(finished)} hasil akhir`,
   missingSuffix: (count: number) => ` (${String(count)} hilang)`,
   expiryNone: "Tidak ada",
   expiryPast: (date: string) => `${date} (lewat)`,
@@ -156,8 +157,7 @@ export const GALLERY_COPY = {
   sourceLastSyncedAt: (when: string) => `Terakhir disinkronkan ${when}`,
   sourceProof: (count: number) => `${String(count)} proof`,
   sourceMissing: (count: number) => `${String(count)} hilang`,
-  sourceEdited: (count: number) => `${String(count)} edited`,
-  sourcePrint: (count: number) => `${String(count)} print`,
+  sourceFinished: (count: number) => `${String(count)} hasil akhir`,
   sourceIgnored: (count: number) => `${String(count)} diabaikan`,
   sourceTooDeep: (count: number) => `${String(count)} folder terlalu dalam`,
   syncError: {
@@ -309,8 +309,8 @@ export const GALLERY_COPY = {
   browseFailedTitle: "Foto belum bisa dimuat", // not in Pencil
   visibilityFolded: {
     EDITED:
-      "Disembunyikan dari klien sampai hasil akhir dikirim. Folder edited digabung ke folder induknya.",
+      "Disembunyikan dari klien sampai hasil akhir dikirim. Subfolder yang dipetakan digabung ke folder induknya.",
     PRINT:
-      "Disembunyikan dari klien sampai hasil akhir dikirim. Folder print digabung ke folder induknya.",
+      "Disembunyikan dari klien sampai hasil akhir dikirim. Subfolder yang dipetakan digabung ke folder induknya.",
   },
 } as const;

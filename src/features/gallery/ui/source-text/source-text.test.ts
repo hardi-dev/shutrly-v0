@@ -26,7 +26,7 @@ describe("sourceRowText", () => {
   it("AC-GAL-005 shows Berhasil, the sync time and the counts", () => {
     expect(sourceRowText(SOURCE, null, null, DESKTOP)).toEqual({
       title: "Rina-Wisuda",
-      meta: "Google Drive · Disinkronkan Min, 4 Okt 2026 · 11.02 · 4 proof · 3 edited · 1 print · 2 diabaikan",
+      meta: "Google Drive · Disinkronkan Min, 4 Okt 2026 · 11.02 · 4 proof · 4 hasil akhir · 2 diabaikan",
       metaTone: "default",
       chip: { tone: "success", label: "Berhasil", hasDot: true },
     });
@@ -37,9 +37,7 @@ describe("sourceRowText", () => {
     expect(sourceRowText(only, null, null, DESKTOP).meta).toBe(
       "Google Drive · Disinkronkan Min, 4 Okt 2026 · 11.02 · 4 proof",
     );
-    expect(sourceRowText(SOURCE, null, null, PHONE).meta).toBe(
-      "4 proof · 3 edited · 1 print · 11.02",
-    );
+    expect(sourceRowText(SOURCE, null, null, PHONE).meta).toBe("4 proof · 4 hasil akhir · 11.02");
   });
 
   it("AC-GAL-007 AC-GAL-030 adds the missing and too-deep counts", () => {
@@ -49,7 +47,7 @@ describe("sourceRowText", () => {
       null,
       DESKTOP,
     );
-    expect(text.meta).toContain("4 proof · 1 hilang · 3 edited · 1 print · 1 folder terlalu dalam");
+    expect(text.meta).toContain("4 proof · 1 hilang · 4 hasil akhir · 1 folder terlalu dalam");
   });
 
   it("AC-GAL-008 shows Gagal with the sharing hint in danger", () => {

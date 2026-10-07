@@ -17,6 +17,13 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 import type { DbExecutor } from "../client/client.types";
 import { project } from "../schema/booking/project";
 import { gallery, gallerySource } from "../schema/gallery/gallery";
+import {
+  reclassifySource,
+  replaceFolderMappings,
+  selectFolderMapping,
+  selectFolderMappings,
+  takeNewFolders,
+} from "./gallery-folder-map-sql";
 import { lifecycleWriter } from "./gallery-lifecycle-sql";
 import { lockGallery } from "./gallery-lock-sql";
 import { toGalleryStatus, toProjectStatus } from "./gallery-rows";
@@ -33,6 +40,16 @@ function sourceWriter(
     isWorkspaceSourceActive: (workspaceSourceId) =>
       isWorkspaceSourceActive(tx, context, workspaceSourceId),
     insertSource: (source) => insertGallerySource(tx, context, galleryId, source),
+    replaceFolderMappings: (sourceId, entries) =>
+      replaceFolderMappings(tx, context, sourceId, entries),
+    async reclassifySource(sourceId, mappings, now) {
+      // F-20: changed kinds change what the client sees.
+      if ((await reclassifySource(tx, context, sourceId, mappings)) === 0) return;
+      await tx
+        .update(gallery)
+        .set({ contentVersion: sql`${gallery.contentVersion} + 1`, updatedAt: now })
+        .where(and(eq(gallery.workspaceId, context.workspaceId), eq(gallery.id, galleryId)));
+    },
   };
 }
 
@@ -70,7 +87,7 @@ async function findSyncTarget(
   db: DbExecutor,
   context: WorkspaceContext,
   sourceId: string,
-): Promise<SyncTarget | null> {
+): Promise<Omit<SyncTarget, "mappings"> | null> {
   const row = await selectSyncRow(db, context, sourceId);
   const status = row ? toGalleryStatus(row.status) : null;
   const projectStatus = row ? toProjectStatus(row.projectStatus) : null;
@@ -89,6 +106,17 @@ async function findSyncTarget(
       projectStatus,
     },
   };
+}
+
+// F-20: the step reads the mappings once; commitStep's re-check doesn't need them.
+async function findSyncTargetWithMappings(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  sourceId: string,
+): Promise<SyncTarget | null> {
+  const target = await findSyncTarget(db, context, sourceId);
+  if (!target) return null;
+  return { ...target, mappings: await selectFolderMappings(db, context, sourceId) };
 }
 
 async function findGalleryIdByProject(
@@ -169,7 +197,9 @@ export function createDrizzleGallerySourceRepository(db: DbExecutor): GallerySou
       }),
     findFolderUse: (context, galleryId, folderId) =>
       findFolderUse(db, context, galleryId, folderId),
-    findSyncTarget: (context, sourceId) => findSyncTarget(db, context, sourceId),
+    findSyncTarget: (context, sourceId) => findSyncTargetWithMappings(db, context, sourceId),
+    takeNewFolders: (context, sourceId) => takeNewFolders(db, context, sourceId),
+    findFolderMapping: (context, sourceId) => selectFolderMapping(db, context, sourceId),
     findGalleryIdByProject: (context, projectId) => findGalleryIdByProject(db, context, projectId),
     listActiveSources: (context, galleryId) => listActiveSources(db, context, galleryId),
     claimStep: (context, sourceId, now) => claimStep(db, context, sourceId, now),

@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/require-await -- the fake mirrors the asynchronous repository port */
 
 import type {
+  FolderMapEntry,
   GallerySourceRepositoryPort,
   LockedGalleryState,
+  MappableItem,
   NewGallerySource,
   SyncClaim,
   SyncStepResult,
 } from "@/features/gallery/application/ports/gallery-source-repository/gallery-source-repository.port";
+import { classifyPhoto } from "@/features/gallery/domain/photo-classification/photo-classification";
+import type { FolderMapping } from "@/features/gallery/domain/photo-classification/photo-classification.types";
 import type {
   SyncedPhoto,
   SyncFailureCode,
@@ -42,6 +46,12 @@ export interface FakeGallery extends LockedGalleryState {
   deleted: boolean;
 }
 
+/** The fake Drive fixture's finished folders, mapped to two package items (F-20). */
+export const FIXTURE_FOLDER_MAPPINGS: readonly FolderMapping[] = [
+  { path: "Edited", kind: "EDITED", projectItemId: "item-edited" },
+  { path: "print", kind: "PRINT", projectItemId: "item-print" },
+];
+
 export class FakeGallerySourceRepository implements GallerySourceRepositoryPort {
   readonly galleries = new Map<string, FakeGallery>();
   readonly activeWorkspaceSources = new Set<string>();
@@ -50,6 +60,17 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
   /** Photo rows a step wrote (inserted or changed): an unchanged photo adds none (D-21). */
   photoWrites = 0;
   readonly otherProjectFolders = new Map<string, string[]>();
+  /** Subfolder mappings per source (F-20). */
+  readonly mappings = new Map<string, FolderMapping[]>();
+  /** The fixture's `Edited` and `print` folders mapped, so tests keep their finished files (F-20). */
+  defaultMappings: readonly FolderMapping[] = FIXTURE_FOLDER_MAPPINGS;
+  readonly knownFolders = new Map<string, string[]>();
+  readonly savedMappings = new Map<string, readonly FolderMapEntry[]>();
+  /** The project's selection items offered for mapping (F-20). */
+  mappableItems: readonly MappableItem[] = [
+    { id: "item-edited", name: "Foto edit", pickMode: "COUNT" },
+    { id: "item-print", name: "Foto cetak", pickMode: "QUANTITY" },
+  ];
   /** Sources with a client pick of one of their photos (BR-GAL-009). */
   readonly pickedSources = new Set<string>();
   private next = 0;
@@ -175,8 +196,39 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
         });
         return { sourceId: id };
       },
+      replaceFolderMappings: async (sourceId: string, entries: readonly FolderMapEntry[]) => {
+        this.savedMappings.set(sourceId, entries);
+      },
+      reclassifySource: async (sourceId: string, mappings: readonly FolderMapping[]) => {
+        this.mappings.set(sourceId, [...mappings]);
+        for (const [index, photo] of this.photos.entries()) {
+          if (photo.sourceId !== sourceId) continue;
+          const segments = photo.folderPath === "" ? [] : photo.folderPath.split("/");
+          this.photos[index] = { ...photo, ...classifyPhoto(segments, mappings) };
+        }
+      },
     };
     return (await work(gallery, writer)) as T;
+  }
+
+  async findFolderMapping(context: WorkspaceContext, sourceId: string) {
+    const source = this.source(context, sourceId);
+    if (!source || source.removed) return null;
+    const folders = [
+      ...new Set(
+        this.photos
+          .filter(
+            (photo) => photo.sourceId === sourceId && !photo.missing && photo.folderPath !== "",
+          )
+          .map((photo) => photo.folderPath),
+      ),
+    ].sort((a, b) => a.localeCompare(b));
+    return {
+      galleryId: source.galleryId,
+      folders,
+      items: this.mappableItems,
+      mappings: this.savedMappings.get(sourceId) ?? [],
+    };
   }
 
   async findFolderUse(_context: WorkspaceContext, _galleryId: string | null, folderId: string) {
@@ -200,7 +252,23 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
       removed: source.removed,
       runOpen: source.syncStatus === "SYNCING",
       gallery,
+      mappings: this.mappings.get(sourceId) ?? this.defaultMappings,
     };
+  }
+
+  async takeNewFolders(_context: WorkspaceContext, sourceId: string) {
+    const paths = [
+      ...new Set(
+        this.photos
+          .filter(
+            (photo) => photo.sourceId === sourceId && !photo.missing && photo.folderPath !== "",
+          )
+          .map((photo) => photo.folderPath),
+      ),
+    ].sort((a, b) => a.localeCompare(b));
+    const known = this.knownFolders.get(sourceId) ?? [];
+    this.knownFolders.set(sourceId, paths);
+    return paths.filter((path) => !known.includes(path));
   }
 
   async claimStep(

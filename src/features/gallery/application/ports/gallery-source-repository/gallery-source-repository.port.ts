@@ -5,6 +5,8 @@ import type {
   GalleryProjectStatus,
   GalleryStoredStatus,
 } from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import type { FolderMapping } from "@/features/gallery/domain/photo-classification/photo-classification.types";
+import type { PickMode } from "@/features/gallery/domain/pick-list/pick-list.types";
 import type {
   SyncedPhoto,
   SyncFailureCode,
@@ -73,7 +75,39 @@ export interface GalleryLifecycleWriter {
   readonly publishFinalDelivery: (actorId: string, now: Date) => Promise<void>;
 }
 
+/** One saved subfolder mapping (F-20). */
+export interface FolderMapEntry {
+  readonly path: string;
+  readonly projectItemId: string;
+}
+
+/** A selection item of the project's package that a subfolder can deliver for (F-20). */
+export interface MappableItem {
+  readonly id: string;
+  readonly name: string;
+  readonly pickMode: PickMode;
+}
+
+/** What the folder *Edit* shows: the subfolders the last sync found, the package's selection items and the saved mapping (F-20). */
+export interface FolderMappingRecord {
+  readonly galleryId: string;
+  readonly folders: readonly string[];
+  readonly items: readonly MappableItem[];
+  readonly mappings: readonly FolderMapEntry[];
+}
+
 export interface GallerySourceWriter extends GalleryLifecycleWriter {
+  /** Replaces a source's subfolder mappings (F-20). */
+  readonly replaceFolderMappings: (
+    sourceId: string,
+    entries: readonly FolderMapEntry[],
+  ) => Promise<void>;
+  /** Re-applies the mappings to the source's stored photos and bumps the content version (F-20). */
+  readonly reclassifySource: (
+    sourceId: string,
+    mappings: readonly FolderMapping[],
+    now: Date,
+  ) => Promise<void>;
   /** True when the workspace source exists and is active (BR-SRC-006). */
   readonly isWorkspaceSourceActive: (workspaceSourceId: string) => Promise<boolean>;
   readonly insertSource: (
@@ -89,6 +123,8 @@ export interface SyncTarget {
   /** A run is open (`SYNCING`): the next step continues it instead of starting one (D-8). */
   readonly runOpen: boolean;
   readonly gallery: LockedGalleryState;
+  /** The source's subfolder mappings with each item's finished kind (F-20). */
+  readonly mappings: readonly FolderMapping[];
 }
 
 // The hold on one step of a run (D-8). `startedAt` is the run's identity, `leaseAt` this step's.
@@ -145,6 +181,16 @@ export interface GallerySourceRepositoryPort {
     step: SyncStepResult,
     now: Date,
   ) => Promise<boolean>;
+  /** The folder *Edit*'s mapping view of an active source, or null (F-20). */
+  readonly findFolderMapping: (
+    context: WorkspaceContext,
+    sourceId: string,
+  ) => Promise<FolderMappingRecord | null>;
+  /** Folder paths with photos that the Owner hasn't been told about yet; marks them known (F-20). */
+  readonly takeNewFolders: (
+    context: WorkspaceContext,
+    sourceId: string,
+  ) => Promise<readonly string[]>;
   /** Ends the run as failed and clears its cursor; photos earlier steps wrote stay (D-23). */
   readonly failRun: (
     context: WorkspaceContext,

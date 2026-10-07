@@ -77,7 +77,7 @@ export async function holdsClaim(
 }
 
 // An unchanged row is neither rewritten nor given a new version (ADR-019, D-21).
-const CHANGED = sql`(${galleryPhoto.fileName}, ${galleryPhoto.mimeType}, ${galleryPhoto.nameSortKey}, ${galleryPhoto.kind}, ${galleryPhoto.folderPath}, ${galleryPhoto.browsePath}, ${galleryPhoto.resourceKey}, ${galleryPhoto.missingAt}) is distinct from (excluded.file_name, excluded.mime_type, excluded.name_sort_key, excluded.kind, excluded.folder_path, excluded.browse_path, excluded.resource_key, null)`;
+const CHANGED = sql`(${galleryPhoto.fileName}, ${galleryPhoto.mimeType}, ${galleryPhoto.nameSortKey}, ${galleryPhoto.kind}, ${galleryPhoto.folderPath}, ${galleryPhoto.browsePath}, ${galleryPhoto.projectItemId}, ${galleryPhoto.resourceKey}, ${galleryPhoto.missingAt}) is distinct from (excluded.file_name, excluded.mime_type, excluded.name_sort_key, excluded.kind, excluded.folder_path, excluded.browse_path, excluded.project_item_id, excluded.resource_key, null)`;
 
 async function upsertChanged(
   tx: DbExecutor,
@@ -107,6 +107,7 @@ async function upsertChanged(
           kind: sql`excluded.kind`,
           folderPath: sql`excluded.folder_path`,
           browsePath: sql`excluded.browse_path`,
+          projectItemId: sql`excluded.project_item_id`,
           missingAt: null,
           updatedAt: sql`now()`,
         },

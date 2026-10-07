@@ -16,6 +16,7 @@ import { linkGallerySource } from "@/features/gallery/application/use-cases/link
 
 import { openTestDb } from "../helpers/test-db";
 import { type GallerySeed, seedGalleryWorkspace } from "./helpers/gallery-seed";
+import { mapFixtureFolders } from "./helpers/map-fixture-folders";
 import { syncSourceToEnd } from "./helpers/sync-to-end";
 
 let db: Db;
@@ -60,6 +61,10 @@ async function galleryWith(seed: GallerySeed, provider: FakeDriveProvider, folde
       label: "",
     });
     if (!linked.ok) throw new Error("link failed");
+    await mapFixtureFolders(db, seed.context, linked.sourceId, {
+      edited: ["Edited", "edited", "Akad/edited"],
+      print: ["print"],
+    });
     await syncSourceToEnd(deps, seed.context, linked.sourceId);
     sourceIds.push(linked.sourceId);
   }

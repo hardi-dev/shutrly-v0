@@ -27,6 +27,7 @@ import type { SyncStepOutcome } from "@/features/gallery/application/use-cases/s
 
 import { openTestDb } from "../helpers/test-db";
 import { type GallerySeed, seedGalleryWorkspace } from "./helpers/gallery-seed";
+import { mapFixtureFolders } from "./helpers/map-fixture-folders";
 
 let db: Db;
 let close: () => Promise<void>;
@@ -129,6 +130,7 @@ async function link(
   folderId = RINA_FOLDER_ID,
 ) {
   const result = await linkOnly(seed, galleryId, provider, folderId);
+  await mapFixtureFolders(db, seed.context, result.sourceId);
   const sync = await syncToEnd(provider, seed, result.sourceId);
   return { ...result, sync };
 }
@@ -138,11 +140,40 @@ function photosOf(sourceId: string) {
 }
 
 describe("gallery sync against Postgres", () => {
+  it("F-20 without a mapping a sync makes only proofs; mapping then reclassifies at once and names no folder twice", async () => {
+    const seed = await seedGalleryWorkspace(db);
+    const galleryId = await withGallery(seed);
+    const provider = FakeDriveProvider.withFixture();
+    const linked = await linkOnly(seed, galleryId, provider);
+    expect(await syncToEnd(provider, seed, linked.sourceId)).toEqual({
+      ok: true,
+      status: "SUCCEEDED",
+      newFolders: ["Edited", "Edited/old", "print", "raw"],
+    });
+    const kindsOf = async () => (await photosOf(linked.sourceId)).map((photo) => photo.kind);
+    expect(new Set(await kindsOf())).toEqual(new Set(["PROOF"]));
+    const [before] = await db.select().from(gallery).where(eq(gallery.id, galleryId));
+    const ids = await mapFixtureFolders(db, seed.context, linked.sourceId);
+    const photos = await photosOf(linked.sourceId);
+    expect(photos.filter((photo) => photo.kind === "EDITED")).toHaveLength(3);
+    expect(photos.filter((photo) => photo.kind === "PRINT")).toHaveLength(1);
+    expect(photos.find((photo) => photo.fileName === "P_001.jpg")?.projectItemId).toBe(
+      ids["Foto cetak"],
+    );
+    const [after] = await db.select().from(gallery).where(eq(gallery.id, galleryId));
+    expect(after.contentVersion).toBe(before.contentVersion + 1);
+    expect(await syncToEnd(provider, seed, linked.sourceId)).toEqual({
+      ok: true,
+      status: "SUCCEEDED",
+      newFolders: [],
+    });
+  });
+
   it("AC-GAL-005 links and syncs the fixture with its counts", async () => {
     const seed = await seedGalleryWorkspace(db);
     const galleryId = await withGallery(seed);
     const linked = await link(seed, galleryId, FakeDriveProvider.withFixture());
-    expect(linked.sync).toEqual({ ok: true, status: "SUCCEEDED" });
+    expect(linked.sync).toMatchObject({ ok: true, status: "SUCCEEDED" });
     const [source] = await db
       .select()
       .from(gallerySource)
@@ -173,7 +204,7 @@ describe("gallery sync against Postgres", () => {
       syncToEnd(provider, seed, linked.sourceId),
       syncToEnd(provider, seed, linked.sourceId),
     ]);
-    expect(results).toContainEqual({ ok: true, status: "SUCCEEDED" });
+    expect(results).toContainEqual(expect.objectContaining({ ok: true, status: "SUCCEEDED" }));
     await syncToEnd(provider, seed, linked.sourceId);
     expect(await photosOf(linked.sourceId)).toHaveLength(8);
   });
@@ -271,7 +302,7 @@ describe("gallery sync against Postgres", () => {
     const second = await link(seed, galleryId, provider, SECOND_FOLDER_ID);
     provider.failures.set(SECOND_FOLDER_ID, "UNAVAILABLE");
     await syncToEnd(provider, seed, second.sourceId);
-    expect(await syncToEnd(provider, seed, first.sourceId)).toEqual({
+    expect(await syncToEnd(provider, seed, first.sourceId)).toMatchObject({
       ok: true,
       status: "SUCCEEDED",
     });
@@ -369,7 +400,7 @@ describe("gallery sync against Postgres", () => {
       if (!outcome.ok || outcome.status !== "CONTINUE") break;
     }
     expect(calls).toEqual([40, 40, 15]);
-    expect(outcome).toEqual({ ok: true, status: "SUCCEEDED" });
+    expect(outcome).toMatchObject({ ok: true, status: "SUCCEEDED" });
     expect(await photosOf(linked.sourceId)).toHaveLength(94);
     const [source] = await db
       .select()

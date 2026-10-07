@@ -24,6 +24,7 @@ import { setGalleryExpiry } from "@/features/gallery/application/use-cases/set-g
 
 import { openTestDb } from "../helpers/test-db";
 import { type GallerySeed, seedGalleryWorkspace } from "./helpers/gallery-seed";
+import { mapFixtureFolders } from "./helpers/map-fixture-folders";
 import { syncSourceToEnd } from "./helpers/sync-to-end";
 
 let db: Db;
@@ -69,6 +70,7 @@ async function linkedGallery(seed: GallerySeed) {
     label: "",
   });
   if (!linked.ok) throw new Error("link failed");
+  await mapFixtureFolders(db, seed.context, linked.sourceId);
   await syncSourceToEnd(deps(), seed.context, linked.sourceId);
   return { galleryId: created.galleryId, sourceId: linked.sourceId };
 }

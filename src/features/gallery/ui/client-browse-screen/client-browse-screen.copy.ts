@@ -31,4 +31,26 @@ export const CLIENT_BROWSE_COPY = {
   // not in Pencil
   loadingMore: "Memuat foto lainnya…",
   viewerMissing: "Foto ini tidak tersedia lagi",
+  // F-19 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
+  download: "Unduh",
+  downloadAll: "Unduh semua",
+  downloadMenu: "Pilihan unduhan",
+  pickSeveral: "Pilih beberapa",
+  selectedTitle: (count: number) => `${String(count)} foto dipilih`,
+  downloadSelected: (count: number) => `Unduh ${String(count)} foto`,
+  cancel: "Batal",
+  pickFor: "Pilih untuk…",
+  pickedTitle: (count: number, group: string) =>
+    count === 0
+      ? `Semua foto sudah ada di ${group}`
+      : `${String(count)} foto dipilih untuk ${group}`,
+  pickLimitTitle: "Pilihan melebihi batas",
+  pickLimitBody: (remaining: number) =>
+    `Sisa ${String(remaining)} foto di bagian ini. Kurangi foto yang dipilih, lalu coba lagi.`,
+  pickClosed: "Pilihan bagian ini sudah dikirim",
+  pickRefused: "Foto belum bisa dipilih. Coba lagi.",
+  progressTitle: "Mengunduh foto",
+  confirmTitle: (count: number) => `Unduh semua ${String(count)} foto?`,
+  tileDownload: (fileName: string) => `Unduh ${fileName}`,
+  downloadPhoto: "Unduh foto",
 } as const;

@@ -6,6 +6,7 @@ import { galleryPhoto } from "@/adapters/db/schema/gallery/gallery";
 import { selectionGroup } from "@/adapters/db/schema/gallery/selection";
 import { setPick } from "@/features/gallery/application/use-cases/set-pick/set-pick";
 import { setPickNote } from "@/features/gallery/application/use-cases/set-pick-note/set-pick-note";
+import { setPicks } from "@/features/gallery/application/use-cases/set-picks/set-picks";
 
 import { openTestDb } from "../../helpers/test-db";
 import { type ClientAccessFixture, seedClientAccess } from "./fixture";
@@ -160,5 +161,40 @@ describe("picks (D-12)", () => {
       }),
     ).toEqual(refused);
     expect(await usage(w, w.edit)).toBe(1);
+  });
+
+  it("F-19 picks several proofs at once, skipping one already picked", async () => {
+    const w = await world();
+    await pick(w, w.edit, "IMG_001.jpg");
+    const ids = ["IMG_001.jpg", "IMG_002.jpg", "IMG_003.jpg"].map((name) => w.photo[name]);
+    expect(await setPicks(deps(), w.client, { groupId: w.edit, photoIds: ids })).toEqual({
+      ok: true,
+      usage: 3,
+      added: 2,
+    });
+    expect(await usage(w, w.edit)).toBe(3);
+  });
+
+  it("F-19 refuses the whole selection past the limit and picks nothing", async () => {
+    const w = await world();
+    const ids = ["IMG_001.jpg", "IMG_002.jpg", "IMG_003.jpg", "IMG_004.jpg"].map(
+      (name) => w.photo[name],
+    );
+    expect(await setPicks(deps(), w.client, { groupId: w.edit, photoIds: ids })).toEqual({
+      ok: false,
+      code: "LIMIT_REACHED",
+      remaining: 3,
+    });
+    expect(await usage(w, w.edit)).toBe(0);
+  });
+
+  it("F-19 adds × 1 per photo in a QUANTITY group", async () => {
+    const w = await world();
+    const ids = ["IMG_001.jpg", "IMG_002.jpg"].map((name) => w.photo[name]);
+    expect(await setPicks(deps(), w.client, { groupId: w.print, photoIds: ids })).toEqual({
+      ok: true,
+      usage: 2,
+      added: 2,
+    });
   });
 });

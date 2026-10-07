@@ -27,4 +27,14 @@ export interface ClientGalleryReaderPort {
     context: WorkspaceContext,
     galleryId: string,
   ) => Promise<readonly GalleryPhotoRecord[]>;
+  /** Id and name of every visible, not-missing proof of active sources, by name (F-19 *Unduh semua*). */
+  readonly listProofFiles: (
+    context: WorkspaceContext,
+    galleryId: string,
+  ) => Promise<readonly ProofFileRecord[]>;
+}
+
+export interface ProofFileRecord {
+  readonly id: string;
+  readonly fileName: string;
 }

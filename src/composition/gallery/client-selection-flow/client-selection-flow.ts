@@ -14,6 +14,8 @@ import type {
   SetPickResult,
 } from "@/features/gallery/application/use-cases/set-pick/set-pick.types";
 import { setPickNote } from "@/features/gallery/application/use-cases/set-pick-note/set-pick-note";
+import { setPicks } from "@/features/gallery/application/use-cases/set-picks/set-picks";
+import type { SetPicksResult } from "@/features/gallery/application/use-cases/set-picks/set-picks.types";
 import { submitSelectionGroup } from "@/features/gallery/application/use-cases/submit-selection-group/submit-selection-group";
 import type { SubmitSelectionGroupResult } from "@/features/gallery/application/use-cases/submit-selection-group/submit-selection-group.types";
 import { logger } from "@/shared/logging/logger";
@@ -79,6 +81,17 @@ export async function setPickEntry(
 ): Promise<SetPickResult | SignedOut> {
   const result = await withSignedInClient(rawToken, (client, scope) =>
     setPick(scope, client, input),
+  );
+  return result.kind === "SIGNED_IN" ? result.value : SIGNED_OUT;
+}
+
+/** Picks several proofs for one group at once for the signed-in client (F-19). @param rawToken - the untrusted route token @param input - untrusted `{ groupId, photoIds }` @returns the result, or SIGNED_OUT */
+export async function setPicksEntry(
+  rawToken: string,
+  input: unknown,
+): Promise<SetPicksResult | SignedOut> {
+  const result = await withSignedInClient(rawToken, (client, scope) =>
+    setPicks(scope, client, input),
   );
   return result.kind === "SIGNED_IN" ? result.value : SIGNED_OUT;
 }

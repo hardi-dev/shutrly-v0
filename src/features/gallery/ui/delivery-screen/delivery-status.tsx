@@ -4,12 +4,17 @@ import { Alert } from "@/ui/patterns/alert/alert";
 import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
+import type { SequentialDownload } from "../use-sequential-download/use-sequential-download.types";
 import { DELIVERY_SCREEN_COPY as COPY } from "./delivery-screen.copy";
 import type { DeliveryPartProps } from "./delivery-screen.types";
 import { failedBody } from "./delivery-screen-text";
 
-function ProgressCard({ screen }: Readonly<DeliveryPartProps>) {
-  const { done, total } = screen.download.progress;
+/** The running download: *n dari m foto selesai* with *Batalkan* (hasilakhir-mengunduh-semua; reused by *Semua foto*, F-19). @param props - the download and the card title @returns the card */
+export function DownloadProgressCard({
+  download,
+  title = COPY.progressTitle,
+}: Readonly<{ download: SequentialDownload; title?: string }>) {
+  const { done, total } = download.progress;
   const ratio = total === 0 ? 0 : done / total;
   return (
     <section
@@ -18,7 +23,7 @@ function ProgressCard({ screen }: Readonly<DeliveryPartProps>) {
     >
       <div className="flex items-center justify-between gap-(--space-2)">
         <h2 className="text-(length:--font-size-subtitle) font-bold text-(--color-semantic-text-primary)">
-          {COPY.progressTitle}
+          {title}
         </h2>
         <StatusChip tone="info" label={COPY.running} hasDot />
       </div>
@@ -32,7 +37,7 @@ function ProgressCard({ screen }: Readonly<DeliveryPartProps>) {
         <p className="flex-1 text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
           {COPY.progress(done, total)}
         </p>
-        <Button variant="secondary" onPress={screen.download.cancel}>
+        <Button variant="secondary" onPress={download.cancel}>
           {COPY.stop}
         </Button>
       </div>
@@ -43,7 +48,7 @@ function ProgressCard({ screen }: Readonly<DeliveryPartProps>) {
 /** Above the files: *Hasil akhir sudah tersedia*, the progress card while downloading, or the failure alert with *Coba lagi* (hasilakhir-siap / -mengunduh-semua / -gagal-unduh, AC-DEL-003, -005). @param props - the screen state @returns the status */
 export function DeliveryStatus({ screen }: Readonly<DeliveryPartProps>) {
   const { progress } = screen.download;
-  if (progress.phase === "RUNNING") return <ProgressCard screen={screen} />;
+  if (progress.phase === "RUNNING") return <DownloadProgressCard download={screen.download} />;
   if (progress.phase === "DONE" && screen.failedNames.length > 0) {
     return (
       <Alert

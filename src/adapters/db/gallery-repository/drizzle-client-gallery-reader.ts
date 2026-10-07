@@ -41,6 +41,24 @@ async function selectFinishedPhotos(
   return rows.flatMap((row) => toPhotoRecord(row) ?? []);
 }
 
+/** Id and name of every visible, not-missing proof of active sources, by name (F-19). @param db - the executor @param context - verified workspace @param galleryId - the gallery @returns the files */
+async function selectProofFiles(db: DbExecutor, context: WorkspaceContext, galleryId: string) {
+  return db
+    .select({ id: galleryPhoto.id, fileName: galleryPhoto.fileName })
+    .from(galleryPhoto)
+    .innerJoin(gallerySource, PHOTO_SOURCE_JOIN)
+    .where(
+      and(
+        eq(galleryPhoto.workspaceId, context.workspaceId),
+        eq(galleryPhoto.galleryId, galleryId),
+        eq(galleryPhoto.kind, "PROOF"),
+        isNull(galleryPhoto.missingAt),
+        isNull(gallerySource.removedAt),
+      ),
+    )
+    .orderBy(asc(galleryPhoto.nameSortKey), asc(galleryPhoto.id));
+}
+
 /** Builds the client-only photo reads, always scoped by workspace and gallery (D-15). @param db - request database @returns the reader port */
 export function createDrizzleClientGalleryReader(db: DbExecutor): ClientGalleryReaderPort {
   return {
@@ -77,5 +95,6 @@ export function createDrizzleClientGalleryReader(db: DbExecutor): ClientGalleryR
       };
     },
     listFinishedPhotos: (context, galleryId) => selectFinishedPhotos(db, context, galleryId),
+    listProofFiles: (context, galleryId) => selectProofFiles(db, context, galleryId),
   };
 }

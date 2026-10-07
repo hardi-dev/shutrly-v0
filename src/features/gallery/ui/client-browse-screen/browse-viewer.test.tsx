@@ -9,6 +9,7 @@ import type { PickGroupView } from "@/features/gallery/application/use-cases/get
 import type { PickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets.types";
 import { showToast } from "@/ui/patterns/toast/toast";
 
+import { usePickTargets } from "../use-pick-targets/use-pick-targets";
 import type { ViewerPickActions } from "../use-pick-targets/use-pick-targets.types";
 import { BrowseViewer } from "./browse-viewer";
 
@@ -62,17 +63,25 @@ function actions(patch: Partial<ViewerPickActions> = {}): ViewerPickActions {
   };
 }
 
-function renderViewer(a: ViewerPickActions, targets: PickTargets = TARGETS) {
-  render(
+const downloadUrlOf = (id: string) => `/g/T1/download/${id}`;
+
+function Harness({ a, targets }: Readonly<{ a: ViewerPickActions; targets: PickTargets }>) {
+  const handle = usePickTargets(targets, a);
+  return (
     <BrowseViewer
       photos={[PHOTO]}
       index={0}
       onIndexChange={vi.fn()}
       onClose={vi.fn()}
-      targets={targets}
+      handle={handle}
       pickActions={a}
-    />,
+      downloadUrlOf={downloadUrlOf}
+    />
   );
+}
+
+function renderViewer(a: ViewerPickActions, targets: PickTargets = TARGETS) {
+  render(<Harness a={a} targets={targets} />);
 }
 
 async function openMenu() {
@@ -132,5 +141,13 @@ describe("BrowseViewer (A-30, A-32)", () => {
     renderViewer(actions(), { groups: [], picks: [] });
     expect(screen.queryByRole("button", { name: "Pilih untuk…" })).toBeNull();
     expect(screen.getByText("Akad")).toBeTruthy();
+  });
+
+  it("F-19 offers Unduh foto with the original's download link", () => {
+    renderViewer(actions());
+    expect(screen.getByRole("link", { name: "Unduh foto" })).toHaveAttribute(
+      "href",
+      "/g/T1/download/p-7",
+    );
   });
 });

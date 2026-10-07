@@ -1,6 +1,6 @@
 import "server-only";
 
-import { isInFinalDelivery } from "@/features/gallery/domain/client-photo-visibility/client-photo-visibility";
+import { isServableToClient } from "@/features/gallery/domain/client-photo-visibility/client-photo-visibility";
 
 import type { ClientContext } from "../resolve-client-access/resolve-client-access.types";
 import type { ServeClientFileDeps, ServeClientFileResult } from "./serve-client-file.types";
@@ -8,9 +8,9 @@ import type { ServeClientFileDeps, ServeClientFileResult } from "./serve-client-
 const NOTHING: ServeClientFileResult = { ok: false };
 
 /**
- * Streams one original finished file to the signed-in client, only once final delivery is published
- * and only for a visible, not-missing EDITED or PRINT photo of this gallery (BR-DEL-002, BR-DEL-004,
- * BR-ACC-005, D-18, AC-DEL-003…005).
+ * Streams one original file to the signed-in client: a visible proof of this gallery at any time
+ * (F-19, Owner 2026-10-07), or a visible EDITED or PRINT file once final delivery is published
+ * (BR-DEL-002, BR-DEL-004, BR-ACC-005, D-18, AC-DEL-003…005).
  * @param deps - the client reader and the provider
  * @param client - the signed-in client context
  * @param photoId - the photo id
@@ -29,7 +29,7 @@ export async function serveClientFile(
     isMissing: photo.missing,
     isSourceRemoved: photo.sourceRemoved,
   };
-  if (!isInFinalDelivery(facts, client.finalDeliveryPublished)) return NOTHING;
+  if (!isServableToClient(facts, client.finalDeliveryPublished)) return NOTHING;
   const file = await deps.provider.download({
     fileId: photo.externalFileId,
     resourceKey: photo.resourceKey,

@@ -58,7 +58,7 @@ describe("serveClientFile (D-18)", () => {
 
   it.each([
     ["before delivery", EDITED, { finalDeliveryPublished: false }],
-    ["a proof", { ...EDITED, kind: "PROOF" as const }, {}],
+    ["a missing proof", { ...EDITED, kind: "PROOF" as const, missing: true }, {}],
     ["a missing file", { ...EDITED, missing: true }, {}],
     ["a removed folder", { ...EDITED, sourceRemoved: true }, {}],
     ["another gallery's photo", null, {}],
@@ -66,6 +66,16 @@ describe("serveClientFile (D-18)", () => {
     const { value, download } = deps(photo);
     expect(await serveClientFile(value, { ...CLIENT, ...patch }, "x")).toEqual({ ok: false });
     expect(download).not.toHaveBeenCalled();
+  });
+
+  it("F-19 streams the original of a visible proof, before and after final delivery", async () => {
+    const proof = { ...EDITED, kind: "PROOF" as const, fileName: "IMG_001.jpg" };
+    for (const finalDeliveryPublished of [false, true]) {
+      const { value } = deps(proof);
+      expect(
+        await serveClientFile(value, { ...CLIENT, finalDeliveryPublished }, "x"),
+      ).toMatchObject({ ok: true, fileName: "IMG_001.jpg" });
+    }
   });
 
   it("AC-DEL-005 a file Drive no longer has is not ok", async () => {

@@ -3,12 +3,18 @@ import type { ClientPhotoView } from "@/features/gallery/application/use-cases/c
 import type { PickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets.types";
 import type { ClientGateView } from "@/features/gallery/application/use-cases/resolve-client-access/resolve-client-access.types";
 
+import type { GridDownloads } from "../client-browse-grid/client-browse-grid.types";
 import type {
   ClientBrowseAction,
   ClientBrowseHandle,
   ClientBrowseState,
 } from "../use-client-browse/use-client-browse.types";
-import type { PhotoTarget, ViewerPickActions } from "../use-pick-targets/use-pick-targets.types";
+import type {
+  PhotoTarget,
+  PickTargetsHandle,
+  ViewerPickActions,
+} from "../use-pick-targets/use-pick-targets.types";
+import type { PhotosActions } from "../use-proof-downloads/use-proof-downloads.types";
 
 export interface ClientBrowseScreenProps {
   readonly gate: ClientGateView;
@@ -21,6 +27,8 @@ export interface ClientBrowseScreenProps {
   /** The groups and picks behind the viewer's *Pilih untuk…*; no groups keeps it read-only (A-31). */
   readonly targets: PickTargets;
   readonly pickActions: ViewerPickActions;
+  /** *Unduh* and the bulk *Pilih untuk…* (F-19). */
+  readonly photosActions: PhotosActions;
 }
 
 export interface BrowseViewerProps {
@@ -28,8 +36,11 @@ export interface BrowseViewerProps {
   readonly index: number | null;
   readonly onIndexChange: (index: number) => void;
   readonly onClose: () => void;
-  readonly targets: PickTargets;
+  /** The groups and picks, shared with the page's bulk *Pilih untuk…* (F-19). */
+  readonly handle: PickTargetsHandle;
   readonly pickActions: ViewerPickActions;
+  /** *Unduh foto* in the viewer (F-19). */
+  readonly downloadUrlOf: (photoId: string) => string;
 }
 
 export interface ClientBrowseCardProps {
@@ -46,6 +57,7 @@ export interface SearchFieldProps extends Pick<ClientBrowseCardProps, "searchTex
 export interface BrowseCardProps {
   readonly browse: ClientBrowseHandle;
   readonly onOpenPhoto: (index: number) => void;
+  readonly downloads: GridDownloads;
 }
 
 /** The pick whose note the viewer's sheet edits (A-32). */

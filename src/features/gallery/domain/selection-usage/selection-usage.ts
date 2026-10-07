@@ -7,6 +7,9 @@ import type {
 } from "./selection-usage.types";
 
 /** BR-SEL-002: never stored. @param base - item value @param extra - approved add-ons @returns the effective limit */
+// F-19: the most photos one *Pilih untuk…* on a selection sends at once.
+export const BULK_PICK_MAX = 500;
+
 export const effectiveLimit = (base: number, extra: number): number => base + extra;
 
 /**

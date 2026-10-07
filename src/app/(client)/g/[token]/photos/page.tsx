@@ -1,10 +1,14 @@
 import { notFound } from "next/navigation";
 
-import { browseClientPhotosAction } from "@/app/actions/client-access/browse";
+import {
+  browseClientPhotosAction,
+  listProofDownloadsAction,
+} from "@/app/actions/client-access/browse";
 import {
   reloadPickTargetsAction,
   setPickAction,
   setPickNoteAction,
+  setPicksAction,
 } from "@/app/actions/client-access/picks";
 import { signInGalleryAction } from "@/app/actions/client-access/sign-in";
 import { loadClientBrowseEntry } from "@/composition/gallery/client-gallery-flow/client-gallery-flow";
@@ -32,6 +36,10 @@ export default async function ClientPhotosPage({
         setPick: setPickAction.bind(null, token),
         setNote: setPickNoteAction.bind(null, token),
         reload: reloadPickTargetsAction.bind(null, token),
+      }}
+      photosActions={{
+        listDownloads: listProofDownloadsAction.bind(null, token),
+        setPicks: setPicksAction.bind(null, token),
       }}
     />
   );

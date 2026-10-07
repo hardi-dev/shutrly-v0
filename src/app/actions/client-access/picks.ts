@@ -8,6 +8,7 @@ import {
   reloadReviewEntry,
   setPickEntry,
   setPickNoteEntry,
+  setPicksEntry,
   submitSelectionGroupEntry,
 } from "@/composition/gallery/client-selection-flow/client-selection-flow";
 import type { PickPhotosPage } from "@/features/gallery/application/use-cases/browse-pick-photos/browse-pick-photos.types";
@@ -18,6 +19,7 @@ import type {
   SetPickNoteResult,
   SetPickResult,
 } from "@/features/gallery/application/use-cases/set-pick/set-pick.types";
+import type { SetPicksResult } from "@/features/gallery/application/use-cases/set-picks/set-picks.types";
 import type { SubmitSelectionGroupResult } from "@/features/gallery/application/use-cases/submit-selection-group/submit-selection-group.types";
 
 export async function setPickAction(
@@ -25,6 +27,13 @@ export async function setPickAction(
   input: unknown,
 ): Promise<SetPickResult | SignedOut> {
   return setPickEntry(token, input);
+}
+
+export async function setPicksAction(
+  token: string,
+  input: unknown,
+): Promise<SetPicksResult | SignedOut> {
+  return setPicksEntry(token, input);
 }
 
 export async function setPickNoteAction(

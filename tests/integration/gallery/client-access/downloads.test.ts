@@ -8,6 +8,7 @@ import { createDrizzleGalleryBrowseReader } from "@/adapters/db/gallery-reposito
 import { galleryPhoto, gallerySource } from "@/adapters/db/schema/gallery/gallery";
 import type { GallerySourceProviderPort } from "@/features/gallery/application/ports/gallery-source-provider/gallery-source-provider.port";
 import { browseClientPhotos } from "@/features/gallery/application/use-cases/browse-client-photos/browse-client-photos";
+import { listProofDownloads } from "@/features/gallery/application/use-cases/list-proof-downloads/list-proof-downloads";
 import { serveClientFile } from "@/features/gallery/application/use-cases/serve-client-file/serve-client-file";
 
 import { openTestDb } from "../../helpers/test-db";
@@ -96,13 +97,12 @@ describe("finished-file downloads (D-18)", () => {
     }
   });
 
-  it("AC-DEL-004 serves nothing before delivery, for a proof or a missing file, or another project's file", async () => {
+  it("AC-DEL-004 serves no finished file before delivery, no missing file and no other project's file", async () => {
     const before = await seedDelivered(false);
     const after = await seedDelivered(true);
     const { provider, download } = drive();
     const refused = [
       [before.client, before.photoIds["E_001.jpg"]],
-      [after.client, after.photoIds["IMG_001.jpg"]],
       [after.client, after.photoIds["E_009.jpg"]],
       [after.client, before.photoIds["E_001.jpg"]],
     ] as const;
@@ -110,6 +110,31 @@ describe("finished-file downloads (D-18)", () => {
       expect(await serveClientFile(deps(provider), client, photoId)).toEqual({ ok: false });
     }
     expect(download).not.toHaveBeenCalled();
+  });
+
+  it("F-19 serves the original of a proof before and after delivery", async () => {
+    for (const delivered of [false, true]) {
+      const seeded = await seedDelivered(delivered);
+      const { provider } = drive();
+      const result = await serveClientFile(
+        deps(provider),
+        seeded.client,
+        seeded.photoIds["IMG_001.jpg"],
+      );
+      expect(result).toMatchObject({ ok: true, fileName: "IMG_001.jpg" });
+    }
+  });
+
+  it("F-19 Unduh semua lists every visible proof and no finished file", async () => {
+    const seeded = await seedDelivered(true);
+    const files = await listProofDownloads(
+      { reader: createDrizzleClientGalleryReader(db) },
+      seeded.client,
+    );
+    expect(files.map((file) => file.fileName)).toEqual(["IMG_001.jpg"]);
+    expect(files[0]?.downloadUrl).toBe(
+      `/g/${seeded.client.token}/download/${seeded.photoIds["IMG_001.jpg"]}`,
+    );
   });
 
   it("AC-DEL-004 a removed folder's files are no longer served", async () => {

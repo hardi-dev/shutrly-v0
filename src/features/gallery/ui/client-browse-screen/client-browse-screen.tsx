@@ -3,6 +3,8 @@
 import { useState } from "react";
 
 import type { FolderTileView } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos.types";
+import type { PickGroupView } from "@/features/gallery/application/use-cases/get-pick-view/get-pick-view.types";
+import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Icon } from "@/ui/primitives/icon/icon";
@@ -13,6 +15,9 @@ import { CLIENT_COPY } from "../client-copy/client-copy.copy";
 import { ClientShell } from "../client-shell/client-shell";
 import type { ClientPageHeader } from "../client-shell/client-shell.types";
 import { CLIENT_BROWSE_START, useClientBrowse } from "../use-client-browse/use-client-browse";
+import { usePickTargets } from "../use-pick-targets/use-pick-targets";
+import { useProofDownloads } from "../use-proof-downloads/use-proof-downloads";
+import type { ProofDownloads } from "../use-proof-downloads/use-proof-downloads.types";
 import { BrowseViewer } from "./browse-viewer";
 import { CLIENT_BROWSE_COPY as COPY } from "./client-browse-screen.copy";
 import type {
@@ -22,6 +27,9 @@ import type {
   SearchFieldProps,
 } from "./client-browse-screen.types";
 import { browseCardMeta, browseSummary } from "./client-browse-text";
+import { PhotosDownloadMenu, SelectingActions } from "./photos-actions";
+import type { PhotosGroupsProps } from "./photos-actions.types";
+import { DownloadAllConfirm, PhotosDownloadStatus } from "./photos-status";
 
 function SearchField({ searchText, onSearch, className }: Readonly<SearchFieldProps>) {
   return (
@@ -62,7 +70,7 @@ function Trail({ state, onRoot }: Readonly<Pick<ClientBrowseCardProps, "state" |
   );
 }
 
-function browseHeader(
+function baseHeader(
   gate: ClientBrowseScreenProps["gate"],
   token: string,
   hasHome: boolean,
@@ -85,7 +93,22 @@ function browseHeader(
   };
 }
 
-function BrowseCard({ browse, onOpenPhoto }: Readonly<BrowseCardProps>) {
+// F-19: *Unduh ▾* in the header, or the select-mode title and actions.
+function browseHeader(
+  base: ClientPageHeader,
+  photos: ProofDownloads,
+  groups: readonly PickGroupView[],
+): ClientPageHeader {
+  if (!photos.isSelecting) return { ...base, action: <PhotosDownloadMenu photos={photos} /> };
+  return {
+    ...base,
+    title: COPY.selectedTitle(photos.selectedCount),
+    subtitle: undefined,
+    action: <SelectingActions photos={photos} groups={groups} />,
+  };
+}
+
+function BrowseCard({ browse, onOpenPhoto, downloads }: Readonly<BrowseCardProps>) {
   const { state } = browse;
   const openFolder = (folder: FolderTileView) => {
     const name = folder.name || COPY.folderFallbackName;
@@ -112,8 +135,29 @@ function BrowseCard({ browse, onOpenPhoto }: Readonly<BrowseCardProps>) {
         onOpenFolder={openFolder}
         onOpenPhoto={onOpenPhoto}
         onLoadMore={loadMore}
+        downloads={downloads}
       />
     </SectionCard>
+  );
+}
+
+// Phones: the Mobile Header has no action slot, so the page actions open the content (as *Hasil akhir*);
+// then the download progress or failure (F-19).
+function PhotosTop({ photos, groups }: Readonly<PhotosGroupsProps>) {
+  const isMobile = useMobileViewport();
+  let phone = null;
+  if (isMobile) {
+    phone = photos.isSelecting ? (
+      <SelectingActions photos={photos} groups={groups} />
+    ) : (
+      <PhotosDownloadMenu photos={photos} />
+    );
+  }
+  return (
+    <>
+      {phone}
+      <PhotosDownloadStatus photos={photos} />
+    </>
   );
 }
 
@@ -126,8 +170,11 @@ export function ClientBrowseScreen({
   browseAction,
   targets,
   pickActions,
+  photosActions,
 }: Readonly<ClientBrowseScreenProps>) {
   const browse = useClientBrowse(browseAction, initialPage);
+  const handle = usePickTargets(targets, pickActions);
+  const photos = useProofDownloads({ token, actions: photosActions, onPicked: handle.reload });
   const [open, setOpen] = useState<number | null>(null);
   const retry = () => {
     void browse.go(browse.state.location);
@@ -136,7 +183,12 @@ export function ClientBrowseScreen({
     setOpen(null);
   };
   return (
-    <ClientShell gate={gate} width="wide" header={browseHeader(gate, token, hasHome)}>
+    <ClientShell
+      gate={gate}
+      width="wide"
+      header={browseHeader(baseHeader(gate, token, hasHome), photos, handle.targets.groups)}
+    >
+      <PhotosTop photos={photos} groups={handle.targets.groups} />
       {browse.state.hasFailed ? (
         <Alert
           tone="danger"
@@ -145,14 +197,16 @@ export function ClientBrowseScreen({
           action={{ label: COPY.retry, onAction: retry }}
         />
       ) : null}
-      <BrowseCard browse={browse} onOpenPhoto={setOpen} />
+      <BrowseCard browse={browse} onOpenPhoto={setOpen} downloads={photos} />
+      <DownloadAllConfirm photos={photos} />
       <BrowseViewer
         photos={browse.state.photos}
         index={open}
         onIndexChange={setOpen}
         onClose={close}
-        targets={targets}
+        handle={handle}
         pickActions={pickActions}
+        downloadUrlOf={photos.downloadUrlOf}
       />
     </ClientShell>
   );

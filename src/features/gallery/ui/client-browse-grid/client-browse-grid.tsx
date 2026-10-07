@@ -5,6 +5,7 @@ import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { FolderTile } from "@/ui/patterns/folder-tile/folder-tile";
 import { PhotoTile, PhotoTileSkeleton } from "@/ui/patterns/photo-tile/photo-tile";
 import { Icon } from "@/ui/primitives/icon/icon";
+import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { CLIENT_BROWSE_COPY as COPY } from "../client-browse-screen/client-browse-screen.copy";
 import type {
@@ -33,19 +34,37 @@ function FolderItem({ folder, onOpenFolder }: Readonly<ClientFolderItemProps>) {
   );
 }
 
-function PhotoItem({ photo, index, onOpenPhoto }: Readonly<ClientPhotoItemProps>) {
+function PhotoItem({ photo, index, onOpenPhoto, downloads }: Readonly<ClientPhotoItemProps>) {
   const handlePress = () => {
     onOpenPhoto(index);
   };
+  const change = (isSelected: boolean) => {
+    downloads?.toggle(photo, isSelected);
+  };
+  const isSelecting = downloads?.isSelecting === true;
   return (
-    <li className="min-w-0">
+    <li className="relative min-w-0">
       <PhotoTile
         fileName={photo.fileName}
         imageSrc={photo.thumb.src}
         fallbackSrc={photo.thumb.fallbackSrc}
         isMissing={photo.missing}
         onPress={handlePress}
+        selection={
+          isSelecting ? { isSelected: downloads.isSelected(photo.id), onChange: change } : undefined
+        }
       />
+      {downloads && !isSelecting && !photo.missing ? (
+        <span className="absolute top-(--component-photo-tile-badge-inset) right-(--component-photo-tile-badge-inset)">
+          <IconButton
+            icon="download"
+            size="sm"
+            href={downloads.downloadUrlOf(photo.id)}
+            className="size-(--space-8) rounded-(--radius-full) border-2 border-(--color-semantic-border-control) bg-(--color-semantic-surface-panel)"
+            aria-label={COPY.tileDownload(photo.fileName)}
+          />
+        </span>
+      ) : null}
     </li>
   );
 }
@@ -75,6 +94,7 @@ function GridItems({
   state,
   onOpenFolder,
   onOpenPhoto,
+  downloads,
 }: Readonly<Omit<ClientBrowseGridProps, "onLoadMore">>) {
   if (state.isLoading) return <Skeletons />;
   return (
@@ -87,7 +107,13 @@ function GridItems({
         />
       ))}
       {state.photos.map((photo, index) => (
-        <PhotoItem key={photo.id} photo={photo} index={index} onOpenPhoto={onOpenPhoto} />
+        <PhotoItem
+          key={photo.id}
+          photo={photo}
+          index={index}
+          onOpenPhoto={onOpenPhoto}
+          downloads={downloads}
+        />
       ))}
     </>
   );
@@ -108,6 +134,7 @@ export function ClientBrowseGrid({
   onOpenFolder,
   onOpenPhoto,
   onLoadMore,
+  downloads,
 }: Readonly<ClientBrowseGridProps>) {
   const hasMore = state.page?.nextCursor != null;
   const sentinel = useIntersectionSentinel(
@@ -134,7 +161,12 @@ export function ClientBrowseGrid({
       className="flex flex-col gap-(--space-5)"
     >
       <ul className={CLIENT_GRID}>
-        <GridItems state={state} onOpenFolder={onOpenFolder} onOpenPhoto={onOpenPhoto} />
+        <GridItems
+          state={state}
+          onOpenFolder={onOpenFolder}
+          onOpenPhoto={onOpenPhoto}
+          downloads={downloads}
+        />
       </ul>
       {state.isLoadingMore ? <LoadingMore /> : null}
       <div ref={sentinel} aria-hidden="true" />

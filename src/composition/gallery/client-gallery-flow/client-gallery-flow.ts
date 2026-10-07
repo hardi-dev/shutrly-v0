@@ -12,6 +12,8 @@ import { getDeliveryFiles } from "@/features/gallery/application/use-cases/get-d
 import type { DeliveryFilesView } from "@/features/gallery/application/use-cases/get-delivery-files/get-delivery-files.types";
 import { listPickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets";
 import type { PickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets.types";
+import { listProofDownloads } from "@/features/gallery/application/use-cases/list-proof-downloads/list-proof-downloads";
+import type { ProofDownloadView } from "@/features/gallery/application/use-cases/list-proof-downloads/list-proof-downloads.types";
 import { serveClientFile } from "@/features/gallery/application/use-cases/serve-client-file/serve-client-file";
 import { serveClientPhoto } from "@/features/gallery/application/use-cases/serve-client-photo/serve-client-photo";
 import { logger } from "@/shared/logging/logger";
@@ -82,6 +84,16 @@ export async function browseClientPhotosEntry(
 ): Promise<ClientBrowsePageView | SignedOut> {
   const result = await withSignedInClient(rawToken, (client, scope) =>
     browseClientPhotos(scope, client, query),
+  );
+  return result.kind === "SIGNED_IN" ? result.value : SIGNED_OUT;
+}
+
+/** Lists every proof for *Unduh semua* on *Semua foto* (F-19). @param rawToken - the untrusted route token @returns the files, or SIGNED_OUT */
+export async function listProofDownloadsEntry(
+  rawToken: string,
+): Promise<readonly ProofDownloadView[] | SignedOut> {
+  const result = await withSignedInClient(rawToken, (client, scope) =>
+    listProofDownloads(scope, client),
   );
   return result.kind === "SIGNED_IN" ? result.value : SIGNED_OUT;
 }

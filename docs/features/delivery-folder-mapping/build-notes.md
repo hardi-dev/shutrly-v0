@@ -31,4 +31,4 @@ Built 2026-10-07 on `feat/client-access` straight from the accepted [intent](int
 ## Deviations / open
 - No spec, AC or Pencil frames (Owner override); copy marked *built without a Pencil frame*.
 - Mapping isn't offered inside *Tambah folder* / *Buat galeri*: subfolders are only known after the first sync, so the new-folders toast's *Petakan* is the "map when adding" path.
-- The Owner's *Hasil akhir* card summary still counts *edited · print*; only the client page shows items.
+- ~~The Owner's *Hasil akhir* card summary still counts *edited · print*~~ Fixed 2026-10-08 (`7afdef4`, `11ccaf6`): owner cards count per item. The Owner's *Semua foto* modal still has Proof / Edited / Print tabs (owner-only view by kind).

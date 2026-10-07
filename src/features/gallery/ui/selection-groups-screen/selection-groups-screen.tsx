@@ -1,5 +1,6 @@
 "use client";
 
+import { lockIntentFor } from "@/features/gallery/domain/selection-group-status/selection-group-status";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -43,12 +44,12 @@ function GroupActions({ workspaceId, projectId, group, lock }: Readonly<GroupCar
       >
         {COPY.viewPicks}
       </Button>
-      {group.status === "SUBMITTED" ? (
+      {lockIntentFor(group) === "LOCK" ? (
         <Button iconLeading="lock" onPress={request("LOCK")}>
           {COPY.lockPicks}
         </Button>
       ) : null}
-      {group.status === "OPEN" ? (
+      {lockIntentFor(group) === "CLOSE" ? (
         <Button variant="secondary" onPress={request("CLOSE")}>
           {COPY.closePicks}
         </Button>

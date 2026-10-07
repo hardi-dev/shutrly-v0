@@ -44,7 +44,8 @@ export function useReviewSubmit(
       showToast({
         tone: "success",
         title: COPY.sentToastTitle(outcome.groupName),
-        body: COPY.sentToastBody,
+        body:
+          outcome.remaining > 0 ? COPY.sentToastBodyOpen(outcome.remaining) : COPY.sentToastBody,
       });
       router.push(`/g/${token}`);
     } else if (outcome.code === "NEEDS_CONFIRMATION") setConfirmRemaining(outcome.remaining);

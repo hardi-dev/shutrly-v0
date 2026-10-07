@@ -37,7 +37,7 @@ export async function lockSelectionGroup(
     projectId,
     groupId,
     async (group, writer) => {
-      if (lockCheck(group.status, intent) === "INVALID_STATE") {
+      if (lockCheck(group, intent) === "INVALID_STATE") {
         return { ok: false, code: "INVALID_STATE" };
       }
       await writer.markLocked(actorId, deps.now);

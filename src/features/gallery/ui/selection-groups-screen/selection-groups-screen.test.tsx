@@ -156,4 +156,20 @@ describe("SelectionGroupsScreen (owner-1 exports)", () => {
     renderScreen(ok, { ...PAGE, state: "NO_ITEMS", groups: [] });
     expect(screen.getByText("Paket proyek ini tidak punya item pilihan foto.")).toBeTruthy();
   });
+
+  it("AC-SEL-011 an open group the client sent below its limit shows the send and offers Kunci pilihan", async () => {
+    const sentOpen = {
+      ...PAGE,
+      groups: [{ ...PAGE.groups[1], submittedAt: "2026-10-07T03:00:00.000Z" }],
+    };
+    renderScreen(ok, sentOpen);
+    expect(screen.getByText("1 dari 2 lembar dipilih · dikirim 7 Okt 2026")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Tutup pilihan" })).toBeNull();
+    await userEvent.click(screen.getByRole("button", { name: "Kunci pilihan" }));
+    const dialog = await screen.findByRole("dialog");
+    await userEvent.click(within(dialog).getByRole("button", { name: "Kunci pilihan" }));
+    await waitFor(() => {
+      expect(ok).toHaveBeenCalledWith("w1", "p1", { groupId: "g-print", intent: "LOCK" });
+    });
+  });
 });

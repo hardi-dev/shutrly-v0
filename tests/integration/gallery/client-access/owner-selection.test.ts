@@ -74,14 +74,16 @@ describe("owner reviews picks (A-6, A-34)", () => {
       photoId: w.photo["IMG_002.jpg"],
       note: "hapus jerawat",
     });
+    await pick(w, w.edit, "IMG_004.jpg");
     await pick(w, w.print, "IMG_003.jpg", 2);
+    // Sent at the limit, so the group is SUBMITTED (a send below it stays OPEN, Owner 2026-10-07).
     await submit(w, w.edit);
     const projectId = w.client.projectId;
 
     const card = await getSelectionCard(owner(), fixture.context, projectId);
     expect(card.state).toBe("REVIEW");
     expect(card.groups.map((g) => [g.name, g.status, g.usage, g.limit, g.noteCount])).toEqual([
-      ["Foto edit", "SUBMITTED", 2, 3, 1],
+      ["Foto edit", "SUBMITTED", 3, 3, 1],
       ["Foto cetak", "OPEN", 2, 2, 0],
     ]);
 
@@ -89,6 +91,7 @@ describe("owner reviews picks (A-6, A-34)", () => {
     expect(page.groups[0].preview.photoIds).toEqual([
       w.photo["IMG_001.jpg"],
       w.photo["IMG_002.jpg"],
+      w.photo["IMG_004.jpg"],
     ]);
     expect(page.groups[0].preview.more).toBe(0);
 
@@ -96,9 +99,10 @@ describe("owner reviews picks (A-6, A-34)", () => {
     expect(edit.picks.map((p) => [p.fileName, p.note])).toEqual([
       ["IMG_001.jpg", null],
       ["IMG_002.jpg", "hapus jerawat"],
+      ["IMG_004.jpg", null],
     ]);
     expect(formatPickList(edit.group.mode, edit.picks)).toBe(
-      "IMG_001.jpg\nIMG_002.jpg — hapus jerawat",
+      "IMG_001.jpg\nIMG_002.jpg — hapus jerawat\nIMG_004.jpg",
     );
     const print = await getSelectionGroupDetail(owner(), fixture.context, projectId, w.print);
     expect(formatPickList(print.group.mode, print.picks)).toBe("IMG_003.jpg × 2");
@@ -126,11 +130,13 @@ describe("owner reviews picks (A-6, A-34)", () => {
 });
 
 describe("owner locks or closes a group (D-13, BR-SEL-005, BR-AUD-001)", () => {
-  it("AC-SEL-011 locks a submitted group and closes an open one, recording who and when, and the client sees both read-only", async () => {
+  it("AC-SEL-011 locks a group sent below its limit and closes an open one, recording who and when, and the client sees both read-only", async () => {
     const w = await world();
     await pick(w, w.edit, "IMG_001.jpg");
     await pick(w, w.print, "IMG_003.jpg");
     await submit(w, w.edit);
+    expect((await statusRow(w.edit)).status).toBe("OPEN");
+    expect(await lock(w, w.edit, "CLOSE")).toEqual({ ok: false, code: "INVALID_STATE" });
     expect(await lock(w, w.edit, "LOCK")).toEqual({ ok: true, groupName: "Foto edit" });
     expect(await lock(w, w.print, "CLOSE")).toEqual({ ok: true, groupName: "Foto cetak" });
     for (const id of [w.edit, w.print]) {
@@ -170,7 +176,8 @@ describe("owner locks or closes a group (D-13, BR-SEL-005, BR-AUD-001)", () => {
     const [sent, closed] = await Promise.all([submit(w, w.edit), lock(w, w.edit, "CLOSE")]);
     expect([sent.ok, closed.ok].filter(Boolean)).toHaveLength(1);
     const status = (await statusRow(w.edit)).status;
-    expect(status).toBe(closed.ok ? "LOCKED" : "SUBMITTED");
+    // A send below the limit keeps the group OPEN, and a sent group can no longer be closed.
+    expect(status).toBe(closed.ok ? "LOCKED" : "OPEN");
   });
 
   it("AC-ACC-006 refuses malformed input without touching the group", async () => {

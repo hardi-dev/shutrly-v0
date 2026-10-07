@@ -28,16 +28,19 @@ export const REVIEW_COPY = {
   // beranda-setelah-kirim draws no toast; the plan asks for one
   sentToastTitle: (name: string) => `${name} dikirim`,
   sentToastBody: "Fotografer akan melihat pilihan Anda.",
+  // not in Pencil: a send below the limit keeps the group open (Owner 2026-10-07)
+  sentToastBodyOpen: (remaining: number) =>
+    `Fotografer akan melihat pilihan Anda. Sisa ${String(remaining)} tempat masih bisa Anda pilih.`,
   groupClosed: "Pilihan sudah dikirim",
   limitReached: "Batas pilihan tercapai",
   rateLimited: "Terlalu banyak perubahan, coba lagi sebentar.",
   failed: "Pilihan belum tersimpan. Coba lagi.",
   sendFailed: "Pilihan belum terkirim. Coba lagi.",
-  // tinjau-konfirmasi-kurang
+  // tinjau-konfirmasi-kurang; description and body changed (Owner 2026-10-07: the places left stay open)
   confirmTitle: (name: string) => `Kirim pilihan ${name}?`,
-  confirmDescription: "Pilihan tidak bisa diubah setelah dikirim.",
+  confirmDescription: "Sisa tempat tetap terbuka setelah dikirim.",
   confirmBody: (usage: number, limit: number, unit: string, remaining: number) =>
-    `Anda baru memilih ${String(usage)} dari ${String(limit)} ${unit}, jadi masih ada ${String(remaining)} tempat. Kirim sekarang atau pilih lagi?`,
+    `Anda baru memilih ${String(usage)} dari ${String(limit)} ${unit}. ${String(remaining)} tempat sisanya tetap terbuka, dan pilihan masih bisa diubah sampai fotografer menguncinya.`,
   confirmBack: "Pilih lagi",
   // pick row
   noteTitle: "Catatan untuk fotografer",

@@ -27,7 +27,8 @@ export function groupMeta(group: OwnerGroupView, isPage: boolean): string {
       : COPY.usage(group.usage, group.limit, unit);
   const parts = [usage];
   if (group.noteCount > 0) parts.push(COPY.notes(group.noteCount));
-  if (group.status === "SUBMITTED" && group.submittedAt !== null) {
+  // An open group the client sent below its limit shows the send too (Owner 2026-10-07).
+  if (group.status !== "LOCKED" && group.submittedAt !== null) {
     parts.push(COPY.sentOn(formatGalleryShortDate(group.submittedAt)));
   }
   return parts.join(COPY.metaJoin);

@@ -36,7 +36,7 @@ async function statusOf(groupId: string) {
 }
 
 describe("submit a group (D-13, BR-SEL-005/006)", () => {
-  it("AC-SEL-008 asks to confirm below the limit, then submits and refuses every later change", async () => {
+  it("AC-SEL-008 asks to confirm below the limit, sends and keeps the group open, then closes it at the limit", async () => {
     const w = await world();
     await pick(w, w.edit, "IMG_001.jpg");
     await pick(w, w.edit, "IMG_002.jpg");
@@ -46,15 +46,25 @@ describe("submit a group (D-13, BR-SEL-005/006)", () => {
       remaining: 1,
     });
     expect((await statusOf(w.edit)).status).toBe("OPEN");
-    expect(await submit(w, w.edit, true)).toEqual({ ok: true, groupName: "Foto edit", usage: 2 });
-    const stored = await statusOf(w.edit);
-    expect(stored.status).toBe("SUBMITTED");
-    expect(stored.submittedAt).not.toBeNull();
+    expect(await submit(w, w.edit, true)).toEqual({
+      ok: true,
+      groupName: "Foto edit",
+      usage: 2,
+      remaining: 1,
+    });
+    const sent = await statusOf(w.edit);
+    expect(sent.status).toBe("OPEN");
+    expect(sent.submittedAt).not.toBeNull();
+    // Still open: the client can change a sent pick and use the place left (Owner 2026-10-07).
+    expect(await pick(w, w.edit, "IMG_002.jpg", 0)).toMatchObject({ ok: true, usage: 1 });
+    expect(await pick(w, w.edit, "IMG_002.jpg")).toMatchObject({ ok: true, usage: 2 });
+    expect(await pick(w, w.edit, "IMG_003.jpg")).toMatchObject({ ok: true, usage: 3 });
+    expect(await submit(w, w.edit, false)).toMatchObject({ ok: true, usage: 3, remaining: 0 });
+    expect((await statusOf(w.edit)).status).toBe("SUBMITTED");
     const refused = { ok: false, code: "GROUP_NOT_OPEN" };
-    expect(await pick(w, w.edit, "IMG_003.jpg")).toEqual(refused);
     expect(await pick(w, w.edit, "IMG_001.jpg", 0)).toEqual(refused);
     expect(await submit(w, w.edit, true)).toEqual(refused);
-    expect(await groupUsage(db, fixture, w, w.edit)).toBe(2);
+    expect(await groupUsage(db, fixture, w, w.edit)).toBe(3);
   });
 
   it("AC-SEL-008 submits a full group without a confirmation", async () => {
@@ -79,9 +89,9 @@ describe("submit a group (D-13, BR-SEL-005/006)", () => {
     expect(await submit(w, w.print, true)).toEqual({ ok: false, code: "NO_PICKS" });
   });
 
-  it("BR-SEL-006 lets exactly one of two simultaneous submits win", async () => {
+  it("BR-SEL-006 lets exactly one of two simultaneous submits of a full group win", async () => {
     const w = await world();
-    await pick(w, w.edit, "IMG_001.jpg");
+    for (const name of ["IMG_001.jpg", "IMG_002.jpg", "IMG_003.jpg"]) await pick(w, w.edit, name);
     const results = await Promise.all([submit(w, w.edit, true), submit(w, w.edit, true)]);
     expect(results.filter((result) => result.ok)).toHaveLength(1);
     expect(results.filter((result) => !result.ok)).toEqual([{ ok: false, code: "GROUP_NOT_OPEN" }]);

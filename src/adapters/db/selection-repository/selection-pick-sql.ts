@@ -60,8 +60,13 @@ function groupStatusWriter(tx: DbExecutor, scope: LockedGroupScope) {
         .set({ status: "LOCKED", lockedAt: at, lockedBy: actorId })
         .where(group);
     },
-    async markSubmitted(at: Date) {
-      await tx.update(selectionGroup).set({ status: "SUBMITTED", submittedAt: at }).where(group);
+    async markSubmitted(at: Date, closes: boolean) {
+      // A send below the limit keeps the group OPEN with submitted_at (Owner 2026-10-07).
+      const status = closes ? { status: "SUBMITTED" } : {};
+      await tx
+        .update(selectionGroup)
+        .set({ ...status, submittedAt: at, updatedAt: at })
+        .where(group);
     },
     async setExtraLimit(extraLimit: number, reopen: boolean) {
       // A reopened group keeps submitted_at, so "sent before, open again" stays visible (A-22).

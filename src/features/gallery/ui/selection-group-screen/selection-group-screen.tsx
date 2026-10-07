@@ -1,6 +1,7 @@
 "use client";
 
 import { formatPickList } from "@/features/gallery/domain/pick-list/pick-list";
+import { lockIntentFor } from "@/features/gallery/domain/selection-group-status/selection-group-status";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -51,12 +52,12 @@ function DetailActions({ detail, lock }: Readonly<DetailActionsProps>) {
       >
         {COPY.copyNames}
       </Button>
-      {group.status === "SUBMITTED" ? (
+      {lockIntentFor(group) === "LOCK" ? (
         <Button iconLeading="lock" onPress={handleLock}>
           {COPY.lockPicks}
         </Button>
       ) : null}
-      {group.status === "OPEN" ? (
+      {lockIntentFor(group) === "CLOSE" ? (
         <Button variant="secondary" onPress={handleClose}>
           {COPY.closePicks}
         </Button>

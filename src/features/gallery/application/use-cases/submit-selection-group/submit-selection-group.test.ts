@@ -68,17 +68,28 @@ describe("submitSelectionGroup (D-13, A-5)", () => {
     expect(markSubmitted).not.toHaveBeenCalled();
   });
 
-  it("AC-SEL-008 submits below the limit once confirmed, with the effective limit counting add-on places", async () => {
+  it("AC-SEL-008 sends below the limit once confirmed and keeps the group open, the effective limit counting add-on places", async () => {
     const { deps, markSubmitted } = setup({ extraLimit: 2 });
     expect(await run(deps, false)).toMatchObject({ code: "NEEDS_CONFIRMATION", remaining: 3 });
-    expect(await run(deps, true)).toEqual({ ok: true, groupName: "Foto edit", usage: 2 });
-    expect(markSubmitted).toHaveBeenCalledWith(NOW);
+    expect(await run(deps, true)).toEqual({
+      ok: true,
+      groupName: "Foto edit",
+      usage: 2,
+      remaining: 3,
+    });
+    expect(markSubmitted).toHaveBeenCalledWith(NOW, false);
   });
 
-  it("AC-SEL-008 submits a full group without a confirmation", async () => {
+  it("AC-SEL-008 sends again from an open group that was sent before", async () => {
+    const { deps, markSubmitted } = setup({ submittedAt: new Date("2026-10-05T12:00:00Z") });
+    expect(await run(deps, true)).toMatchObject({ ok: true, remaining: 1 });
+    expect(markSubmitted).toHaveBeenCalledWith(NOW, false);
+  });
+
+  it("AC-SEL-008 submits and closes a full group without a confirmation", async () => {
     const { deps, markSubmitted } = setup({ usage: 3, pickCount: 3 });
-    expect(await run(deps, false)).toMatchObject({ ok: true });
-    expect(markSubmitted).toHaveBeenCalledTimes(1);
+    expect(await run(deps, false)).toMatchObject({ ok: true, remaining: 0 });
+    expect(markSubmitted).toHaveBeenCalledWith(NOW, true);
   });
 
   it("AC-SEL-009 refuses a group with no picks", async () => {

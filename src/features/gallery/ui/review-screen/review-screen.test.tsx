@@ -87,7 +87,12 @@ function actions(patch: Partial<ReviewActions> = {}): ReviewActions {
     ),
     setNote: vi.fn(),
     submit: vi.fn(() =>
-      Promise.resolve<SubmitSelectionGroupResult>({ ok: true, groupName: "Foto edit", usage: 2 }),
+      Promise.resolve<SubmitSelectionGroupResult>({
+        ok: true,
+        groupName: "Foto edit",
+        usage: 2,
+        remaining: 1,
+      }),
     ),
     reload: vi.fn(() => Promise.resolve({ kind: "VIEW" as const, view: editView() })),
     ...patch,
@@ -122,7 +127,7 @@ describe("ReviewScreen — Tinjau (tinjau exports)", () => {
     expect(within(dialog).getByText("Kirim pilihan Foto edit?")).toBeTruthy();
     expect(
       within(dialog).getByText(
-        "Anda baru memilih 2 dari 3 foto, jadi masih ada 1 tempat. Kirim sekarang atau pilih lagi?",
+        "Anda baru memilih 2 dari 3 foto. 1 tempat sisanya tetap terbuka, dan pilihan masih bisa diubah sampai fotografer menguncinya.",
       ),
     ).toBeTruthy();
     expect(within(dialog).getByRole("link", { name: "Pilih lagi" }).getAttribute("href")).toBe(
@@ -133,7 +138,11 @@ describe("ReviewScreen — Tinjau (tinjau exports)", () => {
     await waitFor(() => {
       expect(a.submit).toHaveBeenCalledWith({ groupId: "g-edit", confirmBelowLimit: true });
     });
-    expect(showToast).toHaveBeenCalledWith(expect.objectContaining({ tone: "success" }));
+    expect(showToast).toHaveBeenCalledWith({
+      tone: "success",
+      title: "Foto edit dikirim",
+      body: "Fotografer akan melihat pilihan Anda. Sisa 1 tempat masih bisa Anda pilih.",
+    });
     expect(push).toHaveBeenCalledWith("/g/T1");
   });
 
@@ -160,7 +169,7 @@ describe("ReviewScreen — Tinjau (tinjau exports)", () => {
     // The screen thinks the group is full; the server knows an add-on made room (BR-ADD-004).
     renderReview(a, fullView());
     await userEvent.click(screen.getByRole("button", { name: "Kirim 3 foto" }));
-    expect(await screen.findByText(/masih ada 2 tempat/)).toBeTruthy();
+    expect(await screen.findByText(/2 tempat sisanya tetap terbuka/)).toBeTruthy();
   });
 
   it("AC-SEL-008 reloads the page when the group was sent meanwhile", async () => {

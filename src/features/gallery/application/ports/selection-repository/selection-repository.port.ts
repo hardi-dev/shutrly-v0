@@ -51,8 +51,8 @@ export interface PickWriter {
   /** Deletes the pick and its note (A-32). */
   readonly deletePick: (photoId: string) => Promise<void>;
   readonly setNote: (photoId: string, note: string | null) => Promise<void>;
-  /** Moves the locked group to `SUBMITTED` (BR-SEL-005). */
-  readonly markSubmitted: (at: Date) => Promise<void>;
+  /** Records the client's send; `closes` (usage at the limit) also moves the group to `SUBMITTED` (BR-SEL-005). */
+  readonly markSubmitted: (at: Date, closes: boolean) => Promise<void>;
   /** Moves the locked group to `LOCKED` with who and when (BR-SEL-005, BR-AUD-001). */
   readonly markLocked: (actorId: string, at: Date) => Promise<void>;
   /** Sets the stored add-on sum and, on approval of a submitted group, reopens it (BR-SEL-002, BR-ADD-004). */

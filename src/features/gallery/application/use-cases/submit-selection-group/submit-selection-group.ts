@@ -29,13 +29,15 @@ async function submitLocked(
   if (remaining > 0 && !confirmBelowLimit) {
     return { ok: false, code: "NEEDS_CONFIRMATION", remaining };
   }
-  await writer.markSubmitted(now);
-  return { ok: true, groupName: group.name, usage: group.usage };
+  // Below the limit the send is recorded and the group stays open (Owner 2026-10-07, BR-SEL-005).
+  await writer.markSubmitted(now, remaining === 0);
+  return { ok: true, groupName: group.name, usage: group.usage, remaining };
 }
 
 /**
  * Submits one group under its lock: at least one pick, `OPEN`, and a below-limit submission only
- * after the client confirmed the places left; then `SUBMITTED` with `submitted_at` (D-13, BR-SEL-005/006, A-5).
+ * after the client confirmed the places left; records `submitted_at`, and only a submission at the
+ * limit makes the group `SUBMITTED` (D-13, BR-SEL-005/006, A-5).
  * @param deps - selection repository and counters
  * @param client - the signed-in client context
  * @param input - untrusted `{ groupId, confirmBelowLimit }`

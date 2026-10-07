@@ -144,7 +144,11 @@ describe("add-ons (D-16, ADR-016)", () => {
     const reopened = await groupOf(w, w.edit);
     expect([reopened.status, reopened.pickCount, reopened.extraLimit]).toEqual(["OPEN", 3, 5]);
     await pick(w, w.edit, ["IMG_004.jpg", "IMG_005.jpg"]);
-    expect(await submit(w, w.edit)).toMatchObject({ ok: true });
+    // 5 of 8: a send below the limit keeps the group open for the 3 places left (Owner 2026-10-07).
+    expect(await submit(w, w.edit)).toMatchObject({ ok: true, remaining: 3 });
+    expect((await groupOf(w, w.edit)).status).toBe("OPEN");
+    await pick(w, w.edit, ["IMG_006.jpg", "IMG_007.jpg", "IMG_008.jpg"]);
+    expect(await submit(w, w.edit)).toMatchObject({ ok: true, remaining: 0 });
     expect((await groupOf(w, w.edit)).status).toBe("SUBMITTED");
   });
 

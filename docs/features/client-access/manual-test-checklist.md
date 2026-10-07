@@ -39,8 +39,8 @@ Client link (`SEED_CLIENT_PATH`, password `SEED_GALLERY_PASSWORD`) › `/final`.
 | 3.2 | Buka viewer › *Unduh foto* | File asli terunduh | ✅ | |
 | 3.3 | *Unduh semua* | Konfirmasi, lalu foto terunduh satu per satu dengan kartu progres | ✅ | |
 | 3.4 | *Pilih beberapa* › pilih foto › *Unduh n foto* | Hanya foto terpilih yang terunduh | ✅ | |
-| 3.5 | *Pilih foto* (tombol utama) › centang foto › *Masukkan ke…* › pilih bagian | Foto masuk ke pilihan bagian itu (×1 di *Foto cetak*) | ⬜ | |
-| 3.6 | *Pilih foto* › centang lebih banyak dari sisa kuota › *Masukkan ke…* | Semua ditolak, tidak ada yang masuk; pesan sisa kuota | ⬜ | Diulang setelah opsi C (2026-10-08) |
+| 3.5 | *Pilih foto* (tombol utama) › centang foto › *Masukkan ke…* › pilih bagian | Foto masuk ke pilihan bagian itu (×1 di *Foto cetak*) | ✅ | |
+| 3.6 | *Pilih foto* › centang lebih banyak dari sisa kuota › *Masukkan ke…* | Semua ditolak, tidak ada yang masuk; pesan sisa kuota | ✅ | Diulang setelah opsi C (2026-10-08) |
 | 3.7 | Buka `/picks/<groupId>` | Halaman pilih per bagian tetap seperti sebelumnya | ✅ | |
 
 ## 4. Hapus folder (#4)

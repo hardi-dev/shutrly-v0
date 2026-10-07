@@ -3,10 +3,11 @@ import "server-only";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { headers } from "next/headers";
 import { after } from "next/server";
+import type { z } from "zod";
 
 import { parseAppEnv } from "@/shared/env/app-env";
 
-import type { RequestContext } from "./request-context.types";
+import type { RequestContext, ScopedRequestContext } from "./request-context.types";
 
 // The part of the Worker ExecutionContext we use; typed here so no generated Workers types are needed.
 interface WorkerContext {
@@ -49,10 +50,30 @@ export async function getRequestContext(): Promise<RequestContext> {
     env: parseAppEnv(env),
     waitUntil,
     ip: clientIp(requestHeaders),
-    requestId:
-      requestHeaders.get("cf-ray") ?? requestHeaders.get("x-nf-request-id") ?? crypto.randomUUID(),
+    requestId: requestIdOf(requestHeaders),
     headers: requestHeaders,
   };
+}
+
+/**
+ * A narrow request context for a public endpoint that needs only a few bindings: it checks just
+ * those, so it works where the full AppEnv doesn't exist (the landing-only production, ADR-021,
+ * ADR-022).
+ * @param schema - the endpoint's own bindings schema
+ * @returns the endpoint's bindings and the request ID; throws when the bindings don't match
+ */
+export async function getScopedRequestContext<T>(
+  schema: z.ZodType<T>,
+): Promise<ScopedRequestContext<T>> {
+  const { env } = await getBindings();
+  const requestHeaders = await headers();
+  return { env: schema.parse(env), requestId: requestIdOf(requestHeaders) };
+}
+
+function requestIdOf(requestHeaders: Headers): string {
+  return (
+    requestHeaders.get("cf-ray") ?? requestHeaders.get("x-nf-request-id") ?? crypto.randomUUID()
+  );
 }
 
 function clientIp(requestHeaders: Headers): string {

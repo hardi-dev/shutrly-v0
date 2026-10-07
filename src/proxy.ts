@@ -14,12 +14,14 @@ const PUBLIC_PREFIXES = [
   "/api/auth",
   "/api/health",
   "/api/test",
+  "/api/waitlist",
 ];
 
 /**
  * Tell whether a path is reachable without a session.
  * @param pathname - the request path
- * @returns true for the auth screens, Better Auth's endpoints and the health/test routes
+ * @returns true for the landing page and its waitlist endpoint, the auth screens, Better Auth's
+ *   endpoints and the health/test routes
  */
 export function isPublicPath(pathname: string): boolean {
   return (
@@ -43,5 +45,5 @@ export function proxy(request: NextRequest): NextResponse {
 }
 
 export const config = {
-  matcher: ["/((?!_next/|favicon.ico|auth/editorial/).*)"],
+  matcher: ["/((?!_next/|favicon.ico|auth/editorial/|landing/).*)"],
 };

@@ -7,3 +7,16 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# F-19 waitlist rate limit (ADR-022, spec A-2): 5 submissions per IP per 3 minutes (Netlify's
+# longest window); above that the edge answers HTTP 429. Code-based rules work on the Free plan
+# (2 per project) and match by path only, so the waitlist has its own path.
+[[redirects]]
+  from = "/api/waitlist"
+  to = "/api/waitlist"
+  status = 200
+  force = true
+  [redirects.rate_limit]
+    window_limit = 5
+    window_size = 180
+    aggregate_by = ["ip", "domain"]

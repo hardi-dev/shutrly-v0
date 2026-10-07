@@ -10,6 +10,11 @@ describe("proxy (early redirect only)", () => {
     expect(isPublicPath("/profile")).toBe(false);
   });
 
+  it("AC-LND-001 AC-LND-005 keeps the landing page and its waitlist endpoint public", () => {
+    expect(isPublicPath("/")).toBe(true);
+    expect(isPublicPath("/api/waitlist")).toBe(true);
+  });
+
   it("AC-AUTH-014 redirects an owner page without a session cookie to /login", () => {
     const response = proxy(new NextRequest("http://localhost:3000/profile"));
     expect(response.headers.get("location")).toBe("http://localhost:3000/login");

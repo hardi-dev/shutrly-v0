@@ -7702,6 +7702,289 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "nSYag",
+      "x": 3670,
+      "y": 682,
+      "name": "SHUTRLY / Share image · 1200×630",
+      "context": "Open Graph / social share image (AC-LND-004). Exported as src/app/opengraph-image.png. Built from the chosen hero sW37g: brand mesh, grain, logo lockup, alternative A headline, laptop mockup.",
+      "clip": true,
+      "width": 1200,
+      "height": 630,
+      "fill": "#F7F9FD",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "miaI9",
+          "x": 0,
+          "y": 150,
+          "name": "Material / Brand mesh gradient",
+          "fill": {
+            "type": "mesh_gradient",
+            "enabled": true,
+            "columns": 4,
+            "rows": 4,
+            "colors": [
+              "#F7F9FD00",
+              "#F7F9FD00",
+              "#F7F9FD00",
+              "#F7F9FD00",
+              "#2F5BFF2E",
+              "#8EA4FF40",
+              "#F7F9FD00",
+              "#C6F43247",
+              "#2F5BFFD9",
+              "#7E97FF73",
+              "#E4FF9E66",
+              "#C6F432D9",
+              "#1A36D6",
+              "#2F5BFF",
+              "#A6E021",
+              "#C6F432"
+            ],
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                0.333,
+                0
+              ],
+              [
+                0.667,
+                0
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                0,
+                0.36
+              ],
+              [
+                0.3,
+                0.3
+              ],
+              [
+                0.7,
+                0.38
+              ],
+              [
+                1,
+                0.3
+              ],
+              [
+                0,
+                0.62
+              ],
+              [
+                0.24,
+                0.66
+              ],
+              [
+                0.78,
+                0.56
+              ],
+              [
+                1,
+                0.6
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0.333,
+                1
+              ],
+              [
+                0.667,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ]
+          },
+          "width": 1200,
+          "height": 480
+        },
+        {
+          "type": "rectangle",
+          "id": "Y75jm",
+          "x": 0,
+          "y": 0,
+          "name": "Material / Grain texture",
+          "opacity": 0.05,
+          "fill": {
+            "type": "shader",
+            "enabled": true,
+            "url": "assets/shaders/grain.glsl",
+            "uniforms": {
+              "u_scale": 1.2
+            },
+            "blendMode": "overlay"
+          },
+          "width": 1200,
+          "height": 630
+        },
+        {
+          "type": "rectangle",
+          "id": "PsYUK",
+          "x": 700,
+          "y": 318,
+          "name": "Product mockup / Laptop",
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "Shutrly%20Project%20Dashboard%20on%20Laptop.png",
+            "mode": "contain"
+          },
+          "width": 600,
+          "height": 400
+        },
+        {
+          "type": "frame",
+          "id": "yuUPe",
+          "x": 72,
+          "y": 64,
+          "name": "Copy",
+          "width": 600,
+          "layout": "vertical",
+          "gap": 28,
+          "children": [
+            {
+              "type": "frame",
+              "id": "E7uhU",
+              "name": "Logo lockup",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "wMPkn",
+                  "name": "Symbol",
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "5D1C4E57-8E7D-431C-B668-5EAF17C42DC5.PNG",
+                    "mode": "cover",
+                    "transform": [
+                      1.457627,
+                      0,
+                      0,
+                      1.487032,
+                      -0.234463,
+                      -0.250721
+                    ]
+                  },
+                  "width": 44,
+                  "height": 44
+                },
+                {
+                  "type": "text",
+                  "id": "lu2zC",
+                  "name": "Wordmark",
+                  "fill": "#17202D",
+                  "content": "shutrly",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 30,
+                  "fontWeight": "800",
+                  "letterSpacing": -1.4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nIbXe",
+              "name": "Headline",
+              "layout": "vertical",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "degO4",
+                  "name": "Line 1",
+                  "height": 72,
+                  "gap": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "WAxKP",
+                      "name": "Less",
+                      "fill": "#171B24",
+                      "content": "Less",
+                      "lineHeight": 1.12,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 64,
+                      "fontWeight": "500",
+                      "letterSpacing": -2.8
+                    },
+                    {
+                      "type": "frame",
+                      "id": "kGHCc",
+                      "name": "Lime highlight",
+                      "height": 72,
+                      "fill": "#C6F432",
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fwvtm",
+                          "name": "busywork.",
+                          "fill": "#171B24",
+                          "content": "busywork.",
+                          "lineHeight": 1.12,
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 64,
+                          "fontWeight": "700",
+                          "letterSpacing": -2.8
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "WXumP",
+                  "name": "Line 2",
+                  "fill": "#171B24",
+                  "content": "More photography.",
+                  "lineHeight": 1.12,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 64,
+                  "fontWeight": "700",
+                  "letterSpacing": -2.8
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "AWli3",
+              "name": "Description",
+              "fill": "#555E6C",
+              "textGrowth": "fixed-width",
+              "width": 470,
+              "content": "A workspace to manage your projects, photo selections, and invoices. Join the waitlist.",
+              "lineHeight": 1.5,
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 22,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
     }
   ],
   "imports": {

@@ -60,6 +60,18 @@ describe("DeliveryScreen (klien-8)", () => {
     );
   });
 
+  it("F-20 shows a tab for an empty item and opens on the first item with files", () => {
+    const files: DeliveryFilesView = {
+      groups: [
+        { id: "i-edit", name: "Foto edit", files: [] },
+        { id: "i-print", name: "Cetak 4R", files: [file("P_001")] },
+      ],
+    };
+    render(<DeliveryScreen gate={GATE} token="T1" files={files} />);
+    expect(screen.getByText("Foto edit · 0")).toBeTruthy();
+    expect(screen.getByText("1 file · Cetak 4R")).toBeTruthy();
+  });
+
   it("AC-DEL-003 Unduh semua asks first, then downloads the open kind one by one", async () => {
     const user = userEvent.setup();
     render(<DeliveryScreen gate={GATE} token="T1" files={FILES} />);

@@ -45,18 +45,25 @@ function deps() {
       photo("P_001", "PRINT"),
     ]),
   );
+  const listDeliveryItems = vi.fn(() =>
+    Promise.resolve([
+      { id: "i-edit", name: "Foto edit" },
+      { id: "i-print", name: "Foto cetak" },
+    ]),
+  );
   return {
-    value: { reader: { listFinishedPhotos }, directImages: true } as never,
+    value: { reader: { listFinishedPhotos, listDeliveryItems }, directImages: true } as never,
     listFinishedPhotos,
   };
 }
 
 describe("getDeliveryFiles (klien-8)", () => {
-  it("AC-DEL-003 F-20 groups the files per package item with their download URL", async () => {
+  it("AC-DEL-003 F-20 groups the files per package item, empty items included, with their download URL", async () => {
     const { value } = deps();
     const files = await getDeliveryFiles(value, CLIENT);
     expect(files?.groups.map((group) => [group.id, group.name, group.files.length])).toEqual([
       ["i-edit", "Foto edit", 2],
+      ["i-print", "Foto cetak", 0],
       ["PRINT", "Print", 1],
     ]);
     expect(files?.groups[0]?.files[0]?.downloadUrl).toBe("/g/tok/download/E_001");

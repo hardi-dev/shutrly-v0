@@ -13,7 +13,8 @@ const FALLBACK = { EDITED: "Edited", PRINT: "Print" } as const;
 
 /**
  * Loads *Hasil akhir* for the signed-in client: every visible, not-missing EDITED and PRINT file
- * with its image and download URLs, grouped per package item (F-20), or null before final delivery is published (BR-DEL-001/002,
+ * with its image and download URLs, grouped per package item with every selection item shown even when
+ * empty (F-20, Owner 2026-10-08), or null before final delivery is published (BR-DEL-001/002,
  * BR-DEL-004, D-15, D-18, AC-DEL-003, -004, -006).
  * @param deps - the client reader and whether images load straight from Google
  * @param client - the signed-in client context
@@ -25,8 +26,13 @@ export async function getDeliveryFiles(
 ): Promise<DeliveryFilesView | null> {
   if (!client.finalDeliveryPublished) return null;
   const context = { workspaceId: client.workspaceId };
-  const photos = await deps.reader.listFinishedPhotos(context, client.galleryId);
-  const groups = new Map<string, { id: string; name: string; files: DeliveryFileView[] }>();
+  const [items, photos] = await Promise.all([
+    deps.reader.listDeliveryItems(context, client.galleryId),
+    deps.reader.listFinishedPhotos(context, client.galleryId),
+  ]);
+  const groups = new Map<string, { id: string; name: string; files: DeliveryFileView[] }>(
+    items.map((item) => [item.id, { id: item.id, name: item.name, files: [] }]),
+  );
   for (const photo of photos) {
     // F-20: one tab per package item; older files without an item fall back to their kind.
     const id = photo.itemId ?? photo.kind;

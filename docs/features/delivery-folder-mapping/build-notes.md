@@ -6,7 +6,7 @@ Built 2026-10-07 on `feat/client-access` straight from the accepted [intent](int
 - *Sumber foto* › folder ⋯ › *Edit folder*: the name, and *Subfolder hasil akhir* with one choice per subfolder found by the last sync: *Tetap foto proof* or a selection item of this project's package. One *Simpan* saves both; photos are reclassified at once (no re-sync).
 - No selection item in the package: a short notice with *Buka Isi paket* (Owner: keep it simple). No subfolders yet: *Sinkronkan dulu*.
 - A sync that finds subfolders the Owner hasn't seen yet shows a toast *n subfolder baru di {folder}* with *Petakan*, which opens *Edit folder*.
-- Client *Hasil akhir*: one tab per package item (was *Edited / Print*); files synced before F-20 without an item fall back to an *Edited* / *Print* tab.
+- Client *Hasil akhir*: one tab per package item (was *Edited / Print*), every selection item of the package even when it has no file yet, opening on the first item with files (Owner manual test 2026-10-08); files synced before F-20 without an item fall back to an *Edited* / *Print* tab.
 
 ## Rules (Owner 2026-10-07)
 - Per linked folder; items offered are this project's selection items only; one subfolder → one item; *Edit folder* lists the package items and each picks one subfolder or none (Owner manual test 2026-10-07: item first, not subfolder first), and a subfolder another item has is not offered; mapping is optional and may come before the subfolder exists.

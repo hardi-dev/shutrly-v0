@@ -27,6 +27,11 @@ export interface ClientGalleryReaderPort {
     context: WorkspaceContext,
     galleryId: string,
   ) => Promise<readonly FinishedPhotoRecord[]>;
+  /** The gallery project's selection items, in package order: one *Hasil akhir* tab each, empty or not (F-20). */
+  readonly listDeliveryItems: (
+    context: WorkspaceContext,
+    galleryId: string,
+  ) => Promise<readonly DeliveryItemRecord[]>;
   /** Id and name of every visible, not-missing proof of active sources, by name (F-19 *Unduh semua*). */
   readonly listProofFiles: (
     context: WorkspaceContext,
@@ -38,6 +43,11 @@ export interface ClientGalleryReaderPort {
 export interface FinishedPhotoRecord extends GalleryPhotoRecord {
   readonly itemId: string | null;
   readonly itemName: string | null;
+}
+
+export interface DeliveryItemRecord {
+  readonly id: string;
+  readonly name: string;
 }
 
 export interface ProofFileRecord {

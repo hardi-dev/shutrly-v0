@@ -25,12 +25,14 @@ const toItem = (file: DeliveryFileView): DownloadItem => ({
  * @returns the state and handlers
  */
 export function useDeliveryScreen(files: DeliveryFilesView): DeliveryScreenState {
-  const [groupId, setGroupId] = useState(files.groups.at(0)?.id ?? "");
+  // F-20: open on the first item that has files; empty items still get a tab.
+  const first = files.groups.find((candidate) => candidate.files.length > 0) ?? files.groups.at(0);
+  const [groupId, setGroupId] = useState(first?.id ?? "");
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
   const selection = useFileSelection();
   const download = useSequentialDownload();
-  const group = files.groups.find((candidate) => candidate.id === groupId) ?? files.groups.at(0);
+  const group = files.groups.find((candidate) => candidate.id === groupId) ?? first;
   const shown = group?.files ?? [];
   const all = files.groups.flatMap((candidate) => candidate.files);
   const failed = new Set(download.progress.failedIds);

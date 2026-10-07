@@ -11,7 +11,7 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import type { DbExecutor } from "../client/client.types";
 import { projectItem } from "../schema/booking/project";
-import { galleryPhoto, gallerySource } from "../schema/gallery/gallery";
+import { gallery, galleryPhoto, gallerySource } from "../schema/gallery/gallery";
 import { workspaceSourceConfig } from "../schema/gallery/workspace-source-config";
 import {
   PHOTO_COLUMNS,
@@ -57,6 +57,29 @@ async function selectFinishedPhotos(
     const photo = toPhotoRecord(row);
     return photo ? [{ ...photo, itemId, itemName }] : [];
   });
+}
+
+/** The gallery project's selection items (COUNT / QUANTITY), in package order (F-20). @param db - the executor @param context - verified workspace @param galleryId - the gallery @returns the items */
+async function selectDeliveryItems(db: DbExecutor, context: WorkspaceContext, galleryId: string) {
+  return db
+    .select({ id: projectItem.id, name: projectItem.name })
+    .from(projectItem)
+    .innerJoin(
+      gallery,
+      and(
+        eq(gallery.workspaceId, projectItem.workspaceId),
+        eq(gallery.projectId, projectItem.projectId),
+      ),
+    )
+    .where(
+      and(
+        eq(projectItem.workspaceId, context.workspaceId),
+        eq(gallery.id, galleryId),
+        eq(projectItem.selectionRequired, true),
+        inArray(projectItem.pickMode, ["COUNT", "QUANTITY"]),
+      ),
+    )
+    .orderBy(asc(projectItem.sortOrder), asc(projectItem.name));
 }
 
 /** Id and name of every visible, not-missing proof of active sources, by name (F-19). @param db - the executor @param context - verified workspace @param galleryId - the gallery @returns the files */
@@ -113,6 +136,7 @@ export function createDrizzleClientGalleryReader(db: DbExecutor): ClientGalleryR
       };
     },
     listFinishedPhotos: (context, galleryId) => selectFinishedPhotos(db, context, galleryId),
+    listDeliveryItems: (context, galleryId) => selectDeliveryItems(db, context, galleryId),
     listProofFiles: (context, galleryId) => selectProofFiles(db, context, galleryId),
   };
 }

@@ -24,8 +24,13 @@ import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-overri
 
 export default async function GalleryPage({
   params,
-}: Readonly<{ params: Promise<{ workspaceId: string; projectId: string }> }>) {
+  searchParams,
+}: Readonly<{
+  params: Promise<{ workspaceId: string; projectId: string }>;
+  searchParams: Promise<{ sync?: string }>;
+}>) {
   const { workspaceId, projectId } = await params;
+  const { sync } = await searchParams;
   const [page, access, selection, delivery] = await Promise.all([
     loadGalleryPage(workspaceId, projectId),
     loadAccessCard(workspaceId, projectId),
@@ -45,6 +50,7 @@ export default async function GalleryPage({
         workspaceId={workspaceId}
         page={page}
         actions={GALLERY_PAGE_ACTIONS}
+        initialSyncSourceId={sync}
         accessCard={accessCardSlot(workspaceId, access)}
         selectionCard={
           <SelectionCard

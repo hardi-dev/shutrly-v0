@@ -6,7 +6,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { GalleryPageScreen } from "./gallery-page-screen";
 
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
-vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }) }));
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn(), replace: vi.fn() }),
+  usePathname: () => "/w/ws-1/projects/p-1/gallery",
+}));
 
 const ACTIONS = fakePageActions();
 

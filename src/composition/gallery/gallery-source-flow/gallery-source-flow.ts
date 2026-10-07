@@ -20,6 +20,18 @@ import {
 } from "../gallery-flow-support/gallery-flow-support";
 import { withGalleryScope } from "../gallery-scope/gallery-scope";
 
+/** Checks a folder link for *Buat galeri*, before the gallery exists (Revision OT #3, AC-GAL-010). @param rawWorkspaceId - untrusted workspace id @param link - untrusted link @returns the other projects' titles, or a field error */
+export async function checkNewGalleryFolderEntry(rawWorkspaceId: string, link: unknown) {
+  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  try {
+    return await withGalleryScope(({ sources }) =>
+      findFolderUse(sources, verified.context, null, link),
+    );
+  } catch (error) {
+    return gallerySaveError(error, verified.context.workspaceId, "folder-use");
+  }
+}
+
 /** Links a Drive folder; the page syncs it next (AC-GAL-005, 008–011, D-27). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @param values - untrusted form values @returns the link result */
 export async function linkGallerySourceEntry(
   rawWorkspaceId: string,

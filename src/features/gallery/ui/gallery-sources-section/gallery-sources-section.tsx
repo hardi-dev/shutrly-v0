@@ -1,5 +1,8 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
+
 import type { GallerySourceView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 import { canEditSources } from "@/features/gallery/domain/gallery-status/gallery-status";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -14,6 +17,7 @@ import { LinkSourceDialog } from "../link-source-dialog/link-source-dialog";
 import { RenameFolderDialog } from "../rename-folder-dialog/rename-folder-dialog";
 import { SourcesCard } from "../sources-card/sources-card";
 import { useGallerySync } from "../use-gallery-sync/use-gallery-sync";
+import type { GallerySyncState } from "../use-gallery-sync/use-gallery-sync.types";
 import { useSourceDialogs } from "../use-source-dialogs/use-source-dialogs";
 import type {
   AddFolderButtonProps,
@@ -28,16 +32,16 @@ export function GallerySourcesSection({
   workspaceId,
   page,
   actions,
+  initialSyncSourceId,
 }: Readonly<GallerySourcesSectionProps>) {
   const dialogs = useSourceDialogs();
   const sync = useGallerySync({ workspaceId, syncSourceAction: actions.syncSourceAction });
+  useInitialSync(sync, page, initialSyncSourceId);
   const handleLinked = (sourceId: string) => {
     dialogs.handleLinked();
     sync.syncNew(sourceId);
   };
   const isEditable = canEditSources(page.gallery.status, page.project.status);
-  const isLive = page.gallery.status === "PUBLISHED" || page.gallery.status === "EXPIRED";
-  const isLastLocked = isLive && page.gallery.activeSourceCount <= 1;
   return (
     <>
       <SourcesCard
@@ -54,7 +58,7 @@ export function GallerySourcesSection({
           sync={sync}
           isEditable={isEditable}
           isArchived={page.gallery.status === "ARCHIVED"}
-          isLastLocked={isLastLocked}
+          isLastLocked={isLastFolderLocked(page)}
           onDelete={dialogs.setDeleting}
           onRename={dialogs.setRenaming}
         />
@@ -73,6 +77,30 @@ export function GallerySourcesSection({
       />
     </>
   );
+}
+
+/** The last active folder of a published or expired gallery can't be deleted (BR-GAL-004). */
+function isLastFolderLocked(page: GallerySourcesSectionProps["page"]): boolean {
+  const isLive = page.gallery.status === "PUBLISHED" || page.gallery.status === "EXPIRED";
+  return isLive && page.gallery.activeSourceCount <= 1;
+}
+
+/** Syncs the folder linked in *Buat galeri* once, then drops `?sync=` so a refresh doesn't repeat it (Revision OT #3). */
+function useInitialSync(
+  sync: GallerySyncState,
+  page: GallerySourcesSectionProps["page"],
+  sourceId: string | undefined,
+) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const started = useRef(false);
+  useEffect(() => {
+    if (started.current || sourceId === undefined) return;
+    started.current = true;
+    router.replace(pathname);
+    if (page.sources.some((source) => source.id === sourceId && !source.removed))
+      sync.syncNew(sourceId);
+  }, [sync, page.sources, sourceId, router, pathname]);
 }
 
 function SourceDialogs(props: Readonly<SourceDialogsProps>) {

@@ -66,6 +66,7 @@ function renderCard(
       Promise.resolve({ ok: true as const, galleryId: "g-1", sourceId: null }),
     ),
     proposeAction: vi.fn(() => Promise.resolve("mawar-4821")),
+    checkFolderAction: vi.fn(),
     ...overrides,
   };
   render(<GalleryCard {...props} />);

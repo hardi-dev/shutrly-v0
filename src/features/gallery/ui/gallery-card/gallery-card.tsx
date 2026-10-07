@@ -100,9 +100,10 @@ function NoGallery(props: Readonly<NoGalleryProps>) {
     projectId: card.project.id,
     proposeAction: props.proposeAction,
   });
-  const handleCreated = () => {
+  // Revision OT #3: a folder linked while creating syncs once the gallery page opens.
+  const handleCreated = (_galleryId: string, sourceId: string | null) => {
     launcher.close();
-    router.push(props.galleryHref);
+    router.push(sourceId ? `${props.galleryHref}?sync=${sourceId}` : props.galleryHref);
   };
   const text = noGalleryText(card);
   return (
@@ -132,8 +133,10 @@ function NoGallery(props: Readonly<NoGalleryProps>) {
           workspaceId={props.workspaceId}
           projectId={card.project.id}
           initialPassword={launcher.initialPassword}
+          linkableSources={card.linkableSources ?? []}
           createAction={props.createAction}
           proposeAction={props.proposeAction}
+          checkFolderAction={props.checkFolderAction}
           onCreated={handleCreated}
         />
       )}

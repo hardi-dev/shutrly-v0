@@ -7,7 +7,10 @@ import { CreateGalleryDialog } from "./create-gallery-dialog";
 
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
 
-function renderDialog() {
+const DRIVE = { id: "66666666-6666-4666-8666-666666666666", name: "Google Drive" };
+const RINA = "https://drive.google.com/drive/folders/fixtureRinaWisuda01";
+
+function renderDialog(overrides: Record<string, unknown> = {}) {
   const props = {
     isOpen: true,
     onOpenChange: vi.fn(),
@@ -18,7 +21,10 @@ function renderDialog() {
       Promise.resolve({ ok: true as const, galleryId: "g-1", sourceId: null }),
     ),
     proposeAction: vi.fn(() => Promise.resolve("melati-2345")),
+    checkFolderAction: vi.fn(() => Promise.resolve({ ok: true as const, projectTitles: [] })),
+    linkableSources: [] as (typeof DRIVE)[],
     onCreated: vi.fn(),
+    ...overrides,
   };
   render(<CreateGalleryDialog {...props} />);
   return props;
@@ -60,7 +66,7 @@ describe("CreateGalleryDialog", () => {
         expiry: { type: "DAYS", days: 30 },
       });
     });
-    expect(props.onCreated).toHaveBeenCalledWith("g-1");
+    expect(props.onCreated).toHaveBeenCalledWith("g-1", null);
   });
 
   it("AC-GAL-002 shows the server's field error on the password", async () => {
@@ -73,5 +79,79 @@ describe("CreateGalleryDialog", () => {
     await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
     expect(await screen.findByText("Password minimal 6 karakter.")).toBeInTheDocument();
     expect(props.onCreated).not.toHaveBeenCalled();
+  });
+
+  describe("Revision OT #3 the optional first folder", () => {
+    it("AC-GAL-001 sends no folder when the link stays empty", async () => {
+      const props = renderDialog({ linkableSources: [DRIVE] });
+      expect(screen.getByText("Folder Google Drive")).toBeInTheDocument();
+      await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
+      await waitFor(() => {
+        expect(props.createAction).toHaveBeenCalledWith("ws-1", "p-1", {
+          password: "mawar-4821",
+          expiry: { type: "NONE" },
+        });
+      });
+      expect(props.checkFolderAction).not.toHaveBeenCalled();
+      expect(props.onCreated).toHaveBeenCalledWith("g-1", null);
+    });
+
+    it("AC-GAL-001 creates with the folder and hands its id on to sync", async () => {
+      const createAction = vi.fn(() =>
+        Promise.resolve({ ok: true as const, galleryId: "g-1", sourceId: "s-1" }),
+      );
+      const props = renderDialog({ linkableSources: [DRIVE], createAction });
+      await userEvent.type(screen.getByLabelText(/^Link folder Google Drive/), RINA);
+      await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
+      await waitFor(() => {
+        expect(createAction).toHaveBeenCalledWith("ws-1", "p-1", {
+          password: "mawar-4821",
+          expiry: { type: "NONE" },
+          folder: { workspaceSourceId: DRIVE.id, link: RINA, label: "" },
+        });
+      });
+      expect(props.checkFolderAction).toHaveBeenCalledWith("ws-1", RINA);
+      expect(props.onCreated).toHaveBeenCalledWith("g-1", "s-1");
+    });
+
+    it("AC-GAL-010 asks first when another project uses the folder", async () => {
+      const checkFolderAction = vi.fn(() =>
+        Promise.resolve({ ok: true as const, projectTitles: ["Wisuda Sari"] }),
+      );
+      const props = renderDialog({ linkableSources: [DRIVE], checkFolderAction });
+      await userEvent.type(screen.getByLabelText(/^Link folder Google Drive/), RINA);
+      await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
+      expect(await screen.findByText(/Wisuda Sari/)).toBeInTheDocument();
+      expect(props.createAction).not.toHaveBeenCalled();
+      await userEvent.click(screen.getByRole("button", { name: "Tetap buat galeri" }));
+      await waitFor(() => {
+        expect(props.createAction).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    it("AC-GAL-009 shows the server's folder error on the link and creates nothing", async () => {
+      const checkFolderAction = vi.fn(() =>
+        Promise.resolve({
+          ok: false as const,
+          code: "VALIDATION_FAILED" as const,
+          fieldErrors: { link: "NOT_A_FOLDER" as const },
+        }),
+      );
+      const props = renderDialog({ linkableSources: [DRIVE], checkFolderAction });
+      await userEvent.type(
+        screen.getByLabelText(/^Link folder Google Drive/),
+        "https://drive.google.com/file/d/abc/view",
+      );
+      await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
+      await waitFor(() => {
+        expect(checkFolderAction).toHaveBeenCalled();
+      });
+      expect(props.createAction).not.toHaveBeenCalled();
+    });
+
+    it("hides the section when the workspace has no active source", () => {
+      renderDialog();
+      expect(screen.queryByText("Folder Google Drive")).not.toBeInTheDocument();
+    });
   });
 });

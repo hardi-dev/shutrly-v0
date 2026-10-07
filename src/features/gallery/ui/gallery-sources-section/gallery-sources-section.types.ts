@@ -10,6 +10,8 @@ export interface GallerySourcesSectionProps {
   readonly workspaceId: string;
   readonly page: GalleryPageView;
   readonly actions: GalleryPageActions;
+  /** A folder linked in *Buat galeri*, synced once on open (Revision OT #3). */
+  readonly initialSyncSourceId?: string;
 }
 
 export interface SourcesHeaderActionsProps {

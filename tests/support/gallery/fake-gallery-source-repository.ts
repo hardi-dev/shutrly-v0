@@ -179,7 +179,7 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
     return (await work(gallery, writer)) as T;
   }
 
-  async findFolderUse(_context: WorkspaceContext, _galleryId: string, folderId: string) {
+  async findFolderUse(_context: WorkspaceContext, _galleryId: string | null, folderId: string) {
     return this.otherProjectFolders.get(folderId) ?? [];
   }
 

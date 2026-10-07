@@ -10,6 +10,7 @@ import {
   archiveGalleryEntry,
   browseGalleryPhotosEntry,
   checkFolderInUseEntry,
+  checkNewGalleryFolderEntry,
   deleteDraftGalleryEntry,
   deleteGallerySourceEntry,
   linkGallerySourceEntry,
@@ -61,6 +62,13 @@ export async function checkFolderInUseAction(
   link: string,
 ): Promise<FolderUseResult> {
   return checkFolderInUseEntry(workspaceId, galleryId, link);
+}
+
+export async function checkNewGalleryFolderAction(
+  workspaceId: string,
+  link: string,
+): Promise<FolderUseResult> {
+  return checkNewGalleryFolderEntry(workspaceId, link);
 }
 
 export async function linkGallerySourceAction(

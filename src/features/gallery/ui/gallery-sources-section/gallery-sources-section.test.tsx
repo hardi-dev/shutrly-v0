@@ -9,7 +9,10 @@ import { showToast } from "@/ui/patterns/toast/toast";
 import { GallerySourcesSection } from "./gallery-sources-section";
 
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
-vi.mock("next/navigation", () => ({ useRouter: () => ({ refresh: vi.fn() }) }));
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ refresh: vi.fn(), replace: vi.fn() }),
+  usePathname: () => "/w/ws-1/projects/p-1/gallery",
+}));
 
 const SOURCE = {
   id: "s-1",
@@ -203,5 +206,24 @@ describe("GallerySourcesSection", () => {
     await waitFor(() => {
       expect(renameSourceAction).toHaveBeenCalledWith("ws-1", "s-1", { label: "Softball" });
     });
+  });
+
+  it("Revision OT #3 syncs the folder linked in Buat galeri once when the page opens", async () => {
+    const syncSourceAction = vi.fn(() =>
+      Promise.resolve({ ok: true as const, status: "SUCCEEDED" as const }),
+    );
+    const actions = fakePageActions({ syncSourceAction });
+    render(
+      <GallerySourcesSection
+        workspaceId="ws-1"
+        page={PAGE}
+        actions={actions}
+        initialSyncSourceId="s-1"
+      />,
+    );
+    await waitFor(() => {
+      expect(syncSourceAction).toHaveBeenCalledWith("ws-1", "s-1");
+    });
+    expect(syncSourceAction).toHaveBeenCalledTimes(1);
   });
 });

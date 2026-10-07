@@ -8,6 +8,8 @@ export interface GalleryPageScreenProps {
   readonly workspaceId: string;
   readonly page: GalleryPageScreenView;
   readonly actions: GalleryPageActions;
+  /** A folder linked in *Buat galeri* (`?sync=`), synced once when the page opens (Revision OT #3). */
+  readonly initialSyncSourceId?: string;
   /** F-10 *Akses klien*: link, password, expiry, *Ganti link* and *Ganti password* (client-access D-20). */
   readonly accessCard?: ReactNode;
   /** F-10 *Pilihan klien*, after *Akses klien* (D-20). */

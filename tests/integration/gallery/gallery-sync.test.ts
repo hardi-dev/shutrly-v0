@@ -253,6 +253,14 @@ describe("gallery sync against Postgres", () => {
       linkValues(seed).link,
     );
     expect(use).toEqual({ ok: true, projectTitles: ["Wisuda Rina"] });
+    // Revision OT #3: *Buat galeri* checks before its gallery exists (no gallery to exclude).
+    const beforeCreate = await findFolderUse(
+      createDrizzleGallerySourceRepository(db),
+      seed.context,
+      null,
+      linkValues(seed).link,
+    );
+    expect(beforeCreate).toEqual({ ok: true, projectTitles: ["Wisuda Rina"] });
   });
 
   it("AC-GAL-012 one failing source doesn't affect another", async () => {

@@ -113,10 +113,10 @@ export interface GallerySourceRepositoryPort {
     galleryId: string,
     work: (gallery: LockedGalleryState, writer: GallerySourceWriter) => Promise<T>,
   ) => Promise<T | "NOT_FOUND">;
-  /** Project titles of other galleries in the workspace with this folder linked (AC-GAL-010). */
+  /** Project titles of other galleries in the workspace with this folder linked; null `galleryId` for a gallery not created yet (AC-GAL-010). */
   readonly findFolderUse: (
     context: WorkspaceContext,
-    galleryId: string,
+    galleryId: string | null,
     folderId: string,
   ) => Promise<readonly string[]>;
   /** The project's gallery id, or null when it has none (BR-GAL-001). */

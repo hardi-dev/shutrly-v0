@@ -15,6 +15,7 @@ export function GalleryPageScreen({
   workspaceId,
   page,
   actions,
+  initialSyncSourceId,
   accessCard,
   selectionCard,
   deliveryCard,
@@ -35,7 +36,12 @@ export function GalleryPageScreen({
       {accessCard}
       {selectionCard}
       {deliveryCard}
-      <GallerySourcesSection workspaceId={workspaceId} page={page} actions={actions} />
+      <GallerySourcesSection
+        workspaceId={workspaceId}
+        page={page}
+        actions={actions}
+        initialSyncSourceId={initialSyncSourceId}
+      />
       <GalleryPhotosSection
         workspaceId={workspaceId}
         page={page}

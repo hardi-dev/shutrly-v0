@@ -14,7 +14,11 @@ import {
 } from "@/app/actions/booking/session-team";
 import { TEAM_QUICK_ADD_ACTIONS } from "@/app/actions/booking/team-quick-add-actions";
 import { completeProjectAction, publishFinalDeliveryAction } from "@/app/actions/gallery/delivery";
-import { createGalleryAction, proposeGalleryPasswordAction } from "@/app/actions/gallery/galleries";
+import {
+  checkNewGalleryFolderAction,
+  createGalleryAction,
+  proposeGalleryPasswordAction,
+} from "@/app/actions/gallery/galleries";
 import { loadAddOnCard } from "@/composition/booking/add-on-flow/add-on-flow";
 import {
   loadProjectDefinitions,
@@ -147,6 +151,7 @@ function galleryCardSlot(
       delivery={views.delivery}
       createAction={createGalleryAction}
       proposeAction={proposeGalleryPasswordAction}
+      checkFolderAction={checkNewGalleryFolderAction}
     />
   );
 }

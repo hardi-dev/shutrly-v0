@@ -34,6 +34,8 @@ export interface GalleryCardView {
   readonly project: GalleryProjectView;
   readonly canCreate: boolean;
   readonly gallery: GallerySummaryView | null;
+  /** Active workspace sources for the optional folder in *Buat galeri*, while one can be created (Revision OT #3). */
+  readonly linkableSources?: readonly LinkableSourceView[];
 }
 
 export interface GallerySourceView {

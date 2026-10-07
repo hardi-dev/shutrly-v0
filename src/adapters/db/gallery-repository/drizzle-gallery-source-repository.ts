@@ -130,7 +130,7 @@ async function listActiveSources(db: DbExecutor, context: WorkspaceContext, gall
 async function findFolderUse(
   db: DbExecutor,
   context: WorkspaceContext,
-  galleryId: string,
+  galleryId: string | null,
   folderId: string,
 ) {
   const rows = await db
@@ -152,7 +152,7 @@ async function findFolderUse(
         eq(gallerySource.workspaceId, context.workspaceId),
         eq(gallerySource.providerFolderId, folderId),
         isNull(gallerySource.removedAt),
-        ne(gallerySource.galleryId, galleryId),
+        galleryId === null ? undefined : ne(gallerySource.galleryId, galleryId),
       ),
     );
   return rows.map((row) => row.title);

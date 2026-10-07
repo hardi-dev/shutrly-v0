@@ -192,6 +192,10 @@ export const GALLERY_COPY = {
   folderInUseBody: (projects: string) =>
     `Folder ini juga tertaut ke galeri ${projects}. Klien kedua proyek bisa melihat foto yang sama.`,
   folderInUseConfirm: "Tetap tambahkan",
+  // Revision OT #3 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
+  createFolderTitle: "Folder Google Drive",
+  createFolderHelper: "Opsional. Bisa juga ditambahkan nanti di halaman galeri.",
+  createFolderInUseConfirm: "Tetap buat galeri",
   linkedTitle: "Folder ditambahkan", // not in Pencil
   previewPosition: (position: number, total: number) => `${String(position)} dari ${String(total)}`,
   previewMissingBadge: "Hilang",

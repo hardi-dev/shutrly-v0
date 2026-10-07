@@ -163,10 +163,12 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
 
     // J-04 end: the Owner opens the picks from the gallery page (A-34) and locks the sent group.
     expect((await page.request.get(`${projectPath}/pilihan`)).status()).toBe(404);
+    // Indonesian route segments were renamed with no redirect (Owner 2026-10-07).
+    expect((await page.request.get(`${projectPath}/gallery/pilihan`)).status()).toBe(404);
     await page.goto(`${projectPath}/gallery`);
     // Sent below the limit, so the card offers Lihat pilihan and the group Kunci pilihan (AC-SEL-011).
     await page.getByRole("link", { name: SELECTION_OWNER_COPY.viewPicks }).first().click();
-    await expect(page).toHaveURL(`${projectPath}/gallery/pilihan`);
+    await expect(page).toHaveURL(`${projectPath}/gallery/picks`);
     const lock = page.getByRole("button", { name: SELECTION_OWNER_COPY.lockPicks }).first();
     await openAndConfirm(page, lock, SELECTION_OWNER_COPY.lockPicks);
     await expect(visibleText(page, SELECTION_OWNER_COPY.status.LOCKED)).toBeVisible();
@@ -176,7 +178,8 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
     const publish = page.getByRole("button", { name: DELIVERY_COPY.publish }).first();
     await openAndConfirm(page, publish, DELIVERY_COPY.publishConfirm);
     await expect(visibleText(page, DELIVERY_COPY.publishedToast)).toBeVisible();
-    await client.goto(`${clientPath}/hasil-akhir`);
+    expect((await client.request.get(`${clientPath}/hasil-akhir`)).status()).toBe(404);
+    await client.goto(`${clientPath}/final`);
     await expectGalleryA11y(client);
     const one = client.waitForEvent("download");
     await client
@@ -207,7 +210,7 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
     // AC-ACC-014 on a phone: Beranda, Semua foto and Hasil akhir.
     const phone = await signIn(browser, clientPath, PHONE);
     try {
-      for (const path of ["", "/foto", "/hasil-akhir"]) {
+      for (const path of ["", "/photos", "/final"]) {
         await phone.client.goto(`${clientPath}${path}`);
         await expectGalleryA11y(phone.client);
       }

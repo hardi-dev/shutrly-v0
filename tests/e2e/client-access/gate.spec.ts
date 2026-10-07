@@ -41,9 +41,9 @@ test("AC-ACC-001 AC-ACC-002 AC-ACC-004 AC-ACC-007 AC-ACC-012 the client gate end
 
     // A-31: the default service has no selection item, so the client lands on Semua foto.
     await enterPassword(visitor, GALLERY_PASSWORD);
-    await expect(visitor).toHaveURL(`${clientPath}/foto`);
+    await expect(visitor).toHaveURL(`${clientPath}/photos`);
     await visitor.reload();
-    await expect(visitor).toHaveURL(`${clientPath}/foto`);
+    await expect(visitor).toHaveURL(`${clientPath}/photos`);
     await expect(
       visitor.getByText(CLIENT_BROWSE_COPY.cardTitle, { exact: true }).first(),
     ).toBeVisible();

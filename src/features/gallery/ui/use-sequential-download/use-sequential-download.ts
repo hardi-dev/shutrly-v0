@@ -10,6 +10,8 @@ import type {
   SequentialDownloadOptions,
 } from "./use-sequential-download.types";
 
+const defaultFetch = (url: string, init: RequestInit): Promise<Response> => fetch(url, init);
+
 const IDLE: DownloadProgress = { phase: "IDLE", done: 0, total: 0, failedIds: [] };
 
 const isAborted = (abort: AbortController): boolean => abort.signal.aborted;
@@ -39,7 +41,8 @@ export function useSequentialDownload(options: SequentialDownloadOptions = {}): 
   const [progress, setProgress] = useState<DownloadProgress>(IDLE);
   const controller = useRef<AbortController | null>(null);
   const lastItems = useRef<readonly DownloadItem[]>([]);
-  const fetchFn = options.fetchFn ?? fetch;
+  // A wrapper, not `fetch` itself: called as `options.fetchFn(...)` the browser throws "Illegal invocation".
+  const fetchFn = options.fetchFn ?? defaultFetch;
   const save = options.save ?? saveBlob;
 
   const run = useCallback(

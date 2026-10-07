@@ -91,4 +91,23 @@ describe("useSequentialDownload (D-18, A-33)", () => {
     expect(hook.result.current.progress.phase).toBe("CANCELLED");
     expect(fetchFn).toHaveBeenCalledTimes(1);
   });
+
+  it("uses the browser's fetch by default without an illegal invocation", async () => {
+    const save = vi.fn();
+    const native = vi.fn(function (this: unknown) {
+      // The real fetch throws when called with an object as `this`.
+      if (this !== undefined && this !== globalThis) throw new TypeError("Illegal invocation");
+      return Promise.resolve(new Response("bytes"));
+    });
+    vi.stubGlobal("fetch", native);
+    const hook = renderHook(() => useSequentialDownload({ save }));
+    act(() => {
+      hook.result.current.start(ITEMS.slice(0, 1));
+    });
+    await waitFor(() => {
+      expect(hook.result.current.progress.phase).toBe("DONE");
+    });
+    expect(hook.result.current.progress.failedIds).toEqual([]);
+    vi.unstubAllGlobals();
+  });
 });

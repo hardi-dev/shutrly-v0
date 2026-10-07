@@ -53,6 +53,7 @@ describe("WaitlistForm", () => {
     expect(await screen.findByText(COPY.successTitle)).toBeInTheDocument();
     expect(action).toHaveBeenCalledWith({ email: "Rina@Example.com", website: "" });
     expect(screen.queryByLabelText(COPY.emailLabel)).not.toBeInTheDocument();
+    expect(screen.getByText(COPY.privacy)).toHaveAttribute("id", "privacy");
   });
 
   it("AC-LND-005 disables the button while the request runs", async () => {

@@ -3,8 +3,10 @@ import type { CSSProperties } from "react";
 // The hero material from landing.pen sW37g / kE8Eu, rebuilt in CSS (design.md › techy + brand
 // mesh): a blueprint grid faded toward the edges, a blue/lime mesh rising behind the product and
 // a light grain. Colours are tokens; their transparency comes from color-mix().
-const BLUE = "var(--color-primitive-blue-500)";
-const LIME = "var(--color-primitive-lime-300)";
+// Brand colours through their semantic tokens; the mesh shades below have no semantic token
+// (landing exception, plan.md › Token mapping).
+const BLUE = "var(--color-semantic-action-primary)";
+const LIME = "var(--color-semantic-accent-highlight)";
 const tint = (color: string, percent: number) =>
   `color-mix(in srgb, ${color} ${String(percent)}%, transparent)`;
 
@@ -74,7 +76,7 @@ export function LandingBackdrop() {
         {NODES.map(([column, row, color, percent]) => (
           <span
             key={`${String(column)}-${String(row)}`}
-            className="absolute size-[5px] -translate-x-1/2 -translate-y-1/2"
+            className="absolute hidden size-[5px] -translate-x-1/2 -translate-y-1/2 md:block"
             style={{ ...at(column, row), background: tint(color, percent) }}
           />
         ))}

@@ -22,7 +22,7 @@ export function LandingHeader() {
           {COPY.wordmark}
         </span>
       </p>
-      <p className="flex items-center gap-(--space-2) rounded-(--radius-full) bg-[color-mix(in_srgb,var(--color-primitive-neutral-0)_70%,transparent)] px-(--space-2-5) py-(--space-1-5) text-(length:--font-size-label) font-medium text-(--color-semantic-text-secondary) outline outline-1 -outline-offset-1 outline-(--color-semantic-border-default) md:px-(--space-3) md:py-(--space-2) md:text-(length:--font-size-body-sm)">
+      <p className="flex items-center gap-(--space-2) rounded-(--radius-full) bg-[color-mix(in_srgb,var(--color-semantic-surface-panel)_70%,transparent)] px-(--space-2-5) py-(--space-1-5) text-(length:--font-size-label) font-medium text-(--color-semantic-text-secondary) outline outline-1 -outline-offset-1 outline-(--color-semantic-border-default) md:px-(--space-3) md:py-(--space-2) md:text-(length:--font-size-body-sm)">
         <span
           aria-hidden="true"
           className="size-[7px] rounded-full bg-(--color-semantic-accent-highlight) md:size-2"

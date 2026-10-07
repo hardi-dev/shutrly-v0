@@ -109,12 +109,13 @@ test("AC-LND-003 the keyboard reaches the field and the button with a visible fo
   }
   await expect(email).toBeFocused();
   expect(focused).not.toContain("website");
-  const ring = await email.evaluate(
-    (element) => getComputedStyle(element.parentElement ?? element).outlineColor,
-  );
-  expect(ring).not.toBe("rgba(0, 0, 0, 0)");
+  // The pill draws the field's ring (focus-within): 2 px in the focus colour while focused.
+  const pill = email.locator("..");
+  expect(await pill.evaluate((element) => getComputedStyle(element).outlineWidth)).toBe("2px");
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("button", { name: /join/i })).toBeFocused();
+  const button = page.getByRole("button", { name: /join/i });
+  await expect(button).toBeFocused();
+  expect(await button.evaluate((element) => getComputedStyle(element).outlineStyle)).toBe("solid");
 });
 
 test("design.md the headline stays on busywork. when the visitor prefers reduced motion", async ({

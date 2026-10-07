@@ -49,14 +49,14 @@ describe("proxy (production gate, then early redirect)", () => {
 
   it("AC-LND-013 still serves the landing page, the waitlist and the metadata files", async () => {
     vi.mocked(isLandingOnly).mockResolvedValue(true);
-    for (const path of ["/", "/api/waitlist", "/robots.txt", "/opengraph-image.jpg"]) {
+    for (const path of ["/", "/api/waitlist", "/robots.txt"]) {
       expect(isLandingPath(path)).toBe(true);
       expect(rewrittenTo(await proxy(request(path)))).toBeNull();
     }
   });
 
-  it("AC-LND-004 never sends robots.txt or the share image to /login", async () => {
-    for (const path of ["/robots.txt", "/opengraph-image.jpg"]) {
+  it("AC-LND-004 never sends robots.txt to /login", async () => {
+    for (const path of ["/robots.txt"]) {
       expect((await proxy(request(path))).headers.get("location")).toBeNull();
     }
   });

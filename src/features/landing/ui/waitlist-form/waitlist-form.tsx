@@ -43,6 +43,9 @@ function WaitlistJoined() {
       <p className="text-(length:--font-size-body) text-(--color-semantic-text-secondary)">
         {COPY.successBody}
       </p>
+      <p id="privacy" className={cn(MUTED_NOTE, "pt-(--space-2)")}>
+        {COPY.privacy}
+      </p>
     </div>
   );
 }
@@ -68,7 +71,7 @@ function WaitlistPill({ id, error, isSubmitting, field }: Readonly<WaitlistPillP
       <button
         type="submit"
         disabled={isSubmitting}
-        className="h-full shrink-0 rounded-(--radius-full) bg-(--color-semantic-action-primary) px-(--space-5) text-(length:--font-size-body) font-semibold text-(--color-semantic-action-on-primary) hover:bg-(--color-semantic-action-primary-hover) disabled:opacity-(--opacity-disabled) md:w-[178px]"
+        className="h-full shrink-0 rounded-(--radius-full) bg-(--color-semantic-action-primary) px-(--space-5) text-(length:--font-size-body) font-semibold text-(--color-semantic-action-on-primary) hover:bg-(--color-semantic-action-primary-hover) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--color-semantic-focus-ring) disabled:opacity-(--opacity-disabled) md:w-[178px]"
       >
         {isSubmitting ? (
           COPY.submitting

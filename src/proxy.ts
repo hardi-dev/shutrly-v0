@@ -9,7 +9,7 @@ import { isLandingOnly } from "@/composition/app-stage/app-stage";
 
 // What production serves during the development phase (ADR-021, AC-LND-013): the landing page,
 // its waitlist endpoint and its metadata files. Static assets never reach the proxy (matcher).
-const LANDING_PATHS = ["/", "/api/waitlist", "/robots.txt", "/opengraph-image.jpg"];
+const LANDING_PATHS = ["/", "/api/waitlist", "/robots.txt"];
 // Not a route, so a rewrite here renders the root not-found page with HTTP 404 (no redirect, A-5).
 const NOT_FOUND_PATH = "/_gated";
 

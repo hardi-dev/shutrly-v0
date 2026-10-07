@@ -1,6 +1,20 @@
-# Landing — desktop design exploration
+# Landing — design
 
-Status: PROVISIONAL · 2026-10-07 · Owner review pending
+Status: APPROVED · 2026-10-08 · Owner
+
+## Approved reference (Owner, 2026-10-07/08)
+| Frame | Use | AC |
+|---|---|---|
+| `sW37g` Desktop · techy + brand mesh gradient | Implementation reference, desktop (export `landing-waitlist-desktop-sW37g`) | AC-LND-002 |
+| `kE8Eu` Mobile · reference-inspired waitlist | Implementation reference, phone (export `landing-waitlist-mobile-kE8Eu`) | AC-LND-002 |
+| `nSYag` Share image · 1200×630 | Open Graph / Twitter image, `public/landing/share.jpg` | AC-LND-004 |
+
+- The Owner chose `sW37g` after the gradient explorations and asked for the hero to reach the top edge; the mobile frame got the same background. Built and committed in F-19 S1–S3.
+- **Light only (A-7):** the page is designed for the light theme. The app has no dark-mode switch (`data-theme="dark"` is opt-in), so the landing never renders dark; if a switch is added, the landing keeps the light theme.
+- **Direct values (Owner, design phase):** the landing uses the brand blue and lime and Plus Jakarta Sans from the design system, with direct values for everything else. In code, the brand colours and text, border and surface colours use semantic tokens; the decorative mesh shades, display type sizes, hero sizes and radii stay raw (plan.md › Token mapping). This is a landing-only exception to `token-usage.md` G2/G4, pending a scoped rule through `/sdv:design-rules`.
+- Form states other than idle (submitting, invalid, failed, rate-limited, joined) aren't drawn; S1 derived them from the pill form.
+
+The sections below are the exploration history.
 
 ## Current direction — selected Repli reference
 

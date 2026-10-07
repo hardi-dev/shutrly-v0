@@ -30,7 +30,7 @@ Status: ACCEPTED (confirmed by Owner 2026-09-25).
 - Authentication: Better Auth with Drizzle adapter; email + password and Google sign-in ([ADR-012](decisions/ADR-012-google-sign-in.md))
 - Storage: none owned; photos stay in Google Drive and load from Google's image host by file ID ([ADR-019](decisions/ADR-019-gallery-media-and-sync-on-free-tier.md))
 - Transactional email (auth only): Resend ([ADR-011](decisions/ADR-011-resend-transactional-email.md))
-- Landing waitlist: Resend Contacts, one audience per environment, no database table ([ADR-022](decisions/ADR-022-waitlist-in-resend-contacts.md))
+- Landing waitlist: Resend Contacts, one segment per environment in the account's audience, no database table ([ADR-022](decisions/ADR-022-waitlist-in-resend-contacts.md))
 - Hosting runtime: Cloudflare Workers via OpenNext adapter (`@opennextjs/cloudflare`) ([ADR-008](decisions/ADR-008-cloudflare-runtime.md)); **staging runs the same build on Netlify (Node)** ([ADR-020](decisions/ADR-020-staging-on-netlify.md)), with the bindings source chosen in `src/composition/request-context`
 
 ## Validation

@@ -2,7 +2,7 @@
 
 Author: Owner (hardi-dev), manual test of F-10
 Source: FEEDBACK
-Status: DRAFT (written 2026-10-07 from the Owner's answers in finding #6; only the Owner sets ACCEPTED)
+Status: ACCEPTED (Owner, 2026-10-07)
 
 ## Problem
 On the client's *Semua foto* page (`/g/{token}/photos`) a client can only look at the proof photos. They can't download any of them, not even the ones they like, while *Hasil akhir* lets them download finished files one by one, several at once, or all. They also have to open each photo in the viewer and use *Pilih untuk…* one at a time to pick it for a group; there is no way to select several photos in the grid and pick them in one go. Evidence: [manual-test-findings.md](../client-access/manual-test-findings.md) #6.
@@ -29,5 +29,5 @@ On the client's *Semua foto* page (`/g/{token}/photos`) a client can only look a
 - Changing the per-group pick screen or the review (*Tinjau*) flow.
 
 ## Open questions
-- Does downloading count as an action the Owner sees (a log, a count)? Not asked yet.
-- Should proof downloads stop once final delivery is published, or stay available? Not asked yet.
+- ~~Does downloading count as an action the Owner sees?~~ No (Owner, 2026-10-07).
+- ~~Should proof downloads stop once final delivery is published?~~ No, they stay available (Owner, 2026-10-07).

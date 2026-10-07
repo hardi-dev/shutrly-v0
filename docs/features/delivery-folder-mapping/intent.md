@@ -2,7 +2,7 @@
 
 Author: Owner (hardi-dev), manual test of F-10
 Source: FEEDBACK
-Status: DRAFT (written 2026-10-07 from the Owner's answers in finding #5; only the Owner sets ACCEPTED)
+Status: ACCEPTED (Owner, 2026-10-07; open questions carry into discovery)
 
 ## Problem
 Finished files are found only in Drive subfolders named exactly `edited` or `print` (BR-GAL-007). Every photographer names folders their own way (`Final`, `Hasil Edit`, `Cetak 4R`…), and anything else is read as a proof, so their finished files never reach *Hasil akhir* and the project can't be delivered without renaming folders on Drive. Evidence: [manual-test-findings.md](../client-access/manual-test-findings.md) #5; the staging example folder has no `edited`/`print` subfolder, so final delivery can't be shown there.
@@ -23,7 +23,7 @@ Finished files are found only in Drive subfolders named exactly `edited` or `pri
 ## Constraints
 - Owner decisions (2026-10-07): option B (per folder); the items offered are the selection items **in this project's package** only; unmapped subfolders stay proofs; **no name is recognised automatically any more**, including `edited` / `print` (every subfolder is mapped by hand).
 - Replaces BR-GAL-007 and touches BR-DEL-001..004; the rules change first (C-011).
-- Already stored photos need a re-sync to be reclassified; galleries that already published final delivery need a transition (see Open questions).
+- Already stored photos need a re-sync to be reclassified. No transition for published galleries: the app is still in development, there is no production data (Owner, 2026-10-07).
 - Drive folder links and IDs stay server-side (C-103); sync stays within the Workers Free budget (ADR-018, ADR-019).
 
 ## Out of scope
@@ -31,7 +31,7 @@ Finished files are found only in Drive subfolders named exactly `edited` or `pri
 - Matching finished files to their proof photos (BR-DEL-004 stays: finished files are independent).
 
 ## Open questions
-- What happens to a gallery whose final delivery is already published when its folder names are no longer recognised?
+- ~~What happens to a gallery whose final delivery is already published?~~ Nothing to migrate: still in development (Owner, 2026-10-07).
 - What happens to a client pick whose photo becomes a finished file after mapping?
 - A package with no selection item has nothing to map to: what does the Owner see?
 - Can one subfolder map to more than one item, or one item to several subfolders?

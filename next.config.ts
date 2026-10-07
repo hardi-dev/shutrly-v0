@@ -1,7 +1,9 @@
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = { devIndicators: false };
+// Server Function calls aren't logged in dev: their arguments carry emails and passwords (C-103,
+// AC-LND-012).
+const nextConfig: NextConfig = { devIndicators: false, logging: { serverFunctions: false } };
 
 export default nextConfig;
 

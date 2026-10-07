@@ -9,7 +9,7 @@ Covers: C-001, C-002, C-106
 
 **Given** an anonymous visitor
 **When** they open `/`
-**Then** the page loads with no redirect and no sign-in. It shows, in Indonesian, the sections listed in spec › *Page content*: what Shutrly is, the studio in one place, galleries and selection, why it differs, a closing call to action and a footer. The waitlist form is visible in the hero. The page shows no price, names no competitor, and doesn't claim direct WhatsApp sending, photo upload or storage in Shutrly, client accounts, a payment gateway or providers other than Google Drive.
+**Then** the page loads with no redirect and no sign-in. It shows, in English, what spec › *Page content* lists: the hero with the rotating headline, the description and the waitlist form, the product mockup and the footer. The page shows no price, names no competitor, and doesn't claim direct WhatsApp sending, photo upload or storage in Shutrly, client accounts, a payment gateway or providers other than Google Drive.
 
 ## AC-LND-002 — Phone and desktop
 Covers: C-008
@@ -30,7 +30,7 @@ Covers: A-6
 
 **Given** the landing page on production
 **When** a crawler or a chat app reads it
-**Then** it finds an Indonesian title, a description and a share preview with the designed image. `robots.txt` lets `/` be indexed and disallows everything else.
+**Then** it finds an English title, a description and a share preview with the designed image. `robots.txt` lets `/` be indexed and disallows everything else.
 
 ## Waitlist
 
@@ -97,7 +97,7 @@ Covers: ADR-021, C-010, A-5
 
 **Given** a production build with `APP_STAGE=production`
 **When** a visitor requests `/login`, `/register`, `/w/<any id>`, `/onboarding/workspace`, `/api/health`, `/api/auth/get-session` or any unknown path, signed in or not
-**Then** each answers 404 with the not-found page in Indonesian, and there's no redirect. `/`, its static assets and the waitlist submission work as in AC-LND-001 and AC-LND-005.
+**Then** each answers 404 with the not-found page in English, and there's no redirect. `/`, its static assets and the waitlist submission work as in AC-LND-001 and AC-LND-005.
 
 ## AC-LND-014 — Staging and development serve everything
 Covers: ADR-021

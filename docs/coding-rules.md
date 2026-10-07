@@ -194,7 +194,7 @@ Keep heavily tested logic (selection limits, invoice totals, lifecycle transitio
 
 ### Copy
 - **(lint)** User-facing copy is never inline in JSX. JSX text and copy props (`label`, `description`, `errorMessage`, `placeholder`, `title`, `alt`, `aria-label`, `message`) take a constant from a sibling `*.copy.ts`. Copy not drawn in Pencil carries `// not in Pencil`. Rule: `local/ui-copy`, applied to `src/**/*.tsx` except tests.
-- Copy follows the workspace language. The MVP UI language is Indonesian (Owner decision, auth CONFLICT-1, 2026-09-27). Frames drawn in another language are translated in `*.copy.ts` and in Pencil before export.
+- Copy follows the workspace language. The MVP UI language is Indonesian (Owner decision, auth CONFLICT-1, 2026-09-27). Frames drawn in another language are translated in `*.copy.ts` and in Pencil before export. Exception: the public landing page (F-19) is English (Owner, 2026-10-07); it is pre-signup marketing, not workspace UI.
 
 ## UI States
 Cover idle, loading, empty, success, validation error, domain/server error, retry, and disabled states where applicable (C-007).

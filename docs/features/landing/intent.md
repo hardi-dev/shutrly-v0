@@ -20,7 +20,7 @@ During the development phase the landing page is the only thing production serve
 - Something that stores waitlist entries. Which store is a planning decision, not part of this intent.
 
 ## Constraints
-- The copy is in Indonesian (id-ID), as assumed under GAP-05, and follows the approved design system (Studio Lime tokens, `docs/design-system/token-usage.md`).
+- The copy is in English (Owner, 2026-10-07, at design; it was Indonesian, id-ID, as assumed under GAP-05) and follows the approved design system (Studio Lime tokens, `docs/design-system/token-usage.md`).
 - The page describes features in product terms that match the product overview and scope (C-001, C-002). It must not claim anything the MVP scope excludes, such as direct WhatsApp sending (C-106) or file uploads to Shutrly.
 - The waitlist collects personal data from people who are not signed in. Input is validated, the endpoint is protected against abuse, and the data stays server-side (C-006).
 - The waitlist form and the page handle their loading, validation, error and success states (C-007) and are accessible (C-008).
@@ -37,7 +37,6 @@ During the development phase the landing page is the only thing production serve
 - Emails to people on the waitlist: confirmations, campaigns or invitations.
 - An admin product for managing the waitlist beyond what the Owner needs to see entries.
 - Blog, documentation, testimonials, custom domains and analytics. Analytics is listed so it gets an explicit decision later.
-- English copy.
 
 ## Open questions
 Answered by the Owner on 2026-10-07:

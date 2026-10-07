@@ -24,13 +24,12 @@ As the Owner, I want interested photographers to leave their email, so that I ca
 | Owner, in Resend (no UI in Shutrly) | list or export every entry; remove one entry by email; remove entries older than 12 months |
 
 ## Page content
-The page is in Indonesian and makes both points from the intent. Sections, order and wording are set in design. The page must at least cover:
-1. **What it is:** a hero that names Shutrly, says it runs the business side of a photography studio, and shows the waitlist form.
-2. **Studio in one place:** one workspace per brand for services and packages, clients, projects with sessions, team, galleries, invoices and WhatsApp messages.
-3. **Galleries and selection:** private galleries from the photographer's own Google Drive, a single link plus password for the client, photo selection within clear package limits, and final files through the same link.
-4. **Why it differs:** photos stay in the photographer's own Drive with no upload, clients need no account, the agreed deal is frozen per project, and the photographer sends messages from their own WhatsApp.
-5. **Closing call to action:** the waitlist form again (or a link back to it).
-6. **Footer:** the wordmark, the privacy note's contact (see Open questions), and the year.
+The page is in **English** and is **one screen** (Owner, 2026-10-07, design.md › selected direction `sW37g` / `kE8Eu`; this replaces the earlier Indonesian, six-section outline). It covers:
+1. **What it is:** a hero that names Shutrly, says what it manages (projects, photo selections and invoices) under the rotating headline "Less busywork. More photography.", and shows the waitlist form with its privacy note.
+2. **The product:** a mockup of the real Projects screen, laptop on desktop and phone on mobile.
+3. **Footer:** the copyright year, *Contact* (the removal contact, see Open questions) and *Privacy* (the privacy note).
+
+The studio-in-one-place, galleries, why-it-differs and closing sections of the first outline are out of this version; the design may bring them back later.
 
 Copy describes the full MVP as available (intent, Owner 2026-10-07). It never claims anything the scope excludes: no direct WhatsApp sending (C-106, BR-MSG-001), no uploading or storing photos in Shutrly, no payment gateway, no client accounts, no providers other than Google Drive. It names no competitor and shows no price.
 
@@ -80,8 +79,8 @@ Copy describes the full MVP as available (intent, Owner 2026-10-07). It never cl
 - **A-2 Rate limit:** at most 5 submissions per IP address in 3 minutes (Netlify's longest window is 180 seconds, ADR-022). Over that, the visitor sees *try again in a moment*.
 - **A-3 Manual retention:** the Owner deletes old contacts in Resend. No scheduled job, in line with the free-tier budget (ADR-018).
 - **A-4 Bot field:** a field hidden from people and assistive technology catches simple bots. There's no CAPTCHA.
-- **A-5 Not found, not redirect:** gated routes on production answer 404 with a plain not-found page in Indonesian. They don't redirect to `/`.
-- **A-6 Search engines:** production lets search engines index `/` only. The page has an Indonesian title, a description and a social-share preview (image from design).
+- **A-5 Not found, not redirect:** gated routes on production answer 404 with a plain not-found page in English. They don't redirect to `/`.
+- **A-6 Search engines:** production lets search engines index `/` only. The page has an English title, a description and a social-share preview (image from design).
 - **A-7 Theme:** the page follows the visitor's light or dark setting, like the app. Design may decide on light only, recorded in design.md (GAP-01).
 
 ## Out of Scope
@@ -89,7 +88,7 @@ Copy describes the full MVP as available (intent, Owner 2026-10-07). It never cl
 - Opening registration or the Owner app on production, and any change to the auth flow.
 - Emails to people on the list: confirmation, campaigns, invitations.
 - A page in the app for the waitlist, and waitlist fields other than email.
-- Blog, docs, testimonials, custom domains, analytics and English copy.
+- Blog, docs, testimonials, custom domains and analytics.
 - A scheduled retention job (A-3).
 
 ## Flagged Concerns

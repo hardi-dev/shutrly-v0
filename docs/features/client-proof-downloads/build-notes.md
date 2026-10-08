@@ -27,3 +27,8 @@ Built 2026-10-07 on `feat/client-access` straight from the accepted [intent](int
 ## Owner change (2026-10-08, manual test, option C)
 - Outside select mode the page shows *Unduh ▾* (*Unduh semua*, *Pilih beberapa*) and, while a group is open, **Pilih foto** as the main action. Both open the same select mode.
 - In select mode the main action is **Masukkan ke…** (was *Pilih untuk…*); *Unduh n foto* is secondary. Without an open group only *Unduh ▾* shows and *Unduh n foto* is the main action.
+
+## Pencil sync (2026-10-08)
+- `client-access.pen`: new frames *Semua foto · Pilih foto*, *Semua foto · mode pilih · Masukkan ke*, *Hasil akhir · tab per item* (Desktop, REVISI 2026-10-08, beside OWNER 7); owner *Hasil akhir* card, publish dialog, Galeri card and photo counts reworded per item and *n proof · m hasil akhir*.
+- `gallery.pen`: new frames *Dialog Hapus folder*, *Menu folder / Edit dan Hapus*, *Dialog Edit folder* (mapping and skeleton), *Dialog Buat galeri, dengan folder* and *folder dipakai proyek lain*; every *edited · print* count and *subfolder edited dan print* line reworded.
+- Not drawn: phone variants of the new frames; the session dialogs' *Tambah anggota* (`team-sessions.pen` could not be opened through the Pencil MCP); the new Hugeicons download and pick icons (Pencil uses its own icon set).

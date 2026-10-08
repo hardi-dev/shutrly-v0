@@ -36,6 +36,7 @@ Reference: `fastpik.id/id/login` (Next.js behind Cloudflare, Singapore edge) 0.1
 
 ## Amendment (Owner, 2026-10-07)
 - Point 4: migrations `0015_pick_mode`, `0016_selection` and `0017_add_on` were applied to `shutrly-staging-us` (and to the old staging branch) before they were merged to `main`, at the Owner's request, so F-10 could be tested on staging. All three are additive, with triggers that keep the `main` code working. Every database (shared non-production, `shutrly-staging-us`, the old staging branch) records `0000`–`0017` with hashes matching the files.
+- Point 4 (Owner, 2026-10-09): migration `0018_folder_map` (F-21, additive: table `gallery_folder_map`, `gallery_photo.project_item_id`, `gallery_source.known_folders`) was applied to `shutrly-staging-us` with drizzle-kit over its direct connection before PR #12 was merged, at the Owner's request. It records `0000`–`0018`, the `0018` hash matching the file. The old staging branch was not migrated.
 - Point 3: `CLIENT_SESSION_KEY` (F-10, ADR-023) was added as a Netlify **secret** for the production, deploy-preview and branch-deploy contexts; Netlify refuses secrets in the `dev` context.
 - Staging and both other databases were seeded with demo data by `pnpm db:seed` (tech-stack › Seed data).
 

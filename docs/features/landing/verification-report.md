@@ -116,3 +116,8 @@ All 18 criteria are covered. 13 pass. AC-LND-011 fails until the contact address
 
 ## Follow-up (2026-10-08, after this report)
 Fixed in code and docs: share-image alt text, button focus ring and a stronger e2e focus check, privacy note kept after joining, phone grid node, brand colours via semantic tokens, design approval and light-only record, spec status, tech-stack wording, `.env.example`. The shared-audience risk was checked against Resend: a repeated create adds the existing contact to the new segment. Details in [plan.md](plan.md) › Follow-up. The three blocking items above are unchanged.
+
+## Follow-up 2 (2026-10-08, after production)
+- AC-LND-011 PASS: `hello@shutrly.space` in the privacy note and the footer *Contact*.
+- AC-LND-015…017 PASS through the Resend API (plan.md › Fixes after the first production deploy).
+- AC-LND-008: moved to an edge-function rate limit; the production result is recorded in plan.md.

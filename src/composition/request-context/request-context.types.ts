@@ -7,3 +7,8 @@ export interface RequestContext {
   requestId: string;
   headers: Headers;
 }
+
+export interface ScopedRequestContext<T> {
+  env: T;
+  requestId: string;
+}

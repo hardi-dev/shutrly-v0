@@ -15,6 +15,9 @@ const CLIENT_MEDIA_HEADERS = [
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  // Server Function calls aren't logged in dev: their arguments carry emails and passwords (C-103,
+  // AC-LND-012).
+  logging: { serverFunctions: false },
   // Later rules win for the same header, so the media rule comes last.
   headers: () =>
     Promise.resolve([

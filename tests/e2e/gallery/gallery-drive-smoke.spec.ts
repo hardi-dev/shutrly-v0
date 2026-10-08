@@ -21,7 +21,11 @@ async function linkAndSync(page: Page): Promise<void> {
   await expect(visibleText(page, GALLERY_COPY.sourceChip.SUCCEEDED)).toBeVisible({
     timeout: 120_000,
   });
-  const counts = await visibleText(page, " edited · ").textContent();
+  const counts = await page
+    .getByText(/^\d+ proof( \(\d+ hilang\))? · \d+ hasil akhir$/)
+    .filter({ visible: true })
+    .first()
+    .textContent();
   const total = (counts ?? "").split(" · ").reduce((sum, part) => sum + Number.parseInt(part), 0);
   expect(total).toBeGreaterThan(0);
   const thumbnail = page.locator("main img").first();

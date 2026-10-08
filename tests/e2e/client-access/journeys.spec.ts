@@ -20,7 +20,8 @@ import {
 } from "../gallery/gallery-e2e";
 import { clientToken, GALLERY_PASSWORD } from "./client-access-e2e";
 
-// Needs the dev server with E2E_FAKE_DRIVE=1: the fixture folder has 4 proofs, 3 edited, 1 print.
+// Needs the dev server with E2E_FAKE_DRIVE=1: the fixture folder has 4 proofs at the root and an
+// *Edited* subfolder (3 files) that the Owner maps to *Foto edit* (F-20).
 test.setTimeout(420_000);
 // The shared setup helpers have short waits that a cold dev server can miss (as gallery-sync.spec).
 test.describe.configure({ retries: 2 });
@@ -53,6 +54,7 @@ async function ownerProject(page: Page): Promise<string> {
   await expect(visibleText(page, GALLERY_COPY.sourceChip.SUCCEEDED)).toBeVisible({
     timeout: 60_000,
   });
+  await mapEditedFolder(page);
   await page.getByRole("button", { name: GALLERY_COPY.publish }).first().click();
   await page
     .getByRole("dialog", { name: GALLERY_COPY.publishDialogTitle })
@@ -60,6 +62,18 @@ async function ownerProject(page: Page): Promise<string> {
     .click();
   await expect(visibleText(page, GALLERY_COPY.publishedTitle)).toBeVisible();
   return projectPath;
+}
+
+/** F-20: *Edit folder* maps the fixture's *Edited* subfolder to the package item *Foto edit*. */
+async function mapEditedFolder(page: Page): Promise<void> {
+  await page.getByRole("button", { name: GALLERY_COPY.sourceMenu("Rina-Wisuda") }).click();
+  await page.getByRole("menuitem", { name: GALLERY_COPY.renameFolder }).click();
+  const edit = page.getByRole("dialog", { name: GALLERY_COPY.renameDialogTitle });
+  await edit.getByRole("button", { name: /Foto edit/ }).click();
+  await page.getByRole("option", { name: "Edited", exact: true }).click();
+  await edit.getByRole("button", { name: GALLERY_COPY.save }).click();
+  await expect(edit).toBeHidden();
+  await expect(visibleText(page, "5 proof · 3 hasil akhir")).toBeVisible();
 }
 
 async function signIn(browser: Browser, clientPath: string, viewport?: typeof PHONE) {

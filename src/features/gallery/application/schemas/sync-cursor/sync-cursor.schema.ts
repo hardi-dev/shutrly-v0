@@ -25,7 +25,7 @@ export const syncCursorSchema = z.object({
   tooDeepCount: z.number().int().min(0),
   foldersDone: z.number().int().min(0),
   listCalls: z.number().int().min(0),
-  // F-20: a run cursor written before this field reads as no folders found yet.
+  // F-21: a run cursor written before this field reads as no folders found yet.
   folders: z
     .array(
       z

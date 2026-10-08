@@ -12,7 +12,7 @@ const valid: SessionCheckInput = {
   nowSeconds: 999,
 };
 
-describe("client session (ADR-021, A-1)", () => {
+describe("client session (ADR-023, A-1)", () => {
   it("AC-ACC-001 accepts a matching, unexpired session", () => {
     expect(isSessionValid(valid)).toBe(true);
   });

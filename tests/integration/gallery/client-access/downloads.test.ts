@@ -112,7 +112,7 @@ describe("finished-file downloads (D-18)", () => {
     expect(download).not.toHaveBeenCalled();
   });
 
-  it("F-19 serves the original of a proof before and after delivery", async () => {
+  it("F-20 serves the original of a proof before and after delivery", async () => {
     for (const delivered of [false, true]) {
       const seeded = await seedDelivered(delivered);
       const { provider } = drive();
@@ -125,7 +125,7 @@ describe("finished-file downloads (D-18)", () => {
     }
   });
 
-  it("F-19 Unduh semua lists every visible proof and no finished file", async () => {
+  it("F-20 Unduh semua lists every visible proof and no finished file", async () => {
     const seeded = await seedDelivered(true);
     const files = await listProofDownloads(
       { reader: createDrizzleClientGalleryReader(db) },

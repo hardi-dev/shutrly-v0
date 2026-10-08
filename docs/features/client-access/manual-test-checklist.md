@@ -2,9 +2,9 @@
 
 Date: 2026-10-07 · Tester: Owner · Branch `feat/client-access` · Environment: `localhost:3000`, dev database, seed from `.env.seed.dev` (owner `owner@shutrly.test`; passwords and the client link are in the file)
 
-Checks the fixes for [manual-test-findings.md](manual-test-findings.md) #1–#7, F-19 (client proof downloads) and F-20 (delivery folder mapping). Mark each row as it is tested: ⬜ not tested · ✅ pass · ❌ fail (write what happened in *Catatan*; a fail becomes a new finding in `manual-test-findings.md`).
+Checks the fixes for [manual-test-findings.md](manual-test-findings.md) #1–#7, F-20 (client proof downloads) and F-21 (delivery folder mapping). Mark each row as it is tested: ⬜ not tested · ✅ pass · ❌ fail (write what happened in *Catatan*; a fail becomes a new finding in `manual-test-findings.md`).
 
-## 1. Pemetaan subfolder (#5, F-20)
+## 1. Pemetaan subfolder (#5, F-21)
 
 Gallery page › *Sumber foto*.
 
@@ -22,7 +22,7 @@ Gallery page › *Sumber foto*.
 | 1.10 | *Edit folder* di proyek yang paketnya tanpa item pilihan foto | Pesan singkat dengan tombol *Buka Isi paket* | ✅ | |
 | 1.11 | *Edit folder* di folder tanpa subfolder | Pesan *Belum ada subfolder…* | ✅ | |
 
-## 2. Hasil akhir per item (#5, F-20) — client
+## 2. Hasil akhir per item (#5, F-21) — client
 
 Client link (`SEED_CLIENT_PATH`, password `SEED_GALLERY_PASSWORD`) › `/final`.
 
@@ -31,7 +31,7 @@ Client link (`SEED_CLIENT_PATH`, password `SEED_GALLERY_PASSWORD`) › `/final`.
 | 2.1 | Buka `/final` | Tab per item paket (nama item), bukan *Edited / Print*; semua item pilihan foto tampil, termasuk yang masih kosong | ✅ | |
 | 2.2 | Buka tiap tab | Fotonya sesuai pemetaan di bagian 1 | ✅ | |
 
-## 3. Download & pilih sekaligus (#6, F-19) — client `/photos`
+## 3. Download & pilih sekaligus (#6, F-20) — client `/photos`
 
 | # | Langkah | Hasil yang diharapkan | Status | Catatan |
 |---|---|---|---|---|
@@ -78,7 +78,7 @@ Workspace without active team members.
 | 7.2 | Owner: `/gallery/picks` | Terbuka | ✅ | Dites Claude (2026-10-08): /gallery/picks dan /gallery/picks/<id> 200 |
 | 7.3 | Klik semua link di halaman-halaman itu | Tidak ada 404 | ✅ | Dites Claude (2026-10-08): 23 link internal dari 10 halaman, semua 200; route lama 404 |
 
-## 8. Kartu Hasil akhir owner per item (F-20)
+## 8. Kartu Hasil akhir owner per item (F-21)
 
 Owner gallery page and project page, gallery with mapped subfolders (*Wisuda Basic*, 179 files in *Foto edit*).
 

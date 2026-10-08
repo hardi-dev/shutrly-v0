@@ -14,12 +14,12 @@ export interface DeliveryGalleryFacts {
   /** Visible, not-missing photos of active sources. */
   readonly editedCount: number;
   readonly printCount: number;
-  /** Finished files per package item, in package order; files without an item count under their kind (F-20). */
+  /** Finished files per package item, in package order; files without an item count under their kind (F-21). */
   readonly items: readonly FinishedItemCount[];
 }
 
 export interface FinishedItemCount {
-  /** The package item id, or the kind (`EDITED` / `PRINT`) for files synced before F-20. */
+  /** The package item id, or the kind (`EDITED` / `PRINT`) for files synced before F-21. */
   readonly id: string;
   readonly name: string;
   readonly count: number;

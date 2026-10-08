@@ -19,7 +19,7 @@ import { projectItem } from "../schema/booking/project";
 import { galleryFolderMap } from "../schema/gallery/folder-map";
 import { gallery, galleryPhoto, gallerySource } from "../schema/gallery/gallery";
 
-/** A source's subfolder mappings with each item's finished kind; items no longer for picks are skipped (F-20). @param db - the executor @param context - verified workspace @param sourceId - the gallery source @returns the mappings */
+/** A source's subfolder mappings with each item's finished kind; items no longer for picks are skipped (F-21). @param db - the executor @param context - verified workspace @param sourceId - the gallery source @returns the mappings */
 export async function selectFolderMappings(
   db: DbExecutor,
   context: WorkspaceContext,
@@ -52,7 +52,7 @@ export async function selectFolderMappings(
   );
 }
 
-/** The folder paths of a source that hold present photos, by name; the root is left out (F-20). @param db - the executor @param context - verified workspace @param sourceId - the gallery source @returns the paths */
+/** The folder paths of a source that hold present photos, by name; the root is left out (F-21). @param db - the executor @param context - verified workspace @param sourceId - the gallery source @returns the paths */
 export async function selectFolderPaths(
   db: DbExecutor,
   context: WorkspaceContext,
@@ -73,7 +73,7 @@ export async function selectFolderPaths(
   return rows.map((row) => row.path);
 }
 
-/** Stores the subfolders a finished run found, empty ones too, and returns those not told to the Owner yet (F-20, Owner 2026-10-07: a photographer prepares folders before uploading). @param db - the executor @param context - verified workspace @param sourceId - the gallery source @param folders - every subfolder path the run found @returns the new paths */
+/** Stores the subfolders a finished run found, empty ones too, and returns those not told to the Owner yet (F-21, Owner 2026-10-07: a photographer prepares folders before uploading). @param db - the executor @param context - verified workspace @param sourceId - the gallery source @param folders - every subfolder path the run found @returns the new paths */
 export async function takeNewFolders(
   db: DbExecutor,
   context: WorkspaceContext,
@@ -96,7 +96,7 @@ export async function takeNewFolders(
   return fresh;
 }
 
-/** The project's selection items a subfolder can deliver for, in package order (F-20). */
+/** The project's selection items a subfolder can deliver for, in package order (F-21). */
 async function selectMappableItems(
   db: DbExecutor,
   context: WorkspaceContext,
@@ -138,7 +138,7 @@ function mergeFolders(known: readonly string[], withPhotos: readonly string[]): 
   return [...new Set([...known, ...withPhotos])].sort((a, b) => a.localeCompare(b));
 }
 
-/** The folder *Edit*'s mapping view: the source's gallery, its folders, the project's selection items and the saved mapping (F-20). @param db - the executor @param context - verified workspace @param sourceId - the gallery source @returns the record, or null for a missing or removed source */
+/** The folder *Edit*'s mapping view: the source's gallery, its folders, the project's selection items and the saved mapping (F-21). @param db - the executor @param context - verified workspace @param sourceId - the gallery source @returns the record, or null for a missing or removed source */
 export async function selectFolderMapping(
   db: DbExecutor,
   context: WorkspaceContext,
@@ -176,7 +176,7 @@ export async function selectFolderMapping(
   };
 }
 
-/** Replaces a source's mappings in the caller's transaction (F-20). @param tx - the transaction @param context - verified workspace @param sourceId - the gallery source @param entries - the new mappings */
+/** Replaces a source's mappings in the caller's transaction (F-21). @param tx - the transaction @param context - verified workspace @param sourceId - the gallery source @param entries - the new mappings */
 export async function replaceFolderMappings(
   tx: DbExecutor,
   context: WorkspaceContext,
@@ -202,7 +202,7 @@ export async function replaceFolderMappings(
   );
 }
 
-/** Re-applies the mappings to every stored photo of a source, one update per folder path, writing only rows that change (F-20). @param tx - the transaction @param context - verified workspace @param sourceId - the gallery source @param mappings - the source's mappings @returns how many photos changed */
+/** Re-applies the mappings to every stored photo of a source, one update per folder path, writing only rows that change (F-21). @param tx - the transaction @param context - verified workspace @param sourceId - the gallery source @param mappings - the source's mappings @returns how many photos changed */
 export async function reclassifySource(
   tx: DbExecutor,
   context: WorkspaceContext,

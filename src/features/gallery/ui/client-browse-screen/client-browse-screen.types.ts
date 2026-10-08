@@ -27,7 +27,7 @@ export interface ClientBrowseScreenProps {
   /** The groups and picks behind the viewer's *Pilih untuk…*; no groups keeps it read-only (A-31). */
   readonly targets: PickTargets;
   readonly pickActions: ViewerPickActions;
-  /** *Unduh* and the bulk *Pilih untuk…* (F-19). */
+  /** *Unduh* and the bulk *Pilih untuk…* (F-20). */
   readonly photosActions: PhotosActions;
 }
 
@@ -36,10 +36,10 @@ export interface BrowseViewerProps {
   readonly index: number | null;
   readonly onIndexChange: (index: number) => void;
   readonly onClose: () => void;
-  /** The groups and picks, shared with the page's bulk *Pilih untuk…* (F-19). */
+  /** The groups and picks, shared with the page's bulk *Pilih untuk…* (F-20). */
   readonly handle: PickTargetsHandle;
   readonly pickActions: ViewerPickActions;
-  /** *Unduh foto* in the viewer (F-19). */
+  /** *Unduh foto* in the viewer (F-20). */
   readonly downloadUrlOf: (photoId: string) => string;
 }
 

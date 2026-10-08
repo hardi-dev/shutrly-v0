@@ -8,7 +8,7 @@ export interface UseRenameFolderFormInput {
   readonly renameSourceAction: GalleryPageActions["renameSourceAction"];
   readonly folderMappingAction: GalleryPageActions["folderMappingAction"];
   readonly setFolderMappingAction: GalleryPageActions["setFolderMappingAction"];
-  /** The project page, for *Isi paket* when the package has no selection item (F-20). */
+  /** The project page, for *Isi paket* when the package has no selection item (F-21). */
   readonly packageHref: string;
   readonly onClose: () => void;
 }

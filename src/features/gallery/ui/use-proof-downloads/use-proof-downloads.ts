@@ -47,7 +47,7 @@ function useSelection() {
   return { isSelecting, selected, toggle, startSelecting, stopSelecting };
 }
 
-/** *Unduh semua*: lists every proof, then waits for the confirm (F-19). */
+/** *Unduh semua*: lists every proof, then waits for the confirm (F-20). */
 function useDownloadAll(input: Readonly<ProofDownloadsInput>) {
   const router = useRouter();
   const [pendingAll, setPendingAll] = useState<readonly DownloadItem[] | null>(null);
@@ -67,7 +67,7 @@ function useDownloadAll(input: Readonly<ProofDownloadsInput>) {
   return { pendingAll, setPendingAll, isListing, ask };
 }
 
-/** *Pilih untuk…* on the selection; it ends select mode and re-reads the groups once picked (F-19). */
+/** *Pilih untuk…* on the selection; it ends select mode and re-reads the groups once picked (F-20). */
 function usePickSelected(
   input: Readonly<ProofDownloadsInput>,
   selection: ReturnType<typeof useSelection>,
@@ -93,7 +93,7 @@ function usePickSelected(
 }
 
 /**
- * *Semua foto* downloads and bulk picks (F-19, Owner 2026-10-07): one photo, the selected ones or
+ * *Semua foto* downloads and bulk picks (F-20, Owner 2026-10-07): one photo, the selected ones or
  * every proof as originals, one by one with progress; and *Pilih untuk…* on the selection, refused
  * as a whole past the group's limit.
  * @param input - the token, the actions and the reload after a pick

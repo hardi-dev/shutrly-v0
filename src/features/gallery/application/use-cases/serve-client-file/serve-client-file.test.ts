@@ -68,7 +68,7 @@ describe("serveClientFile (D-18)", () => {
     expect(download).not.toHaveBeenCalled();
   });
 
-  it("F-19 streams the original of a visible proof, before and after final delivery", async () => {
+  it("F-20 streams the original of a visible proof, before and after final delivery", async () => {
     const proof = { ...EDITED, kind: "PROOF" as const, fileName: "IMG_001.jpg" };
     for (const finalDeliveryPublished of [false, true]) {
       const { value } = deps(proof);

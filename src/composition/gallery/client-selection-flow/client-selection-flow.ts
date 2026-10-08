@@ -85,7 +85,7 @@ export async function setPickEntry(
   return result.kind === "SIGNED_IN" ? result.value : SIGNED_OUT;
 }
 
-/** Picks several proofs for one group at once for the signed-in client (F-19). @param rawToken - the untrusted route token @param input - untrusted `{ groupId, photoIds }` @returns the result, or SIGNED_OUT */
+/** Picks several proofs for one group at once for the signed-in client (F-20). @param rawToken - the untrusted route token @param input - untrusted `{ groupId, photoIds }` @returns the result, or SIGNED_OUT */
 export async function setPicksEntry(
   rawToken: string,
   input: unknown,

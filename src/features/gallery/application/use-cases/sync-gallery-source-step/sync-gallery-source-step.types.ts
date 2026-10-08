@@ -24,7 +24,7 @@ export type SyncStepOutcome =
   | {
       readonly ok: true;
       readonly status: "SUCCEEDED";
-      /** Folder paths found for the first time, to map if they hold finished files (F-20). */
+      /** Folder paths found for the first time, to map if they hold finished files (F-21). */
       readonly newFolders?: readonly string[];
     }
   | { readonly ok: true; readonly status: "FAILED"; readonly errorCode: SyncFailureCode }

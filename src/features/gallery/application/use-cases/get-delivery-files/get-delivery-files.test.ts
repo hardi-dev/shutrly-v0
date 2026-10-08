@@ -58,7 +58,7 @@ function deps() {
 }
 
 describe("getDeliveryFiles (klien-8)", () => {
-  it("AC-DEL-003 F-20 groups the files per package item, empty items included, with their download URL", async () => {
+  it("AC-DEL-003 F-21 groups the files per package item, empty items included, with their download URL", async () => {
     const { value } = deps();
     const files = await getDeliveryFiles(value, CLIENT);
     expect(files?.groups.map((group) => [group.id, group.name, group.files.length])).toEqual([

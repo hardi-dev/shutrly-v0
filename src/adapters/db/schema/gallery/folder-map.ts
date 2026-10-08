@@ -10,7 +10,7 @@ import {
 import { projectItem } from "../booking/project";
 import { gallerySource } from "./gallery";
 
-// F-20 delivery folder mapping (Owner 2026-10-07): one subfolder of a linked Drive folder → one
+// F-21 delivery folder mapping (Owner 2026-10-07): one subfolder of a linked Drive folder → one
 // selection item of the project's package; an item may have several subfolders. A subfolder's
 // photos are finished files for that item; unmapped folders stay proofs.
 export const galleryFolderMap = pgTable(

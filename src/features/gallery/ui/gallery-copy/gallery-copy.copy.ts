@@ -27,7 +27,7 @@ export const GALLERY_COPY = {
   copyFailedBody: "Salin password secara manual.",
   sourceCount: (count: number) => `${String(count)} folder`,
   noSources: "Belum ada folder",
-  // F-20: finished files belong to package items, so one count, not Edited / Print
+  // F-21: finished files belong to package items, so one count, not Edited / Print
   photoCounts: (proof: number, finished: number) =>
     `${String(proof)} proof · ${String(finished)} hasil akhir`,
   missingSuffix: (count: number) => ` (${String(count)} hilang)`,
@@ -244,7 +244,7 @@ export const GALLERY_COPY = {
   renameDialogTitle: "Edit folder",
   renameDialogDescription: "Nama folder dan subfolder yang berisi hasil akhir.",
   renamedTitle: "Folder disimpan",
-  // F-20 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
+  // F-21 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
   mappingTitle: "Subfolder hasil akhir",
   mappingHelper:
     "Pilih subfolder Drive untuk tiap item paket. Subfolder yang tidak dipilih tetap foto proof.",

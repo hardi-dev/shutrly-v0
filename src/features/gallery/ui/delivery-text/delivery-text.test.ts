@@ -20,7 +20,7 @@ const CARD: DeliveryCardView = {
 };
 
 describe("delivery text (hasilakhirowner-kartu)", () => {
-  it("B F-20: one ready row per package item with files", () => {
+  it("B F-21: one ready row per package item with files", () => {
     expect(deliveryRows(CARD).map((row) => [row.title, row.meta, row.chip.label])).toEqual([
       ["Foto edit", "24 file", "Siap"],
       ["Foto cetak", "6 file", "Siap"],

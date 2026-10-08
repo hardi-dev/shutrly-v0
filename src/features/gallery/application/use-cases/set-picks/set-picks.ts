@@ -47,7 +47,7 @@ async function applyPicks(
 }
 
 /**
- * Picks several proofs for one group at once under the group lock (F-19): each new pick is × 1
+ * Picks several proofs for one group at once under the group lock (F-20): each new pick is × 1
  * (`QUANTITY` groups too), photos already picked are skipped, and nothing is written when one photo
  * can't be picked or the new picks pass the limit (BR-SEL-003…006, C-005).
  * @param deps - selection repository and counters

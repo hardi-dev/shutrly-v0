@@ -7,7 +7,7 @@ export const DELIVERY_COPY = {
   noFilesNote:
     "Belum ada hasil akhir yang tersinkron. Buat subfolder hasil akhir di Drive, petakan ke item paket lewat Edit folder, lalu sinkronkan galeri.",
   inactiveNote: "Galeri harus dipublikasikan lebih dulu supaya klien bisa membuka hasil akhir.",
-  // F-20: one row and one phrase per package item
+  // F-21: one row and one phrase per package item
   itemCount: (count: number) => `${String(count)} file`,
   itemFiles: (count: number, name: string) => `${String(count)} file ${name}`,
   and: " dan ",

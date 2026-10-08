@@ -8,7 +8,7 @@ export const DELIVERY_SCREEN_COPY = {
   readyTitle: "Hasil akhir sudah tersedia",
   readyBody: "Unduh satu per satu, beberapa, atau semuanya sekaligus.",
   cardTitle: "Foto hasil akhir",
-  // F-20: one tab per package item instead of Edited / Print.
+  // F-21: one tab per package item instead of Edited / Print.
   groupMeta: (count: number, name: string) => `${String(count)} file · ${name}`,
   groupTab: (name: string, count: number) => `${name} · ${String(count)}`,
   editedMeta: (count: number) => `${String(count)} foto Edited`,

@@ -50,7 +50,7 @@ beforeEach(() => {
 });
 
 describe("DeliveryScreen (klien-8)", () => {
-  it("AC-DEL-003 F-20 shows the first item with a download link on every tile", () => {
+  it("AC-DEL-003 F-21 shows the first item with a download link on every tile", () => {
     render(<DeliveryScreen gate={GATE} token="T1" files={FILES} />);
     expect(screen.getByText("Hasil akhir sudah tersedia")).toBeTruthy();
     expect(screen.getByText("2 file · Foto edit")).toBeTruthy();
@@ -60,7 +60,7 @@ describe("DeliveryScreen (klien-8)", () => {
     );
   });
 
-  it("F-20 shows a tab for an empty item and opens on the first item with files", () => {
+  it("F-21 shows a tab for an empty item and opens on the first item with files", () => {
     const files: DeliveryFilesView = {
       groups: [
         { id: "i-edit", name: "Foto edit", files: [] },
@@ -118,7 +118,7 @@ describe("DeliveryScreen (klien-8)", () => {
     expect(download.current.retry).toHaveBeenCalled();
   });
 
-  it("AC-DEL-004 F-20 another item's tab shows its files", async () => {
+  it("AC-DEL-004 F-21 another item's tab shows its files", async () => {
     render(<DeliveryScreen gate={GATE} token="T1" files={FILES} />);
     await userEvent.setup().click(screen.getByRole("radio", { name: "Cetak 4R · 1" }));
     expect(screen.getByText("1 file · Cetak 4R")).toBeTruthy();

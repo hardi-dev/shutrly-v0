@@ -21,7 +21,7 @@ import {
 import { clientToken, GALLERY_PASSWORD } from "./client-access-e2e";
 
 // Needs the dev server with E2E_FAKE_DRIVE=1: the fixture folder has 4 proofs at the root and an
-// *Edited* subfolder (3 files) that the Owner maps to *Foto edit* (F-20).
+// *Edited* subfolder (3 files) that the Owner maps to *Foto edit* (F-21).
 test.setTimeout(420_000);
 // The shared setup helpers have short waits that a cold dev server can miss (as gallery-sync.spec).
 test.describe.configure({ retries: 2 });
@@ -64,7 +64,7 @@ async function ownerProject(page: Page): Promise<string> {
   return projectPath;
 }
 
-/** F-20: *Edit folder* maps the fixture's *Edited* subfolder to the package item *Foto edit*. */
+/** F-21: *Edit folder* maps the fixture's *Edited* subfolder to the package item *Foto edit*. */
 async function mapEditedFolder(page: Page): Promise<void> {
   await page.getByRole("button", { name: GALLERY_COPY.sourceMenu("Rina-Wisuda") }).click();
   await page.getByRole("menuitem", { name: GALLERY_COPY.renameFolder }).click();

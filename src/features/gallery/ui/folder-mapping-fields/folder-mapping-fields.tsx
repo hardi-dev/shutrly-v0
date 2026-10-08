@@ -78,7 +78,7 @@ function Notice({ mapping, packageHref }: Readonly<FolderMappingFieldsProps>) {
   return null;
 }
 
-/** *Subfolder hasil akhir* in the folder *Edit*: each package item picks its subfolder, none by default; unpicked subfolders stay proofs (F-20, Owner 2026-10-07). @param props - the mapping state and the project page link @returns the fields */
+/** *Subfolder hasil akhir* in the folder *Edit*: each package item picks its subfolder, none by default; unpicked subfolders stay proofs (F-21, Owner 2026-10-07). @param props - the mapping state and the project page link @returns the fields */
 export function FolderMappingFields({ mapping, packageHref }: Readonly<FolderMappingFieldsProps>) {
   const items = mapping.view !== null && mapping.view.folders.length > 0 ? mapping.view.items : [];
   return (

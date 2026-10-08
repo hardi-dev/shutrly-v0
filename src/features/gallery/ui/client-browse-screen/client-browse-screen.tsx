@@ -93,7 +93,7 @@ function baseHeader(
   };
 }
 
-// F-19: *Unduh ▾* and *Pilih foto* in the header, or the select-mode title and actions.
+// F-20: *Unduh ▾* and *Pilih foto* in the header, or the select-mode title and actions.
 function browseHeader(
   base: ClientPageHeader,
   photos: ProofDownloads,
@@ -143,7 +143,7 @@ function BrowseCard({ browse, onOpenPhoto, downloads }: Readonly<BrowseCardProps
 }
 
 // Phones: the Mobile Header has no action slot, so the page actions open the content (as *Hasil akhir*);
-// then the download progress or failure (F-19).
+// then the download progress or failure (F-20).
 function PhotosTop({ photos, groups }: Readonly<PhotosGroupsProps>) {
   const isMobile = useMobileViewport();
   let phone = null;

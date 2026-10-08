@@ -24,7 +24,7 @@ import type {
 const SHEET_HANDOFF_DELAY_MS = 400;
 const ICONS = { COUNT: "images", QUANTITY: "printer" } as const;
 
-/** The page actions outside select mode (F-19, Owner 2026-10-08, option C): *Unduh ▾* and, while a group
+/** The page actions outside select mode (F-20, Owner 2026-10-08, option C): *Unduh ▾* and, while a group
  * can still be picked for, *Pilih foto* as the main action; both open the same select mode. @param props -
  * the proof downloads state and the groups @returns the actions */
 export function PhotosHeaderActions({ photos, groups }: Readonly<PhotosGroupsProps>) {
@@ -47,7 +47,7 @@ export function PhotosHeaderActions({ photos, groups }: Readonly<PhotosGroupsPro
   );
 }
 
-/** *Unduh ▾*: *Unduh semua* and *Pilih beberapa* (F-19, as *Hasil akhir* A-33). */
+/** *Unduh ▾*: *Unduh semua* and *Pilih beberapa* (F-20, as *Hasil akhir* A-33). */
 function PhotosDownloadMenu({ photos, isSecondary }: Readonly<DownloadMenuProps>) {
   const isMobile = useMobileViewport();
   const isBusy = photos.download.progress.phase === "RUNNING" || photos.isListing;
@@ -130,7 +130,7 @@ function GroupPickItem({ group, photos }: Readonly<GroupPickItemProps>) {
   );
 }
 
-/** *Pilih untuk…* on the selection: one entry per group with its usage; closed groups disabled (F-19). */
+/** *Pilih untuk…* on the selection: one entry per group with its usage; closed groups disabled (F-20). */
 function BulkPickMenu({ photos, groups }: Readonly<PhotosGroupsProps>) {
   const isDisabled = photos.selectedCount === 0 || photos.isPicking;
   return (
@@ -152,7 +152,7 @@ function BulkPickMenu({ photos, groups }: Readonly<PhotosGroupsProps>) {
   );
 }
 
-/** Select mode: *Batal*, *Unduh n foto* and, with groups, *Masukkan ke…* as the main action (F-19, Owner 2026-10-07, option C 2026-10-08). */
+/** Select mode: *Batal*, *Unduh n foto* and, with groups, *Masukkan ke…* as the main action (F-20, Owner 2026-10-07, option C 2026-10-08). */
 export function SelectingActions({ photos, groups }: Readonly<PhotosGroupsProps>) {
   const count = photos.selectedCount;
   return (

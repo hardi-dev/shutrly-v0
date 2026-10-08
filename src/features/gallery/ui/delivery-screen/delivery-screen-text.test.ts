@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 
 import { failedBody, groupMeta, viewerMeta } from "./delivery-screen-text";
 
-describe("Hasil akhir text (klien-8, F-20)", () => {
-  it("F-20 names the open item's files", () => {
+describe("Hasil akhir text (klien-8, F-21)", () => {
+  it("F-21 names the open item's files", () => {
     expect(groupMeta("Foto edit", 24)).toBe("24 file · Foto edit");
   });
 

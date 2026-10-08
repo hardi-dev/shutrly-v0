@@ -140,7 +140,7 @@ function photosOf(sourceId: string) {
 }
 
 describe("gallery sync against Postgres", () => {
-  it("F-20 without a mapping a sync makes only proofs; mapping then reclassifies at once and names no folder twice", async () => {
+  it("F-21 without a mapping a sync makes only proofs; mapping then reclassifies at once and names no folder twice", async () => {
     const seed = await seedGalleryWorkspace(db);
     const galleryId = await withGallery(seed);
     const provider = FakeDriveProvider.withFixture();

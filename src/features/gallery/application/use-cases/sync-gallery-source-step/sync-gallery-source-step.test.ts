@@ -63,7 +63,7 @@ describe("syncGallerySourceStep", () => {
     expect(sources.sources[0]).toMatchObject({ folderName: "Rina-Wisuda", label: null });
   });
 
-  it("F-20 a re-sync names no folder twice, and without a mapping every photo is a proof", async () => {
+  it("F-21 a re-sync names no folder twice, and without a mapping every photo is a proof", async () => {
     const { deps, sources } = await linked();
     sources.defaultMappings = [];
     await syncToEnd(deps);
@@ -71,7 +71,7 @@ describe("syncGallerySourceStep", () => {
     expect(new Set(sources.photos.map((photo) => photo.kind))).toEqual(new Set(["PROOF"]));
   });
 
-  it("F-20 names an empty subfolder too, so a prepared folder can be mapped before upload", async () => {
+  it("F-21 names an empty subfolder too, so a prepared folder can be mapped before upload", async () => {
     const { deps, sources, provider } = await linked();
     provider.tree.set(RINA_FOLDER_ID, [folderEntry("empty", "Hasil Edit")]);
     expect((await syncToEnd(deps)).last).toEqual({

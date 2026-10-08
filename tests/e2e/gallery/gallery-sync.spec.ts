@@ -37,7 +37,7 @@ test("AC-GAL-005 AC-GAL-006 AC-GAL-008 AC-GAL-032 links a folder, syncs it step 
   await expect(visibleText(page, GALLERY_COPY.sourceChip.SUCCEEDED)).toBeVisible({
     timeout: 60_000,
   });
-  // F-20: no folder is recognised by name, so the whole unmapped fixture is proofs.
+  // F-21: no folder is recognised by name, so the whole unmapped fixture is proofs.
   await expect(visibleText(page, "8 proof · 0 hasil akhir")).toBeVisible();
   // AC-GAL-015: with the fixture Drive the tiles use the Owner media route, never a Drive URL.
   const thumbnail = page.locator("main img").first();

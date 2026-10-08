@@ -113,7 +113,7 @@ export const gallerySource = pgTable(
     ignoredCount: integer("ignored_count").notNull().default(0),
     missingCount: integer("missing_count").notNull().default(0),
     tooDeepCount: integer("too_deep_count").notNull().default(0),
-    // F-20: the folder paths the Owner has already been told about; a sync names the new ones.
+    // F-21: the folder paths the Owner has already been told about; a sync names the new ones.
     knownFolders: jsonb("known_folders").$type<string[]>().notNull().default([]),
     createdBy: text("created_by").references(() => user.id, { onDelete: "set null" }),
     ...auditColumns(),
@@ -163,7 +163,7 @@ export const galleryPhoto = pgTable(
     kind: text("kind").notNull(),
     folderPath: text("folder_path").notNull().default(""),
     browsePath: text("browse_path").notNull().default(""),
-    // F-20: the package item a mapped subfolder delivers this finished file for; null for proofs.
+    // F-21: the package item a mapped subfolder delivers this finished file for; null for proofs.
     projectItemId: uuid("project_item_id"),
     missingAt: timestamp("missing_at", { withTimezone: true }),
     ...auditColumns(),

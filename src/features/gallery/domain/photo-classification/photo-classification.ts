@@ -25,7 +25,7 @@ export function isImageMime(mimeType: string): boolean {
   return mimeType.toLowerCase().startsWith("image/");
 }
 
-/** The kind a mapped subfolder delivers: *Foto edit*-like items (COUNT) are EDITED, print items (QUANTITY) are PRINT (F-20). @param pickMode - the item's pick mode @returns the finished kind */
+/** The kind a mapped subfolder delivers: *Foto edit*-like items (COUNT) are EDITED, print items (QUANTITY) are PRINT (F-21). @param pickMode - the item's pick mode @returns the finished kind */
 export function kindForPickMode(pickMode: PickMode): FinishedKind {
   return pickMode === "COUNT" ? "EDITED" : "PRINT";
 }
@@ -34,7 +34,7 @@ function covers(mapping: FolderMapping, folderPath: string): boolean {
   return folderPath === mapping.path || folderPath.startsWith(`${mapping.path}/`);
 }
 
-/** Decides a photo's kind from the Owner's subfolder mappings (F-20, replaces BR-GAL-007's folder names): the longest mapped folder that holds it makes it a finished file for that item, with the mapped folder's own level folded out of the browse path; anything else is a PROOF. @param segments - folder names from the source root down to the file's folder @param mappings - the source's subfolder mappings @returns the kind, the browse path and the item */
+/** Decides a photo's kind from the Owner's subfolder mappings (F-21, replaces BR-GAL-007's folder names): the longest mapped folder that holds it makes it a finished file for that item, with the mapped folder's own level folded out of the browse path; anything else is a PROOF. @param segments - folder names from the source root down to the file's folder @param mappings - the source's subfolder mappings @returns the kind, the browse path and the item */
 export function classifyPhoto(
   segments: readonly string[],
   mappings: readonly FolderMapping[] = [],

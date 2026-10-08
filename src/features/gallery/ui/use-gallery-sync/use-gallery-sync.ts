@@ -50,7 +50,7 @@ function toastFor(outcomes: readonly [SyncTarget, SyncRunOutcome][]): void {
   });
 }
 
-/** F-20: names the subfolders a sync found for the first time, with *Petakan* to open the mapping. */
+/** F-21: names the subfolders a sync found for the first time, with *Petakan* to open the mapping. */
 function newFoldersToast(
   outcomes: readonly [SyncTarget, SyncRunOutcome][],
   onMapFolders: UseGallerySyncInput["onMapFolders"],

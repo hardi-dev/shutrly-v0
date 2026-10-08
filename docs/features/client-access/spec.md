@@ -123,7 +123,7 @@ A client who has the project link and the current gallery password can open the 
 - Project cancellation (F-07); the outstanding-balance warning on completion (F-14, A-19).
 - Client requests for add-ons inside the app (A-4), notifications to the Owner, comments on photos other than the per-pick note (A-32), and favourites.
 - Re-opening a group by any means other than an approved add-on, and re-opening a `LOCKED` group (BR-SEL-005).
-- ~~Proof downloads; downloads of photos that aren't `EDITED` or `PRINT`.~~ Moved in scope by F-19 *client-proof-downloads* (Owner 2026-10-07, BR-DEL-004).
+- ~~Proof downloads; downloads of photos that aren't `EDITED` or `PRINT`.~~ Moved in scope by F-20 *client-proof-downloads* (Owner 2026-10-07, BR-DEL-004).
 - Gallery slug (BR-GAL-008); client accounts; providers other than Google Drive.
 
 ## Assumptions (low-risk, reversible — confirm or change anytime)

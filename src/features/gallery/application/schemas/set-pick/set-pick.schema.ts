@@ -16,7 +16,7 @@ export const setPickNoteSchema = z.object({
   note: z.string().max(2000),
 });
 
-// F-19: *Pilih untuk…* on several photos of *Semua foto* at once; each new pick is × 1.
+// F-20: *Pilih untuk…* on several photos of *Semua foto* at once; each new pick is × 1.
 export const setPicksSchema = z.object({
   groupId: z.uuid(),
   photoIds: z.array(z.uuid()).min(1).max(BULK_PICK_MAX),

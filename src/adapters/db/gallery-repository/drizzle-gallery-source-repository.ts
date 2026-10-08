@@ -50,7 +50,7 @@ function sourceWriter(
     replaceFolderMappings: (sourceId, entries) =>
       replaceFolderMappings(tx, context, sourceId, entries),
     async reclassifySource(sourceId, mappings, now) {
-      // F-20: changed kinds change what the client sees and the folder row's counts.
+      // F-21: changed kinds change what the client sees and the folder row's counts.
       if ((await reclassifySource(tx, context, sourceId, mappings)) === 0) return;
       const counts = await presentCounts(tx, context, sourceId);
       await tx
@@ -122,7 +122,7 @@ async function findSyncTarget(
   };
 }
 
-// F-20: the step reads the mappings once; commitStep's re-check doesn't need them.
+// F-21: the step reads the mappings once; commitStep's re-check doesn't need them.
 async function findSyncTargetWithMappings(
   db: DbExecutor,
   context: WorkspaceContext,

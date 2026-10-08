@@ -7,7 +7,7 @@ import type { FolderMappingView } from "@/features/gallery/application/use-cases
 import type { FolderMappingState, UseFolderMappingInput } from "./use-folder-mapping.types";
 
 /**
- * The folder *Edit*'s subfolder mapping (F-20), one subfolder per package item (Owner 2026-10-07): loads the subfolders, the package's selection items
+ * The folder *Edit*'s subfolder mapping (F-21), one subfolder per package item (Owner 2026-10-07): loads the subfolders, the package's selection items
  * and the saved mapping when the dialog opens, and keeps the Owner's choices until saved.
  * @param input - ids and the load action
  * @returns the view, the choices and what to save

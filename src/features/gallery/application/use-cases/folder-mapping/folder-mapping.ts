@@ -17,7 +17,7 @@ import { galleryFailure, galleryFieldFailure } from "../gallery-results/gallery-
 import type { GalleryWriteResult } from "../gallery-results/gallery-results.types";
 import type { FolderMappingView } from "./folder-mapping.types";
 
-/** Loads the folder *Edit*'s mapping: the subfolders found by the last sync, this project's selection items and the saved mapping (F-20). @param deps - repository @param context - verified workspace @param sourceId - the gallery source @returns the view @throws GalleryError NOT_FOUND for a missing or another workspace's source */
+/** Loads the folder *Edit*'s mapping: the subfolders found by the last sync, this project's selection items and the saved mapping (F-21). @param deps - repository @param context - verified workspace @param sourceId - the gallery source @returns the view @throws GalleryError NOT_FOUND for a missing or another workspace's source */
 export async function getFolderMapping(
   deps: Pick<GalleryLifecycleDeps, "sources">,
   context: WorkspaceContext,
@@ -41,7 +41,7 @@ function toMappings(
   return mappings;
 }
 
-/** Saves a folder's subfolder mapping and reclassifies its photos at once (F-20, Owner 2026-10-07): one subfolder → one selection item of this project; unmapped folders stay proofs. @param deps - repository and clock @param context - verified workspace @param sourceId - the gallery source @param input - untrusted `{ mappings }` @returns ok or a failure @throws GalleryError NOT_FOUND for a missing or another workspace's source */
+/** Saves a folder's subfolder mapping and reclassifies its photos at once (F-21, Owner 2026-10-07): one subfolder → one selection item of this project; unmapped folders stay proofs. @param deps - repository and clock @param context - verified workspace @param sourceId - the gallery source @param input - untrusted `{ mappings }` @returns ok or a failure @throws GalleryError NOT_FOUND for a missing or another workspace's source */
 export async function setFolderMapping(
   deps: GalleryLifecycleDeps,
   context: WorkspaceContext,

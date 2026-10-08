@@ -20,7 +20,7 @@ function flipFirst(text: string): string {
   return (text.startsWith("A") ? "B" : "A") + text.slice(1);
 }
 
-describe("web crypto client session signer (ADR-021, D-3)", () => {
+describe("web crypto client session signer (ADR-023, D-3)", () => {
   it("AC-ACC-001 round-trips a payload", async () => {
     expect(await signer.verify(await signer.sign(PAYLOAD))).toEqual(PAYLOAD);
   });

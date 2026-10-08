@@ -8,7 +8,7 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import { addProjectItems } from "../client-access/fixture";
 
-/** Maps the fixture's `Edited` and `print` folders to a *Foto edit* and a *Foto cetak* item of the source's project, as the Owner would (F-20). @returns the item ids */
+/** Maps the fixture's `Edited` and `print` folders to a *Foto edit* and a *Foto cetak* item of the source's project, as the Owner would (F-21). @returns the item ids */
 export async function mapFixtureFolders(
   db: Db,
   context: WorkspaceContext,

@@ -10,7 +10,7 @@ import type { DeliveryRow } from "./delivery-text.types";
 
 const READY_CHIP = { label: COPY.chip.READY, tone: "info" } as const;
 
-/** "24 file Foto edit dan 6 file Foto cetak", one part per package item with files (F-20). @param card - the card view @returns the phrase */
+/** "24 file Foto edit dan 6 file Foto cetak", one part per package item with files (F-21). @param card - the card view @returns the phrase */
 export function finishedFiles(card: Pick<DeliveryCardView, "items">): string {
   return card.items
     .filter((item) => item.count > 0)
@@ -30,7 +30,7 @@ function readyRows(card: DeliveryCardView): DeliveryRow[] {
 }
 
 /**
- * The card's rows for its state: one per package item with files when ready (F-20), the publication when published,
+ * The card's rows for its state: one per package item with files when ready (F-21), the publication when published,
  * the completion when completed; none for states A and E, which show a note (hasilakhirowner-kartu).
  * @param card - the card view
  * @returns the rows

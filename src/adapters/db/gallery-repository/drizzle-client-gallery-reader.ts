@@ -59,7 +59,7 @@ async function selectFinishedPhotos(
   });
 }
 
-/** The gallery project's selection items (COUNT / QUANTITY), in package order (F-20). @param db - the executor @param context - verified workspace @param galleryId - the gallery @returns the items */
+/** The gallery project's selection items (COUNT / QUANTITY), in package order (F-21). @param db - the executor @param context - verified workspace @param galleryId - the gallery @returns the items */
 async function selectDeliveryItems(db: DbExecutor, context: WorkspaceContext, galleryId: string) {
   return db
     .select({ id: projectItem.id, name: projectItem.name })
@@ -82,7 +82,7 @@ async function selectDeliveryItems(db: DbExecutor, context: WorkspaceContext, ga
     .orderBy(asc(projectItem.sortOrder), asc(projectItem.name));
 }
 
-/** Id and name of every visible, not-missing proof of active sources, by name (F-19). @param db - the executor @param context - verified workspace @param galleryId - the gallery @returns the files */
+/** Id and name of every visible, not-missing proof of active sources, by name (F-20). @param db - the executor @param context - verified workspace @param galleryId - the gallery @returns the files */
 async function selectProofFiles(db: DbExecutor, context: WorkspaceContext, galleryId: string) {
   return db
     .select({ id: galleryPhoto.id, fileName: galleryPhoto.fileName })

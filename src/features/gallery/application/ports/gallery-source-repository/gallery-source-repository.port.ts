@@ -75,20 +75,20 @@ export interface GalleryLifecycleWriter {
   readonly publishFinalDelivery: (actorId: string, now: Date) => Promise<void>;
 }
 
-/** One saved subfolder mapping (F-20). */
+/** One saved subfolder mapping (F-21). */
 export interface FolderMapEntry {
   readonly path: string;
   readonly projectItemId: string;
 }
 
-/** A selection item of the project's package that a subfolder can deliver for (F-20). */
+/** A selection item of the project's package that a subfolder can deliver for (F-21). */
 export interface MappableItem {
   readonly id: string;
   readonly name: string;
   readonly pickMode: PickMode;
 }
 
-/** What the folder *Edit* shows: the subfolders the last sync found, the package's selection items and the saved mapping (F-20). */
+/** What the folder *Edit* shows: the subfolders the last sync found, the package's selection items and the saved mapping (F-21). */
 export interface FolderMappingRecord {
   readonly galleryId: string;
   readonly folders: readonly string[];
@@ -97,12 +97,12 @@ export interface FolderMappingRecord {
 }
 
 export interface GallerySourceWriter extends GalleryLifecycleWriter {
-  /** Replaces a source's subfolder mappings (F-20). */
+  /** Replaces a source's subfolder mappings (F-21). */
   readonly replaceFolderMappings: (
     sourceId: string,
     entries: readonly FolderMapEntry[],
   ) => Promise<void>;
-  /** Re-applies the mappings to the source's stored photos and bumps the content version (F-20). */
+  /** Re-applies the mappings to the source's stored photos and bumps the content version (F-21). */
   readonly reclassifySource: (
     sourceId: string,
     mappings: readonly FolderMapping[],
@@ -123,7 +123,7 @@ export interface SyncTarget {
   /** A run is open (`SYNCING`): the next step continues it instead of starting one (D-8). */
   readonly runOpen: boolean;
   readonly gallery: LockedGalleryState;
-  /** The source's subfolder mappings with each item's finished kind (F-20). */
+  /** The source's subfolder mappings with each item's finished kind (F-21). */
   readonly mappings: readonly FolderMapping[];
 }
 
@@ -181,12 +181,12 @@ export interface GallerySourceRepositoryPort {
     step: SyncStepResult,
     now: Date,
   ) => Promise<boolean>;
-  /** The folder *Edit*'s mapping view of an active source, or null (F-20). */
+  /** The folder *Edit*'s mapping view of an active source, or null (F-21). */
   readonly findFolderMapping: (
     context: WorkspaceContext,
     sourceId: string,
   ) => Promise<FolderMappingRecord | null>;
-  /** Stores the subfolders a finished run found, empty ones too, and returns those the Owner hasn't been told about yet (F-20). */
+  /** Stores the subfolders a finished run found, empty ones too, and returns those the Owner hasn't been told about yet (F-21). */
   readonly takeNewFolders: (
     context: WorkspaceContext,
     sourceId: string,

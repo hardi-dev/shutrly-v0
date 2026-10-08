@@ -31,7 +31,7 @@ function parsePayload(bytes: Uint8Array): unknown {
 }
 
 /**
- * Creates the client session signer from the base64url `CLIENT_SESSION_KEY` (32 bytes, ADR-021).
+ * Creates the client session signer from the base64url `CLIENT_SESSION_KEY` (32 bytes, ADR-023).
  * The MAC is checked with `crypto.subtle.verify`, which compares in constant time.
  * @param rawKey - the Worker secret
  * @returns the signer port

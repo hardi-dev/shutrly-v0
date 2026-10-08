@@ -14,7 +14,7 @@ import { pickedInLine } from "../viewer-pick-actions/viewer-pick-text";
 import { CLIENT_BROWSE_COPY as COPY } from "./client-browse-screen.copy";
 import type { BrowseViewerProps, NoteFor } from "./client-browse-screen.types";
 
-/** The viewer's *Unduh foto* (F-19) with *Pilih untuk…* and *Catatan* when the page has groups (A-30). */
+/** The viewer's *Unduh foto* (F-20) with *Pilih untuk…* and *Catatan* when the page has groups (A-30). */
 function useViewerActions(
   { downloadUrlOf }: Readonly<BrowseViewerProps>,
   handle: BrowseViewerProps["handle"],
@@ -44,7 +44,7 @@ function useViewerActions(
   return { renderActions, renderFooter };
 }
 
-/** The *Semua foto* viewer: *Unduh foto* always (F-19); read-only picks without groups (A-31), otherwise with *Pilih untuk…* and *Catatan* in the top bar on desktop or the pick bar on phones, and *Dipilih di: …* as the meta line (pratinjau exports, A-30, A-32, AC-SEL-019). @param props - photos, the open index, handlers, the groups and picks and the pick actions @returns the viewer */
+/** The *Semua foto* viewer: *Unduh foto* always (F-20); read-only picks without groups (A-31), otherwise with *Pilih untuk…* and *Catatan* in the top bar on desktop or the pick bar on phones, and *Dipilih di: …* as the meta line (pratinjau exports, A-30, A-32, AC-SEL-019). @param props - photos, the open index, handlers, the groups and picks and the pick actions @returns the viewer */
 export function BrowseViewer(props: Readonly<BrowseViewerProps>) {
   const { photos, index, onIndexChange, onClose, handle, pickActions } = props;
   const isMobile = useMobileViewport();

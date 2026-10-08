@@ -8,7 +8,7 @@ import type { SequentialDownload } from "../use-sequential-download/use-sequenti
 /** Everything the *Hasil akhir* page renders from (klien-8 states). */
 export interface DeliveryScreenState {
   readonly files: DeliveryFilesView;
-  /** The open tab: a package item, or a kind for files without one (F-20). */
+  /** The open tab: a package item, or a kind for files without one (F-21). */
   readonly groupId: string;
   readonly groupName: string;
   readonly setGroupId: (groupId: string) => void;

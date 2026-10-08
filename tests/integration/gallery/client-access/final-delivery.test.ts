@@ -102,7 +102,7 @@ describe("final delivery (D-17, sequence 3)", () => {
       state: "PUBLISHED",
       editedCount: 2,
       printCount: 1,
-      // F-20: files seeded without an item count under their kind
+      // F-21: files seeded without an item count under their kind
       items: [
         { id: "EDITED", name: "Edited", count: 2 },
         { id: "PRINT", name: "Print", count: 1 },

@@ -3,7 +3,7 @@ import type { ClientPhotoView } from "@/features/gallery/application/use-cases/c
 
 import type { ClientBrowseState } from "../use-client-browse/use-client-browse.types";
 
-/** Select mode and per-tile downloads on *Semua foto* (F-19). */
+/** Select mode and per-tile downloads on *Semua foto* (F-20). */
 export interface GridDownloads {
   readonly isSelecting: boolean;
   readonly isSelected: (photoId: string) => boolean;

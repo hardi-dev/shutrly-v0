@@ -7,7 +7,7 @@ import type { SourceSyncPhase, SourceSyncProgress } from "../source-text/source-
 export interface UseGallerySyncInput {
   readonly workspaceId: string;
   readonly syncSourceAction: GalleryPageActions["syncSourceAction"];
-  /** Opens *Edit folder* for a source after a sync found new subfolders (F-20). */
+  /** Opens *Edit folder* for a source after a sync found new subfolders (F-21). */
   readonly onMapFolders?: (sourceId: string) => void;
 }
 

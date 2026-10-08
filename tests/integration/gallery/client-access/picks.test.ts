@@ -163,7 +163,7 @@ describe("picks (D-12)", () => {
     expect(await usage(w, w.edit)).toBe(1);
   });
 
-  it("F-19 picks several proofs at once, skipping one already picked", async () => {
+  it("F-20 picks several proofs at once, skipping one already picked", async () => {
     const w = await world();
     await pick(w, w.edit, "IMG_001.jpg");
     const ids = ["IMG_001.jpg", "IMG_002.jpg", "IMG_003.jpg"].map((name) => w.photo[name]);
@@ -175,7 +175,7 @@ describe("picks (D-12)", () => {
     expect(await usage(w, w.edit)).toBe(3);
   });
 
-  it("F-19 refuses the whole selection past the limit and picks nothing", async () => {
+  it("F-20 refuses the whole selection past the limit and picks nothing", async () => {
     const w = await world();
     const ids = ["IMG_001.jpg", "IMG_002.jpg", "IMG_003.jpg", "IMG_004.jpg"].map(
       (name) => w.photo[name],
@@ -188,7 +188,7 @@ describe("picks (D-12)", () => {
     expect(await usage(w, w.edit)).toBe(0);
   });
 
-  it("F-19 adds × 1 per photo in a QUANTITY group", async () => {
+  it("F-20 adds × 1 per photo in a QUANTITY group", async () => {
     const w = await world();
     const ids = ["IMG_001.jpg", "IMG_002.jpg"].map((name) => w.photo[name]);
     expect(await setPicks(deps(), w.client, { groupId: w.print, photoIds: ids })).toEqual({

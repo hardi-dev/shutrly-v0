@@ -6,7 +6,7 @@
 
 **Approach:** each slice delivers one screen or flow end to end (domain → application → repository → action → UI → tests), can be tried in the browser when done, and produces the data the next slice shows. Order: catalog pick mode → client gate → groups and Beranda → Pilih → Tinjau → Owner review → add-ons → final delivery (Owner) → Hasil akhir (client) → link rotation → cache and hardening.
 
-**Architecture:** see [technical-design.md](technical-design.md) (D-1…D-24). Client access, selection, delivery reads and every client screen in `features/gallery`; add-ons, completion, link rotation and pick mode in `features/booking`; three ADR-016 scopes join them. Client sessions are signed cookies and public limits use the Neon counters ([ADR-021](../../architecture/decisions/ADR-021-client-gallery-sessions-and-public-limits.md)).
+**Architecture:** see [technical-design.md](technical-design.md) (D-1…D-24). Client access, selection, delivery reads and every client screen in `features/gallery`; add-ons, completion, link rotation and pick mode in `features/booking`; three ADR-016 scopes join them. Client sessions are signed cookies and public limits use the Neon counters ([ADR-023](../../architecture/decisions/ADR-023-client-gallery-sessions-and-public-limits.md)).
 
 **Tech stack:** Next.js 16 (App Router, server actions, route handlers, `next/headers` cookies), React 19, Zod 4, React Hook Form + `zodResolver`, Drizzle on Neon serverless, Tailwind v4 token utilities, react-aria-components (only in `src/ui`), WebCrypto (HMAC-SHA-256), Vitest (unit, dom, integration), Playwright + axe, Storybook.
 
@@ -204,7 +204,7 @@ Every slice has: **Read first** (exact IDs, sections and exports, so the build l
 
 ## Slice 2: Client gate and session
 
-**Read first:** AC-ACC-001…008, -010, -012; BR-ACC-001, -003, -004, BR-GAL-003, -005; spec A-1, A-2, A-3; activity flow 1; sequence 1; state › What a client can reach; ADR-021; technical-design › D-2…D-8, D-23, Security; coding rules › Security, Next.js; exports `klien-1-gerbang/` (all four states, desktop and mobile).
+**Read first:** AC-ACC-001…008, -010, -012; BR-ACC-001, -003, -004, BR-GAL-003, -005; spec A-1, A-2, A-3; activity flow 1; sequence 1; state › What a client can reach; ADR-023; technical-design › D-2…D-8, D-23, Security; coding rules › Security, Next.js; exports `klien-1-gerbang/` (all four states, desktop and mobile).
 
 **Backend**
 - `shared/env/app-env.schema.ts`: `CLIENT_SESSION_KEY` (same regex as `GALLERY_PASSWORD_KEY`).
@@ -222,7 +222,7 @@ Every slice has: **Read first** (exact IDs, sections and exports, so the build l
 import type { ClientSessionPayload, SessionCheckInput } from "./client-session.types";
 
 /**
- * Whether a verified cookie payload still signs this client in (ADR-021, A-1, BR-GAL-003).
+ * Whether a verified cookie payload still signs this client in (ADR-023, A-1, BR-GAL-003).
  * @param input - the payload, the gallery the token resolves to, the token hash and the clock
  * @returns true only if nothing about the gallery or link changed and the cookie is not expired
  */

@@ -15,7 +15,7 @@ import type { EditFolderFormProps, RenameFolderDialogProps } from "./rename-fold
 
 const FORM_ID = "rename-folder-form";
 
-/** *Edit folder*: the folder's label in this gallery (empty shows the Drive folder name, AC-GAL-037) and which subfolders hold finished files for which package item (F-20). */
+/** *Edit folder*: the folder's label in this gallery (empty shows the Drive folder name, AC-GAL-037) and which subfolders hold finished files for which package item (F-21). */
 export function RenameFolderDialog(props: Readonly<RenameFolderDialogProps>) {
   const mapping = useFolderMapping({ ...props, sourceId: props.source.id });
   const state = useRenameFolderForm(props, mapping);

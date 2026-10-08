@@ -46,7 +46,7 @@ async function runStep(
   const written = await deps.sources.commitStep(context, claim, step, deps.now);
   if (!written) return galleryFailure("INVALID_STATE");
   if (step.done) {
-    // F-20: subfolders the Owner hasn't seen yet get a toast pointing to the mapping.
+    // F-21: subfolders the Owner hasn't seen yet get a toast pointing to the mapping.
     const newFolders = await deps.sources.takeNewFolders(
       context,
       target.sourceId,

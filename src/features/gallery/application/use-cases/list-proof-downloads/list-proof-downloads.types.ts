@@ -4,7 +4,7 @@ export interface ListProofDownloadsDeps {
   readonly reader: ClientGalleryReaderPort;
 }
 
-/** One proof the client can download: the same-origin URL and the file name (F-19). */
+/** One proof the client can download: the same-origin URL and the file name (F-20). */
 export interface ProofDownloadView {
   readonly id: string;
   readonly fileName: string;

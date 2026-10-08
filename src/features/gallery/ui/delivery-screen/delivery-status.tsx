@@ -9,7 +9,7 @@ import { DELIVERY_SCREEN_COPY as COPY } from "./delivery-screen.copy";
 import type { DeliveryPartProps } from "./delivery-screen.types";
 import { failedBody } from "./delivery-screen-text";
 
-/** The running download: *n dari m foto selesai* with *Batalkan* (hasilakhir-mengunduh-semua; reused by *Semua foto*, F-19). @param props - the download and the card title @returns the card */
+/** The running download: *n dari m foto selesai* with *Batalkan* (hasilakhir-mengunduh-semua; reused by *Semua foto*, F-20). @param props - the download and the card title @returns the card */
 export function DownloadProgressCard({
   download,
   title = COPY.progressTitle,

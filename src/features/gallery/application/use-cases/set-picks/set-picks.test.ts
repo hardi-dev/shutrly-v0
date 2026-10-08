@@ -90,21 +90,21 @@ const input = (count: number) => ({
   photoIds: Array.from({ length: count }, (_, index) => P(index)),
 });
 
-describe("setPicks (F-19)", () => {
-  it("F-19 picks every new photo × 1 and skips the ones already picked", async () => {
+describe("setPicks (F-20)", () => {
+  it("F-20 picks every new photo × 1 and skips the ones already picked", async () => {
     const { d, pickWriter } = deps({ group: { usage: 1, baseLimit: 5 }, pickedIds: [P(0)] });
     expect(await setPicks(d, CLIENT, input(3))).toEqual({ ok: true, usage: 3, added: 2 });
     expect(pickWriter.insertPick).toHaveBeenCalledTimes(2);
     expect(pickWriter.insertPick).toHaveBeenCalledWith(P(1), 1);
   });
 
-  it("F-19 adds × 1 in a QUANTITY group", async () => {
+  it("F-20 adds × 1 in a QUANTITY group", async () => {
     const { d, pickWriter } = deps({ group: { mode: "QUANTITY", baseLimit: 5 } });
     expect(await setPicks(d, CLIENT, input(2))).toEqual({ ok: true, usage: 2, added: 2 });
     expect(pickWriter.insertPick).toHaveBeenCalledWith(P(0), 1);
   });
 
-  it("F-19 BR-SEL-006 refuses the whole selection past the limit and writes nothing", async () => {
+  it("F-20 BR-SEL-006 refuses the whole selection past the limit and writes nothing", async () => {
     const { d, pickWriter } = deps({ group: { usage: 2, baseLimit: 3 } });
     expect(await setPicks(d, CLIENT, input(2))).toEqual({
       ok: false,

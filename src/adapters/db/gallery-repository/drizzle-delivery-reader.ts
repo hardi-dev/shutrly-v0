@@ -21,10 +21,10 @@ const finishedCount = (kind: "EDITED" | "PRINT") => sql<number>`(select count(*)
   where p.workspace_id = ${gallery.workspaceId} and p.gallery_id = ${gallery.id}
     and p.kind = ${kind} and p.missing_at is null and s.removed_at is null)`;
 
-// Files synced before F-20 have no item; they count under their kind.
+// Files synced before F-21 have no item; they count under their kind.
 const KIND_NAMES = { EDITED: "Edited", PRINT: "Print" } as const;
 
-/** Visible finished files per package item, in package order (F-20). @param db - the executor @param workspaceId - the workspace @param galleryId - the gallery @returns the counts */
+/** Visible finished files per package item, in package order (F-21). @param db - the executor @param workspaceId - the workspace @param galleryId - the gallery @returns the counts */
 async function selectFinishedItems(
   db: DbExecutor,
   workspaceId: string,

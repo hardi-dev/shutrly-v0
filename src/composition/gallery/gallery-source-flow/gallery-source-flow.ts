@@ -211,7 +211,7 @@ export async function deleteDraftGalleryEntry(rawWorkspaceId: string, rawGallery
   }
 }
 
-/** Loads the folder *Edit*'s subfolder mapping (F-20). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @returns the mapping view */
+/** Loads the folder *Edit*'s subfolder mapping (F-21). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @returns the mapping view */
 export async function getFolderMappingEntry(rawWorkspaceId: string, rawSourceId: string) {
   const sourceId = galleryIdOrNotFound(rawSourceId);
   await requireOwnerOrRedirect();
@@ -223,7 +223,7 @@ export async function getFolderMappingEntry(rawWorkspaceId: string, rawSourceId:
   }
 }
 
-/** Saves a folder's subfolder mapping and reclassifies its photos (F-20). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @param values - untrusted `{ mappings }` @returns the write result */
+/** Saves a folder's subfolder mapping and reclassifies its photos (F-21). @param rawWorkspaceId - untrusted workspace id @param rawSourceId - untrusted source id @param values - untrusted `{ mappings }` @returns the write result */
 export async function setFolderMappingEntry(
   rawWorkspaceId: string,
   rawSourceId: string,

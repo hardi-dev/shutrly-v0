@@ -119,7 +119,7 @@ async function upsertChanged(
   return written;
 }
 
-/** A source's stored row counts, from its photos (BR-GAL-006); a reclassify refreshes them too (F-20). @param tx - the executor @param context - verified workspace @param sourceId - the gallery source @returns the counts */
+/** A source's stored row counts, from its photos (BR-GAL-006); a reclassify refreshes them too (F-21). @param tx - the executor @param context - verified workspace @param sourceId - the gallery source @returns the counts */
 export async function presentCounts(tx: DbExecutor, context: WorkspaceContext, sourceId: string) {
   const present = (kind: string) =>
     sql<number>`(count(*) filter (where ${galleryPhoto.kind} = ${kind} and ${galleryPhoto.missingAt} is null))::int`;

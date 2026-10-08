@@ -39,7 +39,7 @@ interface StepState {
   listCalls: number;
   stepCalls: number;
   stepEntries: number;
-  /** The source's subfolder mappings, which decide each photo's kind (F-20). */
+  /** The source's subfolder mappings, which decide each photo's kind (F-21). */
   readonly mappings: readonly FolderMapping[];
 }
 
@@ -143,7 +143,7 @@ async function readPage(
   return null;
 }
 
-/** Reads one step of a sync run: folders from the head of the queue until the step's list-call or entry budget is spent, or the tree ends. It is the breadth-first walk of BR-GAL-006 and BR-GAL-007, cut so each request fits Workers Free (ADR-018, TD D-7). @param listFolder - one page of a folder's children @param cursor - what the run still has to read @param budget - the step's limits @param mappings - the source's subfolder mappings (F-20) @returns the images found in this step, the next cursor and whether the run is done, or why it stopped */
+/** Reads one step of a sync run: folders from the head of the queue until the step's list-call or entry budget is spent, or the tree ends. It is the breadth-first walk of BR-GAL-006 and BR-GAL-007, cut so each request fits Workers Free (ADR-018, TD D-7). @param listFolder - one page of a folder's children @param cursor - what the run still has to read @param budget - the step's limits @param mappings - the source's subfolder mappings (F-21) @returns the images found in this step, the next cursor and whether the run is done, or why it stopped */
 export async function walkStep(
   listFolder: ListFolder,
   cursor: SyncCursor,

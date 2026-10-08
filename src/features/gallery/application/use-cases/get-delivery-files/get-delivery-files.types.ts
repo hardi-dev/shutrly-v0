@@ -11,14 +11,14 @@ export interface DeliveryFileView extends ClientPhotoView {
   readonly downloadUrl: string;
 }
 
-/** The finished files of one package item, or of one kind for files without an item (F-20). */
+/** The finished files of one package item, or of one kind for files without an item (F-21). */
 export interface DeliveryGroupView {
   readonly id: string;
   readonly name: string;
   readonly files: readonly DeliveryFileView[];
 }
 
-/** *Hasil akhir*: the finished files per package item (klien-8, BR-DEL-001/002, F-20). */
+/** *Hasil akhir*: the finished files per package item (klien-8, BR-DEL-001/002, F-21). */
 export interface DeliveryFilesView {
   readonly groups: readonly DeliveryGroupView[];
 }

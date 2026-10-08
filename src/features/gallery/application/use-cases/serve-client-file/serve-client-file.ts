@@ -9,7 +9,7 @@ const NOTHING: ServeClientFileResult = { ok: false };
 
 /**
  * Streams one original file to the signed-in client: a visible proof of this gallery at any time
- * (F-19, Owner 2026-10-07), or a visible EDITED or PRINT file once final delivery is published
+ * (F-20, Owner 2026-10-07), or a visible EDITED or PRINT file once final delivery is published
  * (BR-DEL-002, BR-DEL-004, BR-ACC-005, D-18, AC-DEL-003…005).
  * @param deps - the client reader and the provider
  * @param client - the signed-in client context

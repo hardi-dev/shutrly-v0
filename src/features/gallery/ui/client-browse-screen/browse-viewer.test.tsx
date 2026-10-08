@@ -143,7 +143,7 @@ describe("BrowseViewer (A-30, A-32)", () => {
     expect(screen.getByText("Akad")).toBeTruthy();
   });
 
-  it("F-19 offers Unduh foto with the original's download link", () => {
+  it("F-20 offers Unduh foto with the original's download link", () => {
     renderViewer(actions());
     expect(screen.getByRole("link", { name: "Unduh foto" })).toHaveAttribute(
       "href",

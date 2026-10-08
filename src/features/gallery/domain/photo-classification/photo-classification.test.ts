@@ -5,8 +5,8 @@ import { classifyPhoto, isImageMime, kindForPickMode } from "./photo-classificat
 const EDIT = { path: "Hasil Edit", kind: "EDITED" as const, projectItemId: "item-edit" };
 const PRINT = { path: "Akad/Cetak 4R", kind: "PRINT" as const, projectItemId: "item-print" };
 
-describe("classifyPhoto (F-20)", () => {
-  it("F-20 without a mapping everything is a PROOF, whatever the folder is called", () => {
+describe("classifyPhoto (F-21)", () => {
+  it("F-21 without a mapping everything is a PROOF, whatever the folder is called", () => {
     expect(classifyPhoto([])).toEqual({ kind: "PROOF", browsePath: "", projectItemId: null });
     expect(classifyPhoto(["edited"])).toEqual({
       kind: "PROOF",
@@ -15,7 +15,7 @@ describe("classifyPhoto (F-20)", () => {
     });
   });
 
-  it("F-20 a mapped subfolder and its children deliver for the item, folded out of the browse path", () => {
+  it("F-21 a mapped subfolder and its children deliver for the item, folded out of the browse path", () => {
     expect(classifyPhoto(["Hasil Edit"], [EDIT])).toEqual({
       kind: "EDITED",
       browsePath: "",
@@ -33,11 +33,11 @@ describe("classifyPhoto (F-20)", () => {
     });
   });
 
-  it("F-20 a folder name that only starts like a mapped one stays a PROOF", () => {
+  it("F-21 a folder name that only starts like a mapped one stays a PROOF", () => {
     expect(classifyPhoto(["Hasil Edit 2"], [EDIT]).kind).toBe("PROOF");
   });
 
-  it("F-20 the longest mapped folder decides", () => {
+  it("F-21 the longest mapped folder decides", () => {
     const inner = { path: "Hasil Edit/Print", kind: "PRINT" as const, projectItemId: "item-print" };
     expect(classifyPhoto(["Hasil Edit", "Print"], [EDIT, inner])).toMatchObject({
       kind: "PRINT",
@@ -45,7 +45,7 @@ describe("classifyPhoto (F-20)", () => {
     });
   });
 
-  it("F-20 COUNT items deliver EDITED, QUANTITY items PRINT", () => {
+  it("F-21 COUNT items deliver EDITED, QUANTITY items PRINT", () => {
     expect(kindForPickMode("COUNT")).toBe("EDITED");
     expect(kindForPickMode("QUANTITY")).toBe("PRINT");
   });

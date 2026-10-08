@@ -146,7 +146,7 @@ describe("GallerySourcesSection", () => {
     expect(screen.getAllByText("Arsip")).toHaveLength(2);
   });
 
-  it("Revision OT #4 F-20 the folder menu offers Sinkronkan, Edit folder and Hapus", async () => {
+  it("Revision OT #4 F-21 the folder menu offers Sinkronkan, Edit folder and Hapus", async () => {
     const user = userEvent.setup();
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={fakePageActions()} />);
     await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
@@ -227,7 +227,7 @@ describe("GallerySourcesSection", () => {
     expect(syncSourceAction).toHaveBeenCalledTimes(1);
   });
 
-  it("F-20 Edit folder picks a subfolder for each package item and saves it with the name", async () => {
+  it("F-21 Edit folder picks a subfolder for each package item and saves it with the name", async () => {
     const user = userEvent.setup();
     const renameSourceAction = vi.fn(() => Promise.resolve({ ok: true as const }));
     const setFolderMappingAction = vi.fn(() => Promise.resolve({ ok: true as const }));
@@ -266,7 +266,7 @@ describe("GallerySourcesSection", () => {
     expect(renameSourceAction).toHaveBeenCalledWith("ws-1", "s-1", { label: "" });
   });
 
-  it("F-20 Edit folder shows a skeleton while the subfolders load", async () => {
+  it("F-21 Edit folder shows a skeleton while the subfolders load", async () => {
     const user = userEvent.setup();
     const folderMappingAction = vi.fn(() => new Promise<never>(() => undefined));
     const actions = fakePageActions({ folderMappingAction });
@@ -276,7 +276,7 @@ describe("GallerySourcesSection", () => {
     expect(await screen.findByTestId("folder-mapping-skeleton")).toBeInTheDocument();
   });
 
-  it("F-20 Edit folder points to Isi paket when the package has no selection item", async () => {
+  it("F-21 Edit folder points to Isi paket when the package has no selection item", async () => {
     const user = userEvent.setup();
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={fakePageActions()} />);
     await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
@@ -287,7 +287,7 @@ describe("GallerySourcesSection", () => {
     expect(screen.getByRole("button", { name: "Buka Isi paket" })).toBeInTheDocument();
   });
 
-  it("F-20 a sync that finds new subfolders says so with Petakan", async () => {
+  it("F-21 a sync that finds new subfolders says so with Petakan", async () => {
     const user = userEvent.setup();
     const syncSourceAction = vi.fn(() =>
       Promise.resolve({

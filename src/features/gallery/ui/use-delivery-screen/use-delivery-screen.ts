@@ -19,13 +19,13 @@ const toItem = (file: DeliveryFileView): DownloadItem => ({
 });
 
 /**
- * The *Hasil akhir* page's state: the open item tab (F-20), *Pilih beberapa* mode, the *Unduh semua* confirm,
+ * The *Hasil akhir* page's state: the open item tab (F-21), *Pilih beberapa* mode, the *Unduh semua* confirm,
  * the preview and the sequential download (klien-8, A-33, AC-DEL-003, -005).
  * @param files - the finished files per item
  * @returns the state and handlers
  */
 export function useDeliveryScreen(files: DeliveryFilesView): DeliveryScreenState {
-  // F-20: open on the first item that has files; empty items still get a tab.
+  // F-21: open on the first item that has files; empty items still get a tab.
   const first = files.groups.find((candidate) => candidate.files.length > 0) ?? files.groups.at(0);
   const [groupId, setGroupId] = useState(first?.id ?? "");
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);

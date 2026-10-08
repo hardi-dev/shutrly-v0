@@ -9,7 +9,7 @@ import type {
 
 type SignedOut = { readonly kind: "SIGNED_OUT" };
 
-/** The *Semua foto* download and bulk-pick actions, bound to the token by the page (F-19). */
+/** The *Semua foto* download and bulk-pick actions, bound to the token by the page (F-20). */
 export interface PhotosActions {
   readonly listDownloads: () => Promise<readonly ProofDownloadView[] | SignedOut>;
   readonly setPicks: (input: {

@@ -19,8 +19,8 @@ async function setup() {
 const kinds = (photos: readonly { kind: string }[], kind: string) =>
   photos.filter((photo) => photo.kind === kind).length;
 
-describe("folder mapping (F-20)", () => {
-  it("F-20 shows the subfolders found by the sync and the project's selection items", async () => {
+describe("folder mapping (F-21)", () => {
+  it("F-21 shows the subfolders found by the sync and the project's selection items", async () => {
     const { deps } = await setup();
     const view = await getFolderMapping(deps, WORKSPACE, "source-1");
     expect(view.folders).toEqual(["Edited", "Edited/old", "print", "raw"]);
@@ -28,7 +28,7 @@ describe("folder mapping (F-20)", () => {
     expect(view.mappings).toEqual([]);
   });
 
-  it("F-20 saving a mapping reclassifies the stored photos at once, unmapped folders become proofs", async () => {
+  it("F-21 saving a mapping reclassifies the stored photos at once, unmapped folders become proofs", async () => {
     const { deps, sources } = await setup();
     expect(
       await setFolderMapping(deps, WORKSPACE, "source-1", {
@@ -46,7 +46,7 @@ describe("folder mapping (F-20)", () => {
     ]);
   });
 
-  it("F-20 refuses an item that isn't a selection item of this project, or one path twice", async () => {
+  it("F-21 refuses an item that isn't a selection item of this project, or one path twice", async () => {
     const { deps, sources } = await setup();
     const other = "00000000-0000-4000-8000-0000000000ff";
     for (const mappings of [

@@ -46,7 +46,7 @@ export interface FakeGallery extends LockedGalleryState {
   deleted: boolean;
 }
 
-/** The fake Drive fixture's finished folders, mapped to two package items (F-20). */
+/** The fake Drive fixture's finished folders, mapped to two package items (F-21). */
 export const FIXTURE_FOLDER_MAPPINGS: readonly FolderMapping[] = [
   { path: "Edited", kind: "EDITED", projectItemId: "item-edited" },
   { path: "print", kind: "PRINT", projectItemId: "item-print" },
@@ -60,13 +60,13 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
   /** Photo rows a step wrote (inserted or changed): an unchanged photo adds none (D-21). */
   photoWrites = 0;
   readonly otherProjectFolders = new Map<string, string[]>();
-  /** Subfolder mappings per source (F-20). */
+  /** Subfolder mappings per source (F-21). */
   readonly mappings = new Map<string, FolderMapping[]>();
-  /** The fixture's `Edited` and `print` folders mapped, so tests keep their finished files (F-20). */
+  /** The fixture's `Edited` and `print` folders mapped, so tests keep their finished files (F-21). */
   defaultMappings: readonly FolderMapping[] = FIXTURE_FOLDER_MAPPINGS;
   readonly knownFolders = new Map<string, string[]>();
   readonly savedMappings = new Map<string, readonly FolderMapEntry[]>();
-  /** The project's selection items offered for mapping (F-20). */
+  /** The project's selection items offered for mapping (F-21). */
   mappableItems: readonly MappableItem[] = [
     { id: "item-edited", name: "Foto edit", pickMode: "COUNT" },
     { id: "item-print", name: "Foto cetak", pickMode: "QUANTITY" },

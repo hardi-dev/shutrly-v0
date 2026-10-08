@@ -31,7 +31,7 @@ export const CLIENT_BROWSE_COPY = {
   // not in Pencil
   loadingMore: "Memuat foto lainnya…",
   viewerMissing: "Foto ini tidak tersedia lagi",
-  // F-19 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
+  // F-20 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
   download: "Unduh",
   downloadAll: "Unduh semua",
   downloadMenu: "Pilihan unduhan",

@@ -14,7 +14,7 @@ import type { FolderMappingState } from "../use-folder-mapping/use-folder-mappin
 import { useLifecycleRunner } from "../use-lifecycle-runner/use-lifecycle-runner";
 import type { UseRenameFolderFormInput } from "./use-rename-folder-form.types";
 
-/** Owns *Edit folder*: the label, empty for the Drive folder name (AC-GAL-037), and the save of the subfolder mapping (F-20). @param input - ids, the folder, the actions and the close handler @param mapping - the subfolder mapping state @returns the label field, its error, submit and the pending flag */
+/** Owns *Edit folder*: the label, empty for the Drive folder name (AC-GAL-037), and the save of the subfolder mapping (F-21). @param input - ids, the folder, the actions and the close handler @param mapping - the subfolder mapping state @returns the label field, its error, submit and the pending flag */
 export function useRenameFolderForm(
   input: Readonly<UseRenameFolderFormInput>,
   mapping: FolderMappingState,
@@ -26,7 +26,7 @@ export function useRenameFolderForm(
   });
   const label = useController({ control: form.control, name: "label" });
   const submit = form.handleSubmit(async (values) => {
-    // F-20: one *Simpan* saves the name, then the subfolder mapping when it changed.
+    // F-21: one *Simpan* saves the name, then the subfolder mapping when it changed.
     const result = await runner.run(
       async () => {
         const renamed = await input.renameSourceAction(input.workspaceId, input.source.id, values);

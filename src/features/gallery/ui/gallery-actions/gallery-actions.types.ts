@@ -51,7 +51,7 @@ export interface GalleryPageActions {
     sourceId: string,
     values: RenameGallerySourceInput,
   ) => Promise<GalleryWriteResult>;
-  /** F-20: the folder *Edit*'s subfolder mapping. */
+  /** F-21: the folder *Edit*'s subfolder mapping. */
   readonly folderMappingAction: (
     workspaceId: string,
     sourceId: string,

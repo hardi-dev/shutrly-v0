@@ -10,7 +10,7 @@ import { GalleryDialogShell } from "../gallery-dialog-shell/gallery-dialog-shell
 import { CLIENT_BROWSE_COPY as COPY } from "./client-browse-screen.copy";
 import type { PhotosPartProps } from "./photos-actions.types";
 
-/** The running download, or the failure alert with *Coba lagi* (F-19, as *Hasil akhir* AC-DEL-005). */
+/** The running download, or the failure alert with *Coba lagi* (F-20, as *Hasil akhir* AC-DEL-005). */
 export function PhotosDownloadStatus({ photos }: Readonly<PhotosPartProps>) {
   const { progress } = photos.download;
   if (progress.phase === "RUNNING") {
@@ -28,7 +28,7 @@ export function PhotosDownloadStatus({ photos }: Readonly<PhotosPartProps>) {
   );
 }
 
-/** *Unduh semua n foto?* before a download of every proof (F-19, as *Hasil akhir* A-33). */
+/** *Unduh semua n foto?* before a download of every proof (F-20, as *Hasil akhir* A-33). */
 export function DownloadAllConfirm({ photos }: Readonly<PhotosPartProps>) {
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) photos.closeConfirm();

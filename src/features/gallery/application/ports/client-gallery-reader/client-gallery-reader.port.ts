@@ -27,19 +27,19 @@ export interface ClientGalleryReaderPort {
     context: WorkspaceContext,
     galleryId: string,
   ) => Promise<readonly FinishedPhotoRecord[]>;
-  /** The gallery project's selection items, in package order: one *Hasil akhir* tab each, empty or not (F-20). */
+  /** The gallery project's selection items, in package order: one *Hasil akhir* tab each, empty or not (F-21). */
   readonly listDeliveryItems: (
     context: WorkspaceContext,
     galleryId: string,
   ) => Promise<readonly DeliveryItemRecord[]>;
-  /** Id and name of every visible, not-missing proof of active sources, by name (F-19 *Unduh semua*). */
+  /** Id and name of every visible, not-missing proof of active sources, by name (F-20 *Unduh semua*). */
   readonly listProofFiles: (
     context: WorkspaceContext,
     galleryId: string,
   ) => Promise<readonly ProofFileRecord[]>;
 }
 
-/** A finished file with the package item its mapped subfolder delivers for (F-20); null for older files. */
+/** A finished file with the package item its mapped subfolder delivers for (F-21); null for older files. */
 export interface FinishedPhotoRecord extends GalleryPhotoRecord {
   readonly itemId: string | null;
   readonly itemName: string | null;

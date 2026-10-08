@@ -88,7 +88,7 @@ export async function browseClientPhotosEntry(
   return result.kind === "SIGNED_IN" ? result.value : SIGNED_OUT;
 }
 
-/** Lists every proof for *Unduh semua* on *Semua foto* (F-19). @param rawToken - the untrusted route token @returns the files, or SIGNED_OUT */
+/** Lists every proof for *Unduh semua* on *Semua foto* (F-20). @param rawToken - the untrusted route token @returns the files, or SIGNED_OUT */
 export async function listProofDownloadsEntry(
   rawToken: string,
 ): Promise<readonly ProofDownloadView[] | SignedOut> {

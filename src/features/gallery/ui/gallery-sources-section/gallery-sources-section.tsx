@@ -78,7 +78,7 @@ export function GallerySourcesSection({
   );
 }
 
-/** The section's dialogs and sync; a toast's *Petakan* opens the folder's *Edit* (F-20). */
+/** The section's dialogs and sync; a toast's *Petakan* opens the folder's *Edit* (F-21). */
 function useSectionState(
   workspaceId: string,
   page: GallerySourcesSectionProps["page"],

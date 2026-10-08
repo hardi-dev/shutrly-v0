@@ -1,7 +1,7 @@
 export type PhotoKind = "PROOF" | "EDITED" | "PRINT";
 export type FinishedKind = Exclude<PhotoKind, "PROOF">;
 
-/** One subfolder of a source mapped to a package item (F-20). */
+/** One subfolder of a source mapped to a package item (F-21). */
 export interface FolderMapping {
   /** The folder path from the source root, segments joined by `/`. */
   readonly path: string;

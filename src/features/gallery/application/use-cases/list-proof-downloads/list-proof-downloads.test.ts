@@ -16,8 +16,8 @@ const CLIENT: ClientContext = {
   contentVersion: 1,
 };
 
-describe("listProofDownloads (F-19)", () => {
-  it("F-19 lists every proof of the gallery with its download URL", async () => {
+describe("listProofDownloads (F-20)", () => {
+  it("F-20 lists every proof of the gallery with its download URL", async () => {
     const listProofFiles = vi.fn(() =>
       Promise.resolve([
         { id: "a", fileName: "IMG_001.jpg" },

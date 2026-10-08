@@ -16,10 +16,10 @@ import type {
 import type { RequestContext } from "../../request-context/request-context.types";
 import { withRequestDb } from "../../request-db/request-db";
 
-// ADR-021: one signed cookie per project link, scoped to its path.
+// ADR-023: one signed cookie per project link, scoped to its path.
 export const CLIENT_SESSION_COOKIE = "shutrly_gallery";
 
-/** Runs client work with the gate's request-scoped dependencies (ADR-021). @param work - the client work @returns whatever `work` resolves to */
+/** Runs client work with the gate's request-scoped dependencies (ADR-023). @param work - the client work @returns whatever `work` resolves to */
 export function withClientScope<T>(
   work: (deps: SignInGalleryDeps, rc: RequestContext) => Promise<T>,
 ): Promise<T> {

@@ -56,7 +56,7 @@ function FileTile({ file, index, screen }: Readonly<DeliveryFileTileProps>) {
   );
 }
 
-/** *Foto hasil akhir*: one tab per package item (F-20; was *Edited / Print*) and the grid with a download on each tile, or ticks in *Pilih beberapa* (hasilakhir-siap / -print / -pilih-beberapa, AC-DEL-003, -004). @param props - the screen state @returns the card */
+/** *Foto hasil akhir*: one tab per package item (F-21; was *Edited / Print*) and the grid with a download on each tile, or ticks in *Pilih beberapa* (hasilakhir-siap / -print / -pilih-beberapa, AC-DEL-003, -004). @param props - the screen state @returns the card */
 export function DeliveryFilesCard({ screen }: Readonly<DeliveryPartProps>) {
   const options = screen.files.groups.map((group) => ({
     id: group.id,

@@ -1,4 +1,4 @@
-# ADR-021: Client gallery sessions are signed cookies; public limits reuse the Neon counters
+# ADR-023: Client gallery sessions are signed cookies; public limits reuse the Neon counters
 
 Status: Accepted (2026-10-06, with the F-10 plan; Owner 2026-10-06, delegated: "jawab sesuai rekomendasi kamu").
 Date: 2026-10-06

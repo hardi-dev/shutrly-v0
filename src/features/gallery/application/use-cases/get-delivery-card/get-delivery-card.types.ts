@@ -16,7 +16,7 @@ export interface DeliveryCardView {
   readonly projectTitle: string;
   readonly editedCount: number;
   readonly printCount: number;
-  /** Finished files per package item (F-20); the card lists these instead of Edited / Print. */
+  /** Finished files per package item (F-21); the card lists these instead of Edited / Print. */
   readonly items: readonly FinishedItemCount[];
   /** ISO instants, null while they don't apply. */
   readonly publishedAt: string | null;

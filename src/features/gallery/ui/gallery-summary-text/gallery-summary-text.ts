@@ -44,7 +44,7 @@ export function selectionSummary(
   return { title, meta, chip: groupStatusChip(status) };
 }
 
-// F-20: one part per package item with files, "3 Foto edit · 1 Foto cetak".
+// F-21: one part per package item with files, "3 Foto edit · 1 Foto cetak".
 function finishedKinds(card: DeliveryCardView): string {
   return card.items
     .filter((item) => item.count > 0)

@@ -33,6 +33,6 @@ export interface SyncedPhoto {
   readonly kind: PhotoKind;
   readonly folderPath: string;
   readonly browsePath: string;
-  /** The package item a mapped subfolder delivers for; null for a proof (F-20). */
+  /** The package item a mapped subfolder delivers for; null for a proof (F-21). */
   readonly projectItemId: string | null;
 }

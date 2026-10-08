@@ -8,13 +8,13 @@ import type {
   GetDeliveryFilesDeps,
 } from "./get-delivery-files.types";
 
-// Names for finished files synced before F-20 had items.
+// Names for finished files synced before F-21 had items.
 const FALLBACK = { EDITED: "Edited", PRINT: "Print" } as const;
 
 /**
  * Loads *Hasil akhir* for the signed-in client: every visible, not-missing EDITED and PRINT file
  * with its image and download URLs, grouped per package item with every selection item shown even when
- * empty (F-20, Owner 2026-10-08), or null before final delivery is published (BR-DEL-001/002,
+ * empty (F-21, Owner 2026-10-08), or null before final delivery is published (BR-DEL-001/002,
  * BR-DEL-004, D-15, D-18, AC-DEL-003, -004, -006).
  * @param deps - the client reader and whether images load straight from Google
  * @param client - the signed-in client context
@@ -34,7 +34,7 @@ export async function getDeliveryFiles(
     items.map((item) => [item.id, { id: item.id, name: item.name, files: [] }]),
   );
   for (const photo of photos) {
-    // F-20: one tab per package item; older files without an item fall back to their kind.
+    // F-21: one tab per package item; older files without an item fall back to their kind.
     const id = photo.itemId ?? photo.kind;
     const name = photo.itemName ?? (photo.kind === "EDITED" ? FALLBACK.EDITED : FALLBACK.PRINT);
     const group = groups.get(id) ?? { id, name, files: [] };

@@ -34,7 +34,7 @@ function scopeFor(db: Db, rc: RequestContext, now: Date): ClientGalleryScope {
 
 /**
  * Runs the client gate, then the work for a signed-in client on the same request database
- * (D-4 on every page, action and route; ADR-021). Nothing runs for a signed-out client.
+ * (D-4 on every page, action and route; ADR-023). Nothing runs for a signed-out client.
  * @param rawToken - the untrusted route token
  * @param work - the signed-in work
  * @returns the neutral or password outcome, or the work's value with the client context

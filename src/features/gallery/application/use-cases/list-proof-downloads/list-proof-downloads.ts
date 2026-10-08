@@ -5,7 +5,7 @@ import type { ListProofDownloadsDeps, ProofDownloadView } from "./list-proof-dow
 
 /**
  * Lists every proof of the signed-in client's gallery for *Unduh semua*, across all folders; the
- * download route serves the originals (F-19, Owner 2026-10-07; BR-ACC-005: no folder link or ID).
+ * download route serves the originals (F-20, Owner 2026-10-07; BR-ACC-005: no folder link or ID).
  * @param deps - the client reader
  * @param client - the signed-in client context
  * @returns the files with their download URLs

@@ -1,4 +1,4 @@
-# F-19 Client proof downloads — build notes
+# F-20 Client proof downloads — build notes
 
 Built 2026-10-07 on `feat/client-access` straight from the accepted [intent](intent.md), without spec/AC/Pencil (Owner: "build langsung aja, nanti di catat di akhir"). These notes are that record; the rule lives in BR-DEL-004.
 

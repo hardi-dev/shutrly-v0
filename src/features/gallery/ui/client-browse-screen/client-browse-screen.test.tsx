@@ -124,7 +124,7 @@ describe("ClientBrowseScreen (D-15, A-26)", () => {
     expect(await screen.findByRole("dialog")).toBeVisible();
   });
 
-  it("F-19 each tile downloads its original", () => {
+  it("F-20 each tile downloads its original", () => {
     renderScreen(vi.fn());
     expect(screen.getByRole("link", { name: "Unduh IMG_001.jpg" })).toHaveAttribute(
       "href",
@@ -132,7 +132,7 @@ describe("ClientBrowseScreen (D-15, A-26)", () => {
     );
   });
 
-  it("F-19 Unduh semua lists every proof and asks first", async () => {
+  it("F-20 Unduh semua lists every proof and asks first", async () => {
     const all = renderScreen(vi.fn());
     await userEvent.click(screen.getByRole("button", { name: "Unduh" }));
     await userEvent.click(screen.getByRole("menuitem", { name: "Unduh semua" }));
@@ -140,7 +140,7 @@ describe("ClientBrowseScreen (D-15, A-26)", () => {
     expect(all.listDownloads).toHaveBeenCalledTimes(1);
   });
 
-  it("F-19 Pilih foto then Masukkan ke… picks the selection for a group", async () => {
+  it("F-20 Pilih foto then Masukkan ke… picks the selection for a group", async () => {
     const all = renderScreen(vi.fn());
     await userEvent.click(screen.getByRole("button", { name: "Pilih foto" }));
     await userEvent.click(screen.getByRole("button", { name: "IMG_001.jpg", pressed: false }));

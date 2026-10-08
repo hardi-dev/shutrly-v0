@@ -120,4 +120,6 @@ Fixed in code and docs: share-image alt text, button focus ring and a stronger e
 ## Follow-up 2 (2026-10-08, after production)
 - AC-LND-011 PASS: `hello@shutrly.space` in the privacy note and the footer *Contact*.
 - AC-LND-015…017 PASS through the Resend API (plan.md › Fixes after the first production deploy).
-- AC-LND-008: moved to an edge-function rate limit; the production result is recorded in plan.md.
+- AC-LND-008 PASS on production: an edge-function rate limit answers 429 above 5 submissions per IP in 3 minutes (plan.md).
+
+**Result after follow-up 2:** no blocking item remains; F-19 is DONE. Non-blocking items left: Private Email DKIM (Owner), a scoped landing exception to `token-usage.md` G2/G4 through `/sdv:design-rules`, and the small visual deviations listed above.

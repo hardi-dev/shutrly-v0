@@ -1,7 +1,7 @@
 # Feature: Landing page
 
 ID: F-19 · Slug: `landing`
-Status: IN VERIFICATION (2026-10-08; design approved, S1–S4 built, see [plan.md](plan.md)) · Intent: [intent.md](intent.md) (ACCEPTED 2026-10-07) · Acceptance criteria: [acceptance-criteria.md](acceptance-criteria.md)
+Status: DONE (2026-10-08; live at https://shutrly.space, see [plan.md](plan.md)) · Intent: [intent.md](intent.md) (ACCEPTED 2026-10-07) · Acceptance criteria: [acceptance-criteria.md](acceptance-criteria.md)
 Architecture: [ADR-021](../../architecture/decisions/ADR-021-production-on-netlify-landing-only.md) (production host and the landing-only gate), [ADR-022](../../architecture/decisions/ADR-022-waitlist-in-resend-contacts.md) (the waitlist lives in Resend Contacts)
 
 ## Goal

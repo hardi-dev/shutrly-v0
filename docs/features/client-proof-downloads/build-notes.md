@@ -31,4 +31,5 @@ Built 2026-10-07 on `feat/client-access` straight from the accepted [intent](int
 ## Pencil sync (2026-10-08)
 - `client-access.pen`: new frames *Semua foto · Pilih foto*, *Semua foto · mode pilih · Masukkan ke*, *Hasil akhir · tab per item* (Desktop, REVISI 2026-10-08, beside OWNER 7); owner *Hasil akhir* card, publish dialog, Galeri card and photo counts reworded per item and *n proof · m hasil akhir*.
 - `gallery.pen`: new frames *Dialog Hapus folder*, *Menu folder / Edit dan Hapus*, *Dialog Edit folder* (mapping and skeleton), *Dialog Buat galeri, dengan folder* and *folder dipakai proyek lain*; every *edited · print* count and *subfolder edited dan print* line reworded.
-- Not drawn: phone variants of the new frames; the session dialogs' *Tambah anggota* (`team-sessions.pen` could not be opened through the Pencil MCP); the new Hugeicons download and pick icons (Pencil uses its own icon set).
+- `team-sessions.pen` (Revision OT #1, #2): *Penugasan / Tanpa anggota aktif* (Desktop, Mobile) now offers *Tambah anggota* instead of *Buka Tim*; new frame *Penugasan / Tambah anggota bertumpuk* (Desktop) shows the member dialog stacked on the session dialog.
+- Not drawn: phone variants of the new frames; the new Hugeicons download and pick icons (Pencil uses its own icon set).

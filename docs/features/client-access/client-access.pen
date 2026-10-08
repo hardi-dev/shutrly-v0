@@ -6738,7 +6738,7 @@
               "content": "Klien bisa mengunduh lewat link dan password yang sama."
             },
             "3:nA4wg": {
-              "content": "24 foto Edited dan 6 file Print akan terlihat oleh klien. Status proyek menjadi Dikirim."
+              "content": "24 file Foto edit dan 6 file Foto cetak akan terlihat oleh klien. Status proyek menjadi Terkirim."
             },
             "3:kBv0h/3:xnhuK": {
               "content": "Batal"
@@ -6778,7 +6778,7 @@
               "content": "Klien bisa mengunduh lewat link dan password yang sama."
             },
             "3:vmLiY": {
-              "content": "24 foto Edited dan 6 file Print akan terlihat oleh klien. Status proyek menjadi Dikirim."
+              "content": "24 file Foto edit dan 6 file Foto cetak akan terlihat oleh klien. Status proyek menjadi Terkirim."
             },
             "3:O3xBi/3:xnhuK": {
               "content": "Publikasikan"
@@ -6834,7 +6834,7 @@
                   "fill": "$3:color/semantic/text/primary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Belum ada file edited atau print yang tersinkron.",
+                  "content": "Belum ada hasil akhir yang tersinkron.",
                   "fontFamily": "$3:font/family/base",
                   "fontSize": "$3:font/size/body",
                   "fontWeight": "$3:font/weight/regular"
@@ -6914,7 +6914,7 @@
                   "fill": "$3:color/semantic/text/primary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Belum ada file edited atau print yang tersinkron.",
+                  "content": "Belum ada hasil akhir yang tersinkron.",
                   "fontFamily": "$3:font/family/base",
                   "fontSize": "$3:font/size/body",
                   "fontWeight": "$3:font/weight/regular"
@@ -8386,7 +8386,7 @@
                       "fill": "$3:color/semantic/text/secondary",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "Belum ada file edited atau print yang tersinkron. Buat folder edited atau print di Drive, lalu sinkronkan galeri.",
+                      "content": "Belum ada hasil akhir yang tersinkron. Buat subfolder hasil akhir di Drive, petakan ke item paket lewat Edit folder, lalu sinkronkan galeri.",
                       "fontFamily": "$3:font/family/base",
                       "fontSize": "$3:font/size/body-sm",
                       "fontWeight": "$3:font/weight/regular"
@@ -8481,7 +8481,7 @@
                               "fill": "$3:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Edited",
+                              "content": "Foto edit",
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body",
                               "fontWeight": "$3:font/weight/medium"
@@ -8493,7 +8493,7 @@
                               "fill": "$3:color/semantic/text/secondary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "24 foto",
+                              "content": "24 file",
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body-sm",
                               "fontWeight": "$3:font/weight/regular"
@@ -8537,7 +8537,7 @@
                               "fill": "$3:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Print",
+                              "content": "Foto cetak",
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body",
                               "fontWeight": "$3:font/weight/medium"
@@ -8671,7 +8671,7 @@
                               "fill": "$3:color/semantic/text/secondary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Klien bisa mengunduh 24 foto Edited dan 6 file Print.",
+                              "content": "Klien bisa mengunduh 24 file Foto edit dan 6 file Foto cetak.",
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body-sm",
                               "fontWeight": "$3:font/weight/regular"
@@ -10719,7 +10719,7 @@
                       "fill": "$3:color/semantic/text/secondary",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "Belum ada file edited atau print yang tersinkron. Buat folder edited atau print di Drive, lalu sinkronkan galeri.",
+                      "content": "Belum ada hasil akhir yang tersinkron. Buat subfolder hasil akhir di Drive, petakan ke item paket lewat Edit folder, lalu sinkronkan galeri.",
                       "fontFamily": "$3:font/family/base",
                       "fontSize": "$3:font/size/body-sm",
                       "fontWeight": "$3:font/weight/regular"
@@ -10825,7 +10825,7 @@
                               "fill": "$3:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Edited",
+                              "content": "Foto edit",
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body",
                               "fontWeight": "$3:font/weight/medium"
@@ -10881,7 +10881,7 @@
                               "fill": "$3:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Print",
+                              "content": "Foto cetak",
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body",
                               "fontWeight": "$3:font/weight/medium"
@@ -11026,7 +11026,7 @@
                               "fill": "$3:color/semantic/text/secondary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "Klien bisa mengunduh 24 foto Edited dan 6 file Print.",
+                              "content": "Klien bisa mengunduh 24 file Foto edit dan 6 file Foto cetak.",
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body-sm",
                               "fontWeight": "$3:font/weight/regular"
@@ -49560,7 +49560,7 @@
                               "content": "Rina-Wisuda"
                             },
                             "3:k9OCFf": {
-                              "content": "5 proof · 2 edited · 1 print · 10.12"
+                              "content": "5 proof · 3 hasil akhir · 10.12"
                             },
                             "3:zUF3j": {
                               "children": [
@@ -49692,7 +49692,7 @@
                           "id": "QjZ6Z",
                           "name": "Counts",
                           "fill": "$3:color/semantic/text/primary",
-                          "content": "8 proof · 2 edited · 1 print",
+                          "content": "8 proof · 3 hasil akhir",
                           "fontFamily": "$3:font/family/base",
                           "fontSize": "$3:font/size/body",
                           "fontWeight": "$3:font/weight/semibold"
@@ -50386,7 +50386,7 @@
                                   "id": "jBHP0",
                                   "name": "Value",
                                   "fill": "$3:color/semantic/text/primary",
-                                  "content": "8 proof · 2 edited · 1 print",
+                                  "content": "8 proof · 3 hasil akhir",
                                   "fontFamily": "$3:font/family/base",
                                   "fontSize": "$3:font/size/body",
                                   "fontWeight": "$3:font/weight/semibold"
@@ -50518,7 +50518,7 @@
                                       "fill": "$3:color/semantic/text/secondary",
                                       "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "content": "Dipublikasikan Min, 5 Okt 2026 · 2 edited · 1 print",
+                                      "content": "Dipublikasikan Min, 5 Okt 2026 · 2 Foto edit · 1 Foto cetak",
                                       "fontFamily": "$3:font/family/base",
                                       "fontSize": "$3:font/size/body-sm",
                                       "fontWeight": "$3:font/weight/regular"
@@ -50968,7 +50968,7 @@
                               "fill": "$3:color/semantic/text/primary",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "8 proof · 2 edited · 1 print",
+                              "content": "8 proof · 3 hasil akhir",
                               "lineHeight": 1.5,
                               "fontFamily": "$3:font/family/base",
                               "fontSize": "$3:font/size/body",
@@ -52095,7 +52095,7 @@
                               "content": "Rina-Wisuda"
                             },
                             "3:k9OCFf": {
-                              "content": "Google Drive · Disinkronkan Sab, 4 Okt 2026 · 10.12 · 5 proof · 2 edited · 1 print · 2 diabaikan"
+                              "content": "Google Drive · Disinkronkan Sab, 4 Okt 2026 · 10.12 · 5 proof · 3 hasil akhir · 2 diabaikan"
                             },
                             "3:zUF3j": {
                               "children": [
@@ -52227,7 +52227,7 @@
                           "id": "OrOi0",
                           "name": "Counts",
                           "fill": "$3:color/semantic/text/primary",
-                          "content": "8 proof · 2 edited · 1 print",
+                          "content": "8 proof · 3 hasil akhir",
                           "fontFamily": "$3:font/family/base",
                           "fontSize": "$3:font/size/body",
                           "fontWeight": "$3:font/weight/semibold"
@@ -52448,6 +52448,1490 @@
                                     },
                                     "3:erGMi": {
                                       "enabled": false
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "wnI6D",
+      "type": "ref",
+      "ref": "a7uMtC",
+      "name": "Semua foto · Pilih foto · Desktop (REVISI 2026-10-08)",
+      "x": 21000,
+      "y": 56500,
+      "height": 1135,
+      "descendants": {
+        "e8ukxt/3:rvmSQ": {
+          "enabled": true,
+          "padding": 0
+        },
+        "e8ukxt/3:EPpbd": {
+          "content": "Beranda"
+        },
+        "e8ukxt/3:Hh5tj": {
+          "content": "Semua foto"
+        },
+        "e8ukxt/3:u6PNZ": {
+          "enabled": false
+        },
+        "e8ukxt/3:HsrFT": {
+          "content": "Semua foto"
+        },
+        "e8ukxt/3:i8XPWU": {
+          "content": "Lihat-lihat foto Anda. Buka foto untuk memilihnya ke bagian paket."
+        },
+        "e8ukxt/3:U9JxE": {
+          "type": "frame",
+          "id": "IryXy",
+          "name": "Actions",
+          "gap": "$3:space/2",
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "ZqM88",
+              "type": "ref",
+              "ref": "3:JmfmZ",
+              "name": "Unduh",
+              "descendants": {
+                "3:fMNO1": {
+                  "enabled": true,
+                  "icon": "download"
+                },
+                "3:xnhuK": {
+                  "content": "Unduh"
+                },
+                "3:z3xApy": {
+                  "enabled": true,
+                  "icon": "chevron-down"
+                }
+              }
+            },
+            {
+              "id": "m6oBNa",
+              "type": "ref",
+              "ref": "3:Q49yf7",
+              "name": "Pilih foto",
+              "descendants": {
+                "3:fMNO1": {
+                  "enabled": true,
+                  "icon": "square-check"
+                },
+                "3:xnhuK": {
+                  "content": "Pilih foto"
+                }
+              }
+            }
+          ]
+        },
+        "e8ukxt/3:Iu4gK": {
+          "enabled": false
+        },
+        "Vm4I7": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "DxoT6",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$3:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "ukPYV",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Semua foto",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Foto"
+                    },
+                    "3:nHCW8": {
+                      "content": "24 foto · 2 folder"
+                    },
+                    "3:QcKHK": {
+                      "type": "frame",
+                      "id": "N8GIh",
+                      "name": "Actions",
+                      "gap": "$3:space/2",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "m9rLmk",
+                          "type": "ref",
+                          "ref": "3:vmSeU",
+                          "name": "Cari nama file",
+                          "width": 260,
+                          "descendants": {
+                            "3:tvTDd": {
+                              "content": "Cari nama file"
+                            },
+                            "3:UFzsV": {
+                              "enabled": false
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "wYNJV",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/4",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "i0uEb",
+                          "name": "Breadcrumb",
+                          "width": "fill_container",
+                          "gap": "$3:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "YshSS",
+                              "name": "Root",
+                              "fill": "$3:color/semantic/text/secondary",
+                              "content": "Semua folder · 2 folder, 10 foto",
+                              "fontFamily": "$3:font/family/base",
+                              "fontSize": "$3:font/size/body-sm",
+                              "fontWeight": "$3:font/weight/regular"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "dqwt0",
+                          "name": "Grid",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/4",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "vvBxP",
+                              "name": "Row 1",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "uCgJy",
+                                  "type": "ref",
+                                  "ref": "3:NWvmt",
+                                  "name": "Akad",
+                                  "width": 250,
+                                  "descendants": {
+                                    "3:gvT5W": {
+                                      "height": 190
+                                    },
+                                    "3:rkS3D": {
+                                      "content": "Akad"
+                                    },
+                                    "3:tll3W": {
+                                      "content": "12 foto"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "DhkK5",
+                                  "type": "ref",
+                                  "ref": "3:NWvmt",
+                                  "name": "Resepsi",
+                                  "width": 250,
+                                  "descendants": {
+                                    "3:gvT5W": {
+                                      "height": 190
+                                    },
+                                    "3:rkS3D": {
+                                      "content": "Resepsi"
+                                    },
+                                    "3:tll3W": {
+                                      "content": "8 foto"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "hwkHW",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_001.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_001.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "DjgL7",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_002.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "XKVzi": {
+                                      "enabled": true,
+                                      "y": 160
+                                    },
+                                    "rTZvo": {
+                                      "content": "Foto edit"
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_002.jpg"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "pq5oy",
+                              "name": "Row 2",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "rnvrl",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_003.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_003.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "rQLDq",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_004.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_004.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "CBsoH",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_005.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "XKVzi": {
+                                      "enabled": true,
+                                      "y": 160
+                                    },
+                                    "rTZvo": {
+                                      "content": "Foto cetak × 1"
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_005.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "JocOx",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_006.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_006.jpg"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "tleTx",
+                              "name": "Row 3",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "YAwPc",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_007.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_007.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "XrM6a",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_008.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "XKVzi": {
+                                      "enabled": true,
+                                      "y": 160
+                                    },
+                                    "rTZvo": {
+                                      "content": "Foto edit"
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_008.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "jJamk",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_009.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_009.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "sSiJa",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "IMG_010.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "enabled": false
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "IMG_010.jpg"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "n3FtCO",
+      "type": "ref",
+      "ref": "a7uMtC",
+      "name": "Semua foto · mode pilih · Masukkan ke · Desktop (REVISI 2026-10-08)",
+      "x": 22680,
+      "y": 56500,
+      "height": 1087,
+      "descendants": {
+        "e8ukxt/3:rvmSQ": {
+          "enabled": true,
+          "padding": 0
+        },
+        "e8ukxt/3:EPpbd": {
+          "content": "Beranda"
+        },
+        "e8ukxt/3:Hh5tj": {
+          "content": "Semua foto"
+        },
+        "e8ukxt/3:u6PNZ": {
+          "enabled": false
+        },
+        "e8ukxt/3:HsrFT": {
+          "content": "Semua foto"
+        },
+        "e8ukxt/3:i8XPWU": {
+          "content": "Lihat-lihat foto Anda. Buka foto untuk memilihnya ke bagian paket."
+        },
+        "e8ukxt/3:U9JxE": {
+          "type": "frame",
+          "id": "n5Dsu",
+          "name": "Actions",
+          "gap": "$3:space/2",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "D0Av6",
+              "name": "Terpilih",
+              "fill": "$3:color/semantic/text/primary",
+              "content": "2 foto dipilih",
+              "fontFamily": "$3:font/family/base",
+              "fontSize": "$3:font/size/body",
+              "fontWeight": "$3:font/weight/semibold"
+            },
+            {
+              "id": "ymL1x",
+              "type": "ref",
+              "ref": "3:JmfmZ",
+              "name": "Batal",
+              "descendants": {
+                "3:xnhuK": {
+                  "content": "Batal"
+                }
+              }
+            },
+            {
+              "id": "salnJ",
+              "type": "ref",
+              "ref": "3:JmfmZ",
+              "name": "Unduh terpilih",
+              "descendants": {
+                "3:fMNO1": {
+                  "enabled": true,
+                  "icon": "download"
+                },
+                "3:xnhuK": {
+                  "content": "Unduh 2 foto"
+                }
+              }
+            },
+            {
+              "id": "Z5B95",
+              "type": "ref",
+              "ref": "3:Q49yf7",
+              "name": "Masukkan ke",
+              "descendants": {
+                "3:fMNO1": {
+                  "enabled": true,
+                  "icon": "square-check"
+                },
+                "3:xnhuK": {
+                  "content": "Masukkan ke…"
+                },
+                "3:z3xApy": {
+                  "enabled": true,
+                  "icon": "chevron-down"
+                }
+              }
+            }
+          ]
+        },
+        "e8ukxt/3:Iu4gK": {
+          "enabled": false
+        },
+        "e8ukxt/3:aga8t/3:DnAdt": {
+          "content": "Hasil akhir"
+        },
+        "e8ukxt/3:ngkYY/3:DnAdt": {
+          "content": "Foto"
+        },
+        "Vm4I7": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "iju29",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$3:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "Dc59l",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Hasil akhir",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Foto"
+                    },
+                    "3:nHCW8": {
+                      "content": "24 foto · 2 folder"
+                    },
+                    "3:QcKHK": {
+                      "type": "frame",
+                      "id": "ZLzvM",
+                      "name": "Actions",
+                      "width": "fit_content(181)",
+                      "height": "fit_content(39)",
+                      "gap": "$3:space/2",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "Pdw7b",
+                          "type": "ref",
+                          "ref": "3:uMP5H",
+                          "name": "Jenis file",
+                          "enabled": false,
+                          "descendants": {
+                            "3:DXFJu/3:FnOrw": {
+                              "content": "Edited · 24"
+                            },
+                            "3:lLSKb/3:FnOrw": {
+                              "content": "Print · 6"
+                            },
+                            "3:F56zx9": {
+                              "enabled": false
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "FF917",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/4",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "ViRqk",
+                          "name": "Grid",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/4",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "Wpayf",
+                              "name": "Row 1",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "ei3bP",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_001.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210,
+                                      "fill": "$3:color/semantic/action/primary",
+                                      "stroke": "$3:color/semantic/action/primary"
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_001.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "C8v3V",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_002.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_002.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "YpvtH",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_003.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210,
+                                      "fill": "$3:color/semantic/action/primary",
+                                      "stroke": "$3:color/semantic/action/primary"
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_003.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "wnLCc",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_004.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_004.jpg"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "lS2wR",
+                              "name": "Row 2",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "uFpGY",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_005.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_005.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "SzAiR",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_006.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_006.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "CShPM",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_007.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_007.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "mlOje",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_008.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_008.jpg"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "RELAh",
+                              "name": "Row 3",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "Ch3ks",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_009.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_009.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "GSTU1",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_010.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_010.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "A7e9s",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_011.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_011.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "g127nW",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_012.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": false
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_012.jpg"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "cw9LY": {
+          "enabled": true,
+          "layout": "none",
+          "padding": 0,
+          "children": [
+            {
+              "id": "q8ySZp",
+              "type": "ref",
+              "ref": "3:g6dKmz",
+              "name": "Menu Masukkan ke",
+              "x": 1136,
+              "y": 205,
+              "width": 280,
+              "descendants": {
+                "3:JoK1p": {
+                  "type": "frame",
+                  "id": "XVXOt",
+                  "name": "Items",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "id": "Q0ihS",
+                      "type": "ref",
+                      "ref": "3:WWqyy",
+                      "name": "Foto edit",
+                      "width": "fill_container",
+                      "descendants": {
+                        "3:FL9Kk": {
+                          "icon": "images"
+                        },
+                        "3:vHwtA": {
+                          "content": "Foto edit"
+                        },
+                        "3:leQSn": {
+                          "content": "4 dari 10 foto"
+                        },
+                        "3:baOu6": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "F6CEMd",
+                      "type": "ref",
+                      "ref": "3:WWqyy",
+                      "name": "Foto cetak",
+                      "width": "fill_container",
+                      "descendants": {
+                        "3:FL9Kk": {
+                          "icon": "printer"
+                        },
+                        "3:vHwtA": {
+                          "content": "Foto cetak"
+                        },
+                        "3:leQSn": {
+                          "content": "0 dari 5 lembar"
+                        },
+                        "3:baOu6": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "D4hzf",
+                      "type": "ref",
+                      "ref": "3:WWqyy",
+                      "name": "Album",
+                      "width": "fill_container(272)",
+                      "enabled": false,
+                      "descendants": {
+                        "3:FL9Kk": {
+                          "icon": "book-open"
+                        },
+                        "3:vHwtA": {
+                          "content": "Album"
+                        },
+                        "3:leQSn": {
+                          "content": "30 dari 30 · sudah dikirim"
+                        },
+                        "3:baOu6": {
+                          "enabled": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "UvATn",
+      "type": "ref",
+      "ref": "a7uMtC",
+      "name": "Hasil akhir · tab per item · Desktop (REVISI 2026-10-08)",
+      "x": 24360,
+      "y": 56500,
+      "height": 1176,
+      "descendants": {
+        "e8ukxt/3:rvmSQ": {
+          "enabled": true,
+          "padding": 0
+        },
+        "e8ukxt/3:EPpbd": {
+          "content": "Beranda"
+        },
+        "e8ukxt/3:Hh5tj": {
+          "content": "Hasil akhir"
+        },
+        "e8ukxt/3:u6PNZ": {
+          "enabled": false
+        },
+        "e8ukxt/3:HsrFT": {
+          "content": "Hasil akhir"
+        },
+        "e8ukxt/3:i8XPWU": {
+          "content": "Foto hasil akhir Anda sudah siap diunduh."
+        },
+        "e8ukxt/3:U9JxE": {
+          "type": "frame",
+          "id": "j3kSo4",
+          "name": "Actions",
+          "gap": "$3:space/2",
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "hycsz",
+              "type": "ref",
+              "ref": "3:Q49yf7",
+              "name": "Unduh",
+              "descendants": {
+                "3:fMNO1": {
+                  "enabled": true,
+                  "icon": "download"
+                },
+                "3:xnhuK": {
+                  "content": "Unduh"
+                },
+                "3:z3xApy": {
+                  "enabled": true,
+                  "icon": "chevron-down"
+                }
+              }
+            }
+          ]
+        },
+        "e8ukxt/3:Iu4gK": {
+          "enabled": false
+        },
+        "e8ukxt/3:aga8t/3:DnAdt": {
+          "content": "Hasil akhir"
+        },
+        "e8ukxt/3:ngkYY/3:DnAdt": {
+          "content": "Foto"
+        },
+        "Vm4I7": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "AsEVi",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$3:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "D0v52",
+                  "type": "ref",
+                  "ref": "3:E4PkTw",
+                  "name": "Alert",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:m0dqT6": {
+                      "content": "Hasil akhir sudah tersedia"
+                    },
+                    "3:fhch4": {
+                      "content": "Unduh satu per satu, beberapa, atau semuanya sekaligus."
+                    }
+                  }
+                },
+                {
+                  "id": "nZUCJ",
+                  "type": "ref",
+                  "ref": "3:rHONT",
+                  "name": "Hasil akhir",
+                  "width": "fill_container",
+                  "descendants": {
+                    "3:BXWnC": {
+                      "content": "Foto hasil akhir"
+                    },
+                    "3:nHCW8": {
+                      "content": "24 file · Foto edit"
+                    },
+                    "3:QcKHK": {
+                      "type": "frame",
+                      "id": "gpKlA",
+                      "name": "Actions",
+                      "gap": "$3:space/2",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "id": "fMlyK",
+                          "type": "ref",
+                          "ref": "3:uMP5H",
+                          "name": "Jenis file",
+                          "descendants": {
+                            "3:DXFJu/3:FnOrw": {
+                              "content": "Foto edit · 24"
+                            },
+                            "3:lLSKb/3:FnOrw": {
+                              "content": "Foto cetak · 6"
+                            },
+                            "3:F56zx9": {
+                              "enabled": true
+                            },
+                            "3:F56zx9/3:FnOrw": {
+                              "content": "Premium Retouch · 0"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "3:DElnV": {
+                      "type": "frame",
+                      "id": "vO8nH",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$3:space/4",
+                      "padding": "$3:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "tnj8A",
+                          "name": "Grid",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": "$3:space/4",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "r2OJSz",
+                              "name": "Row 1",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "jEtK8",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_001.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_001.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "Z4wiIQ",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_002.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_002.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "CNnaU",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_003.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_003.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "Cnm0I",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_004.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_004.jpg"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "C49NPn",
+                              "name": "Row 2",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "ukOQ2",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_005.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_005.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "R90820",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_006.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_006.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "EgcZk",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_007.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_007.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "Sq6Wm",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_008.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_008.jpg"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "JBrQb",
+                              "name": "Row 3",
+                              "width": "fill_container",
+                              "gap": "$3:space/4",
+                              "children": [
+                                {
+                                  "id": "FteKN",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_009.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_009.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "R9lfy",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_010.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_010.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "te5df",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_011.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_011.jpg"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "jVDV1",
+                                  "type": "ref",
+                                  "ref": "j1xyVG",
+                                  "name": "E_012.jpg",
+                                  "width": 250,
+                                  "descendants": {
+                                    "ZlGuS": {
+                                      "height": 190
+                                    },
+                                    "f4Yby3": {
+                                      "x": 210
+                                    },
+                                    "Xrteh": {
+                                      "enabled": true,
+                                      "icon": "download",
+                                      "fill": "$3:color/semantic/text/primary"
+                                    },
+                                    "sxpxx": {
+                                      "content": "E_012.jpg"
                                     }
                                   }
                                 }

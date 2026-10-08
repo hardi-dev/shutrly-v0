@@ -1,5 +1,5 @@
 {
-  "version": "2.20",
+  "version": "2.21",
   "children": [
     {
       "id": "syjCy",
@@ -8934,21 +8934,21 @@
                           "content": "Belum ada anggota tim aktif"
                         },
                         "m:FCyNB": {
-                          "content": "Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini.",
+                          "content": "Tambahkan anggota baru di sini. Setelah disimpan, dia langsung dipilih untuk sesi ini.",
                           "width": "fill_container"
                         },
                         "m:SzhQW": {
                           "id": "xQH74",
                           "type": "ref",
                           "ref": "m:JmfmZ",
-                          "name": "Action",
+                          "name": "Tambah anggota",
                           "descendants": {
                             "m:fMNO1": {
                               "enabled": true,
-                              "icon": "user-round-cog"
+                              "icon": "user-plus"
                             },
                             "m:xnhuK": {
-                              "content": "Buka Tim"
+                              "content": "Tambah anggota"
                             }
                           }
                         }
@@ -9763,21 +9763,21 @@
                           "content": "Belum ada anggota tim aktif"
                         },
                         "m:FCyNB": {
-                          "content": "Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini.",
+                          "content": "Tambahkan anggota baru di sini. Setelah disimpan, dia langsung dipilih untuk sesi ini.",
                           "width": "fill_container"
                         },
                         "m:SzhQW": {
                           "id": "vPnRv",
                           "type": "ref",
                           "ref": "m:JmfmZ",
-                          "name": "Action",
+                          "name": "Tambah anggota",
                           "descendants": {
                             "m:fMNO1": {
                               "enabled": true,
-                              "icon": "user-round-cog"
+                              "icon": "user-plus"
                             },
                             "m:xnhuK": {
-                              "content": "Buka Tim"
+                              "content": "Tambah anggota"
                             }
                           }
                         }
@@ -33237,6 +33237,1069 @@
         "m:l9JQO0/m:M54Ca": {
           "enabled": true,
           "content": "Batalkan"
+        }
+      }
+    },
+    {
+      "id": "lyUOZ",
+      "type": "ref",
+      "ref": "m:y9uBJl",
+      "name": "Proyek / Penugasan / Tambah anggota bertumpuk / Desktop (REVISI 2026-10-08)",
+      "x": 3120,
+      "y": 6338,
+      "height": 1024,
+      "descendants": {
+        "m:fNszT/m:rAUNw": {
+          "content": "Aster Wedding"
+        },
+        "m:fNszT/m:llfv5": {
+          "id": "wKxHG",
+          "type": "ref",
+          "ref": "m:K0UQ06",
+          "width": "fill_container",
+          "name": "Nav Dasbor",
+          "descendants": {
+            "m:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "m:m6S2m": {
+              "content": "Dasbor"
+            },
+            "m:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "m:fNszT/m:nHXqh": {
+          "id": "i5MC2E",
+          "type": "ref",
+          "ref": "m:CInVy",
+          "width": "fill_container",
+          "name": "Nav Proyek",
+          "descendants": {
+            "m:MpR9k": {
+              "icon": "folder-kanban"
+            },
+            "m:m6S2m": {
+              "content": "Proyek"
+            },
+            "m:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "m:fNszT/m:wwfj3/m:E6JiYt": {
+          "enabled": false
+        },
+        "m:fNszT/m:lz7Bj/m:E6JiYt": {
+          "enabled": false
+        },
+        "m:fNszT/m:P4ZpeX/m:E6JiYt": {
+          "enabled": false
+        },
+        "m:fNszT/m:V2Udn4/m:E6JiYt": {
+          "enabled": false
+        },
+        "m:fNszT/m:f1BvVe/m:E6JiYt": {
+          "enabled": false
+        },
+        "m:fNszT/m:I3aJo/m:E6JiYt": {
+          "enabled": false
+        },
+        "m:fNszT/m:E2Dl5F/m:E6JiYt": {
+          "enabled": false
+        },
+        "m:fNszT/m:aXcVC/m:DloPs": {
+          "content": "RS"
+        },
+        "m:fNszT/m:EpYE1": {
+          "content": "Rina Saputri"
+        },
+        "m:fNszT/m:pMF7b": {
+          "content": "rina@asterstudio.id"
+        },
+        "m:Sw0yD/m:MST3f/m:EPpbd": {
+          "content": "Proyek"
+        },
+        "m:Sw0yD/m:MST3f/m:Hh5tj": {
+          "content": "Wisuda Basic — Rina"
+        },
+        "m:Sw0yD/m:MST3f/m:ami8m": {
+          "type": "frame",
+          "id": "Z69pdW",
+          "name": "Heading",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": "$m:space/1-5",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Q0aO94",
+              "name": "Title row",
+              "gap": "$m:space/3",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "C1oHt",
+                  "name": "Title",
+                  "fill": "$m:component/page-header/title",
+                  "content": "Wisuda Basic — Rina",
+                  "fontFamily": "$m:font/family/base",
+                  "fontSize": "$m:font/size/display",
+                  "fontWeight": "$m:font/weight/bold",
+                  "letterSpacing": -1
+                },
+                {
+                  "id": "v7aWyw",
+                  "type": "ref",
+                  "ref": "m:D7LAk7",
+                  "name": "Status",
+                  "descendants": {
+                    "m:SD1o7": {
+                      "content": "Dibooking"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "uNuWJ",
+              "name": "Meta",
+              "fill": "$m:component/page-header/subtitle",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Rina · Sesi berikutnya Sel, 10 Nov 2026 · 06.30 · Rumah Rina, Depok · +1 sesi",
+              "fontFamily": "$m:font/family/base",
+              "fontSize": "$m:font/size/body",
+              "fontWeight": "$m:font/weight/regular"
+            }
+          ]
+        },
+        "m:Sw0yD/m:MST3f/m:U9JxE": {
+          "type": "frame",
+          "id": "DRV2N",
+          "name": "Actions",
+          "gap": "$m:component/page-header/hero/gap",
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "RpG5P",
+              "type": "ref",
+              "ref": "m:Q49yf7",
+              "name": "Status step",
+              "descendants": {
+                "m:fMNO1": {
+                  "enabled": true,
+                  "icon": "camera"
+                },
+                "m:xnhuK": {
+                  "content": "Mulai pemotretan"
+                }
+              }
+            },
+            {
+              "id": "ODRU4",
+              "type": "ref",
+              "ref": "m:rXttF",
+              "name": "Menu proyek"
+            }
+          ]
+        },
+        "m:Sw0yD/m:MST3f/m:Iu4gK": {
+          "enabled": false
+        },
+        "m:Sw0yD/m:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "yahCH",
+              "name": "Container",
+              "width": 720,
+              "layout": "vertical",
+              "gap": "$m:space/6",
+              "children": [
+                {
+                  "id": "WAeoW",
+                  "type": "ref",
+                  "ref": "m:rHONT",
+                  "name": "Info",
+                  "width": "fill_container",
+                  "descendants": {
+                    "m:BXWnC": {
+                      "content": "Info"
+                    },
+                    "m:nHCW8": {
+                      "enabled": false
+                    },
+                    "m:QcKHK": {
+                      "children": [
+                        {
+                          "id": "f4Q5A4",
+                          "type": "ref",
+                          "ref": "m:JmfmZ",
+                          "name": "Ubah info",
+                          "descendants": {
+                            "m:fMNO1": {
+                              "enabled": true,
+                              "icon": "pencil"
+                            },
+                            "m:xnhuK": {
+                              "content": "Ubah info"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "m:DElnV": {
+                      "type": "frame",
+                      "id": "e84Ao",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$m:space/5",
+                      "padding": "$m:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "o4rLh",
+                          "name": "Facts",
+                          "width": "fill_container",
+                          "gap": "$m:space/8",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "WDSO3",
+                              "name": "Klien",
+                              "layout": "vertical",
+                              "gap": "$m:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Qk1Tl",
+                                  "name": "Label",
+                                  "fill": "$m:color/semantic/text/secondary",
+                                  "content": "Klien",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body-sm",
+                                  "fontWeight": "$m:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "VoWUQ",
+                                  "name": "Value",
+                                  "fill": "$m:color/semantic/text/primary",
+                                  "content": "Rina · +62 812-3456-7890",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body",
+                                  "fontWeight": "$m:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "tKe6x",
+                              "name": "Layanan",
+                              "layout": "vertical",
+                              "gap": "$m:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "oPQXA",
+                                  "name": "Label",
+                                  "fill": "$m:color/semantic/text/secondary",
+                                  "content": "Layanan",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body-sm",
+                                  "fontWeight": "$m:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "HqWDM",
+                                  "name": "Value",
+                                  "fill": "$m:color/semantic/text/primary",
+                                  "content": "Wisuda Basic",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body",
+                                  "fontWeight": "$m:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "cqVqM",
+                              "name": "Harga sepakat",
+                              "layout": "vertical",
+                              "gap": "$m:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "r21Z5G",
+                                  "name": "Label",
+                                  "fill": "$m:color/semantic/text/secondary",
+                                  "content": "Harga sepakat",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body-sm",
+                                  "fontWeight": "$m:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Q0AUGi",
+                                  "name": "Value",
+                                  "fill": "$m:color/semantic/text/primary",
+                                  "content": "Rp 700.000",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body",
+                                  "fontWeight": "$m:font/weight/semibold"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "VxzIk",
+                  "type": "ref",
+                  "ref": "m:G8WO8q",
+                  "name": "Isi paket",
+                  "width": "fill_container",
+                  "descendants": {
+                    "m:BXWnC": {
+                      "content": "Isi paket"
+                    },
+                    "m:nHCW8": {
+                      "content": "Disalin dari Wisuda Basic. Bisa diubah sampai pemotretan dimulai."
+                    },
+                    "m:QcKHK": {
+                      "children": [
+                        {
+                          "id": "d4nrw",
+                          "type": "ref",
+                          "ref": "m:JmfmZ",
+                          "name": "Tambah item",
+                          "descendants": {
+                            "m:fMNO1": {
+                              "enabled": true,
+                              "icon": "plus"
+                            },
+                            "m:xnhuK": {
+                              "content": "Tambah item"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "m:f60zS": {
+                      "type": "frame",
+                      "id": "ThrHn",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        "$m:component/section-card/flush/padding-y",
+                        "$m:component/section-card/flush/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "dSf50",
+                          "type": "ref",
+                          "ref": "m:PV6HB",
+                          "name": "Item Foto edit",
+                          "width": "fill_container",
+                          "descendants": {
+                            "m:c4tOj9": {
+                              "enabled": false
+                            },
+                            "m:O7pUR": {
+                              "content": "Foto edit"
+                            },
+                            "m:k9OCFf": {
+                              "content": "25 foto · pilihan edit"
+                            },
+                            "m:zUF3j": {
+                              "children": [
+                                {
+                                  "id": "uY40x",
+                                  "type": "ref",
+                                  "ref": "m:tgN4c",
+                                  "name": "Item actions"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "d3lLWX",
+                          "type": "ref",
+                          "ref": "m:Bf3eg",
+                          "name": "Item Jumlah orang",
+                          "width": "fill_container",
+                          "descendants": {
+                            "m:c4tOj9": {
+                              "enabled": false
+                            },
+                            "m:O7pUR": {
+                              "content": "Jumlah orang"
+                            },
+                            "m:k9OCFf": {
+                              "content": "1–3 orang"
+                            },
+                            "m:zUF3j": {
+                              "children": [
+                                {
+                                  "id": "hvbgq",
+                                  "type": "ref",
+                                  "ref": "m:tgN4c",
+                                  "name": "Item actions"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "OJwKW",
+                  "type": "ref",
+                  "ref": "m:G8WO8q",
+                  "name": "Jadwal",
+                  "width": "fill_container",
+                  "descendants": {
+                    "m:BXWnC": {
+                      "content": "Jadwal"
+                    },
+                    "m:nHCW8": {
+                      "content": "Sesi pemotretan, urut tanggal."
+                    },
+                    "m:QcKHK": {
+                      "children": [
+                        {
+                          "id": "Gpmge",
+                          "type": "ref",
+                          "ref": "m:JmfmZ",
+                          "name": "Tambah sesi",
+                          "descendants": {
+                            "m:fMNO1": {
+                              "enabled": true,
+                              "icon": "plus"
+                            },
+                            "m:xnhuK": {
+                              "content": "Tambah sesi"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "m:f60zS": {
+                      "type": "frame",
+                      "id": "BkU9t",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        "$m:component/section-card/flush/padding-y",
+                        "$m:component/section-card/flush/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "w7oef",
+                          "type": "ref",
+                          "ref": "m:PV6HB",
+                          "name": "Session Foto keluarga",
+                          "width": "fill_container",
+                          "descendants": {
+                            "m:c4tOj9": {
+                              "enabled": false
+                            },
+                            "m:O7pUR": {
+                              "content": "Foto keluarga"
+                            },
+                            "m:k9OCFf": {
+                              "content": "Sel, 10 Nov 2026 · 06.30–07.15 · Rumah Rina, Depok"
+                            },
+                            "m:zUF3j": {
+                              "children": [
+                                {
+                                  "id": "cxuUA",
+                                  "type": "ref",
+                                  "ref": "m:VA96y",
+                                  "name": "Atur tim",
+                                  "descendants": {
+                                    "m:wSyzB": {
+                                      "icon": "user-plus"
+                                    }
+                                  }
+                                },
+                                {
+                                  "id": "bmI4M",
+                                  "type": "ref",
+                                  "ref": "m:tgN4c",
+                                  "name": "Session actions"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "zNKYp",
+                          "type": "ref",
+                          "ref": "m:Bf3eg",
+                          "name": "Session Wisuda",
+                          "width": "fill_container",
+                          "descendants": {
+                            "m:c4tOj9": {
+                              "enabled": false
+                            },
+                            "m:O7pUR": {
+                              "content": "Wisuda"
+                            },
+                            "m:k9OCFf": {
+                              "content": "Sel, 10 Nov 2026 · 07.30–10.00 · Balairung UI, Depok"
+                            },
+                            "m:zUF3j": {
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "b1j1r",
+                                  "name": "Avatar group",
+                                  "gap": -6,
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "id": "uFosD",
+                                      "type": "ref",
+                                      "ref": "m:PO3yR",
+                                      "name": "Avatar DP",
+                                      "stroke": "$m:color/semantic/surface/panel",
+                                      "strokeWidth": 2,
+                                      "strokeAlignment": "outer",
+                                      "descendants": {
+                                        "m:DloPs": {
+                                          "content": "DP"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "fTmvo",
+                                      "type": "ref",
+                                      "ref": "m:PO3yR",
+                                      "name": "Avatar SL",
+                                      "stroke": "$m:color/semantic/surface/panel",
+                                      "strokeWidth": 2,
+                                      "strokeAlignment": "outer",
+                                      "descendants": {
+                                        "m:DloPs": {
+                                          "content": "SL"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "id": "NQQ7p",
+                                      "type": "ref",
+                                      "ref": "m:PO3yR",
+                                      "name": "Avatar JS",
+                                      "stroke": "$m:color/semantic/surface/panel",
+                                      "strokeWidth": 2,
+                                      "strokeAlignment": "outer",
+                                      "descendants": {
+                                        "m:DloPs": {
+                                          "content": "JS"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "rVIZH",
+                                      "name": "Overflow",
+                                      "width": 24,
+                                      "height": 24,
+                                      "fill": "$m:color/semantic/surface/sunken",
+                                      "cornerRadius": 12,
+                                      "stroke": "$m:color/semantic/surface/panel",
+                                      "strokeWidth": 2,
+                                      "strokeAlignment": "outer",
+                                      "justifyContent": "center",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "wBZGh",
+                                          "name": "Count",
+                                          "fill": "$m:color/semantic/text/secondary",
+                                          "content": "+1",
+                                          "fontFamily": "$m:font/family/base",
+                                          "fontSize": "$m:font/size/caption",
+                                          "fontWeight": "$m:font/weight/semibold"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "id": "JH6OU",
+                                  "type": "ref",
+                                  "ref": "m:tgN4c",
+                                  "name": "Session actions"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "kEhRU",
+                  "type": "ref",
+                  "ref": "m:rHONT",
+                  "name": "Field booking",
+                  "width": "fill_container",
+                  "descendants": {
+                    "m:BXWnC": {
+                      "content": "Field booking"
+                    },
+                    "m:nHCW8": {
+                      "content": "Disalin dari Wisuda Basic saat proyek dibuat."
+                    },
+                    "m:QcKHK": {
+                      "children": [
+                        {
+                          "id": "p2HDCE",
+                          "type": "ref",
+                          "ref": "m:JmfmZ",
+                          "name": "Ubah field booking",
+                          "descendants": {
+                            "m:fMNO1": {
+                              "enabled": true,
+                              "icon": "pencil"
+                            },
+                            "m:xnhuK": {
+                              "content": "Ubah"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "m:DElnV": {
+                      "type": "frame",
+                      "id": "JZuD8",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$m:space/5",
+                      "padding": "$m:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "simlr",
+                          "name": "Facts",
+                          "width": "fill_container",
+                          "gap": "$m:space/8",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "VCJ1M",
+                              "name": "Nama kampus",
+                              "layout": "vertical",
+                              "gap": "$m:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "SLeLj",
+                                  "name": "Label",
+                                  "fill": "$m:color/semantic/text/secondary",
+                                  "content": "Nama kampus",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body-sm",
+                                  "fontWeight": "$m:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "WWwt4",
+                                  "name": "Value",
+                                  "fill": "$m:color/semantic/text/primary",
+                                  "content": "Universitas Indonesia",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body",
+                                  "fontWeight": "$m:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Nx8Gm",
+                              "name": "Tanggal wisuda",
+                              "layout": "vertical",
+                              "gap": "$m:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "kicQE",
+                                  "name": "Label",
+                                  "fill": "$m:color/semantic/text/secondary",
+                                  "content": "Tanggal wisuda",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body-sm",
+                                  "fontWeight": "$m:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "cKRjO",
+                                  "name": "Value",
+                                  "fill": "$m:color/semantic/text/primary",
+                                  "content": "Sel, 10 Nov 2026",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body",
+                                  "fontWeight": "$m:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "cp7Yh",
+                              "name": "Ukuran toga",
+                              "layout": "vertical",
+                              "gap": "$m:space/1",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "dZjaI",
+                                  "name": "Label",
+                                  "fill": "$m:color/semantic/text/secondary",
+                                  "content": "Ukuran toga",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body-sm",
+                                  "fontWeight": "$m:font/weight/regular"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "gCDED",
+                                  "name": "Value",
+                                  "fill": "$m:color/semantic/text/primary",
+                                  "content": "—",
+                                  "fontFamily": "$m:font/family/base",
+                                  "fontSize": "$m:font/size/body",
+                                  "fontWeight": "$m:font/weight/semibold"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "m:fwm7P": {
+          "type": "frame",
+          "id": "pkJSC",
+          "layoutPosition": "absolute",
+          "x": 0,
+          "y": 0,
+          "name": "Overlay",
+          "width": 1440,
+          "height": 1024,
+          "fill": "#0B0B0B66",
+          "layout": "none",
+          "children": [
+            {
+              "id": "VNpSB",
+              "type": "ref",
+              "ref": "m:f8ym9",
+              "name": "Dialog Tambah anggota sesi",
+              "x": 440,
+              "y": 220,
+              "descendants": {
+                "m:V8uAA": {
+                  "content": "Tambah anggota · Wisuda"
+                },
+                "m:PPg3y": {
+                  "content": "Sel, 10 Nov 2026 · 07.30–10.00 · Balairung UI, Depok"
+                },
+                "m:c5Prsw": {
+                  "type": "frame",
+                  "id": "Vrm8P",
+                  "name": "Body",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$m:space/4",
+                  "padding": "$m:component/modal/body/padding",
+                  "children": [
+                    {
+                      "id": "w2tYJg",
+                      "type": "ref",
+                      "ref": "m:H43gDN",
+                      "name": "Empty",
+                      "width": "fill_container",
+                      "descendants": {
+                        "m:zOUao": {
+                          "icon": "users"
+                        },
+                        "m:c8Y4Ky": {
+                          "content": "Belum ada anggota tim aktif"
+                        },
+                        "m:FCyNB": {
+                          "content": "Tambahkan anggota baru di sini. Setelah disimpan, dia langsung dipilih untuk sesi ini.",
+                          "width": "fill_container"
+                        },
+                        "m:SzhQW": {
+                          "id": "kI3cj",
+                          "type": "ref",
+                          "ref": "m:JmfmZ",
+                          "name": "Tambah anggota",
+                          "descendants": {
+                            "m:fMNO1": {
+                              "enabled": true,
+                              "icon": "user-plus"
+                            },
+                            "m:xnhuK": {
+                              "content": "Tambah anggota"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "m:I7e8yh": {
+                  "type": "frame",
+                  "id": "gzTLm",
+                  "name": "Actions",
+                  "gap": "$m:space/3",
+                  "children": [
+                    {
+                      "id": "x5AZc",
+                      "type": "ref",
+                      "ref": "m:JmfmZ",
+                      "name": "Batal",
+                      "descendants": {
+                        "m:fMNO1": {
+                          "enabled": false
+                        },
+                        "m:xnhuK": {
+                          "content": "Batal"
+                        }
+                      }
+                    },
+                    {
+                      "id": "gQpit",
+                      "type": "ref",
+                      "ref": "m:lBKcT",
+                      "name": "Tambah",
+                      "descendants": {
+                        "m:fMNO1": {
+                          "enabled": false
+                        },
+                        "m:xnhuK": {
+                          "content": "Tambah"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "rectangle",
+              "id": "JbnGa",
+              "x": 0,
+              "y": 0,
+              "name": "Scrim kedua",
+              "fill": "#0B0B0B33",
+              "width": 1440,
+              "height": 1024
+            },
+            {
+              "id": "CVeZr",
+              "type": "ref",
+              "ref": "m:f8ym9",
+              "name": "Dialog Tambah anggota (bertumpuk)",
+              "x": 470,
+              "y": 150,
+              "descendants": {
+                "m:V8uAA": {
+                  "content": "Tambah anggota"
+                },
+                "m:PPg3y": {
+                  "content": "Freelancer yang bisa kamu tugaskan di jadwal proyek."
+                },
+                "m:c5Prsw": {
+                  "type": "frame",
+                  "id": "LZEcO",
+                  "name": "Body",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$m:space/4",
+                  "padding": "$m:component/modal/body/padding",
+                  "children": [
+                    {
+                      "id": "E2jnO",
+                      "type": "ref",
+                      "ref": "m:HHNPk",
+                      "name": "Nama",
+                      "width": "fill_container",
+                      "descendants": {
+                        "m:Gmk0c": {
+                          "content": "Nama"
+                        },
+                        "m:RsEBb": {
+                          "enabled": false
+                        },
+                        "m:c67yIW/m:MePi8": {
+                          "enabled": false
+                        },
+                        "m:c67yIW/m:tvTDd": {
+                          "enabled": true,
+                          "content": "Nama lengkap"
+                        },
+                        "m:c67yIW/m:CykHo": {
+                          "enabled": false
+                        },
+                        "m:uh4XA": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "idutF",
+                      "type": "ref",
+                      "ref": "m:HHNPk",
+                      "name": "Nomor WhatsApp",
+                      "width": "fill_container",
+                      "descendants": {
+                        "m:Gmk0c": {
+                          "content": "Nomor WhatsApp"
+                        },
+                        "m:RsEBb": {
+                          "enabled": false
+                        },
+                        "m:c67yIW/m:MePi8": {
+                          "enabled": false
+                        },
+                        "m:c67yIW/m:tvTDd": {
+                          "enabled": true,
+                          "content": "0812 3456 7890"
+                        },
+                        "m:c67yIW/m:CykHo": {
+                          "enabled": false
+                        },
+                        "m:uh4XA": {
+                          "enabled": true,
+                          "content": "Contoh: 0812 3456 7890"
+                        }
+                      }
+                    },
+                    {
+                      "id": "z11E6w",
+                      "type": "ref",
+                      "ref": "m:HHNPk",
+                      "name": "Email",
+                      "width": "fill_container",
+                      "descendants": {
+                        "m:Gmk0c": {
+                          "content": "Email"
+                        },
+                        "m:RsEBb": {
+                          "enabled": true
+                        },
+                        "m:c67yIW/m:MePi8": {
+                          "enabled": false
+                        },
+                        "m:c67yIW/m:tvTDd": {
+                          "enabled": true,
+                          "content": "nama@email.com"
+                        },
+                        "m:c67yIW/m:CykHo": {
+                          "enabled": false
+                        },
+                        "m:uh4XA": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "R3Sep",
+                      "type": "ref",
+                      "ref": "m:X8ErE9",
+                      "name": "Peran",
+                      "width": "fill_container",
+                      "descendants": {
+                        "m:Et1pR/m:Gmk0c": {
+                          "content": "Peran"
+                        },
+                        "m:Et1pR/m:RsEBb": {
+                          "enabled": false
+                        },
+                        "m:Et1pR/m:c67yIW/m:MePi8": {
+                          "enabled": false
+                        },
+                        "m:Et1pR/m:c67yIW/m:tvTDd": {
+                          "enabled": true,
+                          "content": "Pilih peran"
+                        },
+                        "m:Et1pR/m:c67yIW/m:CykHo": {
+                          "enabled": false
+                        },
+                        "m:Et1pR/m:uh4XA": {
+                          "enabled": true,
+                          "content": "Bisa lebih dari satu. Peran baru bisa dibuat dari sini."
+                        }
+                      }
+                    }
+                  ]
+                },
+                "m:I7e8yh": {
+                  "type": "frame",
+                  "id": "ibf8c",
+                  "name": "Actions",
+                  "gap": "$m:space/3",
+                  "children": [
+                    {
+                      "id": "iVUOS",
+                      "type": "ref",
+                      "ref": "m:JmfmZ",
+                      "name": "Batal",
+                      "descendants": {
+                        "m:fMNO1": {
+                          "enabled": false
+                        },
+                        "m:xnhuK": {
+                          "content": "Batal"
+                        }
+                      }
+                    },
+                    {
+                      "id": "ONXtW",
+                      "type": "ref",
+                      "ref": "m:Q49yf7",
+                      "name": "Simpan",
+                      "descendants": {
+                        "m:fMNO1": {
+                          "enabled": false
+                        },
+                        "m:xnhuK": {
+                          "content": "Simpan"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "m:VJpuD": {
+          "height": 1024
         }
       }
     }

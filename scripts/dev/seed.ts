@@ -1,7 +1,8 @@
 // Seeds one demo studio on a NON-production database through the app's own use cases: an Owner
 // registered and verified through Better Auth (signUpEmail, then the verification link), a workspace with its defaults, a catalog, two clients, a
 // booked project with a gallery synced from a real public Drive folder and published, and a draft
-// project. Final delivery is published too when the folder has `edited` or `print` subfolders.
+// project. Subfolders named `edited` and `print` are mapped to the package items *Foto edit* and
+// *Foto cetak* through the folder mapping (F-21), and final delivery is published when they hold files.
 // It never deletes or overwrites: it stops when the Owner's email already exists.
 // The generated passwords and the client link go to a git-ignored file, never to the repo.
 // Usage: pnpm db:seed
@@ -56,6 +57,10 @@ import { seedDefaultItemDefinitions } from "@/features/booking/application/use-c
 import { seedDefaultTeamRoles } from "@/features/booking/application/use-cases/seed-default-team-roles/seed-default-team-roles";
 import { seedDefaultTemplates } from "@/features/communications/application/use-cases/seed-default-templates/seed-default-templates";
 import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
+import {
+  getFolderMapping,
+  setFolderMapping,
+} from "@/features/gallery/application/use-cases/folder-mapping/folder-mapping";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
 import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
 import { seedDefaultSource } from "@/features/gallery/application/use-cases/seed-default-source/seed-default-source";
@@ -336,6 +341,32 @@ async function workspaceSourceId(studio: Studio): Promise<string> {
   return row.id;
 }
 
+// F-21: no folder name is recognised by itself, so the seed maps the demo names to the package items.
+const SEED_FOLDER_ITEMS: Readonly<Record<string, string>> = {
+  edited: "Foto edit",
+  print: "Foto cetak",
+};
+
+/** Maps the synced `edited` / `print` subfolders to *Foto edit* / *Foto cetak* (F-21). @param studio - the seeded studio @param scope - gallery deps @param sourceId - the linked folder */
+async function mapFinishedFolders(
+  studio: Studio,
+  scope: GalleryScope,
+  sourceId: string,
+): Promise<void> {
+  const view = await getFolderMapping(scope, studio.context, sourceId);
+  const mappings = view.folders.flatMap((path) => {
+    const itemName = SEED_FOLDER_ITEMS[path.toLowerCase()];
+    const item = view.items.find((candidate) => candidate.name === itemName);
+    return item ? [{ path, projectItemId: item.id }] : [];
+  });
+  if (mappings.length === 0) return;
+  check(
+    "folder mapping",
+    await setFolderMapping({ ...scope, now: new Date() }, studio.context, sourceId, { mappings }),
+  );
+  console.log(`  mapped: ${mappings.map((entry) => entry.path).join(", ")}`);
+}
+
 async function seedGallery(studio: Studio, env: SeedEnv, projectId: string): Promise<string> {
   const scope = galleryScope(studio, env);
   const { context, ownerId } = studio;
@@ -355,6 +386,7 @@ async function seedGallery(studio: Studio, env: SeedEnv, projectId: string): Pro
     }),
   );
   await syncSource(studio, scope, linked.sourceId);
+  await mapFinishedFolders(studio, scope, linked.sourceId);
   check(
     "publish",
     await publishGallery({ ...scope, now: new Date() }, context, ownerId, created.galleryId),

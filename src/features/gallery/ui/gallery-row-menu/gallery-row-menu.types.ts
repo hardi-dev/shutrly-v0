@@ -5,7 +5,7 @@ export interface GalleryMenuEntry {
   readonly icon: IconName;
   readonly isDestructive?: boolean;
   readonly isDisabled?: boolean;
-  /** The hint under a disabled entry (e.g. why *Lepas folder* is off). */
+  /** The hint under a disabled entry (e.g. why *Hapus* is off). */
   readonly description?: string;
   readonly onSelect: () => void;
 }

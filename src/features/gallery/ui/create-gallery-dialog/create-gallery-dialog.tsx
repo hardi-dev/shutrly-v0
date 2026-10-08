@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 
 import { Button } from "@/ui/primitives/button/button";
 
+import { CreateGalleryFolderFields } from "../create-gallery-folder-fields/create-gallery-folder-fields";
 import { ExpiryFields } from "../expiry-fields/expiry-fields";
+import { GalleryConfirmDialog } from "../gallery-confirm-dialog/gallery-confirm-dialog";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { GalleryDialogShell } from "../gallery-dialog-shell/gallery-dialog-shell";
 import { galleryErrorText } from "../gallery-error-text/gallery-error-text";
@@ -18,7 +20,7 @@ import type {
 
 const FORM_ID = "create-gallery-form";
 
-/** *Buat galeri*: a generated password with *Buat ulang* and the expiry choice (AC-GAL-001, 002, 018, 019). */
+/** *Buat galeri*: a generated password with *Buat ulang*, the expiry choice and an optional first folder (AC-GAL-001, 002, 010, 018, 019; Revision OT #3). */
 export function CreateGalleryDialog(props: Readonly<CreateGalleryDialogProps>) {
   const [isPending, setIsPending] = useState(false);
   const renderPrimary = (isMobile: boolean) => (
@@ -82,6 +84,27 @@ function CreateGalleryForm(props: Readonly<CreateGalleryFormProps>) {
         daysError={state.errors.days}
         daysHelper={GALLERY_COPY.expiryDaysHelperDraft}
       />
+      {props.linkableSources.length > 0 ? (
+        <CreateGalleryFolderFields folder={state.folder} sources={props.linkableSources} />
+      ) : null}
+      <FolderInUseConfirm state={state} />
     </form>
+  );
+}
+
+/** *Folder sudah dipakai proyek lain* before creating, as after *Tambah folder* (AC-GAL-010). */
+function FolderInUseConfirm({
+  state,
+}: Readonly<{ state: ReturnType<typeof useCreateGalleryForm> }>) {
+  if (!state.inUse) return null;
+  return (
+    <GalleryConfirmDialog
+      title={GALLERY_COPY.folderInUseTitle}
+      description={GALLERY_COPY.folderInUseBody(state.inUse.projects)}
+      confirmLabel={GALLERY_COPY.createFolderInUseConfirm}
+      isPending={state.isPending}
+      onConfirm={state.confirmInUse}
+      onClose={state.cancelInUse}
+    />
   );
 }

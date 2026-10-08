@@ -10,6 +10,7 @@ export type GalleryDomainCode =
   | "ALREADY_EXISTS"
   | "INVALID_STATE"
   | "LAST_ACTIVE_SOURCE"
+  | "HAS_PICKS"
   | "SYNC_IN_PROGRESS"
   | "RATE_LIMITED";
 export interface GalleryValidationFailure {
@@ -23,7 +24,8 @@ export interface GalleryDomainFailure {
 }
 export type GalleryFailure = GalleryValidationFailure | GalleryDomainFailure;
 export type CreateGalleryResult =
-  { readonly ok: true; readonly galleryId: string } | GalleryFailure;
+  | { readonly ok: true; readonly galleryId: string; readonly sourceId: string | null }
+  | GalleryFailure;
 export type GalleryWriteResult = { readonly ok: true } | GalleryFailure;
 
 export interface PublishSourceFailure {

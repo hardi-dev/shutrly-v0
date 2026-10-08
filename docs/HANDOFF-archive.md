@@ -2,6 +2,14 @@
 
 Older handoffs, the early status table, the component-library and design-system notes, and superseded next steps, moved out of [HANDOFF.md](HANDOFF.md) on 2026-10-04 to keep the file that every session reads small. Nothing was edited. Read this only when you need history; the live sources are the feature folders, `docs/design-system/` and `docs/features/README.md`.
 
+## Previous handoff — F-09 free-tier rework PLANNED, F-09 Gallery DONE (2026-10-05)
+
+- Staging moved to Netlify (Owner 2026-10-06, [ADR-020](architecture/decisions/ADR-020-staging-on-netlify.md)) after the Cloudflare Worker hit error 1102; the Owner re-registers and re-links a gallery folder on staging, adds the OAuth redirect URI and rotates the staging secrets.
+- F-09 free-tier rework R1–R4 done; PR #8 to mark ready; production needs the gallery secrets and migrations `0013`/`0014` ([plan](features/gallery/plan.md), [report](features/gallery/verification-report.md), [release notes](features/gallery/release-notes.md)).
+- ADR-018 and ADR-019 accepted; Workers Free continues with a CPU watch (upgrade trigger in ADR-018 point 4).
+- F-09 Gallery `DONE`, pending Owner acceptance: Slices 0–8 recorded, checks passed (integration 160, E2E 73 with 2 flaky), real-Drive smoke spec `gallery-drive-smoke.spec.ts`.
+- Owner actions then: accept F-09, check the Workers Paid plan before ship, provision the Drive and password keys, optionally measure a 1,000–2,000 photo folder (A-T1).
+
 ## Previous handoff — F-08 Team DESIGNED (2026-10-03)
 
 - **Done:** spec and AC-TEAM-001…027 written, design APPROVED (48 frames and exports), diagrams for member state and add/remove/delete.

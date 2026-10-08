@@ -24,3 +24,42 @@ export const Missing: StoryObj<typeof meta> = { args: { isMissing: true } };
 export const WithMeta: StoryObj<typeof meta> = { args: { meta: COPY.meta } };
 
 export const Skeleton: StoryObj<typeof meta> = { render: () => <PhotoTileSkeleton /> };
+
+const noop = () => undefined;
+
+export const Selectable: StoryObj<typeof meta> = {
+  args: { selection: { isSelected: false, onChange: noop } },
+};
+
+export const Selected: StoryObj<typeof meta> = {
+  args: { selection: { isSelected: true, onChange: noop } },
+};
+
+export const SelectedWithQuantity: StoryObj<typeof meta> = {
+  args: {
+    selection: { isSelected: true, onChange: noop },
+    badge: { label: COPY.quantity, tone: "info" },
+  },
+};
+
+export const SelectedWithNote: StoryObj<typeof meta> = {
+  args: {
+    selection: { isSelected: true, onChange: noop },
+    note: { hasNote: true, label: COPY.note, accessibleLabel: COPY.note, onPress: noop },
+  },
+};
+
+export const OtherGroupMarker: StoryObj<typeof meta> = {
+  args: {
+    selection: { isSelected: false, onChange: noop },
+    badge: { label: COPY.otherGroup, tone: "neutral" },
+  },
+};
+
+export const LimitReached: StoryObj<typeof meta> = {
+  args: { selection: { isSelected: false, isDisabled: true, onChange: noop } },
+};
+
+export const SelectedMissing: StoryObj<typeof meta> = {
+  args: { isMissing: true, selection: { isSelected: true, onChange: noop } },
+};

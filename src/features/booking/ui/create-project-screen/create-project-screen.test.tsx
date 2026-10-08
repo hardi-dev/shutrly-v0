@@ -132,7 +132,7 @@ describe("CreateProjectScreen (S2)", () => {
     expect(screen.getByRole("textbox", { name: "Harga sepakat" })).toHaveValue("750.000");
     expect(screen.getByText("Harga dasar layanan: Rp 750.000")).toBeInTheDocument();
     expect(screen.getByText("Wisuda · harga dasar Rp 750.000")).toBeInTheDocument();
-    expect(screen.getByText("25 foto · pilihan edit")).toBeInTheDocument();
+    expect(screen.getByText("25 foto · hitung foto")).toBeInTheDocument();
     expect(screen.getByText("1–3 orang")).toBeInTheDocument();
     expect(screen.getByText("Isi paket")).toBeInTheDocument();
     expect(screen.getByText("Field booking")).toBeInTheDocument();

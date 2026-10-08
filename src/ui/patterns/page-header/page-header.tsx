@@ -1,7 +1,9 @@
+import { cn } from "@/ui/cn/cn";
+
 import { Tabs } from "../tabs/tabs";
 import { BreadcrumbTrail } from "./breadcrumb-trail";
 import { PAGE_HEADER_COPY } from "./page-header.copy";
-import type { PageHeaderProps } from "./page-header.types";
+import type { BreadcrumbItem, PageHeaderProps } from "./page-header.types";
 
 /** Renders the breadcrumb, utility actions and hero title for an app page. */
 export function PageHeader({
@@ -15,20 +17,24 @@ export function PageHeader({
   action,
   utilities,
   tabs,
+  isFlush = false,
 }: Readonly<PageHeaderProps>) {
   const breadcrumbItems = breadcrumbs ?? [{ label: parent }, { label: current }];
 
   return (
-    <header className="shrink-0 border-b border-(--component-page-header-border) bg-(--component-page-header-background)">
-      <div className="flex items-center gap-(--component-page-header-breadcrumb-gap) border-b border-(--component-page-header-border) py-(--space-1-5) pr-(--space-7) pl-(--component-page-header-breadcrumb-padding-x)">
-        <BreadcrumbTrail
-          label={PAGE_HEADER_COPY.breadcrumb}
-          items={breadcrumbItems}
-          className="min-h-(--space-10) flex-1"
-        />
-        {utilities ? <div className="flex items-center gap-(--space-1)">{utilities}</div> : null}
-      </div>
-      <div className="flex items-center justify-between gap-(--component-page-header-hero-gap) px-(--component-page-header-hero-padding-x) pb-(--component-page-header-hero-padding-bottom) pt-(--component-page-header-hero-padding-top)">
+    <header
+      className={cn(
+        "shrink-0 bg-(--component-page-header-background)",
+        !isFlush && "border-b border-(--component-page-header-border)",
+      )}
+    >
+      <BreadcrumbRow items={breadcrumbItems} utilities={utilities} isFlush={isFlush} />
+      <div
+        className={cn(
+          "flex items-center justify-between gap-(--component-page-header-hero-gap) pb-(--component-page-header-hero-padding-bottom) pt-(--component-page-header-hero-padding-top)",
+          isFlush ? "px-0" : "px-(--component-page-header-hero-padding-x)",
+        )}
+      >
         <div className="flex min-w-0 flex-1 flex-col gap-(--space-1-5)">
           <HeaderTitle title={title} adornment={titleAdornment} />
           {(meta ?? subtitle) ? (
@@ -40,11 +46,37 @@ export function PageHeader({
         {action ? <div className="flex shrink-0 items-center gap-(--space-2)">{action}</div> : null}
       </div>
       {tabs ? (
-        <div className="px-(--component-page-header-tabs-padding-x)">
+        <div className={isFlush ? "px-0" : "px-(--component-page-header-tabs-padding-x)"}>
           <Tabs label={tabs.label} tabs={tabs.tabs} hasTrack={false} />
         </div>
       ) : null}
     </header>
+  );
+}
+
+function BreadcrumbRow({
+  items,
+  utilities,
+  isFlush,
+}: Readonly<{
+  items: readonly BreadcrumbItem[];
+  utilities: PageHeaderProps["utilities"];
+  isFlush: boolean;
+}>) {
+  return (
+    <div
+      className={cn(
+        "flex items-center gap-(--component-page-header-breadcrumb-gap) border-b border-(--component-page-header-border) py-(--space-1-5)",
+        isFlush ? "px-0" : "pr-(--space-7) pl-(--component-page-header-breadcrumb-padding-x)",
+      )}
+    >
+      <BreadcrumbTrail
+        label={PAGE_HEADER_COPY.breadcrumb}
+        items={items}
+        className="min-h-(--space-10) flex-1"
+      />
+      {utilities ? <div className="flex items-center gap-(--space-1)">{utilities}</div> : null}
+    </div>
   );
 }
 

@@ -1,7 +1,9 @@
 "use client";
 
 import type { SyntheticEvent } from "react";
+import { useState } from "react";
 
+import type { AssignableMember } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { DateField } from "@/ui/patterns/date-field/date-field";
@@ -75,16 +77,35 @@ function SessionForm({
   members,
 }: Readonly<SessionDialogProps>) {
   const fields = useSessionDraft(isOpen, session, onSave);
-  const picker = useTeamPicker(members ?? [], fields.draft.team, fields.update("team"));
+  const [added, setAdded] = useState<readonly AssignableMember[]>([]);
+  const all = members ? withAdded(members, added) : undefined;
+  const picker = useTeamPicker(all ?? [], fields.draft.team, fields.update("team"));
+  // Revision OT #1: a member added from the empty state joins the list and is picked with their first role.
+  const handleMemberAdded = (member: AssignableMember) => {
+    setAdded((previous) => [...previous, member]);
+    const role = member.roles.at(0);
+    if (role)
+      fields.update("team")([...fields.draft.team, { memberId: member.id, roleId: role.id }]);
+  };
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     if (fields.submit(event, picker.pending)) onOpenChange(false);
   };
   return (
     <form id={FORM_ID} noValidate onSubmit={handleSubmit} className="flex flex-col gap-(--space-4)">
       <SessionFields {...fields} />
-      {members ? <SessionTeamField members={members} picker={picker} /> : null}
+      {all ? (
+        <SessionTeamField members={all} picker={picker} onMemberAdded={handleMemberAdded} />
+      ) : null}
     </form>
   );
+}
+
+/** The page's members plus those added in this dialog, without duplicates once the page refreshes. */
+function withAdded(
+  members: readonly AssignableMember[],
+  added: readonly AssignableMember[],
+): readonly AssignableMember[] {
+  return [...members, ...added.filter((member) => !members.some((m) => m.id === member.id))];
 }
 
 function SessionFields({

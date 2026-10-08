@@ -34,7 +34,8 @@ export interface FakeClient {
 export interface FakeDefinition extends DefinitionRules {
   readonly name: string;
   readonly unit: string | null;
-  readonly selectionType: "EDIT" | "PRINT" | null;
+  readonly pickMode: "COUNT" | "QUANTITY" | null;
+  readonly allowsPickNotes: boolean;
 }
 
 export interface FakeServiceRow extends ServiceSnapshotSource {
@@ -54,6 +55,7 @@ export interface StoredProject {
 }
 
 export class FakeProjectRepository implements ProjectRepositoryPort {
+  readonly rotatedTokens: string[] = [];
   readonly clients: FakeClient[] = [];
   readonly definitions: FakeDefinition[] = [];
   readonly services: FakeServiceRow[] = [];
@@ -121,7 +123,8 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       unit: definition?.unit ?? null,
       valueType: definition?.valueType ?? "NUMBER",
       selectionRequired: definition?.selectionRequired ?? false,
-      selectionType: definition?.selectionType ?? null,
+      pickMode: definition?.pickMode ?? null,
+      allowsPickNotes: definition?.allowsPickNotes ?? false,
       value: item.value,
       order: index,
     } satisfies ProjectItemRecord & { order: number };
@@ -227,7 +230,8 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
         unit: row.unit,
         valueType: row.valueType,
         selectionRequired: row.selectionRequired,
-        selectionType: row.selectionType,
+        pickMode: row.pickMode,
+        allowsPickNotes: row.allowsPickNotes,
       }));
   }
 
@@ -256,6 +260,11 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       sessionCount: stored.sessions.length,
     };
     const writer: ProjectWriter = {
+      // Collisions are tested against Postgres; the fake records the last token.
+      rotateToken: async (token) => {
+        this.rotatedTokens.push(token);
+        return true;
+      },
       updateInfo: async (input) => {
         stored.input = {
           ...stored.input,
@@ -323,6 +332,17 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       },
     };
     return change(locked, writer);
+  }
+
+  async lockStatus(context: WorkspaceContext, id: string): Promise<ProjectStatus | null> {
+    const stored = this.projects.find(
+      (row) => row.id === id && row.workspaceId === context.workspaceId,
+    );
+    return stored ? stored.status : null;
+  }
+
+  async markCompleted(context: WorkspaceContext, id: string): Promise<MoveStatusResult> {
+    return this.moveStatus(context, id, { from: "DELIVERED", to: "COMPLETED" });
   }
 
   async countSessions(context: WorkspaceContext, id: string): Promise<number | null> {

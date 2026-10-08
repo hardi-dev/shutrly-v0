@@ -34,6 +34,12 @@ Reference: `fastpik.id/id/login` (Next.js behind Cloudflare, Singapore edge) 0.1
 - **Cause:** Netlify Free runs functions in `us-east-2` only (changing it returns "Your plan does not support configuring function regions"; the attempt failed the build and was reverted). Every request goes Singapore edge → Ohio → back. With the database in Singapore, each query also crossed the Pacific, plus a Neon WebSocket handshake per request.
 - **Fix applied:** the database moved next to the function (point 4). About 0.4 s of query cost went away; the **~0.5 s edge-to-function hop remains**.
 
+## Amendment (Owner, 2026-10-07)
+- Point 4: migrations `0015_pick_mode`, `0016_selection` and `0017_add_on` were applied to `shutrly-staging-us` (and to the old staging branch) before they were merged to `main`, at the Owner's request, so F-10 could be tested on staging. All three are additive, with triggers that keep the `main` code working. Every database (shared non-production, `shutrly-staging-us`, the old staging branch) records `0000`–`0017` with hashes matching the files.
+- Point 4 (Owner, 2026-10-09): migration `0018_folder_map` (F-21, additive: table `gallery_folder_map`, `gallery_photo.project_item_id`, `gallery_source.known_folders`) was applied to `shutrly-staging-us` with drizzle-kit over its direct connection before PR #12 was merged, at the Owner's request. It records `0000`–`0018`, the `0018` hash matching the file. The old staging branch was not migrated.
+- Point 3: `CLIENT_SESSION_KEY` (F-10, ADR-023) was added as a Netlify **secret** for the production, deploy-preview and branch-deploy contexts; Netlify refuses secrets in the `dev` context.
+- Staging and both other databases were seeded with demo data by `pnpm db:seed` (tech-stack › Seed data).
+
 ## Alternatives considered
 - **Workers Paid ($5/month):** removes the 1102 risk and keeps one runtime. Not chosen for staging; still the cheapest way back to Cloudflare (ADR-018 point 4).
 - **Netlify Pro with a function region in Asia:** the pricing page (checked 2026-10-06) lists Free $0 / 300 credits, Personal $9 / 1,000, Pro $20 / 3,000 per month; it does not say which plan unlocks function regions. Not tested.

@@ -85,7 +85,7 @@ function ServiceItemRow({
 }>) {
   return (
     <ListCardItem
-      icon={item.selectionType ? "image" : "package"}
+      icon={item.pickMode ? "images" : "package"}
       title={item.definitionName}
       meta={item.unit ?? ""}
       isLast={index === count - 1}

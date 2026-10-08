@@ -86,4 +86,19 @@ export class FakeDriveProvider implements GallerySourceProviderPort {
           }
         : { ok: false },
     );
+
+  /** File ids whose download fails, like a file deleted from Drive before the next sync (AC-DEL-005). */
+  readonly gone = new Set<string>();
+
+  download: GallerySourceProviderPort["download"] = (file) =>
+    Promise.resolve(
+      file.fileId.startsWith("file-") && !this.gone.has(file.fileId)
+        ? {
+            ok: true,
+            body: new Response(`original:${file.fileId}`).body ?? new ReadableStream(),
+            contentType: "image/jpeg",
+            contentLength: null,
+          }
+        : { ok: false },
+    );
 }

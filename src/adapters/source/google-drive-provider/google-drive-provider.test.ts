@@ -108,4 +108,32 @@ describe("google drive provider (ADR-005, D-6)", () => {
       ok: false,
     });
   });
+
+  it("F-10 D-18 streams the original through alt=media with the resource key", async () => {
+    const fetchFn = vi.fn<(url: string, init?: RequestInit) => Promise<Response>>(() =>
+      Promise.resolve(
+        new Response("bytes", {
+          headers: { "content-type": "image/jpeg", "content-length": "5" },
+        }),
+      ),
+    );
+    const provider = createGoogleDriveProvider(KEY, fetchFn);
+    const result = await provider.download({ fileId: "f1", resourceKey: "0-rk" });
+    expect(result).toMatchObject({ ok: true, contentType: "image/jpeg", contentLength: "5" });
+    const [url, init] = fetchFn.mock.calls[0];
+    expect(url).toContain("/drive/v3/files/f1?alt=media");
+    expect(init).toMatchObject({
+      redirect: "manual",
+      headers: { "X-Goog-Drive-Resource-Keys": "f1/0-rk" },
+    });
+  });
+
+  it("AC-DEL-005 a file gone from Drive, or a network error, is not ok and never leaks the key", async () => {
+    const gone = createGoogleDriveProvider(KEY, () => Promise.resolve(json({}, 404)));
+    expect(await gone.download({ fileId: "f1", resourceKey: null })).toEqual({ ok: false });
+    const offline = createGoogleDriveProvider(KEY, () =>
+      Promise.reject(new Error(`fetch failed for ...key=${KEY}`)),
+    );
+    expect(await offline.download({ fileId: "f1", resourceKey: null })).toEqual({ ok: false });
+  });
 });

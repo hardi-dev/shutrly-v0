@@ -138,7 +138,8 @@ export class FakeServiceRepository implements ServiceRepositoryPort {
       unit: definition.unit,
       valueType: definition.valueType,
       selectionRequired: definition.selectionRequired,
-      selectionType: definition.selectionType,
+      pickMode: definition.pickMode,
+      allowsPickNotes: definition.allowsPickNotes,
       value,
     });
     return "ADDED" as const;

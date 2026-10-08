@@ -1,18 +1,23 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
+
 import type { GallerySourceView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 import { canEditSources } from "@/features/gallery/domain/gallery-status/gallery-status";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
+import { DeleteFolderDialog } from "../delete-folder-dialog/delete-folder-dialog";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import type { GalleryMenuEntry } from "../gallery-row-menu/gallery-row-menu.types";
 import { GallerySourceRow } from "../gallery-source-row/gallery-source-row";
 import { LinkSourceDialog } from "../link-source-dialog/link-source-dialog";
-import { RemoveSourceDialog } from "../remove-source-dialog/remove-source-dialog";
+import { RenameFolderDialog } from "../rename-folder-dialog/rename-folder-dialog";
 import { SourcesCard } from "../sources-card/sources-card";
 import { useGallerySync } from "../use-gallery-sync/use-gallery-sync";
+import type { GallerySyncState } from "../use-gallery-sync/use-gallery-sync.types";
 import { useSourceDialogs } from "../use-source-dialogs/use-source-dialogs";
 import type {
   AddFolderButtonProps,
@@ -27,16 +32,15 @@ export function GallerySourcesSection({
   workspaceId,
   page,
   actions,
+  initialSyncSourceId,
 }: Readonly<GallerySourcesSectionProps>) {
-  const dialogs = useSourceDialogs();
-  const sync = useGallerySync({ workspaceId, syncSourceAction: actions.syncSourceAction });
+  const { dialogs, sync } = useSectionState(workspaceId, page, actions);
+  useInitialSync(sync, page, initialSyncSourceId);
   const handleLinked = (sourceId: string) => {
     dialogs.handleLinked();
     sync.syncNew(sourceId);
   };
   const isEditable = canEditSources(page.gallery.status, page.project.status);
-  const isLive = page.gallery.status === "PUBLISHED" || page.gallery.status === "EXPIRED";
-  const isLastLocked = isLive && page.gallery.activeSourceCount <= 1;
   return (
     <>
       <SourcesCard
@@ -53,8 +57,9 @@ export function GallerySourcesSection({
           sync={sync}
           isEditable={isEditable}
           isArchived={page.gallery.status === "ARCHIVED"}
-          isLastLocked={isLastLocked}
-          onRemove={dialogs.setRemoving}
+          isLastLocked={isLastFolderLocked(page)}
+          onDelete={dialogs.setDeleting}
+          onRename={dialogs.setRenaming}
         />
       </SourcesCard>
       <SourceDialogs
@@ -62,25 +67,81 @@ export function GallerySourcesSection({
         page={page}
         actions={actions}
         isLinking={dialogs.isLinking}
-        removing={dialogs.removing}
+        deleting={dialogs.deleting}
+        renaming={dialogs.renaming}
         onLinkingChange={dialogs.setIsLinking}
         onLinked={handleLinked}
-        onCloseRemove={dialogs.closeRemoving}
+        onCloseDelete={dialogs.closeDeleting}
+        onCloseRename={dialogs.closeRenaming}
       />
     </>
   );
+}
+
+/** The section's dialogs and sync; a toast's *Petakan* opens the folder's *Edit* (F-21). */
+function useSectionState(
+  workspaceId: string,
+  page: GallerySourcesSectionProps["page"],
+  actions: GallerySourcesSectionProps["actions"],
+) {
+  const dialogs = useSourceDialogs();
+  const openMapping = (sourceId: string) => {
+    const source = page.sources.find((candidate) => candidate.id === sourceId);
+    if (source) dialogs.setRenaming(source);
+  };
+  const sync = useGallerySync({
+    workspaceId,
+    syncSourceAction: actions.syncSourceAction,
+    onMapFolders: openMapping,
+  });
+  return { dialogs, sync };
+}
+
+/** The last active folder of a published or expired gallery can't be deleted (BR-GAL-004). */
+function isLastFolderLocked(page: GallerySourcesSectionProps["page"]): boolean {
+  const isLive = page.gallery.status === "PUBLISHED" || page.gallery.status === "EXPIRED";
+  return isLive && page.gallery.activeSourceCount <= 1;
+}
+
+/** Syncs the folder linked in *Buat galeri* once, then drops `?sync=` so a refresh doesn't repeat it (Revision OT #3). */
+function useInitialSync(
+  sync: GallerySyncState,
+  page: GallerySourcesSectionProps["page"],
+  sourceId: string | undefined,
+) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const started = useRef(false);
+  useEffect(() => {
+    if (started.current || sourceId === undefined) return;
+    started.current = true;
+    router.replace(pathname);
+    if (page.sources.some((source) => source.id === sourceId && !source.removed))
+      sync.syncNew(sourceId);
+  }, [sync, page.sources, sourceId, router, pathname]);
 }
 
 function SourceDialogs(props: Readonly<SourceDialogsProps>) {
   const { workspaceId, page, actions } = props;
   return (
     <>
-      {props.removing ? (
-        <RemoveSourceDialog
+      {props.deleting ? (
+        <DeleteFolderDialog
           workspaceId={workspaceId}
-          source={props.removing}
-          removeSourceAction={actions.removeSourceAction}
-          onClose={props.onCloseRemove}
+          source={props.deleting}
+          deleteSourceAction={actions.deleteSourceAction}
+          onClose={props.onCloseDelete}
+        />
+      ) : null}
+      {props.renaming ? (
+        <RenameFolderDialog
+          workspaceId={workspaceId}
+          source={props.renaming}
+          renameSourceAction={actions.renameSourceAction}
+          folderMappingAction={actions.folderMappingAction}
+          setFolderMappingAction={actions.setFolderMappingAction}
+          packageHref={`/w/${workspaceId}/projects/${page.project.id}`}
+          onClose={props.onCloseRename}
         />
       ) : null}
       {props.isLinking ? (
@@ -99,39 +160,42 @@ function SourceDialogs(props: Readonly<SourceDialogsProps>) {
   );
 }
 
-function SourceList({
-  sources,
-  sync,
-  isEditable,
-  isArchived,
-  isLastLocked,
-  onRemove,
-}: Readonly<SourceListProps>) {
-  const entriesFor = (source: GallerySourceView): GalleryMenuEntry[] => {
-    if (!isEditable || source.removed) return [];
-    const handleSync = () => {
-      sync.syncOne(source);
-    };
-    const handleRemove = () => {
-      onRemove(source);
-    };
-    return [
-      {
-        label: GALLERY_COPY.sync,
-        icon: "refresh-cw",
-        isDisabled: sync.isRunning,
-        onSelect: handleSync,
-      },
-      {
-        label: GALLERY_COPY.removeSource,
-        icon: "trash-2",
-        isDestructive: true,
-        isDisabled: isLastLocked,
-        description: GALLERY_COPY.removeLastHint,
-        onSelect: handleRemove,
-      },
-    ];
+/** The ⋯ entries of one folder row: *Sinkronkan*, *Ganti nama* and *Hapus* (AC-GAL-007, AC-GAL-013, AC-GAL-037). @param source - the row @param list - the list's state and handlers @returns the entries, none when read-only */
+function folderMenuEntries(
+  source: GallerySourceView,
+  { sync, isEditable, isLastLocked, onDelete, onRename }: Readonly<SourceListProps>,
+): GalleryMenuEntry[] {
+  if (!isEditable || source.removed) return [];
+  const handleSync = () => {
+    sync.syncOne(source);
   };
+  const handleRename = () => {
+    onRename(source);
+  };
+  const handleDelete = () => {
+    onDelete(source);
+  };
+  return [
+    {
+      label: GALLERY_COPY.sync,
+      icon: "refresh-cw",
+      isDisabled: sync.isRunning,
+      onSelect: handleSync,
+    },
+    { label: GALLERY_COPY.renameFolder, icon: "pencil", onSelect: handleRename },
+    {
+      label: GALLERY_COPY.deleteFolder,
+      icon: "trash-2",
+      isDestructive: true,
+      isDisabled: isLastLocked,
+      description: GALLERY_COPY.deleteLastHint,
+      onSelect: handleDelete,
+    },
+  ];
+}
+
+function SourceList(props: Readonly<SourceListProps>) {
+  const { sources, sync, isEditable, isArchived } = props;
   return (
     <ul aria-label={GALLERY_COPY.sourcesTitle} className="px-(--space-1) md:px-(--space-3)">
       {sources.map((source, index) => (
@@ -142,7 +206,7 @@ function SourceList({
           progress={sync.progressOf(source.id)}
           isArchived={isArchived}
           isReadOnly={!isEditable}
-          menuEntries={entriesFor(source)}
+          menuEntries={folderMenuEntries(source, props)}
           isLast={index === sources.length - 1}
         />
       ))}

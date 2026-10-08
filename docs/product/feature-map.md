@@ -16,16 +16,18 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-07 | Project creation from service + snapshots | `projects` | BR-PRJ-*, BR-CAT-003 | J-03 | DONE (2026-10-04; Owner accepted, fidelity pass and keyboard-only a11y tests remain as follow-ups) |
 | F-08 | Team: members (WhatsApp, email, roles), workspace roles, who works which session (*Atur tim*); no fees, no stored session status (sessions themselves moved to F-07, Owner 2026-10-02; scope Owner 2026-10-03) | `team-sessions` | BR-TEAM-001..006 | J-03 | IN PROGRESS (2026-10-04) |
 | F-09 | Gallery, sources, Drive sync (Owner side: create with password, link Drive folders, sync, photos by kind with Owner-only media, publish, expiry, rotate, archive; [intent](../features/gallery/intent.md), [spec](../features/gallery/spec.md)) | `gallery` | BR-GAL-001..009, BR-SRC-* | J-04 | IN PROGRESS (free-tier rework R1–R5 built, CPU check done (go on with Workers Free), verified 2026-10-05 ([report](../features/gallery/verification-report.md)), pending Owner acceptance on `feat/gallery-free-tier`, 2026-10-05; Slices 0–8 built and verified on `main`; [design](../features/gallery/design.md), [technical design](../features/gallery/technical-design.md), [plan](../features/gallery/plan.md): Slices 0–8 and R1–R5) |
-| F-10 | Client gallery access (token, password, rate limits, media delivery) | `client-access` | BR-ACC-* | J-04 | TODO |
-| F-11 | Selection groups and client selection | `selection` | BR-SEL-* | J-04 | TODO |
-| F-12 | Final delivery and project completion | `final-delivery` | BR-DEL-*, BR-PRJ-004..006 | J-06 | TODO |
-| F-13 | Add-ons | `add-ons` | BR-ADD-* | J-05 | TODO |
+| F-10 | Client access: gallery (token, password, rate limits, media delivery), selection, final delivery and add-ons, merged from F-10..F-13 (Owner 2026-10-05; [intent](../features/client-access/intent.md)) | `client-access` | BR-ACC-*, BR-SEL-*, BR-DEL-*, BR-ADD-*, BR-PRJ-004..006 | J-04..J-06 | IN PROGRESS (Revision OT from the Owner's manual test 2026-10-07: Slice 13 built, Slices 14–16 wait for Pencil frames; [findings](../features/client-access/manual-test-findings.md)) · built 2026-10-07, Slices 0–12; Slice 12 = Owner 7 revision; planned 2026-10-06; [spec](../features/client-access/spec.md), AC-ACC/SEL/ADD/DEL, [design](../features/client-access/design.md), [technical design](../features/client-access/technical-design.md), [plan](../features/client-access/plan.md)) |
+| F-11 | Selection groups and client selection | `selection` | BR-SEL-* | J-04 | MERGED into F-10 (2026-10-05) |
+| F-12 | Final delivery and project completion | `final-delivery` | BR-DEL-*, BR-PRJ-004..006 | J-06 | MERGED into F-10 (2026-10-05) |
+| F-13 | Add-ons | `add-ons` | BR-ADD-* | J-05 | MERGED into F-10 (2026-10-05) |
 | F-14 | Invoices and payments | `billing` | BR-INV-*, BR-PAY-*, BR-CUR-* | J-07 | TODO |
 | F-15 | WhatsApp sharing | `whatsapp-share` | BR-MSG-* | J-04..J-07 | TODO |
 | F-16 | Operational hardening (isolation, abuse, concurrency, provider-failure tests; backups; caching review) | `hardening` | constitution C-004..C-006 | — | TODO |
 | F-17 | App Shell revamp (desktop/mobile navigation, workspace switcher, page header, content shell, responsive transitions) | `app-shell-revamp` | BR-WS-002..003, BR-WS-006..007, C-007..008 | J-01 | DONE (2026-10-01) |
 | F-18 | Team fees: freelancer rates, a fee per assignment, paid / unpaid tracking, what the Owner still owes (split out of F-08, Owner 2026-10-03; BR-TEAM-007 deprecated until then) | `team-fees` | — | — | TODO (not scheduled) |
 | F-19 | Landing page: public page at `/` explaining Shutrly to prospective Owners, with an email waitlist; the only route served on production during development; no pricing (Owner 2026-10-07; [intent](../features/landing/intent.md), [spec](../features/landing/spec.md); production host [ADR-021](../architecture/decisions/ADR-021-production-on-netlify-landing-only.md)) | `landing` | C-006..008, C-106 | — | DONE (2026-10-08; live at https://shutrly.space; [verification](../features/landing/verification-report.md) blocking items closed; non-blocking: Private Email DKIM, scoped token exception) |
+| F-20 | Client proof downloads and bulk picks on *Semua foto* (Owner 2026-10-07, finding #6) | `client-proof-downloads` | BR-DEL-*, BR-SEL-*, BR-ACC-005 | J-04 | DONE, pending verification (built 2026-10-07; [intent](../features/client-proof-downloads/intent.md), [build notes](../features/client-proof-downloads/build-notes.md)) |
+| F-21 | Delivery folder mapping: map each linked Drive folder's subfolders to the project's selection items; replaces the `edited`/`print` names (Owner 2026-10-07, finding #5) | `delivery-folder-mapping` | BR-GAL-007, BR-DEL-* | J-06 | DONE, pending verification (built 2026-10-07; [intent](../features/delivery-folder-mapping/intent.md), [build notes](../features/delivery-folder-mapping/build-notes.md)) |
 
 ## Project menu (F-07 row and detail menu)
 F-07 defines one menu per project (row ⋯ on the list and the detail page menu) with a **Kirim ke klien** group (Owner 2026-10-02). Its items are named after the message template they load. Later features add their items to that menu, shown only when their condition holds; each template message shows a preview (`communications/ui/message-preview`) before opening WhatsApp (BR-MSG-001). *Chat WhatsApp* (no template) shows only when no template item applies; in F-07 that is always. Target menus: `docs/features/projects/projects.pen` › *Row menu per status / Target*.
@@ -33,8 +35,8 @@ F-07 defines one menu per project (row ⋯ on the list and the detail page menu)
 | Feature | Item | Shown when | Template |
 |---|---|---|---|
 | F-10 | *Kirim link galeri* (password re-entry, BR-MSG-003) | the project has a gallery; `SHOOTING` to `COMPLETED` | `GALLERY_SHARE` |
-| F-11 | *Ingatkan pilih foto* | a selection is open | `SELECTION_REMINDER` |
-| F-12 | *Tandai selesai* (step) · *Kirim hasil akhir* | `DELIVERED` | `FINAL_DELIVERY` |
+| F-10 (was F-11) | *Ingatkan pilih foto* | a selection is open | `SELECTION_REMINDER` |
+| F-10 (was F-12) | *Tandai selesai* (step) · *Kirim hasil akhir* | `DELIVERED` | `FINAL_DELIVERY` |
 | F-14 | *Kirim invoice* · *Ingatkan pembayaran* | an invoice exists · it has a balance | `INVOICE_SHARE` · `PAYMENT_REMINDER` |
 | Planned (Owner 2026-10-02, feature not yet scheduled) | *Kirim konfirmasi booking* | `DRAFT`, `BOOKED` | new type `BOOKING_CONFIRMATION`: changes BR-MSG-002 (five → six types), the F-03 catalogue and the default seed; needs its own discovery |
 

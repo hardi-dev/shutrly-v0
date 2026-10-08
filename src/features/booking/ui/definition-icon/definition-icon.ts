@@ -2,8 +2,8 @@ import type { DefinitionType } from "@/features/booking/domain/item-definition-t
 import type { IconName } from "@/ui/primitives/icon/icon.types";
 
 export function definitionIcon(definition: DefinitionType): IconName {
-  if (definition.selectionType === "EDIT") return "image";
-  if (definition.selectionType === "PRINT") return "printer";
+  if (definition.pickMode === "COUNT") return "images";
+  if (definition.pickMode === "QUANTITY") return "layers";
   if (definition.valueType === "RANGE") return "move-horizontal";
   return "hash";
 }

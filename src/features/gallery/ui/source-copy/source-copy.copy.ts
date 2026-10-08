@@ -34,7 +34,7 @@ export const SOURCE_COPY = {
   steps: [
     "Buat satu folder utama untuk setiap proyek.",
     "Taruh foto proof langsung di folder utama, tidak di dalam subfolder.",
-    "Untuk hasil akhir, nanti tambahkan subfolder edited dan print.",
+    "Untuk hasil akhir, nanti petakan subfolder ke item paket lewat Edit folder.",
     "Bagikan folder utama: Akses umum → Siapa saja yang memiliki link, peran Pelihat.",
   ],
   treeRoot: "Wedding Rina & Dimas",

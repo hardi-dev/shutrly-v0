@@ -110,7 +110,7 @@ function AllPhotosBody({ workspaceId, page, browse, onOpenPhoto }: Readonly<AllP
 export function AllPhotosModal(props: Readonly<AllPhotosModalProps>) {
   const isMobile = useMobileViewport();
   const { counts } = props.page.gallery;
-  const totals = GALLERY_COPY.photoCounts(counts.proof, counts.edited, counts.print);
+  const totals = GALLERY_COPY.photoCounts(counts.proof, counts.edited + counts.print);
   const body = (
     <AllPhotosBody
       workspaceId={props.workspaceId}

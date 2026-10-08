@@ -51,12 +51,37 @@ function wideTree(setup: Awaited<ReturnType<typeof linked>>) {
 describe("syncGallerySourceStep", () => {
   it("AC-GAL-005 syncs the linked folder: 4 proof, 3 edited, 1 print", async () => {
     const { deps, sources } = await linked();
-    expect((await syncToEnd(deps)).last).toEqual({ ok: true, status: "SUCCEEDED" });
+    expect((await syncToEnd(deps)).last).toEqual({
+      ok: true,
+      status: "SUCCEEDED",
+      newFolders: ["Edited", "Edited/old", "print", "raw"],
+    });
     const kinds = sources.photos.map((photo) => photo.kind);
     expect(kinds.filter((kind) => kind === "PROOF")).toHaveLength(4);
     expect(kinds.filter((kind) => kind === "EDITED")).toHaveLength(3);
     expect(kinds.filter((kind) => kind === "PRINT")).toHaveLength(1);
     expect(sources.sources[0]).toMatchObject({ folderName: "Rina-Wisuda", label: null });
+  });
+
+  it("F-21 a re-sync names no folder twice, and without a mapping every photo is a proof", async () => {
+    const { deps, sources } = await linked();
+    sources.defaultMappings = [];
+    await syncToEnd(deps);
+    expect((await syncToEnd(deps)).last).toEqual({ ok: true, status: "SUCCEEDED", newFolders: [] });
+    expect(new Set(sources.photos.map((photo) => photo.kind))).toEqual(new Set(["PROOF"]));
+  });
+
+  it("F-21 names an empty subfolder too, so a prepared folder can be mapped before upload", async () => {
+    const { deps, sources, provider } = await linked();
+    provider.tree.set(RINA_FOLDER_ID, [folderEntry("empty", "Hasil Edit")]);
+    expect((await syncToEnd(deps)).last).toEqual({
+      ok: true,
+      status: "SUCCEEDED",
+      newFolders: ["Hasil Edit"],
+    });
+    expect((await sources.findFolderMapping(WORKSPACE, "source-1"))?.folders).toEqual([
+      "Hasil Edit",
+    ]);
   });
 
   it("AC-GAL-008 an unshared folder ends as Gagal with no photos", async () => {
@@ -113,7 +138,7 @@ describe("syncGallerySourceStep", () => {
       foldersDone: 40,
       foldersTotal: 95,
     });
-    expect(outcomes[2]).toEqual({ ok: true, status: "SUCCEEDED" });
+    expect(outcomes[2]).toMatchObject({ ok: true, status: "SUCCEEDED" });
     expect(setup.sources.photos).toHaveLength(94);
   });
 

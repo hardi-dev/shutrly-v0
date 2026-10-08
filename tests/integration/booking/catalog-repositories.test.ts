@@ -71,7 +71,8 @@ describe("Drizzle catalog repositories", () => {
         valueType: "NUMBER",
         unit: "buah",
         selectionRequired: false,
-        selectionType: null,
+        pickMode: null,
+        allowsPickNotes: false,
         editorUserId: first.ownerId,
       }),
     ).toBe("CREATED");

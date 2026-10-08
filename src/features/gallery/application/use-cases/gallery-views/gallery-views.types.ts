@@ -34,11 +34,15 @@ export interface GalleryCardView {
   readonly project: GalleryProjectView;
   readonly canCreate: boolean;
   readonly gallery: GallerySummaryView | null;
+  /** Active workspace sources for the optional folder in *Buat galeri*, while one can be created (Revision OT #3). */
+  readonly linkableSources?: readonly LinkableSourceView[];
 }
 
 export interface GallerySourceView {
   readonly id: string;
   readonly name: string | null;
+  /** The Owner's label, null when the row shows the Drive folder name (AC-GAL-037). */
+  readonly label: string | null;
   readonly workspaceSourceName: string;
   readonly removed: boolean;
   readonly removedAt: string | null;

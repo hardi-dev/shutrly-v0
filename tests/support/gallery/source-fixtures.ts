@@ -21,7 +21,10 @@ export function sourceSetup(gallery: Partial<LockedGalleryState> = {}) {
   });
   sources.activeWorkspaceSources.add(DRIVE_SOURCE_ID);
   const provider = FakeDriveProvider.withFixture();
-  const rateLimiter = { hit: vi.fn(() => Promise.resolve(true)) };
+  const rateLimiter = {
+    hit: vi.fn(() => Promise.resolve(true)),
+    peek: vi.fn(() => Promise.resolve(true)),
+  };
   const deps = { sources, provider, rateLimiter, now: new Date("2026-10-04T03:00:00Z") };
   return { sources, provider, rateLimiter, deps };
 }

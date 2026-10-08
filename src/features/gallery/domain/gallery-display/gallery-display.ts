@@ -40,3 +40,14 @@ export function formatGalleryShortDateTime(iso: string): string {
   const date = new Date(iso);
   return `${SHORT_DATE.format(date)} · ${TIME.format(date)}`;
 }
+
+/** Formats an instant as its day without the weekday, e.g. "5 Okt 2026" (Owner selection card). @param iso - ISO instant @returns the short date */
+export function formatGalleryShortDate(iso: string): string {
+  return SHORT_DATE.format(new Date(iso));
+}
+
+/** Formats an instant as day and time with a comma, e.g. "5 Okt 2026, 14.20" (Owner selection page). @param iso - ISO instant @returns the date and time */
+export function formatGalleryDateAndTime(iso: string): string {
+  const date = new Date(iso);
+  return `${SHORT_DATE.format(date)}, ${TIME.format(date)}`;
+}

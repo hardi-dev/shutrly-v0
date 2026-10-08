@@ -12,7 +12,8 @@ const input = {
   valueType: "NUMBER" as const,
   unit: "buah",
   selectionRequired: false,
-  selectionType: null,
+  pickMode: null,
+  allowsPickNotes: false,
   editorUserId: "user",
 };
 

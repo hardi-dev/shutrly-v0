@@ -26,8 +26,8 @@ As a photographer (Owner), I want to link my project's Drive folders to one priv
 
 ## Main Flow
 1. On a `BOOKED`-or-later project, the project detail shows a **Galeri** card with *Buat galeri*.
-2. The Owner keeps (or changes) the proposed password, optionally sets the expiry, and creates the gallery. It is a `DRAFT` with no sources. The password is stored encrypted plus a hash (BR-GAL-002, ADR-017).
-3. The Owner adds a source: picks an active workspace source and pastes a Drive folder link. The public-link warning is shown (BR-SRC-004).
+2. The Owner keeps (or changes) the proposed password, optionally sets the expiry, optionally links the first folder (the step-3 fields in the same dialog; Owner 2026-10-07), and creates the gallery. It is a `DRAFT`, with that folder or with no sources. If the folder is refused, nothing is created. The password is stored encrypted plus a hash (BR-GAL-002, ADR-017).
+3. The Owner adds a source (or another one): picks an active workspace source and pastes a Drive folder link. The public-link warning is shown (BR-SRC-004).
 4. Adding the source syncs it (BR-GAL-006):
    - the whole folder tree is read (BR-GAL-007, up to A-14's depth);
    - images under a folder named `edited` / `print`, at any depth, become `EDITED` / `PRINT`;

@@ -9,7 +9,10 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import { GalleryError } from "../../errors/gallery-errors/gallery-errors";
 import type { GalleryRateLimitRule } from "../../ports/gallery-rate-limiter/gallery-rate-limiter.port";
-import type { SyncClaim } from "../../ports/gallery-source-repository/gallery-source-repository.port";
+import type {
+  SyncClaim,
+  SyncTarget,
+} from "../../ports/gallery-source-repository/gallery-source-repository.port";
 import { galleryFailure } from "../gallery-results/gallery-results";
 import type { SyncGalleryDeps, SyncStepOutcome } from "./sync-gallery-source-step.types";
 
@@ -30,17 +33,27 @@ async function runStep(
   deps: SyncGalleryDeps,
   context: WorkspaceContext,
   claim: SyncClaim,
-  folder: Parameters<SyncGalleryDeps["provider"]["getFolder"]>[0],
+  target: SyncTarget,
 ): Promise<SyncStepOutcome> {
-  const opened = await openCursor(deps, claim, folder);
-  const step = opened.ok ? await walkStep(deps.provider.listFolder, opened.cursor) : opened;
+  const opened = await openCursor(deps, claim, target.folder);
+  const step = opened.ok
+    ? await walkStep(deps.provider.listFolder, opened.cursor, undefined, target.mappings)
+    : opened;
   if (!step.ok) {
     await deps.sources.failRun(context, claim, step.code, deps.now);
     return { ok: true, status: "FAILED", errorCode: step.code };
   }
   const written = await deps.sources.commitStep(context, claim, step, deps.now);
   if (!written) return galleryFailure("INVALID_STATE");
-  if (step.done) return { ok: true, status: "SUCCEEDED" };
+  if (step.done) {
+    // F-21: subfolders the Owner hasn't seen yet get a toast pointing to the mapping.
+    const newFolders = await deps.sources.takeNewFolders(
+      context,
+      target.sourceId,
+      step.cursor.folders,
+    );
+    return { ok: true, status: "SUCCEEDED", newFolders };
+  }
   return { ok: true, status: "CONTINUE", ...syncProgress(step.cursor) };
 }
 
@@ -65,5 +78,5 @@ export async function syncGallerySourceStep(
   }
   const claim = await deps.sources.claimStep(context, sourceId, deps.now);
   if (!claim) return galleryFailure("SYNC_IN_PROGRESS");
-  return runStep(deps, context, claim, target.folder);
+  return runStep(deps, context, claim, target);
 }

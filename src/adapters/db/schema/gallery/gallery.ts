@@ -47,6 +47,11 @@ export const gallery = pgTable(
     expiresAt: timestamp("expires_at", { withTimezone: true }),
     expiryDays: integer("expiry_days"),
     publishedAt: timestamp("published_at", { withTimezone: true }),
+    // F-10 BR-DEL-001, BR-AUD-001.
+    finalDeliveryPublishedAt: timestamp("final_delivery_published_at", { withTimezone: true }),
+    finalDeliveryPublishedBy: text("final_delivery_published_by").references(() => user.id, {
+      onDelete: "set null",
+    }),
     archivedAt: timestamp("archived_at", { withTimezone: true }),
     archivedBy: text("archived_by").references(() => user.id, { onDelete: "set null" }),
     createdBy: text("created_by").references(() => user.id, { onDelete: "set null" }),
@@ -74,6 +79,10 @@ export const gallery = pgTable(
     check("gallery_expiry_days_draft_ck", sql`${t.expiryDays} is null or ${t.status} = 'DRAFT'`),
     check("gallery_published_ck", sql`(${t.status} = 'DRAFT') = (${t.publishedAt} is null)`),
     check("gallery_archived_ck", sql`(${t.status} = 'ARCHIVED') = (${t.archivedAt} is not null)`),
+    check(
+      "gallery_final_delivery_ck",
+      sql`${t.finalDeliveryPublishedAt} is null or ${t.status} <> 'DRAFT'`,
+    ),
   ],
 );
 
@@ -104,6 +113,8 @@ export const gallerySource = pgTable(
     ignoredCount: integer("ignored_count").notNull().default(0),
     missingCount: integer("missing_count").notNull().default(0),
     tooDeepCount: integer("too_deep_count").notNull().default(0),
+    // F-21: the folder paths the Owner has already been told about; a sync names the new ones.
+    knownFolders: jsonb("known_folders").$type<string[]>().notNull().default([]),
     createdBy: text("created_by").references(() => user.id, { onDelete: "set null" }),
     ...auditColumns(),
   },
@@ -152,10 +163,13 @@ export const galleryPhoto = pgTable(
     kind: text("kind").notNull(),
     folderPath: text("folder_path").notNull().default(""),
     browsePath: text("browse_path").notNull().default(""),
+    // F-21: the package item a mapped subfolder delivers this finished file for; null for proofs.
+    projectItemId: uuid("project_item_id"),
     missingAt: timestamp("missing_at", { withTimezone: true }),
     ...auditColumns(),
   },
   (t) => [
+    tenantKey(t),
     tenantRef(
       { workspaceId: t.workspaceId, column: t.galleryId },
       { workspaceId: gallery.workspaceId, id: gallery.id },

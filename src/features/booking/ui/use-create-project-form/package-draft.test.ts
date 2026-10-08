@@ -9,7 +9,8 @@ const FOTO_EDIT: DraftItem = {
   unit: "foto",
   valueType: "NUMBER",
   selectionRequired: true,
-  selectionType: "EDIT",
+  pickMode: "COUNT",
+  allowsPickNotes: true,
   value: { type: "NUMBER", value: "25" },
 };
 const ORANG: DraftItem = {
@@ -18,7 +19,8 @@ const ORANG: DraftItem = {
   unit: "orang",
   valueType: "RANGE",
   selectionRequired: false,
-  selectionType: null,
+  pickMode: null,
+  allowsPickNotes: false,
   value: { type: "RANGE", min: "1", max: "3" },
 };
 const CETAK: DraftItem = {
@@ -27,7 +29,8 @@ const CETAK: DraftItem = {
   unit: "foto",
   valueType: "NUMBER",
   selectionRequired: true,
-  selectionType: "PRINT",
+  pickMode: "QUANTITY",
+  allowsPickNotes: false,
   value: { type: "NUMBER", value: "10" },
 };
 

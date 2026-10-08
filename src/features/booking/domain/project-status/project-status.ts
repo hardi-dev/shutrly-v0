@@ -77,3 +77,11 @@ export function canDeleteDraft(status: ProjectStatus): boolean {
 export function needsSession(status: ProjectStatus): boolean {
   return NEEDS_SESSION.includes(status);
 }
+/** Whether publishing final delivery may move this project to DELIVERED (BR-DEL-003, BR-PRJ-004). @param status - stored status @returns true for BOOKED, SHOOTING and POST_PROCESSING */
+export function canMarkDelivered(status: ProjectStatus): boolean {
+  return status === "BOOKED" || status === "SHOOTING" || status === "POST_PROCESSING";
+}
+/** Whether *Tandai selesai* is offered (BR-PRJ-005, AC-DEL-007). @param status - stored status @returns true only for DELIVERED */
+export function canComplete(status: ProjectStatus): boolean {
+  return status === "DELIVERED";
+}

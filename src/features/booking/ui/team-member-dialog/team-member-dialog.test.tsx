@@ -75,6 +75,21 @@ describe("TeamMemberDialog", () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
+  it("Revision OT #1 #2 hands the new member with their roles to onAdded", async () => {
+    const onAdded = vi.fn();
+    setup({ onAdded });
+    await fillValid();
+    await pickRole("Videografer");
+    await userEvent.click(screen.getByRole("button", { name: "Simpan" }));
+    await waitFor(() => {
+      expect(onAdded).toHaveBeenCalledWith({
+        id: "m",
+        name: "Rina",
+        roles: [FOTOGRAFER, VIDEOGRAFER],
+      });
+    });
+  });
+
   it("AC-TEAM-004 prefills an edit and saves it through the update action", async () => {
     const { updateAction, addAction } = setup({
       member: {

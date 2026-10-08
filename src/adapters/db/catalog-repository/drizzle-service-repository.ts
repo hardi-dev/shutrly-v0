@@ -15,6 +15,7 @@ import {
 } from "@/features/booking/domain/booking-field/booking-field";
 import type { FieldType } from "@/features/booking/domain/booking-field/booking-field.types";
 import { canonicalIdrAmount } from "@/features/booking/domain/idr-amount/idr-amount";
+import { parsePickMode } from "@/features/booking/domain/item-definition-type/item-definition-type";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
@@ -38,7 +39,8 @@ interface RawItem {
   readonly unit: string | null;
   readonly valueType: string;
   readonly selectionRequired: boolean;
-  readonly selectionType: string | null;
+  readonly pickMode: string | null;
+  readonly allowsPickNotes: boolean;
   readonly value: unknown;
 }
 
@@ -71,8 +73,6 @@ export function toPackageValue(value: unknown): PackageValue | null {
 function toItem(row: RawItem): ServiceItemRecord | null {
   const value = toPackageValue(row.value);
   if (!value || (row.valueType !== "NUMBER" && row.valueType !== "RANGE")) return null;
-  if (row.selectionType !== null && row.selectionType !== "EDIT" && row.selectionType !== "PRINT")
-    return null;
   return {
     id: row.id,
     definitionId: row.definitionId,
@@ -80,7 +80,8 @@ function toItem(row: RawItem): ServiceItemRecord | null {
     unit: row.unit,
     valueType: row.valueType,
     selectionRequired: row.selectionRequired,
-    selectionType: row.selectionType,
+    pickMode: parsePickMode(row.pickMode),
+    allowsPickNotes: row.allowsPickNotes,
     value,
   };
 }
@@ -122,7 +123,8 @@ export function createDrizzleServiceRepository(db: DbExecutor): ServiceRepositor
         unit: serviceItemDefinition.unit,
         valueType: serviceItemDefinition.valueType,
         selectionRequired: serviceItemDefinition.selectionRequired,
-        selectionType: serviceItemDefinition.selectionType,
+        pickMode: serviceItemDefinition.pickMode,
+        allowsPickNotes: serviceItemDefinition.allowsPickNotes,
         value: serviceItem.value,
       })
       .from(serviceItem)

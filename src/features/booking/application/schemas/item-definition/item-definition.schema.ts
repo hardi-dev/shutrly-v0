@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import {
   findDefinitionTypeProblem,
-  SELECTION_TYPES,
+  PICK_MODES,
   UNIT_MAX_LENGTH,
   VALUE_TYPES,
 } from "@/features/booking/domain/item-definition-type/item-definition-type";
@@ -19,13 +19,16 @@ export const itemDefinitionSchema = catalogNameSchema
         error: "UNIT_TOO_LONG",
       }),
     selectionRequired: z.boolean(),
-    selectionType: z.enum(SELECTION_TYPES).nullable(),
+    pickMode: z.enum(PICK_MODES).nullable(),
+    allowsPickNotes: z.boolean(),
   })
   .superRefine((value, context) => {
     const problem = findDefinitionTypeProblem(value);
     if (problem === "SELECTION_NEEDS_NUMBER") {
       context.addIssue({ code: "custom", path: ["valueType"], message: problem });
+    } else if (problem === "PICK_NOTES_UNEXPECTED") {
+      context.addIssue({ code: "custom", path: ["allowsPickNotes"], message: problem });
     } else if (problem) {
-      context.addIssue({ code: "custom", path: ["selectionType"], message: problem });
+      context.addIssue({ code: "custom", path: ["pickMode"], message: problem });
     }
   });

@@ -38,6 +38,22 @@ function ModalHarness({ isDestructive = false }: Readonly<{ isDestructive?: bool
   );
 }
 
+function StackedHarness() {
+  const [isFirstOpen, setIsFirstOpen] = useState(true);
+  const [isSecondOpen, setIsSecondOpen] = useState(false);
+  function handleOpenSecond() {
+    setIsSecondOpen(true);
+  }
+  return (
+    <Modal isOpen={isFirstOpen} onOpenChange={setIsFirstOpen} title="Tambah sesi">
+      <Button onPress={handleOpenSecond}>Tambah anggota</Button>
+      <Modal isOpen={isSecondOpen} onOpenChange={setIsSecondOpen} title="Tambah anggota tim">
+        <p>Form anggota</p>
+      </Modal>
+    </Modal>
+  );
+}
+
 describe("Modal (C31)", () => {
   it("opens with the approved sections and returns focus to its trigger on close", async () => {
     const user = userEvent.setup();
@@ -78,5 +94,17 @@ describe("Modal (C31)", () => {
     const dialog = screen.getByRole("dialog", { name: "Semua foto" });
     expect(dialog.parentElement?.className).toContain("var(--size-content-max)");
     expect(dialog.className).toContain("h-full");
+  });
+
+  it("Revision OT #1 #2 stacks a modal over another: Escape closes only the top one and focus returns below", async () => {
+    const user = userEvent.setup();
+    render(<StackedHarness />);
+    const trigger = screen.getByRole("button", { name: "Tambah anggota" });
+    await user.click(trigger);
+    expect(screen.getByRole("dialog", { name: "Tambah anggota tim" })).toBeInTheDocument();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog", { name: "Tambah anggota tim" })).not.toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Tambah sesi" })).toBeInTheDocument();
+    expect(trigger).toHaveFocus();
   });
 });

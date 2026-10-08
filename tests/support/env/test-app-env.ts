@@ -13,4 +13,6 @@ export const TEST_APP_ENV: AppEnv = {
   GOOGLE_DRIVE_API_KEY: "test-drive-api-key",
   // 32 zero bytes, base64url: a fixed non-production cipher key.
   GALLERY_PASSWORD_KEY: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  // 32 bytes of 0x01, base64url: a fixed non-production client session key.
+  CLIENT_SESSION_KEY: "AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQE",
 };

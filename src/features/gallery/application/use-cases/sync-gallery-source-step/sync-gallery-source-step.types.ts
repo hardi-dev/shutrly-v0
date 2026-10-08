@@ -21,6 +21,11 @@ export type SyncStepOutcome =
       readonly foldersDone: number;
       readonly foldersTotal: number;
     }
-  | { readonly ok: true; readonly status: "SUCCEEDED" }
+  | {
+      readonly ok: true;
+      readonly status: "SUCCEEDED";
+      /** Folder paths found for the first time, to map if they hold finished files (F-21). */
+      readonly newFolders?: readonly string[];
+    }
   | { readonly ok: true; readonly status: "FAILED"; readonly errorCode: SyncFailureCode }
   | GalleryDomainFailure;

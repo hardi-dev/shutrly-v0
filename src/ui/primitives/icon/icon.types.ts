@@ -8,6 +8,7 @@ export type IconName =
   | "eye-off"
   | "circle-alert"
   | "plus"
+  | "minus"
   | "send"
   | "arrow-right"
   | "trash-2"
@@ -51,6 +52,8 @@ export type IconName =
   | "pencil"
   | "copy"
   | "images"
+  | "layers"
+  | "download"
   | "image-off"
   | "external-link"
   | "arrow-left"
@@ -78,7 +81,9 @@ export type IconName =
   | "align-left"
   | "toggle-left"
   | "list"
-  | "user-plus";
+  | "list-checks"
+  | "user-plus"
+  | "key-round";
 
 export type IconSize = "sm" | "md" | "lg";
 

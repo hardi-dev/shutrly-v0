@@ -25,6 +25,8 @@ const PUBLIC_PREFIXES = [
   "/api/health",
   "/api/test",
   "/api/waitlist",
+  // F-10 client gallery: token + gallery password only, never an Owner session (BR-ACC-003).
+  "/g",
 ];
 
 /**

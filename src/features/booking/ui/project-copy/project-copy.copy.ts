@@ -42,9 +42,18 @@ export const PROJECT_COPY = {
   packageEmptyTitle: "Layanan ini belum punya item paket",
   packageEmptyBody:
     "Tambahkan item bila perlu. Item yang kamu tambah hanya berlaku untuk proyek ini.",
-  selectionEdit: "pilihan edit",
   // not in Pencil
-  selectionPrint: "pilihan cetak",
+  pickModes: { COUNT: "hitung foto", QUANTITY: "jumlah per foto" },
+  // not in Pencil: F-10 D-10c refusals
+  selectionInUseTitle: "Klien sudah memilih foto untuk item ini",
+  selectionInUseBody: (usage: number, unit: string | null) =>
+    `Sudah dipilih ${[String(usage), unit].filter(Boolean).join(" ")}. Nilai tidak bisa di bawah itu, dan item tidak bisa dihapus.`,
+  // not in Pencil
+  selectionClosedTitle: "Pilihan klien untuk item ini sudah dikirim",
+  selectionClosedBody: "Ubah item ini setelah membuka lagi pilihannya.",
+  // not in Pencil
+  selectionHasAddOnTitle: "Item ini dipakai add-on yang sudah disetujui",
+  selectionHasAddOnBody: "Batalkan add-on itu dulu, lalu hapus item ini.",
   detailTitle: "Detail proyek",
   titleLabel: "Judul proyek",
   titlePlaceholderDesktop: "Terisi otomatis setelah memilih layanan",
@@ -87,6 +96,12 @@ export const PROJECT_COPY = {
   assignEmptyTitle: "Belum ada anggota tim aktif",
   assignEmptyBody: "Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini.",
   assignEmptyAction: "Buka Tim",
+  // Revision OT #1, #2 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
+  addTeamMember: "Tambah anggota",
+  assignEmptyQuickBody:
+    "Tambahkan anggota baru di sini. Setelah disimpan, dia langsung dipilih untuk sesi ini.",
+  sessionTeamNoneQuick:
+    "Belum ada anggota tim aktif. Tambahkan di sini, lalu dia langsung dipilih.",
   assignedToastTitle: "Anggota ditambahkan",
   assignedToastBody: (name: string, session: string, role: string) =>
     `${name} bertugas di ${session} sebagai ${role}.`,

@@ -27,7 +27,7 @@ async function checkSources(
   return { passed: 0, failures };
 }
 
-/** Publishes a draft once at least one folder still lists at publish time; a duration expiry starts now (BR-GAL-004, BR-GAL-005, AC-GAL-016…018). @param deps - repository, provider and clock @param context - verified workspace @param actorId - the signed-in owner @param galleryId - the gallery id @returns ok, a refusal naming the failing folders, or a state failure @throws GalleryError NOT_FOUND for another workspace's gallery */
+/** Publishes a draft once at least one folder still lists at publish time; a duration expiry starts now; selection groups are created (BR-GAL-004, BR-GAL-005, BR-SEL-001, AC-GAL-016…018). @param deps - repository, provider and clock @param context - verified workspace @param actorId - the signed-in owner @param galleryId - the gallery id @returns ok, a refusal naming the failing folders, or a state failure @throws GalleryError NOT_FOUND for another workspace's gallery */
 export async function publishGallery(
   deps: PublishGalleryDeps,
   context: WorkspaceContext,
@@ -58,6 +58,8 @@ export async function publishGallery(
         actorId,
         deps.now,
       );
+      // F-10 D-10a: the client can pick from the moment the gallery opens (BR-SEL-001).
+      await writer.createSelectionGroups();
       return { ok: true };
     },
   );

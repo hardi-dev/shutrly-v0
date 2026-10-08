@@ -64,6 +64,8 @@
   --color-primitive-alpha-black-a40: #00000066;
   --color-primitive-alpha-neutral-950-a50: #09090B80;
   --color-primitive-alpha-black-a60: #00000099;
+  --color-primitive-alpha-neutral-0-a80: #FFFFFFCC;
+  --color-primitive-alpha-neutral-850-a80: #1F1F23CC;
   --color-semantic-surface-canvas: var(--color-primitive-neutral-100);
   --color-semantic-surface-panel: var(--color-primitive-neutral-0);
   --color-semantic-surface-subtle: var(--color-primitive-neutral-100);
@@ -71,6 +73,7 @@
   --color-semantic-surface-sunken: var(--color-primitive-neutral-100);
   --color-semantic-surface-muted: var(--color-primitive-neutral-200);
   --color-semantic-surface-inverse: var(--color-primitive-neutral-900);
+  --color-semantic-surface-on-media: var(--color-primitive-alpha-neutral-0-a80);
   --color-semantic-border-default: var(--color-primitive-neutral-150);
   --color-semantic-border-subtle: var(--color-primitive-neutral-150);
   --color-semantic-border-input: var(--color-primitive-neutral-250);
@@ -633,6 +636,7 @@
   --color-semantic-surface-sunken: var(--color-primitive-neutral-900);
   --color-semantic-surface-muted: var(--color-primitive-neutral-700);
   --color-semantic-surface-inverse: var(--color-primitive-neutral-50);
+  --color-semantic-surface-on-media: var(--color-primitive-alpha-neutral-850-a80);
   --color-semantic-border-default: var(--color-primitive-neutral-800);
   --color-semantic-border-subtle: var(--color-primitive-neutral-800);
   --color-semantic-border-input: var(--color-primitive-neutral-650);

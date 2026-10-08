@@ -22,6 +22,12 @@ describe("proxy (production gate, then early redirect)", () => {
     expect(isPublicPath("/profile")).toBe(false);
   });
 
+  it("AC-ACC-007 lets client gallery links through without an Owner session", () => {
+    expect(isPublicPath("/g/abc")).toBe(true);
+    expect(isPublicPath("/g/abc/photos")).toBe(true);
+    expect(isPublicPath("/gallery")).toBe(false);
+  });
+
   it("AC-LND-001 AC-LND-005 keeps the landing page and its waitlist endpoint public", () => {
     expect(isPublicPath("/")).toBe(true);
     expect(isPublicPath("/api/waitlist")).toBe(true);

@@ -143,7 +143,7 @@ A service uses each item definition at most once.
 Booking field types: `TEXT` | `NUMBER` | `DATE` | `BOOLEAN` | `SELECT` | `TEXTAREA`. Booking fields are independent from package item value types.
 
 ### BR-CAT-007 — Selection types
-A definition has a `selectionType` exactly when `selectionRequired = true`. In MVP the only selection types are `EDIT` and `PRINT`; others (album, frame, custom) are added only when their selection behavior is specified (BR-SEL-003). *(F-05 discovery, Owner 2026-10-02.)*
+A definition has a `pickMode` exactly when `selectionRequired = true`. The pick mode is `COUNT` (each picked photo uses one place) or `QUANTITY` (each picked photo has a quantity), and the Owner chooses it per definition, so a studio can add its own selection items (album, frame, canvas…) without a code change (BR-SEL-003). A selection definition also has `allowsPickNotes` (default off): when on, the client may write a note on each photo picked for it (BR-SEL-004). *(F-10 design, Owner 2026-10-05: per-pick client notes.)* *(F-05 discovery, Owner 2026-10-02; the fixed `EDIT`/`PRINT` types were replaced by a pick mode in F-10 discovery, Owner 2026-10-05.)*
 
 ### BR-CAT-008 — Catalog lifecycle: active, archived, deleted
 Categories, item definitions and services are created active. The Owner may archive and unarchive them at any time; archived records keep their data but are not offered for new services, new service items or new projects, and existing services keep using them until changed. A record may be deleted only while nothing refers to it: a category with no services, a definition used by no service and no snapshot, a service from which no project was created. Otherwise it can only be archived (BR-CAT-004). There is no draft or publish step. *(F-05 discovery, Owner 2026-10-02.)*
@@ -152,10 +152,10 @@ Categories, item definitions and services are created active. The Owner may arch
 Category, item-definition and service names are 1–60 characters after trimming and unique per workspace among records of the same kind, ignoring case, archived records included. A booking field's name is unique within its service, ignoring case. *(F-05 discovery, 2026-10-02.)*
 
 ### BR-CAT-010 — Definition type is fixed once used
-A definition's `valueType`, `selectionRequired` and `selectionType` cannot change while any service item uses it; its name and unit can. This keeps every stored service-item value valid (BR-CAT-001, BR-CAT-002). *(F-05 discovery, 2026-10-02.)*
+A definition's `valueType`, `selectionRequired` and `pickMode` cannot change while any service item uses it; its name and unit can. This keeps every stored service-item value valid (BR-CAT-001, BR-CAT-002). *(F-05 discovery, 2026-10-02.)*
 
 ### BR-CAT-011 — Seeded item definitions
-Every workspace starts with active item definitions *Foto edit* (`NUMBER`, unit *foto*, selection `EDIT`), *Foto cetak* (`NUMBER`, unit *lembar*, selection `PRINT`), *Jumlah orang* (`RANGE`, unit *orang*) and *Durasi pemotretan* (`NUMBER`, unit *jam*). They are created with the workspace and backfilled for workspaces that exist before F-05; the backfill skips a workspace that already has a definition with the same name. They are ordinary definitions: the Owner may edit, archive or delete them. No categories or services are seeded. *(F-05 discovery, Owner 2026-10-02.)*
+Every workspace starts with active item definitions *Foto edit* (`NUMBER`, unit *foto*, pick mode `COUNT`, pick notes on), *Foto cetak* (`NUMBER`, unit *lembar*, pick mode `QUANTITY`, pick notes off), *Jumlah orang* (`RANGE`, unit *orang*) and *Durasi pemotretan* (`NUMBER`, unit *jam*). They are created with the workspace and backfilled for workspaces that exist before F-05; the backfill skips a workspace that already has a definition with the same name. They are ordinary definitions: the Owner may edit, archive or delete them. No categories or services are seeded. *(F-05 discovery, Owner 2026-10-02.)*
 
 ---
 
@@ -175,7 +175,7 @@ The Owner may archive a client and restore it. An archived client keeps its data
 ## Project (PRJ)
 
 ### BR-PRJ-001 — Snapshot on creation
-Creating a project from a service atomically copies every service item (with name, valueType, value, unit, selectionRequired, selectionType) into `ProjectItem`s and every booking value (with fieldKey, fieldName, fieldType) into `ProjectFieldValue`s. While creating the project, the Owner may already adjust the deal as BR-PRJ-009 allows (item values, removing items, adding items from active definitions), and the snapshot stores the adjusted items in the same transaction. *(F-07 design, Owner 2026-10-02.)* Snapshots are the authoritative deal; `serviceId` is only an origin reference.
+Creating a project from a service atomically copies every service item (with name, valueType, value, unit, selectionRequired, pickMode, allowsPickNotes) into `ProjectItem`s and every booking value (with fieldKey, fieldName, fieldType) into `ProjectFieldValue`s. While creating the project, the Owner may already adjust the deal as BR-PRJ-009 allows (item values, removing items, adding items from active definitions), and the snapshot stores the adjusted items in the same transaction. *(F-07 design, Owner 2026-10-02.)* Snapshots are the authoritative deal; `serviceId` is only an origin reference.
 
 ### BR-PRJ-002 — One value per booking field
 A project has at most one value per logical booking `fieldKey`. Required booking fields must be valid on creation.
@@ -200,7 +200,7 @@ A project snapshots its service's currency; all project prices, add-ons, and inv
 A project belongs to one workspace, one client and one service of that workspace (BR-WS-002). It is created from an active service for an active client (BR-CAT-008, BR-CLI-003); archiving either later leaves the project unchanged. It has a title (1–100 characters after trimming, not unique), optional internal notes (at most 2000 characters, never shown to the client) and an agreed price (whole IDR, ≥ 0) that starts at the service's base price. The Owner creates it either as `DRAFT` or directly as `BOOKED`; both require valid required booking fields (BR-PRJ-002), and `BOOKED` also requires at least one session (BR-TEAM-003). The project has no event date of its own: its schedule is its sessions. *(F-07 discovery, Owner 2026-10-02; event date replaced by sessions in F-07 design, Owner 2026-10-02.)*
 
 ### BR-PRJ-009 — The deal is editable until shooting starts
-While a project is `DRAFT` or `BOOKED`, the Owner may change its agreed price, the values of its project items, its booking-field values, and add or remove project items. An added item is snapshotted from an active item definition that the project doesn't use yet (one item per definition per project), with values valid under BR-CAT-001/002. Edited booking values must stay valid for the snapshotted field type; required fields stay required. Field metadata (key, name, type, options) never changes. From `SHOOTING` onwards the deal is read-only; later changes go through add-ons (BR-ADD-*) or invoices. Edits never touch the service template (BR-CAT-003). *(F-07 discovery, Owner 2026-10-02.)*
+While a project is `DRAFT` or `BOOKED`, the Owner may change its agreed price, the values of its project items, its booking-field values, and add or remove project items. An added item is snapshotted from an active item definition that the project doesn't use yet (one item per definition per project), with values valid under BR-CAT-001/002. Edited booking values must stay valid for the snapshotted field type; required fields stay required. Field metadata (key, name, type, options) never changes. From `SHOOTING` onwards the deal is read-only; later changes go through add-ons (BR-ADD-*) or invoices. Edits never touch the service template (BR-CAT-003). *(F-07 discovery, Owner 2026-10-02.)* Once a selection item has a group (BR-SEL-001), an edit is refused if it would remove an item whose group has selections, lower a value below the group's usage, or change an item whose group is no longer `OPEN`. *(F-10 discovery, Owner 2026-10-05.)* Removing an item is also refused while an `APPROVED` add-on targets its group (cancel the add-on first, BR-ADD-005); `DRAFT` and `CANCELLED` add-ons on that group lose their target and stay, since none of them changed the limit (BR-ADD-002). *(F-10 build, Owner 2026-10-07.)*
 
 ### BR-PRJ-010 — Deleting and cancelling projects
 A `DRAFT` project can be deleted permanently, with its snapshots. Any other project is never deleted: `BOOKED` and `SHOOTING` projects are cancelled instead (BR-PRJ-004), recording actor and timestamp (BR-AUD-001). *(F-07 discovery, Owner 2026-10-02.)* Cancelling also archives the project's published or expired gallery in the same transaction (BR-GAL-005). *(F-09 discovery, Owner 2026-10-04.)*
@@ -269,13 +269,13 @@ A gallery can be published only with a password hash and at least one active, ac
 Sync upserts photos by `(gallerySource, externalFileId)` and records sync status, time, and error. Repeated syncs never duplicate photos. Sync runs only when the Owner links a source or asks for it; nothing is scheduled. A photo whose file is no longer found is kept and marked *missing*: it is hidden from the client and flagged to the Owner, and it becomes visible again if a later sync finds the file. Sync errors never record the Drive link (C-103). *(F-09 discovery, Owner 2026-10-04.)*
 
 ### BR-GAL-007 — Folder classification
-A source is synced with its whole folder tree. An image's kind comes from its nearest ancestor folder named `edited` or `print` (case-insensitive, at any depth): that folder makes it `EDITED` or `PRINT`. Every other image, in the source root or in any other subfolder (for example `Akad`, `Resepsi`, `raw`), is `PROOF`. Each photo keeps its folder path, so the Owner can browse the tree. Non-image files are ignored. *(F-09 design review, Owner 2026-10-04.)*
+*(Replaced 2026-10-07, F-21 delivery folder mapping, Owner.)* A source is synced with its whole folder tree. The Owner maps subfolders of a linked folder to selection items of the project's package (*Dipakai untuk pilihan foto klien*); mapping is optional and may be done before the subfolder exists. One subfolder maps to one item; one item may have several subfolders. An image inside a mapped subfolder (at any depth below it; the longest mapped folder wins) is a finished file for that item: `EDITED` for a `COUNT` item, `PRINT` for a `QUANTITY` item. Every other image is a `PROOF`. No folder name is recognised by itself any more (`edited` / `print` included). Saving a mapping reclassifies the stored photos at once; a sync that finds subfolders the Owner hasn't seen yet names them. A client pick of a photo that becomes a finished file stays as it is. A package without selection items has nothing to map; the Owner is pointed to *Isi paket*.
 
 ### BR-GAL-008 — Slug is display-only
 An optional gallery slug never grants access.
 
 ### BR-GAL-009 — Gallery record and sources
-A gallery belongs to one project of the same workspace (BR-WS-002). The Owner can create it while the project is `BOOKED`, `SHOOTING`, `POST_PROCESSING`, `DELIVERED` or `COMPLETED`; never on a `DRAFT` or `CANCELLED` project. On a `CANCELLED` project an unarchived gallery can't be published, synced or edited. Each gallery source is created from an active workspace source (BR-SRC-006) and a public folder link (BR-SRC-002). A folder (by its provider folder ID) is linked at most once per gallery; another gallery may link the same folder, and the Owner is warned. The Owner may remove a source from a non-archived gallery unless that would leave a published or expired gallery without an active source (BR-GAL-004); its photos are kept but hidden, like missing photos (BR-GAL-006). An `ARCHIVED` gallery is read-only: no sync, no source changes, no password rotation. *(F-09 discovery, Owner 2026-10-04.)*
+A gallery belongs to one project of the same workspace (BR-WS-002). The Owner can create it while the project is `BOOKED`, `SHOOTING`, `POST_PROCESSING`, `DELIVERED` or `COMPLETED`; never on a `DRAFT` or `CANCELLED` project. On a `CANCELLED` project an unarchived gallery can't be published, synced or edited. Each gallery source is created from an active workspace source (BR-SRC-006) and a public folder link (BR-SRC-002). A folder (by its provider folder ID) is linked at most once per gallery; another gallery may link the same folder, and the Owner is warned. The Owner may delete a source from a non-archived gallery: the gallery source record and every photo synced from it are deleted. Deletion is refused while a client pick references one of its photos (BR-SEL-*), and when it would leave a published or expired gallery without an active source (BR-GAL-004). Another gallery's link to the same folder is a separate source and is not affected. Sources removed before this change keep their photos hidden, like missing photos (BR-GAL-006). The Owner may rename a gallery source's label (1–60 characters, trimmed; empty shows the folder name). *(Delete and rename: Owner manual test, 2026-10-07.)* An `ARCHIVED` gallery is read-only: no sync, no source changes, no password rotation. *(F-09 discovery, Owner 2026-10-04.)*
 
 ---
 
@@ -302,19 +302,26 @@ Clients receive photos either through a server-controlled URL or from Google's p
 
 ### BR-SEL-001 — Selection groups are the entitlement
 Each project item with `selectionRequired = true` yields one selection group with `baseLimit` = the item's whole-number value. A project may have zero groups. There is no project-wide photo limit.
+Groups exist from the moment the gallery is first published, so the client can select from then on. While the deal is still editable (BR-PRJ-009), groups follow the project items: an added selection item gets an `OPEN` group, and a changed value changes `baseLimit`. *(F-10 discovery, Owner 2026-10-05.)*
 
 ### BR-SEL-002 — Effective limit is derived
 `effectiveLimit = baseLimit + extraLimit`, never stored. `extraLimit` = sum of `quantity` of approved add-ons targeting the group, maintained transactionally.
 
 ### BR-SEL-003 — Usage
-Usage for quantity-based groups (e.g. `PRINT`) = sum of selection quantities; otherwise = count of selections. Usage may never exceed `effectiveLimit`.
-**SPEC GAP (deferred to F-11 discovery):** exact rule deciding quantity-based vs count-based per `selectionType` (only EDIT→count and PRINT→sum are stated; ALBUM, FRAME, custom types unspecified). F-05 limits MVP selection types to `EDIT` and `PRINT` (BR-CAT-007), so the gap only matters when a new type is added.
+A group's usage depends on the pick mode of its project item (BR-CAT-007):
+
+| Pick mode | Usage | A pick has | Typical item |
+|---|---|---|---|
+| `COUNT` | number of picked photos | quantity fixed at 1 | *Foto edit*, *Foto album* |
+| `QUANTITY` | sum of pick quantities | a whole-number quantity ≥ 1 | *Foto cetak*, *Foto bingkai* |
+
+Usage may never exceed `effectiveLimit`. Any number of selection items, each with its own name, unit and mode, may exist; each becomes its own group (BR-SEL-001). *(F-10 discovery, Owner 2026-10-05; closes the SPEC GAP deferred from F-05.)*
 
 ### BR-SEL-004 — Only proof photos are selectable
-A selection references a `PROOF` photo from the gallery of the group's own project. One row per `(group, photo)`; quantity > 0. A photo may be selected in several groups.
+A selection references a `PROOF` photo from the gallery of the group's own project. One row per `(group, photo)`; quantity > 0. A photo may be selected in several groups. When the group's project item allows pick notes (BR-CAT-007), a selection may carry an optional client note of at most 500 characters; the note is changed only while the group is `OPEN` (BR-SEL-005), is checked and saved like a pick (BR-SEL-006), and is shown to the Owner with the pick. *(F-10 design, Owner 2026-10-05: per-pick client notes.)*
 
 ### BR-SEL-005 — Group lifecycle
-`OPEN → SUBMITTED → LOCKED`; `OPEN → LOCKED` (Owner closes without submission). Clients may change selections only while `OPEN`. Submission happens once and cannot be reopened by anyone in MVP. Status lives only on the group.
+`OPEN → SUBMITTED → LOCKED`; `OPEN → LOCKED` (Owner locks or closes). Clients may change selections only while `OPEN`. A submission that uses the whole effective limit makes the group `SUBMITTED`. A submission below the limit (after the client confirms the places left) records `submittedAt` and keeps the group `OPEN`: the client may still add, remove and change picks and notes and submit again, until a submission reaches the limit or the Owner locks the group. The Owner locks a `SUBMITTED` group, or an `OPEN` group the client has sent (*Kunci pilihan*), and closes an `OPEN` group never sent (*Tutup pilihan*). *(Owner 2026-10-07: a partial submission keeps the remaining places open.)* A `SUBMITTED` group returns to `OPEN` only when an add-on that targets it is approved (BR-ADD-004), so the client can use the extra places and submit again; picks already made are kept. A `LOCKED` group never reopens, and nothing else reopens a group. Status lives only on the group. *(F-10 modelling, Owner 2026-10-05.)*
 
 ### BR-SEL-006 — Concurrency-safe submission
 Selection changes and submission validate limits inside one transaction holding a lock on the group, so concurrent requests cannot exceed entitlement.
@@ -330,13 +337,13 @@ Clients see "used / effective" per group, without a separate add-on bucket.
 Final delivery uses the existing gallery link and password. No separate delivery URL.
 
 ### BR-DEL-002 — Hidden until published
-`EDITED`/`PRINT` files are hidden from clients until final delivery is published. They are never selectable and never count toward limits.
+`EDITED`/`PRINT` files are hidden from clients until final delivery is published. They are never selectable and never count toward limits. *Hasil akhir* shows them per package item (F-21).
 
 ### BR-DEL-003 — Publishing final delivery
 Requires at least one synced `EDITED` or `PRINT` file and a project in `BOOKED`, `SHOOTING` or `POST_PROCESSING` (BR-PRJ-004); records `finalDeliveryPublishedAt` and moves the project to `DELIVERED` (never to `COMPLETED`).
 
 ### BR-DEL-004 — Independent finished files
-Each finished file is an independent download with no link to its original proof photo; no inference from names/paths.
+Each finished file is an independent download with no link to its original proof photo; no inference from names/paths. The client may download one file, several chosen files, or all finished files at once; a bulk download never exposes the Drive folder link or folder ID (BR-ACC-005). *(Download modes: F-10 discovery, Owner 2026-10-05.)* **Proofs (F-20, Owner 2026-10-07):** a signed-in client may also download the original of any visible proof of the gallery — one, the selected ones, or all — before and after final delivery, never through the folder link or folder ID; downloads are not tracked.
 
 ---
 
@@ -353,6 +360,8 @@ An add-on that changes selection entitlement must target a selection group (`sel
 
 ### BR-ADD-004 — Approval effects are atomic
 Approval, in one transaction: increases the target group's `extraLimit` (if selection-related) and adds an invoice line to the project's sole draft invoice, creating one if none exists; invoice totals are recalculated.
+Approving an add-on on a `SUBMITTED` group also returns that group to `OPEN` (BR-SEL-005); a `LOCKED` group can't be targeted. *(F-10 modelling, Owner 2026-10-05.)*
+Until invoices exist (F-14), approval only increases `extraLimit` and keeps quantity, unit price and total on the add-on. When F-14 ships, every approved add-on that is not yet on an invoice is added to the project's draft invoice under this rule. *(F-10 discovery, Owner 2026-10-05.)*
 
 ### BR-ADD-005 — Safe cancellation
 Cancellation is rejected if the reduced limit would be below current usage. If the add-on is on an issued or paid invoice, cancellation requires an explicit billing adjustment. Draft invoice lines are removed/recalculated in the same transaction.

@@ -19,7 +19,6 @@ export interface PreviewTileProps {
 }
 
 export interface PreviewBodyProps extends GalleryPhotosSectionProps {
-  readonly isMobile: boolean;
   readonly onOpenPhoto: (photo: GalleryPhotoView, list: readonly GalleryPhotoView[]) => void;
 }
 

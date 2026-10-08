@@ -14,7 +14,7 @@ import type { DbExecutor } from "../client/client.types";
 import { galleryPhoto, gallerySource } from "../schema/gallery/gallery";
 import { workspaceSourceConfig } from "../schema/gallery/workspace-source-config";
 
-export const PREVIEW_PHOTO_COUNT = 8;
+export const PREVIEW_PHOTO_COUNT = 6;
 
 /** The columns of an Owner photo row, joined with its source. */
 export const PHOTO_COLUMNS = {

@@ -102,6 +102,7 @@ Additional import restrictions:
 | Ports | interface with suffix `Port`, in `features/<f>/application/ports/<name>/<name>.port.ts` | `ProjectRepositoryPort` in `ports/project-repository/project-repository.port.ts` |
 | Adapters | `adapters/<infra>/<unit>/`, the file named for the vendor | `adapters/email/auth-email-sender/resend-auth-email-sender.ts` |
 | Zod schemas | suffix `Schema` | `registerOwnerSchema` |
+| URL path segments (route folders) | English `kebab-case`, even where the page's copy is Indonesian (Owner 2026-10-07) | `/g/[token]/photos`, `…/picks/[groupId]/review` |
 | UI copy | `*.copy.ts` sibling, `UPPER_SNAKE_CASE` or `camelCase` object `as const` | `REGISTER_FORM_COPY` |
 
 - Use glossary terms ([domain/glossary.md](domain/glossary.md)): `Workspace`, `Project`, `SelectionGroup`, `ProjectAddOn`, not synonyms.

@@ -34,7 +34,7 @@ function lifecycleDeps() {
   return {
     sources: createDrizzleGallerySourceRepository(db),
     provider: FakeDriveProvider.withFixture(),
-    rateLimiter: { hit: () => Promise.resolve(true) },
+    rateLimiter: { hit: () => Promise.resolve(true), peek: () => Promise.resolve(true) },
     now: new Date(),
   };
 }

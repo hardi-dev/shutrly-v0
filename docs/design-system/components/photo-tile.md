@@ -28,6 +28,12 @@ One photo in a grid: a cropped thumbnail and its file name, with an optional met
 | `Photo Tile/Missing` | `HEwJS` | Badge on (*Hilang*). The file is gone from Drive; the photo is kept and hidden from the client (BR-GAL-006). |
 | `Photo Tile/Skeleton` | `e0pYUm` | Image and bar placeholders in `photo-tile.image-background`. Used while infinite scroll loads the next page. |
 
+### Selectable (F-10, code only until the library promotion)
+
+Built in `src/ui/patterns/photo-tile` from the local *Pick Tile* (`client-access.pen` `j1xyVG`) ahead of the planned library component *Photo Tile/Selectable*. Props `selection` (`isSelected`, `isDisabled`, `onChange`), `badge` (`label`, `tone` `info` for the own group's quantity, `neutral` for another group's marker) and `note` (*Catatan* button over the image, `surface.on-media`).
+- The whole tile is a toggle button (`aria-pressed`); the select control top-right is decorative. A full group disables unpicked tiles (`opacity.disabled` on the control); a picked tile stays enabled so it can be un-picked.
+- The *Catatan* button is a separate button over the top-left corner: ＋ when empty, `message-square-text` when filled.
+
 ## Token dependencies
 
 | Decision | Token |

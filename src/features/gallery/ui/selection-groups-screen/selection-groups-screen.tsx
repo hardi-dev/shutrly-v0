@@ -1,6 +1,7 @@
 "use client";
 
 import { lockIntentFor } from "@/features/gallery/domain/selection-group-status/selection-group-status";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -59,11 +60,12 @@ function GroupActions({ workspaceId, projectId, group, lock }: Readonly<GroupCar
 }
 
 function GroupCard(props: Readonly<GroupCardProps>) {
+  const locale = useFormattingLocale();
   const { workspaceId, group } = props;
   return (
     <SectionCard
       title={group.name}
-      description={groupMeta(group, true)}
+      description={groupMeta(group, true, locale)}
       actions={<StatusChip {...groupStatusChip(group.status)} hasDot />}
     >
       <div className="flex flex-col gap-(--space-4)">

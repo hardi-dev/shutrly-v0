@@ -1,5 +1,6 @@
 "use client";
 
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
@@ -19,8 +20,9 @@ export function GallerySourceRow({
   menuEntries,
   isLast,
 }: Readonly<GallerySourceRowProps>) {
+  const locale = useFormattingLocale();
   const isMobile = useMobileViewport();
-  const text = sourceRowText(source, phase, progress, { isArchived, isReadOnly, isMobile });
+  const text = sourceRowText(source, phase, progress, { isArchived, isReadOnly, isMobile }, locale);
   return (
     <ListCardItem
       icon="folder"

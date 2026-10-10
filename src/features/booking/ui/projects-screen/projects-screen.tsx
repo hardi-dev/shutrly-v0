@@ -7,6 +7,8 @@ import { useState } from "react";
 
 import type { ProjectListRow } from "@/features/booking/application/ports/project-list-reader/project-list-reader.port";
 import { formatShortDate } from "@/features/booking/domain/session/session";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { Button } from "@/ui/primitives/button/button";
@@ -40,6 +42,7 @@ function usePager(props: Readonly<ProjectsScreenProps>) {
 
 /** The project list (S1): tabs, search, table or list card, and Muat lebih banyak (AC-PRJ-001…005). */
 export function ProjectsScreen(props: Readonly<ProjectsScreenProps>) {
+  const locale = useFormattingLocale();
   const pager = usePager(props);
   const router = useRouter();
   const handleDeleted = () => {
@@ -58,7 +61,7 @@ export function ProjectsScreen(props: Readonly<ProjectsScreenProps>) {
         onDeleted={handleDeleted}
       >
         {(api) => {
-          const renderMenu = (row: ProjectListRow) => api.menuFor(rowTarget(row));
+          const renderMenu = (row: ProjectListRow) => api.menuFor(rowTarget(row, locale));
           return (
             <ProjectsBody
               {...props}
@@ -133,11 +136,11 @@ function ProjectsBody(
   );
 }
 
-function rowTarget(row: ProjectListRow): ProjectMenuTarget {
+function rowTarget(row: ProjectListRow, locale: FormattingLocale): ProjectMenuTarget {
   const when =
     row.shownSession === null
       ? PROJECT_COPY.metaNoSchedule
-      : formatShortDate(row.shownSession.date);
+      : formatShortDate(row.shownSession.date, locale);
   return {
     id: row.id,
     title: row.title,

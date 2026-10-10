@@ -1,5 +1,6 @@
 "use client";
 
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
@@ -11,8 +12,9 @@ import type { AccessCardProps } from "./access-card.types";
 
 /** *Akses klien*: the Owner-visible password with *Salin* and the expiry (AC-GAL-027, ADR-017). */
 export function AccessCard({ gallery, action }: Readonly<AccessCardProps>) {
+  const locale = useFormattingLocale();
   const isMobile = useMobileViewport();
-  const expiry = galleryExpiryFact(gallery);
+  const expiry = galleryExpiryFact(gallery, locale);
   return (
     <SectionCard
       title={GALLERY_COPY.accessTitle}

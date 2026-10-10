@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/ui/cn/cn";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
@@ -16,6 +17,7 @@ const MUTED = "text-(length:--font-size-body-sm) text-(--color-semantic-text-sec
 
 /** The gallery page's *Hasil akhir* card: no file yet, ready, published, completed or gallery not active, with *Publikasikan hasil akhir*; *Tandai selesai* lives in the project header (hasilakhirowner-kartu A–E, Owner 7, A-34, AC-DEL-001). @param props - workspace, project, the card view and the server actions @returns the card */
 export function DeliveryCard(props: Readonly<DeliveryCardProps>) {
+  const locale = useFormattingLocale();
   const isMobile = useMobileViewport();
   const flows = useDeliveryActions(props);
   const { card } = props;
@@ -33,7 +35,7 @@ export function DeliveryCard(props: Readonly<DeliveryCardProps>) {
           <p className={cn("p-(--space-4) md:p-(--space-6)", MUTED)}>{note}</p>
         ) : (
           <ul className="flex flex-col gap-(--space-3) p-(--space-4) md:p-(--space-6)">
-            {deliveryRows(card).map((row) => (
+            {deliveryRows(card, locale).map((row) => (
               <li key={row.key} className="flex items-center justify-between gap-(--space-3)">
                 <span className="flex min-w-0 flex-1 flex-col gap-(--space-0-5)">
                   <span className="text-(length:--font-size-body) font-medium text-(--color-semantic-text-primary)">

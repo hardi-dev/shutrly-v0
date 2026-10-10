@@ -1,6 +1,7 @@
 import type { OwnerGroupView } from "@/features/gallery/application/use-cases/owner-selection-views/owner-selection-views.types";
 import { formatGalleryShortDate } from "@/features/gallery/domain/gallery-display/gallery-display";
 import type { SelectionCardState } from "@/features/gallery/domain/selection-group-status/selection-group-status.types";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 import type { StatusChipProps } from "@/ui/primitives/status-chip/status-chip.types";
 
 import { CLIENT_COPY } from "../client-copy/client-copy.copy";
@@ -19,7 +20,11 @@ export function groupStatusChip(
 }
 
 /** One group's line on the card and the page: usage, notes and, when sent, the date (owner exports, AC-SEL-010). @param group - the group @param isPage - the page says *dipilih* for open groups @returns the line */
-export function groupMeta(group: OwnerGroupView, isPage: boolean): string {
+export function groupMeta(
+  group: OwnerGroupView,
+  isPage: boolean,
+  locale: FormattingLocale,
+): string {
   const unit = unitOfOwnerGroup(group);
   const usage =
     group.status === "OPEN" && isPage
@@ -29,7 +34,7 @@ export function groupMeta(group: OwnerGroupView, isPage: boolean): string {
   if (group.noteCount > 0) parts.push(COPY.notes(group.noteCount));
   // An open group the client sent below its limit shows the send too (Owner 2026-10-07).
   if (group.status !== "LOCKED" && group.submittedAt !== null) {
-    parts.push(COPY.sentOn(formatGalleryShortDate(group.submittedAt)));
+    parts.push(COPY.sentOn(formatGalleryShortDate(group.submittedAt, locale)));
   }
   return parts.join(COPY.metaJoin);
 }

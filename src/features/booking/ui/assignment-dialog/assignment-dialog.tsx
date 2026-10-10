@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import type { AssignableMember } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import { formatSessionRange } from "@/features/booking/domain/session/session";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
@@ -50,6 +51,7 @@ export function AssignmentDialog(props: Readonly<AssignmentDialogProps>) {
 }
 
 function AssignmentDialogBody(props: Readonly<AssignmentDialogBodyProps>) {
+  const locale = useFormattingLocale();
   const isMobile = useMobileViewport();
   const router = useRouter();
   const form = useAssignmentForm(props, props.initialMemberId);
@@ -85,7 +87,7 @@ function AssignmentDialogBody(props: Readonly<AssignmentDialogBodyProps>) {
       isOpen={props.isOpen}
       onOpenChange={props.onOpenChange}
       title={PROJECT_COPY.assignTitle(props.session.name)}
-      description={formatSessionRange(props.session)}
+      description={formatSessionRange(props.session, locale)}
       isPending={form.state.isPending}
       onClose={close}
       submit={submit}

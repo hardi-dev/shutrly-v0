@@ -1,5 +1,6 @@
 "use client";
 
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
@@ -20,6 +21,7 @@ export function GalleryPageScreen({
   selectionCard,
   deliveryCard,
 }: Readonly<GalleryPageScreenProps>) {
+  const locale = useFormattingLocale();
   const isMobile = useMobileViewport();
   const { gallery } = page;
   return (
@@ -28,7 +30,7 @@ export function GalleryPageScreen({
         <header className="flex flex-col items-start gap-(--space-2)">
           <StatusChip {...galleryStatusChip(gallery.status)} />
           <p className="text-(length:--font-size-body-sm) text-(--component-page-header-subtitle)">
-            {galleryMetaText(gallery, null)}
+            {galleryMetaText(gallery, null, locale)}
           </p>
         </header>
       ) : null}

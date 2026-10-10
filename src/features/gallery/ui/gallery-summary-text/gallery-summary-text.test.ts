@@ -87,13 +87,13 @@ describe("selectionSummary (Owner 7 Galeri card)", () => {
 
 describe("deliverySummary (Owner 7 Galeri card)", () => {
   it("r71J5/QUSVb: published, with the kinds on desktop", () => {
-    expect(deliverySummary(DELIVERY, false)).toEqual({
+    expect(deliverySummary(DELIVERY, false, "id-ID")).toEqual({
       title: "Hasil akhir",
       meta: "Dipublikasikan Sen, 5 Okt 2026 · 2 Foto edit · 1 Foto cetak",
       chip: { label: "Dipublikasikan", tone: "success" },
     });
-    expect(deliverySummary(DELIVERY, true)?.meta).toBe("Dipublikasikan Sen, 5 Okt 2026");
-    expect(deliverySummary({ ...DELIVERY, state: "COMPLETED" }, true)?.chip?.label).toBe(
+    expect(deliverySummary(DELIVERY, true, "id-ID")?.meta).toBe("Dipublikasikan Sen, 5 Okt 2026");
+    expect(deliverySummary({ ...DELIVERY, state: "COMPLETED" }, true, "id-ID")?.chip?.label).toBe(
       "Dipublikasikan",
     );
   });
@@ -101,19 +101,21 @@ describe("deliverySummary (Owner 7 Galeri card)", () => {
   it("shows ready files, the card notes, and hides the row where delivery never applies", () => {
     const items = [{ id: "i-edit", name: "Foto edit", count: 2 }];
     const ready = { ...DELIVERY, state: "READY" as const, publishedAt: null, printCount: 0, items };
-    expect(deliverySummary(ready, false)).toMatchObject({
+    expect(deliverySummary(ready, false, "id-ID")).toMatchObject({
       meta: "2 Foto edit siap",
       chip: { label: "Siap", tone: "info" },
     });
-    expect(deliverySummary(ready, true)?.meta).toBe("Siap dipublikasikan");
-    expect(deliverySummary({ ...DELIVERY, state: "NO_FILES" }, false)).toMatchObject({
+    expect(deliverySummary(ready, true, "id-ID")?.meta).toBe("Siap dipublikasikan");
+    expect(deliverySummary({ ...DELIVERY, state: "NO_FILES" }, false, "id-ID")).toMatchObject({
       meta: "Belum ada hasil akhir yang tersinkron.",
       chip: null,
     });
-    expect(deliverySummary({ ...DELIVERY, state: "GALLERY_INACTIVE" }, false)).toMatchObject({
+    expect(
+      deliverySummary({ ...DELIVERY, state: "GALLERY_INACTIVE" }, false, "id-ID"),
+    ).toMatchObject({
       meta: "Galeri harus berstatus dipublikasikan.",
       chip: null,
     });
-    expect(deliverySummary({ ...DELIVERY, isShown: false }, false)).toBeNull();
+    expect(deliverySummary({ ...DELIVERY, isShown: false }, false, "id-ID")).toBeNull();
   });
 });

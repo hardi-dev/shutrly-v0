@@ -2,6 +2,7 @@
 
 import { formatPickList } from "@/features/gallery/domain/pick-list/pick-list";
 import { lockIntentFor } from "@/features/gallery/domain/selection-group-status/selection-group-status";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -97,6 +98,7 @@ function Fact({ label, children }: Readonly<FactProps>) {
 }
 
 function SummaryCard({ detail }: Readonly<DetailAlertsProps>) {
+  const locale = useFormattingLocale();
   const { group } = detail;
   return (
     <SectionCard title={COPY.summaryTitle}>
@@ -107,7 +109,7 @@ function SummaryCard({ detail }: Readonly<DetailAlertsProps>) {
         <Fact label={COPY.summaryUsed}>
           {COPY.usage(group.usage, group.limit, unitOfOwnerGroup(group))}
         </Fact>
-        <Fact label={COPY.summaryTime}>{timeFact(detail)}</Fact>
+        <Fact label={COPY.summaryTime}>{timeFact(detail, locale)}</Fact>
         {group.noteCount > 0 ? (
           <Fact label={COPY.summaryNotes}>{COPY.notesPhotos(group.noteCount)}</Fact>
         ) : null}

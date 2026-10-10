@@ -4,6 +4,7 @@ import type {
   GalleryProjectStatus,
   GalleryStatus,
 } from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 import type { StatusChipProps } from "@/ui/primitives/status-chip/status-chip.types";
 
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
@@ -24,9 +25,9 @@ export function galleryStatusChip(
 }
 
 /** Describes the expiry for the facts rows: none, a draft duration, or the day. @param gallery - expiry facts @returns the display value and whether it is muted */
-export function galleryExpiryFact(gallery: ExpiryFacts): ExpiryFact {
+export function galleryExpiryFact(gallery: ExpiryFacts, locale: FormattingLocale): ExpiryFact {
   if (gallery.expiresAt !== null) {
-    const date = formatGalleryDate(gallery.expiresAt);
+    const date = formatGalleryDate(gallery.expiresAt, locale);
     return {
       text: gallery.status === "EXPIRED" ? GALLERY_COPY.expiryPast(date) : date,
       isMuted: false,
@@ -46,21 +47,25 @@ export function photoCountsText(counts: GalleryPhotoCounts): string {
   );
 }
 
-function expiryMeta(gallery: ExpiryFacts): string | null {
+function expiryMeta(gallery: ExpiryFacts, locale: FormattingLocale): string | null {
   if (gallery.status === "ARCHIVED") return null;
   if (gallery.expiresAt === null) {
     return gallery.expiryDays === null
       ? GALLERY_COPY.expiryNoneMeta
       : GALLERY_COPY.expiryDays(gallery.expiryDays);
   }
-  const date = formatGalleryDate(gallery.expiresAt);
+  const date = formatGalleryDate(gallery.expiresAt, locale);
   return gallery.status === "EXPIRED"
     ? GALLERY_COPY.expiredSince(date)
     : GALLERY_COPY.expiryOn(date);
 }
 
 /** Builds the page header meta line: folders, proof count and expiry (design.md › Layout). @param gallery - the summary @param projectTitle - prefix on desktop, or null on phones @returns the meta line */
-export function galleryMetaText(gallery: MetaFacts, projectTitle: string | null): string {
+export function galleryMetaText(
+  gallery: MetaFacts,
+  projectTitle: string | null,
+  locale: FormattingLocale,
+): string {
   const parts = projectTitle === null ? [] : [projectTitle];
   if (gallery.activeSourceCount === 0) parts.push(GALLERY_COPY.noSources);
   else
@@ -68,7 +73,7 @@ export function galleryMetaText(gallery: MetaFacts, projectTitle: string | null)
       GALLERY_COPY.sourceCount(gallery.activeSourceCount),
       GALLERY_COPY.proofCount(gallery.counts.proof),
     );
-  const expiry = expiryMeta(gallery);
+  const expiry = expiryMeta(gallery, locale);
   if (expiry !== null) parts.push(expiry);
   return parts.join(" · ");
 }

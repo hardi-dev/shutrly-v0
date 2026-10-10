@@ -1,4 +1,5 @@
 import type { ShownSession } from "@/features/booking/domain/session/session.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 
 import { projectMetaText } from "./project-session-summary";
 
@@ -7,9 +8,10 @@ export function ProjectSessionSummaryLine({
   shown,
   meta,
 }: Readonly<{ shown: ShownSession | null; meta?: string }>) {
+  const locale = useFormattingLocale();
   return (
     <p className="text-(length:--font-size-body-sm) text-(--component-page-header-subtitle)">
-      {meta ?? projectMetaText(null, shown)}
+      {meta ?? projectMetaText(null, shown, locale)}
     </p>
   );
 }

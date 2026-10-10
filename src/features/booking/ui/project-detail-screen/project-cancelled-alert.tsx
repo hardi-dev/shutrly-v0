@@ -1,6 +1,7 @@
 import type { ProjectDetailView } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail.types";
 import { todayInScheduleZone } from "@/features/booking/domain/schedule-clock/schedule-clock";
 import { formatWeekdayDate } from "@/features/booking/domain/session/session";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { Alert } from "@/ui/patterns/alert/alert";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
@@ -9,7 +10,8 @@ import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 export function ProjectCancelledAlert({
   cancellation,
 }: Readonly<{ cancellation: NonNullable<ProjectDetailView["cancellation"]> }>) {
-  const date = formatWeekdayDate(todayInScheduleZone(new Date(cancellation.at)));
+  const locale = useFormattingLocale();
+  const date = formatWeekdayDate(todayInScheduleZone(new Date(cancellation.at)), locale);
   const who =
     cancellation.byName === null
       ? PROJECT_COPY.cancelledAnonymous(date)

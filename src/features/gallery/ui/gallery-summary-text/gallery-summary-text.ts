@@ -1,6 +1,7 @@
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
 import type { SelectionCardView } from "@/features/gallery/application/use-cases/owner-selection-views/owner-selection-views.types";
 import { formatGalleryDate } from "@/features/gallery/domain/gallery-display/gallery-display";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 
 import { DELIVERY_COPY } from "../delivery-copy/delivery.copy";
 import { SELECTION_OWNER_COPY } from "../selection-owner-text/selection-owner.copy";
@@ -62,6 +63,7 @@ function finishedKinds(card: DeliveryCardView): string {
 export function deliverySummary(
   card: DeliveryCardView,
   isMobile: boolean,
+  locale: FormattingLocale,
 ): GallerySummaryRow | null {
   const title = DELIVERY_COPY.cardTitle;
   if (!card.isShown) return null;
@@ -73,7 +75,9 @@ export function deliverySummary(
     const meta = isMobile ? COPY.readyMobile : COPY.ready(finishedKinds(card));
     return { title, meta, chip: { label: DELIVERY_COPY.chip.READY, tone: "info" } };
   }
-  const published = COPY.published(card.publishedAt ? formatGalleryDate(card.publishedAt) : "");
+  const published = COPY.published(
+    card.publishedAt ? formatGalleryDate(card.publishedAt, locale) : "",
+  );
   const meta = isMobile ? published : [published, finishedKinds(card)].join(COPY.join);
   return { title, meta, chip: { label: DELIVERY_COPY.chip.PUBLISHED, tone: "success" } };
 }

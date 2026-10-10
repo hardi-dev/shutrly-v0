@@ -1,4 +1,5 @@
 import { formatShortDate } from "@/features/booking/domain/session/session";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
@@ -16,6 +17,7 @@ export function ProjectList({
   emptyState,
   renderMenu,
 }: Readonly<ProjectListProps>) {
+  const locale = useFormattingLocale();
   return (
     <SectionCard
       title={PROJECT_COPY.listTitle}
@@ -36,7 +38,7 @@ export function ProjectList({
               meta={`${row.clientName} · ${
                 row.shownSession === null
                   ? PROJECT_COPY.metaNoSchedule
-                  : formatShortDate(row.shownSession.date)
+                  : formatShortDate(row.shownSession.date, locale)
               }`}
               isLast={index === rows.length - 1}
               trailing={

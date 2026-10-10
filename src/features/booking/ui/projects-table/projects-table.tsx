@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import type { ProjectListRow } from "@/features/booking/application/ports/project-list-reader/project-list-reader.port";
 import { formatSessionWhen } from "@/features/booking/domain/session/session";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { DataTable } from "@/ui/patterns/data-table/data-table";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
@@ -85,6 +86,7 @@ function ProjectCell({ workspaceId, row }: Readonly<{ workspaceId: string; row: 
 }
 
 function EventCell({ row }: Readonly<{ row: ProjectListRow }>) {
+  const locale = useFormattingLocale();
   const shown = row.shownSession;
   if (shown === null) {
     return (
@@ -92,7 +94,7 @@ function EventCell({ row }: Readonly<{ row: ProjectListRow }>) {
     );
   }
   const extra = row.sessionCount > 1 ? PROJECT_COPY.metaExtra(row.sessionCount - 1) : null;
-  const when = formatSessionWhen(shown);
+  const when = formatSessionWhen(shown, locale);
   return (
     <span className="flex min-w-0 flex-col">
       <span className="truncate">

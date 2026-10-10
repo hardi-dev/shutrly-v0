@@ -2,6 +2,7 @@
 
 import { formatSessionRange } from "@/features/booking/domain/session/session";
 import { firstName } from "@/features/booking/domain/session-assignment/session-assignment";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
@@ -21,6 +22,7 @@ import { useRemoveAssignment } from "./use-remove-assignment";
  * @returns the dialog as a desktop modal or a phone form sheet, with the remove confirmation
  */
 export function SessionTeamDialog(props: Readonly<SessionTeamDialogProps>) {
+  const locale = useFormattingLocale();
   const remove = useRemoveAssignment(props);
   const { session, assignments, canEdit } = props;
   function close(): void {
@@ -32,7 +34,7 @@ export function SessionTeamDialog(props: Readonly<SessionTeamDialogProps>) {
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         title={PROJECT_COPY.teamTitle(session.name)}
-        description={formatSessionRange(session)}
+        description={formatSessionRange(session, locale)}
         actions={<SessionTeamActions canEdit={canEdit} onAdd={props.onAddMember} onClose={close} />}
       >
         {canEdit ? null : (

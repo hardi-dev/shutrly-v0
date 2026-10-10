@@ -19,16 +19,18 @@ function field(overrides: Partial<ProjectFieldRecord>): ProjectFieldRecord {
 
 describe("booking value display", () => {
   it("AC-PRJ-015 shows text as is and dates with the weekday", () => {
-    expect(displayBookingValue(field({}))).toBe("UI");
-    expect(displayBookingValue(field({ fieldType: "DATE", value: "2026-11-10" }))).toBe(
+    expect(displayBookingValue(field({}), "id-ID")).toBe("UI");
+    expect(displayBookingValue(field({ fieldType: "DATE", value: "2026-11-10" }), "id-ID")).toBe(
       "Sel, 10 Nov 2026",
     );
   });
 
   it("AC-PRJ-015 shows booleans as Ya or Tidak and empty values as null", () => {
-    expect(displayBookingValue(field({ fieldType: "BOOLEAN", value: true }))).toBe("Ya");
-    expect(displayBookingValue(field({ fieldType: "BOOLEAN", value: false }))).toBe("Tidak");
-    expect(displayBookingValue(field({ value: null }))).toBeNull();
-    expect(displayBookingValue(field({ value: "" }))).toBeNull();
+    expect(displayBookingValue(field({ fieldType: "BOOLEAN", value: true }), "id-ID")).toBe("Ya");
+    expect(displayBookingValue(field({ fieldType: "BOOLEAN", value: false }), "id-ID")).toBe(
+      "Tidak",
+    );
+    expect(displayBookingValue(field({ value: null }), "id-ID")).toBeNull();
+    expect(displayBookingValue(field({ value: "" }), "id-ID")).toBeNull();
   });
 });

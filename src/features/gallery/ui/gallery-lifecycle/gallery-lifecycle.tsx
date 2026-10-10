@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import type { PublishSourceFailure } from "@/features/gallery/application/use-cases/gallery-results/gallery-results.types";
 import type { GalleryAction } from "@/features/gallery/domain/gallery-status/gallery-header-actions";
 import { galleryHeaderActions } from "@/features/gallery/domain/gallery-status/gallery-header-actions";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { CompactBarActions } from "@/ui/patterns/compact-bar/compact-bar-actions";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
@@ -125,8 +126,9 @@ function PublishConfirm({
   onClose,
   onRefused,
 }: Readonly<GalleryDialogsProps>) {
+  const locale = useFormattingLocale();
   const runner = useLifecycleRunner();
-  const expiry = galleryExpiryFact(page.gallery);
+  const expiry = galleryExpiryFact(page.gallery, locale);
   const handleConfirm = async () => {
     const result = await runner.run(() => actions.publishAction(workspaceId, page.gallery.id), {
       title: GALLERY_COPY.publishedTitle,

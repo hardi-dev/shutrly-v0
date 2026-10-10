@@ -28,6 +28,7 @@ import { loadAssignableMembers, loadTeamRoles } from "@/composition/booking/team
 import { loadDeliveryCard } from "@/composition/gallery/delivery-flow/delivery-flow";
 import { loadGalleryCard } from "@/composition/gallery/gallery-flow/gallery-flow";
 import { loadSelectionCard } from "@/composition/gallery/selection-owner-flow/selection-owner-flow";
+import { getRequestFormattingLocale } from "@/composition/locale/request-formatting-locale/request-formatting-locale";
 import type { ProjectDetailView } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail.types";
 import type { AddOnCardView } from "@/features/booking/application/use-cases/list-add-ons/list-add-ons.types";
 import { AddOnCard } from "@/features/booking/ui/add-on-card/add-on-card";
@@ -46,6 +47,7 @@ import { CompleteProjectButton } from "@/features/gallery/ui/complete-project-bu
 import { deliveredHeaderMeta } from "@/features/gallery/ui/delivery-text/delivery-text";
 import { GalleryCard } from "@/features/gallery/ui/gallery-card/gallery-card";
 import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 import { ToastOnMount } from "@/ui/patterns/toast/toast";
 
 export default async function ProjectDetailPage({
@@ -55,20 +57,20 @@ export default async function ProjectDetailPage({
   params: Promise<{ workspaceId: string; projectId: string }>;
   searchParams: Promise<{ state?: string }>;
 }>) {
-  const { workspaceId, projectId } = await params;
-  const { state } = await searchParams;
+  const locale = await getRequestFormattingLocale();
+  const [{ workspaceId, projectId }, { state }] = await Promise.all([params, searchParams]);
   const { project, definitions, assignableMembers, roles, delivery, cards } = await loadPage(
     workspaceId,
     projectId,
   );
   const toast = resolveToast(state, project.title);
-  const deliveredMeta = deliveredHeaderMeta(delivery);
+  const deliveredMeta = deliveredHeaderMeta(delivery, locale);
   return (
     <>
       <PageHeadingOverride
         title={project.title}
         status={projectStatusChip(project.status)}
-        meta={headerMetaText(project, deliveredMeta)}
+        meta={headerMetaText(project, deliveredMeta, locale)}
         parent={{ label: PROJECT_COPY.parentLabel, href: `/w/${workspaceId}/projects` }}
         hidesBottomNav
       />
@@ -157,8 +159,14 @@ function galleryCardSlot(
 }
 
 // A delivered project names when final delivery was published instead of its session (owner-7 `r71J5`).
-function headerMetaText(project: ProjectDetailView, deliveredMeta: string | null) {
-  if (deliveredMeta === null) return projectMetaText(project.client.name, project.shownSession);
+function headerMetaText(
+  project: ProjectDetailView,
+  deliveredMeta: string | null,
+  locale: FormattingLocale,
+) {
+  if (deliveredMeta === null) {
+    return projectMetaText(project.client.name, project.shownSession, locale);
+  }
   return projectMetaLine(project.client.name, deliveredMeta);
 }
 

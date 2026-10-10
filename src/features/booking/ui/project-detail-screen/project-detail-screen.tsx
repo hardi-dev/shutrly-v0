@@ -6,6 +6,8 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 
 import { formatShortDate } from "@/features/booking/domain/session/session";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { CompactBarActions } from "@/ui/patterns/compact-bar/compact-bar-actions";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
@@ -88,11 +90,14 @@ export function ProjectDetailScreen(props: Readonly<ProjectDetailScreenProps>) {
   );
 }
 
-function menuTargetOf(project: ProjectDetailScreenProps["project"]): ProjectMenuTarget {
+function menuTargetOf(
+  project: ProjectDetailScreenProps["project"],
+  locale: FormattingLocale,
+): ProjectMenuTarget {
   const when =
     project.shownSession === null
       ? PROJECT_COPY.metaNoSchedule
-      : formatShortDate(project.shownSession.session.date);
+      : formatShortDate(project.shownSession.session.date, locale);
   return {
     id: project.id,
     title: project.title,
@@ -137,6 +142,7 @@ function DetailBody({
     onSessionRequired: () => void;
   }
 >) {
+  const locale = useFormattingLocale();
   const isMobile = useMobileViewport();
   const actions = useProjectActions({
     workspaceId,
@@ -144,7 +150,7 @@ function DetailBody({
     advanceAction: menuActions.advanceAction,
     onSessionRequired,
   });
-  const target = menuTargetOf(project);
+  const target = menuTargetOf(project, locale);
   const menu = api.menuFor(target);
   const handleEditInfo = () => {
     api.openInfo(target);

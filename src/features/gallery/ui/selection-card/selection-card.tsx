@@ -1,3 +1,4 @@
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
@@ -21,6 +22,7 @@ function CardAction({ card, base }: Readonly<SelectionCardActionProps>) {
 }
 
 function CardBody({ card }: Readonly<Pick<SelectionCardProps, "card">>) {
+  const locale = useFormattingLocale();
   if (card.state === "NO_ITEMS" || card.state === "NOT_PUBLISHED") {
     return (
       <p className="p-(--space-4) text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary) md:p-(--space-6)">
@@ -37,7 +39,7 @@ function CardBody({ card }: Readonly<Pick<SelectionCardProps, "card">>) {
               {group.name}
             </span>
             <span className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
-              {groupMeta(group, false)}
+              {groupMeta(group, false, locale)}
             </span>
           </span>
           <StatusChip {...groupStatusChip(group.status)} hasDot />

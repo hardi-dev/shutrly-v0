@@ -9,6 +9,7 @@ import { loadAccessCard } from "@/composition/gallery/access-card-flow/access-ca
 import { loadDeliveryCard } from "@/composition/gallery/delivery-flow/delivery-flow";
 import { loadGalleryPage } from "@/composition/gallery/gallery-flow/gallery-flow";
 import { loadSelectionCard } from "@/composition/gallery/selection-owner-flow/selection-owner-flow";
+import { getRequestFormattingLocale } from "@/composition/locale/request-formatting-locale/request-formatting-locale";
 import type { AccessCardView } from "@/features/gallery/application/use-cases/get-access-card/get-access-card.types";
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
 import { DeliveryCard } from "@/features/gallery/ui/delivery-card/delivery-card";
@@ -29,6 +30,7 @@ export default async function GalleryPage({
   params: Promise<{ workspaceId: string; projectId: string }>;
   searchParams: Promise<{ sync?: string }>;
 }>) {
+  const locale = await getRequestFormattingLocale();
   const { workspaceId, projectId } = await params;
   const { sync } = await searchParams;
   const [page, access, selection, delivery] = await Promise.all([
@@ -42,7 +44,7 @@ export default async function GalleryPage({
       <PageHeadingOverride
         title={GALLERY_COPY.pageTitle}
         status={galleryStatusChip(page.gallery.status)}
-        meta={galleryMetaText(page.gallery, page.project.title)}
+        meta={galleryMetaText(page.gallery, page.project.title, locale)}
         parent={{ label: page.project.title, href: `/w/${workspaceId}/projects/${projectId}` }}
         hidesBottomNav
       />

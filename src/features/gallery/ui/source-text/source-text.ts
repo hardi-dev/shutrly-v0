@@ -5,6 +5,7 @@ import {
   formatGalleryShortDateTime,
   formatGalleryTime,
 } from "@/features/gallery/domain/gallery-display/gallery-display";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import type {
@@ -26,24 +27,28 @@ function countsText(source: GallerySourceView, withIgnored: boolean): string[] {
   return parts;
 }
 
-function syncedMeta(source: GallerySourceView, mode: SourceRowMode): string {
+function syncedMeta(
+  source: GallerySourceView,
+  mode: SourceRowMode,
+  locale: FormattingLocale,
+): string {
   const { lastSyncedAt } = source;
   if (lastSyncedAt === null) return [source.workspaceSourceName, COPY.sourceNever].join(" · ");
   if (mode.isReadOnly) {
     const text = mode.isMobile
-      ? COPY.sourceLastSyncedShort(formatGalleryShortDateTime(lastSyncedAt))
-      : COPY.sourceLastSyncedAt(formatGalleryDateTime(lastSyncedAt));
+      ? COPY.sourceLastSyncedShort(formatGalleryShortDateTime(lastSyncedAt, locale))
+      : COPY.sourceLastSyncedAt(formatGalleryDateTime(lastSyncedAt, locale));
     return mode.isMobile ? text : [source.workspaceSourceName, text].join(" · ");
   }
   if (mode.isMobile)
-    return [...countsText(source, false), formatGalleryTime(lastSyncedAt)].join(" · ");
-  const synced = COPY.sourceSyncedAt(formatGalleryDateTime(lastSyncedAt));
+    return [...countsText(source, false), formatGalleryTime(lastSyncedAt, locale)].join(" · ");
+  const synced = COPY.sourceSyncedAt(formatGalleryDateTime(lastSyncedAt, locale));
   return [source.workspaceSourceName, synced, ...countsText(source, true)].join(" · ");
 }
 
-function removedMeta(source: GallerySourceView): string {
+function removedMeta(source: GallerySourceView, locale: FormattingLocale): string {
   const photos = source.proofCount + source.editedCount + source.printCount;
-  const when = source.removedAt === null ? "" : formatGalleryDate(source.removedAt);
+  const when = source.removedAt === null ? "" : formatGalleryDate(source.removedAt, locale);
   return COPY.sourceRemovedAt(when, photos);
 }
 
@@ -76,6 +81,7 @@ export function sourceRowText(
   phase: SourceSyncPhase,
   progress: SourceSyncProgress,
   mode: SourceRowMode,
+  locale: FormattingLocale,
 ): SourceRowText {
   const title = source.name ?? COPY.sourceFallbackName;
   const neutral = (label: string): SourceRowText["chip"] => ({
@@ -86,7 +92,7 @@ export function sourceRowText(
   if (source.removed) {
     return {
       title,
-      meta: removedMeta(source),
+      meta: removedMeta(source, locale),
       metaTone: "default",
       chip: neutral(COPY.sourceChip.REMOVED),
     };
@@ -94,7 +100,7 @@ export function sourceRowText(
   if (mode.isArchived) {
     return {
       title,
-      meta: syncedMeta(source, mode),
+      meta: syncedMeta(source, mode, locale),
       metaTone: "default",
       chip: neutral(COPY.sourceChip.ARCHIVED),
     };
@@ -113,7 +119,7 @@ export function sourceRowText(
   const label = isDone ? COPY.sourceChip.SUCCEEDED : COPY.sourceChip.NEVER;
   return {
     title,
-    meta: syncedMeta(source, mode),
+    meta: syncedMeta(source, mode, locale),
     metaTone: "default",
     chip: { tone: isDone ? "success" : "neutral", label, hasDot: true },
   };

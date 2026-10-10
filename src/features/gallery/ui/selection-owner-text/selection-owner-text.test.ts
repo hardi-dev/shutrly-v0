@@ -21,7 +21,7 @@ const GROUP: OwnerGroupView = {
 
 describe("selection owner text (owner exports)", () => {
   it("AC-SEL-010 writes usage, notes and the sent date on a submitted group", () => {
-    expect(groupMeta(GROUP, false)).toBe("8 dari 8 foto · 3 catatan · dikirim 5 Okt 2026");
+    expect(groupMeta(GROUP, false, "id-ID")).toBe("8 dari 8 foto · 3 catatan · dikirim 5 Okt 2026");
   });
 
   it("AC-SEL-010 says dipilih for an open group on the page only", () => {
@@ -32,14 +32,14 @@ describe("selection owner text (owner exports)", () => {
       noteCount: 0,
       submittedAt: null,
     };
-    expect(groupMeta(open, true)).toBe("3 dari 8 foto dipilih");
-    expect(groupMeta(open, false)).toBe("3 dari 8 foto");
+    expect(groupMeta(open, true, "id-ID")).toBe("3 dari 8 foto dipilih");
+    expect(groupMeta(open, false, "id-ID")).toBe("3 dari 8 foto");
   });
 
   it("uses foto when the item names no unit", () => {
-    expect(groupMeta({ ...GROUP, unit: null, status: "LOCKED", noteCount: 0 }, false)).toBe(
-      "8 dari 8 foto",
-    );
+    expect(
+      groupMeta({ ...GROUP, unit: null, status: "LOCKED", noteCount: 0 }, false, "id-ID"),
+    ).toBe("8 dari 8 foto");
   });
 
   it("chips: Terbuka is info, Dikirim success, Dikunci neutral", () => {

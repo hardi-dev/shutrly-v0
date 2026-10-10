@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
@@ -17,6 +18,7 @@ import { RotateLinkDialog } from "./rotate-link-dialog";
 const NOTE = "text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)";
 
 function AccessRows({ card }: Readonly<Pick<ProjectAccessCardProps, "card">>) {
+  const locale = useFormattingLocale();
   if (card.state === "INACTIVE") {
     return (
       <>
@@ -25,7 +27,7 @@ function AccessRows({ card }: Readonly<Pick<ProjectAccessCardProps, "card">>) {
       </>
     );
   }
-  const expiry = galleryExpiryFact(card.gallery);
+  const expiry = galleryExpiryFact(card.gallery, locale);
   return (
     <>
       <AccessRow

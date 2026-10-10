@@ -30,17 +30,17 @@ describe("gallery text", () => {
   });
 
   it("AC-GAL-018 AC-GAL-019 describes no expiry, a draft duration and a day", () => {
-    expect(galleryExpiryFact(BASE)).toEqual({ text: "Tidak ada", isMuted: true });
-    expect(galleryExpiryFact({ ...BASE, expiryDays: 30 }).text).toBe(
+    expect(galleryExpiryFact(BASE, "id-ID")).toEqual({ text: "Tidak ada", isMuted: true });
+    expect(galleryExpiryFact({ ...BASE, expiryDays: 30 }, "id-ID").text).toBe(
       "30 hari setelah dipublikasikan",
     );
-    expect(galleryExpiryFact({ ...BASE, expiresAt: "2026-11-03T03:00:00Z" }).text).toBe(
+    expect(galleryExpiryFact({ ...BASE, expiresAt: "2026-11-03T03:00:00Z" }, "id-ID").text).toBe(
       "Sel, 3 Nov 2026",
     );
   });
 
   it("design header meta: empty draft, published and expired", () => {
-    expect(galleryMetaText(BASE, "Wisuda Basic — Rina")).toBe(
+    expect(galleryMetaText(BASE, "Wisuda Basic — Rina", "id-ID")).toBe(
       "Wisuda Basic — Rina · Belum ada folder · Tanpa kedaluwarsa",
     );
     const published = {
@@ -50,18 +50,21 @@ describe("gallery text", () => {
       counts: { proof: 8, edited: 2, print: 1, missing: 0 },
       expiresAt: "2026-11-03T03:00:00Z",
     };
-    expect(galleryMetaText(published, null)).toBe(
+    expect(galleryMetaText(published, null, "id-ID")).toBe(
       "2 folder · 8 proof · Kedaluwarsa Sel, 3 Nov 2026",
     );
-    expect(galleryMetaText({ ...published, status: "EXPIRED" }, null)).toBe(
+    expect(galleryMetaText({ ...published, status: "EXPIRED" }, null, "id-ID")).toBe(
       "2 folder · 8 proof · Kedaluwarsa sejak Sel, 3 Nov 2026",
     );
-    expect(galleryMetaText({ ...published, status: "ARCHIVED" }, null)).toBe("2 folder · 8 proof");
+    expect(galleryMetaText({ ...published, status: "ARCHIVED" }, null, "id-ID")).toBe(
+      "2 folder · 8 proof",
+    );
   });
 
   it("design marks a past expiry (lewat) and words visibility per status and project", () => {
     expect(
-      galleryExpiryFact({ ...BASE, status: "EXPIRED", expiresAt: "2026-11-03T03:00:00Z" }).text,
+      galleryExpiryFact({ ...BASE, status: "EXPIRED", expiresAt: "2026-11-03T03:00:00Z" }, "id-ID")
+        .text,
     ).toBe("Sel, 3 Nov 2026 (lewat)");
     expect(galleryVisibilityText("EXPIRED", "BOOKED")).toBe(
       "Tidak terlihat oleh klien selama galeri kedaluwarsa.",

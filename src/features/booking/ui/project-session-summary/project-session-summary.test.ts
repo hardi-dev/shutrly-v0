@@ -26,26 +26,30 @@ function shown(
 
 describe("project meta text", () => {
   it("AC-PRJ-015 joins client, next session, place and the extra count", () => {
-    expect(projectMetaText("Rina", shown())).toBe(
+    expect(projectMetaText("Rina", shown(), "id-ID")).toBe(
       "Rina · Sesi berikutnya Sel, 10 Nov 2026 · 06.30 · Rumah Rina, Depok · +1 sesi",
     );
   });
 
   it("AC-PRJ-018 says the last session once all are past", () => {
     expect(
-      projectMetaText("Rina", shown({ isPast: true, extraCount: 0 }, "Balairung UI, Depok")),
+      projectMetaText(
+        "Rina",
+        shown({ isPast: true, extraCount: 0 }, "Balairung UI, Depok"),
+        "id-ID",
+      ),
     ).toBe("Rina · Sesi terakhir Sel, 10 Nov 2026 · 06.30 · Balairung UI, Depok");
   });
 
   it("AC-PRJ-018 says there is no schedule yet", () => {
-    expect(projectMetaText("Rina", null)).toBe("Rina · Belum ada jadwal");
+    expect(projectMetaText("Rina", null, "id-ID")).toBe("Rina · Belum ada jadwal");
   });
 
   it("AC-PRJ-015 drops the client on phones and a missing place", () => {
-    expect(projectMetaText(null, shown({ extraCount: 0 }, null))).toBe(
+    expect(projectMetaText(null, shown({ extraCount: 0 }, null), "id-ID")).toBe(
       "Sesi berikutnya Sel, 10 Nov 2026 · 06.30",
     );
-    expect(projectMetaText(null, null)).toBe("Belum ada jadwal");
+    expect(projectMetaText(null, null, "id-ID")).toBe("Belum ada jadwal");
   });
 
   it("Owner 7: puts the client before a given line", () => {

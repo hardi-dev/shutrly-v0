@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
@@ -32,6 +34,7 @@ import { GallerySummaryRows } from "./gallery-summary-rows";
 
 /** The project detail's Galeri card (board `ZiJzF`, Owner 7): *Buat galeri*, the draft-project hint, or the gallery facts with the *Pilihan klien* and *Hasil akhir* rows (AC-GAL-001, 003, A-34). */
 export function GalleryCard(props: Readonly<GalleryCardProps>) {
+  const locale = useFormattingLocale();
   const router = useRouter();
   const isMobile = useMobileViewport();
   const { card, workspaceId } = props;
@@ -53,7 +56,7 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
     >
       <div className="flex flex-col gap-(--space-4) p-(--space-4) md:gap-(--space-5) md:p-(--space-6)">
         <GallerySummaryFacts gallery={card.gallery} isMobile={isMobile} />
-        <GallerySummaryRows rows={summaryRows(props, isMobile)} />
+        <GallerySummaryRows rows={summaryRows(props, isMobile, locale)} />
       </div>
       {card.gallery.failedSourceCount > 0 ? (
         <div className="px-(--space-4) pb-(--space-4) md:px-(--space-6) md:pb-(--space-6)">
@@ -71,10 +74,11 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
 function summaryRows(
   { selection, delivery }: Readonly<GalleryCardProps>,
   isMobile: boolean,
+  locale: FormattingLocale,
 ): GallerySummaryRow[] {
   const rows = [
     selection ? selectionSummary(selection, isMobile) : null,
-    delivery ? deliverySummary(delivery, isMobile) : null,
+    delivery ? deliverySummary(delivery, isMobile, locale) : null,
   ];
   return rows.filter((row) => row !== null);
 }
@@ -145,7 +149,8 @@ function NoGallery(props: Readonly<NoGalleryProps>) {
 }
 
 function GallerySummaryFacts({ gallery, isMobile }: Readonly<GallerySummaryFactsProps>) {
-  const expiry = galleryExpiryFact(gallery);
+  const locale = useFormattingLocale();
+  const expiry = galleryExpiryFact(gallery, locale);
   const status: GalleryFact = {
     label: GALLERY_COPY.factStatus,
     value: <StatusChip {...galleryStatusChip(gallery.status)} />,

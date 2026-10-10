@@ -4,6 +4,7 @@ import type { AssignableMember } from "@/features/booking/application/ports/team
 import { compareSessions, formatSessionRange } from "@/features/booking/domain/session/session";
 import type { SessionRecordShape } from "@/features/booking/domain/session/session.types";
 import type { TeamPick } from "@/features/booking/domain/session-assignment/session-assignment.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -141,6 +142,7 @@ function SessionRowTeam({
 }
 
 function SessionRow({ row, isLast, team, onEdit, onRemove }: Readonly<SessionRowProps>) {
+  const locale = useFormattingLocale();
   const index = Number(row.id);
   const handleEdit = () => {
     onEdit(index);
@@ -152,7 +154,7 @@ function SessionRow({ row, isLast, team, onEdit, onRemove }: Readonly<SessionRow
     <ListCardItem
       icon="calendar"
       title={row.name}
-      meta={formatSessionRange(row)}
+      meta={formatSessionRange(row, locale)}
       isLast={isLast}
       trailing={
         <div className="flex items-center gap-(--space-2)">

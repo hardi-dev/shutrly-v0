@@ -226,6 +226,7 @@ function SessionRow({
   edit,
   isLastOfBooked,
 }: Readonly<SessionRowProps>) {
+  const locale = useFormattingLocale();
   const menu = edit ? (
     <SessionMenu
       session={session}
@@ -240,7 +241,7 @@ function SessionRow({
     <ListCardItem
       icon="calendar"
       title={session.name}
-      meta={formatSessionRange(session)}
+      meta={formatSessionRange(session, locale)}
       isLast={isLastRow}
       trailing={
         <SessionTrailing
@@ -346,6 +347,7 @@ function SessionMenu({
 export function ProjectFieldsReadCard(
   props: Readonly<ProjectDetailCardProps & { edit?: DetailEditHandlers }>,
 ) {
+  const locale = useFormattingLocale();
   const { project, edit } = props;
   if (project.fields.length === 0) return null;
   const description = fieldsDescription(props);
@@ -365,7 +367,7 @@ export function ProjectFieldsReadCard(
       <ProjectFacts
         facts={project.fields.map((field) => ({
           label: field.name,
-          value: displayBookingValue(field),
+          value: displayBookingValue(field, locale),
         }))}
       />
     </SectionCard>

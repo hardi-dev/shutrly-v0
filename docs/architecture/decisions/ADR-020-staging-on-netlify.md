@@ -40,6 +40,9 @@ Reference: `fastpik.id/id/login` (Next.js behind Cloudflare, Singapore edge) 0.1
 - Point 3: `CLIENT_SESSION_KEY` (F-10, ADR-023) was added as a Netlify **secret** for the production, deploy-preview and branch-deploy contexts; Netlify refuses secrets in the `dev` context.
 - Staging and both other databases were seeded with demo data by `pnpm db:seed` (tech-stack › Seed data).
 
+## Amendment (Owner, 2026-10-09)
+- [ADR-024](ADR-024-single-non-production-database.md): `shutrly-staging-us` is now the only non-production database (local dev, tests, seed and staging). Point 4's "staging receives only migrations merged to `main`" no longer applies, the old staging branch and the ap-southeast-1 project are retired, and the "two Neon regions" consequence below is resolved.
+
 ## Alternatives considered
 - **Workers Paid ($5/month):** removes the 1102 risk and keeps one runtime. Not chosen for staging; still the cheapest way back to Cloudflare (ADR-018 point 4).
 - **Netlify Pro with a function region in Asia:** the pricing page (checked 2026-10-06) lists Free $0 / 300 credits, Personal $9 / 1,000, Pro $20 / 3,000 per month; it does not say which plan unlocks function regions. Not tested.

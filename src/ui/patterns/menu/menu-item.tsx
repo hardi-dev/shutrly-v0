@@ -45,6 +45,7 @@ export function MenuItem({
   href,
   target,
   onSelect,
+  shouldCloseOnSelect,
 }: Readonly<MenuItemProps>) {
   const isDestructive = variant === "destructive";
   return (
@@ -55,6 +56,7 @@ export function MenuItem({
       textValue={label}
       isDisabled={isDisabled}
       onAction={onSelect}
+      shouldCloseOnSelect={shouldCloseOnSelect}
       aria-label={description ? `${label} ${description}` : label}
       className={getMenuItemClassName(isDestructive, isDisabled, layout)}
     >

@@ -7,6 +7,13 @@ import { OwnerNav, OwnerNavBottom, resolveActiveNav, resolvePageHeading } from "
 const t = copyTranslator("ownerNav");
 
 describe("Owner navigation", () => {
+  it("leaves Settings to the account menu", () => {
+    render(<OwnerNavBottom workspaceId="workspace-1" pathname="/w/workspace-1" />);
+
+    expect(screen.queryByRole("link", { name: "Pengaturan" })).toBeNull();
+    expect(screen.getByRole("link", { name: "Templat pesan" })).toBeInTheDocument();
+  });
+
   it("keeps the catalog group between primary and bottom navigation", () => {
     render(
       <>

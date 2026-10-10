@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { logoutAction } from "@/app/actions/auth/login";
+import { setOwnerLocaleAction } from "@/app/actions/auth/profile";
 import { createWorkspaceAction } from "@/app/actions/workspace/create";
 import { switchWorkspaceAction } from "@/app/actions/workspace/switch";
 import { requireOwnerOrRedirect } from "@/composition/auth/owner-guard/owner-guard";
@@ -32,6 +33,7 @@ export default async function WorkspaceLayout({
       onSwitch={switchWorkspaceAction}
       onCreate={createWorkspaceAction}
       logoutAction={logoutAction}
+      localeAction={setOwnerLocaleAction}
       subPages={messageTemplateSubPages(workspaceId)}
     >
       {children}

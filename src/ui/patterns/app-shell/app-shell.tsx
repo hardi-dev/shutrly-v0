@@ -13,6 +13,7 @@ import { CompactBar } from "../compact-bar/compact-bar";
 import { COMPACT_BAR_ACTIONS_ID } from "../compact-bar/compact-bar-actions";
 import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
 import { Sidebar } from "../sidebar/sidebar";
+import type { SidebarAccountMenu } from "../sidebar/sidebar.types";
 import { APP_SHELL_COPY_NAMESPACE } from "./app-shell.copy";
 import type { AppShellProps } from "./app-shell.types";
 import { readCollapsed, writeCollapsed } from "./sidebar-collapse-preference";
@@ -27,6 +28,7 @@ export function AppShell({
   workspace,
   account,
   onLogout,
+  accountMenu,
   children,
   nav,
   navBottom,
@@ -96,6 +98,7 @@ export function AppShell({
         onExpand={handleExpandDesktopSidebar}
         workspaceSwitcher={workspaceSwitcher}
         onLogout={onLogout}
+        accountMenu={accountMenu}
       />
       <TabletRail
         workspace={workspace}
@@ -154,6 +157,7 @@ export function AppShell({
         onCollapse={handleCloseTabletSidebar}
         workspaceSwitcher={workspaceSwitcher}
         onLogout={onLogout}
+        accountMenu={accountMenu}
       />
     </div>
   );
@@ -188,12 +192,14 @@ function DesktopSidebar({
   onExpand,
   workspaceSwitcher,
   onLogout,
+  accountMenu,
 }: Readonly<Pick<AppShellProps, "workspace" | "account" | "nav" | "navBottom">> & {
   isCompact: boolean;
   onCollapse: () => void;
   onExpand: () => void;
   workspaceSwitcher: AppShellProps["workspaceSwitcher"];
   onLogout?: () => void;
+  accountMenu?: SidebarAccountMenu;
 }) {
   return (
     // The Sidebar stays pinned while the page (header and content) scrolls.
@@ -206,6 +212,7 @@ function DesktopSidebar({
         onCollapse={onCollapse}
         workspaceSwitcher={workspaceSwitcher}
         onLogout={onLogout}
+        accountMenu={accountMenu}
         navBottom={navBottom}
       >
         {nav}
@@ -342,6 +349,7 @@ function TabletSidebarOverlay({
   onCollapse,
   workspaceSwitcher,
   onLogout,
+  accountMenu,
 }: Readonly<{
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
@@ -352,6 +360,7 @@ function TabletSidebarOverlay({
   onCollapse: () => void;
   workspaceSwitcher: AppShellProps["workspaceSwitcher"];
   onLogout?: () => void;
+  accountMenu?: SidebarAccountMenu;
 }>) {
   const t = useTranslations(APP_SHELL_COPY_NAMESPACE);
   return (
@@ -370,6 +379,7 @@ function TabletSidebarOverlay({
             navBottom={navBottom}
             workspaceSwitcher={workspaceSwitcher}
             onLogout={onLogout}
+            accountMenu={accountMenu}
           >
             {nav}
           </Sidebar>

@@ -16,4 +16,6 @@ export interface MenuItemProps {
   href?: string;
   target?: "_blank";
   onSelect?: () => void;
+  /** Keeps the menu open after a choice, e.g. while a language switch saves. */
+  shouldCloseOnSelect?: boolean;
 }

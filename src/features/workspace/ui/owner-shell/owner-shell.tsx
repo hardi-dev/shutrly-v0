@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 import { useState } from "react";
 
 import { AppShell } from "@/ui/patterns/app-shell/app-shell";
@@ -18,6 +19,7 @@ import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
+import { AccountMenu } from "../account-menu/account-menu";
 import { CreateWorkspaceDialog } from "../create-workspace-dialog/create-workspace-dialog";
 import {
   OwnerNav,
@@ -88,6 +90,7 @@ export function OwnerShell({
   onSwitch,
   onCreate,
   logoutAction,
+  localeAction,
   subPages,
 }: Readonly<OwnerShellProps>) {
   const currentPathname = usePathname();
@@ -151,6 +154,15 @@ export function OwnerShell({
   const handleLogout = () => {
     void logoutAction?.();
   };
+  const renderAccountMenu = (trigger: ReactNode) => (
+    <AccountMenu
+      workspaceId={workspaceId}
+      localeAction={localeAction}
+      onLogout={logoutAction ? handleLogout : undefined}
+    >
+      {trigger}
+    </AccountMenu>
+  );
   const renderWorkspaceSwitcher = (isCompact: boolean) => (
     <WorkspaceSwitcher
       currentName={workspaceName}
@@ -188,6 +200,7 @@ export function OwnerShell({
           }
           panelActions={<div id={PAGE_ACTIONS_ID} className="flex items-center gap-(--space-2)" />}
           onLogout={logoutAction ? handleLogout : undefined}
+          accountMenu={renderAccountMenu}
           mobileBottomNav={{
             items: mobileItems,
             ctaLabel: navT("create"),

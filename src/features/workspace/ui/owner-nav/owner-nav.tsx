@@ -229,7 +229,6 @@ export function OwnerNavBottom({ workspaceId, pathname }: Readonly<OwnerNavProps
         items={[
           ["message-templates", t("messageTemplates"), "message-square-text"],
           ["photo-sources", t("photoSources"), "folder-open"],
-          ["settings", t("settings"), "settings"],
         ]}
       />
     </SidebarNavGroup>

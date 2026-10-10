@@ -11,6 +11,7 @@ import { NavItemCompactContext } from "../nav-item/nav-item-context";
 import { SIDEBAR_COPY_NAMESPACE, SIDEBAR_WORDMARK } from "./sidebar.copy";
 import type {
   SidebarAccount,
+  SidebarAccountMenu,
   SidebarProps,
   SidebarWorkspace,
   SidebarWorkspaceTriggerProps,
@@ -27,6 +28,7 @@ export function Sidebar({
   onCollapse,
   onExpand,
   onLogout,
+  accountMenu,
   workspaceSwitcher,
 }: Readonly<SidebarProps>) {
   const t = useTranslations(SIDEBAR_COPY_NAMESPACE);
@@ -78,7 +80,12 @@ export function Sidebar({
             onPress={onExpand}
           />
         ) : null}
-        <SidebarAccount account={account} isCompact={isCompact} onLogout={onLogout} />
+        <SidebarAccount
+          account={account}
+          isCompact={isCompact}
+          onLogout={onLogout}
+          accountMenu={accountMenu}
+        />
       </aside>
     </NavItemCompactContext.Provider>
   );
@@ -230,7 +237,68 @@ function resolveWorkspaceSwitcher(
   return typeof workspaceSwitcher === "function" ? workspaceSwitcher(isCompact) : workspaceSwitcher;
 }
 
+/** The account block as a pressable trigger, for an account menu (avatar, name, email, chevrons). */
+export function SidebarAccountTrigger({
+  account,
+  isCompact,
+  "aria-label": ariaLabel,
+}: Readonly<{ account: SidebarAccount; isCompact: boolean; "aria-label"?: string }>) {
+  if (isCompact) {
+    return (
+      <AriaButton
+        type="button"
+        aria-label={ariaLabel}
+        className="rounded-full outline-none focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
+      >
+        <Avatar initials={account.initials} aria-hidden />
+      </AriaButton>
+    );
+  }
+
+  return (
+    <AriaButton
+      type="button"
+      aria-label={ariaLabel}
+      className="flex w-full items-center gap-(--component-sidebar-account-gap) rounded-(--radius-sm) px-(--space-2) py-(--space-1) text-left outline-none data-hovered:bg-(--color-semantic-surface-sunken) focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
+    >
+      <Avatar initials={account.initials} aria-hidden />
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-(length:--font-size-body-sm) font-semibold text-(--color-semantic-text-primary)">
+          {account.name}
+        </p>
+        <p className="truncate text-(length:--font-size-caption) text-(--color-semantic-text-secondary)">
+          {account.email}
+        </p>
+      </div>
+      <Icon
+        name="chevrons-up-down"
+        size="sm"
+        aria-hidden="true"
+        data-icon="chevrons-up-down"
+        className="text-(--color-semantic-text-muted)"
+      />
+    </AriaButton>
+  );
+}
+
 function SidebarAccount({
+  account,
+  isCompact,
+  onLogout,
+  accountMenu,
+}: Readonly<{
+  account: SidebarAccount;
+  isCompact: boolean;
+  onLogout?: () => void;
+  accountMenu?: SidebarAccountMenu;
+}>) {
+  if (accountMenu) {
+    return <>{accountMenu(<SidebarAccountTrigger account={account} isCompact={isCompact} />)}</>;
+  }
+  return <SidebarAccountBlock account={account} isCompact={isCompact} onLogout={onLogout} />;
+}
+
+function SidebarAccountBlock({
   account,
   isCompact,
   onLogout,

@@ -1,10 +1,40 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
+import { Menu } from "../menu/menu";
+import { MenuItem } from "../menu/menu-item";
+import { MenuTrigger } from "../menu/menu-trigger";
 import { NavItem } from "../nav-item/nav-item";
 import { Sidebar } from "./sidebar";
 
 describe("Sidebar (C29)", () => {
+  it("opens the account menu from the account block", async () => {
+    const user = userEvent.setup();
+    const renderAccountMenu = (trigger: ReactNode) => (
+      <MenuTrigger label="Menu akun">
+        {trigger}
+        <Menu aria-label="Menu akun">
+          <MenuItem label="Profil" />
+        </Menu>
+      </MenuTrigger>
+    );
+    render(
+      <Sidebar
+        workspace={{ name: "Studio Lime" }}
+        account={{ name: "Hardi Ansari", email: "hardi@example.com", initials: "HA" }}
+        accountMenu={renderAccountMenu}
+      >
+        <span>Nav</span>
+      </Sidebar>,
+    );
+
+    expect(screen.queryByRole("button", { name: "Keluar" })).toBeNull();
+    await user.click(screen.getByRole("button", { name: "Menu akun" }));
+    expect(screen.getByRole("menuitem", { name: "Profil" })).toBeInTheDocument();
+  });
+
   it("renders the workspace switcher, navigation slots and account controls", () => {
     render(
       <Sidebar

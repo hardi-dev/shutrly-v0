@@ -255,6 +255,8 @@ Add-on description: one owner-only text (1–100 characters), no pairs, shown as
 
 ## 8. UI components and states
 
+Owner decision (2026-10-10): this feature changes copy, not design. Pencil exports are not required for copy-only changes, so I4–I8 do not wait for exports. Any layout change still needs its own review.
+
 No layout is designed here. Each item needs approved Pencil exports before implementation.
 
 | Component (unit folder) | States (C-007) |

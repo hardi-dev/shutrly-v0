@@ -62,15 +62,30 @@ describe("deal edits", () => {
     stored.status = "SHOOTING";
     const locked = { ok: false, code: "DEAL_LOCKED" };
     expect(
-      await addProjectItem(repository, projectContext, "o", id, {
-        definitionId: PROJECT_IDS.fotoCetak,
-        value: { type: "NUMBER", value: "10" },
-      }),
+      await addProjectItem(
+        repository,
+        projectContext,
+        "o",
+        id,
+        {
+          definitionId: PROJECT_IDS.fotoCetak,
+          value: { type: "NUMBER", value: "10" },
+        },
+        "id-ID",
+      ),
     ).toEqual(locked);
     expect(
-      await updateProjectItemValue(repository, projectContext, "o", id, fotoEditId(id), {
-        value: { type: "NUMBER", value: "30" },
-      }),
+      await updateProjectItemValue(
+        repository,
+        projectContext,
+        "o",
+        id,
+        fotoEditId(id),
+        {
+          value: { type: "NUMBER", value: "30" },
+        },
+        "id-ID",
+      ),
     ).toEqual(locked);
     expect(await removeProjectItem(repository, projectContext, id, fotoEditId(id))).toEqual(locked);
     expect(
@@ -86,10 +101,17 @@ describe("deal edits", () => {
   it("AC-PRJ-017 appends an active definition with its metadata", async () => {
     const { repository, id, stored } = await seed();
     expect(
-      await addProjectItem(repository, projectContext, "o", id, {
-        definitionId: PROJECT_IDS.fotoCetak,
-        value: { type: "NUMBER", value: "10" },
-      }),
+      await addProjectItem(
+        repository,
+        projectContext,
+        "o",
+        id,
+        {
+          definitionId: PROJECT_IDS.fotoCetak,
+          value: { type: "NUMBER", value: "10" },
+        },
+        "id-ID",
+      ),
     ).toBeUndefined();
     expect(stored.items.at(-1)).toMatchObject({
       name: "Foto cetak",
@@ -103,19 +125,33 @@ describe("deal edits", () => {
   it("AC-PRJ-017 rejects a duplicate and an archived definition", async () => {
     const { repository, id } = await seed();
     expect(
-      await addProjectItem(repository, projectContext, "o", id, {
-        definitionId: PROJECT_IDS.fotoEdit,
-        value: { type: "NUMBER", value: "5" },
-      }),
+      await addProjectItem(
+        repository,
+        projectContext,
+        "o",
+        id,
+        {
+          definitionId: PROJECT_IDS.fotoEdit,
+          value: { type: "NUMBER", value: "5" },
+        },
+        "id-ID",
+      ),
     ).toMatchObject({
       code: "VALIDATION_FAILED",
       fieldErrors: { definitionId: "DUPLICATE_DEFINITION" },
     });
     expect(
-      await addProjectItem(repository, projectContext, "o", id, {
-        definitionId: PROJECT_IDS.albumLama,
-        value: { type: "NUMBER", value: "5" },
-      }),
+      await addProjectItem(
+        repository,
+        projectContext,
+        "o",
+        id,
+        {
+          definitionId: PROJECT_IDS.albumLama,
+          value: { type: "NUMBER", value: "5" },
+        },
+        "id-ID",
+      ),
     ).toMatchObject({
       code: "VALIDATION_FAILED",
       fieldErrors: { definitionId: "DEFINITION_INACTIVE" },
@@ -125,19 +161,43 @@ describe("deal edits", () => {
   it("AC-PRJ-017 validates an edited value against the item's own type", async () => {
     const { repository, id, stored } = await seed();
     expect(
-      await updateProjectItemValue(repository, projectContext, "o", id, fotoEditId(id), {
-        value: { type: "NUMBER", value: "2,5" },
-      }),
+      await updateProjectItemValue(
+        repository,
+        projectContext,
+        "o",
+        id,
+        fotoEditId(id),
+        {
+          value: { type: "NUMBER", value: "2,5" },
+        },
+        "id-ID",
+      ),
     ).toMatchObject({ fieldErrors: { value: "NOT_WHOLE" } });
     expect(
-      await updateProjectItemValue(repository, projectContext, "o", id, orangId(id), {
-        value: { type: "RANGE", min: "3", max: "1" },
-      }),
+      await updateProjectItemValue(
+        repository,
+        projectContext,
+        "o",
+        id,
+        orangId(id),
+        {
+          value: { type: "RANGE", min: "3", max: "1" },
+        },
+        "id-ID",
+      ),
     ).toMatchObject({ fieldErrors: { max: "MIN_GREATER_THAN_MAX" } });
     expect(
-      await updateProjectItemValue(repository, projectContext, "o", id, fotoEditId(id), {
-        value: { type: "NUMBER", value: "30" },
-      }),
+      await updateProjectItemValue(
+        repository,
+        projectContext,
+        "o",
+        id,
+        fotoEditId(id),
+        {
+          value: { type: "NUMBER", value: "30" },
+        },
+        "id-ID",
+      ),
     ).toBeUndefined();
     expect(stored.items[0]?.value).toEqual({ type: "NUMBER", value: "30" });
   });

@@ -1,5 +1,6 @@
 import "server-only";
 
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { CatalogError } from "../../errors/catalog-errors/catalog-errors";
@@ -16,11 +17,12 @@ export async function addServiceItem(
   definitionId: string,
   editorUserId: string,
   input: unknown,
+  locale: FormattingLocale,
 ): Promise<ServiceItemWriteResult> {
   const definition = await definitions.findById(context, definitionId);
   if (!definition)
     return { ok: false, code: "VALIDATION_FAILED", fieldErrors: { definitionId: "NOT_FOUND" } };
-  const value = parsePackageValue(input, definition);
+  const value = parsePackageValue(input, definition, locale);
   if (!value.ok) return value;
   const result = await repository.addItem(
     context,

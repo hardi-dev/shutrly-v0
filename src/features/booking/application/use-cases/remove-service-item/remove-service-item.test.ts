@@ -12,10 +12,19 @@ describe("removeServiceItem", () => {
     const { services, definitions, serviceId } = await serviceFixture();
     const definitionId = definitions.rows[0]?.id;
     if (!definitionId) throw new Error("fixture");
-    await addServiceItem(services, definitions, bookingContext, serviceId, definitionId, "user", {
-      type: "NUMBER",
-      value: "2",
-    });
+    await addServiceItem(
+      services,
+      definitions,
+      bookingContext,
+      serviceId,
+      definitionId,
+      "user",
+      {
+        type: "NUMBER",
+        value: "2",
+      },
+      "id-ID",
+    );
     const itemId = services.rows[0]?.items[0]?.id;
     if (!itemId) throw new Error("fixture");
     expect(await removeServiceItem(services, bookingContext, serviceId, itemId)).toEqual({

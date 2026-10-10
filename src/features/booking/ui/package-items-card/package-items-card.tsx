@@ -1,4 +1,6 @@
 import { summariseServiceItems } from "@/features/booking/domain/item-summary/item-summary";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -21,6 +23,7 @@ export function PackageItemsCard({
   description,
   edit,
 }: Readonly<PackageItemsCardProps>) {
+  const locale = useFormattingLocale();
   return (
     <SectionCard
       title={PROJECT_COPY.packageTitle}
@@ -53,7 +56,7 @@ export function PackageItemsCard({
               key={item.definitionId}
               icon={item.pickMode ? "images" : "package"}
               title={item.definitionName}
-              meta={describePackageItem(item)}
+              meta={describePackageItem(item, locale)}
               isLast={index === items.length - 1}
               trailing={edit ? <ItemRowMenu item={item} edit={edit} /> : undefined}
             />
@@ -92,9 +95,13 @@ function ItemRowMenu({ item, edit }: Readonly<{ item: PackageCardItem; edit: Pac
 }
 
 /** The item row meta, e.g. "25 foto · hitung foto". @param item - the package item @returns the summary text */
-export function describePackageItem(item: PackageItemsCardProps["items"][number]): string {
-  const summary = summariseServiceItems([
-    { name: item.definitionName, unit: item.unit, value: item.value },
-  ]);
+export function describePackageItem(
+  item: PackageItemsCardProps["items"][number],
+  locale: FormattingLocale,
+): string {
+  const summary = summariseServiceItems(
+    [{ name: item.definitionName, unit: item.unit, value: item.value }],
+    locale,
+  );
   return item.pickMode ? `${summary} · ${PROJECT_COPY.pickModes[item.pickMode]}` : summary;
 }

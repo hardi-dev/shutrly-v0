@@ -26,6 +26,7 @@ export async function getServiceDetail(
         unit: item.unit,
         value: item.value,
       })),
+      locale,
     ),
   };
 }

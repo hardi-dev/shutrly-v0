@@ -36,6 +36,7 @@ export async function listServices(
           unit: item.unit,
           value: item.value,
         })),
+        locale,
       ),
     })),
   }));

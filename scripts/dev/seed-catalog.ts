@@ -129,10 +129,17 @@ async function seedService(studio: Studio, categoryId: string, seed: ServiceSeed
     const definition = await definitionId(studio, name);
     check(
       `service item ${seed.name} / ${name}`,
-      await addServiceItem(services, definitions, context, id, definition, ownerId, {
-        type: "NUMBER",
-        value,
-      }),
+      await addServiceItem(
+        services,
+        definitions,
+        context,
+        id,
+        definition,
+        ownerId,
+        { type: "NUMBER", value },
+        // Seed data is written in Indonesian (the seeded catalog text).
+        "id-ID",
+      ),
     );
   }
   for (const field of seed.fields ?? []) {

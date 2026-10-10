@@ -13,6 +13,7 @@ import type {
 import type { ItemChange } from "@/features/gallery/application/ports/selection-repository/selection-repository.port";
 import { syncGroupWithItem } from "@/features/gallery/application/use-cases/sync-group-with-item/sync-group-with-item";
 import type { SyncGroupResult } from "@/features/gallery/application/use-cases/sync-group-with-item/sync-group-with-item.types";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 
 import { DealEditRefusal } from "../project-deal-edit-scope/project-deal-edit-scope";
 import type { ProjectDealEditScope } from "../project-deal-edit-scope/project-deal-edit-scope.types";
@@ -34,9 +35,10 @@ export async function addItemWithGroup(
   scope: ProjectDealEditScope,
   target: DealEditTarget,
   values: unknown,
+  locale: FormattingLocale,
 ): Promise<ProjectWriteResult> {
   const { context, actorId, projectId } = target;
-  const result = await addProjectItem(scope.projects, context, actorId, projectId, values);
+  const result = await addProjectItem(scope.projects, context, actorId, projectId, values, locale);
   const parsed = addItemInputSchema.safeParse(values);
   if (result === undefined && parsed.success) {
     const definitionId = parsed.data.definitionId;
@@ -51,6 +53,7 @@ export async function updateItemWithGroup(
   target: DealEditTarget,
   itemId: string,
   values: unknown,
+  locale: FormattingLocale,
 ): Promise<ProjectWriteResult> {
   const { context, actorId, projectId } = target;
   const result = await updateProjectItemValue(
@@ -60,6 +63,7 @@ export async function updateItemWithGroup(
     projectId,
     itemId,
     values,
+    locale,
   );
   if (result === undefined) await follow(scope, target, { kind: "VALUE", projectId, itemId });
   return result;

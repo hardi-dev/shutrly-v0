@@ -6,6 +6,8 @@ import { useState } from "react";
 import type { ActiveDefinition } from "@/features/booking/application/ports/project-repository/project-repository.port";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
 import { validateItemList } from "@/features/booking/domain/project-items/project-items";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 
 import { PackageItemsCard } from "../package-items-card/package-items-card";
 import type { PackageCardItem } from "../package-items-card/package-items-card.types";
@@ -20,8 +22,9 @@ function checkValue(
   definitionId: string,
   rules: { valueType: "NUMBER" | "RANGE"; selectionRequired: boolean },
   value: PackageValue,
+  locale: FormattingLocale,
 ): { value: PackageValue } | { errors: SubmitErrors } {
-  const checked = validateItemList([{ definitionId, value }], { [definitionId]: rules });
+  const checked = validateItemList([{ definitionId, value }], { [definitionId]: rules }, locale);
   const errors = Object.fromEntries(
     Object.entries(checked.errors).map(([path, problem]) => [
       path.replace(/^items\.\d+\./, ""),
@@ -45,6 +48,7 @@ export function PackageEditing({
   definitions: readonly ActiveDefinition[];
   isMobile: boolean;
 }>) {
+  const locale = useFormattingLocale();
   const [open, setOpen] = useState<PackageEditOpen>(null);
   const close = (isOpen: boolean) => {
     if (!isOpen) setOpen(null);
@@ -68,7 +72,7 @@ export function PackageEditing({
   const submitAdd = (input: { definitionId?: string; value: PackageValue }) => {
     const definition = definitions.find((candidate) => candidate.id === input.definitionId);
     if (!definition) return Promise.resolve<SubmitErrors>({ definitionId: "REQUIRED" });
-    const checked = checkValue(definition.id, definition, input.value);
+    const checked = checkValue(definition.id, definition, input.value, locale);
     if ("errors" in checked) return Promise.resolve(checked.errors);
     state.dispatchPackage({
       type: "ADD",
@@ -88,7 +92,7 @@ export function PackageEditing({
   const submitEdit = (input: { value: PackageValue }) => {
     if (open?.kind !== "edit") return Promise.resolve<SubmitErrors>(null);
     const item = open.item;
-    const checked = checkValue(item.definitionId, item, input.value);
+    const checked = checkValue(item.definitionId, item, input.value, locale);
     if ("errors" in checked) return Promise.resolve(checked.errors);
     state.dispatchPackage({
       type: "UPDATE_VALUE",

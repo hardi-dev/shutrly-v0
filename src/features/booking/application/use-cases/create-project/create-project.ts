@@ -51,13 +51,14 @@ async function checkItems(
   repository: ProjectRepositoryPort,
   context: WorkspaceContext,
   items: ReturnType<typeof readPartialInput>["items"],
+  locale: FormattingLocale,
 ) {
   const found = await repository.findDefinitionRules(
     context,
     items.map((item) => item.definitionId),
   );
   const rules = Object.fromEntries(found.map((rule) => [rule.id, rule]));
-  return validateItemList(items, rules);
+  return validateItemList(items, rules, locale);
 }
 
 function indexOfDefinition(input: CreateProjectInput, definitionId: string, last: boolean): string {
@@ -121,7 +122,7 @@ export async function createProject(
   for (const [key, problem] of Object.entries(fieldCheck.problems)) {
     errors[`fieldValues.${key}`] = problem;
   }
-  const itemCheck = await checkItems(repository, context, partial.items);
+  const itemCheck = await checkItems(repository, context, partial.items, locale);
   Object.assign(errors, itemCheck.errors);
   if (partial.mode === "BOOKED" && partial.sessions?.length === 0)
     errors.sessions = "SESSION_REQUIRED";

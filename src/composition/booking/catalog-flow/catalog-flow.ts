@@ -297,6 +297,7 @@ export async function addCatalogServiceItem(
   const definitionId = idOrNotFound(input.definitionId);
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const locale = await getRequestFormattingLocale();
   try {
     return await withCatalogScope(({ services, itemDefinitions }) =>
       addServiceItem(
@@ -307,6 +308,7 @@ export async function addCatalogServiceItem(
         definitionId,
         account.id,
         input.value,
+        locale,
       ),
     );
   } catch (error) {
@@ -329,6 +331,7 @@ export async function updateCatalogServiceItem(
   const itemId = idOrNotFound(rawItemId);
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const locale = await getRequestFormattingLocale();
   try {
     return await withCatalogScope(async ({ services, itemDefinitions }) => {
       const detail = await services.findDetail(verified.context, serviceId);
@@ -343,6 +346,7 @@ export async function updateCatalogServiceItem(
         item.definitionId,
         account.id,
         input.value,
+        locale,
       );
     });
   } catch (error) {

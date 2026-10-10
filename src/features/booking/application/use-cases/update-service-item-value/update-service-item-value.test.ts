@@ -12,10 +12,19 @@ describe("updateServiceItemValue", () => {
     const { services, definitions, serviceId } = await serviceFixture();
     const definitionId = definitions.rows[0]?.id;
     if (!definitionId) throw new Error("fixture");
-    await addServiceItem(services, definitions, bookingContext, serviceId, definitionId, "user", {
-      type: "NUMBER",
-      value: "2",
-    });
+    await addServiceItem(
+      services,
+      definitions,
+      bookingContext,
+      serviceId,
+      definitionId,
+      "user",
+      {
+        type: "NUMBER",
+        value: "2",
+      },
+      "id-ID",
+    );
     const itemId = services.rows[0]?.items[0]?.id;
     if (!itemId) throw new Error("fixture");
     expect(
@@ -28,6 +37,7 @@ describe("updateServiceItemValue", () => {
         definitionId,
         "user",
         { type: "NUMBER", value: "3" },
+        "id-ID",
       ),
     ).toEqual({ ok: true });
     expect(services.rows[0]?.items[0]?.value).toEqual({ type: "NUMBER", value: "3" });

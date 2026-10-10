@@ -73,6 +73,7 @@ export function ProjectPackageCard({
   isMobile,
   edit,
 }: Readonly<ProjectDetailCardProps & { edit?: DetailEditHandlers }>) {
+  const locale = useFormattingLocale();
   const description =
     lockedDescription(project) ??
     (isMobile
@@ -105,7 +106,7 @@ export function ProjectPackageCard({
               key={item.id}
               icon={item.pickMode ? "images" : "package"}
               title={item.name}
-              meta={describePackageItem({ ...item, definitionName: item.name })}
+              meta={describePackageItem({ ...item, definitionName: item.name }, locale)}
               isLast={index === project.items.length - 1}
               trailing={
                 edit && project.canEditDeal ? <ItemMenu item={item} edit={edit} /> : undefined

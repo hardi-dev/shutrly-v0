@@ -342,7 +342,7 @@ Every auth screen shares `src/app/(auth)/layout.tsx` → `SplitLayout`, so Login
 
 **Exports:** `auth-language-closed` (`…-desktop-wqcpW.html`, `…-mobile-Fwe1v.html`), `auth-language-hover-desktop-EBYgV.html`, `auth-language-open` (`…-desktop-GPftW.html`, `…-mobile-sAUWh.html`), `auth-language-switching` (`…-desktop-m63yf.html`, `…-mobile-AvC3d.html`), `auth-language-failed` (`…-desktop-xbbVv.html`, `…-mobile-W5jJs.html`). The desktop files are ~200 KB because of the editorial mosaic; read only the form side.
 
-- [ ] **I5.9 `SplitLayout` header action slot.** `src/ui/patterns/split-layout/` (`split-layout.tsx`, `.types.ts`, `.test.tsx`): add `headerAction?: ReactNode`. The brand row becomes a `flex items-center justify-between` header with the brand on the left and `headerAction` on the right; without it the markup looks as today.
+- [x] **I5.9 `SplitLayout` header action slot.** `src/ui/patterns/split-layout/` (`split-layout.tsx`, `.types.ts`, `.test.tsx`): add `headerAction?: ReactNode`. The brand row becomes a `flex items-center justify-between` header with the brand on the left and `headerAction` on the right; without it the markup looks as today.
   - Tests first: `"renders the header action next to the brand"`, `"renders no header action by default"`.
   - Commit `feat(ui): add a header action slot to the auth layout`.
 

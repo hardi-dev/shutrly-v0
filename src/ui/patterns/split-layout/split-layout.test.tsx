@@ -26,6 +26,26 @@ describe("SplitLayout", () => {
     expect(container.querySelector("p p")).toBeNull();
   });
 
+  it("renders the header action next to the brand", () => {
+    render(
+      <SplitLayout headerAction={<button type="button">Language</button>}>
+        <h1>Heading</h1>
+      </SplitLayout>,
+    );
+    const header = document.querySelector('[data-slot="header"]');
+    expect(header).toHaveClass("flex", "items-center", "justify-between");
+    expect(header).toContainElement(screen.getByText(SPLIT_LAYOUT_COPY.brand));
+    expect(header).toContainElement(screen.getByRole("button", { name: "Language" }));
+  });
+
+  it("renders no header action by default", () => {
+    render(<SplitLayout>Heading</SplitLayout>);
+    const header = document.querySelector('[data-slot="header"]');
+    expect(header).toContainElement(screen.getByText(SPLIT_LAYOUT_COPY.brand));
+    expect(header?.children).toHaveLength(1);
+    expect(screen.queryByRole("button")).toBeNull();
+  });
+
   it("accepts a feature-specific editorial panel without changing the shell", () => {
     render(
       <SplitLayout editorial={<div data-testid="feature-editorial">Workspace preview</div>}>

@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 import { describe, expect, it } from "vitest";
 
 import { OwnerNav, OwnerNavBottom, resolveActiveNav, resolvePageHeading } from "./owner-nav";
-import { OWNER_NAV_COPY } from "./owner-nav.copy";
+
+const t = copyTranslator("ownerNav");
 
 describe("Owner navigation", () => {
   it("keeps the catalog group between primary and bottom navigation", () => {
@@ -13,11 +15,11 @@ describe("Owner navigation", () => {
       </>,
     );
 
-    expect(screen.getByText("KATALOG")).toBeInTheDocument();
+    expect(screen.getByText("Katalog")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Dasbor" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Klien" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("link", { name: "Layanan" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Template pesan" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Templat pesan" })).toBeInTheDocument();
   });
 
   it("AC-MSG-004 keeps Template pesan active on a template editor route", () => {
@@ -29,7 +31,7 @@ describe("Owner navigation", () => {
       </>,
     );
 
-    expect(screen.getByRole("link", { name: "Template pesan" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Templat pesan" })).toHaveAttribute(
       "aria-current",
       "page",
     );
@@ -74,13 +76,13 @@ describe("resolveActiveNav", () => {
 
 describe("resolvePageHeading", () => {
   it.each([
-    ["/w/A", { title: "Dasbor", subtitle: "Ringkasan workspace Aster." }],
+    ["/w/A", { title: "Dasbor", subtitle: "Ruang kerjamu: Aster." }],
     [
       "/w/A/clients",
       {
         title: "Klien",
-        subtitle: "Orang yang memesan sesi foto. Pilih mereka saat membuat proyek.",
-        mobileSubtitle: "Orang yang memesan sesi foto.",
+        subtitle: "Simpan kontak klien agar bisa dipilih saat membuat proyek.",
+        mobileSubtitle: "Klien yang memesan sesi foto.",
         tabs: {
           label: "Status klien",
           tabs: [
@@ -94,8 +96,8 @@ describe("resolvePageHeading", () => {
       "/w/A/clients/archived",
       {
         title: "Klien",
-        subtitle: "Orang yang memesan sesi foto. Pilih mereka saat membuat proyek.",
-        mobileSubtitle: "Orang yang memesan sesi foto.",
+        subtitle: "Simpan kontak klien agar bisa dipilih saat membuat proyek.",
+        mobileSubtitle: "Klien yang memesan sesi foto.",
         tabs: {
           label: "Status klien",
           tabs: [
@@ -109,10 +111,10 @@ describe("resolvePageHeading", () => {
       "/w/A/team",
       {
         title: "Tim",
-        subtitle: "Freelancer yang kamu ajak bertugas. Pilih mereka di jadwal proyek.",
-        mobileSubtitle: "Freelancer yang kamu ajak bertugas.",
+        subtitle: "Catat siapa yang bertugas di tiap sesi dan perannya.",
+        mobileSubtitle: "Anggota tim dan peran tiap sesi.",
         tabs: {
-          label: OWNER_NAV_COPY.teamTabsLabel,
+          label: t("teamTabsLabel"),
           tabs: [
             { label: "Aktif", href: "/w/A/team", isActive: true },
             { label: "Arsip", href: "/w/A/team/archived", isActive: false },
@@ -149,14 +151,14 @@ describe("resolvePageHeading", () => {
       "/w/A/services",
       {
         title: "Layanan",
-        subtitle: OWNER_NAV_COPY.servicesSubtitle,
+        subtitle: t("servicesSubtitle"),
         breadcrumbs: [{ label: "Aster", href: "/w/A" }, { label: "Layanan" }],
         tabs: {
-          label: OWNER_NAV_COPY.servicesTabsLabel,
+          label: t("servicesTabsLabel"),
           tabs: [
             { href: "/w/A/services", label: "Layanan", isActive: true },
             { href: "/w/A/services/categories", label: "Kategori", isActive: false },
-            { href: "/w/A/services/items", label: "Item paket", isActive: false },
+            { href: "/w/A/services/items", label: "Isi paket", isActive: false },
           ],
         },
       },
@@ -164,41 +166,38 @@ describe("resolvePageHeading", () => {
     [
       "/w/A/services/items",
       {
-        title: "Item paket",
-        subtitle: OWNER_NAV_COPY.servicesSubtitle,
+        title: "Isi paket",
+        subtitle: t("servicesSubtitle"),
         breadcrumbs: [
           { label: "Aster", href: "/w/A" },
           { label: "Layanan", href: "/w/A/services" },
-          { label: "Item paket" },
+          { label: "Isi paket" },
         ],
         tabs: {
-          label: OWNER_NAV_COPY.servicesTabsLabel,
+          label: t("servicesTabsLabel"),
           tabs: [
             { href: "/w/A/services", label: "Layanan", isActive: false },
             { href: "/w/A/services/categories", label: "Kategori", isActive: false },
-            { href: "/w/A/services/items", label: "Item paket", isActive: true },
+            { href: "/w/A/services/items", label: "Isi paket", isActive: true },
           ],
         },
       },
     ],
-    ["/w/A/services/9b6e", { title: "Layanan", subtitle: OWNER_NAV_COPY.servicesSubtitle }],
-    ["/w/A/search", { title: "Pencarian", subtitle: "Segera hadir." }],
-    ["/w/A/notifications", { title: "Notifikasi", subtitle: "Segera hadir." }],
+    ["/w/A/services/9b6e", { title: "Layanan", subtitle: t("servicesSubtitle") }],
+    ["/w/A/search", { title: "Cari", subtitle: "Fitur ini belum tersedia." }],
+    ["/w/A/notifications", { title: "Notifikasi", subtitle: "Fitur ini belum tersedia." }],
     [
       "/w/A/settings",
       {
         title: "Pengaturan",
-        subtitle: "Atur identitas brand, kontak, dan format invoice workspace ini.",
+        subtitle: "Atur nama merek, kontak, dan awalan nomor tagihan ruang kerja ini.",
       },
     ],
-    [
-      "/w/A/message-templates",
-      { title: "Template pesan", subtitle: OWNER_NAV_COPY.messageTemplatesSubtitle },
-    ],
-    ["/w/A/photo-sources", { title: "Sumber foto", subtitle: OWNER_NAV_COPY.photoSourcesSubtitle }],
+    ["/w/A/message-templates", { title: "Templat pesan", subtitle: t("messageTemplatesSubtitle") }],
+    ["/w/A/photo-sources", { title: "Sumber foto", subtitle: t("photoSourcesSubtitle") }],
     ["/profile", null],
   ])("resolves %s", (pathname, heading) => {
-    expect(resolvePageHeading(pathname, "A", "Aster")).toEqual(heading);
+    expect(resolvePageHeading(pathname, "A", "Aster", t)).toEqual(heading);
   });
 
   it("D-17 keeps the Tim nav item active on every team route", () => {
@@ -207,7 +206,7 @@ describe("resolvePageHeading", () => {
   });
 
   it("builds the catalog hierarchy for service categories", () => {
-    expect(resolvePageHeading("/w/A/services/categories", "A", "Aster")).toMatchObject({
+    expect(resolvePageHeading("/w/A/services/categories", "A", "Aster", t)).toMatchObject({
       breadcrumbs: [
         { label: "Aster", href: "/w/A" },
         { label: "Layanan", href: "/w/A/services" },
@@ -217,11 +216,11 @@ describe("resolvePageHeading", () => {
   });
 
   it("builds the catalog hierarchy for service items", () => {
-    expect(resolvePageHeading("/w/A/services/items", "A", "Aster")).toMatchObject({
+    expect(resolvePageHeading("/w/A/services/items", "A", "Aster", t)).toMatchObject({
       breadcrumbs: [
         { label: "Aster", href: "/w/A" },
         { label: "Layanan", href: "/w/A/services" },
-        { label: "Item paket" },
+        { label: "Isi paket" },
       ],
     });
   });
@@ -229,7 +228,7 @@ describe("resolvePageHeading", () => {
 
 describe("projects heading", () => {
   it("AC-PRJ-001 gives the list routes tabs with the active one marked", () => {
-    const heading = resolvePageHeading("/w/ws/projects/completed", "ws", "Aster");
+    const heading = resolvePageHeading("/w/ws/projects/completed", "ws", "Aster", t);
     const tabs = heading && "tabs" in heading ? (heading.tabs?.tabs ?? []) : [];
     expect(heading?.title).toBe("Proyek");
     expect(heading?.subtitle).toContain("pemotretan");
@@ -241,7 +240,7 @@ describe("projects heading", () => {
   });
 
   it("AC-PRJ-007 gives Proyek baru and a detail no tabs", () => {
-    expect(resolvePageHeading("/w/ws/projects/new", "ws", "Aster")).toEqual({ title: "Proyek" });
-    expect(resolvePageHeading("/w/ws/projects/abc", "ws", "Aster")).toEqual({ title: "Proyek" });
+    expect(resolvePageHeading("/w/ws/projects/new", "ws", "Aster", t)).toEqual({ title: "Proyek" });
+    expect(resolvePageHeading("/w/ws/projects/abc", "ws", "Aster", t)).toEqual({ title: "Proyek" });
   });
 });

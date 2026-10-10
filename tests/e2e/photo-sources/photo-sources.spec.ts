@@ -46,12 +46,11 @@ test("AC-SRC-001 AC-SRC-003 AC-SRC-004 seeded source, navigation and legacy rout
   page,
 }) => {
   const workspace = await openWorkspace(page, "photo-sources-seeded");
-  await page.getByRole("link", { name: OWNER_NAV_COPY.photoSources }).click();
+  await page.getByRole("link", { name: OWNER_NAV_COPY.messages.id.photoSources }).click();
   await expect(page).toHaveURL(`${workspace}/photo-sources`);
-  await expect(page.getByRole("link", { name: OWNER_NAV_COPY.photoSources })).toHaveAttribute(
-    "aria-current",
-    "page",
-  );
+  await expect(
+    page.getByRole("link", { name: OWNER_NAV_COPY.messages.id.photoSources }),
+  ).toHaveAttribute("aria-current", "page");
   const desktop = page.locator("#app-shell-content");
   await expect(desktop.getByText("Google Drive", { exact: true }).first()).toBeVisible();
   await expect(desktop.getByText(SOURCE_COPY.active, { exact: true })).toBeVisible();

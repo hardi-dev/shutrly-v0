@@ -46,7 +46,7 @@ test("AC-WS-002 AC-WS-007 AC-WS-016 workspace onboarding, settings and create fl
   await page.reload();
   await expect(page.getByRole("button", { name: RENAMED_WORKSPACE_NAME })).toBeVisible();
   await page.getByRole("button", { name: RENAMED_WORKSPACE_NAME }).click();
-  await page.getByRole("menuitem", { name: WORKSPACE_SWITCHER_COPY.create }).click();
+  await page.getByRole("menuitem", { name: WORKSPACE_SWITCHER_COPY.messages.id.create }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
   await dialog.getByLabel(CREATE_WORKSPACE_COPY.label).fill("Studio Baru");
@@ -62,7 +62,7 @@ test("AC-WS-022 AC-WS-025 workspace shell is accessible and unbuilt sections are
   await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Accessibility Studio");
   await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
-  await page.getByRole("button", { name: TOAST_COPY.close }).click();
+  await page.getByRole("button", { name: TOAST_COPY.messages.id.close }).click();
   await expect(page.locator("[data-live-announcer] [role='img']")).toHaveCount(0, {
     timeout: 8000,
   });

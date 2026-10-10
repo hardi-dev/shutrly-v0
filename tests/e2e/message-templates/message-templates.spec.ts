@@ -32,13 +32,12 @@ test("AC-MSG-001 AC-MSG-004 AC-MSG-005 AC-MSG-006 AC-MSG-007 AC-MSG-009 AC-MSG-0
   page,
 }) => {
   const home = await openWorkspace(page, "templates");
-  await page.getByRole("link", { name: OWNER_NAV_COPY.messageTemplates }).click();
+  await page.getByRole("link", { name: OWNER_NAV_COPY.messages.id.messageTemplates }).click();
   await expect(page).toHaveURL(`${home}/message-templates`);
   await expect(page.getByText(COMING_SOON_COPY.title)).toHaveCount(0);
-  await expect(page.getByRole("link", { name: OWNER_NAV_COPY.messageTemplates })).toHaveAttribute(
-    "aria-current",
-    "page",
-  );
+  await expect(
+    page.getByRole("link", { name: OWNER_NAV_COPY.messages.id.messageTemplates }),
+  ).toHaveAttribute("aria-current", "page");
   const rows = page.getByRole("main").getByRole("link");
   await expect(rows).toHaveCount(5);
 
@@ -55,7 +54,7 @@ test("AC-MSG-001 AC-MSG-004 AC-MSG-005 AC-MSG-006 AC-MSG-007 AC-MSG-009 AC-MSG-0
 
   await page.getByRole("button", { name: TEMPLATE_EDITOR_COPY.restore }).click();
   await page.getByRole("button", { name: "Sisipkan {{projectTitle}}" }).click();
-  await page.getByRole("link", { name: OWNER_NAV_COPY.settings }).click();
+  await page.getByRole("link", { name: OWNER_NAV_COPY.messages.id.settings }).click();
   await expect(page.getByRole("alertdialog", { name: UNSAVED_CHANGES_COPY.title })).toBeVisible();
   await page.getByRole("button", { name: UNSAVED_CHANGES_COPY.stay }).click();
   await expect(page).toHaveURL(`${home}/message-templates/gallery-share`);

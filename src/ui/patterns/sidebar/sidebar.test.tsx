@@ -42,7 +42,7 @@ describe("Sidebar (C29)", () => {
       </Sidebar>,
     );
 
-    screen.getByRole("button", { name: "Ciutkan sidebar" }).click();
+    screen.getByRole("button", { name: "Ciutkan navigasi samping" }).click();
     screen.getByRole("button", { name: "Keluar" }).click();
     expect(onCollapse).toHaveBeenCalledOnce();
     expect(onLogout).toHaveBeenCalledOnce();
@@ -69,7 +69,7 @@ describe("Sidebar (C29)", () => {
     ).toBeInTheDocument();
     expect(workspaceSwitcher.querySelector('svg[data-icon="camera"]')).toBeNull();
     expect(screen.getAllByTestId("sidebar-divider")[0]).toHaveClass("w-(--space-8)");
-    screen.getByRole("button", { name: "Buka sidebar" }).click();
+    screen.getByRole("button", { name: "Buka navigasi samping" }).click();
     expect(onExpand).toHaveBeenCalledOnce();
   });
 

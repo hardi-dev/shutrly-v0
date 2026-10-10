@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { Dialog, Modal as AriaModal, ModalOverlay } from "react-aria-components";
@@ -12,7 +13,7 @@ import { CompactBar } from "../compact-bar/compact-bar";
 import { COMPACT_BAR_ACTIONS_ID } from "../compact-bar/compact-bar-actions";
 import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
 import { Sidebar } from "../sidebar/sidebar";
-import { APP_SHELL_COPY } from "./app-shell.copy";
+import { APP_SHELL_COPY_NAMESPACE } from "./app-shell.copy";
 import type { AppShellProps } from "./app-shell.types";
 import { readCollapsed, writeCollapsed } from "./sidebar-collapse-preference";
 
@@ -44,6 +45,7 @@ export function AppShell({
   workspaceSwitcher,
   subPage,
 }: Readonly<AppShellProps>) {
+  const t = useTranslations(APP_SHELL_COPY_NAMESPACE);
   const [isDesktopSidebarCollapsed, setIsDesktopSidebarCollapsed] = useState(false);
   const [isTabletSidebarOpen, setIsTabletSidebarOpen] = useState(false);
 
@@ -82,7 +84,7 @@ export function AppShell({
   return (
     <div className="flex min-h-dvh bg-(--color-semantic-surface-muted) md:pt-(--space-3) md:pr-(--space-3) md:pb-(--space-3)">
       <a href={`#${APP_SHELL_CONTENT_ID}`} className="sr-only focus:not-sr-only max-md:hidden">
-        {APP_SHELL_COPY.skip}
+        {t("skip")}
       </a>
       <DesktopSidebar
         workspace={workspace}
@@ -351,6 +353,7 @@ function TabletSidebarOverlay({
   workspaceSwitcher: AppShellProps["workspaceSwitcher"];
   onLogout?: () => void;
 }>) {
+  const t = useTranslations(APP_SHELL_COPY_NAMESPACE);
   return (
     <ModalOverlay
       isOpen={isOpen}
@@ -359,7 +362,7 @@ function TabletSidebarOverlay({
       className="fixed inset-0 z-50 bg-(--component-modal-scrim)"
     >
       <AriaModal className="h-full w-fit max-w-[calc(100%_-_32px)] bg-(--color-semantic-surface-panel)">
-        <Dialog aria-label={APP_SHELL_COPY.tabletOverlay} className="h-full outline-none">
+        <Dialog aria-label={t("tabletOverlay")} className="h-full outline-none">
           <Sidebar
             workspace={workspace}
             account={account}

@@ -1,19 +1,21 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Button as AriaButton } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
 import { Icon } from "@/ui/primitives/icon/icon";
 
-import { BOTTOM_NAV_COPY } from "./bottom-nav.copy";
+import { BOTTOM_NAV_COPY_NAMESPACE } from "./bottom-nav.copy";
 import type { BottomNavProps } from "./bottom-nav.types";
 import { BottomNavItem } from "./bottom-nav-item";
 
 /** Renders the four-destination mobile navigation and create CTA (C34). */
 export function BottomNav({ items, ctaLabel, onCtaPress, className }: Readonly<BottomNavProps>) {
+  const t = useTranslations(BOTTOM_NAV_COPY_NAMESPACE);
   return (
     <nav
-      aria-label={BOTTOM_NAV_COPY.navLabel}
+      aria-label={t("navLabel")}
       className={cn(
         "border-t border-(--component-bottom-nav-border)",
         "bg-(--component-bottom-nav-background)",

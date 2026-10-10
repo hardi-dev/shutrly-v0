@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { type ReactNode, useId, useLayoutEffect, useRef } from "react";
 import { Dialog, Modal as AriaModal, ModalOverlay } from "react-aria-components";
 
@@ -7,7 +8,7 @@ import { cn } from "@/ui/cn/cn";
 import { useRestoreFocus } from "@/ui/hooks/use-restore-focus/use-restore-focus";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { BOTTOM_SHEET_COPY } from "./bottom-sheet.copy";
+import { BOTTOM_SHEET_COPY_NAMESPACE } from "./bottom-sheet.copy";
 import type { BottomSheetProps, SheetContentProps, SheetHeaderProps } from "./bottom-sheet.types";
 
 // The sheet spans the phone/tablet viewport; its content keeps the desktop Modal `md` width.
@@ -169,6 +170,7 @@ function SheetHeader({
   hasClose,
   onClose,
 }: Readonly<SheetHeaderProps>) {
+  const t = useTranslations(BOTTOM_SHEET_COPY_NAMESPACE);
   return (
     <header
       className={cn(
@@ -206,7 +208,7 @@ function SheetHeader({
         <IconButton
           icon="x"
           size="sm"
-          aria-label={BOTTOM_SHEET_COPY.close}
+          aria-label={t("close")}
           onPress={onClose}
           className="rounded-full bg-(--component-sheet-close-background)"
         />

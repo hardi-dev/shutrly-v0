@@ -308,7 +308,7 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 
 - [x] **I5.2 Owner checkpoint: account menu copy.** Rows added to deck §1 *Account menu* on 2026-10-11 as proposed copy, pending Owner review (Owner set the goal to finish every task). The deck has *Language/Bahasa*, *Settings/Pengaturan*, *Profile/Profil*, *Sign out/Keluar* (§1 l.144), the self-names, *Changing language…* and the failure line (§1), but no copy for the account menu trigger or the theme group. Propose these rows for deck §1 and stop for the Owner: account menu accessible name (EN *Account menu* / ID *Menu akun*), theme group (*Theme* / *Tema*), *Light* / *Terang*, *Dark* / *Gelap*, *System* / *Sistem*. After approval add them to `copy-deck.md` §1. Commit `docs(i18n): add the account menu copy to the deck`.
 
-- [ ] **I5.3 Owner shell copy to `{ en, id }`.** Files: `owner-shell.copy.ts`, `owner-nav.copy.ts`, `workspace-switcher.copy.ts`, `src/ui/patterns/sidebar/sidebar.copy.ts`, `bottom-sheet.copy.ts`, `toast.copy.ts`, plus the I5.2 rows under the `ownerShell` namespace. Register each in `COPY_REGISTRY`; components read them with `useTranslations` (D-9).
+- [x] **I5.3 Owner shell copy to `{ en, id }`.** Files: `owner-shell.copy.ts`, `owner-nav.copy.ts`, `workspace-switcher.copy.ts`, `src/ui/patterns/sidebar/sidebar.copy.ts`, `bottom-sheet.copy.ts`, `toast.copy.ts`, plus the I5.2 rows under the `ownerShell` namespace. Register each in `COPY_REGISTRY`; components read them with `useTranslations` (D-9).
   - Tests first: parity test stays green with the new namespaces; `owner-shell.test.tsx` `"AC-L10N-002 renders the shell navigation in English"` and `"… in Indonesian"` (provider with each locale).
   - Commit `feat(i18n): translate the owner shell`.
 

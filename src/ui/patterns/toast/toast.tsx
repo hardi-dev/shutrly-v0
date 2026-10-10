@@ -2,11 +2,12 @@
 
 import { useToast, useToastRegion } from "@react-aria/toast";
 import { ToastQueue, useToastQueue } from "@react-stately/toast";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 
 import { Alert } from "../alert/alert";
-import { TOAST_COPY } from "./toast.copy";
+import { TOAST_COPY_NAMESPACE } from "./toast.copy";
 import type {
   ToastContent,
   ToastItemProps,
@@ -72,11 +73,16 @@ function claimToastOnMount(eventKey: string): boolean {
  * @param props - optional accessible landmark label
  * @returns the portal-mounted toast region
  */
-export function ToastRegion({ ariaLabel = TOAST_COPY.regionLabel }: Readonly<ToastRegionProps>) {
+export function ToastRegion({ ariaLabel }: Readonly<ToastRegionProps>) {
+  const t = useTranslations(TOAST_COPY_NAMESPACE);
   const isMounted = useSyncExternalStore(EMPTY_SUBSCRIBE, CLIENT_MOUNTED, SERVER_UNMOUNTED);
   const regionRef = useRef<HTMLDivElement>(null);
   const state = useToastQueue(toastQueue);
-  const { regionProps } = useToastRegion({ "aria-label": ariaLabel }, state, regionRef);
+  const { regionProps } = useToastRegion(
+    { "aria-label": ariaLabel ?? t("regionLabel") },
+    state,
+    regionRef,
+  );
 
   if (!isMounted) {
     return null;
@@ -97,6 +103,7 @@ export function ToastRegion({ ariaLabel = TOAST_COPY.regionLabel }: Readonly<Toa
 }
 
 function ToastItem({ toast, state }: Readonly<ToastItemProps>) {
+  const t = useTranslations(TOAST_COPY_NAMESPACE);
   const toastRef = useRef<HTMLDivElement>(null);
   const { toastProps, contentProps, titleProps, descriptionProps } = useToast(
     { toast },
@@ -123,7 +130,7 @@ function ToastItem({ toast, state }: Readonly<ToastItemProps>) {
           titleId={titleProps.id}
           bodyId={descriptionProps.id}
           onClose={handleClose}
-          closeLabel={toast.content.closeLabel ?? TOAST_COPY.close}
+          closeLabel={toast.content.closeLabel ?? t("close")}
           action={action ? { label: action.label, onAction: handleAction } : undefined}
           className="shadow-[0_4px_16px_var(--color-semantic-elevation-1-color)]"
         />

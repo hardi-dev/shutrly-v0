@@ -1,8 +1,10 @@
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/ui/cn/cn";
 
 import { Tabs } from "../tabs/tabs";
 import { BreadcrumbTrail } from "./breadcrumb-trail";
-import { PAGE_HEADER_COPY } from "./page-header.copy";
+import { PAGE_HEADER_COPY_NAMESPACE } from "./page-header.copy";
 import type { BreadcrumbItem, PageHeaderProps } from "./page-header.types";
 
 /** Renders the breadcrumb, utility actions and hero title for an app page. */
@@ -63,6 +65,7 @@ function BreadcrumbRow({
   utilities: PageHeaderProps["utilities"];
   isFlush: boolean;
 }>) {
+  const t = useTranslations(PAGE_HEADER_COPY_NAMESPACE);
   return (
     <div
       className={cn(
@@ -71,7 +74,7 @@ function BreadcrumbRow({
       )}
     >
       <BreadcrumbTrail
-        label={PAGE_HEADER_COPY.breadcrumb}
+        label={t("breadcrumb")}
         items={items}
         className="min-h-(--space-10) flex-1"
       />

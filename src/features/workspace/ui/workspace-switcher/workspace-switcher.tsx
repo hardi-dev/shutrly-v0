@@ -1,6 +1,7 @@
 "use client";
 
 import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
 import { Menu } from "@/ui/patterns/menu/menu";
@@ -12,8 +13,16 @@ import { MenuTrigger as WorkspaceMenuTrigger } from "@/ui/patterns/menu/menu-tri
 import { SidebarWorkspaceTrigger } from "@/ui/patterns/sidebar/sidebar";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { WORKSPACE_SWITCHER_COPY } from "./workspace-switcher.copy";
+import { WORKSPACE_SWITCHER_COPY_NAMESPACE } from "./workspace-switcher.copy";
 import type { WorkspaceSwitcherItem, WorkspaceSwitcherProps } from "./workspace-switcher.types";
+
+/**
+ * The workspace switcher copy. The owner shell reads its sheet labels through this hook too.
+ * @returns the translate function for the workspace-switcher namespace
+ */
+export function useWorkspaceSwitcherTranslations() {
+  return useTranslations(WORKSPACE_SWITCHER_COPY_NAMESPACE);
+}
 
 /** Sorts workspaces alphabetically for every switcher surface. */
 export function sortWorkspaces(workspaces: readonly WorkspaceSwitcherItem[]) {
@@ -31,6 +40,7 @@ export function useWorkspaceSwitch(
   onSwitch: WorkspaceSwitcherProps["onSwitch"],
 ) {
   const [pendingId, setPendingId] = useState<string | null>(null);
+  const t = useWorkspaceSwitcherTranslations();
   const selectWorkspace = async (workspaceId: string): Promise<void> => {
     setPendingId(workspaceId);
     try {
@@ -39,10 +49,10 @@ export function useWorkspaceSwitch(
       if (isRedirectError(error)) throw error;
       showToast({
         tone: "danger",
-        title: WORKSPACE_SWITCHER_COPY.failed,
-        body: WORKSPACE_SWITCHER_COPY.failedBody(currentName),
+        title: t("failed"),
+        body: t("failedBody", { workspaceName: currentName }),
         action: {
-          label: WORKSPACE_SWITCHER_COPY.retry,
+          label: t("retry"),
           onAction: () => {
             void selectWorkspace(workspaceId);
           },
@@ -63,6 +73,7 @@ export function WorkspaceSwitcher({
   onSwitch,
   onCreate,
 }: Readonly<WorkspaceSwitcherProps>) {
+  const t = useWorkspaceSwitcherTranslations();
   const { pendingId, selectWorkspace } = useWorkspaceSwitch(currentName, onSwitch);
   const sortedWorkspaces = useMemo(() => sortWorkspaces(workspaces), [workspaces]);
   const isPending = pendingId !== null;
@@ -70,12 +81,12 @@ export function WorkspaceSwitcher({
     onCreate();
   };
   return (
-    <WorkspaceMenuTrigger label={WORKSPACE_SWITCHER_COPY.trigger}>
+    <WorkspaceMenuTrigger label={t("trigger")}>
       <SidebarWorkspaceTrigger workspaceName={currentName} isCompact={isCompact} />
-      <Menu aria-label={WORKSPACE_SWITCHER_COPY.menuLabel} variant="list">
+      <Menu aria-label={t("menuLabel")} variant="list">
         <MenuSection className="w-[calc(var(--size-sidebar)_-_var(--space-6))]">
           <MenuGroupLabel className="px-(--component-sheet-item-padding-x) pb-(--space-2)">
-            {WORKSPACE_SWITCHER_COPY.menuLabel}
+            {t("menuLabel")}
           </MenuGroupLabel>
           {sortedWorkspaces.map((workspace) => (
             <WorkspaceMenuItem
@@ -86,7 +97,7 @@ export function WorkspaceSwitcher({
             />
           ))}
           <MenuCtaItem
-            label={WORKSPACE_SWITCHER_COPY.create}
+            label={t("create")}
             icon="plus"
             isDisabled={isPending}
             className="border-t border-(--component-sheet-item-border) px-(--component-sheet-item-padding-x) py-(--space-3)"

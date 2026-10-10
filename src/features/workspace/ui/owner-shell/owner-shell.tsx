@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { AppShell } from "@/ui/patterns/app-shell/app-shell";
@@ -18,32 +19,61 @@ import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { CreateWorkspaceDialog } from "../create-workspace-dialog/create-workspace-dialog";
-import { OwnerNav, OwnerNavBottom, resolvePageHeading } from "../owner-nav/owner-nav";
-import { OWNER_NAV_COPY } from "../owner-nav/owner-nav.copy";
+import {
+  OwnerNav,
+  OwnerNavBottom,
+  resolvePageHeading,
+  useOwnerNavTranslations,
+} from "../owner-nav/owner-nav";
+import type { OwnerNavTranslator } from "../owner-nav/owner-nav.types";
 import { PageHeadingOverrideProvider } from "../page-heading-override/page-heading-override";
 import type { PageHeadingOverrideValue } from "../page-heading-override/page-heading-override.types";
 import {
   sortWorkspaces,
   useWorkspaceSwitch,
+  useWorkspaceSwitcherTranslations,
   WorkspaceSwitcher,
 } from "../workspace-switcher/workspace-switcher";
-import { WORKSPACE_SWITCHER_COPY } from "../workspace-switcher/workspace-switcher.copy";
-import { OWNER_SHELL_COPY } from "./owner-shell.copy";
+import { OWNER_SHELL_COPY_NAMESPACE } from "./owner-shell.copy";
 import type { OwnerShellProps } from "./owner-shell.types";
 
-const MOBILE_ITEMS: BottomNavProps["items"] = [
-  { href: "", label: OWNER_NAV_COPY.dashboard, icon: "layout-grid", isActive: false },
-  { href: "/projects", label: OWNER_NAV_COPY.projects, icon: "folder-kanban", isActive: false },
-  { href: "/clients", label: OWNER_NAV_COPY.clients, icon: "users", isActive: false },
-  { href: "/invoices", label: OWNER_NAV_COPY.invoices, icon: "receipt", isActive: false },
-];
+/** The bottom-nav destinations, labelled from the owner-nav copy. */
+function mobileBottomItems(
+  t: OwnerNavTranslator,
+  workspaceId: string,
+  pathname: string,
+): BottomNavProps["items"] {
+  return [
+    mobileItem(
+      { href: "", label: t("dashboard"), icon: "layout-grid", isActive: false },
+      workspaceId,
+      pathname,
+    ),
+    mobileItem(
+      { href: "/projects", label: t("projects"), icon: "folder-kanban", isActive: false },
+      workspaceId,
+      pathname,
+    ),
+    mobileItem(
+      { href: "/clients", label: t("clients"), icon: "users", isActive: false },
+      workspaceId,
+      pathname,
+    ),
+    mobileItem(
+      { href: "/invoices", label: t("invoices"), icon: "receipt", isActive: false },
+      workspaceId,
+      pathname,
+    ),
+  ];
+}
 
+/** The menu-sheet destinations: section, owner-nav copy key and icon. */
 const MOBILE_MENU_ITEMS = [
-  ["services", OWNER_NAV_COPY.services, "package"],
-  ["team", OWNER_NAV_COPY.team, "user-round-cog"],
-  ["message-templates", OWNER_NAV_COPY.messageTemplates, "message-square-text"],
-  ["photo-sources", OWNER_NAV_COPY.photoSources, "folder-open"],
-  ["settings", OWNER_NAV_COPY.settings, "settings"],
+  ["services", "services", "package"],
+  ["team", "team", "user-round-cog"],
+  ["message-templates", "messageTemplates", "message-square-text"],
+  ["photo-sources", "photoSources", "folder-open"],
+  ["settings", "settings", "settings"],
 ] as const;
 
 // eslint-disable-next-line max-lines-per-function -- coordinates responsive shell regions
@@ -61,9 +91,10 @@ export function OwnerShell({
   subPages,
 }: Readonly<OwnerShellProps>) {
   const currentPathname = usePathname();
+  const navT = useOwnerNavTranslations();
   const subPage = subPages?.find((page) => page.path === currentPathname);
   const [headingOverride, setHeadingOverride] = useState<PageHeadingOverrideValue | null>(null);
-  const resolvedHeading = resolvePageHeading(currentPathname, workspaceId, workspaceName);
+  const resolvedHeading = resolvePageHeading(currentPathname, workspaceId, workspaceName, navT);
   const heading = headingOverride ?? subPage ?? resolvedHeading ?? { title };
   let shellSubPage: AppShellSubPage | undefined;
   let panelBreadcrumbs: readonly BreadcrumbItem[] | undefined;
@@ -105,12 +136,7 @@ export function OwnerShell({
     setIsMobileMenuOpen(false);
     router.push(`/w/${workspaceId}/${section}`);
   };
-  const mobileItems = [
-    mobileItem(MOBILE_ITEMS[0], workspaceId, currentPathname),
-    mobileItem(MOBILE_ITEMS[1], workspaceId, currentPathname),
-    mobileItem(MOBILE_ITEMS[2], workspaceId, currentPathname),
-    mobileItem(MOBILE_ITEMS[3], workspaceId, currentPathname),
-  ] as const;
+  const mobileItems = mobileBottomItems(navT, workspaceId, currentPathname);
   const handleOpenCreate = () => {
     setIsCreateOpen(true);
   };
@@ -164,7 +190,7 @@ export function OwnerShell({
           onLogout={logoutAction ? handleLogout : undefined}
           mobileBottomNav={{
             items: mobileItems,
-            ctaLabel: OWNER_NAV_COPY.create,
+            ctaLabel: navT("create"),
             onCtaPress: handleCreateProject,
           }}
           mobileUtilities={
@@ -227,6 +253,8 @@ export function MobileWorkspaceSheet({
   onNavigate: (section: string) => void;
   onLogout?: () => void;
 }>) {
+  const t = useTranslations(OWNER_SHELL_COPY_NAMESPACE);
+  const navT = useOwnerNavTranslations();
   const handleNavigate = (section: string) => () => {
     onNavigate(section);
   };
@@ -238,16 +266,16 @@ export function MobileWorkspaceSheet({
     <BottomSheet
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      title={OWNER_SHELL_COPY.mobileMenuTitle}
+      title={t("mobileMenuTitle")}
       headerLeading={<MobileSheetLogo />}
       variant="menu"
     >
-      <MobileSheetGroupLabel label={OWNER_NAV_COPY.catalog} />
-      {MOBILE_MENU_ITEMS.slice(0, 2).map(([section, label, icon]) => (
-        <SheetItem key={section} label={label} icon={icon} onPress={handleNavigate(section)} />
+      <MobileSheetGroupLabel label={navT("catalog")} />
+      {MOBILE_MENU_ITEMS.slice(0, 2).map(([section, key, icon]) => (
+        <SheetItem key={section} label={navT(key)} icon={icon} onPress={handleNavigate(section)} />
       ))}
-      {MOBILE_MENU_ITEMS.slice(2).map(([section, label, icon]) => (
-        <SheetItem key={section} label={label} icon={icon} onPress={handleNavigate(section)} />
+      {MOBILE_MENU_ITEMS.slice(2).map(([section, key, icon]) => (
+        <SheetItem key={section} label={navT(key)} icon={icon} onPress={handleNavigate(section)} />
       ))}
       <MobileSheetAccount
         name={accountName}
@@ -263,14 +291,11 @@ function DesktopUtilities({
   onSearch,
   onNotifications,
 }: Readonly<{ onSearch: () => void; onNotifications: () => void }>) {
+  const t = useTranslations(OWNER_SHELL_COPY_NAMESPACE);
   return (
     <>
-      <IconButton icon="search" aria-label={OWNER_SHELL_COPY.search} onPress={onSearch} />
-      <IconButton
-        icon="bell"
-        aria-label={OWNER_SHELL_COPY.notifications}
-        onPress={onNotifications}
-      />
+      <IconButton icon="search" aria-label={t("search")} onPress={onSearch} />
+      <IconButton icon="bell" aria-label={t("notifications")} onPress={onNotifications} />
     </>
   );
 }
@@ -280,15 +305,12 @@ function MobileUtilities({
   onNotifications,
   onMenu,
 }: Readonly<{ onSearch: () => void; onNotifications: () => void; onMenu: () => void }>) {
+  const t = useTranslations(OWNER_SHELL_COPY_NAMESPACE);
   return (
     <>
-      <IconButton icon="search" aria-label={OWNER_SHELL_COPY.search} onPress={onSearch} />
-      <IconButton
-        icon="bell"
-        aria-label={OWNER_SHELL_COPY.notifications}
-        onPress={onNotifications}
-      />
-      <IconButton icon="menu" aria-label={OWNER_SHELL_COPY.menu} onPress={onMenu} />
+      <IconButton icon="search" aria-label={t("search")} onPress={onSearch} />
+      <IconButton icon="bell" aria-label={t("notifications")} onPress={onNotifications} />
+      <IconButton icon="menu" aria-label={t("menu")} onPress={onMenu} />
     </>
   );
 }
@@ -308,6 +330,7 @@ export function MobileWorkspaceSwitcherSheet({
   onSwitch: (workspaceId: string) => Promise<void>;
   onCreate: () => void;
 }>) {
+  const t = useWorkspaceSwitcherTranslations();
   const { pendingId, selectWorkspace } = useWorkspaceSwitch(currentName, onSwitch);
   const isPending = pendingId !== null;
   const handleSwitch = (workspaceId: string) => () => {
@@ -320,8 +343,8 @@ export function MobileWorkspaceSwitcherSheet({
     <BottomSheet
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      title={WORKSPACE_SWITCHER_COPY.menuLabel}
-      meta={WORKSPACE_SWITCHER_COPY.count(workspaces.length)}
+      title={t("menuLabel")}
+      meta={t("count", { count: workspaces.length })}
       variant="menu"
       actions={<CreateWorkspaceButton isDisabled={isPending} onPress={onCreate} />}
     >
@@ -342,6 +365,7 @@ function CreateWorkspaceButton({
   isDisabled,
   onPress,
 }: Readonly<{ isDisabled: boolean; onPress: () => void }>) {
+  const t = useWorkspaceSwitcherTranslations();
   return (
     <Button
       variant="primary"
@@ -351,7 +375,7 @@ function CreateWorkspaceButton({
       isDisabled={isDisabled}
       onPress={onPress}
     >
-      {WORKSPACE_SWITCHER_COPY.create}
+      {t("create")}
     </Button>
   );
 }
@@ -376,6 +400,7 @@ function MobileSheetAccount({
   onOpenProfile,
   onLogout,
 }: Readonly<{ name: string; email: string; onOpenProfile: () => void; onLogout?: () => void }>) {
+  const t = useTranslations(OWNER_SHELL_COPY_NAMESPACE);
   return (
     <div className="flex items-center gap-(--component-sidebar-account-gap) border-t border-(--component-sheet-item-border) px-(--component-sheet-item-padding-x) pb-(--space-1) pt-(--space-3)">
       <Link
@@ -385,12 +410,7 @@ function MobileSheetAccount({
       >
         <MobileSheetAccountText name={name} email={email} />
       </Link>
-      <IconButton
-        icon="log-out"
-        size="sm"
-        aria-label={OWNER_SHELL_COPY.logout}
-        onPress={onLogout}
-      />
+      <IconButton icon="log-out" size="sm" aria-label={t("logout")} onPress={onLogout} />
     </div>
   );
 }

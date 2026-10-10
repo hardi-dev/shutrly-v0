@@ -83,10 +83,9 @@ test("AC-CLI-001 AC-CLI-003 navigates a new workspace to both empty client tabs"
   const workspaceId = await openWorkspace(page, "clients-empty");
 
   await openClients(page, workspaceId);
-  await expect(page.getByRole("link", { name: OWNER_NAV_COPY.clients }).first()).toHaveAttribute(
-    "aria-current",
-    "page",
-  );
+  await expect(
+    page.getByRole("link", { name: OWNER_NAV_COPY.messages.id.clients }).first(),
+  ).toHaveAttribute("aria-current", "page");
   await expect(page.getByRole("heading", { name: CLIENT_COPY.emptyActiveTitle })).toBeVisible();
 
   await openClients(page, workspaceId, true);

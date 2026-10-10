@@ -41,7 +41,9 @@ describe("AppShell (C30/C37)", () => {
     );
     expect(screen.getAllByText("Konten workspace").length).toBeGreaterThan(0);
     expect(screen.getAllByRole("main").length).toBeGreaterThan(0);
-    expect(screen.getAllByRole("complementary", { name: "Sidebar" }).length).toBeGreaterThan(0);
+    expect(
+      screen.getAllByRole("complementary", { name: "Navigasi samping" }).length,
+    ).toBeGreaterThan(0);
   });
 
   it("keeps the tablet overlay closed by default", () => {
@@ -62,10 +64,10 @@ describe("AppShell (C30/C37)", () => {
       </AppShell>,
     );
 
-    await user.click(getAllByRole("button", { name: "Buka sidebar" })[0]);
+    await user.click(getAllByRole("button", { name: "Buka navigasi samping" })[0]);
     expect(screen.getByRole("dialog", { name: "Navigasi utama" })).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "Ciutkan sidebar" }));
+    await user.click(screen.getByRole("button", { name: "Ciutkan navigasi samping" }));
     expect(queryByRole("dialog", { name: "Navigasi utama" })).toBeNull();
   });
 

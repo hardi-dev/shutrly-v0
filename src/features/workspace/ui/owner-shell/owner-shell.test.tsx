@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { copyMessages } from "@tests/support/copy/copy-messages";
+import { NextIntlClientProvider } from "next-intl";
 import { describe, expect, it, vi } from "vitest";
 
 const push = vi.hoisted(() => vi.fn());
@@ -34,14 +36,14 @@ describe("MobileWorkspaceSwitcherSheet", () => {
       />,
     );
 
-    expect(screen.getByRole("dialog", { name: "Pindah workspace" })).toBeInTheDocument();
-    expect(screen.getByText("2 workspace")).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Pindah ruang kerja" })).toBeInTheDocument();
+    expect(screen.getByText("2 ruang kerja")).toBeInTheDocument();
     const names = screen
       .getAllByRole("button")
       .map((button) => button.getAttribute("aria-label"))
       .filter((name) => name === "Studio Lime" || name === "Aster Wedding");
     expect(names).toEqual(["Aster Wedding", "Studio Lime"]);
-    const createButton = screen.getByRole("button", { name: "Buat workspace" });
+    const createButton = screen.getByRole("button", { name: "Buat ruang kerja" });
     expect(createButton).toHaveAttribute("data-variant", "primary");
     expect(createButton.closest("footer")).toBeInTheDocument();
 
@@ -62,21 +64,21 @@ describe("MobileWorkspaceSheet", () => {
       />,
     );
 
-    expect(screen.getByText("KATALOG")).toBeInTheDocument();
+    expect(screen.getByText("Katalog")).toBeInTheDocument();
     expect(
       screen
         .getAllByRole("button")
         .map((button) => button.getAttribute("aria-label"))
         .filter(Boolean),
     ).toEqual(
-      expect.arrayContaining(["Layanan", "Tim", "Template pesan", "Sumber foto", "Pengaturan"]),
+      expect.arrayContaining(["Layanan", "Tim", "Templat pesan", "Sumber foto", "Pengaturan"]),
     );
     const labels = screen.getAllByRole("button").map((button) => button.textContent);
     expect(labels.indexOf("Layanan")).toBeLessThan(labels.indexOf("Tim"));
-    expect(labels.indexOf("Tim")).toBeLessThan(labels.indexOf("Template pesan"));
+    expect(labels.indexOf("Tim")).toBeLessThan(labels.indexOf("Templat pesan"));
     expect(screen.queryByRole("button", { name: "Studio Lime" })).toBeNull();
     expect(screen.queryByText("Invoice")).toBeNull();
-    expect(screen.queryByRole("button", { name: "Buat workspace" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Buat ruang kerja" })).toBeNull();
   });
 });
 
@@ -208,7 +210,7 @@ describe("OwnerShell sub-pages", () => {
     );
 
     // The desktop sidebar and the phone menu keep their "Utama" navigations; the Bottom Nav is the third.
-    expect(screen.getAllByRole("navigation", { name: "Utama" })).toHaveLength(2);
+    expect(screen.getAllByRole("navigation", { name: "Navigasi utama" })).toHaveLength(2);
     expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute("href", "/w/A/projects");
   });
 
@@ -228,6 +230,42 @@ describe("OwnerShell sub-pages", () => {
       </OwnerShell>,
     );
 
-    expect(screen.getAllByRole("navigation", { name: "Utama" })).toHaveLength(3);
+    expect(screen.getAllByRole("navigation", { name: "Navigasi utama" })).toHaveLength(3);
+  });
+});
+
+function renderShellIn(locale: "en" | "id") {
+  return render(
+    <NextIntlClientProvider locale={locale} messages={copyMessages(locale)}>
+      <OwnerShell
+        workspaceId="A"
+        workspaceName="Aster Wedding"
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        title="Aster Wedding"
+        workspaces={workspaces}
+        onSwitch={vi.fn()}
+        onCreate={vi.fn()}
+      >
+        <p>isi</p>
+      </OwnerShell>
+    </NextIntlClientProvider>,
+  );
+}
+
+describe("OwnerShell copy", () => {
+  it("AC-L10N-002 renders the shell navigation in English", () => {
+    renderShellIn("en");
+    expect(screen.getAllByRole("link", { name: "Projects" }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "Message templates" }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("button", { name: "Search" }).length).toBeGreaterThan(0);
+    expect(screen.queryByRole("link", { name: "Proyek" })).toBeNull();
+  });
+
+  it("AC-L10N-002 renders the shell navigation in Indonesian", () => {
+    renderShellIn("id");
+    expect(screen.getAllByRole("link", { name: "Proyek" }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "Templat pesan" }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("button", { name: "Cari" }).length).toBeGreaterThan(0);
   });
 });

@@ -176,6 +176,19 @@ Descriptions explain an action and its useful result only where supported. Do no
 | Switching pending | Changing language… | Mengganti bahasa… |
 | Switch failed | Couldn’t change the language. Try again. | Bahasa belum diganti. Coba lagi. |
 
+### Account menu (design 2026-10-11; proposed copy, pending Owner review)
+
+**Pages:** owner shell account menu (desktop sidebar account block, mobile menu sheet). Theme items are shown but have no action until the next phase.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Account menu accessible name | Account menu | Menu akun |
+| Account group label (mobile sheet) | Account | Akun |
+| Theme group label / row | Theme | Tema |
+| Light theme option | Light | Terang |
+| Dark theme option | Dark | Gelap |
+| System theme option | System | Sistem |
+
 ### Shared photo and media controls
 
 | Element / context | English | Bahasa Indonesia |

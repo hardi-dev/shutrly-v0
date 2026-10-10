@@ -1,6 +1,6 @@
 # Design: bilingual copy revamp (F-22)
 
-Status: **DESIGNED** (Owner approved and saved, 2026-10-11; `.pen` 56,443 bytes, mtime 2026-10-11 02:19 WIB).
+Status: **DESIGNED**. Account menu approved and saved 2026-10-11; auth language link approved and saved 2026-10-11. Landing and client gallery have no switch (Owner 2026-10-11), so no frames.
 
 ## Pencil file
 
@@ -24,7 +24,7 @@ Status: **DESIGNED** (Owner approved and saved, 2026-10-11; `.pen` 56,443 bytes,
 | M5 · Language switching (pending) · phone · light | `ZJyUC` | Sheet meta *Mengganti bahasa…*, options dimmed, spinner on the chosen one |
 | M6 · Language switch failed · phone · light | `p2jPCo` | Toast/Danger top-centre with the same message |
 
-## Auth language switch (PROPOSED, 2026-10-11)
+## Auth language switch (APPROVED, Owner 2026-10-11)
 
 Source: `docs/features/auth/auth.pen`, Login desktop `amp4Y` and mobile `IOC5i`, rebuilt here as library instances. The local editorial panel `Z5xhk` is recreated as the local component **Auth / Editorial panel** (`RnrxL`, same tiles, photos, scrim and copy). The mobile title now wraps (`fixed-width`), because the one-line title was clipped at 390.
 
@@ -100,5 +100,5 @@ Copy is verbatim from deck §1 (*Mengganti bahasa…*, *Bahasa belum diganti. Co
 ## Open items
 
 1. **APPROVED:** Owner, 2026-10-11 ("sudah saya save, desain disetujui"). The design is `DESIGNED`.
-2. HTML exports (2026-10-11, `html-tailwind`, exported through Pencil MCP): 10 frames in [`exports/`](exports/), indexed in [`exports/INDEX.md`](exports/INDEX.md). Phone frames use the device name `mobile`; the M2 menu sheet is the `account-menu-open` mobile state.
+2. HTML exports (2026-10-11, `html-tailwind`, exported through Pencil MCP): 10 account-menu frames plus 9 auth frames (`auth-language-*`) in [`exports/`](exports/), indexed in [`exports/INDEX.md`](exports/INDEX.md). Phone frames use the device name `mobile`; the M2 menu sheet is the `account-menu-open` mobile state.
 3. After every re-export of the HTML frames to `docs/features/bilingual-copy-revamp/exports/`, run `python3 scripts/sdv/index-exports.py bilingual-copy-revamp`.

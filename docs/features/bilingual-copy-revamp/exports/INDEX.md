@@ -4,13 +4,23 @@
 
 Raw Pencil HTML exports, one complete frame per file. Read only the states your task names,
 one file at a time. *Design note* and *AC* come from [design.md](../design.md).
-Total: 10 files, 645 KB.
+Total: 19 files, 1722 KB.
 
 ## account
 
 | State | Desktop | Mobile | Design note | AC |
 |---|---|---|---|---|
 | `account-menu-open` | [`TJlEh`](account-menu-open-desktop-TJlEh.html) · 87 KB | [`UY9Co`](account-menu-open-mobile-UY9Co.html) · 90 KB | Menu open |  |
+
+## auth
+
+| State | Desktop | Mobile | Design note | AC |
+|---|---|---|---|---|
+| `auth-language-closed` | [`wqcpW`](auth-language-closed-desktop-wqcpW.html) · 199 KB | [`Fwe1v`](auth-language-closed-mobile-Fwe1v.html) · 15 KB | A1 · Login · language closed · desktop |  |
+| `auth-language-failed` | [`xbbVv`](auth-language-failed-desktop-xbbVv.html) · 204 KB | [`W5jJs`](auth-language-failed-mobile-W5jJs.html) · 20 KB | A7 · Login · language failed · desktop |  |
+| `auth-language-hover` | [`EBYgV`](auth-language-hover-desktop-EBYgV.html) · 199 KB | — | A1b · Login · language link hover · desktop |  |
+| `auth-language-open` | [`GPftW`](auth-language-open-desktop-GPftW.html) · 202 KB | [`sAUWh`](auth-language-open-mobile-sAUWh.html) · 19 KB | A3 · Login · language menu open · desktop |  |
+| `auth-language-switching` | [`m63yf`](auth-language-switching-desktop-m63yf.html) · 198 KB | [`AvC3d`](auth-language-switching-mobile-AvC3d.html) · 14 KB | A5 · Login · language switching · desktop |  |
 
 ## dashboard
 

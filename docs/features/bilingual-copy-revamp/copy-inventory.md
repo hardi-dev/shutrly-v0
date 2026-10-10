@@ -4,6 +4,29 @@ Snapshot: 2026-10-06, staging base `bdab2c2`.
 
 96 existing `.copy.ts` files. This is a starting inventory, not proof of complete string coverage. Audit must also inspect validation schemas, server error mapping, metadata, accessibility text, date/number formatting, emails and generated messages. Internal/demo files are reviewed separately from shipped product copy.
 
+### Added 2026-10-10 (client gallery and add-on coverage)
+
+| File | Surface |
+|---|---|
+| `src/features/gallery/ui/client-gate-screen/client-gate-screen.copy.ts` | Product — client gallery access |
+| `src/features/gallery/ui/client-password-form/client-password-form.copy.ts` | Product — client gallery password |
+| `src/features/gallery/ui/client-unavailable/client-unavailable.copy.ts` | Product — unavailable client gallery |
+| `src/features/gallery/ui/client-home-screen/client-home-screen.copy.ts` | Product — client gallery home |
+| `src/features/gallery/ui/client-browse-screen/client-browse-screen.copy.ts` | Product — client photo browse and download |
+| `src/features/gallery/ui/client-copy/client-copy.copy.ts` | Product — shared client gallery labels and statuses |
+| `src/features/gallery/ui/pick-screen/pick-screen.copy.ts` | Product — client selection group |
+| `src/features/gallery/ui/pick-note-sheet/pick-note-sheet.copy.ts` | Product — client photo notes |
+| `src/features/gallery/ui/review-screen/review-screen.copy.ts` | Product — client selection review and submit |
+| `src/features/gallery/ui/viewer-pick-actions/viewer-pick-actions.copy.ts` | Product — client viewer selection actions |
+| `src/features/gallery/ui/gallery-summary-text/gallery-summary.copy.ts` | Product — owner gallery summaries |
+| `src/features/gallery/ui/selection-owner-text/selection-owner.copy.ts` | Product — owner selection review |
+| `src/features/gallery/ui/delivery-screen/delivery-screen.copy.ts` | Product — client final delivery |
+| `src/features/gallery/ui/delivery-copy/delivery.copy.ts` | Product — owner final delivery |
+| `src/features/gallery/ui/project-access-card/project-access-card.copy.ts` | Product — owner client access |
+| `src/features/booking/ui/add-on-copy/add-on.copy.ts` | Product — owner add-ons |
+| `src/app/not-found.copy.ts` | Product — global not-found |
+| `src/ui/primitives/stepper/stepper.copy.ts` | Product — stepper accessible actions |
+
 | File | Surface |
 |---|---|
 | `src/adapters/email/auth-email-templates/auth-email-templates.copy.ts` | Product |

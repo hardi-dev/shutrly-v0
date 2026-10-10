@@ -72,7 +72,7 @@ Descriptions explain an action and its useful result only where supported. Do no
 | Message templates | `{workspace}/message-templates`, `/message-templates/{templateType}` | Existing editor; recipient output used by later sharing features |
 | Auth emails | Verification/reset email in recipient inbox | Existing channel, not an app page |
 | Bilingual authoring | Descriptive content/template editors on their owning pages | Proposed; exact authoring flow pending |
-| Client gallery | Future token/password entry, selection and delivery surfaces | Future surface; no client route implementation in this branch |
+| Client gallery | `/g/{token}`, `/photos`, `/final`, `/picks/{groupId}`, `/picks/{groupId}/review` | Section 14; built client routes and UI modules |
 | Billing and sharing | Future invoice/payment and message-sharing surfaces | Future surface; use existing template drafts below |
 
 ## 1. Shared UI, navigation and language
@@ -1753,11 +1753,11 @@ These drafts avoid a “pay here” claim that could imply a payment gateway. Th
 
 Do not silently show Indonesian content on an English reader page when a version is missing. Legacy single-language records require the approved rollout/viewing policy, not a new invented fallback sentence in this deck. Completion and review status must reflect actual stored state, not merely nonempty fields.
 
-## 14. Client gallery — future surface drafts
+## 14. Client gallery — built surfaces
 
 Submission copy in 14.2 applies to the current selection group. A gallery-wide submit action is not approved by this deck; lifecycle is per group (BR-SEL-005).
 
-**Where:** planned client token-link journey (`/g/{token}` in product journeys), password entry and selection/final-delivery screens. No implemented client page route is present in this branch. These drafts cover the known journey only; detailed feature specs, selection semantics and Pencil exports must precede implementation. They do not add a client account, public index or sharing behavior.
+**Where:** implemented client token-link journey (`/g/{token}`, `/photos`, `/final`, `/picks/{groupId}` and `/picks/{groupId}/review`). The tables below update the earlier drafts with the built states. Selection submission remains per group; do not add a gallery-wide submit action or automatic progress-saving claim.
 
 ### 14.1 Password entry and unavailable access
 
@@ -1776,7 +1776,7 @@ Submission copy in 14.2 applies to the current selection group. A gallery-wide s
 
 Use generic unavailable copy where security rules prohibit revealing whether a token exists, is archived or expired. Distinct expiry/archival details must be authorized by the client-access design.
 
-### 14.2 Client selections — future selection feature
+### 14.2 Client selections — built selection feature
 
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
@@ -1799,9 +1799,9 @@ Use generic unavailable copy where security rules prohibit revealing whether a t
 | Submitted body | Your photographer can now review your selections. | Fotografermu sudah bisa melihat pilihanmu. |
 | Concurrent-change error | Your selections need another review. Reload the latest details before submitting. | Pilihanmu perlu dicek lagi. Muat data terbaru sebelum mengirim. |
 
-Validate allowances and one-time submission against BR-SEL-* before adopting these future rows. Do not invent “all selections required”, editable submitted selections or automatic progress-saving claims.
+The selected/limit/remaining wording follows BR-SEL-* and the implemented partial-send behavior. Do not imply that every allowance must be filled or that submitted groups remain editable indefinitely.
 
-### 14.3 Final delivery — future delivery feature
+### 14.3 Final delivery — built delivery feature
 
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
@@ -1815,11 +1815,58 @@ Validate allowances and one-time submission against BR-SEL-* before adopting the
 
 Do not add bulk-download, download-progress, file-retention or permanent-access promises until delivery behavior is designed.
 
-## 15. Deferred surfaces and editorial coverage
+## 15. Owner gallery, client access and delivery summaries
+
+**Where:** owner project gallery tabs and picks routes under `{workspace}/projects/{projectId}/gallery`.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Client access card | Client access / Link and password for the client. | Akses klien / Link dan password untuk klien. |
+| Access actions | Change link / Change password / Copy link / Copy password / Link / Password / Expires / Inactive | Ganti link / Ganti password / Salin link / Salin password / Link / Password / Kedaluwarsa / Tidak aktif |
+| Draft and archived notes | The client can’t open this link until the gallery is published. / The gallery is archived. The link can’t be opened or changed. | Klien belum bisa membuka link ini sampai galeri dipublikasikan. / Galeri diarsipkan. Link tidak bisa dibuka dan tidak bisa diganti. |
+| Rotate-link confirmation | Change the gallery link? The old link will stop working. All shared links, including invoice links, will stop working. The password won’t change. Share the new link with the client. | Ganti link galeri? Link lama berhenti bekerja. Semua link yang sudah dibagikan, termasuk link invoice, tidak bisa dibuka lagi. Password tidak berubah. Bagikan link baru ke klien. |
+| Selection card | Client selections / See the client’s photo selections and lock them when finished. / The client chooses photos through the gallery. | Pilihan klien / Lihat pilihan foto klien dan kunci setelah selesai. / Klien memilih foto lewat galeri. |
+| Selection actions | View selections / Review selections / Lock selections / Close selections / Copy file names | Lihat pilihan / Tinjau pilihan / Kunci pilihan / Tutup pilihan / Salin nama file |
+| Owner warning | The client can still change selections until they submit or you close the group. / {count} selected photos are no longer in Drive. They still count. | Klien masih bisa mengubah pilihan sampai mengirim atau kamu menutupnya. / {count} foto pilihan tidak ada lagi di Drive. Foto tetap dihitung. |
+| Selection confirmation | Lock selections for {name}? The client can’t change them again. / Close selections for {name}? The group will be locked with the current selections. | Kunci pilihan {name}? Klien tidak bisa mengubahnya lagi. / Tutup pilihan {name}? Grup dikunci dengan pilihan saat ini. |
+| Delivery card | Final files / Downloads for the client. / Publish final files / Mark complete | Hasil akhir / Unduhan untuk klien. / Publikasikan hasil akhir / Tandai selesai |
+| Delivery readiness | No final files have synced yet. Create and map the Drive final-file subfolder, then sync the gallery. / The gallery must be published before the client can open final files. | Belum ada hasil akhir yang tersinkron. Buat dan petakan subfolder hasil akhir di Drive, lalu sinkronkan galeri. / Galeri harus dipublikasikan lebih dulu supaya klien bisa membuka hasil akhir. |
+| Publish/complete consequence | The client can download through the same link and password. / The project becomes Delivered. / The gallery stays open while it remains published. | Klien bisa mengunduh lewat link dan password yang sama. / Status proyek menjadi Terkirim. / Galeri tetap terbuka selama masih dipublikasikan. |
+
+The source comment says gallery-open tracking is unavailable; owner copy must not claim that the client opened the gallery. Public Drive/image-link limits remain governed by BR-ACC-005.
+
+## 16. Add-ons
+
+**Where:** built project add-on card, form, action menu and confirmations. This is owner-side copy; the source explicitly says the description is not for the client.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Card and empty state | Add-on / Extra requested by the client. / No add-ons yet. Add one when the client requests extra photos or services. | Add-on / Tambahan yang klien minta. / Belum ada add-on. Tambahkan saat klien minta foto atau layanan ekstra. |
+| Actions and statuses | Add add-on / Approve / Delete draft / Cancel add-on / Draft / Approved / Cancelled / No group | Tambah add-on / Setujui / Hapus draf / Batalkan add-on / Draf / Disetujui / Dibatalkan / Tanpa grup |
+| Form | Add an add-on / An add-on increases the client’s selection limit after approval. / Description / Quantity / Unit price / Total / Save draft | Tambah add-on / Add-on menambah batas pilihan klien setelah disetujui. / Deskripsi / Jumlah / Harga satuan / Total / Simpan draf |
+| Helpers | Shown in the add-on list, not to the client. / Whole-number quantity. / Full rupiah amount. / This group’s limit increases after approval. | Tampil di daftar add-on, tidak untuk klien. / Bilangan bulat. / Rupiah penuh. / Batas grup ini naik setelah add-on disetujui. |
+| Locked group | {names} is locked, so the add-on can’t increase its limit. Add-ons without a group can still be created. | {names} sudah dikunci, jadi add-on tidak bisa menambah batasnya. Add-on tanpa grup tetap bisa dibuat. |
+| Approval | Approve this add-on? / The {group} limit increases from {from} to {to}. / Submitted selections reopen so the client can add photos and send again. / No invoice has been created. | Setujui add-on? / Batas {group} naik dari {from} menjadi {to}. / Pilihan yang sudah dikirim dibuka lagi supaya klien bisa menambah foto dan mengirim ulang. / Belum ada invoice dibuat. |
+| Cancellation | Cancel this add-on? / The {group} limit drops from {from} to {to}. Cancellation is refused if the client selected more than {to} {unit}. / This add-on does not change the client’s selection limit. | Batalkan add-on? / Batas {group} turun dari {from} menjadi {to}. Pembatalan ditolak jika klien sudah memilih lebih dari {to} {unit}. / Add-on ini tidak mengubah batas pilihan klien. |
+| Refusal and recovery | Add-on can’t be cancelled. The limit would be lower than the client’s selections. Ask the client to remove photos first. / Try again. | Add-on belum bisa dibatalkan. Batas akan lebih kecil dari pilihan klien. Minta klien melepas foto lebih dulu. / Coba lagi. |
+| Field errors | Description is required. / Quantity must be at least 1 and a whole number. / Enter a valid price in whole rupiah. / This group is locked. Choose another group or no group. | Deskripsi wajib diisi. / Jumlah minimal 1 dan harus bilangan bulat. / Isi harga yang valid dalam rupiah bulat. / Grup ini sudah dikunci. Pilih grup lain atau tanpa grup. |
+
+Approval changes the selection limit only for an unlocked target group. It does not create an invoice, send a message or collect payment.
+
+## 17. Global not-found and product primitives
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Global 404 | 404 / Page not found / This page isn’t available. / Go to Shutrly | 404 / Halaman tidak ditemukan / Halaman ini tidak tersedia. / Ke Shutrly |
+| Stepper accessible actions | Decrease / Increase | Kurangi / Tambah |
+
+The stepper labels are included because they are shipped product controls, not story/demo copy.
+
+## 18. Deferred surfaces and editorial coverage
 
 ### Scope boundaries
 
-Invoice/payment pages, add-ons, team fees and real WhatsApp sharing do not yet have complete implemented page specs on this branch. Their current owner navigation/coming-soon copy is covered in section 1; the five message outputs are covered in section 11. Billing-page copy must be drafted from its approved feature spec rather than inventing online payment, due dates or financial actions now.
+Invoice/payment pages, team fees and real WhatsApp sharing do not yet have complete implemented page specs on this branch. Add-ons are built and covered in section 16. Billing-page copy must still be drafted from its approved feature spec rather than inventing online payment, due dates or financial actions.
 
 The root `/` is currently a scaffold placeholder. Proposed replacement for its existing single status line:
 
@@ -1833,7 +1880,7 @@ This is wording for the existing placeholder only, not a new landing-page design
 
 | Source family / audit finding | Deck section | Review treatment |
 |---|---|---|
-| Owner nav/shell/layout, shared UI wrappers and route errors | 1, 4, 15 | Shared actions; full-page contexts; demo literals excluded below |
+| Owner nav/shell/layout, shared UI wrappers and route errors | 1, 4, 17 | Shared actions; full-page contexts; demo literals excluded below |
 | Auth screens/forms, profile, password visibility and auth error mappings | 2, 3 | All existing page/state families |
 | Workspace onboarding/settings/switcher and field errors | 4 | Complete field/state families |
 | Catalog copy, detail parent, mobile tabs, skeletons, booking type array (OCM-01–04) | 5 | Visible labels plus empty/loading/validation states |
@@ -1848,7 +1895,10 @@ This is wording for the existing placeholder only, not a new landing-page design
 | Icon-button unread badge (OCM-09) | 1 | Complete count announcement |
 | Locale assumptions (OCM-14–22) | Cross-cutting notes | HTML/providers/formatting are technical requirements, not extra text rows |
 | User-authored bilingual descriptions/custom templates | 13 | Proposed authoring/readiness copy; actual records not translated here |
-| Client access/selection/delivery journey | 14 | Explicit future drafts, not implementation-ready feature specs |
+| Client access/selection/delivery journey | 14 | Built routes and copy modules; partial-send and download consequences retained |
+| Owner client-access card, selection-owner text, gallery summaries and delivery card | 15 | Built owner gallery tabs, cards, picks routes and dialogs |
+| Add-on card, form, menu, validation and confirmations | 16 | Built owner project surface; no client-facing offer inferred |
+| Global not-found page and stepper actions | 17 | Built product copy; stepper stories excluded |
 
 The deck consolidates repeated actions, desktop/mobile duplicates and common error messages instead of reproducing every source key. Tables are editorial review units, not a generated source-key catalog; implementation must map every actual consumer and state back to an approved row. No claim of full runtime coverage is made until browser and data review.
 

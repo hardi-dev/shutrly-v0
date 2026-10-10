@@ -285,14 +285,58 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 
 ### I5 — Shared UI, shell, auth, landing, profile; language switches
 
-- **Goal.** Register the first copy modules in the catalog; convert shared UI, app shell, auth screens, landing and profile copy to `{ en, id }` ICU messages; build `src/ui/patterns/language-switch/`, `features/auth/ui/profile-language-field/`, `features/auth/ui/auth-language-switch/` and the landing placement (§8); apply the amount/quantity reformat on switch; auth email locale (§7.3).
-- **AC / BR.** AC-L10N-001, 002, 010, 011; BR-L10N-002, 006.
-- **Status.** Ready. Open decisions resolved 2026-10-10 (see technical design §3).
-  - Auth layout language switch (login, register, verify, forgot/reset password): idle, pending, failed — desktop and mobile; each in EN and ID.
-  - Landing page with the switch placement: idle, pending, failed — desktop and mobile; EN and ID.
-  - App shell (navigation, mobile drawer, workspace switcher) in EN and ID — desktop and mobile.
-  - Auth email locale control, only if D-17 approves one: preselected, changed, submitting.
-- **First task once unblocked.** Register `src/app/not-found.copy.ts` and `src/app/error.copy.ts` (no screen layout change) as the first `CopyModule`s in `COPY_REGISTRY`, converted to `{ en, id }` from the copy deck, with the parity test green. Commit `feat(i18n): register the first copy modules`.
+- **Goal.** Register the first copy modules in the catalog; convert shared UI, app shell, auth screens, landing and profile copy to `{ en, id }` ICU messages; build the owner account menu with the language switch (design 2026-10-11, below), `features/auth/ui/auth-language-switch/` and the landing placement (§8); apply the amount/quantity reformat on switch; auth email locale (§7.3).
+- **AC / BR.** AC-L10N-001, 002, 004, 010, 011; BR-L10N-001, 002, 006; D-22.
+- **Status.** Owner shell part (I5.1–I5.8) ready: design approved 2026-10-11, exports in [`exports/INDEX.md`](exports/INDEX.md). Auth, landing and auth email locale (I5.9+) still need a design decision; not written as tasks yet.
+- **Design change (Owner, 2026-10-11).** The owner switches language from the **account menu**, not from a Profile field or a segmented control. `features/auth/ui/profile-language-field/` and the `RadioGroup`/`Select` form of `src/ui/patterns/language-switch/` (technical design §8) are dropped for the owner shell. See [design.md](design.md) › *Account menu* and *Scope note*.
+- **Scope note (Owner, 2026-10-11).** The whole menu is shown. Only *Bahasa/Language* gets new behavior in F-22. *Tema/Theme* (Light, Dark, System) is shown with no action; theme switching is the next phase. *Profil*, *Pengaturan* and *Keluar* keep the behavior the shell already has (profile link, settings route, logout), because moving them into the menu must not remove a working route or the only way to sign out.
+
+**Exports (read one file at a time, only the ones a task names):**
+
+| State | Desktop | Mobile |
+|---|---|---|
+| `dashboard-menu-closed` | `dashboard-menu-closed-desktop-x7qwr.html` | `dashboard-menu-closed-mobile-v8vSQJ.html` |
+| `account-menu-open` | `account-menu-open-desktop-TJlEh.html` | `account-menu-open-mobile-UY9Co.html` |
+| `language-sheet` | inline in the desktop menu | `language-sheet-mobile-X9JQT.html` |
+| `theme-sheet` | inline in the desktop menu | `theme-sheet-mobile-cCf8E.html` |
+| `language-switching` | `language-switching-desktop-PuQxH.html` | `language-switching-mobile-ZJyUC.html` |
+| `language-failed` | `language-failed-desktop-y49rBj.html` | `language-failed-mobile-p2jPCo.html` |
+
+**Existing code to follow.** `src/features/workspace/ui/owner-shell/owner-shell.tsx` (`MobileWorkspaceSheet`, `MobileSheetAccount`, `logoutAction` prop), `src/ui/patterns/sidebar/sidebar.tsx` (`SidebarAccount`), `src/features/workspace/ui/owner-nav/owner-nav.tsx` (`OwnerNavBottom` settings entry), `src/features/workspace/ui/workspace-switcher/workspace-switcher.tsx` (`useWorkspaceSwitch`: pending id, redirect re-throw, danger toast), `src/ui/patterns/menu/*` (`MenuTrigger`, `Menu`, `MenuItem` with `isSelected`, `isDisabled`, `description`, `variant: "destructive"`), `src/ui/patterns/sheet-item/sheet-item.tsx`, `src/ui/patterns/bottom-sheet/bottom-sheet.tsx` (`meta`), `src/app/actions/auth/profile.ts` (`setOwnerLocaleAction`), `src/composition/locale/locale-flow/locale-flow.ts`, `src/app/(owner)/w/[workspaceId]/layout.tsx` and `src/app/(owner)/profile/layout.tsx` (both render `OwnerShell`).
+
+- [ ] **I5.1 Register the first copy modules.** Register `src/app/not-found.copy.ts` and `src/app/error.copy.ts` (no screen layout change) as the first `CopyModule`s in `COPY_REGISTRY`, converted to `{ en, id }` from the copy deck, with the parity test green. Commit `feat(i18n): register the first copy modules`.
+
+- [ ] **I5.2 Owner checkpoint: account menu copy.** The deck has *Language/Bahasa*, *Settings/Pengaturan*, *Profile/Profil*, *Sign out/Keluar* (§1 l.144), the self-names, *Changing language…* and the failure line (§1), but no copy for the account menu trigger or the theme group. Propose these rows for deck §1 and stop for the Owner: account menu accessible name (EN *Account menu* / ID *Menu akun*), theme group (*Theme* / *Tema*), *Light* / *Terang*, *Dark* / *Gelap*, *System* / *Sistem*. After approval add them to `copy-deck.md` §1. Commit `docs(i18n): add the account menu copy to the deck`.
+
+- [ ] **I5.3 Owner shell copy to `{ en, id }`.** Files: `owner-shell.copy.ts`, `owner-nav.copy.ts`, `workspace-switcher.copy.ts`, `src/ui/patterns/sidebar/sidebar.copy.ts`, `bottom-sheet.copy.ts`, `toast.copy.ts`, plus the I5.2 rows under the `ownerShell` namespace. Register each in `COPY_REGISTRY`; components read them with `useTranslations` (D-9).
+  - Tests first: parity test stays green with the new namespaces; `owner-shell.test.tsx` `"AC-L10N-002 renders the shell navigation in English"` and `"… in Indonesian"` (provider with each locale).
+  - Commit `feat(i18n): translate the owner shell`.
+
+- [ ] **I5.4 An owner switch also writes the device cookie (D-22).** `src/composition/locale/locale-flow/locale-flow.ts`: after `updateOwnerLocale` returns ok, call `writeDeviceLocaleCookie(locale)` so the screens before sign-in on this device follow the choice. A refusal writes nothing.
+  - Tests first in `locale-flow.test.ts`: `"D-22 an owner switch also writes the device cookie"`, `"D-22 a refused owner switch writes no cookie"`.
+  - Commit `feat(i18n): remember the owner's language on this device`.
+
+- [ ] **I5.5 `useOwnerLanguageSwitch` hook.** New unit `src/features/workspace/ui/owner-language-switch/` (`use-owner-language-switch.ts`, `.types.ts`, `.test.tsx`). Input: the current locale (`useLocale()`) and `localeAction: (values: { locale: AppLocale }) => Promise<AuthFailure | undefined>`. Returns `{ pendingLocale, selectLocale }`. `selectLocale` ignores the current locale, sets `pendingLocale`, awaits the action; on success `router.refresh()` (route, scroll and form state kept, AC-L10N-004); on a failure result or a thrown non-redirect error shows `showToast({ tone: "danger", title: <deck §1 failure line> })` with no action button (design: the owner retries from the menu); always clears `pendingLocale`. Redirect errors are re-thrown, as in `useWorkspaceSwitch`.
+  - Tests first: `"AC-L10N-004 a switch refreshes the page and keeps the route"`, `"AC-L10N-004 choosing the current language does nothing"`, `"AC-L10N-001 a failed switch shows the deck failure toast and keeps the old language"`, `"a pending switch exposes the chosen locale"`.
+  - Commit `feat(i18n): add the owner language switch hook`.
+
+- [ ] **I5.6 Desktop account menu.** Read `account-menu-open-desktop-TJlEh.html`, then `language-switching-desktop-PuQxH.html`, then `language-failed-desktop-y49rBj.html`.
+  - `src/ui/patterns/sidebar/`: `SidebarAccount` takes an optional `accountMenu` render slot. With it, the account block (avatar, name, email, `chevrons-up-down`) is the `MenuTrigger`; the log-out icon button is gone. Without it, today's markup stays (stories, other callers).
+  - New unit `src/features/workspace/ui/account-menu/` (`account-menu.tsx`, `.types.ts`, `.test.tsx`): `Menu` with *Profile* (`href="/profile"`), *Settings* (`href=/w/<id>/settings`), divider, group *Language* with *English* and *Bahasa Indonesia* (`isSelected` = current locale; while pending both `isDisabled`, and the chosen one gets `icon="loader-circle"` and `description` = *Changing language…*), divider, group *Theme* with *Light*, *Dark*, *System* (*System* selected; no `onSelect`, next phase), divider, *Sign out* (`variant="destructive"`, `icon="log-out"`, calls `logoutAction`).
+  - `OwnerShell` gets `localeAction?: OwnerShellProps["localeAction"]` and passes the menu to the sidebar; `OwnerNavBottom` drops the *Settings* entry (it lives in the menu now). Both owner layouts pass `localeAction={setOwnerLocaleAction}`.
+  - Tests first: `account-menu.test.tsx` `"AC-L10N-001 lists both languages by self-name and checks the current one"`, `"AC-L10N-004 disables the language items and shows Changing language… while pending"`, `"signs out from the menu"`, `"theme items are shown and do nothing"`; `sidebar.test.tsx` `"opens the account menu from the account block"`; `owner-nav.test.tsx` updated for the missing *Settings* entry.
+  - Commit `feat(workspace): switch language from the account menu`.
+
+- [ ] **I5.7 Mobile menu sheet, language sheet and theme sheet.** Read `account-menu-open-mobile-UY9Co.html`, `language-sheet-mobile-X9JQT.html`, `theme-sheet-mobile-cCf8E.html`, `language-switching-mobile-ZJyUC.html`, `language-failed-mobile-p2jPCo.html`, one at a time.
+  - `src/ui/patterns/sheet-item/`: add `value?: string`, rendered as secondary text plus a `chevron-right` icon at the trailing edge (design `UY9Co`; the library Sheet Item has no such slot, so record it in the fidelity notes).
+  - `MobileWorkspaceSheet`: *Settings* moves out of the catalog list into a new *Account* group: *Profile*, *Settings*, *Language* (`value` = current self-name, opens the language sheet), *Theme* (`value` = *System*, opens the theme sheet), *Sign out* (destructive). `MobileSheetAccount` drops its log-out button and keeps the profile link.
+  - Language sheet: `BottomSheet` with title *Language*, two `SheetItem`s (`isSelected` current). While pending: `meta` = *Changing language…*, both items `isDisabled`, the chosen one with `icon="loader-circle"`. Theme sheet: same shape, three items, *System* selected, no action.
+  - Tests first in `owner-shell.test.tsx`: `"AC-L10N-001 the mobile menu opens the language sheet with both languages"`, `"AC-L10N-004 the language sheet shows Changing language… and disables the options while pending"`, `"signs out from the mobile menu"`; `sheet-item.test.tsx` `"renders a trailing value with a chevron"`.
+  - Commit `feat(workspace): switch language from the mobile menu`.
+
+- [ ] **I5.8 E2E owner language switch.** `tests/e2e/locale/owner-language-menu.spec.ts`: `"BR-L10N-001 an owner switches to English from the account menu and keeps the page"` (desktop: `html[lang=en]`, same URL, still `en` after reload); `"AC-L10N-001 an owner switches language from the mobile menu sheet"` (390 × 844); `"D-22 after sign-out the sign-in screen keeps the owner's language"`. Then the fidelity pass against the six exports above (class names and nesting only). Commit `test(i18n): cover the owner language switch end to end`.
+
+**Not yet tasks (need a design decision):** auth layout language switch (login, register, verify, forgot/reset password), landing placement, auth email locale control (D-17). Each needs idle, pending and failed states for desktop and mobile in EN and ID.
 
 ### I6 — Owner feature copy
 

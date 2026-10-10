@@ -11,6 +11,7 @@ import {
   allowedVariables,
   requiredVariable,
 } from "@/features/communications/domain/variable-catalogue/variable-catalogue";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { SegmentedControl } from "@/ui/patterns/segmented-control/segmented-control";
@@ -137,6 +138,7 @@ function MobileEditor({ preview, ...part }: Readonly<EditorLayoutProps>) {
 }
 
 function ContentField({ template, type, isMobile }: Readonly<EditorPartProps>) {
+  const locale = useFormattingLocale();
   const { field, fieldState } = useController({ control: template.form.control, name: "content" });
   const setRef = (element: HTMLTextAreaElement | null) => {
     field.ref(element);
@@ -152,7 +154,7 @@ function ContentField({ template, type, isMobile }: Readonly<EditorPartProps>) {
       onChange={field.onChange}
       textareaRef={setRef}
       helperText={isMobile ? COPY.mobileHelper : COPY.helper}
-      errorMessage={templateProblemText(type, fieldState.error?.message)}
+      errorMessage={templateProblemText(type, fieldState.error?.message, locale)}
       trailingMeta={COPY.counter(templateContentLength(field.value), TEMPLATE_CONTENT_MAX_LENGTH)}
     />
   );

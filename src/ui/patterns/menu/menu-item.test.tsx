@@ -48,4 +48,18 @@ describe("MenuItem (C09)", () => {
     expect(item).toHaveAttribute("href", "https://example.com");
     expect(item).toHaveAttribute("rel", "noopener noreferrer");
   });
+
+  it("renders a pending spinner that spins and disables the row", () => {
+    render(
+      <Menu aria-label="Bahasa">
+        <MenuItem label="English" isPending onSelect={handleSelect} />
+      </Menu>,
+    );
+
+    expect(screen.getByTestId("menu-item-icon")).toHaveClass("animate-spin");
+    expect(screen.getByRole("menuitem", { name: "English" })).toHaveAttribute(
+      "aria-disabled",
+      "true",
+    );
+  });
 });

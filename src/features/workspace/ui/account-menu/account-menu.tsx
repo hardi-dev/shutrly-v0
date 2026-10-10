@@ -1,9 +1,8 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-import { DEFAULT_LOCALE, parseAppLocale } from "@/shared/locale/locale";
 import type { AppLocale } from "@/shared/locale/locale.types";
 import { useLanguageSwitch } from "@/ui/patterns/language-switch/use-language-switch";
 import { Menu } from "@/ui/patterns/menu/menu";
@@ -16,11 +15,7 @@ import { MenuTrigger } from "@/ui/patterns/menu/menu-trigger";
 import { useOwnerNavTranslations } from "../owner-nav/owner-nav";
 import { ACCOUNT_MENU_COPY_NAMESPACE, ACCOUNT_MENU_LANGUAGE_NAMESPACE } from "./account-menu.copy";
 import type { AccountMenuProps, OwnerLocaleAction } from "./account-menu.types";
-
-const LANGUAGE_OPTIONS = [
-  { locale: "en", labelKey: "english" },
-  { locale: "id", labelKey: "indonesian" },
-] as const satisfies readonly { locale: AppLocale; labelKey: string }[];
+import { LANGUAGE_OPTIONS, ownerLanguageSwitchAction, useOwnerLocale } from "./owner-locale";
 
 /** The desktop account menu: profile and settings, language, theme and sign out (AC-L10N-001). */
 export function AccountMenu({
@@ -41,8 +36,8 @@ export function AccountMenu({
       {children}
       <Menu aria-label={t("accountMenu")}>
         <MenuSection>
-          <MenuItem label={t("profile")} href="/profile" />
-          <MenuItem label={navT("settings")} href={`/w/${workspaceId}/settings`} />
+          <MenuItem label={t("profile")} icon="user" href="/profile" />
+          <MenuItem label={navT("settings")} icon="settings" href={`/w/${workspaceId}/settings`} />
         </MenuSection>
         <MenuDivider />
         {localeAction ? <LanguageGroup action={localeAction} onSettled={closeMenu} /> : null}
@@ -58,9 +53,9 @@ function LanguageGroup({
   action,
   onSettled,
 }: Readonly<{ action: OwnerLocaleAction; onSettled: () => void }>) {
-  const currentLocale = parseAppLocale(useLocale()) ?? DEFAULT_LOCALE;
+  const currentLocale = useOwnerLocale();
   const t = useTranslations(ACCOUNT_MENU_LANGUAGE_NAMESPACE);
-  const save = async (locale: AppLocale) => (await action({ locale })) === undefined;
+  const save = ownerLanguageSwitchAction(action);
   const { pendingLocale, selectLocale } = useLanguageSwitch(currentLocale, save);
   const isPending = pendingLocale !== null;
   const chooseLocale = (locale: AppLocale) => () => {
@@ -77,7 +72,7 @@ function LanguageGroup({
             key={locale}
             label={t(labelKey)}
             description={isChosen ? t("changing") : undefined}
-            icon={isChosen ? "loading-03" : undefined}
+            isPending={isChosen}
             isSelected={locale === currentLocale}
             isDisabled={isPending}
             shouldCloseOnSelect={false}
@@ -95,9 +90,9 @@ function ThemeGroup() {
   return (
     <MenuSection>
       <MenuGroupLabel>{t("theme")}</MenuGroupLabel>
-      <MenuItem label={t("themeLight")} shouldCloseOnSelect={false} />
-      <MenuItem label={t("themeDark")} shouldCloseOnSelect={false} />
-      <MenuItem label={t("themeSystem")} isSelected shouldCloseOnSelect={false} />
+      <MenuItem label={t("themeLight")} icon="sun" shouldCloseOnSelect={false} />
+      <MenuItem label={t("themeDark")} icon="moon" shouldCloseOnSelect={false} />
+      <MenuItem label={t("themeSystem")} icon="monitor" isSelected shouldCloseOnSelect={false} />
     </MenuSection>
   );
 }

@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { copyMessages } from "@tests/support/copy/copy-messages";
 import { NextIntlClientProvider } from "next-intl";
+import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 const push = vi.hoisted(() => vi.fn());
@@ -267,5 +268,61 @@ describe("OwnerShell copy", () => {
     expect(screen.getAllByRole("link", { name: "Proyek" }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: "Templat pesan" }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("button", { name: "Cari" }).length).toBeGreaterThan(0);
+  });
+});
+
+describe("MobileWorkspaceSheet language and sign-out", () => {
+  function MenuHarness({
+    localeAction,
+    onLogout,
+  }: Readonly<{ localeAction: () => Promise<unknown>; onLogout: () => void }>) {
+    const [isOpen, setIsOpen] = useState(true);
+    return (
+      <MobileWorkspaceSheet
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        onNavigate={vi.fn()}
+        localeAction={localeAction}
+        onLogout={onLogout}
+      />
+    );
+  }
+
+  it("AC-L10N-001 the mobile menu opens the language sheet with both languages", async () => {
+    const user = userEvent.setup();
+    render(<MenuHarness localeAction={vi.fn().mockResolvedValue(undefined)} onLogout={vi.fn()} />);
+
+    await user.click(screen.getByRole("button", { name: "Bahasa" }));
+
+    const sheet = screen.getByRole("dialog", { name: "Bahasa" });
+    expect(within(sheet).getByRole("button", { name: "English" })).toBeInTheDocument();
+    const current = within(sheet).getByRole("button", { name: "Bahasa Indonesia" });
+    expect(within(current).getByTestId("sheet-item-check")).toBeInTheDocument();
+  });
+
+  it("AC-L10N-004 the language sheet shows Changing language… and disables the options while pending", async () => {
+    const user = userEvent.setup();
+    const localeAction = vi.fn(() => new Promise<unknown>(() => undefined));
+    render(<MenuHarness localeAction={localeAction} onLogout={vi.fn()} />);
+    await user.click(screen.getByRole("button", { name: "Bahasa" }));
+
+    await user.click(screen.getByRole("button", { name: "English" }));
+
+    expect(localeAction).toHaveBeenCalledWith({ locale: "en" });
+    expect(screen.getByText("Mengganti bahasa…")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "English" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Bahasa Indonesia" })).toBeDisabled();
+  });
+
+  it("signs out from the mobile menu", async () => {
+    const user = userEvent.setup();
+    const onLogout = vi.fn();
+    render(<MenuHarness localeAction={vi.fn().mockResolvedValue(undefined)} onLogout={onLogout} />);
+
+    await user.click(screen.getByRole("button", { name: "Keluar" }));
+
+    expect(onLogout).toHaveBeenCalledOnce();
   });
 });

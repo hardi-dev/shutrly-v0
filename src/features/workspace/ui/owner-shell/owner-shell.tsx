@@ -20,6 +20,7 @@ import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { AccountMenu } from "../account-menu/account-menu";
+import type { OwnerLocaleAction } from "../account-menu/account-menu.types";
 import { CreateWorkspaceDialog } from "../create-workspace-dialog/create-workspace-dialog";
 import {
   OwnerNav,
@@ -36,6 +37,12 @@ import {
   useWorkspaceSwitcherTranslations,
   WorkspaceSwitcher,
 } from "../workspace-switcher/workspace-switcher";
+import {
+  MobileAccountGroup,
+  MobileAccountSheets,
+  useMobileAccountSheets,
+} from "./mobile-account-sheets";
+import type { MobileAccountSheet } from "./mobile-account-sheets.types";
 import { OWNER_SHELL_COPY_NAMESPACE } from "./owner-shell.copy";
 import type { OwnerShellProps } from "./owner-shell.types";
 
@@ -75,7 +82,6 @@ const MOBILE_MENU_ITEMS = [
   ["team", "team", "user-round-cog"],
   ["message-templates", "messageTemplates", "message-square-text"],
   ["photo-sources", "photoSources", "folder-open"],
-  ["settings", "settings", "settings"],
 ] as const;
 
 // eslint-disable-next-line max-lines-per-function -- coordinates responsive shell regions
@@ -146,6 +152,9 @@ export function OwnerShell({
   const handleMobileCreate = () => {
     setIsMobileWorkspaceSwitcherOpen(false);
     handleOpenCreate();
+  };
+  const handleOpenProfile = () => {
+    router.push("/profile");
   };
   const handleOpenMobileWorkspaceSwitcher = () => {
     setIsMobileMenuOpen(false);
@@ -224,6 +233,8 @@ export function OwnerShell({
                 accountName={accountName}
                 accountEmail={accountEmail}
                 onNavigate={handleMobileNavigate}
+                onOpenProfile={handleOpenProfile}
+                localeAction={localeAction}
                 onLogout={logoutAction ? handleLogout : undefined}
               />
               <MobileWorkspaceSwitcherSheet
@@ -255,6 +266,8 @@ export function MobileWorkspaceSheet({
   accountName,
   accountEmail,
   onNavigate,
+  onOpenProfile,
+  localeAction,
   onLogout,
 }: Readonly<{
   isOpen: boolean;
@@ -264,39 +277,97 @@ export function MobileWorkspaceSheet({
   workspaces?: OwnerShellProps["workspaces"];
   onOpenWorkspaceSwitcher?: () => void;
   onNavigate: (section: string) => void;
+  onOpenProfile?: () => void;
+  localeAction?: OwnerLocaleAction;
   onLogout?: () => void;
 }>) {
   const t = useTranslations(OWNER_SHELL_COPY_NAMESPACE);
+  const { subSheet, openSheet, closeSubSheet } = useMobileAccountSheets(onOpenChange);
+  return (
+    <>
+      <BottomSheet
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        title={t("mobileMenuTitle")}
+        headerLeading={<MobileSheetLogo />}
+        variant="menu"
+      >
+        <MobileMenuBody
+          accountName={accountName}
+          accountEmail={accountEmail}
+          hasLanguage={localeAction !== undefined}
+          onNavigate={onNavigate}
+          onOpenProfile={onOpenProfile}
+          onOpenSheet={openSheet}
+          onMenuOpenChange={onOpenChange}
+          onLogout={onLogout}
+        />
+      </BottomSheet>
+      <MobileAccountSheets subSheet={subSheet} onChange={closeSubSheet} action={localeAction} />
+    </>
+  );
+}
+
+/** The menu body: catalog, account rows and the account block (the profile link). */
+function MobileMenuBody({
+  accountName,
+  accountEmail,
+  hasLanguage,
+  onNavigate,
+  onOpenProfile,
+  onOpenSheet,
+  onMenuOpenChange,
+  onLogout,
+}: Readonly<{
+  accountName: string;
+  accountEmail: string;
+  hasLanguage: boolean;
+  onNavigate: (section: string) => void;
+  onOpenProfile?: () => void;
+  onOpenSheet: (sheet: MobileAccountSheet) => void;
+  onMenuOpenChange: (isOpen: boolean) => void;
+  onLogout?: () => void;
+}>) {
+  const t = useTranslations(OWNER_SHELL_COPY_NAMESPACE);
+  const handleClose = () => {
+    onMenuOpenChange(false);
+  };
+  const handleProfile = () => {
+    handleClose();
+    onOpenProfile?.();
+  };
+  const handleSettings = () => {
+    onNavigate("settings");
+  };
+  return (
+    <>
+      <MobileCatalogItems onNavigate={onNavigate} />
+      <MobileSheetGroupLabel label={t("accountGroup")} />
+      <MobileAccountGroup
+        hasLanguage={hasLanguage}
+        onProfile={handleProfile}
+        onOpenSheet={onOpenSheet}
+        onNavigateSettings={handleSettings}
+        onLogout={onLogout}
+      />
+      <MobileSheetAccount name={accountName} email={accountEmail} onOpenProfile={handleClose} />
+    </>
+  );
+}
+
+/** The catalog destinations of the mobile menu, labelled from the owner-nav copy. */
+function MobileCatalogItems({ onNavigate }: Readonly<{ onNavigate: (section: string) => void }>) {
   const navT = useOwnerNavTranslations();
   const handleNavigate = (section: string) => () => {
     onNavigate(section);
   };
-  const handleClose = () => {
-    onOpenChange(false);
-  };
-
   return (
-    <BottomSheet
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      title={t("mobileMenuTitle")}
-      headerLeading={<MobileSheetLogo />}
-      variant="menu"
-    >
+    <>
       <MobileSheetGroupLabel label={navT("catalog")} />
-      {MOBILE_MENU_ITEMS.slice(0, 2).map(([section, key, icon]) => (
+      {MOBILE_MENU_ITEMS.map(([section, key, icon]) => (
         <SheetItem key={section} label={navT(key)} icon={icon} onPress={handleNavigate(section)} />
       ))}
-      {MOBILE_MENU_ITEMS.slice(2).map(([section, key, icon]) => (
-        <SheetItem key={section} label={navT(key)} icon={icon} onPress={handleNavigate(section)} />
-      ))}
-      <MobileSheetAccount
-        name={accountName}
-        email={accountEmail}
-        onOpenProfile={handleClose}
-        onLogout={onLogout}
-      />
-    </BottomSheet>
+    </>
   );
 }
 
@@ -411,9 +482,7 @@ function MobileSheetAccount({
   name,
   email,
   onOpenProfile,
-  onLogout,
-}: Readonly<{ name: string; email: string; onOpenProfile: () => void; onLogout?: () => void }>) {
-  const t = useTranslations(OWNER_SHELL_COPY_NAMESPACE);
+}: Readonly<{ name: string; email: string; onOpenProfile: () => void }>) {
   return (
     <div className="flex items-center gap-(--component-sidebar-account-gap) border-t border-(--component-sheet-item-border) px-(--component-sheet-item-padding-x) pb-(--space-1) pt-(--space-3)">
       <Link
@@ -423,7 +492,6 @@ function MobileSheetAccount({
       >
         <MobileSheetAccountText name={name} email={email} />
       </Link>
-      <IconButton icon="log-out" size="sm" aria-label={t("logout")} onPress={onLogout} />
     </div>
   );
 }

@@ -40,6 +40,7 @@ export function MenuItem({
   icon,
   isSelected = false,
   isDisabled = false,
+  isPending = false,
   variant = "default",
   layout = "compact",
   href,
@@ -54,7 +55,7 @@ export function MenuItem({
       target={target}
       rel={target === "_blank" ? "noopener noreferrer" : undefined}
       textValue={label}
-      isDisabled={isDisabled}
+      isDisabled={isDisabled || isPending}
       onAction={onSelect}
       shouldCloseOnSelect={shouldCloseOnSelect}
       aria-label={description ? `${label} ${description}` : label}
@@ -63,7 +64,8 @@ export function MenuItem({
       <MenuItemContent
         label={label}
         description={description}
-        icon={icon}
+        icon={isPending ? "loading-03" : icon}
+        isPending={isPending}
         isSelected={isSelected}
         layout={layout}
       />
@@ -75,12 +77,22 @@ function MenuItemContent({
   label,
   description,
   icon,
+  isPending,
   isSelected,
   layout,
-}: Readonly<Pick<MenuItemProps, "label" | "description" | "icon" | "isSelected" | "layout">>) {
+}: Readonly<
+  Pick<MenuItemProps, "label" | "description" | "icon" | "isPending" | "isSelected" | "layout">
+>) {
   return (
     <>
-      {icon ? <Icon name={icon} aria-hidden="true" data-testid="menu-item-icon" /> : null}
+      {icon ? (
+        <Icon
+          name={icon}
+          aria-hidden="true"
+          data-testid="menu-item-icon"
+          className={isPending ? "animate-spin" : undefined}
+        />
+      ) : null}
       <span className="min-w-0 flex-1">
         <span className={cn("block", isSelected && "font-semibold")}>{label}</span>
         {description ? (

@@ -91,4 +91,15 @@ describe("AccountMenu", () => {
       "/w/A/settings",
     );
   });
+
+  it("AC-L10N-001 shows icons on the profile, settings and theme items", async () => {
+    renderMenu({ localeAction: vi.fn().mockResolvedValue(undefined), onLogout: vi.fn() });
+    await openMenu();
+
+    for (const name of ["Profil", "Pengaturan", "Terang", "Gelap", "Sistem"]) {
+      expect(
+        within(screen.getByRole("menuitem", { name })).getByTestId("menu-item-icon"),
+      ).toBeInTheDocument();
+    }
+  });
 });

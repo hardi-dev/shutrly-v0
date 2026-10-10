@@ -11,7 +11,7 @@ Plan: [plan.md](plan.md) · Design: [technical-design.md](technical-design.md) �
 |---|---|---|---|
 | I1 Locale foundation | I1.1–I1.12 | `076bfd1` proxy header, `ee0dca8` once per request, `06b3e2e` catalog and parity gate, `0755b61` next-intl request config, `73f267c` one locale for html/next-intl/React Aria, `e341275` lint namespace rule, `63d6f6d` E2E, `47aa217` precedence, `5d436a6` cookies | None |
 | I2 Preferences and actions | I2.1, I2.3–I2.10 | `6a491d6` user.locale migration, `557762f` Better Auth field, `a3c9623` account directory, `23605ac` use case, `1a2c98a` owner action, `2948311` device action, `9793d4e` gallery owner lookup, `dc1c8f0` gallery action, `a04ced2` per-request owner locales | **I2.2 migration not run** (Owner checkpoint). I2.10 E2E spec not written. DB-backed tests not run. |
-| I3 Formatting and parsing | I3.1, I3.4, I3.5, I3.6, I3.7, I3.8, I3.2 (amount half) | `a5725f2` amounts, `181a0f2` hook, `a579596` dates, `270d133` template limit, `924dce0` date/time fields, `9444768` amount reformat, `fa580fa` add-on approval date | **I3.3 blocked: SPEC GAP** (section 4). I3.2 quantity half waits on I3.3. |
+| I3 Formatting and parsing | I3.1–I3.8 | `a5725f2` amounts, `181a0f2` hook, `a579596` dates, `270d133` template limit, `924dce0` date/time fields, `9444768` amount reformat, `fa580fa` add-on approval date, `abd474e` quantities (option b), `463aa2c` quantity reformat | Option (b) was implemented on your instruction to follow my recommendation. It is still subject to Owner review. |
 | I4 Platform defaults | — | — | Not started. Needs migration 0020 (Owner checkpoint to run it). |
 | I5 Shared UI, shell, auth, landing, profile | — | — | Not started. Needs a layout review for the switches (Owner). |
 | I6 Owner feature copy | — | — | Not started. |
@@ -66,7 +66,7 @@ Verification run on the final branch:
 13. **Lint rule (I1.11).** `docs/coding-rules.md` › Copy is not changed. The new rule's wording needs Owner approval. It is noted in the commit body.
 14. **Owner pages.** `projects/[projectId]/page.tsx` now reads its params with one `Promise.all`. This was needed to stay under the function-length rule once the locale was read.
 
-## 4. Spec gap: quantity parsing (I3.3, stop per plan)
+## 4. Spec gap: quantity parsing (I3.3), resolved by option (b)
 
 `parseQuantity` must become locale-strict (id-ID accepts `,` only, en-US accepts `.` only). The plan says to stop and report if any caller parses a stored canonical value. One does:
 
@@ -74,7 +74,7 @@ Verification run on the final branch:
 - The draft goes to `createProject`, which calls `validateItemList` → `parseQuantity(raw.value)` without any user edit.
 - Under an id-ID-only parser, a service default with a fractional quantity (e.g. `1.5`) would be `INVALID` for every Indonesian owner.
 
-Nothing was changed for I3.3. `parseQuantity` still accepts either separator. **Owner decision needed**, one of:
+Implemented as option (b) on the Owner's instruction to follow the recommendation. Stored canonical values are localized at the draft-to-form boundary (`localizePackageValue`), and `parseQuantity` is locale-strict (C-105). Other options, not taken:
 
 - (a) Keep the canonical value in the draft as a typed value that skips parsing (a state change in the draft model), then make `parseQuantity` locale-strict.
 - (b) Convert stored defaults to the active locale before they enter the draft, then make `parseQuantity` locale-strict.

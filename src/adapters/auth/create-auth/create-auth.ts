@@ -146,6 +146,8 @@ export function createAuth(deps: CreateAuthDeps) {
       additionalFields: {
         status: { type: "string", required: false, defaultValue: "ACTIVE", input: false },
         emailVerifiedAt: { type: "date", required: false, input: false },
+        // Set only through the owner locale action, never by sign-up (C-004, BR-L10N-001).
+        locale: { type: "string", required: false, defaultValue: "en", input: false },
       },
     },
     session: {

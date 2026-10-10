@@ -55,6 +55,14 @@ describe("Better Auth 1.7.6 contract", () => {
     expect(row).toMatchObject({ status: "ACTIVE", emailVerified: false });
   });
 
+  it("C-004 a sign-up body carrying locale id still creates the user with en", async () => {
+    const email = uniqueEmail();
+    const body = { name: "Owner", email, password: PASSWORD, locale: "id" };
+    await auth.api.signUpEmail({ body });
+    const [row] = await db.select().from(user).where(eq(user.email, email));
+    expect(row).toMatchObject({ locale: "en" });
+  });
+
   it("AC-AUTH-004 verifying signs in and sets email_verified_at through the hook", async () => {
     const email = await signUp();
     await auth.api.sendVerificationEmail({ body: { email } });

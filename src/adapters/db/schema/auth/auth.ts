@@ -28,6 +28,8 @@ export const user = pgTable(
     emailVerifiedAt: timestamp("email_verified_at", { withTimezone: true }),
     status: text("status").notNull().default("ACTIVE"),
     image: text("image"),
+    // Owner dashboard language (BR-L10N-001). Sign-up cannot set it (Better Auth input: false).
+    locale: text("locale").notNull().default("en"),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
@@ -35,6 +37,7 @@ export const user = pgTable(
     uniqueIndex("user_email_lower_uq").on(sql`lower(${t.email})`),
     check("user_status_ck", sql`${t.status} in ('ACTIVE','SUSPENDED','DISABLED')`),
     check("user_email_verified_ck", sql`${t.emailVerified} = (${t.emailVerifiedAt} is not null)`),
+    check("user_locale_ck", sql`${t.locale} in ('en','id')`),
   ],
 );
 

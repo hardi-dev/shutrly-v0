@@ -1,5 +1,6 @@
 import "server-only";
 
+import { getRequestFormattingLocale } from "@/composition/locale/request-formatting-locale/request-formatting-locale";
 import type {
   AddOnStatusResult,
   AddOnWriteResult,
@@ -28,18 +29,20 @@ async function applyEffect(
 }
 
 /** Creates a draft add-on; the target check reads the project's groups (D-16, BR-ADD-002). @param scope - add-on and selection repositories @param target - verified workspace, actor, project and clock @param values - untrusted form values @returns the new id or a failure */
-export function createAddOnWithTarget(
+export async function createAddOnWithTarget(
   scope: AddOnScope,
   target: AddOnTarget,
   values: unknown,
 ): Promise<CreateAddOnResult> {
   const targets = addOnTargetsOf(scope.selections);
+  const locale = await getRequestFormattingLocale();
   return createAddOn(
     { addOns: scope.addOns, targets },
     target.context,
     target.actorId,
     target.projectId,
     values,
+    locale,
   );
 }
 

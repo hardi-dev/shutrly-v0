@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { formatIdr } from "@/features/booking/domain/idr-amount/idr-amount";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Menu } from "@/ui/patterns/menu/menu";
@@ -49,6 +50,7 @@ function DesktopAddOnMenu({ row, onApprove, onDeleteDraft, onCancel }: Readonly<
 }
 
 function MobileAddOnMenu({ row, onApprove, onDeleteDraft, onCancel }: Readonly<AddOnMenuProps>) {
+  const locale = useFormattingLocale();
   const [isOpen, setIsOpen] = useState(false);
   const closeThen = (next: () => void) => () => {
     setIsOpen(false);
@@ -69,7 +71,7 @@ function MobileAddOnMenu({ row, onApprove, onDeleteDraft, onCancel }: Readonly<A
         isOpen={isOpen}
         onOpenChange={setIsOpen}
         title={row.description}
-        meta={COPY.sheetMeta(COPY.status[row.status], formatIdr(row.totalAmount))}
+        meta={COPY.sheetMeta(COPY.status[row.status], formatIdr(row.totalAmount, locale))}
         variant="actions"
       >
         {row.status === "DRAFT" ? (

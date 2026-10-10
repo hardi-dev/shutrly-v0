@@ -2,6 +2,7 @@ import type { AddOnRowView } from "@/features/booking/application/use-cases/list
 import type { AddOnStatus } from "@/features/booking/domain/add-on/add-on.types";
 import { formatIdr } from "@/features/booking/domain/idr-amount/idr-amount";
 import { PROJECT_SCHEDULE_TIME_ZONE } from "@/features/booking/domain/schedule-clock/schedule-clock";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 import type { StatusChipProps } from "@/ui/primitives/status-chip/status-chip.types";
 
 import { ADD_ON_COPY as COPY, ADD_ON_FIELD_ERRORS } from "../add-on-copy/add-on.copy";
@@ -21,9 +22,14 @@ export function addOnStatusChip(status: AddOnStatus): Pick<StatusChipProps, "lab
 }
 
 /** A row's second line, e.g. "Foto edit · 5 × Rp 20.000 = Rp 100.000" (addon-kartu state B). @param row - the add-on @returns the line */
-export function addOnMeta(row: AddOnRowView): string {
+export function addOnMeta(row: AddOnRowView, locale: FormattingLocale): string {
   const group = row.group?.name ?? (row.selectionGroupId ? "" : COPY.noGroup);
-  return COPY.meta(group, row.quantity, formatIdr(row.unitPrice), formatIdr(row.totalAmount));
+  return COPY.meta(
+    group,
+    row.quantity,
+    formatIdr(row.unitPrice, locale),
+    formatIdr(row.totalAmount, locale),
+  );
 }
 
 /** The approve confirm's body: the new limit, the reopen note for a sent group, and no invoice yet (addon-dialog-setujui, A-22, FC-001). @param row - the draft add-on @returns the body text */

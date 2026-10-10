@@ -1,6 +1,8 @@
 "use client";
 
 import { formatIdr } from "@/features/booking/domain/idr-amount/idr-amount";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { TextField } from "@/ui/primitives/text-field/text-field";
@@ -23,8 +25,14 @@ function titlePlaceholder(state: CreateProjectState, isMobile: boolean): string 
   return isMobile ? PROJECT_COPY.titlePlaceholderMobile : PROJECT_COPY.titlePlaceholderDesktop;
 }
 
+/** The price helper under the agreed price, shown once a service is picked. */
+function priceDescription(service: CreateProjectState["service"], locale: FormattingLocale) {
+  return service ? PROJECT_COPY.priceHelper(formatIdr(service.basePrice, locale)) : undefined;
+}
+
 /** The Detail proyek card: title, agreed price and internal notes. */
 export function ProjectDetailCard({ state }: Readonly<{ state: CreateProjectState }>) {
+  const locale = useFormattingLocale();
   const isMobile = useMobileViewport();
   const { form, service } = state;
   const values = form.watch();
@@ -56,7 +64,7 @@ export function ProjectDetailCard({ state }: Readonly<{ state: CreateProjectStat
           onChange={handlePrice}
           onBlur={noop}
           placeholder={PROJECT_COPY.pricePlaceholder}
-          description={service ? PROJECT_COPY.priceHelper(formatIdr(service.basePrice)) : undefined}
+          description={priceDescription(service, locale)}
           errorMessage={errorText("agreedPrice", errors.agreedPrice?.message)}
         />
       </div>

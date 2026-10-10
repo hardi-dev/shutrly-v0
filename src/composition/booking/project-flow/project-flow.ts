@@ -2,6 +2,7 @@ import "server-only";
 
 import { notFound } from "next/navigation";
 
+import { getRequestFormattingLocale } from "@/composition/locale/request-formatting-locale/request-formatting-locale";
 import { ProjectError } from "@/features/booking/application/errors/project-errors/project-errors";
 import type { ProjectRepositoryPort } from "@/features/booking/application/ports/project-repository/project-repository.port";
 import { projectIdSchema } from "@/features/booking/application/schemas/project-ids/project-ids.schema";
@@ -71,9 +72,10 @@ export async function loadCreateProjectOptions(
 export async function createProjectEntry(rawWorkspaceId: string, values: unknown) {
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const locale = await getRequestFormattingLocale();
   try {
     return await withProjectScope(({ projects, accessTokens }) =>
-      createProject(projects, accessTokens, verified.context, account.id, values),
+      createProject(projects, accessTokens, verified.context, account.id, values, locale),
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "create");
@@ -193,9 +195,10 @@ export async function updateProjectInfoEntry(
   const projectId = idOrNotFound(rawProjectId);
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const locale = await getRequestFormattingLocale();
   try {
     return await withProjectScope(({ projects }) =>
-      updateProjectInfo(projects, verified.context, account.id, projectId, values),
+      updateProjectInfo(projects, verified.context, account.id, projectId, values, locale),
     );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "update-info");

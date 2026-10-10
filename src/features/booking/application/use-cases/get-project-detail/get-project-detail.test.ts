@@ -24,7 +24,7 @@ async function seed(mode: "DRAFT" | "BOOKED", sessions: readonly object[] = SESS
     sessions,
     fieldValues: { nama_kampus: "UI", tanggal_wisuda: "2026-11-10", ukuran_toga: "" },
   };
-  const result = await createProject(repository, TOKENS, projectContext, "owner", input);
+  const result = await createProject(repository, TOKENS, projectContext, "owner", input, "id-ID");
   if (!result.ok) throw new Error("not created");
   return { repository, id: result.projectId };
 }

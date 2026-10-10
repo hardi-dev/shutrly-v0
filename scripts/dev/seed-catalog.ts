@@ -111,11 +111,18 @@ async function seedService(studio: Studio, categoryId: string, seed: ServiceSeed
   const definitions = createDrizzleItemDefinitionRepository(db);
   const created = check(
     `service ${seed.name}`,
-    await addService(services, context, ownerId, {
-      name: seed.name,
-      categoryId,
-      basePrice: seed.basePrice,
-    }),
+    await addService(
+      services,
+      context,
+      ownerId,
+      {
+        name: seed.name,
+        categoryId,
+        basePrice: seed.basePrice,
+      },
+      // Seed data is written in Indonesian (the seeded owner's catalog text).
+      "id-ID",
+    ),
   );
   const id = present("service id", created.serviceId);
   for (const [name, value] of seed.items) {

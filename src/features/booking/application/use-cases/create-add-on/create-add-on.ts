@@ -1,6 +1,7 @@
 import "server-only";
 
 import { addOnTotal, canCreateAddOn } from "@/features/booking/domain/add-on/add-on";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { ProjectError } from "../../errors/project-errors/project-errors";
@@ -27,8 +28,9 @@ export async function createAddOn(
   actorId: string,
   projectId: string,
   input: unknown,
+  locale: FormattingLocale,
 ): Promise<CreateAddOnResult> {
-  const parsed = createAddOnSchema.safeParse(input);
+  const parsed = createAddOnSchema(locale).safeParse(input);
   if (!parsed.success) return toValidationFailure(parsed.error.issues);
   const status = await deps.addOns.findProjectStatus(context, projectId);
   if (!status) throw new ProjectError("NOT_FOUND");

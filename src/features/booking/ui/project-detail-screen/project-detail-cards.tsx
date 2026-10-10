@@ -3,6 +3,7 @@ import { needsSession } from "@/features/booking/domain/project-status/project-s
 import { formatSessionRange } from "@/features/booking/domain/session/session";
 import { assignmentsBySession } from "@/features/booking/domain/session-assignment/session-assignment";
 import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -37,6 +38,7 @@ export function ProjectInfoCard({
   isMobile,
   onEdit,
 }: Readonly<ProjectDetailCardProps & { onEdit?: () => void }>) {
+  const locale = useFormattingLocale();
   const number = project.client.whatsappNumber;
   const client = number
     ? `${project.client.name} · ${formatWhatsappNumber(number)}`
@@ -57,7 +59,7 @@ export function ProjectInfoCard({
         facts={[
           { label: PROJECT_COPY.infoClient, value: client },
           { label: PROJECT_COPY.infoService, value: project.service.name },
-          { label: PROJECT_COPY.infoPrice, value: formatIdr(project.agreedPrice) },
+          { label: PROJECT_COPY.infoPrice, value: formatIdr(project.agreedPrice, locale) },
           { label: PROJECT_COPY.infoNotes, value: project.notes },
         ]}
       />

@@ -27,7 +27,10 @@ const ROW: AddOnRowView = {
 
 describe("add-on confirms (owner-3-addon dialogs)", () => {
   it("AC-ADD-001 approve shows the description with the total", () => {
-    const content = addOnConfirmContent({ kind: "APPROVE", row: { ...ROW, status: "DRAFT" } });
+    const content = addOnConfirmContent(
+      { kind: "APPROVE", row: { ...ROW, status: "DRAFT" } },
+      "id-ID",
+    );
     expect(content.description).toBe("Tambahan 5 foto edit · Rp 100.000");
     expect([content.confirmLabel, content.cancelLabel, content.isDanger]).toEqual([
       "Setujui add-on",
@@ -37,7 +40,7 @@ describe("add-on confirms (owner-3-addon dialogs)", () => {
   });
 
   it("AC-ADD-005 cancel is destructive with Kembali", () => {
-    const content = addOnConfirmContent({ kind: "CANCEL", row: ROW });
+    const content = addOnConfirmContent({ kind: "CANCEL", row: ROW }, "id-ID");
     expect([content.title, content.cancelLabel, content.isDanger]).toEqual([
       "Batalkan add-on?",
       "Kembali",
@@ -46,7 +49,10 @@ describe("add-on confirms (owner-3-addon dialogs)", () => {
   });
 
   it("AC-ADD-005 the refusal names the usage and the limit it would leave", () => {
-    const content = addOnConfirmContent({ kind: "REFUSED", row: ROW, usage: 11, limit: 8 });
+    const content = addOnConfirmContent(
+      { kind: "REFUSED", row: ROW, usage: 11, limit: 8 },
+      "id-ID",
+    );
     expect(content.body).toBe(
       "Klien sudah memilih 11 foto. Jika add-on ini dibatalkan, batas turun menjadi 8. Minta klien melepas foto lebih dulu.",
     );

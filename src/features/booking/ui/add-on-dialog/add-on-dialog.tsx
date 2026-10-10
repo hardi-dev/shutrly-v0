@@ -2,6 +2,7 @@
 
 import { useController, useWatch } from "react-hook-form";
 
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
@@ -160,6 +161,7 @@ function TargetSelect({ control, targets }: Readonly<AddOnFieldsProps>) {
 }
 
 function LiveTotal({ control }: Readonly<Pick<AddOnFieldsProps, "control">>) {
+  const locale = useFormattingLocale();
   const [quantity, unitPrice] = useWatch({ control, name: ["quantity", "unitPrice"] });
   return (
     <div className="flex w-full items-center justify-between">
@@ -167,7 +169,7 @@ function LiveTotal({ control }: Readonly<Pick<AddOnFieldsProps, "control">>) {
         {COPY.totalLabel}
       </span>
       <span className="text-(length:--font-size-subtitle) font-bold text-(--color-semantic-text-primary)">
-        {liveAddOnTotal(quantity, unitPrice)}
+        {liveAddOnTotal(quantity, unitPrice, locale)}
       </span>
     </div>
   );

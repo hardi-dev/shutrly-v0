@@ -35,7 +35,7 @@ const ROW: AddOnRowView = {
 
 describe("add-on text (owner-3-addon exports)", () => {
   it("formats the row line as in addon-kartu", () => {
-    expect(addOnMeta(ROW)).toBe("Foto edit · 5 × Rp 20.000 = Rp 100.000");
+    expect(addOnMeta(ROW, "id-ID")).toBe("Foto edit · 5 × Rp 20.000 = Rp 100.000");
     const album = {
       ...ROW,
       selectionGroupId: null,
@@ -44,7 +44,7 @@ describe("add-on text (owner-3-addon exports)", () => {
       unitPrice: "750000",
       totalAmount: "750000",
     };
-    expect(addOnMeta(album)).toBe("Tanpa grup · 1 × Rp 750.000 = Rp 750.000");
+    expect(addOnMeta(album, "id-ID")).toBe("Tanpa grup · 1 × Rp 750.000 = Rp 750.000");
   });
 
   it("maps statuses to the drawn chips", () => {

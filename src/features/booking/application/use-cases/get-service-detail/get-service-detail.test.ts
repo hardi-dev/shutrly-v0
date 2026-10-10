@@ -10,7 +10,7 @@ import { getServiceDetail } from "./get-service-detail";
 describe("getServiceDetail", () => {
   it("AC-CAT-010/011/014 returns detail, items and fields", async () => {
     const { services, serviceId } = await serviceFixture();
-    expect(await getServiceDetail(services, bookingContext, serviceId)).toMatchObject({
+    expect(await getServiceDetail(services, bookingContext, serviceId, "id-ID")).toMatchObject({
       name: "Wisuda Basic",
       basePrice: "750000",
       categoryName: "Wisuda",
@@ -21,7 +21,7 @@ describe("getServiceDetail", () => {
 
   it("throws NOT_FOUND for an unknown service", async () => {
     await expect(
-      getServiceDetail((await serviceFixture()).services, bookingContext, "missing"),
+      getServiceDetail((await serviceFixture()).services, bookingContext, "missing", "id-ID"),
     ).rejects.toMatchObject({ code: "NOT_FOUND" } satisfies Partial<CatalogError>);
   });
 });

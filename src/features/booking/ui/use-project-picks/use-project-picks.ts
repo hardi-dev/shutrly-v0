@@ -10,6 +10,7 @@ import type {
 } from "@/features/booking/application/ports/project-repository/project-repository.port";
 import { formatIdrNumber } from "@/features/booking/domain/idr-amount/idr-amount";
 import { nextProjectTitle } from "@/features/booking/domain/project-record/project-record";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 
 import { isPackageEdited, reducePackageDraft } from "../use-create-project-form/package-draft";
 import type { DraftItem } from "../use-create-project-form/package-draft.types";
@@ -24,6 +25,7 @@ export function useProjectPicks(
   form: CreateForm,
   serviceGroups: readonly ServiceOptionGroup[],
 ): ProjectPicks {
+  const locale = useFormattingLocale();
   const [client, setClient] = useState<ClientOption | null>(null);
   const lastDefault = useRef<string | null>(null);
   const { items, applyItems, dispatchPackage } = usePackageDraft(form);
@@ -56,7 +58,7 @@ export function useProjectPicks(
     const next = services.find((candidate) => candidate.id === id);
     if (!next) return;
     form.setValue("serviceId", id);
-    form.setValue("agreedPrice", formatIdrNumber(next.basePrice));
+    form.setValue("agreedPrice", formatIdrNumber(next.basePrice, locale));
     applyItems(reducePackageDraft(items, { type: "RESET", serviceItems: toDraftItems(next) }));
     form.setValue("fieldValues", {});
     form.clearErrors(["serviceId", "agreedPrice", "fieldValues"]);

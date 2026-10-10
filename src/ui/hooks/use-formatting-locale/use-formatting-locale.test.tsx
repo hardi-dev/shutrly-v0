@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { NextIntlClientProvider } from "next-intl";
+import { NextIntlClientProvider, useLocale } from "next-intl";
 import type { ReactNode } from "react";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { useFormattingLocale } from "./use-formatting-locale";
 
@@ -18,6 +18,11 @@ function wrap(locale: "en" | "id"): ReactNode {
 }
 
 describe("useFormattingLocale", () => {
+  beforeEach(async () => {
+    const actual = await vi.importActual<typeof import("next-intl")>("next-intl");
+    vi.mocked(useLocale).mockImplementation(actual.useLocale);
+  });
+
   it("AC-L10N-005 useFormattingLocale follows the provider locale", () => {
     const { unmount } = render(wrap("en"));
     expect(screen.getByText("en-US")).toBeInTheDocument();

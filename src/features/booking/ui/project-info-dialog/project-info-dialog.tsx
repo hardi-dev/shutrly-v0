@@ -5,6 +5,7 @@ import type { SyntheticEvent } from "react";
 import { useState } from "react";
 
 import { formatIdr, formatIdrNumber } from "@/features/booking/domain/idr-amount/idr-amount";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
@@ -72,9 +73,10 @@ export function ProjectInfoDialog(props: Readonly<ProjectInfoDialogProps>) {
 }
 
 function InfoForm(props: Readonly<ProjectInfoDialogProps & { target: ProjectInfoTarget }>) {
+  const locale = useFormattingLocale();
   const { target } = props;
   const [title, setTitle] = useState(target.title);
-  const [price, setPrice] = useState(formatIdrNumber(target.agreedPrice));
+  const [price, setPrice] = useState(formatIdrNumber(target.agreedPrice, locale));
   const [notes, setNotes] = useState(target.notes ?? "");
   const [errors, setErrors] = useState<Readonly<Record<string, string>>>({});
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
@@ -131,7 +133,7 @@ function InfoForm(props: Readonly<ProjectInfoDialogProps & { target: ProjectInfo
         isDisabled={!target.canEditDeal}
         description={
           target.canEditDeal
-            ? PROJECT_COPY.priceHelper(formatIdr(target.basePrice))
+            ? PROJECT_COPY.priceHelper(formatIdr(target.basePrice, locale))
             : PROJECT_COPY.infoPriceLocked
         }
         errorMessage={errors.agreedPrice}

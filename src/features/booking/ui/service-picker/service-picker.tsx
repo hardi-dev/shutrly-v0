@@ -1,6 +1,7 @@
 "use client";
 
 import { formatIdr } from "@/features/booking/domain/idr-amount/idr-amount";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { Select } from "@/ui/patterns/select/select";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
@@ -8,6 +9,7 @@ import type { ServicePickerProps } from "./service-picker.types";
 
 /** Picks one active service, grouped by category, with its base price as the helper (AC-PRJ-006). */
 export function ServicePicker(props: Readonly<ServicePickerProps>) {
+  const locale = useFormattingLocale();
   const options = props.serviceGroups.flatMap((group) =>
     group.services.map((service) => ({
       id: service.id,
@@ -29,7 +31,7 @@ export function ServicePicker(props: Readonly<ServicePickerProps>) {
       onChange={props.onChange}
       description={
         selected
-          ? PROJECT_COPY.serviceHelper(selected.categoryName, formatIdr(selected.basePrice))
+          ? PROJECT_COPY.serviceHelper(selected.categoryName, formatIdr(selected.basePrice, locale))
           : undefined
       }
       errorMessage={props.errorMessage}

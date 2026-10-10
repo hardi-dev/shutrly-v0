@@ -8,11 +8,13 @@ import {
   PROJECT_TITLE_MAX_LENGTH,
 } from "./project-record";
 import {
-  agreedPriceSchema,
   cancelReasonSchema,
+  createAgreedPriceSchema,
   projectNotesSchema,
   projectTitleSchema,
 } from "./project-record.schema";
+
+const agreedPriceSchema = createAgreedPriceSchema("id-ID");
 
 const issue = (
   schema: { safeParse: (v: unknown) => { error?: { issues: { message: string }[] } } },
@@ -89,5 +91,12 @@ describe("nextProjectTitle (A-2, AC-PRJ-013)", () => {
       title: "",
       lastDefault: null,
     });
+  });
+
+  it("C-004 the server parses an amount with the server-resolved locale", () => {
+    const enAmount = createAgreedPriceSchema("en-US");
+    expect(enAmount.safeParse("750.000").success).toBe(false);
+    expect(createAgreedPriceSchema("id-ID").parse("750.000")).toBe("750000");
+    expect(enAmount.parse("750,000")).toBe("750000");
   });
 });

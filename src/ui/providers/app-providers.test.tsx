@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useLocale as useAriaLocale } from "react-aria-components";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppProviders } from "./app-providers";
 
@@ -17,6 +17,11 @@ function Translated() {
 }
 
 describe("AppProviders", () => {
+  beforeEach(async () => {
+    const actual = await vi.importActual<typeof import("next-intl")>("next-intl");
+    vi.mocked(useLocale).mockImplementation(actual.useLocale);
+  });
+
   it("AC-L10N-005 renders next-intl and React Aria in en", () => {
     render(
       <AppProviders locale="en" messages={{}} strictMessages={false}>

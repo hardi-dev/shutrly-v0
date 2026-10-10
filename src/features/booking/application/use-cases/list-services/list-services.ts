@@ -3,6 +3,7 @@ import "server-only";
 import { sortCatalogEntries } from "@/features/booking/domain/catalog-order/catalog-order";
 import { formatIdr } from "@/features/booking/domain/idr-amount/idr-amount";
 import { summariseServiceItems } from "@/features/booking/domain/item-summary/item-summary";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { CategoryRepositoryPort } from "../../ports/category-repository/category-repository.port";
@@ -14,6 +15,7 @@ export async function listServices(
   serviceRepository: ServiceRepositoryPort,
   categoryRepository: CategoryRepositoryPort,
   context: WorkspaceContext,
+  locale: FormattingLocale,
 ): Promise<readonly ServiceListGroup[]> {
   const [categories, services] = await Promise.all([
     listCategories(categoryRepository, context),
@@ -27,7 +29,7 @@ export async function listServices(
       services.filter((service) => service.categoryId === category.id),
     ).map((service) => ({
       ...service,
-      priceLabel: formatIdr(service.basePrice),
+      priceLabel: formatIdr(service.basePrice, locale),
       summary: summariseServiceItems(
         service.items.map((item) => ({
           name: item.definitionName,

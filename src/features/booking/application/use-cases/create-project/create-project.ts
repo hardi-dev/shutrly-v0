@@ -5,6 +5,7 @@ import { z } from "zod";
 import { validateFieldValues } from "@/features/booking/domain/booking-field-value/booking-field-value";
 import { validateItemList } from "@/features/booking/domain/project-items/project-items";
 import { hasDuplicateMember } from "@/features/booking/domain/session-assignment/session-assignment";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { ProjectError } from "../../errors/project-errors/project-errors";
@@ -23,9 +24,9 @@ import type {
 } from "../project-results/project-results.types";
 
 /** Reads the pieces the cross-checks need even when other fields are invalid, so every problem is reported at once. */
-function readPartialInput(input: unknown) {
+function readPartialInput(input: unknown, locale: FormattingLocale) {
   const raw = z.record(z.string(), z.unknown()).safeParse(input).data ?? {};
-  const shape = createProjectInputSchema.shape;
+  const shape = createProjectInputSchema(locale).shape;
   return {
     mode: shape.mode.safeParse(raw.mode).data,
     serviceId: shape.serviceId.safeParse(raw.serviceId).data,
@@ -107,12 +108,13 @@ export async function createProject(
   context: WorkspaceContext,
   actorId: string,
   input: unknown,
+  locale: FormattingLocale,
 ): Promise<CreateProjectResult> {
-  const parsed = createProjectInputSchema.safeParse(input);
+  const parsed = createProjectInputSchema(locale).safeParse(input);
   const errors: Record<string, ProjectFieldErrorKey> = parsed.success
     ? {}
     : { ...toValidationFailure(parsed.error.issues).fieldErrors };
-  const partial = readPartialInput(input);
+  const partial = readPartialInput(input, locale);
   const service = await loadService(repository, context, partial.serviceId);
   if (service && !service.isActive) errors.serviceId = "SERVICE_INACTIVE";
   const fieldCheck = validateFieldValues(service?.fields ?? [], partial.fieldValues);

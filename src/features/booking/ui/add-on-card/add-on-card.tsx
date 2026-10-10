@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
@@ -92,6 +93,7 @@ const NOTE_CLASS =
   "p-(--space-4) text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary) md:p-(--space-6)";
 
 function AddOnRow({ row, flows }: Readonly<AddOnRowProps>) {
+  const locale = useFormattingLocale();
   const handleApprove = () => {
     flows.open({ kind: "APPROVE", row });
   };
@@ -108,7 +110,7 @@ function AddOnRow({ row, flows }: Readonly<AddOnRowProps>) {
           {row.description}
         </span>
         <span className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
-          {addOnMeta(row)}
+          {addOnMeta(row, locale)}
         </span>
       </span>
       <StatusChip {...addOnStatusChip(row.status)} hasDot />

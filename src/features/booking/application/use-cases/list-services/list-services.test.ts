@@ -9,7 +9,7 @@ import { listServices } from "./list-services";
 describe("listServices", () => {
   it("AC-CAT-005 groups services by category with formatted price and item summary", async () => {
     const { services, categories } = await serviceFixture();
-    const result = await listServices(services, categories, bookingContext);
+    const result = await listServices(services, categories, bookingContext, "id-ID");
     expect(result[0]?.services[0]).toMatchObject({
       name: "Wisuda Basic",
       priceLabel: "Rp 750.000",
@@ -21,7 +21,7 @@ describe("listServices", () => {
     const { categories, services } = await serviceFixture();
     categories.rows[0] = { ...categories.rows[0], isActive: false };
 
-    const result = await listServices(services, categories, bookingContext);
+    const result = await listServices(services, categories, bookingContext, "id-ID");
 
     expect(result[0]).toMatchObject({ categoryName: "Wisuda", isActive: false });
   });
@@ -32,7 +32,7 @@ describe("listServices", () => {
     if (activeCategory.status !== "CREATED") throw new Error("fixture");
     categories.rows[0] = { ...categories.rows[0], isActive: false };
 
-    const result = await listServices(services, categories, bookingContext);
+    const result = await listServices(services, categories, bookingContext, "id-ID");
 
     expect(result.map(({ categoryName }) => categoryName)).toEqual(["Wedding", "Wisuda"]);
   });

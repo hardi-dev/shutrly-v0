@@ -16,7 +16,7 @@ const generate = () => TOKEN;
 function setup() {
   const repository = projectFixture();
   const create = (input: unknown, context = projectContext) =>
-    createProject(repository, generate, context, "owner-1", input);
+    createProject(repository, generate, context, "owner-1", input, "id-ID");
   return { repository, create };
 }
 

@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { SyntheticEvent } from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { createAddOnSchema } from "@/features/booking/application/use-cases/create-add-on/create-add-on.schema";
@@ -10,6 +10,7 @@ import type {
   CreateAddOnFields,
   CreateAddOnInput,
 } from "@/features/booking/application/use-cases/create-add-on/create-add-on.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { showToast } from "@/ui/patterns/toast/toast";
 
 import { ADD_ON_COPY as COPY } from "../add-on-copy/add-on.copy";
@@ -34,8 +35,10 @@ function defaults(firstTargetId: string): CreateAddOnInput {
  */
 export function useAddOnForm(props: Readonly<AddOnDialogProps>) {
   const firstTargetId = props.targets.at(0)?.id ?? "";
+  const locale = useFormattingLocale();
+  const schema = useMemo(() => createAddOnSchema(locale), [locale]);
   const form = useForm<CreateAddOnInput, unknown, CreateAddOnFields>({
-    resolver: zodResolver(createAddOnSchema),
+    resolver: zodResolver(schema),
     defaultValues: defaults(firstTargetId),
     shouldFocusError: true,
   });

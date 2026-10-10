@@ -7,6 +7,9 @@ const notFound = vi.fn(() => {
   throw new Error("NEXT_NOT_FOUND");
 });
 
+vi.mock("@/composition/locale/request-formatting-locale/request-formatting-locale", () => ({
+  getRequestFormattingLocale: vi.fn(() => Promise.resolve("id-ID")),
+}));
 vi.mock("@/shared/logging/logger", () => ({ logger }));
 vi.mock("next/navigation", () => ({ notFound }));
 vi.mock("@/features/booking/application/use-cases/create-project/create-project", () => ({

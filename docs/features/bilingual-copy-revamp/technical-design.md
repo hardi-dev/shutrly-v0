@@ -59,7 +59,7 @@ Out of scope:
 | D-5 | Gallery cookie is path-scoped: `shutrly_gallery_locale`, `Path=/g/<token>`, same scoping as the ADR-023 session cookie. | spec l.21 leaves it to design; ADR-023 | Decided (design) |
 | D-6 | Locale resolution and message assembly live in `src/composition/locale/`; no URL locale prefix; no process-global state. | ADR-025; overview › Localization | Decided |
 | D-7 | The proxy forwards a server-internal request header naming the gallery token so the request config can resolve the gallery owner's locale. | design (§5.3) | Decided (design); verify in I1 |
-| D-8 | `composition/locale/message-catalog` may import `*.copy.ts` modules from `features/*/ui`, `src/ui` and `src/app`. This needs a narrow `eslint-plugin-boundaries` exception and a coding-rules amendment. | ADR-025 l.15 vs coding-rules boundary table | **Proposed — needs Owner** |
+| D-8 | Copy registry is read in `src/app` and passed into composition (`messagesFor(locale, surfaces, registry)`), so composition never imports `features/*/ui`. No boundary-lint exception and no coding-rules change. | ADR-025 l.15 vs coding-rules boundary table | **Decided (Owner, 2026-10-10)** |
 | D-9 | Copy modules hold ICU message strings as `{ en, id }` pairs under one namespace; components read them with next-intl `useTranslations`/`getTranslations`. The `local/ui-copy` lint rule is extended to accept `t("key")` from a sibling-copy namespace. | ADR-025; coding rules › Copy | Decided (design) |
 | D-10 | Missing message: non-production stages throw; production logs `l10n.missing_message` and renders an empty string. Never the other language, never the key. | ADR-025 l.19 delegates the contract | Decided (design) |
 | D-11 | Custom template content is single-language, sent as written. | spec l.25 | Decided |
@@ -68,12 +68,12 @@ Out of scope:
 | D-14 | Existing dev/staging template rows are flagged by 0019: a row is default only if its content equals the historical 0003 text byte for byte; other rows become custom. No content is rewritten. | spec l.23, l.26 | Decided (design) |
 | D-15 | One domain function `resolveTemplateContent(template, language)` feeds the editor, the preview and (later) F-15 message assembly. | brief; ADR-025 | Decided (design) |
 | D-16 | Recipient language is an explicit argument for every generated message; the default preselection is the owner's `user.locale`. | spec l.22, l.27; BR-L10N-006 | Decided |
-| D-17 | Auth emails (verification, reset): how the owner chooses the language "per message" before sign-in. | spec l.22 | **Proposed — needs Owner** (§7.3, Q-1) |
-| D-18 | Platform-default item definitions and team roles carry a nullable stable `default_key`; any rename or unit change clears it, after which the stored text is an identity. Project item snapshots copy the key. | spec l.24 leaves marking to design | **Proposed — needs Owner** (Q-2) |
+| D-17 | Auth emails: an explicit language control on the triggering form, preselected to the screen language (Q-1). | spec l.22 | **Decided (Owner, 2026-10-10)** |
+| D-18 | Platform-default item definitions and team roles carry a nullable stable `default_key`; rename or unit change clears it, after which the text is an identity. Project item snapshots copy the key (Q-2). | spec l.24 | **Decided (Owner, 2026-10-10)** |
 | D-19 | Amount input parsing follows the active locale: its group separator is accepted, its decimal separator is a `NOT_WHOLE` error. An input is never silently reinterpreted. | ADR-025; OCM-20/21; localization policy | Decided (design) |
-| D-20 | Display formats per locale for IDR amounts and dates. | ADR-025 maps locales only | **Proposed — needs Owner** (Q-3) |
-| D-21 | Optimistic concurrency on template save (`expectedUpdatedAt`) with a new "changed elsewhere" state. | brief §10 | **Proposed — needs Owner** (new state and copy) |
-| D-22 | Initialize `user.locale` at registration from the pre-sign-in locale the person used. | none (spec says default `en`) | **Proposed — needs Owner** (Q-4) |
+| D-20 | English: `IDR 750,000` and `Oct 10, 2026`. Indonesian: `Rp 750.000` and `10 Okt 2026`. Amounts stay exact (Q-3). | ADR-025 | **Decided (Owner, 2026-10-10)** |
+| D-21 | Template save stays last-write-wins for MVP; no conflict state and no new copy (Q-5). | brief §10 | **Decided (Owner, 2026-10-10)** |
+| D-22 | Registration copies the pre-sign-in locale into `user.locale`. A Profile switch also writes the device cookie (Q-4). | none | **Decided (Owner, 2026-10-10)** |
 | D-23 | Time fields keep the current 24-hour display in both locales; hour cycle is not inferred from language. | OCM-17; BR-L10N-004 | Decided (design) |
 
 **Source contradictions found (report, not resolved here):**
@@ -348,6 +348,8 @@ BR tests: BR-L10N-004 (identity names unchanged across switch; a keyed item rena
 | R-9 | Pencil exports are missing for every affected screen. | UI iterations blocked; non-UI iterations (I1–I4) proceed. |
 
 ## 15. Open questions for the Owner
+
+Resolved 2026-10-10: Q-1 to Q-6 are answered as recommended (see §3). Q-6 amendments are applied to the higher-authority documents listed there.
 
 - **Q-1 (D-17):** How does the owner choose the auth email language per message before sign-in? The proposal is an explicit control on the triggering form, preselected to the screen language. The alternative is to treat the screen language itself as that choice.
 - **Q-2 (D-18):** Do you approve `default_key` for item definitions, roles and project-item snapshots? The rule would be: a rename clears it, a keyed row shows its label in the reader's language, and snapshots keep the key.

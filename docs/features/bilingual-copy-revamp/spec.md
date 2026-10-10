@@ -27,6 +27,7 @@ Base: staging `bdab2c2`; branch `codex/bilingual-copy-revamp`.
 - Recipient language for each generated message is chosen by the owner per message (BR-L10N-006). The default-language choice for a message is the owner's `user.locale`.
 - Owner-authored add-on descriptions are owner-only (`add-on.copy.ts`: "tidak untuk klien") and stored as one text. Services and categories have no description column, so no EN/ID pairs are needed for them.
 - No readiness rule and no paired-content storage are needed for owner-authored text; the readiness question is closed.
+- Resolved 2026-10-10 as recommended: copy registry injected from `src/app` (no boundary exception); explicit language control for auth emails; `default_key` for platform defaults; IDR and date display per locale; last-write-wins template saves; registration copies the pre-sign-in locale; default template wording approved as written in the copy deck.
 
 ## Goal and boundaries
 

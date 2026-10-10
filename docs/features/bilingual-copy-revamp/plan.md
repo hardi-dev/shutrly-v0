@@ -5,7 +5,7 @@ Status: PLANNED — partial: I1–I3 ready; I4–I8 blocked
 Date: 2026-10-10
 Sources: [technical design](technical-design.md) (DRAFT, §1–§16), [spec](spec.md) › *Language preference decisions (Owner, 2026-10-10)*, [acceptance criteria](acceptance-criteria.md), [coding rules](../../coding-rules.md), [architecture overview](../../architecture/overview.md), [ADR-025](../../architecture/decisions/ADR-025-next-intl-bilingual-localization.md).
 
-This plan executes the iterations in technical design §16. Only I1–I3 are written as executable tasks. I4–I8 are outlines until the Owner answers the open decisions.
+This plan executes the iterations in technical design §16. Only I1–I3 are written as executable tasks. I4–I8 are ready in order once the Owner's 2026-10-10 decisions are applied.
 
 Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a layout review are not required. Copy changes are applied to the existing layouts, and any layout change needs its own review.
 
@@ -41,11 +41,11 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 | I1 | Locale foundation: next-intl, `shared/locale`, `composition/locale`, proxy header, root layout and providers, missing-message contract, completeness harness, lint rule | Ready (starts with an Owner install checkpoint and the proxy-header spike) | AC-L10N-001 (resolution), 003, 004, 005; BR-L10N-001, 002 | No |
 | I2 | `user.locale` migration and the owner, device and gallery locale actions | Ready (Owner checkpoint before `pnpm db:migrate`) | AC-L10N-001, 004; BR-L10N-001; C-101, C-104 | No |
 | I3 | Locale-aware formatting and parsing (OCM-16…22), round-trip laws, React Aria local overrides removed | Ready (display patterns provisional until D-20) | AC-L10N-004 (reformat helpers), 005, 006; BR-L10N-004; C-105 | No |
-| I4 | Platform defaults: EN/ID default templates, `is_default`, save modes, seeds, keyed items and roles, recipient rendering | BLOCKED — needs Owner decision D-18 (Q-2), Q-6 document amendments; D-21 (Q-5) optional | AC-L10N-006, 008, 010; BR-L10N-003, 004, 006; C-102 | No |
-| I5 | Shared UI, shell, auth, landing, profile copy; language switches; auth email locale | BLOCKED — needs Owner decision D-8 (Q-6) and D-17 (Q-1); D-22 (Q-4) for registration | AC-L10N-001, 002, 010, 011; BR-L10N-002, 006 | No |
-| I6 | Owner feature copy (OCM-01…13): catalog, clients, projects, team, sources, add-ons, templates | BLOCKED — needs Owner decision D-8; D-18 for keyed labels | AC-L10N-002, 006, 011; BR-L10N-002, 004 | No |
-| I7 | Client gallery copy and client language switch | BLOCKED — needs Owner decision D-8 | AC-L10N-001, 002, 004, 011; C-104 | No |
-| I8 | Verification: E2E per surface in both locales, build smoke, SSR/hydration, coverage report | BLOCKED — needs I4–I7 | AC-L10N-011, 012 | No |
+| I4 | Platform defaults: EN/ID default templates, `is_default`, save modes, seeds, keyed items and roles, recipient rendering | Ready (decisions resolved 2026-10-10) | AC-L10N-006, 008, 010; BR-L10N-003, 004, 006; C-102 | No |
+| I5 | Shared UI, shell, auth, landing, profile copy; language switches; auth email locale | Ready (decisions resolved 2026-10-10) | AC-L10N-001, 002, 010, 011; BR-L10N-002, 006 | No |
+| I6 | Owner feature copy (OCM-01…13): catalog, clients, projects, team, sources, add-ons, templates | Ready (decisions resolved 2026-10-10) | AC-L10N-002, 006, 011; BR-L10N-002, 004 | No |
+| I7 | Client gallery copy and client language switch | Ready (decisions resolved 2026-10-10) | AC-L10N-001, 002, 004, 011; C-104 | No |
+| I8 | Verification: E2E per surface in both locales, build smoke, SSR/hydration, coverage report | Waits on I4–I7 | AC-L10N-011, 012 | No |
 
 ## Deviations from the technical design (for Owner review)
 
@@ -280,14 +280,14 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 
 - **Goal.** EN/ID default templates in code; `message_template.is_default` with nullable `content` (§4.2, §4.3, migration after 0019 per deviation 1); `resolveTemplateContent`; save modes `custom`/`default` (D-13); seeds write `is_default = true, content = NULL`; backfill tests frozen against a historical constant; `renderTemplateForRecipient(template, language, values)` for F-15; keyed item definitions, roles and project-item snapshots (§4.4, §7.4).
 - **AC / BR / C.** AC-L10N-006, 008, 010; BR-L10N-003, 004, 006; C-102, C-106.
-- **Blocks on.** Owner decision D-18 (Q-2) for `default_key`; Q-6 amendments to BR-L10N-003 and the localization policy (spec l.25 requires them before template storage is built); Owner approval of the EN/ID default template wording in copy deck §11.4; D-21 (Q-5) only if the conflict state is wanted.
+- **Status.** Ready. Open decisions resolved 2026-10-10 (see technical design §3).
 - **First task once unblocked.** Freeze the historical constant: add `HISTORICAL_0003_TEMPLATE_CONTENT` to `tests/config/message-template-backfill.test.ts` (copied from `drizzle/0003_message_template_backfill.sql`) and point the test at it, so `DEFAULT_TEMPLATE_CONTENT` can become `Record<AppLocale, Record<TemplateType, string>>` without touching migration 0003. Commit `test(communications): freeze the 0003 template backfill literals`.
 
 ### I5 — Shared UI, shell, auth, landing, profile; language switches
 
 - **Goal.** Register the first copy modules in the catalog; convert shared UI, app shell, auth screens, landing and profile copy to `{ en, id }` ICU messages; build `src/ui/patterns/language-switch/`, `features/auth/ui/profile-language-field/`, `features/auth/ui/auth-language-switch/` and the landing placement (§8); apply the amount/quantity reformat on switch; auth email locale (§7.3).
 - **AC / BR.** AC-L10N-001, 002, 010, 011; BR-L10N-002, 006.
-- **Blocks on.** Owner decision D-8 (boundary exception for `message-catalog` importing `*.copy.ts`, or another placement the Owner chooses); D-17 (Q-1) for the auth email language; D-22 (Q-4) for registration and whether a Profile switch also writes the device cookie.
+- **Status.** Ready. Open decisions resolved 2026-10-10 (see technical design §3).
   - Auth layout language switch (login, register, verify, forgot/reset password): idle, pending, failed — desktop and mobile; each in EN and ID.
   - Landing page with the switch placement: idle, pending, failed — desktop and mobile; EN and ID.
   - App shell (navigation, mobile drawer, workspace switcher) in EN and ID — desktop and mobile.
@@ -298,21 +298,21 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 
 - **Goal.** Convert catalog, clients, projects, team, sources, add-ons and template screens (OCM-01…13): option arrays, error-code maps (stable keys), skeleton text equal to final text, ICU plurals for counts and the icon-button badge.
 - **AC / BR.** AC-L10N-002, 006, 011; BR-L10N-002, 004.
-- **Blocks on.** Owner decision D-8; D-18 for keyed default labels.
+- **Status.** Ready. Open decisions resolved 2026-10-10 (see technical design §3).
 - **First task once unblocked.** Convert `src/ui/primitives/icon-button` badge text (OCM-09) to one ICU plural `{count, plural, …}` with a render test in both locales. Commit `feat(ui): announce the icon button badge count per locale`.
 
 ### I7 — Client gallery copy and client switch
 
 - **Goal.** Convert the client gallery (password gate, home, photos, picks, review, final delivery) and add `features/gallery/ui/client-language-switch/`, which must not clear selections, the pick-note draft or the password field.
 - **AC / BR / C.** AC-L10N-001, 002, 004, 011; C-104.
-- **Blocks on.** Owner decision D-8.
+- **Status.** Ready. Open decisions resolved 2026-10-10 (see technical design §3).
 - **First task once unblocked.** E2E spec `tests/e2e/locale/gallery-switch.spec.ts`: `"AC-L10N-004 switching language on the photos page keeps selections and the pick note draft"` (fails until the switch exists). Commit with the switch implementation.
 
 ### I8 — Verification
 
 - **Goal.** E2E journeys per surface in both locales (owner creates a project in ID; client picks and submits in ID), `next build` + start smoke with hydration warnings failing the test, visual comparison against the current screens, and a coverage report separating implemented coverage from future surfaces.
 - **AC.** AC-L10N-011, 012.
-- **Blocks on.** I4–I7.
+- **Status.** Ready. Open decisions resolved 2026-10-10 (see technical design §3).
 - **First task once unblocked.** `tests/e2e/locale/build-smoke.spec.ts` run against `pnpm build && pnpm start`: every top-level route in EN and ID with a console listener that fails on hydration warnings.
 
 ## Owner actions required

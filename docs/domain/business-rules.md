@@ -436,13 +436,13 @@ Dashboard and client galleries support `en` and `id`, defaulting to English. Pre
 All system-owned reader-facing text, including accessible and library-generated text, follows the active language. Missing translations block bilingual release; no cross-language fallback. Clearly identified bilingual authoring fields are an editing context, not mixed reader copy.
 
 ### BR-L10N-003 — Paired authored content
-Owner-authored descriptions and custom templates have reviewed EN/ID versions before bilingual exposure. Incomplete translation drafts may be retained under a designed readiness policy; no service publication lifecycle is introduced. Existing BR-MSG template type/channel counts and placeholder contracts remain unchanged.
+Owner-authored text is single-language, stored and shown as written. Custom message templates have no EN/ID pair and are never translated automatically. Default message templates have EN and ID versions in code and render in the owner's language until edited (Owner, 2026-10-10). Existing BR-MSG template type/channel counts and placeholder contracts remain unchanged.
 
 ### BR-L10N-004 — Identity and business invariants
 Preserve names, identifiers, filenames, authorization, exact values, currency, timezone, workflow states and entitlements when language changes. Classify free-text display titles before translating them.
 
 ### BR-L10N-005 — Historical content remains truthful
-Never relabel single-language content, overwrite customized text automatically or rewrite immutable snapshots/historical migrations. Agree migration and historical viewing policies before bilingual release.
+Never relabel single-language content, overwrite customized text automatically or rewrite immutable snapshots/historical migrations. Nothing is released, so no legacy migration or backfill is required (Owner, 2026-10-10).
 
 ### BR-L10N-006 — Recipient language is explicit
 Emails and generated messages are localized for their recipient under a separately specified policy; dashboard language does not imply recipient language. The Owner still sends WhatsApp messages manually (C-106).

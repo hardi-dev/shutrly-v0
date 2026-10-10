@@ -1,6 +1,6 @@
 # Localization policy
 
-Status: Approved scope; implementation and rollout decisions pending.
+Status: Approved scope; decisions resolved 2026-10-10; implementation pending.
 Owner decisions: 2026-10-06.
 
 ## Languages and coverage
@@ -9,9 +9,9 @@ English (`en`) is the default. The photographer dashboard and client galleries a
 
 The public landing page (F-19 `landing`) follows this policy too: English and Bahasa Indonesia with the same switch behavior and no cross-language fallback. This replaces the English-only landing exception of 2026-10-07 (Owner request, 2026-10-10).
 
-Descriptions and custom WhatsApp templates authored by the Owner support paired EN/ID versions. Display the matching version without falling back to the other language. Do not automatically translate or overwrite customized content. Classify free-text item/service/role titles before deciding whether each is an identity or translated display label. Authoring both versions is an intentional bilingual editing context: language tabs/fields must be clearly identified; ordinary reader pages remain single-language.
+Owner-authored text is stored and shown as written, in one language. Custom WhatsApp templates are single-language text sent as written; they have no EN/ID pair and are never translated automatically. Add-on descriptions are owner-only single text. Services, categories and item names have no description field. Free-text titles (services, categories, items, fields, sessions, team members, clients, workspace names, project titles, gallery source labels) are identities and are not translated. Only platform defaults have EN/ID versions: item definitions, units, default team roles and the five default message templates.
 
-Missing translations block bilingual release. Incomplete translation drafts may be retained, but the content cannot be exposed in both languages until reviewed versions are complete. This is a content-readiness requirement, not approval for a new service draft/publish lifecycle; [catalog scope](scope.md) still excludes that lifecycle. Define the save/edit/readiness behavior in technical design before implementation.
+Nothing is released yet, so no legacy migration or backfill is required. Default message templates render in the owner's language until the owner edits them; restore-default returns the template to that default state.
 
 Auth emails and generated WhatsApp messages are covered. Their recipient language must be specified independently of the dashboard language. Shutrly prepares messages; the Owner still sends them manually (C-106).
 
@@ -21,12 +21,12 @@ Use concise, friendly, task-focused copy. Indonesian uses natural everyday verbs
 
 Language changes must preserve authorization, selected photos, unsaved form values and business semantics. Currency remains IDR; timezone, exact monetary values, financial calculations, entitlements and workflow states do not change with language. Display formatting and parsing must be designed together to avoid changing numeric values.
 
-## Decisions still needed before implementation
+## Decisions resolved (Owner, 2026-10-10)
 
-- Preference persistence, scope, precedence and behavior across dashboard, gallery and authentication. English is the initial default; browser detection must not silently override it.
-- Recipient-language selection for email and WhatsApp, and the language scope of template restore-default actions.
-- Legacy records and immutable snapshots: collect missing translations without relabeling, overwriting customized data or changing historical facts. Agree the viewing/rollout policy before shipping.
-- Classification of existing free-text titles, authoring/readiness behavior, and final terminology.
+- Dashboard language is stored on the owner account (`user.locale`, default English). Before sign-in, a device cookie is used, then English.
+- Client gallery language defaults to the owner's `user.locale`. A client can switch it; the choice is stored per device for that gallery and overrides the owner default.
+- Recipient language for auth emails and WhatsApp messages is chosen by the owner per message, preselected to the owner's language. Dashboard language never sets recipient language.
+- Owner-authored text rules as above. Default template wording is approved as written in the copy deck.
 
 ## Delivery
 

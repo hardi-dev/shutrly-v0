@@ -18,7 +18,7 @@ Resolve locale per request and synchronize the client provider. Never use mutabl
 
 Do not merge the other language's catalog as fallback. Require catalog parity and supported-state coverage before release. Configure and test missing-message handling on both server and client: next-intl defaults can expose message keys and do not enforce our completeness rule. Runtime recovery must remain in the active language and must not conceal missing translations from diagnostics. Define that recovery contract in technical design.
 
-User-authored paired content and legacy snapshots follow the product policy; next-intl does not provide their storage, review or migration workflow. Preserve one logical template per existing type/channel, with language versions, rather than doubling template business counts. Never rewrite historical SQL migrations to change seeded copy.
+Owner-authored text is single-language as written (Owner, 2026-10-10). Default message templates have EN and ID versions in code. Keep one logical template per type/channel; business counts are unchanged. Nothing is released, so no legacy migration is needed. Never rewrite historical SQL migrations to change seeded copy.
 
 ## Alternatives considered
 

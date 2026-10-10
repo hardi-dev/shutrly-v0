@@ -1,5 +1,7 @@
 # Acceptance Criteria — Landing page (F-19)
 
+> Localization amendment (Owner request 2026-10-10): The public landing page is bilingual in English and Bahasa Indonesia, uses the same language-switch behavior as the workspace, and has no cross-language fallback. This supersedes the English-only wording below. See [localization policy](../../product/localization.md) and [bilingual copy deck §19](../bilingual-copy-revamp/copy-deck.md#19-public-landing-page--).
+
 Assumption references (A-n) point to [spec.md](spec.md#assumptions-low-risk-reversible--confirm-or-change-anytime). No `BR-*` covers this feature, so each criterion lists the constitution principles, ADRs and assumptions it covers. Since [ADR-022](../../architecture/decisions/ADR-022-waitlist-in-resend-contacts.md), "the waitlist" means the environment's Resend waitlist audience; tests use a fake `WaitlistStore`.
 
 ## Page

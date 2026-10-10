@@ -1868,11 +1868,11 @@ The stepper labels are included because they are shipped product controls, not s
 
 Invoice/payment pages, team fees and real WhatsApp sharing do not yet have complete implemented page specs on this branch. Add-ons are built and covered in section 16. Billing-page copy must still be drafted from its approved feature spec rather than inventing online payment, due dates or financial actions.
 
-The root `/` is currently a scaffold placeholder. Proposed replacement for its existing single status line:
+The root `/` scaffold placeholder is replaced by the public landing page in section 19. Keep the existing placeholder row below only as the historical replacement wording; it is no longer the public root-page surface.
 
 | Element | English | Bahasa Indonesia |
 |---|---|---|
-| Existing root placeholder status | Record your shoot details | Catat detail pemotretanmu |
+| Existing root placeholder status (historical; replaced by landing page) | Record your shoot details | Catat detail pemotretanmu |
 
 This is wording for the existing placeholder only, not a new landing-page design, CTA or redirect. The wordmark `shutrly.` and copyright retain brand identity.
 
@@ -1899,6 +1899,7 @@ This is wording for the existing placeholder only, not a new landing-page design
 | Owner client-access card, selection-owner text, gallery summaries and delivery card | 15 | Built owner gallery tabs, cards, picks routes and dialogs |
 | Add-on card, form, menu, validation and confirmations | 16 | Built owner project surface; no client-facing offer inferred |
 | Global not-found page and stepper actions | 17 | Built product copy; stepper stories excluded |
+| Public landing page, rotating headline, waitlist form and root metadata | 19 | Added to bilingual scope by Owner request 2026-10-10; see section 19 |
 
 The deck consolidates repeated actions, desktop/mobile duplicates and common error messages instead of reproducing every source key. Tables are editorial review units, not a generated source-key catalog; implementation must map every actual consumer and state back to an approved row. No claim of full runtime coverage is made until browser and data review.
 
@@ -1907,7 +1908,7 @@ The deck consolidates repeated actions, desktop/mobile duplicates and common err
 - Storybook/explorer content and demo data embedded under shared `story`, modal `small/medium/large`, bottom-sheet sample forms/actions and tooltip demos. These must not be promoted into production copy. Keep the reusable real control labels in section 1.
 - Identity values: Shutrly, Google Drive, WhatsApp, provider/social brands, client/project/brand/folder/file names, email addresses, invoice identifiers, token URLs, generated password words and neutral separators. Descriptive content versions still need review; preserving a name is not permission for cross-language fallback.
 - Developer exceptions, API health output, stable error codes/enums, test fixtures, internal date calculations and historical migrations.
-- Invented new feature copy for unapproved billing, fees, add-ons, automatic sending, AI translation or unsupported gallery actions.
+- Invented new feature copy for unapproved billing, fees, automatic sending, AI translation or unsupported gallery actions. Built add-on copy is in section 16.
 
 ### Review decisions before adopting this deck
 
@@ -1916,5 +1917,50 @@ The deck consolidates repeated actions, desktop/mobile duplicates and common err
 3. Resolve preference persistence, recipient language and restore-default language scope.
 4. Decide authored-title classification, translation readiness and historical-record/snapshot handling.
 5. Map approved rows to source consumers, update Pencil frames/HTML exports, then write technical design and an implementation plan.
+6. Landing copy is included in the bilingual scope as of 2026-10-10 (Owner request); review the public-page switch placement and preference behavior with the landing implementation.
 
 References: [feature spec](spec.md), [acceptance criteria](acceptance-criteria.md), [copy inventory](copy-inventory.md), [outside-module audit](copy-outside-modules-audit.md), [localization policy](../../product/localization.md), [ADR-025](../../architecture/decisions/ADR-025-next-intl-bilingual-localization.md). Writing guidance: project Rama Copywriting and UX Writing skills. No source code, translations in storage or Pencil frames are changed by this deck.
+
+## 19. Public landing page — `/`
+
+**Sources:** `src/features/landing/ui/landing-page/landing-page.copy.ts`, `src/features/landing/ui/rotating-headline/rotating-headline.copy.ts`, `src/features/landing/ui/waitlist-form/waitlist-form.copy.ts`, `src/app/page.copy.ts`, plus the adjacent landing components for rendered placement and state behavior.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Wordmark | shutrly | shutrly |
+| Launch-status badge | Coming soon | Segera hadir |
+| Audience overline | YOUR STUDIO, IN ONE PLACE | STUDIO-MU, DI SATU TEMPAT |
+| Hero description | A workspace to manage your projects, photo selections, and invoices. All in one workspace. | Ruang kerja untuk mengelola proyek, pilihan foto, dan tagihanmu. Semuanya dalam satu ruang kerja. |
+| Laptop image accessible name | Shutrly’s project list on a laptop | Daftar proyek Shutrly di laptop |
+| Phone image accessible name | Shutrly’s project list on a phone | Daftar proyek Shutrly di ponsel |
+| Rotating headline — prefix | Less | Lebih sedikit |
+| Rotating headline — rotating words | busywork. / paperwork. / back-and-forth. | kerja admin. / urusan kertas. / bolak-balik. |
+| Rotating headline — stable line | More photography. | Lebih banyak waktu untuk fotografi. |
+| Rotating headline — accessible name | Less busywork. More photography. | Lebih sedikit kerja admin. Lebih banyak waktu untuk fotografi. |
+| Email field accessible label | Email address | Alamat email |
+| Email placeholder | Enter your email | Masukkan emailmu |
+| Submit — desktop | Join the waitlist | Gabung daftar tunggu |
+| Submit — mobile | Join waitlist | Gabung daftar tunggu |
+| Submitting | Joining… | Sedang bergabung… |
+| Launch notification promise | Get notified when Shutrly launches. No spam. | Dapatkan kabar saat Shutrly diluncurkan. Tanpa spam. |
+| Privacy/removal note | We only use your email to tell you about the launch. It’s kept with our email provider, never shared, and removed whenever you ask at {contactEmail}. | Emailmu hanya dipakai untuk memberi kabar tentang peluncuran Shutrly. Email disimpan di penyedia email kami, tidak dibagikan, dan akan dihapus kalau kamu minta lewat {contactEmail}. |
+| Hidden bot-field label | Leave this field empty | Kosongkan kolom ini |
+| Required-email error | Enter your email address. | Masukkan alamat emailmu. |
+| Invalid-email error | Enter a valid email address, like name@example.com. | Masukkan alamat email yang valid, misalnya nama@example.com. |
+| Too-long-email error | This email is too long. Use one with at most 254 characters. | Email ini terlalu panjang. Gunakan alamat maksimal 254 karakter. |
+| Server/network failure | That didn’t work. Please try again. | Belum berhasil. Coba lagi. |
+| Rate-limit error | Too many attempts. Please try again in a moment. | Terlalu banyak percobaan. Coba lagi sebentar. |
+| Success title | You’re on the list. | Kamu sudah masuk daftar. |
+| Success body | We’ll email you when Shutrly opens. | Kami akan mengirim email saat Shutrly dibuka. |
+| Footer landmark accessible name | Footer | Footer |
+| Footer copyright | © 2026 Shutrly | © 2026 Shutrly |
+| Footer contact link | Contact | Kontak |
+| Footer privacy link | Privacy | Privasi |
+| Site/share name | Shutrly | Shutrly |
+| Page title | Shutrly — Less busywork. More photography. | Shutrly — Lebih sedikit kerja admin. Lebih banyak waktu untuk fotografi. |
+| Page description | A workspace for photographers to manage projects, client photo selections and invoices in one workspace. Join the waitlist. | Ruang kerja untuk fotografer mengelola proyek, pilihan foto klien, dan tagihan dalam satu ruang kerja. Gabung daftar tunggu. |
+| Share-image alt text | Shutrly — Less busywork. More photography. A workspace for photographers to manage projects, photo selections and invoices. | Shutrly — Lebih sedikit kerja admin. Lebih banyak waktu untuk fotografi. Ruang kerja untuk fotografer mengelola proyek, pilihan foto, dan tagihan. |
+
+The English hero description changes “All in one place” to “All in one workspace” in this deck. This is a claim-boundary correction: it describes the workspace without implying free storage, automatic sending/payments/sync, guaranteed time savings, or a finished end-to-end MVP. The metadata and share alt text retain the source meaning while avoiding a stronger unsupported promise.
+
+The email address is an identity/contact value and remains `hello@shutrly.space` in both languages. `{contactEmail}` above represents that source value; it is a link target, not translated copy. “shutrly.”, the wordmark and identity names remain unchanged. The page is single-language at a time: selected EN or ID copy must be complete, with no cross-language fallback. The source modules currently contain English only; the Indonesian column is the reviewed target copy for implementation.

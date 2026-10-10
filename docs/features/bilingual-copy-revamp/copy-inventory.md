@@ -4,6 +4,15 @@ Snapshot: 2026-10-06, staging base `bdab2c2`.
 
 96 existing `.copy.ts` files. This is a starting inventory, not proof of complete string coverage. Audit must also inspect validation schemas, server error mapping, metadata, accessibility text, date/number formatting, emails and generated messages. Internal/demo files are reviewed separately from shipped product copy.
 
+### Added 2026-10-10 (landing page scope)
+
+| File | Surface |
+|---|---|
+| `src/features/landing/ui/landing-page/landing-page.copy.ts` | Public landing page |
+| `src/features/landing/ui/rotating-headline/rotating-headline.copy.ts` | Public landing page — rotating headline |
+| `src/features/landing/ui/waitlist-form/waitlist-form.copy.ts` | Public landing page — waitlist form and states |
+| `src/app/page.copy.ts` | Public landing page — page and share metadata |
+
 ### Added 2026-10-10 (client gallery and add-on coverage)
 
 | File | Surface |

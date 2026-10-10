@@ -328,6 +328,7 @@ async function addItemRow(
     projectId,
     definitionId: definition.id,
     name: definition.name,
+    defaultKey: definition.defaultKey,
     valueType: definition.valueType,
     value: input.value,
     unit: definition.unit,

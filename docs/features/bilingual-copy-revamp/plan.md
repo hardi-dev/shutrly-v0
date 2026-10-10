@@ -316,9 +316,9 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
   - Tests first in `locale-flow.test.ts`: `"D-22 an owner switch also writes the device cookie"`, `"D-22 a refused owner switch writes no cookie"`.
   - Commit `feat(i18n): remember the owner's language on this device`.
 
-- [ ] **I5.5 `useOwnerLanguageSwitch` hook.** New unit `src/features/workspace/ui/owner-language-switch/` (`use-owner-language-switch.ts`, `.types.ts`, `.test.tsx`). Input: the current locale (`useLocale()`) and `localeAction: (values: { locale: AppLocale }) => Promise<AuthFailure | undefined>`. Returns `{ pendingLocale, selectLocale }`. `selectLocale` ignores the current locale, sets `pendingLocale`, awaits the action; on success `router.refresh()` (route, scroll and form state kept, AC-L10N-004); on a failure result or a thrown non-redirect error shows `showToast({ tone: "danger", title: <deck §1 failure line> })` with no action button (design: the owner retries from the menu); always clears `pendingLocale`. Redirect errors are re-thrown, as in `useWorkspaceSwitch`.
+- [ ] **I5.5 Shared `useLanguageSwitch` hook.** New unit `src/ui/patterns/language-switch/` (`use-language-switch.ts`, `.types.ts`, `.test.tsx`), used by the owner menu (I5.6–I5.7) and the auth link (I5.10). Input: `currentLocale: AppLocale` (callers pass `useLocale()`) and `action: LanguageSwitchAction`, where `type LanguageSwitchAction = (locale: AppLocale) => Promise<boolean>` (true = saved). Returns `{ pendingLocale, selectLocale }`. `selectLocale` ignores the current locale, sets `pendingLocale`, awaits the action; on `true` calls `router.refresh()` (route, scroll and form state kept, AC-L10N-004); on `false` or a thrown non-redirect error shows `showToast({ tone: "danger", title: <deck §1 failure line> })` with no action button (design: the owner retries from the menu); always clears `pendingLocale`. Redirect errors are re-thrown, as in `useWorkspaceSwitch`. Callers adapt their server action to `LanguageSwitchAction` (owner: `setOwnerLocaleAction({ locale })` returns `undefined` on success; auth: `setDeviceLocaleAction({ locale })` returns `{ ok }`).
   - Tests first: `"AC-L10N-004 a switch refreshes the page and keeps the route"`, `"AC-L10N-004 choosing the current language does nothing"`, `"AC-L10N-001 a failed switch shows the deck failure toast and keeps the old language"`, `"a pending switch exposes the chosen locale"`.
-  - Commit `feat(i18n): add the owner language switch hook`.
+  - Commit `feat(i18n): add the shared language switch hook`.
 
 - [ ] **I5.6 Desktop account menu.** Read `account-menu-open-desktop-TJlEh.html`, then `language-switching-desktop-PuQxH.html`, then `language-failed-desktop-y49rBj.html`.
   - `src/ui/patterns/sidebar/`: `SidebarAccount` takes an optional `accountMenu` render slot. With it, the account block (avatar, name, email, `chevrons-up-down`) is the `MenuTrigger`; the log-out icon button is gone. Without it, today's markup stays (stories, other callers).
@@ -336,7 +336,31 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 
 - [ ] **I5.8 E2E owner language switch.** `tests/e2e/locale/owner-language-menu.spec.ts`: `"BR-L10N-001 an owner switches to English from the account menu and keeps the page"` (desktop: `html[lang=en]`, same URL, still `en` after reload); `"AC-L10N-001 an owner switches language from the mobile menu sheet"` (390 × 844); `"D-22 after sign-out the sign-in screen keeps the owner's language"`. Then the fidelity pass against the six exports above (class names and nesting only). Commit `test(i18n): cover the owner language switch end to end`.
 
-**Not yet tasks:** auth layout language link (designed 2026-10-11 on Login; every auth screen shares the layout), landing (no switch in F-22, English by default; Owner 2026-10-11), auth email locale (D-17, 2026-10-11: the email uses the screen's resolved locale, no form control).
+### I5 — Auth layout language link (design approved 2026-10-11)
+
+Every auth screen shares `src/app/(auth)/layout.tsx` → `SplitLayout`, so Login is the only designed screen; register, verification, forgot and reset password get the same link from the layout. D-17 (Owner 2026-10-11): auth emails use the screen's resolved locale; the forms get no field.
+
+**Exports:** `auth-language-closed` (`…-desktop-wqcpW.html`, `…-mobile-Fwe1v.html`), `auth-language-hover-desktop-EBYgV.html`, `auth-language-open` (`…-desktop-GPftW.html`, `…-mobile-sAUWh.html`), `auth-language-switching` (`…-desktop-m63yf.html`, `…-mobile-AvC3d.html`), `auth-language-failed` (`…-desktop-xbbVv.html`, `…-mobile-W5jJs.html`). The desktop files are ~200 KB because of the editorial mosaic; read only the form side.
+
+- [ ] **I5.9 `SplitLayout` header action slot.** `src/ui/patterns/split-layout/` (`split-layout.tsx`, `.types.ts`, `.test.tsx`): add `headerAction?: ReactNode`. The brand row becomes a `flex items-center justify-between` header with the brand on the left and `headerAction` on the right; without it the markup looks as today.
+  - Tests first: `"renders the header action next to the brand"`, `"renders no header action by default"`.
+  - Commit `feat(ui): add a header action slot to the auth layout`.
+
+- [ ] **I5.10 `LanguageLink` pattern.** Read `auth-language-closed-desktop-wqcpW.html`, `auth-language-hover-desktop-EBYgV.html`, `auth-language-open-desktop-GPftW.html`, `auth-language-switching-desktop-m63yf.html`, then the mobile `sAUWh`, one at a time (form side only). New unit `src/ui/patterns/language-link/` (`language-link.tsx`, `.types.ts`, `.copy.ts` if needed, `.test.tsx`, `.stories.tsx`): a text-only trigger (no padding, no border, no chevron) with a `globe` icon and the current self-name in `text.secondary`; hover and focus-visible use `status.info.fg` with an underline; pending shows `loader-circle` and *Changing language…* in `text.muted` and is not pressable. Props: `currentLocale`, `pendingLocale`, `onSelect(locale)`. At `lg` and up it opens a `Menu` under the link (English, Bahasa Indonesia ✓); below `lg` it opens a `BottomSheet` titled *Language* with two `SheetItem`s (`isSelected` current). Accessible name: deck §1 *Language*. Self-names from deck §1.
+  - Tests first: `"AC-L10N-001 lists both languages by self-name and checks the current one"`, `"AC-L10N-004 shows Changing language… and is not pressable while pending"`, `"opens a bottom sheet below the lg breakpoint"`.
+  - Commit `feat(ui): add the language link`.
+
+- [ ] **I5.11 Auth language switch in the auth layout.** New unit `src/features/auth/ui/auth-language-switch/` (`auth-language-switch.tsx`, `.test.tsx`): client component that wires `LanguageLink` to `useLanguageSwitch` with `action = async (locale) => (await setDeviceLocaleAction({ locale })).ok`. `src/app/(auth)/layout.tsx` passes `<AuthLanguageSwitch action={setDeviceLocaleAction} />` as `headerAction`. Failure uses the toast from I5.5 (desktop bottom-right, mobile top; frames `xbbVv`, `W5jJs`).
+  - Tests first: `"AC-L10N-001 switching to English writes the device locale and refreshes"`, `"AC-L10N-001 a refused switch shows the failure toast"`.
+  - Commit `feat(auth): switch language from the auth layout`.
+
+- [ ] **I5.12 Auth emails in the screen language (D-17).** `AuthEmailPort.send` gains `locale: AppLocale`; `auth-email-templates` select the `{ en, id }` copy (deck §12) by it. The register, resend-verification and forgot-password flows pass `await getRequestLocale()`; because Better Auth's `sendVerificationEmail`/`sendResetPassword` callbacks get only `user`/`token`, the flow sets a request-scoped value the adapter reads (spike first, risk R-7; fall back to `user.locale` when the email follows a sign-in). Stop and report if neither works.
+  - Tests first: unit `"D-17 renders the verification email in English"` and `"… in Indonesian"`; integration `"D-17 a register request in Indonesian sends the Indonesian verification email"` with the fake email port.
+  - Commit `feat(auth): send auth emails in the screen language`.
+
+- [ ] **I5.13 E2E auth language link.** `tests/e2e/locale/auth-language-link.spec.ts`: `"AC-L10N-001 a visitor switches the login screen to Indonesian and it stays after reload"`, `"AC-L10N-001 the register screen shows the same language link"`, `"AC-L10N-004 typed login values survive a language switch"` (390 × 844 and desktop). Then the fidelity pass against the auth exports (class names and nesting only). Commit `test(i18n): cover the auth language link end to end`.
+
+**Not yet tasks:** none for I5 surfaces. Landing has no switch in F-22 (English by default; Owner 2026-10-11).
 
 ### I6 — Owner feature copy
 

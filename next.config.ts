@@ -1,5 +1,6 @@
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
 // F-10 D-8: client gallery pages and actions are private and never indexed or edge-cached.
 const CLIENT_GALLERY_HEADERS = [
@@ -26,7 +27,10 @@ const nextConfig: NextConfig = {
     ]),
 };
 
-export default nextConfig;
+// The request config reads the resolved locale and the copy registry per request (ADR-025).
+const withNextIntl = createNextIntlPlugin("./src/app/i18n/request.ts");
+
+export default withNextIntl(nextConfig);
 
 // Exposes .dev.vars bindings to getCloudflareContext() under `next dev`; not needed on Netlify.
 if (!process.env.NETLIFY) void initOpenNextCloudflareForDev();

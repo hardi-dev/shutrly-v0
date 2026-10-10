@@ -1,8 +1,10 @@
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/ui/cn/cn";
 import { Icon } from "@/ui/primitives/icon/icon";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { ALERT_COPY } from "./alert.copy";
+import { ALERT_COPY_NAMESPACE } from "./alert.copy";
 import type { AlertProps, AlertTone } from "./alert.types";
 
 // C24 Alert (docs/design-system/components/alert.md): Close off, icon fixed by tone.
@@ -49,13 +51,14 @@ export function Alert({
   body,
   live = false,
   onClose,
-  closeLabel = ALERT_COPY.close,
+  closeLabel,
   titleId,
   bodyId,
   className,
   ref,
   action,
 }: Readonly<AlertProps>) {
+  const t = useTranslations(ALERT_COPY_NAMESPACE);
   return (
     <div
       ref={ref}
@@ -99,7 +102,7 @@ export function Alert({
         <IconButton
           icon="x"
           size="sm"
-          aria-label={closeLabel}
+          aria-label={closeLabel ?? t("close")}
           onPress={onClose}
           className="ml-auto"
         />

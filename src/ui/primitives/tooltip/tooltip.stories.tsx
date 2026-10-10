@@ -7,8 +7,8 @@ const meta = {
   title: "Primitives/Tooltip",
   component: Tooltip,
   args: {
-    label: TOOLTIP_COPY.label,
-    children: <button type="button">{TOOLTIP_COPY.trigger}</button>,
+    label: TOOLTIP_COPY.messages.id.label,
+    children: <button type="button">{TOOLTIP_COPY.messages.id.trigger}</button>,
   },
   parameters: { designSystemSpec: "docs/design-system/components/nav-rail.md" },
 } satisfies Meta<typeof Tooltip>;

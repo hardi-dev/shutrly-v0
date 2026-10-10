@@ -25,7 +25,7 @@ import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-format
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Icon } from "@/ui/primitives/icon/icon";
-import { TEXT_FIELD_COPY } from "@/ui/primitives/text-field/text-field.copy";
+import { OptionalSuffix } from "@/ui/primitives/text-field/text-field";
 
 import type { DateFieldDisplay, DateFieldProps } from "./date-field.types";
 
@@ -154,7 +154,7 @@ function DateFieldLabel({
       </Label>
       {isOptional ? (
         <span className="text-(length:--font-size-label) text-(--component-input-helper)">
-          {TEXT_FIELD_COPY.optionalSuffix}
+          <OptionalSuffix />
         </span>
       ) : null}
     </div>

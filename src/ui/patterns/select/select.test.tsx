@@ -1,5 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it, vi } from "vitest";
 
 import { Select } from "./select";
@@ -161,5 +162,18 @@ describe("Select (C19 + Menu Item/Rich)", () => {
     await userEvent.click(screen.getByRole("button", { name: /Layanan/ }));
     expect(screen.getByText("Wisuda")).toBeInTheDocument();
     expect(screen.getByText("Prewed")).toBeInTheDocument();
+  });
+});
+
+describe("Select optional suffix in both locales (I6.1)", () => {
+  it.each([
+    ["en", "(optional)"],
+    ["id", "(opsional)"],
+  ] as const)("%s shows the optional suffix", (locale, suffix) => {
+    renderInLocale(
+      <Select label="Tipe nilai" options={OPTIONS} value="NUMBER" onChange={vi.fn()} isOptional />,
+      locale,
+    );
+    expect(screen.getByText(suffix)).toBeInTheDocument();
   });
 });

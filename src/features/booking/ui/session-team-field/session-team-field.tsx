@@ -6,7 +6,7 @@ import { Select } from "@/ui/patterns/select/select";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
-import { TEXT_FIELD_COPY } from "@/ui/primitives/text-field/text-field.copy";
+import { OptionalSuffix } from "@/ui/primitives/text-field/text-field";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { AddTeamMemberButton, useCanQuickAddMember } from "../team-quick-add/team-quick-add";
@@ -33,7 +33,10 @@ export function SessionTeamField(props: Readonly<SessionTeamFieldProps>) {
       <div className="flex flex-col gap-(--space-1)">
         <span className="text-(length:--font-size-label) font-semibold text-(--component-input-label)">
           {PROJECT_COPY.sessionTeamLabel}
-          <span className="font-normal text-(--color-semantic-text-muted)">{` ${TEXT_FIELD_COPY.optionalSuffix}`}</span>
+          <span className="font-normal text-(--color-semantic-text-muted)">
+            {" "}
+            <OptionalSuffix />
+          </span>
         </span>
         <span className="text-(length:--font-size-label) text-(--component-input-helper)">
           {teamHint(props.members.length === 0, canQuickAdd)}

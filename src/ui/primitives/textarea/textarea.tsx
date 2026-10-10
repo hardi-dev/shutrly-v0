@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { type ChangeEvent, type ReactNode, useId } from "react";
 import {
   FieldError,
@@ -11,7 +12,7 @@ import {
 
 import { cn } from "@/ui/cn/cn";
 
-import { TEXTAREA_COPY } from "./textarea.copy";
+import { TEXTAREA_COPY_NAMESPACE } from "./textarea.copy";
 import type {
   TextareaDescriptionProps,
   TextareaFooterProps,
@@ -90,14 +91,13 @@ function TextareaDescription({
 }
 
 function TextareaLabel({ label, optional }: Readonly<Pick<TextareaProps, "label" | "optional">>) {
+  const t = useTranslations(TEXTAREA_COPY_NAMESPACE);
   if (!label) return null;
   return (
     <Label className="text-(length:--font-size-label) text-(--component-input-label)">
       {label}
       {optional ? (
-        <span className="ml-(--space-1) text-(--component-input-helper)">
-          {TEXTAREA_COPY.optional}
-        </span>
+        <span className="ml-(--space-1) text-(--component-input-helper)">{t("optional")}</span>
       ) : null}
     </Label>
   );

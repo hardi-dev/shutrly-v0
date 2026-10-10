@@ -27,17 +27,28 @@ import { WAITLIST_FORM_COPY } from "@/features/landing/ui/waitlist-form/waitlist
 import { OWNER_NAV_COPY } from "@/features/workspace/ui/owner-nav/owner-nav.copy";
 import { OWNER_SHELL_COPY } from "@/features/workspace/ui/owner-shell/owner-shell.copy";
 import { WORKSPACE_SWITCHER_COPY } from "@/features/workspace/ui/workspace-switcher/workspace-switcher.copy";
+import { ALERT_COPY } from "@/ui/patterns/alert/alert.copy";
 import { APP_SHELL_COPY } from "@/ui/patterns/app-shell/app-shell.copy";
 import { BOTTOM_NAV_COPY } from "@/ui/patterns/bottom-nav/bottom-nav.copy";
 import { BOTTOM_SHEET_COPY } from "@/ui/patterns/bottom-sheet/bottom-sheet.copy";
 import { COMPACT_BAR_COPY } from "@/ui/patterns/compact-bar/compact-bar.copy";
 import { EDITORIAL_PANEL_COPY } from "@/ui/patterns/editorial-panel/editorial-panel.copy";
+import { FOLDER_TILE_COPY } from "@/ui/patterns/folder-tile/folder-tile.copy";
 import { LANGUAGE_SWITCH_COPY } from "@/ui/patterns/language-switch/language-switch.copy";
+import { MEDIA_VIEWER_COPY } from "@/ui/patterns/media-viewer/media-viewer.copy";
 import { MOBILE_APP_SHELL_COPY } from "@/ui/patterns/mobile-app-shell/mobile-app-shell.copy";
+import { MODAL_COPY } from "@/ui/patterns/modal/modal.copy";
 import { PAGE_HEADER_COPY } from "@/ui/patterns/page-header/page-header.copy";
+import { PHOTO_TILE_COPY } from "@/ui/patterns/photo-tile/photo-tile.copy";
+import { SELECT_COPY } from "@/ui/patterns/select/select.copy";
 import { SIDEBAR_COPY } from "@/ui/patterns/sidebar/sidebar.copy";
 import { SPLIT_LAYOUT_COPY } from "@/ui/patterns/split-layout/split-layout.copy";
 import { TOAST_COPY } from "@/ui/patterns/toast/toast.copy";
+import { ICON_BUTTON_COPY } from "@/ui/primitives/icon-button/icon-button.copy";
+import { STEPPER_COPY } from "@/ui/primitives/stepper/stepper.copy";
+import { TEXT_FIELD_COPY } from "@/ui/primitives/text-field/text-field.copy";
+import { TEXTAREA_COPY } from "@/ui/primitives/textarea/textarea.copy";
+import { TOOLTIP_COPY } from "@/ui/primitives/tooltip/tooltip.copy";
 
 import { PROFILE_LAYOUT_COPY } from "./(owner)/profile/layout.copy";
 import { ERROR_COPY } from "./error.copy";
@@ -58,6 +69,17 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   SIDEBAR_COPY,
   BOTTOM_SHEET_COPY,
   TOAST_COPY,
+  ALERT_COPY,
+  FOLDER_TILE_COPY,
+  MEDIA_VIEWER_COPY,
+  MODAL_COPY,
+  PHOTO_TILE_COPY,
+  SELECT_COPY,
+  ICON_BUTTON_COPY,
+  STEPPER_COPY,
+  TEXTAREA_COPY,
+  TEXT_FIELD_COPY,
+  TOOLTIP_COPY,
   APP_SHELL_COPY,
   MOBILE_APP_SHELL_COPY,
   PAGE_HEADER_COPY,

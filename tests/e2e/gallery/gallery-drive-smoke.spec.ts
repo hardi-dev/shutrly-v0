@@ -44,7 +44,7 @@ async function linkAndSync(page: Page): Promise<void> {
 
 async function previewByKeyboard(page: Page): Promise<void> {
   await page.locator("main button:has(img)").first().click();
-  const preview = page.getByRole("dialog", { name: /^Preview / });
+  const preview = page.getByRole("dialog", { name: /^(Preview|Pratinjau) / });
   await expect(preview).toBeVisible();
   const first = await preview.getByRole("heading").textContent();
   await page.keyboard.press("ArrowRight");

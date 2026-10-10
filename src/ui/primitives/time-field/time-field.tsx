@@ -13,7 +13,7 @@ import {
 import { cn } from "@/ui/cn/cn";
 
 import { Icon } from "../icon/icon";
-import { TEXT_FIELD_COPY } from "../text-field/text-field.copy";
+import { OptionalSuffix } from "../text-field/text-field";
 import type { TimeFieldProps } from "./time-field.types";
 
 const MINUTE_END = 5;
@@ -46,7 +46,7 @@ export function TimeField(props: Readonly<TimeFieldProps>) {
         </Label>
         {props.isOptional ? (
           <span className="text-(length:--font-size-label) text-(--component-input-helper)">
-            {TEXT_FIELD_COPY.optionalSuffix}
+            <OptionalSuffix />
           </span>
         ) : null}
       </div>

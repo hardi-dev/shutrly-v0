@@ -2,6 +2,7 @@ import "server-only";
 
 import type { SnapshotField } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
 import type { BookingValue } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
+import type { PickMode } from "@/features/booking/domain/item-definition-type/item-definition-type.types";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
 import type {
   ProjectStatus,
@@ -22,7 +23,8 @@ export interface ProjectItemRecord {
   readonly unit: string | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
-  readonly selectionType: "EDIT" | "PRINT" | null;
+  readonly pickMode: PickMode | null;
+  readonly allowsPickNotes: boolean;
   readonly value: PackageValue;
 }
 
@@ -186,6 +188,8 @@ export interface ProjectWriter {
   ) => Promise<boolean>;
   /** False when the session is not in this project. */
   readonly deleteSession: (sessionId: string) => Promise<boolean>;
+  /** Stores a new client token with who and when; false when the token is already taken (F-10 D-19, R-3). */
+  readonly rotateToken: (token: string, actorId: string, at: Date) => Promise<boolean>;
 }
 
 export type AddItemOutcome = "ADDED" | "DEFINITION_INACTIVE" | "DUPLICATE_DEFINITION" | "NOT_FOUND";
@@ -196,7 +200,8 @@ export interface ActiveDefinition {
   readonly unit: string | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
-  readonly selectionType: "EDIT" | "PRINT" | null;
+  readonly pickMode: PickMode | null;
+  readonly allowsPickNotes: boolean;
 }
 
 export type MoveStatusResult = "MOVED" | "STALE" | "NOT_FOUND";
@@ -258,6 +263,15 @@ export interface ProjectRepositoryPort {
     id: string,
     change: (locked: LockedProject, writer: ProjectWriter) => Promise<T>,
   ) => Promise<T | "NOT_FOUND">;
+  /** The project's status, locked FOR UPDATE in the caller's transaction (F-10 D-17: project first). */
+  readonly lockStatus: (context: WorkspaceContext, id: string) => Promise<ProjectStatus | null>;
+  /** DELIVERED → COMPLETED with who and when; STALE when the project is no longer DELIVERED (BR-PRJ-005). */
+  readonly markCompleted: (
+    context: WorkspaceContext,
+    id: string,
+    actorId: string,
+    at: Date,
+  ) => Promise<MoveStatusResult>;
   /** Null when the project does not exist in the workspace. */
   readonly countSessions: (context: WorkspaceContext, id: string) => Promise<number | null>;
   readonly listActiveServiceOptions: (

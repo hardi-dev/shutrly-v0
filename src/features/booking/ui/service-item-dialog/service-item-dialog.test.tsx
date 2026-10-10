@@ -22,7 +22,8 @@ const DEFINITION: ItemDefinitionRecord = {
   usageCount: 0,
   valueType: "NUMBER",
   selectionRequired: true,
-  selectionType: "EDIT",
+  pickMode: "COUNT",
+  allowsPickNotes: true,
 };
 
 const RANGE_DEFINITION: ItemDefinitionRecord = {
@@ -32,7 +33,8 @@ const RANGE_DEFINITION: ItemDefinitionRecord = {
   unit: "orang",
   valueType: "RANGE",
   selectionRequired: false,
-  selectionType: null,
+  pickMode: null,
+  allowsPickNotes: false,
 };
 
 function AddItemHarness({

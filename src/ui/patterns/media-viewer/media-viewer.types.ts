@@ -28,6 +28,8 @@ export interface MediaViewerProps {
   readonly missingNote?: string;
   /** The Owner's (or client's) actions for the current item, e.g. *Buka di Google Drive*. */
   readonly renderActions?: (item: MediaViewerItem) => ReactNode;
+  /** A bar above the filmstrip for the current item, e.g. the client's pick bar on phones (F-10). */
+  readonly renderFooter?: (item: MediaViewerItem) => ReactNode;
 }
 
 export interface ViewerFrameProps extends MediaViewerProps {

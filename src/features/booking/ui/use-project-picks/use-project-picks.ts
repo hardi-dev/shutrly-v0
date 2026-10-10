@@ -101,7 +101,8 @@ function toDraftItems(service: ServiceSnapshotSource): readonly DraftItem[] {
     unit: item.unit,
     valueType: item.valueType,
     selectionRequired: item.selectionRequired,
-    selectionType: item.selectionType,
+    pickMode: item.pickMode,
+    allowsPickNotes: item.allowsPickNotes,
     value: item.value,
   }));
 }

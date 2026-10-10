@@ -12,7 +12,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25). Business-oriented; pe
 
 **Catalog (templates)**
 - **ServiceCategory** — grouping of services (Wedding, Family…). Categories, definitions and services are active or archived (BR-CAT-008).
-- **ServiceItemDefinition** — reusable *what* a package benefit is (Edited Photos, Person), with value type, unit, and whether it creates a selection entitlement (`EDIT` | `PRINT`, BR-CAT-007). Four starter definitions are seeded per workspace (BR-CAT-011).
+- **ServiceItemDefinition** — reusable *what* a package benefit is (Edited Photos, Person), with value type, unit, and whether it creates a selection entitlement, with its pick mode (`COUNT` | `QUANTITY`) and whether picks take a client note (BR-CAT-007). Four starter definitions are seeded per workspace (BR-CAT-011).
 - **Service** — a sellable package with base price.
 - **ServiceItem** — *how much* of a definition a service includes (`{value}` or `{min,max}`).
 - **ServiceFieldDefinition** — extra booking input a service needs (Campus Name, Graduation Date).
@@ -32,7 +32,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25). Business-oriented; pe
 - **GallerySource** — a concrete external folder feeding a gallery.
 - **Photo** — metadata for one external file with role `PROOF` | `EDITED` | `PRINT`.
 - **SelectionGroup** — an entitlement bucket ("Edited Photos 12 / 25") with base + extra limit and its own lifecycle.
-- **PhotoSelection** — a client's choice of a proof photo in a group, with quantity.
+- **PhotoSelection** — a client's choice of a proof photo in a group, with quantity and an optional client note (BR-SEL-004).
 - **ProjectAddOn** — purchased extra (entitlement and/or billing).
 
 **Billing**
@@ -110,6 +110,7 @@ stateDiagram-v2
       [*] --> OPEN
       OPEN --> SUBMITTED : client submits
       SUBMITTED --> LOCKED : Owner
+      SUBMITTED --> OPEN : add-on approved
       OPEN --> LOCKED : Owner closes
     }
     state Gallery {

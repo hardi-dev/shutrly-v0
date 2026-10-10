@@ -3,6 +3,7 @@ import "server-only";
 import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { getGalleryCard } from "@/features/gallery/application/use-cases/get-gallery-card/get-gallery-card";
 import { getGalleryPage } from "@/features/gallery/application/use-cases/get-gallery-page/get-gallery-page";
+import { listWorkspaceSources } from "@/features/gallery/application/use-cases/list-workspace-sources/list-workspace-sources";
 import { proposeGalleryPassword } from "@/features/gallery/application/use-cases/propose-gallery-password/propose-gallery-password";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
@@ -49,9 +50,17 @@ export async function loadGalleryCard(rawWorkspaceId: string, rawProjectId: stri
   const projectId = galleryIdOrNotFound(rawProjectId);
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
-    return await withGalleryScope(({ galleries, cipher, now }) =>
-      getGalleryCard(galleries, cipher, verified.context, projectId, now),
-    );
+    return await withGalleryScope(async ({ galleries, workspaceSources, cipher, now }) => {
+      const card = await getGalleryCard(galleries, cipher, verified.context, projectId, now);
+      if (!card.canCreate) return card;
+      // Revision OT #3: *Buat galeri* can link the first folder from an active source.
+      const sources = await listWorkspaceSources(workspaceSources, verified.context);
+      const active = sources.filter((source) => source.isActive);
+      return {
+        ...card,
+        linkableSources: active.map((source) => ({ id: source.id, name: source.displayName })),
+      };
+    });
   } catch (error) {
     return gallerySaveError(error, verified.context.workspaceId, "card");
   }

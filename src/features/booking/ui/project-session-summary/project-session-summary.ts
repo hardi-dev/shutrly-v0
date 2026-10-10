@@ -20,3 +20,8 @@ export function projectMetaText(clientName: string | null, shown: ShownSession |
   }
   return parts.filter((part) => part !== null).join(SEPARATOR);
 }
+
+/** The header meta with a line other than the session, e.g. a delivered project's *Hasil akhir dipublikasikan …* (owner-7 `r71J5`). @param clientName - the client @param line - the line after it @returns the meta */
+export function projectMetaLine(clientName: string, line: string): string {
+  return [clientName, line].join(SEPARATOR);
+}

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import type { ShownSession } from "@/features/booking/domain/session/session.types";
 
-import { projectMetaText } from "./project-session-summary";
+import { projectMetaLine, projectMetaText } from "./project-session-summary";
 
 function shown(
   overrides: Partial<ShownSession> = {},
@@ -46,5 +46,11 @@ describe("project meta text", () => {
       "Sesi berikutnya Sel, 10 Nov 2026 · 06.30",
     );
     expect(projectMetaText(null, null)).toBe("Belum ada jadwal");
+  });
+
+  it("Owner 7: puts the client before a given line", () => {
+    expect(projectMetaLine("Rina", "Hasil akhir dipublikasikan Sen, 5 Okt 2026")).toBe(
+      "Rina · Hasil akhir dipublikasikan Sen, 5 Okt 2026",
+    );
   });
 });

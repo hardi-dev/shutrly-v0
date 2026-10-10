@@ -132,6 +132,50 @@ describe("ProjectDetailScreen", () => {
     },
   );
 
+  it("AC-DEL-007 A-34 shows the header action of a delivered project in the page actions", () => {
+    render(
+      <ProjectDetailScreen
+        workspaceId="ws"
+        project={projectDetailView("DELIVERED")}
+        menuActions={menuActions(vi.fn())}
+        editActions={EDIT_ACTIONS}
+        assignableMembers={[]}
+        addAssignmentAction={vi.fn()}
+        removeAssignmentAction={vi.fn()}
+        definitions={[]}
+        headerAction={<button type="button">Tandai selesai</button>}
+      />,
+    );
+    expect(
+      within(screen.getByTestId("page-actions")).getByRole("button", { name: "Tandai selesai" }),
+    ).toBeInTheDocument();
+  });
+
+  it("AC-DEL-007 A-34 puts the header action in the phone action bar and the delivered meta in the header", () => {
+    isMobile.value = true;
+    render(
+      <ProjectDetailScreen
+        workspaceId="ws"
+        project={projectDetailView("DELIVERED")}
+        menuActions={menuActions(vi.fn())}
+        editActions={EDIT_ACTIONS}
+        assignableMembers={[]}
+        addAssignmentAction={vi.fn()}
+        removeAssignmentAction={vi.fn()}
+        definitions={[]}
+        headerAction={<button type="button">Tandai selesai</button>}
+        headerMeta="Hasil akhir dipublikasikan Sen, 5 Okt 2026"
+      />,
+    );
+    expect(
+      within(screen.getByTestId("compact-actions")).queryByRole("button", {
+        name: "Tandai selesai",
+      }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Tandai selesai" })).toBeInTheDocument();
+    expect(screen.getByText("Hasil akhir dipublikasikan Sen, 5 Okt 2026")).toBeInTheDocument();
+  });
+
   it("AC-PRJ-018 shows the empty schedule of a draft", () => {
     renderScreen(projectDetailView("DRAFT", { sessions: [], shownSession: null }));
     expect(screen.getByText("Belum ada sesi")).toBeInTheDocument();

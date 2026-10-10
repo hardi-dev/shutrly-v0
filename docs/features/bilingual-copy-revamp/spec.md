@@ -84,13 +84,13 @@ Separately decide language for generated WhatsApp messages, auth emails and exis
 
 ## Source-of-truth alignment
 
-Owner authorization on 2026-10-06 aligns the higher-authority documents. [Localization policy](../../product/localization.md), BR-L10N-* and [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md) supersede earlier Indonesian-only/default-fallback instructions. Historical verification and release records are preserved.
+Owner authorization on 2026-10-06 aligns the higher-authority documents. [Localization policy](../../product/localization.md), BR-L10N-* and [ADR-025](../../architecture/decisions/ADR-025-next-intl-bilingual-localization.md) supersede earlier Indonesian-only/default-fallback instructions. Historical verification and release records are preserved.
 
 Review affected feature specs, acceptance criteria and domain glossary for approved wording and language behavior. Preserve constitutional rules, especially truthful security copy and C-106: Shutrly builds messages; the Owner sends them.
 
 Approved Pencil frames remain the visual authority. Update copy through Pencil tools only, then refresh the required HTML exports and INDEX before implementing affected screens. Missing exports are a stop condition. Layout fidelity work may change only class names and element nesting under repository rules.
 
-Keep copy co-located in sibling `.copy.ts` modules and preserve the fixed architecture. Design the locale mechanism only after product decisions are settled and the installed Next.js guides have been read. Use next-intl under ADR-021; selection does not approve a persistence policy or schema. The dependency is not yet installed.
+Keep copy co-located in sibling `.copy.ts` modules and preserve the fixed architecture. Design the locale mechanism only after product decisions are settled and the installed Next.js guides have been read. Use next-intl under ADR-025; selection does not approve a persistence policy or schema. The dependency is not yet installed.
 
 ## Proposed execution sequence
 

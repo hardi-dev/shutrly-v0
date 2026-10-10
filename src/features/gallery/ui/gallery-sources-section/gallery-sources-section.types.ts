@@ -10,6 +10,8 @@ export interface GallerySourcesSectionProps {
   readonly workspaceId: string;
   readonly page: GalleryPageView;
   readonly actions: GalleryPageActions;
+  /** A folder linked in *Buat galeri*, synced once on open (Revision OT #3). */
+  readonly initialSyncSourceId?: string;
 }
 
 export interface SourcesHeaderActionsProps {
@@ -23,9 +25,10 @@ export interface SourceListProps {
   readonly sync: GallerySyncState;
   readonly isEditable: boolean;
   readonly isArchived: boolean;
-  /** The last active folder of a published or expired gallery can't be removed. */
+  /** The last active folder of a published or expired gallery can't be deleted. */
   readonly isLastLocked: boolean;
-  readonly onRemove: (source: GallerySourceView) => void;
+  readonly onDelete: (source: GallerySourceView) => void;
+  readonly onRename: (source: GallerySourceView) => void;
 }
 
 export interface AddFolderButtonProps {
@@ -34,8 +37,10 @@ export interface AddFolderButtonProps {
 
 export interface SourceDialogsProps extends GallerySourcesSectionProps {
   readonly isLinking: boolean;
-  readonly removing: GallerySourceView | null;
+  readonly deleting: GallerySourceView | null;
+  readonly renaming: GallerySourceView | null;
   readonly onLinkingChange: (isOpen: boolean) => void;
   readonly onLinked: (sourceId: string) => void;
-  readonly onCloseRemove: () => void;
+  readonly onCloseDelete: () => void;
+  readonly onCloseRename: () => void;
 }

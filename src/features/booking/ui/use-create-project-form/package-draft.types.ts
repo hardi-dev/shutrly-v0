@@ -6,7 +6,8 @@ export interface DraftItem {
   readonly unit: string | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
-  readonly selectionType: "EDIT" | "PRINT" | null;
+  readonly pickMode: "COUNT" | "QUANTITY" | null;
+  readonly allowsPickNotes: boolean;
   readonly value: PackageValue;
 }
 

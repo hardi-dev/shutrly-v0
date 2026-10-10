@@ -10,21 +10,28 @@ import {
   archiveGalleryEntry,
   browseGalleryPhotosEntry,
   checkFolderInUseEntry,
+  checkNewGalleryFolderEntry,
   deleteDraftGalleryEntry,
+  deleteGallerySourceEntry,
+  getFolderMappingEntry,
   linkGallerySourceEntry,
   publishGalleryEntry,
-  removeGallerySourceEntry,
+  renameGallerySourceEntry,
   rotateGalleryPasswordEntry,
+  setFolderMappingEntry,
   setGalleryExpiryEntry,
   syncGallerySourceEntry,
 } from "@/composition/gallery/gallery-source-flow/gallery-source-flow";
 import type { BrowseQuery } from "@/features/gallery/application/schemas/browse-query/browse-query.types";
 import type { CreateGalleryInput } from "@/features/gallery/application/schemas/create-gallery/create-gallery.types";
+import type { SetFolderMappingInput } from "@/features/gallery/application/schemas/folder-mapping/folder-mapping.types";
 import type { LinkGallerySourceInput } from "@/features/gallery/application/schemas/link-gallery-source/link-gallery-source.types";
+import type { RenameGallerySourceInput } from "@/features/gallery/application/schemas/rename-gallery-source/rename-gallery-source.types";
 import type { RotateGalleryPasswordInput } from "@/features/gallery/application/schemas/rotate-gallery-password/rotate-gallery-password.types";
 import type { SetGalleryExpiryInput } from "@/features/gallery/application/schemas/set-gallery-expiry/set-gallery-expiry.types";
 import type { BrowsePageView } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos.types";
 import type { FolderUseResult } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use.types";
+import type { FolderMappingView } from "@/features/gallery/application/use-cases/folder-mapping/folder-mapping.types";
 import type { CreateGalleryResult } from "@/features/gallery/application/use-cases/gallery-results/gallery-results.types";
 import type {
   ExpiryResult,
@@ -59,6 +66,13 @@ export async function checkFolderInUseAction(
   link: string,
 ): Promise<FolderUseResult> {
   return checkFolderInUseEntry(workspaceId, galleryId, link);
+}
+
+export async function checkNewGalleryFolderAction(
+  workspaceId: string,
+  link: string,
+): Promise<FolderUseResult> {
+  return checkNewGalleryFolderEntry(workspaceId, link);
 }
 
 export async function linkGallerySourceAction(
@@ -119,11 +133,38 @@ export async function rotateGalleryPasswordAction(
   return result;
 }
 
-export async function removeGallerySourceAction(
+export async function deleteGallerySourceAction(
   workspaceId: string,
   sourceId: string,
 ): Promise<GalleryWriteResult> {
-  const result = await removeGallerySourceEntry(workspaceId, sourceId);
+  const result = await deleteGallerySourceEntry(workspaceId, sourceId);
+  revalidatePath(PROJECTS, "layout");
+  return result;
+}
+
+export async function renameGallerySourceAction(
+  workspaceId: string,
+  sourceId: string,
+  values: RenameGallerySourceInput,
+): Promise<GalleryWriteResult> {
+  const result = await renameGallerySourceEntry(workspaceId, sourceId, values);
+  revalidatePath(PROJECTS, "layout");
+  return result;
+}
+
+export async function getFolderMappingAction(
+  workspaceId: string,
+  sourceId: string,
+): Promise<FolderMappingView> {
+  return getFolderMappingEntry(workspaceId, sourceId);
+}
+
+export async function setFolderMappingAction(
+  workspaceId: string,
+  sourceId: string,
+  values: SetFolderMappingInput,
+): Promise<GalleryWriteResult> {
+  const result = await setFolderMappingEntry(workspaceId, sourceId, values);
   revalidatePath(PROJECTS, "layout");
   return result;
 }

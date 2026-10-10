@@ -26,8 +26,6 @@ import type {
   ViewAllButtonProps,
 } from "./gallery-photos-section.types";
 
-const MOBILE_PREVIEW = 6;
-
 /** *Foto*: counts per kind, the client-visibility line, the first photos from the Owner media endpoint and *Lihat semua foto* (AC-GAL-014, AC-GAL-015, AC-GAL-028). */
 export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>) {
   const { workspaceId, page } = props;
@@ -49,12 +47,10 @@ export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>)
     <GalleryImageProvider directImages={page.directImages}>
       <PhotosCard
         hasPhotos={hasPhotos}
-        description={
-          isMobile ? GALLERY_COPY.photosDescriptionPreviewMobile : GALLERY_COPY.photosDescription
-        }
+        description={isMobile ? undefined : GALLERY_COPY.photosDescription}
         actions={hasPhotos ? <ViewAllButton onPress={handleViewAll} /> : undefined}
       >
-        <PreviewBody {...props} isMobile={isMobile} onOpenPhoto={preview.openFromCard} />
+        <PreviewBody {...props} onOpenPhoto={preview.openFromCard} />
       </PhotosCard>
       {isAllOpen ? (
         <AllPhotosModal
@@ -87,9 +83,9 @@ function ViewAllButton({ onPress }: Readonly<ViewAllButtonProps>) {
   );
 }
 
-function PreviewBody({ workspaceId, page, onOpenPhoto, isMobile }: Readonly<PreviewBodyProps>) {
+function PreviewBody({ workspaceId, page, onOpenPhoto }: Readonly<PreviewBodyProps>) {
   const { counts, status } = page.gallery;
-  const photos = isMobile ? page.previewPhotos.slice(0, MOBILE_PREVIEW) : page.previewPhotos;
+  const photos = page.previewPhotos;
   const visibility =
     counts.missing > 0
       ? `${galleryVisibilityText(status, page.project.status)} ${GALLERY_COPY.visibilityMissing}`
@@ -103,7 +99,7 @@ function PreviewBody({ workspaceId, page, onOpenPhoto, isMobile }: Readonly<Prev
         <Icon name="eye" size="sm" aria-hidden="true" className="mt-(--space-0-5) shrink-0" />
         {visibility}
       </p>
-      <ul className="grid grid-cols-3 gap-x-(--space-3) gap-y-(--space-4) md:grid-cols-4 md:gap-x-(--space-4) md:gap-y-(--space-5)">
+      <ul className="grid grid-cols-3 gap-x-(--space-3) gap-y-(--space-4) md:gap-x-(--space-4) md:gap-y-(--space-5)">
         {photos.map((photo) => (
           <PreviewTile
             key={photo.id}

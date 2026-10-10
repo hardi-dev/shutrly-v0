@@ -1,7 +1,10 @@
 import type { ReactNode } from "react";
 
 import type { NumberHolder } from "@/features/booking/application/ports/client-repository/client-repository.port";
-import type { TeamMemberRecord } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
+import type {
+  AssignableMember,
+  TeamMemberRecord,
+} from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import type { RoleRef } from "@/features/booking/application/ports/team-role-repository/team-role-repository.port";
 import type {
   TeamMemberValidationFailure,
@@ -26,6 +29,8 @@ export interface TeamMemberDialogProps {
   ) => Promise<TeamMemberValidationFailure | undefined>;
   /** Creates a role from the Peran field's *Tambah peran baru* row. */
   readonly addRoleAction: TeamRoleDialogProps["addAction"];
+  /** Called with the new member after an add, so a session dialog can pick them (Revision OT #1, #2). */
+  readonly onAdded?: (member: AssignableMember) => void;
 }
 
 export interface MemberErrorState {

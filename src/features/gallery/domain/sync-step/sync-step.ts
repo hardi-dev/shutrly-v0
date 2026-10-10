@@ -6,6 +6,7 @@ import {
   SYNC_STEP_MAX_ENTRIES,
   SYNC_STEP_MAX_LIST_CALLS,
 } from "../photo-classification/photo-classification";
+import type { FolderMapping } from "../photo-classification/photo-classification.types";
 import { DRIVE_FOLDER_MIME, DRIVE_SHORTCUT_MIME, toPhoto } from "../sync-plan/sync-plan";
 import type {
   FolderEntry,
@@ -31,12 +32,15 @@ interface StepState {
   queue: CursorFolder[];
   readonly photos: SyncedPhoto[];
   readonly seen: string[];
+  readonly folders: string[];
   ignoredCount: number;
   tooDeepCount: number;
   foldersDone: number;
   listCalls: number;
   stepCalls: number;
   stepEntries: number;
+  /** The source's subfolder mappings, which decide each photo's kind (F-21). */
+  readonly mappings: readonly FolderMapping[];
 }
 
 /** Makes the first cursor of a run: the source root is the only folder to read (TD D-20). @param root - the source folder @param folderName - the folder's name from the provider @returns the cursor of a run that has read nothing */
@@ -47,6 +51,7 @@ export function startCursor(root: DriveFolderRef, folderName: string): SyncCurso
       { folderId: root.folderId, resourceKey: root.resourceKey, segments: [], pageToken: null },
     ],
     seen: [],
+    folders: [],
     ignoredCount: 0,
     tooDeepCount: 0,
     foldersDone: 0,
@@ -62,11 +67,13 @@ export function syncProgress(cursor: SyncCursor): SyncProgress {
   };
 }
 
-function openState(cursor: SyncCursor): StepState {
+function openState(cursor: SyncCursor, mappings: readonly FolderMapping[]): StepState {
   return {
+    mappings,
     queue: [...cursor.queue],
     photos: [],
     seen: [...cursor.seen],
+    folders: [...cursor.folders],
     ignoredCount: cursor.ignoredCount,
     tooDeepCount: cursor.tooDeepCount,
     foldersDone: cursor.foldersDone,
@@ -85,6 +92,7 @@ function closeState(state: StepState, cursor: SyncCursor): SyncCursor {
     tooDeepCount: state.tooDeepCount,
     foldersDone: state.foldersDone,
     listCalls: state.listCalls,
+    folders: state.folders,
   };
 }
 
@@ -93,15 +101,17 @@ function place(state: StepState, folder: CursorFolder, entry: FolderEntry): void
   if (entry.mimeType === DRIVE_FOLDER_MIME) {
     const segments = [...folder.segments, entry.name];
     if (segments.length > SYNC_MAX_DEPTH) state.tooDeepCount += 1;
-    else
+    else {
+      state.folders.push(segments.join("/"));
       state.queue.push({
         folderId: entry.id,
         resourceKey: entry.resourceKey,
         segments,
         pageToken: null,
       });
+    }
   } else if (isImageMime(entry.mimeType)) {
-    state.photos.push(toPhoto(entry, folder.segments));
+    state.photos.push(toPhoto(entry, folder.segments, state.mappings));
     state.seen.push(entry.id);
   } else state.ignoredCount += 1;
 }
@@ -133,13 +143,14 @@ async function readPage(
   return null;
 }
 
-/** Reads one step of a sync run: folders from the head of the queue until the step's list-call or entry budget is spent, or the tree ends. It is the breadth-first walk of BR-GAL-006 and BR-GAL-007, cut so each request fits Workers Free (ADR-018, TD D-7). @param listFolder - one page of a folder's children @param cursor - what the run still has to read @param budget - the step's limits @returns the images found in this step, the next cursor and whether the run is done, or why it stopped */
+/** Reads one step of a sync run: folders from the head of the queue until the step's list-call or entry budget is spent, or the tree ends. It is the breadth-first walk of BR-GAL-006 and BR-GAL-007, cut so each request fits Workers Free (ADR-018, TD D-7). @param listFolder - one page of a folder's children @param cursor - what the run still has to read @param budget - the step's limits @param mappings - the source's subfolder mappings (F-21) @returns the images found in this step, the next cursor and whether the run is done, or why it stopped */
 export async function walkStep(
   listFolder: ListFolder,
   cursor: SyncCursor,
   budget: SyncBudget = SYNC_STEP_BUDGET,
+  mappings: readonly FolderMapping[] = [],
 ): Promise<StepWalk> {
-  const state = openState(cursor);
+  const state = openState(cursor, mappings);
   for (
     let head = state.queue.at(0);
     head && !budgetSpent(state, budget);

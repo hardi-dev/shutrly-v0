@@ -49,6 +49,18 @@ function byName(a: RoleRef, b: RoleRef): number {
   return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
 }
 
+/** Tells a session dialog about a member just added, with their roles by name (TD-A-1). */
+function reportAdded(
+  props: Readonly<TeamMemberDialogProps>,
+  result: Awaited<ReturnType<typeof saveMember>>,
+  roles: readonly RoleRef[],
+  roleIds: readonly string[],
+): void {
+  if (!props.onAdded || props.member || !result?.ok || !result.member) return;
+  const held = roles.filter((role) => roleIds.includes(role.id)).sort(byName);
+  props.onAdded({ id: result.member.id, name: result.member.name, roles: held });
+}
+
 /**
  * Drives the member dialog's form: validation, the add or edit write, server field errors and the
  * roles created inline (A-5), which join the options and are selected.
@@ -64,6 +76,7 @@ export function useTeamMemberForm(props: Readonly<TeamMemberDialogProps>) {
   });
   const [isPending, setIsPending] = useState(false);
   const [numberHolder, setNumberHolder] = useState<NumberHolder | undefined>();
+  const roleOptions = useRoleOptions(props.roles, form);
   useEffect(() => {
     if (props.isOpen) {
       form.reset(formValues(props.member));
@@ -75,7 +88,8 @@ export function useTeamMemberForm(props: Readonly<TeamMemberDialogProps>) {
     if (!(await form.trigger())) return;
     setIsPending(true);
     try {
-      const result = await saveMember(run, props, form.getValues());
+      const values = form.getValues();
+      const result = await saveMember(run, props, values);
       if (result?.ok === false) {
         setNumberHolder(result.numberHolder);
         for (const field of FIELDS) {
@@ -84,6 +98,7 @@ export function useTeamMemberForm(props: Readonly<TeamMemberDialogProps>) {
         }
         return;
       }
+      reportAdded(props, result, roleOptions.roles, values.roleIds);
       props.onOpenChange(false);
     } catch {
       // useTeamMutations shows the retryable failure toast; the input stays in the form.
@@ -95,7 +110,14 @@ export function useTeamMemberForm(props: Readonly<TeamMemberDialogProps>) {
     event.preventDefault();
     void submit();
   }
-  return { form, isPending, numberHolder, handleSubmit, ...useRoleOptions(props.roles, form) };
+  return {
+    form,
+    isPending,
+    numberHolder,
+    handleSubmit,
+    options: roleOptions.options,
+    handleRoleCreated: roleOptions.handleRoleCreated,
+  };
 }
 
 /** The role options plus the roles created inline, and the handler that selects a new one (A-5). */
@@ -108,8 +130,7 @@ function useRoleOptions(
     setCreated((previous) => [...previous, role]);
     form.setValue("roleIds", [...form.getValues("roleIds"), role.id], { shouldValidate: true });
   }
-  const options = [...roles, ...created.filter((c) => !roles.some((r) => r.id === c.id))]
-    .sort(byName)
-    .map((role) => ({ id: role.id, label: role.name }));
-  return { options, handleRoleCreated };
+  const all = [...roles, ...created.filter((c) => !roles.some((r) => r.id === c.id))].sort(byName);
+  const options = all.map((role) => ({ id: role.id, label: role.name }));
+  return { roles: all, options, handleRoleCreated };
 }

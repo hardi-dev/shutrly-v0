@@ -9,8 +9,14 @@ import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 import { TEXT_FIELD_COPY } from "@/ui/primitives/text-field/text-field.copy";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { AddTeamMemberButton, useCanQuickAddMember } from "../team-quick-add/team-quick-add";
 import type { SessionTeamFieldProps } from "./session-team-field.types";
 import type { useTeamPicker } from "./use-team-picker";
+
+function teamHint(isEmpty: boolean, canQuickAdd: boolean): string {
+  if (!isEmpty) return PROJECT_COPY.sessionTeamHint;
+  return canQuickAdd ? PROJECT_COPY.sessionTeamNoneQuick : PROJECT_COPY.sessionTeamNone;
+}
 
 /**
  * The *Tim* field of the session dialog: the members picked for the session with a remove button
@@ -21,6 +27,7 @@ import type { useTeamPicker } from "./use-team-picker";
  */
 export function SessionTeamField(props: Readonly<SessionTeamFieldProps>) {
   const { picker } = props;
+  const canQuickAdd = useCanQuickAddMember() && props.onMemberAdded !== undefined;
   return (
     <div className="flex flex-col gap-(--space-3)">
       <div className="flex flex-col gap-(--space-1)">
@@ -29,9 +36,14 @@ export function SessionTeamField(props: Readonly<SessionTeamFieldProps>) {
           <span className="font-normal text-(--color-semantic-text-muted)">{` ${TEXT_FIELD_COPY.optionalSuffix}`}</span>
         </span>
         <span className="text-(length:--font-size-label) text-(--component-input-helper)">
-          {props.members.length === 0 ? PROJECT_COPY.sessionTeamNone : PROJECT_COPY.sessionTeamHint}
+          {teamHint(props.members.length === 0, canQuickAdd)}
         </span>
       </div>
+      {props.members.length === 0 && props.onMemberAdded ? (
+        <div>
+          <AddTeamMemberButton onAdded={props.onMemberAdded} isDisabled={props.isDisabled} />
+        </div>
+      ) : null}
       <PickedMembers
         members={props.members}
         picks={picker.picks}

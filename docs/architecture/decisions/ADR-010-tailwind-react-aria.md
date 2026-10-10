@@ -33,4 +33,4 @@ Visual truth lives in Pencil; code must match it closely. The constitution targe
 
 ## Amendment — 2026-10-06
 
-[ADR-021](ADR-021-next-intl-bilingual-localization.md) supersedes only this ADR's Indonesian default and English fallback. Current policy is English default, EN/ID switching and no cross-language fallback. React Aria's provider follows the resolved active formatting locale rather than fixed `id-ID`. Tailwind and React Aria selection remain accepted. Earlier context above records the original decision, not current language behavior.
+[ADR-025](ADR-025-next-intl-bilingual-localization.md) supersedes only this ADR's Indonesian default and English fallback. Current policy is English default, EN/ID switching and no cross-language fallback. React Aria's provider follows the resolved active formatting locale rather than fixed `id-ID`. Tailwind and React Aria selection remain accepted. Earlier context above records the original decision, not current language behavior.

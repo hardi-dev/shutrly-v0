@@ -17,4 +17,4 @@ Status: Scope specified; persistence, recipient-language and legacy rollout case
 | AC-L10N-011 | Reviewed EN/ID copy has equivalent meaning and accurate recovery/consequence claims; agreed glossary terms are consistent. Updated approved Pencil exports support readable desktop/mobile text and keyboard accessibility. |
 | AC-L10N-012 | Integration checks cover the configured deployment build, SSR/client agreement and critical bilingual journeys. The report distinguishes implemented coverage from future feature surfaces and records remaining gaps. |
 
-Traceability: [BR-L10N-*](../../domain/business-rules.md), [policy](../../product/localization.md), [ADR-021](../../architecture/decisions/ADR-021-next-intl-bilingual-localization.md), [spec](spec.md), [audit](copy-outside-modules-audit.md). No criteria are marked passed by this documentation change.
+Traceability: [BR-L10N-*](../../domain/business-rules.md), [policy](../../product/localization.md), [ADR-025](../../architecture/decisions/ADR-025-next-intl-bilingual-localization.md), [spec](spec.md), [audit](copy-outside-modules-audit.md). No criteria are marked passed by this documentation change.

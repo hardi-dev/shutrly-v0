@@ -7,6 +7,8 @@ Owner decisions: 2026-10-06.
 
 English (`en`) is the default. The photographer dashboard and client galleries allow an explicit switch to Bahasa Indonesia (`id`). A rendered page uses one language for all system-owned copy, including navigation, forms, validation, errors, loading, empty states, dialogs, toasts, accessible names, metadata, library-generated labels and platform defaults. Supported brands, identity names, identifiers and external filenames retain their original values; these are not translation failures.
 
+The public landing page (F-19 `landing`, Owner 2026-10-07) is English-only pre-signup marketing outside workspace UI; it is not governed by the workspace language switch.
+
 Descriptions and custom WhatsApp templates authored by the Owner support paired EN/ID versions. Display the matching version without falling back to the other language. Do not automatically translate or overwrite customized content. Classify free-text item/service/role titles before deciding whether each is an identity or translated display label. Authoring both versions is an intentional bilingual editing context: language tabs/fields must be clearly identified; ordinary reader pages remain single-language.
 
 Missing translations block bilingual release. Incomplete translation drafts may be retained, but the content cannot be exposed in both languages until reviewed versions are complete. This is a content-readiness requirement, not approval for a new service draft/publish lifecycle; [catalog scope](scope.md) still excludes that lifecycle. Define the save/edit/readiness behavior in technical design before implementation.
@@ -28,4 +30,4 @@ Language changes must preserve authorization, selected photos, unsaved form valu
 
 ## Delivery
 
-Use [ADR-021](../architecture/decisions/ADR-021-next-intl-bilingual-localization.md). The [feature spec](../features/bilingual-copy-revamp/spec.md), [acceptance criteria](../features/bilingual-copy-revamp/acceptance-criteria.md) and [outside-module audit](../features/bilingual-copy-revamp/copy-outside-modules-audit.md) define delivery coverage. Existing feature behavior remains authoritative; language-only instructions and Indonesian examples in older feature documents are superseded by this policy. Historical verification, release records and migrations remain historical evidence.
+Use [ADR-025](../architecture/decisions/ADR-025-next-intl-bilingual-localization.md). The [feature spec](../features/bilingual-copy-revamp/spec.md), [acceptance criteria](../features/bilingual-copy-revamp/acceptance-criteria.md) and [outside-module audit](../features/bilingual-copy-revamp/copy-outside-modules-audit.md) define delivery coverage. Existing feature behavior remains authoritative; language-only instructions and Indonesian examples in older feature documents are superseded by this policy. Historical verification, release records and migrations remain historical evidence.

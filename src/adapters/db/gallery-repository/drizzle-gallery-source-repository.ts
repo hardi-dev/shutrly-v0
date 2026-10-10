@@ -5,7 +5,6 @@ import { and, eq, isNull, ne, sql } from "drizzle-orm";
 import type {
   GallerySourceRepositoryPort,
   GallerySourceWriter,
-  NewGallerySource,
   SyncTarget,
 } from "@/features/gallery/application/ports/gallery-source-repository/gallery-source-repository.port";
 import {
@@ -18,11 +17,25 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 import type { DbExecutor } from "../client/client.types";
 import { project } from "../schema/booking/project";
 import { gallery, gallerySource } from "../schema/gallery/gallery";
-import { workspaceSourceConfig } from "../schema/gallery/workspace-source-config";
+import {
+  reclassifySource,
+  replaceFolderMappings,
+  selectFolderMapping,
+  selectFolderMappings,
+  takeNewFolders,
+} from "./gallery-folder-map-sql";
 import { lifecycleWriter } from "./gallery-lifecycle-sql";
 import { lockGallery } from "./gallery-lock-sql";
 import { toGalleryStatus, toProjectStatus } from "./gallery-rows";
-import { claimStep, heldClaim, holdsClaim, releaseRun, writeStep } from "./gallery-sync-sql";
+import { insertGallerySource, isWorkspaceSourceActive } from "./gallery-source-link-sql";
+import {
+  claimStep,
+  heldClaim,
+  holdsClaim,
+  presentCounts,
+  releaseRun,
+  writeStep,
+} from "./gallery-sync-sql";
 
 function sourceWriter(
   tx: DbExecutor,
@@ -31,38 +44,25 @@ function sourceWriter(
 ): GallerySourceWriter {
   return {
     ...lifecycleWriter(tx, context, galleryId),
-    async isWorkspaceSourceActive(workspaceSourceId) {
-      const rows = await tx
-        .select({ isActive: workspaceSourceConfig.isActive })
-        .from(workspaceSourceConfig)
+    isWorkspaceSourceActive: (workspaceSourceId) =>
+      isWorkspaceSourceActive(tx, context, workspaceSourceId),
+    insertSource: (source) => insertGallerySource(tx, context, galleryId, source),
+    replaceFolderMappings: (sourceId, entries) =>
+      replaceFolderMappings(tx, context, sourceId, entries),
+    async reclassifySource(sourceId, mappings, now) {
+      // F-21: changed kinds change what the client sees and the folder row's counts.
+      if ((await reclassifySource(tx, context, sourceId, mappings)) === 0) return;
+      const counts = await presentCounts(tx, context, sourceId);
+      await tx
+        .update(gallerySource)
+        .set({ ...counts, updatedAt: now })
         .where(
-          and(
-            eq(workspaceSourceConfig.workspaceId, context.workspaceId),
-            eq(workspaceSourceConfig.id, workspaceSourceId),
-          ),
+          and(eq(gallerySource.workspaceId, context.workspaceId), eq(gallerySource.id, sourceId)),
         );
-      return rows.at(0)?.isActive === true;
-    },
-    async insertSource(source: NewGallerySource) {
-      // The partial unique index decides a concurrent duplicate too (AC-GAL-010).
-      const rows = await tx
-        .insert(gallerySource)
-        .values({
-          workspaceId: context.workspaceId,
-          galleryId,
-          workspaceSourceId: source.workspaceSourceId,
-          providerFolderId: source.folder.folderId,
-          resourceKey: source.folder.resourceKey,
-          label: source.label,
-          createdBy: source.actorId,
-        })
-        .onConflictDoNothing({
-          target: [gallerySource.galleryId, gallerySource.providerFolderId],
-          where: sql`removed_at is null`,
-        })
-        .returning({ id: gallerySource.id });
-      const row = rows.at(0);
-      return row ? { sourceId: row.id } : "FOLDER_ALREADY_LINKED";
+      await tx
+        .update(gallery)
+        .set({ contentVersion: sql`${gallery.contentVersion} + 1`, updatedAt: now })
+        .where(and(eq(gallery.workspaceId, context.workspaceId), eq(gallery.id, galleryId)));
     },
   };
 }
@@ -101,7 +101,7 @@ async function findSyncTarget(
   db: DbExecutor,
   context: WorkspaceContext,
   sourceId: string,
-): Promise<SyncTarget | null> {
+): Promise<Omit<SyncTarget, "mappings"> | null> {
   const row = await selectSyncRow(db, context, sourceId);
   const status = row ? toGalleryStatus(row.status) : null;
   const projectStatus = row ? toProjectStatus(row.projectStatus) : null;
@@ -120,6 +120,17 @@ async function findSyncTarget(
       projectStatus,
     },
   };
+}
+
+// F-21: the step reads the mappings once; commitStep's re-check doesn't need them.
+async function findSyncTargetWithMappings(
+  db: DbExecutor,
+  context: WorkspaceContext,
+  sourceId: string,
+): Promise<SyncTarget | null> {
+  const target = await findSyncTarget(db, context, sourceId);
+  if (!target) return null;
+  return { ...target, mappings: await selectFolderMappings(db, context, sourceId) };
 }
 
 async function findGalleryIdByProject(
@@ -161,7 +172,7 @@ async function listActiveSources(db: DbExecutor, context: WorkspaceContext, gall
 async function findFolderUse(
   db: DbExecutor,
   context: WorkspaceContext,
-  galleryId: string,
+  galleryId: string | null,
   folderId: string,
 ) {
   const rows = await db
@@ -183,7 +194,7 @@ async function findFolderUse(
         eq(gallerySource.workspaceId, context.workspaceId),
         eq(gallerySource.providerFolderId, folderId),
         isNull(gallerySource.removedAt),
-        ne(gallerySource.galleryId, galleryId),
+        galleryId === null ? undefined : ne(gallerySource.galleryId, galleryId),
       ),
     );
   return rows.map((row) => row.title);
@@ -200,7 +211,9 @@ export function createDrizzleGallerySourceRepository(db: DbExecutor): GallerySou
       }),
     findFolderUse: (context, galleryId, folderId) =>
       findFolderUse(db, context, galleryId, folderId),
-    findSyncTarget: (context, sourceId) => findSyncTarget(db, context, sourceId),
+    findSyncTarget: (context, sourceId) => findSyncTargetWithMappings(db, context, sourceId),
+    takeNewFolders: (context, sourceId, folders) => takeNewFolders(db, context, sourceId, folders),
+    findFolderMapping: (context, sourceId) => selectFolderMapping(db, context, sourceId),
     findGalleryIdByProject: (context, projectId) => findGalleryIdByProject(db, context, projectId),
     listActiveSources: (context, galleryId) => listActiveSources(db, context, galleryId),
     claimStep: (context, sourceId, now) => claimStep(db, context, sourceId, now),

@@ -1,0 +1,5 @@
+interface:
+  display_name: "sdv ux-task-effectiveness"
+  short_description: "Measure how effectively a flow helps users complete a goal (task success, time, efficiency, step drop-off) from sessions, analytics events, or a walkthrough"
+policy:
+  allow_implicit_invocation: false

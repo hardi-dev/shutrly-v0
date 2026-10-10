@@ -11,6 +11,7 @@ import type { DbExecutor } from "../client/client.types";
 import { gallery } from "../schema/gallery/gallery";
 import { selectMediaPhoto, selectPreviewPhotos } from "./gallery-photo-sql";
 import { selectProjectFacts, selectSources, selectSummary } from "./gallery-read-sql";
+import { insertGallerySource, isWorkspaceSourceActive } from "./gallery-source-link-sql";
 
 function createWriter(db: DbExecutor, context: WorkspaceContext): GalleryCreateWriter {
   return {
@@ -35,6 +36,9 @@ function createWriter(db: DbExecutor, context: WorkspaceContext): GalleryCreateW
         .returning({ id: gallery.id });
       return inserted.length === 0 ? "ALREADY_EXISTS" : "CREATED";
     },
+    isWorkspaceSourceActive: (workspaceSourceId) =>
+      isWorkspaceSourceActive(db, context, workspaceSourceId),
+    insertSource: (galleryId, source) => insertGallerySource(db, context, galleryId, source),
   };
 }
 

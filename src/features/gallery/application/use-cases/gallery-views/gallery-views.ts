@@ -53,6 +53,7 @@ export function toSourceView(source: GallerySourceRecord): GallerySourceView {
   return {
     id: source.id,
     name: source.label ?? source.folderName,
+    label: source.label,
     workspaceSourceName: source.workspaceSourceName,
     removed: source.removedAt !== null,
     removedAt: source.removedAt?.toISOString() ?? null,

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import type { FolderMapping } from "../photo-classification/photo-classification.types";
 import { DRIVE_FOLDER_MIME, DRIVE_SHORTCUT_MIME } from "../sync-plan/sync-plan";
 import type { FolderEntry, FolderListing, SyncedPhoto } from "../sync-plan/sync-plan.types";
 import { startCursor, syncProgress, walkStep } from "./sync-step";
@@ -42,6 +43,7 @@ async function runToEnd(
   tree: Record<string, FolderEntry[]>,
   budget: SyncBudget = BUDGET,
   pageSize = 1000,
+  mappings: readonly FolderMapping[] = [],
 ): Promise<Run> {
   const { list, state } = lister(tree, pageSize);
   let cursor = startCursor(ROOT, "Rina-Wisuda");
@@ -49,7 +51,7 @@ async function runToEnd(
   const callsPerStep: number[] = [];
   for (let steps = 1; steps < 1000; steps += 1) {
     const before = state.calls;
-    const step = await walkStep(list, cursor, budget);
+    const step = await walkStep(list, cursor, budget, mappings);
     if (!step.ok) throw new Error(`step failed: ${step.code}`);
     callsPerStep.push(state.calls - before);
     photos.push(...step.photos);
@@ -120,7 +122,16 @@ describe("walkStep", () => {
     expect(run.photos).toHaveLength(0);
   });
 
-  it("BR-GAL-007 AC-GAL-030 classifies by the nearest edited/print folder, skips shortcuts", async () => {
+  it("F-21 lists every subfolder within depth, empty ones too, across steps", async () => {
+    const tree = {
+      "root-folder-id": [folder("e", "Edit"), folder("p", "Proof"), file("A.jpg")],
+      p: [folder("q", "Day 1"), file("B.jpg")],
+    };
+    const run = await runToEnd(tree, { ...BUDGET, maxListCalls: 1 });
+    expect(run.cursor.folders).toEqual(["Edit", "Proof", "Proof/Day 1"]);
+  });
+
+  it("F-21 AC-GAL-030 classifies by the mapped subfolder, folding it out of the browse path, and skips shortcuts", async () => {
     const tree = {
       "root-folder-id": [
         file("IMG_001.jpg"),
@@ -130,7 +141,8 @@ describe("walkStep", () => {
       ak: [file("A_001.jpg"), folder("ed", "edited")],
       ed: [file("AE_001.jpg")],
     };
-    const run = await runToEnd(tree, { ...BUDGET, maxListCalls: 1 });
+    const mapped = [{ path: "Akad/edited", kind: "EDITED" as const, projectItemId: "item-edit" }];
+    const run = await runToEnd(tree, { ...BUDGET, maxListCalls: 1 }, 1000, mapped);
     expect(run.photos.map((p) => [p.fileName, p.kind, p.browsePath])).toEqual([
       ["IMG_001.jpg", "PROOF", ""],
       ["A_001.jpg", "PROOF", "Akad"],
@@ -138,7 +150,7 @@ describe("walkStep", () => {
     ]);
   });
 
-  it("AC-GAL-005 classifies the fixture: 4 proof, 3 edited, 1 print, 2 ignored", async () => {
+  it("F-21 AC-GAL-005 classifies the fixture by its mappings: 4 proof, 3 edited, 1 print, 2 ignored", async () => {
     const tree = {
       "root-folder-id": [
         file("IMG_001.jpg"),
@@ -155,7 +167,10 @@ describe("walkStep", () => {
       "raw-id": [file("R_001.jpg")],
       "old-id": [file("X_001.jpg")],
     };
-    const run = await runToEnd(tree);
+    const run = await runToEnd(tree, BUDGET, 1000, [
+      { path: "Edited", kind: "EDITED", projectItemId: "item-edit" },
+      { path: "print", kind: "PRINT", projectItemId: "item-print" },
+    ]);
     const byKind = (kind: string) =>
       run.photos
         .filter((photo) => photo.kind === kind)

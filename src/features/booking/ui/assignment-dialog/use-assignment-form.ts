@@ -70,11 +70,20 @@ async function saveAssignment(
  * the save, the toast and the form errors per failure code (AC-TEAM-011, AC-TEAM-013).
  * The dialog is mounted fresh for each opening, so the state starts empty.
  * @param props - the dialog props
+ * @param initialMemberId - a member to preselect, e.g. one just added (Revision OT #2)
  * @returns the state, the selected member and the handlers
  */
-export function useAssignmentForm(props: Readonly<AssignmentDialogProps>) {
+export function useAssignmentForm(
+  props: Readonly<AssignmentDialogProps>,
+  initialMemberId: string | null = null,
+) {
   const router = useRouter();
-  const [state, setState] = useState<AssignmentFormState>(IDLE);
+  const [state, setState] = useState<AssignmentFormState>(() => {
+    const initial = props.members.find((candidate) => candidate.id === initialMemberId);
+    return initial
+      ? { ...IDLE, memberId: initial.id, roleId: initial.roles.at(0)?.id ?? null }
+      : IDLE;
+  });
   const member = props.members.find((candidate) => candidate.id === state.memberId);
 
   function selectMember(memberId: string): void {

@@ -1,6 +1,7 @@
 import "server-only";
 
 import type {
+  DownloadResult,
   FolderInfo,
   GallerySourceProviderPort,
   ProviderFileRef,
@@ -145,6 +146,31 @@ async function thumbnail(
   }
 }
 
+/** Streams an original file through Drive v3 `alt=media`; the body is passed on, not buffered (F-10 D-18, spike R-1). @param fetchFn - fetch @param key - the API key @param file - the file and its resource key @returns the stream, or not ok */
+async function download(
+  fetchFn: Fetch,
+  key: string,
+  file: ProviderFileRef,
+): Promise<DownloadResult> {
+  const params = new URLSearchParams({ alt: "media", supportsAllDrives: "true", key });
+  const url = `${FILES}/${encodeURIComponent(file.fileId)}?${params.toString()}`;
+  try {
+    const headers = headersFor([{ id: file.fileId, resourceKey: file.resourceKey }]);
+    // No redirects: a hop to another host could serve something else (TD › Security).
+    const response = await fetchFn(url, { headers, redirect: "manual" });
+    if (!response.ok || !response.body) return { ok: false };
+    return {
+      ok: true,
+      body: response.body,
+      contentType: response.headers.get("content-type") ?? "application/octet-stream",
+      contentLength: response.headers.get("content-length"),
+    };
+  } catch {
+    // The error message would carry the URL with the key: never forward it.
+    return { ok: false };
+  }
+}
+
 /** Creates the Google Drive provider over Drive v3 with an API key; public folders only (ADR-005, D-6, D-10). @param apiKey - the Worker secret `GOOGLE_DRIVE_API_KEY` @param fetchFn - fetch, injectable for tests @returns the provider port */
 export function createGoogleDriveProvider(
   apiKey: string,
@@ -154,5 +180,6 @@ export function createGoogleDriveProvider(
     getFolder: (folder) => getFolder(fetchFn, apiKey, folder),
     listFolder: (folder, pageToken) => listFolder(fetchFn, apiKey, folder, pageToken),
     thumbnail: (file, size) => thumbnail(fetchFn, apiKey, file, size),
+    download: (file) => download(fetchFn, apiKey, file),
   };
 }

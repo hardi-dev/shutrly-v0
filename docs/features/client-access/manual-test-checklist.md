@@ -1,0 +1,90 @@
+# Client access — manual test checklist (round 2)
+
+Date: 2026-10-07 · Tester: Owner · Branch `feat/client-access` · Environment: `localhost:3000`, dev database, seed from `.env.seed.dev` (owner `owner@shutrly.test`; passwords and the client link are in the file)
+
+Checks the fixes for [manual-test-findings.md](manual-test-findings.md) #1–#7, F-20 (client proof downloads) and F-21 (delivery folder mapping). Mark each row as it is tested: ⬜ not tested · ✅ pass · ❌ fail (write what happened in *Catatan*; a fail becomes a new finding in `manual-test-findings.md`).
+
+## 1. Pemetaan subfolder (#5, F-21)
+
+Gallery page › *Sumber foto*.
+
+| # | Langkah | Hasil yang diharapkan | Status | Catatan |
+|---|---|---|---|---|
+| 1.1 | Buka menu `…` di baris folder | Isinya *Sinkronkan · Edit folder · Hapus* | ✅ | |
+| 1.2 | *Edit folder* › ubah nama › *Simpan* | Nama baru muncul di daftar | ✅ | |
+| 1.3 | Buka *Edit folder* | Skeleton tampil selama subfolder dimuat, lalu diganti daftar item | ✅ | |
+| 1.4 | *Edit folder* di folder yang punya subfolder | Satu baris per item paket; tiap item memilih satu subfolder atau *Belum dipilih* | ✅ | |
+| 1.5 | Subfolder **kosong** di Drive › *Sinkronkan* › *Edit folder* | Subfolder kosong tetap muncul di pilihan | ✅ | |
+| 1.6 | Pilih subfolder untuk satu item, lalu buka pilihan item lain | Subfolder yang sudah dipilih tidak ditawarkan lagi | ✅ | |
+| 1.7 | Upload hasil edit ke subfolder yang **belum** dipetakan › *Sinkronkan* › lalu petakan subfolder itu ke item › *Simpan* (tanpa sinkron ulang) | Hasil edit langsung pindah ke tab item itu di `/final` dan tidak lagi di `/photos`; foto asli di folder root tetap di `/photos` | ✅ | |
+| 1.8 | Buat subfolder baru di Drive › *Sinkronkan* | Toast menyebut subfolder baru, dengan tombol *Petakan* yang membuka *Edit folder* | ✅ | |
+| 1.9 | Upload foto ke subfolder yang sudah dipetakan › *Sinkronkan* | Foto masuk ke item tersebut | ✅ | |
+| 1.10 | *Edit folder* di proyek yang paketnya tanpa item pilihan foto | Pesan singkat dengan tombol *Buka Isi paket* | ✅ | |
+| 1.11 | *Edit folder* di folder tanpa subfolder | Pesan *Belum ada subfolder…* | ✅ | |
+
+## 2. Hasil akhir per item (#5, F-21) — client
+
+Client link (`SEED_CLIENT_PATH`, password `SEED_GALLERY_PASSWORD`) › `/final`.
+
+| # | Langkah | Hasil yang diharapkan | Status | Catatan |
+|---|---|---|---|---|
+| 2.1 | Buka `/final` | Tab per item paket (nama item), bukan *Edited / Print*; semua item pilihan foto tampil, termasuk yang masih kosong | ✅ | |
+| 2.2 | Buka tiap tab | Fotonya sesuai pemetaan di bagian 1 | ✅ | |
+
+## 3. Download & pilih sekaligus (#6, F-20) — client `/photos`
+
+| # | Langkah | Hasil yang diharapkan | Status | Catatan |
+|---|---|---|---|---|
+| 3.1 | Tombol unduh di satu foto | File asli terunduh | ✅ | |
+| 3.2 | Buka viewer › *Unduh foto* | File asli terunduh | ✅ | |
+| 3.3 | *Unduh semua* | Konfirmasi, lalu foto terunduh satu per satu dengan kartu progres | ✅ | |
+| 3.4 | *Pilih beberapa* › pilih foto › *Unduh n foto* | Hanya foto terpilih yang terunduh | ✅ | |
+| 3.5 | *Pilih foto* (tombol utama) › centang foto › *Masukkan ke…* › pilih bagian | Foto masuk ke pilihan bagian itu (×1 di *Foto cetak*) | ✅ | |
+| 3.6 | *Pilih foto* › centang lebih banyak dari sisa kuota › *Masukkan ke…* | Semua ditolak, tidak ada yang masuk; pesan sisa kuota | ✅ | Diulang setelah opsi C (2026-10-08) |
+| 3.7 | Buka `/picks/<groupId>` | Halaman pilih per bagian tetap seperti sebelumnya | ✅ | |
+
+## 4. Hapus folder (#4)
+
+| # | Langkah | Hasil yang diharapkan | Status | Catatan |
+|---|---|---|---|---|
+| 4.1 | *Hapus* folder yang fotonya belum dipilih klien | Folder dan fotonya hilang | ✅ | |
+| 4.2 | *Hapus* folder yang fotonya sudah dipilih klien | Ditolak: *Ada foto dari folder ini yang sudah dipilih klien.* | ✅ | |
+| 4.3 | *Hapus* folder terakhir di galeri yang sudah dipublikasikan | Ditolak | ✅ | |
+
+## 5. Folder di *Buat galeri* (#3)
+
+Project without a gallery › *Buat galeri*.
+
+| # | Langkah | Hasil yang diharapkan | Status | Catatan |
+|---|---|---|---|---|
+| 5.1 | Isi link folder Drive › Buat | Halaman galeri terbuka dan langsung sinkron | ✅ | Dites Claude di browser (2026-10-08); toast diperbaiki 81f33d1 |
+| 5.2 | Buat tanpa link folder | Galeri tetap terbuat | ✅ | Dites Claude di browser (2026-10-08) |
+| 5.3 | Link folder yang dipakai proyek lain | Konfirmasi *Tetap buat galeri* | ✅ | Dites Claude di browser (2026-10-08) |
+
+## 6. Tambah anggota tim dari sesi (#1, #2)
+
+Workspace without active team members.
+
+| # | Langkah | Hasil yang diharapkan | Status | Catatan |
+|---|---|---|---|---|
+| 6.1 | *Proyek baru* › *Tambah sesi* › *Tambah anggota* | Dialog anggota muncul di atas; setelah simpan, anggota baru terpilih; form sesi tidak ikut tersubmit | ✅ | Dites Claude di browser (2026-10-08): nama sesi tetap, Uji Asisten Dua langsung terpilih |
+| 6.2 | Detail proyek › *Tambah anggota · <sesi>* | Sama seperti 6.1, tanpa diarahkan ke halaman Tim | ✅ | Dites Claude di browser (2026-10-08): Uji Fotografer Satu terpilih sebagai Fotografer |
+
+## 7. Route bahasa Inggris (#7)
+
+| # | Langkah | Hasil yang diharapkan | Status | Catatan |
+|---|---|---|---|---|
+| 7.1 | Client: `/photos`, `/final`, `/picks/<id>`, `/picks/<id>/review` | Semua terbuka | ✅ | Dites Claude (2026-10-08): semua 200; /final dialihkan ke Beranda sebelum hasil akhir dipublikasikan |
+| 7.2 | Owner: `/gallery/picks` | Terbuka | ✅ | Dites Claude (2026-10-08): /gallery/picks dan /gallery/picks/<id> 200 |
+| 7.3 | Klik semua link di halaman-halaman itu | Tidak ada 404 | ✅ | Dites Claude (2026-10-08): 23 link internal dari 10 halaman, semua 200; route lama 404 |
+
+## 8. Kartu Hasil akhir owner per item (F-21)
+
+Owner gallery page and project page, gallery with mapped subfolders (*Wisuda Basic*, 179 files in *Foto edit*).
+
+| # | Langkah | Hasil yang diharapkan | Status | Catatan |
+|---|---|---|---|---|
+| 8.1 | Halaman galeri › kartu *Hasil akhir* | Satu baris per item paket yang punya file (siap), atau *Klien bisa mengunduh n file <item>* setelah dipublikasikan; tidak ada *Edited / Print* | ✅ | Dites Claude (2026-10-08): *Klien bisa mengunduh 179 file Foto edit.* |
+| 8.2 | Halaman proyek › kartu *Galeri* › baris *Hasil akhir* | Per item, mis. *Dipublikasikan … · 179 Foto edit* | ✅ | Dites Claude (2026-10-08) |
+| 8.3 | Baris *Foto* dan baris folder di *Sumber foto* | *n proof · m hasil akhir*, termasuk langsung setelah pemetaan disimpan | ✅ | Dites Claude (2026-10-08): *58 proof · 179 hasil akhir* (sebelumnya baris folder masih *237 proof*, diperbaiki 11ccaf6) |
+| 8.4 | Ulang 2.1 di klien `/final` | Tab per item tetap benar | ✅ | Dites Claude (2026-10-08): *Foto edit · 179*, *Foto cetak · 0*, *Premium Retouch · 0* |

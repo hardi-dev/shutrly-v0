@@ -21,9 +21,20 @@ export type ButtonIconName = Extract<
   | "refresh-cw"
   | "copy"
   | "images"
+  | "download"
+  | "arrow-left"
   | "external-link"
   | "user-round-cog"
   | "user-plus"
+  // F-10 viewer: *Pilih untuk…* and *Catatan* (pratinjau exports).
+  | "list-checks"
+  | "message-square-text"
+  // F-10 Owner selection pages: *Lihat pilihan* and *Kunci pilihan* (owner exports).
+  | "eye"
+  | "lock"
+  // F-10 *Akses klien*: *Ganti link* and *Ganti password* (aksesklien-kartu).
+  | "link"
+  | "key-round"
 >;
 
 export interface ButtonIconProps {

@@ -50,6 +50,31 @@ function toastFor(outcomes: readonly [SyncTarget, SyncRunOutcome][]): void {
   });
 }
 
+/** F-21: names the subfolders a sync found for the first time, with *Petakan* to open the mapping. */
+function newFoldersToast(
+  outcomes: readonly [SyncTarget, SyncRunOutcome][],
+  onMapFolders: UseGallerySyncInput["onMapFolders"],
+): void {
+  for (const [target, outcome] of outcomes) {
+    if (!outcome.ok || outcome.status !== "SUCCEEDED") continue;
+    const folders = outcome.newFolders ?? [];
+    if (folders.length === 0) continue;
+    showToast({
+      tone: "info",
+      title: GALLERY_COPY.newFoldersTitle(folders.length, target.name),
+      body: GALLERY_COPY.newFoldersBody(folders.join(", ")),
+      action: onMapFolders
+        ? {
+            label: GALLERY_COPY.mapFolders,
+            onAction: () => {
+              onMapFolders(target.id);
+            },
+          }
+        : undefined,
+    });
+  }
+}
+
 function toTarget(source: GallerySourceView): SyncTarget {
   return { id: source.id, name: source.name ?? GALLERY_COPY.sourceFallbackName };
 }
@@ -105,6 +130,7 @@ export function useGallerySync(input: Readonly<UseGallerySyncInput>): GallerySyn
     const outcomes: [SyncTarget, SyncRunOutcome][] = [];
     for (const target of targets) outcomes.push(await runOne(target));
     toastFor(outcomes);
+    newFoldersToast(outcomes, input.onMapFolders);
     router.refresh();
   };
   return {

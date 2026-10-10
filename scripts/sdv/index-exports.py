@@ -6,7 +6,9 @@ the right file for each state without listing the folder. The index groups the e
 by screen. Each state gets a row with its desktop and mobile files, their sizes, and,
 when design.md lists the frame ID, the state description and the AC from design.md.
 
-Export file names follow `<screen>-<state>-<device>-<frameId>.html`. Run after
+Export file names follow `<screen>-<state>-<device>-<frameId>.html`. Exports may sit in
+subfolders (one per flow group); the index then groups rows by subfolder instead of by
+screen and links each file by its relative path. Run after
 (re-)exporting a design:
 
     python3 scripts/sdv/index-exports.py <slug>          # write
@@ -46,15 +48,20 @@ def render(slug):
     notes = design_notes(folder.parent / "design.md")
     states = defaultdict(dict)
     unmatched = []
-    for path in sorted(folder.glob("*.html")):
+    groups = {}
+    for path in sorted(folder.rglob("*.html")):
+        rel = path.relative_to(folder).as_posix()
         match = NAME.match(path.name)
         if not match:
-            unmatched.append(path.name)
+            unmatched.append(rel)
             continue
-        states[match["state"]][match["device"]] = (path.name, match["frame"], path.stat().st_size)
+        group = rel.rsplit("/", 1)[0] if "/" in rel else match["state"].split("-", 1)[0]
+        key = (group, match["state"])
+        groups[key] = group
+        states[key][match["device"]] = (rel, match["frame"], path.stat().st_size)
     screens = defaultdict(list)
-    for state in sorted(states):
-        screens[state.split("-", 1)[0]].append(state)
+    for key in sorted(states):
+        screens[groups[key]].append(key)
     devices = [d for d in DEVICES if any(d in files for files in states.values())]
     out = [
         f"# Exports — {slug}",
@@ -81,7 +88,7 @@ def render(slug):
                 name, frame, size = files[device]
                 cells.append(f"[`{frame}`]({name}) · {size // 1024} KB")
                 note = notes.get(frame, note) if not note[0] else note
-            out.append(f"| `{state}` | " + " | ".join(cells) + f" | {note[0]} | {note[1]} |")
+            out.append(f"| `{state[1]}` | " + " | ".join(cells) + f" | {note[0]} | {note[1]} |")
     if unmatched:
         out += ["", "## Not matched", "", "File names that don't follow `<screen>-<state>-<device>-<frameId>.html`:", ""]
         out += [f"- `{name}`" for name in unmatched]

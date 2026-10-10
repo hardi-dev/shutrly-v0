@@ -20,6 +20,7 @@ import type {
   ServiceSnapshotSource,
 } from "@/features/booking/application/ports/project-repository/project-repository.port";
 import { canonicalIdrAmount } from "@/features/booking/domain/idr-amount/idr-amount";
+import { parsePickMode } from "@/features/booking/domain/item-definition-type/item-definition-type";
 import { PROJECT_STATUSES } from "@/features/booking/domain/project-status/project-status";
 import type { StepTransition } from "@/features/booking/domain/project-status/project-status.types";
 import { compareSessions } from "@/features/booking/domain/session/session";
@@ -42,6 +43,11 @@ import { client } from "../schema/booking/client";
 import { project, projectFieldValue, projectItem, projectSession } from "../schema/booking/project";
 import { sessionAssignment, teamMember, teamRole } from "../schema/booking/team";
 import { createSnapshot } from "./drizzle-project-snapshot";
+import {
+  lockProjectStatus,
+  markProjectCompleted,
+  rotateProjectToken,
+} from "./project-delivery-sql";
 
 const LIKE_SPECIAL = /[\\%_]/g;
 const TIME_LENGTH = 5;
@@ -49,9 +55,6 @@ const TIME_LENGTH = 5;
 function toItem(row: typeof projectItem.$inferSelect): ProjectItemRecord | null {
   const value = toPackageValue(row.value);
   if (!value || (row.valueType !== "NUMBER" && row.valueType !== "RANGE")) return null;
-  if (row.selectionType !== null && row.selectionType !== "EDIT" && row.selectionType !== "PRINT") {
-    return null;
-  }
   return {
     id: row.id,
     definitionId: row.definitionId,
@@ -59,7 +62,8 @@ function toItem(row: typeof projectItem.$inferSelect): ProjectItemRecord | null 
     unit: row.unit,
     valueType: row.valueType,
     selectionRequired: row.selectionRequired,
-    selectionType: row.selectionType,
+    pickMode: parsePickMode(row.pickMode),
+    allowsPickNotes: row.allowsPickNotes,
     value,
   };
 }
@@ -264,10 +268,8 @@ async function listActiveDefinitions(
             unit: row.unit,
             valueType: row.valueType,
             selectionRequired: row.selectionRequired,
-            selectionType:
-              row.selectionType === "EDIT" || row.selectionType === "PRINT"
-                ? row.selectionType
-                : null,
+            pickMode: parsePickMode(row.pickMode),
+            allowsPickNotes: row.allowsPickNotes,
           },
         ]
       : [],
@@ -331,6 +333,8 @@ async function addItemRow(
     unit: definition.unit,
     selectionRequired: definition.selectionRequired,
     selectionType: definition.selectionType,
+    pickMode: definition.pickMode,
+    allowsPickNotes: definition.allowsPickNotes,
     sortOrder: Math.max(-1, ...existing.map((row) => row.sortOrder)) + 1,
     updatedBy: input.actorId,
   });
@@ -444,6 +448,8 @@ function sessionWriter(
 function writerFor(db: DbExecutor, context: WorkspaceContext, id: string): ProjectWriter {
   const scope = and(eq(project.workspaceId, context.workspaceId), eq(project.id, id));
   return {
+    rotateToken: (token, actorId, at) =>
+      rotateProjectToken(db, context, id, { token, actorId, at }),
     async updateInfo(input) {
       await db
         .update(project)
@@ -664,6 +670,8 @@ export function createDrizzleProjectRepository(db: DbExecutor): ProjectRepositor
     moveStatus: (context, id, transition, actorId) =>
       moveStatus(db, context, id, transition, actorId),
     countSessions: (context, id) => countSessions(db, context, id),
+    lockStatus: (context, id) => lockProjectStatus(db, context, id),
+    markCompleted: (context, id, actorId, at) => markProjectCompleted(db, context, id, actorId, at),
     withLockedProject: (context, id, change) => withLockedProject(db, context, id, change),
     listActiveDefinitions: (context) => listActiveDefinitions(db, context),
     findFilterClient: (context, id) => findFilterClient(db, context, id),

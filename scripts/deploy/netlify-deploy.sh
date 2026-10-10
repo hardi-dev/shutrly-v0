@@ -7,6 +7,10 @@
 set -euo pipefail
 
 CLI="netlify-cli@27.11.0"
+# The Next.js server handler is bundled into .netlify/functions-internal. Since netlify/edge-functions
+# exists (F-19 waitlist), the CLI defaults the functions folder to the missing netlify/functions and
+# deploys without the handler, so every route returns Netlify's 404 (2026-10-09). Point it there.
+FUNCTIONS_DIR=".netlify/functions-internal"
 target="${1:-}"
 shift || true
 assume_yes=false
@@ -27,7 +31,7 @@ if [[ -n "$(git status --porcelain)" ]]; then
 fi
 
 case "$target" in
-  staging) args=(deploy --build --alias staging) ;;
+  staging) args=(deploy --build --alias staging --functions "$FUNCTIONS_DIR") ;;
   prod)
     if [[ "$branch" != "main" ]]; then
       echo "Production deploys only from main (current branch: $branch)." >&2
@@ -38,7 +42,7 @@ case "$target" in
       echo "Local main differs from origin/main; pull or push first." >&2
       exit 1
     fi
-    args=(deploy --build --prod)
+    args=(deploy --build --prod --functions "$FUNCTIONS_DIR")
     ;;
   *) echo "Usage: $0 <staging|prod> [--yes] [--dry-run]" >&2; exit 2 ;;
 esac

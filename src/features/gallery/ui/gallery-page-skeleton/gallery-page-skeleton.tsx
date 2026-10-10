@@ -4,7 +4,7 @@ import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 
 const SOURCE_ROWS = 2;
-const TILES = 8;
+const TILES = 6;
 // C46: the tile image height is a literal per grid, 104 on phones and 220 on desktop (photo-tile.md › Gaps).
 
 /** The gallery page while loading (`K5PgU` / `umIa6`, C-007): skeleton source rows and photo tiles. */
@@ -13,7 +13,7 @@ export function GalleryPageSkeleton() {
     <main
       aria-busy="true"
       data-testid="gallery-page-skeleton"
-      className="mx-auto flex w-full max-w-(--size-content-max) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)"
+      className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)"
     >
       <p className="text-(length:--font-size-body-sm) text-(--component-page-header-subtitle) md:hidden">
         {GALLERY_COPY.loadingGallery}
@@ -26,7 +26,7 @@ export function GalleryPageSkeleton() {
         </ul>
       </SectionCard>
       <SectionCard title={GALLERY_COPY.photosTitle}>
-        <div className="grid grid-cols-3 gap-(--space-3) md:grid-cols-4 md:gap-x-(--space-4) md:gap-y-(--space-5)">
+        <div className="grid grid-cols-3 gap-(--space-3) md:gap-x-(--space-4) md:gap-y-(--space-5)">
           {Array.from({ length: TILES }, (_, index) => (
             <div key={index} className="flex flex-col gap-(--component-photo-tile-gap)">
               <div className="h-[104px] rounded-(--component-photo-tile-image-radius) bg-(--component-photo-tile-image-background) md:h-[220px]" />

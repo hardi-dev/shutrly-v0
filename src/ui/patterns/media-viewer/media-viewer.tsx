@@ -188,6 +188,7 @@ function ViewerFrame(props: Readonly<ViewerFrameProps>) {
           />
           {isMobile ? null : <Arrows index={index} count={items.length} nav={nav} />}
         </div>
+        {props.renderFooter?.(item)}
         <Filmstrip
           items={items}
           index={index}

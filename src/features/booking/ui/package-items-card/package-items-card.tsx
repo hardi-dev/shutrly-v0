@@ -51,7 +51,7 @@ export function PackageItemsCard({
           {items.map((item, index) => (
             <ListCardItem
               key={item.definitionId}
-              icon={item.selectionType ? "image" : "package"}
+              icon={item.pickMode ? "images" : "package"}
               title={item.definitionName}
               meta={describePackageItem(item)}
               isLast={index === items.length - 1}
@@ -91,12 +91,10 @@ function ItemRowMenu({ item, edit }: Readonly<{ item: PackageCardItem; edit: Pac
   );
 }
 
-/** The item row meta, e.g. "25 foto · pilihan edit". @param item - the package item @returns the summary text */
+/** The item row meta, e.g. "25 foto · hitung foto". @param item - the package item @returns the summary text */
 export function describePackageItem(item: PackageItemsCardProps["items"][number]): string {
   const summary = summariseServiceItems([
     { name: item.definitionName, unit: item.unit, value: item.value },
   ]);
-  if (item.selectionType === "EDIT") return `${summary} · ${PROJECT_COPY.selectionEdit}`;
-  if (item.selectionType === "PRINT") return `${summary} · ${PROJECT_COPY.selectionPrint}`;
-  return summary;
+  return item.pickMode ? `${summary} · ${PROJECT_COPY.pickModes[item.pickMode]}` : summary;
 }

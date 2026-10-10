@@ -1,7 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
+import type { AssignableMember } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import { formatSessionRange } from "@/features/booking/domain/session/session";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
@@ -11,7 +13,13 @@ import { Select } from "@/ui/patterns/select/select";
 import { Button } from "@/ui/primitives/button/button";
 
 import { PROJECT_COPY } from "../project-copy/project-copy.copy";
-import type { AssignmentDialogProps, AssignmentShellProps } from "./assignment-dialog.types";
+import { AddTeamMemberButton, useCanQuickAddMember } from "../team-quick-add/team-quick-add";
+import type {
+  AssignmentDialogBodyProps,
+  AssignmentDialogProps,
+  AssignmentShellProps,
+  NoMembersProps,
+} from "./assignment-dialog.types";
 import { useAssignmentForm } from "./use-assignment-form";
 
 /**
@@ -21,9 +29,31 @@ import { useAssignmentForm } from "./use-assignment-form";
  * @returns the dialog as a desktop modal or a phone form sheet
  */
 export function AssignmentDialog(props: Readonly<AssignmentDialogProps>) {
+  const [added, setAdded] = useState<readonly AssignableMember[]>([]);
+  const members = [
+    ...props.members,
+    ...added.filter((member) => !props.members.some((m) => m.id === member.id)),
+  ];
+  // Revision OT #2: a member added from the empty state is selected; remounting the form preselects them.
+  const handleAdded = (member: AssignableMember) => {
+    setAdded((previous) => [...previous, member]);
+  };
+  return (
+    <AssignmentDialogBody
+      key={added.length}
+      {...props}
+      members={members}
+      initialMemberId={added.at(-1)?.id ?? null}
+      onMemberAdded={handleAdded}
+    />
+  );
+}
+
+function AssignmentDialogBody(props: Readonly<AssignmentDialogBodyProps>) {
   const isMobile = useMobileViewport();
   const router = useRouter();
-  const form = useAssignmentForm(props);
+  const form = useAssignmentForm(props, props.initialMemberId);
+  const canQuickAdd = useCanQuickAddMember();
   const isEmpty = props.members.length === 0;
   function handleOpenTeam(): void {
     router.push(`/w/${props.workspaceId}/team`);
@@ -32,16 +62,10 @@ export function AssignmentDialog(props: Readonly<AssignmentDialogProps>) {
     props.onOpenChange(false);
   }
   const body = isEmpty ? (
-    <EmptyState
-      placement="in-card"
-      icon="user-round-cog"
-      title={PROJECT_COPY.assignEmptyTitle}
-      body={PROJECT_COPY.assignEmptyBody}
-      action={
-        <Button variant="secondary" iconLeading="user-round-cog" onPress={handleOpenTeam}>
-          {PROJECT_COPY.assignEmptyAction}
-        </Button>
-      }
+    <NoMembers
+      canQuickAdd={canQuickAdd}
+      onAdded={props.onMemberAdded}
+      onOpenTeam={handleOpenTeam}
     />
   ) : (
     <AssignmentFields {...props} form={form} />
@@ -68,6 +92,27 @@ export function AssignmentDialog(props: Readonly<AssignmentDialogProps>) {
     >
       {body}
     </AssignmentShell>
+  );
+}
+
+/** No active member yet: *Tambah anggota* on top of this dialog, or *Buka Tim* without quick add (AC-TEAM-027, Revision OT #2). */
+function NoMembers({ canQuickAdd, onAdded, onOpenTeam }: Readonly<NoMembersProps>) {
+  return (
+    <EmptyState
+      placement="in-card"
+      icon="user-round-cog"
+      title={PROJECT_COPY.assignEmptyTitle}
+      body={canQuickAdd ? PROJECT_COPY.assignEmptyQuickBody : PROJECT_COPY.assignEmptyBody}
+      action={
+        canQuickAdd ? (
+          <AddTeamMemberButton onAdded={onAdded} />
+        ) : (
+          <Button variant="secondary" iconLeading="user-round-cog" onPress={onOpenTeam}>
+            {PROJECT_COPY.assignEmptyAction}
+          </Button>
+        )
+      }
+    />
   );
 }
 

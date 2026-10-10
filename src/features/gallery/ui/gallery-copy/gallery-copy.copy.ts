@@ -27,8 +27,9 @@ export const GALLERY_COPY = {
   copyFailedBody: "Salin password secara manual.",
   sourceCount: (count: number) => `${String(count)} folder`,
   noSources: "Belum ada folder",
-  photoCounts: (proof: number, edited: number, print: number) =>
-    `${String(proof)} proof · ${String(edited)} edited · ${String(print)} print`,
+  // F-21: finished files belong to package items, so one count, not Edited / Print
+  photoCounts: (proof: number, finished: number) =>
+    `${String(proof)} proof · ${String(finished)} hasil akhir`,
   missingSuffix: (count: number) => ` (${String(count)} hilang)`,
   expiryNone: "Tidak ada",
   expiryPast: (date: string) => `${date} (lewat)`,
@@ -63,6 +64,8 @@ export const GALLERY_COPY = {
   cancel: "Batal",
   createdTitle: "Galeri dibuat",
   createdBody: "Tambahkan folder Google Drive untuk mulai.",
+  // Revision OT #3: the first folder was linked with the gallery and syncs next.
+  createdWithFolderBody: "Folder Google Drive sedang disinkronkan.",
   errors: {
     TOO_SHORT: "Password minimal 6 karakter.",
     TOO_LONG: "Password maksimal 64 karakter.", // not in Pencil
@@ -87,6 +90,8 @@ export const GALLERY_COPY = {
     ALREADY_EXISTS: "Proyek ini sudah punya galeri.",
     INVALID_STATE: "Galeri sudah berubah. Muat ulang halaman.",
     LAST_ACTIVE_SOURCE: "Galeri yang dipublikasikan butuh minimal satu folder aktif.",
+    // not in Pencil yet (Revision OT Slice 14): a client pick blocks deleting the folder
+    HAS_PICKS: "Ada foto dari folder ini yang sudah dipilih klien.",
     SYNC_IN_PROGRESS: "Folder ini sedang disinkronkan.",
     RATE_LIMITED: "Terlalu banyak sinkronisasi. Coba lagi sebentar lagi.",
   },
@@ -97,7 +102,7 @@ export const GALLERY_COPY = {
   sourcesDescription: "Folder Google Drive yang dibagikan sebagai “Siapa saja yang memiliki link”.",
   sourcesEmptyTitle: "Belum ada folder",
   sourcesEmptyBody:
-    "Tautkan folder Google Drive berisi foto proyek ini. Foto di folder utama menjadi proof; subfolder edited dan print untuk hasil akhir.",
+    "Tautkan folder Google Drive berisi foto proyek ini. Foto di folder utama menjadi proof; subfolder hasil akhir dipetakan ke item paket lewat Edit folder.",
   sourcesEmptyBodyMobile: "Tautkan folder Google Drive berisi foto proyek ini.",
   addFolder: "Tambah folder",
   addFolderMobile: "Tambah",
@@ -106,8 +111,7 @@ export const GALLERY_COPY = {
   photosDescriptionMobile: "Urut nama file.",
   photosEmptyTitle: "Belum ada foto",
   photosDescription:
-    "Cuplikan 8 foto pertama. Buka semua untuk menjelajah folder, mencari, dan melihat preview.",
-  photosDescriptionPreviewMobile: "Cuplikan foto pertama.", // not in Pencil
+    "Cuplikan 6 foto pertama. Buka semua untuk menjelajah folder, mencari, dan melihat preview.",
   viewAll: "Lihat semua foto",
   viewAllMobile: "Semua",
   visibility: {
@@ -153,8 +157,7 @@ export const GALLERY_COPY = {
   sourceLastSyncedAt: (when: string) => `Terakhir disinkronkan ${when}`,
   sourceProof: (count: number) => `${String(count)} proof`,
   sourceMissing: (count: number) => `${String(count)} hilang`,
-  sourceEdited: (count: number) => `${String(count)} edited`,
-  sourcePrint: (count: number) => `${String(count)} print`,
+  sourceFinished: (count: number) => `${String(count)} hasil akhir`,
   sourceIgnored: (count: number) => `${String(count)} diabaikan`,
   sourceTooDeep: (count: number) => `${String(count)} folder terlalu dalam`,
   syncError: {
@@ -174,7 +177,7 @@ export const GALLERY_COPY = {
     "Google Drive sedang tidak bisa dihubungi. Foto yang ada tidak berubah. Coba lagi sebentar lagi.",
   linkDialogTitle: "Tambah folder",
   linkDialogDescription:
-    "Foto di folder utama menjadi proof. Subfolder edited dan print menjadi hasil akhir.",
+    "Foto di folder utama menjadi proof. Subfolder yang dipetakan ke item paket menjadi hasil akhir.",
   linkSourceLabel: "Sumber",
   linkSourceHelper: "Hanya sumber aktif.",
   linkLabel: "Link folder Google Drive",
@@ -191,6 +194,10 @@ export const GALLERY_COPY = {
   folderInUseBody: (projects: string) =>
     `Folder ini juga tertaut ke galeri ${projects}. Klien kedua proyek bisa melihat foto yang sama.`,
   folderInUseConfirm: "Tetap tambahkan",
+  // Revision OT #3 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
+  createFolderTitle: "Folder Google Drive",
+  createFolderHelper: "Opsional. Bisa juga ditambahkan nanti di halaman galeri.",
+  createFolderInUseConfirm: "Tetap buat galeri",
   linkedTitle: "Folder ditambahkan", // not in Pencil
   previewPosition: (position: number, total: number) => `${String(position)} dari ${String(total)}`,
   previewMissingBadge: "Hilang",
@@ -226,12 +233,33 @@ export const GALLERY_COPY = {
   rotateHelper: "Dibuat otomatis. Boleh diganti (6–64 karakter).",
   rotatedTitle: "Password diganti",
   rotatedBody: "Bagikan password baru ke klien. Password lama tidak berlaku lagi.",
-  removeSource: "Lepas folder",
-  removeDialogTitle: (name: string) => `Lepas ${name}?`,
-  removeDialogBody: (count: number) =>
-    `${String(count)} foto dari folder ini disembunyikan dari klien. Folder di Google Drive tidak berubah. Folder yang dilepas tidak bisa dipasang lagi; tambahkan sebagai folder baru bila perlu.`,
-  removeLastHint: "Galeri yang dipublikasikan butuh minimal satu folder aktif.",
-  removedTitle: "Folder dilepas", // not in Pencil
+  // Revision OT #4 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
+  deleteFolder: "Hapus",
+  deleteFolderTitle: (name: string) => `Hapus ${name}?`,
+  deleteFolderBody: (count: number) =>
+    `Folder ini dan ${String(count)} fotonya dihapus dari galeri. Folder di Google Drive tidak berubah. Tindakan ini tidak bisa dibatalkan.`,
+  deleteLastHint: "Galeri yang dipublikasikan butuh minimal satu folder aktif.",
+  folderDeletedTitle: "Folder dihapus",
+  renameFolder: "Edit folder",
+  renameDialogTitle: "Edit folder",
+  renameDialogDescription: "Nama folder dan subfolder yang berisi hasil akhir.",
+  renamedTitle: "Folder disimpan",
+  // F-21 (Owner 2026-10-07): built without a Pencil frame (Owner override); sync Pencil afterwards.
+  mappingTitle: "Subfolder hasil akhir",
+  mappingHelper:
+    "Pilih subfolder Drive untuk tiap item paket. Subfolder yang tidak dipilih tetap foto proof.",
+  mappingNone: "Belum dipilih",
+  mappingNoFolders: "Belum ada subfolder. Sinkronkan folder ini dulu, lalu petakan di sini.",
+  mappingNoItemsTitle: "Paket proyek ini belum punya item untuk pilihan foto",
+  mappingNoItemsBody: "Tambahkan item di Isi paket dulu.",
+  mappingNoItemsAction: "Buka Isi paket",
+  mappingLoadFailed: "Subfolder belum bisa dimuat. Coba lagi.",
+  newFoldersTitle: (count: number, source: string) =>
+    `${String(count)} subfolder baru di ${source}`,
+  newFoldersBody: (folders: string) => `${folders}. Petakan ke item paket bila berisi hasil akhir.`,
+  mapFolders: "Petakan",
+  save: "Simpan",
+  saving: "Menyimpan…",
   archiveDialogTitle: "Arsipkan galeri?",
   archiveDialogBody:
     "Klien tidak bisa membuka galeri lagi. Galeri yang diarsipkan tidak bisa dipublikasikan kembali.",
@@ -281,8 +309,8 @@ export const GALLERY_COPY = {
   browseFailedTitle: "Foto belum bisa dimuat", // not in Pencil
   visibilityFolded: {
     EDITED:
-      "Disembunyikan dari klien sampai hasil akhir dikirim. Folder edited digabung ke folder induknya.",
+      "Disembunyikan dari klien sampai hasil akhir dikirim. Subfolder yang dipetakan digabung ke folder induknya.",
     PRINT:
-      "Disembunyikan dari klien sampai hasil akhir dikirim. Folder print digabung ke folder induknya.",
+      "Disembunyikan dari klien sampai hasil akhir dikirim. Subfolder yang dipetakan digabung ke folder induknya.",
   },
 } as const;

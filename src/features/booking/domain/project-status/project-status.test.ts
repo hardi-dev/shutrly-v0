@@ -3,7 +3,9 @@ import { describe, expect, it } from "vitest";
 import {
   canCancel,
   cancelReasonRequired,
+  canComplete,
   canDeleteDraft,
+  canMarkDelivered,
   isDealEditable,
   isScheduleEditable,
   needsSession,
@@ -69,5 +71,19 @@ describe("project status (BR-PRJ-004, BR-PRJ-009, BR-PRJ-010)", () => {
       "DELIVERED",
       "COMPLETED",
     ]);
+  });
+});
+
+describe("final delivery and completion (BR-DEL-003, BR-PRJ-005)", () => {
+  it("AC-DEL-001 only BOOKED, SHOOTING and POST_PROCESSING can be delivered", () => {
+    expect(PROJECT_STATUSES.filter(canMarkDelivered)).toEqual([
+      "BOOKED",
+      "SHOOTING",
+      "POST_PROCESSING",
+    ]);
+  });
+
+  it("AC-DEL-007 Tandai selesai is offered only on DELIVERED", () => {
+    expect(PROJECT_STATUSES.filter(canComplete)).toEqual(["DELIVERED"]);
   });
 });

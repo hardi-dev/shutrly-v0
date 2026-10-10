@@ -33,5 +33,17 @@ export function createFixtureDriveProvider(): GallerySourceProviderPort {
           ? { ok: true, body: placeholder(file.fileId), contentType: "image/svg+xml" }
           : { ok: false },
       ),
+    // Fixture originals are the placeholders; an id with "missing" fails, like a file gone from Drive.
+    download: (file) =>
+      Promise.resolve(
+        file.fileId.startsWith("fixture-") && !file.fileId.includes("missing")
+          ? {
+              ok: true,
+              body: placeholder(file.fileId),
+              contentType: "image/svg+xml",
+              contentLength: null,
+            }
+          : { ok: false },
+      ),
   };
 }

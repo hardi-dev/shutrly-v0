@@ -15,7 +15,8 @@ describe("listItemDefinitions", () => {
       valueType: "NUMBER",
       unit: "foto",
       selectionRequired: true,
-      selectionType: "EDIT",
+      pickMode: "COUNT",
+      allowsPickNotes: true,
       editorUserId: "user",
     });
     await repository.create(context, {
@@ -23,7 +24,8 @@ describe("listItemDefinitions", () => {
       valueType: "NUMBER",
       unit: "buah",
       selectionRequired: false,
-      selectionType: null,
+      pickMode: null,
+      allowsPickNotes: false,
       editorUserId: "user",
     });
     await repository.create(context, {
@@ -31,7 +33,8 @@ describe("listItemDefinitions", () => {
       valueType: "NUMBER",
       unit: "foto",
       selectionRequired: true,
-      selectionType: "PRINT",
+      pickMode: "QUANTITY",
+      allowsPickNotes: false,
       editorUserId: "user",
     });
 

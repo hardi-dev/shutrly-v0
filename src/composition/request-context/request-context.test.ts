@@ -8,8 +8,9 @@ vi.mock("next/server", () => ({ after: vi.fn() }));
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { headers } from "next/headers";
 import { after } from "next/server";
+import { z } from "zod";
 
-import { getRequestContext } from "./request-context";
+import { getRequestContext, getScopedRequestContext } from "./request-context";
 
 const waitUntil = vi.fn();
 const env = { ...TEST_APP_ENV, ASSETS: {} };
@@ -94,5 +95,22 @@ describe("getRequestContext on a production Node host (Netlify)", () => {
     const rc = await getRequestContext();
     expect(rc.ip).toBe("203.0.113.9");
     expect(rc.requestId).toBe("01ABC");
+  });
+});
+
+describe("getScopedRequestContext", () => {
+  const schema = z.object({ ONLY_THIS: z.string() });
+
+  it("ADR-022 checks only the endpoint's own bindings, so a partial environment works", async () => {
+    givenRequest({ "cf-ray": "abc-SIN" }, { ONLY_THIS: "yes", APP_STAGE: "production" });
+    expect(await getScopedRequestContext(schema)).toEqual({
+      env: { ONLY_THIS: "yes" },
+      requestId: "abc-SIN",
+    });
+  });
+
+  it("throws when the endpoint's own bindings are invalid", async () => {
+    givenRequest({}, {});
+    await expect(getScopedRequestContext(schema)).rejects.toThrow();
   });
 });

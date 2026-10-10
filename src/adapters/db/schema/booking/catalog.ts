@@ -54,7 +54,10 @@ export const serviceItemDefinition = pgTable(
     valueType: text("value_type").notNull(),
     unit: text("unit"),
     selectionRequired: boolean("selection_required").notNull().default(false),
+    // Legacy column, dual-written from pickMode until a cleanup migration drops it (F-10 R-4).
     selectionType: text("selection_type"),
+    pickMode: text("pick_mode"),
+    allowsPickNotes: boolean("allows_pick_notes").notNull().default(false),
     isActive: boolean("is_active").notNull().default(true),
     updatedBy: updatedBy(),
     ...auditColumns(),
@@ -76,8 +79,16 @@ export const serviceItemDefinition = pgTable(
       sql`${t.selectionType} is null or ${t.selectionType} in ('EDIT','PRINT')`,
     ),
     check(
-      "service_item_definition_selection_ck",
-      sql`${t.selectionRequired} = (${t.selectionType} is not null)`,
+      "service_item_definition_pick_mode_ck",
+      sql`${t.pickMode} is null or ${t.pickMode} in ('COUNT','QUANTITY')`,
+    ),
+    check(
+      "service_item_definition_pick_ck",
+      sql`${t.selectionRequired} = (${t.pickMode} is not null)`,
+    ),
+    check(
+      "service_item_definition_pick_notes_ck",
+      sql`not ${t.allowsPickNotes} or ${t.selectionRequired}`,
     ),
     check(
       "service_item_definition_selection_number_ck",

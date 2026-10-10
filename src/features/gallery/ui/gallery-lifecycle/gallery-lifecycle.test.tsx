@@ -7,7 +7,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { GalleryPageScreen } from "../gallery-page-screen/gallery-page-screen";
 
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
-vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }) }));
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn(), replace: vi.fn() }),
+  usePathname: () => "/w/ws-1/projects/p-1/gallery",
+}));
 // The header actions portal into the shell's slot, which these tests don't render.
 vi.mock("@/ui/patterns/page-actions/page-actions", () => ({
   PageActions: ({ children }: Readonly<{ children: React.ReactNode }>) => <div>{children}</div>,
@@ -16,6 +19,7 @@ vi.mock("@/ui/patterns/page-actions/page-actions", () => ({
 const SOURCE = {
   id: "s-1",
   name: "Rina-Wisuda",
+  label: null,
   workspaceSourceName: "Google Drive",
   removed: false,
   removedAt: null,
@@ -168,7 +172,7 @@ describe("GalleryLifecycle", () => {
     });
   });
 
-  it("AC-GAL-013 the last folder of a published gallery can't be removed", async () => {
+  it("AC-GAL-013 the last folder of a published gallery can't be deleted", async () => {
     render(
       <GalleryPageScreen
         workspaceId="ws-1"
@@ -177,7 +181,7 @@ describe("GalleryLifecycle", () => {
       />,
     );
     await userEvent.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
-    expect(await screen.findByRole("menuitem", { name: /Lepas folder/ })).toHaveAttribute(
+    expect(await screen.findByRole("menuitem", { name: /Hapus/ })).toHaveAttribute(
       "aria-disabled",
       "true",
     );

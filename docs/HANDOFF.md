@@ -1,39 +1,34 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-06 · Active: bilingual documentation and pending design decisions. Read this first, then [docs/README.md](README.md).
-Branch: `codex/bilingual-copy-revamp`; worktree `.claude/worktrees/bilingual-copy-revamp`. Previous gallery delivery context is preserved below.
+Last updated: 2026-10-07 (F-10 client-access DONE pending verification, Slices 0–12 built incl. the Owner 7 revision; F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending Owner acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
+Branch: `feat/client-access` (F-10, worktree `.claude/worktrees/pull-branch-main-21161f`). F-09 free-tier rework is on `feat/gallery-free-tier`, F-07 on `feat/projects`, F-08 Team designed on `feat/team-sessions`.
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-19 bilingual revamp SPECIFIED (2026-10-06)
+## Current handoff — F-10 client-access, Owner 7 revision built, pending verification (2026-10-07)
 
-- [Policy](product/localization.md), BR-L10N-* and [ADR-021](architecture/decisions/ADR-021-next-intl-bilingual-localization.md) approved: English default, EN/ID switches, full system/authored-content coverage. Docs aligned; app, dependency, schema and exports unchanged.
-- Read [spec](features/bilingual-copy-revamp/spec.md), [criteria](features/bilingual-copy-revamp/acceptance-criteria.md) and [audit](features/bilingual-copy-revamp/copy-outside-modules-audit.md).
-- Resume at: review the [EN/ID copy deck](features/bilingual-copy-revamp/copy-deck.md), including selection-led product positioning (F-09–F-12) and its headline/claim audit; resolve preferences, recipient/reset language, classification, readiness and legacy snapshots; then Pencil/exports, technical design and plan. Prior gallery actions remain outstanding.
-
-## Previous delivery context — F-09 free-tier rework PLANNED (2026-10-05)
-
-- **Staging moved to Netlify (Owner 2026-10-06, [ADR-020](architecture/decisions/ADR-020-staging-on-netlify.md)):** the Cloudflare staging Worker hit error 1102. Staging is now `https://staging--shutrly.netlify.app` (Netlify Free, deployed by hand with `netlify deploy --build --alias staging`) on the empty Neon project `shutrly-staging-us` (us-east-2). **Owner to do:** register the owner and link a gallery folder again on staging; add `<alias>/api/auth/callback/google` to the Google OAuth redirect URIs; rotate the staging secrets if the setup transcript is shared (the Netlify CLI printed them once); delete the old staging branch and Worker when no longer needed. Latency is ~0.5 s above the edge (Ohio functions on Free). The production host is still open.
-
-- **Done:** R1–R4 and the checks of R5 (see [plan.md](features/gallery/plan.md)). **Next:** mark PR #8 ready and merge (verified and shipped-checked 2026-10-05: [report](features/gallery/verification-report.md), [release notes](features/gallery/release-notes.md)); production needs the two secrets and migrations `0013`/`0014`, then `/sdv:handoff`. The CPU measurement (ADR-018 › Measurement) found every path far over the documented 10 ms but no request refused on a Workers Free account; the Owner decided on 2026-10-05 to go on with Workers Free and watch for CPU errors (upgrade trigger in ADR-018 point 4). `SYNC_STEP_MAX_ENTRIES` is now 1,000, derived from the measurements (gallery technical design, R-6). The Owner accepted ADR-018 and ADR-019 and the media trade-off (constitution v1.2, BR-ACC-005, BR-SRC-003, AC-GAL-015 amended; new AC-GAL-032…036). **Owner allowed (2026-10-05):** the CPU check on a free Cloudflare preview (R5; new Workers project, or an existing one); done 2026-10-05 and failed on the first path (see above). The `last_seen_at` drop is done (`0014`).
-- **F-09 before the rework:** the block below, still true for `main`.
-
-### F-09 Gallery DONE on `main`, pending Owner acceptance
-
-- **State:** F-09 Gallery `DONE` (pending Owner acceptance). Branch `claude/new-feature-skill-start-a92e1b` (worktree), `origin/main` (F-08) merged, not pushed, no PR. Only the generated `docs/design-system/pencil-variables.json` is untracked.
-- **Done:** Slices 0–8 of the [plan](features/gallery/plan.md), each with an implementation record. Slice 0 spike on the Owner's public folder closed R-1/R-2 ([technical design › Risks](features/gallery/technical-design.md)). Slice 8: isolation test, browser pass with axe, copy audit of all 100 exports, and the real-Drive smoke E2E (`gallery-drive-smoke.spec.ts`, axe and keyboard on every surface). Migration `0012_gallery` applied to the non-production DB.
-- **Checks (last run):** typecheck, lint, unit/dom (1493), integration (160) and build pass. Full E2E: 73 passed, 2 flaky (pass on retry), 1 stale workspace test fixed and passing; the gallery specs and the real-Drive smoke pass.
-- **Owner actions:**
-  - Accept F-09 or report changes; the smoke spec runs with `pnpm e2e tests/e2e/gallery` when `GALLERY_SMOKE_FOLDER_URL` is set in the shell or in `.env.test`.
-  - Check the Workers Paid plan before ship; provision the Drive and password keys for production; commit the `guard.py` change on `feat/team-sessions` if still pending.
-  - Optionally measure a 1,000–2,000 photo folder to settle A-T1 (sync size limit).
+- **State:** feature map `DONE, pending verification` (Slices 0–12). Branch `feat/client-access` (worktree `.claude/worktrees/pull-branch-main-21161f`), pushed to origin on 2026-10-07 (`9849df1`, Owner asked), no PR yet. Every slice has an implementation record in [technical-design.md](features/client-access/technical-design.md); [plan.md](features/client-access/plan.md) is fully ticked.
+- **Slice 12 (Owner 7, built 2026-10-07):** *Akses klien*, *Pilihan klien* and *Hasil akhir* are on the gallery page (720 column, *Foto* 6 photos in 3 columns); the project page keeps *Add-on*, its *Galeri* card has the *Pilihan klien* / *Hasil akhir* summary rows and no password, and *Tandai selesai* is the header action of a `DELIVERED` project (phone action bar) with the meta *Hasil akhir dipublikasikan {date}*. The picks pages moved to `/projects/[id]/gallery/pilihan[/groupId]`; the old URLs are 404 (Owner: no redirect). *Salin* on *Akses klien* shows the whole value selected when the browser refuses the clipboard (Owner chose this over a deprecated `execCommand` fallback).
+- **Checks (last run):** typecheck, lint on changed files, the touched dom/unit tests, `gallery-sync` integration and `tests/e2e/client-access/journeys.spec.ts` pass; Slices 0–11 checks as recorded. Screenshots at 1440/390 matched `HT8V6`, `iGwTx`, `r71J5`, `QUSVb`. Not run: the full suite (project rule), `gate.spec.ts` (real Drive), R-6 (real phone).
+- **Partial submission (Owner 2026-10-07):** a client send below the limit keeps the group `OPEN` (picks still changeable) until a send at the limit or the Owner's *Kunci pilihan*; built in `756ad74`, docs `ad65b7f`, deployed `68cdc10` (see the technical-design record). The updated journeys E2E has not run yet.
+- **Answered 2026-10-07 (option B, finding #5): studio-specific subfolder names.** Final-delivery files are found only in subfolders named `edited` / `print` (case-insensitive, any depth, BR-GAL-007, `photo-classification.ts`); other names (`Final`, `Hasil Edit`, `Cetak`…) are read as proofs. Options offered, no answer yet: **A** workspace setting with extra names per kind, defaults kept (recommended); **B** per source, the Owner picks the Edited/Print subfolder when adding a Drive folder; **C** a wider built-in synonym list; **D** keep the convention and hint after sync. Any choice is a new rule (intent → spec/AC → Pencil → build, likely its own F-09 slice), needs a re-sync to reclassify stored photos, and must decide what happens to a pick whose photo becomes Edited. Start with `/sdv:capture-intent` once the Owner picks.
+- **Owner manual test (2026-10-07) → Revision OT:** seven findings, all decided, in [manual-test-findings.md](features/client-access/manual-test-findings.md); plan › *Revision OT* (Slices 13–16). Slice 13 (English route segments: `/g/[token]/photos`, `/final`, `/picks/…`, `/download/…`, Owner `…/gallery/picks`) is built. The subfolder-name question below is answered: option B (finding #5).
+- **Revision OT + F-20 + F-21 (2026-10-07):** all seven manual-test findings are fixed. Slices 13–16 built; F-20 *client-proof-downloads* (#6) and F-21 *delivery-folder-mapping* (#5) built straight from their accepted intents without spec/AC/Pencil (Owner), recorded in each feature's `build-notes.md`. Migration `0018_folder_map` is on the dev database. BR-GAL-007 replaced (subfolders mapped to package items; no folder name is recognised by itself), BR-DEL-004 amended (proof downloads).
+- **Resume at:** (1) Owner reviews on `localhost:3000`: folder ⋯ › *Edit folder* (subfolder mapping), the new-folders toast after *Sinkronkan*, *Hasil akhir* tabs per item, `/g/{token}/photos` downloads and *Pilih beberapa* › *Pilih untuk…*; (2) sync Pencil with the UI built without frames (Revision OT, F-20, F-21); (3) verify the React key warning on the gallery page (fix `8dd3737`); (4) `/sdv:verify-feature client-access` (+ F-20, F-21), push, PR, `/sdv:ship` (run `0018` on staging/production at ship).
+- **Staging (Netlify, ADR-020):** `68cdc10` is deployed to `staging--shutrly.netlify.app` (`/api/health`, `/login` 200). `CLIENT_SESSION_KEY` is a Netlify secret; all three databases (dev, Netlify staging us-east-2, old staging) record migrations `0000`–`0017`. Seed: `pnpm db:seed` ([tech-stack › Seed data](architecture/tech-stack.md#seed-data)), Owner `owner@shutrly.test`, passwords and client link in the git-ignored `.env.seed.dev`, `.env.seed.staging`, `.env.seed.staging-old` of this worktree (never in chat). *Wisuda Rina* (BOOKED, 113 photos, published); no final delivery because the example Drive folder has no `edited`/`print` subfolder, so *Tandai selesai* can't be seen on staging. Deploy from a checkout outside `.claude/` (see `CLAUDE.md`); the scratch checkout `…/92dd845c-…/scratchpad/deploy-src` can be reused (`git checkout --detach <sha>`, `NETLIFY_SITE_ID` from the main checkout's `.netlify/state.json`, `scripts/deploy/netlify-deploy.sh staging`).
+- **Owner actions:** push and open the PR; stop the dev server of the main checkout that holds port 3000 (started from this session's browser pane; it fails with missing env keys and blocks Playwright, whose base URL is fixed to 3000); provision `CLIENT_SESSION_KEY` for production if it isn't this Netlify site; run `0015`–`0017` on production at ship; promote *Photo Tile/Selectable* in `design-system.lib.pen`; fix two Pencil drifts (the add-on dialog's target field label/helper; the publish confirm says *Dikirim* where the status is *Terkirim*); decide whether F-09's now-unused `AccessCard` and `CopyPasswordButton` may be deleted.
 - **Open items:**
-  - A-T1 stays an assumption (only 113 photos measured).
-  - Small deviations are listed in the plan's records (no *Ganti password* button in the *Akses klien* header, *Galeri dibuka lagi* toast not wired).
-  - Flaky E2E: catalog phone axe (timeout) and AC-SRC-015, both pass on retry.
-- **Next:** `/sdv:verify-feature gallery` for the independent review, then `/sdv:ship`.
+  - Netlify streams stop at 60 s / 20 MB, so a large Print download from `/g/[token]/unduh/[photoId]` can fail on staging; test needs a `print` subfolder with a file over 20 MB in the example Drive folder (`1yyis5Mp…`), then sync, publish final delivery and download from the client link.
+  - The two staging Owners were seeded with the older seed (direct inserts); compatibility is proven on dev only.
+  - The staging *Wisuda Rina* group sent 5/10 before the partial-submission change is still `SUBMITTED`; offered to set it back to `OPEN` on the staging database (Owner hasn't answered).
+  - Seen once: *Only plain objects … Client Components* on the client *Tinjau* route during a failed throwaway run; not reproduced.
+  - The client *Dibuka lagi* chip is not built; R-6 (iOS Safari bulk download) needs a real phone; tablet and dark mode are not drawn (GAP-01, GAP-04).
+  - Fixture-Drive E2E needs `E2E_FAKE_DRIVE=1` in this worktree's `.dev.vars` for the run (restore after; `retries: 2`).
 
-- **Local test account:** `scripts/dev/show-test-owner.sh [--reveal]` prints the named test Owner kept in the git-ignored `.env.test` (`TEST_OWNER_EMAIL`, `TEST_OWNER_PASSWORD`). It has a workspace, a client, a service and a booked project with a gallery of the Owner's 113-photo folder.
+## Parallel handoff — F-22 bilingual copy (branch `codex/bilingual-copy-revamp`, SPECIFIED 2026-10-06)
+
+- [Policy](product/localization.md), BR-L10N-* and [ADR-025](architecture/decisions/ADR-025-next-intl-bilingual-localization.md) approved: English default, EN/ID switches, full system/authored-content coverage. Landing stays English (Owner 2026-10-07). Specs in `docs/features/bilingual-copy-revamp/`; app, dependency, schema and exports unchanged.
+- Branch `codex/bilingual-copy-revamp` (worktree `.claude/worktrees/bilingual-copy-revamp`) is merged with `staging`. Resume at: review the [EN/ID copy deck](features/bilingual-copy-revamp/copy-deck.md); resolve preferences, recipient/reset language, classification, readiness and legacy snapshots; then Pencil/exports, technical design and plan.
 
 ## Key decisions (Owner)
 
@@ -50,7 +45,7 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 - GAP-02 loading states (button, switch) and states beyond those drawn
 - GAP-03 workspace brand-override rules
 - GAP-04 client gallery (mobile) — frame now exists (C33 Mobile Shell); screens, bottom navigation and breakpoints still open
-- GAP-05 bilingual implementation pending: scope resolved by [localization policy](product/localization.md) and ADR-021; English default, complete EN/ID coverage, no cross-language fallback.
+- GAP-05 EN/ID copy mix (id-ID assumed)
 - Tabular figures for money and time
 - No negative (red) metric delta tone
 - Menu components have no legacy evidence
@@ -92,3 +87,7 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 - **Design exports:** builds read the raw exports through `exports/INDEX.md` (`scripts/sdv/index-exports.py`). The compact exports were dropped on 2026-10-04 because their stripped bases didn't render the real UI (Owner).
 - **Pen library import in a worktree** can point at the main checkout's library; verify and never remove a used import (see `CLAUDE.md` › Mistakes to avoid).
 - **CLI save isn't possible:** `osascript` keystrokes are blocked (no Accessibility permission), so the Owner presses ⌘S.
+- **Local test account:** `scripts/dev/show-test-owner.sh [--reveal]` prints the named test Owner kept in the git-ignored `.env.test` (`TEST_OWNER_EMAIL`, `TEST_OWNER_PASSWORD`). It has a workspace, a client, a service and a booked project with a gallery of the Owner's 113-photo folder.
+- **F-10 browser passes:** the Owner pages need a signed-in Owner. The test Owner can be made owner of the throwaway studio's workspace for a pass by updating `workspace.owner_user_id` on the non-production database, then restoring it. `.claude/launch.json` entry `dev-client-access` runs this worktree's server.
+- **Machine:** `head` and `timeout` are not available (macOS); `head` is also listed in `CLAUDE.md` › Mistakes to avoid and was typed again this session. A bare `cat > file` waits for input.
+- **UI gotchas (F-10):** the destructive `Modal` drops its body text, so use a standard dialog when the export has a body; a `size-*` class needs a block or flex parent (`PhotoThumb` is `block`); `Button` only takes icons from its allow-list in `button.types.ts`.

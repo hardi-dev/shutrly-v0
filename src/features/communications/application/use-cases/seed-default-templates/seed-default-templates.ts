@@ -1,6 +1,5 @@
 import "server-only";
 
-import { DEFAULT_TEMPLATE_CONTENT } from "@/features/communications/domain/default-templates/default-templates";
 import { TEMPLATE_TYPES } from "@/features/communications/domain/template-type/template-type";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
@@ -19,6 +18,6 @@ export async function seedDefaultTemplates(
 ): Promise<void> {
   await repository.seedDefaults(
     context,
-    TEMPLATE_TYPES.map((type) => ({ type, content: DEFAULT_TEMPLATE_CONTENT.id[type] })),
+    TEMPLATE_TYPES.map((type) => ({ type })),
   );
 }

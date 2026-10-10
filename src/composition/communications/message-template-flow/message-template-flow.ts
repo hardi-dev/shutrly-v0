@@ -8,7 +8,7 @@ import { getMessageTemplate } from "@/features/communications/application/use-ca
 import { listMessageTemplates } from "@/features/communications/application/use-cases/list-message-templates/list-message-templates";
 import { updateMessageTemplate } from "@/features/communications/application/use-cases/update-message-template/update-message-template";
 import type { UpdateMessageTemplateResult } from "@/features/communications/application/use-cases/update-message-template/update-message-template.types";
-import { DEFAULT_TEMPLATE_CONTENT } from "@/features/communications/domain/default-templates/default-templates";
+import { resolveTemplateContent } from "@/features/communications/domain/resolve-template-content/resolve-template-content";
 import { templateTypeFromSlug } from "@/features/communications/domain/template-type/template-type";
 import type { TemplateType } from "@/features/communications/domain/template-type/template-type.types";
 import { getWorkspaceProfile } from "@/features/workspace/application/use-cases/get-workspace-profile/get-workspace-profile";
@@ -16,6 +16,7 @@ import { DomainError } from "@/shared/errors/domain-error";
 import { logger } from "@/shared/logging/logger";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
+import { getRequestLocale } from "../../locale/request-locale/request-locale";
 import { verifyOwnerWorkspace } from "../../workspace/owner-workspace/owner-workspace";
 import { withMessageTemplateScope } from "../message-template-scope/message-template-scope";
 import type {
@@ -59,13 +60,14 @@ export async function loadMessageTemplateEditor(
     const record = await getMessageTemplate(templates, verified.context, type).catch(
       notFoundOnMissing,
     );
+    const locale = await getRequestLocale();
     const profile = await getWorkspaceProfile(workspaces, verified.context);
     // BR-WS-004: clients see the brand name, falling back to the workspace name.
     const brandName = profile?.brandName ?? profile?.name ?? verified.workspace.name;
     return {
       type,
-      content: record.content,
-      defaultContent: DEFAULT_TEMPLATE_CONTENT.id[type],
+      content: resolveTemplateContent(record, locale),
+      defaultContent: resolveTemplateContent({ isDefault: true, content: null, type }, locale),
       brandName,
     };
   });
@@ -96,6 +98,8 @@ export async function saveMessageTemplate(
     return await withMessageTemplateScope(({ templates }) =>
       updateMessageTemplate(templates, verified.context, {
         type,
+        // The form has no save-mode control yet; text saves are custom (restore-default UI is I5/I6).
+        mode: "custom",
         editorUserId: account.id,
         input,
       }),

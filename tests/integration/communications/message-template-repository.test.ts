@@ -73,6 +73,7 @@ describe("Drizzle message template repository", () => {
     await seedDefaultTemplates(templates, context);
     const updated = await templates.updateContent(context, {
       type: "INVOICE_SHARE",
+      isDefault: false,
       content: "{{invoiceUrl}}",
       editorUserId: ownerId,
     });
@@ -98,6 +99,7 @@ describe("Drizzle message template repository", () => {
     expect(await templates.findByType(mine, "GALLERY_SHARE")).toBeNull();
     const updated = await templates.updateContent(mine, {
       type: "GALLERY_SHARE",
+      isDefault: false,
       content: "{{galleryUrl}}",
       editorUserId: "nobody",
     });

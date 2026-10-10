@@ -26,6 +26,9 @@ export async function updateMessageTemplate(
   context: WorkspaceContext,
   command: UpdateMessageTemplateCommand,
 ): Promise<UpdateMessageTemplateResult> {
+  if (command.mode === "default") {
+    return storeDefault(repository, context, command);
+  }
   const parsed = messageTemplateContentSchema(command.type).safeParse(command.input);
   if (!parsed.success) {
     const key = parsed.error.issues.at(0)?.message ?? "EMPTY";
@@ -33,7 +36,24 @@ export async function updateMessageTemplate(
   }
   const updated = await repository.updateContent(context, {
     type: command.type,
+    isDefault: false,
     content: normaliseTemplateContent(parsed.data.content),
+    editorUserId: command.editorUserId,
+  });
+  if (!updated) throw new MessageTemplateError("NOT_FOUND");
+  return { ok: true };
+}
+
+async function storeDefault(
+  repository: MessageTemplateRepositoryPort,
+  context: WorkspaceContext,
+  command: UpdateMessageTemplateCommand,
+): Promise<UpdateMessageTemplateResult> {
+  // Sent content is ignored: a default is stored with no text (D-13).
+  const updated = await repository.updateContent(context, {
+    type: command.type,
+    isDefault: true,
+    content: null,
     editorUserId: command.editorUserId,
   });
   if (!updated) throw new MessageTemplateError("NOT_FOUND");

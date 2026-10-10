@@ -34,6 +34,7 @@ export class FakeMessageTemplateRepository implements MessageTemplateRepositoryP
     if (index === -1) return false;
     this.rows[index] = {
       ...this.rows[index],
+      isDefault: update.isDefault,
       content: update.content,
       updatedBy: update.editorUserId,
       updatedAt: new Date(),
@@ -47,7 +48,8 @@ export class FakeMessageTemplateRepository implements MessageTemplateRepositoryP
       this.rows.push({
         workspaceId: context.workspaceId,
         type: seed.type,
-        content: seed.content,
+        isDefault: true,
+        content: null,
         updatedBy: null,
         updatedAt: new Date(),
       });

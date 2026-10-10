@@ -27,7 +27,7 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 
 ## Parallel handoff — F-22 bilingual copy (branch `codex/bilingual-copy-revamp`, SPECIFIED 2026-10-06)
 
-- [Policy](product/localization.md), BR-L10N-* and [ADR-025](architecture/decisions/ADR-025-next-intl-bilingual-localization.md) approved: English default, EN/ID switches, full system/authored-content coverage. Landing stays English (Owner 2026-10-07). Specs in `docs/features/bilingual-copy-revamp/`; app, dependency, schema and exports unchanged.
+- [Policy](product/localization.md), BR-L10N-* and [ADR-025](architecture/decisions/ADR-025-next-intl-bilingual-localization.md) approved: English default, EN/ID switches, full system/authored-content coverage. The public landing page is included too (Owner request, 2026-10-10). Specs in `docs/features/bilingual-copy-revamp/`; app, dependency, schema and exports unchanged.
 - Branch `codex/bilingual-copy-revamp` (worktree `.claude/worktrees/bilingual-copy-revamp`) is merged with `staging`. Resume at: review the [EN/ID copy deck](features/bilingual-copy-revamp/copy-deck.md); resolve preferences, recipient/reset language, classification, readiness and legacy snapshots; then Pencil/exports, technical design and plan.
 
 ## Key decisions (Owner)

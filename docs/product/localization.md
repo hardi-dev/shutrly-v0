@@ -7,7 +7,7 @@ Owner decisions: 2026-10-06.
 
 English (`en`) is the default. The photographer dashboard and client galleries allow an explicit switch to Bahasa Indonesia (`id`). A rendered page uses one language for all system-owned copy, including navigation, forms, validation, errors, loading, empty states, dialogs, toasts, accessible names, metadata, library-generated labels and platform defaults. Supported brands, identity names, identifiers and external filenames retain their original values; these are not translation failures.
 
-The public landing page (F-19 `landing`, Owner 2026-10-07) is English-only pre-signup marketing outside workspace UI; it is not governed by the workspace language switch.
+The public landing page (F-19 `landing`) follows this policy too: English and Bahasa Indonesia with the same switch behavior and no cross-language fallback. This replaces the English-only landing exception of 2026-10-07 (Owner request, 2026-10-10).
 
 Descriptions and custom WhatsApp templates authored by the Owner support paired EN/ID versions. Display the matching version without falling back to the other language. Do not automatically translate or overwrite customized content. Classify free-text item/service/role titles before deciding whether each is an identity or translated display label. Authoring both versions is an intentional bilingual editing context: language tabs/fields must be clearly identified; ordinary reader pages remain single-language.
 

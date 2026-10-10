@@ -336,7 +336,7 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 
 - [ ] **I5.8 E2E owner language switch.** `tests/e2e/locale/owner-language-menu.spec.ts`: `"BR-L10N-001 an owner switches to English from the account menu and keeps the page"` (desktop: `html[lang=en]`, same URL, still `en` after reload); `"AC-L10N-001 an owner switches language from the mobile menu sheet"` (390 × 844); `"D-22 after sign-out the sign-in screen keeps the owner's language"`. Then the fidelity pass against the six exports above (class names and nesting only). Commit `test(i18n): cover the owner language switch end to end`.
 
-**Not yet tasks (need a design decision):** auth layout language switch (login, register, verify, forgot/reset password), landing placement, auth email locale control (D-17). Each needs idle, pending and failed states for desktop and mobile in EN and ID.
+**Not yet tasks:** auth layout language link (designed 2026-10-11 on Login; every auth screen shares the layout), landing placement (needs design), auth email locale (D-17, 2026-10-11: the email uses the screen's resolved locale, no form control).
 
 ### I6 — Owner feature copy
 
@@ -363,7 +363,7 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 
 **Decisions to answer** (technical-design §3, §15):
 - D-8 / Q-6: approve the narrow `eslint-plugin-boundaries` exception so `composition/locale/message-catalog` may import `*.copy.ts` from `features/*/ui`, `src/ui` and `src/app` — or name another placement for the registry. Blocks I5–I7.
-- D-17 / Q-1: how the owner chooses the auth email language before sign-in. Blocks the auth email part of I5.
+- D-17 / Q-1: answered 2026-10-11, the auth email uses the screen language; no form control.
 - D-18 / Q-2: `default_key` for item definitions, roles and project-item snapshots. Blocks I4 and the keyed labels in I6.
 - D-20 / Q-3: EN display patterns for IDR and dates per locale. I3 ships provisional constants; the answer changes only those constants and EN display tests.
 - D-21 / Q-5: template "changed elsewhere" conflict state, or keep last-write-wins. Affects I4 scope.

@@ -24,6 +24,32 @@ Status: **DESIGNED** (Owner approved and saved, 2026-10-11; `.pen` 56,443 bytes,
 | M5 · Language switching (pending) · phone · light | `ZJyUC` | Sheet meta *Mengganti bahasa…*, options dimmed, spinner on the chosen one |
 | M6 · Language switch failed · phone · light | `p2jPCo` | Toast/Danger top-centre with the same message |
 
+## Auth language switch (PROPOSED, 2026-10-11)
+
+Source: `docs/features/auth/auth.pen`, Login desktop `amp4Y` and mobile `IOC5i`, rebuilt here as library instances. The local editorial panel `Z5xhk` is recreated as the local component **Auth / Editorial panel** (`RnrxL`, same tiles, photos, scrim and copy). The mobile title now wraps (`fixed-width`), because the one-line title was clipped at 390.
+
+The auth layout header gets a **language link** on the right of the brand (Owner 2026-10-11): no padding, no border, no chevron, a `globe` icon and the current language's self-name in `text.secondary`. On hover it reads as a link (`status.info.fg` and an underline). It sits in the shared auth layout, so login, register, verification, forgot and reset password all get it; Login stands for all of them.
+
+Local component board **Components / Language link** (`eIyAc`): `Language link` (`XxIqd`), `Language link/Hover` (`T51PYf`), `Language link/Pending` (`i1CNf`, `loader-circle` and *Mengganti bahasa…* in `text.muted`). The underline is a 1 px rectangle under the label (transparent at rest), because Pencil ignores a text `underline` override on an instance.
+
+| Frame | Pencil ID | State |
+|---|---|---|
+| A1 · Login · language closed · desktop | `wqcpW` | Link shows *Bahasa Indonesia* |
+| A1b · Login · language link hover · desktop | `EBYgV` | Link in info colour with underline |
+| A2 · Login · language closed · mobile | `Fwe1v` | Same link, full label |
+| A3 · Login · language menu open · desktop | `GPftW` | Link in hover style; menu under it: English, Bahasa Indonesia ✓ |
+| A4 · Login · language sheet · mobile | `sAUWh` | Bottom Sheet/Actions *Bahasa* with the two options |
+| A5 · Login · language switching · desktop | `m63yf` | Pending link: spinner, *Mengganti bahasa…*, not pressable |
+| A6 · Login · language switching · mobile | `AvC3d` | Same |
+| A7 · Login · language failed · desktop | `xbbVv` | Toast/Danger bottom-right, deck §1 failure line |
+| A8 · Login · language failed · mobile | `W5jJs` | Toast/Danger at the top, under the header |
+
+Notes:
+- No library component fits a text-only trigger, so the link is a local component. DESIGN-SYSTEM GAP: promote it (or a generic text/link button) to the library with `/sdv:save-design-system` if the Owner wants it reused.
+- The switch writes the device cookie (`setDeviceLocale`); no session is needed.
+- Login is the example for every auth screen (register, verification, forgot and reset password): they share the auth layout, so the link is placed the same way in code (Owner 2026-10-11).
+- Auth email language (D-17, Owner 2026-10-11): no email-language field on the forms. Emails go out in the screen language chosen with this link.
+
 ## Account menu
 
 The language switch lives in the owner's account menu, not in a segmented control.

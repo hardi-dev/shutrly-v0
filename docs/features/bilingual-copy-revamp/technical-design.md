@@ -68,7 +68,7 @@ Out of scope:
 | D-14 | Existing dev/staging template rows are flagged by 0019: a row is default only if its content equals the historical 0003 text byte for byte; other rows become custom. No content is rewritten. | spec l.23, l.26 | Decided (design) |
 | D-15 | One domain function `resolveTemplateContent(template, language)` feeds the editor, the preview and (later) F-15 message assembly. | brief; ADR-025 | Decided (design) |
 | D-16 | Recipient language is an explicit argument for every generated message; the default preselection is the owner's `user.locale`. | spec l.22, l.27; BR-L10N-006 | Decided |
-| D-17 | Auth emails: an explicit language control on the triggering form, preselected to the screen language (Q-1). | spec l.22 | **Decided (Owner, 2026-10-10)** |
+| D-17 | Auth emails go out in the language of the auth screen that triggers them. There is no separate email-language control on the form; the owner chooses through the auth layout language link before submitting (Q-1 alternative). | spec l.22 | **Decided (Owner, 2026-10-11; replaces the 2026-10-10 form control)** |
 | D-18 | Platform-default item definitions and team roles carry a nullable stable `default_key`; rename or unit change clears it, after which the text is an identity. Project item snapshots copy the key (Q-2). | spec l.24 | **Decided (Owner, 2026-10-10)** |
 | D-19 | Amount input parsing follows the active locale: its group separator is accepted, its decimal separator is a `NOT_WHOLE` error. An input is never silently reinterpreted. | ADR-025; OCM-20/21; localization policy | Decided (design) |
 | D-20 | English: `IDR 750,000` and `Oct 10, 2026`. Indonesian: `Rp 750.000` and `10 Okt 2026`. Amounts stay exact (Q-3). | ADR-025 | **Decided (Owner, 2026-10-10)** |
@@ -207,7 +207,7 @@ All actions are thin: parse, call composition, map the result (coding rules › 
 | `setGalleryLocale(token, locale)` | `src/app/actions/client-access/gallery-locale.ts` | `locale-flow.setGalleryLocale` → reuses gallery token resolution (`client-access-flow`) | Validates the token format and that the token resolves to an available gallery (C-104); writes `shutrly_gallery_locale` with `Path=/g/<token>`. Needs no gallery password, because the locked password screen also switches language. Rate-limited by the existing unknown-token limiter (ADR-023). |
 | `saveMessageTemplate(rawId, slug, input)` (changed) | `src/app/actions/communications/…` | `message-template-flow.saveMessageTemplate` → `update-message-template` | Input `{ mode: "custom", content } \| { mode: "default" }` (D-13). Optionally `expectedUpdatedAt` (D-21, Proposed). |
 | `loadMessageTemplateEditor` (changed) | composition only | `get-message-template` + `resolveTemplateContent(record, ownerLocale)` | Returns `{ type, isDefault, content (resolved), defaultContent (owner locale), brandName, updatedAt }`. |
-| Auth email triggers (changed) | register, resend, forgot-password actions | register/recovery flows → `auth-email` port gains `locale` | Recipient language passed explicitly (D-17, Proposed). |
+| Auth email triggers (changed) | register, resend, forgot-password actions | register/recovery flows → `auth-email` port gains `locale` | Recipient language = the request's resolved locale (D-17). |
 
 Recipient language for F-15 is not an F-22 action. F-22 exposes `renderTemplateForRecipient(template, language, values)` in the communications application layer for F-15 to call.
 
@@ -230,7 +230,7 @@ Recipient language for F-15 is not an F-22 action. F-22 exposes `renderTemplateF
 ### 7.3 Recipient language
 
 - Generated messages (F-15): `language` is a required argument. The composition entry point preselects `user.locale` for the UI and never reads the request locale. A custom template ignores `language` for its text, which is sent as written. `language` still formats the values (`invoiceTotal`, dates) of that message (§7.6).
-- Auth emails (D-17, **Proposed — needs Owner**). The verification and reset emails go to the owner, usually before sign-in, so there is no dashboard. Proposal: each auth form that triggers an email submits an explicit `emailLocale`, preselected to the screen's resolved locale. For a signed-in owner (none of the current flows) it is preselected to `user.locale`. `AuthEmailPort.send({ kind, to, link, locale })` and `auth-email-templates` select the `{ en, id }` copy by `locale`. Better Auth's `sendVerificationEmail`/`sendResetPassword` callbacks receive only `user`/`token`, so the chosen locale has to reach them through a request-scoped value set by the flow, or through `user.locale` when the email follows a sign-in. The mechanism is confirmed in the iteration spike.
+- Auth emails (D-17, decided 2026-10-11). The verification and reset emails go to the owner, usually before sign-in. The email uses the auth screen's resolved locale at submit time (the device cookie set by the auth layout language link, else `en`); the forms get no extra field. For a signed-in owner (none of the current flows) it is `user.locale`. `AuthEmailPort.send({ kind, to, link, locale })` and `auth-email-templates` select the `{ en, id }` copy by `locale`. Better Auth's `sendVerificationEmail`/`sendResetPassword` callbacks receive only `user`/`token`, so the locale has to reach them through a request-scoped value set by the flow, or through `user.locale` when the email follows a sign-in. The mechanism is confirmed in the iteration spike.
 
 ### 7.4 Identity vs platform default (D-18, **Proposed — needs Owner**)
 
@@ -269,7 +269,6 @@ No layout is designed here. Each item needs approved Pencil exports before imple
 | Every screen in OCM-01…09, catalog/clients/projects/team/sources/gallery/add-on screens | existing states, each in both languages; skeleton text equals final-state text (OCM-03/06). |
 | `src/ui/primitives/icon-button` badge (OCM-09) | count announced through an ICU plural (`{count, plural, …}`). |
 | Message preview | same locale and format policy as its page (deck §11.2). |
-| Auth email locale control (D-17, if approved) | preselected value, change, submit. |
 
 ## 9. Validation and error handling
 
@@ -351,7 +350,7 @@ BR tests: BR-L10N-004 (identity names unchanged across switch; a keyed item rena
 
 Resolved 2026-10-10: Q-1 to Q-6 are answered as recommended (see §3). Q-6 amendments are applied to the higher-authority documents listed there.
 
-- **Q-1 (D-17):** How does the owner choose the auth email language per message before sign-in? The proposal is an explicit control on the triggering form, preselected to the screen language. The alternative is to treat the screen language itself as that choice.
+- **Q-1 (D-17):** How does the owner choose the auth email language per message before sign-in? The proposal is an explicit control on the triggering form, preselected to the screen language. The alternative is to treat the screen language itself as that choice. **Answered (Owner, 2026-10-11): the screen language is the choice.**
 - **Q-2 (D-18):** Do you approve `default_key` for item definitions, roles and project-item snapshots? The rule would be: a rename clears it, a keyed row shows its label in the reader's language, and snapshots keep the key.
 - **Q-3 (D-20):** Display patterns: IDR in English (`Rp 750,000` or `IDR 750,000`) and date style per locale (e.g. `Oct 10, 2026` / `10 Okt 2026`)?
 - **Q-4 (D-22):** Should registration copy the locale the person used before sign-in into `user.locale`, or always start at `en` as spec l.19 says? Should a Profile switch also update the device cookie, so the signed-out screens follow it?

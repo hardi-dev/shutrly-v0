@@ -18,11 +18,14 @@ describe("saveMessageTemplateAction", () => {
   it("AC-MSG-007 saves and revalidates the template list", async () => {
     saveMessageTemplate.mockResolvedValue({ ok: true });
     await expect(
-      saveMessageTemplateAction("ws-1", "invoice-share", { content: "{{invoiceUrl}}" }),
+      saveMessageTemplateAction("ws-1", "invoice-share", { content: "{{invoiceUrl}}" }, "custom"),
     ).resolves.toBeUndefined();
-    expect(saveMessageTemplate).toHaveBeenCalledWith("ws-1", "invoice-share", {
-      content: "{{invoiceUrl}}",
-    });
+    expect(saveMessageTemplate).toHaveBeenCalledWith(
+      "ws-1",
+      "invoice-share",
+      { content: "{{invoiceUrl}}" },
+      "custom",
+    );
     expect(revalidatePath).toHaveBeenCalledWith("/w/[workspaceId]/message-templates", "page");
   });
 
@@ -34,7 +37,7 @@ describe("saveMessageTemplateAction", () => {
     };
     saveMessageTemplate.mockResolvedValue(failure);
     await expect(
-      saveMessageTemplateAction("ws-1", "gallery-share", { content: "{{invoiceUrl}}" }),
+      saveMessageTemplateAction("ws-1", "gallery-share", { content: "{{invoiceUrl}}" }, "custom"),
     ).resolves.toEqual(failure);
     expect(revalidatePath).not.toHaveBeenCalled();
   });

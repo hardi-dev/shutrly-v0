@@ -65,7 +65,7 @@ describe("TemplateEditorScreen", () => {
     await user.type(textbox, "!");
     await user.click(screen.getByRole("button", { name: "Simpan" }));
 
-    expect(action).toHaveBeenCalledWith({ content: `${STORED}!` });
+    expect(action).toHaveBeenCalledWith({ content: `${STORED}!` }, "custom");
     expect(showToast).toHaveBeenCalledWith(
       expect.objectContaining({ tone: "success", title: "Template tersimpan" }),
     );

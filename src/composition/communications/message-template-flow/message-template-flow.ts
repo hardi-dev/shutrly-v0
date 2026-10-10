@@ -7,7 +7,10 @@ import type { MessageTemplateContentInput } from "@/features/communications/appl
 import { getMessageTemplate } from "@/features/communications/application/use-cases/get-message-template/get-message-template";
 import { listMessageTemplates } from "@/features/communications/application/use-cases/list-message-templates/list-message-templates";
 import { updateMessageTemplate } from "@/features/communications/application/use-cases/update-message-template/update-message-template";
-import type { UpdateMessageTemplateResult } from "@/features/communications/application/use-cases/update-message-template/update-message-template.types";
+import type {
+  TemplateSaveMode,
+  UpdateMessageTemplateResult,
+} from "@/features/communications/application/use-cases/update-message-template/update-message-template.types";
 import { resolveTemplateContent } from "@/features/communications/domain/resolve-template-content/resolve-template-content";
 import { templateTypeFromSlug } from "@/features/communications/domain/template-type/template-type";
 import type { TemplateType } from "@/features/communications/domain/template-type/template-type.types";
@@ -84,12 +87,14 @@ function notFoundOnMissing(error: unknown): never {
  * @param rawId - bound route workspace ID
  * @param slug - bound route template slug
  * @param input - untrusted content
+ * @param mode - `default` restores the platform default; `custom` stores the sent text
  * @returns success or the content field error
  */
 export async function saveMessageTemplate(
   rawId: string,
   slug: string,
   input: MessageTemplateContentInput,
+  mode: TemplateSaveMode = "custom",
 ): Promise<UpdateMessageTemplateResult> {
   const type = typeOrNotFound(slug);
   const account = await requireOwnerOrRedirect();
@@ -98,8 +103,7 @@ export async function saveMessageTemplate(
     return await withMessageTemplateScope(({ templates }) =>
       updateMessageTemplate(templates, verified.context, {
         type,
-        // The form has no save-mode control yet; text saves are custom (restore-default UI is I5/I6).
-        mode: "custom",
+        mode,
         editorUserId: account.id,
         input,
       }),

@@ -17,4 +17,13 @@ describe("default item definitions (BR-CAT-011)", () => {
       expect(findDefinitionTypeProblem(definition)).toBeNull();
     }
   });
+
+  it("D-18 every default item carries a unique key matching migration 0021", () => {
+    expect(DEFAULT_ITEM_DEFINITIONS.map(({ defaultKey }) => defaultKey)).toEqual([
+      "EDITED_PHOTOS",
+      "PRINTED_PHOTOS",
+      "PEOPLE_COUNT",
+      "SHOOT_DURATION",
+    ]);
+  });
 });

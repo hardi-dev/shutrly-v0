@@ -4,6 +4,7 @@ import type { DefaultItemDefinition } from "./default-item-definitions.types";
 export const DEFAULT_ITEM_DEFINITIONS: readonly DefaultItemDefinition[] = [
   {
     name: "Foto edit",
+    defaultKey: "EDITED_PHOTOS",
     valueType: "NUMBER",
     unit: "foto",
     selectionRequired: true,
@@ -12,6 +13,7 @@ export const DEFAULT_ITEM_DEFINITIONS: readonly DefaultItemDefinition[] = [
   },
   {
     name: "Foto cetak",
+    defaultKey: "PRINTED_PHOTOS",
     valueType: "NUMBER",
     unit: "lembar",
     selectionRequired: true,
@@ -20,6 +22,7 @@ export const DEFAULT_ITEM_DEFINITIONS: readonly DefaultItemDefinition[] = [
   },
   {
     name: "Jumlah orang",
+    defaultKey: "PEOPLE_COUNT",
     valueType: "RANGE",
     unit: "orang",
     selectionRequired: false,
@@ -28,6 +31,7 @@ export const DEFAULT_ITEM_DEFINITIONS: readonly DefaultItemDefinition[] = [
   },
   {
     name: "Durasi pemotretan",
+    defaultKey: "SHOOT_DURATION",
     valueType: "NUMBER",
     unit: "jam",
     selectionRequired: false,

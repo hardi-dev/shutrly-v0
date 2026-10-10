@@ -54,6 +54,10 @@ Notes:
 
 No language switch on the landing page in F-22, so no frames. The landing renders the resolved account locale, which is English on a first visit.
 
+## Client gallery (Owner, 2026-10-11)
+
+No client language switch, so no frames. The gallery renders in the gallery owner's current language; the client cannot change it.
+
 ## Account menu
 
 The language switch lives in the owner's account menu, not in a segmented control.

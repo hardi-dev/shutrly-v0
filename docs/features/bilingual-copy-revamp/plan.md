@@ -345,12 +345,13 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 - **Status.** Ready. Open decisions resolved 2026-10-10 (see technical design §3).
 - **First task once unblocked.** Convert `src/ui/primitives/icon-button` badge text (OCM-09) to one ICU plural `{count, plural, …}` with a render test in both locales. Commit `feat(ui): announce the icon button badge count per locale`.
 
-### I7 — Client gallery copy and client switch
+### I7 — Client gallery copy
 
-- **Goal.** Convert the client gallery (password gate, home, photos, picks, review, final delivery) and add `features/gallery/ui/client-language-switch/`, which must not clear selections, the pick-note draft or the password field.
-- **AC / BR / C.** AC-L10N-001, 002, 004, 011; C-104.
-- **Status.** Ready. Open decisions resolved 2026-10-10 (see technical design §3).
-- **First task once unblocked.** E2E spec `tests/e2e/locale/gallery-switch.spec.ts`: `"AC-L10N-004 switching language on the photos page keeps selections and the pick note draft"` (fails until the switch exists). Commit with the switch implementation.
+- **Goal.** Convert the client gallery (password gate, home, photos, picks, review, final delivery) to `{ en, id }`. **No client language switch** (Owner, 2026-10-11): the gallery always renders in the gallery owner's current `user.locale` (D-4). `features/gallery/ui/client-language-switch/` is not built.
+- **AC / BR / C.** AC-L10N-001 (owner locale only, see amendment below), 002, 011; C-104.
+- **Status.** Ready. No design needed: copy changes only.
+- **First task once unblocked.** E2E spec `tests/e2e/locale/gallery-owner-locale.spec.ts`: `"AC-L10N-001 a gallery renders in the owner's language and follows an owner switch"`. Commit with the first converted gallery screen.
+- **Existing code.** I2 built `setGalleryLocale` (`src/app/actions/client-access/gallery-locale.ts`) and the `shutrly_gallery_locale` cookie read in gallery resolution. With no switch nothing writes that cookie. Removing them is a separate cleanup task that needs the Owner's go-ahead; until then they stay unused.
 
 ### I8 — Verification
 
@@ -380,6 +381,7 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 - ADR-025 l.21 ("one logical template … with language versions").
 - `acceptance-criteria.md` AC-L10N-007 (paired authoring and readiness) and AC-L10N-009 (legacy migration policy), both superseded by the 2026-10-10 decisions.
 - Copy deck corrections listed in technical-design §13.
+- `spec.md` l.20 (a client can switch the gallery language, stored in a gallery-scoped cookie) and `acceptance-criteria.md` AC-L10N-001 ("both expose an accessible English/Indonesian switch"): Owner decided 2026-10-11 that the gallery has no client switch and follows the owner's locale, and that the landing page has no switch. Both lines need the Owner's wording.
 
 ## Spike log
 

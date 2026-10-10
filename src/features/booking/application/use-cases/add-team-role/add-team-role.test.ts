@@ -1,3 +1,4 @@
+import { defaultRolesNamed } from "@tests/support/booking/default-roles";
 import { describe, expect, it } from "vitest";
 
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
@@ -20,7 +21,7 @@ describe("addTeamRole", () => {
 
   it("AC-TEAM-009 reports a name another role has, ignoring case", async () => {
     const repository = new FakeTeamRoleRepository();
-    await repository.seedDefaults(context, ["Videografer"]);
+    await repository.seedDefaults(context, defaultRolesNamed(["Videografer"]));
     await expect(
       addTeamRole(repository, context, "owner", { name: "videografer" }),
     ).resolves.toEqual({

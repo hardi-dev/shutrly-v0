@@ -6,8 +6,11 @@ import { createDrizzleItemDefinitionRepository } from "@/adapters/db/catalog-rep
 import type { Db } from "@/adapters/db/client/client.types";
 import { user } from "@/adapters/db/schema/auth/auth";
 import { serviceItemDefinition } from "@/adapters/db/schema/booking/catalog";
+import { teamRole } from "@/adapters/db/schema/booking/team";
 import { workspace } from "@/adapters/db/schema/workspace/workspace";
+import { createDrizzleTeamRoleRepository } from "@/adapters/db/team-repository/drizzle-team-role-repository";
 import { seedDefaultItemDefinitions } from "@/features/booking/application/use-cases/seed-default-item-definitions/seed-default-item-definitions";
+import { seedDefaultTeamRoles } from "@/features/booking/application/use-cases/seed-default-team-roles/seed-default-team-roles";
 import { asWorkspaceId } from "@/shared/workspace-context/workspace-context";
 
 import { openTestDb } from "../helpers/test-db";
@@ -26,7 +29,7 @@ async function seedWorkspace() {
     .insert(workspace)
     .values({ ownerUserId: ownerId, name: `WS ${crypto.randomUUID()}`, invoicePrefix: "WS" })
     .returning({ id: workspace.id });
-  return { workspaceId: asWorkspaceId(rows[0]?.id ?? "") };
+  return { workspaceId: asWorkspaceId(rows[0]?.id ?? ""), ownerId };
 }
 
 async function idOf(workspaceId: string, name: string): Promise<string> {
@@ -64,6 +67,24 @@ describe("platform default item keys", () => {
       .select({ key: serviceItemDefinition.defaultKey })
       .from(serviceItemDefinition)
       .where(eq(serviceItemDefinition.id, id));
+    expect(renamed.key).toBeNull();
+  });
+
+  it("D-18 seeds role keys and a role rename clears its key", async () => {
+    const { ownerId, ...context } = await seedWorkspace();
+    const roles = createDrizzleTeamRoleRepository(db);
+    await seedDefaultTeamRoles(roles, context);
+    const [photographer] = await db
+      .select({ id: teamRole.id, key: teamRole.defaultKey })
+      .from(teamRole)
+      .where(and(eq(teamRole.workspaceId, context.workspaceId), eq(teamRole.name, "Fotografer")));
+    expect(photographer.key).toBe("PHOTOGRAPHER");
+
+    await roles.rename(context, photographer.id, "Fotografer utama", ownerId);
+    const [renamed] = await db
+      .select({ key: teamRole.defaultKey })
+      .from(teamRole)
+      .where(eq(teamRole.id, photographer.id));
     expect(renamed.key).toBeNull();
   });
 });

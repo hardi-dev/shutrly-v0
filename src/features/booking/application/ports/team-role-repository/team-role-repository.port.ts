@@ -1,5 +1,6 @@
 import "server-only";
 
+import type { DefaultTeamRole } from "@/features/booking/domain/team-role/team-role";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 export interface RoleRef {
@@ -47,6 +48,9 @@ export interface TeamRoleRepositoryPort {
     context: WorkspaceContext,
     id: string,
   ) => Promise<"DELETED" | "NOT_FOUND" | RoleInUse>;
-  /** Inserts the named roles a workspace lacks, ignoring case; idempotent (BR-TEAM-005). */
-  readonly seedDefaults: (context: WorkspaceContext, names: readonly string[]) => Promise<void>;
+  /** Inserts the default roles a workspace lacks, ignoring case; idempotent (BR-TEAM-005, D-18). */
+  readonly seedDefaults: (
+    context: WorkspaceContext,
+    roles: readonly DefaultTeamRole[],
+  ) => Promise<void>;
 }

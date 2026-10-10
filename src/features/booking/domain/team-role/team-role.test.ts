@@ -29,6 +29,15 @@ describe("team role name", () => {
   });
 
   it("BR-TEAM-005 seeds Fotografer, Videografer and Asisten", () => {
-    expect(DEFAULT_TEAM_ROLES).toEqual(["Fotografer", "Videografer", "Asisten"]);
+    expect(DEFAULT_TEAM_ROLES.map(({ name }) => name)).toEqual([
+      "Fotografer",
+      "Videografer",
+      "Asisten",
+    ]);
+    expect(DEFAULT_TEAM_ROLES.map(({ defaultKey }) => defaultKey)).toEqual([
+      "PHOTOGRAPHER",
+      "VIDEOGRAPHER",
+      "ASSISTANT",
+    ]);
   });
 });

@@ -82,7 +82,13 @@ async function renameRole(
   try {
     const rows = await db
       .update(teamRole)
-      .set({ name, updatedBy: actor, updatedAt: new Date() })
+      // D-18: a rename clears the platform key in the same UPDATE.
+      .set({
+        name,
+        defaultKey: sql`case when ${teamRole.name} is distinct from ${name} then null else ${teamRole.defaultKey} end`,
+        updatedBy: actor,
+        updatedAt: new Date(),
+      })
       .where(and(eq(teamRole.workspaceId, context.workspaceId), eq(teamRole.id, id)))
       .returning({ id: teamRole.id });
     return rows.length > 0 ? ("UPDATED" as const) : ("NOT_FOUND" as const);
@@ -112,11 +118,17 @@ export function createDrizzleTeamRoleRepository(db: DbExecutor): TeamRoleReposit
     create: (context, name, actorId) => createRole(db, context, name, actorId),
     rename: (context, id, name, actorId) => renameRole(db, context, id, name, actorId),
     delete: (context, id) => deleteRoleOrReportUsage(db, context, id),
-    async seedDefaults(context, names) {
-      if (names.length === 0) return;
+    async seedDefaults(context, roles) {
+      if (roles.length === 0) return;
       await db
         .insert(teamRole)
-        .values(names.map((name) => ({ workspaceId: context.workspaceId, name })))
+        .values(
+          roles.map((role) => ({
+            workspaceId: context.workspaceId,
+            name: role.name,
+            defaultKey: role.defaultKey,
+          })),
+        )
         .onConflictDoNothing();
     },
   };

@@ -19,12 +19,17 @@ import type {
   TeamRoleRecord,
   TeamRoleRepositoryPort,
 } from "@/features/booking/application/ports/team-role-repository/team-role-repository.port";
+import type {
+  DefaultTeamRole,
+  DefaultTeamRoleKey,
+} from "@/features/booking/domain/team-role/team-role";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 interface StoredRole {
   readonly id: string;
   readonly workspaceId: string;
   name: string;
+  defaultKey?: DefaultTeamRoleKey | null;
 }
 
 export class FakeTeamRoleRepository implements TeamRoleRepositoryPort {
@@ -71,10 +76,15 @@ export class FakeTeamRoleRepository implements TeamRoleRepositoryPort {
     return "DELETED" as const;
   }
 
-  async seedDefaults(context: WorkspaceContext, names: readonly string[]) {
-    for (const name of names) {
-      if (!this.find(context, name))
-        this.rows.push({ id: crypto.randomUUID(), workspaceId: context.workspaceId, name });
+  async seedDefaults(context: WorkspaceContext, roles: readonly DefaultTeamRole[]) {
+    for (const role of roles) {
+      if (!this.find(context, role.name))
+        this.rows.push({
+          id: crypto.randomUUID(),
+          workspaceId: context.workspaceId,
+          name: role.name,
+          defaultKey: role.defaultKey,
+        });
     }
   }
 }

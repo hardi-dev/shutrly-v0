@@ -11,17 +11,20 @@ const resend = vi.fn();
 describe("verification screens", () => {
   it("AC-AUTH-003 the pending screen shows static guidance, not a live announcement", () => {
     render(<VerifyPendingScreen canResend resendAction={resend} />);
-    expect(screen.getByText(VERIFY_PENDING_SCREEN_COPY.alertTitle)).toBeInTheDocument();
+    expect(screen.getByText(VERIFY_PENDING_SCREEN_COPY.messages.id.alertTitle)).toBeInTheDocument();
     expect(screen.queryByRole("status")).toBeNull();
   });
 
   it("AC-AUTH-005 the invalid-link screen offers resend when an email is known", () => {
     render(<InvalidVerifyLinkScreen canResend resendAction={resend} />);
-    expect(screen.getByRole("button", { name: COPY.action })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: COPY.messages.id.action })).toBeInTheDocument();
   });
 
   it("AC-AUTH-005 without a known email it sends the visitor to sign in", () => {
     render(<InvalidVerifyLinkScreen canResend={false} resendAction={resend} />);
-    expect(screen.getByRole("link", { name: COPY.action })).toHaveAttribute("href", "/login");
+    expect(screen.getByRole("link", { name: COPY.messages.id.action })).toHaveAttribute(
+      "href",
+      "/login",
+    );
   });
 });

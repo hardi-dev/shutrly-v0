@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 import { CHANGE_PASSWORD_FORM_COPY } from "@/features/auth/ui/change-password-form/change-password-form.copy";
-import { FIELD_ERROR_COPY } from "@/features/auth/ui/controlled-text-field/controlled-text-field.copy";
+import { CONTROLLED_TEXT_FIELD_COPY } from "@/features/auth/ui/controlled-text-field/controlled-text-field.copy";
 import { PROFILE_FORM_COPY } from "@/features/auth/ui/profile-form/profile-form.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 
@@ -19,20 +19,22 @@ test("AC-AUTH-019 AC-AUTH-020 update the name and change the password", async ({
   await page.goto("/profile");
   // The shell renders the page in a desktop and a phone tree; use the visible desktop one.
   const profile = page.locator("#app-shell-content");
-  await expect(profile.getByLabel(PROFILE_FORM_COPY.email)).toHaveValue(email);
+  await expect(profile.getByLabel(PROFILE_FORM_COPY.messages.id.email)).toHaveValue(email);
 
-  await profile.getByLabel(PROFILE_FORM_COPY.name).fill("Alya P.");
-  await profile.getByRole("button", { name: PROFILE_FORM_COPY.save }).click();
-  await expect(profile.getByRole("status").filter({ hasText: PROFILE_FORM_COPY.saved })).toHaveText(
-    PROFILE_FORM_COPY.saved,
-  );
+  await profile.getByLabel(PROFILE_FORM_COPY.messages.id.name).fill("Alya P.");
+  await profile.getByRole("button", { name: PROFILE_FORM_COPY.messages.id.save }).click();
+  await expect(
+    profile.getByRole("status").filter({ hasText: PROFILE_FORM_COPY.messages.id.saved }),
+  ).toHaveText(PROFILE_FORM_COPY.messages.id.saved);
 
-  const copy = CHANGE_PASSWORD_FORM_COPY;
+  const copy = CHANGE_PASSWORD_FORM_COPY.messages.id;
   await profile.getByRole("textbox", { name: copy.current }).fill("wrong-horse");
   await profile.getByRole("textbox", { name: copy.next, exact: true }).fill("new-horse-1");
   await profile.getByRole("textbox", { name: copy.confirm, exact: true }).fill("new-horse-1");
   await profile.getByRole("button", { name: copy.submit }).click();
-  await expect(profile.getByText(FIELD_ERROR_COPY["password.wrongCurrent"])).toBeVisible();
+  await expect(
+    profile.getByText(CONTROLLED_TEXT_FIELD_COPY.messages.id.passwordWrongCurrent),
+  ).toBeVisible();
 
   await profile.getByRole("textbox", { name: copy.current }).fill(PASSWORD);
   await profile.getByRole("button", { name: copy.submit }).click();

@@ -1,9 +1,11 @@
+import { useTranslations } from "next-intl";
+
 import { Alert } from "@/ui/patterns/alert/alert";
 
 import { AccountSection } from "../account-section/account-section";
 import { ChangePasswordForm } from "../change-password-form/change-password-form";
 import { ProfileForm } from "../profile-form/profile-form";
-import { ACCOUNT_SECTIONS_COPY as COPY } from "./account-sections.copy";
+import { ACCOUNT_SECTIONS_COPY_NAMESPACE } from "./account-sections.copy";
 import type { AccountSectionsProps } from "./account-sections.types";
 
 /**
@@ -18,17 +20,18 @@ export function AccountSections({
   changePassword,
   passwordChanged = false,
 }: Readonly<AccountSectionsProps>) {
+  const t = useTranslations(ACCOUNT_SECTIONS_COPY_NAMESPACE);
   return (
     <div className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-6)">
-      <AccountSection title={COPY.profileTitle} lead={COPY.profileLead}>
+      <AccountSection title={t("profileTitle")} lead={t("profileLead")}>
         <ProfileForm email={account.email} name={account.name} action={updateName} />
       </AccountSection>
       {account.hasPassword ? (
-        <AccountSection title={COPY.passwordTitle} lead={COPY.passwordLead}>
+        <AccountSection title={t("passwordTitle")} lead={t("passwordLead")}>
           <ChangePasswordForm action={changePassword} initialDone={passwordChanged} />
         </AccountSection>
       ) : (
-        <Alert tone="info" title={COPY.googleOnlyTitle} body={COPY.googleOnlyBody} />
+        <Alert tone="info" title={t("googleOnlyTitle")} body={t("googleOnlyBody")} />
       )}
     </div>
   );

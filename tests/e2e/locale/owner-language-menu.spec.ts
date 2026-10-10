@@ -121,7 +121,7 @@ test.describe("desktop 1440 × 900", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", chosen);
     if (chosen === "id") {
       await expect(
-        page.getByRole("heading", { name: LOGIN_SCREEN_COPY.title, exact: true }),
+        page.getByRole("heading", { name: LOGIN_SCREEN_COPY.messages.id.title, exact: true }),
       ).toBeVisible();
     }
   });

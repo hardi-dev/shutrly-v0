@@ -2,15 +2,15 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { FIELD_ERROR_COPY } from "../controlled-text-field/controlled-text-field.copy";
+import { CONTROLLED_TEXT_FIELD_COPY } from "../controlled-text-field/controlled-text-field.copy";
 import { ResetPasswordForm } from "./reset-password-form";
 import { RESET_PASSWORD_FORM_COPY as COPY } from "./reset-password-form.copy";
 
 async function submit(password: string, confirm: string) {
   const user = userEvent.setup();
-  await user.type(screen.getByLabelText(COPY.password), password);
-  await user.type(screen.getByLabelText(COPY.confirm), confirm);
-  await user.click(screen.getByRole("button", { name: COPY.submit }));
+  await user.type(screen.getByLabelText(COPY.messages.id.password), password);
+  await user.type(screen.getByLabelText(COPY.messages.id.confirm), confirm);
+  await user.click(screen.getByRole("button", { name: COPY.messages.id.submit }));
 }
 
 describe("ResetPasswordForm (RFaNT)", () => {
@@ -18,7 +18,9 @@ describe("ResetPasswordForm (RFaNT)", () => {
     const action = vi.fn();
     render(<ResetPasswordForm token="t" action={action} />);
     await submit("new-horse-1", "new-horse-2");
-    expect(await screen.findByText(FIELD_ERROR_COPY["password.mismatch"])).toBeInTheDocument();
+    expect(
+      await screen.findByText(CONTROLLED_TEXT_FIELD_COPY.messages.id.passwordMismatch),
+    ).toBeInTheDocument();
     expect(action).not.toHaveBeenCalled();
   });
 

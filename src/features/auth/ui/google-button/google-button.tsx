@@ -1,6 +1,8 @@
+import { useTranslations } from "next-intl";
+
 import { Button } from "@/ui/primitives/button/button";
 
-import { GOOGLE_BUTTON_COPY } from "./google-button.copy";
+import { GOOGLE_BUTTON_COPY_NAMESPACE } from "./google-button.copy";
 import type { GoogleButtonProps } from "./google-button.types";
 
 /**
@@ -10,10 +12,11 @@ import type { GoogleButtonProps } from "./google-button.types";
  * @returns the form with one secondary button
  */
 export function GoogleButton({ action }: Readonly<GoogleButtonProps>) {
+  const t = useTranslations(GOOGLE_BUTTON_COPY_NAMESPACE);
   return (
     <form action={action}>
       <Button type="submit" variant="secondary" size="lg" className="w-full">
-        {GOOGLE_BUTTON_COPY.label}
+        {t("label")}
       </Button>
     </form>
   );

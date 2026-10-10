@@ -41,14 +41,18 @@ for (const { label, size, mobile } of VIEWPORTS) {
 
       await chooseIndonesian(page, mobile);
       await expect(page.locator("html")).toHaveAttribute("lang", "id");
-      await expect(page.getByText(LOGIN_SCREEN_COPY.title, { exact: true })).toBeVisible();
       await expect(
-        page.getByRole("button", { name: LOGIN_FORM_COPY.submit, exact: true }),
+        page.getByText(LOGIN_SCREEN_COPY.messages.id.title, { exact: true }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: LOGIN_FORM_COPY.messages.id.submit, exact: true }),
       ).toBeVisible();
 
       await page.reload();
       await expect(page.locator("html")).toHaveAttribute("lang", "id");
-      await expect(page.getByText(LOGIN_SCREEN_COPY.title, { exact: true })).toBeVisible();
+      await expect(
+        page.getByText(LOGIN_SCREEN_COPY.messages.id.title, { exact: true }),
+      ).toBeVisible();
     });
 
     test("AC-L10N-001 the register screen shows the same language link", async ({ page }) => {
@@ -63,11 +67,13 @@ for (const { label, size, mobile } of VIEWPORTS) {
     test("AC-L10N-004 typed login values survive a language switch", async ({ page }) => {
       const email = "owner.locale@test.shutrly.dev";
       await page.goto("/login");
-      await page.getByLabel(LOGIN_FORM_COPY.email, { exact: true }).fill(email);
+      await page.getByLabel(LOGIN_FORM_COPY.messages.id.email, { exact: true }).fill(email);
 
       await chooseIndonesian(page, mobile);
       await expect(page.locator("html")).toHaveAttribute("lang", "id");
-      await expect(page.getByLabel(LOGIN_FORM_COPY.email, { exact: true })).toHaveValue(email);
+      await expect(page.getByLabel(LOGIN_FORM_COPY.messages.id.email, { exact: true })).toHaveValue(
+        email,
+      );
     });
   });
 }

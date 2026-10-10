@@ -1,4 +1,15 @@
-// Translated from auth.pen Z5xhk (English); UI language is Indonesian (CONFLICT-1, 2026-09-27).
+// Source: copy-deck.md §2.1 interim editorial description. Copied verbatim.
+export const EDITORIAL_PANEL_COPY_NAMESPACE = "authEditorialPanel";
+
 export const EDITORIAL_PANEL_COPY = {
-  body: "Booking, galeri, seleksi, dan invoice untuk fotografer.",
+  namespace: EDITORIAL_PANEL_COPY_NAMESPACE,
+  surface: "auth",
+  messages: {
+    en: {
+      body: "Record the client’s package, agreed price and shoot schedule in one project.",
+    },
+    id: {
+      body: "Catat paket klien, harga sepakat, dan jadwal pemotretan dalam satu proyek.",
+    },
+  },
 } as const;

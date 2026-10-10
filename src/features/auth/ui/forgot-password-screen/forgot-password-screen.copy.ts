@@ -1,7 +1,21 @@
-// Translated from auth.pen o9WtCo / e091S (English); Indonesian per CONFLICT-1 (2026-09-27).
+// Source: copy-deck.md §2.4. Copied verbatim.
+export const FORGOT_PASSWORD_SCREEN_COPY_NAMESPACE = "authForgotPasswordScreen";
+
 export const FORGOT_PASSWORD_SCREEN_COPY = {
-  title: "Atur ulang kata sandi",
-  lead: "Masukkan email Anda. Kami akan mengirim tautan atur ulang jika akun itu memakai kata sandi.",
-  switchPrompt: "Ingat kata sandi Anda?",
-  back: "Kembali ke halaman masuk",
+  namespace: FORGOT_PASSWORD_SCREEN_COPY_NAMESPACE,
+  surface: "auth",
+  messages: {
+    en: {
+      title: "Reset your password",
+      lead: "Enter your email. If password reset is available for this address, we’ll send a link.",
+      switchPrompt: "Remember your password?",
+      back: "Back to sign in",
+    },
+    id: {
+      title: "Atur ulang kata sandi",
+      lead: "Masukkan emailmu. Kalau atur ulang kata sandi tersedia untuk alamat ini, kami akan mengirim tautannya.",
+      switchPrompt: "Ingat kata sandimu?",
+      back: "Kembali ke halaman masuk",
+    },
+  },
 } as const;

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import type { Control } from "react-hook-form";
 
@@ -11,36 +12,37 @@ import { Button } from "@/ui/primitives/button/button";
 import { AuthErrorAlert } from "../auth-error-alert/auth-error-alert";
 import { ControlledTextField } from "../controlled-text-field/controlled-text-field";
 import { useAuthForm } from "../use-auth-form/use-auth-form";
-import { CHANGE_PASSWORD_FORM_COPY as COPY } from "./change-password-form.copy";
+import { CHANGE_PASSWORD_FORM_COPY_NAMESPACE } from "./change-password-form.copy";
 import type { ChangePasswordFormProps } from "./change-password-form.types";
 
 const DEFAULTS = { currentPassword: "", newPassword: "", confirm: "" };
 
 function PasswordFields({ control }: Readonly<{ control: Control<ChangePasswordInput> }>) {
+  const t = useTranslations(CHANGE_PASSWORD_FORM_COPY_NAMESPACE);
   return (
     <>
       <ControlledTextField
         control={control}
         name="currentPassword"
         type="password"
-        label={COPY.current}
-        placeholder={COPY.currentPlaceholder}
+        label={t("current")}
+        placeholder={t("currentPlaceholder")}
         autoComplete="current-password"
       />
       <ControlledTextField
         control={control}
         name="newPassword"
         type="password"
-        label={COPY.next}
-        placeholder={COPY.nextPlaceholder}
+        label={t("next")}
+        placeholder={t("nextPlaceholder")}
         autoComplete="new-password"
       />
       <ControlledTextField
         control={control}
         name="confirm"
         type="password"
-        label={COPY.confirm}
-        placeholder={COPY.confirmPlaceholder}
+        label={t("confirm")}
+        placeholder={t("confirmPlaceholder")}
         autoComplete="new-password"
       />
     </>
@@ -56,6 +58,7 @@ export function ChangePasswordForm({
   action,
   initialDone = false,
 }: Readonly<ChangePasswordFormProps>) {
+  const t = useTranslations(CHANGE_PASSWORD_FORM_COPY_NAMESPACE);
   const [done, setDone] = useState(initialDone);
   function afterChange(): void {
     setDone(true);
@@ -71,11 +74,11 @@ export function ChangePasswordForm({
   return (
     <form noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-4)">
       {server.formError ? <AuthErrorAlert code={server.formError} /> : null}
-      {done && !isSubmitting ? <Alert tone="info" title={COPY.done} live /> : null}
+      {done && !isSubmitting ? <Alert tone="info" title={t("done")} live /> : null}
       <PasswordFields control={control} />
       <div>
         <Button type="submit" isDisabled={isSubmitting}>
-          {isSubmitting ? COPY.submitting : COPY.submit}
+          {isSubmitting ? t("submitting") : t("submit")}
         </Button>
       </div>
     </form>

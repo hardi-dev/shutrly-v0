@@ -36,10 +36,10 @@ export async function register(page: Page, email: string): Promise<void> {
   if (!octets || octets.length !== 4) throw new Error("failed to create an E2E client IP");
   await page.setExtraHTTPHeaders({ "cf-connecting-ip": octets.join(".") });
   await page.goto("/register");
-  await page.getByLabel(REGISTER_FORM_COPY.name).fill("Alya Pratama");
-  await page.getByLabel(REGISTER_FORM_COPY.email).fill(email);
-  await page.getByRole("textbox", { name: REGISTER_FORM_COPY.password }).fill(PASSWORD);
-  await page.getByRole("button", { name: REGISTER_FORM_COPY.submit }).click();
+  await page.getByLabel(REGISTER_FORM_COPY.messages.id.name).fill("Alya Pratama");
+  await page.getByLabel(REGISTER_FORM_COPY.messages.id.email).fill(email);
+  await page.getByRole("textbox", { name: REGISTER_FORM_COPY.messages.id.password }).fill(PASSWORD);
+  await page.getByRole("button", { name: REGISTER_FORM_COPY.messages.id.submit }).click();
   try {
     await expect(page).toHaveURL(/\/verify$/);
   } catch (error) {

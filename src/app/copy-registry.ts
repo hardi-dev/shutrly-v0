@@ -1,4 +1,24 @@
 import type { CopyModule } from "@/composition/locale/message-catalog/message-catalog.types";
+import { ACCOUNT_SECTIONS_COPY } from "@/features/auth/ui/account-sections/account-sections.copy";
+import { ACCOUNT_UNAVAILABLE_SCREEN_COPY } from "@/features/auth/ui/account-unavailable-screen/account-unavailable-screen.copy";
+import { AUTH_ERROR_COPY } from "@/features/auth/ui/auth-error-alert/auth-error-alert.copy";
+import { CHANGE_PASSWORD_FORM_COPY } from "@/features/auth/ui/change-password-form/change-password-form.copy";
+import { CONTROLLED_TEXT_FIELD_COPY } from "@/features/auth/ui/controlled-text-field/controlled-text-field.copy";
+import { FORGOT_PASSWORD_FORM_COPY } from "@/features/auth/ui/forgot-password-form/forgot-password-form.copy";
+import { FORGOT_PASSWORD_SCREEN_COPY } from "@/features/auth/ui/forgot-password-screen/forgot-password-screen.copy";
+import { GOOGLE_BUTTON_COPY } from "@/features/auth/ui/google-button/google-button.copy";
+import { INVALID_RESET_LINK_SCREEN_COPY } from "@/features/auth/ui/invalid-reset-link-screen/invalid-reset-link-screen.copy";
+import { INVALID_VERIFY_LINK_SCREEN_COPY } from "@/features/auth/ui/invalid-verify-link-screen/invalid-verify-link-screen.copy";
+import { LOGIN_FORM_COPY } from "@/features/auth/ui/login-form/login-form.copy";
+import { LOGIN_SCREEN_COPY } from "@/features/auth/ui/login-screen/login-screen.copy";
+import { PROFILE_FORM_COPY } from "@/features/auth/ui/profile-form/profile-form.copy";
+import { REGISTER_FORM_COPY } from "@/features/auth/ui/register-form/register-form.copy";
+import { REGISTER_SCREEN_COPY } from "@/features/auth/ui/register-screen/register-screen.copy";
+import { RESEND_VERIFICATION_COPY } from "@/features/auth/ui/resend-verification/resend-verification.copy";
+import { RESET_PASSWORD_FORM_COPY } from "@/features/auth/ui/reset-password-form/reset-password-form.copy";
+import { RESET_PASSWORD_SCREEN_COPY } from "@/features/auth/ui/reset-password-screen/reset-password-screen.copy";
+import { RESET_SENT_SCREEN_COPY } from "@/features/auth/ui/reset-sent-screen/reset-sent-screen.copy";
+import { VERIFY_PENDING_SCREEN_COPY } from "@/features/auth/ui/verify-pending-screen/verify-pending-screen.copy";
 import { OWNER_NAV_COPY } from "@/features/workspace/ui/owner-nav/owner-nav.copy";
 import { OWNER_SHELL_COPY } from "@/features/workspace/ui/owner-shell/owner-shell.copy";
 import { WORKSPACE_SWITCHER_COPY } from "@/features/workspace/ui/workspace-switcher/workspace-switcher.copy";
@@ -6,12 +26,15 @@ import { APP_SHELL_COPY } from "@/ui/patterns/app-shell/app-shell.copy";
 import { BOTTOM_NAV_COPY } from "@/ui/patterns/bottom-nav/bottom-nav.copy";
 import { BOTTOM_SHEET_COPY } from "@/ui/patterns/bottom-sheet/bottom-sheet.copy";
 import { COMPACT_BAR_COPY } from "@/ui/patterns/compact-bar/compact-bar.copy";
+import { EDITORIAL_PANEL_COPY } from "@/ui/patterns/editorial-panel/editorial-panel.copy";
 import { LANGUAGE_SWITCH_COPY } from "@/ui/patterns/language-switch/language-switch.copy";
 import { MOBILE_APP_SHELL_COPY } from "@/ui/patterns/mobile-app-shell/mobile-app-shell.copy";
 import { PAGE_HEADER_COPY } from "@/ui/patterns/page-header/page-header.copy";
 import { SIDEBAR_COPY } from "@/ui/patterns/sidebar/sidebar.copy";
+import { SPLIT_LAYOUT_COPY } from "@/ui/patterns/split-layout/split-layout.copy";
 import { TOAST_COPY } from "@/ui/patterns/toast/toast.copy";
 
+import { PROFILE_LAYOUT_COPY } from "./(owner)/profile/layout.copy";
 import { ERROR_COPY } from "./error.copy";
 import { NOT_FOUND_COPY } from "./not-found.copy";
 
@@ -34,4 +57,27 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   PAGE_HEADER_COPY,
   BOTTOM_NAV_COPY,
   COMPACT_BAR_COPY,
+  ACCOUNT_SECTIONS_COPY,
+  ACCOUNT_UNAVAILABLE_SCREEN_COPY,
+  AUTH_ERROR_COPY,
+  CHANGE_PASSWORD_FORM_COPY,
+  CONTROLLED_TEXT_FIELD_COPY,
+  FORGOT_PASSWORD_FORM_COPY,
+  FORGOT_PASSWORD_SCREEN_COPY,
+  GOOGLE_BUTTON_COPY,
+  INVALID_RESET_LINK_SCREEN_COPY,
+  INVALID_VERIFY_LINK_SCREEN_COPY,
+  LOGIN_FORM_COPY,
+  LOGIN_SCREEN_COPY,
+  PROFILE_FORM_COPY,
+  REGISTER_FORM_COPY,
+  REGISTER_SCREEN_COPY,
+  RESEND_VERIFICATION_COPY,
+  RESET_PASSWORD_FORM_COPY,
+  RESET_PASSWORD_SCREEN_COPY,
+  RESET_SENT_SCREEN_COPY,
+  VERIFY_PENDING_SCREEN_COPY,
+  SPLIT_LAYOUT_COPY,
+  EDITORIAL_PANEL_COPY,
+  PROFILE_LAYOUT_COPY,
 ];

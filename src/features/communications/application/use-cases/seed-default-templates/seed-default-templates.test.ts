@@ -16,7 +16,7 @@ describe("seedDefaultTemplates", () => {
     expect(repository.rows).toHaveLength(5);
     expect(repository.rows.at(0)).toMatchObject({
       type: "GALLERY_SHARE",
-      content: DEFAULT_TEMPLATE_CONTENT.GALLERY_SHARE,
+      content: DEFAULT_TEMPLATE_CONTENT.id.GALLERY_SHARE,
       updatedBy: null,
     });
   });

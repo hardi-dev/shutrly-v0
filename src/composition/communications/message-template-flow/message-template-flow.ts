@@ -65,7 +65,7 @@ export async function loadMessageTemplateEditor(
     return {
       type,
       content: record.content,
-      defaultContent: DEFAULT_TEMPLATE_CONTENT[type],
+      defaultContent: DEFAULT_TEMPLATE_CONTENT.id[type],
       brandName,
     };
   });

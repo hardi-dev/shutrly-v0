@@ -19,6 +19,6 @@ export async function seedDefaultTemplates(
 ): Promise<void> {
   await repository.seedDefaults(
     context,
-    TEMPLATE_TYPES.map((type) => ({ type, content: DEFAULT_TEMPLATE_CONTENT[type] })),
+    TEMPLATE_TYPES.map((type) => ({ type, content: DEFAULT_TEMPLATE_CONTENT.id[type] })),
   );
 }

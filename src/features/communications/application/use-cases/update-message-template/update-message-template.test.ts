@@ -27,7 +27,7 @@ describe("updateMessageTemplate", () => {
     const invoice = await repository.findByType(context, "INVOICE_SHARE");
     expect(invoice).toMatchObject({ content, updatedBy: "owner_1" });
     const reminder = await repository.findByType(context, "PAYMENT_REMINDER");
-    expect(reminder?.content).toBe(DEFAULT_TEMPLATE_CONTENT.PAYMENT_REMINDER);
+    expect(reminder?.content).toBe(DEFAULT_TEMPLATE_CONTENT.id.PAYMENT_REMINDER);
   });
 
   it.each([
@@ -44,7 +44,7 @@ describe("updateMessageTemplate", () => {
     });
     expect(result).toEqual({ ok: false, code: "VALIDATION_FAILED", fieldErrors: { content: key } });
     const gallery = await repository.findByType(context, "GALLERY_SHARE");
-    expect(gallery?.content).toBe(DEFAULT_TEMPLATE_CONTENT.GALLERY_SHARE);
+    expect(gallery?.content).toBe(DEFAULT_TEMPLATE_CONTENT.id.GALLERY_SHARE);
   });
 
   it("AC-MSG-015 is not found when the workspace has no such template", async () => {

@@ -1728,30 +1728,22 @@ These drafts avoid a “pay here” claim that could imply a payment gateway. Th
 | Expiry | This link is valid for one hour and can only be used once. | Tautan ini berlaku satu jam dan hanya bisa dipakai sekali. |
 | Ignore note | If you didn’t request this, ignore this email. Your password hasn’t changed. | Kalau kamu tidak memintanya, abaikan email ini. Kata sandimu tidak berubah. |
 
-## 13. Bilingual authoring — proposed copy for the approved scope
+## 13. Owner-authored text and language hints
 
-**Where:** service/package descriptions and custom template editors on their owning pages. This is not a new standalone page. The exact field layout, draft/readiness rules and title classification still need design. The following copy names translation readiness without adding a service publish button or lifecycle.
+**Where:** the custom message template editor and the owner’s add-on form. Owner-authored text is one text, kept and shown as written. Services and categories have no description field. There are no paired authoring fields, readiness states, translation drafts or automatic translation.
 
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
-| Authoring section title | Language versions | Versi bahasa |
-| Description label | Description | Deskripsi |
-| English content field accessible name | Description in English | Deskripsi dalam bahasa Inggris |
-| Indonesian content field accessible name | Description in Indonesian | Deskripsi dalam bahasa Indonesia |
-| English message field accessible name | Message in English | Pesan dalam bahasa Inggris |
-| Indonesian message field accessible name | Message in Indonesian | Pesan dalam bahasa Indonesia |
-| English tab/self-name | English | English |
-| Indonesian tab/self-name | Bahasa Indonesia | Bahasa Indonesia |
-| Authoring helper | Write both versions with the same meaning. Names and template variables stay unchanged. | Tulis kedua versi dengan makna yang sama. Nama dan variabel templat tetap sama. |
-| Missing-English readiness | English version needed | Versi bahasa Inggris belum lengkap |
-| Missing-Indonesian readiness | Indonesian version needed | Versi bahasa Indonesia belum lengkap |
-| Incomplete content title | Language versions aren’t complete | Versi bahasa belum lengkap |
-| Incomplete content body | Complete and review both versions before this content is available in both languages. | Lengkapi dan tinjau kedua versi sebelum konten ini tersedia dalam dua bahasa. |
-| Both versions ready, only after actual review | Both language versions are ready | Kedua versi bahasa siap |
-| Incomplete draft saved, only if supported by final behavior | Translation draft saved | Draf terjemahan disimpan |
-| Draft saved body | This content isn’t ready for both languages yet. | Konten ini belum siap untuk kedua bahasa. |
+| Template-language hint | This message is sent in the language you write it in. Shutrly doesn’t translate it. | Pesan ini dikirim dalam bahasa yang kamu tulis. Shutrly tidak menerjemahkannya. |
+| Custom message field label and helper | Reuse §11.2: Content heading/label and Content description. | Gunakan kembali §11.2: Content heading/label dan Content description. |
+| Add-on description field label and helper | Reuse §16: Form “Description” and Helpers “Shown in the add-on list, not to the client.” | Gunakan kembali §16: Form “Description” dan Helpers “Tampil di daftar add-on, tidak untuk klien.” |
+| Restore-default helper | When you save, the default text returns in your language. | Saat disimpan, teks bawaan kembali dalam bahasa kamu. |
 
-Do not silently show Indonesian content on an English reader page when a version is missing. Legacy single-language records require the approved rollout/viewing policy, not a new invented fallback sentence in this deck. Completion and review status must reflect actual stored state, not merely nonempty fields.
+Recipient language is chosen per message and preselected to the owner’s language. No new string is needed here: the owner message-preview screen is not part of the existing product surface covered by this deck; add its choice helper with the approved F-15 message-preview copy when that screen is designed.
+
+### Open questions
+
+None for this scope.
 
 ## 14. Client gallery — built surfaces
 
@@ -1894,7 +1886,7 @@ This is wording for the existing placeholder only, not a new landing-page design
 | Default item definitions (OCM-11) | 5.7 | Paired platform defaults; no historical overwrite |
 | Icon-button unread badge (OCM-09) | 1 | Complete count announcement |
 | Locale assumptions (OCM-14–22) | Cross-cutting notes | HTML/providers/formatting are technical requirements, not extra text rows |
-| User-authored bilingual descriptions/custom templates | 13 | Proposed authoring/readiness copy; actual records not translated here |
+| Owner-authored text and language hints | 13 | Single-language custom templates and owner-only add-on descriptions; no paired authoring |
 | Client access/selection/delivery journey | 14 | Built routes and copy modules; partial-send and download consequences retained |
 | Owner client-access card, selection-owner text, gallery summaries and delivery card | 15 | Built owner gallery tabs, cards, picks routes and dialogs |
 | Add-on card, form, menu, validation and confirmations | 16 | Built owner project surface; no client-facing offer inferred |

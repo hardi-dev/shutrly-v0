@@ -14,6 +14,20 @@ Base: staging `bdab2c2`; branch `codex/bilingual-copy-revamp`.
 - Voice is casual and friendly. Indonesian addresses the reader as `kamu` or `-mu` when useful.
 - Use natural local startup language: warmth, everyday verbs, concise task instructions, and clear recovery guidance.
 
+### Language preference decisions (Owner, 2026-10-10)
+
+- Dashboard language is stored on the owner account as a `locale` column on the `user` table (`en` or `id`, default `en`). A profile switch changes it; it follows the owner across devices.
+- Before sign-in, the choice comes from a device cookie, then English.
+- Client gallery language defaults to the gallery owner's `user.locale`. A client can switch the gallery language; the choice is stored in a device cookie scoped to that gallery and overrides the owner default. Clients who have not chosen follow the owner's current locale.
+- Recipient language for auth emails and WhatsApp messages is chosen by the owner for each message (BR-L10N-006). Dashboard language never sets recipient language.
+- Nothing is released yet (Owner, 2026-10-10). No production data needs migration or backfill for EN/ID. Development and staging data may be reseeded. The legacy-content rule and the historical-viewing policy from BR-L10N-005 are not needed for this build. Snapshot immutability (C-102) still applies to new data.
+- Existing free-text titles (services, categories, items, fields, sessions, team roles, clients, members, workspace, gallery source labels, project titles) stay identities and are not translated. Only platform defaults (item definitions, units, default roles, default templates) have EN/ID versions.
+- Custom message templates (`message_template.content`) are single-language text written by the owner in any language and sent as written. No EN/ID pair, no automatic translation (Owner, 2026-10-10). This changes the 2026-10-06 rule that custom templates need both versions; BR-L10N-* and [localization policy](../../product/localization.md) still say both versions and must be updated by the Owner before implementation.
+- Everything else system-owned follows the language the owner chooses (Owner, 2026-10-10). This includes default template text (Owner, 2026-10-10, option B): the five default templates (GALLERY_SHARE, SELECTION_REMINDER, FINAL_DELIVERY, INVOICE_SHARE, PAYMENT_REMINDER) have English and Indonesian versions in code. Until the owner edits a template, it renders in the owner's `user.locale`. After an edit, the owner's text is kept as written. Restore-default returns the template to the default flag and renders in the owner's locale again. Technical design must decide how existing workspace rows, seeded with the Indonesian default text, are flagged as still default without rewriting history.
+- Recipient language for each generated message is chosen by the owner per message (BR-L10N-006). The default-language choice for a message is the owner's `user.locale`.
+- Owner-authored add-on descriptions are owner-only (`add-on.copy.ts`: "tidak untuk klien") and stored as one text. Services and categories have no description column, so no EN/ID pairs are needed for them.
+- No readiness rule and no paired-content storage are needed for owner-authored text; the readiness question is closed.
+
 ## Goal and boundaries
 
 Make existing Shutrly journeys easy to understand in either language without changing business behavior. Rewrite navigation, forms, helper text, state messages, confirmations, accessible labels and existing client-gallery text. Include existing auth emails and generated WhatsApp messages in localization coverage. Their recipient-language selection and treatment of existing customized templates must be specified before implementation; this is a behavior decision, not an exclusion from localization.

@@ -358,7 +358,7 @@ Every auth screen shares `src/app/(auth)/layout.tsx` → `SplitLayout`, so Login
   - Tests first: unit `"D-17 renders the verification email in English"` and `"… in Indonesian"`; integration `"D-17 a register request in Indonesian sends the Indonesian verification email"` with the fake email port.
   - Commit `feat(auth): send auth emails in the screen language`.
 
-- [ ] **I5.13 E2E auth language link.** `tests/e2e/locale/auth-language-link.spec.ts`: `"AC-L10N-001 a visitor switches the login screen to Indonesian and it stays after reload"`, `"AC-L10N-001 the register screen shows the same language link"`, `"AC-L10N-004 typed login values survive a language switch"` (390 × 844 and desktop). Then the fidelity pass against the auth exports (class names and nesting only). Commit `test(i18n): cover the auth language link end to end`.
+- [x] **I5.13 E2E auth language link.** `tests/e2e/locale/auth-language-link.spec.ts`: `"AC-L10N-001 a visitor switches the login screen to Indonesian and it stays after reload"`, `"AC-L10N-001 the register screen shows the same language link"`, `"AC-L10N-004 typed login values survive a language switch"` (390 × 844 and desktop). Then the fidelity pass against the auth exports (class names and nesting only). Commit `test(i18n): cover the auth language link end to end`.
 
 **Not yet tasks:** none for I5 surfaces. Landing has no switch in F-22 (English by default; Owner 2026-10-11).
 

@@ -90,13 +90,17 @@ function LanguageTrigger({
         aria-hidden="true"
         className={isPending ? "animate-spin" : undefined}
       />
-      <span
-        className={cn(
-          "whitespace-nowrap text-(length:--font-size-body-sm) font-medium",
-          !isPending && "group-data-hovered:underline group-data-focus-visible:underline",
-        )}
-      >
-        {isPending ? copy.changing : selfName(currentLocale, copy)}
+      <span className="flex flex-col gap-px items-start">
+        <span className="whitespace-nowrap text-(length:--font-size-body-sm) leading-[normal] font-medium">
+          {isPending ? copy.changing : selfName(currentLocale, copy)}
+        </span>
+        <span
+          aria-hidden="true"
+          className={cn(
+            "h-px w-full bg-transparent",
+            !isPending && "group-data-hovered:bg-current group-data-focus-visible:bg-current",
+          )}
+        />
       </span>
     </AriaButton>
   );

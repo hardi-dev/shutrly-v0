@@ -13,7 +13,7 @@ export function SplitLayout({ children, editorial, headerAction }: Readonly<Spli
               aria-hidden="true"
               className="size-(--space-4) rounded-(--radius-xs) bg-(--color-semantic-accent-highlight)"
             />
-            <span className="text-(length:--font-size-title) font-bold text-(--color-semantic-text-primary)">
+            <span className="text-(length:--font-size-title) leading-[normal] font-bold text-(--color-semantic-text-primary)">
               {SPLIT_LAYOUT_COPY.brand}
             </span>
           </p>

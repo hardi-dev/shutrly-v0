@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 import { isLandingOnly } from "@/composition/app-stage/app-stage";
+import { GALLERY_TOKEN_HEADER } from "@/shared/gallery-token/gallery-token-header";
 
 // Next 16 Proxy (formerly middleware): the production gate, then an early cookie-presence
 // redirect. The owner guard in composition is the authority on every page, action and route
@@ -12,9 +13,7 @@ import { isLandingOnly } from "@/composition/app-stage/app-stage";
 const LANDING_PATHS = ["/", "/api/waitlist", "/robots.txt"];
 // Not a route, so a rewrite here renders the root not-found page with HTTP 404 (no redirect, A-5).
 const NOT_FOUND_PATH = "/_gated";
-// Server-internal request header naming the gallery token of a /g/<token> path (D-7). Set only on
-// the forwarded request, never on the response; any value from the client is dropped (C-103).
-export const GALLERY_TOKEN_HEADER = "x-shutrly-gallery-token";
+// Gallery token header (D-7): set only on the forwarded request, never on the response.
 const GALLERY_PATH = /^\/g\/([^/]+)(?:\/|$)/;
 
 const PUBLIC_PREFIXES = [

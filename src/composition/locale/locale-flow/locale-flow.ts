@@ -4,11 +4,16 @@ import { z } from "zod";
 
 import { withAuthScope } from "@/composition/auth/auth-scope/auth-scope";
 import { redirectOnRefusal } from "@/composition/auth/owner-guard/owner-guard";
+import { withClientScope } from "@/composition/gallery/client-access-flow/client-access-flow";
 import { updateOwnerLocale as updateOwnerLocaleUseCase } from "@/features/auth/application/use-cases/update-owner-locale/update-owner-locale";
 import type { UpdateOwnerLocaleResult } from "@/features/auth/application/use-cases/update-owner-locale/update-owner-locale.types";
+import { checkGalleryLocaleTarget } from "@/features/gallery/application/use-cases/check-gallery-locale-target/check-gallery-locale-target";
 import { appLocaleSchema } from "@/shared/locale/locale.schema";
 
-import { writeDeviceLocaleCookie } from "../locale-cookies/locale-cookies";
+import {
+  writeDeviceLocaleCookie,
+  writeGalleryLocaleCookie,
+} from "../locale-cookies/locale-cookies";
 import { type LocaleActionResult } from "./locale-flow.types";
 
 /**
@@ -34,5 +39,26 @@ export async function setDeviceLocale(values: unknown): Promise<LocaleActionResu
   const parsed = deviceLocaleSchema.safeParse(values);
   if (!parsed.success) return { ok: false };
   await writeDeviceLocaleCookie(parsed.data.locale);
+  return { ok: true };
+}
+
+/**
+ * Store a visitor's language for one gallery link only (`shutrly_gallery_locale`, `Path=/g/<token>`).
+ * It writes only when the link is available, so an unknown token gets nothing (C-104).
+ * @param rawToken - the raw token from the gallery path
+ * @param values - the untrusted locale value from the client language switch
+ * @returns ok, or a refusal that writes nothing
+ */
+export async function setGalleryLocale(
+  rawToken: string,
+  values: unknown,
+): Promise<LocaleActionResult> {
+  const parsed = deviceLocaleSchema.safeParse(values);
+  if (!parsed.success) return { ok: false };
+  const available = await withClientScope((deps, rc) =>
+    checkGalleryLocaleTarget(deps, rawToken, rc.ip),
+  );
+  if (!available) return { ok: false };
+  await writeGalleryLocaleCookie(rawToken, parsed.data.locale);
   return { ok: true };
 }

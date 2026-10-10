@@ -2,9 +2,19 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const writeDeviceLocaleCookie = vi.hoisted(() => vi.fn(() => Promise.resolve()));
 
+const updateOwnerLocaleUseCase = vi.hoisted(() => vi.fn());
+
 vi.mock("../locale-cookies/locale-cookies", () => ({ writeDeviceLocaleCookie }));
-vi.mock("@/composition/auth/auth-scope/auth-scope", () => ({ withAuthScope: vi.fn() }));
-vi.mock("@/composition/auth/owner-guard/owner-guard", () => ({ redirectOnRefusal: vi.fn() }));
+vi.mock("@/composition/auth/auth-scope/auth-scope", () => ({
+  withAuthScope: (work: (scope: unknown) => Promise<unknown>) =>
+    work({ meta: { headers: new Headers() } }),
+}));
+vi.mock("@/composition/auth/owner-guard/owner-guard", () => ({
+  redirectOnRefusal: (work: () => Promise<unknown>) => work(),
+}));
+vi.mock("@/features/auth/application/use-cases/update-owner-locale/update-owner-locale", () => ({
+  updateOwnerLocale: updateOwnerLocaleUseCase,
+}));
 
 const galleryDeps = vi.hoisted(() => ({
   record: null as null | object,
@@ -31,7 +41,7 @@ vi.mock("@/composition/gallery/client-access-flow/client-access-flow", () => ({
     ),
 }));
 
-import { setDeviceLocale, setGalleryLocale } from "./locale-flow";
+import { setDeviceLocale, setGalleryLocale, updateOwnerLocale } from "./locale-flow";
 
 const TOKEN = "A".repeat(43);
 const AVAILABLE = {
@@ -49,6 +59,28 @@ const AVAILABLE = {
   contentVersion: 1,
   finalDeliveryPublishedAt: null,
 };
+
+describe("updateOwnerLocale", () => {
+  beforeEach(() => {
+    writeDeviceLocaleCookie.mockClear();
+    updateOwnerLocaleUseCase.mockReset();
+  });
+
+  it("D-22 an owner switch also writes the device cookie", async () => {
+    updateOwnerLocaleUseCase.mockResolvedValue({ ok: true });
+    expect(await updateOwnerLocale({ locale: "id" })).toEqual({ ok: true });
+    expect(writeDeviceLocaleCookie).toHaveBeenCalledWith("id");
+  });
+
+  it("D-22 a refused owner switch writes no cookie", async () => {
+    updateOwnerLocaleUseCase.mockResolvedValue({ ok: false, code: "VALIDATION_FAILED" });
+    expect(await updateOwnerLocale({ locale: "fr" })).toEqual({
+      ok: false,
+      code: "VALIDATION_FAILED",
+    });
+    expect(writeDeviceLocaleCookie).not.toHaveBeenCalled();
+  });
+});
 
 describe("setDeviceLocale", () => {
   beforeEach(() => {

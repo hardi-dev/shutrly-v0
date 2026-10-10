@@ -6,6 +6,7 @@ import { withAuthScope } from "@/composition/auth/auth-scope/auth-scope";
 import { redirectOnRefusal } from "@/composition/auth/owner-guard/owner-guard";
 import { withClientScope } from "@/composition/gallery/client-access-flow/client-access-flow";
 import { updateOwnerLocale as updateOwnerLocaleUseCase } from "@/features/auth/application/use-cases/update-owner-locale/update-owner-locale";
+import { updateOwnerLocaleSchema as ownerLocaleSchema } from "@/features/auth/application/use-cases/update-owner-locale/update-owner-locale.schema";
 import type { UpdateOwnerLocaleResult } from "@/features/auth/application/use-cases/update-owner-locale/update-owner-locale.types";
 import { checkGalleryLocaleTarget } from "@/features/gallery/application/use-cases/check-gallery-locale-target/check-gallery-locale-target";
 import { appLocaleSchema } from "@/shared/locale/locale.schema";
@@ -18,13 +19,17 @@ import { type LocaleActionResult } from "./locale-flow.types";
 
 /**
  * Store the signed-in owner's dashboard language (BR-L10N-001). A non-owner session is redirected.
+ * A saved switch also writes the device cookie, so the screens before sign-in follow it (D-22).
  * @param values - the untrusted locale value from the Profile control
- * @returns the use-case result
+ * @returns the use-case result; a refusal writes no cookie
  */
-export function updateOwnerLocale(values: unknown): Promise<UpdateOwnerLocaleResult> {
-  return redirectOnRefusal(() =>
+export async function updateOwnerLocale(values: unknown): Promise<UpdateOwnerLocaleResult> {
+  const result = await redirectOnRefusal(() =>
     withAuthScope((scope) => updateOwnerLocaleUseCase(scope, values, scope.meta.headers)),
   );
+  const parsed = ownerLocaleSchema.safeParse(values);
+  if (result.ok && parsed.success) await writeDeviceLocaleCookie(parsed.data.locale);
+  return result;
 }
 
 const deviceLocaleSchema = z.object({ locale: appLocaleSchema });

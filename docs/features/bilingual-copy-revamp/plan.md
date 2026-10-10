@@ -312,7 +312,7 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
   - Tests first: parity test stays green with the new namespaces; `owner-shell.test.tsx` `"AC-L10N-002 renders the shell navigation in English"` and `"… in Indonesian"` (provider with each locale).
   - Commit `feat(i18n): translate the owner shell`.
 
-- [ ] **I5.4 An owner switch also writes the device cookie (D-22).** `src/composition/locale/locale-flow/locale-flow.ts`: after `updateOwnerLocale` returns ok, call `writeDeviceLocaleCookie(locale)` so the screens before sign-in on this device follow the choice. A refusal writes nothing.
+- [x] **I5.4 An owner switch also writes the device cookie (D-22).** `src/composition/locale/locale-flow/locale-flow.ts`: after `updateOwnerLocale` returns ok, call `writeDeviceLocaleCookie(locale)` so the screens before sign-in on this device follow the choice. A refusal writes nothing.
   - Tests first in `locale-flow.test.ts`: `"D-22 an owner switch also writes the device cookie"`, `"D-22 a refused owner switch writes no cookie"`.
   - Commit `feat(i18n): remember the owner's language on this device`.
 

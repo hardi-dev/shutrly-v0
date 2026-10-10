@@ -30,6 +30,47 @@
         "dev"
       ],
       "port": 3000
+    },
+    {
+      "name": "dev-client-access",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--dir",
+        "/Users/hardiansa/Documents/work/personal/Coding/shutrly-v01/.claude/worktrees/pull-branch-main-21161f",
+        "run",
+        "dev"
+      ],
+      "port": 3000
+    },
+    {
+      "name": "dev-landing",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--dir",
+        "/Users/hardiansa/Documents/work/personal/Coding/shutrly-v01/.claude/worktrees/landing",
+        "run",
+        "dev"
+      ],
+      "port": 3100,
+      "autoPort": true
+    },
+    {
+      "name": "landing-prod",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "-u",
+        "DATABASE_URL",
+        "APP_STAGE=production",
+        "pnpm",
+        "--dir",
+        "/Users/hardiansa/Documents/work/personal/Coding/shutrly-v01/.claude/worktrees/landing",
+        "exec",
+        "next",
+        "start",
+        "-p",
+        "3200"
+      ],
+      "port": 3200
     }
   ]
 }

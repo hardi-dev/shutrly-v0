@@ -1,0 +1,1959 @@
+{
+  "version": "2.21",
+  "children": [
+    {
+      "type": "frame",
+      "id": "pmPvn",
+      "x": 0,
+      "y": -400,
+      "name": "Placeholder/Page content",
+      "reusable": true,
+      "width": 360,
+      "height": 160,
+      "fill": "$a:color/semantic/surface/panel",
+      "cornerRadius": "$a:radius/md",
+      "stroke": "$a:color/semantic/border/default",
+      "strokeWidth": 1,
+      "strokeAlignment": "inner",
+      "layout": "vertical",
+      "padding": "$a:space/4",
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "C66QY",
+          "name": "Label",
+          "fill": "$a:color/semantic/text/secondary",
+          "content": "Page content",
+          "fontFamily": "$a:font/family/base",
+          "fontSize": "$a:font/size/body-sm",
+          "fontWeight": "$a:font/weight/regular"
+        }
+      ]
+    },
+    {
+      "id": "x7qwr",
+      "type": "ref",
+      "ref": "a:y9uBJl",
+      "name": "D1 · Dashboard · desktop · light",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 960,
+      "descendants": {
+        "a:fNszT/a:llfv5": {
+          "id": "kL2eL",
+          "type": "ref",
+          "ref": "a:CInVy",
+          "name": "Nav Dasbor",
+          "width": "fill_container",
+          "descendants": {
+            "a:MpR9k": {
+              "icon": "layout-grid"
+            },
+            "a:m6S2m": {
+              "content": "Dasbor"
+            }
+          }
+        },
+        "a:fNszT/a:nHXqh/a:E6JiYt": {
+          "enabled": false
+        },
+        "a:fNszT/a:wwfj3/a:E6JiYt": {
+          "enabled": false
+        },
+        "a:fNszT/a:lz7Bj/a:E6JiYt": {
+          "enabled": false
+        },
+        "a:fNszT/a:P4ZpeX/a:E6JiYt": {
+          "enabled": false
+        },
+        "a:fNszT/a:V2Udn4/a:E6JiYt": {
+          "enabled": false
+        },
+        "a:fNszT/a:f1BvVe/a:E6JiYt": {
+          "enabled": false
+        },
+        "a:fNszT/a:I3aJo/a:E6JiYt": {
+          "enabled": false
+        },
+        "a:fNszT/a:E2Dl5F/a:E6JiYt": {
+          "enabled": false
+        },
+        "a:Sw0yD/a:MST3f": {
+          "id": "J8G94v",
+          "type": "ref",
+          "ref": "a:ImEDW",
+          "name": "Page Header",
+          "width": "fill_container",
+          "descendants": {
+            "a:EPpbd": {
+              "content": "Aster Wedding"
+            },
+            "a:Hh5tj": {
+              "content": "Dasbor"
+            },
+            "a:HsrFT": {
+              "content": "Dasbor"
+            },
+            "a:i8XPWU": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "a:ew9bb": {
+              "enabled": false
+            }
+          }
+        },
+        "a:Sw0yD/a:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "HG8Xq",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$a:component/panel/app/content/gap",
+              "children": [
+                {
+                  "id": "rBqNE",
+                  "type": "ref",
+                  "ref": "pmPvn",
+                  "name": "Placeholder",
+                  "width": "fill_container",
+                  "height": 240
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "v8vSQJ",
+      "type": "ref",
+      "ref": "a:c6qPz7",
+      "name": "M1 · Dashboard · top-level · light",
+      "x": 1560,
+      "y": 0,
+      "width": 390,
+      "height": 844,
+      "fill": "$a:color/semantic/surface/muted",
+      "descendants": {
+        "a:jqblo": {
+          "strokeWidth": 0
+        },
+        "a:nUiGs": {
+          "type": "frame",
+          "id": "MdCMG",
+          "x": 0,
+          "y": 0,
+          "name": "App bar (legacy, off)",
+          "enabled": false,
+          "width": 1,
+          "height": 1
+        },
+        "a:n0MP5/a:K1jSfD": {
+          "content": "Dasbor"
+        },
+        "a:n0MP5/a:EYvag": {
+          "content": "Ringkasan workspace Aster Wedding."
+        },
+        "a:HvRky": {
+          "type": "frame",
+          "id": "t4Z8BE",
+          "name": "Content sheet",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$a:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$a:component/panel/app/radius",
+            "$a:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$a:space/4",
+          "padding": [
+            "$a:space/5",
+            "$a:space/4"
+          ],
+          "children": [
+            {
+              "id": "qealr",
+              "type": "ref",
+              "ref": "pmPvn",
+              "name": "Placeholder",
+              "width": "fill_container"
+            }
+          ]
+        },
+        "a:SpGXb/a:uzabE/a:qSiIY": {
+          "enabled": false
+        },
+        "a:SpGXb/a:Ryjdm/a:qSiIY": {
+          "enabled": false
+        },
+        "a:SpGXb/a:YChMw/a:qSiIY": {
+          "enabled": false
+        },
+        "a:SpGXb/a:wTYuN": {
+          "id": "MJs6P",
+          "type": "ref",
+          "ref": "a:x1Mgr3",
+          "name": "Tab Invoice",
+          "descendants": {
+            "a:Tz5za": {
+              "icon": "receipt"
+            },
+            "a:qSiIY": {
+              "enabled": false
+            },
+            "a:sJlqM": {
+              "content": "Invoice"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "frame",
+      "id": "TJlEh",
+      "x": 0,
+      "y": 1100,
+      "name": "D2 · Account menu open · desktop · light",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "layout": "none",
+      "children": [
+        {
+          "id": "qjzxV",
+          "type": "ref",
+          "ref": "a:y9uBJl",
+          "name": "Shell",
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 960,
+          "descendants": {
+            "a:fNszT/a:llfv5": {
+              "id": "LgLIy",
+              "type": "ref",
+              "ref": "a:CInVy",
+              "name": "Nav Dasbor",
+              "width": "fill_container",
+              "descendants": {
+                "a:MpR9k": {
+                  "icon": "layout-grid"
+                },
+                "a:m6S2m": {
+                  "content": "Dasbor"
+                }
+              }
+            },
+            "a:fNszT/a:nHXqh/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:wwfj3/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:lz7Bj/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:P4ZpeX/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:V2Udn4/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:f1BvVe/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:I3aJo/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:E2Dl5F": {
+              "enabled": false
+            },
+            "a:fNszT/a:E2Dl5F/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:B5IsTM": {
+              "fill": "$a:color/semantic/surface/panel",
+              "cornerRadius": "$a:radius/md"
+            },
+            "a:fNszT/a:Z3WMYf": {
+              "name": "Menu trigger"
+            },
+            "a:fNszT/a:Z3WMYf/a:wSyzB": {
+              "icon": "chevrons-up-down"
+            },
+            "a:Sw0yD/a:MST3f": {
+              "id": "u1C26",
+              "type": "ref",
+              "ref": "a:ImEDW",
+              "name": "Page Header",
+              "width": "fill_container",
+              "descendants": {
+                "a:EPpbd": {
+                  "content": "Aster Wedding"
+                },
+                "a:Hh5tj": {
+                  "content": "Dasbor"
+                },
+                "a:HsrFT": {
+                  "content": "Dasbor"
+                },
+                "a:i8XPWU": {
+                  "content": "Ringkasan workspace Aster Wedding."
+                },
+                "a:ew9bb": {
+                  "enabled": false
+                }
+              }
+            },
+            "a:Sw0yD/a:d2hCuQ": {
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "S4AhH1",
+                  "name": "Container",
+                  "width": 1096,
+                  "layout": "vertical",
+                  "gap": "$a:component/panel/app/content/gap",
+                  "children": [
+                    {
+                      "id": "izhLE",
+                      "type": "ref",
+                      "ref": "pmPvn",
+                      "name": "Placeholder",
+                      "width": "fill_container",
+                      "height": 240
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "ZLa3l",
+          "type": "ref",
+          "ref": "a:g6dKmz",
+          "name": "Account menu",
+          "x": 12,
+          "y": 515,
+          "width": 228,
+          "descendants": {
+            "a:JoK1p": {
+              "children": [
+                {
+                  "id": "wXumg",
+                  "type": "ref",
+                  "ref": "a:iSqRB",
+                  "name": "Profil",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "user"
+                    },
+                    "a:vHwtA": {
+                      "content": "Profil"
+                    }
+                  }
+                },
+                {
+                  "id": "mdIlU",
+                  "type": "ref",
+                  "ref": "a:iSqRB",
+                  "name": "Pengaturan",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "settings"
+                    },
+                    "a:vHwtA": {
+                      "content": "Pengaturan"
+                    }
+                  }
+                },
+                {
+                  "id": "QvoED",
+                  "type": "ref",
+                  "ref": "a:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "beTPK",
+                  "type": "ref",
+                  "ref": "a:yNxME",
+                  "name": "Group BAHASA",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:n0wAh6": {
+                      "content": "BAHASA"
+                    }
+                  }
+                },
+                {
+                  "id": "DVGX5",
+                  "type": "ref",
+                  "ref": "a:iSqRB",
+                  "name": "English",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:vHwtA": {
+                      "content": "English"
+                    }
+                  }
+                },
+                {
+                  "id": "QnUuX",
+                  "type": "ref",
+                  "ref": "a:qKcfI",
+                  "name": "Bahasa Indonesia",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:vHwtA": {
+                      "content": "Bahasa Indonesia"
+                    }
+                  }
+                },
+                {
+                  "id": "QJrZ0",
+                  "type": "ref",
+                  "ref": "a:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "LA01N",
+                  "type": "ref",
+                  "ref": "a:yNxME",
+                  "name": "Group TEMA",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:n0wAh6": {
+                      "content": "TEMA"
+                    }
+                  }
+                },
+                {
+                  "id": "IYV1k",
+                  "type": "ref",
+                  "ref": "a:iSqRB",
+                  "name": "Terang",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "sun"
+                    },
+                    "a:vHwtA": {
+                      "content": "Terang"
+                    }
+                  }
+                },
+                {
+                  "id": "ewZdr",
+                  "type": "ref",
+                  "ref": "a:iSqRB",
+                  "name": "Gelap",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "moon"
+                    },
+                    "a:vHwtA": {
+                      "content": "Gelap"
+                    }
+                  }
+                },
+                {
+                  "id": "k7iql",
+                  "type": "ref",
+                  "ref": "a:qKcfI",
+                  "name": "Sistem",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "monitor"
+                    },
+                    "a:vHwtA": {
+                      "content": "Sistem"
+                    }
+                  }
+                },
+                {
+                  "id": "OqWDN",
+                  "type": "ref",
+                  "ref": "a:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "bOs7u",
+                  "type": "ref",
+                  "ref": "a:Amnm5",
+                  "name": "Keluar",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "log-out"
+                    },
+                    "a:vHwtA": {
+                      "content": "Keluar"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "UY9Co",
+      "x": 1560,
+      "y": 1100,
+      "name": "M2 · Menu sheet open · phone · light",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "layout": "none",
+      "children": [
+        {
+          "id": "LvikZ",
+          "type": "ref",
+          "ref": "a:c6qPz7",
+          "name": "Shell",
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "fill": "$a:color/semantic/surface/muted",
+          "descendants": {
+            "a:jqblo": {
+              "strokeWidth": 0
+            },
+            "a:nUiGs": {
+              "type": "frame",
+              "id": "NWFgZ",
+              "x": 0,
+              "y": 0,
+              "name": "App bar (legacy, off)",
+              "enabled": false,
+              "width": 1,
+              "height": 1
+            },
+            "a:n0MP5/a:K1jSfD": {
+              "content": "Dasbor"
+            },
+            "a:n0MP5/a:EYvag": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "a:HvRky": {
+              "type": "frame",
+              "id": "S3RDm",
+              "name": "Content sheet",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$a:color/semantic/surface/canvas",
+              "cornerRadius": [
+                "$a:component/panel/app/radius",
+                "$a:component/panel/app/radius",
+                0,
+                0
+              ],
+              "layout": "vertical",
+              "gap": "$a:space/4",
+              "padding": [
+                "$a:space/5",
+                "$a:space/4"
+              ],
+              "children": [
+                {
+                  "id": "UZl9C",
+                  "type": "ref",
+                  "ref": "pmPvn",
+                  "name": "Placeholder",
+                  "width": "fill_container"
+                }
+              ]
+            },
+            "a:SpGXb/a:uzabE/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:Ryjdm/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:YChMw/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:wTYuN": {
+              "id": "DWuP2",
+              "type": "ref",
+              "ref": "a:x1Mgr3",
+              "name": "Tab Invoice",
+              "descendants": {
+                "a:Tz5za": {
+                  "icon": "receipt"
+                },
+                "a:qSiIY": {
+                  "enabled": false
+                },
+                "a:sJlqM": {
+                  "content": "Invoice"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "rectangle",
+          "id": "PTRx9",
+          "x": 0,
+          "y": 0,
+          "name": "Scrim",
+          "fill": "$a:component/modal/scrim",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "uQUmA",
+          "type": "ref",
+          "ref": "a:oWJw2",
+          "name": "Menu sheet",
+          "x": 0,
+          "y": 184,
+          "width": 390,
+          "descendants": {
+            "a:MfblZ": {
+              "children": [
+                {
+                  "id": "bFaBi",
+                  "type": "ref",
+                  "ref": "a:Rjoxp",
+                  "name": "Group KATALOG",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:p1hGy": {
+                      "content": "KATALOG"
+                    }
+                  }
+                },
+                {
+                  "id": "CTb5X",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Layanan",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "package"
+                    },
+                    "a:elAPX": {
+                      "content": "Layanan"
+                    }
+                  }
+                },
+                {
+                  "id": "Z4Iud",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Tim",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "users"
+                    },
+                    "a:elAPX": {
+                      "content": "Tim"
+                    }
+                  }
+                },
+                {
+                  "id": "CLN0A",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Template pesan",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "message-square-text"
+                    },
+                    "a:elAPX": {
+                      "content": "Template pesan"
+                    }
+                  }
+                },
+                {
+                  "id": "t5CnB",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Sumber foto",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "folder-open"
+                    },
+                    "a:elAPX": {
+                      "content": "Sumber foto"
+                    }
+                  }
+                },
+                {
+                  "id": "E4baz",
+                  "type": "ref",
+                  "ref": "a:Rjoxp",
+                  "name": "Group AKUN",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:p1hGy": {
+                      "content": "AKUN"
+                    }
+                  }
+                },
+                {
+                  "id": "U6sau",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Profil",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "user"
+                    },
+                    "a:elAPX": {
+                      "content": "Profil"
+                    }
+                  }
+                },
+                {
+                  "id": "f7Biz",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Pengaturan",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "settings"
+                    },
+                    "a:elAPX": {
+                      "content": "Pengaturan"
+                    }
+                  }
+                },
+                {
+                  "id": "y7pojz",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Bahasa",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "languages"
+                    },
+                    "a:elAPX": {
+                      "content": "Bahasa"
+                    },
+                    "a:bZ2Ux": {
+                      "type": "frame",
+                      "id": "w1uKl",
+                      "name": "Value",
+                      "gap": "$a:space/1",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "MuVSM",
+                          "name": "Current",
+                          "fill": "$a:color/semantic/text/secondary",
+                          "content": "Bahasa Indonesia",
+                          "fontFamily": "$a:font/family/base",
+                          "fontSize": "$a:font/size/body",
+                          "fontWeight": "$a:font/weight/regular"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "gAIkf",
+                          "name": "Chevron",
+                          "width": 20,
+                          "height": 20,
+                          "icon": "chevron-right",
+                          "library": "lucide",
+                          "fill": "$a:color/semantic/text/secondary"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "sE64Z",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Tema",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "sun-moon"
+                    },
+                    "a:elAPX": {
+                      "content": "Tema"
+                    },
+                    "a:bZ2Ux": {
+                      "type": "frame",
+                      "id": "AyW5H",
+                      "name": "Value",
+                      "gap": "$a:space/1",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "RQyFA",
+                          "name": "Current",
+                          "fill": "$a:color/semantic/text/secondary",
+                          "content": "Sistem",
+                          "fontFamily": "$a:font/family/base",
+                          "fontSize": "$a:font/size/body",
+                          "fontWeight": "$a:font/weight/regular"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "KFmE8",
+                          "name": "Chevron",
+                          "width": 20,
+                          "height": 20,
+                          "icon": "chevron-right",
+                          "library": "lucide",
+                          "fill": "$a:color/semantic/text/secondary"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "mgwNL",
+                  "type": "ref",
+                  "ref": "a:FAObX",
+                  "name": "Item Keluar",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "log-out"
+                    },
+                    "a:elAPX": {
+                      "content": "Keluar"
+                    }
+                  }
+                }
+              ]
+            },
+            "a:JVVIR": {
+              "enabled": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "X9JQT",
+      "x": 2050,
+      "y": 1100,
+      "name": "M3 · Language sheet · phone · light",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "layout": "none",
+      "children": [
+        {
+          "id": "gngJ1",
+          "type": "ref",
+          "ref": "a:c6qPz7",
+          "name": "Shell",
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "fill": "$a:color/semantic/surface/muted",
+          "descendants": {
+            "a:jqblo": {
+              "strokeWidth": 0
+            },
+            "a:nUiGs": {
+              "type": "frame",
+              "id": "g9MpO0",
+              "x": 0,
+              "y": 0,
+              "name": "App bar (legacy, off)",
+              "enabled": false,
+              "width": 1,
+              "height": 1
+            },
+            "a:n0MP5/a:K1jSfD": {
+              "content": "Dasbor"
+            },
+            "a:n0MP5/a:EYvag": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "a:HvRky": {
+              "type": "frame",
+              "id": "St8vn",
+              "name": "Content sheet",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$a:color/semantic/surface/canvas",
+              "cornerRadius": [
+                "$a:component/panel/app/radius",
+                "$a:component/panel/app/radius",
+                0,
+                0
+              ],
+              "layout": "vertical",
+              "gap": "$a:space/4",
+              "padding": [
+                "$a:space/5",
+                "$a:space/4"
+              ],
+              "children": [
+                {
+                  "id": "Kgqtd",
+                  "type": "ref",
+                  "ref": "pmPvn",
+                  "name": "Placeholder",
+                  "width": "fill_container"
+                }
+              ]
+            },
+            "a:SpGXb/a:uzabE/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:Ryjdm/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:YChMw/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:wTYuN": {
+              "id": "Z57SY",
+              "type": "ref",
+              "ref": "a:x1Mgr3",
+              "name": "Tab Invoice",
+              "descendants": {
+                "a:Tz5za": {
+                  "icon": "receipt"
+                },
+                "a:qSiIY": {
+                  "enabled": false
+                },
+                "a:sJlqM": {
+                  "content": "Invoice"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "rectangle",
+          "id": "dB30i",
+          "x": 0,
+          "y": 0,
+          "name": "Scrim",
+          "fill": "$a:component/modal/scrim",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "lXLWP",
+          "type": "ref",
+          "ref": "a:U0wHw",
+          "name": "Bahasa sheet",
+          "x": 0,
+          "y": 660,
+          "width": 390,
+          "descendants": {
+            "a:bEyU3": {
+              "content": "Bahasa"
+            },
+            "a:GyfP0": {
+              "enabled": false
+            },
+            "a:CLpYz": {
+              "children": [
+                {
+                  "id": "jk8QU",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item English",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "enabled": false
+                    },
+                    "a:elAPX": {
+                      "content": "English"
+                    }
+                  }
+                },
+                {
+                  "id": "lrVGv",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Bahasa Indonesia",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "enabled": false
+                    },
+                    "a:elAPX": {
+                      "content": "Bahasa Indonesia",
+                      "fontWeight": "$a:font/weight/semibold"
+                    },
+                    "a:W5pLC": {
+                      "enabled": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "cCf8E",
+      "x": 2540,
+      "y": 1100,
+      "name": "M4 · Theme sheet · phone · light",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "layout": "none",
+      "children": [
+        {
+          "id": "N5QZlm",
+          "type": "ref",
+          "ref": "a:c6qPz7",
+          "name": "Shell",
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "fill": "$a:color/semantic/surface/muted",
+          "descendants": {
+            "a:jqblo": {
+              "strokeWidth": 0
+            },
+            "a:nUiGs": {
+              "type": "frame",
+              "id": "U4gz1K",
+              "x": 0,
+              "y": 0,
+              "name": "App bar (legacy, off)",
+              "enabled": false,
+              "width": 1,
+              "height": 1
+            },
+            "a:n0MP5/a:K1jSfD": {
+              "content": "Dasbor"
+            },
+            "a:n0MP5/a:EYvag": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "a:HvRky": {
+              "type": "frame",
+              "id": "jUymb",
+              "name": "Content sheet",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$a:color/semantic/surface/canvas",
+              "cornerRadius": [
+                "$a:component/panel/app/radius",
+                "$a:component/panel/app/radius",
+                0,
+                0
+              ],
+              "layout": "vertical",
+              "gap": "$a:space/4",
+              "padding": [
+                "$a:space/5",
+                "$a:space/4"
+              ],
+              "children": [
+                {
+                  "id": "XiKAJ",
+                  "type": "ref",
+                  "ref": "pmPvn",
+                  "name": "Placeholder",
+                  "width": "fill_container"
+                }
+              ]
+            },
+            "a:SpGXb/a:uzabE/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:Ryjdm/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:YChMw/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:wTYuN": {
+              "id": "Iz8Il",
+              "type": "ref",
+              "ref": "a:x1Mgr3",
+              "name": "Tab Invoice",
+              "descendants": {
+                "a:Tz5za": {
+                  "icon": "receipt"
+                },
+                "a:qSiIY": {
+                  "enabled": false
+                },
+                "a:sJlqM": {
+                  "content": "Invoice"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "rectangle",
+          "id": "EgEtw",
+          "x": 0,
+          "y": 0,
+          "name": "Scrim",
+          "fill": "$a:component/modal/scrim",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "h19UQ1",
+          "type": "ref",
+          "ref": "a:U0wHw",
+          "name": "Tema sheet",
+          "x": 0,
+          "y": 608,
+          "width": 390,
+          "descendants": {
+            "a:bEyU3": {
+              "content": "Tema"
+            },
+            "a:GyfP0": {
+              "enabled": false
+            },
+            "a:CLpYz": {
+              "children": [
+                {
+                  "id": "hmkjP",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Terang",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "sun"
+                    },
+                    "a:elAPX": {
+                      "content": "Terang"
+                    }
+                  }
+                },
+                {
+                  "id": "Y95MP4",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Gelap",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "moon"
+                    },
+                    "a:elAPX": {
+                      "content": "Gelap"
+                    }
+                  }
+                },
+                {
+                  "id": "L6poa",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Sistem",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:MLkPM": {
+                      "icon": "monitor"
+                    },
+                    "a:elAPX": {
+                      "content": "Sistem",
+                      "fontWeight": "$a:font/weight/semibold"
+                    },
+                    "a:W5pLC": {
+                      "enabled": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "PuQxH",
+      "x": 0,
+      "y": 2200,
+      "name": "D3 · Language switching (pending) · desktop · light",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "layout": "none",
+      "children": [
+        {
+          "id": "LmvAg",
+          "type": "ref",
+          "ref": "a:y9uBJl",
+          "name": "Shell",
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 960,
+          "descendants": {
+            "a:fNszT/a:llfv5": {
+              "id": "C901eP",
+              "type": "ref",
+              "ref": "a:CInVy",
+              "name": "Nav Dasbor",
+              "width": "fill_container",
+              "descendants": {
+                "a:MpR9k": {
+                  "icon": "layout-grid"
+                },
+                "a:m6S2m": {
+                  "content": "Dasbor"
+                }
+              }
+            },
+            "a:fNszT/a:nHXqh/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:wwfj3/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:lz7Bj/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:P4ZpeX/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:V2Udn4/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:f1BvVe/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:I3aJo/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:E2Dl5F": {
+              "enabled": false
+            },
+            "a:fNszT/a:E2Dl5F/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:B5IsTM": {
+              "fill": "$a:color/semantic/surface/panel",
+              "cornerRadius": "$a:radius/md"
+            },
+            "a:fNszT/a:Z3WMYf": {
+              "name": "Menu trigger"
+            },
+            "a:fNszT/a:Z3WMYf/a:wSyzB": {
+              "icon": "chevrons-up-down"
+            },
+            "a:Sw0yD/a:MST3f": {
+              "id": "U8WlE",
+              "type": "ref",
+              "ref": "a:ImEDW",
+              "name": "Page Header",
+              "width": "fill_container",
+              "descendants": {
+                "a:EPpbd": {
+                  "content": "Aster Wedding"
+                },
+                "a:Hh5tj": {
+                  "content": "Dasbor"
+                },
+                "a:HsrFT": {
+                  "content": "Dasbor"
+                },
+                "a:i8XPWU": {
+                  "content": "Ringkasan workspace Aster Wedding."
+                },
+                "a:ew9bb": {
+                  "enabled": false
+                }
+              }
+            },
+            "a:Sw0yD/a:d2hCuQ": {
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "gbep2",
+                  "name": "Container",
+                  "width": 1096,
+                  "layout": "vertical",
+                  "gap": "$a:component/panel/app/content/gap",
+                  "children": [
+                    {
+                      "id": "i0jgkI",
+                      "type": "ref",
+                      "ref": "pmPvn",
+                      "name": "Placeholder",
+                      "width": "fill_container",
+                      "height": 240
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "UXNqn",
+          "type": "ref",
+          "ref": "a:g6dKmz",
+          "name": "Account menu",
+          "x": 12,
+          "y": 515,
+          "width": 228,
+          "descendants": {
+            "a:JoK1p": {
+              "children": [
+                {
+                  "id": "xOsOz",
+                  "type": "ref",
+                  "ref": "a:iSqRB",
+                  "name": "Profil",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "user"
+                    },
+                    "a:vHwtA": {
+                      "content": "Profil"
+                    }
+                  }
+                },
+                {
+                  "id": "JMYh7",
+                  "type": "ref",
+                  "ref": "a:iSqRB",
+                  "name": "Pengaturan",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "settings"
+                    },
+                    "a:vHwtA": {
+                      "content": "Pengaturan"
+                    }
+                  }
+                },
+                {
+                  "id": "XtNhQ",
+                  "type": "ref",
+                  "ref": "a:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "zmqMz",
+                  "type": "ref",
+                  "ref": "a:yNxME",
+                  "name": "Group BAHASA",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:n0wAh6": {
+                      "content": "BAHASA"
+                    }
+                  }
+                },
+                {
+                  "id": "xeGT8",
+                  "type": "ref",
+                  "ref": "a:e0gYs",
+                  "name": "English",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "loader-circle"
+                    },
+                    "a:vHwtA": {
+                      "content": "English"
+                    },
+                    "a:leQSn": {
+                      "enabled": true,
+                      "content": "Mengganti bahasa…",
+                      "width": "fill_container"
+                    }
+                  }
+                },
+                {
+                  "id": "b7rQH",
+                  "type": "ref",
+                  "ref": "a:e0gYs",
+                  "name": "Bahasa Indonesia",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:vHwtA": {
+                      "content": "Bahasa Indonesia"
+                    },
+                    "a:baOu6": {
+                      "enabled": true
+                    }
+                  }
+                },
+                {
+                  "id": "Q85FIZ",
+                  "type": "ref",
+                  "ref": "a:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "N0D9k",
+                  "type": "ref",
+                  "ref": "a:yNxME",
+                  "name": "Group TEMA",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:n0wAh6": {
+                      "content": "TEMA"
+                    }
+                  }
+                },
+                {
+                  "id": "XiUYi",
+                  "type": "ref",
+                  "ref": "a:iSqRB",
+                  "name": "Terang",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "sun"
+                    },
+                    "a:vHwtA": {
+                      "content": "Terang"
+                    }
+                  }
+                },
+                {
+                  "id": "t4GbwM",
+                  "type": "ref",
+                  "ref": "a:iSqRB",
+                  "name": "Gelap",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "moon"
+                    },
+                    "a:vHwtA": {
+                      "content": "Gelap"
+                    }
+                  }
+                },
+                {
+                  "id": "fiQHg",
+                  "type": "ref",
+                  "ref": "a:qKcfI",
+                  "name": "Sistem",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "monitor"
+                    },
+                    "a:vHwtA": {
+                      "content": "Sistem"
+                    }
+                  }
+                },
+                {
+                  "id": "eeW6a",
+                  "type": "ref",
+                  "ref": "a:z7QON",
+                  "name": "Divider",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "xzpZP",
+                  "type": "ref",
+                  "ref": "a:Amnm5",
+                  "name": "Keluar",
+                  "width": "fill_container",
+                  "descendants": {
+                    "a:FL9Kk": {
+                      "enabled": true,
+                      "icon": "log-out"
+                    },
+                    "a:vHwtA": {
+                      "content": "Keluar"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "y49rBj",
+      "x": 0,
+      "y": 3300,
+      "name": "D4 · Language switch failed · desktop · light",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "layout": "none",
+      "children": [
+        {
+          "id": "AXiC0",
+          "type": "ref",
+          "ref": "a:y9uBJl",
+          "name": "Shell",
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 960,
+          "descendants": {
+            "a:fNszT/a:llfv5": {
+              "id": "TK9zR",
+              "type": "ref",
+              "ref": "a:CInVy",
+              "name": "Nav Dasbor",
+              "width": "fill_container",
+              "descendants": {
+                "a:MpR9k": {
+                  "icon": "layout-grid"
+                },
+                "a:m6S2m": {
+                  "content": "Dasbor"
+                }
+              }
+            },
+            "a:fNszT/a:nHXqh/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:wwfj3/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:lz7Bj/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:P4ZpeX/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:V2Udn4/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:f1BvVe/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:I3aJo/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:fNszT/a:E2Dl5F/a:E6JiYt": {
+              "enabled": false
+            },
+            "a:Sw0yD/a:MST3f": {
+              "id": "w0uh3",
+              "type": "ref",
+              "ref": "a:ImEDW",
+              "name": "Page Header",
+              "width": "fill_container",
+              "descendants": {
+                "a:EPpbd": {
+                  "content": "Aster Wedding"
+                },
+                "a:Hh5tj": {
+                  "content": "Dasbor"
+                },
+                "a:HsrFT": {
+                  "content": "Dasbor"
+                },
+                "a:i8XPWU": {
+                  "content": "Ringkasan workspace Aster Wedding."
+                },
+                "a:ew9bb": {
+                  "enabled": false
+                }
+              }
+            },
+            "a:Sw0yD/a:d2hCuQ": {
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "M2IKOY",
+                  "name": "Container",
+                  "width": 1096,
+                  "layout": "vertical",
+                  "gap": "$a:component/panel/app/content/gap",
+                  "children": [
+                    {
+                      "id": "eKAxa",
+                      "type": "ref",
+                      "ref": "pmPvn",
+                      "name": "Placeholder",
+                      "width": "fill_container",
+                      "height": 240
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "qzoGf",
+          "type": "ref",
+          "ref": "a:C3PCyx",
+          "name": "Toast language failed",
+          "x": 996,
+          "y": 875,
+          "width": 420,
+          "descendants": {
+            "a:m0dqT6": {
+              "content": "Bahasa belum diganti. Coba lagi."
+            },
+            "a:fhch4": {
+              "enabled": false
+            },
+            "a:M54Ca": {
+              "enabled": false,
+              "content": "Coba lagi"
+            },
+            "a:IXhZl": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "ZJyUC",
+      "x": 3030,
+      "y": 1100,
+      "name": "M5 · Language switching (pending) · phone · light",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "layout": "none",
+      "children": [
+        {
+          "id": "VdFhB",
+          "type": "ref",
+          "ref": "a:c6qPz7",
+          "name": "Shell",
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "fill": "$a:color/semantic/surface/muted",
+          "descendants": {
+            "a:jqblo": {
+              "strokeWidth": 0
+            },
+            "a:nUiGs": {
+              "type": "frame",
+              "id": "i7gWD8",
+              "x": 0,
+              "y": 0,
+              "name": "App bar (legacy, off)",
+              "enabled": false,
+              "width": 1,
+              "height": 1
+            },
+            "a:n0MP5/a:K1jSfD": {
+              "content": "Dasbor"
+            },
+            "a:n0MP5/a:EYvag": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "a:HvRky": {
+              "type": "frame",
+              "id": "xAU3s",
+              "name": "Content sheet",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$a:color/semantic/surface/canvas",
+              "cornerRadius": [
+                "$a:component/panel/app/radius",
+                "$a:component/panel/app/radius",
+                0,
+                0
+              ],
+              "layout": "vertical",
+              "gap": "$a:space/4",
+              "padding": [
+                "$a:space/5",
+                "$a:space/4"
+              ],
+              "children": [
+                {
+                  "id": "FbBvd",
+                  "type": "ref",
+                  "ref": "pmPvn",
+                  "name": "Placeholder",
+                  "width": "fill_container"
+                }
+              ]
+            },
+            "a:SpGXb/a:uzabE/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:Ryjdm/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:YChMw/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:wTYuN": {
+              "id": "grQPg",
+              "type": "ref",
+              "ref": "a:x1Mgr3",
+              "name": "Tab Invoice",
+              "descendants": {
+                "a:Tz5za": {
+                  "icon": "receipt"
+                },
+                "a:qSiIY": {
+                  "enabled": false
+                },
+                "a:sJlqM": {
+                  "content": "Invoice"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "rectangle",
+          "id": "mSmtE",
+          "x": 0,
+          "y": 0,
+          "name": "Scrim",
+          "fill": "$a:component/modal/scrim",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "utLws",
+          "type": "ref",
+          "ref": "a:U0wHw",
+          "name": "Bahasa sheet",
+          "x": 0,
+          "y": 641,
+          "width": 390,
+          "descendants": {
+            "a:bEyU3": {
+              "content": "Bahasa"
+            },
+            "a:GyfP0": {
+              "enabled": true,
+              "content": "Mengganti bahasa…"
+            },
+            "a:CLpYz": {
+              "children": [
+                {
+                  "id": "di6X4",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item English",
+                  "width": "fill_container",
+                  "opacity": 0.5,
+                  "descendants": {
+                    "a:MLkPM": {
+                      "enabled": true,
+                      "icon": "loader-circle"
+                    },
+                    "a:elAPX": {
+                      "content": "English"
+                    }
+                  }
+                },
+                {
+                  "id": "eUpXc",
+                  "type": "ref",
+                  "ref": "a:FRtU1",
+                  "name": "Item Bahasa Indonesia",
+                  "width": "fill_container",
+                  "opacity": 0.5,
+                  "descendants": {
+                    "a:MLkPM": {
+                      "enabled": false
+                    },
+                    "a:elAPX": {
+                      "content": "Bahasa Indonesia",
+                      "fontWeight": "$a:font/weight/semibold"
+                    },
+                    "a:W5pLC": {
+                      "enabled": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "p2jPCo",
+      "x": 3520,
+      "y": 1100,
+      "name": "M6 · Language switch failed · phone · light",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "layout": "none",
+      "children": [
+        {
+          "id": "tc5pA",
+          "type": "ref",
+          "ref": "a:c6qPz7",
+          "name": "Shell",
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "fill": "$a:color/semantic/surface/muted",
+          "descendants": {
+            "a:jqblo": {
+              "strokeWidth": 0
+            },
+            "a:nUiGs": {
+              "type": "frame",
+              "id": "aPw2Q",
+              "x": 0,
+              "y": 0,
+              "name": "App bar (legacy, off)",
+              "enabled": false,
+              "width": 1,
+              "height": 1
+            },
+            "a:n0MP5/a:K1jSfD": {
+              "content": "Dasbor"
+            },
+            "a:n0MP5/a:EYvag": {
+              "content": "Ringkasan workspace Aster Wedding."
+            },
+            "a:HvRky": {
+              "type": "frame",
+              "id": "U41BP",
+              "name": "Content sheet",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$a:color/semantic/surface/canvas",
+              "cornerRadius": [
+                "$a:component/panel/app/radius",
+                "$a:component/panel/app/radius",
+                0,
+                0
+              ],
+              "layout": "vertical",
+              "gap": "$a:space/4",
+              "padding": [
+                "$a:space/5",
+                "$a:space/4"
+              ],
+              "children": [
+                {
+                  "id": "KaH0v",
+                  "type": "ref",
+                  "ref": "pmPvn",
+                  "name": "Placeholder",
+                  "width": "fill_container"
+                }
+              ]
+            },
+            "a:SpGXb/a:uzabE/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:Ryjdm/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:YChMw/a:qSiIY": {
+              "enabled": false
+            },
+            "a:SpGXb/a:wTYuN": {
+              "id": "XgDRw",
+              "type": "ref",
+              "ref": "a:x1Mgr3",
+              "name": "Tab Invoice",
+              "descendants": {
+                "a:Tz5za": {
+                  "icon": "receipt"
+                },
+                "a:qSiIY": {
+                  "enabled": false
+                },
+                "a:sJlqM": {
+                  "content": "Invoice"
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "fk0hz",
+          "type": "ref",
+          "ref": "a:C3PCyx",
+          "name": "Toast language failed",
+          "x": 16,
+          "y": 62,
+          "width": 358,
+          "descendants": {
+            "a:m0dqT6": {
+              "content": "Bahasa belum diganti. Coba lagi."
+            },
+            "a:fhch4": {
+              "enabled": false
+            },
+            "a:M54Ca": {
+              "enabled": false,
+              "content": "Coba lagi"
+            },
+            "a:IXhZl": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "imports": {
+    "a": "../../design-system/design-system.lib.pen"
+  },
+  "fileToken": "33c55eed-4698-4732-85f8-2f9905c302f6"
+}

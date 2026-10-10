@@ -339,13 +339,20 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 
 ## Spike log
 
-_Filled in by I1.2._
+Run 2026-10-10 by I1.2, in a throwaway checkout of commit `690a9d40` (removed afterwards). The proxy was instrumented to forward `x-shutrly-gallery-token` on `/g/<token>` paths and to strip any incoming value. Only booleans were logged, never the token (C-103).
 
 | Date | Path checked | `pnpm dev` | `pnpm build && pnpm start` | Notes |
 |---|---|---|---|---|
-| | Root layout (RSC) | | | |
-| | Gallery page | | | |
-| | Gallery server action | | | |
-| | Gallery route handler | | | |
-| | Forged header on `/login` stripped | | | |
-| | `/` dynamic in build route table (R-2) | | | |
+| 2026-10-10 | Root layout (RSC) on `/g/<token>` | pass (`true`) | pass (`true`, `APP_STAGE=development`) | Header reaches the root layout. |
+| 2026-10-10 | Gallery page `/g/[token]` | pass (`true`) | pass (`true`) | Page reads the header. |
+| 2026-10-10 | Gallery server action | not verified | not verified | No action was triggered; the form needs a browser. Still to check in I1.6 or I2. |
+| 2026-10-10 | Gallery route handler `/g/[token]/media/...` | pass (`true`) | pass (`true`) | Handler reads the header. |
+| 2026-10-10 | Forged header on `/login` stripped | pass (`false`) | pass (`false`) | Stripped on the normal `NextResponse.next()` path. |
+| 2026-10-10 | Forged header on the landing-gate rewrite | not in plan | **FAIL: header reached the layout (`true`)** | The gate rewrite does not pass through the forwarded headers, so a forged value survives on that path. Fix in I1.6: apply `forwardHeaders` to every response, including rewrites and redirects. |
+| 2026-10-10 | `/` dynamic in build route table (R-2) | n/a | observed: `/` is `ƒ` (dynamic) | No static baseline was built, so the effect of reading cookies in the root layout is not measured. Every route in this build is already dynamic. |
+
+**Result: the header path passes (fallback in §5.3 not needed).** One gap is fixed in I1.6 (gate rewrite). Two checks are still open: the server action and the R-2 baseline comparison.
+
+Environment notes found while running the spike:
+- `APP_STAGE` accepts only `development`, `test` or `production` (`app-stage.schema.ts`). `staging` is treated as unreadable and falls back to the landing-only gate.
+- `next start` reads bindings from `process.env` (`request-context.ts`), but `.dev.vars` is not loaded automatically, so `/login` returns 500 without it.

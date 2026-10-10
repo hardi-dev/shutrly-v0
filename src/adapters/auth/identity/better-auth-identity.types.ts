@@ -11,8 +11,11 @@ export interface BetterAuthIdentityDeps {
   env: AuthEnv;
   accounts: AccountDirectoryPort;
   links: LinkRegistryPort;
-  /** The request's resolved locale; every email this adapter issues carries it (D-17). */
-  locale: AppLocale;
+  /**
+   * Resolves the request's locale when a link is issued; every email this adapter sends carries it
+   * (D-17). Lazy, because resolving it can open another auth scope for a signed-in owner.
+   */
+  resolveLocale: () => Promise<AppLocale>;
   onLink: (link: AuthLink) => void;
 }
 

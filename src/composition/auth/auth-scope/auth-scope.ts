@@ -31,16 +31,16 @@ function emailSender(env: AppEnv): AuthEmailPort {
  * @returns whatever `work` resolves to
  */
 export function withAuthScope<T>(work: (scope: AuthScope) => Promise<T>): Promise<T> {
-  return withRequestDb(async (db, rc) => {
-    // D-17: auth emails follow the screen language resolved for this request.
-    const locale = await getRequestLocale();
+  return withRequestDb((db, rc) => {
     const outbox = new LinkOutbox(emailSender(rc.env), rc.requestId);
     const accounts = createDrizzleAccountDirectory(db);
     const { identity, handler } = createBetterAuthIdentity({
       database: createBetterAuthDatabase(db),
       env: rc.env,
       accounts,
-      locale,
+      // D-17: auth emails follow the screen language of this request, resolved only when a link
+      // is issued (an eager call would recurse through the signed-in owner lookup).
+      resolveLocale: getRequestLocale,
       links: createDrizzleLinkRegistry(db),
       onLink: (link) => {
         outbox.enqueue(link);

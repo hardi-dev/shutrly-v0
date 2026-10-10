@@ -133,7 +133,8 @@ export function createBetterAuthIdentity(deps: BetterAuthIdentityDeps): BetterAu
       ttlSeconds: LINK_TTL[kind],
     });
     const url = `${deps.env.BETTER_AUTH_URL}${LINK_PATH[kind]}?token=${encodeURIComponent(linkToken)}`;
-    deps.onLink({ kind, to: user.email, name: user.name, url, locale: deps.locale });
+    const locale = await deps.resolveLocale();
+    deps.onLink({ kind, to: user.email, name: user.name, url, locale });
   };
   const onGoogleClaims = createGoogleClaimsGuard(deps.accounts);
   const auth = createAuth({ database: deps.database, env: deps.env, onToken, onGoogleClaims });

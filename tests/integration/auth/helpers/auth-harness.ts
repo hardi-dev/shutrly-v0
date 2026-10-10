@@ -36,7 +36,7 @@ export async function openAuthHarness(options: { locale?: AppLocale } = {}): Pro
     database: createBetterAuthDatabase(db),
     env,
     accounts,
-    locale: options.locale ?? "en",
+    resolveLocale: () => Promise.resolve(options.locale ?? "en"),
     links: createDrizzleLinkRegistry(db),
     onLink: (link) => {
       outbox.enqueue(link);

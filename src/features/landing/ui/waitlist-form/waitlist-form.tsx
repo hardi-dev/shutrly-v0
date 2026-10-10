@@ -1,12 +1,14 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useId, useRef } from "react";
 
 import { cn } from "@/ui/cn/cn";
 
+import { LANDING_CONTACT_EMAIL } from "../landing-page/landing-page.copy";
 import { postWaitlist } from "../post-waitlist/post-waitlist";
 import { useWaitlistForm } from "../use-waitlist-form/use-waitlist-form";
-import { WAITLIST_FORM_COPY as COPY } from "./waitlist-form.copy";
+import { WAITLIST_FORM_COPY_NAMESPACE } from "./waitlist-form.copy";
 import type {
   PrivacyNoteProps,
   WaitlistBotFieldProps,
@@ -15,10 +17,15 @@ import type {
   WaitlistPillProps,
 } from "./waitlist-form.types";
 
-const ERROR_TEXT = new Map<string, string>(Object.entries(COPY.errors));
-const FORM_ERROR_TEXT = new Map<string, string>([
-  ["RATE_LIMITED", COPY.rateLimited],
-  ["FAILED", COPY.failed],
+// The server's error codes, mapped to the flat copy keys (next-intl reads dots as nesting).
+const ERROR_KEY = new Map<string, "errorRequired" | "errorInvalid" | "errorTooLong">([
+  ["email.required", "errorRequired"],
+  ["email.invalid", "errorInvalid"],
+  ["email.tooLong", "errorTooLong"],
+]);
+const FORM_ERROR_KEY = new Map<string, "rateLimited" | "failed">([
+  ["RATE_LIMITED", "rateLimited"],
+  ["FAILED", "failed"],
 ]);
 const NOTE = "text-center text-(length:--font-size-label) leading-(--font-line-height-body)";
 const ERROR_NOTE = cn(NOTE, "text-(--color-semantic-status-danger-fg)");
@@ -26,21 +33,25 @@ const MUTED_NOTE = cn(NOTE, "text-(--color-semantic-text-muted)");
 
 // The privacy note with its removal contact as a mail link (AC-LND-011).
 function PrivacyNote({ className }: Readonly<PrivacyNoteProps>) {
+  const t = useTranslations(WAITLIST_FORM_COPY_NAMESPACE);
   return (
     <p id="privacy" className={className}>
-      {COPY.privacy}{" "}
-      <a
-        href={`mailto:${COPY.contactEmail}`}
-        className="font-medium text-(--color-semantic-text-secondary) underline underline-offset-2"
-      >
-        {COPY.contactEmail}
-      </a>
-      {COPY.privacyEnd}
+      {t.rich("privacy", {
+        mail: (chunks) => (
+          <a
+            href={`mailto:${LANDING_CONTACT_EMAIL}`}
+            className="font-medium text-(--color-semantic-text-secondary) underline underline-offset-2"
+          >
+            {chunks}
+          </a>
+        ),
+      })}
     </p>
   );
 }
 
 function WaitlistJoined() {
+  const t = useTranslations(WAITLIST_FORM_COPY_NAMESPACE);
   const title = useRef<HTMLParagraphElement>(null);
   // Focus moves to the confirmation so screen readers announce it when the form disappears.
   useEffect(() => title.current?.focus(), []);
@@ -55,10 +66,10 @@ function WaitlistJoined() {
           aria-hidden="true"
           className="size-2 rounded-full bg-(--color-semantic-accent-highlight)"
         />
-        {COPY.successTitle}
+        {t("successTitle")}
       </p>
       <p className="text-(length:--font-size-body) text-(--color-semantic-text-secondary)">
-        {COPY.successBody}
+        {t("successBody")}
       </p>
       <PrivacyNote className={cn(MUTED_NOTE, "pt-(--space-2)")} />
     </div>
@@ -66,6 +77,7 @@ function WaitlistJoined() {
 }
 
 function WaitlistPill({ id, error, isSubmitting, field }: Readonly<WaitlistPillProps>) {
+  const t = useTranslations(WAITLIST_FORM_COPY_NAMESPACE);
   return (
     <div
       className={cn(
@@ -77,7 +89,7 @@ function WaitlistPill({ id, error, isSubmitting, field }: Readonly<WaitlistPillP
         id={`${id}-email`}
         type="email"
         autoComplete="email"
-        placeholder={COPY.emailPlaceholder}
+        placeholder={t("emailPlaceholder")}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${id}-error` : undefined}
         className="h-full min-w-0 flex-1 bg-transparent px-(--space-4) text-(length:--font-size-body) text-(--color-semantic-text-primary) outline-none placeholder:text-(--color-semantic-text-muted) md:px-(--space-5)"
@@ -89,11 +101,11 @@ function WaitlistPill({ id, error, isSubmitting, field }: Readonly<WaitlistPillP
         className="h-full shrink-0 rounded-(--radius-full) bg-(--color-semantic-action-primary) px-(--space-5) text-(length:--font-size-body) font-semibold text-(--color-semantic-action-on-primary) hover:bg-(--color-semantic-action-primary-hover) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--color-semantic-focus-ring) disabled:opacity-(--opacity-disabled) md:w-[178px]"
       >
         {isSubmitting ? (
-          COPY.submitting
+          t("submitting")
         ) : (
           <>
-            <span className="md:hidden">{COPY.submitShort}</span>
-            <span className="hidden md:inline">{COPY.submit}</span>
+            <span className="md:hidden">{t("submitShort")}</span>
+            <span className="hidden md:inline">{t("submit")}</span>
           </>
         )}
       </button>
@@ -103,15 +115,17 @@ function WaitlistPill({ id, error, isSubmitting, field }: Readonly<WaitlistPillP
 
 // Off-screen and aria-hidden: people and assistive tech never reach it, simple bots fill it (A-4).
 function WaitlistBotField({ id, field }: Readonly<WaitlistBotFieldProps>) {
+  const t = useTranslations(WAITLIST_FORM_COPY_NAMESPACE);
   return (
     <div aria-hidden="true" className="absolute -left-[10000px] size-px overflow-hidden">
-      <label htmlFor={`${id}-website`}>{COPY.botLabel}</label>
+      <label htmlFor={`${id}-website`}>{t("botLabel")}</label>
       <input id={`${id}-website`} tabIndex={-1} autoComplete="off" {...field} />
     </div>
   );
 }
 
 function WaitlistMessages({ id, error, formError }: Readonly<WaitlistMessagesProps>) {
+  const t = useTranslations(WAITLIST_FORM_COPY_NAMESPACE);
   return (
     <>
       {error ? (
@@ -124,7 +138,7 @@ function WaitlistMessages({ id, error, formError }: Readonly<WaitlistMessagesPro
           {formError}
         </p>
       ) : null}
-      <p className={MUTED_NOTE}>{COPY.promise}</p>
+      <p className={MUTED_NOTE}>{t("promise")}</p>
       <PrivacyNote className={MUTED_NOTE} />
     </>
   );
@@ -137,15 +151,18 @@ function WaitlistMessages({ id, error, formError }: Readonly<WaitlistMessagesPro
  * @returns the form, or the confirmation once the email is on the list
  */
 export function WaitlistForm({ action = postWaitlist }: Readonly<WaitlistFormProps>) {
+  const t = useTranslations(WAITLIST_FORM_COPY_NAMESPACE);
   const { form, onSubmit, isSubmitting, outcome } = useWaitlistForm(action);
   const id = useId();
   if (outcome === "JOINED") return <WaitlistJoined />;
-  const error = ERROR_TEXT.get(form.formState.errors.email?.message ?? "");
-  const formError = FORM_ERROR_TEXT.get(outcome ?? "");
+  const errorKey = ERROR_KEY.get(form.formState.errors.email?.message ?? "");
+  const error = errorKey ? t(errorKey) : undefined;
+  const formKey = FORM_ERROR_KEY.get(outcome ?? "");
+  const formError = formKey ? t(formKey) : undefined;
   return (
     <form noValidate onSubmit={onSubmit} className="relative flex w-full flex-col gap-(--space-2)">
       <label htmlFor={`${id}-email`} className="sr-only">
-        {COPY.emailLabel}
+        {t("emailLabel")}
       </label>
       <WaitlistPill
         id={id}

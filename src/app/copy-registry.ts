@@ -19,6 +19,11 @@ import { RESET_PASSWORD_FORM_COPY } from "@/features/auth/ui/reset-password-form
 import { RESET_PASSWORD_SCREEN_COPY } from "@/features/auth/ui/reset-password-screen/reset-password-screen.copy";
 import { RESET_SENT_SCREEN_COPY } from "@/features/auth/ui/reset-sent-screen/reset-sent-screen.copy";
 import { VERIFY_PENDING_SCREEN_COPY } from "@/features/auth/ui/verify-pending-screen/verify-pending-screen.copy";
+import { LANDING_FOOTER_COPY } from "@/features/landing/ui/landing-footer/landing-footer.copy";
+import { LANDING_HEADER_COPY } from "@/features/landing/ui/landing-header/landing-header.copy";
+import { LANDING_PAGE_COPY } from "@/features/landing/ui/landing-page/landing-page.copy";
+import { ROTATING_HEADLINE_COPY } from "@/features/landing/ui/rotating-headline/rotating-headline.copy";
+import { WAITLIST_FORM_COPY } from "@/features/landing/ui/waitlist-form/waitlist-form.copy";
 import { OWNER_NAV_COPY } from "@/features/workspace/ui/owner-nav/owner-nav.copy";
 import { OWNER_SHELL_COPY } from "@/features/workspace/ui/owner-shell/owner-shell.copy";
 import { WORKSPACE_SWITCHER_COPY } from "@/features/workspace/ui/workspace-switcher/workspace-switcher.copy";
@@ -37,6 +42,7 @@ import { TOAST_COPY } from "@/ui/patterns/toast/toast.copy";
 import { PROFILE_LAYOUT_COPY } from "./(owner)/profile/layout.copy";
 import { ERROR_COPY } from "./error.copy";
 import { NOT_FOUND_COPY } from "./not-found.copy";
+import { HOME_PAGE_COPY } from "./page.copy";
 
 /**
  * Every copy module the app renders, read here in `src/app` and passed into composition (D-8).
@@ -80,4 +86,10 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   SPLIT_LAYOUT_COPY,
   EDITORIAL_PANEL_COPY,
   PROFILE_LAYOUT_COPY,
+  LANDING_HEADER_COPY,
+  LANDING_FOOTER_COPY,
+  LANDING_PAGE_COPY,
+  ROTATING_HEADLINE_COPY,
+  WAITLIST_FORM_COPY,
+  HOME_PAGE_COPY,
 ];

@@ -25,7 +25,7 @@ export function addOnConfirmContent(
   if (state.kind === "CANCEL") {
     return {
       title: COPY.cancelTitle,
-      description: cancelDescription(row),
+      description: cancelDescription(row, locale),
       body: cancelBody(row),
       confirmLabel: COPY.cancelConfirm,
       cancelLabel: COPY.cancelBack,

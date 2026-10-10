@@ -67,7 +67,9 @@ describe("add-on text (owner-3-addon exports)", () => {
     expect(cancelBody(approved)).toBe(
       "Batas Foto edit turun dari 13 menjadi 8. Pembatalan ditolak jika klien sudah memilih lebih dari 8 foto.",
     );
-    expect(cancelDescription(approved)).toBe("Tambahan 5 foto edit · disetujui 5 Okt 2026");
+    expect(cancelDescription(approved, "id-ID")).toBe(
+      "Tambahan 5 foto edit · disetujui 5 Okt 2026",
+    );
   });
 
   it("AC-ADD-006 maps server field errors to the drawn messages", () => {

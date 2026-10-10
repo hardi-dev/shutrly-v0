@@ -7,11 +7,20 @@ import type { StatusChipProps } from "@/ui/primitives/status-chip/status-chip.ty
 
 import { ADD_ON_COPY as COPY, ADD_ON_FIELD_ERRORS } from "../add-on-copy/add-on.copy";
 
-const SHORT_DATE = new Intl.DateTimeFormat("id-ID", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-  timeZone: PROJECT_SCHEDULE_TIME_ZONE,
+// Per formatting locale (D-20), in the project schedule zone. Frozen lookup (§5.6).
+const SHORT_DATE: Readonly<Record<FormattingLocale, Intl.DateTimeFormat>> = Object.freeze({
+  "id-ID": new Intl.DateTimeFormat("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: PROJECT_SCHEDULE_TIME_ZONE,
+  }),
+  "en-US": new Intl.DateTimeFormat("en-US", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: PROJECT_SCHEDULE_TIME_ZONE,
+  }),
 });
 const TONES = { DRAFT: "neutral", APPROVED: "success", CANCELLED: "danger" } as const;
 const GENERIC_ERROR = "Isi nilai yang valid.";
@@ -51,9 +60,9 @@ export function cancelBody(row: AddOnRowView): string {
 }
 
 /** The cancel confirm's description, e.g. "Tambahan 5 foto edit · disetujui 5 Okt 2026". @param row - the approved add-on @returns the line */
-export function cancelDescription(row: AddOnRowView): string {
+export function cancelDescription(row: AddOnRowView, locale: FormattingLocale): string {
   const approvedAt = row.approvedAt ?? row.createdAt;
-  return COPY.cancelDescription(row.description, SHORT_DATE.format(new Date(approvedAt)));
+  return COPY.cancelDescription(row.description, SHORT_DATE[locale].format(new Date(approvedAt)));
 }
 
 /** Maps a field-error key from the server to the add-on form's message (AC-ADD-006). @param field - the field path @param key - stable validation key @returns the message */

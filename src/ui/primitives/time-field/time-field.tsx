@@ -6,7 +6,6 @@ import {
   DateInput,
   DateSegment,
   FieldError,
-  I18nProvider,
   Label,
   TimeField as AriaTimeField,
 } from "react-aria-components";
@@ -17,7 +16,6 @@ import { Icon } from "../icon/icon";
 import { TEXT_FIELD_COPY } from "../text-field/text-field.copy";
 import type { TimeFieldProps } from "./time-field.types";
 
-const LOCALE = "id-ID";
 const MINUTE_END = 5;
 const FRAME_CLASS =
   "flex h-(--component-input-height) w-full items-center gap-(--space-2) rounded-(--component-input-radius) border border-(--component-input-border) bg-(--component-input-background) px-(--component-input-padding-x) text-(length:--font-size-body) text-(--component-input-text) transition-colors hover:border-(--component-input-border-hover) focus-within:border-(--component-input-border-focus) focus-within:shadow-[inset_0_0_0_1px_var(--component-input-border-focus),0_0_0_4px_var(--color-semantic-focus-glow)]";
@@ -31,36 +29,34 @@ export function TimeField(props: Readonly<TimeFieldProps>) {
     props.onChange(time === null ? null : time.toString().slice(0, MINUTE_END));
   };
   return (
-    <I18nProvider locale={LOCALE}>
-      <AriaTimeField
-        value={props.value === null ? null : parseTime(props.value)}
-        onChange={handleChange}
-        hourCycle={24}
-        granularity="minute"
-        shouldForceLeadingZeros
-        isDisabled={props.isDisabled}
-        isInvalid={Boolean(props.errorMessage)}
-        validationBehavior="aria"
-        className="flex flex-col gap-(--component-input-gap)"
-      >
-        <div className="flex items-center gap-(--space-1)">
-          <Label className="text-(length:--font-size-label) font-semibold text-(--component-input-label)">
-            {props.label}
-          </Label>
-          {props.isOptional ? (
-            <span className="text-(length:--font-size-label) text-(--component-input-helper)">
-              {TEXT_FIELD_COPY.optionalSuffix}
-            </span>
-          ) : null}
-        </div>
-        <TimeFieldFrame errorMessage={props.errorMessage} isDisabled={props.isDisabled} />
-        {props.errorMessage ? (
-          <FieldError className="text-(length:--font-size-label) text-(--component-input-error-text)">
-            {props.errorMessage}
-          </FieldError>
+    <AriaTimeField
+      value={props.value === null ? null : parseTime(props.value)}
+      onChange={handleChange}
+      hourCycle={24}
+      granularity="minute"
+      shouldForceLeadingZeros
+      isDisabled={props.isDisabled}
+      isInvalid={Boolean(props.errorMessage)}
+      validationBehavior="aria"
+      className="flex flex-col gap-(--component-input-gap)"
+    >
+      <div className="flex items-center gap-(--space-1)">
+        <Label className="text-(length:--font-size-label) font-semibold text-(--component-input-label)">
+          {props.label}
+        </Label>
+        {props.isOptional ? (
+          <span className="text-(length:--font-size-label) text-(--component-input-helper)">
+            {TEXT_FIELD_COPY.optionalSuffix}
+          </span>
         ) : null}
-      </AriaTimeField>
-    </I18nProvider>
+      </div>
+      <TimeFieldFrame errorMessage={props.errorMessage} isDisabled={props.isDisabled} />
+      {props.errorMessage ? (
+        <FieldError className="text-(length:--font-size-label) text-(--component-input-error-text)">
+          {props.errorMessage}
+        </FieldError>
+      ) : null}
+    </AriaTimeField>
   );
 }
 

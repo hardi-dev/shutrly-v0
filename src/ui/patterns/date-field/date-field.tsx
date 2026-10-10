@@ -14,13 +14,14 @@ import {
   FieldError,
   Group,
   Heading,
-  I18nProvider,
   Label,
   Popover,
   Text,
 } from "react-aria-components";
 
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 import { cn } from "@/ui/cn/cn";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Icon } from "@/ui/primitives/icon/icon";
@@ -28,31 +29,51 @@ import { TEXT_FIELD_COPY } from "@/ui/primitives/text-field/text-field.copy";
 
 import type { DateFieldDisplay, DateFieldProps } from "./date-field.types";
 
-const LOCALE = "id-ID";
 const FIELD_MESSAGE = "text-(length:--font-size-label)";
-const FORMATS: Readonly<Record<DateFieldDisplay, Intl.DateTimeFormat>> = {
-  date: new Intl.DateTimeFormat(LOCALE, {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }),
-  weekday: new Intl.DateTimeFormat(LOCALE, {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }),
-};
+// The display follows the app's formatting locale, which the app provider sets (AC-L10N-005).
+// Frozen per-locale lookup, never a mutable one (§5.6).
+const DATE_FORMATS: Readonly<
+  Record<FormattingLocale, Readonly<Record<DateFieldDisplay, Intl.DateTimeFormat>>>
+> = Object.freeze({
+  "id-ID": {
+    date: new Intl.DateTimeFormat("id-ID", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    }),
+    weekday: new Intl.DateTimeFormat("id-ID", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    }),
+  },
+  "en-US": {
+    date: new Intl.DateTimeFormat("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    }),
+    weekday: new Intl.DateTimeFormat("en-US", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    }),
+  },
+});
 const TRIGGER_CLASS =
   "flex h-(--component-input-height) w-full items-center gap-(--space-2) rounded-(--component-input-radius) border border-(--component-input-border) bg-(--component-input-background) px-(--component-input-padding-x) text-left text-(length:--font-size-body) text-(--component-input-text) outline-none transition-colors data-hovered:border-(--component-input-border-hover) data-focus-visible:border-(--component-input-border-focus) data-focus-visible:shadow-[inset_0_0_0_1px_var(--component-input-border-focus),0_0_0_4px_var(--color-semantic-focus-glow)] data-disabled:border-(--component-input-border-disabled) data-disabled:bg-(--component-input-background-disabled) data-disabled:text-(--component-input-text-disabled)";
 const NAV_CLASS =
   "flex size-(--space-9) items-center justify-center rounded-(--component-calendar-day-radius) text-(--component-calendar-day-number) outline-none data-hovered:bg-(--component-calendar-day-background-hover) data-focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]";
 
 /** Formats a YYYY-MM-DD date for display, e.g. "10 Nov 2026" or "Sel, 10 Nov 2026". @param value - the ISO date @param display - with or without the weekday @returns the display text */
-function formatDate(value: string, display: DateFieldDisplay): string {
-  return FORMATS[display].format(new Date(`${value}T00:00:00Z`));
+function formatDate(value: string, display: DateFieldDisplay, locale: FormattingLocale): string {
+  return DATE_FORMATS[locale][display].format(new Date(`${value}T00:00:00Z`));
 }
 
 /** Renders a text-field-looking date picker with a calendar popover (C25).
@@ -64,30 +85,28 @@ export function DateField(props: Readonly<DateFieldProps>) {
     props.onChange(date === null ? null : date.toString());
   };
   return (
-    <I18nProvider locale={LOCALE}>
-      <DatePicker
-        value={props.value === null ? null : parseDate(props.value)}
-        onChange={handleChange}
-        isDisabled={props.isDisabled}
-        isInvalid={Boolean(props.errorMessage)}
-        validationBehavior="aria"
-        className="flex flex-col gap-(--component-input-gap)"
-      >
-        <DateFieldLabel label={props.label} isOptional={props.isOptional} />
-        <DateFieldTrigger {...props} />
-        {props.description && !props.errorMessage ? (
-          <Text slot="description" className={cn(FIELD_MESSAGE, "text-(--component-input-helper)")}>
-            {props.description}
-          </Text>
-        ) : null}
-        {props.errorMessage ? (
-          <FieldError className={cn(FIELD_MESSAGE, "text-(--component-input-error-text)")}>
-            {props.errorMessage}
-          </FieldError>
-        ) : null}
-        <DateFieldCalendar title={props.label} />
-      </DatePicker>
-    </I18nProvider>
+    <DatePicker
+      value={props.value === null ? null : parseDate(props.value)}
+      onChange={handleChange}
+      isDisabled={props.isDisabled}
+      isInvalid={Boolean(props.errorMessage)}
+      validationBehavior="aria"
+      className="flex flex-col gap-(--component-input-gap)"
+    >
+      <DateFieldLabel label={props.label} isOptional={props.isOptional} />
+      <DateFieldTrigger {...props} />
+      {props.description && !props.errorMessage ? (
+        <Text slot="description" className={cn(FIELD_MESSAGE, "text-(--component-input-helper)")}>
+          {props.description}
+        </Text>
+      ) : null}
+      {props.errorMessage ? (
+        <FieldError className={cn(FIELD_MESSAGE, "text-(--component-input-error-text)")}>
+          {props.errorMessage}
+        </FieldError>
+      ) : null}
+      <DateFieldCalendar title={props.label} />
+    </DatePicker>
   );
 }
 
@@ -148,6 +167,7 @@ function DateFieldTrigger({
   placeholder,
   errorMessage,
 }: Readonly<Pick<DateFieldProps, "value" | "display" | "placeholder" | "errorMessage">>) {
+  const locale = useFormattingLocale();
   return (
     <Group className="block w-full">
       <AriaButton
@@ -159,7 +179,7 @@ function DateFieldTrigger({
             value === null && "text-(--component-input-placeholder)",
           )}
         >
-          {value === null ? (placeholder ?? "") : formatDate(value, display)}
+          {value === null ? (placeholder ?? "") : formatDate(value, display, locale)}
         </span>
         <Icon name="calendar" aria-hidden="true" className="text-(--component-input-placeholder)" />
       </AriaButton>

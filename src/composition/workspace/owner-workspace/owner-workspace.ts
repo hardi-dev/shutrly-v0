@@ -18,6 +18,7 @@ import type { VerifiedWorkspace } from "@/features/workspace/application/use-cas
 import { asOwnerUserId } from "@/features/workspace/domain/owner-user-id/owner-user-id";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
+import { getRequestLocale } from "../../locale/request-locale/request-locale";
 import { withWorkspaceCreationScope } from "../workspace-creation-scope/workspace-creation-scope";
 import { withWorkspaceScope } from "./../workspace-scope/workspace-scope";
 
@@ -78,13 +79,14 @@ export async function enterWorkspace(rawId: string): Promise<VerifiedWorkspace> 
 /** Creates an owner's first workspace with its default templates in one transaction (ADR-016). @param input - onboarding input @returns the created workspace ID */
 export async function createOwnerFirstWorkspace(input: CreateFirstWorkspaceInput) {
   const account = await requireOwnerOrRedirect();
+  const locale = await getRequestLocale();
   return withWorkspaceCreationScope(
     async ({ repository, templates, sources, itemDefinitions, teamRoles }) => {
       const created = await createFirstWorkspace(repository, asOwnerUserId(account.id), input);
       await seedDefaultTemplates(templates, { workspaceId: created.id });
       await seedDefaultSource(sources, { workspaceId: created.id });
-      await seedDefaultItemDefinitions(itemDefinitions, { workspaceId: created.id });
-      await seedDefaultTeamRoles(teamRoles, { workspaceId: created.id });
+      await seedDefaultItemDefinitions(itemDefinitions, { workspaceId: created.id }, locale);
+      await seedDefaultTeamRoles(teamRoles, { workspaceId: created.id }, locale);
       return created;
     },
   );
@@ -93,13 +95,14 @@ export async function createOwnerFirstWorkspace(input: CreateFirstWorkspaceInput
 /** Creates an additional owner workspace with its default templates in one transaction (ADR-016). @param input - create input @returns the created workspace ID */
 export async function createOwnerWorkspace(input: CreateWorkspaceInput) {
   const account = await requireOwnerOrRedirect();
+  const locale = await getRequestLocale();
   return withWorkspaceCreationScope(
     async ({ repository, templates, sources, itemDefinitions, teamRoles }) => {
       const created = await createWorkspace(repository, asOwnerUserId(account.id), input);
       await seedDefaultTemplates(templates, { workspaceId: created.id });
       await seedDefaultSource(sources, { workspaceId: created.id });
-      await seedDefaultItemDefinitions(itemDefinitions, { workspaceId: created.id });
-      await seedDefaultTeamRoles(teamRoles, { workspaceId: created.id });
+      await seedDefaultItemDefinitions(itemDefinitions, { workspaceId: created.id }, locale);
+      await seedDefaultTeamRoles(teamRoles, { workspaceId: created.id }, locale);
       return created;
     },
   );

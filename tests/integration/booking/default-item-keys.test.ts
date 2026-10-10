@@ -46,7 +46,7 @@ describe("platform default item keys", () => {
   it("D-18 seeds the key with the item and a rename clears it in the same update", async () => {
     const context = await seedWorkspace();
     const repository = createDrizzleItemDefinitionRepository(db);
-    await seedDefaultItemDefinitions(repository, context);
+    await seedDefaultItemDefinitions(repository, context, "id");
     const id = await idOf(context.workspaceId, "Foto edit");
     const [seeded] = await db
       .select({ key: serviceItemDefinition.defaultKey })
@@ -73,7 +73,7 @@ describe("platform default item keys", () => {
   it("D-18 seeds role keys and a role rename clears its key", async () => {
     const { ownerId, ...context } = await seedWorkspace();
     const roles = createDrizzleTeamRoleRepository(db);
-    await seedDefaultTeamRoles(roles, context);
+    await seedDefaultTeamRoles(roles, context, "id");
     const [photographer] = await db
       .select({ id: teamRole.id, key: teamRole.defaultKey })
       .from(teamRole)

@@ -6,12 +6,14 @@ import type {
   ItemDefinitionRepositoryPort,
 } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
 import { catalogNameKey } from "@/features/booking/domain/catalog-name/catalog-name";
+import type { DefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions.types";
 import { isTypeChange } from "@/features/booking/domain/item-definition-type/item-definition-type";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 interface StoredDefinition extends ItemDefinitionRecord {
   readonly workspaceId: string;
   readonly updatedBy: string | null;
+  readonly defaultKey?: DefaultItemKey | null;
 }
 
 export class FakeItemDefinitionRepository implements ItemDefinitionRepositoryPort {

@@ -19,12 +19,25 @@ describe("seedDefaultItemDefinitions", () => {
       allowsPickNotes: true,
       editorUserId: "owner",
     });
-    await seedDefaultItemDefinitions(repository, context);
-    await seedDefaultItemDefinitions(repository, context);
+    await seedDefaultItemDefinitions(repository, context, "id");
+    await seedDefaultItemDefinitions(repository, context, "id");
 
     expect(repository.rows).toHaveLength(4);
     expect(repository.rows.find((row) => row.name === "foto edit")).toMatchObject({
       unit: "custom",
     });
+  });
+
+  it("D-18 an English owner gets the English names and units with the same keys", async () => {
+    const repository = new FakeItemDefinitionRepository();
+    await seedDefaultItemDefinitions(repository, context, "en");
+    expect(
+      repository.rows.map(({ name, unit, defaultKey }) => ({ name, unit, defaultKey })),
+    ).toEqual([
+      { name: "Edited photos", unit: "photos", defaultKey: "EDITED_PHOTOS" },
+      { name: "Printed photos", unit: "prints", defaultKey: "PRINTED_PHOTOS" },
+      { name: "Number of people", unit: "people", defaultKey: "PEOPLE_COUNT" },
+      { name: "Shoot duration", unit: "hours", defaultKey: "SHOOT_DURATION" },
+    ]);
   });
 });

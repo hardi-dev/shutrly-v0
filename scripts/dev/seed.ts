@@ -119,8 +119,8 @@ async function createStudio(db: Db, ownerId: string): Promise<WorkspaceContext> 
     const context = { workspaceId: created.id };
     await seedDefaultTemplates(createDrizzleMessageTemplateRepository(tx), context);
     await seedDefaultSource(createDrizzleWorkspaceSourceRepository(tx), context);
-    await seedDefaultItemDefinitions(createDrizzleItemDefinitionRepository(tx), context);
-    await seedDefaultTeamRoles(createDrizzleTeamRoleRepository(tx), context);
+    await seedDefaultItemDefinitions(createDrizzleItemDefinitionRepository(tx), context, "id");
+    await seedDefaultTeamRoles(createDrizzleTeamRoleRepository(tx), context, "id");
     return created.id;
   });
   return { workspaceId: asWorkspaceId(workspaceId) };

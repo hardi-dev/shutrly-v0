@@ -1,3 +1,5 @@
+import type { AppLocale } from "@/shared/locale/locale.types";
+
 /** BR-TEAM-005: a role name is 1–50 characters after trimming, unique per workspace ignoring case. */
 export const TEAM_ROLE_NAME_MAX_LENGTH = 50;
 
@@ -15,6 +17,14 @@ export const DEFAULT_TEAM_ROLES: readonly DefaultTeamRole[] = [
   { name: "Videografer", defaultKey: "VIDEOGRAPHER" },
   { name: "Asisten", defaultKey: "ASSISTANT" },
 ];
+
+/** D-18: the name a platform-default role is seeded with, per the owner's locale (deck §8.1). */
+export const DEFAULT_TEAM_ROLE_NAMES: Readonly<
+  Record<AppLocale, Readonly<Record<DefaultTeamRoleKey, string>>>
+> = {
+  en: { PHOTOGRAPHER: "Photographer", VIDEOGRAPHER: "Videographer", ASSISTANT: "Assistant" },
+  id: { PHOTOGRAPHER: "Fotografer", VIDEOGRAPHER: "Videografer", ASSISTANT: "Asisten" },
+};
 
 /**
  * Tells whether a role name is within the length limit, counted in code points.

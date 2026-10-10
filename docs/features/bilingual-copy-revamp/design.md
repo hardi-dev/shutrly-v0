@@ -50,6 +50,10 @@ Notes:
 - Login is the example for every auth screen (register, verification, forgot and reset password): they share the auth layout, so the link is placed the same way in code (Owner 2026-10-11).
 - Auth email language (D-17, Owner 2026-10-11): no email-language field on the forms. Emails go out in the screen language chosen with this link.
 
+## Landing (Owner, 2026-10-11)
+
+No language switch on the landing page in F-22, so no frames. The landing renders the resolved account locale, which is English on a first visit.
+
 ## Account menu
 
 The language switch lives in the owner's account menu, not in a segmented control.

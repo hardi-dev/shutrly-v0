@@ -285,7 +285,7 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 
 ### I5 — Shared UI, shell, auth, landing, profile; language switches
 
-- **Goal.** Register the first copy modules in the catalog; convert shared UI, app shell, auth screens, landing and profile copy to `{ en, id }` ICU messages; build the owner account menu with the language switch (design 2026-10-11, below), `features/auth/ui/auth-language-switch/` and the landing placement (§8); apply the amount/quantity reformat on switch; auth email locale (§7.3).
+- **Goal.** Register the first copy modules in the catalog; convert shared UI, app shell, auth screens, landing and profile copy to `{ en, id }` ICU messages; build the owner account menu with the language switch (design 2026-10-11, below), `features/auth/ui/auth-language-switch/` (§8); the landing page gets no switch (Owner 2026-10-11) and renders English by default; apply the amount/quantity reformat on switch; auth email locale (§7.3).
 - **AC / BR.** AC-L10N-001, 002, 004, 010, 011; BR-L10N-001, 002, 006; D-22.
 - **Status.** Owner shell part (I5.1–I5.8) ready: design approved 2026-10-11, exports in [`exports/INDEX.md`](exports/INDEX.md). Auth, landing and auth email locale (I5.9+) still need a design decision; not written as tasks yet.
 - **Design change (Owner, 2026-10-11).** The owner switches language from the **account menu**, not from a Profile field or a segmented control. `features/auth/ui/profile-language-field/` and the `RadioGroup`/`Select` form of `src/ui/patterns/language-switch/` (technical design §8) are dropped for the owner shell. See [design.md](design.md) › *Account menu* and *Scope note*.
@@ -336,7 +336,7 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
 
 - [ ] **I5.8 E2E owner language switch.** `tests/e2e/locale/owner-language-menu.spec.ts`: `"BR-L10N-001 an owner switches to English from the account menu and keeps the page"` (desktop: `html[lang=en]`, same URL, still `en` after reload); `"AC-L10N-001 an owner switches language from the mobile menu sheet"` (390 × 844); `"D-22 after sign-out the sign-in screen keeps the owner's language"`. Then the fidelity pass against the six exports above (class names and nesting only). Commit `test(i18n): cover the owner language switch end to end`.
 
-**Not yet tasks:** auth layout language link (designed 2026-10-11 on Login; every auth screen shares the layout), landing placement (needs design), auth email locale (D-17, 2026-10-11: the email uses the screen's resolved locale, no form control).
+**Not yet tasks:** auth layout language link (designed 2026-10-11 on Login; every auth screen shares the layout), landing (no switch in F-22, English by default; Owner 2026-10-11), auth email locale (D-17, 2026-10-11: the email uses the screen's resolved locale, no form control).
 
 ### I6 — Owner feature copy
 

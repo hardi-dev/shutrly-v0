@@ -29,8 +29,8 @@ function visibleText(page: Page, text: string) {
 
 async function openWorkspace(page: Page): Promise<string> {
   await registerAndVerify(page, uniqueEmail("projects"));
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Projects Studio");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Projects Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
   return new URL(page.url()).pathname.split("/")[2];
 }

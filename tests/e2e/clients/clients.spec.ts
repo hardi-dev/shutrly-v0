@@ -27,8 +27,8 @@ async function expectClientsA11y(page: Page): Promise<void> {
 
 async function openWorkspace(page: Page, label: string): Promise<string> {
   await registerAndVerify(page, uniqueEmail(label));
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Clients Studio");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Clients Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
   return new URL(page.url()).pathname.split("/")[2];
 }
@@ -218,7 +218,7 @@ test("AC-CLI-018 prevents a second owner opening another workspace clients", asy
     await openWorkspace(other, "clients-owner-b");
     await other.goto(`/w/${workspaceId}/clients`);
     await expect(
-      other.getByRole("heading", { name: WORKSPACE_NOT_FOUND_COPY.title }),
+      other.getByRole("heading", { name: WORKSPACE_NOT_FOUND_COPY.messages.id.title }),
     ).toBeVisible();
   } finally {
     await other.close();

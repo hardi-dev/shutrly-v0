@@ -18,8 +18,8 @@ test.describe.configure({ retries: 2 });
 async function openWorkspace(page: Page, label: string): Promise<string> {
   await page.setViewportSize(DESKTOP);
   await registerAndVerify(page, uniqueEmail(label));
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Aster Wedding");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Aster Wedding");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
   const url = new URL(page.url());
   return `${url.origin}${url.pathname.replace(/\/$/, "")}`;
@@ -141,7 +141,7 @@ test("AC-SRC-015 another owner cannot open the first owner's sources", async ({
     await openWorkspace(other, "photo-sources-owner-b");
     await other.goto(`${workspace}/photo-sources`);
     await expect(
-      other.getByRole("heading", { name: WORKSPACE_NOT_FOUND_COPY.title }),
+      other.getByRole("heading", { name: WORKSPACE_NOT_FOUND_COPY.messages.id.title }),
     ).toBeVisible();
   } finally {
     await other.close();

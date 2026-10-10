@@ -22,8 +22,8 @@ test.describe.configure({ retries: 2 });
 async function openWorkspace(page: Page, tag: string, name: string): Promise<string> {
   await page.setViewportSize(DESKTOP);
   await registerAndVerify(page, uniqueEmail(tag));
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill(name);
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill(name);
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
   await page.getByRole("button", { name: TOAST_COPY.messages.id.close }).click();
   const url = new URL(page.url());
@@ -35,8 +35,8 @@ async function createSecondWorkspace(page: Page, current: string, name: string):
   await page.getByRole("button", { name: current }).click();
   await page.getByRole("menuitem", { name: WORKSPACE_SWITCHER_COPY.messages.id.create }).click();
   const dialog = page.getByRole("dialog");
-  await dialog.getByLabel(CREATE_WORKSPACE_COPY.label).fill(name);
-  await dialog.getByRole("button", { name: CREATE_WORKSPACE_COPY.submit }).click();
+  await dialog.getByLabel(CREATE_WORKSPACE_COPY.messages.id.label).fill(name);
+  await dialog.getByRole("button", { name: CREATE_WORKSPACE_COPY.messages.id.submit }).click();
   await expect(page.getByRole("navigation", { name: "Lokasi halaman" })).toContainText(name);
   await page.getByRole("button", { name: TOAST_COPY.messages.id.close }).click();
 }

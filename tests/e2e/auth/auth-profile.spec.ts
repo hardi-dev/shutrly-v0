@@ -13,8 +13,8 @@ test("AC-AUTH-019 AC-AUTH-020 update the name and change the password", async ({
   const email = uniqueEmail();
   await registerAndVerify(page, email);
   // BR-AUTH-004: an owner with no workspace is sent to onboarding, so create one first.
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Profile Studio");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Profile Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+/);
   await page.goto("/profile");
   // The shell renders the page in a desktop and a phone tree; use the visible desktop one.

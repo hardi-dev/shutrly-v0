@@ -21,8 +21,8 @@ async function expectCatalogA11y(page: Page): Promise<void> {
 
 async function createWorkspace(page: Page): Promise<string> {
   await registerAndVerify(page, uniqueEmail("catalog-a11y"));
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Catalog A11y Studio");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Catalog A11y Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
   return new URL(page.url()).pathname.split("/")[2];
 }
@@ -56,8 +56,8 @@ test("AC-CAT-003 AC-CAT-004 AC-CAT-009 AC-CAT-010 creates a service from an empt
   page,
 }) => {
   await registerAndVerify(page, uniqueEmail("catalog"));
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Catalog Studio");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Catalog Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
 
   await page.getByRole("link", { name: "Layanan", exact: true }).first().click();

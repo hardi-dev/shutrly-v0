@@ -1,34 +1,59 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it, vi } from "vitest";
+
+import type { AppLocale } from "@/shared/locale/locale.types";
 
 import { CreateWorkspaceDialog } from "./create-workspace-dialog";
 
-describe("CreateWorkspaceDialog", () => {
-  it("keeps the desktop submit button in the modal footer", async () => {
-    vi.stubGlobal("matchMedia", () => ({
-      matches: false,
-      media: "(max-width: 767px)",
-      onchange: null,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    }));
+function stubMobile(matches: boolean) {
+  vi.stubGlobal("matchMedia", () => ({
+    matches,
+    media: "(max-width: 767px)",
+    onchange: null,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  }));
+}
 
-    render(
-      <CreateWorkspaceDialog
-        isOpen
-        onOpenChange={vi.fn()}
-        action={vi.fn(() => Promise.resolve())}
-      />,
-    );
+function renderDialog(action: (formData: FormData) => Promise<void> = () => Promise.resolve()) {
+  renderInLocale(<CreateWorkspaceDialog isOpen onOpenChange={vi.fn()} action={action} />, "id");
+  return action;
+}
 
+function renderLocalized(locale: AppLocale) {
+  renderInLocale(<CreateWorkspaceDialog isOpen onOpenChange={vi.fn()} action={vi.fn()} />, locale);
+}
+
+describe("CreateWorkspaceDialog copy", () => {
+  it("AC-L10N-002 titles the desktop modal and labels its submit in English", async () => {
+    stubMobile(false);
+    renderLocalized("en");
     await waitFor(() => {
-      expect(screen.getByRole("dialog", { name: "Buat workspace" })).toBeInTheDocument();
+      expect(screen.getByRole("dialog", { name: "Create workspace" })).toBeInTheDocument();
     });
-    expect(screen.getByRole("button", { name: "Buat workspace" })).toHaveAttribute(
+    expect(screen.getByRole("button", { name: "Cancel" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Create workspace" })).toHaveAttribute(
+      "form",
+      "create-workspace-form",
+    );
+    expect(screen.getByRole("textbox", { name: "Workspace name" })).toHaveAttribute(
+      "placeholder",
+      "e.g. Aster Family",
+    );
+  });
+
+  it("AC-L10N-002 keeps the desktop submit button in the modal footer", async () => {
+    stubMobile(false);
+    renderDialog();
+    await waitFor(() => {
+      expect(screen.getByRole("dialog", { name: "Buat ruang kerja" })).toBeInTheDocument();
+    });
+    expect(screen.getByRole("button", { name: "Buat ruang kerja" })).toHaveAttribute(
       "form",
       "create-workspace-form",
     );
@@ -36,33 +61,16 @@ describe("CreateWorkspaceDialog", () => {
   });
 
   it("uses a form bottom sheet on mobile", async () => {
-    vi.stubGlobal("matchMedia", () => ({
-      matches: true,
-      media: "(max-width: 767px)",
-      onchange: null,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    }));
-
-    render(
-      <CreateWorkspaceDialog
-        isOpen
-        onOpenChange={vi.fn()}
-        action={vi.fn(() => Promise.resolve())}
-      />,
-    );
-
+    stubMobile(true);
+    renderDialog();
     await waitFor(() => {
-      expect(screen.getByRole("dialog", { name: "Buat workspace" })).toBeInTheDocument();
+      expect(screen.getByRole("dialog", { name: "Buat ruang kerja" })).toBeInTheDocument();
     });
     expect(
-      screen.getByText("Satu workspace untuk satu brand. Klien, proyek, dan invoice-nya terpisah."),
+      screen.getByText("Buat ruang kerja terpisah untuk klien dan proyek merek lain."),
     ).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Batal" })).toBeNull();
-    expect(screen.getByRole("button", { name: "Buat workspace" })).toHaveAttribute(
+    expect(screen.getByRole("button", { name: "Buat ruang kerja" })).toHaveAttribute(
       "data-size",
       "lg",
     );
@@ -70,43 +78,26 @@ describe("CreateWorkspaceDialog", () => {
 
   it("shows a client-side error and skips the action when the name is empty", async () => {
     const user = userEvent.setup();
+    stubMobile(true);
     const action = vi.fn((formData: FormData) => Promise.resolve(formData).then(() => undefined));
-    vi.stubGlobal("matchMedia", () => ({
-      matches: true,
-      media: "(max-width: 767px)",
-      onchange: null,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    }));
+    renderDialog(action);
 
-    render(<CreateWorkspaceDialog isOpen onOpenChange={vi.fn()} action={action} />);
+    await user.click(await screen.findByRole("button", { name: "Buat ruang kerja" }));
 
-    await user.click(await screen.findByRole("button", { name: "Buat workspace" }));
-
-    expect(await screen.findByText("Nama workspace wajib diisi.")).toBeInTheDocument();
+    expect(await screen.findByText("Isi nama ruang kerja.")).toBeInTheDocument();
     expect(action).not.toHaveBeenCalled();
   });
 
   it("passes a valid workspace name to the server action", async () => {
     const user = userEvent.setup();
+    stubMobile(true);
     const action = vi.fn((formData: FormData) => Promise.resolve(formData).then(() => undefined));
-    vi.stubGlobal("matchMedia", () => ({
-      matches: true,
-      media: "(max-width: 767px)",
-      onchange: null,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    }));
-
-    render(<CreateWorkspaceDialog isOpen onOpenChange={vi.fn()} action={action} />);
-    await user.type(await screen.findByRole("textbox", { name: "Nama workspace" }), "Aster Family");
-    await user.click(screen.getByRole("button", { name: "Buat workspace" }));
+    renderDialog(action);
+    await user.type(
+      await screen.findByRole("textbox", { name: "Nama ruang kerja" }),
+      "Aster Family",
+    );
+    await user.click(screen.getByRole("button", { name: "Buat ruang kerja" }));
 
     await waitFor(() => {
       expect(action).toHaveBeenCalledTimes(1);

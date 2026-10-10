@@ -32,8 +32,8 @@ export async function openGalleryWorkspace(
   email: string = uniqueEmail("gallery"),
 ): Promise<string> {
   await registerAndVerify(page, email);
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Gallery Studio");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Gallery Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
   const workspaceId = new URL(page.url()).pathname.split("/")[2];
   await addClient(page, workspaceId);

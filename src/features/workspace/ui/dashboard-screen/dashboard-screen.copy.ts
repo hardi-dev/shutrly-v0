@@ -1,10 +1,25 @@
+// Source: copy-deck.md §4.3 "Dashboard" rows. Copied verbatim.
+export const DASHBOARD_COPY_NAMESPACE = "workspaceDashboard";
+
 export const DASHBOARD_COPY = {
-  title: "Dasbor",
-  greeting: "Selamat datang di",
-  created: "Workspace berhasil dibuat",
-  subtitle: "Ini dasbor workspace-mu. Ringkasan proyek dan invoice akan tampil di sini.",
-  emptyTitle: "Workspace ini masih kosong",
-  emptyBody:
-    "Mulai dengan melengkapi branding: nama brand, kontak, dan prefiks invoice yang akan dilihat klien.",
-  settings: "Lengkapi branding",
+  namespace: DASHBOARD_COPY_NAMESPACE,
+  surface: "owner",
+  messages: {
+    en: {
+      greeting: "Welcome to {workspaceName}",
+      created: "Workspace created",
+      subtitle: "Use the navigation to open your projects, clients or services.",
+      emptyTitle: "Set up this workspace’s brand details",
+      emptyBody: "Open settings to add the brand name, contact details and invoice prefix.",
+      settings: "Set up branding",
+    },
+    id: {
+      greeting: "Selamat datang di {workspaceName}",
+      created: "Ruang kerja dibuat",
+      subtitle: "Buka proyek, klien, atau layanan lewat navigasi.",
+      emptyTitle: "Lengkapi identitas merek ruang kerja ini",
+      emptyBody: "Buka pengaturan untuk melengkapi nama merek, kontak, dan awalan nomor tagihan.",
+      settings: "Lengkapi identitas merek",
+    },
+  },
 } as const;

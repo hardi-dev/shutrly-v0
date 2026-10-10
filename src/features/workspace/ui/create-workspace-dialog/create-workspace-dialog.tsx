@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
@@ -12,8 +13,8 @@ import { Button } from "@/ui/primitives/button/button";
 import { Input } from "@/ui/primitives/input/input";
 
 import { createWorkspaceSchema } from "../../application/use-cases/create-workspace/create-workspace.schema";
-import { workspaceFieldErrorText } from "../workspace-field-error/workspace-field-error";
-import { CREATE_WORKSPACE_COPY } from "./create-workspace-dialog.copy";
+import { useWorkspaceFieldErrorText } from "../workspace-field-error/workspace-field-error";
+import { CREATE_WORKSPACE_COPY_NAMESPACE } from "./create-workspace-dialog.copy";
 import type {
   CreateWorkspaceDialogProps,
   CreateWorkspaceFormProps,
@@ -28,6 +29,7 @@ export function CreateWorkspaceDialog({
   onOpenChange,
   action,
 }: Readonly<CreateWorkspaceDialogProps>) {
+  const t = useTranslations(CREATE_WORKSPACE_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const [isPending, setIsPending] = useState(false);
 
@@ -36,8 +38,8 @@ export function CreateWorkspaceDialog({
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        title={CREATE_WORKSPACE_COPY.title}
-        description={CREATE_WORKSPACE_COPY.description}
+        title={t("title")}
+        description={t("description")}
         variant="form"
         actions={
           <Button
@@ -47,7 +49,7 @@ export function CreateWorkspaceDialog({
             className="w-full"
             isPending={isPending}
           >
-            {CREATE_WORKSPACE_COPY.submit}
+            {t("submit")}
           </Button>
         }
       >
@@ -64,16 +66,16 @@ export function CreateWorkspaceDialog({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      title={CREATE_WORKSPACE_COPY.title}
-      description={CREATE_WORKSPACE_COPY.description}
+      title={t("title")}
+      description={t("description")}
       size="sm"
       actions={
         <>
           <Button variant="secondary" onPress={handleCancel} isDisabled={isPending}>
-            {CREATE_WORKSPACE_COPY.cancel}
+            {t("cancel")}
           </Button>
           <Button type="submit" form="create-workspace-form" isPending={isPending}>
-            {CREATE_WORKSPACE_COPY.submit}
+            {t("submit")}
           </Button>
         </>
       }
@@ -89,6 +91,7 @@ function CreateWorkspaceForm({
   isPending = false,
   onPendingChange,
 }: Readonly<CreateWorkspaceFormProps>) {
+  const t = useTranslations(CREATE_WORKSPACE_COPY_NAMESPACE);
   const form = useForm<CreateWorkspaceFormValues>({
     resolver: zodResolver(createWorkspaceSchema),
     defaultValues: { name: "" },
@@ -119,11 +122,11 @@ function CreateWorkspaceForm({
     >
       <CreateWorkspaceNameField control={form.control} />
       <p className="text-(length:--font-size-label) leading-[17px] text-(--component-input-helper)">
-        {CREATE_WORKSPACE_COPY.helper}
+        {t("helper")}
       </p>
       {includeSubmit ? (
         <Button type="submit" isPending={isPending}>
-          {CREATE_WORKSPACE_COPY.submit}
+          {t("submit")}
         </Button>
       ) : null}
     </form>
@@ -131,13 +134,15 @@ function CreateWorkspaceForm({
 }
 
 function CreateWorkspaceNameField({ control }: Readonly<CreateWorkspaceNameFieldProps>) {
+  const t = useTranslations(CREATE_WORKSPACE_COPY_NAMESPACE);
+  const errorText = useWorkspaceFieldErrorText();
   const { field, fieldState } = useController({ control, name: "name" });
   return (
     <label className="flex flex-col gap-(--space-2) text-(length:--font-size-label) font-semibold">
-      {CREATE_WORKSPACE_COPY.label}
+      {t("label")}
       <Input
         name={field.name}
-        placeholder={CREATE_WORKSPACE_COPY.placeholder}
+        placeholder={t("placeholder")}
         value={field.value}
         onChange={field.onChange}
         onBlur={field.onBlur}
@@ -151,7 +156,7 @@ function CreateWorkspaceNameField({ control }: Readonly<CreateWorkspaceNameField
           role="alert"
           className="text-(length:--font-size-label) font-normal text-(--component-input-error-text)"
         >
-          {workspaceFieldErrorText(fieldState.error.message)}
+          {errorText(fieldState.error.message)}
         </span>
       ) : null}
     </label>

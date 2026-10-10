@@ -24,8 +24,15 @@ import { LANDING_HEADER_COPY } from "@/features/landing/ui/landing-header/landin
 import { LANDING_PAGE_COPY } from "@/features/landing/ui/landing-page/landing-page.copy";
 import { ROTATING_HEADLINE_COPY } from "@/features/landing/ui/rotating-headline/rotating-headline.copy";
 import { WAITLIST_FORM_COPY } from "@/features/landing/ui/waitlist-form/waitlist-form.copy";
+import { COMING_SOON_COPY } from "@/features/workspace/ui/coming-soon-screen/coming-soon-screen.copy";
+import { CREATE_WORKSPACE_COPY } from "@/features/workspace/ui/create-workspace-dialog/create-workspace-dialog.copy";
+import { DASHBOARD_COPY } from "@/features/workspace/ui/dashboard-screen/dashboard-screen.copy";
+import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 import { OWNER_NAV_COPY } from "@/features/workspace/ui/owner-nav/owner-nav.copy";
 import { OWNER_SHELL_COPY } from "@/features/workspace/ui/owner-shell/owner-shell.copy";
+import { SETTINGS_COPY } from "@/features/workspace/ui/settings-screen/settings-screen.copy";
+import { WORKSPACE_FIELD_ERROR_COPY } from "@/features/workspace/ui/workspace-field-error/workspace-field-error.copy";
+import { WORKSPACE_NOT_FOUND_COPY } from "@/features/workspace/ui/workspace-not-found-screen/workspace-not-found-screen.copy";
 import { WORKSPACE_SWITCHER_COPY } from "@/features/workspace/ui/workspace-switcher/workspace-switcher.copy";
 import { ALERT_COPY } from "@/ui/patterns/alert/alert.copy";
 import { APP_SHELL_COPY } from "@/ui/patterns/app-shell/app-shell.copy";
@@ -51,6 +58,7 @@ import { TEXTAREA_COPY } from "@/ui/primitives/textarea/textarea.copy";
 import { TOOLTIP_COPY } from "@/ui/primitives/tooltip/tooltip.copy";
 
 import { PROFILE_LAYOUT_COPY } from "./(owner)/profile/layout.copy";
+import { WORKSPACE_LAYOUT_COPY } from "./(owner)/w/[workspaceId]/layout.copy";
 import { ERROR_COPY } from "./error.copy";
 import { NOT_FOUND_COPY } from "./not-found.copy";
 import { HOME_PAGE_COPY } from "./page.copy";
@@ -66,6 +74,14 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   OWNER_SHELL_COPY,
   OWNER_NAV_COPY,
   WORKSPACE_SWITCHER_COPY,
+  WORKSPACE_LAYOUT_COPY,
+  COMING_SOON_COPY,
+  CREATE_WORKSPACE_COPY,
+  DASHBOARD_COPY,
+  ONBOARDING_COPY,
+  SETTINGS_COPY,
+  WORKSPACE_FIELD_ERROR_COPY,
+  WORKSPACE_NOT_FOUND_COPY,
   SIDEBAR_COPY,
   BOTTOM_SHEET_COPY,
   TOAST_COPY,

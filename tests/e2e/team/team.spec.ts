@@ -24,8 +24,8 @@ async function expectTeamA11y(page: Page): Promise<void> {
 
 async function openWorkspace(page: Page, label: string): Promise<string> {
   await registerAndVerify(page, uniqueEmail(label));
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Team Studio");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Team Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
   return new URL(page.url()).pathname.split("/")[2];
 }

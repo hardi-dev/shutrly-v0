@@ -21,8 +21,8 @@ test.describe.configure({ retries: 2 });
 async function openWorkspace(page: Page, label: string): Promise<string> {
   await page.setViewportSize(DESKTOP);
   await registerAndVerify(page, uniqueEmail(label));
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Aster Wedding");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Aster Wedding");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
   const url = new URL(page.url());
   return `${url.origin}${url.pathname.replace(/\/$/, "")}`;
@@ -34,7 +34,7 @@ test("AC-MSG-001 AC-MSG-004 AC-MSG-005 AC-MSG-006 AC-MSG-007 AC-MSG-009 AC-MSG-0
   const home = await openWorkspace(page, "templates");
   await page.getByRole("link", { name: OWNER_NAV_COPY.messages.id.messageTemplates }).click();
   await expect(page).toHaveURL(`${home}/message-templates`);
-  await expect(page.getByText(COMING_SOON_COPY.title)).toHaveCount(0);
+  await expect(page.getByText(COMING_SOON_COPY.messages.id.title)).toHaveCount(0);
   await expect(
     page.getByRole("link", { name: OWNER_NAV_COPY.messages.id.messageTemplates }),
   ).toHaveAttribute("aria-current", "page");
@@ -89,6 +89,8 @@ test("AC-MSG-015 another owner's template editor is not found", async ({ browser
   const other = await browser.newPage();
   await openWorkspace(other, "templates-owner-b");
   await other.goto(`${home}/message-templates/gallery-share`);
-  await expect(other.getByRole("heading", { name: WORKSPACE_NOT_FOUND_COPY.title })).toBeVisible();
+  await expect(
+    other.getByRole("heading", { name: WORKSPACE_NOT_FOUND_COPY.messages.id.title }),
+  ).toBeVisible();
   await other.close();
 });

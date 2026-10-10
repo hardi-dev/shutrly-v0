@@ -48,6 +48,12 @@ describe("loadSignedInOwnerLocale", () => {
     expect(await loadSignedInOwnerLocale()).toBeNull();
   });
 
+  it("D-3 a failed session lookup falls back to no owner locale instead of failing the page", async () => {
+    state.cookieNames = ["better-auth.session_token"];
+    resolveOwnerAccess.mockImplementation(() => Promise.reject(new Error("Failed to get session")));
+    expect(await loadSignedInOwnerLocale()).toBeNull();
+  });
+
   it("R-2 no session cookie means no session lookup", async () => {
     expect(await loadSignedInOwnerLocale()).toBeNull();
     expect(resolveOwnerAccess).not.toHaveBeenCalled();

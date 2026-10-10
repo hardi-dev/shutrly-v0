@@ -44,6 +44,7 @@ export type IconName =
   | "chevron-left"
   | "aperture"
   | "image"
+  | "globe"
   | "hourglass"
   | "package-check"
   | "wallet"

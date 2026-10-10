@@ -141,6 +141,13 @@
       "when": 1791632665018,
       "tag": "0019_locale_preferences",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1791641369305,
+      "tag": "0020_default_template_flag",
+      "breakpoints": true
     }
   ]
 }

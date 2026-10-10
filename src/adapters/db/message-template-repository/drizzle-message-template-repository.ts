@@ -15,7 +15,7 @@ const CHANNEL = "WHATSAPP";
 
 interface TemplateRow {
   type: string;
-  content: string;
+  content: string | null;
   updatedAt: Date;
 }
 
@@ -27,7 +27,12 @@ const RECORD_COLUMNS = {
 
 function toRecords(row: TemplateRow): MessageTemplateRecord[] {
   // The CHECK constraint guarantees a known type; an unknown one is skipped, never guessed.
-  return isTemplateType(row.type) ? [{ ...row, type: row.type }] : [];
+  if (!isTemplateType(row.type)) return [];
+  // A platform default has no stored text until the save modes (I4) write one. Until then no row
+  // is null, so a null here means a default reached code that cannot render it yet: fail loudly,
+  // never substitute text (D-10, no fallback).
+  if (row.content === null) throw new Error("message template default has no content mapper yet");
+  return [{ ...row, type: row.type, content: row.content }];
 }
 
 /**

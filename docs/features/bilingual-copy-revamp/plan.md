@@ -350,7 +350,7 @@ Every auth screen shares `src/app/(auth)/layout.tsx` → `SplitLayout`, so Login
   - Tests first: `"AC-L10N-001 lists both languages by self-name and checks the current one"`, `"AC-L10N-004 shows Changing language… and is not pressable while pending"`, `"opens a bottom sheet below the lg breakpoint"`.
   - Commit `feat(ui): add the language link`.
 
-- [ ] **I5.11 Auth language switch in the auth layout.** New unit `src/features/auth/ui/auth-language-switch/` (`auth-language-switch.tsx`, `.test.tsx`): client component that wires `LanguageLink` to `useLanguageSwitch` with `action = async (locale) => (await setDeviceLocaleAction({ locale })).ok`. `src/app/(auth)/layout.tsx` passes `<AuthLanguageSwitch action={setDeviceLocaleAction} />` as `headerAction`. Failure uses the toast from I5.5 (desktop bottom-right, mobile top; frames `xbbVv`, `W5jJs`).
+- [x] **I5.11 Auth language switch in the auth layout.** New unit `src/features/auth/ui/auth-language-switch/` (`auth-language-switch.tsx`, `.test.tsx`): client component that wires `LanguageLink` to `useLanguageSwitch` with `action = async (locale) => (await setDeviceLocaleAction({ locale })).ok`. `src/app/(auth)/layout.tsx` passes `<AuthLanguageSwitch action={setDeviceLocaleAction} />` as `headerAction`. Failure uses the toast from I5.5 (desktop bottom-right, mobile top; frames `xbbVv`, `W5jJs`).
   - Tests first: `"AC-L10N-001 switching to English writes the device locale and refreshes"`, `"AC-L10N-001 a refused switch shows the failure toast"`.
   - Commit `feat(auth): switch language from the auth layout`.
 

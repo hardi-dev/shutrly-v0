@@ -1,95 +1,52 @@
 // Seeds one demo studio on a NON-production database through the app's own use cases: an Owner
-// registered and verified through Better Auth (signUpEmail, then the verification link), a workspace with its defaults, a catalog, two clients, a
-// booked project with a gallery synced from a real public Drive folder and published, and a draft
-// project. Subfolders named `edited` and `print` are mapped to the package items *Foto edit* and
-// *Foto cetak* through the folder mapping (F-21), and final delivery is published when they hold files.
+// registered and verified through Better Auth (signUpEmail, then the verification link), a workspace
+// with its defaults, a catalog of three categories (seed-catalog.ts), ten clients, a team of four,
+// and a project in every status with sessions, teams, booking values, galleries synced from a real
+// public Drive folder, client picks and add-ons (seed-projects.ts). DELIVERED and COMPLETED need
+// SEED_FINAL_DRIVE_FOLDER: a folder whose `edited` / `print` subfolders are mapped to the package
+// items (F-21) before final delivery is published.
 // It never deletes or overwrites: it stops when the Owner's email already exists.
-// The generated passwords and the client link go to a git-ignored file, never to the repo.
+// The generated passwords and the client links go to a git-ignored file, never to the repo.
 // Usage: pnpm db:seed
 //   target: DATABASE_URL and the keys from the environment, else from SEED_ENV_FILE (.dev.vars)
 //   SEED_OWNER_EMAIL (default owner@shutrly.test), SEED_OWNER_PASSWORD, SEED_GALLERY_PASSWORD
-//   SEED_DRIVE_FOLDER (a public folder link), SEED_CREDENTIALS_FILE (default .env.seed)
+//   SEED_DRIVE_FOLDER, SEED_FINAL_DRIVE_FOLDER (public folder links), SEED_CREDENTIALS_FILE (.env.seed)
 import { randomBytes } from "node:crypto";
 import { writeFileSync } from "node:fs";
 
 import { config } from "dotenv";
-import { and, eq } from "drizzle-orm";
 
-import type { AuthEnv } from "@/adapters/auth/create-auth/create-auth.types";
 import { createBetterAuthIdentity } from "@/adapters/auth/identity/better-auth-identity";
-import { createWebCryptoAccessTokenGenerator } from "@/adapters/crypto/access-token-generator/web-crypto-access-token-generator";
-import { createWebCryptoGalleryPasswordCipher } from "@/adapters/crypto/gallery-password-cipher/web-crypto-gallery-password-cipher";
-import { createBetterAuthPasswordHasher } from "@/adapters/crypto/password-hasher/better-auth-password-hasher";
-import { createWebCryptoRandomInt } from "@/adapters/crypto/random-int/web-crypto-random-int";
 import { createDrizzleAccountDirectory } from "@/adapters/db/account-directory/drizzle-account-directory";
 import { createBetterAuthDatabase } from "@/adapters/db/better-auth-database/better-auth-database";
-import { createDrizzleCategoryRepository } from "@/adapters/db/catalog-repository/drizzle-category-repository";
 import { createDrizzleItemDefinitionRepository } from "@/adapters/db/catalog-repository/drizzle-item-definition-repository";
-import { createDrizzleServiceRepository } from "@/adapters/db/catalog-repository/drizzle-service-repository";
 import { createDb } from "@/adapters/db/client/client";
 import type { Db } from "@/adapters/db/client/client.types";
-import { createDrizzleClientRepository } from "@/adapters/db/client-repository/drizzle-client-repository";
-import { createDrizzleGalleryBrowseReader } from "@/adapters/db/gallery-repository/drizzle-gallery-browse-reader";
-import { createDrizzleGalleryRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-repository";
-import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
 import { createDrizzleLinkRegistry } from "@/adapters/db/link-registry/drizzle-link-registry";
 import { createDrizzleMessageTemplateRepository } from "@/adapters/db/message-template-repository/drizzle-message-template-repository";
-import { createDrizzleProjectRepository } from "@/adapters/db/project-repository/drizzle-project-repository";
-import { createNeonRateLimiter } from "@/adapters/db/rate-limiter/neon-rate-limiter";
-import { serviceItemDefinition } from "@/adapters/db/schema/booking/catalog";
-import { project } from "@/adapters/db/schema/booking/project";
-import { gallerySource } from "@/adapters/db/schema/gallery/gallery";
-import { workspaceSourceConfig } from "@/adapters/db/schema/gallery/workspace-source-config";
 import { createDrizzleTeamRoleRepository } from "@/adapters/db/team-repository/drizzle-team-role-repository";
 import { createDrizzleWorkspaceRepository } from "@/adapters/db/workspace-repository/drizzle-workspace-repository";
 import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-source-repository/drizzle-workspace-source-repository";
-import { createGoogleDriveProvider } from "@/adapters/source/google-drive-provider/google-drive-provider";
-import { runFinalDeliveryTransaction } from "@/composition/gallery/final-delivery-scope/final-delivery-scope";
-import type { GalleryScope } from "@/composition/gallery/gallery-scope/gallery-scope.types";
 import type { AuthLink } from "@/features/auth/application/ports/auth-email/auth-email.port";
 import { normaliseEmail } from "@/features/auth/domain/credentials/credentials";
-import { addCategory } from "@/features/booking/application/use-cases/add-category/add-category";
-import { addClient } from "@/features/booking/application/use-cases/add-client/add-client";
-import { addService } from "@/features/booking/application/use-cases/add-service/add-service";
-import { addServiceItem } from "@/features/booking/application/use-cases/add-service-item/add-service-item";
-import { createProject } from "@/features/booking/application/use-cases/create-project/create-project";
 import { seedDefaultItemDefinitions } from "@/features/booking/application/use-cases/seed-default-item-definitions/seed-default-item-definitions";
 import { seedDefaultTeamRoles } from "@/features/booking/application/use-cases/seed-default-team-roles/seed-default-team-roles";
 import { seedDefaultTemplates } from "@/features/communications/application/use-cases/seed-default-templates/seed-default-templates";
-import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
-import {
-  getFolderMapping,
-  setFolderMapping,
-} from "@/features/gallery/application/use-cases/folder-mapping/folder-mapping";
-import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
-import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
 import { seedDefaultSource } from "@/features/gallery/application/use-cases/seed-default-source/seed-default-source";
-import { syncGallerySourceStep } from "@/features/gallery/application/use-cases/sync-gallery-source-step/sync-gallery-source-step";
 import { createWorkspace } from "@/features/workspace/application/use-cases/create-workspace/create-workspace";
 import { asOwnerUserId } from "@/features/workspace/domain/owner-user-id/owner-user-id";
 import { asWorkspaceId } from "@/shared/workspace-context/workspace-context";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
+import { seedCatalog, seedClients, seedTeam } from "./seed-catalog";
+import { clientToken } from "./seed-gallery";
+import { seedProjects } from "./seed-projects";
+import { present, type SeedEnv, type Studio } from "./seed-support";
+
 const DEFAULT_FOLDER = "https://drive.google.com/drive/folders/1yyis5MpfzQHuJs1DZAE_StzDXC8HEvhC";
-const MAX_SYNC_STEPS = 200;
 
-interface SeedEnv {
-  readonly databaseUrl: string;
-  readonly auth: AuthEnv;
-  readonly galleryPasswordKey: string;
-  readonly driveApiKey: string;
-  readonly ownerEmail: string;
-  readonly ownerPassword: string;
-  readonly galleryPassword: string;
-  readonly driveFolder: string;
-  readonly credentialsFile: string;
-}
-
-interface Studio {
-  readonly db: Db;
-  readonly context: WorkspaceContext;
-  readonly ownerId: string;
-}
+// Projects whose client link goes to the credentials file: they have a published gallery.
+const CLIENT_LINKS = ["Wisuda Rina", "Wisuda Fajar", "Prewedding Kevin & Maya", "Wisuda Lina"];
 
 function required(name: string): string {
   const value = process.env[name];
@@ -118,26 +75,9 @@ function readEnv(): SeedEnv {
     ownerPassword: process.env.SEED_OWNER_PASSWORD ?? secret(16),
     galleryPassword: process.env.SEED_GALLERY_PASSWORD ?? secret(10),
     driveFolder: process.env.SEED_DRIVE_FOLDER ?? DEFAULT_FOLDER,
+    finalDriveFolder: process.env.SEED_FINAL_DRIVE_FOLDER ?? null,
     credentialsFile: process.env.SEED_CREDENTIALS_FILE ?? ".env.seed",
   };
-}
-
-type Ok<T> = Extract<T, { readonly ok: true }>;
-
-function isOk<T extends { readonly ok: boolean }>(result: T): result is Ok<T> {
-  return result.ok;
-}
-
-/** Throws unless a use case result is ok, naming the step. */
-function check<T extends { readonly ok: boolean }>(step: string, result: T): Ok<T> {
-  if (!isOk(result)) throw new Error(`${step} failed: ${JSON.stringify(result)}`);
-  return result;
-}
-
-/** Throws when a value the step should have returned is missing. */
-function present<T>(label: string, value: T | undefined): T {
-  if (value === undefined) throw new Error(`${label} is missing`);
-  return value;
 }
 
 function ownerIdentity(db: Db, env: SeedEnv, onLink: (link: AuthLink) => void) {
@@ -186,255 +126,6 @@ async function createStudio(db: Db, ownerId: string): Promise<WorkspaceContext> 
   return { workspaceId: asWorkspaceId(workspaceId) };
 }
 
-async function definitionId(studio: Studio, name: string): Promise<string> {
-  const row = (
-    await studio.db
-      .select({ id: serviceItemDefinition.id })
-      .from(serviceItemDefinition)
-      .where(
-        and(
-          eq(serviceItemDefinition.workspaceId, studio.context.workspaceId),
-          eq(serviceItemDefinition.name, name),
-        ),
-      )
-  ).at(0);
-  if (!row) throw new Error(`default item definition ${name} is missing`);
-  return row.id;
-}
-
-async function seedCatalog(studio: Studio): Promise<string> {
-  const { db, context, ownerId } = studio;
-  const services = createDrizzleServiceRepository(db);
-  const definitions = createDrizzleItemDefinitionRepository(db);
-  const category = check(
-    "category",
-    await addCategory(createDrizzleCategoryRepository(db), context, ownerId, { name: "Wisuda" }),
-  );
-  const service = check(
-    "service",
-    await addService(services, context, ownerId, {
-      name: "Wisuda Basic",
-      categoryId: present("category id", category.categoryId),
-      basePrice: "1500000",
-    }),
-  );
-  const serviceId = present("service id", service.serviceId);
-  for (const [name, value] of [
-    ["Foto edit", "10"],
-    ["Foto cetak", "5"],
-  ] as const) {
-    const id = await definitionId(studio, name);
-    check(
-      `service item ${name}`,
-      await addServiceItem(services, definitions, context, serviceId, id, ownerId, {
-        type: "NUMBER",
-        value,
-      }),
-    );
-  }
-  return serviceId;
-}
-
-async function seedClient(studio: Studio, name: string, whatsappNumber: string): Promise<string> {
-  const result = check(
-    `client ${name}`,
-    await addClient(createDrizzleClientRepository(studio.db), studio.context, studio.ownerId, {
-      name,
-      whatsappNumber,
-      socialLinks: [],
-    }),
-  );
-  return present("client id", result.client).id;
-}
-
-function sessionDate(daysAhead: number): string {
-  return new Date(Date.now() + daysAhead * 86_400_000).toISOString().slice(0, 10);
-}
-
-interface ProjectSeed {
-  readonly mode: "BOOKED" | "DRAFT";
-  readonly clientId: string;
-  readonly serviceId: string;
-  readonly title: string;
-}
-
-async function seedProject(studio: Studio, seed: ProjectSeed): Promise<string> {
-  const items = [
-    {
-      definitionId: await definitionId(studio, "Foto edit"),
-      value: { type: "NUMBER", value: "10" },
-    },
-    {
-      definitionId: await definitionId(studio, "Foto cetak"),
-      value: { type: "NUMBER", value: "5" },
-    },
-  ];
-  const sessions =
-    seed.mode === "BOOKED"
-      ? [
-          {
-            name: "Wisuda",
-            date: sessionDate(7),
-            startTime: "08:00",
-            endTime: "11:00",
-            location: "Balairung",
-            team: [],
-          },
-        ]
-      : [];
-  const result = check(
-    `project ${seed.title}`,
-    await createProject(
-      createDrizzleProjectRepository(studio.db),
-      createWebCryptoAccessTokenGenerator(),
-      studio.context,
-      studio.ownerId,
-      { ...seed, agreedPrice: "1500000", notes: null, items, sessions, fieldValues: {} },
-    ),
-  );
-  return result.projectId;
-}
-
-function galleryScope(studio: Studio, env: SeedEnv): GalleryScope {
-  const { db } = studio;
-  return {
-    galleries: createDrizzleGalleryRepository(db),
-    browse: createDrizzleGalleryBrowseReader(db),
-    sources: createDrizzleGallerySourceRepository(db),
-    workspaceSources: createDrizzleWorkspaceSourceRepository(db),
-    provider: createGoogleDriveProvider(env.driveApiKey),
-    directImages: true,
-    rateLimiter: createNeonRateLimiter(db),
-    cipher: createWebCryptoGalleryPasswordCipher(env.galleryPasswordKey),
-    hasher: createBetterAuthPasswordHasher(),
-    randomInt: createWebCryptoRandomInt(),
-    newId: () => crypto.randomUUID(),
-    now: new Date(),
-  };
-}
-
-async function syncSource(studio: Studio, scope: GalleryScope, sourceId: string): Promise<void> {
-  for (let step = 1; step <= MAX_SYNC_STEPS; step += 1) {
-    const outcome = await syncGallerySourceStep(
-      { ...scope, now: new Date() },
-      studio.context,
-      sourceId,
-    );
-    if (!outcome.ok) throw new Error(`sync refused: ${JSON.stringify(outcome)}`);
-    if (outcome.status === "SUCCEEDED") return;
-    if (outcome.status === "FAILED") throw new Error(`sync failed: ${outcome.errorCode}`);
-    console.log(
-      `  sync step ${String(step)}: ${String(outcome.foldersDone)}/${String(outcome.foldersTotal)} folders`,
-    );
-  }
-  throw new Error("sync did not finish");
-}
-
-async function workspaceSourceId(studio: Studio): Promise<string> {
-  const row = (
-    await studio.db
-      .select({ id: workspaceSourceConfig.id })
-      .from(workspaceSourceConfig)
-      .where(eq(workspaceSourceConfig.workspaceId, studio.context.workspaceId))
-  ).at(0);
-  if (!row) throw new Error("default photo source is missing");
-  return row.id;
-}
-
-// F-21: no folder name is recognised by itself, so the seed maps the demo names to the package items.
-const SEED_FOLDER_ITEMS: Readonly<Record<string, string>> = {
-  edited: "Foto edit",
-  print: "Foto cetak",
-};
-
-/** Maps the synced `edited` / `print` subfolders to *Foto edit* / *Foto cetak* (F-21). @param studio - the seeded studio @param scope - gallery deps @param sourceId - the linked folder */
-async function mapFinishedFolders(
-  studio: Studio,
-  scope: GalleryScope,
-  sourceId: string,
-): Promise<void> {
-  const view = await getFolderMapping(scope, studio.context, sourceId);
-  const mappings = view.folders.flatMap((path) => {
-    const itemName = SEED_FOLDER_ITEMS[path.toLowerCase()];
-    const item = view.items.find((candidate) => candidate.name === itemName);
-    return item ? [{ path, projectItemId: item.id }] : [];
-  });
-  if (mappings.length === 0) return;
-  check(
-    "folder mapping",
-    await setFolderMapping({ ...scope, now: new Date() }, studio.context, sourceId, { mappings }),
-  );
-  console.log(`  mapped: ${mappings.map((entry) => entry.path).join(", ")}`);
-}
-
-async function seedGallery(studio: Studio, env: SeedEnv, projectId: string): Promise<string> {
-  const scope = galleryScope(studio, env);
-  const { context, ownerId } = studio;
-  const created = check(
-    "gallery",
-    await createGallery(scope, context, ownerId, projectId, {
-      password: env.galleryPassword,
-      expiry: { type: "NONE" },
-    }),
-  );
-  const linked = check(
-    "link folder",
-    await linkGallerySource(scope, context, ownerId, created.galleryId, {
-      workspaceSourceId: await workspaceSourceId(studio),
-      link: env.driveFolder,
-      label: "Foto wisuda",
-    }),
-  );
-  await syncSource(studio, scope, linked.sourceId);
-  await mapFinishedFolders(studio, scope, linked.sourceId);
-  check(
-    "publish",
-    await publishGallery({ ...scope, now: new Date() }, context, ownerId, created.galleryId),
-  );
-  return linked.sourceId;
-}
-
-async function publishDeliveryIfFinished(studio: Studio, projectId: string, sourceId: string) {
-  const counts = present(
-    "source counts",
-    (
-      await studio.db
-        .select({
-          edited: gallerySource.editedCount,
-          print: gallerySource.printCount,
-          proofs: gallerySource.proofCount,
-        })
-        .from(gallerySource)
-        .where(eq(gallerySource.id, sourceId))
-    ).at(0),
-  );
-  console.log(
-    `  synced: ${String(counts.proofs)} proofs, ${String(counts.edited)} edited, ${String(counts.print)} print`,
-  );
-  if (counts.edited + counts.print === 0) {
-    console.log("  final delivery skipped: add `edited` or `print` subfolders to the Drive folder");
-    return false;
-  }
-  const refused = await runFinalDeliveryTransaction(studio.db, {
-    context: studio.context,
-    actorId: studio.ownerId,
-    projectId,
-  });
-  if (refused) throw new Error(`final delivery refused: ${refused.reasons.join(", ")}`);
-  return true;
-}
-
-async function clientToken(db: Db, projectId: string): Promise<string> {
-  const row = (
-    await db
-      .select({ token: project.clientAccessToken })
-      .from(project)
-      .where(eq(project.id, projectId))
-  ).at(0);
-  if (!row?.token) throw new Error("client access token missing");
-  return row.token;
-}
-
 function writeCredentials(env: SeedEnv, lines: Readonly<Record<string, string>>): void {
   const body = Object.entries(lines)
     .map(([key, value]) => `${key}=${value}`)
@@ -448,32 +139,30 @@ function writeCredentials(env: SeedEnv, lines: Readonly<Record<string, string>>)
   );
 }
 
+const envKey = (title: string) => title.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
+
 async function seed(db: Db, env: SeedEnv) {
   const ownerId = await createOwner(db, env);
   const studio: Studio = { db, ownerId, context: await createStudio(db, ownerId) };
   console.log(`Owner ${env.ownerEmail} and workspace ${studio.context.workspaceId}`);
-  const serviceId = await seedCatalog(studio);
-  const rina = await seedClient(studio, "Rina Saputri", "0812-3456-7890");
-  const sari = await seedClient(studio, "Sari Wulandari", "0813-2222-3333");
-  const projectId = await seedProject(studio, {
-    mode: "BOOKED",
-    clientId: rina,
-    serviceId,
-    title: "Wisuda Rina",
-  });
-  await seedProject(studio, { mode: "DRAFT", clientId: sari, serviceId, title: "Wisuda Sari" });
-  console.log("Gallery: linking and syncing the Drive folder");
-  const sourceId = await seedGallery(studio, env, projectId);
-  const delivered = await publishDeliveryIfFinished(studio, projectId, sourceId);
-  writeCredentials(env, {
+  const services = await seedCatalog(studio);
+  const clients = await seedClients(studio);
+  const team = await seedTeam(studio);
+  const projects = await seedProjects(studio, { env, services, clients, team });
+  const lines: Record<string, string> = {
     SEED_OWNER_EMAIL: env.ownerEmail,
     SEED_OWNER_PASSWORD: env.ownerPassword,
     SEED_GALLERY_PASSWORD: env.galleryPassword,
-    SEED_PROJECT_PATH: `/w/${studio.context.workspaceId}/projects/${projectId}`,
-    SEED_CLIENT_PATH: `/g/${await clientToken(db, projectId)}`,
-    SEED_FINAL_DELIVERY: delivered ? "published" : "not published",
-  });
-  console.log(`Done. Passwords and the client link are in ${env.credentialsFile} (git-ignored).`);
+  };
+  for (const [title, projectId] of Object.entries(projects)) {
+    lines[`SEED_PROJECT_${envKey(title)}`] =
+      `/w/${studio.context.workspaceId}/projects/${projectId}`;
+    if (CLIENT_LINKS.includes(title)) {
+      lines[`SEED_CLIENT_${envKey(title)}`] = `/g/${await clientToken(studio, projectId)}`;
+    }
+  }
+  writeCredentials(env, lines);
+  console.log(`Done. Passwords and the client links are in ${env.credentialsFile} (git-ignored).`);
 }
 
 async function main(): Promise<void> {

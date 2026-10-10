@@ -20,6 +20,16 @@ vi.mock("next/headers", () => ({
 
 import { GALLERY_TOKEN_HEADER } from "@/shared/gallery-token/gallery-token-header";
 
+const ownerLookup = vi.hoisted(() => ({ signedIn: null as "en" | "id" | null }));
+const galleryLookup = vi.hoisted(() => vi.fn(() => Promise.resolve<"en" | "id" | null>(null)));
+
+vi.mock("@/composition/auth/owner-locale/owner-locale", () => ({
+  loadSignedInOwnerLocale: vi.fn(() => Promise.resolve(ownerLookup.signedIn)),
+}));
+vi.mock("@/composition/gallery/gallery-owner-locale/gallery-owner-locale", () => ({
+  loadGalleryOwnerLocale: galleryLookup,
+}));
+
 import { getRequestLocale } from "./request-locale";
 
 function setRequest(cookies: Record<string, string>, galleryToken?: string) {
@@ -56,5 +66,26 @@ describe("getRequestLocale", () => {
     const second = await getRequestLocale();
     expect(first).toBe("id");
     expect(second).toBe("en");
+  });
+
+  it("AC-L10N-001 a valid gallery cookie skips the owner lookup", async () => {
+    setRequest({ shutrly_gallery_locale: "id" }, "tok-123");
+    galleryLookup.mockClear();
+    expect(await getRequestLocale()).toBe("id");
+    expect(galleryLookup).not.toHaveBeenCalled();
+  });
+
+  it("AC-L10N-001 without a valid gallery cookie the gallery owner's locale applies", async () => {
+    setRequest({}, "tok-123");
+    galleryLookup.mockResolvedValueOnce("id");
+    expect(await getRequestLocale()).toBe("id");
+    expect(galleryLookup).toHaveBeenCalledWith("tok-123");
+  });
+
+  it("BR-L10N-001 a signed-in owner's locale wins over the device cookie on account screens", async () => {
+    setRequest({ shutrly_locale: "en" });
+    ownerLookup.signedIn = "id";
+    expect(await getRequestLocale()).toBe("id");
+    ownerLookup.signedIn = null;
   });
 });

@@ -354,7 +354,7 @@ Every auth screen shares `src/app/(auth)/layout.tsx` → `SplitLayout`, so Login
   - Tests first: `"AC-L10N-001 switching to English writes the device locale and refreshes"`, `"AC-L10N-001 a refused switch shows the failure toast"`.
   - Commit `feat(auth): switch language from the auth layout`.
 
-- [ ] **I5.12 Auth emails in the screen language (D-17).** `AuthEmailPort.send` gains `locale: AppLocale`; `auth-email-templates` select the `{ en, id }` copy (deck §12) by it. The register, resend-verification and forgot-password flows pass `await getRequestLocale()`; because Better Auth's `sendVerificationEmail`/`sendResetPassword` callbacks get only `user`/`token`, the flow sets a request-scoped value the adapter reads (spike first, risk R-7; fall back to `user.locale` when the email follows a sign-in). Stop and report if neither works.
+- [x] **I5.12 Auth emails in the screen language (D-17).** `AuthEmailPort.send` gains `locale: AppLocale`; `auth-email-templates` select the `{ en, id }` copy (deck §12) by it. The register, resend-verification and forgot-password flows pass `await getRequestLocale()`; because Better Auth's `sendVerificationEmail`/`sendResetPassword` callbacks get only `user`/`token`, the flow sets a request-scoped value the adapter reads (spike first, risk R-7; fall back to `user.locale` when the email follows a sign-in). Stop and report if neither works.
   - Tests first: unit `"D-17 renders the verification email in English"` and `"… in Indonesian"`; integration `"D-17 a register request in Indonesian sends the Indonesian verification email"` with the fake email port.
   - Commit `feat(auth): send auth emails in the screen language`.
 

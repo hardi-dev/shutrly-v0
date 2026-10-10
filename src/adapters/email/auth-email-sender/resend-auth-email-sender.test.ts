@@ -10,6 +10,7 @@ const verify: AuthLink = {
   to: "owner@example.com",
   name: "Alya",
   url: "https://app.shutrly.dev/verify/confirm?token=secret-token",
+  locale: "en",
 };
 
 describe("Resend auth email sender (ADR-011)", () => {

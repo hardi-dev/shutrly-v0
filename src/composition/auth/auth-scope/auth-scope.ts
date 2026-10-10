@@ -15,6 +15,7 @@ import { LinkOutbox } from "@/features/auth/application/link-outbox/link-outbox"
 import type { AuthEmailPort } from "@/features/auth/application/ports/auth-email/auth-email.port";
 import type { AppEnv } from "@/shared/env/app-env.types";
 
+import { getRequestLocale } from "../../locale/request-locale/request-locale";
 import { withRequestDb } from "../../request-db/request-db";
 import type { AuthScope } from "./auth-scope.types";
 
@@ -30,13 +31,16 @@ function emailSender(env: AppEnv): AuthEmailPort {
  * @returns whatever `work` resolves to
  */
 export function withAuthScope<T>(work: (scope: AuthScope) => Promise<T>): Promise<T> {
-  return withRequestDb((db, rc) => {
+  return withRequestDb(async (db, rc) => {
+    // D-17: auth emails follow the screen language resolved for this request.
+    const locale = await getRequestLocale();
     const outbox = new LinkOutbox(emailSender(rc.env), rc.requestId);
     const accounts = createDrizzleAccountDirectory(db);
     const { identity, handler } = createBetterAuthIdentity({
       database: createBetterAuthDatabase(db),
       env: rc.env,
       accounts,
+      locale,
       links: createDrizzleLinkRegistry(db),
       onLink: (link) => {
         outbox.enqueue(link);

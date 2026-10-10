@@ -85,6 +85,7 @@ function ownerIdentity(db: Db, env: SeedEnv, onLink: (link: AuthLink) => void) {
     database: createBetterAuthDatabase(db),
     env: env.auth,
     accounts: createDrizzleAccountDirectory(db),
+    locale: "en",
     links: createDrizzleLinkRegistry(db),
     onLink,
   }).identity;

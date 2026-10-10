@@ -15,6 +15,7 @@ const link: AuthLink = {
   to: "o@x.dev",
   name: "O",
   url: "https://app/verify/confirm?token=secret",
+  locale: "en",
 };
 
 describe("LinkOutbox", () => {

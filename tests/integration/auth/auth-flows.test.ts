@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { user } from "@/adapters/db/schema/auth/auth";
+import { renderAuthEmail } from "@/adapters/email/auth-email-templates/auth-email-templates";
 import { requireOwner } from "@/features/auth/application/policy/owner-access/owner-access";
 import { changePassword } from "@/features/auth/application/use-cases/change-password/change-password";
 import { loginOwner } from "@/features/auth/application/use-cases/login-owner/login-owner";
@@ -84,5 +85,22 @@ describe("auth flows on the real adapters", () => {
     const refreshed = result.setCookies.length > 0 ? cookieHeaders(result.setCookies) : current;
     expect(await h.deps.identity.getSessionUserId(refreshed)).not.toBeNull();
     expect(await h.deps.identity.getSessionUserId(other)).toBeNull();
+  });
+});
+
+describe("auth emails in the screen language (D-17)", () => {
+  it("D-17 a register request in Indonesian sends the Indonesian verification email", async () => {
+    const id = await openAuthHarness({ locale: "id" });
+    try {
+      const email = normaliseEmail(uniqueEmail());
+      await registerOwner(id.deps, { name: "Alya", email, password: PASSWORD }, meta());
+      await id.settle();
+      const link = id.sender.linksTo(email, "VERIFY_EMAIL").at(0);
+      if (!link) throw new Error("expected a verification link");
+      expect(link.locale).toBe("id");
+      expect(renderAuthEmail(link).subject).toBe("Verifikasi email Shutrly kamu");
+    } finally {
+      await id.close();
+    }
   });
 });

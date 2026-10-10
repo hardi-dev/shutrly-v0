@@ -11,6 +11,7 @@ import type { AuthDeps, RequestMeta } from "@/features/auth/application/auth-dep
 import { LinkOutbox } from "@/features/auth/application/link-outbox/link-outbox";
 import { parseAppEnv } from "@/shared/env/app-env";
 import type { AppEnv } from "@/shared/env/app-env.types";
+import type { AppLocale } from "@/shared/locale/locale.types";
 
 import { openTestDb } from "../../helpers/test-db";
 
@@ -25,7 +26,7 @@ export interface AuthHarness {
 }
 
 /** The real auth adapters over the shared non-production database (ADR-009). */
-export async function openAuthHarness(): Promise<AuthHarness> {
+export async function openAuthHarness(options: { locale?: AppLocale } = {}): Promise<AuthHarness> {
   const { db, close } = await openTestDb();
   const env = parseAppEnv(process.env);
   const sender = new RecordingEmailSender();
@@ -35,6 +36,7 @@ export async function openAuthHarness(): Promise<AuthHarness> {
     database: createBetterAuthDatabase(db),
     env,
     accounts,
+    locale: options.locale ?? "en",
     links: createDrizzleLinkRegistry(db),
     onLink: (link) => {
       outbox.enqueue(link);

@@ -166,7 +166,7 @@ export class FakeAuthBackend {
     const token = crypto.randomUUID();
     this.latest.set(`${kind}:${user.id}`, token);
     const url = `${BASE_URL}${LINK_PATH[kind]}?token=${token}`;
-    this.onLink({ kind, to: user.email, name: user.name, url });
+    this.onLink({ kind, to: user.email, name: user.name, url, locale: "en" });
   }
 
   private findLink(kind: AuthLinkKind, token: string): FakeUser | null {

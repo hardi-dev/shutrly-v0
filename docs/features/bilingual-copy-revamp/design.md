@@ -43,14 +43,14 @@ The whole menu is shown in this phase. Only **Bahasa** works in F-22, because F-
 
 ## State inventory (C-007)
 
-| State | Frame |
-|---|---|
-| Menu closed | `x7qwr`, `v8vSQJ` |
-| Menu open | `TJlEh`, `UY9Co` |
-| Language options | `TJlEh` (inline), `X9JQT` |
-| Theme options | `TJlEh` (inline), `cCf8E` |
-| Language switching (pending) | `PuQxH`, `ZJyUC` |
-| Language switch failed | `y49rBj`, `p2jPCo` |
+| State | Frame | AC |
+|---|---|---|
+| Menu closed | `x7qwr`, `v8vSQJ` | AC-L10N-001 |
+| Menu open | `TJlEh`, `UY9Co` | AC-L10N-001, AC-L10N-002 |
+| Language options (inline in the desktop menu) | `X9JQT` | AC-L10N-001 |
+| Theme options (inline in the desktop menu) | `cCf8E` | next phase |
+| Language switching (pending) | `PuQxH`, `ZJyUC` | AC-L10N-004 |
+| Language switch failed | `y49rBj`, `p2jPCo` | AC-L10N-004 |
 
 Copy is verbatim from deck §1 (*Mengganti bahasa…*, *Bahasa belum diganti. Coba lagi.*). The failure toast has no *Coba lagi* action button, because the deck sentence already says it and the owner retries by choosing the language again; the menu keeps the old language checked.
 
@@ -66,4 +66,5 @@ Copy is verbatim from deck §1 (*Mengganti bahasa…*, *Bahasa belum diganti. Co
 ## Open items
 
 1. **APPROVED:** Owner, 2026-10-11 ("sudah saya save, desain disetujui"). The design is `DESIGNED`.
-2. After export of the HTML frames to `docs/features/bilingual-copy-revamp/exports/`, run `python3 scripts/sdv/index-exports.py bilingual-copy-revamp`.
+2. HTML exports (2026-10-11, `html-tailwind`, exported through Pencil MCP): 10 frames in [`exports/`](exports/), indexed in [`exports/INDEX.md`](exports/INDEX.md). Phone frames use the device name `mobile`; the M2 menu sheet is the `account-menu-open` mobile state.
+3. After every re-export of the HTML frames to `docs/features/bilingual-copy-revamp/exports/`, run `python3 scripts/sdv/index-exports.py bilingual-copy-revamp`.

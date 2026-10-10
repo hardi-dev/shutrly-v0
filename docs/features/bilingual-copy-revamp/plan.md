@@ -334,7 +334,7 @@ Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a
   - Tests first in `owner-shell.test.tsx`: `"AC-L10N-001 the mobile menu opens the language sheet with both languages"`, `"AC-L10N-004 the language sheet shows Changing language… and disables the options while pending"`, `"signs out from the mobile menu"`; `sheet-item.test.tsx` `"renders a trailing value with a chevron"`.
   - Commit `feat(workspace): switch language from the mobile menu`.
 
-- [ ] **I5.8 E2E owner language switch.** `tests/e2e/locale/owner-language-menu.spec.ts`: `"BR-L10N-001 an owner switches to English from the account menu and keeps the page"` (desktop: `html[lang=en]`, same URL, still `en` after reload); `"AC-L10N-001 an owner switches language from the mobile menu sheet"` (390 × 844); `"D-22 after sign-out the sign-in screen keeps the owner's language"`. Then the fidelity pass against the six exports above (class names and nesting only). Commit `test(i18n): cover the owner language switch end to end`.
+- [x] **I5.8 E2E owner language switch.** `tests/e2e/locale/owner-language-menu.spec.ts`: `"BR-L10N-001 an owner switches to English from the account menu and keeps the page"` (desktop: `html[lang=en]`, same URL, still `en` after reload); `"AC-L10N-001 an owner switches language from the mobile menu sheet"` (390 × 844); `"D-22 after sign-out the sign-in screen keeps the owner's language"`. Then the fidelity pass against the six exports above (class names and nesting only). Commit `test(i18n): cover the owner language switch end to end`.
 
 ### I5 — Auth layout language link (design approved 2026-10-11)
 

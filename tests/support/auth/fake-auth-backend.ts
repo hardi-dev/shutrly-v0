@@ -14,6 +14,7 @@ import type {
   AuthUserId,
 } from "@/features/auth/domain/account/account.types";
 import type { NormalisedEmail } from "@/features/auth/domain/credentials/credentials.types";
+import type { AppLocale } from "@/shared/locale/locale.types";
 
 const COOKIE = "fake.session_token";
 const BASE_URL = "http://localhost:3000";
@@ -27,6 +28,7 @@ interface FakeUser {
   name: string;
   email: NormalisedEmail;
   password: string | null;
+  locale: AppLocale;
   status: AccountStatus;
   emailVerified: boolean;
 }
@@ -55,6 +57,10 @@ export class FakeAuthBackend {
       this.revoke(id);
       return Promise.resolve();
     },
+    setLocale: (id, locale) => {
+      this.mustGet(id).locale = locale;
+      return Promise.resolve();
+    },
     applyGoogleTakeoverGuard: (id) => {
       const user = this.mustGet(id);
       Object.assign(user, { emailVerified: true, password: null });
@@ -68,7 +74,15 @@ export class FakeAuthBackend {
     createPasswordUser: ({ name, email, password }) => {
       if (this.byEmail(email)) return Promise.resolve({ created: false });
       const id = asAuthUserId(crypto.randomUUID());
-      const user = { id, name, email, password, status: "ACTIVE", emailVerified: false } as const;
+      const user = {
+        id,
+        name,
+        email,
+        password,
+        status: "ACTIVE",
+        emailVerified: false,
+        locale: "en",
+      } as const;
       this.users.set(id, { ...user });
       return Promise.resolve({ created: true });
     },
@@ -128,9 +142,9 @@ export class FakeAuthBackend {
       }),
   };
 
-  seedUser(user: Omit<FakeUser, "id">): AuthUserId {
+  seedUser(user: Omit<FakeUser, "id" | "locale"> & { locale?: AppLocale }): AuthUserId {
     const id = asAuthUserId(crypto.randomUUID());
-    this.users.set(id, { ...user, id });
+    this.users.set(id, { locale: "en", ...user, id });
     return id;
   }
 

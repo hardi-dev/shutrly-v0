@@ -60,6 +60,15 @@ describe("Drizzle account directory", () => {
     expect((await accounts.findByEmail(googleOnly.email))?.hasPassword).toBe(false);
   });
 
+  it("BR-L10N-001 setLocale changes only that user's locale", async () => {
+    const accounts = createDrizzleAccountDirectory(db);
+    const changed = await seedOwner({ verified: true, password: true, sessions: 0 });
+    const other = await seedOwner({ verified: true, password: true, sessions: 0 });
+    await accounts.setLocale(changed.id, "id");
+    expect((await accounts.getById(changed.id))?.locale).toBe("id");
+    expect((await accounts.getById(other.id))?.locale).toBe("en");
+  });
+
   it("AC-AUTH-015 a status change revokes every session in the same transaction", async () => {
     const accounts = createDrizzleAccountDirectory(db);
     const owner = await seedOwner({ verified: true, password: true, sessions: 2 });

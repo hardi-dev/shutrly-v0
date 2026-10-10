@@ -1,5 +1,7 @@
 import type { z } from "zod";
 
+import type { AppLocale } from "@/shared/locale/locale.types";
+
 import type { NormalisedEmail } from "../credentials/credentials.types";
 import type { accountStatusSchema, authUserIdSchema } from "./account.schema";
 
@@ -14,6 +16,8 @@ export interface AccountRecord {
   status: AccountStatus;
   emailVerified: boolean;
   hasPassword: boolean;
+  /** Owner dashboard language (BR-L10N-001). */
+  locale: AppLocale;
 }
 
 export type AccessSubject = Pick<AccountRecord, "status" | "emailVerified">;

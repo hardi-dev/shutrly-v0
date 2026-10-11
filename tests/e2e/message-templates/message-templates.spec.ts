@@ -1,14 +1,18 @@
 import AxeBuilder from "@axe-core/playwright";
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 
-import { TEMPLATE_COPY } from "@/features/communications/ui/template-copy/template-copy.copy";
-import { TEMPLATE_EDITOR_COPY } from "@/features/communications/ui/template-editor-screen/template-editor-screen.copy";
-import { UNSAVED_CHANGES_COPY } from "@/features/communications/ui/unsaved-changes-dialog/unsaved-changes-dialog.copy";
+import {
+  TEMPLATE_COPY_NAMESPACE,
+  TEMPLATE_LABEL_MESSAGE_KEY,
+} from "@/features/communications/ui/template-copy/template-copy.copy";
 import { COMING_SOON_COPY } from "@/features/workspace/ui/coming-soon-screen/coming-soon-screen.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 import { OWNER_NAV_COPY } from "@/features/workspace/ui/owner-nav/owner-nav.copy";
 import { WORKSPACE_NOT_FOUND_COPY } from "@/features/workspace/ui/workspace-not-found-screen/workspace-not-found-screen.copy";
+
+const templateT = copyTranslator(TEMPLATE_COPY_NAMESPACE, "id");
 
 import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
 
@@ -41,26 +45,28 @@ test("AC-MSG-001 AC-MSG-004 AC-MSG-005 AC-MSG-006 AC-MSG-007 AC-MSG-009 AC-MSG-0
   const rows = page.getByRole("main").getByRole("link");
   await expect(rows).toHaveCount(5);
 
-  await page.getByRole("link", { name: new RegExp(TEMPLATE_COPY.GALLERY_SHARE.label) }).click();
+  await page
+    .getByRole("link", { name: new RegExp(templateT(TEMPLATE_LABEL_MESSAGE_KEY.GALLERY_SHARE)) })
+    .click();
   await expect(page).toHaveURL(`${home}/message-templates/gallery-share`);
-  const editor = page.getByRole("textbox", { name: TEMPLATE_EDITOR_COPY.contentLabel });
+  const editor = page.getByRole("textbox", { name: templateT("contentLabel") });
   await expect(editor).toContainText("{{galleryUrl}}");
   await expect(page.getByRole("region", { name: "Pratinjau pesan" })).toContainText("••••••");
 
   await editor.press("ControlOrMeta+End");
   await editor.pressSequentially("\nInvoice: {{invoiceUrl}}");
-  await page.getByRole("button", { name: TEMPLATE_EDITOR_COPY.save }).click();
+  await page.getByRole("button", { name: templateT("save") }).click();
   await expect(page.getByText(/tidak bisa dipakai di Bagikan gallery/)).toBeVisible();
 
-  await page.getByRole("button", { name: TEMPLATE_EDITOR_COPY.restore }).click();
+  await page.getByRole("button", { name: templateT("restore") }).click();
   await page.getByRole("button", { name: "Sisipkan {{projectTitle}}" }).click();
   await page.getByRole("link", { name: OWNER_NAV_COPY.messages.id.settings }).click();
-  await expect(page.getByRole("alertdialog", { name: UNSAVED_CHANGES_COPY.title })).toBeVisible();
-  await page.getByRole("button", { name: UNSAVED_CHANGES_COPY.stay }).click();
+  await expect(page.getByRole("alertdialog", { name: templateT("unsavedTitle") })).toBeVisible();
+  await page.getByRole("button", { name: templateT("keepEditing") }).click();
   await expect(page).toHaveURL(`${home}/message-templates/gallery-share`);
 
-  await page.getByRole("button", { name: TEMPLATE_EDITOR_COPY.save }).click();
-  await expect(page.getByText(TEMPLATE_EDITOR_COPY.saved)).toBeVisible();
+  await page.getByRole("button", { name: templateT("save") }).click();
+  await expect(page.getByText(templateT("savedTitle"))).toBeVisible();
   await page.reload();
   await expect(editor).toContainText("{{projectTitle}}");
 });

@@ -4,45 +4,53 @@ import {
 } from "@/features/communications/domain/template-content/template-content";
 import { templateGroupOf } from "@/features/communications/domain/template-type/template-type";
 import type { TemplateType } from "@/features/communications/domain/template-type/template-type.types";
-import type { FormattingLocale } from "@/shared/locale/locale.types";
 
-import { TEMPLATE_COPY } from "../template-copy/template-copy.copy";
-import { TEMPLATE_PROBLEM_COPY as COPY } from "./template-problem-text.copy";
-
-// Frozen per-locale lookup (§5.6): the limit is written as "2.000" in Indonesian, "2,000" in English.
-const NUMBER: Readonly<Record<FormattingLocale, Intl.NumberFormat>> = Object.freeze({
-  "id-ID": new Intl.NumberFormat("id-ID"),
-  "en-US": new Intl.NumberFormat("en-US"),
-});
+import {
+  TEMPLATE_LABEL_MESSAGE_KEY,
+  TEMPLATE_PROBLEM_TARGET_KEY,
+} from "../template-copy/template-copy.copy";
+import type { TemplateTranslate } from "../template-copy/template-copy.types";
 
 /**
- * Translates a content problem key into the Indonesian field error shown under the textarea.
+ * Translates a content problem key into the field error shown under the textarea (deck §11.3).
+ * The limit is formatted by the translator's active locale.
+ * @param t - the template translator
  * @param type - the template type being edited
  * @param key - the field error key from the form or the server, if any
- * @param locale - the formatting locale for the limit
  * @returns the message, or undefined when there is no error
  */
 export function templateProblemText(
+  t: TemplateTranslate,
   type: TemplateType,
   key: string | undefined,
-  locale: FormattingLocale,
 ): string | undefined {
   if (!key) return undefined;
   const problem = parseProblemKey(key);
-  if (!problem) return COPY.fallback;
+  if (!problem) return t("problemGeneric");
+  return problemMessage(t, type, problem);
+}
+
+function problemMessage(
+  t: TemplateTranslate,
+  type: TemplateType,
+  problem: NonNullable<ReturnType<typeof parseProblemKey>>,
+): string {
   switch (problem.code) {
     case "EMPTY":
-      return COPY.empty;
+      return t("problemEmpty");
     case "TOO_LONG":
-      return COPY.tooLong(NUMBER[locale].format(TEMPLATE_CONTENT_MAX_LENGTH));
+      return t("problemTooLong", { max: TEMPLATE_CONTENT_MAX_LENGTH });
     case "MALFORMED":
-      return COPY.malformed;
+      return t("problemMalformed");
     case "UNKNOWN_VARIABLE":
-      return COPY.unknownVariable(problem.variable, TEMPLATE_COPY[type].label);
+      return t("problemUnknownVariable", {
+        variable: problem.variable,
+        templateName: t(TEMPLATE_LABEL_MESSAGE_KEY[type]),
+      });
     case "MISSING_REQUIRED":
-      return COPY.missingRequired(
-        problem.variable,
-        templateGroupOf(type) === "INVOICE" ? COPY.invoice : COPY.gallery,
-      );
+      return t("problemMissingRequired", {
+        variable: problem.variable,
+        target: t(TEMPLATE_PROBLEM_TARGET_KEY[templateGroupOf(type)]),
+      });
   }
 }

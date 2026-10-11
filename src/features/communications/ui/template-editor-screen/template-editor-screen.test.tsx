@@ -1,5 +1,6 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { ToastContent } from "@/ui/patterns/toast/toast.types";
@@ -67,7 +68,7 @@ describe("TemplateEditorScreen", () => {
 
     expect(action).toHaveBeenCalledWith({ content: `${STORED}!` }, "custom");
     expect(showToast).toHaveBeenCalledWith(
-      expect.objectContaining({ tone: "success", title: "Template tersimpan" }),
+      expect.objectContaining({ tone: "success", title: "Templat disimpan" }),
     );
   });
 
@@ -82,7 +83,7 @@ describe("TemplateEditorScreen", () => {
     await user.type(textbox, "!");
     await user.click(screen.getByRole("button", { name: "Simpan" }));
 
-    expect(await screen.findByText(/tidak bisa dipakai di Bagikan gallery/)).toBeVisible();
+    expect(await screen.findByText(/tidak bisa dipakai di Bagikan galeri/)).toBeVisible();
     expect(textbox).toHaveFocus();
   });
 
@@ -94,7 +95,9 @@ describe("TemplateEditorScreen", () => {
 
     expect(await screen.findByText(/tanpa spasi/)).toBeVisible();
     expect(action).not.toHaveBeenCalled();
-    expect(screen.getByRole("status")).toHaveTextContent("Pratinjau muncul lagi");
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "Perbaiki isi templat agar pratinjau muncul lagi",
+    );
   });
 
   it("AC-MSG-012 keeps the text and offers a retry toast when the server fails", async () => {
@@ -106,7 +109,7 @@ describe("TemplateEditorScreen", () => {
 
     expect(showToast.mock.calls.at(0)?.[0]).toMatchObject({
       tone: "danger",
-      title: "Template belum tersimpan",
+      title: "Templat belum tersimpan",
       action: { label: "Coba lagi" },
     });
     expect(textbox).toHaveValue(`${STORED}!`);
@@ -115,7 +118,7 @@ describe("TemplateEditorScreen", () => {
   it("AC-MSG-013 restoring the default is a draft change until saved", async () => {
     const user = userEvent.setup();
     const { textbox, action } = renderEditor();
-    await user.click(screen.getByRole("button", { name: "Kembalikan ke default" }));
+    await user.click(screen.getByRole("button", { name: "Kembalikan teks bawaan" }));
 
     expect(textbox).toHaveValue(DEFAULT);
     expect(action).not.toHaveBeenCalled();
@@ -134,9 +137,17 @@ describe("TemplateEditorScreen", () => {
       await user.click(link);
     });
 
-    expect(await screen.findByRole("alertdialog", { name: "Buang perubahan?" })).toBeVisible();
+    expect(await screen.findByRole("alertdialog", { name: "Buang perubahanmu?" })).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Lanjut mengedit" }));
     expect(push).not.toHaveBeenCalled();
     expect(textbox).toHaveValue(`${STORED}!`);
+  });
+
+  it("renders the editor in English with the deck wording", () => {
+    renderInLocale(<TemplateEditorScreen editor={editor} action={vi.fn()} />, "en");
+
+    expect(screen.getByRole("textbox", { name: "Message content" })).toHaveValue(STORED);
+    expect(screen.getByRole("button", { name: "Insert {{galleryUrl}}, required" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Save" })).toBeDisabled();
   });
 });

@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it } from "vitest";
 
 import { MessagePreview } from "./message-preview";
@@ -30,15 +31,26 @@ describe("MessagePreview", () => {
 
     const region = screen.getByRole("region", { name: "Pratinjau pesan" });
     expect(region).toHaveTextContent("Halo");
-    expect(region).toHaveTextContent("Password gallery diisi saat kamu membagikan pesan.");
+    expect(region).toHaveTextContent(
+      "Kata sandi galeri terisi saat kamu menyiapkan pesan untuk dibagikan.",
+    );
   });
 
   it("shows the error state instead of a partial render", () => {
     render(<MessagePreview text={null} showsPasswordNote />);
 
     expect(screen.getByRole("status")).toHaveTextContent(
-      "Pratinjau muncul lagi setelah isi template diperbaiki.",
+      "Perbaiki isi templat agar pratinjau muncul lagi.",
     );
-    expect(screen.queryByText(/Password gallery/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Kata sandi galeri/)).not.toBeInTheDocument();
+  });
+
+  it("renders the English region name and password note", () => {
+    renderInLocale(<MessagePreview text="Hi" showsPasswordNote />, "en");
+
+    const region = screen.getByRole("region", { name: "Message preview" });
+    expect(region).toHaveTextContent(
+      "The gallery password is filled in when you prepare the sharing message.",
+    );
   });
 });

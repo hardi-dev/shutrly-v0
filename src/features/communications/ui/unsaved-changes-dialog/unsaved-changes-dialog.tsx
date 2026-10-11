@@ -1,11 +1,13 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { Button } from "@/ui/primitives/button/button";
 
-import { UNSAVED_CHANGES_COPY as COPY } from "./unsaved-changes-dialog.copy";
+import { UNSAVED_CHANGES_DIALOG_COPY_NAMESPACE } from "./unsaved-changes-dialog.copy";
 import type { UnsavedChangesDialogProps } from "./unsaved-changes-dialog.types";
 
 /**
@@ -21,6 +23,7 @@ export function UnsavedChangesDialog({
   onStay,
   onLeave,
 }: Readonly<UnsavedChangesDialogProps>) {
+  const t = useTranslations(UNSAVED_CHANGES_DIALOG_COPY_NAMESPACE);
   const handleOpenChange = (open: boolean) => {
     if (!open) onStay();
   };
@@ -29,30 +32,63 @@ export function UnsavedChangesDialog({
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={handleOpenChange}
-        title={COPY.title}
-        description={COPY.mobileDescription(templateLabel)}
+        title={t("unsavedTitle")}
+        description={t("unsavedMobileDescription", { templateName: templateLabel })}
         variant="actions"
       >
-        <SheetItem label={COPY.stay} icon="pencil" onPress={onStay} />
-        <SheetItem label={COPY.leave} icon="trash-2" variant="destructive" onPress={onLeave} />
+        <SheetItem label={t("keepEditing")} icon="pencil" onPress={onStay} />
+        <SheetItem
+          label={t("discardChanges")}
+          icon="trash-2"
+          variant="destructive"
+          onPress={onLeave}
+        />
       </BottomSheet>
     );
   }
   return (
-    <Modal
+    <DesktopDialog
       isOpen={isOpen}
       onOpenChange={handleOpenChange}
-      title={COPY.title}
-      description={COPY.description(templateLabel)}
+      title={t("unsavedTitle")}
+      description={t("unsavedDescription", { templateName: templateLabel })}
+      onStay={onStay}
+      onLeave={onLeave}
+    />
+  );
+}
+
+function DesktopDialog({
+  isOpen,
+  onOpenChange,
+  title,
+  description,
+  onStay,
+  onLeave,
+}: Readonly<{
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+  title: string;
+  description: string;
+  onStay: () => void;
+  onLeave: () => void;
+}>) {
+  const t = useTranslations(UNSAVED_CHANGES_DIALOG_COPY_NAMESPACE);
+  return (
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      title={title}
+      description={description}
       size="sm"
       isDestructive
       actions={
         <>
           <Button variant="secondary" onPress={onStay}>
-            {COPY.stay}
+            {t("keepEditing")}
           </Button>
           <Button variant="danger" onPress={onLeave}>
-            {COPY.leave}
+            {t("discardChanges")}
           </Button>
         </>
       }

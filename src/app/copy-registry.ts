@@ -24,6 +24,7 @@ import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.co
 import { CLIENT_COPY } from "@/features/booking/ui/client-copy/client-copy.copy";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { TEAM_COPY } from "@/features/booking/ui/team-copy/team-copy.copy";
+import { TEMPLATE_COPY } from "@/features/communications/ui/template-copy/template-copy.copy";
 import { LANDING_FOOTER_COPY } from "@/features/landing/ui/landing-footer/landing-footer.copy";
 import { LANDING_HEADER_COPY } from "@/features/landing/ui/landing-header/landing-header.copy";
 import { LANDING_PAGE_COPY } from "@/features/landing/ui/landing-page/landing-page.copy";
@@ -131,6 +132,7 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   CLIENT_COPY,
   TEAM_COPY,
   PROJECT_COPY,
+  TEMPLATE_COPY,
   SPLIT_LAYOUT_COPY,
   EDITORIAL_PANEL_COPY,
   PROFILE_LAYOUT_COPY,

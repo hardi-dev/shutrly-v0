@@ -11,7 +11,10 @@ import { loadWorkspaceSwitcher } from "@/composition/workspace/workspace-flow/wo
 import { messageTemplateSubPages } from "@/features/communications/ui/template-sub-pages/template-sub-pages";
 import { OwnerShell } from "@/features/workspace/ui/owner-shell/owner-shell";
 
-import { WORKSPACE_LAYOUT_COPY_NAMESPACE } from "./layout.copy";
+import {
+  MESSAGE_TEMPLATE_SUB_PAGES_COPY_NAMESPACE,
+  WORKSPACE_LAYOUT_COPY_NAMESPACE,
+} from "./layout.copy";
 
 export default async function WorkspaceLayout({
   children,
@@ -19,6 +22,7 @@ export default async function WorkspaceLayout({
 }: Readonly<{ children: ReactNode; params: Promise<{ workspaceId: string }> }>) {
   const { workspaceId } = await params;
   const t = await getTranslations(WORKSPACE_LAYOUT_COPY_NAMESPACE);
+  const templateT = await getTranslations(MESSAGE_TEMPLATE_SUB_PAGES_COPY_NAMESPACE);
   const [account, verified, workspaces] = await Promise.all([
     requireOwnerOrRedirect(),
     verifyOwnerWorkspace(workspaceId),
@@ -36,7 +40,7 @@ export default async function WorkspaceLayout({
       onCreate={createWorkspaceAction}
       logoutAction={logoutAction}
       localeAction={setOwnerLocaleAction}
-      subPages={messageTemplateSubPages(workspaceId)}
+      subPages={messageTemplateSubPages(templateT, workspaceId)}
     >
       {children}
     </OwnerShell>

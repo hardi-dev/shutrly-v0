@@ -5,6 +5,9 @@ export const DEFAULT_LOCALE: AppLocale = "en";
 
 export const APP_LOCALES: readonly AppLocale[] = ["en", "id"];
 
+/** The one time zone for app dates and times, in both locales (ADR-025; Asia/Jakarta). */
+export const APP_TIME_ZONE = "Asia/Jakarta";
+
 const FORMATTING_LOCALES: Readonly<Record<AppLocale, FormattingLocale>> = Object.freeze({
   en: "en-US",
   id: "id-ID",

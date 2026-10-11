@@ -3,6 +3,7 @@ import "server-only";
 import type { RequestConfig } from "next-intl/server";
 
 import { isLandingOnly } from "@/composition/app-stage/app-stage";
+import { APP_TIME_ZONE } from "@/shared/locale/locale";
 import { createMessageErrorHandler, messageFallback } from "@/shared/locale/message-errors";
 
 import { messagesFor } from "../message-catalog/message-catalog";
@@ -24,7 +25,7 @@ export async function createRequestConfig(registry: readonly CopyModule[]): Prom
   return {
     locale,
     messages: messagesFor(locale, ALL_SURFACES, registry),
-    timeZone: "Asia/Jakarta",
+    timeZone: APP_TIME_ZONE,
     onError: createMessageErrorHandler(locale, strict),
     getMessageFallback: messageFallback,
   };

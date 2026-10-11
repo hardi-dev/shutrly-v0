@@ -3,7 +3,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import { I18nProvider } from "react-aria-components";
 
-import { formattingLocale } from "@/shared/locale/locale";
+import { APP_TIME_ZONE, formattingLocale } from "@/shared/locale/locale";
 import { createMessageErrorHandler, messageFallback } from "@/shared/locale/message-errors";
 import { ToastRegion } from "@/ui/patterns/toast/toast";
 
@@ -20,6 +20,7 @@ export function AppProviders({ children, locale, messages, strictMessages }: App
     <NextIntlClientProvider
       locale={locale}
       messages={messages}
+      timeZone={APP_TIME_ZONE}
       onError={createMessageErrorHandler(locale, strictMessages)}
       getMessageFallback={messageFallback}
     >

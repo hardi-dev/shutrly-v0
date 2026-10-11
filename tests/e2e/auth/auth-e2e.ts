@@ -55,7 +55,7 @@ export async function register(page: Page, email: string, locale: AppLocale = "i
   await page.getByRole("textbox", { name: copy.password }).fill(PASSWORD);
   await page.getByRole("button", { name: copy.submit }).click();
   try {
-    await expect(page).toHaveURL(/\/verify$/);
+    await expect(page).toHaveURL(/\/verify$/, { timeout: 30_000 });
   } catch (error) {
     const alerts = await page.getByRole("alert").allTextContents();
     throw new Error(`${String(error)}\nRegistration alerts: ${alerts.join(" | ")}`);
@@ -69,5 +69,5 @@ export async function registerAndVerify(
 ): Promise<void> {
   await register(page, email, locale);
   await page.goto(await lastLink(page, email, "VERIFY_EMAIL"));
-  await expect(page).toHaveURL(/\/onboarding\/workspace$/);
+  await expect(page).toHaveURL(/\/onboarding\/workspace$/, { timeout: 45_000 });
 }

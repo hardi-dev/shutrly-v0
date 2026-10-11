@@ -407,7 +407,7 @@ Every auth screen shares `src/app/(auth)/layout.tsx` → `SplitLayout`, so Login
 - **First task once unblocked.** `tests/e2e/locale/build-smoke.spec.ts` run against `pnpm build && pnpm start`: every top-level route in EN and ID with a console listener that fails on hydration warnings.
 
 - [x] **I8.1 Build smoke.** `tests/e2e/locale/build-smoke.spec.ts` against `pnpm build && pnpm start`: every top-level route in EN and ID with a console listener that fails on hydration warnings and on server render errors. Also check the cold-start `ToastRegion` "NextIntlClientProvider was not found" error seen on `/` in dev (next-intl reports any error inside the hook that way): find the real error and fix it. Commit `test(i18n): smoke every route in both languages`.
-- [ ] **I8.2 Journeys and coverage report.** E2E: an owner creates a project in Indonesian; a client picks and submits in Indonesian; both screens show only that language. Write `docs/features/bilingual-copy-revamp/coverage-report.md` separating implemented coverage from future surfaces (AC-L10N-011, 012). Commit `test(i18n): cover the owner and client journeys in Indonesian`.
+- [x] **I8.2 Journeys and coverage report.** E2E: an owner creates a project in Indonesian; a client picks and submits in Indonesian; both screens show only that language. Write `docs/features/bilingual-copy-revamp/coverage-report.md` separating implemented coverage from future surfaces (AC-L10N-011, 012). Commit `test(i18n): cover the owner and client journeys in Indonesian`.
 
 ## Owner actions required
 

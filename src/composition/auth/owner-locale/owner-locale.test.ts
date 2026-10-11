@@ -16,12 +16,8 @@ vi.mock("next/headers", () => ({
   ),
   headers: vi.fn(() => Promise.resolve(new Headers())),
 }));
-vi.mock("../auth-scope/auth-scope", () => ({
-  withAuthScope: (work: (scope: unknown) => unknown) =>
-    Promise.resolve(work({ meta: { headers: new Headers() } })),
-}));
-vi.mock("@/features/auth/application/policy/owner-access/owner-access", () => ({
-  resolveOwnerAccess,
+vi.mock("../session-access/session-access", () => ({
+  loadSessionAccess: (): unknown => resolveOwnerAccess(),
 }));
 
 import { loadSignedInOwnerLocale } from "./owner-locale";

@@ -9,12 +9,13 @@ import {
   DESTINATION_PATH,
 } from "@/features/auth/application/policy/destination-path/destination-path";
 import {
-  requireOwner,
+  ownerFromAccess,
   resolveOwnerAccess,
 } from "@/features/auth/application/policy/owner-access/owner-access";
 import type { AccountRecord } from "@/features/auth/domain/account/account.types";
 
 import { withAuthScope } from "../auth-scope/auth-scope";
+import { loadSessionAccess } from "../session-access/session-access";
 
 /**
  * The screen for each refusal of the owner gate.
@@ -46,7 +47,7 @@ export async function redirectOnRefusal<T>(work: () => Promise<T>): Promise<T> {
  * @returns the owner's account
  */
 export function requireOwnerOrRedirect(): Promise<AccountRecord> {
-  return redirectOnRefusal(() => withAuthScope((scope) => requireOwner(scope, scope.meta.headers)));
+  return redirectOnRefusal(async () => ownerFromAccess(await loadSessionAccess()));
 }
 
 /**

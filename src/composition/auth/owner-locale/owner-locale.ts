@@ -3,11 +3,10 @@ import "server-only";
 import { cookies } from "next/headers";
 
 import { isLandingOnly } from "@/composition/app-stage/app-stage";
-import { resolveOwnerAccess } from "@/features/auth/application/policy/owner-access/owner-access";
 import type { AppLocale } from "@/shared/locale/locale.types";
 import { logger } from "@/shared/logging/logger";
 
-import { withAuthScope } from "../auth-scope/auth-scope";
+import { loadSessionAccess } from "../session-access/session-access";
 
 /**
  * The signed-in owner's stored locale, for the account screens before and after sign-in (D-3).
@@ -24,10 +23,8 @@ export async function loadSignedInOwnerLocale(): Promise<AppLocale | null> {
     .some((cookie) => cookie.name.endsWith("session_token"));
   if (!hasSession) return null;
   try {
-    return await withAuthScope(async (scope) => {
-      const { decision, account } = await resolveOwnerAccess(scope, scope.meta.headers);
-      return decision === "OWNER" && account ? account.locale : null;
-    });
+    const { decision, account } = await loadSessionAccess();
+    return decision === "OWNER" && account ? account.locale : null;
   } catch {
     logger.error("l10n.owner_locale_failed", {});
     return null;

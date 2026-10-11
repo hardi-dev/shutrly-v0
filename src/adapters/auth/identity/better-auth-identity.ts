@@ -137,7 +137,13 @@ export function createBetterAuthIdentity(deps: BetterAuthIdentityDeps): BetterAu
     deps.onLink({ kind, to: user.email, name: user.name, url, locale });
   };
   const onGoogleClaims = createGoogleClaimsGuard(deps.accounts);
-  const auth = createAuth({ database: deps.database, env: deps.env, onToken, onGoogleClaims });
+  const auth = createAuth({
+    database: deps.database,
+    env: deps.env,
+    onToken,
+    onGoogleClaims,
+    resolveLocale: deps.resolveLocale,
+  });
   const identity: IdentityPort = {
     ...sessionMethods(auth, deps),
     ...linkMethods(auth, deps),

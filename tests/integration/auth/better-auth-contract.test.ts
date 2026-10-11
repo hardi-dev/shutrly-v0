@@ -29,6 +29,7 @@ beforeAll(async () => {
       return Promise.resolve();
     },
     onGoogleClaims: () => Promise.resolve(),
+    resolveLocale: () => Promise.resolve("en"),
   });
 });
 afterAll(() => close());

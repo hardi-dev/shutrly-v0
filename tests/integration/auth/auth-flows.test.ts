@@ -104,3 +104,32 @@ describe("auth emails in the screen language (D-17)", () => {
     }
   });
 });
+
+describe("the sign-up language becomes the owner's language (D-22)", () => {
+  async function storedLocale(harness: AuthHarness, email: string): Promise<string | undefined> {
+    const rows = await harness.db
+      .select({ locale: user.locale })
+      .from(user)
+      .where(eq(user.email, email));
+    return rows.at(0)?.locale;
+  }
+
+  it("D-22 a register request in Indonesian stores user.locale id", async () => {
+    const id = await openAuthHarness({ locale: "id" });
+    try {
+      const email = normaliseEmail(uniqueEmail());
+      await registerOwner(id.deps, { name: "Alya", email, password: PASSWORD }, meta());
+      await id.settle();
+      expect(await storedLocale(id, email)).toBe("id");
+    } finally {
+      await id.close();
+    }
+  });
+
+  it("D-22 a register request without a choice stores en", async () => {
+    const email = normaliseEmail(uniqueEmail());
+    await registerOwner(h.deps, { name: "Alya", email, password: PASSWORD }, meta());
+    await h.settle();
+    expect(await storedLocale(h, email)).toBe("en");
+  });
+});

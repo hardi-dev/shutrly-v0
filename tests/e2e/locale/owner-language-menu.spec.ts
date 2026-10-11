@@ -35,9 +35,9 @@ async function currentLocale(page: Page): Promise<AppLocale> {
 
 /** Signs in a fresh owner with a workspace, so the owner shell renders (user.locale starts at en). */
 async function openOwnerWorkspace(page: Page): Promise<void> {
-  await registerAndVerify(page, uniqueEmail("owner-language"));
-  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Language Studio");
-  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
+  await registerAndVerify(page, uniqueEmail("owner-language"), "en");
+  await page.getByLabel(ONBOARDING_COPY.messages.en.nameLabel).fill("Language Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.en.submit }).click();
   // Better Auth's scrypt and the first owner-route compile are slow in dev (see auth-profile.spec.ts).
   // The redirect may carry a ?state=created query, so the pattern does not anchor the end.
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+/, { timeout: 45_000 });

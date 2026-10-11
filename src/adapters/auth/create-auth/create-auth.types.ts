@@ -1,6 +1,7 @@
 import type { drizzleAdapter } from "better-auth/adapters/drizzle";
 
 import type { AuthLinkKind } from "@/features/auth/application/ports/auth-email/auth-email.port";
+import type { AppLocale } from "@/shared/locale/locale.types";
 
 import type { createAuth } from "./create-auth";
 
@@ -51,6 +52,8 @@ export interface CreateAuthDeps {
   env: AuthEnv;
   onToken: (issued: IssuedToken) => Promise<void>;
   onGoogleClaims: (claims: GoogleClaims) => Promise<void>;
+  /** D-22: the request's locale, read only when an account is created. Lazy (see D-17). */
+  resolveLocale: () => Promise<AppLocale>;
 }
 
 export type Auth = ReturnType<typeof createAuth>;

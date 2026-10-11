@@ -88,7 +88,7 @@ function googleOptions({ env, onGoogleClaims }: CreateAuthDeps) {
   };
 }
 
-function databaseHooks() {
+function databaseHooks({ resolveLocale }: CreateAuthDeps) {
   const withoutTokens = {
     accessToken: null,
     refreshToken: null,
@@ -99,13 +99,14 @@ function databaseHooks() {
   return {
     user: {
       create: {
-        before: (user: UserHookData, ctx: HookContext | null) =>
-          // AC-AUTH-028: no account from an unverified Google email.
-          Promise.resolve(
-            isSocialCallback(ctx) && !user.emailVerified
-              ? false
-              : { data: { ...user, emailVerifiedAt: user.emailVerified ? new Date() : null } },
-          ),
+        // D-22: a new account starts in the sign-up screen language, from the server only.
+        // AC-AUTH-028: no account from an unverified Google email.
+        before: async (user: UserHookData, ctx: HookContext | null) => {
+          if (isSocialCallback(ctx) && !user.emailVerified) return false;
+          const locale = await resolveLocale();
+          const emailVerifiedAt = user.emailVerified ? new Date() : null;
+          return { data: { ...user, locale, emailVerifiedAt } };
+        },
       },
       update: {
         before: (user: Partial<UserHookData>) =>
@@ -146,7 +147,7 @@ export function createAuth(deps: CreateAuthDeps) {
       additionalFields: {
         status: { type: "string", required: false, defaultValue: "ACTIVE", input: false },
         emailVerifiedAt: { type: "date", required: false, input: false },
-        // Set only through the owner locale action, never by sign-up (C-004, BR-L10N-001).
+        // Set by the create hook from the request's locale, or by the owner locale action (C-004).
         locale: { type: "string", required: false, defaultValue: "en", input: false },
       },
     },
@@ -158,6 +159,6 @@ export function createAuth(deps: CreateAuthDeps) {
     },
     ...emailOptions(deps),
     ...googleOptions(deps),
-    databaseHooks: databaseHooks(),
+    databaseHooks: databaseHooks(deps),
   });
 }

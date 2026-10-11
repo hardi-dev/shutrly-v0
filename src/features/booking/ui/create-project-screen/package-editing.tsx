@@ -1,6 +1,7 @@
 "use client";
 /* eslint-disable max-lines-per-function -- one place owns which package dialog is open and what each submit does */
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ActiveDefinition } from "@/features/booking/application/ports/project-repository/project-repository.port";
@@ -12,10 +13,10 @@ import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-format
 import { PackageItemsCard } from "../package-items-card/package-items-card";
 import type { PackageCardItem } from "../package-items-card/package-items-card.types";
 import { ProjectConfirmDialog } from "../project-confirm-dialog/project-confirm-dialog";
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import type { SubmitErrors } from "../project-edit/project-edit.types";
 import { ProjectItemDialog } from "../project-item-dialog/project-item-dialog";
 import type { CreateProjectState } from "../use-create-project-form/use-create-project-form.types";
+import { CREATE_PROJECT_SCREEN_COPY_NAMESPACE } from "./create-project-screen.copy";
 import type { PackageEditOpen } from "./create-project-screen.types";
 
 function checkValue(
@@ -48,6 +49,7 @@ export function PackageEditing({
   definitions: readonly ActiveDefinition[];
   isMobile: boolean;
 }>) {
+  const t = useTranslations(CREATE_PROJECT_SCREEN_COPY_NAMESPACE);
   const locale = useFormattingLocale();
   const [open, setOpen] = useState<PackageEditOpen>(null);
   const close = (isOpen: boolean) => {
@@ -142,9 +144,9 @@ export function PackageEditing({
         <ProjectConfirmDialog
           isOpen
           onOpenChange={close}
-          title={PROJECT_COPY.removeItemTitle(open.item.name)}
-          body={PROJECT_COPY.removeItemBody}
-          confirmLabel={PROJECT_COPY.removeItemConfirm}
+          title={t("removeItemTitle", { name: open.item.name })}
+          body={t("removeItemBody")}
+          confirmLabel={t("removeItemConfirm")}
           onConfirm={confirmRemove}
         />
       ) : null}

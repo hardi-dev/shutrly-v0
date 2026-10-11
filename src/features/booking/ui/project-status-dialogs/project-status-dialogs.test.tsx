@@ -91,9 +91,9 @@ describe("DeleteDraftDialog", () => {
   it.each([
     [
       true,
-      "Draf beserta isi paket, jadwal, dan field booking-nya dihapus permanen. Penugasan tim ikut terhapus.",
+      "Draf, isi paket, jadwal, dan kolom pemesanannya dihapus permanen. Penugasan tim ikut dihapus.",
     ],
-    [false, "Draf beserta isi paket, jadwal, dan field booking-nya dihapus permanen."],
+    [false, "Draf, isi paket, jadwal, dan kolom pemesanannya dihapus permanen."],
   ])("AC-TEAM-020 hasTeam=%s: the confirmation body", (hasTeam, body) => {
     render(
       <DeleteDraftDialog

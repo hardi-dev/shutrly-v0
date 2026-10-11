@@ -2,7 +2,7 @@ import { type Browser, expect, type Locator, type Page, test } from "@playwright
 import { copyTranslator } from "@tests/support/copy/copy-messages";
 
 import { ADD_ON_COPY } from "@/features/booking/ui/add-on-copy/add-on.copy";
-import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
+import { PROJECT_COPY_NAMESPACE } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { CLIENT_COPY } from "@/features/gallery/ui/client-copy/client-copy.copy";
 import { CLIENT_HOME_COPY } from "@/features/gallery/ui/client-home-screen/client-home-screen.copy";
 import { CLIENT_PASSWORD_FORM_COPY } from "@/features/gallery/ui/client-password-form/client-password-form.copy";
@@ -21,6 +21,8 @@ import {
 } from "../gallery/gallery-e2e";
 import { clientToken, GALLERY_PASSWORD } from "./client-access-e2e";
 
+const pc = copyTranslator(PROJECT_COPY_NAMESPACE, "id");
+
 // Needs the dev server with E2E_FAKE_DRIVE=1: the fixture folder has 4 proofs at the root and an
 // *Edited* subfolder (3 files) that the Owner maps to *Foto edit* (F-21).
 test.setTimeout(420_000);
@@ -34,14 +36,15 @@ const PHONE = { width: 390, height: 844 };
 async function ownerProject(page: Page): Promise<string> {
   const workspaceId = await openGalleryWorkspace(page);
   const projectPath = await createProject(page, workspaceId, "BOOKED");
-  await page.getByRole("button", { name: PROJECT_COPY.addItemDesktop }).first().click();
-  const item = page
-    .getByRole("dialog", { name: PROJECT_COPY.itemAddTitle })
-    .filter({ visible: true });
-  await item.getByRole("button", { name: new RegExp(PROJECT_COPY.itemPickerLabel) }).click();
+  await page
+    .getByRole("button", { name: pc("addItemDesktop") })
+    .first()
+    .click();
+  const item = page.getByRole("dialog", { name: pc("itemAddTitle") }).filter({ visible: true });
+  await item.getByRole("button", { name: new RegExp(pc("itemPickerLabel")) }).click();
   await page.getByRole("option", { name: /Foto edit/ }).click();
-  await item.getByRole("textbox", { name: PROJECT_COPY.quantityLabel }).fill("3");
-  await item.getByRole("button", { name: PROJECT_COPY.itemAddConfirm }).click();
+  await item.getByRole("textbox", { name: pc("quantityLabel") }).fill("3");
+  await item.getByRole("button", { name: pc("itemAddConfirm") }).click();
   await expect(item).toBeHidden();
   await page.getByRole("button", { name: GALLERY_COPY.create }).click();
   const create = page.getByRole("dialog", { name: GALLERY_COPY.createDialogTitle });

@@ -97,9 +97,9 @@ describe("ProjectDetailScreen", () => {
 
   it("AC-PRJ-009 AC-PRJ-020 offers the right step with its icon label for each status", () => {
     for (const [status, label] of [
-      ["DRAFT", "Konfirmasi booking"],
+      ["DRAFT", "Konfirmasi pemesanan"],
       ["BOOKED", "Mulai pemotretan"],
-      ["SHOOTING", "Selesai pemotretan"],
+      ["SHOOTING", "Selesaikan pemotretan"],
     ] as const) {
       const { unmount } = render(
         <ProjectDetailScreen
@@ -180,7 +180,7 @@ describe("ProjectDetailScreen", () => {
     renderScreen(projectDetailView("DRAFT", { sessions: [], shownSession: null }));
     expect(screen.getByText("Belum ada sesi")).toBeInTheDocument();
     expect(
-      screen.getByText("Tambahkan minimal satu sesi sebelum konfirmasi booking."),
+      screen.getByText("Tambahkan minimal satu sesi sebelum mengonfirmasi pemesanan."),
     ).toBeInTheDocument();
   });
 
@@ -202,10 +202,10 @@ describe("ProjectDetailScreen", () => {
     expect(screen.getByText("Proyek dibatalkan")).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Dibatalkan oleh Rina Saputri pada Rab, 4 Nov 2026. Alasan: wisuda diundur ke semester depan.",
+        "Dibatalkan oleh Rina Saputri pada Rab, 4 Nov 2026. Alasan: wisuda diundur ke semester depan",
       ),
     ).toBeInTheDocument();
-    expect(screen.getAllByText("Proyek dibatalkan, tidak bisa diubah.")).toHaveLength(3);
+    expect(screen.getAllByText("Proyek ini dibatalkan dan tidak bisa diubah.")).toHaveLength(3);
   });
 
   it("AC-PRJ-016 leaves the reason out of a cancellation without one", () => {
@@ -226,7 +226,7 @@ describe("ProjectDetailScreen", () => {
       vi.fn(() => pending),
     );
     await userEvent.click(screen.getByRole("button", { name: "Mulai pemotretan" }));
-    const button = screen.getByRole("button", { name: "Mulai pemotretan…" });
+    const button = screen.getByRole("button", { name: "Memulai pemotretan…" });
     expect(button).toHaveAttribute("aria-disabled", "true");
   });
 
@@ -242,7 +242,7 @@ describe("ProjectDetailScreen", () => {
   it("AC-PRJ-015 puts the chip, session line and a full-width step in the phone layout", () => {
     isMobile.value = true;
     renderScreen(projectDetailView("BOOKED"));
-    expect(screen.getByText("Dibooking")).toBeInTheDocument();
+    expect(screen.getByText("Dipesan")).toBeInTheDocument();
     expect(
       screen.getByText("Sesi berikutnya Sel, 10 Nov 2026 · 06.30 · Rumah Rina, Depok · +1 sesi"),
     ).toBeInTheDocument();

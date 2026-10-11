@@ -1,11 +1,13 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { DateField } from "@/ui/patterns/date-field/date-field";
 import { Select } from "@/ui/patterns/select/select";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 import { Textarea } from "@/ui/primitives/textarea/textarea";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { BOOKING_FIELD_INPUT_COPY_NAMESPACE } from "./booking-field-input.copy";
 import type { BookingFieldInputProps } from "./booking-field-input.types";
 
 const noop = () => undefined;
@@ -88,6 +90,7 @@ function DateValueInput({
 }
 
 function YesNoInput({ field, value, onChange, errorMessage }: Readonly<BookingFieldInputProps>) {
+  const t = useTranslations(BOOKING_FIELD_INPUT_COPY_NAMESPACE);
   const handleChange = (id: string) => {
     onChange(id === YES);
   };
@@ -95,10 +98,10 @@ function YesNoInput({ field, value, onChange, errorMessage }: Readonly<BookingFi
     <Select
       label={field.name}
       isOptional={!field.isRequired}
-      placeholder={PROJECT_COPY.fieldSelectPlaceholder(field.name)}
+      placeholder={t("fieldSelectPlaceholder", { fieldName: field.name })}
       options={[
-        { id: YES, label: PROJECT_COPY.fieldYes },
-        { id: NO, label: PROJECT_COPY.fieldNo },
+        { id: YES, label: t("fieldYes") },
+        { id: NO, label: t("fieldNo") },
       ]}
       value={booleanId(value)}
       onChange={handleChange}
@@ -108,11 +111,12 @@ function YesNoInput({ field, value, onChange, errorMessage }: Readonly<BookingFi
 }
 
 function OptionInput({ field, value, onChange, errorMessage }: Readonly<BookingFieldInputProps>) {
+  const t = useTranslations(BOOKING_FIELD_INPUT_COPY_NAMESPACE);
   return (
     <Select
       label={field.name}
       isOptional={!field.isRequired}
-      placeholder={PROJECT_COPY.fieldSelectPlaceholder(field.name)}
+      placeholder={t("fieldSelectPlaceholder", { fieldName: field.name })}
       options={(field.options ?? []).map((option) => ({ id: option, label: option }))}
       value={asText(value) === "" ? null : asText(value)}
       onChange={onChange}

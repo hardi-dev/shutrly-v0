@@ -81,7 +81,7 @@ describe("SessionsCard (AC-PRJ-029, BR-TEAM-003)", () => {
 
   it("AC-PRJ-029 edits and deletes a session from its menu", async () => {
     const { onUpdate, onRemove } = renderCard([WISUDA]);
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk sesi Wisuda" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk sesi Wisuda" }));
     await userEvent.click(screen.getByRole("menuitem", { name: "Ubah" }));
     const dialog = screen.getByRole("dialog", { name: "Ubah sesi" });
     const name = within(dialog).getByRole("textbox", { name: "Nama sesi" });
@@ -90,7 +90,7 @@ describe("SessionsCard (AC-PRJ-029, BR-TEAM-003)", () => {
     await userEvent.type(name, "Wisuda UI");
     await userEvent.click(within(dialog).getByRole("button", { name: "Simpan" }));
     expect(onUpdate).toHaveBeenCalledWith(0, expect.objectContaining({ name: "Wisuda UI" }));
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk sesi Wisuda" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk sesi Wisuda" }));
     await userEvent.click(screen.getByRole("menuitem", { name: "Hapus" }));
     expect(onRemove).toHaveBeenCalledWith(0);
   });

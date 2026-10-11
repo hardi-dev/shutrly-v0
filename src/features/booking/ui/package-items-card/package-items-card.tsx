@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 import { summariseServiceItems } from "@/features/booking/domain/item-summary/item-summary";
 import type { FormattingLocale } from "@/shared/locale/locale.types";
 import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
@@ -6,9 +8,11 @@ import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { PICK_MODE_MESSAGE_KEY } from "../project-copy/project-copy.copy";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { ProjectRowMenu } from "../project-row-menu/project-row-menu";
 import type { RowMenuEntry } from "../project-row-menu/project-row-menu.types";
+import { PACKAGE_ITEMS_CARD_COPY_NAMESPACE } from "./package-items-card.copy";
 import type {
   PackageCardEdit,
   PackageCardItem,
@@ -23,21 +27,20 @@ export function PackageItemsCard({
   description,
   edit,
 }: Readonly<PackageItemsCardProps>) {
+  const t = useTranslations(PACKAGE_ITEMS_CARD_COPY_NAMESPACE);
   const locale = useFormattingLocale();
+  const serviceDescription = isMobile
+    ? t("packageDescriptionMobile", { serviceName })
+    : t("packageDescriptionDesktop", { serviceName });
   return (
     <SectionCard
-      title={PROJECT_COPY.packageTitle}
-      description={
-        description ??
-        (isMobile
-          ? PROJECT_COPY.packageDescriptionMobile(serviceName)
-          : PROJECT_COPY.packageDescriptionDesktop(serviceName))
-      }
+      title={t("packageTitle")}
+      description={description ?? serviceDescription}
       content="flush"
       actions={
         edit ? (
           <Button variant="secondary" iconLeading="plus" onPress={edit.onAdd}>
-            {isMobile ? PROJECT_COPY.addItemMobile : PROJECT_COPY.addItemDesktop}
+            {isMobile ? t("addItemMobile") : t("addItemDesktop")}
           </Button>
         ) : null
       }
@@ -46,17 +49,17 @@ export function PackageItemsCard({
         <EmptyState
           icon="package"
           placement="in-card"
-          title={PROJECT_COPY.packageEmptyTitle}
-          body={PROJECT_COPY.packageEmptyBody}
+          title={t("packageEmptyTitle")}
+          body={t("packageEmptyBody")}
         />
       ) : (
-        <ul aria-label={PROJECT_COPY.packageTitle}>
+        <ul aria-label={t("packageTitle")}>
           {items.map((item, index) => (
             <ListCardItem
               key={item.definitionId}
               icon={item.pickMode ? "images" : "package"}
               title={item.definitionName}
-              meta={describePackageItem(item, locale)}
+              meta={describePackageItem(t, item, locale)}
               isLast={index === items.length - 1}
               trailing={edit ? <ItemRowMenu item={item} edit={edit} /> : undefined}
             />
@@ -68,16 +71,17 @@ export function PackageItemsCard({
 }
 
 function ItemRowMenu({ item, edit }: Readonly<{ item: PackageCardItem; edit: PackageCardEdit }>) {
+  const t = useTranslations(PACKAGE_ITEMS_CARD_COPY_NAMESPACE);
   const entries: RowMenuEntry[] = [
     {
-      label: PROJECT_COPY.itemEditValue,
+      label: t("itemEditValue"),
       icon: "pencil",
       onSelect: () => {
         edit.onEdit(item);
       },
     },
     {
-      label: PROJECT_COPY.itemRemove,
+      label: t("itemRemove"),
       icon: "trash-2",
       isDestructive: true,
       onSelect: () => {
@@ -87,7 +91,7 @@ function ItemRowMenu({ item, edit }: Readonly<{ item: PackageCardItem; edit: Pac
   ];
   return (
     <ProjectRowMenu
-      label={PROJECT_COPY.itemActions(item.definitionName)}
+      label={t("itemActions", { name: item.definitionName })}
       title={item.definitionName}
       entries={entries}
     />
@@ -96,6 +100,7 @@ function ItemRowMenu({ item, edit }: Readonly<{ item: PackageCardItem; edit: Pac
 
 /** The item row meta, e.g. "25 foto · hitung foto". @param item - the package item @returns the summary text */
 export function describePackageItem(
+  t: ProjectTranslate,
   item: PackageItemsCardProps["items"][number],
   locale: FormattingLocale,
 ): string {
@@ -103,5 +108,5 @@ export function describePackageItem(
     [{ name: item.definitionName, unit: item.unit, value: item.value }],
     locale,
   );
-  return item.pickMode ? `${summary} · ${PROJECT_COPY.pickModes[item.pickMode]}` : summary;
+  return item.pickMode ? `${summary} · ${t(PICK_MODE_MESSAGE_KEY[item.pickMode])}` : summary;
 }

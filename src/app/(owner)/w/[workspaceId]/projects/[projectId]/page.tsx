@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 import {
   approveAddOnAction,
   cancelAddOnAction,
@@ -32,7 +34,7 @@ import { getRequestFormattingLocale } from "@/composition/locale/request-formatt
 import type { ProjectDetailView } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail.types";
 import type { AddOnCardView } from "@/features/booking/application/use-cases/list-add-ons/list-add-ons.types";
 import { AddOnCard } from "@/features/booking/ui/add-on-card/add-on-card";
-import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
+import type { ProjectTranslate } from "@/features/booking/ui/project-copy/project-copy.types";
 import { ProjectDetailScreen } from "@/features/booking/ui/project-detail-screen/project-detail-screen";
 import {
   projectMetaLine,
@@ -50,6 +52,8 @@ import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-overri
 import type { FormattingLocale } from "@/shared/locale/locale.types";
 import { ToastOnMount } from "@/ui/patterns/toast/toast";
 
+import { PROJECT_DETAIL_PAGE_COPY_NAMESPACE } from "./page.copy";
+
 export default async function ProjectDetailPage({
   params,
   searchParams,
@@ -59,19 +63,19 @@ export default async function ProjectDetailPage({
 }>) {
   const locale = await getRequestFormattingLocale();
   const [{ workspaceId, projectId }, { state }] = await Promise.all([params, searchParams]);
-  const { project, definitions, assignableMembers, roles, delivery, cards } = await loadPage(
+  const { project, definitions, assignableMembers, roles, delivery, cards, t } = await loadPage(
     workspaceId,
     projectId,
   );
-  const toast = resolveToast(state, project.title);
+  const toast = resolveToast(t, state, project.title);
   const deliveredMeta = deliveredHeaderMeta(delivery, locale);
   return (
     <>
       <PageHeadingOverride
         title={project.title}
-        status={projectStatusChip(project.status)}
-        meta={headerMetaText(project, deliveredMeta, locale)}
-        parent={{ label: PROJECT_COPY.parentLabel, href: `/w/${workspaceId}/projects` }}
+        status={projectStatusChip(t, project.status)}
+        meta={headerMetaText(t, project, deliveredMeta, locale)}
+        parent={{ label: t("parentLabel"), href: `/w/${workspaceId}/projects` }}
         hidesBottomNav
       />
       <TeamQuickAddProvider value={{ workspaceId, roles, ...TEAM_QUICK_ADD_ACTIONS }}>
@@ -117,7 +121,8 @@ async function loadPage(workspaceId: string, projectId: string) {
     galleryCard: galleryCardSlot(workspaceId, { gallery, selection, delivery }),
     addOnCard: addOnCardSlot(workspaceId, projectId, addOn),
   };
-  return { project, definitions, assignableMembers, roles, delivery, cards };
+  const t = await getTranslations(PROJECT_DETAIL_PAGE_COPY_NAMESPACE);
+  return { project, definitions, assignableMembers, roles, delivery, cards, t };
 }
 
 const ADD_ON_ACTIONS = {
@@ -160,12 +165,13 @@ function galleryCardSlot(
 
 // A delivered project names when final delivery was published instead of its session (owner-7 `r71J5`).
 function headerMetaText(
+  t: ProjectTranslate,
   project: ProjectDetailView,
   deliveredMeta: string | null,
   locale: FormattingLocale,
 ) {
   if (deliveredMeta === null) {
-    return projectMetaText(project.client.name, project.shownSession, locale);
+    return projectMetaText(t, project.client.name, project.shownSession, locale);
   }
   return projectMetaLine(project.client.name, deliveredMeta);
 }
@@ -188,15 +194,12 @@ function completeSlot(workspaceId: string, projectId: string, card: DeliveryCard
   );
 }
 
-function resolveToast(state: string | undefined, title: string) {
+function resolveToast(t: ProjectTranslate, state: string | undefined, title: string) {
   if (state === "created") {
-    return { title: PROJECT_COPY.toastCreatedTitle, body: PROJECT_COPY.toastCreatedBody(title) };
+    return { title: t("toastCreatedTitle"), body: t("toastCreatedBody", { title }) };
   }
   if (state === "draft-saved") {
-    return {
-      title: PROJECT_COPY.toastDraftSavedTitle,
-      body: PROJECT_COPY.toastDraftSavedBody(title),
-    };
+    return { title: t("toastDraftSavedTitle"), body: t("toastDraftSavedBody", { title }) };
   }
   return null;
 }

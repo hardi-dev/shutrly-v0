@@ -1,13 +1,15 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import type { ProjectStatus } from "@/features/booking/domain/project-status/project-status.types";
 import { DateField } from "@/ui/patterns/date-field/date-field";
 import { MultiSelect } from "@/ui/patterns/multi-select/multi-select";
 import { Checkbox } from "@/ui/primitives/checkbox/checkbox";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { projectStatusChip } from "../project-status-chip/project-status-props";
 import { FilterClientField } from "./filter-client-field";
+import { PROJECT_FILTER_DIALOG_COPY_NAMESPACE } from "./project-filter-dialog.copy";
 import type { FilterDraftApi, ProjectFilterDialogProps } from "./project-filter-dialog.types";
 
 const FILTER_STATUSES: readonly ProjectStatus[] = [
@@ -27,6 +29,7 @@ export function ProjectFilterForm({
   props,
   api,
 }: Readonly<{ props: ProjectFilterDialogProps; api: FilterDraftApi }>) {
+  const t = useTranslations(PROJECT_FILTER_DIALOG_COPY_NAMESPACE);
   const { draft, patch } = api;
   const handleStatuses = (ids: string[]) => {
     patch({ statuses: ids.filter(isStatus) });
@@ -41,11 +44,11 @@ export function ProjectFilterForm({
     <div className="flex flex-col gap-(--space-4)">
       {props.tab === "ACTIVE" ? (
         <MultiSelect
-          label={PROJECT_COPY.filterStatus}
-          placeholder={PROJECT_COPY.filterStatusPlaceholder}
+          label={t("filterStatus")}
+          placeholder={t("filterStatusPlaceholder")}
           options={FILTER_STATUSES.map((status) => ({
             id: status,
-            label: projectStatusChip(status).label,
+            label: projectStatusChip(t, status).label,
           }))}
           selectedIds={draft.statuses}
           onChange={handleStatuses}
@@ -53,8 +56,8 @@ export function ProjectFilterForm({
       ) : null}
       <FilterScheduleFields draft={draft} toError={api.toError} patch={patch} />
       <MultiSelect
-        label={PROJECT_COPY.filterService}
-        placeholder={PROJECT_COPY.filterServicePlaceholder}
+        label={t("filterService")}
+        placeholder={t("filterServicePlaceholder")}
         options={props.services.map((service) => ({ id: service.id, label: service.name }))}
         selectedIds={draft.serviceIds}
         onChange={handleServices}
@@ -75,6 +78,7 @@ function FilterScheduleFields({
   toError,
   patch,
 }: Readonly<Pick<FilterDraftApi, "draft" | "toError" | "patch">>) {
+  const t = useTranslations(PROJECT_FILTER_DIALOG_COPY_NAMESPACE);
   const handleFrom = (from: string | null) => {
     patch({ from });
   };
@@ -87,27 +91,27 @@ function FilterScheduleFields({
   return (
     <fieldset className="flex flex-col gap-(--space-3)">
       <legend className="mb-(--space-2) text-(length:--font-size-label) font-semibold text-(--component-input-label)">
-        {PROJECT_COPY.filterSchedule}
+        {t("filterSchedule")}
       </legend>
       <div className="grid grid-cols-2 items-start gap-(--space-3)">
         <DateField
-          label={PROJECT_COPY.filterFrom}
+          label={t("filterFrom")}
           value={draft.from}
           onChange={handleFrom}
           display="date"
-          placeholder={PROJECT_COPY.filterDatePlaceholder}
+          placeholder={t("filterDatePlaceholder")}
         />
         <DateField
-          label={PROJECT_COPY.filterTo}
+          label={t("filterTo")}
           value={draft.to}
           onChange={handleTo}
           display="date"
-          placeholder={PROJECT_COPY.filterDatePlaceholder}
+          placeholder={t("filterDatePlaceholder")}
           errorMessage={toError}
         />
       </div>
       <Checkbox
-        label={PROJECT_COPY.filterNoSchedule}
+        label={t("filterNoSchedule")}
         isSelected={draft.includeNoSchedule}
         onChange={handleNoSchedule}
       />

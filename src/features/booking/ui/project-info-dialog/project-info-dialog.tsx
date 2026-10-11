@@ -1,6 +1,7 @@
 "use client";
 /* eslint-disable max-lines-per-function -- responsive dialog shell plus the form share one submit flow */
 
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useState } from "react";
 
@@ -14,8 +15,8 @@ import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 import { Textarea } from "@/ui/primitives/textarea/textarea";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { projectFieldErrorText } from "../project-field-error/project-field-error";
+import { PROJECT_INFO_DIALOG_COPY_NAMESPACE } from "./project-info-dialog.copy";
 import type { ProjectInfoDialogProps, ProjectInfoTarget } from "./project-info-dialog.types";
 
 const FORM_ID = "project-info-form";
@@ -23,14 +24,15 @@ const noop = () => undefined;
 
 /** Ubah info: title, agreed price (locked once shooting starts) and notes, under the project lock (AC-PRJ-017, 018). */
 export function ProjectInfoDialog(props: Readonly<ProjectInfoDialogProps>) {
+  const t = useTranslations(PROJECT_INFO_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   if (props.target === null) return null;
   const description = props.target.canEditDeal
-    ? PROJECT_COPY.infoDialogDescription
-    : PROJECT_COPY.infoDialogDescriptionLocked;
+    ? t("infoDialogDescription")
+    : t("infoDialogDescriptionLocked");
   const save = (
     <Button type="submit" form={FORM_ID} size={isMobile ? "lg" : "md"} className="max-md:w-full">
-      {PROJECT_COPY.infoSave}
+      {t("infoSave")}
     </Button>
   );
   const form = <InfoForm key={props.target.projectId} {...props} target={props.target} />;
@@ -39,7 +41,7 @@ export function ProjectInfoDialog(props: Readonly<ProjectInfoDialogProps>) {
       <BottomSheet
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
-        title={PROJECT_COPY.infoDialogTitle}
+        title={t("infoDialogTitle")}
         description={description}
         variant="form"
         actions={save}
@@ -55,13 +57,13 @@ export function ProjectInfoDialog(props: Readonly<ProjectInfoDialogProps>) {
     <Modal
       isOpen={props.isOpen}
       onOpenChange={props.onOpenChange}
-      title={PROJECT_COPY.infoDialogTitle}
+      title={t("infoDialogTitle")}
       description={description}
       size="md"
       actions={
         <>
           <Button variant="secondary" onPress={handleCancel}>
-            {PROJECT_COPY.infoCancel}
+            {t("infoCancel")}
           </Button>
           {save}
         </>
@@ -73,6 +75,7 @@ export function ProjectInfoDialog(props: Readonly<ProjectInfoDialogProps>) {
 }
 
 function InfoForm(props: Readonly<ProjectInfoDialogProps & { target: ProjectInfoTarget }>) {
+  const t = useTranslations(PROJECT_INFO_DIALOG_COPY_NAMESPACE);
   const locale = useFormattingLocale();
   const { target } = props;
   const [title, setTitle] = useState(target.title);
@@ -87,7 +90,7 @@ function InfoForm(props: Readonly<ProjectInfoDialogProps & { target: ProjectInfo
       notes,
     });
     if (result === undefined) {
-      showToast({ tone: "success", title: PROJECT_COPY.infoSavedTitle });
+      showToast({ tone: "success", title: t("infoSavedTitle") });
       props.onOpenChange(false);
       props.onSaved();
     } else if (result.code === "VALIDATION_FAILED") {
@@ -102,10 +105,7 @@ function InfoForm(props: Readonly<ProjectInfoDialogProps & { target: ProjectInfo
     } else {
       showToast({
         tone: "danger",
-        title:
-          result.code === "DEAL_LOCKED"
-            ? PROJECT_COPY.infoDealLockedTitle
-            : PROJECT_COPY.infoCancelledTitle,
+        title: result.code === "DEAL_LOCKED" ? t("infoDealLockedTitle") : t("infoCancelledTitle"),
       });
       props.onSaved();
     }
@@ -116,7 +116,7 @@ function InfoForm(props: Readonly<ProjectInfoDialogProps & { target: ProjectInfo
   return (
     <form id={FORM_ID} noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-4)">
       <TextField
-        label={PROJECT_COPY.titleLabel}
+        label={t("titleLabel")}
         name="title"
         value={title}
         onChange={setTitle}
@@ -124,27 +124,27 @@ function InfoForm(props: Readonly<ProjectInfoDialogProps & { target: ProjectInfo
         errorMessage={errors.title}
       />
       <TextField
-        label={PROJECT_COPY.priceLabel}
+        label={t("priceLabel")}
         name="agreedPrice"
-        prefix={PROJECT_COPY.pricePrefix}
+        prefix={t("pricePrefix")}
         value={price}
         onChange={setPrice}
         onBlur={noop}
         isDisabled={!target.canEditDeal}
         description={
           target.canEditDeal
-            ? PROJECT_COPY.priceHelper(formatIdr(target.basePrice, locale))
-            : PROJECT_COPY.infoPriceLocked
+            ? t("priceHelper", { amount: formatIdr(target.basePrice, locale) })
+            : t("infoPriceLocked")
         }
         errorMessage={errors.agreedPrice}
       />
       <Textarea
-        label={PROJECT_COPY.notesLabel}
+        label={t("notesLabel")}
         optional
         name="notes"
         value={notes}
         onChange={setNotes}
-        placeholder={PROJECT_COPY.notesPlaceholder}
+        placeholder={t("notesPlaceholder")}
         errorMessage={errors.notes}
       />
     </form>

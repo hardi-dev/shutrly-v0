@@ -2,7 +2,7 @@ import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
 import { copyTranslator } from "@tests/support/copy/copy-messages";
 
-import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
+import { PROJECT_COPY_NAMESPACE } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { TEAM_COPY_NAMESPACE } from "@/features/booking/ui/team-copy/team-copy.copy";
 
 import {
@@ -18,6 +18,8 @@ import {
   visibleText,
 } from "../team/team-e2e";
 
+const pc = copyTranslator(PROJECT_COPY_NAMESPACE, "id");
+
 const teamT = copyTranslator(TEAM_COPY_NAMESPACE, "id");
 
 test.setTimeout(150_000);
@@ -32,15 +34,17 @@ test.describe("AC-TEAM-011 AC-TEAM-013 AC-TEAM-021 AC-TEAM-026 AC-TEAM-027 Jadwa
     await addService(page, workspaceId);
     await createBookedProject(page, workspaceId);
 
-    const addTeam = page.getByRole("button", { name: PROJECT_COPY.addTeamFor("Resepsi") });
+    const addTeam = page.getByRole("button", {
+      name: pc("addTeamFor", { sessionName: "Resepsi" }),
+    });
     await addTeam.click();
     const form = page
-      .getByRole("dialog", { name: PROJECT_COPY.assignTitle("Resepsi") })
+      .getByRole("dialog", { name: pc("assignTitle", { sessionName: "Resepsi" }) })
       .filter({ visible: true });
-    await expect(form.getByText(PROJECT_COPY.assignEmptyTitle)).toBeVisible();
-    await expect(form.getByRole("button", { name: PROJECT_COPY.assignSubmit })).toBeDisabled();
+    await expect(form.getByText(pc("assignEmptyTitle"))).toBeVisible();
+    await expect(form.getByRole("button", { name: pc("assignSubmit") })).toBeDisabled();
     await expectA11y(page);
-    await form.getByRole("button", { name: PROJECT_COPY.assignEmptyAction }).click();
+    await form.getByRole("button", { name: pc("assignEmptyAction") }).click();
     await expect(page).toHaveURL(new RegExp(`/w/${workspaceId}/team$`));
 
     await addMember(page, workspaceId);
@@ -48,21 +52,23 @@ test.describe("AC-TEAM-011 AC-TEAM-013 AC-TEAM-021 AC-TEAM-026 AC-TEAM-027 Jadwa
     await page.goBack();
     await expect(addTeam).toBeVisible();
     await addTeam.click();
-    await form.getByRole("button", { name: new RegExp(`^${PROJECT_COPY.assignMember}`) }).click();
+    await form.getByRole("button", { name: new RegExp(`^${pc("assignMember")}`) }).click();
     await page.getByRole("option", { name: "Dimas Pratama" }).click();
     await expect(
-      form.getByRole("button", { name: new RegExp(`^${PROJECT_COPY.assignRole}`) }),
+      form.getByRole("button", { name: new RegExp(`^${pc("assignRole")}`) }),
     ).toContainText("Fotografer");
-    await form.getByRole("button", { name: new RegExp(`^${PROJECT_COPY.assignRole}`) }).click();
+    await form.getByRole("button", { name: new RegExp(`^${pc("assignRole")}`) }).click();
     await page.getByRole("option", { name: "Videografer" }).click();
-    await form.getByRole("button", { name: PROJECT_COPY.assignSubmit }).click();
+    await form.getByRole("button", { name: pc("assignSubmit") }).click();
 
-    await expect(visibleText(page, PROJECT_COPY.assignedToastTitle)).toBeVisible();
+    await expect(visibleText(page, pc("assignedToastTitle"))).toBeVisible();
     await expect(
-      page.getByRole("button", { name: PROJECT_COPY.teamGroupLabel("Resepsi", 1) }),
+      page.getByRole("button", {
+        name: pc("teamGroupLabel", { sessionName: "Resepsi", count: 1 }),
+      }),
     ).toContainText("DP");
     await expect(addTeam).toHaveCount(0);
-    await expect(visibleText(page, PROJECT_COPY.statusBooked).first()).toBeVisible();
+    await expect(visibleText(page, pc("statusBooked")).first()).toBeVisible();
     await expectA11y(page);
 
     // AC-TEAM-007: an assigned member cannot be deleted, only archived.
@@ -79,22 +85,24 @@ test.describe("AC-TEAM-011 AC-TEAM-013 AC-TEAM-021 AC-TEAM-026 AC-TEAM-027 Jadwa
 });
 
 async function removeFromAturTim(page: Page): Promise<void> {
-  await page.getByRole("button", { name: PROJECT_COPY.teamGroupLabel("Resepsi", 1) }).click();
+  await page
+    .getByRole("button", { name: pc("teamGroupLabel", { sessionName: "Resepsi", count: 1 }) })
+    .click();
   const team = page
-    .getByRole("dialog", { name: PROJECT_COPY.teamTitle("Resepsi") })
+    .getByRole("dialog", { name: pc("teamTitle", { sessionName: "Resepsi" }) })
     .filter({ visible: true });
   await expect(team.getByText("Dimas Pratama")).toBeVisible();
   await expect(team.getByText("Fotografer")).toBeVisible();
   await expectA11y(page);
-  await team.getByRole("button", { name: PROJECT_COPY.teamRemoveLabel }).click();
+  await team.getByRole("button", { name: pc("teamRemoveLabel") }).click();
   const confirm = page
     .getByRole("alertdialog", {
-      name: PROJECT_COPY.removeAssignmentTitle("Dimas Pratama", "Resepsi"),
+      name: pc("removeAssignmentTitle", { name: "Dimas Pratama", sessionName: "Resepsi" }),
     })
     .filter({ visible: true });
-  await expect(confirm.getByText(PROJECT_COPY.removeAssignmentBody("Dimas"))).toBeVisible();
-  await confirm.getByRole("button", { name: PROJECT_COPY.removeAssignmentConfirm }).click();
-  await expect(visibleText(page, PROJECT_COPY.removedToastTitle)).toBeVisible();
+  await expect(confirm.getByText(pc("removeAssignmentBody", { name: "Dimas" }))).toBeVisible();
+  await confirm.getByRole("button", { name: pc("removeAssignmentConfirm") }).click();
+  await expect(visibleText(page, pc("removedToastTitle"))).toBeVisible();
 }
 
 test.describe("AC-TEAM-014 Atur tim", () => {
@@ -103,17 +111,21 @@ test.describe("AC-TEAM-014 Atur tim", () => {
   }) => {
     await setupStaffedProject(page);
     await removeFromAturTim(page);
-    const addTeam = page.getByRole("button", { name: PROJECT_COPY.addTeamFor("Resepsi") });
+    const addTeam = page.getByRole("button", {
+      name: pc("addTeamFor", { sessionName: "Resepsi" }),
+    });
     await expect(addTeam).toBeVisible();
-    await expect(page.getByRole("dialog", { name: PROJECT_COPY.teamTitle("Resepsi") })).toHaveCount(
-      0,
-    );
+    await expect(
+      page.getByRole("dialog", { name: pc("teamTitle", { sessionName: "Resepsi" }) }),
+    ).toHaveCount(0);
 
     await addTeam.click();
     await staffSession(page, "Resepsi", "Videografer");
-    await page.getByRole("button", { name: PROJECT_COPY.teamGroupLabel("Resepsi", 1) }).click();
+    await page
+      .getByRole("button", { name: pc("teamGroupLabel", { sessionName: "Resepsi", count: 1 }) })
+      .click();
     const team = page
-      .getByRole("dialog", { name: PROJECT_COPY.teamTitle("Resepsi") })
+      .getByRole("dialog", { name: pc("teamTitle", { sessionName: "Resepsi" }) })
       .filter({ visible: true });
     await expect(team.getByText("Videografer")).toBeVisible();
   });
@@ -125,15 +137,17 @@ test.describe("AC-TEAM-020 deleting a staffed session", () => {
   }) => {
     const workspaceId = await setupStaffedProject(page);
     await addSessionOnDetail(page, "Akad", "16");
-    await page.getByRole("button", { name: PROJECT_COPY.sessionActions("Resepsi") }).click();
-    await page.getByRole("menuitem", { name: PROJECT_COPY.deleteSessionConfirm }).click();
+    await page
+      .getByRole("button", { name: pc("sessionActions", { sessionName: "Resepsi" }) })
+      .click();
+    await page.getByRole("menuitem", { name: pc("deleteSessionConfirm") }).click();
     const confirm = page
-      .getByRole("alertdialog", { name: PROJECT_COPY.deleteSessionTitle("Resepsi") })
+      .getByRole("alertdialog", { name: pc("deleteSessionTitle", { sessionName: "Resepsi" }) })
       .filter({ visible: true });
-    await expect(confirm.getByText(PROJECT_COPY.deleteSessionTeamBody(1))).toBeVisible();
-    await confirm.getByRole("button", { name: PROJECT_COPY.deleteSessionConfirm }).click();
+    await expect(confirm.getByText(pc("deleteSessionTeamBody", { count: 1 }))).toBeVisible();
+    await confirm.getByRole("button", { name: pc("deleteSessionConfirm") }).click();
     await expect(
-      page.getByRole("button", { name: PROJECT_COPY.sessionActions("Resepsi") }),
+      page.getByRole("button", { name: pc("sessionActions", { sessionName: "Resepsi" }) }),
     ).toHaveCount(0);
 
     await page.goto(`/w/${workspaceId}/team`);

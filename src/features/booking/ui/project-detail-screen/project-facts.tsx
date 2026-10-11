@@ -1,10 +1,13 @@
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/ui/cn/cn";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { PROJECT_DETAIL_SCREEN_COPY_NAMESPACE } from "./project-detail-screen.copy";
 import type { ProjectFact } from "./project-facts.types";
 
 /** A label/value list for the Info and Field booking cards; an empty value shows a muted dash. */
 export function ProjectFacts({ facts }: Readonly<{ facts: readonly ProjectFact[] }>) {
+  const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
   return (
     <dl className="flex flex-col gap-(--space-4) px-(--space-6) py-(--space-6)">
       {facts.map((fact) => (
@@ -18,7 +21,7 @@ export function ProjectFacts({ facts }: Readonly<{ facts: readonly ProjectFact[]
               fact.value === null && "text-(--component-input-placeholder)",
             )}
           >
-            {fact.value ?? PROJECT_COPY.emptyValue}
+            {fact.value ?? t("emptyValue")}
           </dd>
         </div>
       ))}

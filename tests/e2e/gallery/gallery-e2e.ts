@@ -5,10 +5,12 @@ import { copyTranslator } from "@tests/support/copy/copy-messages";
 
 import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
 import { CLIENT_COPY_NAMESPACE } from "@/features/booking/ui/client-copy/client-copy.copy";
-import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
+import { PROJECT_COPY_NAMESPACE } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 
 import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
+
+const pc = copyTranslator(PROJECT_COPY_NAMESPACE, "id");
 
 const clientT = copyTranslator(CLIENT_COPY_NAMESPACE, "id");
 
@@ -99,22 +101,22 @@ export async function createProject(
   mode: "BOOKED" | "DRAFT",
 ): Promise<string> {
   await page.goto(`/w/${workspaceId}/projects/new`);
-  await page.getByRole("combobox", { name: PROJECT_COPY.clientLabel }).click();
+  await page.getByRole("combobox", { name: pc("clientLabel") }).click();
   await page.getByRole("option", { name: /Rina/ }).click();
-  await page.getByRole("button", { name: new RegExp(PROJECT_COPY.serviceLabel) }).click();
+  await page.getByRole("button", { name: new RegExp(pc("serviceLabel")) }).click();
   await page.getByRole("option", { name: "Wisuda Basic" }).click();
   if (mode === "BOOKED") {
-    await page.getByRole("button", { name: PROJECT_COPY.addSessionDesktop }).click();
+    await page.getByRole("button", { name: pc("addSession") }).click();
     const dialog = page
-      .getByRole("dialog", { name: PROJECT_COPY.sessionDialogTitle })
+      .getByRole("dialog", { name: pc("sessionDialogTitle") })
       .filter({ visible: true });
-    await dialog.getByRole("textbox", { name: PROJECT_COPY.sessionName }).fill("Wisuda");
-    await dialog.getByRole("button", { name: new RegExp(PROJECT_COPY.sessionDate) }).click();
+    await dialog.getByRole("textbox", { name: pc("sessionName") }).fill("Wisuda");
+    await dialog.getByRole("button", { name: new RegExp(pc("sessionDate")) }).click();
     await page.getByRole("grid").getByText("15", { exact: true }).first().click();
-    await dialog.getByRole("button", { name: PROJECT_COPY.sessionSave }).click();
+    await dialog.getByRole("button", { name: pc("sessionSave") }).click();
     await expect(dialog).toBeHidden();
   }
-  const submit = mode === "BOOKED" ? PROJECT_COPY.create : PROJECT_COPY.saveDraft;
+  const submit = mode === "BOOKED" ? pc("create") : pc("saveDraft");
   await page.getByRole("button", { name: submit }).click();
   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=/);
   return new URL(page.url()).pathname;

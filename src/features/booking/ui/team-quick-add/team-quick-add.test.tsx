@@ -13,7 +13,7 @@ const { SessionDialog } = await import("../session-dialog/session-dialog");
 const { AssignmentDialog } = await import("../assignment-dialog/assignment-dialog");
 
 const { PROJECT_COPY } = await import("../project-copy/project-copy.copy");
-const ASSIGN_SUBMIT = PROJECT_COPY.assignSubmit;
+const ASSIGN_SUBMIT = PROJECT_COPY.messages.id.assignSubmit;
 
 const FOTOGRAFER = { id: "6f1c1b0e-8a5d-4a43-a3b6-3c2f7c0f1a11", name: "Fotografer" };
 const SESSION = {
@@ -91,7 +91,7 @@ describe("TeamQuickAdd (Revision OT #1, #2)", () => {
         />
       </TeamQuickAddProvider>,
     );
-    expect(screen.queryByRole("button", { name: "Buka Tim" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Buka tim" })).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Tambah anggota" }));
     await addRina();
     await waitFor(() => {
@@ -116,6 +116,6 @@ describe("TeamQuickAdd (Revision OT #1, #2)", () => {
         addAction={vi.fn()}
       />,
     );
-    expect(screen.getByRole("button", { name: "Buka Tim" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Buka tim" })).toBeInTheDocument();
   });
 });

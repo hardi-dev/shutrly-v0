@@ -45,7 +45,7 @@ describe("PackageItemsCard (AC-PRJ-007)", () => {
 
   it("AC-PRJ-007 shows the empty state when the service has no items", () => {
     render(<PackageItemsCard serviceName="Wisuda Basic" items={[]} isMobile={false} />);
-    expect(screen.getByText("Layanan ini belum punya item paket")).toBeInTheDocument();
+    expect(screen.getByText("Layanan ini belum punya isi paket")).toBeInTheDocument();
     expect(screen.queryByRole("list")).not.toBeInTheDocument();
   });
 });

@@ -1,11 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { SESSION_TEAM_DIALOG_COPY_NAMESPACE } from "./session-team-dialog.copy";
 import type { SessionAssignment, SessionTeamDialogProps } from "./session-team-dialog.types";
 
 /**
@@ -15,6 +16,7 @@ import type { SessionAssignment, SessionTeamDialogProps } from "./session-team-d
  * @returns the pending target and its handlers
  */
 export function useRemoveAssignment(props: Readonly<SessionTeamDialogProps>) {
+  const t = useTranslations(SESSION_TEAM_DIALOG_COPY_NAMESPACE);
   const router = useRouter();
   const [target, setTarget] = useState<SessionAssignment | null>(null);
 
@@ -25,18 +27,18 @@ export function useRemoveAssignment(props: Readonly<SessionTeamDialogProps>) {
       if (result.ok) {
         showToast({
           tone: "success",
-          title: PROJECT_COPY.removedToastTitle,
-          body: PROJECT_COPY.removedToastBody(target.memberName, props.session.name),
+          title: t("removedToastTitle"),
+          body: t("removedToastBody", { name: target.memberName, sessionName: props.session.name }),
         });
       } else {
-        showToast({ tone: "danger", title: PROJECT_COPY.teamCancelledToast });
+        showToast({ tone: "danger", title: t("teamCancelledToast") });
       }
       router.refresh();
     } catch {
       showToast({
         tone: "danger",
-        title: PROJECT_COPY.serverErrorTitle,
-        body: PROJECT_COPY.serverErrorBody,
+        title: t("serverErrorTitle"),
+        body: t("serverErrorBody"),
       });
     }
   }

@@ -121,7 +121,7 @@ describe("SessionTeamHost", () => {
     await userEvent.click(screen.getByText("manage-wisuda"));
     const dialog = screen.getByRole("dialog", { name: "Tim · Wisuda" });
     expect(
-      within(dialog).getByText("Proyek dibatalkan, tim tidak bisa diubah."),
+      within(dialog).getByText("Proyek ini dibatalkan. Timnya tidak bisa diubah."),
     ).toBeInTheDocument();
     expect(
       within(dialog).queryByRole("button", { name: "Hapus dari sesi" }),

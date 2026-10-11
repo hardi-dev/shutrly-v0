@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { AssignableMember } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
@@ -13,8 +14,8 @@ import { Modal } from "@/ui/patterns/modal/modal";
 import { Select } from "@/ui/patterns/select/select";
 import { Button } from "@/ui/primitives/button/button";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { AddTeamMemberButton, useCanQuickAddMember } from "../team-quick-add/team-quick-add";
+import { ASSIGNMENT_DIALOG_COPY_NAMESPACE } from "./assignment-dialog.copy";
 import type {
   AssignmentDialogBodyProps,
   AssignmentDialogProps,
@@ -51,6 +52,7 @@ export function AssignmentDialog(props: Readonly<AssignmentDialogProps>) {
 }
 
 function AssignmentDialogBody(props: Readonly<AssignmentDialogBodyProps>) {
+  const t = useTranslations(ASSIGNMENT_DIALOG_COPY_NAMESPACE);
   const locale = useFormattingLocale();
   const isMobile = useMobileViewport();
   const router = useRouter();
@@ -79,14 +81,14 @@ function AssignmentDialogBody(props: Readonly<AssignmentDialogBodyProps>) {
       isDisabled={isEmpty || form.state.roleId === null}
       onPress={form.handleSubmit}
     >
-      {form.state.isPending ? PROJECT_COPY.assignSubmitting : PROJECT_COPY.assignSubmit}
+      {form.state.isPending ? t("assignSubmitting") : t("assignSubmit")}
     </Button>
   );
   return (
     <AssignmentShell
       isOpen={props.isOpen}
       onOpenChange={props.onOpenChange}
-      title={PROJECT_COPY.assignTitle(props.session.name)}
+      title={t("assignTitle", { sessionName: props.session.name })}
       description={formatSessionRange(props.session, locale)}
       isPending={form.state.isPending}
       onClose={close}
@@ -99,18 +101,19 @@ function AssignmentDialogBody(props: Readonly<AssignmentDialogBodyProps>) {
 
 /** No active member yet: *Tambah anggota* on top of this dialog, or *Buka Tim* without quick add (AC-TEAM-027, Revision OT #2). */
 function NoMembers({ canQuickAdd, onAdded, onOpenTeam }: Readonly<NoMembersProps>) {
+  const t = useTranslations(ASSIGNMENT_DIALOG_COPY_NAMESPACE);
   return (
     <EmptyState
       placement="in-card"
       icon="user-round-cog"
-      title={PROJECT_COPY.assignEmptyTitle}
-      body={canQuickAdd ? PROJECT_COPY.assignEmptyQuickBody : PROJECT_COPY.assignEmptyBody}
+      title={t("assignEmptyTitle")}
+      body={canQuickAdd ? t("assignEmptyQuickBody") : t("assignEmptyBody")}
       action={
         canQuickAdd ? (
           <AddTeamMemberButton onAdded={onAdded} />
         ) : (
           <Button variant="secondary" iconLeading="user-round-cog" onPress={onOpenTeam}>
-            {PROJECT_COPY.assignEmptyAction}
+            {t("assignEmptyAction")}
           </Button>
         )
       }
@@ -128,6 +131,7 @@ function AssignmentShell({
   submit,
   children,
 }: Readonly<AssignmentShellProps>) {
+  const t = useTranslations(ASSIGNMENT_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   if (isMobile) {
     return (
@@ -153,7 +157,7 @@ function AssignmentShell({
       actions={
         <>
           <Button variant="secondary" onPress={onClose} isDisabled={isPending}>
-            {PROJECT_COPY.assignCancel}
+            {t("assignCancel")}
           </Button>
           {submit}
         </>
@@ -168,28 +172,29 @@ function AssignmentFields({
   members,
   form,
 }: Readonly<AssignmentDialogProps & { form: ReturnType<typeof useAssignmentForm> }>) {
+  const t = useTranslations(ASSIGNMENT_DIALOG_COPY_NAMESPACE);
   const { state, member } = form;
   const memberOptions = members.map((candidate) => ({ id: candidate.id, label: candidate.name }));
   const roleOptions = (member?.roles ?? []).map((role) => ({ id: role.id, label: role.name }));
   return (
     <div className="flex flex-col gap-(--space-4)">
       <Select
-        label={PROJECT_COPY.assignMember}
-        placeholder={PROJECT_COPY.assignMemberPlaceholder}
+        label={t("assignMember")}
+        placeholder={t("assignMemberPlaceholder")}
         options={memberOptions}
         value={state.memberId}
         onChange={form.selectMember}
-        description={PROJECT_COPY.assignMemberHint}
+        description={t("assignMemberHint")}
         errorMessage={state.error?.field === "member" ? state.error.text : undefined}
         isDisabled={state.isPending}
       />
       <Select
-        label={PROJECT_COPY.assignRole}
-        placeholder={PROJECT_COPY.assignRolePlaceholder}
+        label={t("assignRole")}
+        placeholder={t("assignRolePlaceholder")}
         options={roleOptions}
         value={state.roleId}
         onChange={form.selectRole}
-        description={member ? PROJECT_COPY.assignRoleHint(member.name) : undefined}
+        description={member ? t("assignRoleHint", { name: member.name }) : undefined}
         errorMessage={state.error?.field === "role" ? state.error.text : undefined}
         isDisabled={state.isPending || member === undefined}
       />

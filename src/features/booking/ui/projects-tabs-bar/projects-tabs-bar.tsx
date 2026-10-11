@@ -1,19 +1,21 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { SegmentedControl } from "@/ui/patterns/segmented-control/segmented-control";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { projectTabPath } from "../project-search-field/project-tab-path";
+import { PROJECTS_TABS_BAR_COPY_NAMESPACE } from "./projects-tabs-bar.copy";
 
 /** Renders the phone-only Aktif / Selesai / Dibatalkan selector; changing tab drops the search. */
 export function ProjectsTabsBar({
   workspaceId,
   tab,
 }: Readonly<{ workspaceId: string; tab: ProjectTab }>) {
+  const t = useTranslations(PROJECTS_TABS_BAR_COPY_NAMESPACE);
   const router = useRouter();
   const isMobile = useMobileViewport();
   if (!isMobile) return null;
@@ -24,11 +26,11 @@ export function ProjectsTabsBar({
   };
   return (
     <SegmentedControl
-      label={PROJECT_COPY.tabsLabel}
+      label={t("tabsLabel")}
       options={[
-        { id: "ACTIVE", label: PROJECT_COPY.tabActive },
-        { id: "COMPLETED", label: PROJECT_COPY.tabCompleted },
-        { id: "CANCELLED", label: PROJECT_COPY.tabCancelled },
+        { id: "ACTIVE", label: t("tabActive") },
+        { id: "COMPLETED", label: t("tabCompleted") },
+        { id: "CANCELLED", label: t("tabCancelled") },
       ]}
       selectedId={tab}
       onChange={handleChange}

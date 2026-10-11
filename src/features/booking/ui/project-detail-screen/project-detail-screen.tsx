@@ -2,6 +2,7 @@
 /* eslint-disable max-lines-per-function -- responsive detail body wires the step, menu and cards */
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useState } from "react";
 
@@ -12,7 +13,7 @@ import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-vie
 import { CompactBarActions } from "@/ui/patterns/compact-bar/compact-bar-actions";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { ProjectMenuHost } from "../project-menu-host/project-menu-host";
 import type {
   ProjectMenuApi,
@@ -31,6 +32,7 @@ import {
   ProjectPackageCard,
   ProjectScheduleCard,
 } from "./project-detail-cards";
+import { PROJECT_DETAIL_SCREEN_COPY_NAMESPACE } from "./project-detail-screen.copy";
 import type {
   DetailEditHandlers,
   ProjectDetailScreenProps,
@@ -91,12 +93,13 @@ export function ProjectDetailScreen(props: Readonly<ProjectDetailScreenProps>) {
 }
 
 function menuTargetOf(
+  t: ProjectTranslate,
   project: ProjectDetailScreenProps["project"],
   locale: FormattingLocale,
 ): ProjectMenuTarget {
   const when =
     project.shownSession === null
-      ? PROJECT_COPY.metaNoSchedule
+      ? t("metaNoSchedule")
       : formatShortDate(project.shownSession.session.date, locale);
   return {
     id: project.id,
@@ -106,11 +109,11 @@ function menuTargetOf(
     clientId: project.client.id,
     clientName: project.client.name,
     whatsappNumber: project.client.whatsappNumber,
-    meta: PROJECT_COPY.menuSheetMeta(
-      project.client.name,
+    meta: t("menuSheetMeta", {
+      client: project.client.name,
       when,
-      projectStatusChip(project.status).label,
-    ),
+      status: projectStatusChip(t, project.status).label,
+    }),
     info: {
       projectId: project.id,
       title: project.title,
@@ -142,6 +145,7 @@ function DetailBody({
     onSessionRequired: () => void;
   }
 >) {
+  const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
   const locale = useFormattingLocale();
   const isMobile = useMobileViewport();
   const actions = useProjectActions({
@@ -150,7 +154,7 @@ function DetailBody({
     advanceAction: menuActions.advanceAction,
     onSessionRequired,
   });
-  const target = menuTargetOf(project, locale);
+  const target = menuTargetOf(t, project, locale);
   const menu = api.menuFor(target);
   const handleEditInfo = () => {
     api.openInfo(target);

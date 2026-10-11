@@ -5,10 +5,12 @@ import { copyTranslator } from "@tests/support/copy/copy-messages";
 
 import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
 import { CLIENT_COPY_NAMESPACE } from "@/features/booking/ui/client-copy/client-copy.copy";
-import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
+import { PROJECT_COPY_NAMESPACE } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 
 import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
+
+const pc = copyTranslator(PROJECT_COPY_NAMESPACE, "id");
 
 const clientT = copyTranslator(CLIENT_COPY_NAMESPACE, "id");
 
@@ -92,21 +94,21 @@ async function addService(page: Page, workspaceId: string): Promise<void> {
 }
 
 async function pickClientAndService(page: Page, client = "Rina"): Promise<void> {
-  await page.getByRole("combobox", { name: PROJECT_COPY.clientLabel }).click();
+  await page.getByRole("combobox", { name: pc("clientLabel") }).click();
   await page.getByRole("option", { name: new RegExp(client) }).click();
-  await page.getByRole("button", { name: new RegExp(PROJECT_COPY.serviceLabel) }).click();
+  await page.getByRole("button", { name: new RegExp(pc("serviceLabel")) }).click();
   await page.getByRole("option", { name: "Wisuda Basic" }).click();
 }
 
 async function addSession(page: Page): Promise<void> {
-  await page.getByRole("button", { name: PROJECT_COPY.addSessionDesktop }).click();
+  await page.getByRole("button", { name: pc("addSession") }).click();
   const dialog = page
-    .getByRole("dialog", { name: PROJECT_COPY.sessionDialogTitle })
+    .getByRole("dialog", { name: pc("sessionDialogTitle") })
     .filter({ visible: true });
-  await dialog.getByRole("textbox", { name: PROJECT_COPY.sessionName }).fill("Wisuda");
-  await dialog.getByRole("button", { name: new RegExp(PROJECT_COPY.sessionDate) }).click();
+  await dialog.getByRole("textbox", { name: pc("sessionName") }).fill("Wisuda");
+  await dialog.getByRole("button", { name: new RegExp(pc("sessionDate")) }).click();
   await page.getByRole("grid").getByText("15", { exact: true }).first().click();
-  await dialog.getByRole("button", { name: PROJECT_COPY.sessionSave }).click();
+  await dialog.getByRole("button", { name: pc("sessionSave") }).click();
   await expect(dialog).toBeHidden();
 }
 
@@ -119,43 +121,43 @@ test("AC-PRJ-006 AC-PRJ-007 AC-PRJ-008 AC-PRJ-009 creates a booked project from 
 
   await page.goto(`/w/${workspaceId}/projects/new`);
   await expect(
-    page.getByRole("heading", { level: 1, name: PROJECT_COPY.createTitle }).first(),
+    page.getByRole("heading", { level: 1, name: pc("createTitle") }).first(),
   ).toBeVisible();
   await expectProjectsA11y(page);
 
   await pickClientAndService(page);
-  await expect(page.getByRole("textbox", { name: PROJECT_COPY.titleLabel })).toHaveValue(
+  await expect(page.getByRole("textbox", { name: pc("titleLabel") })).toHaveValue(
     "Wisuda Basic — Rina",
   );
-  await expect(page.getByRole("textbox", { name: PROJECT_COPY.priceLabel })).toHaveValue("750.000");
+  await expect(page.getByRole("textbox", { name: pc("priceLabel") })).toHaveValue("750.000");
 
-  await page.getByRole("button", { name: PROJECT_COPY.create }).click();
+  await page.getByRole("button", { name: pc("create") }).click();
   await expect(page.getByText("Tambahkan minimal satu sesi.")).toBeVisible();
 
   await addSession(page);
   await expectProjectsA11y(page);
-  await page.getByRole("button", { name: PROJECT_COPY.create }).click();
+  await page.getByRole("button", { name: pc("create") }).click();
   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=created$/);
-  await expect(page.getByText(PROJECT_COPY.toastCreatedTitle)).toBeVisible();
+  await expect(page.getByText(pc("toastCreatedTitle"))).toBeVisible();
 
   await expect(
     page.getByRole("heading", { level: 1, name: "Wisuda Basic — Rina" }).first(),
   ).toBeVisible();
-  await expect(visibleText(page, PROJECT_COPY.statusBooked)).toBeVisible();
+  await expect(visibleText(page, pc("statusBooked"))).toBeVisible();
   await expect(visibleText(page, "Rina · +62 812-3456-7890")).toBeVisible();
   await expect(visibleText(page, "Rp 750.000")).toBeVisible();
   await expectProjectsA11y(page);
 
-  await page.getByRole("button", { name: PROJECT_COPY.stepStart }).click();
-  await expect(visibleText(page, PROJECT_COPY.toastStartedTitle)).toBeVisible();
-  await expect(visibleText(page, PROJECT_COPY.statusShooting)).toBeVisible();
-  await expect(visibleText(page, PROJECT_COPY.lockedDescription)).toBeVisible();
+  await page.getByRole("button", { name: pc("stepStart") }).click();
+  await expect(visibleText(page, pc("toastStartedTitle"))).toBeVisible();
+  await expect(visibleText(page, pc("statusShooting"))).toBeVisible();
+  await expect(visibleText(page, pc("lockedDescription"))).toBeVisible();
 
-  await page.getByRole("button", { name: PROJECT_COPY.stepFinish }).click();
-  await expect(visibleText(page, PROJECT_COPY.toastFinishedTitle)).toBeVisible();
-  await expect(visibleText(page, PROJECT_COPY.statusPostProcessing)).toBeVisible();
-  await expect(page.getByRole("button", { name: PROJECT_COPY.stepFinish })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: PROJECT_COPY.stepStart })).toHaveCount(0);
+  await page.getByRole("button", { name: pc("stepFinish") }).click();
+  await expect(visibleText(page, pc("toastFinishedTitle"))).toBeVisible();
+  await expect(visibleText(page, pc("statusPostProcessing"))).toBeVisible();
+  await expect(page.getByRole("button", { name: pc("stepFinish") })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: pc("stepStart") })).toHaveCount(0);
 });
 
 test("AC-PRJ-029 saves a draft without a session", async ({ page }) => {
@@ -165,25 +167,25 @@ test("AC-PRJ-029 saves a draft without a session", async ({ page }) => {
 
   await page.goto(`/w/${workspaceId}/projects/new`);
   await pickClientAndService(page);
-  await page.getByRole("button", { name: PROJECT_COPY.saveDraft }).click();
+  await page.getByRole("button", { name: pc("saveDraft") }).click();
   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=draft-saved$/);
-  await expect(visibleText(page, PROJECT_COPY.toastDraftSavedTitle)).toBeVisible();
-  await expect(visibleText(page, PROJECT_COPY.statusDraft)).toBeVisible();
-  await expect(visibleText(page, PROJECT_COPY.scheduleEmptyTitle)).toBeVisible();
+  await expect(visibleText(page, pc("toastDraftSavedTitle"))).toBeVisible();
+  await expect(visibleText(page, pc("statusDraft"))).toBeVisible();
+  await expect(visibleText(page, pc("scheduleEmptyTitle"))).toBeVisible();
 
-  await page.getByRole("button", { name: PROJECT_COPY.stepConfirm }).click();
-  await expect(visibleText(page, PROJECT_COPY.toastSessionRequiredTitle)).toBeVisible();
-  await expect(visibleText(page, PROJECT_COPY.statusDraft)).toBeVisible();
+  await page.getByRole("button", { name: pc("stepConfirm") }).click();
+  await expect(visibleText(page, pc("toastSessionRequiredTitle"))).toBeVisible();
+  await expect(visibleText(page, pc("statusDraft"))).toBeVisible();
 });
 
 async function fillSession(page: Page, name = "Wisuda"): Promise<void> {
   const dialog = page
-    .getByRole("dialog", { name: PROJECT_COPY.sessionDialogTitle })
+    .getByRole("dialog", { name: pc("sessionDialogTitle") })
     .filter({ visible: true });
-  await dialog.getByRole("textbox", { name: PROJECT_COPY.sessionName }).fill(name);
-  await dialog.getByRole("button", { name: new RegExp(PROJECT_COPY.sessionDate) }).click();
+  await dialog.getByRole("textbox", { name: pc("sessionName") }).fill(name);
+  await dialog.getByRole("button", { name: new RegExp(pc("sessionDate")) }).click();
   await page.getByRole("grid").getByText("15", { exact: true }).first().click();
-  await dialog.getByRole("button", { name: PROJECT_COPY.sessionSave }).click();
+  await dialog.getByRole("button", { name: pc("sessionSave") }).click();
   await expect(dialog).toBeHidden();
 }
 
@@ -197,7 +199,7 @@ async function createProject(
   if (options.withSession) await addSession(page);
   await page
     .getByRole("button", {
-      name: options.mode === "BOOKED" ? PROJECT_COPY.create : PROJECT_COPY.saveDraft,
+      name: options.mode === "BOOKED" ? pc("create") : pc("saveDraft"),
     })
     .click();
   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=/);
@@ -205,14 +207,12 @@ async function createProject(
 }
 
 async function addItem(page: Page, item: string, amount: string): Promise<void> {
-  await page.getByRole("button", { name: PROJECT_COPY.addItemDesktop }).click();
-  const dialog = page
-    .getByRole("dialog", { name: PROJECT_COPY.itemAddTitle })
-    .filter({ visible: true });
+  await page.getByRole("button", { name: pc("addItemDesktop") }).click();
+  const dialog = page.getByRole("dialog", { name: pc("itemAddTitle") }).filter({ visible: true });
   await dialog.getByRole("button", { name: /^Item/ }).click();
   await page.getByRole("option", { name: new RegExp(item) }).click();
-  await dialog.getByRole("textbox", { name: PROJECT_COPY.quantityLabel }).fill(amount);
-  await dialog.getByRole("button", { name: PROJECT_COPY.itemAddConfirm }).click();
+  await dialog.getByRole("textbox", { name: pc("quantityLabel") }).fill(amount);
+  await dialog.getByRole("button", { name: pc("itemAddConfirm") }).click();
   await expect(dialog).toBeHidden();
 }
 
@@ -223,7 +223,7 @@ test("AC-PRJ-013 AC-PRJ-008 AC-PRJ-030 creates a client inline, edits the packag
   await addService(page, workspaceId);
 
   await page.goto(`/w/${workspaceId}/projects/new`);
-  await page.getByRole("combobox", { name: PROJECT_COPY.clientLabel }).fill("Sar");
+  await page.getByRole("combobox", { name: pc("clientLabel") }).fill("Sar");
   await page.getByRole("option", { name: /Tambah klien baru “Sar”/ }).click();
   const clientDialog = page
     .getByRole("dialog", { name: clientT("dialogTitle") })
@@ -237,12 +237,12 @@ test("AC-PRJ-013 AC-PRJ-008 AC-PRJ-030 creates a client inline, edits the packag
   await expect(clientDialog).toBeHidden();
   // The picker takes focus back and reopens its list; close it before using the rest of the form.
   await page.keyboard.press("Escape");
-  await expect(page.getByRole("combobox", { name: PROJECT_COPY.clientLabel })).toHaveValue("Sari");
+  await expect(page.getByRole("combobox", { name: pc("clientLabel") })).toHaveValue("Sari");
   await expect(page.getByText("+62 812-3456-7891")).toBeVisible();
 
   await page.getByRole("button", { name: /^Layanan/ }).click();
   await page.getByRole("option", { name: "Wisuda Basic" }).click();
-  await expect(page.getByRole("textbox", { name: PROJECT_COPY.titleLabel })).toHaveValue(
+  await expect(page.getByRole("textbox", { name: pc("titleLabel") })).toHaveValue(
     "Wisuda Basic — Sari",
   );
 
@@ -252,7 +252,7 @@ test("AC-PRJ-013 AC-PRJ-008 AC-PRJ-030 creates a client inline, edits the packag
   await expectProjectsA11y(page);
 
   await addSession(page);
-  await page.getByRole("button", { name: PROJECT_COPY.create }).click();
+  await page.getByRole("button", { name: pc("create") }).click();
   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=created$/);
   await expect(visibleText(page, "30 foto · hitung foto")).toBeVisible();
   await expect(visibleText(page, "10 lembar · jumlah per foto")).toBeVisible();
@@ -266,14 +266,14 @@ test("AC-PRJ-009 AC-PRJ-029 a draft without a session asks for one, then books",
   await addService(page, workspaceId);
   await createProject(page, workspaceId, { withSession: false, mode: "DRAFT" });
 
-  await page.getByRole("button", { name: PROJECT_COPY.stepConfirm }).click();
-  await expect(visibleText(page, PROJECT_COPY.toastSessionRequiredTitle)).toBeVisible();
+  await page.getByRole("button", { name: pc("stepConfirm") }).click();
+  await expect(visibleText(page, pc("toastSessionRequiredTitle"))).toBeVisible();
   await fillSession(page);
-  await expect(visibleText(page, PROJECT_COPY.editSavedToast)).toBeVisible();
+  await expect(visibleText(page, pc("editSavedToast"))).toBeVisible();
 
-  await page.getByRole("button", { name: PROJECT_COPY.stepConfirm }).click();
-  await expect(visibleText(page, PROJECT_COPY.toastConfirmedTitle)).toBeVisible();
-  await expect(visibleText(page, PROJECT_COPY.statusBooked)).toBeVisible();
+  await page.getByRole("button", { name: pc("stepConfirm") }).click();
+  await expect(visibleText(page, pc("toastConfirmedTitle"))).toBeVisible();
+  await expect(visibleText(page, pc("statusBooked"))).toBeVisible();
 });
 
 test("AC-PRJ-001 AC-PRJ-004 AC-PRJ-027 AC-PRJ-028 lists, searches, filters and steps from a row", async ({
@@ -292,39 +292,41 @@ test("AC-PRJ-001 AC-PRJ-004 AC-PRJ-027 AC-PRJ-028 lists, searches, filters and s
   await expect(visibleText(page, "2 proyek aktif")).toBeVisible();
   await expectProjectsA11y(page);
 
-  await page.getByRole("searchbox", { name: PROJECT_COPY.searchLabel }).fill("Rina");
+  await page.getByRole("searchbox", { name: pc("searchLabel") }).fill("Rina");
   await expect(page).toHaveURL(/q=Rina/);
   await expect(page.getByRole("link", { name: "Wisuda Basic — Budi" })).toBeHidden();
   await page.reload();
-  await expect(page.getByRole("searchbox", { name: PROJECT_COPY.searchLabel })).toHaveValue("Rina");
-  await page.getByRole("button", { name: PROJECT_COPY.clearSearch }).click();
+  await expect(page.getByRole("searchbox", { name: pc("searchLabel") })).toHaveValue("Rina");
+  await page.getByRole("button", { name: pc("clearSearch") }).click();
   await expect(page.getByRole("link", { name: "Wisuda Basic — Budi" })).toBeVisible();
 
-  await page.getByRole("button", { name: PROJECT_COPY.filterButton }).click();
-  const filter = page.getByRole("dialog", { name: PROJECT_COPY.filterTitle });
+  await page.getByRole("button", { name: pc("filterButton") }).click();
+  const filter = page.getByRole("dialog", { name: pc("filterTitle") });
   await expectProjectsA11y(page);
   await filter.getByRole("button", { name: /^Status/ }).click();
-  await page.getByRole("option", { name: PROJECT_COPY.statusDraft }).click();
+  await page.getByRole("option", { name: pc("statusDraft") }).click();
   await page.keyboard.press("Escape");
-  await filter.getByRole("button", { name: PROJECT_COPY.filterApply }).click();
+  await filter.getByRole("button", { name: pc("filterApply") }).click();
   await expect(page).toHaveURL(/status=DRAFT/);
   await expect(page.getByRole("button", { name: "Filter, 1 aktif" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Wisuda Basic — Rina" })).toBeHidden();
   await page.reload();
   await expect(page.getByRole("button", { name: "Filter, 1 aktif" })).toBeVisible();
   await page.getByRole("button", { name: "Filter, 1 aktif" }).click();
-  await page.getByRole("button", { name: PROJECT_COPY.filterReset }).click();
+  await page.getByRole("button", { name: pc("filterReset") }).click();
   await expect(page.getByRole("link", { name: "Wisuda Basic — Rina" })).toBeVisible();
 
-  await page.getByRole("button", { name: PROJECT_COPY.menuActions("Wisuda Basic — Rina") }).click();
+  await page
+    .getByRole("button", { name: pc("menuActions", { name: "Wisuda Basic — Rina" }) })
+    .click();
   await expectProjectsA11y(page);
-  await expect(page.getByRole("menuitem", { name: PROJECT_COPY.menuChat })).toHaveAttribute(
+  await expect(page.getByRole("menuitem", { name: pc("menuChat") })).toHaveAttribute(
     "href",
     /^https:\/\/wa\.me\/62/,
   );
-  await page.getByRole("menuitem", { name: PROJECT_COPY.stepStart }).click();
-  await expect(visibleText(page, PROJECT_COPY.toastStartedTitle)).toBeVisible();
-  await expect(visibleText(page, PROJECT_COPY.statusShooting)).toBeVisible();
+  await page.getByRole("menuitem", { name: pc("stepStart") }).click();
+  await expect(visibleText(page, pc("toastStartedTitle"))).toBeVisible();
+  await expect(visibleText(page, pc("statusShooting"))).toBeVisible();
 });
 
 test("AC-PRJ-018 AC-PRJ-020 AC-PRJ-022 AC-PRJ-023 locks the deal, cancels with a reason and deletes a draft", async ({
@@ -334,38 +336,42 @@ test("AC-PRJ-018 AC-PRJ-020 AC-PRJ-022 AC-PRJ-023 locks the deal, cancels with a
   await addClient(page, workspaceId, "Rina");
   await addService(page, workspaceId);
   const booked = await createProject(page, workspaceId, { withSession: true, mode: "BOOKED" });
-  await expect(page.getByRole("button", { name: PROJECT_COPY.addItemDesktop })).toBeVisible();
+  await expect(page.getByRole("button", { name: pc("addItemDesktop") })).toBeVisible();
 
-  await page.getByRole("button", { name: PROJECT_COPY.stepStart }).click();
-  await expect(visibleText(page, PROJECT_COPY.statusShooting)).toBeVisible();
-  await expect(page.getByRole("button", { name: PROJECT_COPY.addItemDesktop })).toHaveCount(0);
-  await page.getByRole("button", { name: PROJECT_COPY.infoEditDesktop }).click();
-  await expect(page.getByRole("textbox", { name: PROJECT_COPY.priceLabel })).toBeDisabled();
+  await page.getByRole("button", { name: pc("stepStart") }).click();
+  await expect(visibleText(page, pc("statusShooting"))).toBeVisible();
+  await expect(page.getByRole("button", { name: pc("addItemDesktop") })).toHaveCount(0);
+  await page.getByRole("button", { name: pc("infoEditDesktop") }).click();
+  await expect(page.getByRole("textbox", { name: pc("priceLabel") })).toBeDisabled();
   await expectProjectsA11y(page);
   await page.keyboard.press("Escape");
 
-  await page.getByRole("button", { name: PROJECT_COPY.menuActions("Wisuda Basic — Rina") }).click();
-  await page.getByRole("menuitem", { name: PROJECT_COPY.menuCancel }).click();
-  const cancel = page.getByRole("dialog", { name: PROJECT_COPY.cancelDialogTitle });
-  await cancel.getByRole("button", { name: PROJECT_COPY.cancelConfirm }).click();
+  await page
+    .getByRole("button", { name: pc("menuActions", { name: "Wisuda Basic — Rina" }) })
+    .click();
+  await page.getByRole("menuitem", { name: pc("menuCancel") }).click();
+  const cancel = page.getByRole("dialog", { name: pc("cancelDialogTitle") });
+  await cancel.getByRole("button", { name: pc("cancelConfirm") }).click();
   await expect(
     cancel.getByText("Isi alasan pembatalan. Wajib setelah pemotretan dimulai."),
   ).toBeVisible();
   await cancel.getByRole("textbox").fill("wisuda diundur");
-  await cancel.getByRole("button", { name: PROJECT_COPY.cancelConfirm }).click();
-  await expect(visibleText(page, PROJECT_COPY.cancelledTitle)).toBeVisible();
+  await cancel.getByRole("button", { name: pc("cancelConfirm") }).click();
+  await expect(visibleText(page, pc("cancelledTitle"))).toBeVisible();
   await expect(visibleText(page, "Alasan: wisuda diundur.")).toBeVisible();
   await expect(page).toHaveURL(new RegExp(booked));
 
   await createProject(page, workspaceId, { withSession: false, mode: "DRAFT" });
-  await page.getByRole("button", { name: PROJECT_COPY.menuActions("Wisuda Basic — Rina") }).click();
-  await page.getByRole("menuitem", { name: PROJECT_COPY.menuDeleteDraft }).click();
+  await page
+    .getByRole("button", { name: pc("menuActions", { name: "Wisuda Basic — Rina" }) })
+    .click();
+  await page.getByRole("menuitem", { name: pc("menuDeleteDraft") }).click();
   await page
     .getByRole("alertdialog")
-    .getByRole("button", { name: PROJECT_COPY.deleteConfirm })
+    .getByRole("button", { name: pc("deleteConfirm") })
     .click();
   await expect(page).toHaveURL(new RegExp(`/w/${workspaceId}/projects$`));
-  await expect(visibleText(page, PROJECT_COPY.toastDeletedTitle)).toBeVisible();
+  await expect(visibleText(page, pc("toastDeletedTitle"))).toBeVisible();
 });
 
 test("AC-PRJ-025 another account cannot open a project", async ({ page, browser }) => {

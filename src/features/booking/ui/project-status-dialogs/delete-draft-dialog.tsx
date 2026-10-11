@@ -1,6 +1,7 @@
 "use client";
 /* eslint-disable max-lines-per-function -- responsive dialog shell plus the confirm flow share state */
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -10,11 +11,12 @@ import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { PROJECT_STATUS_DIALOGS_COPY_NAMESPACE } from "./project-status-dialogs.copy";
 import type { DeleteDraftDialogProps } from "./project-status-dialogs.types";
 
 /** Hapus draf “…”?: deletes a draft with its snapshots, then the caller returns to the list (AC-PRJ-023). */
 export function DeleteDraftDialog(props: Readonly<DeleteDraftDialogProps>) {
+  const t = useTranslations(PROJECT_STATUS_DIALOGS_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const [isPending, setIsPending] = useState(false);
   const { target } = props;
@@ -27,8 +29,8 @@ export function DeleteDraftDialog(props: Readonly<DeleteDraftDialogProps>) {
       if (result.ok) {
         showToast({
           tone: "success",
-          title: PROJECT_COPY.toastDeletedTitle,
-          body: PROJECT_COPY.toastDeletedBody(result.title),
+          title: t("toastDeletedTitle"),
+          body: t("toastDeletedBody", { title: result.title }),
         });
       }
       props.onDone();
@@ -42,10 +44,10 @@ export function DeleteDraftDialog(props: Readonly<DeleteDraftDialogProps>) {
   const handleCancel = () => {
     props.onOpenChange(false);
   };
-  const title = PROJECT_COPY.deleteDialogTitle(target.title);
+  const title = t("deleteDialogTitle", { title: target.title });
   const body = target.hasTeam
-    ? `${PROJECT_COPY.deleteDialogBody} ${PROJECT_COPY.deleteDraftTeamNote}`
-    : PROJECT_COPY.deleteDialogBody;
+    ? `${t("deleteDialogBody")} ${t("deleteDraftTeamNote")}`
+    : t("deleteDialogBody");
   if (isMobile) {
     return (
       <BottomSheet
@@ -56,13 +58,13 @@ export function DeleteDraftDialog(props: Readonly<DeleteDraftDialogProps>) {
         variant="actions"
       >
         <SheetItem
-          label={PROJECT_COPY.deleteConfirm}
+          label={t("deleteConfirm")}
           icon="trash-2"
           variant="destructive"
           isPending={isPending}
           onPress={handleConfirm}
         />
-        <SheetItem label={PROJECT_COPY.deleteCancel} icon="x" onPress={handleCancel} />
+        <SheetItem label={t("deleteCancel")} icon="x" onPress={handleCancel} />
       </BottomSheet>
     );
   }
@@ -77,10 +79,10 @@ export function DeleteDraftDialog(props: Readonly<DeleteDraftDialogProps>) {
       actions={
         <>
           <Button variant="secondary" onPress={handleCancel}>
-            {PROJECT_COPY.deleteCancel}
+            {t("deleteCancel")}
           </Button>
           <Button variant="danger" isPending={isPending} onPress={handleConfirm}>
-            {PROJECT_COPY.deleteConfirm}
+            {t("deleteConfirm")}
           </Button>
         </>
       }

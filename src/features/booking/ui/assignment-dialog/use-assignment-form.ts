@@ -1,21 +1,25 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { AssignmentWriteResult } from "@/features/booking/application/use-cases/team-results/team-results.types";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { ASSIGN_ERROR_MESSAGE_KEY } from "../project-copy/project-copy.copy";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
+import { ASSIGNMENT_DIALOG_COPY_NAMESPACE } from "./assignment-dialog.copy";
 import type { AssignmentDialogProps, AssignmentFormState } from "./assignment-dialog.types";
 
 const IDLE: AssignmentFormState = { memberId: null, roleId: null, isPending: false, error: null };
 
 function failureState(
+  t: ProjectTranslate,
   code: Exclude<Extract<AssignmentWriteResult, { ok: false }>["code"], "PROJECT_CANCELLED">,
   name: string,
 ): AssignmentFormState["error"] {
-  const text = PROJECT_COPY.assignErrors[code](name);
+  const text = t(ASSIGN_ERROR_MESSAGE_KEY[code], { name });
   return { field: code === "ROLE_NOT_HELD" ? "role" : "member", text };
 }
 
@@ -27,6 +31,7 @@ interface Named {
 
 /** Saves the assignment and reports it; "left" means the dialog was closed or moved on. */
 async function saveAssignment(
+  t: ProjectTranslate,
   props: Readonly<AssignmentDialogProps>,
   router: Router,
   member: Named,
@@ -40,8 +45,12 @@ async function saveAssignment(
     if (result.ok) {
       showToast({
         tone: "success",
-        title: PROJECT_COPY.assignedToastTitle,
-        body: PROJECT_COPY.assignedToastBody(member.name, props.session.name, role.name),
+        title: t("assignedToastTitle"),
+        body: t("assignedToastBody", {
+          name: member.name,
+          sessionName: props.session.name,
+          role: role.name,
+        }),
       });
       router.refresh();
       props.onSaved();
@@ -49,17 +58,17 @@ async function saveAssignment(
     }
     const code = result.code;
     if (code === "PROJECT_CANCELLED") {
-      showToast({ tone: "danger", title: PROJECT_COPY.teamCancelledToast });
+      showToast({ tone: "danger", title: t("teamCancelledToast") });
       router.refresh();
       props.onOpenChange(false);
       return "left";
     }
-    return failureState(code, member.name);
+    return failureState(t, code, member.name);
   } catch {
     showToast({
       tone: "danger",
-      title: PROJECT_COPY.serverErrorTitle,
-      body: PROJECT_COPY.serverErrorBody,
+      title: t("serverErrorTitle"),
+      body: t("serverErrorBody"),
     });
     return null;
   }
@@ -77,6 +86,7 @@ export function useAssignmentForm(
   props: Readonly<AssignmentDialogProps>,
   initialMemberId: string | null = null,
 ) {
+  const t = useTranslations(ASSIGNMENT_DIALOG_COPY_NAMESPACE);
   const router = useRouter();
   const [state, setState] = useState<AssignmentFormState>(() => {
     const initial = props.members.find((candidate) => candidate.id === initialMemberId);
@@ -100,7 +110,7 @@ export function useAssignmentForm(
     const role = member?.roles.find((candidate) => candidate.id === state.roleId);
     if (!member || !role) return;
     setState((previous) => ({ ...previous, isPending: true, error: null }));
-    const outcome = await saveAssignment(props, router, member, role);
+    const outcome = await saveAssignment(t, props, router, member, role);
     if (outcome !== "left") settle(outcome);
   }
   function handleSubmit(): void {

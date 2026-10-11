@@ -5,11 +5,13 @@ import { copyTranslator } from "@tests/support/copy/copy-messages";
 
 import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
 import { CLIENT_COPY_NAMESPACE } from "@/features/booking/ui/client-copy/client-copy.copy";
-import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
+import { PROJECT_COPY_NAMESPACE } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { TEAM_COPY_NAMESPACE } from "@/features/booking/ui/team-copy/team-copy.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 
 import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
+
+const pc = copyTranslator(PROJECT_COPY_NAMESPACE, "id");
 
 const clientT = copyTranslator(CLIENT_COPY_NAMESPACE, "id");
 const teamT = copyTranslator(TEAM_COPY_NAMESPACE, "id");
@@ -124,21 +126,21 @@ export async function createBookedProject(
   teamMember?: string,
 ): Promise<void> {
   await page.goto(`/w/${workspaceId}/projects/new`);
-  await page.getByRole("combobox", { name: PROJECT_COPY.clientLabel }).click();
+  await page.getByRole("combobox", { name: pc("clientLabel") }).click();
   await page.getByRole("option", { name: /Rina/ }).click();
-  await page.getByRole("button", { name: new RegExp(PROJECT_COPY.serviceLabel) }).click();
+  await page.getByRole("button", { name: new RegExp(pc("serviceLabel")) }).click();
   await page.getByRole("option", { name: "Wisuda Basic" }).click();
-  await page.getByRole("button", { name: PROJECT_COPY.addSessionDesktop }).click();
+  await page.getByRole("button", { name: pc("addSession") }).click();
   const dialog = page
-    .getByRole("dialog", { name: PROJECT_COPY.sessionDialogTitle })
+    .getByRole("dialog", { name: pc("sessionDialogTitle") })
     .filter({ visible: true });
-  await dialog.getByRole("textbox", { name: PROJECT_COPY.sessionName }).fill("Resepsi");
-  await dialog.getByRole("button", { name: new RegExp(PROJECT_COPY.sessionDate) }).click();
+  await dialog.getByRole("textbox", { name: pc("sessionName") }).fill("Resepsi");
+  await dialog.getByRole("button", { name: new RegExp(pc("sessionDate")) }).click();
   await page.getByRole("grid").getByText("15", { exact: true }).first().click();
   if (teamMember) await pickTeamInSessionDialog(page, dialog, teamMember);
-  await dialog.getByRole("button", { name: PROJECT_COPY.sessionSave }).click();
+  await dialog.getByRole("button", { name: pc("sessionSave") }).click();
   await expect(dialog).toBeHidden();
-  await page.getByRole("button", { name: PROJECT_COPY.create }).click();
+  await page.getByRole("button", { name: pc("create") }).click();
   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=created$/);
 }
 
@@ -149,13 +151,13 @@ export async function staffSession(
   member = "Dimas Pratama",
 ): Promise<void> {
   const form = page
-    .getByRole("dialog", { name: PROJECT_COPY.assignTitle(session) })
+    .getByRole("dialog", { name: pc("assignTitle", { sessionName: session }) })
     .filter({ visible: true });
-  await form.getByRole("button", { name: new RegExp(`^${PROJECT_COPY.assignMember}`) }).click();
+  await form.getByRole("button", { name: new RegExp(`^${pc("assignMember")}`) }).click();
   await page.getByRole("option", { name: member }).click();
-  await form.getByRole("button", { name: new RegExp(`^${PROJECT_COPY.assignRole}`) }).click();
+  await form.getByRole("button", { name: new RegExp(`^${pc("assignRole")}`) }).click();
   await page.getByRole("option", { name: role }).click();
-  await form.getByRole("button", { name: PROJECT_COPY.assignSubmit }).click();
+  await form.getByRole("button", { name: pc("assignSubmit") }).click();
   await expect(form).toBeHidden({ timeout: 15_000 });
 }
 
@@ -165,27 +167,29 @@ export async function setupStaffedProject(page: Page): Promise<string> {
   await addService(page, workspaceId);
   await addMember(page, workspaceId);
   await createBookedProject(page, workspaceId);
-  await page.getByRole("button", { name: PROJECT_COPY.addTeamFor("Resepsi") }).click();
+  await page.getByRole("button", { name: pc("addTeamFor", { sessionName: "Resepsi" }) }).click();
   await staffSession(page, "Resepsi", "Fotografer");
   return workspaceId;
 }
 
 export async function addSessionOnDetail(page: Page, name: string, day: string): Promise<void> {
-  await page.getByRole("button", { name: PROJECT_COPY.addSessionDesktop }).click();
+  await page.getByRole("button", { name: pc("addSession") }).click();
   const dialog = page
-    .getByRole("dialog", { name: PROJECT_COPY.sessionDialogTitle })
+    .getByRole("dialog", { name: pc("sessionDialogTitle") })
     .filter({ visible: true });
-  await dialog.getByRole("textbox", { name: PROJECT_COPY.sessionName }).fill(name);
-  await dialog.getByRole("button", { name: new RegExp(PROJECT_COPY.sessionDate) }).click();
+  await dialog.getByRole("textbox", { name: pc("sessionName") }).fill(name);
+  await dialog.getByRole("button", { name: new RegExp(pc("sessionDate")) }).click();
   await page.getByRole("grid").getByText(day, { exact: true }).first().click();
-  await dialog.getByRole("button", { name: PROJECT_COPY.sessionSave }).click();
+  await dialog.getByRole("button", { name: pc("sessionSave") }).click();
   await expect(dialog).toBeHidden();
 }
 
 export async function openAturTim(page: Page, session: string, count: number) {
-  const group = page.getByRole("button", { name: PROJECT_COPY.teamGroupLabel(session, count) });
+  const group = page.getByRole("button", {
+    name: pc("teamGroupLabel", { sessionName: session, count: count }),
+  });
   const team = page
-    .getByRole("dialog", { name: PROJECT_COPY.teamTitle(session) })
+    .getByRole("dialog", { name: pc("teamTitle", { sessionName: session }) })
     .filter({ visible: true });
   // A click before hydration does nothing, so press again until the dialog is there.
   await expect(async () => {
@@ -196,11 +200,11 @@ export async function openAturTim(page: Page, session: string, count: number) {
 }
 
 export async function cancelProject(page: Page, title: string): Promise<void> {
-  await page.getByRole("button", { name: PROJECT_COPY.menuActions(title) }).click();
-  await page.getByRole("menuitem", { name: PROJECT_COPY.menuCancel }).click();
-  const cancel = page.getByRole("dialog", { name: PROJECT_COPY.cancelDialogTitle });
-  await cancel.getByRole("button", { name: PROJECT_COPY.cancelConfirm }).click();
-  await expect(visibleText(page, PROJECT_COPY.cancelledTitle).first()).toBeVisible();
+  await page.getByRole("button", { name: pc("menuActions", { name: title }) }).click();
+  await page.getByRole("menuitem", { name: pc("menuCancel") }).click();
+  const cancel = page.getByRole("dialog", { name: pc("cancelDialogTitle") });
+  await cancel.getByRole("button", { name: pc("cancelConfirm") }).click();
+  await expect(visibleText(page, pc("cancelledTitle")).first()).toBeVisible();
 }
 
 async function pickTeamInSessionDialog(
@@ -208,12 +212,10 @@ async function pickTeamInSessionDialog(
   dialog: ReturnType<Page["locator"]>,
   member: string,
 ): Promise<void> {
-  await dialog
-    .getByRole("button", { name: new RegExp(`^${PROJECT_COPY.sessionTeamMember}`) })
-    .click();
+  await dialog.getByRole("button", { name: new RegExp(`^${pc("sessionTeamMember")}`) }).click();
   await page.getByRole("option", { name: member }).click();
-  await dialog.getByRole("button", { name: PROJECT_COPY.teamAddMember }).click();
-  await expect(dialog.getByRole("list", { name: PROJECT_COPY.sessionTeamListLabel })).toContainText(
+  await dialog.getByRole("button", { name: pc("teamAddMember") }).click();
+  await expect(dialog.getByRole("list", { name: pc("sessionTeamListLabel") })).toContainText(
     member,
   );
 }

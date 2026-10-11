@@ -121,6 +121,8 @@ export async function createProject(
   }
   const submit = mode === "BOOKED" ? pc("create") : pc("saveDraft");
   await page.getByRole("button", { name: submit }).click();
-  await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=/, { timeout: 30_000 });
+  // Creating a project opens its detail page, which reads many tables; far from the database
+  // this takes well over 30 s.
+  await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=/, { timeout: 90_000 });
   return new URL(page.url()).pathname;
 }

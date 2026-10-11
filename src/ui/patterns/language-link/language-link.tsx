@@ -86,7 +86,7 @@ function LanguageTrigger({
       className={triggerClassName(isPending)}
     >
       <Icon
-        name={isPending ? "loading-03" : "globe"}
+        name={isPending ? "loading-03" : "languages"}
         aria-hidden="true"
         className={isPending ? "animate-spin" : undefined}
       />

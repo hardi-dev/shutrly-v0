@@ -2,27 +2,31 @@ import type { SelectionGroupDetailView } from "@/features/gallery/application/us
 import { formatGalleryDateAndTime } from "@/features/gallery/domain/gallery-display/gallery-display";
 import type { FormattingLocale } from "@/shared/locale/locale.types";
 
-import { SELECTION_OWNER_COPY as COPY } from "../selection-owner-text/selection-owner.copy";
+import type { SelectionOwnerTranslate } from "../selection-owner-text/selection-owner-text.types";
 
-/** The *Waktu* fact of the summary: when it was sent or locked, or when an open group last changed (owner-2 exports). @param detail - the group detail @returns the line */
+/** The *Waktu* fact of the summary: when it was sent or locked, or when an open group last changed (owner-2 exports). @param t - the translator @param detail - the group detail @param locale - the formatting locale @returns the line */
 export function timeFact(
+  t: SelectionOwnerTranslate,
   { group, changedAt }: SelectionGroupDetailView,
   locale: FormattingLocale,
 ): string {
   if (group.status === "LOCKED" && group.lockedAt !== null) {
-    return COPY.timeLocked(formatGalleryDateAndTime(group.lockedAt, locale));
+    return t("timeLocked", { when: formatGalleryDateAndTime(group.lockedAt, locale) });
   }
   if (group.status === "SUBMITTED" && group.submittedAt !== null) {
-    return COPY.timeSent(formatGalleryDateAndTime(group.submittedAt, locale));
+    return t("timeSent", { when: formatGalleryDateAndTime(group.submittedAt, locale) });
   }
   return changedAt === null
-    ? COPY.timeNone
-    : COPY.timeChanged(formatGalleryDateAndTime(changedAt, locale));
+    ? t("timeNone")
+    : t("timeChanged", { when: formatGalleryDateAndTime(changedAt, locale) });
 }
 
-/** The *Foto pilihan* card's description: photos and notes, or for print groups the hint that quantities sit on each photo (owner-2 exports). @param detail - the group detail @returns the line */
-export function picksMeta({ group, picks }: SelectionGroupDetailView): string {
-  return group.mode === "QUANTITY"
-    ? COPY.picksMetaQuantity(picks.length)
-    : COPY.picksMetaCount(picks.length, group.noteCount);
+/** The *Foto pilihan* card's description: photos and notes, or for print groups the hint that quantities sit on each photo (owner-2 exports). @param t - the translator @param detail - the group detail @returns the line */
+export function picksMeta(
+  t: SelectionOwnerTranslate,
+  { group, picks }: SelectionGroupDetailView,
+): string {
+  if (group.mode === "QUANTITY") return t("picksMetaQuantity", { picks: picks.length });
+  if (group.noteCount === 0) return t("picksMetaCount", { picks: picks.length });
+  return t("picksMetaCountNotes", { picks: picks.length, withNotes: group.noteCount });
 }

@@ -52,7 +52,7 @@ import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-overri
 import type { FormattingLocale } from "@/shared/locale/locale.types";
 import { ToastOnMount } from "@/ui/patterns/toast/toast";
 
-import { PROJECT_DETAIL_PAGE_COPY_NAMESPACE } from "./page.copy";
+import { PROJECT_DETAIL_DELIVERY_NAMESPACE, PROJECT_DETAIL_PAGE_COPY_NAMESPACE } from "./page.copy";
 
 export default async function ProjectDetailPage({
   params,
@@ -68,7 +68,7 @@ export default async function ProjectDetailPage({
     projectId,
   );
   const toast = resolveToast(t, state, project.title);
-  const deliveredMeta = deliveredHeaderMeta(delivery, locale);
+  const deliveredMeta = await deliveredMetaOf(delivery, locale);
   return (
     <>
       <PageHeadingOverride
@@ -202,4 +202,12 @@ function resolveToast(t: ProjectTranslate, state: string | undefined, title: str
     return { title: t("toastDraftSavedTitle"), body: t("toastDraftSavedBody", { title }) };
   }
   return null;
+}
+
+async function deliveredMetaOf(
+  delivery: Parameters<typeof deliveredHeaderMeta>[1],
+  locale: Parameters<typeof deliveredHeaderMeta>[2],
+): Promise<string | null> {
+  const t = await getTranslations(PROJECT_DETAIL_DELIVERY_NAMESPACE);
+  return deliveredHeaderMeta(t, delivery, locale);
 }

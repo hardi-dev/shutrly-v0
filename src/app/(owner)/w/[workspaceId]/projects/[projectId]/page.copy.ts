@@ -2,3 +2,7 @@
 import { PROJECT_COPY_NAMESPACE } from "@/features/booking/ui/project-copy/project-copy.copy";
 
 export const PROJECT_DETAIL_PAGE_COPY_NAMESPACE = PROJECT_COPY_NAMESPACE;
+
+import { DELIVERY_COPY_NAMESPACE } from "@/features/gallery/ui/delivery-copy/delivery.copy";
+
+export const PROJECT_DETAIL_DELIVERY_NAMESPACE = DELIVERY_COPY_NAMESPACE;

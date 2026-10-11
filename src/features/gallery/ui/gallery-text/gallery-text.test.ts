@@ -1,5 +1,7 @@
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 import { describe, expect, it } from "vitest";
 
+import { GALLERY_COPY_NAMESPACE } from "../gallery-copy/gallery-copy.copy";
 import {
   galleryExpiryFact,
   galleryMetaText,
@@ -7,6 +9,8 @@ import {
   galleryVisibilityText,
   photoCountsText,
 } from "./gallery-text";
+
+const t = copyTranslator(GALLERY_COPY_NAMESPACE, "id");
 
 const BASE = {
   status: "DRAFT" as const,
@@ -18,29 +22,35 @@ const BASE = {
 
 describe("gallery text", () => {
   it("AC-GAL-016 AC-GAL-020 labels each status", () => {
-    expect(galleryStatusChip("DRAFT")).toEqual({ tone: "neutral", label: "Draf", hasDot: true });
-    expect(galleryStatusChip("PUBLISHED").label).toBe("Dipublikasikan");
-    expect(galleryStatusChip("EXPIRED")).toMatchObject({ tone: "warning", label: "Kedaluwarsa" });
+    expect(galleryStatusChip(t, "DRAFT")).toEqual({ tone: "neutral", label: "Draf", hasDot: true });
+    expect(galleryStatusChip(t, "PUBLISHED").label).toBe("Dipublikasikan");
+    expect(galleryStatusChip(t, "EXPIRED")).toMatchObject({
+      tone: "warning",
+      label: "Kedaluwarsa",
+    });
   });
 
   it("AC-GAL-014 counts per kind with the missing ones", () => {
-    expect(photoCountsText({ proof: 5, edited: 3, print: 1, missing: 1 })).toBe(
-      "5 proof (1 hilang) · 4 hasil akhir",
+    expect(photoCountsText(t, { proof: 5, edited: 3, print: 1, missing: 1 })).toBe(
+      "5 foto pilihan (1 hilang) · 4 hasil akhir",
     );
   });
 
   it("AC-GAL-018 AC-GAL-019 describes no expiry, a draft duration and a day", () => {
-    expect(galleryExpiryFact(BASE, "id-ID")).toEqual({ text: "Tidak ada", isMuted: true });
-    expect(galleryExpiryFact({ ...BASE, expiryDays: 30 }, "id-ID").text).toBe(
+    expect(galleryExpiryFact(t, BASE, "id-ID")).toEqual({
+      text: "Tanpa kedaluwarsa",
+      isMuted: true,
+    });
+    expect(galleryExpiryFact(t, { ...BASE, expiryDays: 30 }, "id-ID").text).toBe(
       "30 hari setelah dipublikasikan",
     );
-    expect(galleryExpiryFact({ ...BASE, expiresAt: "2026-11-03T03:00:00Z" }, "id-ID").text).toBe(
+    expect(galleryExpiryFact(t, { ...BASE, expiresAt: "2026-11-03T03:00:00Z" }, "id-ID").text).toBe(
       "Sel, 3 Nov 2026",
     );
   });
 
   it("design header meta: empty draft, published and expired", () => {
-    expect(galleryMetaText(BASE, "Wisuda Basic — Rina", "id-ID")).toBe(
+    expect(galleryMetaText(t, BASE, "Wisuda Basic — Rina", "id-ID")).toBe(
       "Wisuda Basic — Rina · Belum ada folder · Tanpa kedaluwarsa",
     );
     const published = {
@@ -50,27 +60,30 @@ describe("gallery text", () => {
       counts: { proof: 8, edited: 2, print: 1, missing: 0 },
       expiresAt: "2026-11-03T03:00:00Z",
     };
-    expect(galleryMetaText(published, null, "id-ID")).toBe(
-      "2 folder · 8 proof · Kedaluwarsa Sel, 3 Nov 2026",
+    expect(galleryMetaText(t, published, null, "id-ID")).toBe(
+      "2 folder · 8 foto pilihan · Kedaluwarsa pada Sel, 3 Nov 2026",
     );
-    expect(galleryMetaText({ ...published, status: "EXPIRED" }, null, "id-ID")).toBe(
-      "2 folder · 8 proof · Kedaluwarsa sejak Sel, 3 Nov 2026",
+    expect(galleryMetaText(t, { ...published, status: "EXPIRED" }, null, "id-ID")).toBe(
+      "2 folder · 8 foto pilihan · Kedaluwarsa sejak Sel, 3 Nov 2026",
     );
-    expect(galleryMetaText({ ...published, status: "ARCHIVED" }, null, "id-ID")).toBe(
-      "2 folder · 8 proof",
+    expect(galleryMetaText(t, { ...published, status: "ARCHIVED" }, null, "id-ID")).toBe(
+      "2 folder · 8 foto pilihan",
     );
   });
 
-  it("design marks a past expiry (lewat) and words visibility per status and project", () => {
+  it("design marks a past expiry (kedaluwarsa) and words visibility per status and project", () => {
     expect(
-      galleryExpiryFact({ ...BASE, status: "EXPIRED", expiresAt: "2026-11-03T03:00:00Z" }, "id-ID")
-        .text,
-    ).toBe("Sel, 3 Nov 2026 (lewat)");
-    expect(galleryVisibilityText("EXPIRED", "BOOKED")).toBe(
-      "Tidak terlihat oleh klien selama galeri kedaluwarsa.",
+      galleryExpiryFact(
+        t,
+        { ...BASE, status: "EXPIRED", expiresAt: "2026-11-03T03:00:00Z" },
+        "id-ID",
+      ).text,
+    ).toBe("Sel, 3 Nov 2026 (kedaluwarsa)");
+    expect(galleryVisibilityText(t, "EXPIRED", "BOOKED")).toBe(
+      "Disembunyikan dari klien selama galeri kedaluwarsa.",
     );
-    expect(galleryVisibilityText("ARCHIVED", "BOOKED")).toBe("Tidak terlihat oleh klien.");
-    expect(galleryVisibilityText("DRAFT", "CANCELLED")).toBe("Tidak akan terlihat oleh klien.");
-    expect(galleryVisibilityText("PUBLISHED", "SHOOTING")).toBe("Terlihat oleh klien sekarang.");
+    expect(galleryVisibilityText(t, "ARCHIVED", "BOOKED")).toBe("Disembunyikan dari klien.");
+    expect(galleryVisibilityText(t, "DRAFT", "CANCELLED")).toBe("Tidak akan terlihat oleh klien.");
+    expect(galleryVisibilityText(t, "PUBLISHED", "SHOOTING")).toBe("Terlihat oleh klien sekarang.");
   });
 });

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 import type { FormattingLocale } from "@/shared/locale/locale.types";
@@ -13,7 +14,7 @@ import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { CreateGalleryDialog } from "../create-gallery-dialog/create-gallery-dialog";
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
+import type { GalleryTranslate } from "../gallery-copy/gallery-copy.types";
 import { GalleryFacts } from "../gallery-facts/gallery-facts";
 import type { GalleryFact } from "../gallery-facts/gallery-facts.types";
 import { deliverySummary, selectionSummary } from "../gallery-summary-text/gallery-summary-text";
@@ -24,6 +25,13 @@ import {
   photoCountsText,
 } from "../gallery-text/gallery-text";
 import { useCreateGalleryLauncher } from "../use-create-gallery-launcher/use-create-gallery-launcher";
+import {
+  GALLERY_CARD_COPY_NAMESPACE,
+  GALLERY_CARD_DELIVERY_NAMESPACE,
+  GALLERY_CARD_SELECTION_NAMESPACE,
+  GALLERY_CARD_SUMMARY_NAMESPACE,
+} from "./gallery-card.copy";
+import type { SummaryTranslators } from "./gallery-card.types";
 import type {
   EmptyText,
   GalleryCardProps,
@@ -34,6 +42,10 @@ import { GallerySummaryRows } from "./gallery-summary-rows";
 
 /** The project detail's Galeri card (board `ZiJzF`, Owner 7): *Buat galeri*, the draft-project hint, or the gallery facts with the *Pilihan klien* and *Hasil akhir* rows (AC-GAL-001, 003, A-34). */
 export function GalleryCard(props: Readonly<GalleryCardProps>) {
+  const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
+  const summaryT = useTranslations(GALLERY_CARD_SUMMARY_NAMESPACE);
+  const selectionT = useTranslations(GALLERY_CARD_SELECTION_NAMESPACE);
+  const deliveryT = useTranslations(GALLERY_CARD_DELIVERY_NAMESPACE);
   const locale = useFormattingLocale();
   const router = useRouter();
   const isMobile = useMobileViewport();
@@ -43,27 +55,29 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
     router.push(galleryHref);
   };
   if (card.gallery === null) return <NoGallery {...props} galleryHref={galleryHref} />;
-  const manageLabel = isMobile ? GALLERY_COPY.manageMobile : GALLERY_COPY.manage;
+  const manageLabel = isMobile ? t("manageMobile") : t("manage");
   return (
     <SectionCard
-      title={GALLERY_COPY.cardTitle}
+      title={t("cardTitle")}
       content="flush"
       actions={
         <Button variant="secondary" iconLeading="arrow-right" onPress={handleManage}>
-          {card.gallery.status === "ARCHIVED" ? GALLERY_COPY.view : manageLabel}
+          {card.gallery.status === "ARCHIVED" ? t("view") : manageLabel}
         </Button>
       }
     >
       <div className="flex flex-col gap-(--space-4) p-(--space-4) md:gap-(--space-5) md:p-(--space-6)">
         <GallerySummaryFacts gallery={card.gallery} isMobile={isMobile} />
-        <GallerySummaryRows rows={summaryRows(props, isMobile, locale)} />
+        <GallerySummaryRows
+          rows={summaryRows(props, { summaryT, selectionT, deliveryT }, isMobile, locale)}
+        />
       </div>
       {card.gallery.failedSourceCount > 0 ? (
         <div className="px-(--space-4) pb-(--space-4) md:px-(--space-6) md:pb-(--space-6)">
           <Alert
             tone="warning"
-            title={GALLERY_COPY.cardFailedTitle(card.gallery.failedSourceCount)}
-            body={GALLERY_COPY.cardFailedBody(failedNames(card.gallery.failedSourceNames))}
+            title={t("cardFailedTitle", { count: card.gallery.failedSourceCount })}
+            body={t("cardFailedBody", { names: failedNames(t, card.gallery.failedSourceNames) })}
           />
         </div>
       ) : null}
@@ -73,30 +87,35 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
 
 function summaryRows(
   { selection, delivery }: Readonly<GalleryCardProps>,
+  translators: SummaryTranslators,
   isMobile: boolean,
   locale: FormattingLocale,
 ): GallerySummaryRow[] {
   const rows = [
-    selection ? selectionSummary(selection, isMobile) : null,
-    delivery ? deliverySummary(delivery, isMobile, locale) : null,
+    selection
+      ? selectionSummary(translators.summaryT, translators.selectionT, selection, isMobile)
+      : null,
+    delivery
+      ? deliverySummary(translators.summaryT, translators.deliveryT, delivery, isMobile, locale)
+      : null,
   ];
   return rows.filter((row) => row !== null);
 }
 
-function failedNames(names: readonly string[]): string {
-  return names.map((name) => name || GALLERY_COPY.sourceFallbackName).join(", ");
+function failedNames(t: GalleryTranslate, names: readonly string[]): string {
+  return names.map((name) => name || t("sourceFallbackName")).join(", ");
 }
 
-function noGalleryText(card: GalleryCardView): EmptyText {
-  if (card.canCreate)
-    return { title: GALLERY_COPY.cardEmptyTitle, body: GALLERY_COPY.cardEmptyBody };
+function noGalleryText(t: GalleryTranslate, card: GalleryCardView): EmptyText {
+  if (card.canCreate) return { title: t("cardEmptyTitle"), body: t("cardEmptyBody") };
   if (card.project.status === "DRAFT") {
-    return { title: GALLERY_COPY.cardDraftProjectTitle, body: GALLERY_COPY.cardDraftProjectBody };
+    return { title: t("cardDraftProjectTitle"), body: t("cardDraftProjectBody") };
   }
-  return { title: GALLERY_COPY.cardCancelledTitle, body: GALLERY_COPY.cardCancelledBody };
+  return { title: t("cardCancelledTitle"), body: t("cardCancelledBody") };
 }
 
 function NoGallery(props: Readonly<NoGalleryProps>) {
+  const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
   const router = useRouter();
   const { card } = props;
   const launcher = useCreateGalleryLauncher({
@@ -109,14 +128,13 @@ function NoGallery(props: Readonly<NoGalleryProps>) {
     launcher.close();
     router.push(sourceId ? `${props.galleryHref}?sync=${sourceId}` : props.galleryHref);
   };
-  const text = noGalleryText(card);
   return (
-    <SectionCard title={GALLERY_COPY.cardTitle} description={GALLERY_COPY.cardDescription}>
+    <SectionCard title={t("cardTitle")} description={t("cardDescription")}>
       <EmptyState
         icon="images"
         placement="in-card"
-        title={text.title}
-        body={text.body}
+        title={noGalleryText(t, card).title}
+        body={noGalleryText(t, card).body}
         action={
           card.canCreate ? (
             <Button
@@ -125,7 +143,7 @@ function NoGallery(props: Readonly<NoGalleryProps>) {
               isPending={launcher.isOpening}
               onPress={launcher.handleOpen}
             >
-              {GALLERY_COPY.create}
+              {t("create")}
             </Button>
           ) : undefined
         }
@@ -149,26 +167,27 @@ function NoGallery(props: Readonly<NoGalleryProps>) {
 }
 
 function GallerySummaryFacts({ gallery, isMobile }: Readonly<GallerySummaryFactsProps>) {
+  const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
   const locale = useFormattingLocale();
-  const expiry = galleryExpiryFact(gallery, locale);
+  const expiry = galleryExpiryFact(t, gallery, locale);
   const status: GalleryFact = {
-    label: GALLERY_COPY.factStatus,
-    value: <StatusChip {...galleryStatusChip(gallery.status)} />,
+    label: t("factStatus"),
+    value: <StatusChip {...galleryStatusChip(t, gallery.status)} />,
   };
   const photos: GalleryFact = {
-    label: GALLERY_COPY.factPhotos,
-    value: photoCountsText(gallery.counts),
+    label: t("factPhotos"),
+    value: photoCountsText(t, gallery.counts),
   };
   if (isMobile) return <GalleryFacts facts={[status, photos]} isFlush />;
   const sources =
     gallery.activeSourceCount === 0
-      ? GALLERY_COPY.noSources
-      : GALLERY_COPY.sourceCount(gallery.activeSourceCount);
+      ? t("noSources")
+      : t("sourceCount", { count: gallery.activeSourceCount });
   const facts: GalleryFact[] = [
     status,
-    { label: GALLERY_COPY.factSources, value: sources },
+    { label: t("factSources"), value: sources },
     photos,
-    { label: GALLERY_COPY.factExpiry, value: expiry.text, isMuted: expiry.isMuted },
+    { label: t("factExpiry"), value: expiry.text, isMuted: expiry.isMuted },
   ];
   return <GalleryFacts facts={facts} isFlush />;
 }

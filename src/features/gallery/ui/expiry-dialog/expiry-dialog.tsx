@@ -1,19 +1,21 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 
 import { Button } from "@/ui/primitives/button/button";
 
 import { ExpiryFields } from "../expiry-fields/expiry-fields";
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { GalleryDialogShell } from "../gallery-dialog-shell/gallery-dialog-shell";
 import { useExpiryForm } from "../use-expiry-form/use-expiry-form";
+import { EXPIRY_DIALOG_COPY_NAMESPACE } from "./expiry-dialog.copy";
 import type { ExpiryDialogProps } from "./expiry-dialog.types";
 
 const FORM_ID = "gallery-expiry-form";
 
 /** *Kedaluwarsa galeri*: none, a date or days; a later or no expiry re-opens an expired gallery (BR-GAL-005, AC-GAL-018…020). */
 export function ExpiryDialog(props: Readonly<ExpiryDialogProps>) {
+  const t = useTranslations(EXPIRY_DIALOG_COPY_NAMESPACE);
   const state = useExpiryForm(props);
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     void state.submit(event);
@@ -29,15 +31,15 @@ export function ExpiryDialog(props: Readonly<ExpiryDialogProps>) {
       isPending={state.isPending}
       className="max-md:w-full"
     >
-      {GALLERY_COPY.expirySave}
+      {t("expirySave")}
     </Button>
   );
   return (
     <GalleryDialogShell
       isOpen
       onOpenChange={handleOpenChange}
-      title={GALLERY_COPY.expiryDialogTitle}
-      description={GALLERY_COPY.expiryDialogBody}
+      title={t("expiryDialogTitle")}
+      description={t("expiryDialogBody")}
       size="md"
       isPending={state.isPending}
       renderPrimary={renderPrimary}
@@ -48,9 +50,7 @@ export function ExpiryDialog(props: Readonly<ExpiryDialogProps>) {
           onChange={state.expiry.onChange}
           dateError={state.errors.date}
           daysError={state.errors.days}
-          daysHelper={
-            props.isDraft ? GALLERY_COPY.expiryDaysHelperDraft : GALLERY_COPY.expiryDaysHelperLive
-          }
+          daysHelper={props.isDraft ? t("expiryDaysHelperDraft") : t("expiryDaysHelperLive")}
         />
       </form>
     </GalleryDialogShell>

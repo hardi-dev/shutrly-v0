@@ -76,7 +76,7 @@ describe("DeliveryScreen (klien-8)", () => {
     const user = userEvent.setup();
     render(<DeliveryScreen gate={GATE} token="T1" files={FILES} />);
     await user.click(screen.getByRole("button", { name: /Unduh/ }));
-    await user.click(await screen.findByRole("menuitem", { name: "Unduh semua (2)" }));
+    await user.click(await screen.findByRole("menuitem", { name: "Unduh semua (2 foto)" }));
     const dialog = await screen.findByRole("dialog");
     expect(within(dialog).getByText("Unduh semua 2 foto?")).toBeTruthy();
     await user.click(within(dialog).getByRole("button", { name: "Unduh semua" }));
@@ -104,7 +104,7 @@ describe("DeliveryScreen (klien-8)", () => {
     download.current = fakeDownload({ phase: "RUNNING", done: 1, total: 2 });
     render(<DeliveryScreen gate={GATE} token="T1" files={FILES} />);
     expect(screen.getByText("1 dari 2 foto selesai")).toBeTruthy();
-    await userEvent.setup().click(screen.getByRole("button", { name: "Batalkan" }));
+    await userEvent.setup().click(screen.getByRole("button", { name: "Hentikan unduhan" }));
     expect(download.current.cancel).toHaveBeenCalled();
   });
 

@@ -89,12 +89,12 @@ describe("GalleryCard", () => {
     await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
     expect(props.proposeAction).toHaveBeenCalledWith("ws-1", "p-1");
     expect(await screen.findByRole("dialog", { name: "Buat galeri" })).toBeInTheDocument();
-    expect(screen.getByLabelText("Password galeri")).toHaveValue("mawar-4821");
+    expect(screen.getByLabelText("Kata sandi galeri")).toHaveValue("mawar-4821");
   });
 
   it("AC-GAL-003 shows the booking hint and no Buat galeri on a draft project", () => {
     renderCard({ project: { ...PROJECT, status: "DRAFT" }, canCreate: false, gallery: null });
-    expect(screen.getByText("Galeri tersedia setelah booking")).toBeInTheDocument();
+    expect(screen.getByText("Galeri tersedia setelah pemesanan dikonfirmasi")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Buat galeri" })).not.toBeInTheDocument();
   });
 
@@ -102,8 +102,8 @@ describe("GalleryCard", () => {
     renderCard({ project: PROJECT, canCreate: false, gallery: GALLERY });
     expect(screen.getByText("Draf")).toBeInTheDocument();
     expect(screen.getByText("2 folder")).toBeInTheDocument();
-    expect(screen.getByText("8 proof · 3 hasil akhir")).toBeInTheDocument();
-    expect(screen.getByText("Tidak ada")).toBeInTheDocument();
+    expect(screen.getByText("8 foto pilihan · 3 hasil akhir")).toBeInTheDocument();
+    expect(screen.getByText("Tanpa kedaluwarsa")).toBeInTheDocument();
     expect(screen.queryByText("mawar-4821")).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Kelola galeri" }));
     expect(push).toHaveBeenCalledWith("/w/ws-1/projects/p-1/gallery");
@@ -128,7 +128,7 @@ describe("GalleryCard", () => {
       { project: PROJECT, canCreate: false, gallery: { ...GALLERY, status: "PUBLISHED" } },
       { selection: SELECTION, delivery: DELIVERY },
     );
-    expect(screen.getByText("8 proof · 3 hasil akhir")).toBeInTheDocument();
+    expect(screen.getByText("8 foto pilihan · 3 hasil akhir")).toBeInTheDocument();
     expect(screen.queryByText("Kedaluwarsa")).not.toBeInTheDocument();
     expect(screen.queryByText(/2 folder/)).not.toBeInTheDocument();
     expect(screen.getByText("Semua grup dikunci")).toBeInTheDocument();
@@ -152,9 +152,9 @@ describe("GalleryCard", () => {
   it("AC-GAL-008 the card names the folder that failed to sync", () => {
     const failed = { ...GALLERY, failedSourceCount: 1, failedSourceNames: ["Rina-Keluarga"] };
     renderCard({ project: PROJECT, canCreate: false, gallery: failed });
-    expect(screen.getByText("1 folder gagal disinkronkan")).toBeInTheDocument();
+    expect(screen.getByText("1 folder belum bisa disinkronkan")).toBeInTheDocument();
     expect(
-      screen.getByText("Rina-Keluarga tidak bisa dibaca. Buka galeri untuk melihat penyebabnya."),
+      screen.getByText("Rina-Keluarga belum bisa dibaca. Buka galeri untuk melihat penyebabnya."),
     ).toBeInTheDocument();
   });
 });

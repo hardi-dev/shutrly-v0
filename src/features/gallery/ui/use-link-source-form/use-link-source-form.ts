@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { useController, useForm } from "react-hook-form";
@@ -13,7 +14,9 @@ import type {
 import type { LinkGallerySourceResult } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source.types";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
+import { GALLERY_REFUSED_MESSAGE_KEY } from "../gallery-copy/gallery-copy.copy";
+import type { GalleryTranslate } from "../gallery-copy/gallery-copy.types";
+import { USE_LINK_SOURCE_FORM_COPY_NAMESPACE } from "./use-link-source-form.copy";
 import type { PendingInUse, UseLinkSourceFormInput } from "./use-link-source-form.types";
 
 type LinkForm = UseFormReturn<LinkGallerySourceInput, unknown, LinkGallerySourceValues>;
@@ -28,15 +31,16 @@ function setFieldErrors(form: LinkForm, fieldErrors: Readonly<Record<string, str
 }
 
 function applyLinkResult(
+  t: GalleryTranslate,
   form: LinkForm,
   result: LinkGallerySourceResult,
   onLinked: (sourceId: string) => void,
 ): void {
   if (result.ok) {
-    showToast({ tone: "success", title: GALLERY_COPY.linkedTitle });
+    showToast({ tone: "success", title: t("linkedTitle") });
     onLinked(result.sourceId);
   } else if (result.code === "VALIDATION_FAILED") setFieldErrors(form, result.fieldErrors);
-  else showToast({ tone: "danger", title: GALLERY_COPY.refused[result.code] });
+  else showToast({ tone: "danger", title: t(GALLERY_REFUSED_MESSAGE_KEY[result.code]) });
 }
 
 function useLinkFields(form: LinkForm) {
@@ -48,24 +52,26 @@ function useLinkFields(form: LinkForm) {
 }
 
 async function sendLink(
+  t: GalleryTranslate,
   form: LinkForm,
   input: Readonly<UseLinkSourceFormInput>,
   values: LinkGallerySourceValues,
 ): Promise<void> {
   try {
     const result = await input.linkSourceAction(input.workspaceId, input.galleryId, values);
-    applyLinkResult(form, result, input.onLinked);
+    applyLinkResult(t, form, result, input.onLinked);
   } catch {
     showToast({
       tone: "danger",
-      title: GALLERY_COPY.saveFailedTitle,
-      body: GALLERY_COPY.saveFailedBody,
+      title: t("saveFailedTitle"),
+      body: t("saveFailedBody"),
     });
   }
 }
 
 /** Owns *Tambah folder*: validate, warn when another project uses the folder, then link and sync it (AC-GAL-005, 009, 010, 011). @param input - ids, active sources and the actions @returns the form, the in-use warning and handlers */
 export function useLinkSourceForm(input: Readonly<UseLinkSourceFormInput>) {
+  const t = useTranslations(USE_LINK_SOURCE_FORM_COPY_NAMESPACE);
   const form = useForm<LinkGallerySourceInput, unknown, LinkGallerySourceValues>({
     resolver: zodResolver(linkGallerySourceSchema),
     defaultValues: {
@@ -79,7 +85,7 @@ export function useLinkSourceForm(input: Readonly<UseLinkSourceFormInput>) {
   const link = async (values: LinkGallerySourceValues) => {
     setInUse(null);
     setIsPending(true);
-    await sendLink(form, input, values);
+    await sendLink(t, form, input, values);
     setIsPending(false);
   };
   const submit = form.handleSubmit(async (values) => {

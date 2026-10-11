@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { showToast } from "@/ui/patterns/toast/toast";
@@ -9,9 +10,11 @@ import type {
   DeliveryDialogState,
   DeliveryFlows,
 } from "../delivery-card/delivery-card.types";
-import { DELIVERY_COPY as COPY } from "../delivery-copy/delivery.copy";
+import type { DeliveryTranslate } from "../delivery-copy/delivery-copy.types";
+import { USE_DELIVERY_ACTIONS_COPY_NAMESPACE } from "./use-delivery-actions.copy";
 
 async function run(
+  t: DeliveryTranslate,
   props: Readonly<DeliveryCardProps>,
   kind: "PUBLISH" | "COMPLETE",
 ): Promise<DeliveryDialogState | null> {
@@ -19,14 +22,14 @@ async function run(
   if (kind === "PUBLISH") {
     const result = await actions.publishAction(workspaceId, projectId);
     if (result) return { kind: "REFUSED", reasons: result.reasons };
-    showToast({ tone: "success", title: COPY.publishedToast });
+    showToast({ tone: "success", title: t("publishedToast") });
     return null;
   }
   const result = await actions.completeAction(workspaceId, projectId);
   showToast(
     result
-      ? { tone: "danger", title: COPY.staleToast }
-      : { tone: "success", title: COPY.completedToast },
+      ? { tone: "danger", title: t("staleToast") }
+      : { tone: "success", title: t("completedToast") },
   );
   return null;
 }
@@ -38,15 +41,16 @@ async function run(
  * @returns the dialog state and handlers
  */
 export function useDeliveryActions(props: Readonly<DeliveryCardProps>): DeliveryFlows {
+  const t = useTranslations(USE_DELIVERY_ACTIONS_COPY_NAMESPACE);
   const [dialog, setDialog] = useState<DeliveryDialogState | null>(null);
   const [isPending, setIsPending] = useState(false);
   async function write(kind: "PUBLISH" | "COMPLETE"): Promise<void> {
     setIsPending(true);
     try {
-      setDialog(await run(props, kind));
+      setDialog(await run(t, props, kind));
     } catch {
       setDialog(null);
-      showToast({ tone: "danger", title: COPY.failedToast });
+      showToast({ tone: "danger", title: t("failedToast") });
     } finally {
       setIsPending(false);
     }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 import type { PublishSourceFailure } from "@/features/gallery/application/use-cases/gallery-results/gallery-results.types";
@@ -14,7 +15,8 @@ import { Button } from "@/ui/primitives/button/button";
 
 import { ExpiryDialog } from "../expiry-dialog/expiry-dialog";
 import { GalleryConfirmDialog } from "../gallery-confirm-dialog/gallery-confirm-dialog";
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
+import { GALLERY_STATUS_MESSAGE_KEY } from "../gallery-copy/gallery-copy.copy";
+import type { GalleryTranslate } from "../gallery-copy/gallery-copy.types";
 import { GalleryRowMenu } from "../gallery-row-menu/gallery-row-menu";
 import type { GalleryMenuEntry } from "../gallery-row-menu/gallery-row-menu.types";
 import { galleryExpiryFact } from "../gallery-text/gallery-text";
@@ -22,6 +24,7 @@ import { PublishRefusedDialog } from "../publish-refused-dialog/publish-refused-
 import { RotatePasswordDialog } from "../rotate-password-dialog/rotate-password-dialog";
 import { useCreateGalleryLauncher } from "../use-create-gallery-launcher/use-create-gallery-launcher";
 import { useLifecycleRunner } from "../use-lifecycle-runner/use-lifecycle-runner";
+import { GALLERY_LIFECYCLE_COPY_NAMESPACE } from "./gallery-lifecycle.copy";
 import type {
   GalleryDialogsProps,
   GalleryHeaderControlsProps,
@@ -29,13 +32,13 @@ import type {
   PrimaryButtonProps,
 } from "./gallery-lifecycle.types";
 
-const LABELS: Readonly<Record<GalleryAction, string>> = {
-  PUBLISH: GALLERY_COPY.publish,
-  CHANGE_EXPIRY: GALLERY_COPY.changeExpiry,
-  ROTATE_PASSWORD: GALLERY_COPY.rotatePassword,
-  ARCHIVE: GALLERY_COPY.archive,
-  DELETE: GALLERY_COPY.deleteGallery,
-};
+const LABEL_KEY = {
+  PUBLISH: "publish",
+  CHANGE_EXPIRY: "changeExpiry",
+  ROTATE_PASSWORD: "rotatePassword",
+  ARCHIVE: "archive",
+  DELETE: "deleteGallery",
+} as const satisfies Readonly<Record<GalleryAction, string>>;
 const ICONS = {
   PUBLISH: "send",
   CHANGE_EXPIRY: "calendar-check",
@@ -45,11 +48,12 @@ const ICONS = {
 } as const;
 
 function menuEntries(
+  t: GalleryTranslate,
   menu: readonly GalleryAction[],
   onChoose: (action: GalleryAction) => void,
 ): GalleryMenuEntry[] {
   return menu.map((action) => ({
-    label: LABELS[action],
+    label: t(LABEL_KEY[action]),
     icon: ICONS[action],
     isDestructive: action === "DELETE",
     onSelect: () => {
@@ -59,6 +63,7 @@ function menuEntries(
 }
 
 function PrimaryButton({ primary, hasSources, onChoose }: Readonly<PrimaryButtonProps>) {
+  const t = useTranslations(GALLERY_LIFECYCLE_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const handlePress = () => {
     onChoose(primary);
@@ -71,7 +76,7 @@ function PrimaryButton({ primary, hasSources, onChoose }: Readonly<PrimaryButton
       onPress={handlePress}
       className="max-md:w-full"
     >
-      {LABELS[primary]}
+      {t(LABEL_KEY[primary])}
     </Button>
   );
 }
@@ -83,8 +88,9 @@ function HeaderControls({
   menuMeta,
   onChoose,
 }: Readonly<GalleryHeaderControlsProps>) {
+  const t = useTranslations(GALLERY_LIFECYCLE_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
-  const entries = menuEntries(menu, onChoose);
+  const entries = menuEntries(t, menu, onChoose);
   const button =
     primary === null ? null : (
       <PrimaryButton primary={primary} hasSources={hasSources} onChoose={onChoose} />
@@ -92,8 +98,8 @@ function HeaderControls({
   const menuButton =
     entries.length === 0 ? null : (
       <GalleryRowMenu
-        label={GALLERY_COPY.galleryMenu}
-        title={GALLERY_COPY.galleryMenuTitle}
+        label={t("galleryMenu")}
+        title={t("galleryMenuTitle")}
         meta={menuMeta}
         entries={entries}
         size="md"
@@ -126,13 +132,14 @@ function PublishConfirm({
   onClose,
   onRefused,
 }: Readonly<GalleryDialogsProps>) {
+  const t = useTranslations(GALLERY_LIFECYCLE_COPY_NAMESPACE);
   const locale = useFormattingLocale();
   const runner = useLifecycleRunner();
-  const expiry = galleryExpiryFact(page.gallery, locale);
+  const expiry = galleryExpiryFact(t, page.gallery, locale);
   const handleConfirm = async () => {
     const result = await runner.run(() => actions.publishAction(workspaceId, page.gallery.id), {
-      title: GALLERY_COPY.publishedTitle,
-      body: GALLERY_COPY.publishedBody,
+      title: t("publishedTitle"),
+      body: t("publishedBody"),
     });
     if (result?.ok) onClose();
     else if (result && "failures" in result) onRefused(result.failures);
@@ -142,12 +149,12 @@ function PublishConfirm({
   };
   return (
     <GalleryConfirmDialog
-      title={GALLERY_COPY.publishDialogTitle}
-      description={GALLERY_COPY.publishDescription(
-        GALLERY_COPY.publishDialogBody,
-        GALLERY_COPY.publishExpiry(expiry.text.toLowerCase()),
-      )}
-      confirmLabel={GALLERY_COPY.publish}
+      title={t("publishDialogTitle")}
+      description={t("publishDescription", {
+        body: t("publishDialogBody"),
+        expiry: t("publishExpiry", { text: expiry.text.toLowerCase() }),
+      })}
+      confirmLabel={t("publish")}
       isPending={runner.isPending}
       onConfirm={handlePress}
       onClose={onClose}
@@ -162,6 +169,7 @@ function SimpleConfirm({
   open,
   onClose,
 }: Readonly<GalleryDialogsProps>) {
+  const t = useTranslations(GALLERY_LIFECYCLE_COPY_NAMESPACE);
   const router = useRouter();
   const runner = useLifecycleRunner();
   const isDelete = open === "DELETE";
@@ -171,7 +179,7 @@ function SimpleConfirm({
       ? () => actions.deleteDraftAction(workspaceId, page.gallery.id)
       : () => actions.archiveAction(workspaceId, page.gallery.id);
     const result = await runner.run(work, {
-      title: isDelete ? GALLERY_COPY.deletedTitle : GALLERY_COPY.archivedTitle,
+      title: isDelete ? t("deletedTitle") : t("archivedTitle"),
     });
     if (result?.ok) {
       onClose();
@@ -183,16 +191,17 @@ function SimpleConfirm({
   };
   return (
     <GalleryConfirmDialog
-      title={isDelete ? GALLERY_COPY.deleteDialogTitle : GALLERY_COPY.archiveDialogTitle}
+      title={isDelete ? t("deleteDialogTitle") : t("archiveDialogTitle")}
       description={
         isDelete
-          ? GALLERY_COPY.deleteDialogBody(
-              folders,
-              page.gallery.counts.proof + page.gallery.counts.edited + page.gallery.counts.print,
-            )
-          : GALLERY_COPY.archiveDialogBody
+          ? t("deleteDialogBody", {
+              folders: folders,
+              photos:
+                page.gallery.counts.proof + page.gallery.counts.edited + page.gallery.counts.print,
+            })
+          : t("archiveDialogBody")
       }
-      confirmLabel={isDelete ? GALLERY_COPY.deleteGallery : GALLERY_COPY.archive}
+      confirmLabel={isDelete ? t("deleteGallery") : t("archive")}
       isDestructive
       isPending={runner.isPending}
       onConfirm={handlePress}
@@ -252,6 +261,7 @@ function GalleryDialogs(props: Readonly<GalleryDialogsProps>) {
 
 /** The gallery page's lifecycle controls: header actions by state, the ⋯ menu and every dialog (BR-GAL-003…005, AC-GAL-016…023). */
 export function GalleryLifecycle(props: Readonly<GalleryLifecycleProps>) {
+  const t = useTranslations(GALLERY_LIFECYCLE_COPY_NAMESPACE);
   const [open, setOpen] = useState<GalleryDialogsProps["open"]>(null);
   const [failures, setFailures] = useState<readonly PublishSourceFailure[]>([]);
   const { page } = props;
@@ -269,10 +279,10 @@ export function GalleryLifecycle(props: Readonly<GalleryLifecycleProps>) {
         primary={header.primary}
         menu={header.menu}
         hasSources={page.gallery.activeSourceCount > 0}
-        menuMeta={GALLERY_COPY.menuSheetMeta(
-          GALLERY_COPY.status[page.gallery.status],
-          page.project.title,
-        )}
+        menuMeta={t("menuSheetMeta", {
+          status: t(GALLERY_STATUS_MESSAGE_KEY[page.gallery.status]),
+          project: page.project.title,
+        })}
         onChoose={setOpen}
       />
       <GalleryDialogs

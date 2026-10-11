@@ -1840,6 +1840,163 @@ Do not add bulk-download, download-progress, file-retention or permanent-access 
 
 The source comment says gallery-open tracking is unavailable; owner copy must not claim that the client opened the gallery. Public Drive/image-link limits remain governed by BR-ACC-005.
 
+### 15.x Proposed rows (I6.7, pending Owner review)
+
+These rows come from owner gallery strings that have no deck row yet. The English is a faithful rendering of the current Indonesian and is marked `PROPOSED (pending Owner review)` in the copy file. The Owner accepts, edits or replaces each row here before it becomes deck copy.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Project access card: copied | Copied | Disalin |
+| Project access card: copyFailedTitle | Link couldn’t be copied | Link belum tersalin |
+| Project access card: copyFailedBody | The text is selected. Copy it with Ctrl+C or ⌘C, or press and hold, then Copy. | Teksnya sudah ditandai. Salin dengan Ctrl+C atau ⌘C, atau tekan lama lalu Salin. |
+| Project access card: rotatedToast | New link ready. Share it with the client. | Link baru siap. Bagikan ke klien. |
+| Project access card: cancelledToast | The project was canceled, so the link can’t be changed. | Proyek dibatalkan, link tidak bisa diganti. |
+| Project access card: failedToast | Couldn’t change the link. Try again. | Gagal mengganti link. Coba lagi. |
+| Selection owner: cardNotPublishedNote | The client can choose once the gallery is published. | Klien baru bisa memilih setelah galeri dipublikasikan. |
+| Selection owner: cardNoItems | This package has no photo selection items. | Paket proyek ini tidak punya item pilihan foto. |
+| Selection owner: cardOpen | Selections per package item. | Pilihan per bagian paket. |
+| Selection owner: cardReview | {count, plural, one {The client has sent one section.} other {The client has sent # sections.}} | {count, plural, one {Klien sudah mengirim satu bagian.} other {Klien sudah mengirim # bagian.}} |
+| Selection owner: cardFinal | Selections are final. | Pilihan sudah final. |
+| Selection owner: statusOpen | Open | Terbuka |
+| Selection owner: statusSubmitted | Sent | Dikirim |
+| Selection owner: statusLocked | Locked | Dikunci |
+| Selection owner: usage | {usage} of {limit} {unit} | {usage} dari {limit} {unit} |
+| Selection owner: usageOpen | {usage} of {limit} {unit} selected | {usage} dari {limit} {unit} dipilih |
+| Selection owner: sentOn | sent {date} | dikirim {date} |
+| Selection owner: defaultUnit | photos | foto |
+| Selection owner: waitingTitle | Waiting for the client to choose | Menunggu klien memilih |
+| Selection owner: waitingBody | The client hasn’t sent selections yet. | Klien belum mengirim pilihan. |
+| Selection owner: sentBannerTitle | {names} sent their selections | {names} sudah dikirim klien |
+| Selection owner: sentBannerBody | Review the selections, then lock them so they can’t change. | Periksa pilihan, lalu kunci agar tidak berubah. |
+| Selection owner: detailSubtitle | Photos the client chose. | Foto yang klien pilih. |
+| Selection owner: copiedTitle | File name list copied | Daftar nama file disalin |
+| Selection owner: copyFailedTitle | List couldn’t be copied | Daftar belum tersalin |
+| Selection owner: copyFailedBody | Copy the file names manually. | Salin nama file secara manual. |
+| Selection owner: openAlertTitle | Selections are still open | Pilihan masih terbuka |
+| Selection owner: summaryTitle | Summary | Ringkasan |
+| Selection owner: summaryStatus | Status | Status |
+| Selection owner: summaryUsed | Used | Terpakai |
+| Selection owner: summaryTime | Time | Waktu |
+| Selection owner: summaryNotes | Notes | Catatan |
+| Selection owner: notesPhotos | {count, plural, one {# photo with a note} other {# photos with notes}} | {count, plural, other {# foto bercatatan}} |
+| Selection owner: timeChanged | Changed {when} | Diubah {when} |
+| Selection owner: timeSent | Sent {when} | Dikirim {when} |
+| Selection owner: timeLocked | Locked {when} | Dikunci {when} |
+| Selection owner: timeNone | No selections yet | Belum ada pilihan |
+| Selection owner: picksTitle | Chosen photos | Foto pilihan |
+| Selection owner: picksMetaCount | {picks, plural, one {# photo} other {# photos}} | {picks, plural, other {# foto}} |
+| Selection owner: picksMetaCountNotes | {picks, plural, one {# photo} other {# photos}} · {withNotes, plural, one {# with a note} other {# with notes}} | {picks, plural, other {# foto}} · {withNotes, plural, other {# dengan catatan}} |
+| Selection owner: picksMetaQuantity | {picks, plural, one {# photo} other {# photos}} · print quantity is written on each photo | {picks, plural, other {# foto}} · jumlah cetak tertulis di tiap foto |
+| Selection owner: clientNote | Client note | Catatan klien |
+| Selection owner: quantity | × {quantity} | × {quantity} |
+| Selection owner: missingOnPhone | Missing in Drive | Hilang di Drive |
+| Selection owner: emptyTitle | No photos chosen yet | Belum ada foto dipilih |
+| Selection owner: emptyBody | The client hasn’t chosen photos for this section yet. | Klien belum memilih foto untuk bagian ini. |
+| Selection owner: lockBody | Once locked, the selections can’t be reopened, and add-ons can’t raise this group’s limit. | Setelah dikunci, pilihan tidak bisa dibuka lagi dan add-on tidak bisa menambah batas grup ini. |
+| Selection owner: closeBody | The client hasn’t sent yet. The group will be locked with {usage} {unit} chosen and can’t be reopened. | Klien belum mengirim. Grup dikunci dengan {usage} {unit} terpilih dan tidak bisa dibuka lagi. |
+| Selection owner: lockedToast | {name} locked | {name} dikunci |
+| Selection owner: closedToast | {name} closed | {name} ditutup |
+| Selection owner: staleToast | The selection status has changed. The page has reloaded. | Status pilihan sudah berubah. Halaman dimuat ulang. |
+| Selection owner: lockFailed | Selections aren’t locked yet. Try again. | Pilihan belum terkunci. Coba lagi. |
+| Owner delivery: itemCount | {count, plural, one {# file} other {# files}} | {count, plural, other {# file}} |
+| Owner delivery: itemFiles | {count, plural, one {# file} other {# files}} {name} | {count, plural, other {# file}} {name} |
+| Owner delivery: publishedTitle | Published {when} | Dipublikasikan {when} |
+| Owner delivery: publishedMeta | The client can download {files}. | Klien bisa mengunduh {files}. |
+| Owner delivery: completedTitle | Completed {when} | Selesai {when} |
+| Owner delivery: chipReady | Ready | Siap |
+| Owner delivery: chipCompleted | Completed | Selesai |
+| Owner delivery: headerMeta | Final files published {when} | Hasil akhir dipublikasikan {when} |
+| Owner delivery: publishTitle | Publish final files? | Publikasikan hasil akhir? |
+| Owner delivery: completeTitle | Mark the project complete? | Tandai proyek selesai? |
+| Owner delivery: completeDescription | Project {title} will be marked Completed. | Proyek {title} akan berstatus Selesai. |
+| Owner delivery: refusedTitle | Final files can’t be published yet | Hasil akhir belum bisa dipublikasikan |
+| Owner delivery: refusedDescription | Check the following first. | Periksa hal berikut lebih dulu. |
+| Owner delivery: reasonProjectStatus | This project’s status can’t be changed to Delivered. | Status proyek ini tidak bisa diubah menjadi Terkirim. |
+| Owner delivery: publishedToast | Final files published | Hasil akhir dipublikasikan |
+| Owner delivery: completedToast | Project marked complete | Proyek ditandai selesai |
+| Owner delivery: staleToast | The project status has changed. Reload the page. | Status proyek sudah berubah. Muat ulang halaman. |
+| Owner delivery: failedToast | Couldn’t save. Try again. | Gagal menyimpan. Coba lagi. |
+| Gallery summary: groupUsage | {name} {usage}/{limit} | {name} {usage}/{limit} |
+| Gallery summary: allLocked | all locked | semua dikunci |
+| Gallery summary: allLockedMobile | All groups locked | Semua grup dikunci |
+| Gallery summary: sent | {count, plural, one {# sent} other {# sent}} | {count, plural, other {# dikirim}} |
+| Gallery summary: sentMobile | {count, plural, one {# group sent} other {# groups sent}} | {count, plural, other {# grup dikirim}} |
+| Gallery summary: open | open | terbuka |
+| Gallery summary: openMobile | The client is choosing | Klien sedang memilih |
+| Gallery summary: item | {count} {name} | {count} {name} |
+| Gallery summary: ready | {files} ready | {files} siap |
+| Gallery summary: readyMobile | Ready to publish | Siap dipublikasikan |
+| Gallery summary: published | Published {when} | Dipublikasikan {when} |
+| Final delivery screen: downloadAll | Download all ({count, plural, one {# photo} other {# photos}}) | Unduh semua ({count, plural, other {# foto}}) |
+| Final delivery screen: pickSeveral | Choose several | Pilih beberapa |
+| Final delivery screen: readyTitle | Final photos are ready | Hasil akhir sudah tersedia |
+| Final delivery screen: readyBody | Download one by one, several, or all at once. | Unduh satu per satu, beberapa, atau semuanya sekaligus. |
+| Final delivery screen: cardTitle | Final photos | Foto hasil akhir |
+| Final delivery screen: groupMeta | {count, plural, one {# file} other {# files}} · {name} | {count, plural, other {# file}} · {name} |
+| Final delivery screen: groupTab | {name} · {count} | {name} · {count} |
+| Final delivery screen: editedMeta | {count, plural, one {# edited photo} other {# edited photos}} | {count, plural, other {# foto hasil edit}} |
+| Final delivery screen: printMeta | {count, plural, one {# print file} other {# print files}} | {count, plural, other {# file cetak}} |
+| Final delivery screen: kindLabel | File type | Jenis file |
+| Final delivery screen: editedTab | Edited · {count} | Hasil edit · {count} |
+| Final delivery screen: printTab | Print · {count} | Cetak · {count} |
+| Final delivery screen: confirmTitle | Download all {count, plural, one {# photo} other {# photos}}? | Unduh semua {count, plural, other {# foto}}? |
+| Final delivery screen: confirmDescription | Your browser downloads the files one at a time. | Peramban Anda mengunduh file satu per satu. |
+| Final delivery screen: confirmBody | If asked, allow multiple downloads. Keep this page open until it finishes. | Jika diminta, izinkan unduhan berganda. Jangan tutup halaman ini sampai selesai. |
+| Final delivery screen: confirm | Download all | Unduh semua |
+| Final delivery screen: progressTitle | Downloading final photos | Mengunduh hasil akhir |
+| Final delivery screen: running | Running | Berjalan |
+| Final delivery screen: progress | {done} of {total} photos done | {done} dari {total} foto selesai |
+| Final delivery screen: stop | Stop downloads | Hentikan unduhan |
+| Final delivery screen: failedTitle | {count, plural, one {# photo couldn’t be downloaded} other {# photos couldn’t be downloaded}} | {count, plural, other {# foto gagal diunduh}} |
+| Final delivery screen: failedBody | {names} couldn’t be downloaded. The other photos were saved. | {names} tidak bisa diunduh. Foto lain sudah masuk. |
+| Final delivery screen: failedBadge | Failed | Gagal |
+| Final delivery screen: failedMeta | Couldn’t download | Gagal diunduh |
+| Final delivery screen: selectedTitle | {count, plural, one {# photo selected} other {# photos selected}} | {count, plural, other {# foto dipilih}} |
+| Final delivery screen: downloadSelected | Download {count, plural, one {# photo} other {# photos}} | Unduh {count, plural, other {# foto}} |
+| Final delivery screen: viewerMeta | Final photos · {kind} · {position} of {total} | Hasil akhir · {kind} · {position} dari {total} |
+| Final delivery screen: downloadPhoto | Download photo | Unduh foto |
+| Final delivery screen: tileSelect | Select {fileName} | Pilih {fileName} |
+| Final delivery screen: downloadMenu | Download options | Pilihan unduhan |
+| Final delivery screen: viewerMissing | This photo isn’t available. | Foto ini tidak tersedia. |
+| Final delivery screen: emptyKind | No files here yet. | Belum ada file di sini. |
+| Owner gallery: photoCounts | {proof} selection photos · {finished} final files | {proof} foto pilihan · {finished} hasil akhir |
+| Owner gallery: photoCountsMissing | {proof} selection photos ({missing} missing) · {finished} final files | {proof} foto pilihan ({missing} hilang) · {finished} hasil akhir |
+| Owner gallery: proofCount | {count, plural, one {# selection photo} other {# selection photos}} | {count, plural, other {# foto pilihan}} |
+| Owner gallery: sourceFinished | {count} final files | {count} hasil akhir |
+| Owner gallery: kindLowerProof | selection | pilihan |
+| Owner gallery: kindLowerEdited | edited | hasil edit |
+| Owner gallery: kindLowerPrint | print | cetak |
+| Owner gallery: segmentLabel | {kind} {count} | {kind} {count} |
+| Owner gallery: allPhotosDescription | {project} · {totals} | {project} · {totals} |
+| Owner gallery: menuSheetMeta | {status} · {project} | {status} · {project} |
+| Owner gallery: publishDescription | {body} {expiry} | {body} {expiry} |
+| Owner gallery: galleryMenu | Gallery menu | Menu galeri |
+| Owner gallery: renameFolder | Edit folder | Edit folder |
+| Owner gallery: renameDialogTitle | Edit folder | Edit folder |
+| Owner gallery: renameDialogDescription | The folder name and the subfolders that hold final files. | Nama folder dan subfolder yang berisi hasil akhir. |
+| Owner gallery: renamedTitle | Folder saved | Folder disimpan |
+| Owner gallery: mappingTitle | Final-file subfolders | Subfolder hasil akhir |
+| Owner gallery: mappingHelper | Choose the Drive subfolder for each package item. Subfolders you don’t choose stay selection photos. | Pilih subfolder Drive untuk tiap item paket. Subfolder yang tidak dipilih tetap foto pilihan. |
+| Owner gallery: mappingNone | Not chosen | Belum dipilih |
+| Owner gallery: mappingNoFolders | No subfolders yet. Sync this folder first, then map them here. | Belum ada subfolder. Sinkronkan folder ini dulu, lalu petakan di sini. |
+| Owner gallery: mappingNoItemsTitle | This package has no items for selection photos yet | Paket proyek ini belum punya item untuk pilihan foto |
+| Owner gallery: mappingNoItemsBody | Add items in Package items first. | Tambahkan item di Isi paket dulu. |
+| Owner gallery: mappingNoItemsAction | Open package items | Buka Isi paket |
+| Owner gallery: mappingLoadFailed | Subfolders couldn’t be loaded. Try again. | Subfolder belum bisa dimuat. Coba lagi. |
+| Owner gallery: newFoldersTitle | {count, plural, one {# new subfolder} other {# new subfolders}} in {source} | {count, plural, other {# subfolder baru}} di {source} |
+| Owner gallery: newFoldersBody | {folders}. Map them to package items if they hold final files. | {folders}. Petakan ke item paket bila berisi hasil akhir. |
+| Owner gallery: mapFolders | Map | Petakan |
+| Owner gallery: cancelledAlertTitle | Project canceled | Proyek dibatalkan |
+| Owner gallery: archivedAlertTitle | Gallery archived | Galeri diarsipkan |
+| Owner gallery: createFolderTitle | Google Drive folder | Folder Google Drive |
+| Owner gallery: createFolderHelper | Optional. You can also add one later on the gallery page. | Opsional. Bisa juga ditambahkan nanti di halaman galeri. |
+| Owner gallery: createFolderInUseConfirm | Create gallery anyway | Tetap buat galeri |
+| Owner gallery: createdWithFolderBody | The Google Drive folder is syncing. | Folder Google Drive sedang disinkronkan. |
+| Owner gallery: previewPosition | {position} of {total} | {position} dari {total} |
+| Owner gallery: previewMissingBadge | Missing | Hilang |
+| Owner gallery: refusedHasPicks | The client has already chosen photos from this folder. | Ada foto dari folder ini yang sudah dipilih klien. |
+| Owner gallery: crumbFolders | {folders, plural, =0 {· {photos} photos} other {· # folders · {photos} photos}} | {folders, plural, =0 {· {photos} foto} other {· # folder · {photos} foto}} |
+
 ## 16. Add-ons
 
 **Where:** built project add-on card, form, action menu and confirmations. This is owner-side copy; the source explicitly says the description is not for the client.

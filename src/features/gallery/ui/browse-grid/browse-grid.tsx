@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useIntersectionSentinel } from "@/ui/hooks/use-intersection-sentinel/use-intersection-sentinel";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { FolderTile } from "@/ui/patterns/folder-tile/folder-tile";
@@ -7,9 +9,9 @@ import { PhotoTile, PhotoTileSkeleton } from "@/ui/patterns/photo-tile/photo-til
 import { Icon } from "@/ui/primitives/icon/icon";
 
 import { searchMeta } from "../browse-text/browse-text";
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { useDirectImages } from "../gallery-image-sources/gallery-image-context";
 import { imageSources } from "../gallery-image-sources/gallery-image-sources";
+import { BROWSE_GRID_COPY_NAMESPACE } from "./browse-grid.copy";
 import type {
   BrowseFolderItemProps,
   BrowseGridProps,
@@ -21,14 +23,15 @@ const GRID =
 const SKELETON_ROW = 4;
 
 function BrowseFolderItem({ folder, onOpenFolder }: Readonly<BrowseFolderItemProps>) {
+  const t = useTranslations(BROWSE_GRID_COPY_NAMESPACE);
   const handlePress = () => {
     onOpenFolder(folder);
   };
   return (
     <li className="min-w-0">
       <FolderTile
-        name={folder.name || GALLERY_COPY.sourceFallbackName}
-        countLabel={GALLERY_COPY.folderCount(folder.count)}
+        name={folder.name || t("sourceFallbackName")}
+        countLabel={t("folderCount", { count: folder.count })}
         onPress={handlePress}
       />
     </li>
@@ -42,6 +45,7 @@ function BrowsePhotoItem({
   isSearch,
   onOpenPhoto,
 }: Readonly<BrowsePhotoItemProps>) {
+  const t = useTranslations(BROWSE_GRID_COPY_NAMESPACE);
   const image = imageSources(photo, "thumb", workspaceId, useDirectImages());
   const handlePress = () => {
     onOpenPhoto(photo, list);
@@ -50,7 +54,7 @@ function BrowsePhotoItem({
     <li className="min-w-0">
       <PhotoTile
         fileName={photo.fileName}
-        meta={isSearch ? searchMeta(photo) : undefined}
+        meta={isSearch ? searchMeta(t, photo) : undefined}
         imageSrc={image.src}
         fallbackSrc={image.fallbackSrc}
         isMissing={photo.missing}
@@ -69,31 +73,33 @@ function Skeletons() {
 }
 
 function BrowseEmpty({ state }: Readonly<Pick<BrowseGridProps, "state">>) {
+  const t = useTranslations(BROWSE_GRID_COPY_NAMESPACE);
   const { search } = state.location;
   if (search !== "")
     return (
       <EmptyState
         icon="search"
         placement="in-card"
-        title={GALLERY_COPY.searchEmptyTitle(search)}
-        body={GALLERY_COPY.searchEmptyBody}
+        title={t("searchEmptyTitle", { text: search })}
+        body={t("searchEmptyBody")}
       />
     );
   return (
     <EmptyState
       icon="images"
       placement="in-card"
-      title={GALLERY_COPY.folderEmptyTitle}
-      body={GALLERY_COPY.folderEmptyBody}
+      title={t("folderEmptyTitle")}
+      body={t("folderEmptyBody")}
     />
   );
 }
 
 function LoadingMore() {
+  const t = useTranslations(BROWSE_GRID_COPY_NAMESPACE);
   return (
     <p className="flex items-center justify-center gap-(--space-2) text-(length:--font-size-body-sm) text-(--component-photo-tile-meta)">
       <Icon name="loading-03" size="sm" aria-hidden="true" className="animate-spin" />
-      {GALLERY_COPY.loadingMore}
+      {t("loadingMore")}
     </p>
   );
 }

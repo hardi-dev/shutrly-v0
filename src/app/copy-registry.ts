@@ -25,6 +25,12 @@ import { CLIENT_COPY } from "@/features/booking/ui/client-copy/client-copy.copy"
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { TEAM_COPY } from "@/features/booking/ui/team-copy/team-copy.copy";
 import { TEMPLATE_COPY } from "@/features/communications/ui/template-copy/template-copy.copy";
+import { DELIVERY_COPY } from "@/features/gallery/ui/delivery-copy/delivery.copy";
+import { DELIVERY_SCREEN_COPY } from "@/features/gallery/ui/delivery-screen/delivery-screen.copy";
+import { GALLERY_COPY } from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
+import { GALLERY_SUMMARY_COPY } from "@/features/gallery/ui/gallery-summary-text/gallery-summary.copy";
+import { PROJECT_ACCESS_COPY } from "@/features/gallery/ui/project-access-card/project-access-card.copy";
+import { SELECTION_OWNER_COPY } from "@/features/gallery/ui/selection-owner-text/selection-owner.copy";
 import { SOURCE_COPY } from "@/features/gallery/ui/source-copy/source-copy.copy";
 import { LANDING_FOOTER_COPY } from "@/features/landing/ui/landing-footer/landing-footer.copy";
 import { LANDING_HEADER_COPY } from "@/features/landing/ui/landing-header/landing-header.copy";
@@ -135,6 +141,12 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   PROJECT_COPY,
   TEMPLATE_COPY,
   SOURCE_COPY,
+  PROJECT_ACCESS_COPY,
+  GALLERY_COPY,
+  DELIVERY_SCREEN_COPY,
+  SELECTION_OWNER_COPY,
+  DELIVERY_COPY,
+  GALLERY_SUMMARY_COPY,
   SPLIT_LAYOUT_COPY,
   EDITORIAL_PANEL_COPY,
   PROFILE_LAYOUT_COPY,

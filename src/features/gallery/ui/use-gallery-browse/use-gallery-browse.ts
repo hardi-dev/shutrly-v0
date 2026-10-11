@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 
 import type { BrowseCursor } from "@/features/gallery/application/ports/gallery-browse-reader/gallery-browse-reader.port";
@@ -7,13 +8,15 @@ import type { BrowsePageView } from "@/features/gallery/application/use-cases/br
 import { showToast } from "@/ui/patterns/toast/toast";
 
 import type { BrowseLocation } from "../browse-text/browse-text.types";
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
+import type { GalleryTranslate } from "../gallery-copy/gallery-copy.types";
+import { USE_GALLERY_BROWSE_COPY_NAMESPACE } from "./use-gallery-browse.copy";
 import type { BrowseState, UseGalleryBrowseInput } from "./use-gallery-browse.types";
 
 const SEARCH_DEBOUNCE_MS = 300;
 export const BROWSE_START: BrowseLocation = { kind: "PROOF", sourceId: null, path: "", search: "" };
 
 async function fetchPage(
+  t: GalleryTranslate,
   input: Readonly<UseGalleryBrowseInput>,
   location: BrowseLocation,
   cursor: BrowseCursor | null,
@@ -23,8 +26,8 @@ async function fetchPage(
   } catch {
     showToast({
       tone: "danger",
-      title: GALLERY_COPY.browseFailedTitle,
-      body: GALLERY_COPY.saveFailedBody,
+      title: t("browseFailedTitle"),
+      body: t("saveFailedBody"),
     });
     return null;
   }
@@ -32,6 +35,7 @@ async function fetchPage(
 
 /** Drives *Semua foto*: tabs, folders, the breadcrumb, debounced search and infinite scroll; stale answers are dropped (A-12, A-13, AC-GAL-028…030). @param input - ids and the browse action @returns the state and handlers */
 export function useGalleryBrowse(input: Readonly<UseGalleryBrowseInput>) {
+  const t = useTranslations(USE_GALLERY_BROWSE_COPY_NAMESPACE);
   const [state, setState] = useState<BrowseState>({
     location: BROWSE_START,
     page: null,
@@ -46,7 +50,7 @@ export function useGalleryBrowse(input: Readonly<UseGalleryBrowseInput>) {
     request.current += 1;
     const mine = request.current;
     setState((current) => ({ ...current, location, isLoading: true, isLoadingMore: false }));
-    const page = await fetchPage(input, location, null);
+    const page = await fetchPage(t, input, location, null);
     if (mine !== request.current) return;
     if (page)
       setState({ location, page, photos: page.photos, isLoading: false, isLoadingMore: false });
@@ -57,7 +61,7 @@ export function useGalleryBrowse(input: Readonly<UseGalleryBrowseInput>) {
     if (cursor === null || state.isLoading || state.isLoadingMore) return;
     const mine = request.current;
     setState((current) => ({ ...current, isLoadingMore: true }));
-    const next = await fetchPage(input, state.location, cursor);
+    const next = await fetchPage(t, input, state.location, cursor);
     if (mine !== request.current) return;
     setState((current) =>
       next

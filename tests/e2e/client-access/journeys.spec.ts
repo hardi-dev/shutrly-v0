@@ -6,12 +6,15 @@ import { PROJECT_COPY_NAMESPACE } from "@/features/booking/ui/project-copy/proje
 import { CLIENT_COPY } from "@/features/gallery/ui/client-copy/client-copy.copy";
 import { CLIENT_HOME_COPY } from "@/features/gallery/ui/client-home-screen/client-home-screen.copy";
 import { CLIENT_PASSWORD_FORM_COPY } from "@/features/gallery/ui/client-password-form/client-password-form.copy";
-import { DELIVERY_COPY } from "@/features/gallery/ui/delivery-copy/delivery.copy";
-import { DELIVERY_SCREEN_COPY } from "@/features/gallery/ui/delivery-screen/delivery-screen.copy";
-import { GALLERY_COPY } from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
+import { DELIVERY_COPY_NAMESPACE } from "@/features/gallery/ui/delivery-copy/delivery.copy";
+import { DELIVERY_SCREEN_COPY_NAMESPACE } from "@/features/gallery/ui/delivery-screen/delivery-screen.copy";
+import {
+  GALLERY_COPY_NAMESPACE,
+  GALLERY_SOURCE_CHIP_MESSAGE_KEY,
+} from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
 import { PICK_NOTE_COPY } from "@/features/gallery/ui/pick-note-sheet/pick-note-sheet.copy";
 import { PICK_COPY } from "@/features/gallery/ui/pick-screen/pick-screen.copy";
-import { SELECTION_OWNER_COPY } from "@/features/gallery/ui/selection-owner-text/selection-owner.copy";
+import { SELECTION_OWNER_COPY_NAMESPACE } from "@/features/gallery/ui/selection-owner-text/selection-owner.copy";
 
 import {
   createProject,
@@ -20,6 +23,11 @@ import {
   visibleText,
 } from "../gallery/gallery-e2e";
 import { clientToken, GALLERY_PASSWORD } from "./client-access-e2e";
+
+const galleryCopy = copyTranslator(GALLERY_COPY_NAMESPACE, "id");
+const deliveryCopy = copyTranslator(DELIVERY_COPY_NAMESPACE, "id");
+const selectionCopy = copyTranslator(SELECTION_OWNER_COPY_NAMESPACE, "id");
+const deliveryScreenCopy = copyTranslator(DELIVERY_SCREEN_COPY_NAMESPACE, "id");
 
 const pc = copyTranslator(PROJECT_COPY_NAMESPACE, "id");
 
@@ -46,36 +54,46 @@ async function ownerProject(page: Page): Promise<string> {
   await item.getByRole("textbox", { name: pc("quantityLabel") }).fill("3");
   await item.getByRole("button", { name: pc("itemAddConfirm") }).click();
   await expect(item).toBeHidden();
-  await page.getByRole("button", { name: GALLERY_COPY.create }).click();
-  const create = page.getByRole("dialog", { name: GALLERY_COPY.createDialogTitle });
-  await create.getByRole("textbox", { name: GALLERY_COPY.passwordLabel }).fill(GALLERY_PASSWORD);
-  await create.getByRole("button", { name: GALLERY_COPY.create }).click();
+  await page.getByRole("button", { name: galleryCopy("create") }).click();
+  const create = page.getByRole("dialog", { name: galleryCopy("createDialogTitle") });
+  await create.getByRole("textbox", { name: galleryCopy("passwordLabel") }).fill(GALLERY_PASSWORD);
+  await create.getByRole("button", { name: galleryCopy("create") }).click();
   await expect(page).toHaveURL(`${projectPath}/gallery`);
-  await page.getByRole("button", { name: GALLERY_COPY.addFolder }).first().click();
-  const link = page.getByRole("dialog", { name: GALLERY_COPY.linkDialogTitle });
-  await link.getByRole("textbox", { name: GALLERY_COPY.linkLabel }).fill(RINA);
-  await link.getByRole("button", { name: GALLERY_COPY.addFolder }).click();
-  await expect(visibleText(page, GALLERY_COPY.sourceChip.SUCCEEDED)).toBeVisible({
+  await page
+    .getByRole("button", { name: galleryCopy("addFolder") })
+    .first()
+    .click();
+  const link = page.getByRole("dialog", { name: galleryCopy("linkDialogTitle") });
+  await link.getByRole("textbox", { name: galleryCopy("linkLabel") }).fill(RINA);
+  await link.getByRole("button", { name: galleryCopy("addFolder") }).click();
+  await expect(
+    visibleText(page, galleryCopy(GALLERY_SOURCE_CHIP_MESSAGE_KEY.SUCCEEDED)),
+  ).toBeVisible({
     timeout: 60_000,
   });
   await mapEditedFolder(page);
-  await page.getByRole("button", { name: GALLERY_COPY.publish }).first().click();
   await page
-    .getByRole("dialog", { name: GALLERY_COPY.publishDialogTitle })
-    .getByRole("button", { name: GALLERY_COPY.publish })
+    .getByRole("button", { name: galleryCopy("publish") })
+    .first()
     .click();
-  await expect(visibleText(page, GALLERY_COPY.publishedTitle)).toBeVisible();
+  await page
+    .getByRole("dialog", { name: galleryCopy("publishDialogTitle") })
+    .getByRole("button", { name: galleryCopy("publish") })
+    .click();
+  await expect(visibleText(page, galleryCopy("publishedTitle"))).toBeVisible();
   return projectPath;
 }
 
 /** F-21: *Edit folder* maps the fixture's *Edited* subfolder to the package item *Foto edit*. */
 async function mapEditedFolder(page: Page): Promise<void> {
-  await page.getByRole("button", { name: GALLERY_COPY.sourceMenu("Rina-Wisuda") }).click();
-  await page.getByRole("menuitem", { name: GALLERY_COPY.renameFolder }).click();
-  const edit = page.getByRole("dialog", { name: GALLERY_COPY.renameDialogTitle });
+  await page
+    .getByRole("button", { name: galleryCopy("sourceMenu", { name: "Rina-Wisuda" }) })
+    .click();
+  await page.getByRole("menuitem", { name: galleryCopy("renameFolder") }).click();
+  const edit = page.getByRole("dialog", { name: galleryCopy("renameDialogTitle") });
   await edit.getByRole("button", { name: /Foto edit/ }).click();
-  await page.getByRole("option", { name: "Edited", exact: true }).click();
-  await edit.getByRole("button", { name: GALLERY_COPY.save }).click();
+  await page.getByRole("option", { name: "Hasil edit", exact: true }).click();
+  await edit.getByRole("button", { name: galleryCopy("save") }).click();
   await expect(edit).toBeHidden();
   await expect(visibleText(page, "5 proof · 3 hasil akhir")).toBeVisible();
 }
@@ -189,17 +207,20 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
     expect((await page.request.get(`${projectPath}/gallery/pilihan`)).status()).toBe(404);
     await page.goto(`${projectPath}/gallery`);
     // Sent below the limit, so the card offers Lihat pilihan and the group Kunci pilihan (AC-SEL-011).
-    await page.getByRole("link", { name: SELECTION_OWNER_COPY.viewPicks }).first().click();
+    await page
+      .getByRole("link", { name: selectionCopy("viewPicks") })
+      .first()
+      .click();
     await expect(page).toHaveURL(`${projectPath}/gallery/picks`);
-    const lock = page.getByRole("button", { name: SELECTION_OWNER_COPY.lockPicks }).first();
-    await openAndConfirm(page, lock, SELECTION_OWNER_COPY.lockPicks);
-    await expect(visibleText(page, SELECTION_OWNER_COPY.status.LOCKED)).toBeVisible();
+    const lock = page.getByRole("button", { name: selectionCopy("lockPicks") }).first();
+    await openAndConfirm(page, lock, selectionCopy("lockPicks"));
+    await expect(visibleText(page, selectionCopy("statusLocked"))).toBeVisible();
 
     // J-06: the Owner publishes final delivery from the gallery page; the client downloads one file and then all.
     await page.goto(`${projectPath}/gallery`);
-    const publish = page.getByRole("button", { name: DELIVERY_COPY.publish }).first();
-    await openAndConfirm(page, publish, DELIVERY_COPY.publishConfirm);
-    await expect(visibleText(page, DELIVERY_COPY.publishedToast)).toBeVisible();
+    const publish = page.getByRole("button", { name: deliveryCopy("publish") }).first();
+    await openAndConfirm(page, publish, deliveryCopy("publishConfirm"));
+    await expect(visibleText(page, deliveryCopy("publishedToast"))).toBeVisible();
     expect((await client.request.get(`${clientPath}/hasil-akhir`)).status()).toBe(404);
     await client.goto(`${clientPath}/final`);
     await expectGalleryA11y(client);
@@ -210,24 +231,27 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
       .click();
     expect((await one).suggestedFilename()).toMatch(/^E_.+\.jpg$/);
     await expect(async () => {
-      await client.getByRole("button", { name: DELIVERY_SCREEN_COPY.download }).first().click();
+      await client
+        .getByRole("button", { name: deliveryScreenCopy("download") })
+        .first()
+        .click();
       await expect(client.getByRole("menuitem", { name: /^Unduh semua/ })).toBeVisible({
         timeout: 2_000,
       });
     }).toPass({ timeout: 30_000 });
     await client.getByRole("menuitem", { name: /^Unduh semua/ }).click();
-    await confirmIn(client, DELIVERY_SCREEN_COPY.confirm);
-    await expect(visibleText(client, DELIVERY_SCREEN_COPY.readyTitle)).toBeVisible({
+    await confirmIn(client, deliveryScreenCopy("confirm"));
+    await expect(visibleText(client, deliveryScreenCopy("readyTitle"))).toBeVisible({
       timeout: 30_000,
     });
     await expectGalleryA11y(client);
 
     // J-06 end: Tandai selesai, the project header's action on a delivered project (A-34).
     await page.goto(projectPath);
-    await expect(visibleText(page, DELIVERY_COPY.headerMeta("").trim())).toBeVisible();
-    const complete = page.getByRole("button", { name: DELIVERY_COPY.complete }).first();
-    await openAndConfirm(page, complete, DELIVERY_COPY.complete);
-    await expect(visibleText(page, DELIVERY_COPY.completedToast)).toBeVisible();
+    await expect(visibleText(page, deliveryCopy("headerMeta", { when: "" }).trim())).toBeVisible();
+    const complete = page.getByRole("button", { name: deliveryCopy("complete") }).first();
+    await openAndConfirm(page, complete, deliveryCopy("complete"));
+    await expect(visibleText(page, deliveryCopy("completedToast"))).toBeVisible();
 
     // AC-ACC-014 on a phone: Beranda, Semua foto and Hasil akhir.
     const phone = await signIn(browser, clientPath, PHONE);

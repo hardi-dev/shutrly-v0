@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -8,7 +9,6 @@ import { Button } from "@/ui/primitives/button/button";
 import { Icon } from "@/ui/primitives/icon/icon";
 
 import { AllPhotosModal } from "../all-photos-modal/all-photos-modal";
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import {
   GalleryImageProvider,
   useDirectImages,
@@ -19,6 +19,7 @@ import { PhotoPreview } from "../photo-preview/photo-preview";
 import { PhotosCard } from "../photos-card/photos-card";
 import { BROWSE_START, useGalleryBrowse } from "../use-gallery-browse/use-gallery-browse";
 import { usePhotoPreview } from "../use-photo-preview/use-photo-preview";
+import { GALLERY_PHOTOS_SECTION_COPY_NAMESPACE } from "./gallery-photos-section.copy";
 import type {
   GalleryPhotosSectionProps,
   PreviewBodyProps,
@@ -28,6 +29,7 @@ import type {
 
 /** *Foto*: counts per kind, the client-visibility line, the first photos from the Owner media endpoint and *Lihat semua foto* (AC-GAL-014, AC-GAL-015, AC-GAL-028). */
 export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>) {
+  const t = useTranslations(GALLERY_PHOTOS_SECTION_COPY_NAMESPACE);
   const { workspaceId, page } = props;
   const isMobile = useMobileViewport();
   const [isAllOpen, setIsAllOpen] = useState(false);
@@ -47,7 +49,7 @@ export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>)
     <GalleryImageProvider directImages={page.directImages}>
       <PhotosCard
         hasPhotos={hasPhotos}
-        description={isMobile ? undefined : GALLERY_COPY.photosDescription}
+        description={isMobile ? undefined : t("photosDescription")}
         actions={hasPhotos ? <ViewAllButton onPress={handleViewAll} /> : undefined}
       >
         <PreviewBody {...props} onOpenPhoto={preview.openFromCard} />
@@ -75,25 +77,27 @@ export function GalleryPhotosSection(props: Readonly<GalleryPhotosSectionProps>)
 }
 
 function ViewAllButton({ onPress }: Readonly<ViewAllButtonProps>) {
+  const t = useTranslations(GALLERY_PHOTOS_SECTION_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   return (
     <Button variant="secondary" iconLeading="images" onPress={onPress}>
-      {isMobile ? GALLERY_COPY.viewAllMobile : GALLERY_COPY.viewAll}
+      {isMobile ? t("viewAllMobile") : t("viewAll")}
     </Button>
   );
 }
 
 function PreviewBody({ workspaceId, page, onOpenPhoto }: Readonly<PreviewBodyProps>) {
+  const t = useTranslations(GALLERY_PHOTOS_SECTION_COPY_NAMESPACE);
   const { counts, status } = page.gallery;
   const photos = page.previewPhotos;
   const visibility =
     counts.missing > 0
-      ? `${galleryVisibilityText(status, page.project.status)} ${GALLERY_COPY.visibilityMissing}`
-      : galleryVisibilityText(status, page.project.status);
+      ? `${galleryVisibilityText(t, status, page.project.status)} ${t("visibilityMissing")}`
+      : galleryVisibilityText(t, status, page.project.status);
   return (
     <div className="flex flex-col gap-(--space-4) md:gap-(--space-5)">
       <p className="text-(length:--font-size-body) font-semibold text-(--component-photo-tile-name)">
-        {photoCountsText(counts)}
+        {photoCountsText(t, counts)}
       </p>
       <p className="flex items-start gap-(--space-2) text-(length:--font-size-body-sm) text-(--component-photo-tile-meta)">
         <Icon name="eye" size="sm" aria-hidden="true" className="mt-(--space-0-5) shrink-0" />

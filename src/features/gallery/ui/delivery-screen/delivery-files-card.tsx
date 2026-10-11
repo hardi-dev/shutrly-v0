@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/ui/cn/cn";
 import { PhotoTile } from "@/ui/patterns/photo-tile/photo-tile";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -8,13 +10,14 @@ import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { CLIENT_GRID } from "../client-browse-grid/client-browse-grid";
-import { DELIVERY_SCREEN_COPY as COPY } from "./delivery-screen.copy";
+import { DELIVERY_SCREEN_COPY_NAMESPACE } from "./delivery-screen.copy";
 import type { DeliveryFileTileProps, DeliveryPartProps } from "./delivery-screen.types";
 import { groupMeta } from "./delivery-screen-text";
 
 const CORNER = "absolute top-(--component-photo-tile-badge-inset)";
 
 function FileTile({ file, index, screen }: Readonly<DeliveryFileTileProps>) {
+  const t = useTranslations(DELIVERY_SCREEN_COPY_NAMESPACE);
   const hasFailed = screen.download.progress.failedIds.includes(file.id);
   const open = () => {
     screen.setViewerIndex(index);
@@ -26,7 +29,7 @@ function FileTile({ file, index, screen }: Readonly<DeliveryFileTileProps>) {
     <li className="relative min-w-0">
       <PhotoTile
         fileName={file.fileName}
-        meta={hasFailed ? COPY.failedMeta : undefined}
+        meta={hasFailed ? t("failedMeta") : undefined}
         imageSrc={file.thumb.src}
         fallbackSrc={file.thumb.fallbackSrc}
         onPress={open}
@@ -38,7 +41,7 @@ function FileTile({ file, index, screen }: Readonly<DeliveryFileTileProps>) {
       />
       {hasFailed ? (
         <span className={cn(CORNER, "left-(--component-photo-tile-badge-inset)")}>
-          <StatusChip tone="warning" label={COPY.failedBadge} hasDot />
+          <StatusChip tone="warning" label={t("failedBadge")} hasDot />
         </span>
       ) : null}
       {screen.isSelecting ? null : (
@@ -48,7 +51,7 @@ function FileTile({ file, index, screen }: Readonly<DeliveryFileTileProps>) {
             size="sm"
             href={file.downloadUrl}
             className="size-(--space-8) rounded-(--radius-full) border-2 border-(--color-semantic-border-control) bg-(--color-semantic-surface-panel)"
-            aria-label={COPY.tileDownload(file.fileName)}
+            aria-label={t("tileDownload", { fileName: file.fileName })}
           />
         </span>
       )}
@@ -58,18 +61,19 @@ function FileTile({ file, index, screen }: Readonly<DeliveryFileTileProps>) {
 
 /** *Foto hasil akhir*: one tab per package item (F-21; was *Edited / Print*) and the grid with a download on each tile, or ticks in *Pilih beberapa* (hasilakhir-siap / -print / -pilih-beberapa, AC-DEL-003, -004). @param props - the screen state @returns the card */
 export function DeliveryFilesCard({ screen }: Readonly<DeliveryPartProps>) {
+  const t = useTranslations(DELIVERY_SCREEN_COPY_NAMESPACE);
   const options = screen.files.groups.map((group) => ({
     id: group.id,
-    label: COPY.groupTab(group.name, group.files.length),
+    label: t("groupTab", { name: group.name, count: group.files.length }),
   }));
   return (
     <SectionCard
-      title={COPY.cardTitle}
-      description={groupMeta(screen.groupName, screen.shown.length)}
+      title={t("cardTitle")}
+      description={groupMeta(t, screen.groupName, screen.shown.length)}
       actions={
         options.length > 1 ? (
           <SegmentedControl
-            label={COPY.kindLabel}
+            label={t("kindLabel")}
             options={options}
             selectedId={screen.groupId}
             onChange={screen.setGroupId}
@@ -79,7 +83,7 @@ export function DeliveryFilesCard({ screen }: Readonly<DeliveryPartProps>) {
     >
       {screen.shown.length === 0 ? (
         <p className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
-          {COPY.emptyKind}
+          {t("emptyKind")}
         </p>
       ) : (
         <ul className={CLIENT_GRID}>

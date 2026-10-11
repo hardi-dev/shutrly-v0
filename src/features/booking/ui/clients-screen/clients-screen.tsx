@@ -1,6 +1,7 @@
 "use client";
 /* eslint-disable no-restricted-syntax, @typescript-eslint/no-confusing-void-expression, max-lines-per-function -- responsive list wiring shares the archive mutation */
 
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -9,7 +10,7 @@ import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 
-import { CLIENT_COPY } from "../client-copy/client-copy.copy";
+import type { ClientTranslate } from "../client-copy/client-copy.types";
 import { ClientDialog } from "../client-dialog/client-dialog";
 import { ClientList } from "../client-list/client-list";
 import { ClientSearchField } from "../client-search-field/client-search-field";
@@ -19,6 +20,7 @@ import { ClientsTabsBar } from "../clients-tabs-bar/clients-tabs-bar";
 import { DeleteClientDialog } from "../delete-client-dialog/delete-client-dialog";
 import { useClientMutations } from "../use-client-mutations/use-client-mutations";
 import { useLoadMoreClients } from "../use-load-more-clients/use-load-more-clients";
+import { CLIENTS_SCREEN_COPY_NAMESPACE } from "./clients-screen.copy";
 import type {
   ClientAddDialogProps,
   ClientScreenContentProps,
@@ -40,6 +42,7 @@ export function ClientsScreen({
   deleteAction,
 }: Readonly<ClientsScreenProps>) {
   const isMobile = useMobileViewport();
+  const t = useTranslations(CLIENTS_SCREEN_COPY_NAMESPACE);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editing, setEditing] = useState<ClientsScreenProps["rows"][number] | undefined>();
   const [deleting, setDeleting] = useState<ClientsScreenProps["rows"][number] | null>(null);
@@ -63,13 +66,13 @@ export function ClientsScreen({
   function closeDeleteDialog(isOpen: boolean): void {
     if (!isOpen) setDeleting(null);
   }
-  const actions = createAddActions(addAction, openDialog);
+  const actions = createAddActions(t, addAction, openDialog);
   const emptyState = q ? (
     <EmptyState
       placement="in-card"
       icon="search-x"
-      title={CLIENT_COPY.noMatchTitle}
-      body={CLIENT_COPY.noMatchBody}
+      title={t("noMatchTitle")}
+      body={t("noMatchBody")}
     />
   ) : (
     <ClientsEmptyState status={status} action={isMobile ? actions.mobile : undefined} />
@@ -117,12 +120,13 @@ function LoadMoreButton({
   isLoading,
   onLoadMore,
 }: Readonly<{ isLoading: boolean; onLoadMore: () => Promise<void> }>) {
+  const t = useTranslations(CLIENTS_SCREEN_COPY_NAMESPACE);
   function handleLoadMore(): void {
     void onLoadMore();
   }
   return (
     <Button variant="secondary" isPending={isLoading} onPress={handleLoadMore}>
-      {isLoading ? CLIENT_COPY.loadingMore : CLIENT_COPY.loadMore}
+      {isLoading ? t("loadingMore") : t("loadMore")}
     </Button>
   );
 }
@@ -162,6 +166,7 @@ function ClientScreenContent({
   setArchivedAction,
   openDelete,
 }: Readonly<ClientScreenContentProps>) {
+  const t = useTranslations(CLIENTS_SCREEN_COPY_NAMESPACE);
   return (
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)">
       <PageActions>{desktopAddAction}</PageActions>
@@ -175,8 +180,8 @@ function ClientScreenContent({
           action={mobileAddAction}
           emptyState={emptyState}
           onEdit={openEdit}
-          onArchive={(client) => archiveClient(client, true, setArchivedAction, workspaceId)}
-          onRestore={(client) => archiveClient(client, false, setArchivedAction, workspaceId)}
+          onArchive={(client) => archiveClient(t, client, true, setArchivedAction, workspaceId)}
+          onRestore={(client) => archiveClient(t, client, false, setArchivedAction, workspaceId)}
           onDelete={openDelete}
         />
       ) : (
@@ -187,8 +192,8 @@ function ClientScreenContent({
           emptyState={emptyState}
           search={search}
           onRowAction={updateAction ? openEdit : undefined}
-          onArchive={(client) => archiveClient(client, true, setArchivedAction, workspaceId)}
-          onRestore={(client) => archiveClient(client, false, setArchivedAction, workspaceId)}
+          onArchive={(client) => archiveClient(t, client, true, setArchivedAction, workspaceId)}
+          onRestore={(client) => archiveClient(t, client, false, setArchivedAction, workspaceId)}
           onDelete={openDelete}
         />
       )}
@@ -206,6 +211,7 @@ function ClientScreenContent({
 }
 
 function archiveClient(
+  t: ClientTranslate,
   client: ClientsScreenProps["rows"][number],
   isArchived: boolean,
   action: ClientsScreenProps["setArchivedAction"],
@@ -215,12 +221,12 @@ function archiveClient(
   void action(workspaceId, client.id, isArchived).then(() => {
     showToast({
       tone: "success",
-      title: isArchived ? CLIENT_COPY.archivedTitle : CLIENT_COPY.restoredTitle,
-      body: isArchived ? CLIENT_COPY.archivedBody(client.name) : undefined,
+      title: isArchived ? t("archivedTitle") : t("restoredTitle"),
+      body: isArchived ? t("archivedBody", { name: client.name }) : undefined,
       action: isArchived
         ? {
-            label: CLIENT_COPY.undo,
-            onAction: () => archiveClient(client, false, action, workspaceId),
+            label: t("undo"),
+            onAction: () => archiveClient(t, client, false, action, workspaceId),
           }
         : undefined,
     });
@@ -235,6 +241,7 @@ function ClientAddDialog({
   workspaceId,
   onOpenChange,
 }: Readonly<ClientAddDialogProps>) {
+  const t = useTranslations(CLIENTS_SCREEN_COPY_NAMESPACE);
   const mutations = useClientMutations();
   if (!addAction && !updateAction) return null;
   function submitClient(
@@ -243,7 +250,7 @@ function ClientAddDialog({
   ) {
     if (editing && updateAction)
       return mutations.run(values.name, () => updateAction(id, editing.id, values), {
-        title: CLIENT_COPY.savedTitle,
+        title: t("savedTitle"),
       });
     if (addAction) return mutations.run(values.name, () => addAction(id, values));
     return Promise.resolve({ ok: true } as const);
@@ -260,17 +267,21 @@ function ClientAddDialog({
   );
 }
 
-function createAddActions(addAction: ClientsScreenProps["addAction"], onAdd: () => void) {
+function createAddActions(
+  t: ClientTranslate,
+  addAction: ClientsScreenProps["addAction"],
+  onAdd: () => void,
+) {
   if (!addAction) return { desktop: null, mobile: null };
   return {
     desktop: (
       <Button iconLeading="plus" onPress={onAdd}>
-        {CLIENT_COPY.addClient}
+        {t("addClient")}
       </Button>
     ),
     mobile: (
       <Button variant="secondary" iconLeading="plus" onPress={onAdd}>
-        {CLIENT_COPY.add}
+        {t("add")}
       </Button>
     ),
   };

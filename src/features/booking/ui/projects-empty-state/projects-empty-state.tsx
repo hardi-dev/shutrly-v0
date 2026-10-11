@@ -1,14 +1,15 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { PROJECTS_EMPTY_STATE_COPY_NAMESPACE } from "./projects-empty-state.copy";
 
-const EMPTY = {
-  ACTIVE: { title: PROJECT_COPY.emptyActiveTitle, body: PROJECT_COPY.emptyActiveBody },
-  COMPLETED: { title: PROJECT_COPY.emptyCompletedTitle, body: PROJECT_COPY.emptyCompletedBody },
-  CANCELLED: { title: PROJECT_COPY.emptyCancelledTitle, body: PROJECT_COPY.emptyCancelledBody },
+const EMPTY_KEY = {
+  ACTIVE: { title: "emptyActiveTitle", body: "emptyActiveBody" },
+  COMPLETED: { title: "emptyCompletedTitle", body: "emptyCompletedBody" },
+  CANCELLED: { title: "emptyCancelledTitle", body: "emptyCancelledBody" },
 } as const;
 
 /** The in-card empty state of a tab, or the no-match state while a search is active. */
@@ -17,13 +18,14 @@ export function ProjectsEmptyState({
   hasQuery,
   action,
 }: Readonly<{ tab: ProjectTab; hasQuery: boolean; action?: ReactNode }>) {
+  const t = useTranslations(PROJECTS_EMPTY_STATE_COPY_NAMESPACE);
   if (hasQuery) {
     return (
       <EmptyState
         placement="in-card"
         icon="search-x"
-        title={PROJECT_COPY.noMatchTitle}
-        body={PROJECT_COPY.noMatchBody}
+        title={t("noMatchTitle")}
+        body={t("noMatchBody")}
         action={action}
       />
     );
@@ -32,8 +34,8 @@ export function ProjectsEmptyState({
     <EmptyState
       placement="in-card"
       icon="folder-kanban"
-      title={EMPTY[tab].title}
-      body={EMPTY[tab].body}
+      title={t(EMPTY_KEY[tab].title)}
+      body={t(EMPTY_KEY[tab].body)}
       action={tab === "ACTIVE" ? action : undefined}
     />
   );

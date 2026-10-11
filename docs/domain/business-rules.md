@@ -426,3 +426,25 @@ Money is exact decimal; never floating point.
 
 ### BR-AUD-001 — Sensitive actions are auditable
 Project completion, project cancellation, payment void, password rotation, token rotation, selection lock, and add-on approval/cancellation record actor and timestamp.
+
+## Localization (Owner 2026-10-06)
+
+### BR-L10N-001 — English default and explicit switching
+Dashboard and client galleries support `en` and `id`, defaulting to English. Preference persistence/precedence remains a specified-before-build decision.
+
+### BR-L10N-002 — Complete single-language presentation
+All system-owned reader-facing text, including accessible and library-generated text, follows the active language. Missing translations block bilingual release; no cross-language fallback. Clearly identified bilingual authoring fields are an editing context, not mixed reader copy.
+
+### BR-L10N-003 — Paired authored content
+Owner-authored text is single-language, stored and shown as written. Custom message templates have no EN/ID pair and are never translated automatically. Default message templates have EN and ID versions in code and render in the owner's language until edited (Owner, 2026-10-10). Existing BR-MSG template type/channel counts and placeholder contracts remain unchanged.
+
+### BR-L10N-004 — Identity and business invariants
+Preserve names, identifiers, filenames, authorization, exact values, currency, timezone, workflow states and entitlements when language changes. Classify free-text display titles before translating them.
+
+### BR-L10N-005 — Historical content remains truthful
+Never relabel single-language content, overwrite customized text automatically or rewrite immutable snapshots/historical migrations. Nothing is released, so no legacy migration or backfill is required (Owner, 2026-10-10).
+
+### BR-L10N-006 — Recipient language is explicit
+Emails and generated messages are localized for their recipient under a separately specified policy; dashboard language does not imply recipient language. The Owner still sends WhatsApp messages manually (C-106).
+
+See [localization policy](../product/localization.md) and [acceptance criteria](../features/bilingual-copy-revamp/acceptance-criteria.md).

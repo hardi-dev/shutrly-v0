@@ -1,13 +1,16 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { CLIENT_COPY } from "../client-copy/client-copy.copy";
+import type { ClientTranslate } from "../client-copy/client-copy.types";
+import { USE_CLIENT_MUTATIONS_COPY_NAMESPACE } from "./use-client-mutations.copy";
 import type { ClientMutationCall, ClientMutationSuccess } from "./use-client-mutations.types";
 
 async function runClientMutation(
+  t: ClientTranslate,
   name: string,
   call: ClientMutationCall,
   success: ClientMutationSuccess,
@@ -24,11 +27,11 @@ async function runClientMutation(
   } catch (error) {
     showToast({
       tone: "danger",
-      title: CLIENT_COPY.serverErrorTitle,
-      body: CLIENT_COPY.serverErrorBody,
+      title: t("serverErrorTitle"),
+      body: t("serverErrorBody"),
       action: {
-        label: CLIENT_COPY.retry,
-        onAction: () => void runClientMutation(name, call, success),
+        label: t("retry"),
+        onAction: () => void runClientMutation(t, name, call, success),
       },
     });
     throw error;
@@ -37,14 +40,15 @@ async function runClientMutation(
 
 /** Runs a client write and presents its matching success or retryable failure toast. */
 export function useClientMutations() {
+  const t = useTranslations(USE_CLIENT_MUTATIONS_COPY_NAMESPACE);
   const run = useCallback(
-    (name: string, call: ClientMutationCall, success = addedSuccess(name)) =>
-      runClientMutation(name, call, success),
-    [],
+    (name: string, call: ClientMutationCall, success = addedSuccess(t, name)) =>
+      runClientMutation(t, name, call, success),
+    [t],
   );
   return { run };
 }
 
-function addedSuccess(name: string): ClientMutationSuccess {
-  return { title: CLIENT_COPY.addedTitle, body: CLIENT_COPY.addedBody(name) };
+function addedSuccess(t: ClientTranslate, name: string): ClientMutationSuccess {
+  return { title: t("addedTitle"), body: t("addedBody", { name }) };
 }

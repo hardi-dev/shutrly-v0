@@ -1,3 +1,5 @@
+import type { useTranslations } from "next-intl";
+
 import type { AccessCardView } from "@/features/gallery/application/use-cases/get-access-card/get-access-card.types";
 
 import type { GalleryPageActions } from "../gallery-actions/gallery-actions.types";
@@ -38,3 +40,6 @@ export interface AccessButtonsProps {
   readonly onRotateLink: () => void;
   readonly onRotatePassword: () => void;
 }
+
+/** The project access translate function, passed into the row copy helper. */
+export type ProjectAccessTranslate = ReturnType<typeof useTranslations>;

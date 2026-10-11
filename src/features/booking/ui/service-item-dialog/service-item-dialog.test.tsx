@@ -15,6 +15,7 @@ vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
 }));
 
 const DEFINITION: ItemDefinitionRecord = {
+  defaultKey: null,
   id: "definition-1",
   name: "Foto edit",
   unit: "foto",
@@ -72,7 +73,7 @@ describe("ServiceItemDialog", () => {
     const action: ServiceItemDialogProps["action"] = vi.fn().mockResolvedValue({ ok: true });
     render(<AddItemHarness action={action} />);
 
-    await user.click(screen.getByRole("button", { name: /Item paket/ }));
+    await user.click(screen.getByRole("button", { name: /Isi paket/ }));
     const listbox = await screen.findByRole("listbox");
     await user.click(within(listbox).getByRole("option", { name: /Foto edit/ }));
     expect(screen.getByRole("textbox", { name: "Nilai" })).toHaveAttribute(
@@ -88,7 +89,7 @@ describe("ServiceItemDialog", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Buka tambah item" }));
-    expect(screen.getByRole("button", { name: /Item paket/ })).toHaveTextContent("Item paket");
+    expect(screen.getByRole("button", { name: /Isi paket/ })).toHaveTextContent("Isi paket");
     expect(screen.getByRole("textbox", { name: "Nilai" })).toHaveValue("");
   });
 
@@ -97,7 +98,7 @@ describe("ServiceItemDialog", () => {
     const action: ServiceItemDialogProps["action"] = vi.fn().mockResolvedValue({ ok: true });
     render(<AddItemHarness action={action} definitions={[RANGE_DEFINITION]} />);
 
-    await user.click(screen.getByRole("button", { name: /Item paket/ }));
+    await user.click(screen.getByRole("button", { name: /Isi paket/ }));
     await user.click(
       within(await screen.findByRole("listbox")).getByRole("option", { name: /Jumlah orang/ }),
     );

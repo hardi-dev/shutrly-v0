@@ -5,7 +5,7 @@ import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { Modal } from "./modal";
-import { MODAL_COPY } from "./modal.copy";
+import { MODAL_STORY_COPY } from "./modal.stories.copy";
 import type { ModalStoryCopy } from "./modal.types";
 
 function handleNoop() {
@@ -14,18 +14,18 @@ function handleNoop() {
 
 function getModalStoryCopy(size: "sm" | "md" | "lg"): ModalStoryCopy {
   if (size === "sm") {
-    return MODAL_COPY.small;
+    return MODAL_STORY_COPY.small;
   }
   if (size === "lg") {
-    return MODAL_COPY.large;
+    return MODAL_STORY_COPY.large;
   }
-  return MODAL_COPY.medium;
+  return MODAL_STORY_COPY.medium;
 }
 
 function WorkspaceForm() {
   const [name, setName] = useState("");
   const [prefix, setPrefix] = useState("");
-  const formCopy = MODAL_COPY.medium.form;
+  const formCopy = MODAL_STORY_COPY.medium.form;
 
   return (
     <div className="flex flex-col gap-(--space-4)">
@@ -57,7 +57,7 @@ const meta = {
   args: {
     isOpen: false,
     onOpenChange: handleNoop,
-    title: MODAL_COPY.medium.title,
+    title: MODAL_STORY_COPY.medium.title,
     children: null,
   },
   parameters: { designSystemSpec: "docs/design-system/components/modal.md" },

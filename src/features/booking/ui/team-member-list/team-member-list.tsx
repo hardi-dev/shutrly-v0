@@ -1,9 +1,13 @@
+import { useTranslations } from "next-intl";
+
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
 import { clientInitials } from "../client-initials/client-initials";
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
+import { TEAM_COUNT_MESSAGE_KEY } from "../team-copy/team-copy.copy";
 import { memberRolesLabel } from "../team-member-roles/team-member-roles";
+import { TEAM_MEMBER_LIST_COPY_NAMESPACE } from "./team-member-list.copy";
 import type { TeamMemberListProps } from "./team-member-list.types";
 
 /**
@@ -19,23 +23,25 @@ export function TeamMemberList({
   emptyState,
   renderActions,
 }: Readonly<TeamMemberListProps>) {
+  const t = useTranslations(TEAM_MEMBER_LIST_COPY_NAMESPACE);
+  const locale = useAppLocale();
   return (
     <SectionCard
-      title={TEAM_COPY.membersTitle}
-      description={TEAM_COPY.membersCount(status, count)}
+      title={t("membersTitle")}
+      description={t(TEAM_COUNT_MESSAGE_KEY[status], { count })}
       actions={action}
       content="flush"
     >
       {rows.length === 0 ? (
         <div className="px-(--space-4)">{emptyState}</div>
       ) : (
-        <ul aria-label={TEAM_COPY.membersTitle}>
+        <ul aria-label={t("membersTitle")}>
           {rows.map((row, index) => (
             <ListCardItem
               key={row.id}
               avatarInitials={clientInitials(row.name)}
               title={row.name}
-              meta={memberRolesLabel(row.roles)}
+              meta={memberRolesLabel(row.roles, locale)}
               isLast={index === rows.length - 1}
               trailing={renderActions?.(row)}
             />

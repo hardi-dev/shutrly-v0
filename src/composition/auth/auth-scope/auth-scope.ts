@@ -15,6 +15,7 @@ import { LinkOutbox } from "@/features/auth/application/link-outbox/link-outbox"
 import type { AuthEmailPort } from "@/features/auth/application/ports/auth-email/auth-email.port";
 import type { AppEnv } from "@/shared/env/app-env.types";
 
+import { getRequestLocale } from "../../locale/request-locale/request-locale";
 import { withRequestDb } from "../../request-db/request-db";
 import type { AuthScope } from "./auth-scope.types";
 
@@ -37,6 +38,9 @@ export function withAuthScope<T>(work: (scope: AuthScope) => Promise<T>): Promis
       database: createBetterAuthDatabase(db),
       env: rc.env,
       accounts,
+      // D-17: auth emails follow the screen language of this request, resolved only when a link
+      // is issued (an eager call would recurse through the signed-in owner lookup).
+      resolveLocale: getRequestLocale,
       links: createDrizzleLinkRegistry(db),
       onLink: (link) => {
         outbox.enqueue(link);

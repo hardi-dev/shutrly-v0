@@ -14,6 +14,7 @@ import {
   uniqueFieldKey,
 } from "@/features/booking/domain/booking-field/booking-field";
 import type { FieldType } from "@/features/booking/domain/booking-field/booking-field.types";
+import { parseDefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions";
 import { canonicalIdrAmount } from "@/features/booking/domain/idr-amount/idr-amount";
 import { parsePickMode } from "@/features/booking/domain/item-definition-type/item-definition-type";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
@@ -37,6 +38,7 @@ interface RawItem {
   readonly definitionId: string;
   readonly definitionName: string;
   readonly unit: string | null;
+  readonly defaultKey: string | null;
   readonly valueType: string;
   readonly selectionRequired: boolean;
   readonly pickMode: string | null;
@@ -77,6 +79,7 @@ function toItem(row: RawItem): ServiceItemRecord | null {
     id: row.id,
     definitionId: row.definitionId,
     definitionName: row.definitionName,
+    defaultKey: parseDefaultItemKey(row.defaultKey),
     unit: row.unit,
     valueType: row.valueType,
     selectionRequired: row.selectionRequired,
@@ -121,6 +124,7 @@ export function createDrizzleServiceRepository(db: DbExecutor): ServiceRepositor
         definitionId: serviceItem.definitionId,
         definitionName: serviceItemDefinition.name,
         unit: serviceItemDefinition.unit,
+        defaultKey: serviceItemDefinition.defaultKey,
         valueType: serviceItemDefinition.valueType,
         selectionRequired: serviceItemDefinition.selectionRequired,
         pickMode: serviceItemDefinition.pickMode,

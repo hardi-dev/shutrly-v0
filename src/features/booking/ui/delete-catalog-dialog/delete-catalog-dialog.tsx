@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -9,7 +10,7 @@ import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
+import { DELETE_CATALOG_DIALOG_COPY_NAMESPACE } from "./delete-catalog-dialog.copy";
 import type {
   DeleteCatalogDialogProps,
   DeleteDialogState,
@@ -25,6 +26,7 @@ export function DeleteCatalogDialog(props: Readonly<DeleteCatalogDialogProps>) {
 
 function useDeleteDialogState(props: Readonly<DeleteCatalogDialogProps>): DeleteDialogState {
   const [isPending, setIsPending] = useState(false);
+  const t = useTranslations(DELETE_CATALOG_DIALOG_COPY_NAMESPACE);
   const { entry, isInUse, usage } = props;
   async function deleteEntry(): Promise<void> {
     setIsPending(true);
@@ -36,20 +38,20 @@ function useDeleteDialogState(props: Readonly<DeleteCatalogDialogProps>): Delete
       }
       const result = await props.removeAction(props.workspaceId, props.kind, entry.id);
       if (!result.ok) return;
-      showToast({ tone: "success", title: CATALOG_COPY.deletedToast });
+      showToast({ tone: "success", title: t("deletedToast") });
       props.onOpenChange(false);
     } finally {
       setIsPending(false);
     }
   }
-  let description: string = CATALOG_COPY.deleteAllowedBody;
-  if (isInUse) description = CATALOG_COPY.deleteBlockedBody(entry.name);
+  let description: string = t("deleteAllowedBody");
+  if (isInUse) description = t("deleteBlockedBody", { name: entry.name });
   else if (usage) description = `${description} ${usage}`;
   return {
     isPending,
-    title: isInUse ? CATALOG_COPY.deleteBlockedTitle : CATALOG_COPY.deleteTitle(entry.name),
+    title: isInUse ? t("deleteBlockedTitle") : t("deleteTitle", { name: entry.name }),
     description,
-    actionLabel: isInUse ? CATALOG_COPY.archive : CATALOG_COPY.deleteConfirm,
+    actionLabel: isInUse ? t("archive") : t("delete"),
     onAction: () => {
       void deleteEntry();
     },
@@ -60,6 +62,7 @@ function useDeleteDialogState(props: Readonly<DeleteCatalogDialogProps>): Delete
 }
 
 function MobileDeleteDialog({ props, state }: Readonly<DeleteDialogSurfaceProps>) {
+  const t = useTranslations(DELETE_CATALOG_DIALOG_COPY_NAMESPACE);
   return (
     <BottomSheet
       isOpen={props.isOpen}
@@ -74,12 +77,13 @@ function MobileDeleteDialog({ props, state }: Readonly<DeleteDialogSurfaceProps>
         variant="destructive"
         onPress={state.onAction}
       />
-      <SheetItem label={CATALOG_COPY.cancel} onPress={state.onCancel} />
+      <SheetItem label={t("cancel")} onPress={state.onCancel} />
     </BottomSheet>
   );
 }
 
 function DesktopDeleteDialog({ props, state }: Readonly<DeleteDialogSurfaceProps>) {
+  const t = useTranslations(DELETE_CATALOG_DIALOG_COPY_NAMESPACE);
   return (
     <Modal
       isOpen={props.isOpen}
@@ -91,7 +95,7 @@ function DesktopDeleteDialog({ props, state }: Readonly<DeleteDialogSurfaceProps
       actions={
         <>
           <Button variant="secondary" onPress={state.onCancel} isDisabled={state.isPending}>
-            {CATALOG_COPY.cancel}
+            {t("cancel")}
           </Button>
           <Button variant="danger" onPress={state.onAction} isPending={state.isPending}>
             {state.actionLabel}

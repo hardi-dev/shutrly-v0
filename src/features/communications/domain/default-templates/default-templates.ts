@@ -1,17 +1,35 @@
+import type { AppLocale } from "@/shared/locale/locale.types";
+
 import type { TemplateType } from "../template-type/template-type.types";
 
-// A-10 platform defaults (Indonesian). GALLERY_SHARE is the approved design copy; the others follow
-// its pattern (Owner 2026-10-01: "fix it for me based on your recommendation"). Migration 0003
-// repeats these strings; a test in tests/config keeps them equal.
-export const DEFAULT_TEMPLATE_CONTENT: Readonly<Record<TemplateType, string>> = {
-  GALLERY_SHARE:
-    "Halo {{clientName}},\n\nGallery untuk {{projectTitle}} dari {{brandName}} sudah bisa dibuka:\n{{galleryUrl}}\n\nPassword: {{galleryPassword}}\n\nSilakan pilih foto favoritmu. Terima kasih!",
-  SELECTION_REMINDER:
-    "Halo {{clientName}},\n\nPengingat dari {{brandName}}: pilihan foto untuk {{projectTitle}} belum selesai. Lanjutkan memilih di sini:\n{{galleryUrl}}\n\nTerima kasih!",
-  FINAL_DELIVERY:
-    "Halo {{clientName}},\n\nFoto akhir {{projectTitle}} dari {{brandName}} sudah siap diunduh:\n{{galleryUrl}}\n\nPassword: {{galleryPassword}}\n\nTerima kasih sudah memercayakan momenmu kepada kami!",
-  INVOICE_SHARE:
-    "Halo {{clientName}},\n\nInvoice {{invoiceNumber}} untuk {{projectTitle}} dari {{brandName}} sudah terbit.\nTotal: {{invoiceTotal}}\n\nLihat dan bayar invoice di sini:\n{{invoiceUrl}}\n\nTerima kasih!",
-  PAYMENT_REMINDER:
-    "Halo {{clientName}},\n\nPengingat dari {{brandName}}: invoice {{invoiceNumber}} untuk {{projectTitle}} masih memiliki sisa tagihan {{invoiceBalance}}.\n\nDetail dan pembayaran:\n{{invoiceUrl}}\n\nTerima kasih!",
+// Platform default messages, English and Indonesian, copied verbatim from the approved copy deck
+// (copy-deck.md §11.4, Owner-reviewed 2026-10-10). Migration 0003 keeps its own frozen copy;
+// tests/config/message-template-backfill.test.ts pins it.
+export const DEFAULT_TEMPLATE_CONTENT: Readonly<
+  Record<AppLocale, Readonly<Record<TemplateType, string>>>
+> = {
+  en: {
+    GALLERY_SHARE:
+      "Hi {{clientName}},\n\nYour gallery for {{projectTitle}} from {{brandName}} is ready:\n{{galleryUrl}}\n\nPassword: {{galleryPassword}}\n\nChoose your favorite photos. Thank you!",
+    SELECTION_REMINDER:
+      "Hi {{clientName}},\n\nA reminder from {{brandName}}: your photo selections for {{projectTitle}} aren’t complete yet.\nContinue choosing here:\n{{galleryUrl}}\n\nThank you!",
+    FINAL_DELIVERY:
+      "Hi {{clientName}},\n\nYour final photos for {{projectTitle}} from {{brandName}} are ready to download:\n{{galleryUrl}}\n\nPassword: {{galleryPassword}}\n\nThank you for choosing us to capture your moments!",
+    INVOICE_SHARE:
+      "Hi {{clientName}},\n\nInvoice {{invoiceNumber}} for {{projectTitle}} from {{brandName}} has been issued.\nTotal: {{invoiceTotal}}\n\nView the invoice and payment details:\n{{invoiceUrl}}\n\nThank you!",
+    PAYMENT_REMINDER:
+      "Hi {{clientName}},\n\nA reminder from {{brandName}}: invoice {{invoiceNumber}} for {{projectTitle}} has an outstanding balance of {{invoiceBalance}}.\n\nView the invoice and payment details:\n{{invoiceUrl}}\n\nThank you!",
+  },
+  id: {
+    GALLERY_SHARE:
+      "Halo {{clientName}},\n\nGaleri {{projectTitle}} dari {{brandName}} sudah bisa dibuka:\n{{galleryUrl}}\n\nKata sandi: {{galleryPassword}}\n\nPilih foto favoritmu, ya. Terima kasih!",
+    SELECTION_REMINDER:
+      "Halo {{clientName}},\n\nPengingat dari {{brandName}}: pilihan foto untuk {{projectTitle}} belum selesai.\nLanjutkan memilih di sini:\n{{galleryUrl}}\n\nTerima kasih!",
+    FINAL_DELIVERY:
+      "Halo {{clientName}},\n\nHasil akhir {{projectTitle}} dari {{brandName}} sudah siap diunduh:\n{{galleryUrl}}\n\nKata sandi: {{galleryPassword}}\n\nTerima kasih sudah memercayakan momenmu kepada kami!",
+    INVOICE_SHARE:
+      "Halo {{clientName}},\n\nTagihan {{invoiceNumber}} untuk {{projectTitle}} dari {{brandName}} sudah terbit.\nTotal: {{invoiceTotal}}\n\nLihat tagihan dan informasi pembayaran:\n{{invoiceUrl}}\n\nTerima kasih!",
+    PAYMENT_REMINDER:
+      "Halo {{clientName}},\n\nPengingat dari {{brandName}}: tagihan {{invoiceNumber}} untuk {{projectTitle}} belum lunas.\nSisa tagihan: {{invoiceBalance}}\n\nLihat tagihan dan informasi pembayaran:\n{{invoiceUrl}}\n\nTerima kasih!",
+  },
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
@@ -13,8 +14,8 @@ import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { sourceNameSchema } from "../../application/schemas/source-name/source-name.schema";
-import { SOURCE_COPY } from "../source-copy/source-copy.copy";
 import { sourceNameErrorText } from "../source-name-error/source-name-error";
+import { RENAME_SOURCE_DIALOG_COPY_NAMESPACE } from "./rename-source-dialog.copy";
 import type { RenameSourceDialogProps } from "./rename-source-dialog.types";
 
 const FORM_ID = "rename-source-form";
@@ -27,6 +28,7 @@ export function RenameSourceDialog({
   onOpenChange,
   action,
 }: Readonly<RenameSourceDialogProps>) {
+  const t = useTranslations(RENAME_SOURCE_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const [isPending, setIsPending] = useState(false);
   const form = useForm<{ displayName: string }>({
@@ -50,8 +52,8 @@ export function RenameSourceDialog({
       }
       showToast({
         tone: "success",
-        title: SOURCE_COPY.renamedTitle,
-        body: SOURCE_COPY.renamedBody(values.displayName),
+        title: t("renamedTitle"),
+        body: t("renamedBody", { name: values.displayName }),
       });
       onOpenChange(false);
     } finally {
@@ -71,19 +73,19 @@ export function RenameSourceDialog({
   const formContent = (
     <form id={FORM_ID} noValidate onSubmit={handleSubmit} className="flex flex-col gap-(--space-4)">
       <TextField
-        label={SOURCE_COPY.nameLabel}
+        label={t("nameLabel")}
         name={field.name}
         value={field.value}
         onChange={field.onChange}
         onBlur={field.onBlur}
         inputRef={field.ref}
-        errorMessage={sourceNameErrorText(fieldState.error?.message ?? "")}
+        errorMessage={sourceNameErrorText(t, fieldState.error?.message ?? "")}
       />
     </form>
   );
   const submitButton = (
     <Button type="submit" form={FORM_ID} size={isMobile ? "lg" : "md"} isPending={isPending}>
-      {isPending ? SOURCE_COPY.saving : SOURCE_COPY.save}
+      {isPending ? t("saving") : t("save")}
     </Button>
   );
 
@@ -92,8 +94,8 @@ export function RenameSourceDialog({
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        title={SOURCE_COPY.renameTitle}
-        description={SOURCE_COPY.renameDescription}
+        title={t("renameTitle")}
+        description={t("renameDescription")}
         variant="form"
         actions={<div className="w-full">{submitButton}</div>}
       >
@@ -105,13 +107,13 @@ export function RenameSourceDialog({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      title={SOURCE_COPY.renameTitle}
-      description={SOURCE_COPY.renameDescription}
+      title={t("renameTitle")}
+      description={t("renameDescription")}
       size="sm"
       actions={
         <>
           <Button variant="secondary" onPress={handleCancel} isDisabled={isPending}>
-            {SOURCE_COPY.cancel}
+            {t("cancel")}
           </Button>
           {submitButton}
         </>

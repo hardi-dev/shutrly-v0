@@ -2,8 +2,12 @@ import type { TemplateType } from "@/features/communications/domain/template-typ
 
 import type { MessageTemplateContentInput } from "../../schemas/message-template-content/message-template-content.types";
 
+/** `default` stores the platform default (is_default, no text); `custom` stores the sent text. */
+export type TemplateSaveMode = "custom" | "default";
+
 export interface UpdateMessageTemplateCommand {
   readonly type: TemplateType;
+  readonly mode: TemplateSaveMode;
   readonly editorUserId: string;
   readonly input: MessageTemplateContentInput;
 }

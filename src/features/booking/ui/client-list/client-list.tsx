@@ -1,11 +1,14 @@
 /* eslint-disable no-restricted-syntax, @typescript-eslint/no-confusing-void-expression -- row action callbacks are parameterized by each record */
+import { useTranslations } from "next-intl";
+
 import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
-import { CLIENT_COPY } from "../client-copy/client-copy.copy";
+import { CLIENT_COUNT_MESSAGE_KEY } from "../client-copy/client-copy.copy";
 import { clientInitials } from "../client-initials/client-initials";
 import { ClientRowActions } from "../client-row-actions/client-row-actions";
+import { CLIENT_LIST_COPY_NAMESPACE } from "./client-list.copy";
 import type { ClientListProps } from "./client-list.types";
 
 /** Renders the compact phone-only client list. */
@@ -20,10 +23,11 @@ export function ClientList({
   onRestore,
   onDelete,
 }: Readonly<ClientListProps>) {
+  const t = useTranslations(CLIENT_LIST_COPY_NAMESPACE);
   return (
     <SectionCard
-      title={CLIENT_COPY.listTitle}
-      description={CLIENT_COPY.count(status, count)}
+      title={t("listTitle")}
+      description={t(CLIENT_COUNT_MESSAGE_KEY[status], { count })}
       actions={action}
       content="flush"
     >
@@ -53,16 +57,15 @@ function ClientRows({
 }: Readonly<
   Pick<ClientListProps, "rows" | "status" | "onEdit" | "onArchive" | "onRestore" | "onDelete">
 >) {
+  const t = useTranslations(CLIENT_LIST_COPY_NAMESPACE);
   return (
-    <ul aria-label={CLIENT_COPY.listTitle}>
+    <ul aria-label={t("listTitle")}>
       {rows.map((row, index) => (
         <ListCardItem
           key={row.id}
           avatarInitials={clientInitials(row.name)}
           title={row.name}
-          meta={
-            row.whatsappNumber ? formatWhatsappNumber(row.whatsappNumber) : CLIENT_COPY.noWhatsapp
-          }
+          meta={row.whatsappNumber ? formatWhatsappNumber(row.whatsappNumber) : t("noWhatsapp")}
           isLast={index === rows.length - 1}
           trailing={
             onEdit && onArchive && onRestore && onDelete ? (

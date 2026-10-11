@@ -12,19 +12,26 @@ const TOKENS = () => "t".repeat(43);
 
 async function seed(mode: "DRAFT" | "BOOKED", status?: string) {
   const repository = projectFixture();
-  const result = await createProject(repository, TOKENS, projectContext, "owner", {
-    mode,
-    clientId: PROJECT_IDS.rina,
-    serviceId: PROJECT_IDS.wisudaBasic,
-    title: "Wisuda Basic — Rina",
-    agreedPrice: "750.000",
-    notes: "",
-    items: [],
-    sessions: [
-      { name: "Wisuda", date: "2026-11-10", startTime: null, endTime: null, location: null },
-    ],
-    fieldValues: { nama_kampus: "UI", tanggal_wisuda: "2026-11-10", ukuran_toga: "" },
-  });
+  const result = await createProject(
+    repository,
+    TOKENS,
+    projectContext,
+    "owner",
+    {
+      mode,
+      clientId: PROJECT_IDS.rina,
+      serviceId: PROJECT_IDS.wisudaBasic,
+      title: "Wisuda Basic — Rina",
+      agreedPrice: "750.000",
+      notes: "",
+      items: [],
+      sessions: [
+        { name: "Wisuda", date: "2026-11-10", startTime: null, endTime: null, location: null },
+      ],
+      fieldValues: { nama_kampus: "UI", tanggal_wisuda: "2026-11-10", ukuran_toga: "" },
+    },
+    "id-ID",
+  );
   if (!result.ok) throw new Error("not created");
   const stored = repository.projects.find((row) => row.id === result.projectId);
   if (!stored) throw new Error("not stored");

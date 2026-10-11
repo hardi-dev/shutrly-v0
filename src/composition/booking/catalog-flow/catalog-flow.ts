@@ -2,6 +2,8 @@ import "server-only";
 
 import { notFound } from "next/navigation";
 
+import { getRequestFormattingLocale } from "@/composition/locale/request-formatting-locale/request-formatting-locale";
+import { getRequestLocale } from "@/composition/locale/request-locale/request-locale";
 import { CatalogError } from "@/features/booking/application/errors/catalog-errors/catalog-errors";
 import { catalogIdSchema } from "@/features/booking/application/schemas/catalog-id/catalog-id.schema";
 import { addBookingField } from "@/features/booking/application/use-cases/add-booking-field/add-booking-field";
@@ -65,9 +67,11 @@ function saveError(
 
 export async function loadServices(rawWorkspaceId: string): Promise<ServicesData> {
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const locale = await getRequestFormattingLocale();
+  const appLocale = await getRequestLocale();
   try {
     return await withCatalogScope(({ services, categories }) =>
-      listServices(services, categories, verified.context),
+      listServices(services, categories, verified.context, locale, appLocale),
     );
   } catch (error) {
     return saveError(error, {
@@ -112,9 +116,11 @@ export async function loadServiceDetail(
 ): Promise<ServiceDetailData> {
   const serviceId = idOrNotFound(rawServiceId);
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const locale = await getRequestFormattingLocale();
+  const appLocale = await getRequestLocale();
   try {
     return await withCatalogScope(({ services }) =>
-      getServiceDetail(services, verified.context, serviceId),
+      getServiceDetail(services, verified.context, serviceId, locale, appLocale),
     );
   } catch (error) {
     return saveError(error, {
@@ -201,9 +207,10 @@ export async function updateCatalogItemDefinition(
 export async function addCatalogService(rawWorkspaceId: string, input: unknown) {
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const locale = await getRequestFormattingLocale();
   try {
     return await withCatalogScope(({ services }) =>
-      addService(services, verified.context, account.id, input),
+      addService(services, verified.context, account.id, input, locale),
     );
   } catch (error) {
     return saveError(error, {
@@ -222,9 +229,10 @@ export async function updateCatalogServiceInfo(
   const id = idOrNotFound(rawId);
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const locale = await getRequestFormattingLocale();
   try {
     return await withCatalogScope(({ services }) =>
-      updateServiceInfo(services, verified.context, id, account.id, input),
+      updateServiceInfo(services, verified.context, id, account.id, input, locale),
     );
   } catch (error) {
     return saveError(error, {
@@ -292,6 +300,7 @@ export async function addCatalogServiceItem(
   const definitionId = idOrNotFound(input.definitionId);
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const locale = await getRequestFormattingLocale();
   try {
     return await withCatalogScope(({ services, itemDefinitions }) =>
       addServiceItem(
@@ -302,6 +311,7 @@ export async function addCatalogServiceItem(
         definitionId,
         account.id,
         input.value,
+        locale,
       ),
     );
   } catch (error) {
@@ -324,6 +334,7 @@ export async function updateCatalogServiceItem(
   const itemId = idOrNotFound(rawItemId);
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
+  const locale = await getRequestFormattingLocale();
   try {
     return await withCatalogScope(async ({ services, itemDefinitions }) => {
       const detail = await services.findDetail(verified.context, serviceId);
@@ -338,6 +349,7 @@ export async function updateCatalogServiceItem(
         item.definitionId,
         account.id,
         input.value,
+        locale,
       );
     });
   } catch (error) {

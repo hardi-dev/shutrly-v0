@@ -1,3 +1,5 @@
+import type { useTranslations } from "next-intl";
+
 import type { SetPickNoteInput } from "@/features/gallery/application/schemas/set-pick/set-pick.types";
 import type { ClientPhotoView } from "@/features/gallery/application/use-cases/client-views/client-views.types";
 import type { SetPickNoteResult } from "@/features/gallery/application/use-cases/set-pick/set-pick.types";
@@ -28,3 +30,6 @@ export interface NotePhotoProps {
   readonly photo: ClientPhotoView;
   readonly groupName: string;
 }
+
+/** The note sheet translate function, passed into helpers that run outside a component. */
+export type PickNoteTranslate = ReturnType<typeof useTranslations>;

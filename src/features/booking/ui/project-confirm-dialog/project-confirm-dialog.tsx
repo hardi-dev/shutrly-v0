@@ -1,6 +1,7 @@
 "use client";
 /* eslint-disable max-lines-per-function -- responsive dialog shell plus the confirm flow share state */
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -9,7 +10,7 @@ import { Modal } from "@/ui/patterns/modal/modal";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { Button } from "@/ui/primitives/button/button";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { PROJECT_CONFIRM_DIALOG_COPY_NAMESPACE } from "./project-confirm-dialog.copy";
 
 /** A destructive confirm for removing an item or a session: Modal SM on desktop, an Actions sheet on phones. */
 export function ProjectConfirmDialog({
@@ -27,6 +28,7 @@ export function ProjectConfirmDialog({
   confirmLabel: string;
   onConfirm: () => Promise<void>;
 }>) {
+  const t = useTranslations(PROJECT_CONFIRM_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const [isPending, setIsPending] = useState(false);
   const confirm = async () => {
@@ -60,7 +62,7 @@ export function ProjectConfirmDialog({
           isPending={isPending}
           onPress={handleConfirm}
         />
-        <SheetItem label={PROJECT_COPY.itemCancel} icon="x" onPress={handleCancel} />
+        <SheetItem label={t("itemCancel")} icon="x" onPress={handleCancel} />
       </BottomSheet>
     );
   }
@@ -75,7 +77,7 @@ export function ProjectConfirmDialog({
       actions={
         <>
           <Button variant="secondary" onPress={handleCancel}>
-            {PROJECT_COPY.itemCancel}
+            {t("itemCancel")}
           </Button>
           <Button variant="danger" isPending={isPending} onPress={handleConfirm}>
             {confirmLabel}

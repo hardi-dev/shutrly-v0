@@ -2,6 +2,7 @@ import "server-only";
 
 import { notFound } from "next/navigation";
 
+import { getRequestFormattingLocale } from "@/composition/locale/request-formatting-locale/request-formatting-locale";
 import { ProjectError } from "@/features/booking/application/errors/project-errors/project-errors";
 import { projectIdSchema } from "@/features/booking/application/schemas/project-ids/project-ids.schema";
 import type { ProjectWriteResult } from "@/features/booking/application/use-cases/project-results/project-results.types";
@@ -47,22 +48,24 @@ async function runDealEdit(
 }
 
 /** Adds a package item and, with a published gallery, its group (AC-PRJ-017, AC-SEL-013). @param ws - untrusted workspace id @param id - untrusted project id @param values - untrusted `{ definitionId, value }` @returns undefined or a failure */
-export function addProjectItemEntry(ws: string, id: string, values: unknown) {
+export async function addProjectItemEntry(ws: string, id: string, values: unknown) {
+  const locale = await getRequestFormattingLocale();
   return runDealEdit(ws, id, "add-item", (scope, target) =>
-    addItemWithGroup(scope, target, values),
+    addItemWithGroup(scope, target, values, locale),
   );
 }
 
 /** Changes an item's value; its group follows or refuses (AC-PRJ-017, AC-SEL-013/014). @param ws - untrusted workspace id @param id - untrusted project id @param rawItemId - untrusted item id @param values - untrusted `{ value }` @returns undefined or a failure */
-export function updateProjectItemValueEntry(
+export async function updateProjectItemValueEntry(
   ws: string,
   id: string,
   rawItemId: string,
   values: unknown,
 ) {
   const itemId = idOrNotFound(rawItemId);
+  const locale = await getRequestFormattingLocale();
   return runDealEdit(ws, id, "update-item", (scope, target) =>
-    updateItemWithGroup(scope, target, itemId, values),
+    updateItemWithGroup(scope, target, itemId, values, locale),
   );
 }
 

@@ -1,11 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { SELECTION_OWNER_COPY as COPY } from "../selection-owner-text/selection-owner.copy";
+import { USE_LOCK_SELECTION_COPY_NAMESPACE } from "./use-lock-selection.copy";
 import type {
   LockSelectionHandle,
   LockTarget,
@@ -24,6 +25,7 @@ export function useLockSelection({
   projectId,
   lockAction,
 }: UseLockSelectionInput): LockSelectionHandle {
+  const t = useTranslations(USE_LOCK_SELECTION_COPY_NAMESPACE);
   const router = useRouter();
   const [target, setTarget] = useState<LockTarget | null>(null);
   const [isPending, setIsPending] = useState(false);
@@ -42,16 +44,16 @@ export function useLockSelection({
     setIsPending(false);
     setTarget(null);
     if (result === null || (!result.ok && result.code === "INVALID")) {
-      showToast({ tone: "danger", title: COPY.lockFailed });
+      showToast({ tone: "danger", title: t("lockFailed") });
       return;
     }
     if (result.ok) {
       const title =
         current.intent === "LOCK"
-          ? COPY.lockedToast(result.groupName)
-          : COPY.closedToast(result.groupName);
+          ? t("lockedToast", { name: result.groupName })
+          : t("closedToast", { name: result.groupName });
       showToast({ tone: "success", title });
-    } else showToast({ tone: "warning", title: COPY.staleToast });
+    } else showToast({ tone: "warning", title: t("staleToast") });
     router.refresh();
   };
   const confirm = () => {

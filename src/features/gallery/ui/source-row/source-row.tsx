@@ -1,9 +1,12 @@
+import { useTranslations } from "next-intl";
+
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
-import { PROVIDER_COPY, SOURCE_COPY } from "../source-copy/source-copy.copy";
+import { PROVIDER_TITLE_MESSAGE_KEY } from "../source-copy/source-copy.copy";
 import { SourceRowActions } from "../source-row-actions/source-row-actions";
+import { SOURCE_ROW_COPY_NAMESPACE } from "./source-row.copy";
 import type { PhotoSourceRowProps } from "./source-row.types";
 
 export function PhotoSourceRow({
@@ -14,6 +17,7 @@ export function PhotoSourceRow({
   onRename,
   onDelete,
 }: Readonly<PhotoSourceRowProps>) {
+  const t = useTranslations(SOURCE_ROW_COPY_NAMESPACE);
   function handleRename(): void {
     onRename?.(source);
   }
@@ -35,7 +39,7 @@ export function PhotoSourceRow({
       <IconButton
         icon="more-horizontal"
         size="sm"
-        aria-label={SOURCE_COPY.rowActions(source.displayName)}
+        aria-label={t("rowActions", { name: source.displayName })}
       />
     );
 
@@ -43,13 +47,13 @@ export function PhotoSourceRow({
     <ListCardItem
       icon="hard-drive"
       title={source.displayName}
-      meta={PROVIDER_COPY[source.provider].title}
+      meta={t(PROVIDER_TITLE_MESSAGE_KEY[source.provider])}
       isLast={isLast}
       trailing={
         <>
           <StatusChip
             tone={source.isActive ? "success" : "neutral"}
-            label={source.isActive ? SOURCE_COPY.active : SOURCE_COPY.inactive}
+            label={source.isActive ? t("active") : t("inactive")}
           />
           {trailingActions}
         </>

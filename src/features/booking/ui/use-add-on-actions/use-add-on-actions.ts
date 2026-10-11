@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { AddOnWriteResult } from "@/features/booking/application/use-cases/add-on-results/add-on-results.types";
@@ -11,22 +12,27 @@ import type {
   AddOnConfirmState,
   AddOnFlows,
 } from "../add-on-card/add-on-card.types";
-import { ADD_ON_COPY as COPY } from "../add-on-copy/add-on.copy";
+import type { AddOnTranslate } from "../add-on-copy/add-on-copy.types";
+import { USE_ADD_ON_ACTIONS_COPY_NAMESPACE } from "./use-add-on-actions.copy";
 
-function failureTitle(result: Exclude<AddOnWriteResult, undefined>): string {
-  if (result.code === "TARGET_LOCKED") return COPY.targetLockedTitle;
-  if (result.code === "ADD_ON_STATUS") return COPY.addOnStatusTitle;
-  return COPY.failedTitle;
+function failureTitle(result: Exclude<AddOnWriteResult, undefined>, t: AddOnTranslate): string {
+  if (result.code === "TARGET_LOCKED") return t("targetLockedTitle");
+  if (result.code === "ADD_ON_STATUS") return t("addOnStatusTitle");
+  return t("failedTitle");
 }
 
-async function deleteDraft(props: Readonly<AddOnCardProps>, row: AddOnRowView): Promise<void> {
+async function deleteDraft(
+  props: Readonly<AddOnCardProps>,
+  row: AddOnRowView,
+  t: AddOnTranslate,
+): Promise<void> {
   const { workspaceId, projectId, actions } = props;
   try {
     const result = await actions.deleteDraftAction(workspaceId, projectId, { addOnId: row.id });
-    if (result) showToast({ tone: "danger", title: failureTitle(result) });
-    else showToast({ tone: "success", title: COPY.deletedTitle });
+    if (result) showToast({ tone: "danger", title: failureTitle(result, t) });
+    else showToast({ tone: "success", title: t("deletedTitle") });
   } catch {
-    showToast({ tone: "danger", title: COPY.failedTitle });
+    showToast({ tone: "danger", title: t("failedTitle") });
   }
 }
 
@@ -38,6 +44,7 @@ async function deleteDraft(props: Readonly<AddOnCardProps>, row: AddOnRowView): 
  */
 export function useAddOnActions(props: Readonly<AddOnCardProps>): AddOnFlows {
   const { workspaceId, projectId, actions } = props;
+  const t = useTranslations(USE_ADD_ON_ACTIONS_COPY_NAMESPACE);
   const [confirm, setConfirm] = useState<AddOnConfirmState | null>(null);
   const [isPending, setIsPending] = useState(false);
 
@@ -51,13 +58,13 @@ export function useAddOnActions(props: Readonly<AddOnCardProps>): AddOnFlows {
         return;
       }
       setConfirm(null);
-      if (result) showToast({ tone: "danger", title: failureTitle(result) });
+      if (result) showToast({ tone: "danger", title: failureTitle(result, t) });
       else {
-        const title = state.kind === "APPROVE" ? COPY.approvedTitle : COPY.cancelledTitle;
+        const title = state.kind === "APPROVE" ? t("approvedTitle") : t("cancelledTitle");
         showToast({ tone: "success", title });
       }
     } catch {
-      showToast({ tone: "danger", title: COPY.failedTitle });
+      showToast({ tone: "danger", title: t("failedTitle") });
     } finally {
       setIsPending(false);
     }
@@ -77,7 +84,7 @@ export function useAddOnActions(props: Readonly<AddOnCardProps>): AddOnFlows {
       else void write(confirm);
     },
     deleteDraft: (row: AddOnRowView) => {
-      void deleteDraft(props, row);
+      void deleteDraft(props, row, t);
     },
   };
 }

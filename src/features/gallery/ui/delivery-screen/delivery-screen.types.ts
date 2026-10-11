@@ -1,3 +1,5 @@
+import type { useTranslations } from "next-intl";
+
 import type {
   DeliveryFilesView,
   DeliveryFileView,
@@ -21,3 +23,6 @@ export interface DeliveryFileTileProps {
   readonly index: number;
   readonly screen: DeliveryScreenState;
 }
+
+/** The delivery screen translate function, passed into helpers that run outside a component. */
+export type DeliveryScreenTranslate = ReturnType<typeof useTranslations>;

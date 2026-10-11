@@ -109,8 +109,8 @@ describe("ProjectsScreen", () => {
     expect(screen.getByText("Rina · Wisuda Basic")).toBeInTheDocument();
     expect(screen.getByText("Sel, 10 Nov 2026 · 07.30")).toBeInTheDocument();
     expect(screen.getByText("Balairung UI, Depok · +1 sesi")).toBeInTheDocument();
-    expect(screen.getByText("Belum ada jadwal")).toBeInTheDocument();
-    expect(screen.getByText("Dibooking")).toBeInTheDocument();
+    expect(screen.getByText("Belum ada jadwal sesi")).toBeInTheDocument();
+    expect(screen.getByText("Dipesan")).toBeInTheDocument();
     expect(screen.getByText("Draf")).toBeInTheDocument();
     expect(screen.getByTestId("page-actions")).toHaveTextContent("Proyek baru");
   });
@@ -140,7 +140,7 @@ describe("ProjectsScreen", () => {
 
   it("AC-PRJ-004 shows the no-match state and keeps the tab total", () => {
     renderScreen([], { q: "andra", count: 12 });
-    expect(screen.getByText("Tidak ada proyek yang cocok")).toBeInTheDocument();
+    expect(screen.getByText("Belum ada proyek yang cocok")).toBeInTheDocument();
     expect(screen.getByText("12 proyek aktif")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Hapus pencarian" })).toHaveAttribute(
       "href",
@@ -167,7 +167,7 @@ describe("ProjectsScreen", () => {
     renderScreen([WITH_SESSION, NO_SESSION]);
     expect(screen.getByRole("radio", { name: "Aktif" })).toBeInTheDocument();
     expect(screen.getByText("Rina · 10 Nov 2026")).toBeInTheDocument();
-    expect(screen.getByText("Sari · Belum ada jadwal")).toBeInTheDocument();
+    expect(screen.getByText("Sari · Belum ada jadwal sesi")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Baru" }));
     expect(push).toHaveBeenCalledWith("/w/ws/projects/new");
     await userEvent.click(screen.getByRole("radio", { name: "Selesai" }));
@@ -177,7 +177,7 @@ describe("ProjectsScreen", () => {
   it("AC-PRJ-004 writes the search to the URL after the debounce and clears it", async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     renderScreen([WITH_SESSION], { tab: "COMPLETED" });
-    const search = screen.getByRole("searchbox", { name: "Cari judul atau nama klien" });
+    const search = screen.getByRole("searchbox", { name: "Cari judul proyek atau nama klien" });
     await userEvent.type(search, "rina");
     expect(replace).not.toHaveBeenCalled();
     await vi.advanceTimersByTimeAsync(350);

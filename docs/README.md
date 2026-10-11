@@ -20,6 +20,7 @@ When artifacts conflict, the higher one wins. Never silently resolve a conflict 
 |---|---|---|
 | Product | [product/overview.md](product/overview.md) | Who, problem, value, success |
 | | [product/scope.md](product/scope.md) | MVP in/out, constraints, later |
+| | [product/localization.md](product/localization.md) | Approved bilingual scope, voice, invariants and pending rollout decisions |
 | | [product/user-journeys.md](product/user-journeys.md) | End-to-end Owner and Client journeys |
 | | [product/feature-map.md](product/feature-map.md) | Epics/features with IDs and status |
 | | [product/pricing-and-costs.md](product/pricing-and-costs.md) | Running costs, competitors, open pricing questions (draft) |

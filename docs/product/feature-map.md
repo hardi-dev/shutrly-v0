@@ -28,6 +28,13 @@ Status legend: `TODO` · `DISCOVERY` · `SPECIFIED` · `DESIGNED` · `PLANNED` �
 | F-19 | Landing page: public page at `/` explaining Shutrly to prospective Owners, with an email waitlist; the only route served on production during development; no pricing (Owner 2026-10-07; [intent](../features/landing/intent.md), [spec](../features/landing/spec.md); production host [ADR-021](../architecture/decisions/ADR-021-production-on-netlify-landing-only.md)) | `landing` | C-006..008, C-106 | — | DONE (2026-10-08; live at https://shutrly.space; [verification](../features/landing/verification-report.md) blocking items closed; non-blocking: Private Email DKIM, scoped token exception) |
 | F-20 | Client proof downloads and bulk picks on *Semua foto* (Owner 2026-10-07, finding #6) | `client-proof-downloads` | BR-DEL-*, BR-SEL-*, BR-ACC-005 | J-04 | DONE (built 2026-10-07, verified and shipped with F-10, Owner 2026-10-09; [intent](../features/client-proof-downloads/intent.md), [build notes](../features/client-proof-downloads/build-notes.md)) |
 | F-21 | Delivery folder mapping: map each linked Drive folder's subfolders to the project's selection items; replaces the `edited`/`print` names (Owner 2026-10-07, finding #5) | `delivery-folder-mapping` | BR-GAL-007, BR-DEL-* | J-06 | DONE (built 2026-10-07, verified and shipped with F-10, Owner 2026-10-09; [intent](../features/delivery-folder-mapping/intent.md), [build notes](../features/delivery-folder-mapping/build-notes.md)) |
+| F-22 | Bilingual copy revamp: English default, EN/ID switching, complete copy and authored content coverage | `bilingual-copy-revamp` | BR-L10N-001..006 | J-01..J-07 | SPECIFIED (scope and library accepted 2026-10-06; behavior gaps, design and implementation pending) |
+
+## Core product emphasis — photo selection to editing (Owner 2026-10-06)
+
+The primary benefit is helping the photographer know which photos the client wants edited. F-09 supplies the gallery/photo records, F-10 provides client access, F-11 records choices within each package allowance for Owner review, and F-12 delivers the finished photos. This follows J-04 → J-06. Catalog, projects, sessions, team and billing support that workflow; administrative organization is a supporting benefit.
+
+This records product emphasis, not a new capability or status change. F-11 specifies client selection and Owner review; it does not establish a separate photographer-culling tool, automatic best-photo selection, photo editing or an export to editing software. Selection remains TODO here.
 
 ## Project menu (F-07 row and detail menu)
 F-07 defines one menu per project (row ⋯ on the list and the detail page menu) with a **Kirim ke klien** group (Owner 2026-10-02). Its items are named after the message template they load. Later features add their items to that menu, shown only when their condition holds; each template message shows a preview (`communications/ui/message-preview`) before opening WhatsApp (BR-MSG-001). *Chat WhatsApp* (no template) shows only when no template item applies; in F-07 that is always. Target menus: `docs/features/projects/projects.pen` › *Row menu per status / Target*.
@@ -46,3 +53,7 @@ F-07 defines one menu per project (row ⋯ on the list and the detail page menu)
 After it: F-15 WhatsApp sharing, then F-16 Operational hardening. F-18 Team fees is not scheduled.
 
 Status as of 2026-10-09 (Owner): F-10 client-access with F-20 and F-21 is reviewed, verified and shipped; F-04, F-05 and F-17 are verified; F-09 is accepted. Earlier *Next up* notes are in git history.
+
+## Product-copy availability gate
+
+This map tracks the feature lifecycle; inclusion in MVP scope does not mean a feature is shipped. Use the [product overview](overview.md) for problem/mechanism wording, and verify the feature’s release/acceptance evidence before public present-tense claims. F-10–F-15 remain future client-selection/delivery/add-on/billing/sharing surfaces on this branch. F-03 edits templates; it does not send real project messages. F-08 records assignments, not staff logins, availability or payouts. The existing dashboard is a placeholder, not a verified project/invoice summary. Feature statuses above are preserved by this editorial review.

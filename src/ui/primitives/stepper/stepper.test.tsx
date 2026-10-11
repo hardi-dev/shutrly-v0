@@ -2,6 +2,7 @@
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it, vi } from "vitest";
 
 import { Stepper } from "./stepper";
@@ -36,5 +37,16 @@ describe("Stepper (C08)", () => {
     const onChange = renderStepper(2, 2);
     await userEvent.click(screen.getByRole("button", { name: "Tambah" }));
     expect(onChange).not.toHaveBeenCalled();
+  });
+});
+
+describe("Stepper copy in both locales (I6.1)", () => {
+  it.each([
+    ["en", "Decrease", "Increase"],
+    ["id", "Kurangi", "Tambah"],
+  ] as const)("%s names the step buttons", (locale, decrease, increase) => {
+    renderInLocale(<Stepper label="Jumlah cetak" value={1} onChange={vi.fn()} max={4} />, locale);
+    expect(screen.getByRole("button", { name: decrease })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: increase })).toBeInTheDocument();
   });
 });

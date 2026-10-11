@@ -24,6 +24,7 @@ vi.mock("@/ui/patterns/compact-bar/compact-bar-actions", () => ({
 const DEFINITIONS = [
   {
     id: "d3",
+    defaultKey: null,
     name: "Foto cetak",
     unit: "foto",
     valueType: "NUMBER",
@@ -78,7 +79,9 @@ describe("detail edit controls", () => {
   it.each(["DRAFT", "BOOKED"] as const)("AC-PRJ-017 shows every edit control in %s", (status) => {
     setup(status);
     expect(screen.getByRole("button", { name: "Tambah item" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Aksi untuk item Foto edit" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Tindakan untuk item Foto edit" }),
+    ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah sesi" })).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: "Ubah" })).toHaveLength(1);
   });
@@ -86,7 +89,7 @@ describe("detail edit controls", () => {
   it("AC-PRJ-018 hides the deal controls from SHOOTING on but keeps the schedule's", () => {
     setup("SHOOTING");
     expect(screen.queryByRole("button", { name: "Tambah item" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /Aksi untuk item/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Tindakan untuk item/ })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Ubah" })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah sesi" })).toBeInTheDocument();
   });
@@ -94,7 +97,7 @@ describe("detail edit controls", () => {
   it("AC-PRJ-018 hides every edit control when cancelled", () => {
     setup("CANCELLED");
     expect(screen.queryByRole("button", { name: "Tambah sesi" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /Aksi untuk sesi/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Tindakan untuk sesi/ })).not.toBeInTheDocument();
   });
 
   it("AC-PRJ-017 adds an item and confirms with a toast and a refresh", async () => {
@@ -109,13 +112,13 @@ describe("detail edit controls", () => {
       definitionId: "d3",
       value: { type: "NUMBER", value: "10" },
     });
-    expect(showToast).toHaveBeenCalledWith({ tone: "success", title: "Perubahan disimpan" });
+    expect(showToast).toHaveBeenCalledWith({ tone: "success", title: "Perubahan disimpan." });
     expect(refresh).toHaveBeenCalled();
   });
 
   it("AC-PRJ-017 edits an item value from its menu", async () => {
     const { edit } = setup("BOOKED");
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk item Foto edit" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk item Foto edit" }));
     await userEvent.click(screen.getByRole("menuitem", { name: "Ubah nilai" }));
     const dialog = screen.getByRole("dialog", { name: "Ubah nilai · Foto edit" });
     const field = within(dialog).getByRole("textbox", { name: "Jumlah" });
@@ -130,14 +133,14 @@ describe("detail edit controls", () => {
   it("AC-PRJ-019 shows the locked toast and reloads when the deal was locked meanwhile", async () => {
     const { edit } = setup("BOOKED");
     edit.removeItemAction.mockResolvedValueOnce({ ok: false, code: "DEAL_LOCKED" } as never);
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk item Foto edit" }));
-    await userEvent.click(screen.getByRole("menuitem", { name: "Hapus" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk item Foto edit" }));
+    await userEvent.click(screen.getByRole("menuitem", { name: "Hapus item" }));
     expect(screen.getByText("Hapus Foto edit?")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Hapus item" }));
     expect(showToast).toHaveBeenCalledWith({
       tone: "danger",
-      title: "Detail paket tidak bisa diubah lagi",
-      body: "Proyek sudah dalam pemotretan. Data terbaru sudah dimuat.",
+      title: "Isi paket tidak bisa diubah lagi",
+      body: "Pemotretan sudah dimulai. Data terbaru sudah dimuat.",
     });
     expect(refresh).toHaveBeenCalled();
   });
@@ -145,19 +148,23 @@ describe("detail edit controls", () => {
   it("AC-PRJ-029 disables deleting the last session of a booked project and says why", async () => {
     const one = projectDetailView("BOOKED").sessions.slice(0, 1);
     setup("BOOKED", { sessions: one });
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk sesi Foto keluarga" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Tindakan untuk sesi Foto keluarga" }),
+    );
     const remove = screen.getByRole("menuitem", { name: /Hapus sesi/ });
     expect(remove).toHaveAttribute("aria-disabled", "true");
     expect(
       within(screen.getByRole("menu")).getByText(
-        "Proyek yang sudah dibooking butuh minimal satu sesi.",
+        "Proyek yang sudah dipesan butuh minimal satu sesi.",
       ),
     ).toBeInTheDocument();
   });
 
   it("AC-PRJ-029 deletes a session after confirming", async () => {
     const { edit } = setup("BOOKED");
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk sesi Foto keluarga" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Tindakan untuk sesi Foto keluarga" }),
+    );
     await userEvent.click(screen.getByRole("menuitem", { name: "Hapus sesi" }));
     expect(screen.getByText("Hapus sesi Foto keluarga?")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Hapus sesi" }));
@@ -171,14 +178,17 @@ describe("detail edit controls", () => {
       memberId: `m-${id}`,
       memberName: `Anggota ${id}`,
       isMemberArchived: false,
+      defaultKey: null,
       roleName: "Asisten",
     }));
     const { edit } = setup("BOOKED", { assignments });
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk sesi Foto keluarga" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Tindakan untuk sesi Foto keluarga" }),
+    );
     await userEvent.click(screen.getByRole("menuitem", { name: "Hapus sesi" }));
     expect(screen.getByText("Hapus sesi Foto keluarga?")).toBeInTheDocument();
     expect(
-      screen.getByText("Sesi ini punya 2 anggota tim. Penugasan mereka ikut terhapus."),
+      screen.getByText("Sesi ini punya 2 anggota tim. Penugasannya ikut dihapus."),
     ).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Hapus sesi" }));
     expect(edit.deleteSessionAction).toHaveBeenCalledWith("ws", "p1", "s1");
@@ -192,11 +202,14 @@ describe("detail edit controls", () => {
         memberId: "m1",
         memberName: "Dimas",
         isMemberArchived: false,
+        defaultKey: null,
         roleName: "Fotografer",
       },
     ];
     setup("BOOKED", { assignments });
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk sesi Foto keluarga" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Tindakan untuk sesi Foto keluarga" }),
+    );
     await userEvent.click(screen.getByRole("menuitem", { name: "Hapus sesi" }));
     expect(screen.getByText("Sesi dihapus dari jadwal proyek ini.")).toBeInTheDocument();
     expect(screen.queryByText(/anggota tim/)).not.toBeInTheDocument();
@@ -204,7 +217,7 @@ describe("detail edit controls", () => {
 
   it("AC-PRJ-009 opens Tambah sesi after Konfirmasi booking finds no session", async () => {
     const { menu } = setup("DRAFT", { sessions: [], shownSession: null });
-    await userEvent.click(screen.getByRole("button", { name: "Konfirmasi booking" }));
+    await userEvent.click(screen.getByRole("button", { name: "Konfirmasi pemesanan" }));
     expect(menu.advanceAction).toHaveBeenCalled();
     expect(await screen.findByRole("dialog", { name: "Tambah sesi" })).toBeInTheDocument();
   });
@@ -212,7 +225,7 @@ describe("detail edit controls", () => {
   it("AC-PRJ-017 saves booking field values from Ubah", async () => {
     const { edit } = setup("BOOKED");
     await userEvent.click(screen.getByRole("button", { name: "Ubah" }));
-    const dialog = screen.getByRole("dialog", { name: "Ubah field booking" });
+    const dialog = screen.getByRole("dialog", { name: "Ubah kolom pemesanan" });
     const campus = within(dialog).getByRole("textbox", { name: /Nama kampus/ });
     await userEvent.clear(campus);
     await userEvent.type(campus, "ITB");

@@ -107,6 +107,8 @@ export const projectItem = pgTable(
     valueType: text("value_type").notNull(),
     value: jsonb("value").notNull(),
     unit: text("unit"),
+    // Copied from the definition at project creation (C-102); never changes on rename.
+    defaultKey: text("default_key"),
     selectionRequired: boolean("selection_required").notNull(),
     // Legacy column, dual-written from pickMode until a cleanup migration drops it (F-10 R-4).
     selectionType: text("selection_type"),
@@ -130,6 +132,10 @@ export const projectItem = pgTable(
     index("project_item_order_ix").on(t.projectId, t.sortOrder),
     check("project_item_value_type_ck", sql`${t.valueType} in ('NUMBER','RANGE')`),
     check("project_item_value_ck", sql`jsonb_typeof(${t.value}) = 'object'`),
+    check(
+      "project_item_default_key_ck",
+      sql`${t.defaultKey} is null or ${t.defaultKey} in ('EDITED_PHOTOS','PRINTED_PHOTOS','PEOPLE_COUNT','SHOOT_DURATION')`,
+    ),
     check(
       "project_item_pick_mode_ck",
       sql`${t.pickMode} is null or ${t.pickMode} in ('COUNT','QUANTITY')`,

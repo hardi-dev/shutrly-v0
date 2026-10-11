@@ -27,7 +27,10 @@ const RECORD: ClientAccessRecord = {
 
 function deps(isOver: (key: string) => boolean = () => false): SignInGalleryDeps {
   return {
-    repository: { findByTokenUnscoped: vi.fn(() => Promise.resolve(RECORD)) },
+    repository: {
+      findByTokenUnscoped: vi.fn(() => Promise.resolve(RECORD)),
+      findOwnerLocaleByTokenUnscoped: vi.fn(() => Promise.resolve(null)),
+    },
     rateLimiter: {
       hit: vi.fn((key: string) => Promise.resolve(!isOver(key))),
       peek: vi.fn(() => Promise.resolve(true)),

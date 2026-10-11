@@ -12,6 +12,7 @@ import type {
 } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import type { RoleRef } from "@/features/booking/application/ports/team-role-repository/team-role-repository.port";
 import type { TeamMemberStatus } from "@/features/booking/domain/team-member/team-member.types";
+import { parseDefaultTeamRoleKey } from "@/features/booking/domain/team-role/team-role";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { pgCode } from "../catalog-repository/pg-error";
@@ -45,7 +46,12 @@ async function rolesByMember(db: DbExecutor, context: WorkspaceContext, memberId
   const grouped = new Map<string, RoleRef[]>();
   if (memberIds.length === 0) return grouped;
   const rows = await db
-    .select({ memberId: teamMemberRole.memberId, id: teamRole.id, name: teamRole.name })
+    .select({
+      memberId: teamMemberRole.memberId,
+      id: teamRole.id,
+      name: teamRole.name,
+      defaultKey: teamRole.defaultKey,
+    })
     .from(teamMemberRole)
     .innerJoin(
       teamRole,
@@ -64,7 +70,7 @@ async function rolesByMember(db: DbExecutor, context: WorkspaceContext, memberId
   for (const row of rows) {
     grouped.set(row.memberId, [
       ...(grouped.get(row.memberId) ?? []),
-      { id: row.id, name: row.name },
+      { id: row.id, name: row.name, defaultKey: parseDefaultTeamRoleKey(row.defaultKey) },
     ]);
   }
   return grouped;

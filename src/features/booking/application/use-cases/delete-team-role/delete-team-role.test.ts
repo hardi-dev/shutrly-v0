@@ -1,3 +1,4 @@
+import { defaultRolesNamed } from "@tests/support/booking/default-roles";
 import { describe, expect, it } from "vitest";
 
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
@@ -10,7 +11,7 @@ const context = { workspaceId: "workspace-a" } as unknown as WorkspaceContext;
 describe("deleteTeamRole", () => {
   it("AC-TEAM-009 deletes an unused role", async () => {
     const repository = new FakeTeamRoleRepository();
-    await repository.seedDefaults(context, ["Asisten"]);
+    await repository.seedDefaults(context, defaultRolesNamed(["Asisten"]));
     await expect(deleteTeamRole(repository, context, repository.rows[0].id)).resolves.toEqual({
       ok: true,
     });
@@ -19,7 +20,7 @@ describe("deleteTeamRole", () => {
 
   it("AC-TEAM-009 refuses a used role and reports the usage", async () => {
     const repository = new FakeTeamRoleRepository();
-    await repository.seedDefaults(context, ["Fotografer"]);
+    await repository.seedDefaults(context, defaultRolesNamed(["Fotografer"]));
     const { id } = repository.rows[0];
     repository.usage.set(id, 3);
     await expect(deleteTeamRole(repository, context, id)).resolves.toEqual({

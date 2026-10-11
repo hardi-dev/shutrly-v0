@@ -72,9 +72,9 @@ describe("GalleryLifecycle", () => {
         actions={fakePageActions({ publishAction })}
       />,
     );
-    await userEvent.click(screen.getByRole("button", { name: "Publikasikan" }));
-    const dialog = await screen.findByRole("dialog", { name: "Publikasikan galeri?" });
-    await userEvent.click(within(dialog).getByRole("button", { name: "Publikasikan" }));
+    await userEvent.click(screen.getByRole("button", { name: "Publikasikan galeri" }));
+    const dialog = await screen.findByRole("dialog", { name: "Publikasikan galeri ini?" });
+    await userEvent.click(within(dialog).getByRole("button", { name: "Publikasikan galeri" }));
     await waitFor(() => {
       expect(publishAction).toHaveBeenCalledWith("ws-1", "g-1");
     });
@@ -95,9 +95,9 @@ describe("GalleryLifecycle", () => {
         actions={fakePageActions({ publishAction })}
       />,
     );
-    await userEvent.click(screen.getByRole("button", { name: "Publikasikan" }));
-    const dialog = await screen.findByRole("dialog", { name: "Publikasikan galeri?" });
-    await userEvent.click(within(dialog).getByRole("button", { name: "Publikasikan" }));
+    await userEvent.click(screen.getByRole("button", { name: "Publikasikan galeri" }));
+    const dialog = await screen.findByRole("dialog", { name: "Publikasikan galeri ini?" });
+    await userEvent.click(within(dialog).getByRole("button", { name: "Publikasikan galeri" }));
     const refused = await screen.findByRole("dialog", { name: "Galeri belum bisa dipublikasikan" });
     expect(within(refused).getByText("Rina-Keluarga")).toBeInTheDocument();
   });
@@ -124,7 +124,7 @@ describe("GalleryLifecycle", () => {
     );
     expect(screen.getByText("Galeri diarsipkan")).toBeInTheDocument();
     for (const name of [
-      "Publikasikan",
+      "Publikasikan hasil akhir",
       "Ubah kedaluwarsa",
       "Menu galeri",
       "Sinkronkan semua",
@@ -145,7 +145,7 @@ describe("GalleryLifecycle", () => {
     );
     await userEvent.click(screen.getByRole("button", { name: "Menu galeri" }));
     await userEvent.click(await screen.findByRole("menuitem", { name: "Arsipkan galeri" }));
-    const dialog = await screen.findByRole("alertdialog", { name: "Arsipkan galeri?" });
+    const dialog = await screen.findByRole("alertdialog", { name: "Arsipkan galeri ini?" });
     await userEvent.click(within(dialog).getByRole("button", { name: "Arsipkan galeri" }));
     await waitFor(() => {
       expect(archiveAction).toHaveBeenCalledWith("ws-1", "g-1");
@@ -163,10 +163,10 @@ describe("GalleryLifecycle", () => {
       />,
     );
     await userEvent.click(screen.getByRole("button", { name: "Menu galeri" }));
-    await userEvent.click(await screen.findByRole("menuitem", { name: "Ganti password" }));
-    const dialog = await screen.findByRole("dialog", { name: "Ganti password galeri" });
-    expect(within(dialog).getByLabelText("Password baru")).toHaveValue("melati-2759");
-    await userEvent.click(within(dialog).getByRole("button", { name: "Ganti password" }));
+    await userEvent.click(await screen.findByRole("menuitem", { name: "Ganti kata sandi" }));
+    const dialog = await screen.findByRole("dialog", { name: "Ganti kata sandi galeri" });
+    expect(within(dialog).getByLabelText("Kata sandi baru")).toHaveValue("melati-2759");
+    await userEvent.click(within(dialog).getByRole("button", { name: "Ganti kata sandi" }));
     await waitFor(() => {
       expect(rotatePasswordAction).toHaveBeenCalledWith("ws-1", "g-1", { password: "melati-2759" });
     });
@@ -180,8 +180,8 @@ describe("GalleryLifecycle", () => {
         actions={fakePageActions()}
       />,
     );
-    await userEvent.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
-    expect(await screen.findByRole("menuitem", { name: /Hapus/ })).toHaveAttribute(
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Rina-Wisuda" }));
+    expect(await screen.findByRole("menuitem", { name: /Lepas folder/ })).toHaveAttribute(
       "aria-disabled",
       "true",
     );

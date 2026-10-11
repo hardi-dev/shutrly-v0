@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { useController, useForm } from "react-hook-form";
@@ -14,7 +15,9 @@ import type {
 import type { CreateGalleryResult } from "@/features/gallery/application/use-cases/gallery-results/gallery-results.types";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
+import { GALLERY_REFUSED_MESSAGE_KEY } from "../gallery-copy/gallery-copy.copy";
+import type { GalleryTranslate } from "../gallery-copy/gallery-copy.types";
+import { USE_CREATE_GALLERY_FORM_COPY_NAMESPACE } from "./use-create-gallery-form.copy";
 import type { PendingCreate, UseCreateGalleryFormInput } from "./use-create-gallery-form.types";
 
 type CreateForm = UseFormReturn<CreateGalleryFormInput, unknown, CreateGalleryFormValues>;
@@ -52,6 +55,7 @@ function toCreateInput(values: CreateGalleryFormValues): CreateGalleryInput {
 }
 
 function applyCreateResult(
+  t: GalleryTranslate,
   result: CreateGalleryResult,
   form: CreateForm,
   onCreated: UseCreateGalleryFormInput["onCreated"],
@@ -59,34 +63,34 @@ function applyCreateResult(
   if (result.ok) {
     showToast({
       tone: "success",
-      title: GALLERY_COPY.createdTitle,
-      body:
-        result.sourceId === null ? GALLERY_COPY.createdBody : GALLERY_COPY.createdWithFolderBody,
+      title: t("createdTitle"),
+      body: result.sourceId === null ? t("createdBody") : t("createdWithFolderBody"),
     });
     onCreated(result.galleryId, result.sourceId);
   } else if (result.code === "VALIDATION_FAILED") setFieldErrors(form, result.fieldErrors);
-  else showToast({ tone: "danger", title: GALLERY_COPY.refused[result.code] });
+  else showToast({ tone: "danger", title: t(GALLERY_REFUSED_MESSAGE_KEY[result.code]) });
 }
 
-function showSaveFailed(): void {
+function showSaveFailed(t: GalleryTranslate): void {
   showToast({
     tone: "danger",
-    title: GALLERY_COPY.saveFailedTitle,
-    body: GALLERY_COPY.saveFailedBody,
+    title: t("saveFailedTitle"),
+    body: t("saveFailedBody"),
   });
 }
 
 /** Sends the create and applies its result. @param input - ids and actions @param form - the form @param payload - what to create */
 async function sendCreate(
+  t: GalleryTranslate,
   input: Readonly<UseCreateGalleryFormInput>,
   form: CreateForm,
   payload: CreateGalleryInput,
 ): Promise<void> {
   try {
     const result = await input.createAction(input.workspaceId, input.projectId, payload);
-    applyCreateResult(result, form, input.onCreated);
+    applyCreateResult(t, result, form, input.onCreated);
   } catch {
-    showSaveFailed();
+    showSaveFailed(t);
   }
 }
 
@@ -104,6 +108,7 @@ async function folderUse(
 
 /** Owns the *Buat galeri* form: the proposed password, *Buat ulang*, the expiry, the optional first folder with the in-use warning, and submit (AC-GAL-001, 002, 010). @param input - ids, the first proposal, the active sources and the actions @returns the form and handlers */
 export function useCreateGalleryForm(input: Readonly<UseCreateGalleryFormInput>) {
+  const t = useTranslations(USE_CREATE_GALLERY_FORM_COPY_NAMESPACE);
   const form = useForm<CreateGalleryFormInput, unknown, CreateGalleryFormValues>({
     resolver: zodResolver(createGalleryFormSchema),
     defaultValues: {
@@ -117,7 +122,7 @@ export function useCreateGalleryForm(input: Readonly<UseCreateGalleryFormInput>)
   const create = async (payload: CreateGalleryInput) => {
     setInUse(null);
     setIsPending(true);
-    await sendCreate(input, form, payload);
+    await sendCreate(t, input, form, payload);
     setIsPending(false);
   };
   const submit = form.handleSubmit(async (values) => {
@@ -125,7 +130,7 @@ export function useCreateGalleryForm(input: Readonly<UseCreateGalleryFormInput>)
     if (!payload.folder) return create(payload);
     setIsPending(true);
     const titles = await folderUse(input, form, payload.folder.link).catch(() => {
-      showSaveFailed();
+      showSaveFailed(t);
       return null;
     });
     setIsPending(false);

@@ -1,8 +1,12 @@
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 import { describe, expect, it } from "vitest";
 
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
 
+import { DELIVERY_COPY_NAMESPACE } from "../delivery-copy/delivery.copy";
 import { deliveredHeaderMeta, deliveryNote, deliveryRows, finishedFiles } from "./delivery-text";
+
+const t = copyTranslator(DELIVERY_COPY_NAMESPACE, "id");
 
 const CARD: DeliveryCardView = {
   state: "READY",
@@ -21,14 +25,20 @@ const CARD: DeliveryCardView = {
 
 describe("delivery text (hasilakhirowner-kartu)", () => {
   it("B F-21: one ready row per package item with files", () => {
-    expect(deliveryRows(CARD).map((row) => [row.title, row.meta, row.chip.label])).toEqual([
+    expect(
+      deliveryRows(t, CARD, "id-ID").map((row) => [row.title, row.meta, row.chip.label]),
+    ).toEqual([
       ["Foto edit", "24 file", "Siap"],
       ["Foto cetak", "6 file", "Siap"],
     ]);
   });
 
   it("C: the publication with its time and what the client can download", () => {
-    const rows = deliveryRows({ ...CARD, state: "PUBLISHED", publishedAt: "2026-10-05T10:10:00Z" });
+    const rows = deliveryRows(
+      t,
+      { ...CARD, state: "PUBLISHED", publishedAt: "2026-10-05T10:10:00Z" },
+      "id-ID",
+    );
     expect(rows.map((row) => [row.title, row.meta, row.chip.label])).toEqual([
       [
         "Dipublikasikan 5 Okt 2026, 17.10",
@@ -39,14 +49,18 @@ describe("delivery text (hasilakhirowner-kartu)", () => {
   });
 
   it("D: the completion date", () => {
-    const rows = deliveryRows({ ...CARD, state: "COMPLETED", completedAt: "2026-10-12T03:00:00Z" });
+    const rows = deliveryRows(
+      t,
+      { ...CARD, state: "COMPLETED", completedAt: "2026-10-12T03:00:00Z" },
+      "id-ID",
+    );
     expect(rows[0]?.title).toBe("Selesai 12 Okt 2026");
   });
 
   it("A and E show a note instead of rows", () => {
-    expect(deliveryNote({ ...CARD, state: "NO_FILES" })).toMatch(/^Belum ada hasil akhir/);
-    expect(deliveryNote({ ...CARD, state: "GALLERY_INACTIVE" })).toMatch(/^Galeri harus/);
-    expect(deliveryRows({ ...CARD, state: "NO_FILES" })).toEqual([]);
+    expect(deliveryNote(t, { ...CARD, state: "NO_FILES" })).toMatch(/^Belum ada hasil akhir/);
+    expect(deliveryNote(t, { ...CARD, state: "GALLERY_INACTIVE" })).toMatch(/^Galeri harus/);
+    expect(deliveryRows(t, { ...CARD, state: "NO_FILES" }, "id-ID")).toEqual([]);
   });
 
   it("leaves out an item with no file", () => {
@@ -54,13 +68,15 @@ describe("delivery text (hasilakhirowner-kartu)", () => {
       { id: "i-edit", name: "Foto edit", count: 3 },
       { id: "i-print", name: "Foto cetak", count: 0 },
     ];
-    expect(finishedFiles({ items })).toBe("3 file Foto edit");
+    expect(finishedFiles(t, { items })).toBe("3 file Foto edit");
   });
 
   it("Owner 7: a delivered project's header says when final delivery was published", () => {
     const published = { ...CARD, state: "PUBLISHED" as const, publishedAt: "2026-10-05T03:00:00Z" };
-    expect(deliveredHeaderMeta(published)).toBe("Hasil akhir dipublikasikan Sen, 5 Okt 2026");
-    expect(deliveredHeaderMeta({ ...published, state: "COMPLETED" })).toBeNull();
-    expect(deliveredHeaderMeta(CARD)).toBeNull();
+    expect(deliveredHeaderMeta(t, published, "id-ID")).toBe(
+      "Hasil akhir dipublikasikan Sen, 5 Okt 2026",
+    );
+    expect(deliveredHeaderMeta(t, { ...published, state: "COMPLETED" }, "id-ID")).toBeNull();
+    expect(deliveredHeaderMeta(t, CARD, "id-ID")).toBeNull();
   });
 });

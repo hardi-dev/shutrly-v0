@@ -1,19 +1,23 @@
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 import { describe, expect, it } from "vitest";
 
+import { GALLERY_COPY_NAMESPACE } from "../gallery-copy/gallery-copy.copy";
 import { browseCrumbs, kindVisibility, searchMeta } from "./browse-text";
+
+const t = copyTranslator(GALLERY_COPY_NAMESPACE, "id");
 
 const AT = { kind: "PROOF" as const, sourceId: "s-1", path: "Akad", search: "" };
 
 describe("browse text", () => {
   it("AC-GAL-030 reads Semua folder › Rina-Wisuda › Akad with the last one current", () => {
-    const crumbs = browseCrumbs(AT, "Rina-Wisuda");
+    const crumbs = browseCrumbs(t, AT, "Rina-Wisuda");
     expect(crumbs.map((crumb) => crumb.label)).toEqual(["Semua folder", "Rina-Wisuda", "Akad"]);
     expect(crumbs[1].target).toEqual({ ...AT, path: "" });
     expect(crumbs[2].target).toBeNull();
   });
 
   it("AC-GAL-028 shows only Semua folder at the top", () => {
-    expect(browseCrumbs({ ...AT, sourceId: null, path: "" }, null)).toEqual([
+    expect(browseCrumbs(t, { ...AT, sourceId: null, path: "" }, null)).toEqual([
       { label: "Semua folder", target: null },
     ]);
   });
@@ -32,12 +36,16 @@ describe("browse text", () => {
       provider: "GOOGLE_DRIVE" as const,
       driveUrl: null,
     };
-    expect(searchMeta(photo)).toBe("Rina-Wisuda › Akad · edited");
-    expect(searchMeta({ ...photo, kind: "PROOF", browsePath: "" })).toBe("Rina-Wisuda · proof");
+    expect(searchMeta(t, photo)).toBe("Rina-Wisuda › Akad · hasil edit");
+    expect(searchMeta(t, { ...photo, kind: "PROOF", browsePath: "" })).toBe(
+      "Rina-Wisuda · pilihan",
+    );
   });
 
   it("AC-GAL-014 marks proof by status and edited as hidden until delivery", () => {
-    expect(kindVisibility("PROOF", "PUBLISHED")).toBe("Terlihat oleh klien sekarang.");
-    expect(kindVisibility("EDITED", "PUBLISHED")).toMatch(/^Disembunyikan dari klien/);
+    expect(kindVisibility(t, "PROOF", "PUBLISHED")).toBe("Terlihat oleh klien sekarang.");
+    expect(kindVisibility(t, "EDITED", "PUBLISHED")).toMatch(
+      /^Disembunyikan sampai hasil akhir dikirim/,
+    );
   });
 });

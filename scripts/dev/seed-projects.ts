@@ -91,6 +91,8 @@ async function createSeedProject(studio: Studio, seed: ProjectSeed): Promise<str
         sessions,
         fieldValues: seed.fieldValues ?? {},
       },
+      // Seed data is written in Indonesian (the seeded owner's project text).
+      "id-ID",
     ),
   );
   return result.projectId;

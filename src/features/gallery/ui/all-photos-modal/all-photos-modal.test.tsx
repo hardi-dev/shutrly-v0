@@ -94,7 +94,7 @@ describe("AllPhotosModal", () => {
     render(<GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={browseAction} />);
     await userEvent.click(screen.getByRole("button", { name: "Lihat semua foto" }));
     const dialog = await screen.findByRole("dialog", { name: "Semua foto" });
-    expect(within(dialog).getByRole("button", { name: "Proof (312)" })).toHaveAttribute(
+    expect(within(dialog).getByRole("button", { name: "Foto pilihan (312)" })).toHaveAttribute(
       "aria-current",
       "true",
     );
@@ -165,6 +165,6 @@ describe("AllPhotosModal", () => {
     await userEvent.click(screen.getByRole("button", { name: "Lihat semua foto" }));
     const dialog = await screen.findByRole("dialog", { name: "Semua foto" });
     await userEvent.click(await within(dialog).findByRole("button", { name: "IMG_001.jpg" }));
-    expect(await screen.findByText("Rina-Wisuda · Proof · 1 dari 1")).toBeInTheDocument();
+    expect(await screen.findByText("Rina-Wisuda · Foto pilihan · 1 dari 1")).toBeInTheDocument();
   });
 });

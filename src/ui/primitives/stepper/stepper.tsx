@@ -1,11 +1,12 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Button as AriaButton, Group, Input, NumberField } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
 import { Icon } from "@/ui/primitives/icon/icon";
 
-import { STEPPER_COPY } from "./stepper.copy";
+import { STEPPER_COPY_NAMESPACE } from "./stepper.copy";
 import type { StepperProps } from "./stepper.types";
 
 // 32 px visible button; the pseudo-element widens the hit area to 44 px on touch (stepper.md › Accessibility).
@@ -27,6 +28,7 @@ export function Stepper({
   isDisabled = false,
   className,
 }: Readonly<StepperProps>) {
+  const t = useTranslations(STEPPER_COPY_NAMESPACE);
   return (
     <NumberField
       aria-label={label}
@@ -41,7 +43,7 @@ export function Stepper({
       <Group className="flex items-center gap-(--component-stepper-gap) rounded-(--component-stepper-radius) border border-(--component-stepper-border) bg-(--component-stepper-background) p-(--component-stepper-padding)">
         <AriaButton
           slot="decrement"
-          aria-label={STEPPER_COPY.decrease}
+          aria-label={t("decrease")}
           className={cn(
             STEP,
             "bg-(--component-stepper-button-background) text-(--component-stepper-button-icon) data-hovered:bg-(--component-stepper-button-background-hover)",
@@ -52,7 +54,7 @@ export function Stepper({
         <Input className="w-8 bg-transparent text-center text-(length:--font-size-body) font-bold text-(--component-stepper-value) outline-none" />
         <AriaButton
           slot="increment"
-          aria-label={STEPPER_COPY.increase}
+          aria-label={t("increase")}
           className={cn(
             STEP,
             "bg-(--component-stepper-button-primary-background) text-(--component-stepper-button-primary-icon) data-hovered:bg-(--component-stepper-button-primary-background-hover)",

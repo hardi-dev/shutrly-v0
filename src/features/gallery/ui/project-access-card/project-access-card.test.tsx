@@ -1,12 +1,16 @@
 // @vitest-environment jsdom
 
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
+import type { ReactElement } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { AccessCardView } from "@/features/gallery/application/use-cases/get-access-card/get-access-card.types";
 
 import { ProjectAccessCard } from "./project-access-card";
+
+const render = (ui: ReactElement) => renderInLocale(ui, "id");
 import type { ProjectAccessActions } from "./project-access-card.types";
 
 vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
@@ -88,7 +92,7 @@ describe("ProjectAccessCard (aksesklien-kartu A–C)", () => {
     expect(screen.queryByText("shutrly.app/g/••••••••3kQ9")).toBeNull();
     expect(showToast).toHaveBeenCalledWith({
       tone: "warning",
-      title: "Belum tersalin",
+      title: "Link belum tersalin",
       body: "Teksnya sudah ditandai. Salin dengan Ctrl+C atau ⌘C, atau tekan lama lalu Salin.",
     });
   });

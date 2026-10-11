@@ -1,12 +1,14 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import type { PropsWithChildren } from "react";
 
-import { EDITORIAL_PANEL_COPY } from "./editorial-panel.copy";
+import { EDITORIAL_PANEL_COPY_NAMESPACE } from "./editorial-panel.copy";
 
 const MOSAIC_SRC = "/auth/editorial/mosaic.webp";
 
 /** The decorative desktop editorial panel shared by auth layouts. */
 export function EditorialPanel({ children }: Readonly<PropsWithChildren>) {
+  const t = useTranslations(EDITORIAL_PANEL_COPY_NAMESPACE);
   return (
     <aside
       aria-hidden="true"
@@ -18,7 +20,7 @@ export function EditorialPanel({ children }: Readonly<PropsWithChildren>) {
           {children}
         </p>
         <p className="text-(length:--font-size-body) text-(--color-semantic-text-muted)">
-          {EDITORIAL_PANEL_COPY.body}
+          {t("body")}
         </p>
       </div>
     </aside>

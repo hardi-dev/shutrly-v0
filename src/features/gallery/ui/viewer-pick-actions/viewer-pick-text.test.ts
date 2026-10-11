@@ -1,9 +1,15 @@
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 import { describe, expect, it } from "vitest";
 
 import type { PickGroupView } from "@/features/gallery/application/use-cases/get-pick-view/get-pick-view.types";
 
+import { CLIENT_COPY_NAMESPACE } from "../client-copy/client-copy.copy";
 import type { PhotoTarget } from "../use-pick-targets/use-pick-targets.types";
+import { VIEWER_PICK_COPY_NAMESPACE } from "./viewer-pick-actions.copy";
 import { noteTarget, pickedInLine, targetDescription } from "./viewer-pick-text";
+
+const viewerT = copyTranslator(VIEWER_PICK_COPY_NAMESPACE, "id");
+const sharedT = copyTranslator(CLIENT_COPY_NAMESPACE, "id");
 
 const EDIT: PickGroupView = {
   id: "g1",
@@ -34,15 +40,18 @@ const pick = (groupId: string, note: string | null = null) => ({
 
 describe("viewer pick text (pratinjau exports)", () => {
   it("AC-SEL-019 describes a group by usage and the photo's pick in it", () => {
-    expect(targetDescription({ group: EDIT, pick: undefined })).toBe(
+    expect(targetDescription(viewerT, sharedT, { group: EDIT, pick: undefined })).toBe(
       "3 dari 8 foto · ketuk untuk memilih",
     );
-    expect(targetDescription({ group: PRINT, pick: pick("g2") })).toBe(
+    expect(targetDescription(viewerT, sharedT, { group: PRINT, pick: pick("g2") })).toBe(
       "1 dari 4 lembar · sudah dipilih × 1",
     );
-    expect(targetDescription({ group: { ...EDIT, status: "LOCKED" }, pick: undefined })).toBe(
-      "3 dari 8 foto · Dikunci",
-    );
+    expect(
+      targetDescription(viewerT, sharedT, {
+        group: { ...EDIT, status: "LOCKED" },
+        pick: undefined,
+      }),
+    ).toBe("3 dari 8 foto · Dikunci");
   });
 
   it("A-30 names where the photo is picked, with quantities and notes", () => {
@@ -50,8 +59,10 @@ describe("viewer pick text (pratinjau exports)", () => {
       { group: EDIT, pick: pick("g1", "rapikan") },
       { group: PRINT, pick: pick("g2") },
     ];
-    expect(pickedInLine(targets)).toBe("Dipilih di: Foto edit · ada catatan, Foto cetak × 1");
-    expect(pickedInLine([{ group: EDIT, pick: undefined }])).toBeNull();
+    expect(pickedInLine(viewerT, targets)).toBe(
+      "Dipilih di: Foto edit · ada catatan, Foto cetak × 1",
+    );
+    expect(pickedInLine(viewerT, [{ group: EDIT, pick: undefined }])).toBeNull();
   });
 
   it("A-32 opens the note of the first open group with notes where the photo is picked", () => {

@@ -1,12 +1,28 @@
 // @vitest-environment jsdom
 
-import { renderHook, waitFor } from "@testing-library/react";
+import { renderHook as renderBareHook, waitFor } from "@testing-library/react";
+import { copyMessages } from "@tests/support/copy/copy-messages";
+import { NextIntlClientProvider } from "next-intl";
+import { createElement, type ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-const showToast = vi.fn();
+const showToast = vi.hoisted(() => vi.fn());
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast }));
 
-const { useCatalogMutations } = await import("./use-catalog-mutations");
+import { useCatalogMutations } from "./use-catalog-mutations";
+
+function wrapper({ children }: Readonly<{ children: ReactNode }>) {
+  // eslint-disable-next-line react/no-children-prop -- this .ts file cannot use JSX; the provider reads children from props
+  return createElement(NextIntlClientProvider, {
+    locale: "id",
+    messages: copyMessages("id"),
+    children,
+  });
+}
+
+function renderHook<T>(hook: () => T) {
+  return renderBareHook(hook, { wrapper });
+}
 
 describe("useCatalogMutations", () => {
   it("AC-CAT-009 returns field errors and shows success for a category", async () => {

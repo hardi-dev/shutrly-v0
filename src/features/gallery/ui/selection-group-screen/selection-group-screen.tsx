@@ -1,7 +1,10 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { formatPickList } from "@/features/gallery/domain/pick-list/pick-list";
 import { lockIntentFor } from "@/features/gallery/domain/selection-group-status/selection-group-status";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -11,9 +14,9 @@ import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { LockSelectionDialog } from "../lock-selection-dialog/lock-selection-dialog";
 import { OwnerPickTile } from "../owner-pick-tile/owner-pick-tile";
-import { SELECTION_OWNER_COPY as COPY } from "../selection-owner-text/selection-owner.copy";
 import { groupStatusChip, unitOfOwnerGroup } from "../selection-owner-text/selection-owner-text";
 import { useLockSelection } from "../use-lock-selection/use-lock-selection";
+import { SELECTION_GROUP_SCREEN_COPY_NAMESPACE } from "./selection-group-screen.copy";
 import type {
   DetailActionsProps,
   DetailAlertsProps,
@@ -24,13 +27,14 @@ import type {
 import { picksMeta, timeFact } from "./selection-group-text";
 
 function DetailActions({ detail, lock }: Readonly<DetailActionsProps>) {
+  const t = useTranslations(SELECTION_GROUP_SCREEN_COPY_NAMESPACE);
   const { group } = detail;
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(formatPickList(group.mode, detail.picks));
-      showToast({ tone: "success", title: COPY.copiedTitle });
+      showToast({ tone: "success", title: t("copiedTitle") });
     } catch {
-      showToast({ tone: "danger", title: COPY.copyFailedTitle, body: COPY.copyFailedBody });
+      showToast({ tone: "danger", title: t("copyFailedTitle"), body: t("copyFailedBody") });
     }
   };
   const handleCopy = () => {
@@ -50,16 +54,16 @@ function DetailActions({ detail, lock }: Readonly<DetailActionsProps>) {
         isDisabled={detail.picks.length === 0}
         onPress={handleCopy}
       >
-        {COPY.copyNames}
+        {t("copyNames")}
       </Button>
       {lockIntentFor(group) === "LOCK" ? (
         <Button iconLeading="lock" onPress={handleLock}>
-          {COPY.lockPicks}
+          {t("lockPicks")}
         </Button>
       ) : null}
       {lockIntentFor(group) === "CLOSE" ? (
         <Button variant="secondary" onPress={handleClose}>
-          {COPY.closePicks}
+          {t("closePicks")}
         </Button>
       ) : null}
     </div>
@@ -67,16 +71,17 @@ function DetailActions({ detail, lock }: Readonly<DetailActionsProps>) {
 }
 
 function DetailAlerts({ detail }: Readonly<DetailAlertsProps>) {
+  const t = useTranslations(SELECTION_GROUP_SCREEN_COPY_NAMESPACE);
   return (
     <>
       {detail.group.status === "OPEN" ? (
-        <Alert tone="info" title={COPY.openAlertTitle} body={COPY.openAlertBody} />
+        <Alert tone="info" title={t("openAlertTitle")} body={t("openAlertBody")} />
       ) : null}
       {detail.missingCount > 0 ? (
         <Alert
           tone="warning"
-          title={COPY.missingTitle(detail.missingCount)}
-          body={COPY.missingBody(detail.missingNames.join(COPY.namesList))}
+          title={t("missingTitle", { count: detail.missingCount })}
+          body={t("missingBody")}
         />
       ) : null}
     </>
@@ -97,19 +102,21 @@ function Fact({ label, children }: Readonly<FactProps>) {
 }
 
 function SummaryCard({ detail }: Readonly<DetailAlertsProps>) {
+  const t = useTranslations(SELECTION_GROUP_SCREEN_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
   const { group } = detail;
   return (
-    <SectionCard title={COPY.summaryTitle}>
+    <SectionCard title={t("summaryTitle")}>
       <div className="flex flex-wrap gap-x-(--space-10) gap-y-(--space-4)">
-        <Fact label={COPY.summaryStatus}>
-          <StatusChip {...groupStatusChip(group.status)} hasDot />
+        <Fact label={t("summaryStatus")}>
+          <StatusChip {...groupStatusChip(t, group.status)} hasDot />
         </Fact>
-        <Fact label={COPY.summaryUsed}>
-          {COPY.usage(group.usage, group.limit, unitOfOwnerGroup(group))}
+        <Fact label={t("summaryUsed")}>
+          {t("usage", { usage: group.usage, limit: group.limit, unit: unitOfOwnerGroup(t, group) })}
         </Fact>
-        <Fact label={COPY.summaryTime}>{timeFact(detail)}</Fact>
+        <Fact label={t("summaryTime")}>{timeFact(t, detail, locale)}</Fact>
         {group.noteCount > 0 ? (
-          <Fact label={COPY.summaryNotes}>{COPY.notesPhotos(group.noteCount)}</Fact>
+          <Fact label={t("summaryNotes")}>{t("notesPhotos", { count: group.noteCount })}</Fact>
         ) : null}
       </div>
     </SectionCard>
@@ -117,15 +124,16 @@ function SummaryCard({ detail }: Readonly<DetailAlertsProps>) {
 }
 
 function PicksCard({ workspaceId, detail }: Readonly<PicksCardProps>) {
+  const t = useTranslations(SELECTION_GROUP_SCREEN_COPY_NAMESPACE);
   const { group, picks } = detail;
   return (
-    <SectionCard title={COPY.picksTitle} description={picksMeta(detail)}>
+    <SectionCard title={t("picksTitle")} description={picksMeta(t, detail)}>
       {picks.length === 0 ? (
         <EmptyState
           icon="images"
           placement="in-card"
-          title={COPY.emptyTitle}
-          body={COPY.emptyBody}
+          title={t("emptyTitle")}
+          body={t("emptyBody")}
         />
       ) : (
         <ul className="grid grid-cols-1 gap-(--space-4) md:grid-cols-4">

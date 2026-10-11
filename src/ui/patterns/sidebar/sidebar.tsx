@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useContext } from "react";
 import { Button as AriaButton } from "react-aria-components";
 
@@ -7,9 +8,10 @@ import { Icon } from "@/ui/primitives/icon/icon";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { NavItemCompactContext } from "../nav-item/nav-item-context";
-import { SIDEBAR_COPY } from "./sidebar.copy";
+import { SIDEBAR_COPY_NAMESPACE, SIDEBAR_WORDMARK } from "./sidebar.copy";
 import type {
   SidebarAccount,
+  SidebarAccountMenu,
   SidebarProps,
   SidebarWorkspace,
   SidebarWorkspaceTriggerProps,
@@ -26,8 +28,10 @@ export function Sidebar({
   onCollapse,
   onExpand,
   onLogout,
+  accountMenu,
   workspaceSwitcher,
 }: Readonly<SidebarProps>) {
+  const t = useTranslations(SIDEBAR_COPY_NAMESPACE);
   return (
     <NavItemCompactContext.Provider value={isCompact}>
       <aside
@@ -36,7 +40,7 @@ export function Sidebar({
             ? "flex h-full w-(--size-rail) shrink-0 flex-col items-center gap-(--component-sidebar-rail-gap) py-(--component-sidebar-padding-y)"
             : "flex h-full w-(--component-sidebar-width) shrink-0 flex-col gap-(--component-sidebar-gap) bg-transparent px-(--component-sidebar-padding-x) py-(--component-sidebar-padding-y)"
         }
-        aria-label={SIDEBAR_COPY.label}
+        aria-label={t("label")}
       >
         <SidebarLogo isCompact={isCompact} onCollapse={onCollapse} />
         {!isCompact ? (
@@ -47,7 +51,7 @@ export function Sidebar({
         )}
         <SidebarDivider isCompact={isCompact} />
         <nav
-          aria-label={SIDEBAR_COPY.navigationLabel}
+          aria-label={t("navigationLabel")}
           className={
             isCompact
               ? "flex min-h-0 flex-1 flex-col items-center gap-(--component-sidebar-rail-gap) overflow-y-auto"
@@ -71,12 +75,17 @@ export function Sidebar({
         {isCompact && onExpand ? (
           <IconButton
             icon="panel-left-open"
-            aria-label={SIDEBAR_COPY.expand}
+            aria-label={t("expand")}
             data-sidebar-toggle=""
             onPress={onExpand}
           />
         ) : null}
-        <SidebarAccount account={account} isCompact={isCompact} onLogout={onLogout} />
+        <SidebarAccount
+          account={account}
+          isCompact={isCompact}
+          onLogout={onLogout}
+          accountMenu={accountMenu}
+        />
       </aside>
     </NavItemCompactContext.Provider>
   );
@@ -112,7 +121,7 @@ export function SidebarBrandLogo({ className }: Readonly<{ className?: string }>
     <span className={cn("flex items-center gap-(--space-2)", className)}>
       <SidebarBrandMark />
       <span className="text-(length:--font-size-title) font-bold tracking-(--font-letter-spacing-title) text-(--component-sidebar-logo)">
-        {SIDEBAR_COPY.wordmark}
+        {SIDEBAR_WORDMARK}
       </span>
     </span>
   );
@@ -122,6 +131,7 @@ function SidebarLogo({
   isCompact,
   onCollapse,
 }: Readonly<{ isCompact: boolean; onCollapse?: () => void }>) {
+  const t = useTranslations(SIDEBAR_COPY_NAMESPACE);
   if (isCompact) {
     return (
       <div className="flex size-(--space-10) shrink-0 items-center justify-center">
@@ -136,7 +146,7 @@ function SidebarLogo({
       <IconButton
         icon="panel-left"
         size="sm"
-        aria-label={SIDEBAR_COPY.collapse}
+        aria-label={t("collapse")}
         data-sidebar-toggle=""
         onPress={onCollapse}
       />
@@ -227,11 +237,73 @@ function resolveWorkspaceSwitcher(
   return typeof workspaceSwitcher === "function" ? workspaceSwitcher(isCompact) : workspaceSwitcher;
 }
 
+/** The account block as a pressable trigger, for an account menu (avatar, name, email, chevrons). */
+export function SidebarAccountTrigger({
+  account,
+  isCompact,
+  "aria-label": ariaLabel,
+}: Readonly<{ account: SidebarAccount; isCompact: boolean; "aria-label"?: string }>) {
+  if (isCompact) {
+    return (
+      <AriaButton
+        type="button"
+        aria-label={ariaLabel}
+        className="rounded-full outline-none focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
+      >
+        <Avatar initials={account.initials} aria-hidden />
+      </AriaButton>
+    );
+  }
+
+  return (
+    <AriaButton
+      type="button"
+      aria-label={ariaLabel}
+      className="flex w-full items-center gap-(--component-sidebar-account-gap) rounded-(--radius-sm) px-(--space-2) py-(--space-1) text-left outline-none data-hovered:bg-(--color-semantic-surface-sunken) focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
+    >
+      <Avatar initials={account.initials} aria-hidden />
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-(length:--font-size-body-sm) font-semibold text-(--color-semantic-text-primary)">
+          {account.name}
+        </p>
+        <p className="truncate text-(length:--font-size-caption) text-(--color-semantic-text-secondary)">
+          {account.email}
+        </p>
+      </div>
+      <Icon
+        name="chevrons-up-down"
+        size="sm"
+        aria-hidden="true"
+        data-icon="chevrons-up-down"
+        className="text-(--color-semantic-text-muted)"
+      />
+    </AriaButton>
+  );
+}
+
 function SidebarAccount({
   account,
   isCompact,
   onLogout,
+  accountMenu,
+}: Readonly<{
+  account: SidebarAccount;
+  isCompact: boolean;
+  onLogout?: () => void;
+  accountMenu?: SidebarAccountMenu;
+}>) {
+  if (accountMenu) {
+    return <>{accountMenu(<SidebarAccountTrigger account={account} isCompact={isCompact} />)}</>;
+  }
+  return <SidebarAccountBlock account={account} isCompact={isCompact} onLogout={onLogout} />;
+}
+
+function SidebarAccountBlock({
+  account,
+  isCompact,
+  onLogout,
 }: Readonly<{ account: SidebarAccount; isCompact: boolean; onLogout?: () => void }>) {
+  const t = useTranslations(SIDEBAR_COPY_NAMESPACE);
   if (isCompact) {
     return <Avatar initials={account.initials} aria-label={account.name} />;
   }
@@ -247,7 +319,7 @@ function SidebarAccount({
           {account.email}
         </p>
       </div>
-      <IconButton icon="log-out" size="sm" aria-label={SIDEBAR_COPY.logout} onPress={onLogout} />
+      <IconButton icon="log-out" size="sm" aria-label={t("logout")} onPress={onLogout} />
     </div>
   );
 }

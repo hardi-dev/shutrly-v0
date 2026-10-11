@@ -31,7 +31,7 @@ describe("ClientRowActions", () => {
         onDelete={vi.fn()}
       />,
     );
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Rina" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Rina" }));
     expect(screen.getByRole("menuitem", { name: "Buka WhatsApp" })).toHaveAttribute(
       "href",
       "https://wa.me/6281234567890",
@@ -54,7 +54,7 @@ describe("ClientRowActions", () => {
         onDelete={vi.fn()}
       />,
     );
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Rina" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Rina" }));
     expect(screen.getByRole("menuitem", { name: "Pulihkan" })).toBeVisible();
   });
 });

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useController, useFieldArray } from "react-hook-form";
 
 import {
@@ -12,14 +13,18 @@ import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { CLIENT_COPY, PLATFORM_COPY } from "../client-copy/client-copy.copy";
+import { PLATFORM_MESSAGE_KEY } from "../client-copy/client-copy.copy";
+import type { ClientTranslate } from "../client-copy/client-copy.types";
 import { clientFieldErrorText } from "../client-field-error/client-field-error";
+import { SOCIAL_LINKS_EDITOR_COPY_NAMESPACE } from "./social-links-editor.copy";
 import type { SocialLinkRowProps, SocialLinksEditorProps } from "./social-links-editor.types";
 
-const PLATFORM_OPTIONS = SOCIAL_PLATFORMS.map((platform) => ({
-  id: platform,
-  label: PLATFORM_COPY[platform],
-}));
+function platformOptions(t: ClientTranslate) {
+  return SOCIAL_PLATFORMS.map((platform) => ({
+    id: platform,
+    label: t(PLATFORM_MESSAGE_KEY[platform]),
+  }));
+}
 const DEFAULT_PLATFORM = SOCIAL_PLATFORMS[0];
 const EMPTY_SOCIAL_LINK_VALUE = "";
 
@@ -30,6 +35,7 @@ export function SocialLinksEditor({
   isMobile,
   setFocus,
 }: Readonly<SocialLinksEditorProps>) {
+  const t = useTranslations(SOCIAL_LINKS_EDITOR_COPY_NAMESPACE);
   const { fields, append, remove } = useFieldArray({ control, name: "socialLinks" });
   function addRow(): void {
     append({ platform: DEFAULT_PLATFORM, value: EMPTY_SOCIAL_LINK_VALUE });
@@ -47,7 +53,7 @@ export function SocialLinksEditor({
   return (
     <fieldset className="flex flex-col gap-(--space-3)">
       <legend className="text-(length:--font-size-label) font-semibold text-(--color-semantic-text-primary)">
-        {CLIENT_COPY.socialLinksLabel}
+        {t("socialLinksLabel")}
       </legend>
       {fields.map((field, index) => (
         <SocialLinkRow
@@ -68,7 +74,7 @@ export function SocialLinksEditor({
         onPress={addRow}
         isDisabled={isPending || fields.length >= SOCIAL_LINK_MAX_COUNT}
       >
-        {CLIENT_COPY.addSocialLink}
+        {t("addSocialLink")}
       </Button>
     </fieldset>
   );
@@ -76,7 +82,8 @@ export function SocialLinksEditor({
 
 function SocialLinkRow(props: Readonly<SocialLinkRowProps>) {
   const { index, control, isPending, isMobile, onRemove, onFocusAfterRemove, rowCount } = props;
-  const fields = useSocialLinkFields(control, index);
+  const t = useTranslations(SOCIAL_LINKS_EDITOR_COPY_NAMESPACE);
+  const fields = useSocialLinkFields(t, control, index);
   function removeRow(): void {
     onRemove(index);
     onFocusAfterRemove(index, rowCount);
@@ -87,10 +94,10 @@ function SocialLinkRow(props: Readonly<SocialLinkRowProps>) {
   const removeButton = (
     <IconButton
       icon="x"
-      aria-label={CLIENT_COPY.removeSocialLinkField(
-        PLATFORM_COPY[fields.platform.value],
-        index + 1,
-      )}
+      aria-label={t("removeSocialLinkField", {
+        platform: t(PLATFORM_MESSAGE_KEY[fields.platform.value]),
+        index: index + 1,
+      })}
       onPress={removeRow}
       isDisabled={isPending}
     />
@@ -104,9 +111,9 @@ function SocialLinkRow(props: Readonly<SocialLinkRowProps>) {
       )}
     >
       <Select
-        aria-label={CLIENT_COPY.socialPlatformField(index + 1)}
+        aria-label={t("socialPlatformField", { index: index + 1 })}
         value={fields.platform.value}
-        options={PLATFORM_OPTIONS}
+        options={platformOptions(t)}
         onChange={fields.platform.onChange}
         isDisabled={isPending}
         errorMessage={fields.platform.error}
@@ -117,7 +124,11 @@ function SocialLinkRow(props: Readonly<SocialLinkRowProps>) {
   );
 }
 
-function useSocialLinkFields(control: SocialLinksEditorProps["control"], index: number) {
+function useSocialLinkFields(
+  t: ClientTranslate,
+  control: SocialLinksEditorProps["control"],
+  index: number,
+) {
   const platform = useController({ control, name: socialPlatformPath(index) });
   const value = useController({ control, name: socialValuePath(index) });
   return {
@@ -125,7 +136,7 @@ function useSocialLinkFields(control: SocialLinksEditorProps["control"], index: 
       value: platform.field.value,
       onChange: platform.field.onChange,
       error: platform.fieldState.error?.message
-        ? clientFieldErrorText(platform.fieldState.error.message)
+        ? clientFieldErrorText(t, platform.fieldState.error.message)
         : undefined,
     },
     value: {
@@ -135,7 +146,7 @@ function useSocialLinkFields(control: SocialLinksEditorProps["control"], index: 
       onBlur: value.field.onBlur,
       ref: value.field.ref,
       error: value.fieldState.error?.message
-        ? valueErrorText(value.fieldState.error.message)
+        ? valueErrorText(t, value.fieldState.error.message)
         : undefined,
     },
   };
@@ -161,8 +172,8 @@ function isSocialValuePath(path: string): path is `socialLinks.${number}.value` 
   return /^socialLinks\.\d+\.value$/.test(path);
 }
 
-function valueErrorText(error: string): string {
-  return error === "EMPTY" ? CLIENT_COPY.emptySocialValue : clientFieldErrorText(error);
+function valueErrorText(t: ClientTranslate, error: string): string {
+  return error === "EMPTY" ? t("emptySocialValue") : clientFieldErrorText(t, error);
 }
 
 function SocialValueField({
@@ -176,19 +187,21 @@ function SocialValueField({
   isPending: boolean;
   isMobile: boolean;
 }>) {
+  const t = useTranslations(SOCIAL_LINKS_EDITOR_COPY_NAMESPACE);
   return (
     <div className={isMobile ? "col-span-2" : "col-span-1"}>
       <TextField
-        aria-label={CLIENT_COPY.socialValueField(PLATFORM_COPY[fields.platform.value], index + 1)}
+        aria-label={t("socialValueField", {
+          platform: t(PLATFORM_MESSAGE_KEY[fields.platform.value]),
+          index: index + 1,
+        })}
         name={fields.value.name}
         value={fields.value.value}
         onChange={fields.value.onChange}
         onBlur={fields.value.onBlur}
         inputRef={fields.value.ref}
         placeholder={
-          isMobile
-            ? CLIENT_COPY.socialValuePlaceholderMobile
-            : CLIENT_COPY.socialValuePlaceholderDesktop
+          isMobile ? t("socialValuePlaceholderMobile") : t("socialValuePlaceholderDesktop")
         }
         isDisabled={isPending}
         errorMessage={fields.value.error}

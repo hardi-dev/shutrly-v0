@@ -1,13 +1,18 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { formatIdr } from "@/features/booking/domain/idr-amount/idr-amount";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { Select } from "@/ui/patterns/select/select";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { SERVICE_PICKER_COPY_NAMESPACE } from "./service-picker.copy";
 import type { ServicePickerProps } from "./service-picker.types";
 
 /** Picks one active service, grouped by category, with its base price as the helper (AC-PRJ-006). */
 export function ServicePicker(props: Readonly<ServicePickerProps>) {
+  const t = useTranslations(SERVICE_PICKER_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
   const options = props.serviceGroups.flatMap((group) =>
     group.services.map((service) => ({
       id: service.id,
@@ -20,16 +25,17 @@ export function ServicePicker(props: Readonly<ServicePickerProps>) {
     .find((service) => service.id === props.value);
   return (
     <Select
-      label={PROJECT_COPY.serviceLabel}
-      placeholder={
-        options.length === 0 ? PROJECT_COPY.noServiceTitle : PROJECT_COPY.servicePlaceholder
-      }
+      label={t("serviceLabel")}
+      placeholder={options.length === 0 ? t("noServiceTitle") : t("servicePlaceholder")}
       options={options}
       value={props.value}
       onChange={props.onChange}
       description={
         selected
-          ? PROJECT_COPY.serviceHelper(selected.categoryName, formatIdr(selected.basePrice))
+          ? t("serviceHelper", {
+              category: selected.categoryName,
+              amount: formatIdr(selected.basePrice, locale),
+            })
           : undefined
       }
       errorMessage={props.errorMessage}

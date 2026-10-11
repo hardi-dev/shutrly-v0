@@ -12,9 +12,9 @@ vi.mock("@/ui/patterns/toast/toast", () => ({ showToast }));
 
 const { TeamMembersScreen } = await import("./team-members-screen");
 
-const FOTOGRAFER = { id: "r1", name: "Fotografer" };
-const VIDEOGRAFER = { id: "r2", name: "Videografer" };
-const ASISTEN = { id: "r3", name: "Asisten" };
+const FOTOGRAFER = { id: "r1", name: "Fotografer", defaultKey: null };
+const VIDEOGRAFER = { id: "r2", name: "Videografer", defaultKey: null };
+const ASISTEN = { id: "r3", name: "Asisten", defaultKey: null };
 
 const AYU = {
   id: "m1",
@@ -66,7 +66,7 @@ describe("TeamMembersScreen", () => {
 
   it("AC-TEAM-001 shows each member's name, formatted number and roles, with no money", () => {
     setup();
-    const table = screen.getByRole("grid", { name: "Daftar anggota" });
+    const table = screen.getByRole("grid", { name: "Anggota tim" });
     expect(table).toBeInTheDocument();
     expect(screen.getByText("2 anggota aktif")).toBeInTheDocument();
     expect(screen.getByText("Dimas Pratama")).toBeInTheDocument();
@@ -93,20 +93,18 @@ describe("TeamMembersScreen", () => {
     setup({ count: 0, initialPage: { items: [], nextCursor: null } });
     expect(screen.getByText("Belum ada anggota tim")).toBeInTheDocument();
     expect(
-      screen.getByText(
-        "Catat freelancer yang sering kamu ajak, lalu pilih mereka di jadwal proyek.",
-      ),
+      screen.getByText("Catat pekerja lepas yang kamu ajak, lalu tugaskan di jadwal proyek."),
     ).toBeInTheDocument();
   });
 
   it("AC-TEAM-002 shows the Arsip empty state", () => {
     setup({ status: "ARCHIVED", count: 0, initialPage: { items: [], nextCursor: null } });
-    expect(screen.getByText("Belum ada anggota yang diarsipkan")).toBeInTheDocument();
+    expect(screen.getByText("Belum ada anggota di arsip")).toBeInTheDocument();
   });
 
   it("AC-TEAM-003 shows the no-match state with Hapus pencarian, which drops q from the URL", async () => {
     setup({ q: "zzz", initialPage: { items: [], nextCursor: null } });
-    expect(screen.getByText("Tidak ada anggota yang cocok")).toBeInTheDocument();
+    expect(screen.getByText("Belum ada anggota yang cocok")).toBeInTheDocument();
     expect(screen.getByRole("searchbox")).toHaveValue("zzz");
     // The search box's clear icon and the empty state's button share a name; the button is last.
     const [, emptyStateButton] = screen.getAllByRole("button", { name: "Hapus pencarian" });
@@ -167,7 +165,7 @@ describe("TeamMembersScreen", () => {
   it("AC-TEAM-007 archives from the row menu, offers Batalkan and restores on undo", async () => {
     const setArchivedAction = vi.fn().mockResolvedValue(undefined);
     setup({ setArchivedAction });
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Dimas Pratama" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Dimas Pratama" }));
     await userEvent.click(screen.getByRole("menuitem", { name: "Arsipkan" }));
     await waitFor(() => {
       expect(setArchivedAction).toHaveBeenCalledWith("ws", "m2", true);
@@ -189,7 +187,7 @@ describe("TeamMembersScreen", () => {
   it("AC-TEAM-007 opens the blocked dialog when the member has assignments", async () => {
     const deleteAction = vi.fn().mockResolvedValue({ ok: false, code: "HAS_ASSIGNMENTS" });
     setup({ deleteAction });
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Dimas Pratama" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Dimas Pratama" }));
     await userEvent.click(screen.getByRole("menuitem", { name: "Hapus" }));
     await userEvent.click(await screen.findByRole("button", { name: "Hapus" }));
     expect(await screen.findByText("Dimas Pratama tidak bisa dihapus")).toBeInTheDocument();
@@ -197,7 +195,7 @@ describe("TeamMembersScreen", () => {
 
   it("AC-TEAM-007 does not open Ubah when the row menu is used", async () => {
     setup();
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Dimas Pratama" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Dimas Pratama" }));
     expect(screen.queryByRole("dialog", { name: "Ubah anggota" })).not.toBeInTheDocument();
   });
 });

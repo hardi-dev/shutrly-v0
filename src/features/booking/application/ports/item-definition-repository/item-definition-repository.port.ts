@@ -1,5 +1,6 @@
 import "server-only";
 
+import type { DefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions.types";
 import type { DefinitionType } from "@/features/booking/domain/item-definition-type/item-definition-type.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
@@ -9,6 +10,8 @@ export interface ItemDefinitionRecord extends DefinitionType {
   readonly id: string;
   readonly name: string;
   readonly unit: string | null;
+  /** D-18: the platform key of a default item; null for owner items and renamed defaults. */
+  readonly defaultKey: DefaultItemKey | null;
   readonly isActive: boolean;
   readonly usageCount: number;
 }
@@ -17,6 +20,8 @@ export interface ItemDefinitionInput extends DefinitionType {
   readonly name: string;
   readonly unit: string | null;
   readonly editorUserId: string | null;
+  /** Set only by the platform seed (D-18); owner items have none. */
+  readonly defaultKey?: DefaultItemKey;
 }
 
 export interface ItemDefinitionRepositoryPort {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { updateDisplayNameSchema } from "@/features/auth/application/use-cases/update-display-name/update-display-name.schema";
@@ -10,7 +11,7 @@ import { TextField } from "@/ui/primitives/text-field/text-field";
 import { AuthErrorAlert } from "../auth-error-alert/auth-error-alert";
 import { ControlledTextField } from "../controlled-text-field/controlled-text-field";
 import { useAuthForm } from "../use-auth-form/use-auth-form";
-import { PROFILE_FORM_COPY as COPY } from "./profile-form.copy";
+import { PROFILE_FORM_COPY_NAMESPACE } from "./profile-form.copy";
 import type { ProfileFormProps } from "./profile-form.types";
 
 // The email is shown, never submitted (AC-AUTH-020); the read-only field ignores edits.
@@ -24,6 +25,7 @@ function ignoreEdit(): void {
  * @returns the form
  */
 export function ProfileForm({ email, name, action }: Readonly<ProfileFormProps>) {
+  const t = useTranslations(PROFILE_FORM_COPY_NAMESPACE);
   const [saved, setSaved] = useState(false);
   function markSaved(): void {
     setSaved(true);
@@ -37,9 +39,9 @@ export function ProfileForm({ email, name, action }: Readonly<ProfileFormProps>)
   return (
     <form noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-4)">
       {server.formError ? <AuthErrorAlert code={server.formError} /> : null}
-      {saved && !isSubmitting ? <Alert tone="info" title={COPY.saved} live /> : null}
+      {saved && !isSubmitting ? <Alert tone="info" title={t("saved")} live /> : null}
       <TextField
-        label={COPY.email}
+        label={t("email")}
         name="email"
         type="email"
         value={email}
@@ -50,12 +52,12 @@ export function ProfileForm({ email, name, action }: Readonly<ProfileFormProps>)
       <ControlledTextField
         control={form.control}
         name="name"
-        label={COPY.name}
+        label={t("name")}
         autoComplete="name"
       />
       <div>
         <Button type="submit" isDisabled={isSubmitting}>
-          {isSubmitting ? COPY.saving : COPY.save}
+          {isSubmitting ? t("saving") : t("save")}
         </Button>
       </div>
     </form>

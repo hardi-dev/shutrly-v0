@@ -1,15 +1,18 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/ui/cn/cn";
 import { Icon } from "@/ui/primitives/icon/icon";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 import { Stepper } from "@/ui/primitives/stepper/stepper";
 
 import { PhotoThumb } from "../photo-thumb/photo-thumb";
-import { REVIEW_COPY as COPY } from "../review-screen/review-screen.copy";
+import { PICK_ROW_NAMESPACE } from "./pick-row.copy";
 import type { PickNoteBlockProps, PickRowProps } from "./pick-row.types";
 
 function NoteBlock({ note, isEditable, allowsNotes, onNote }: Readonly<PickNoteBlockProps>) {
+  const t = useTranslations(PICK_ROW_NAMESPACE);
   if (!allowsNotes || (note === null && !isEditable)) return null;
   const action = (
     <button
@@ -18,7 +21,7 @@ function NoteBlock({ note, isEditable, allowsNotes, onNote }: Readonly<PickNoteB
       className="flex w-fit items-center gap-(--space-1-5) text-(length:--font-size-body-sm) font-medium text-(--color-semantic-action-primary)"
     >
       <Icon name={note === null ? "plus" : "pencil"} size="sm" aria-hidden="true" />
-      {note === null ? COPY.noteAdd : COPY.noteEdit}
+      {note === null ? t("noteAdd") : t("noteEdit")}
     </button>
   );
   if (note === null) return action;
@@ -30,7 +33,7 @@ function NoteBlock({ note, isEditable, allowsNotes, onNote }: Readonly<PickNoteB
         </span>
         <span className="flex min-w-0 flex-1 flex-col gap-(--space-0-5)">
           <span className="text-(length:--font-size-body-sm) font-semibold text-(--component-alert-info-title)">
-            {COPY.noteTitle}
+            {t("noteTitle")}
           </span>
           <span className="text-(length:--font-size-caption) break-words whitespace-pre-line text-(--color-semantic-text-secondary)">
             {note}
@@ -49,6 +52,7 @@ function RowTrailing({
   maxQuantity,
   onQuantity,
 }: Readonly<Omit<PickRowProps, "onNote">>) {
+  const t = useTranslations(PICK_ROW_NAMESPACE);
   const { photo } = pick;
   const handleQuantity = (quantity: number) => {
     onQuantity(photo.id, quantity);
@@ -60,7 +64,7 @@ function RowTrailing({
   if (!isEditable) {
     return isQuantity ? (
       <span className="text-(length:--font-size-body) font-bold text-(--color-semantic-text-primary)">
-        {COPY.quantityReadOnly(pick.quantity)}
+        {t("quantityReadOnly", { quantity: pick.quantity })}
       </span>
     ) : null;
   }
@@ -74,7 +78,7 @@ function RowTrailing({
     >
       {isQuantity ? (
         <Stepper
-          label={COPY.quantityLabel(photo.fileName)}
+          label={t("quantityLabel", { fileName: photo.fileName })}
           value={pick.quantity}
           min={1}
           max={maxQuantity}
@@ -84,7 +88,7 @@ function RowTrailing({
       <IconButton
         icon="x"
         size="sm"
-        aria-label={COPY.remove(photo.fileName)}
+        aria-label={t("remove", { fileName: photo.fileName })}
         onPress={handleRemove}
       />
     </span>
@@ -94,13 +98,14 @@ function RowTrailing({
 /** One picked photo on Tinjau: thumbnail, name and folder, the print stepper and remove button, and the note with *Ubah catatan* / *Tambah catatan*; read-only after the group is sent (tinjau and lihatpilihan exports, A-29, A-32). @param props - the pick, its group and the handlers @returns the row */
 export function PickRow(props: Readonly<PickRowProps>) {
   const { pick, group, isEditable, onNote } = props;
+  const t = useTranslations(PICK_ROW_NAMESPACE);
   const { photo } = pick;
   const handleNote = () => {
     onNote(photo.id);
   };
   const meta = photo.missing
-    ? COPY.missingMeta
-    : photo.folderPath.split("/").join(COPY.folderSeparator);
+    ? t("missingMeta")
+    : photo.folderPath.split("/").join(t("folderSeparator"));
   return (
     <li className="flex flex-col gap-(--space-3) border-b border-(--color-semantic-border-subtle) px-(--space-4) py-(--space-3) last:border-b-0">
       <div className="flex flex-wrap items-center gap-(--space-3)">

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -10,7 +11,7 @@ import { MenuTrigger } from "@/ui/patterns/menu/menu-trigger";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { Button } from "@/ui/primitives/button/button";
 
-import { DELIVERY_SCREEN_COPY as COPY } from "./delivery-screen.copy";
+import { DELIVERY_SCREEN_COPY_NAMESPACE } from "./delivery-screen.copy";
 import type { DeliveryPartProps } from "./delivery-screen.types";
 
 // The next dialog opens once the action sheet has finished its exit (catalog row actions).
@@ -18,19 +19,20 @@ const SHEET_HANDOFF_DELAY_MS = 400;
 
 /** *Unduh ▾*: *Unduh semua (n)* and *Pilih beberapa*; a Menu on desktop, an action sheet on phones (hasilakhir-menu-unduh). @param props - the screen state @returns the button with its menu */
 export function DeliveryDownloadMenu({ screen }: Readonly<DeliveryPartProps>) {
+  const t = useTranslations(DELIVERY_SCREEN_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const [isOpen, setIsOpen] = useState(false);
   const isBusy = screen.download.progress.phase === "RUNNING" || screen.shown.length === 0;
-  const all = COPY.downloadAll(screen.shown.length);
+  const all = t("downloadAll", { count: screen.shown.length });
   if (!isMobile) {
     return (
-      <MenuTrigger label={COPY.download}>
+      <MenuTrigger label={t("download")}>
         <Button iconLeading="download" iconTrailing="chevron-down" isDisabled={isBusy}>
-          {COPY.download}
+          {t("download")}
         </Button>
-        <Menu aria-label={COPY.downloadMenu}>
+        <Menu aria-label={t("downloadMenu")}>
           <MenuItem label={all} icon="download" onSelect={screen.askDownloadAll} />
-          <MenuItem label={COPY.pickSeveral} icon="list-checks" onSelect={screen.startSelecting} />
+          <MenuItem label={t("pickSeveral")} icon="list-checks" onSelect={screen.startSelecting} />
         </Menu>
       </MenuTrigger>
     );
@@ -52,12 +54,12 @@ export function DeliveryDownloadMenu({ screen }: Readonly<DeliveryPartProps>) {
         isDisabled={isBusy}
         onPress={open}
       >
-        {COPY.download}
+        {t("download")}
       </Button>
-      <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen} title={COPY.download} variant="actions">
+      <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen} title={t("download")} variant="actions">
         <SheetItem label={all} icon="download" onPress={later(screen.askDownloadAll)} />
         <SheetItem
-          label={COPY.pickSeveral}
+          label={t("pickSeveral")}
           icon="list-checks"
           onPress={later(screen.startSelecting)}
         />

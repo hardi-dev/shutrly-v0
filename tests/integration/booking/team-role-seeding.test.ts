@@ -49,8 +49,8 @@ describe("default team roles", () => {
   it("AC-TEAM-008 a seeded workspace has three roles, and seeding twice adds none", async () => {
     const context = await seedWorkspace();
     const roles = createDrizzleTeamRoleRepository(db);
-    await seedDefaultTeamRoles(roles, context);
-    await seedDefaultTeamRoles(roles, context);
+    await seedDefaultTeamRoles(roles, context, "id");
+    await seedDefaultTeamRoles(roles, context, "id");
     expect(await roleNames(context.workspaceId)).toEqual(["Asisten", "Fotografer", "Videografer"]);
   });
 
@@ -73,9 +73,11 @@ describe("default team roles", () => {
           .values({ ownerUserId: ownerId, name, invoicePrefix: "RB" })
           .returning({ id: workspace.id });
         workspaceId = created.id;
-        await seedDefaultTeamRoles(createDrizzleTeamRoleRepository(tx), {
-          workspaceId: asWorkspaceId(created.id),
-        });
+        await seedDefaultTeamRoles(
+          createDrizzleTeamRoleRepository(tx),
+          { workspaceId: asWorkspaceId(created.id) },
+          "id",
+        );
         throw new Error("simulated failure after seeding");
       }),
     ).rejects.toThrow("simulated failure after seeding");

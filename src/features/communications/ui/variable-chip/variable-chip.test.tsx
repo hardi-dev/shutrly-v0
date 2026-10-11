@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it, vi } from "vitest";
 
 import { VariableChip } from "./variable-chip";
@@ -19,6 +20,14 @@ describe("VariableChip", () => {
 
     expect(
       screen.getByRole("button", { name: "Sisipkan {{galleryUrl}}, wajib" }),
-    ).toHaveTextContent("wajib");
+    ).toHaveTextContent("Wajib");
+  });
+
+  it("names the variable and the required marker in English", () => {
+    renderInLocale(<VariableChip name="galleryUrl" isRequired onInsert={vi.fn()} />, "en");
+
+    expect(
+      screen.getByRole("button", { name: "Insert {{galleryUrl}}, required" }),
+    ).toHaveTextContent("Required");
   });
 });

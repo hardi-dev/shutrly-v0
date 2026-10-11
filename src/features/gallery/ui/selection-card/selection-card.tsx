@@ -1,30 +1,36 @@
+import { useTranslations } from "next-intl";
+
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
-import { SELECTION_OWNER_COPY as COPY } from "../selection-owner-text/selection-owner.copy";
 import {
   cardDescription,
   groupMeta,
   groupStatusChip,
 } from "../selection-owner-text/selection-owner-text";
+import { SELECTION_CARD_COPY_NAMESPACE } from "./selection-card.copy";
 import type { SelectionCardActionProps, SelectionCardProps } from "./selection-card.types";
 
 function CardAction({ card, base }: Readonly<SelectionCardActionProps>) {
+  const t = useTranslations(SELECTION_CARD_COPY_NAMESPACE);
   if (card.state === "NO_ITEMS" || card.state === "NOT_PUBLISHED") return null;
   const isReview = card.state === "REVIEW";
   return (
     <Button variant={isReview ? "primary" : "secondary"} href={`${base}/gallery/picks`}>
-      {isReview ? COPY.reviewPicks : COPY.viewPicks}
+      {isReview ? t("reviewPicks") : t("viewPicks")}
     </Button>
   );
 }
 
 function CardBody({ card }: Readonly<Pick<SelectionCardProps, "card">>) {
+  const t = useTranslations(SELECTION_CARD_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
   if (card.state === "NO_ITEMS" || card.state === "NOT_PUBLISHED") {
     return (
       <p className="p-(--space-4) text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary) md:p-(--space-6)">
-        {card.state === "NO_ITEMS" ? COPY.cardNoItems : COPY.cardNotPublishedNote}
+        {card.state === "NO_ITEMS" ? t("cardNoItems") : t("cardNotPublishedNote")}
       </p>
     );
   }
@@ -37,10 +43,10 @@ function CardBody({ card }: Readonly<Pick<SelectionCardProps, "card">>) {
               {group.name}
             </span>
             <span className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
-              {groupMeta(group, false)}
+              {groupMeta(t, group, false, locale)}
             </span>
           </span>
-          <StatusChip {...groupStatusChip(group.status)} hasDot />
+          <StatusChip {...groupStatusChip(t, group.status)} hasDot />
         </li>
       ))}
     </ul>
@@ -49,12 +55,13 @@ function CardBody({ card }: Readonly<Pick<SelectionCardProps, "card">>) {
 
 /** The gallery page's *Pilihan klien* card: its state (not published, open, needs review, final, no selection items) with one row per group, and the button into the groups page (card export states A–E, A-34, AC-SEL-010). @param props - workspace, project and the card view @returns the card */
 export function SelectionCard({ workspaceId, projectId, card }: Readonly<SelectionCardProps>) {
+  const t = useTranslations(SELECTION_CARD_COPY_NAMESPACE);
   const base = `/w/${workspaceId}/projects/${projectId}`;
   const submitted = card.groups.filter((group) => group.status === "SUBMITTED").length;
   return (
     <SectionCard
-      title={COPY.cardTitle}
-      description={cardDescription(card.state, submitted) ?? undefined}
+      title={t("cardTitle")}
+      description={cardDescription(t, card.state, submitted) ?? undefined}
       actions={<CardAction card={card} base={base} />}
       content="flush"
     >

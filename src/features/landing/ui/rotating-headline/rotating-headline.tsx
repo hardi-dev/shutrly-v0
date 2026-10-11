@@ -1,10 +1,12 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/ui/cn/cn";
 
 import { useMeasuredWidth } from "../use-measured-width/use-measured-width";
 import { useRotatingWord } from "../use-rotating-word/use-rotating-word";
-import { ROTATING_HEADLINE_COPY as COPY } from "./rotating-headline.copy";
+import { ROTATING_HEADLINE_COPY_NAMESPACE } from "./rotating-headline.copy";
 
 // Display sizes are a DESIGN TOKEN GAP (plan.md › Token mapping): 32/36 px phone, 68/76 px desktop.
 const LINE =
@@ -34,25 +36,27 @@ function wordState(word: number, index: number, count: number): string {
  * @returns the heading
  */
 export function RotatingHeadline() {
-  const count = COPY.words.length;
+  const t = useTranslations(ROTATING_HEADLINE_COPY_NAMESPACE);
+  const words = [t("wordBusywork"), t("wordPaperwork"), t("wordBackAndForth")];
+  const count = words.length;
   const index = useRotatingWord(count);
-  const [sizer, width] = useMeasuredWidth<HTMLSpanElement>(COPY.words[index]);
+  const [sizer, width] = useMeasuredWidth<HTMLSpanElement>(words[index]);
   return (
     <h1 className="flex flex-col items-center gap-(--space-0-5) md:gap-(--space-1)">
-      <span className="sr-only">{COPY.accessible}</span>
+      <span className="sr-only">{t("accessible")}</span>
       <span
         aria-hidden="true"
         className="flex h-10 items-center gap-(--space-2) md:h-[76px] md:gap-(--space-4)"
       >
-        <span className={cn(LINE, "font-medium")}>{COPY.prefix}</span>
+        <span className={cn(LINE, "font-medium")}>{t("prefix")}</span>
         {/* Clipped at the top and sides so words slide in under the edge, but open below so
             descenders (the "y" of busywork.) hang over the highlight, as drawn. */}
         <span className="flex h-full items-center bg-(--color-semantic-accent-highlight) px-(--space-2) [clip-path:inset(0_0_-25%_0)] md:px-(--space-3)">
           <span className={cn("relative block", BOX_MOTION)} style={{ width }}>
             <span ref={sizer} className={cn(LINE, "invisible inline-block align-top font-bold")}>
-              {COPY.words[index]}
+              {words[index]}
             </span>
-            {COPY.words.map((word, position) => (
+            {words.map((word, position) => (
               <span
                 key={word}
                 className={cn(
@@ -69,7 +73,7 @@ export function RotatingHeadline() {
         </span>
       </span>
       <span aria-hidden="true" className={cn(LINE, "font-bold")}>
-        {COPY.stable}
+        {t("stable")}
       </span>
     </h1>
   );

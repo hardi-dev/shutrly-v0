@@ -11,9 +11,13 @@ export interface MenuItemProps {
   icon?: IconName;
   isSelected?: boolean;
   isDisabled?: boolean;
+  /** Shows a spinning `loading-03` in place of the icon, e.g. while a language switch saves. */
+  isPending?: boolean;
   variant?: MenuItemVariant;
   layout?: MenuItemLayout;
   href?: string;
   target?: "_blank";
   onSelect?: () => void;
+  /** Keeps the menu open after a choice, e.g. while a language switch saves. */
+  shouldCloseOnSelect?: boolean;
 }

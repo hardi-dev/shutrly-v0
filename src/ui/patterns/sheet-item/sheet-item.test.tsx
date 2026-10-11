@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
@@ -53,5 +53,13 @@ describe("SheetItem (C32)", () => {
     rerender(<SheetItem label="Hapus" icon="trash-2" isPending />);
     expect(screen.getByRole("button", { name: "Hapus" })).toBeDisabled();
     expect(screen.queryByTestId("sheet-item-check")).not.toBeInTheDocument();
+  });
+
+  it("renders a trailing value with a chevron", () => {
+    render(<SheetItem label="Bahasa" value="Bahasa Indonesia" onPress={handleNoop} />);
+
+    const item = screen.getByRole("button", { name: "Bahasa" });
+    expect(within(item).getByText("Bahasa Indonesia")).toBeInTheDocument();
+    expect(within(item).getByTestId("sheet-item-chevron")).toBeInTheDocument();
   });
 });

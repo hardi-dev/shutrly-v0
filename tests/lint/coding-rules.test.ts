@@ -23,4 +23,24 @@ describe("coding rules enforced by lint", () => {
     expect(ids).toContain("local/ui-copy");
     expect(ids).toContain("no-restricted-syntax");
   });
+
+  it("AC-L10N-002 accepts t(key) with a namespace imported from a sibling copy module", async () => {
+    const ids = await ruleIds(
+      "src/ui/x.tsx",
+      [
+        'import { X_COPY_NAMESPACE } from "./x.copy";',
+        'export const A = () => { const t = useTranslations(X_COPY_NAMESPACE); return <p>{t("a")}</p>; };',
+      ].join("\n"),
+    );
+    expect(ids).not.toContain("local/ui-copy");
+  });
+
+  it("AC-L10N-002 rejects a string-literal namespace", async () => {
+    expect(
+      await ruleIds(
+        "src/ui/x.tsx",
+        'export const A = () => { const t = useTranslations("landing"); return <p>{t("a")}</p>; };',
+      ),
+    ).toContain("local/ui-copy");
+  });
 });

@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { loginOwnerSchema } from "@/features/auth/application/use-cases/login-owner/login-owner.schema";
 import { Button } from "@/ui/primitives/button/button";
 
@@ -7,7 +9,7 @@ import { AuthErrorAlert } from "../auth-error-alert/auth-error-alert";
 import { AuthTextLink } from "../auth-text-link/auth-text-link";
 import { ControlledTextField } from "../controlled-text-field/controlled-text-field";
 import { useAuthForm } from "../use-auth-form/use-auth-form";
-import { LOGIN_FORM_COPY as COPY } from "./login-form.copy";
+import { LOGIN_FORM_COPY_NAMESPACE } from "./login-form.copy";
 import type { LoginFormProps } from "./login-form.types";
 
 const DEFAULTS = { email: "", password: "" };
@@ -22,6 +24,7 @@ export function LoginForm({
   initialError = null,
   secondaryAction,
 }: Readonly<LoginFormProps>) {
+  const t = useTranslations(LOGIN_FORM_COPY_NAMESPACE);
   const { form, server, onSubmit, isSubmitting } = useAuthForm({
     schema: loginOwnerSchema,
     defaultValues: DEFAULTS,
@@ -38,24 +41,24 @@ export function LoginForm({
             control={control}
             name="email"
             type="email"
-            label={COPY.email}
-            placeholder={COPY.emailPlaceholder}
+            label={t("email")}
+            placeholder={t("emailPlaceholder")}
             autoComplete="email"
           />
           <ControlledTextField
             control={control}
             name="password"
             type="password"
-            label={COPY.password}
-            placeholder={COPY.passwordPlaceholder}
+            label={t("password")}
+            placeholder={t("passwordPlaceholder")}
             autoComplete="current-password"
           />
           <div className="flex justify-end">
-            <AuthTextLink href="/forgot-password">{COPY.forgot}</AuthTextLink>
+            <AuthTextLink href="/forgot-password">{t("forgot")}</AuthTextLink>
           </div>
         </div>
         <Button type="submit" size="lg" isDisabled={isSubmitting}>
-          {isSubmitting ? COPY.submitting : COPY.submit}
+          {isSubmitting ? t("submitting") : t("submit")}
         </Button>
       </form>
       {secondaryAction}

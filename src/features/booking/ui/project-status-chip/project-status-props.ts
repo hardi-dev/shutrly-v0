@@ -1,19 +1,28 @@
 import type { ProjectStatus } from "@/features/booking/domain/project-status/project-status.types";
 import type { StatusChipProps } from "@/ui/primitives/status-chip/status-chip.types";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 
-const CHIPS: Readonly<Record<ProjectStatus, Pick<StatusChipProps, "label" | "tone" | "hasDot">>> = {
-  DRAFT: { label: PROJECT_COPY.statusDraft, tone: "neutral", hasDot: true },
-  BOOKED: { label: PROJECT_COPY.statusBooked, tone: "info", hasDot: true },
-  SHOOTING: { label: PROJECT_COPY.statusShooting, tone: "accent", hasDot: true },
-  POST_PROCESSING: { label: PROJECT_COPY.statusPostProcessing, tone: "warning", hasDot: true },
-  DELIVERED: { label: PROJECT_COPY.statusDelivered, tone: "success", hasDot: true },
-  COMPLETED: { label: PROJECT_COPY.statusCompleted, tone: "success", hasDot: false },
-  CANCELLED: { label: PROJECT_COPY.statusCancelled, tone: "neutral", hasDot: true },
-};
+const CHIPS = {
+  DRAFT: { labelKey: "statusDraft", tone: "neutral", hasDot: true },
+  BOOKED: { labelKey: "statusBooked", tone: "info", hasDot: true },
+  SHOOTING: { labelKey: "statusShooting", tone: "accent", hasDot: true },
+  POST_PROCESSING: { labelKey: "statusPostProcessing", tone: "warning", hasDot: true },
+  DELIVERED: { labelKey: "statusDelivered", tone: "success", hasDot: true },
+  COMPLETED: { labelKey: "statusCompleted", tone: "success", hasDot: false },
+  CANCELLED: { labelKey: "statusCancelled", tone: "neutral", hasDot: true },
+} as const satisfies Record<ProjectStatus, unknown>;
 
-/** Maps a project status to its label, chip tone and dot (design-handoff decision 1). @param status - stored status @returns the chip props */
-export function projectStatusChip(status: ProjectStatus) {
-  return CHIPS[status];
+/**
+ * Maps a project status to its label, chip tone and dot (design-handoff decision 1).
+ * @param t - the project translator
+ * @param status - stored status
+ * @returns the chip props
+ */
+export function projectStatusChip(
+  t: ProjectTranslate,
+  status: ProjectStatus,
+): Pick<StatusChipProps, "label" | "tone" | "hasDot"> {
+  const chip = CHIPS[status];
+  return { label: t(chip.labelKey), tone: chip.tone, hasDot: chip.hasDot };
 }

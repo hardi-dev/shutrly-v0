@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { type BaseSyntheticEvent, useState } from "react";
 
 import { Alert } from "@/ui/patterns/alert/alert";
@@ -8,22 +9,26 @@ import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { useClientPasswordForm } from "../use-client-password-form/use-client-password-form";
 import type { ClientPasswordProblem } from "../use-client-password-form/use-client-password-form.types";
-import { CLIENT_PASSWORD_FORM_COPY as COPY } from "./client-password-form.copy";
-import type { ClientPasswordFormProps } from "./client-password-form.types";
+import { CLIENT_PASSWORD_FORM_COPY_NAMESPACE } from "./client-password-form.copy";
+import type { ClientPasswordFormProps, PasswordTranslate } from "./client-password-form.types";
 
-function errorText(problem: ClientPasswordProblem | null): string | undefined {
-  if (problem?.kind === "WRONG_PASSWORD") return COPY.wrongPassword;
-  if (problem?.kind === "EMPTY") return COPY.empty;
-  if (problem?.kind === "FAILED") return COPY.failed;
+function errorText(
+  t: PasswordTranslate,
+  problem: ClientPasswordProblem | null,
+): string | undefined {
+  if (problem?.kind === "WRONG_PASSWORD") return t("wrongPassword");
+  if (problem?.kind === "EMPTY") return t("empty");
+  if (problem?.kind === "FAILED") return t("failed");
   return undefined;
 }
 
 /** The gallery password form (gerbang default A3bQ0, salah KpxQW, terkunci DNzk6). @param props - the sign-in action @returns the form */
 export function ClientPasswordForm({ action }: Readonly<ClientPasswordFormProps>) {
+  const t = useTranslations(CLIENT_PASSWORD_FORM_COPY_NAMESPACE);
   const { field, problem, submit, isSubmitting } = useClientPasswordForm(action);
   const [isVisible, setIsVisible] = useState(false);
   const isLocked = problem?.kind === "TOO_MANY_ATTEMPTS";
-  const toggle = { label: isVisible ? COPY.hidePassword : COPY.showPassword, onPress: show };
+  const toggle = { label: isVisible ? t("hidePassword") : t("showPassword"), onPress: show };
   const eye = isVisible ? "eye-off" : "eye";
   function show(): void {
     setIsVisible((visible) => !visible);
@@ -36,19 +41,19 @@ export function ClientPasswordForm({ action }: Readonly<ClientPasswordFormProps>
       {isLocked ? (
         <Alert
           tone="warning"
-          title={COPY.lockedTitle}
-          body={COPY.lockedBody(problem.minutes)}
+          title={t("lockedTitle")}
+          body={t("lockedBody", { minutes: problem.minutes })}
           live
         />
       ) : null}
       <TextField
-        label={COPY.password}
+        label={t("password")}
         name={field.name}
         type={isVisible ? "text" : "password"}
         autoComplete="current-password"
-        placeholder={COPY.placeholder}
-        description={isLocked ? COPY.lockedHelper : COPY.helper}
-        errorMessage={errorText(problem)}
+        placeholder={t("placeholder")}
+        description={isLocked ? t("lockedHelper") : t("helper")}
+        errorMessage={errorText(t, problem)}
         isDisabled={isLocked}
         iconTrailing={isLocked ? undefined : eye}
         iconTrailingAction={isLocked ? undefined : toggle}
@@ -59,7 +64,7 @@ export function ClientPasswordForm({ action }: Readonly<ClientPasswordFormProps>
         inputRef={field.ref}
       />
       <Button type="submit" size="lg" isDisabled={isLocked || isSubmitting}>
-        {isSubmitting ? COPY.submitting : COPY.submit}
+        {isSubmitting ? t("submitting") : t("submit")}
       </Button>
     </form>
   );

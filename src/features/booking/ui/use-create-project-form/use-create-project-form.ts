@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 import { createProjectInputSchema } from "@/features/booking/application/schemas/create-project-input/create-project-input.schema";
@@ -9,6 +10,7 @@ import type {
   CreateProjectInput,
 } from "@/features/booking/application/schemas/create-project-input/create-project-input.types";
 import type { BookingValue } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 
 import type { SessionWithTeam } from "../session-dialog/session-dialog.types";
 import { useProjectPicks } from "../use-project-picks/use-project-picks";
@@ -18,8 +20,10 @@ import type { UseCreateProjectFormInput } from "./use-create-project-form.types"
 
 /** Owns the Proyek baru form: values, service-driven prefill, sessions and submit (AC-PRJ-006…011). @param input - workspace, service options and the create action @returns the form state and handlers */
 export function useCreateProjectForm(input: Readonly<UseCreateProjectFormInput>) {
+  const locale = useFormattingLocale();
+  const schema = useMemo(() => createProjectInputSchema(locale), [locale]);
   const form = useForm<CreateProjectFormValues, unknown, CreateProjectInput>({
-    resolver: zodResolver(createProjectInputSchema),
+    resolver: zodResolver(schema),
     defaultValues: CREATE_PROJECT_DEFAULTS,
   });
   const picks = useProjectPicks(form, input.serviceGroups);

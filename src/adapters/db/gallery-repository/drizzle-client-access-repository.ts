@@ -6,8 +6,11 @@ import type {
   ClientAccessRecord,
   ClientAccessRepositoryPort,
 } from "@/features/gallery/application/ports/client-access-repository/client-access-repository.port";
+import { parseAppLocale } from "@/shared/locale/locale";
+import type { AppLocale } from "@/shared/locale/locale.types";
 
 import type { DbExecutor } from "../client/client.types";
+import { user } from "../schema/auth/auth";
 import { client } from "../schema/booking/client";
 import { project } from "../schema/booking/project";
 import { gallery } from "../schema/gallery/gallery";
@@ -32,8 +35,33 @@ function firstName(name: string): string {
  * @param db - the request-scoped database
  * @returns the repository port
  */
+/**
+ * The owner's locale for a project link token, read per request (D-4).
+ * @param db - the executor
+ * @param token - the raw client access token
+ * @returns the owner's locale, or null when the token is unknown
+ */
+async function ownerLocaleByToken(db: DbExecutor, token: string): Promise<AppLocale | null> {
+  const row = (
+    await db
+      .select({ locale: user.locale })
+      .from(project)
+      .innerJoin(workspace, eq(workspace.id, project.workspaceId))
+      .innerJoin(user, eq(user.id, workspace.ownerUserId))
+      .where(eq(project.clientAccessToken, token))
+      .limit(1)
+  ).at(0);
+  return row ? parseAppLocale(row.locale) : null;
+}
+
+/**
+ * Drizzle adapter for the gallery's client-access reads.
+ * @param db - the executor (request-scoped)
+ * @returns the `ClientAccessRepositoryPort`
+ */
 export function createDrizzleClientAccessRepository(db: DbExecutor): ClientAccessRepositoryPort {
   return {
+    findOwnerLocaleByTokenUnscoped: (token) => ownerLocaleByToken(db, token),
     async findByTokenUnscoped(token) {
       const row = (
         await db

@@ -3,19 +3,16 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { AUTH_ERROR_COPY } from "../auth-error-alert/auth-error-alert.copy";
-import {
-  CONTROLLED_TEXT_FIELD_COPY,
-  FIELD_ERROR_COPY,
-} from "../controlled-text-field/controlled-text-field.copy";
+import { CONTROLLED_TEXT_FIELD_COPY } from "../controlled-text-field/controlled-text-field.copy";
 import { RegisterForm } from "./register-form";
 import { REGISTER_FORM_COPY as COPY } from "./register-form.copy";
 
 async function fill(values: { name: string; email: string; password: string }) {
   const user = userEvent.setup();
-  await user.type(screen.getByLabelText(COPY.name), values.name);
-  await user.type(screen.getByLabelText(COPY.email), values.email);
-  await user.type(screen.getByLabelText(COPY.password), values.password);
-  await user.click(screen.getByRole("button", { name: COPY.submit }));
+  await user.type(screen.getByLabelText(COPY.messages.id.name), values.name);
+  await user.type(screen.getByLabelText(COPY.messages.id.email), values.email);
+  await user.type(screen.getByLabelText(COPY.messages.id.password), values.password);
+  await user.click(screen.getByRole("button", { name: COPY.messages.id.submit }));
 }
 
 const good = { name: "Alya", email: "a@b.co", password: "correct-horse" };
@@ -23,7 +20,11 @@ const good = { name: "Alya", email: "a@b.co", password: "correct-horse" };
 describe("RegisterForm", () => {
   it("AC-AUTH-023 labels every field", () => {
     render(<RegisterForm action={vi.fn()} />);
-    for (const label of [COPY.name, COPY.email, COPY.password]) {
+    for (const label of [
+      COPY.messages.id.name,
+      COPY.messages.id.email,
+      COPY.messages.id.password,
+    ]) {
       expect(screen.getByLabelText(label)).toBeInTheDocument();
     }
   });
@@ -31,11 +32,15 @@ describe("RegisterForm", () => {
   it("shows and hides the password when the eye button is pressed", async () => {
     const user = userEvent.setup();
     render(<RegisterForm action={vi.fn()} />);
-    const password = screen.getByLabelText(COPY.password);
+    const password = screen.getByLabelText(COPY.messages.id.password);
     expect(password).toHaveAttribute("type", "password");
-    await user.click(screen.getByRole("button", { name: CONTROLLED_TEXT_FIELD_COPY.showPassword }));
+    await user.click(
+      screen.getByRole("button", { name: CONTROLLED_TEXT_FIELD_COPY.messages.id.showPassword }),
+    );
     expect(password).toHaveAttribute("type", "text");
-    await user.click(screen.getByRole("button", { name: CONTROLLED_TEXT_FIELD_COPY.hidePassword }));
+    await user.click(
+      screen.getByRole("button", { name: CONTROLLED_TEXT_FIELD_COPY.messages.id.hidePassword }),
+    );
     expect(password).toHaveAttribute("type", "password");
   });
 
@@ -43,9 +48,13 @@ describe("RegisterForm", () => {
     const action = vi.fn();
     render(<RegisterForm action={action} />);
     await fill({ ...good, email: "not-an-email", password: "short" });
-    expect(await screen.findByText(FIELD_ERROR_COPY["email.invalid"])).toBeInTheDocument();
-    expect(screen.getByText(FIELD_ERROR_COPY["password.length"])).toBeInTheDocument();
-    expect(screen.getByLabelText(COPY.email)).toHaveFocus();
+    expect(
+      await screen.findByText(CONTROLLED_TEXT_FIELD_COPY.messages.id.emailInvalid),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(CONTROLLED_TEXT_FIELD_COPY.messages.id.passwordLength),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText(COPY.messages.id.email)).toHaveFocus();
     expect(action).not.toHaveBeenCalled();
   });
 
@@ -56,7 +65,9 @@ describe("RegisterForm", () => {
     );
     render(<RegisterForm action={action} />);
     await fill(good);
-    expect(await screen.findByText(FIELD_ERROR_COPY["email.invalid"])).toBeInTheDocument();
+    expect(
+      await screen.findByText(CONTROLLED_TEXT_FIELD_COPY.messages.id.emailInvalid),
+    ).toBeInTheDocument();
   });
 
   it("AC-AUTH-010 AC-AUTH-023 announces and focuses a form-level error", async () => {
@@ -64,7 +75,7 @@ describe("RegisterForm", () => {
     render(<RegisterForm action={action} />);
     await fill(good);
     const alert = await screen.findByRole("alert");
-    expect(alert).toHaveTextContent(AUTH_ERROR_COPY.RATE_LIMITED);
+    expect(alert).toHaveTextContent(AUTH_ERROR_COPY.messages.id.RATE_LIMITED);
     await waitFor(() => {
       expect(alert).toHaveFocus();
     });

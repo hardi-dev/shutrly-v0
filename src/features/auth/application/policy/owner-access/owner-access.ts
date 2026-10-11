@@ -33,7 +33,16 @@ export async function requireOwner(
   deps: OwnerAccessDeps,
   headers: Headers,
 ): Promise<AccountRecord> {
-  const { decision, account } = await resolveOwnerAccess(deps, headers);
+  return ownerFromAccess(await resolveOwnerAccess(deps, headers));
+}
+
+/**
+ * The owner gate's decision over an access already read (C-004).
+ * @param access - the access decision and account
+ * @returns the owner's account; throws `AuthError` `AUTH_REQUIRED`, `EMAIL_UNVERIFIED` or
+ *   `ACCOUNT_UNAVAILABLE` otherwise
+ */
+export function ownerFromAccess({ decision, account }: OwnerAccess): AccountRecord {
   if (decision === "OWNER" && account) return account;
   if (decision === "RESTRICTED") throw new AuthError("EMAIL_UNVERIFIED");
   if (decision === "UNAVAILABLE") throw new AuthError("ACCOUNT_UNAVAILABLE");

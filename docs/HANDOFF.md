@@ -25,6 +25,35 @@ History (previous handoffs, early status table, component-library notes): [HANDO
   - The client *Dibuka lagi* chip is not built; R-6 (iOS Safari bulk download) needs a real phone; tablet and dark mode are not drawn (GAP-01, GAP-04).
   - Fixture-Drive E2E needs `E2E_FAKE_DRIVE=1` in this worktree's `.dev.vars` for the run (restore after; `retries: 2`).
 
+## Current handoff — F-22 bilingual copy, partially built, waiting on DB access and layout review (2026-10-10)
+
+- **Branch:** `codex/bilingual-copy-revamp`, pushed to origin at `9907664`. No PR, nothing on staging. Worktree on the Mac: `.claude/worktrees/bilingual-copy-revamp`. The cloud checkout has no `.dev.vars`.
+- **Read first:** [implementation-report.md](features/bilingual-copy-revamp/implementation-report.md) (status per AC, deviations, open gaps), then [plan.md](features/bilingual-copy-revamp/plan.md) and [technical-design.md](features/bilingual-copy-revamp/technical-design.md).
+- **Done (commits):** I1 complete (`47aa217`…`076bfd1` locale precedence, cookies, proxy header, catalog and parity gate, next-intl request config, one locale for html/next-intl/React Aria, lint rule, E2E). I2 except 2 and 10's E2E: user.locale migration `6a491d6`, Better Auth field, account directory, owner/device/gallery locale actions and lookups. I3 complete except as noted: amounts `a5725f2`, dates, template limit, fields, quantities `abd474e` (option b, see below). First copy modules `be79c31` (not-found, route error). Migration 0020 `9907664`.
+- **Not applied:** migrations `0019_locale_preferences` and `0020_default_template_flag` are committed and reviewed but not run. Owner approved both on 2026-10-10. Only the non-production database may be used (ADR-024), i.e. `shutrly-staging-us`.
+- **Not written or run:** DB-backed integration tests (`schema.test.ts`, `better-auth-contract.test.ts`, `db-adapters.test.ts`, `gallery-owner-locale.test.ts`); I2.10 E2E `tests/e2e/locale/locale-preferences.spec.ts`; I8 build-smoke spec.
+- **Not started:** I4 save modes, `resolveTemplateContent`, seeds and keyed items (copy from deck §11.4, §12, §19); I5 remaining screens and switches; I6 Owner feature copy; I7 client gallery copy and switch; I8 verification.
+- **Open decisions:**
+  - Quantity model: option (b) implemented (stored values localized at the form boundary; `parseQuantity` locale-strict). Confirm or pick (a)/(c) per report §4.
+  - Route error title: the deck's "Ada kendala" replaced the old "Terjadi kesalahan".
+  - Layout review path for the language switches and layout-affecting copy: not chosen yet.
+- **Next steps, in order:**
+  1. Provide `DATABASE_URL_UNPOOLED` (non-production direct URL) or a git-ignored `.dev.vars`. Run the project's migrate script (see package.json) once per migration. Report the database name, tag and result. Then run the DB-backed tests above.
+  2. Write and run the I2.10 E2E spec (needs seeded owners and gallery; set locales through the actions, not SQL).
+  3. Finish I4, then I5–I7, each with tests first and the copy from the deck only. Ask the Owner before any layout change.
+  4. Write the I8 build-smoke spec (production build and start, every route in EN and ID, fail on hydration warnings). Update the report.
+- **Rules (apply to every session):**
+  - Copy text only from `copy-deck.md`, verbatim. Never write UI text by hand.
+  - Test first, then implement, then one commit per task. Commit subject `feat(i18n): ...`, lowercase, no trailing period, with the Co-Authored-By trailer.
+  - Related tests only (`npx vitest run <path>`). Never the full unit or E2E suites.
+  - Lint per file: `npx prettier --write <file>`, then `NODE_OPTIONS=--max-old-space-size=6144 npx eslint --fix <file>`.
+  - Don't use `head`; use `sed -n`. Pencil design files are only read or edited through the Pencil MCP. Never deploy. Don't install new packages without approval.
+- **Gotchas:**
+  - next-intl namespaces cannot contain `.`; use names like `appError`.
+  - Local production start needs every binding in `src/shared/env/app-env.schema.ts`, and `APP_STAGE=development`, or `/login` returns 404 or 500.
+  - The pre-commit hook reverts the commit on any lint error. Run eslint per file first.
+  - Per-locale formatter tables (`id-ID`/`en-US`) are intended (§5.6). The workspace-name `toLocaleLowerCase("id-ID")` is a data rule and was left alone.
+
 ## Key decisions (Owner)
 
 - Design-system decisions from sessions 1–4 (2026-09-26) are in the [archive](HANDOFF-archive.md); the approved values live in `docs/design-system/`.

@@ -1,6 +1,7 @@
 "use client";
 /* eslint-disable max-lines-per-function -- responsive row actions share their handlers */
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -12,7 +13,7 @@ import { MenuTrigger } from "@/ui/patterns/menu/menu-trigger";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { SESSION_ROW_ACTIONS_COPY_NAMESPACE } from "./session-row-actions.copy";
 import type { SessionRowActionsProps } from "./session-row-actions.types";
 
 /** The ⋯ menu of a session row: Ubah and Hapus, as a menu on desktop and an actions sheet on phones. */
@@ -24,11 +25,12 @@ export function SessionRowActions({
   isDetail = false,
   teamAction,
 }: Readonly<SessionRowActionsProps>) {
+  const t = useTranslations(SESSION_ROW_ACTIONS_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const [isOpen, setIsOpen] = useState(false);
-  const label = PROJECT_COPY.sessionActions(name);
-  const editLabel = isDetail ? PROJECT_COPY.editSessionDetail : PROJECT_COPY.editSession;
-  const deleteLabel = isDetail ? PROJECT_COPY.deleteSessionConfirm : PROJECT_COPY.deleteSession;
+  const label = t("sessionActions", { sessionName: name });
+  const editLabel = isDetail ? t("editSessionDetail") : t("editSession");
+  const deleteLabel = isDetail ? t("deleteSessionConfirm") : t("deleteSession");
   const handleOpen = () => {
     setIsOpen(true);
   };

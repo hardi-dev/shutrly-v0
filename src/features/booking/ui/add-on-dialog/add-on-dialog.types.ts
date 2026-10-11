@@ -5,6 +5,7 @@ import type { AddOnGroupFacts } from "@/features/booking/application/ports/add-o
 import type { CreateAddOnInput } from "@/features/booking/application/use-cases/create-add-on/create-add-on.types";
 
 import type { AddOnCardActions } from "../add-on-card/add-on-card.types";
+import type { ReformatKind } from "../locale-reformat/use-locale-reformat.types";
 
 export interface AddOnDialogProps {
   readonly isOpen: boolean;
@@ -33,4 +34,5 @@ export interface AddOnTextInputProps {
   readonly placeholder?: string;
   readonly description?: string;
   readonly prefix?: string;
+  readonly kind?: ReformatKind;
 }

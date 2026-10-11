@@ -53,6 +53,8 @@ export const serviceItemDefinition = pgTable(
     name: text("name").notNull(),
     valueType: text("value_type").notNull(),
     unit: text("unit"),
+    // Platform-default identity (D-18); a rename or unit change clears it. Null for owner items.
+    defaultKey: text("default_key"),
     selectionRequired: boolean("selection_required").notNull().default(false),
     // Legacy column, dual-written from pickMode until a cleanup migration drops it (F-10 R-4).
     selectionType: text("selection_type"),
@@ -68,7 +70,14 @@ export const serviceItemDefinition = pgTable(
       t.workspaceId,
       sql`lower(${t.name})`,
     ),
+    uniqueIndex("service_item_definition_workspace_default_key_uq")
+      .on(t.workspaceId, t.defaultKey)
+      .where(sql`${t.defaultKey} is not null`),
     check("service_item_definition_name_ck", nameCheck(t.name)),
+    check(
+      "service_item_definition_default_key_ck",
+      sql`${t.defaultKey} is null or ${t.defaultKey} in ('EDITED_PHOTOS','PRINTED_PHOTOS','PEOPLE_COUNT','SHOOT_DURATION')`,
+    ),
     check("service_item_definition_value_type_ck", sql`${t.valueType} in ('NUMBER','RANGE')`),
     check(
       "service_item_definition_unit_ck",

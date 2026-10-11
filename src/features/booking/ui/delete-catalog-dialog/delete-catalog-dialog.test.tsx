@@ -46,7 +46,7 @@ describe("DeleteCatalogDialog", () => {
         setActiveAction={setActiveAction}
       />,
     );
-    expect(screen.getByText("Tidak bisa dihapus")).toBeInTheDocument();
+    expect(screen.getByText("Belum bisa dihapus")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Arsipkan" }));
     expect(setActiveAction).toHaveBeenCalledWith("ws-1", "category", "category-1", false);
   });

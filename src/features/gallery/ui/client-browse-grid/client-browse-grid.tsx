@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useIntersectionSentinel } from "@/ui/hooks/use-intersection-sentinel/use-intersection-sentinel";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { FolderTile } from "@/ui/patterns/folder-tile/folder-tile";
@@ -7,7 +9,7 @@ import { PhotoTile, PhotoTileSkeleton } from "@/ui/patterns/photo-tile/photo-til
 import { Icon } from "@/ui/primitives/icon/icon";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { CLIENT_BROWSE_COPY as COPY } from "../client-browse-screen/client-browse-screen.copy";
+import { BROWSE_GRID_NAMESPACE } from "./client-browse-grid.copy";
 import type {
   ClientBrowseGridProps,
   ClientFolderItemProps,
@@ -20,14 +22,15 @@ export const CLIENT_GRID =
 const SKELETONS = 8;
 
 function FolderItem({ folder, onOpenFolder }: Readonly<ClientFolderItemProps>) {
+  const t = useTranslations(BROWSE_GRID_NAMESPACE);
   const handlePress = () => {
     onOpenFolder(folder);
   };
   return (
     <li className="min-w-0">
       <FolderTile
-        name={folder.name || COPY.folderFallbackName}
-        countLabel={COPY.folderCount(folder.count)}
+        name={folder.name || t("folderFallbackName")}
+        countLabel={t("folderCount", { count: folder.count })}
         onPress={handlePress}
       />
     </li>
@@ -35,6 +38,7 @@ function FolderItem({ folder, onOpenFolder }: Readonly<ClientFolderItemProps>) {
 }
 
 function PhotoItem({ photo, index, onOpenPhoto, downloads }: Readonly<ClientPhotoItemProps>) {
+  const t = useTranslations(BROWSE_GRID_NAMESPACE);
   const handlePress = () => {
     onOpenPhoto(index);
   };
@@ -61,7 +65,7 @@ function PhotoItem({ photo, index, onOpenPhoto, downloads }: Readonly<ClientPhot
             size="sm"
             href={downloads.downloadUrlOf(photo.id)}
             className="size-(--space-8) rounded-(--radius-full) border-2 border-(--color-semantic-border-control) bg-(--color-semantic-surface-panel)"
-            aria-label={COPY.tileDownload(photo.fileName)}
+            aria-label={t("tileDownload", { fileName: photo.fileName })}
           />
         </span>
       ) : null}
@@ -78,14 +82,15 @@ function Skeletons() {
 }
 
 function Empty({ search }: Readonly<{ search: string }>) {
+  const t = useTranslations(BROWSE_GRID_NAMESPACE);
   return search === "" ? (
-    <EmptyState icon="images" placement="in-card" title={COPY.emptyTitle} body={COPY.emptyBody} />
+    <EmptyState icon="images" placement="in-card" title={t("emptyTitle")} body={t("emptyBody")} />
   ) : (
     <EmptyState
       icon="search"
       placement="in-card"
-      title={COPY.searchEmptyTitle(search)}
-      body={COPY.searchEmptyBody}
+      title={t("searchEmptyTitle", { text: search })}
+      body={t("searchEmptyBody")}
     />
   );
 }
@@ -120,10 +125,11 @@ function GridItems({
 }
 
 function LoadingMore() {
+  const t = useTranslations(BROWSE_GRID_NAMESPACE);
   return (
     <p className="flex items-center justify-center gap-(--space-2) text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
       <Icon name="loading-03" size="sm" aria-hidden="true" className="animate-spin" />
-      {COPY.loadingMore}
+      {t("loadingMore")}
     </p>
   );
 }
@@ -136,6 +142,7 @@ export function ClientBrowseGrid({
   onLoadMore,
   downloads,
 }: Readonly<ClientBrowseGridProps>) {
+  const t = useTranslations(BROWSE_GRID_NAMESPACE);
   const hasMore = state.page?.nextCursor != null;
   const sentinel = useIntersectionSentinel(
     onLoadMore,
@@ -146,8 +153,8 @@ export function ClientBrowseGrid({
       <EmptyState
         icon="image-off"
         placement="in-card"
-        title={COPY.unavailableTitle}
-        body={COPY.unavailableBody}
+        title={t("unavailableTitle")}
+        body={t("unavailableBody")}
       />
     );
   }

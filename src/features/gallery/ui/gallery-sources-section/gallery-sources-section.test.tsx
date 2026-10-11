@@ -68,7 +68,7 @@ describe("GallerySourcesSection", () => {
   it("AC-GAL-005 AC-GAL-008 shows each source's status", () => {
     const actions = fakePageActions();
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
-    expect(screen.getByText("Berhasil")).toBeInTheDocument();
+    expect(screen.getByText("Disinkronkan")).toBeInTheDocument();
     expect(screen.getByText("Gagal")).toBeInTheDocument();
     expect(screen.getByText(/Bagikan folder sebagai/)).toBeInTheDocument();
   });
@@ -143,20 +143,20 @@ describe("GallerySourcesSection", () => {
     const archived = { ...PAGE, gallery: { ...PAGE.gallery, status: "ARCHIVED" as const } };
     render(<GallerySourcesSection workspaceId="ws-1" page={archived} actions={actions} />);
     expect(screen.queryByRole("button", { name: "Sinkronkan semua" })).not.toBeInTheDocument();
-    expect(screen.getAllByText("Arsip")).toHaveLength(2);
+    expect(screen.getAllByText("Diarsipkan")).toHaveLength(2);
   });
 
   it("Revision OT #4 F-21 the folder menu offers Sinkronkan, Edit folder and Hapus", async () => {
     const user = userEvent.setup();
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={fakePageActions()} />);
-    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("button", { name: "Tindakan untuk Rina-Wisuda" }));
     const items = screen.getAllByRole("menuitem").map((item) => item.textContent);
     expect(items).toEqual([
       expect.stringContaining("Sinkronkan"),
       expect.stringContaining("Edit folder"),
-      expect.stringContaining("Hapus"),
+      expect.stringContaining("Lepas folder"),
     ]);
-    expect(screen.queryByText("Lepas folder")).not.toBeInTheDocument();
+    expect(screen.queryByText("Hapus")).not.toBeInTheDocument();
   });
 
   it("AC-GAL-013 Hapus asks first, deletes the folder and toasts", async () => {
@@ -164,15 +164,15 @@ describe("GallerySourcesSection", () => {
     const deleteSourceAction = vi.fn(() => Promise.resolve({ ok: true as const }));
     const actions = fakePageActions({ deleteSourceAction });
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
-    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
-    await user.click(screen.getByRole("menuitem", { name: /Hapus/ }));
-    const dialog = screen.getByRole("alertdialog", { name: "Hapus Rina-Wisuda?" });
-    expect(dialog).toHaveTextContent("8 fotonya dihapus dari galeri");
-    await user.click(screen.getByRole("button", { name: "Hapus" }));
+    await user.click(screen.getByRole("button", { name: "Tindakan untuk Rina-Wisuda" }));
+    await user.click(screen.getByRole("menuitem", { name: /Lepas folder/ }));
+    const dialog = screen.getByRole("alertdialog", { name: "Lepas Rina-Wisuda?" });
+    expect(dialog).toHaveTextContent("8 foto disembunyikan dari klien");
+    await user.click(screen.getByRole("button", { name: "Lepas folder" }));
     await waitFor(() => {
       expect(deleteSourceAction).toHaveBeenCalledWith("ws-1", "s-1");
     });
-    expect(showToast).toHaveBeenCalledWith({ tone: "success", title: "Folder dihapus" });
+    expect(showToast).toHaveBeenCalledWith({ tone: "success", title: "Folder dilepas" });
   });
 
   it("AC-GAL-013 BR-GAL-009 a refused Hapus explains the client picks", async () => {
@@ -182,9 +182,9 @@ describe("GallerySourcesSection", () => {
     );
     const actions = fakePageActions({ deleteSourceAction });
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
-    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
-    await user.click(screen.getByRole("menuitem", { name: /Hapus/ }));
-    await user.click(screen.getByRole("button", { name: "Hapus" }));
+    await user.click(screen.getByRole("button", { name: "Tindakan untuk Rina-Wisuda" }));
+    await user.click(screen.getByRole("menuitem", { name: /Lepas folder/ }));
+    await user.click(screen.getByRole("button", { name: "Lepas folder" }));
     await waitFor(() => {
       expect(showToast).toHaveBeenCalledWith({
         tone: "danger",
@@ -198,7 +198,7 @@ describe("GallerySourcesSection", () => {
     const renameSourceAction = vi.fn(() => Promise.resolve({ ok: true as const }));
     const actions = fakePageActions({ renameSourceAction });
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
-    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("button", { name: "Tindakan untuk Rina-Wisuda" }));
     await user.click(screen.getByRole("menuitem", { name: /Edit folder/ }));
     const dialog = screen.getByRole("dialog", { name: "Edit folder" });
     await user.type(within(dialog).getByRole("textbox", { name: /Label/ }), "Softball");
@@ -247,7 +247,7 @@ describe("GallerySourcesSection", () => {
       folderMappingAction,
     });
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
-    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("button", { name: "Tindakan untuk Rina-Wisuda" }));
     await user.click(screen.getByRole("menuitem", { name: /Edit folder/ }));
     await user.click(await screen.findByRole("button", { name: /Foto edit/ }));
     await user.click(screen.getByRole("option", { name: "Hasil Edit" }));
@@ -271,7 +271,7 @@ describe("GallerySourcesSection", () => {
     const folderMappingAction = vi.fn(() => new Promise<never>(() => undefined));
     const actions = fakePageActions({ folderMappingAction });
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={actions} />);
-    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("button", { name: "Tindakan untuk Rina-Wisuda" }));
     await user.click(screen.getByRole("menuitem", { name: /Edit folder/ }));
     expect(await screen.findByTestId("folder-mapping-skeleton")).toBeInTheDocument();
   });
@@ -279,7 +279,7 @@ describe("GallerySourcesSection", () => {
   it("F-21 Edit folder points to Isi paket when the package has no selection item", async () => {
     const user = userEvent.setup();
     render(<GallerySourcesSection workspaceId="ws-1" page={PAGE} actions={fakePageActions()} />);
-    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("button", { name: "Tindakan untuk Rina-Wisuda" }));
     await user.click(screen.getByRole("menuitem", { name: /Edit folder/ }));
     expect(
       await screen.findByText("Paket proyek ini belum punya item untuk pilihan foto"),
@@ -303,7 +303,7 @@ describe("GallerySourcesSection", () => {
         actions={fakePageActions({ syncSourceAction })}
       />,
     );
-    await user.click(screen.getByRole("button", { name: "Menu Rina-Wisuda" }));
+    await user.click(screen.getByRole("button", { name: "Tindakan untuk Rina-Wisuda" }));
     await user.click(screen.getByRole("menuitem", { name: /Sinkronkan/ }));
     await waitFor(() => {
       const info = vi

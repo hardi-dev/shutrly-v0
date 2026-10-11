@@ -33,8 +33,8 @@ describe("LinkSourceDialog", () => {
 
   it("AC-GAL-005 warns about public links and links the folder", async () => {
     const props = renderDialog();
-    expect(screen.getByText("Link Drive melewati password galeri")).toBeInTheDocument();
-    await userEvent.type(screen.getByLabelText("Link folder Google Drive"), LINK);
+    expect(screen.getByText("Tautan Drive melewati kata sandi galeri")).toBeInTheDocument();
+    await userEvent.type(screen.getByLabelText("Tautan folder Google Drive"), LINK);
     await userEvent.click(screen.getByRole("button", { name: "Tambah folder" }));
     await waitFor(() => {
       expect(props.linkSourceAction).toHaveBeenCalledWith("ws-1", "g-1", {
@@ -54,19 +54,19 @@ describe("LinkSourceDialog", () => {
       fieldErrors: { link: "NOT_A_FOLDER" },
     } as never);
     await userEvent.type(
-      screen.getByLabelText("Link folder Google Drive"),
+      screen.getByLabelText("Tautan folder Google Drive"),
       "https://drive.google.com/file/d/1aB9xQ/view",
     );
     await userEvent.click(screen.getByRole("button", { name: "Tambah folder" }));
     expect(
-      await screen.findByText("Ini link file. Tempel link folder Google Drive."),
+      await screen.findByText("Ini tautan file. Tempel tautan folder Google Drive."),
     ).toBeInTheDocument();
     expect(props.linkSourceAction).not.toHaveBeenCalled();
   });
 
   it("AC-GAL-010 warns with the other project before linking", async () => {
     const props = renderDialog(["Wisuda Basic — Sari"]);
-    await userEvent.type(screen.getByLabelText("Link folder Google Drive"), LINK);
+    await userEvent.type(screen.getByLabelText("Tautan folder Google Drive"), LINK);
     await userEvent.click(screen.getByRole("button", { name: "Tambah folder" }));
     expect(await screen.findByText(/Wisuda Basic — Sari/)).toBeInTheDocument();
     expect(props.linkSourceAction).not.toHaveBeenCalled();

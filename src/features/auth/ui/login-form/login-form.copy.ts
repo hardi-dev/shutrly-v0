@@ -1,10 +1,27 @@
-// Translated from auth.pen amp4Y / U9laqq (English); Indonesian per CONFLICT-1 (2026-09-27).
+// Source: copy-deck.md §2.1. Copied verbatim.
+export const LOGIN_FORM_COPY_NAMESPACE = "authLoginForm";
+
 export const LOGIN_FORM_COPY = {
-  email: "Email",
-  emailPlaceholder: "anda@studio.com",
-  password: "Kata sandi",
-  passwordPlaceholder: "Masukkan kata sandi Anda",
-  forgot: "Lupa kata sandi?",
-  submit: "Masuk",
-  submitting: "Sedang masuk…",
+  namespace: LOGIN_FORM_COPY_NAMESPACE,
+  surface: "auth",
+  messages: {
+    en: {
+      email: "Email",
+      emailPlaceholder: "you@studio.com",
+      password: "Password",
+      passwordPlaceholder: "Enter your password",
+      forgot: "Forgot your password?",
+      submit: "Sign in",
+      submitting: "Signing in…",
+    },
+    id: {
+      email: "Email",
+      emailPlaceholder: "nama@studio.com",
+      password: "Kata sandi",
+      passwordPlaceholder: "Masukkan kata sandimu",
+      forgot: "Lupa kata sandi?",
+      submit: "Masuk",
+      submitting: "Sedang masuk…",
+    },
+  },
 } as const;

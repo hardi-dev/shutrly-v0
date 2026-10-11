@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import {
   Button as AriaButton,
@@ -18,9 +19,9 @@ import { MenuGroupLabel } from "@/ui/patterns/menu/menu-group-label";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { Button } from "@/ui/primitives/button/button";
 import { Icon } from "@/ui/primitives/icon/icon";
-import { TEXT_FIELD_COPY } from "@/ui/primitives/text-field/text-field.copy";
+import { OptionalSuffix } from "@/ui/primitives/text-field/text-field";
 
-import { SELECT_COPY } from "./select.copy";
+import { SELECT_COPY_NAMESPACE } from "./select.copy";
 import type {
   MobileSelectSheetProps,
   MobileSelectTriggerProps,
@@ -169,6 +170,7 @@ function MobileSelectSheet({
   onPendingChange,
   onPick,
 }: Readonly<MobileSelectSheetProps>) {
+  const t = useTranslations(SELECT_COPY_NAMESPACE);
   function selectOption(optionId: string): () => void {
     return function handleOptionPress(): void {
       onPendingChange(new Set([optionId]));
@@ -182,7 +184,7 @@ function MobileSelectSheet({
       title={label}
       description={pickerDescription}
       variant="menu"
-      actions={<Button onPress={onPick}>{SELECT_COPY.pick}</Button>}
+      actions={<Button onPress={onPick}>{t("pick")}</Button>}
     >
       {groupBySection(options).map((group) => (
         <div key={group.section ?? ""}>
@@ -232,7 +234,7 @@ function SelectLabel({ label, isOptional }: Readonly<Pick<SelectProps, "label" |
       </Label>
       {isOptional ? (
         <span className="text-(length:--font-size-label) text-(--component-input-helper)">
-          {TEXT_FIELD_COPY.optionalSuffix}
+          <OptionalSuffix />
         </span>
       ) : null}
     </div>

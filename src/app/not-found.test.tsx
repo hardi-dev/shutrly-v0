@@ -1,14 +1,25 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { renderToStaticMarkup } from "react-dom/server";
+import { describe, expect, it, vi } from "vitest";
 
 import NotFound from "./not-found";
-import { NOT_FOUND_COPY as COPY } from "./not-found.copy";
+import { NOT_FOUND_COPY } from "./not-found.copy";
+
+vi.mock("next-intl/server", () => ({
+  getLocale: () => Promise.resolve("en"),
+  getTranslations: () => Promise.resolve((key: string) => NOT_FOUND_COPY.messages.en[key] ?? ""),
+}));
 
 describe("NotFound", () => {
-  it("AC-LND-013 says the page isn't available, in English, with a way back to the landing page", () => {
-    render(<NotFound />);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(COPY.title);
-    expect(screen.getByRole("main")).toHaveAttribute("lang", "en");
-    expect(screen.getByRole("link", { name: COPY.home })).toHaveAttribute("href", "/");
+  it("AC-LND-013 says the page isn't available, with a way back to the landing page", async () => {
+    const markup = renderToStaticMarkup(await NotFound());
+    expect(markup).toContain(NOT_FOUND_COPY.messages.en.title);
+    expect(markup).toContain(NOT_FOUND_COPY.messages.en.body);
+    expect(markup).toContain('href="/"');
+    expect(markup).toContain(NOT_FOUND_COPY.messages.en.home);
+  });
+
+  it("AC-L10N-002 renders the page in the request locale", async () => {
+    const markup = renderToStaticMarkup(await NotFound());
+    expect(markup).toContain('lang="en"');
   });
 });

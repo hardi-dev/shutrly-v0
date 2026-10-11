@@ -30,7 +30,7 @@ describe("ServicePicker (AC-PRJ-006)", () => {
 
   it("AC-PRJ-007 shows the category and base price as the helper once chosen", () => {
     render(<ServicePicker serviceGroups={GROUPS} value="s1" onChange={vi.fn()} />);
-    expect(screen.getByText("Wisuda · harga dasar Rp 750.000")).toBeInTheDocument();
+    expect(screen.getByText("Wisuda · Harga dasar Rp 750.000")).toBeInTheDocument();
   });
 
   it("AC-PRJ-012 shows the inactive-service error", () => {

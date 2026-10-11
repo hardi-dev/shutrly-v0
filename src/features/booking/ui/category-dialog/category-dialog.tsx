@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
 import { useController, useForm } from "react-hook-form";
@@ -13,9 +14,9 @@ import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogFieldError } from "../catalog-field-error/catalog-field-error";
 import { showCatalogSaveFailure } from "../catalog-save-feedback/catalog-save-feedback";
+import { CATEGORY_DIALOG_COPY_NAMESPACE } from "./category-dialog.copy";
 import type {
   CategoryDialogController,
   CategoryDialogFormProps,
@@ -27,10 +28,9 @@ import type {
 const FORM_ID = "catalog-category-form";
 
 export function CategoryDialog(props: Readonly<CategoryDialogProps>) {
+  const t = useTranslations(CATEGORY_DIALOG_COPY_NAMESPACE);
   const { form, isPending, handleSubmit } = useCategoryDialogForm(props);
-  const title = props.category
-    ? CATALOG_COPY.categoryDialogRenameTitle
-    : CATALOG_COPY.categoryDialogAddTitle;
+  const title = props.category ? t("categoryDialogRenameTitle") : t("categoryDialogAddTitle");
   const content = <CategoryDialogForm form={form} onSubmit={handleSubmit} />;
   const save = <CategorySaveButton isPending={isPending} />;
   return (
@@ -45,6 +45,7 @@ export function CategoryDialog(props: Readonly<CategoryDialogProps>) {
 }
 
 function useCategoryDialogForm(props: Readonly<CategoryDialogProps>): CategoryDialogController {
+  const t = useTranslations(CATEGORY_DIALOG_COPY_NAMESPACE);
   const form = useForm<CategoryDialogFormValues>({
     resolver: zodResolver(catalogNameSchema),
     defaultValues: { name: props.category?.name ?? "" },
@@ -72,7 +73,7 @@ function useCategoryDialogForm(props: Readonly<CategoryDialogProps>): CategoryDi
         return;
       }
       props.onOpenChange(false);
-      showToast({ tone: "success", title: CATALOG_COPY.savedToast });
+      showToast({ tone: "success", title: t("savedToast") });
     } catch {
       showCatalogSaveFailure({
         setError: (message) => {
@@ -81,6 +82,7 @@ function useCategoryDialogForm(props: Readonly<CategoryDialogProps>): CategoryDi
         retry: () => {
           void submit();
         },
+        t,
       });
     } finally {
       setIsPending(false);
@@ -95,6 +97,7 @@ function useCategoryDialogForm(props: Readonly<CategoryDialogProps>): CategoryDi
 }
 
 function CategorySaveButton({ isPending }: Readonly<{ readonly isPending: boolean }>) {
+  const t = useTranslations(CATEGORY_DIALOG_COPY_NAMESPACE);
   return (
     <Button
       type="submit"
@@ -102,20 +105,21 @@ function CategorySaveButton({ isPending }: Readonly<{ readonly isPending: boolea
       isPending={isPending}
       size={useMobileViewport() ? "lg" : "md"}
     >
-      {CATALOG_COPY.save}
+      {t("save")}
     </Button>
   );
 }
 
 function CategoryDialogForm({ form, onSubmit }: Readonly<CategoryDialogFormProps>) {
+  const t = useTranslations(CATEGORY_DIALOG_COPY_NAMESPACE);
   const { field, fieldState } = useController({ control: form.control, name: "name" });
   return (
     <form id={FORM_ID} noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-4)">
       <TextField
-        label={CATALOG_COPY.nameCategory}
+        label={t("nameCategory")}
         name={field.name}
-        placeholder={CATALOG_COPY.nameCategoryPlaceholder}
-        description={CATALOG_COPY.categoryDialogDescription}
+        placeholder={t("nameCategoryPlaceholder")}
+        description={t("categoryDialogDescription")}
         value={field.value}
         onChange={field.onChange}
         onBlur={field.onBlur}
@@ -135,13 +139,14 @@ function ResponsiveCategoryDialog({
   isPending,
 }: Readonly<ResponsiveCategoryDialogProps>) {
   const mobile = useMobileViewport();
+  const t = useTranslations(CATEGORY_DIALOG_COPY_NAMESPACE);
   if (mobile) {
     return (
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         title={title}
-        description={CATALOG_COPY.categoryDialogDescription}
+        description={t("categoryDialogDescription")}
         variant="form"
         actions={save}
       >
@@ -159,12 +164,12 @@ function ResponsiveCategoryDialog({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       title={title}
-      description={CATALOG_COPY.categoryDialogDescription}
+      description={t("categoryDialogDescription")}
       size="sm"
       actions={
         <>
           <Button variant="secondary" onPress={cancel} isDisabled={isPending}>
-            {CATALOG_COPY.cancel}
+            {t("cancel")}
           </Button>
           {save}
         </>

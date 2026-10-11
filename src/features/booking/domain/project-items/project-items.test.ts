@@ -17,6 +17,7 @@ describe("project item list (AC-PRJ-017, BR-CAT-001, BR-CAT-002)", () => {
         { definitionId: "people", value: { type: "RANGE", min: "1", max: "3,5" } },
       ],
       rules,
+      "id-ID",
     );
     expect(result.errors).toEqual({});
     expect(result.values).toEqual([
@@ -34,6 +35,7 @@ describe("project item list (AC-PRJ-017, BR-CAT-001, BR-CAT-002)", () => {
         { definitionId: "print", value: { type: "NUMBER", value: "1" } },
       ],
       rules,
+      "id-ID",
     );
     expect(result.errors).toEqual({
       "items.0.value": "NOT_WHOLE",
@@ -50,6 +52,7 @@ describe("project item list (AC-PRJ-017, BR-CAT-001, BR-CAT-002)", () => {
         { definitionId: "people", value: { type: "NUMBER", value: "1" } },
       ],
       rules,
+      "id-ID",
     );
     expect(result.errors).toEqual({
       "items.0.definitionId": "INVALID",

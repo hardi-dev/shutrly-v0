@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -12,7 +13,8 @@ import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { showToast } from "@/ui/patterns/toast/toast";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { PROVIDER_COPY, SOURCE_COPY } from "../source-copy/source-copy.copy";
+import { PROVIDER_TITLE_MESSAGE_KEY } from "../source-copy/source-copy.copy";
+import { SOURCE_ROW_ACTIONS_COPY_NAMESPACE } from "./source-row-actions.copy";
 import type { SourceRowActionsProps } from "./source-row-actions.types";
 
 // eslint-disable-next-line max-lines-per-function -- mirrors one action set across desktop and phone surfaces
@@ -23,21 +25,22 @@ export function SourceRowActions({
   onDelete,
   setActiveAction,
 }: Readonly<SourceRowActionsProps>) {
+  const t = useTranslations(SOURCE_ROW_ACTIONS_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const [isOpen, setIsOpen] = useState(false);
   const nextActive = !source.isActive;
-  const activeLabel = source.isActive ? SOURCE_COPY.deactivate : SOURCE_COPY.activate;
+  const activeLabel = source.isActive ? t("deactivate") : t("activate");
 
   async function handleActive(): Promise<void> {
     await setActiveAction(workspaceId, source.id, nextActive);
     showToast({
       tone: "success",
-      title: nextActive ? SOURCE_COPY.activatedTitle : SOURCE_COPY.deactivatedTitle,
+      title: nextActive ? t("activatedTitle") : t("deactivatedTitle"),
       body: nextActive
-        ? SOURCE_COPY.activatedBody(source.displayName)
-        : SOURCE_COPY.deactivatedBody(source.displayName),
+        ? t("activatedBody", { name: source.displayName })
+        : t("deactivatedBody", { name: source.displayName }),
       action: {
-        label: SOURCE_COPY.undo,
+        label: t("undo"),
         onAction: () => {
           void setActiveAction(workspaceId, source.id, !nextActive);
         },
@@ -66,14 +69,9 @@ export function SourceRowActions({
 
   const items = (
     <>
-      <SheetItem label={SOURCE_COPY.rename} icon="pencil" onPress={handleRename} />
+      <SheetItem label={t("rename")} icon="pencil" onPress={handleRename} />
       <SheetItem label={activeLabel} icon="power" onPress={handleActivePress} />
-      <SheetItem
-        label={SOURCE_COPY.delete}
-        icon="trash-2"
-        variant="destructive"
-        onPress={handleDelete}
-      />
+      <SheetItem label={t("delete")} icon="trash-2" variant="destructive" onPress={handleDelete} />
     </>
   );
 
@@ -83,14 +81,14 @@ export function SourceRowActions({
         <IconButton
           icon="more-horizontal"
           size="sm"
-          aria-label={SOURCE_COPY.rowActions(source.displayName)}
+          aria-label={t("rowActions", { name: source.displayName })}
           onPress={handleOpen}
         />
         <BottomSheet
           isOpen={isOpen}
           onOpenChange={setIsOpen}
           title={source.displayName}
-          meta={`${PROVIDER_COPY[source.provider].title} · ${source.isActive ? SOURCE_COPY.active : SOURCE_COPY.inactive}`}
+          meta={`${t(PROVIDER_TITLE_MESSAGE_KEY[source.provider])} · ${source.isActive ? t("active") : t("inactive")}`}
           variant="actions"
         >
           {items}
@@ -100,22 +98,17 @@ export function SourceRowActions({
   }
 
   return (
-    <MenuTrigger label={SOURCE_COPY.rowActions(source.displayName)}>
+    <MenuTrigger label={t("rowActions", { name: source.displayName })}>
       <IconButton
         icon="more-horizontal"
         size="sm"
-        aria-label={SOURCE_COPY.rowActions(source.displayName)}
+        aria-label={t("rowActions", { name: source.displayName })}
       />
-      <Menu aria-label={SOURCE_COPY.rowActions(source.displayName)}>
-        <MenuItem label={SOURCE_COPY.rename} icon="pencil" onSelect={onRename} />
+      <Menu aria-label={t("rowActions", { name: source.displayName })}>
+        <MenuItem label={t("rename")} icon="pencil" onSelect={onRename} />
         <MenuItem label={activeLabel} icon="power" onSelect={handleActivePress} />
         <MenuDivider />
-        <MenuItem
-          label={SOURCE_COPY.delete}
-          icon="trash-2"
-          variant="destructive"
-          onSelect={onDelete}
-        />
+        <MenuItem label={t("delete")} icon="trash-2" variant="destructive" onSelect={onDelete} />
       </Menu>
     </MenuTrigger>
   );

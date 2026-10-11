@@ -1,8 +1,10 @@
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/ui/cn/cn";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
-import { TEMPLATE_GROUP_COPY } from "../template-copy/template-copy.copy";
-import { TEMPLATE_LIST_SKELETON_COPY as COPY } from "./template-list-skeleton.copy";
+import { TEMPLATE_GROUP_MESSAGE_KEY } from "../template-copy/template-copy.copy";
+import { TEMPLATE_LIST_SKELETON_COPY_NAMESPACE } from "./template-list-skeleton.copy";
 
 const BAR = "rounded-(--radius-xs) bg-(--color-semantic-surface-muted)";
 
@@ -29,22 +31,23 @@ function SkeletonRows({ count }: Readonly<{ count: number }>) {
  * @returns the skeleton cards
  */
 export function TemplateListSkeleton() {
+  const t = useTranslations(TEMPLATE_LIST_SKELETON_COPY_NAMESPACE);
   return (
     <div
       aria-busy="true"
       className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-6) md:gap-(--component-panel-app-content-gap)"
     >
-      <span className="sr-only">{COPY.loading}</span>
+      <span className="sr-only">{t("listLoading")}</span>
       <SectionCard
-        title={TEMPLATE_GROUP_COPY.GALLERY.title}
-        description={TEMPLATE_GROUP_COPY.GALLERY.description}
+        title={t(TEMPLATE_GROUP_MESSAGE_KEY.GALLERY.title)}
+        description={t(TEMPLATE_GROUP_MESSAGE_KEY.GALLERY.description)}
         content="flush"
       >
         <SkeletonRows count={3} />
       </SectionCard>
       <SectionCard
-        title={TEMPLATE_GROUP_COPY.INVOICE.title}
-        description={TEMPLATE_GROUP_COPY.INVOICE.description}
+        title={t(TEMPLATE_GROUP_MESSAGE_KEY.INVOICE.title)}
+        description={t(TEMPLATE_GROUP_MESSAGE_KEY.INVOICE.description)}
         content="flush"
       >
         <SkeletonRows count={2} />

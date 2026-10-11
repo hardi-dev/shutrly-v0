@@ -1,4 +1,15 @@
-// Translated from auth.pen amp4Y (English); Indonesian per CONFLICT-1 (2026-09-27).
+// Source: copy-deck.md §2.1 'Google CTA'. Copied verbatim.
+export const GOOGLE_BUTTON_COPY_NAMESPACE = "authGoogleButton";
+
 export const GOOGLE_BUTTON_COPY = {
-  label: "Lanjutkan dengan Google",
+  namespace: GOOGLE_BUTTON_COPY_NAMESPACE,
+  surface: "auth",
+  messages: {
+    en: {
+      label: "Continue with Google",
+    },
+    id: {
+      label: "Lanjutkan dengan Google",
+    },
+  },
 } as const;

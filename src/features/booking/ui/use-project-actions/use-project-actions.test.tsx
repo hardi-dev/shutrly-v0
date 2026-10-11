@@ -43,7 +43,7 @@ describe("useProjectActions", () => {
     await act(() => hook.result.current.advance("CONFIRM_BOOKING"));
     expect(showToast).toHaveBeenCalledWith({
       tone: "danger",
-      title: "Tambahkan minimal satu sesi sebelum konfirmasi booking.",
+      title: "Tambahkan minimal satu sesi sebelum mengonfirmasi pemesanan.",
     });
     expect(refresh).not.toHaveBeenCalled();
   });

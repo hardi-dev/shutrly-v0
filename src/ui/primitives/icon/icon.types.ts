@@ -44,6 +44,7 @@ export type IconName =
   | "chevron-left"
   | "aperture"
   | "image"
+  | "globe"
   | "hourglass"
   | "package-check"
   | "wallet"
@@ -83,7 +84,13 @@ export type IconName =
   | "list"
   | "list-checks"
   | "user-plus"
-  | "key-round";
+  | "key-round"
+  | "user"
+  | "languages"
+  | "sun"
+  | "moon"
+  | "monitor"
+  | "sun-moon";
 
 export type IconSize = "sm" | "md" | "lg";
 

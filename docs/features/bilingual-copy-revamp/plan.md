@@ -1,0 +1,453 @@
+# Bilingual copy revamp — implementation plan
+
+Feature: F-22 `bilingual-copy-revamp` · Branch `codex/bilingual-copy-revamp`
+Status: IMPLEMENTED (2026-10-11), all tasks ticked. Open for the Owner: proposed deck rows (Account menu, §14.4, §15.x), DECK GAP strings, higher-authority amendments listed under *Owner actions required*, and E2E specs blocked by the Neon websocket flake (gallery-owner-locale, build-smoke owner/gallery, journeys). See [coverage report](coverage-report.md).
+Date: 2026-10-10
+Sources: [technical design](technical-design.md) (DRAFT, §1–§16), [spec](spec.md) › *Language preference decisions (Owner, 2026-10-10)*, [acceptance criteria](acceptance-criteria.md), [coding rules](../../coding-rules.md), [architecture overview](../../architecture/overview.md), [ADR-025](../../architecture/decisions/ADR-025-next-intl-bilingual-localization.md).
+
+This plan executes the iterations in technical design §16. Only I1–I3 are written as executable tasks. I4–I8 are ready in order once the Owner's 2026-10-10 decisions are applied.
+
+Owner decision (2026-10-10): this is copy work, not design. Pencil exports and a layout review are not required. Copy changes are applied to the existing layouts, and any layout change needs its own review.
+
+## Copy authoring rule (Owner, 2026-10-10)
+
+- Every user-facing string in English and Indonesian is written by Codex CLI, not by Claude or any planning agent. The source of truth is `docs/features/bilingual-copy-revamp/copy-deck.md`, produced by Codex runs from a written brief.
+- Implementers copy strings verbatim from the approved deck section into the sibling `*.copy.ts` file. They do not rephrase, translate, or add strings.
+- If a needed string is missing from the deck, stop that task and ask Codex (new brief, same deck) to add it. Do not write the string in code, plans, or chat.
+- Default template text (EN and ID) comes from deck section 11.4. Auth email text comes from deck section 12. Landing text comes from deck section 19.
+- Placeholders such as `{count}` and `{filename}` and identity values (Shutrly, WhatsApp, Google Drive) are kept exactly as in the deck.
+- The Owner reviews the deck before implementation. Claude may verify that keys, placeholders and tests match the deck, but may not change the wording.
+
+## How to work this plan
+
+- One iteration at a time, top to bottom. Each task is: write the failing test → implement → the related test passes → typecheck and lint on the changed files → one commit.
+- Related checks only (Owner 2026-10-05). Never run `pnpm test`, the full integration suite or the full E2E suite.
+  - Unit: `npx vitest run <paths>`
+  - Integration: `npx vitest run --config vitest.integration.config.ts <file>`
+  - E2E: `npx playwright test <spec>` (Playwright starts `pnpm dev`; for a build check run `pnpm build && pnpm start` first, it reuses the running server)
+  - Typecheck: `pnpm typecheck`
+  - Lint per file: `npx prettier --write <files> && NODE_OPTIONS=--max-old-space-size=6144 npx eslint --fix <files>`. Lint-staged runs again on commit.
+- Write lint-clean code from the first draft: functions at most 50 lines, `import "server-only";` first in composition/application/adapter modules, exported types only in `*.types.ts`, no `type`/`interface` in `.tsx` or use cases, no inline object type literals in signatures, JSDoc on every exported function.
+- Test names are behavior sentences prefixed with the `AC-*`/`BR-*`/`C-*` ID they cover.
+- Commits: conventional, English, lowercase, no trailing period, scope `i18n` unless stated. Docs that describe a behavior change go in the same commit (C-011).
+- Never type `head`; use `sed -n 'a,bp'`.
+- Never read or edit `.pen` files. Never run `pnpm deploy:staging` from this worktree (hidden `.claude/` path, see CLAUDE.md).
+- `pnpm db:migrate` only against the `.dev.vars` non-production database, only for a migration generated, reviewed and committed in this branch, and report each run (AGENTS.md, ADR-024).
+
+## Iterations
+
+| ID | Goal | Status | AC / BR / C | Layout review |
+|---|---|---|---|---|
+| I1 | Locale foundation: next-intl, `shared/locale`, `composition/locale`, proxy header, root layout and providers, missing-message contract, completeness harness, lint rule | Ready (starts with an Owner install checkpoint and the proxy-header spike) | AC-L10N-001 (resolution), 003, 004, 005; BR-L10N-001, 002 | No |
+| I2 | `user.locale` migration and the owner, device and gallery locale actions | Ready (Owner checkpoint before `pnpm db:migrate`) | AC-L10N-001, 004; BR-L10N-001; C-101, C-104 | No |
+| I3 | Locale-aware formatting and parsing (OCM-16…22), round-trip laws, React Aria local overrides removed | Ready (display patterns provisional until D-20) | AC-L10N-004 (reformat helpers), 005, 006; BR-L10N-004; C-105 | No |
+| I4 | Platform defaults: EN/ID default templates, `is_default`, save modes, seeds, keyed items and roles, recipient rendering | Ready (decisions resolved 2026-10-10) | AC-L10N-006, 008, 010; BR-L10N-003, 004, 006; C-102 | No |
+| I5 | Shared UI, shell, auth, landing, profile copy; language switches; auth email locale | Ready (decisions resolved 2026-10-10) | AC-L10N-001, 002, 010, 011; BR-L10N-002, 006 | No |
+| I6 | Owner feature copy (OCM-01…13): catalog, clients, projects, team, sources, add-ons, templates | Ready (decisions resolved 2026-10-10) | AC-L10N-002, 006, 011; BR-L10N-002, 004 | No |
+| I7 | Client gallery copy and client language switch | Ready (decisions resolved 2026-10-10) | AC-L10N-001, 002, 004, 011; C-104 | No |
+| I8 | Verification: E2E per surface in both locales, build smoke, SSR/hydration, coverage report | Waits on I4–I7 | AC-L10N-011, 012 | No |
+
+## Deviations from the technical design (for Owner review)
+
+1. **Migration split.** Design §4 puts `user.locale` and `message_template.is_default` in one migration, `0019_locale_preferences.sql`, applied in I2. This plan generates 0019 with `user.locale` only (§4.1). The `message_template` changes (§4.2, §4.3) move to I4 as the next migration number. Reasons: spec l.25 says BR-L10N-003 and the localization policy must be updated by the Owner before template storage is implemented (Q-6), the code that reads `is_default` lands in I4, and it shortens the Risk R-3 window on the shared staging database. If the Owner prefers the design's single migration, fold §4.2–§4.3 back into 0019 before it is generated.
+2. **Catalog without feature namespaces in I1.** Design §5.1 has `message-catalog` import every `*.copy.ts`. That import is D-8, which is not approved, and `eslint-plugin-boundaries` refuses it today. I1 builds the catalog machinery and tests it with fixtures; the registry starts empty. The first real registration is the first task of I5 once D-8 is answered.
+3. **Owner-locale inputs arrive in I2.** `user.locale` does not exist until I2, so I1's `getRequestLocale()` passes `ownerLocale: null` to the resolver and I2 Task 10 wires the two loaders. Tests in I1 cover both branches through the pure resolver.
+4. **Quantity parsing.** §7.6 says `parseQuantity(raw, locale)` accepts only the locale's decimal separator. I3 Task 3 first lists every caller and confirms each one receives typed user input, not a canonical dot-decimal from storage. If any caller parses a stored value, stop and report it as a `SPEC GAP` instead of guessing.
+
+## Iteration I1 — Locale foundation
+
+**Goal.** One locale is resolved per request with no global state; it drives `<html lang>`, next-intl and React Aria; missing messages fail loudly outside production and never fall back to the other language.
+
+**AC / BR.** AC-L10N-001 (resolution only, no switch UI), AC-L10N-003, AC-L10N-004 (request isolation), AC-L10N-005 (layout agreement); BR-L10N-001, BR-L10N-002.
+
+**Read first.**
+- `technical-design.md` §3 (D-1, D-3…D-7, D-9, D-10), §5.1–§5.6, §9 items 1, 2, 4, §10 first bullet, §11 (cookie attributes, forwarded header), §12 rows AC-L10N-001/003/004/005, §14 R-1, R-2.
+- `coding-rules.md` › Structure and boundaries, Next.js, Files, Where types and schemas live, Copy, Testing, Git.
+- `node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/proxy.md` › *Setting Headers*; `node_modules/next/dist/docs/01-app/02-guides/internationalization.md`; `node_modules/next/dist/docs/01-app/03-api-reference/04-functions/next-root-params.md` (fallback only).
+- Existing files to follow: `src/proxy.ts` + `src/proxy.test.ts`, `src/composition/auth/pending-email-cookie/pending-email-cookie.ts` (cookie module shape), `src/composition/auth/session-cookies/session-cookies.test.ts` (`vi.mock("next/headers")`), `src/composition/app-stage/app-stage.ts` (stage read), `src/ui/providers/app-providers.tsx`, `src/app/layout.tsx`, `eslint/local-rules.mjs` + `tests/lint/coding-rules.test.ts`, `src/shared/logging/logger.ts`.
+
+### Tasks
+
+- [x] **I1.1 Owner checkpoint: install next-intl.** Dependency installs fail in these worktrees (pnpm store mismatch), and agents must not reinstall on their own. Ask the Owner to run, in this worktree: `pnpm add --save-exact next-intl@<version>` and, because the completeness test imports it directly, `pnpm add --save-exact @formatjs/icu-messageformat-parser@<version matching next-intl's dependency>`. Before asking, confirm the version: ADR-025 researched `4.14.9`; check its declared peers cover `next@16.3.6` and `react@19` (`npm view next-intl@4.14.9 peerDependencies`) and that the release is at least two weeks old. Commit after the Owner's install: `chore(i18n): pin next-intl and the icu message parser`. Do not start I1.2 before this commit exists.
+
+- [x] **I1.2 Spike: does the proxy header reach every render path? (R-1, D-7).** Timebox half a day. Nothing from the spike is committed except the log below.
+  1. Work in a throwaway checkout, never in this worktree (it may hold the Owner's uncommitted files): `git worktree add --detach <scratch-dir> HEAD` with a path that has no dot folder, copy `.dev.vars`, and ask the Owner to run `pnpm install --frozen-lockfile` there if `node_modules` is missing. In it, make `src/proxy.ts` set `x-shutrly-gallery-token` for `/g/<token>` paths via `NextResponse.next({ request: { headers } })` (not `NextResponse.next({ headers })`, which exposes it to the browser).
+  2. Temporarily log `Boolean((await headers()).get("x-shutrly-gallery-token"))` (never the value, C-103) from: the root layout, a page under `src/app/(client)/g/[token]/`, the gallery sign-in server action (`src/app/actions/client-access/sign-in.ts`), and a client route handler under `/g/<token>/media/`.
+  3. Check the three cases under `pnpm dev`, then under `pnpm build && pnpm start`. Also check that a request sent with a forged `x-shutrly-gallery-token` to `/login` arrives without it.
+  4. Remove the throwaway checkout (`git worktree remove <scratch-dir>`).
+  5. Record the result in **Spike log** at the end of this file and commit it: `docs(i18n): record the proxy header spike`.
+  - **Pass:** continue with I1.3.
+  - **Fail (any path lacks the header) — fallback path (§5.3):** stop and report to the Owner. The fallback is a second root layout at `src/app/(client)/g/[token]/layout.tsx` that reads the token through `next/root-params`. It needs multiple root layouts, moving `src/app/not-found.tsx` to the experimental `global-not-found.js`, and root params are unavailable in server actions, so the gallery locale action would take the token as an argument (it already does, §6). This restructure changes ADR-level file layout; do not start it without the Owner.
+  - Also record in the log whether reading `cookies()` in the root layout makes `/` dynamic in the `pnpm build` route table (R-2).
+
+- [x] **I1.3 `shared/locale` unit.** Files: `src/shared/locale/locale.ts`, `locale.types.ts`, `locale.schema.ts`, `locale.test.ts`.
+  - `locale.types.ts`: `export type AppLocale = "en" | "id";` and `export type FormattingLocale = "en-US" | "id-ID";`.
+  - `locale.schema.ts`: `export const appLocaleSchema = z.enum(["en", "id"]);` (§9.1).
+  - `locale.ts`: `export const DEFAULT_LOCALE: AppLocale = "en";`, `export const APP_LOCALES: readonly AppLocale[] = ["en", "id"];`, `export function parseAppLocale(raw: string | undefined): AppLocale | null`, `export function formattingLocale(locale: AppLocale): FormattingLocale` (a frozen `Record<AppLocale, FormattingLocale>` lookup, §5.6).
+  - Tests: `"BR-L10N-001 parses en and id"`; `"BR-L10N-001 rejects tampered, empty, upper-case and unknown values"` (`"EN"`, `""`, `"fr"`, `"en-US"`, `undefined` → `null`); `"AC-L10N-005 maps en to en-US and id to id-ID"`; `"BR-L10N-001 defaults to en"`.
+  - Commit: `feat(i18n): add app locale types, schema and parsing`.
+
+- [x] **I1.4 `composition/locale/resolve-locale` (pure precedence, §5.2).** Files: `resolve-locale.ts`, `resolve-locale.types.ts`, `resolve-locale.test.ts`.
+  - Types: `AccountLocaleInput { readonly ownerLocale: AppLocale | null; readonly deviceCookie: string | undefined }`, `GalleryLocaleInput { readonly clientCookie: string | undefined; readonly ownerLocale: AppLocale | null }`.
+  - `export function resolveAccountLocale(input: AccountLocaleInput): AppLocale` — `ownerLocale` if non-null, else `parseAppLocale(deviceCookie)`, else `DEFAULT_LOCALE`.
+  - `export function resolveGalleryLocale(input: GalleryLocaleInput): AppLocale` — `parseAppLocale(clientCookie)`, else `ownerLocale`, else `DEFAULT_LOCALE`.
+  - Table tests (`it.each`): `"AC-L10N-001 a first visit with no cookie and no session resolves en"`; `"BR-L10N-001 a signed-in owner's user.locale wins over the device cookie"` (D-3); `"BR-L10N-001 a valid device cookie applies before sign-in"`; `"AC-L10N-001 a gallery cookie wins over the owner locale"` (D-4); `"AC-L10N-001 a client without a cookie follows the owner's current locale"`; `"BR-L10N-001 an invalid cookie is ignored as if absent"` (§9.2); `"BR-L10N-001 Accept-Language is never an input"` (assert the input types have no such field by calling with only the two fields).
+  - Commit: `feat(i18n): add account and gallery locale precedence`.
+
+- [x] **I1.5 `composition/locale/locale-cookies`.** Files: `locale-cookies.ts`, `locale-cookies.test.ts`. Mirror `pending-email-cookie.ts`.
+  - `export const DEVICE_LOCALE_COOKIE = "shutrly_locale";`, `export const GALLERY_LOCALE_COOKIE = "shutrly_gallery_locale";`, `export const LOCALE_COOKIE_MAX_AGE_SECONDS = 31_536_000;` (§11).
+  - `export async function readDeviceLocaleCookie(): Promise<string | undefined>`, `export async function writeDeviceLocaleCookie(locale: AppLocale): Promise<void>` (`Path=/`), `export async function readGalleryLocaleCookie(): Promise<string | undefined>`, `export async function writeGalleryLocaleCookie(token: string, locale: AppLocale): Promise<void>` (`Path=/g/<token>`). All set `httpOnly: true, secure: true, sameSite: "lax", maxAge: LOCALE_COOKIE_MAX_AGE_SECONDS`.
+  - Tests with `vi.mock("next/headers")`: `"BR-L10N-001 writes the device cookie for the whole site for one year"`; `"AC-L10N-001 scopes the gallery cookie to its own link path"` (D-5); `"C-103 the cookie holds only the locale value"`.
+  - Commit: `feat(i18n): add device and gallery locale cookies`.
+
+- [x] **I1.6 Proxy forwards the gallery token header (§5.3, D-7).** Edit `src/proxy.ts`, `src/proxy.test.ts`.
+  - Add `export const GALLERY_TOKEN_HEADER = "x-shutrly-gallery-token";` and a helper `export function forwardHeaders(request: NextRequest): Headers` that copies the request headers, deletes `GALLERY_TOKEN_HEADER`, and sets it to the first path segment after `/g/` when the path matches `/g/<token>` or `/g/<token>/…`.
+  - Every `NextResponse.next()` in `proxy` becomes `NextResponse.next({ request: { headers: forwardHeaders(request) } })`. The landing gate rewrite and the `/login` redirect are unchanged.
+  - Tests: `"AC-L10N-001 forwards the gallery token to the server for /g/<token> paths"`; `"C-103 strips a forged token header from every incoming request"` (send it to `/login` and `/w/x`); `"C-103 never echoes the token header on the response"` (assert the response headers lack it); keep all existing proxy tests green.
+  - Commit: `feat(i18n): forward the gallery token to server rendering`.
+
+- [x] **I1.7 `composition/locale/request-locale`.** Files: `request-locale.ts`, `request-locale.test.ts`.
+  - `export const getRequestLocale: () => Promise<AppLocale> = cache(async () => …)` (React `cache`, request-scoped, §5.6).
+  - Reads `headers()` for `GALLERY_TOKEN_HEADER`. Gallery path: `resolveGalleryLocale({ clientCookie: await readGalleryLocaleCookie(), ownerLocale: null })`. Account path: `resolveAccountLocale({ ownerLocale: null, deviceCookie: await readDeviceLocaleCookie() })`. The `ownerLocale: null` inputs are replaced in I2.10 (deviation 3). No module-level mutable state.
+  - Tests (mock `next/headers`): `"AC-L10N-001 resolves en on a first visit"`; `"BR-L10N-001 uses the device cookie on account surfaces"`; `"AC-L10N-001 uses the gallery cookie only when the gallery header is present"`; `"AC-L10N-004 two calls with different cookies resolve independently"` (call twice with different mocked jars and no shared module state).
+  - Commit: `feat(i18n): resolve the locale once per request`.
+
+- [x] **I1.8 `composition/locale/message-catalog` machinery (deviation 2).** Files: `message-catalog.ts`, `message-catalog.types.ts`, `message-catalog.test.ts`, `catalog-parity.ts`, `catalog-parity.test.ts` (both in the same unit folder; parity is the completeness gate of the catalog).
+  - Types: `CopyModule<T> { readonly namespace: string; readonly surface: CatalogSurface; readonly messages: { readonly en: T; readonly id: CopyShape<T> } }`, `CatalogSurface = "landing" | "auth" | "owner" | "gallery" | "shared"`, `CopyShape<T>` (same keys as `T`, string leaves), `CatalogMessages`, `ParityProblem { namespace; key; problem: "MISSING" | "EMPTY" | "ARGUMENTS_DIFFER" }`.
+  - `export const COPY_REGISTRY: readonly CopyModule<unknown>[] = [];` — empty until D-8 (comment: `// D-8 pending: feature copy modules are registered here once the boundary exception is approved`; no TODO tag).
+  - `export function buildCatalog(registry, locale: AppLocale): CatalogMessages` and `export function messagesFor(locale: AppLocale, surfaces: readonly CatalogSurface[]): CatalogMessages` (per-surface picking, §5.5, R-6). Catalog objects are frozen constants.
+  - `export function findParityProblems(registry): readonly ParityProblem[]` — same key sets in `en` and `id`, no empty strings, and the same ICU argument names and plural/select argument sets, parsed with `@formatjs/icu-messageformat-parser` (§9.4).
+  - Tests with fixture modules declared in the test file: `"AC-L10N-003 reports a key missing in id"`; `"AC-L10N-003 reports an empty string"`; `"AC-L10N-003 reports a placeholder present in only one language"`; `"AC-L10N-003 reports a plural argument that differs"`; `"AC-L10N-003 the registered catalog has no parity problems"` (runs on `COPY_REGISTRY`, so it guards every later registration); `"BR-L10N-002 messagesFor(\"en\", [\"landing\"]) contains no owner namespace"`.
+  - Also declare next-intl's `AppConfig` (`Locale: AppLocale`, `Messages` from the EN catalog type) in `message-catalog.types.ts` (§5.5).
+  - Commit: `feat(i18n): add the message catalog and its parity gate`.
+
+- [x] **I1.9 `composition/locale/request-config` and the missing-message contract (§5.1, §9.4, D-10).** Files: `request-config.ts`, `message-errors.ts`, `message-errors.test.ts` (same unit folder), `next.config.ts`.
+  - `message-errors.ts`: `export function createMessageErrorHandler(strict: boolean): (error: IntlError) => void` — logs `l10n.missing_message` (or the error code for `FORMATTING_ERROR`/`INVALID_MESSAGE`) through `logger` with `{ locale, namespace, key }` only, then throws when `strict`. `export function messageFallback(): string` returns `""`.
+  - `request-config.ts`: `export default getRequestConfig(async () => ({ locale, messages: messagesFor(locale, ALL_SURFACES), timeZone: "Asia/Jakarta", onError: createMessageErrorHandler(strict), getMessageFallback: messageFallback }))` where `locale = await getRequestLocale()` and `strict` is true unless `APP_STAGE === "production"` (read through `getScopedBindings(appStageSchema)`; an unreadable stage counts as production, as in `isLandingOnly`).
+  - `next.config.ts`: wrap the export with `createNextIntlPlugin("./src/composition/locale/request-config/request-config.ts")`; keep the existing headers and the OpenNext dev hook.
+  - Tests: `"AC-L10N-003 throws on a missing message outside production"`; `"AC-L10N-003 logs l10n.missing_message without user data in production"`; `"AC-L10N-003 the fallback is empty, never the key and never the other language"`.
+  - Commit: `feat(i18n): register next-intl with a strict missing-message contract`.
+
+- [x] **I1.10 Root layout and providers share one locale (§5.4, OCM-14, OCM-15).** Files: `src/app/layout.tsx`, new `src/app/layout.test.tsx`, `src/ui/providers/app-providers.tsx` (+ `app-providers.types.ts`, `app-providers.test.tsx`).
+  - Layout: `const locale = await getLocale(); const messages = await getMessages();` from `next-intl/server`; render `<html lang={locale}>` and `<AppProviders locale={locale} messages={messages} strictMessages={…}>`. `metadata` stays `{ title: "Shutrly" }` (brand only).
+  - `AppProvidersProps { locale: AppLocale; messages: CatalogMessages; strictMessages: boolean }` in `app-providers.types.ts`. Render `NextIntlClientProvider` (client `onError`/`getMessageFallback` defined here, §5.1) around `I18nProvider locale={formattingLocale(locale)}`.
+  - Tests: `"AC-L10N-005 renders lang, next-intl and React Aria in en"` and the same for `id` (mock `next-intl/server`; assert `html[lang]`, `useLocale()` from next-intl and React Aria `useLocale().locale` in a probe child); `"AC-L10N-003 the client provider throws on a missing message when strict"`.
+  - Commit: `feat(i18n): drive html lang, next-intl and react aria from one locale`.
+
+- [x] **I1.11 Extend `local/ui-copy` (D-9).** Files: `eslint/local-rules.mjs`, `tests/lint/coding-rules.test.ts`. The design says only that the rule "is extended to accept `t("key")` from a sibling-copy namespace". `label={t("x")}` is already accepted (a call is not a literal). Implement the namespace half: a `useTranslations(...)`/`getTranslations(...)` call whose namespace argument is a string literal is reported; an identifier imported from a sibling `./<unit>.copy` module is accepted.
+  - Tests: `"AC-L10N-002 accepts t(key) with a namespace imported from a sibling copy module"`; `"AC-L10N-002 rejects a string-literal namespace"`; existing ui-copy tests still pass.
+  - Update `docs/coding-rules.md` › Copy only if the Owner approves the wording (it is a higher-authority document); otherwise note the rule change in the commit body.
+  - Commit: `feat(lint): require copy-module namespaces for translations`.
+
+- [x] **I1.12 E2E: first visit and request isolation.** File: `tests/e2e/locale/locale-resolution.spec.ts`.
+  - `"AC-L10N-001 a first visit renders html lang en on /login"`.
+  - `"BR-L10N-001 a device cookie of id renders html lang id on /login"`.
+  - `"AC-L10N-004 concurrent visitors with different cookies each get their own language"` (two browser contexts, `Promise.all` navigations, assert each `html[lang]`).
+  - Run once under `pnpm dev`, once under `pnpm build && pnpm start`; note any hydration warning as a failure.
+  - Commit: `test(i18n): cover first-visit language and request isolation`.
+
+**Done when.** All I1 unit tests and the I1 E2E spec pass; `pnpm typecheck` passes; lint passes on every changed file; `pnpm build` succeeds; the Spike log records a pass (or the Owner chose the fallback); `COPY_REGISTRY` is empty and the parity test runs on it; no page shows a message key.
+
+## Iteration I2 — Locale preferences and actions
+
+**Goal.** The owner's language lives on `user.locale`; owner, device and gallery switches have server actions; request resolution reads the owner's and gallery owner's stored locale.
+
+**AC / BR / C.** AC-L10N-001, AC-L10N-004; BR-L10N-001; C-004, C-101, C-103, C-104.
+
+**Read first.**
+- `technical-design.md` §3 (D-2…D-5, D-7), §4.1, §4.5, §4.6, §5.2, §5.3, §6 rows `setOwnerLocale`, `setDeviceLocale`, `setGalleryLocale`, §9.1–§9.2, §10, §11, §12 rows AC-L10N-001/004 and the BR/C list.
+- `coding-rules.md` › Data Access (`*Unscoped` naming), Validation, Next.js (thin actions), Errors and Logging, Testing.
+- Existing files: `src/adapters/db/schema/auth/auth.ts`, `drizzle/0018_folder_map.sql` and `drizzle/meta/` (snapshot naming `00NN_snapshot.json`, `_journal.json` tag), `src/adapters/auth/create-auth/create-auth.ts` (`user.additionalFields`), `src/features/auth/application/ports/account-directory/account-directory.port.ts`, `src/adapters/db/account-directory/drizzle-account-directory.ts`, `tests/support/auth/fake-auth-backend.ts`, `src/features/auth/application/use-cases/update-display-name/` (use case + test pattern), `src/composition/auth/profile-flow/profile-flow.ts`, `src/app/actions/auth/profile.ts`, `src/composition/auth/owner-guard/owner-guard.ts` (`resolveOwnerAccess`), `src/features/gallery/application/ports/client-access-repository/client-access-repository.port.ts`, `src/adapters/db/gallery-repository/drizzle-client-access-repository.ts`, `src/features/gallery/application/use-cases/resolve-client-access/` (`findAvailableGallery`), `src/composition/gallery/client-access-flow/client-access-flow.ts`, `src/features/gallery/domain/client-token/client-token.ts` (`isWellFormedToken`), `tests/integration/auth/schema.test.ts`, `tests/integration/auth/better-auth-contract.test.ts`, `tests/integration/auth/db-adapters.test.ts`.
+
+### Tasks
+
+- [x] **I2.1 Schema and migration 0019 (`user.locale` only, deviation 1).**
+  - `src/adapters/db/schema/auth/auth.ts`: add `locale: text("locale").notNull().default("en"),` to `user`, and `check("user_locale_ck", sql\`${t.locale} in ('en','id')\`)` to its table checks.
+  - Test first in `tests/integration/auth/schema.test.ts`: `"BR-L10N-001 a new user row defaults to locale en"`; `"BR-L10N-001 the database refuses a locale outside en and id"` (insert `fr`, expect a check violation).
+  - Generate: `pnpm db:generate --name locale_preferences` → `drizzle/0019_locale_preferences.sql`, `drizzle/meta/0019_snapshot.json`, journal entry. Review that the SQL is exactly §4.1:
+    ```sql
+    ALTER TABLE "user" ADD COLUMN "locale" text DEFAULT 'en' NOT NULL;
+    ALTER TABLE "user" ADD CONSTRAINT "user_locale_ck" CHECK ("locale" in ('en','id'));
+    ```
+    (drizzle-kit adds `--> statement-breakpoint` separators). It must contain no drop or rename. Do not edit `0003`, `0007`, `0011` or their tests.
+  - Commit (schema + migration + snapshot + journal, before any run): `feat(db): add user locale preference`.
+
+- [x] **I2.2 Owner checkpoint, then apply 0019.** Done 2026-10-11 with the Owner's go-ahead: 0019, 0020 and 0021 applied to `shutrly-staging-us` (22 migrations recorded). Tell the Owner that 0019 is additive (one column with a default, one check) and safe for the code deployed on staging. On approval run `pnpm db:migrate` (worktrees need `.dev.vars` copied from the main checkout) and report the run: database name, migration tag, result. Then run the two schema tests from I2.1: `npx vitest run --config vitest.integration.config.ts tests/integration/auth/schema.test.ts`. No commit.
+
+- [x] **I2.3 Better Auth field cannot be set by sign-up.** `create-auth.ts`: add `locale: { type: "string", required: false, defaultValue: "en", input: false },` to `user.additionalFields` (§4.1).
+  - Test first in `tests/integration/auth/better-auth-contract.test.ts`: `"C-004 a sign-up body carrying locale id still creates the user with en"`.
+  - Commit: `feat(auth): expose user locale to better auth as server-only`.
+
+- [x] **I2.4 Account record and directory carry the locale.**
+  - `src/features/auth/domain/account/account.types.ts`: `AccountRecord` gains `locale: AppLocale`.
+  - `account-directory.port.ts`: add `setLocale: (id: AuthUserId, locale: AppLocale) => Promise<void>;`.
+  - `drizzle-account-directory.ts`: select `locale` (parse with `appLocaleSchema`; a violated value is a bug, assert it) and implement `setLocale` as one `UPDATE "user" SET locale, updated_at WHERE id`.
+  - `tests/support/auth/fake-auth-backend.ts` and `fake-auth-deps.ts`: store and return `locale` (default `"en"`), implement `setLocale`.
+  - Tests first: `tests/integration/auth/db-adapters.test.ts` `"BR-L10N-001 setLocale changes only that user's locale"` (seed two users, change one, assert the other stays `en`).
+  - Commit: `feat(auth): read and write the owner locale in the account directory`.
+
+- [x] **I2.5 Use case `update-owner-locale`.** Folder `src/features/auth/application/use-cases/update-owner-locale/`: `update-owner-locale.ts`, `.schema.ts` (`updateOwnerLocaleSchema = z.object({ locale: appLocaleSchema })`), `.types.ts` (`UpdateOwnerLocaleInput`, `UpdateOwnerLocaleResult = { ok: true } | AuthFailure`), `.test.ts`.
+  - `export async function updateOwnerLocale(deps: AuthDeps, input: unknown, headers: Headers): Promise<UpdateOwnerLocaleResult>` — `requireOwner(deps, headers)`, parse, `deps.accounts.setLocale(owner.id, parsed.data.locale)`, `authLog({ operation: "update-locale", outcome: "UPDATED", userId: owner.id, requestId })`. The user ID comes only from the session (C-004).
+  - Tests (pattern of `update-display-name.test.ts`): `"BR-L10N-001 stores the chosen locale on the owner's own record"`; `"C-101 ignores a userId in the input and changes only the session owner"` (seed two owners, send the other's ID); `"BR-L10N-001 rejects a locale outside en and id"`; `"AC-AUTH-009 refuses an unverified session"`.
+  - Commit: `feat(auth): add the update owner locale use case`.
+
+- [x] **I2.6 `locale-flow.updateOwnerLocale` and the `setOwnerLocale` action.** `src/composition/locale/locale-flow/locale-flow.ts` (+ `.test.ts`): `export function updateOwnerLocale(values: unknown): Promise<UpdateOwnerLocaleResult>` using `redirectOnRefusal` + `withAuthScope` like `updateProfileName`. `src/app/actions/auth/profile.ts`: `export async function setOwnerLocaleAction(values: UpdateOwnerLocaleInput): Promise<AuthFailure | undefined>` (thin; the client calls `router.refresh()` later, in I5).
+  - Test: `"BR-L10N-001 the profile action returns no error after a valid change"` (mock the composition entry, as `src/app/actions/workspace/settings.test.ts` does).
+  - Commit: `feat(i18n): add the owner locale action`.
+
+- [x] **I2.7 `setDeviceLocale` action.** `locale-flow.ts`: `export async function setDeviceLocale(values: unknown): Promise<LocaleActionResult>` — parse `{ locale }` with `appLocaleSchema`, `writeDeviceLocaleCookie`. `src/app/actions/locale/device.ts`: `setDeviceLocaleAction`. Works without a session and on landing-only production (it posts to `/`, which the proxy already allows).
+  - Tests: `"BR-L10N-001 writes shutrly_locale for a valid locale"`; `"BR-L10N-001 refuses an invalid locale without writing a cookie"`.
+  - Commit: `feat(i18n): add the device locale action`.
+
+- [x] **I2.8 Gallery owner locale lookup.** Port `client-access-repository.port.ts`: `readonly findOwnerLocaleByTokenUnscoped: (token: string) => Promise<AppLocale | null>;` (token resolution is the allowed unscoped read). Adapter in `drizzle-client-access-repository.ts`: one query joining the project link token → `workspace.owner_user_id` → `user.locale`, the same token match as `findByTokenUnscoped`.
+  - Composition: `src/composition/gallery/gallery-owner-locale/gallery-owner-locale.ts` (+ `.test.ts`): `export async function loadGalleryOwnerLocale(token: string): Promise<AppLocale | null>` — returns `null` without a query when `!isWellFormedToken(token)`; catches a lookup failure, logs `l10n.gallery_owner_locale_failed` without the token (C-103) and returns `null` (§5.2).
+  - Tests first: integration `tests/integration/gallery/client-access/gallery-owner-locale.test.ts` `"AC-L10N-001 returns the gallery owner's current locale"`, `"AC-L10N-001 returns null for an unknown token"`, `"AC-L10N-001 follows an owner switch on the next read"` (D-4, never snapshotted); unit `"C-104 a malformed token never reaches the database"`.
+  - Commit: `feat(gallery): read the gallery owner's locale by token`.
+
+- [x] **I2.9 `setGalleryLocale` action (§6, C-104).** Use case `src/features/gallery/application/use-cases/check-gallery-locale-target/` (`.ts`, `.types.ts`, `.test.ts`): `export async function checkGalleryLocaleTarget(deps: SignInGalleryDeps, token: string, ip: string): Promise<boolean>` — true only when `findAvailableGallery(deps, token, ip)` returns a record with a gallery; reuses its unknown-token rate limit (ADR-023); needs no gallery password.
+  - `locale-flow.ts`: `export async function setGalleryLocale(rawToken: string, values: unknown): Promise<LocaleActionResult>` — parse the locale, run the check inside `withClientScope`, then `writeGalleryLocaleCookie(rawToken, locale)`; an unavailable gallery returns a neutral refusal and writes nothing. Action: `src/app/actions/client-access/gallery-locale.ts` → `setGalleryLocaleAction(token, values)`.
+  - Tests: `"C-104 writes the gallery cookie only for an available gallery"`; `"C-104 an unknown token writes nothing and counts toward the token limit"`; `"AC-L10N-004 works on the locked password screen without a client session"`; `"D-5 the cookie path is /g/<token>"`.
+  - Commit: `feat(i18n): add the gallery locale action`.
+
+- [x] **I2.10 Wire the owner locales into `getRequestLocale` (deviation 3).** `src/composition/auth/owner-locale/owner-locale.ts` (+ test): `export async function loadSignedInOwnerLocale(): Promise<AppLocale | null>` — returns `null` when `isLandingOnly()` or when no cookie name ends with `session_token`; otherwise `resolveOwnerAccess` inside `withAuthScope` and returns `account.locale` only for an `OWNER` decision. `request-locale.ts`: account path passes `loadSignedInOwnerLocale()`; gallery path calls `loadGalleryOwnerLocale(token)` only when the gallery cookie is absent or invalid (§5.3: skip the database when the cookie is valid).
+  - Unit tests (mocks): `"BR-L10N-001 a signed-in owner gets user.locale on auth and landing screens"` (D-3); `"AC-L10N-001 a valid gallery cookie skips the owner lookup"`; `"R-2 no session cookie means no session lookup"`.
+  - E2E `tests/e2e/locale/locale-preferences.spec.ts`: `"BR-L10N-001 an owner with locale id sees html lang id after sign-in on another device"`; `"AC-L10N-001 a gallery client without a choice follows the owner's locale"`; `"AC-L10N-001 a gallery client's choice overrides the owner and stays on that gallery only"`; `"AC-L10N-004 a workspace switch keeps the owner locale"`. Use the existing E2E owner and gallery seeding helpers; set the locale through the actions, not SQL.
+  - Commit: `feat(i18n): resolve owner and gallery owner locales per request`.
+
+**Done when.** 0019 is committed, reviewed and applied (run reported); the I2 unit, integration and E2E tests pass; `pnpm typecheck` and lint on changed files pass; no action takes a user ID from input; the gallery cookie path is `/g/<token>`; sign-up cannot set `locale`; `message_template` is unchanged.
+
+## Iteration I3 — Formatting and parsing
+
+**Goal.** Every display formatter and amount/quantity parser takes the formatting locale as an argument, round-trips exactly in both locales, and never reinterprets an input silently. React Aria local `id-ID` overrides are gone.
+
+**AC / BR / C.** AC-L10N-004 (reformat helpers only; the switch UI is I5–I7), AC-L10N-005, AC-L10N-006 (OCM-16…22), BR-L10N-004, C-105, C-004.
+
+**Display patterns are provisional (D-20 open).** Keep today's `id-ID` output byte-for-byte. For `en-US`, use the same `Intl` options with `en-US` and the same `Rp ` prefix as today; put each pattern in one named constant per locale with the comment `// D-20 pending: display pattern awaits Owner decision`. EN tests assert round trips and separators only, never the exact EN currency prefix or date style. When the Owner answers Q-3, only those constants and the EN display tests change.
+
+**Read first.**
+- `technical-design.md` §3 (D-19, D-20, D-23), §7.6, §9.3, §12 rows AC-L10N-004/005/006, §14 R-5.
+- `copy-outside-modules-audit.md` OCM-16…22 (lines 64–70).
+- `coding-rules.md` › TypeScript (money), Pure domain + orchestration, Validation, Where types and schemas live.
+- ADR-007 (money as digit strings).
+- Existing files: `src/features/booking/domain/idr-amount/idr-amount.ts` (+ `.test.ts`, `.types.ts`), `src/features/booking/domain/package-value/package-value.ts` (+ test), `src/features/booking/domain/session/session.ts` (+ test), `src/features/gallery/domain/gallery-display/gallery-display.ts` (+ test), `src/features/communications/ui/template-problem-text/template-problem-text.ts`, `src/ui/patterns/date-field/date-field.tsx`, `src/ui/primitives/time-field/time-field.tsx`, `src/features/booking/application/schemas/service-info/service-info.schema.ts`, `src/features/booking/domain/project-record/project-record.schema.ts`.
+
+### Tasks
+
+- [x] **I3.1 IDR amount: locale-aware parse and format (OCM-20, D-19).** `idr-amount.ts`:
+  - `export function parseIdrAmount(raw: string, locale: FormattingLocale): IdrAmountResult` — strip an optional `Rp`/`IDR` prefix (case-insensitive) and spaces; remove the locale's group separator (`id-ID`: `.`, `en-US`: `,`); if the other separator remains → `NOT_WHOLE`; the rest unchanged (`EMPTY`, `INVALID`, `TOO_LARGE`, leading zeros).
+  - `export function formatIdr(amount: string, locale: FormattingLocale): string` and `export function formatIdrNumber(amount: string, locale: FormattingLocale): string` — `BigInt` through a frozen per-locale `Intl.NumberFormat` lookup (§5.6).
+  - Tests (`it.each` over both locales and `0`, `1`, `999`, `1000`, `1500000`, `IDR_MAX`): `"AC-L10N-005 parse(format(v, l), l) returns v exactly"`; `"C-105 id-ID: a comma is NOT_WHOLE, never a decimal"`; `"C-105 en-US: a dot is NOT_WHOLE, never a decimal"`; `"AC-L10N-005 accepts the Rp and IDR prefixes in both locales"`; `"AC-L10N-006 id-ID output is unchanged (Rp 750.000)"`; existing problem tests keep passing with `"id-ID"`.
+  - Update callers in the same task so typecheck passes (see I3.5 for the list); temporarily the UI callers pass the locale from I3.5's hook, so do I3.5's hook first if needed (reorder within the iteration is fine; keep one commit per task).
+  - Commit: `feat(booking): parse and format idr amounts per locale`.
+
+- [x] **I3.2 Reformat helpers for the language switch (AC-L10N-004, §7.6 last bullets).** New unit `src/features/booking/domain/locale-input/locale-input.ts` (+ `.test.ts`): `export function reformatAmountInput(raw: string, from: FormattingLocale, to: FormattingLocale): string` and `export function reformatQuantityInput(raw: string, from: FormattingLocale, to: FormattingLocale): string` — return the value re-formatted in `to` when it parses under `from`; otherwise return `raw` unchanged.
+  - Tests: `"AC-L10N-004 an amount typed in id is rewritten in en with the same value"`; `"AC-L10N-004 unparseable text is kept as typed"`; `"C-105 the rewritten value parses back to the same digits"`.
+  - Commit: `feat(booking): reformat amount and quantity inputs on a language switch`.
+
+- [x] **I3.3 Quantity: locale-aware parse and format (OCM-21, deviation 4).** First list every `parseQuantity` caller (`rg -n "parseQuantity\(" src`) and confirm each parses typed user input (today: `domain/project-items/project-items.ts`, `application/use-cases/service-results/service-results.ts`). If one parses stored canonical values, stop and report a `SPEC GAP`.
+  - `export function parseQuantity(raw: string, locale: FormattingLocale): QuantityResult` — accepts only the locale's decimal separator (`id-ID` `,`, `en-US` `.`), no grouping; the other separator → `INVALID`. Scale and `QUANTITY_MAX` unchanged.
+  - `export function formatQuantity(value: string, locale: FormattingLocale): string` — canonical `.` → the locale's decimal separator. Update `domain/item-summary/item-summary.ts` to take and pass the locale.
+  - Callers that parse input get `locale` from their caller: `service-results.ts` and the project-items flow receive it from composition, which passes `formattingLocale(await getRequestLocale())` (server-resolved, never client-supplied, C-004).
+  - Tests: `"AC-L10N-005 parse(format(v, l), l) returns v for 0, 0.5, 12.25 and QUANTITY_MAX"`; `"C-105 id-ID refuses a dot decimal"`; `"C-105 en-US refuses a comma decimal"`; `"BR-CAT-001 more than two decimals is still TOO_MANY_DECIMALS"`.
+  - Commit: `feat(booking): parse and format quantities per locale`.
+
+- [x] **I3.4 Reformat open amount and quantity inputs on a switch (AC-L10N-004).** Done in code: I3.2 helpers (94447687, 463aa2c2) and I3.3 (abd474ea). Missing: the inputs that hold typed amounts or quantities (grep the money and quantity fields in src/features/booking/ui and src/ui/primitives) keep their text in the old format after `router.refresh()`. Add one hook, e.g. `useLocaleReformat(value, setValue, kind)` in `src/features/booking/ui/locale-reformat/`, that watches `useLocale()` and, when it changes, replaces the field value with `reformatAmountInput`/`reformatQuantityInput(value, from, to)` (unparseable text is kept). Use it in every amount and quantity field. Tests: `"AC-L10N-004 a typed amount is rewritten when the language changes"`, `"AC-L10N-004 unparseable text is kept"`. Commit `feat(booking): reformat typed amounts and quantities on a language switch`.
+
+- [x] **I3.4 Server-side amount schemas take the request locale (C-004).** `service-info.schema.ts`: replace the constant with `export function createServiceInfoSchema(locale: FormattingLocale)`; `project-record.schema.ts`: `export function createAgreedPriceSchema(locale: FormattingLocale)`. Use cases `add-service`, `update-service-info` and the project create/update use cases that use `agreedPriceSchema` gain a `locale: FormattingLocale` parameter; composition passes `formattingLocale(await getRequestLocale())`. Forms build the same schema with the hook from I3.5.
+  - Tests: extend the existing use-case tests: `"C-004 the server parses an amount with the server-resolved locale"` (an `en-US` request refuses `750.000` as `NOT_WHOLE`; `id-ID` accepts it).
+  - Commit: `feat(booking): validate amounts with the server-resolved locale`.
+
+- [x] **I3.5 Callers pass the active formatting locale.** Add `src/ui/hooks/use-formatting-locale/use-formatting-locale.ts` (+ test): `export function useFormattingLocale(): FormattingLocale` → `formattingLocale(useLocale())` from next-intl. Server components and application read models get it as a parameter from composition (`list-services.ts` and `get-service-detail.ts` gain `locale: FormattingLocale`).
+  - Update every caller found by `rg -n "formatIdr\(|formatIdrNumber\(|formatQuantity\(" src` (today about twelve files under `src/features/booking/ui/` and the two application use cases). Text helpers (`*-text.ts`, `add-on-total.ts`) take `locale` as a parameter from their component.
+  - Tests: `"AC-L10N-005 useFormattingLocale follows the provider locale"`; touched component tests render once in each locale and assert the amount uses that locale's grouping.
+  - Commit: `refactor(booking): pass the active locale to amount formatting`.
+
+- [x] **I3.6 Session and gallery dates per locale (OCM-18, OCM-19, D-23).** `session.ts`: `formatWeekdayDate`, `formatShortDate`, `formatSessionWhen`, `formatSessionRange` gain `locale: FormattingLocale`; keep `timeZone: "UTC"` and the 24-hour `HH.MM`/`HH:MM` display per locale constant. `gallery-display.ts`: all six `formatGallery*` functions gain `locale`; keep `GALLERY_TIME_ZONE`. Per-locale frozen `Intl.DateTimeFormat` lookups (§5.6). Update the callers listed by `rg -n "formatGallery|formatWeekdayDate|formatShortDate|formatSessionWhen|formatSessionRange" src` (about twenty files under `src/features/booking/ui/` and `src/features/gallery/ui/`).
+  - Tests: `"AC-L10N-005 id-ID output is unchanged"` (existing expectations); `"AC-L10N-005 en-US uses the same instant and time zone"` (assert the day number and 24-hour time, not the month style, D-20); `"AC-L10N-005 Asia/Jakarta midnight boundary stays on the same calendar day in both locales"`.
+  - Commit: `feat(i18n): format session and gallery dates per locale`.
+
+- [x] **I3.7 Template character limit number (OCM-22).** `template-problem-text.ts`: `templateProblemText(type, key, locale: FormattingLocale)`; the limit is formatted with the passed locale. Update its callers in `features/communications/ui`.
+  - Tests: `"AC-L10N-006 formats 2000 with the active locale"` (`2.000` in id-ID, `2,000` in en-US).
+  - Commit: `feat(communications): format the template length limit per locale`.
+
+- [x] **I3.8 Remove React Aria local overrides (OCM-16, OCM-17).** `date-field.tsx`: remove the local `I18nProvider locale="id-ID"` and its `LOCALE` constant; its own date formatters take the locale from React Aria `useLocale()` (allowed in `src/ui`). `time-field.tsx`: remove the local provider; keep `hourCycle={24}` (D-23). ISO values and time zones are unchanged.
+  - Tests in `date-field.test.tsx` / `time-field.test.tsx`: `"AC-L10N-005 the date field follows the app provider locale"` (render under `I18nProvider` `en-US` and `id-ID`, assert the accessible segment labels differ and the ISO value is identical); `"D-23 the time field shows 24-hour time in en-US"`.
+  - Commit: `fix(ui): let date and time fields follow the app locale`.
+
+**Done when.** Every OCM-16…22 site takes a locale; round-trip tests pass for both locales at all boundary values; `id-ID` output is byte-for-byte unchanged; no `"id-ID"` literal remains in `src/` outside `src/shared/locale/locale.ts` (check with `rg -n '"id-ID"' src`); `pnpm typecheck` and lint on changed files pass; `pnpm build` succeeds. Known interim state: screens still show Indonesian `.copy.ts` text while numbers and dates follow the resolved locale (default `en`) until I5–I7 convert their copy. Nothing is released (spec l.23); do not deploy this branch to staging before I8 without the Owner.
+
+## Blocked iterations (outline only)
+
+### I4 — Platform defaults
+
+- **Goal.** EN/ID default templates in code; `message_template.is_default` with nullable `content` (§4.2, §4.3, migration after 0019 per deviation 1); `resolveTemplateContent`; save modes `custom`/`default` (D-13); seeds write `is_default = true, content = NULL`; backfill tests frozen against a historical constant; `renderTemplateForRecipient(template, language, values)` for F-15; keyed item definitions, roles and project-item snapshots (§4.4, §7.4).
+- **AC / BR / C.** AC-L10N-006, 008, 010; BR-L10N-003, 004, 006; C-102, C-106.
+- **Status.** Ready. Open decisions resolved 2026-10-10 (see technical design §3).
+- **First task once unblocked.** Freeze the historical constant: add `HISTORICAL_0003_TEMPLATE_CONTENT` to `tests/config/message-template-backfill.test.ts` (copied from `drizzle/0003_message_template_backfill.sql`) and point the test at it, so `DEFAULT_TEMPLATE_CONTENT` can become `Record<AppLocale, Record<TemplateType, string>>` without touching migration 0003. Commit `test(communications): freeze the 0003 template backfill literals`.
+
+### I5 — Shared UI, shell, auth, landing, profile; language switches
+
+- **Goal.** Register the first copy modules in the catalog; convert shared UI, app shell, auth screens, landing and profile copy to `{ en, id }` ICU messages; build the owner account menu with the language switch (design 2026-10-11, below), `features/auth/ui/auth-language-switch/` (§8); the landing page gets no switch (Owner 2026-10-11) and renders English by default; apply the amount/quantity reformat on switch; auth email locale (§7.3).
+- **AC / BR.** AC-L10N-001, 002, 004, 010, 011; BR-L10N-001, 002, 006; D-22.
+- **Status.** Owner shell part (I5.1–I5.8) ready: design approved 2026-10-11, exports in [`exports/INDEX.md`](exports/INDEX.md). Auth, landing and auth email locale (I5.9+) still need a design decision; not written as tasks yet.
+- **Design change (Owner, 2026-10-11).** The owner switches language from the **account menu**, not from a Profile field or a segmented control. `features/auth/ui/profile-language-field/` and the `RadioGroup`/`Select` form of `src/ui/patterns/language-switch/` (technical design §8) are dropped for the owner shell. See [design.md](design.md) › *Account menu* and *Scope note*.
+- **Scope note (Owner, 2026-10-11).** The whole menu is shown. Only *Bahasa/Language* gets new behavior in F-22. *Tema/Theme* (Light, Dark, System) is shown with no action; theme switching is the next phase. *Profil*, *Pengaturan* and *Keluar* keep the behavior the shell already has (profile link, settings route, logout), because moving them into the menu must not remove a working route or the only way to sign out.
+
+**Exports (read one file at a time, only the ones a task names):**
+
+| State | Desktop | Mobile |
+|---|---|---|
+| `dashboard-menu-closed` | `dashboard-menu-closed-desktop-x7qwr.html` | `dashboard-menu-closed-mobile-v8vSQJ.html` |
+| `account-menu-open` | `account-menu-open-desktop-TJlEh.html` | `account-menu-open-mobile-UY9Co.html` |
+| `language-sheet` | inline in the desktop menu | `language-sheet-mobile-X9JQT.html` |
+| `theme-sheet` | inline in the desktop menu | `theme-sheet-mobile-cCf8E.html` |
+| `language-switching` | `language-switching-desktop-PuQxH.html` | `language-switching-mobile-ZJyUC.html` |
+| `language-failed` | `language-failed-desktop-y49rBj.html` | `language-failed-mobile-p2jPCo.html` |
+
+**Existing code to follow.** `src/features/workspace/ui/owner-shell/owner-shell.tsx` (`MobileWorkspaceSheet`, `MobileSheetAccount`, `logoutAction` prop), `src/ui/patterns/sidebar/sidebar.tsx` (`SidebarAccount`), `src/features/workspace/ui/owner-nav/owner-nav.tsx` (`OwnerNavBottom` settings entry), `src/features/workspace/ui/workspace-switcher/workspace-switcher.tsx` (`useWorkspaceSwitch`: pending id, redirect re-throw, danger toast), `src/ui/patterns/menu/*` (`MenuTrigger`, `Menu`, `MenuItem` with `isSelected`, `isDisabled`, `description`, `variant: "destructive"`), `src/ui/patterns/sheet-item/sheet-item.tsx`, `src/ui/patterns/bottom-sheet/bottom-sheet.tsx` (`meta`), `src/app/actions/auth/profile.ts` (`setOwnerLocaleAction`), `src/composition/locale/locale-flow/locale-flow.ts`, `src/app/(owner)/w/[workspaceId]/layout.tsx` and `src/app/(owner)/profile/layout.tsx` (both render `OwnerShell`).
+
+- [x] **I5.1 Register the first copy modules.** Register `src/app/not-found.copy.ts` and `src/app/error.copy.ts` (no screen layout change) as the first `CopyModule`s in `COPY_REGISTRY`, converted to `{ en, id }` from the copy deck, with the parity test green. Commit `feat(i18n): register the first copy modules`.
+
+- [x] **I5.2 Owner checkpoint: account menu copy.** Rows added to deck §1 *Account menu* on 2026-10-11 as proposed copy, pending Owner review (Owner set the goal to finish every task). The deck has *Language/Bahasa*, *Settings/Pengaturan*, *Profile/Profil*, *Sign out/Keluar* (§1 l.144), the self-names, *Changing language…* and the failure line (§1), but no copy for the account menu trigger or the theme group. Propose these rows for deck §1 and stop for the Owner: account menu accessible name (EN *Account menu* / ID *Menu akun*), theme group (*Theme* / *Tema*), *Light* / *Terang*, *Dark* / *Gelap*, *System* / *Sistem*. After approval add them to `copy-deck.md` §1. Commit `docs(i18n): add the account menu copy to the deck`.
+
+- [x] **I5.3 Owner shell copy to `{ en, id }`.** Files: `owner-shell.copy.ts`, `owner-nav.copy.ts`, `workspace-switcher.copy.ts`, `src/ui/patterns/sidebar/sidebar.copy.ts`, `bottom-sheet.copy.ts`, `toast.copy.ts`, plus the I5.2 rows under the `ownerShell` namespace. Register each in `COPY_REGISTRY`; components read them with `useTranslations` (D-9).
+  - Tests first: parity test stays green with the new namespaces; `owner-shell.test.tsx` `"AC-L10N-002 renders the shell navigation in English"` and `"… in Indonesian"` (provider with each locale).
+  - Commit `feat(i18n): translate the owner shell`.
+
+- [x] **I5.4 An owner switch also writes the device cookie (D-22).** `src/composition/locale/locale-flow/locale-flow.ts`: after `updateOwnerLocale` returns ok, call `writeDeviceLocaleCookie(locale)` so the screens before sign-in on this device follow the choice. A refusal writes nothing.
+  - Tests first in `locale-flow.test.ts`: `"D-22 an owner switch also writes the device cookie"`, `"D-22 a refused owner switch writes no cookie"`.
+  - Commit `feat(i18n): remember the owner's language on this device`.
+
+- [x] **I5.5 Shared `useLanguageSwitch` hook.** New unit `src/ui/patterns/language-switch/` (`use-language-switch.ts`, `.types.ts`, `.test.tsx`), used by the owner menu (I5.6–I5.7) and the auth link (I5.10). Input: `currentLocale: AppLocale` (callers pass `useLocale()`) and `action: LanguageSwitchAction`, where `type LanguageSwitchAction = (locale: AppLocale) => Promise<boolean>` (true = saved). Returns `{ pendingLocale, selectLocale }`. `selectLocale` ignores the current locale, sets `pendingLocale`, awaits the action; on `true` calls `router.refresh()` (route, scroll and form state kept, AC-L10N-004); on `false` or a thrown non-redirect error shows `showToast({ tone: "danger", title: <deck §1 failure line> })` with no action button (design: the owner retries from the menu); always clears `pendingLocale`. Redirect errors are re-thrown, as in `useWorkspaceSwitch`. Callers adapt their server action to `LanguageSwitchAction` (owner: `setOwnerLocaleAction({ locale })` returns `undefined` on success; auth: `setDeviceLocaleAction({ locale })` returns `{ ok }`).
+  - Tests first: `"AC-L10N-004 a switch refreshes the page and keeps the route"`, `"AC-L10N-004 choosing the current language does nothing"`, `"AC-L10N-001 a failed switch shows the deck failure toast and keeps the old language"`, `"a pending switch exposes the chosen locale"`.
+  - Commit `feat(i18n): add the shared language switch hook`.
+
+- [x] **I5.6 Desktop account menu.** Read `account-menu-open-desktop-TJlEh.html`, then `language-switching-desktop-PuQxH.html`, then `language-failed-desktop-y49rBj.html`.
+  - `src/ui/patterns/sidebar/`: `SidebarAccount` takes an optional `accountMenu` render slot. With it, the account block (avatar, name, email, `chevrons-up-down`) is the `MenuTrigger`; the log-out icon button is gone. Without it, today's markup stays (stories, other callers).
+  - New unit `src/features/workspace/ui/account-menu/` (`account-menu.tsx`, `.types.ts`, `.test.tsx`): `Menu` with *Profile* (`href="/profile"`), *Settings* (`href=/w/<id>/settings`), divider, group *Language* with *English* and *Bahasa Indonesia* (`isSelected` = current locale; while pending both `isDisabled`, and the chosen one gets `icon="loader-circle"` and `description` = *Changing language…*), divider, group *Theme* with *Light*, *Dark*, *System* (*System* selected; no `onSelect`, next phase), divider, *Sign out* (`variant="destructive"`, `icon="log-out"`, calls `logoutAction`).
+  - `OwnerShell` gets `localeAction?: OwnerShellProps["localeAction"]` and passes the menu to the sidebar; `OwnerNavBottom` drops the *Settings* entry (it lives in the menu now). Both owner layouts pass `localeAction={setOwnerLocaleAction}`.
+  - Tests first: `account-menu.test.tsx` `"AC-L10N-001 lists both languages by self-name and checks the current one"`, `"AC-L10N-004 disables the language items and shows Changing language… while pending"`, `"signs out from the menu"`, `"theme items are shown and do nothing"`; `sidebar.test.tsx` `"opens the account menu from the account block"`; `owner-nav.test.tsx` updated for the missing *Settings* entry.
+  - Commit `feat(workspace): switch language from the account menu`.
+
+- [x] **I5.7 Mobile menu sheet, language sheet and theme sheet.** Read `account-menu-open-mobile-UY9Co.html`, `language-sheet-mobile-X9JQT.html`, `theme-sheet-mobile-cCf8E.html`, `language-switching-mobile-ZJyUC.html`, `language-failed-mobile-p2jPCo.html`, one at a time.
+  - `src/ui/patterns/sheet-item/`: add `value?: string`, rendered as secondary text plus a `chevron-right` icon at the trailing edge (design `UY9Co`; the library Sheet Item has no such slot, so record it in the fidelity notes).
+  - `MobileWorkspaceSheet`: *Settings* moves out of the catalog list into a new *Account* group: *Profile*, *Settings*, *Language* (`value` = current self-name, opens the language sheet), *Theme* (`value` = *System*, opens the theme sheet), *Sign out* (destructive). `MobileSheetAccount` drops its log-out button and keeps the profile link.
+  - Language sheet: `BottomSheet` with title *Language*, two `SheetItem`s (`isSelected` current). While pending: `meta` = *Changing language…*, both items `isDisabled`, the chosen one with `icon="loader-circle"`. Theme sheet: same shape, three items, *System* selected, no action.
+  - Tests first in `owner-shell.test.tsx`: `"AC-L10N-001 the mobile menu opens the language sheet with both languages"`, `"AC-L10N-004 the language sheet shows Changing language… and disables the options while pending"`, `"signs out from the mobile menu"`; `sheet-item.test.tsx` `"renders a trailing value with a chevron"`.
+  - Commit `feat(workspace): switch language from the mobile menu`.
+
+- [x] **I5.8 E2E owner language switch.** `tests/e2e/locale/owner-language-menu.spec.ts`: `"BR-L10N-001 an owner switches to English from the account menu and keeps the page"` (desktop: `html[lang=en]`, same URL, still `en` after reload); `"AC-L10N-001 an owner switches language from the mobile menu sheet"` (390 × 844); `"D-22 after sign-out the sign-in screen keeps the owner's language"`. Then the fidelity pass against the six exports above (class names and nesting only). Commit `test(i18n): cover the owner language switch end to end`.
+
+### I5 — Auth layout language link (design approved 2026-10-11)
+
+Every auth screen shares `src/app/(auth)/layout.tsx` → `SplitLayout`, so Login is the only designed screen; register, verification, forgot and reset password get the same link from the layout. D-17 (Owner 2026-10-11): auth emails use the screen's resolved locale; the forms get no field.
+
+**Exports:** `auth-language-closed` (`…-desktop-wqcpW.html`, `…-mobile-Fwe1v.html`), `auth-language-hover-desktop-EBYgV.html`, `auth-language-open` (`…-desktop-GPftW.html`, `…-mobile-sAUWh.html`), `auth-language-switching` (`…-desktop-m63yf.html`, `…-mobile-AvC3d.html`), `auth-language-failed` (`…-desktop-xbbVv.html`, `…-mobile-W5jJs.html`). The desktop files are ~200 KB because of the editorial mosaic; read only the form side.
+
+- [x] **I5.9 `SplitLayout` header action slot.** `src/ui/patterns/split-layout/` (`split-layout.tsx`, `.types.ts`, `.test.tsx`): add `headerAction?: ReactNode`. The brand row becomes a `flex items-center justify-between` header with the brand on the left and `headerAction` on the right; without it the markup looks as today.
+  - Tests first: `"renders the header action next to the brand"`, `"renders no header action by default"`.
+  - Commit `feat(ui): add a header action slot to the auth layout`.
+
+- [x] **I5.10 `LanguageLink` pattern.** Read `auth-language-closed-desktop-wqcpW.html`, `auth-language-hover-desktop-EBYgV.html`, `auth-language-open-desktop-GPftW.html`, `auth-language-switching-desktop-m63yf.html`, then the mobile `sAUWh`, one at a time (form side only). New unit `src/ui/patterns/language-link/` (`language-link.tsx`, `.types.ts`, `.copy.ts` if needed, `.test.tsx`, `.stories.tsx`): a text-only trigger (no padding, no border, no chevron) with a `globe` icon and the current self-name in `text.secondary`; hover and focus-visible use `status.info.fg` with an underline; pending shows `loader-circle` and *Changing language…* in `text.muted` and is not pressable. Props: `currentLocale`, `pendingLocale`, `onSelect(locale)`. At `lg` and up it opens a `Menu` under the link (English, Bahasa Indonesia ✓); below `lg` it opens a `BottomSheet` titled *Language* with two `SheetItem`s (`isSelected` current). Accessible name: deck §1 *Language*. Self-names from deck §1.
+  - Tests first: `"AC-L10N-001 lists both languages by self-name and checks the current one"`, `"AC-L10N-004 shows Changing language… and is not pressable while pending"`, `"opens a bottom sheet below the lg breakpoint"`.
+  - Commit `feat(ui): add the language link`.
+
+- [x] **I5.11 Auth language switch in the auth layout.** New unit `src/features/auth/ui/auth-language-switch/` (`auth-language-switch.tsx`, `.test.tsx`): client component that wires `LanguageLink` to `useLanguageSwitch` with `action = async (locale) => (await setDeviceLocaleAction({ locale })).ok`. `src/app/(auth)/layout.tsx` passes `<AuthLanguageSwitch action={setDeviceLocaleAction} />` as `headerAction`. Failure uses the toast from I5.5 (desktop bottom-right, mobile top; frames `xbbVv`, `W5jJs`).
+  - Tests first: `"AC-L10N-001 switching to English writes the device locale and refreshes"`, `"AC-L10N-001 a refused switch shows the failure toast"`.
+  - Commit `feat(auth): switch language from the auth layout`.
+
+- [x] **I5.12 Auth emails in the screen language (D-17).** `AuthEmailPort.send` gains `locale: AppLocale`; `auth-email-templates` select the `{ en, id }` copy (deck §12) by it. The register, resend-verification and forgot-password flows pass `await getRequestLocale()`; because Better Auth's `sendVerificationEmail`/`sendResetPassword` callbacks get only `user`/`token`, the flow sets a request-scoped value the adapter reads (spike first, risk R-7; fall back to `user.locale` when the email follows a sign-in). Stop and report if neither works.
+  - Tests first: unit `"D-17 renders the verification email in English"` and `"… in Indonesian"`; integration `"D-17 a register request in Indonesian sends the Indonesian verification email"` with the fake email port.
+  - Commit `feat(auth): send auth emails in the screen language`.
+
+- [x] **I5.13 E2E auth language link.** `tests/e2e/locale/auth-language-link.spec.ts`: `"AC-L10N-001 a visitor switches the login screen to Indonesian and it stays after reload"`, `"AC-L10N-001 the register screen shows the same language link"`, `"AC-L10N-004 typed login values survive a language switch"` (390 × 844 and desktop). Then the fidelity pass against the auth exports (class names and nesting only). Commit `test(i18n): cover the auth language link end to end`.
+
+### I5 — Auth, profile and landing copy (added 2026-10-11)
+
+- [x] **I5.14 Auth and profile copy to `{ en, id }`.** Convert each listed `*.copy.ts` to a `{ en, id }` CopyModule (pattern: `src/app/error.copy.ts`, I5.3 owner-shell), register it in `src/app/copy-registry.ts`, and read it with `useTranslations`/`getTranslations` via the namespace constant. Text verbatim from `copy-deck.md`; a string with no deck row is reported as a DECK GAP, never invented. Functions in copy become ICU messages. Tests render in both locales (`tests/support/copy/copy-messages.ts`). Modules: every unconverted `src/features/auth/ui/*/*.copy.ts` (login, register, forgot/reset, verify, resend, invalid links, account unavailable, google button, auth error alert, controlled text field, profile form, change password, account sections), `src/ui/patterns/split-layout/split-layout.copy.ts`, `src/ui/patterns/editorial-panel/editorial-panel.copy.ts`, `src/app/(owner)/profile/layout.copy.ts`. Surface `auth` (profile modules: `owner`). Deck §2, §3. Commit `feat(i18n): translate the auth and profile screens`.
+- [x] **I5.15 Landing copy to `{ en, id }`.** Convert each listed `*.copy.ts` to a `{ en, id }` CopyModule (pattern: `src/app/error.copy.ts`, I5.3 owner-shell), register it in `src/app/copy-registry.ts`, and read it with `useTranslations`/`getTranslations` via the namespace constant. Text verbatim from `copy-deck.md`; a string with no deck row is reported as a DECK GAP, never invented. Functions in copy become ICU messages. Tests render in both locales (`tests/support/copy/copy-messages.ts`). Modules: `src/features/landing/ui/*/*.copy.ts`, `src/app/page.copy.ts`. Surface `landing`. Deck §19. The landing has no switch; it renders the resolved locale. Commit `feat(i18n): translate the landing page`.
+
+- [x] **I5.16 Registration copies the screen language into `user.locale` (D-22).** After a successful email sign-up (and the first Google sign-in that creates the account), the register flow stores the request's resolved locale (`getRequestLocale()`, i.e. the device cookie or `en`) as the new owner's `user.locale`, server-side only (C-004: never from form input; the Better Auth field stays `input: false`). Tests first: integration `"D-22 a register request in Indonesian stores user.locale id"` and `"D-22 a register request without a choice stores en"`. Then make the E2E auth helper (`tests/e2e/auth/auth-e2e.ts` `registerAndVerify`) set the `shutrly_locale=id` cookie before registering, so the existing Indonesian-language specs keep running in Indonesian; the locale specs set the language they test explicitly. Commit `feat(i18n): store the sign-up language as the owner's language`.
+
+**Not yet tasks:** none for I5 surfaces. Landing has no switch in F-22 (English by default; Owner 2026-10-11).
+
+### I6 — Owner feature copy
+
+- **Goal.** Convert catalog, clients, projects, team, sources, add-ons and template screens (OCM-01…13): option arrays, error-code maps (stable keys), skeleton text equal to final text, ICU plurals for counts and the icon-button badge.
+- **AC / BR.** AC-L10N-002, 006, 011; BR-L10N-002, 004.
+- **Status.** Ready. Open decisions resolved 2026-10-10 (see technical design §3).
+- **First task once unblocked.** Convert `src/ui/primitives/icon-button` badge text (OCM-09) to one ICU plural `{count, plural, …}` with a render test in both locales. Commit `feat(ui): announce the icon button badge count per locale`.
+
+- [x] **I6.1 Icon button badge plural (OCM-09) and shared UI copy.** Convert `src/ui/primitives/icon-button` badge text to one ICU plural with a render test in both locales; then convert each listed `*.copy.ts` to a `{ en, id }` CopyModule (pattern: `src/app/error.copy.ts`, I5.3 owner-shell), register it in `src/app/copy-registry.ts`, and read it with `useTranslations`/`getTranslations` via the namespace constant. Text verbatim from `copy-deck.md`; a string with no deck row is reported as a DECK GAP, never invented. Functions in copy become ICU messages. Tests render in both locales (`tests/support/copy/copy-messages.ts`). Modules: `src/ui/primitives/{stepper,tooltip,textarea,text-field}`, `src/ui/patterns/{folder-tile,select,photo-tile,modal,alert,media-viewer}` copy modules (surface `shared`). `src/ui/explorer/tokens` is a dev tool: leave it single-language and report it. Commit `feat(i18n): translate the shared ui copy`.
+- [x] **I6.2 Workspace screens.** Convert each listed `*.copy.ts` to a `{ en, id }` CopyModule (pattern: `src/app/error.copy.ts`, I5.3 owner-shell), register it in `src/app/copy-registry.ts`, and read it with `useTranslations`/`getTranslations` via the namespace constant. Text verbatim from `copy-deck.md`; a string with no deck row is reported as a DECK GAP, never invented. Functions in copy become ICU messages. Tests render in both locales (`tests/support/copy/copy-messages.ts`). Modules: unconverted `src/features/workspace/ui/*/*.copy.ts` (coming soon, dashboard, onboarding, create workspace dialog, workspace field error, workspace not found, settings) and `src/app/(owner)/w/[workspaceId]/layout.copy.ts`. Re-export-only modules (`account-menu.copy.ts`, `mobile-account-sheets.copy.ts`) stay as they are. Deck §1, §4. Commit `feat(i18n): translate the workspace screens`.
+- [x] **I6.3 Catalog and add-ons.** Convert each listed `*.copy.ts` to a `{ en, id }` CopyModule (pattern: `src/app/error.copy.ts`, I5.3 owner-shell), register it in `src/app/copy-registry.ts`, and read it with `useTranslations`/`getTranslations` via the namespace constant. Text verbatim from `copy-deck.md`; a string with no deck row is reported as a DECK GAP, never invented. Functions in copy become ICU messages. Tests render in both locales (`tests/support/copy/copy-messages.ts`). Modules: `src/features/booking/ui/catalog-copy/catalog-copy.copy.ts`, `add-on-copy/add-on.copy.ts`. Option arrays and error-code maps keep their stable keys (OCM-07/08); keyed item and role labels (D-18) show the locale's default label when `default_key` is set. Skeleton text equals final text (OCM-03/06). Deck §5–§7. Commit `feat(i18n): translate the catalog and add-on screens`.
+- [x] **I6.8 Keyed default labels in the UI (D-18, AC-L10N-006).** `ItemDefinitionRecord` (port), the list use cases and the Drizzle mapping for item definitions, team roles and project-item snapshots carry `defaultKey`; the catalog, team and project screens show `DEFAULT_ITEM_COPY[locale]` / `DEFAULT_TEAM_ROLE_NAMES[locale]` when `defaultKey` is set and the stored name is shown otherwise. Tests: unit for the label choice, integration for the mapping. Commit `feat(i18n): show platform default labels in the owner's language`.
+- [x] **I6.4 Clients and team.** Convert each listed `*.copy.ts` to a `{ en, id }` CopyModule (pattern: `src/app/error.copy.ts`, I5.3 owner-shell), register it in `src/app/copy-registry.ts`, and read it with `useTranslations`/`getTranslations` via the namespace constant. Text verbatim from `copy-deck.md`; a string with no deck row is reported as a DECK GAP, never invented. Functions in copy become ICU messages. Tests render in both locales (`tests/support/copy/copy-messages.ts`). Modules: `src/features/booking/ui/client-copy/client-copy.copy.ts`, `team-copy/team-copy.copy.ts`. Deck §8, §10. Commit `feat(i18n): translate the client and team screens`.
+- [x] **I6.5 Projects.** Convert each listed `*.copy.ts` to a `{ en, id }` CopyModule (pattern: `src/app/error.copy.ts`, I5.3 owner-shell), register it in `src/app/copy-registry.ts`, and read it with `useTranslations`/`getTranslations` via the namespace constant. Text verbatim from `copy-deck.md`; a string with no deck row is reported as a DECK GAP, never invented. Functions in copy become ICU messages. Tests render in both locales (`tests/support/copy/copy-messages.ts`). Module: `src/features/booking/ui/project-copy/project-copy.copy.ts`. Deck §9. Commit `feat(i18n): translate the project screens`.
+- [x] **I6.6 Message templates.** Convert each listed `*.copy.ts` to a `{ en, id }` CopyModule (pattern: `src/app/error.copy.ts`, I5.3 owner-shell), register it in `src/app/copy-registry.ts`, and read it with `useTranslations`/`getTranslations` via the namespace constant. Text verbatim from `copy-deck.md`; a string with no deck row is reported as a DECK GAP, never invented. Functions in copy become ICU messages. Tests render in both locales (`tests/support/copy/copy-messages.ts`). Modules: unconverted `src/features/communications/ui/*/*.copy.ts`. Deck §11. Commit `feat(i18n): translate the message template screens`.
+- [x] **I6.7 Owner gallery and sources.** Convert each listed `*.copy.ts` to a `{ en, id }` CopyModule (pattern: `src/app/error.copy.ts`, I5.3 owner-shell), register it in `src/app/copy-registry.ts`, and read it with `useTranslations`/`getTranslations` via the namespace constant. Text verbatim from `copy-deck.md`; a string with no deck row is reported as a DECK GAP, never invented. Functions in copy become ICU messages. Tests render in both locales (`tests/support/copy/copy-messages.ts`). Modules: `src/features/gallery/ui/{project-access-card,selection-owner-text,delivery-screen,delivery-copy,gallery-summary-text,source-copy,gallery-copy}`. Surface `owner`. Deck §13–§16. Commit `feat(i18n): translate the owner gallery screens`.
+
+- [x] **I6.9 Remaining copy sweep.** Convert `src/features/booking/ui/project-field-error/project-field-error.ts` (deck §7.7 validation rows; DECK GAP rows proposed in the deck as in I6.7) into the project copy module with stable key maps; show keyed default role names (D-18) in session assignments (`sessions-card/team-assignments.ts`, `session-team-rows`, `session-team-avatars`, the assign-role toast in `assignment-dialog/use-assignment-form.ts`); make the team-role fake's `rename` clear `defaultKey` like the real repository; add an integration assertion for the member-roles key mapping. Commit `feat(i18n): translate the remaining project validation copy`.
+
+### I7 — Client gallery copy
+
+- **Goal.** Convert the client gallery (password gate, home, photos, picks, review, final delivery) to `{ en, id }`. **No client language switch** (Owner, 2026-10-11): the gallery always renders in the gallery owner's current `user.locale` (D-4). `features/gallery/ui/client-language-switch/` is not built.
+- **AC / BR / C.** AC-L10N-001 (owner locale only, see amendment below), 002, 011; C-104.
+- **Status.** Ready. No design needed: copy changes only.
+- **First task once unblocked.** E2E spec `tests/e2e/locale/gallery-owner-locale.spec.ts`: `"AC-L10N-001 a gallery renders in the owner's language and follows an owner switch"`. Commit with the first converted gallery screen.
+
+- [x] **I7.1 Client gallery copy and owner-locale E2E.** Convert each listed `*.copy.ts` to a `{ en, id }` CopyModule (pattern: `src/app/error.copy.ts`, I5.3 owner-shell), register it in `src/app/copy-registry.ts`, and read it with `useTranslations`/`getTranslations` via the namespace constant. Text verbatim from `copy-deck.md`; a string with no deck row is reported as a DECK GAP, never invented. Functions in copy become ICU messages. Tests render in both locales (`tests/support/copy/copy-messages.ts`). Modules: `src/features/gallery/ui/{client-home-screen,pick-note-sheet,client-password-form,pick-screen,client-gate-screen,client-copy,review-screen,viewer-pick-actions,client-unavailable,client-browse-screen}`. Surface `gallery`. Deck §17–§18. E2E `tests/e2e/locale/gallery-owner-locale.spec.ts`: `"AC-L10N-001 a gallery renders in the owner's language and follows an owner switch"`. Commit `feat(i18n): translate the client gallery`.
+- **Existing code.** I2 built `setGalleryLocale` (`src/app/actions/client-access/gallery-locale.ts`) and the `shutrly_gallery_locale` cookie read in gallery resolution. With no switch nothing writes that cookie. Removing them is a separate cleanup task that needs the Owner's go-ahead; until then they stay unused.
+
+### I8 — Verification
+
+- **Goal.** E2E journeys per surface in both locales (owner creates a project in ID; client picks and submits in ID), `next build` + start smoke with hydration warnings failing the test, visual comparison against the current screens, and a coverage report separating implemented coverage from future surfaces.
+- **AC.** AC-L10N-011, 012.
+- **Status.** Ready. Open decisions resolved 2026-10-10 (see technical design §3).
+- **First task once unblocked.** `tests/e2e/locale/build-smoke.spec.ts` run against `pnpm build && pnpm start`: every top-level route in EN and ID with a console listener that fails on hydration warnings.
+
+- [x] **I8.1 Build smoke.** `tests/e2e/locale/build-smoke.spec.ts` against `pnpm build && pnpm start`: every top-level route in EN and ID with a console listener that fails on hydration warnings and on server render errors. Also check the cold-start `ToastRegion` "NextIntlClientProvider was not found" error seen on `/` in dev (next-intl reports any error inside the hook that way): find the real error and fix it. Commit `test(i18n): smoke every route in both languages`.
+- [x] **I8.2 Journeys and coverage report.** E2E: an owner creates a project in Indonesian; a client picks and submits in Indonesian; both screens show only that language. Write `docs/features/bilingual-copy-revamp/coverage-report.md` separating implemented coverage from future surfaces (AC-L10N-011, 012). Commit `test(i18n): cover the owner and client journeys in Indonesian`.
+
+## Owner actions required
+
+**Decisions to answer** (technical-design §3, §15):
+- D-8 / Q-6: approve the narrow `eslint-plugin-boundaries` exception so `composition/locale/message-catalog` may import `*.copy.ts` from `features/*/ui`, `src/ui` and `src/app` — or name another placement for the registry. Blocks I5–I7.
+- D-17 / Q-1: answered 2026-10-11, the auth email uses the screen language; no form control.
+- D-18 / Q-2: `default_key` for item definitions, roles and project-item snapshots. Blocks I4 and the keyed labels in I6.
+- D-20 / Q-3: EN display patterns for IDR and dates per locale. I3 ships provisional constants; the answer changes only those constants and EN display tests.
+- D-21 / Q-5: template "changed elsewhere" conflict state, or keep last-write-wins. Affects I4 scope.
+- D-22 / Q-4: copy the pre-sign-in locale into `user.locale` at registration; should a Profile switch also write the device cookie. Affects I5.
+- Deviations 1–4 in this plan, especially the 0019 split (deviation 1).
+- I1.1: install and pin `next-intl` and `@formatjs/icu-messageformat-parser` in this worktree.
+- I2.2: go-ahead to apply 0019 to the shared non-production database.
+
+
+**Higher-authority documents to amend and approve** (do not edit them as part of this plan):
+- `docs/domain/business-rules.md` BR-L10N-003 (l.439, "reviewed EN/ID versions") and BR-L10N-005 (l.445, migration and historical-viewing policy), to match spec l.23–29.
+- `docs/product/localization.md` l.12, l.14, l.27–29 (pairs, readiness, legacy policy).
+- `docs/coding-rules.md` l.198 Copy bullet ("Owner-authored descriptions/templates support both versions"), and the boundary table (l.48) if D-8 is approved; the `local/ui-copy` wording from I1.11.
+- ADR-025 l.21 ("one logical template … with language versions").
+- `acceptance-criteria.md` AC-L10N-007 (paired authoring and readiness) and AC-L10N-009 (legacy migration policy), both superseded by the 2026-10-10 decisions.
+- Copy deck corrections listed in technical-design §13.
+- `spec.md` l.20 (a client can switch the gallery language, stored in a gallery-scoped cookie) and `acceptance-criteria.md` AC-L10N-001 ("both expose an accessible English/Indonesian switch"): Owner decided 2026-10-11 that the gallery has no client switch and follows the owner's locale, and that the landing page has no switch. Both lines need the Owner's wording.
+
+## Spike log
+
+Run 2026-10-10 by I1.2, in a throwaway checkout of commit `690a9d40` (removed afterwards). The proxy was instrumented to forward `x-shutrly-gallery-token` on `/g/<token>` paths and to strip any incoming value. Only booleans were logged, never the token (C-103).
+
+| Date | Path checked | `pnpm dev` | `pnpm build && pnpm start` | Notes |
+|---|---|---|---|---|
+| 2026-10-10 | Root layout (RSC) on `/g/<token>` | pass (`true`) | pass (`true`, `APP_STAGE=development`) | Header reaches the root layout. |
+| 2026-10-10 | Gallery page `/g/[token]` | pass (`true`) | pass (`true`) | Page reads the header. |
+| 2026-10-10 | Gallery server action | not verified | not verified | No action was triggered; the form needs a browser. Still to check in I1.6 or I2. |
+| 2026-10-10 | Gallery route handler `/g/[token]/media/...` | pass (`true`) | pass (`true`) | Handler reads the header. |
+| 2026-10-10 | Forged header on `/login` stripped | pass (`false`) | pass (`false`) | Stripped on the normal `NextResponse.next()` path. |
+| 2026-10-10 | Forged header on the landing-gate rewrite | not in plan | **FAIL: header reached the layout (`true`)** | The gate rewrite does not pass through the forwarded headers, so a forged value survives on that path. Fix in I1.6: apply `forwardHeaders` to every response, including rewrites and redirects. |
+| 2026-10-10 | `/` dynamic in build route table (R-2) | n/a | observed: `/` is `ƒ` (dynamic) | No static baseline was built, so the effect of reading cookies in the root layout is not measured. Every route in this build is already dynamic. |
+
+**Result: the header path passes (fallback in §5.3 not needed).** One gap is fixed in I1.6 (gate rewrite). Two checks are still open: the server action and the R-2 baseline comparison.
+
+Environment notes found while running the spike:
+- `APP_STAGE` accepts only `development`, `test` or `production` (`app-stage.schema.ts`). `staging` is treated as unreadable and falls back to the landing-only gate.
+- `next start` reads bindings from `process.env` (`request-context.ts`), but `.dev.vars` is not loaded automatically, so `/login` returns 500 without it.

@@ -69,7 +69,7 @@ describe("WorkspaceSwitcher", () => {
     );
 
     await user.click(screen.getByRole("button", { name: "Aster Wedding" }));
-    await user.click(screen.getByRole("menuitem", { name: "Buat workspace" }));
+    await user.click(screen.getByRole("menuitem", { name: "Buat ruang kerja" }));
 
     expect(onCreate).toHaveBeenCalledOnce();
   });
@@ -88,11 +88,11 @@ describe("WorkspaceSwitcher", () => {
 
     await user.click(screen.getByRole("button", { name: "Aster Wedding" }));
 
-    expect(screen.getByText("Pindah workspace")).toBeInTheDocument();
+    expect(screen.getByText("Pindah ruang kerja")).toBeInTheDocument();
     expect(screen.getAllByRole("menuitem").map((item) => item.textContent)).toEqual([
       "Aster Wedding",
       "Studio Lime",
-      "Buat workspace",
+      "Buat ruang kerja",
     ]);
     for (const name of ["Aster Wedding", "Studio Lime"]) {
       expect(screen.getByRole("menuitem", { name })).toHaveClass(
@@ -122,7 +122,7 @@ describe("WorkspaceSwitcher", () => {
     expect(onSwitch).toHaveBeenCalledWith("other");
     const toast = vi.mocked(showToast).mock.calls[0]?.[0];
     expect(toast.tone).toBe("danger");
-    expect(toast.title).toBe("Gagal pindah workspace");
+    expect(toast.title).toBe("Belum bisa pindah ruang kerja");
     expect(toast.body).toBe("Kamu masih di Aster Wedding.");
     expect(toast.action?.label).toBe("Coba lagi");
   });

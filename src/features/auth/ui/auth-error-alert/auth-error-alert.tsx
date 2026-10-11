@@ -1,10 +1,11 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 
 import { Alert } from "@/ui/patterns/alert/alert";
 
-import { AUTH_ERROR_COPY } from "./auth-error-alert.copy";
+import { AUTH_ERROR_COPY_NAMESPACE } from "./auth-error-alert.copy";
 import type { AuthErrorAlertProps } from "./auth-error-alert.types";
 
 /**
@@ -14,9 +15,10 @@ import type { AuthErrorAlertProps } from "./auth-error-alert.types";
  * @returns the alert
  */
 export function AuthErrorAlert({ code }: Readonly<AuthErrorAlertProps>) {
+  const t = useTranslations(AUTH_ERROR_COPY_NAMESPACE);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     ref.current?.focus();
   }, [code]);
-  return <Alert ref={ref} tone="danger" title={AUTH_ERROR_COPY[code]} live />;
+  return <Alert ref={ref} tone="danger" title={t(code)} live />;
 }

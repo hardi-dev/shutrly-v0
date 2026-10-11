@@ -1,3 +1,5 @@
+import type { FormattingLocale } from "@/shared/locale/locale.types";
+
 import type {
   PackageValue,
   PackageValueIssue,
@@ -7,11 +9,25 @@ import type {
 
 export const QUANTITY_MAX = "999999.99";
 
-/** Parses a non-negative quantity typed with a comma or dot decimal separator (BR-CAT-001). @param raw - untrusted input @returns the canonical decimal string or a problem */
-export function parseQuantity(raw: string): QuantityResult {
+// The only decimal separator each locale accepts (D-19, C-105). The other one is INVALID, never a decimal.
+const DECIMAL_SEPARATOR: Readonly<Record<FormattingLocale, string>> = Object.freeze({
+  "id-ID": ",",
+  "en-US": ".",
+});
+
+/**
+ * Parses a non-negative quantity typed with the locale's decimal separator (BR-CAT-001, C-105).
+ * The other separator is refused, never read as a decimal.
+ * @param raw - untrusted input
+ * @param locale - the formatting locale of the person typing
+ * @returns the canonical decimal string or a problem
+ */
+export function parseQuantity(raw: string, locale: FormattingLocale): QuantityResult {
   const text = raw.trim();
   if (text.startsWith("-")) return { ok: false, problem: "NEGATIVE" };
-  const separator = text.includes(",") ? "," : ".";
+  const separator = DECIMAL_SEPARATOR[locale];
+  const other = separator === "," ? "." : ",";
+  if (text.includes(other)) return { ok: false, problem: "INVALID" };
   const parts = text.split(separator);
   if (parts.length > 2) return { ok: false, problem: "INVALID" };
   const wholeText = parts[0] ?? "";
@@ -55,9 +71,31 @@ export function findPackageValueProblem(
     : null;
 }
 
-/** Formats a canonical decimal for Indonesian display (comma decimals). @param value - canonical decimal @returns the display string */
-export function formatQuantity(value: string): string {
-  return value.replace(".", ",");
+/**
+ * Shows a stored package value in the locale's decimal separator, for a form the person edits
+ * (C-004: the server still parses what is submitted with the server-resolved locale).
+ * @param value - the stored value with canonical decimals
+ * @param locale - the formatting locale of the form
+ * @returns the same value with its decimals written for the locale
+ */
+export function localizePackageValue(value: PackageValue, locale: FormattingLocale): PackageValue {
+  return value.type === "NUMBER"
+    ? { type: "NUMBER", value: formatQuantity(value.value, locale) }
+    : {
+        type: "RANGE",
+        min: formatQuantity(value.min, locale),
+        max: formatQuantity(value.max, locale),
+      };
+}
+
+/**
+ * Formats a canonical decimal with the locale's decimal separator.
+ * @param value - canonical decimal
+ * @param locale - the formatting locale
+ * @returns the display string, e.g. "1,5" (id-ID) or "1.5" (en-US)
+ */
+export function formatQuantity(value: string, locale: FormattingLocale): string {
+  return value.replace(".", DECIMAL_SEPARATOR[locale]);
 }
 
 function isDigits(value: string): boolean {

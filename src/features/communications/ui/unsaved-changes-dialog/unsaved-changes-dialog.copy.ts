@@ -1,9 +1,4 @@
-// editor-unsaved-KKHgt (desktop Modal) and T96gnV (phone Bottom Sheet).
-export const UNSAVED_CHANGES_COPY = {
-  title: "Buang perubahan?",
-  description: (template: string) =>
-    `Perubahan pada ${template} belum disimpan dan akan hilang kalau kamu keluar.`,
-  mobileDescription: (template: string) => `Perubahan pada ${template} belum disimpan.`,
-  stay: "Lanjut mengedit",
-  leave: "Buang perubahan",
-} as const;
+// Names the TEMPLATE_COPY_NAMESPACE namespace for this folder's components (the local ui-copy rule reads a sibling copy import).
+import { TEMPLATE_COPY_NAMESPACE } from "../template-copy/template-copy.copy";
+
+export const UNSAVED_CHANGES_DIALOG_COPY_NAMESPACE = TEMPLATE_COPY_NAMESPACE;

@@ -43,17 +43,17 @@ describe("CreateGalleryDialog", () => {
     await userEvent.click(screen.getByRole("button", { name: "Buat ulang" }));
     expect(props.proposeAction).toHaveBeenCalledWith("ws-1", "p-1");
     await waitFor(() => {
-      expect(screen.getByLabelText("Password galeri")).toHaveValue("melati-2345");
+      expect(screen.getByLabelText("Kata sandi galeri")).toHaveValue("melati-2345");
     });
   });
 
   it("AC-GAL-002 shows a field error for 5 characters and creates nothing", async () => {
     const props = renderDialog();
-    const field = screen.getByLabelText("Password galeri");
+    const field = screen.getByLabelText("Kata sandi galeri");
     await userEvent.clear(field);
     await userEvent.type(field, "abc12");
     await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
-    expect(await screen.findByText("Password minimal 6 karakter.")).toBeInTheDocument();
+    expect(await screen.findByText("Gunakan minimal 6 karakter.")).toBeInTheDocument();
     expect(props.createAction).not.toHaveBeenCalled();
   });
 
@@ -79,7 +79,7 @@ describe("CreateGalleryDialog", () => {
       fieldErrors: { password: "TOO_SHORT" },
     } as never);
     await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
-    expect(await screen.findByText("Password minimal 6 karakter.")).toBeInTheDocument();
+    expect(await screen.findByText("Gunakan minimal 6 karakter.")).toBeInTheDocument();
     expect(props.onCreated).not.toHaveBeenCalled();
   });
 
@@ -103,7 +103,7 @@ describe("CreateGalleryDialog", () => {
         Promise.resolve({ ok: true as const, galleryId: "g-1", sourceId: "s-1" }),
       );
       const props = renderDialog({ linkableSources: [DRIVE], createAction });
-      await userEvent.type(screen.getByLabelText(/^Link folder Google Drive/), RINA);
+      await userEvent.type(screen.getByLabelText(/^Tautan folder Google Drive/), RINA);
       await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
       await waitFor(() => {
         expect(createAction).toHaveBeenCalledWith("ws-1", "p-1", {
@@ -124,7 +124,7 @@ describe("CreateGalleryDialog", () => {
         Promise.resolve({ ok: true as const, projectTitles: ["Wisuda Sari"] }),
       );
       const props = renderDialog({ linkableSources: [DRIVE], checkFolderAction });
-      await userEvent.type(screen.getByLabelText(/^Link folder Google Drive/), RINA);
+      await userEvent.type(screen.getByLabelText(/^Tautan folder Google Drive/), RINA);
       await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
       expect(await screen.findByText(/Wisuda Sari/)).toBeInTheDocument();
       expect(props.createAction).not.toHaveBeenCalled();
@@ -144,7 +144,7 @@ describe("CreateGalleryDialog", () => {
       );
       const props = renderDialog({ linkableSources: [DRIVE], checkFolderAction });
       await userEvent.type(
-        screen.getByLabelText(/^Link folder Google Drive/),
+        screen.getByLabelText(/^Tautan folder Google Drive/),
         "https://drive.google.com/file/d/abc/view",
       );
       await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));

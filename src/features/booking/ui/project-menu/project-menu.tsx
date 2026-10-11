@@ -1,6 +1,7 @@
 "use client";
 /* eslint-disable max-lines-per-function -- responsive menu renders one section list for both layouts */
 
+import { useTranslations } from "next-intl";
 import { Fragment, useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -14,18 +15,19 @@ import { MenuTrigger } from "@/ui/patterns/menu/menu-trigger";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { PROJECT_MENU_COPY_NAMESPACE } from "./project-menu.copy";
 import type { ProjectMenuProps, ResolvedMenuItem } from "./project-menu.types";
 import { resolveMenuGroups } from "./resolve-menu-items";
 
 /** The ⋯ menu of a project: an Action Menu on desktop, a Bottom Sheet on phones (AC-PRJ-027). */
 export function ProjectMenu(props: Readonly<ProjectMenuProps>) {
   const isMobile = useMobileViewport();
-  const label = PROJECT_COPY.menuActions(props.title);
-  const groups = resolveMenuGroups(props);
+  const t = useTranslations(PROJECT_MENU_COPY_NAMESPACE);
+  const label = t("menuActions", { name: props.title });
+  const groups = resolveMenuGroups(t, props);
   const sections = [
     { id: "project", items: groups.project, label: null },
-    { id: "send", items: groups.sendToClient, label: PROJECT_COPY.menuSendGroup },
+    { id: "send", items: groups.sendToClient, label: t("menuSendGroup") },
     { id: "destructive", items: groups.destructive, label: null },
   ].filter((section) => section.items.length > 0);
   const size = props.variant === "row" ? "sm" : "md";

@@ -1,12 +1,13 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Button as AriaButton, ToggleButton } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
 import { useImageFallback } from "@/ui/hooks/use-image-fallback/use-image-fallback";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
-import { PHOTO_TILE_COPY } from "./photo-tile.copy";
+import { PHOTO_TILE_COPY_NAMESPACE } from "./photo-tile.copy";
 import type { PhotoTileImageProps, PhotoTileProps } from "./photo-tile.types";
 import { NoteButton, SelectIndicator, TileBadge } from "./photo-tile-overlays";
 
@@ -26,6 +27,7 @@ function PhotoTileImage({
   badge,
   selection,
 }: Readonly<PhotoTileImageProps>) {
+  const t = useTranslations(PHOTO_TILE_COPY_NAMESPACE);
   const image = useImageFallback(imageSrc, fallbackSrc);
   return (
     <span className={IMAGE}>
@@ -44,7 +46,7 @@ function PhotoTileImage({
       )}
       {isMissing ? (
         <span className="absolute top-(--component-photo-tile-badge-inset) left-(--component-photo-tile-badge-inset)">
-          <StatusChip tone="warning" label={PHOTO_TILE_COPY.missingBadge} hasDot />
+          <StatusChip tone="warning" label={t("missingBadge")} hasDot />
         </span>
       ) : null}
       {selection ? <SelectIndicator selection={selection} /> : null}
@@ -55,8 +57,9 @@ function PhotoTileImage({
 
 function SelectablePhotoTile(props: Readonly<PhotoTileProps>) {
   const { fileName, isMissing = false, selection, note } = props;
+  const t = useTranslations(PHOTO_TILE_COPY_NAMESPACE);
   if (!selection) return null;
-  const label = isMissing ? `${fileName}, ${PHOTO_TILE_COPY.missingSuffix}` : fileName;
+  const label = isMissing ? `${fileName}, ${t("missingSuffix")}` : fileName;
   return (
     <div className="relative min-w-0">
       <ToggleButton
@@ -105,9 +108,10 @@ function TileContent({
 /** One photo in a grid: thumbnail, file name and an optional meta line; a missing file shows *Hilang* (C46). With `selection` the whole tile toggles a pick, with a select control, an optional chip and *Catatan* button (Photo Tile/Selectable, F-10). @param props - file, image, press handler or selection @returns the tile */
 export function PhotoTile(props: Readonly<PhotoTileProps>) {
   const { fileName, isMissing = false, onPress, selection } = props;
+  const t = useTranslations(PHOTO_TILE_COPY_NAMESPACE);
   if (selection) return <SelectablePhotoTile {...props} />;
   const content = <TileContent {...props} />;
-  const label = isMissing ? `${fileName}, ${PHOTO_TILE_COPY.missingSuffix}` : fileName;
+  const label = isMissing ? `${fileName}, ${t("missingSuffix")}` : fileName;
   if (!onPress) {
     return <div className="flex min-w-0 flex-col gap-(--component-photo-tile-gap)">{content}</div>;
   }

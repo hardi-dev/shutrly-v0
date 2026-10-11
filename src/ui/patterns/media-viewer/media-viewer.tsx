@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Button as AriaButton, Dialog, Modal, ModalOverlay } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
@@ -8,7 +9,7 @@ import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-vie
 import { useRestoreFocus } from "@/ui/hooks/use-restore-focus/use-restore-focus";
 import { Icon } from "@/ui/primitives/icon/icon";
 
-import { MEDIA_VIEWER_COPY } from "./media-viewer.copy";
+import { MEDIA_VIEWER_COPY_NAMESPACE } from "./media-viewer.copy";
 import type {
   ArrowsProps,
   FilmstripProps,
@@ -100,9 +101,10 @@ function Filmstrip({
   imageFallbackSrc,
   onIndexChange,
 }: Readonly<FilmstripProps>) {
+  const t = useTranslations(MEDIA_VIEWER_COPY_NAMESPACE);
   return (
     <ul
-      aria-label={MEDIA_VIEWER_COPY.filmstrip}
+      aria-label={t("filmstrip")}
       className="flex justify-center gap-(--component-media-viewer-filmstrip-gap) overflow-x-auto px-(--component-media-viewer-bar-padding-x) py-(--component-media-viewer-bar-padding-y)"
     >
       {items.map((item, position) => (
@@ -121,6 +123,7 @@ function Filmstrip({
 }
 
 function TopBar({ item, renderActions, onClose }: Readonly<TopBarProps>) {
+  const t = useTranslations(MEDIA_VIEWER_COPY_NAMESPACE);
   return (
     <header className="flex items-center gap-(--component-media-viewer-bar-gap) px-(--component-media-viewer-bar-padding-x) py-(--component-media-viewer-bar-padding-y) text-(--component-media-viewer-text)">
       <div className="flex min-w-0 flex-1 flex-col">
@@ -130,12 +133,7 @@ function TopBar({ item, renderActions, onClose }: Readonly<TopBarProps>) {
         </p>
       </div>
       {renderActions?.(item)}
-      <AriaButton
-        autoFocus
-        aria-label={MEDIA_VIEWER_COPY.close}
-        onPress={onClose}
-        className={ICON_BUTTON}
-      >
+      <AriaButton autoFocus aria-label={t("close")} onPress={onClose} className={ICON_BUTTON}>
         <Icon name="x" aria-hidden="true" />
       </AriaButton>
     </header>
@@ -143,10 +141,11 @@ function TopBar({ item, renderActions, onClose }: Readonly<TopBarProps>) {
 }
 
 function Arrows({ index, count, nav }: Readonly<ArrowsProps>) {
+  const t = useTranslations(MEDIA_VIEWER_COPY_NAMESPACE);
   return (
     <>
       <AriaButton
-        aria-label={MEDIA_VIEWER_COPY.previous}
+        aria-label={t("previous")}
         isDisabled={index === 0}
         onPress={nav.handlePrevious}
         className={cn(ARROW, "left-(--component-media-viewer-nav-inset)")}
@@ -154,7 +153,7 @@ function Arrows({ index, count, nav }: Readonly<ArrowsProps>) {
         <Icon name="arrow-left" aria-hidden="true" />
       </AriaButton>
       <AriaButton
-        aria-label={MEDIA_VIEWER_COPY.next}
+        aria-label={t("next")}
         isDisabled={index === count - 1}
         onPress={nav.handleNext}
         className={cn(ARROW, "right-(--component-media-viewer-nav-inset)")}
@@ -166,12 +165,13 @@ function Arrows({ index, count, nav }: Readonly<ArrowsProps>) {
 }
 
 function ViewerFrame(props: Readonly<ViewerFrameProps>) {
+  const t = useTranslations(MEDIA_VIEWER_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const { items, index, onIndexChange } = props;
   const item = items[index];
   const nav = useViewerNavigation(index, items.length, onIndexChange);
   return (
-    <Dialog aria-label={MEDIA_VIEWER_COPY.label(item.title)} className="h-full outline-none">
+    <Dialog aria-label={t("label", { filename: item.title })} className="h-full outline-none">
       <div onKeyDown={nav.handleKeyDown} className="flex h-full flex-col">
         <TopBar item={item} renderActions={props.renderActions} onClose={props.onClose} />
         <div

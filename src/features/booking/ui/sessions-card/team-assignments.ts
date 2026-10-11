@@ -27,6 +27,7 @@ export function picksAsAssignments(
         memberName: member.name,
         isMemberArchived: false,
         roleName: role.name,
+        defaultKey: role.defaultKey,
       },
     ];
   });

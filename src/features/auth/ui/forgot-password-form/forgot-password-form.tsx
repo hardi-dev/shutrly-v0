@@ -1,12 +1,14 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { requestPasswordResetSchema } from "@/features/auth/application/use-cases/request-password-reset/request-password-reset.schema";
 import { Button } from "@/ui/primitives/button/button";
 
 import { AuthErrorAlert } from "../auth-error-alert/auth-error-alert";
 import { ControlledTextField } from "../controlled-text-field/controlled-text-field";
 import { useAuthForm } from "../use-auth-form/use-auth-form";
-import { FORGOT_PASSWORD_FORM_COPY as COPY } from "./forgot-password-form.copy";
+import { FORGOT_PASSWORD_FORM_COPY_NAMESPACE } from "./forgot-password-form.copy";
 import type { ForgotPasswordFormProps } from "./forgot-password-form.types";
 
 /**
@@ -15,6 +17,7 @@ import type { ForgotPasswordFormProps } from "./forgot-password-form.types";
  * @returns the form
  */
 export function ForgotPasswordForm({ action }: Readonly<ForgotPasswordFormProps>) {
+  const t = useTranslations(FORGOT_PASSWORD_FORM_COPY_NAMESPACE);
   const { form, server, onSubmit, isSubmitting } = useAuthForm({
     schema: requestPasswordResetSchema,
     defaultValues: { email: "" },
@@ -27,12 +30,12 @@ export function ForgotPasswordForm({ action }: Readonly<ForgotPasswordFormProps>
         control={form.control}
         name="email"
         type="email"
-        label={COPY.email}
-        placeholder={COPY.emailPlaceholder}
+        label={t("email")}
+        placeholder={t("emailPlaceholder")}
         autoComplete="email"
       />
       <Button type="submit" size="lg" isDisabled={isSubmitting}>
-        {isSubmitting ? COPY.submitting : COPY.submit}
+        {isSubmitting ? t("submitting") : t("submit")}
       </Button>
     </form>
   );

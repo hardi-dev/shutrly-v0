@@ -10,6 +10,7 @@ export type AuthOperation =
   | "logout"
   | "forgot-password"
   | "reset-password"
+  | "update-locale"
   | "change-password"
   | "update-profile"
   | "google-sign-in"

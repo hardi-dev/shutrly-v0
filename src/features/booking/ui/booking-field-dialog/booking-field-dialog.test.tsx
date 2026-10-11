@@ -39,11 +39,11 @@ describe("BookingFieldDialog", () => {
     const action: BookingFieldDialogProps["action"] = vi.fn().mockResolvedValue({ ok: true });
     render(<AddFieldHarness action={action} />);
 
-    expect(screen.getByRole("textbox", { name: "Nama field" })).toHaveAttribute(
+    expect(screen.getByRole("textbox", { name: "Nama kolom" })).toHaveAttribute(
       "placeholder",
       "Contoh: Nama kampus",
     );
-    await user.type(screen.getByRole("textbox", { name: "Nama field" }), "Nama kampus");
+    await user.type(screen.getByRole("textbox", { name: "Nama kolom" }), "Nama kampus");
     await user.click(screen.getByRole("button", { name: /Tipe/ }));
     await user.click(screen.getByRole("option", { name: "Pilihan" }));
     await user.click(screen.getByRole("button", { name: "Tambah pilihan" }));
@@ -61,7 +61,7 @@ describe("BookingFieldDialog", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Buka tambah field" }));
-    expect(screen.getByRole("textbox", { name: "Nama field" })).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "Nama kolom" })).toHaveValue("");
     expect(screen.getByRole("button", { name: /Tipe/ })).toHaveTextContent("Teks");
     expect(screen.getByRole("switch", { name: "Wajib diisi" })).not.toBeChecked();
     expect(screen.queryByRole("textbox", { name: "Pilihan 1" })).not.toBeInTheDocument();

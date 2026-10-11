@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it, vi } from "vitest";
 
 import { PhotoTile, PhotoTileSkeleton } from "./photo-tile";
@@ -35,7 +36,7 @@ describe("PhotoTile (C46)", () => {
 
   it("AC-GAL-014 marks a missing file with Hilang in text", () => {
     render(<PhotoTile fileName="IMG_002.jpg" imageSrc="/x" isMissing onPress={vi.fn()} />);
-    expect(screen.getByRole("button", { name: "IMG_002.jpg, hilang" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "IMG_002.jpg, File hilang" })).toBeInTheDocument();
     expect(screen.getByText("Hilang")).toBeInTheDocument();
   });
 
@@ -114,5 +115,19 @@ describe("PhotoTile selectable (F-10 Photo Tile/Selectable, A-25, A-32)", () => 
       .click(screen.getByRole("button", { name: "Catatan untuk IMG_002.jpg" }));
     expect(onNote).toHaveBeenCalledOnce();
     expect(onChange).not.toHaveBeenCalled();
+  });
+});
+
+describe("PhotoTile missing copy in both locales (I6.1)", () => {
+  it.each([
+    ["en", "IMG_002.jpg, File missing", "Missing"],
+    ["id", "IMG_002.jpg, File hilang", "Hilang"],
+  ] as const)("%s names the missing file and shows its badge", (locale, name, badge) => {
+    renderInLocale(
+      <PhotoTile fileName="IMG_002.jpg" imageSrc="/x.jpg" isMissing onPress={vi.fn()} />,
+      locale,
+    );
+    expect(screen.getByRole("button", { name })).toBeInTheDocument();
+    expect(screen.getByText(badge)).toBeInTheDocument();
   });
 });

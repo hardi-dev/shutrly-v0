@@ -15,7 +15,7 @@ afterEach(() => {
 
 async function press() {
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
-  await user.click(screen.getByRole("button", { name: COPY.resend }));
+  await user.click(screen.getByRole("button", { name: COPY.messages.id.resend }));
 }
 
 describe("ResendVerification", () => {
@@ -23,14 +23,14 @@ describe("ResendVerification", () => {
     render(<ResendVerification action={vi.fn(() => Promise.resolve({ ok: true } as const))} />);
     await press();
     expect(await screen.findByText(/60/)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: COPY.resend })).toBeDisabled();
+    expect(screen.getByRole("button", { name: COPY.messages.id.resend })).toBeDisabled();
     // The countdown re-arms a one-second timer after each render.
     for (let second = 0; second < 60; second++) {
       await act(async () => {
         await vi.advanceTimersByTimeAsync(1_000);
       });
     }
-    expect(screen.getByRole("button", { name: COPY.resend })).toBeEnabled();
+    expect(screen.getByRole("button", { name: COPY.messages.id.resend })).toBeEnabled();
   });
 
   it("AC-AUTH-022 shows a retryable delivery failure", async () => {
@@ -38,8 +38,8 @@ describe("ResendVerification", () => {
     render(<ResendVerification action={vi.fn(() => Promise.resolve(failed))} />);
     await press();
     expect(await screen.findByRole("alert")).toHaveTextContent(
-      AUTH_ERROR_COPY.EMAIL_DELIVERY_FAILED,
+      AUTH_ERROR_COPY.messages.id.EMAIL_DELIVERY_FAILED,
     );
-    expect(screen.getByRole("button", { name: COPY.resend })).toBeEnabled();
+    expect(screen.getByRole("button", { name: COPY.messages.id.resend })).toBeEnabled();
   });
 });

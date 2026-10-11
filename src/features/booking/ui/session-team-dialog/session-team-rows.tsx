@@ -1,10 +1,14 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
 import { clientInitials } from "@/features/booking/ui/client-initials/client-initials";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { SESSION_TEAM_DIALOG_COPY_NAMESPACE } from "./session-team-dialog.copy";
 import type { SessionAssignment, SessionTeamRowsProps } from "./session-team-dialog.types";
 
 /** The rows of *Atur tim*: avatar, name (+ *(diarsipkan)*), role and, while editable, the remove button. */
@@ -14,8 +18,9 @@ export function SessionTeamRows({
   canEdit,
   onRemove,
 }: Readonly<SessionTeamRowsProps>) {
+  const t = useTranslations(SESSION_TEAM_DIALOG_COPY_NAMESPACE);
   return (
-    <ul aria-label={PROJECT_COPY.teamListLabel(sessionName)}>
+    <ul aria-label={t("teamListLabel", { sessionName })}>
       {assignments.map((assignment, index) => (
         <TeamRow
           key={assignment.id}
@@ -23,6 +28,8 @@ export function SessionTeamRows({
           isLast={index === assignments.length - 1}
           canEdit={canEdit}
           onRemove={onRemove}
+          archivedMark={t("teamArchivedMark")}
+          removeLabel={t("teamRemoveLabel")}
         />
       ))}
     </ul>
@@ -34,17 +41,22 @@ function TeamRow({
   isLast,
   canEdit,
   onRemove,
+  archivedMark,
+  removeLabel,
 }: Readonly<{
   assignment: SessionAssignment;
   isLast: boolean;
   canEdit: boolean;
   onRemove: (assignment: SessionAssignment) => void;
+  archivedMark: string;
+  removeLabel: string;
 }>) {
+  const appLocale = useAppLocale();
   function handleRemove(): void {
     onRemove(assignment);
   }
   const name = assignment.isMemberArchived
-    ? `${assignment.memberName} ${PROJECT_COPY.teamArchivedMark}`
+    ? `${assignment.memberName} ${archivedMark}`
     : assignment.memberName;
   return (
     <li
@@ -56,7 +68,10 @@ function TeamRow({
           {name}
         </span>
         <span className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
-          {assignment.roleName}
+          {displayTeamRoleName(
+            { name: assignment.roleName, defaultKey: assignment.defaultKey },
+            appLocale,
+          )}
         </span>
       </span>
       {canEdit ? (
@@ -64,7 +79,7 @@ function TeamRow({
           icon="trash-2"
           size="sm"
           tone="danger"
-          aria-label={PROJECT_COPY.teamRemoveLabel}
+          aria-label={removeLabel}
           onPress={handleRemove}
         />
       ) : null}

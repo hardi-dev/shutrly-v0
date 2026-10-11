@@ -1,3 +1,4 @@
+import { defaultRolesNamed } from "@tests/support/booking/default-roles";
 import { describe, expect, it } from "vitest";
 
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
@@ -9,7 +10,7 @@ const context = { workspaceId: "workspace-a" } as unknown as WorkspaceContext;
 
 async function seeded() {
   const repository = new FakeTeamRoleRepository();
-  await repository.seedDefaults(context, ["Fotografer", "Videografer"]);
+  await repository.seedDefaults(context, defaultRolesNamed(["Fotografer", "Videografer"]));
   const [first] = repository.rows;
   return { repository, id: first.id };
 }

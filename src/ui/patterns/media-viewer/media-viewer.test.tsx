@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { stubViewport } from "@tests/support/gallery/viewport";
 import { useState } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -41,7 +42,7 @@ describe("MediaViewer (C48)", () => {
 
   it("AC-GAL-031 labels the dialog, shows the meta and focuses Tutup", () => {
     render(<Harness onClose={vi.fn()} />);
-    expect(screen.getByRole("dialog", { name: "Preview A_012.jpg" })).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Pratinjau A_012.jpg" })).toBeInTheDocument();
     expect(screen.getByText("Rina-Wisuda › Akad · Proof · 12 dari 13")).toBeInTheDocument();
     expect(screen.getByRole("img", { name: "A_012.jpg" })).toHaveAttribute("src", "/media/b/stage");
     expect(screen.getByRole("button", { name: "Tutup" })).toHaveFocus();
@@ -55,13 +56,13 @@ describe("MediaViewer (C48)", () => {
     const onClose = vi.fn();
     render(<Harness onClose={onClose} />);
     await userEvent.keyboard("{ArrowLeft}");
-    expect(screen.getByRole("dialog", { name: "Preview A_011.jpg" })).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Pratinjau A_011.jpg" })).toBeInTheDocument();
     await userEvent.keyboard("{End}");
     expect(screen.getByText("File tidak ditemukan di Google Drive")).toBeInTheDocument();
     await userEvent.keyboard("{Home}");
-    expect(screen.getByRole("dialog", { name: "Preview A_011.jpg" })).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Pratinjau A_011.jpg" })).toBeInTheDocument();
     await userEvent.keyboard("{ArrowRight}");
-    expect(screen.getByRole("dialog", { name: "Preview A_012.jpg" })).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Pratinjau A_012.jpg" })).toBeInTheDocument();
     await userEvent.keyboard("{Escape}");
     expect(onClose).toHaveBeenCalled();
   });
@@ -69,9 +70,9 @@ describe("MediaViewer (C48)", () => {
   it("AC-GAL-031 picks a photo from the filmstrip and the → button", async () => {
     render(<Harness onClose={vi.fn()} />);
     await userEvent.click(screen.getByRole("button", { name: "A_011.jpg" }));
-    expect(screen.getByRole("dialog", { name: "Preview A_011.jpg" })).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Pratinjau A_011.jpg" })).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Foto berikutnya" }));
-    expect(screen.getByRole("dialog", { name: "Preview A_012.jpg" })).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Pratinjau A_012.jpg" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Buka di Google Drive" })).toBeInTheDocument();
   });
 
@@ -95,5 +96,28 @@ describe("MediaViewer (C48)", () => {
     expect(stage()).toHaveAttribute("src", "/route/b");
     fireEvent.error(stage());
     expect(screen.getByText("File tidak ditemukan di Google Drive")).toBeInTheDocument();
+  });
+});
+
+describe("MediaViewer copy in both locales (I6.1)", () => {
+  const imageSrc = (item: { id: string }, size: string) => `/media/${item.id}/${size}`;
+  it.each([
+    ["en", "Preview A_012.jpg", "Other photos"],
+    ["id", "Pratinjau A_012.jpg", "Foto lainnya"],
+  ] as const)("%s names the viewer and its filmstrip", (locale, dialogName, filmstrip) => {
+    renderInLocale(
+      <MediaViewer
+        items={ITEMS}
+        index={1}
+        onIndexChange={vi.fn()}
+        onClose={vi.fn()}
+        imageSrc={imageSrc}
+        missingText="File tidak ditemukan di Google Drive"
+        renderActions={renderActions}
+      />,
+      locale,
+    );
+    expect(screen.getByRole("dialog", { name: dialogName })).toBeInTheDocument();
+    expect(screen.getByRole("list", { name: filmstrip })).toBeInTheDocument();
   });
 });

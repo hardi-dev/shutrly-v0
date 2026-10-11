@@ -4,6 +4,8 @@ import type { BookingFieldRecord } from "@/features/booking/application/ports/se
 import type { CatalogWriteResult } from "@/features/booking/application/use-cases/catalog-results/catalog-results.types";
 import type { FieldType } from "@/features/booking/domain/booking-field/booking-field.types";
 
+import type { CatalogTranslate } from "../catalog-copy/catalog-copy.types";
+
 export interface BookingFieldDialogProps {
   readonly isOpen: boolean;
   readonly workspaceId: string;
@@ -56,6 +58,7 @@ export interface BookingFieldValueState {
 }
 
 export interface BookingFieldSubmitArgs {
+  readonly t: CatalogTranslate;
   readonly workspaceId: string;
   readonly serviceId: string;
   readonly field?: BookingFieldRecord;

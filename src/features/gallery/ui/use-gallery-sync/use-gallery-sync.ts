@@ -1,13 +1,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { GallerySourceView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
+import { GALLERY_REFUSED_MESSAGE_KEY } from "../gallery-copy/gallery-copy.copy";
+import type { GalleryTranslate } from "../gallery-copy/gallery-copy.types";
 import type { SourceSyncPhase, SourceSyncProgress } from "../source-text/source-text.types";
+import { USE_GALLERY_SYNC_COPY_NAMESPACE } from "./use-gallery-sync.copy";
 import type {
   GallerySyncState,
   SyncReport,
@@ -26,32 +29,33 @@ function report(outcomes: readonly [SyncTarget, SyncRunOutcome][]): SyncReport {
   return { synced: outcomes.length - failedNames.length, failedNames };
 }
 
-function toastFor(outcomes: readonly [SyncTarget, SyncRunOutcome][]): void {
+function toastFor(t: GalleryTranslate, outcomes: readonly [SyncTarget, SyncRunOutcome][]): void {
   const single = outcomes.length === 1 ? outcomes[0][1] : null;
   if (single && !single.ok) {
-    showToast({ tone: "danger", title: GALLERY_COPY.refused[single.code] });
+    showToast({ tone: "danger", title: t(GALLERY_REFUSED_MESSAGE_KEY[single.code]) });
     return;
   }
   const { synced, failedNames } = report(outcomes);
   if (synced === 0) {
     showToast({
       tone: "danger",
-      title: GALLERY_COPY.syncFailedTitle,
-      body: GALLERY_COPY.syncFailedBody,
+      title: t("syncFailedTitle"),
+      body: t("syncFailedBody"),
     });
     return;
   }
   const failed =
-    failedNames.length === 0 ? "" : ` ${GALLERY_COPY.syncFailedNames(failedNames.join(", "))}`;
+    failedNames.length === 0 ? "" : ` ${t("syncFailedNames", { names: failedNames.join(", ") })}`;
   showToast({
     tone: "success",
-    title: GALLERY_COPY.syncDoneTitle,
-    body: `${GALLERY_COPY.syncDoneBody(synced)}${failed}`,
+    title: t("syncDoneTitle"),
+    body: `${t("syncDoneBody", { count: synced })}${failed}`,
   });
 }
 
 /** F-21: names the subfolders a sync found for the first time, with *Petakan* to open the mapping. */
 function newFoldersToast(
+  t: GalleryTranslate,
   outcomes: readonly [SyncTarget, SyncRunOutcome][],
   onMapFolders: UseGallerySyncInput["onMapFolders"],
 ): void {
@@ -61,11 +65,11 @@ function newFoldersToast(
     if (folders.length === 0) continue;
     showToast({
       tone: "info",
-      title: GALLERY_COPY.newFoldersTitle(folders.length, target.name),
-      body: GALLERY_COPY.newFoldersBody(folders.join(", ")),
+      title: t("newFoldersTitle", { count: folders.length, source: target.name }),
+      body: t("newFoldersBody", { folders: folders.join(", ") }),
       action: onMapFolders
         ? {
-            label: GALLERY_COPY.mapFolders,
+            label: t("mapFolders"),
             onAction: () => {
               onMapFolders(target.id);
             },
@@ -75,8 +79,8 @@ function newFoldersToast(
   }
 }
 
-function toTarget(source: GallerySourceView): SyncTarget {
-  return { id: source.id, name: source.name ?? GALLERY_COPY.sourceFallbackName };
+function toTarget(t: GalleryTranslate, source: GallerySourceView): SyncTarget {
+  return { id: source.id, name: source.name ?? t("sourceFallbackName") };
 }
 
 const FAILED_RUN: SyncRunOutcome = { ok: true, status: "FAILED", errorCode: "UNAVAILABLE" };
@@ -111,6 +115,7 @@ function useSyncMarks() {
 
 /** Runs *Sinkronkan* for one source, *Sinkronkan semua* one source at a time, and the first sync of a newly linked folder, each as a loop of server steps with its own progress (D-9, D-27, AC-GAL-012, AC-GAL-032). @param input - workspace and the sync step action @returns the phases, the progress and the triggers */
 export function useGallerySync(input: Readonly<UseGallerySyncInput>): GallerySyncState {
+  const t = useTranslations(USE_GALLERY_SYNC_COPY_NAMESPACE);
   const router = useRouter();
   const { phases, progress, setPhase, setStepProgress } = useSyncMarks();
   const runOne = async (target: SyncTarget): Promise<[SyncTarget, SyncRunOutcome]> => {
@@ -129,16 +134,16 @@ export function useGallerySync(input: Readonly<UseGallerySyncInput>): GallerySyn
     );
     const outcomes: [SyncTarget, SyncRunOutcome][] = [];
     for (const target of targets) outcomes.push(await runOne(target));
-    toastFor(outcomes);
-    newFoldersToast(outcomes, input.onMapFolders);
+    toastFor(t, outcomes);
+    newFoldersToast(t, outcomes, input.onMapFolders);
     router.refresh();
   };
   return {
     phaseOf: (sourceId) => phases.get(sourceId) ?? null,
     progressOf: (sourceId) => progress.get(sourceId) ?? null,
     isRunning: [...phases.values()].some((phase) => phase !== null),
-    syncOne: (source) => void run([toTarget(source)]),
-    syncAll: (sources) => void run(sources.map(toTarget)),
-    syncNew: (sourceId) => void run([{ id: sourceId, name: GALLERY_COPY.sourceFallbackName }]),
+    syncOne: (source) => void run([toTarget(t, source)]),
+    syncAll: (sources) => void run(sources.map((source) => toTarget(t, source))),
+    syncNew: (sourceId) => void run([{ id: sourceId, name: t("sourceFallbackName") }]),
   };
 }

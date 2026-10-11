@@ -1,8 +1,10 @@
+import { useTranslations } from "next-intl";
+
 import { Alert } from "@/ui/patterns/alert/alert";
 import { Button } from "@/ui/primitives/button/button";
 
 import { AuthIntro } from "../auth-intro/auth-intro";
-import { ACCOUNT_UNAVAILABLE_SCREEN_COPY as COPY } from "./account-unavailable-screen.copy";
+import { ACCOUNT_UNAVAILABLE_SCREEN_COPY_NAMESPACE } from "./account-unavailable-screen.copy";
 import type { AccountUnavailableScreenProps } from "./account-unavailable-screen.types";
 
 /**
@@ -14,13 +16,14 @@ import type { AccountUnavailableScreenProps } from "./account-unavailable-screen
 export function AccountUnavailableScreen({
   signOutAction,
 }: Readonly<AccountUnavailableScreenProps>) {
+  const t = useTranslations(ACCOUNT_UNAVAILABLE_SCREEN_COPY_NAMESPACE);
   return (
     <>
-      <AuthIntro title={COPY.title} lead={COPY.lead} />
-      <Alert tone="danger" title={COPY.alertTitle} body={COPY.alertBody} />
+      <AuthIntro title={t("title")} lead={t("lead")} />
+      <Alert tone="danger" title={t("alertTitle")} body={t("alertBody")} />
       <form action={signOutAction}>
         <Button type="submit" variant="secondary" size="lg" className="w-full">
-          {COPY.signOut}
+          {t("signOut")}
         </Button>
       </form>
     </>

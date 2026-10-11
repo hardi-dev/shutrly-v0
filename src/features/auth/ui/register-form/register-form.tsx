@@ -1,12 +1,14 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { registerOwnerSchema } from "@/features/auth/application/use-cases/register-owner/register-owner.schema";
 import { Button } from "@/ui/primitives/button/button";
 
 import { AuthErrorAlert } from "../auth-error-alert/auth-error-alert";
 import { ControlledTextField } from "../controlled-text-field/controlled-text-field";
 import { useAuthForm } from "../use-auth-form/use-auth-form";
-import { REGISTER_FORM_COPY as COPY } from "./register-form.copy";
+import { REGISTER_FORM_COPY_NAMESPACE } from "./register-form.copy";
 import type { RegisterFormProps } from "./register-form.types";
 
 const DEFAULTS = { name: "", email: "", password: "" };
@@ -18,6 +20,7 @@ const DEFAULTS = { name: "", email: "", password: "" };
  * @returns the form
  */
 export function RegisterForm({ action, secondaryAction }: Readonly<RegisterFormProps>) {
+  const t = useTranslations(REGISTER_FORM_COPY_NAMESPACE);
   const { form, server, onSubmit, isSubmitting } = useAuthForm({
     schema: registerOwnerSchema,
     defaultValues: DEFAULTS,
@@ -32,29 +35,29 @@ export function RegisterForm({ action, secondaryAction }: Readonly<RegisterFormP
           <ControlledTextField
             control={control}
             name="name"
-            label={COPY.name}
-            placeholder={COPY.namePlaceholder}
+            label={t("name")}
+            placeholder={t("namePlaceholder")}
             autoComplete="name"
           />
           <ControlledTextField
             control={control}
             name="email"
             type="email"
-            label={COPY.email}
-            placeholder={COPY.emailPlaceholder}
+            label={t("email")}
+            placeholder={t("emailPlaceholder")}
             autoComplete="email"
           />
           <ControlledTextField
             control={control}
             name="password"
             type="password"
-            label={COPY.password}
-            placeholder={COPY.passwordPlaceholder}
+            label={t("password")}
+            placeholder={t("passwordPlaceholder")}
             autoComplete="new-password"
           />
         </div>
         <Button type="submit" size="lg" isDisabled={isSubmitting}>
-          {isSubmitting ? COPY.submitting : COPY.submit}
+          {isSubmitting ? t("submitting") : t("submit")}
         </Button>
       </form>
       {secondaryAction}

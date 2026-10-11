@@ -1,12 +1,15 @@
+import { useTranslations } from "next-intl";
+
 import { Icon } from "@/ui/primitives/icon/icon";
 
 import { ClientHeader } from "../client-header/client-header";
 import { ClientPasswordForm } from "../client-password-form/client-password-form";
-import { CLIENT_GATE_SCREEN_COPY as COPY } from "./client-gate-screen.copy";
+import { CLIENT_GATE_SCREEN_COPY_NAMESPACE } from "./client-gate-screen.copy";
 import type { ClientGateScreenProps } from "./client-gate-screen.types";
 
 /** The gallery password page (gerbang A3bQ0 / XIUZy, AC-ACC-001…003, -007). @param props - the gate view and the sign-in action @returns the page */
 export function ClientGateScreen({ gate, action }: Readonly<ClientGateScreenProps>) {
+  const t = useTranslations(CLIENT_GATE_SCREEN_COPY_NAMESPACE);
   return (
     <div className="flex min-h-dvh flex-col bg-(--color-semantic-surface-canvas)">
       <ClientHeader studioName={gate.studioName} projectTitle={gate.projectTitle} />
@@ -24,10 +27,10 @@ export function ClientGateScreen({ gate, action }: Readonly<ClientGateScreenProp
                 id="client-gate-title"
                 className="text-(length:--font-size-title) font-bold text-(--color-semantic-text-primary)"
               >
-                {COPY.title}
+                {t("title")}
               </h1>
               <p className="text-(length:--font-size-body) text-(--color-semantic-text-secondary)">
-                {COPY.description(gate.projectTitle, gate.studioName)}
+                {t("description", { projectTitle: gate.projectTitle, studioName: gate.studioName })}
               </p>
             </div>
           </div>

@@ -1,7 +1,9 @@
+import { useTranslations } from "next-intl";
+
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { Button } from "@/ui/primitives/button/button";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
+import { TEAM_MEMBERS_EMPTY_STATE_COPY_NAMESPACE } from "./team-members-empty-state.copy";
 import type { TeamMembersEmptyStateProps } from "./team-members-empty-state.types";
 
 /**
@@ -15,16 +17,17 @@ export function TeamMembersEmptyState({
   addAction,
   onClearSearch,
 }: Readonly<TeamMembersEmptyStateProps>) {
+  const t = useTranslations(TEAM_MEMBERS_EMPTY_STATE_COPY_NAMESPACE);
   if (hasQuery) {
     return (
       <EmptyState
         placement="in-card"
         icon="search-x"
-        title={TEAM_COPY.noMatchTitle}
-        body={TEAM_COPY.noMatchBody}
+        title={t("noMatchTitle")}
+        body={t("noMatchBody")}
         action={
           <Button variant="secondary" onPress={onClearSearch}>
-            {TEAM_COPY.clearSearch}
+            {t("clearSearch")}
           </Button>
         }
       />
@@ -35,8 +38,8 @@ export function TeamMembersEmptyState({
     <EmptyState
       placement="in-card"
       icon={isActive ? "users" : "archive"}
-      title={isActive ? TEAM_COPY.emptyActiveTitle : TEAM_COPY.emptyArchivedTitle}
-      body={isActive ? TEAM_COPY.emptyActiveBody : TEAM_COPY.emptyArchivedBody}
+      title={isActive ? t("emptyActiveTitle") : t("emptyArchivedTitle")}
+      body={isActive ? t("emptyActiveBody") : t("emptyArchivedBody")}
       action={isActive ? addAction : undefined}
     />
   );

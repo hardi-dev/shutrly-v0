@@ -43,14 +43,14 @@ describe("ProjectFilterDialog", () => {
 
   it("AC-PRJ-028 shows the fields of Aktif with its description", () => {
     renderDialog();
-    const dialog = screen.getByRole("dialog", { name: "Filter proyek" });
+    const dialog = screen.getByRole("dialog", { name: "Saring proyek" });
     expect(within(dialog).getByText("Berlaku untuk tab Aktif.")).toBeInTheDocument();
     expect(within(dialog).getByRole("button", { name: /Status/ })).toHaveTextContent(
       "Semua status",
     );
     expect(within(dialog).getByText("Jadwal")).toBeInTheDocument();
     expect(
-      within(dialog).getByRole("checkbox", { name: "Sertakan proyek tanpa jadwal" }),
+      within(dialog).getByRole("checkbox", { name: "Sertakan proyek tanpa jadwal sesi" }),
     ).toBeInTheDocument();
     expect(within(dialog).getByRole("button", { name: /Layanan/ })).toHaveTextContent(
       "Semua layanan",
@@ -77,14 +77,16 @@ describe("ProjectFilterDialog", () => {
 
   it("AC-PRJ-028 Reset removes the filter but keeps the search text", async () => {
     renderDialog({ q: "rina", filter: { statuses: ["BOOKED"] } });
-    await userEvent.click(screen.getByRole("button", { name: "Reset" }));
+    await userEvent.click(screen.getByRole("button", { name: "Hapus penyaring" }));
     expect(replace).toHaveBeenCalledWith("/w/ws/projects?q=rina");
   });
 
   it("AC-PRJ-028 refuses a Sampai before Dari and does not navigate", async () => {
     renderDialog({ filter: { from: "2026-11-30", to: "2026-10-01" } });
     await userEvent.click(screen.getByRole("button", { name: "Terapkan" }));
-    expect(screen.getByText("Tanggal Sampai harus sama atau setelah Dari.")).toBeInTheDocument();
+    expect(
+      screen.getByText("Tanggal akhir harus sama atau setelah tanggal awal."),
+    ).toBeInTheDocument();
     expect(replace).not.toHaveBeenCalled();
   });
 
@@ -101,10 +103,10 @@ describe("ProjectFilterButton", () => {
     const { rerender } = render(
       <ProjectFilterButton tab="ACTIVE" filter={filter} onPress={vi.fn()} />,
     );
-    expect(screen.getByRole("button", { name: "Filter, 2 aktif" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Saring, 2 penyaring aktif" })).toBeInTheDocument();
     rerender(<ProjectFilterButton tab="COMPLETED" filter={filter} onPress={vi.fn()} />);
-    expect(screen.getByRole("button", { name: "Filter, 1 aktif" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Saring, 1 penyaring aktif" })).toBeInTheDocument();
     rerender(<ProjectFilterButton tab="ACTIVE" filter={EMPTY_PROJECT_FILTER} onPress={vi.fn()} />);
-    expect(screen.getByRole("button", { name: "Filter" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Saring" })).toBeInTheDocument();
   });
 });

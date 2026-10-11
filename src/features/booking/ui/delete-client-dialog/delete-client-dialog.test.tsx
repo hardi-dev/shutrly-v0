@@ -24,7 +24,7 @@ describe("DeleteClientDialog", () => {
         onOpenChange={onOpenChange}
       />,
     );
-    expect(screen.getByRole("alertdialog", { name: 'Hapus klien "Rina"?' })).toBeVisible();
+    expect(screen.getByRole("alertdialog", { name: "Hapus klien “Rina”?" })).toBeVisible();
     await userEvent.click(screen.getByRole("button", { name: "Hapus klien" }));
     expect(action).toHaveBeenCalledWith("w1", "c1");
     expect(onOpenChange).toHaveBeenCalledWith(false);
@@ -42,7 +42,7 @@ describe("DeleteClientDialog", () => {
       />,
     );
     await userEvent.click(screen.getByRole("button", { name: "Hapus klien" }));
-    expect(await screen.findByText("Klien ini punya proyek. Arsipkan saja.")).toBeVisible();
+    expect(await screen.findByText("Klien ini punya proyek")).toBeVisible();
     expect(screen.getByRole("button", { name: "Hapus klien" })).toBeDisabled();
   });
 });

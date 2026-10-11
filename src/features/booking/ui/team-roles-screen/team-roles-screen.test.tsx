@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useLocale } from "next-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const useMobileViewport = vi.fn();
@@ -12,8 +13,8 @@ vi.mock("@/ui/patterns/toast/toast", () => ({ showToast }));
 const { TeamRolesScreen } = await import("./team-roles-screen");
 
 const ROLES = [
-  { id: "asisten", name: "Asisten", usage: 3 },
-  { id: "drone", name: "Drone", usage: 0 },
+  { id: "asisten", name: "Asisten", defaultKey: null, usage: 3 },
+  { id: "drone", name: "Drone", defaultKey: null, usage: 0 },
 ];
 
 function setup(overrides = {}) {
@@ -44,7 +45,7 @@ describe("TeamRolesScreen", () => {
 
   it("AC-TEAM-009 shows each role with its usage in the desktop table", () => {
     setup();
-    expect(screen.getByRole("grid", { name: "Daftar peran" })).toBeInTheDocument();
+    expect(screen.getByRole("grid", { name: "Peran" })).toBeInTheDocument();
     expect(screen.getByText("2 peran · dipilih saat menambah anggota")).toBeInTheDocument();
     expect(screen.getByText("3 anggota")).toBeInTheDocument();
     expect(screen.getByText("Belum dipakai")).toBeInTheDocument();
@@ -100,7 +101,7 @@ describe("TeamRolesScreen", () => {
 
   it("AC-TEAM-009 opens the blocked dialog for a used role, offering only Tutup", async () => {
     const { deleteAction } = setup();
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Asisten" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Asisten" }));
     await userEvent.click(await screen.findByRole("menuitem", { name: "Hapus" }));
     expect(await screen.findByText("Peran Asisten tidak bisa dihapus")).toBeInTheDocument();
     expect(screen.getByText("Peran ini masih dipakai 3 anggota.")).toBeInTheDocument();
@@ -112,9 +113,9 @@ describe("TeamRolesScreen", () => {
 
   it("AC-TEAM-009 deletes an unused role after confirmation", async () => {
     const { deleteAction } = setup();
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Drone" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Drone" }));
     await userEvent.click(await screen.findByRole("menuitem", { name: "Hapus" }));
-    expect(await screen.findByText('Hapus peran "Drone"?')).toBeInTheDocument();
+    expect(await screen.findByText("Hapus peran “Drone”?")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Hapus" }));
     expect(deleteAction).toHaveBeenCalledWith("ws", "drone");
     expect(showToast).toHaveBeenCalledWith(
@@ -124,7 +125,7 @@ describe("TeamRolesScreen", () => {
 
   it("AC-TEAM-009 flips to the blocked dialog when the server reports the role in use", async () => {
     setup({ deleteAction: vi.fn().mockResolvedValue({ ok: false, code: "IN_USE", usage: 1 }) });
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Drone" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Drone" }));
     await userEvent.click(await screen.findByRole("menuitem", { name: "Hapus" }));
     await userEvent.click(screen.getByRole("button", { name: "Hapus" }));
     expect(await screen.findByText("Peran ini masih dipakai 1 anggota.")).toBeInTheDocument();
@@ -147,7 +148,7 @@ describe("TeamRolesScreen", () => {
 
   it("C-008 returns focus to the row's ⋯ trigger when the dialog closes", async () => {
     setup();
-    const trigger = screen.getByRole("button", { name: "Aksi untuk Asisten" });
+    const trigger = screen.getByRole("button", { name: "Tindakan untuk Asisten" });
     await userEvent.click(trigger);
     await userEvent.click(await screen.findByRole("menuitem", { name: "Hapus" }));
     await screen.findByText("Peran Asisten tidak bisa dihapus");
@@ -155,5 +156,16 @@ describe("TeamRolesScreen", () => {
     await waitFor(() => {
       expect(trigger).toHaveFocus();
     });
+  });
+
+  it("D-18 a keyed role shows its English label in en", () => {
+    vi.mocked(useLocale).mockReturnValue("en");
+    try {
+      setup({ roles: [{ id: "p", name: "Fotografer", defaultKey: "PHOTOGRAPHER", usage: 0 }] });
+      expect(screen.getByText("Photographer")).toBeInTheDocument();
+      expect(screen.queryByText("Fotografer")).not.toBeInTheDocument();
+    } finally {
+      vi.mocked(useLocale).mockReturnValue("id");
+    }
   });
 });

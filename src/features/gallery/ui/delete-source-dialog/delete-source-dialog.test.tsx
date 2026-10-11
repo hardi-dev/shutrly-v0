@@ -1,13 +1,20 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
+import type { ReactElement } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { SOURCE_COPY } from "../source-copy/source-copy.copy";
+import { SOURCE_COPY_NAMESPACE } from "../source-copy/source-copy.copy";
 import { DeleteSourceDialog } from "./delete-source-dialog";
 
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
+
+import { copyTranslator } from "@tests/support/copy/copy-messages";
+
+const copy = copyTranslator(SOURCE_COPY_NAMESPACE, "id");
+const render = (ui: ReactElement) => renderInLocale(ui, "id");
 
 const source = {
   id: "source-1",
@@ -32,17 +39,17 @@ describe("DeleteSourceDialog", () => {
     );
 
     expect(
-      screen.getByRole("alertdialog", { name: SOURCE_COPY.deleteTitle(source.displayName) }),
+      screen.getByRole("alertdialog", { name: copy("deleteTitle", { name: source.displayName }) }),
     ).toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: SOURCE_COPY.deleteConfirm }));
+    await user.click(screen.getByRole("button", { name: copy("deleteConfirm") }));
     await waitFor(() => {
       expect(action).toHaveBeenCalledWith("ws-1", "source-1");
     });
     expect(onOpenChange).toHaveBeenCalledWith(false);
     expect(showToast).toHaveBeenCalledWith({
       tone: "success",
-      title: SOURCE_COPY.deletedTitle,
-      body: SOURCE_COPY.deletedBody(source.displayName),
+      title: copy("deletedTitle"),
+      body: copy("deletedBody", { name: source.displayName }),
     });
   });
 
@@ -59,9 +66,9 @@ describe("DeleteSourceDialog", () => {
         action={action}
       />,
     );
-    await user.click(screen.getByRole("button", { name: SOURCE_COPY.deleteConfirm }));
+    await user.click(screen.getByRole("button", { name: copy("deleteConfirm") }));
     await waitFor(() => {
-      expect(showToast).toHaveBeenCalledWith({ tone: "danger", title: SOURCE_COPY.inUse });
+      expect(showToast).toHaveBeenCalledWith({ tone: "danger", title: copy("inUse") });
     });
     expect(onOpenChange).not.toHaveBeenCalledWith(false);
   });

@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it, vi } from "vitest";
 
 import { Alert } from "./alert";
@@ -66,5 +67,15 @@ describe("Alert (C24)", () => {
     expect(screen.getByText("Info pilihan")).toHaveClass(
       "text-(--component-alert-highlight-title)",
     );
+  });
+});
+
+describe("Alert close label in both locales (I6.1)", () => {
+  it.each([
+    ["en", "Dismiss notification"],
+    ["id", "Tutup notifikasi"],
+  ] as const)("%s names the default close control", (locale, name) => {
+    renderInLocale(<Alert tone="info" title="Tersimpan" onClose={vi.fn()} />, locale);
+    expect(screen.getByRole("button", { name })).toBeInTheDocument();
   });
 });

@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useState } from "react";
 
 import type { ProjectListRow } from "@/features/booking/application/ports/project-list-reader/project-list-reader.port";
 import { formatShortDate } from "@/features/booking/domain/session/session";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { Button } from "@/ui/primitives/button/button";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { ProjectFilterButton } from "../project-filter-button/project-filter-button";
 import { ProjectFilterDialog } from "../project-filter-dialog/project-filter-dialog";
 import { ProjectList } from "../project-list/project-list";
@@ -25,6 +28,7 @@ import { ProjectsTable } from "../projects-table/projects-table";
 import { ProjectsTabsBar } from "../projects-tabs-bar/projects-tabs-bar";
 import { useLoadMoreProjects } from "../use-load-more-projects/use-load-more-projects";
 import { NewProjectButton } from "./new-project-button";
+import { PROJECTS_SCREEN_COPY_NAMESPACE } from "./projects-screen.copy";
 import type { ProjectsScreenProps } from "./projects-screen.types";
 
 function usePager(props: Readonly<ProjectsScreenProps>) {
@@ -40,6 +44,8 @@ function usePager(props: Readonly<ProjectsScreenProps>) {
 
 /** The project list (S1): tabs, search, table or list card, and Muat lebih banyak (AC-PRJ-001…005). */
 export function ProjectsScreen(props: Readonly<ProjectsScreenProps>) {
+  const t = useTranslations(PROJECTS_SCREEN_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
   const pager = usePager(props);
   const router = useRouter();
   const handleDeleted = () => {
@@ -58,7 +64,7 @@ export function ProjectsScreen(props: Readonly<ProjectsScreenProps>) {
         onDeleted={handleDeleted}
       >
         {(api) => {
-          const renderMenu = (row: ProjectListRow) => api.menuFor(rowTarget(row));
+          const renderMenu = (row: ProjectListRow) => api.menuFor(rowTarget(t, row, locale));
           return (
             <ProjectsBody
               {...props}
@@ -94,6 +100,7 @@ function ProjectsBody(
     }
   >,
 ) {
+  const t = useTranslations(PROJECTS_SCREEN_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const newButton = (label: string) => (
     <NewProjectButton workspaceId={props.workspaceId} label={label} />
@@ -112,14 +119,14 @@ function ProjectsBody(
           rows={props.rows}
           emptyState={emptyState}
           renderMenu={props.renderMenu}
-          action={newButton(PROJECT_COPY.listAddMobile)}
+          action={newButton(t("listAddMobile"))}
         />
       </>
     );
   }
   return (
     <>
-      <PageActions>{newButton(PROJECT_COPY.listAddDesktop)}</PageActions>
+      <PageActions>{newButton(t("listAddDesktop"))}</PageActions>
       <ProjectsTable
         workspaceId={props.workspaceId}
         tab={props.tab}
@@ -133,11 +140,15 @@ function ProjectsBody(
   );
 }
 
-function rowTarget(row: ProjectListRow): ProjectMenuTarget {
+function rowTarget(
+  t: ProjectTranslate,
+  row: ProjectListRow,
+  locale: FormattingLocale,
+): ProjectMenuTarget {
   const when =
     row.shownSession === null
-      ? PROJECT_COPY.metaNoSchedule
-      : formatShortDate(row.shownSession.date);
+      ? t("metaNoSchedule")
+      : formatShortDate(row.shownSession.date, locale);
   return {
     id: row.id,
     title: row.title,
@@ -146,7 +157,11 @@ function rowTarget(row: ProjectListRow): ProjectMenuTarget {
     clientId: row.clientId,
     clientName: row.clientName,
     whatsappNumber: row.clientWhatsappNumber,
-    meta: PROJECT_COPY.menuSheetMeta(row.clientName, when, projectStatusChip(row.status).label),
+    meta: t("menuSheetMeta", {
+      client: row.clientName,
+      when,
+      status: projectStatusChip(t, row.status).label,
+    }),
   };
 }
 
@@ -177,16 +192,17 @@ function ProjectsEmpty({
   tab,
   q,
 }: Readonly<Pick<ProjectsScreenProps, "workspaceId" | "tab" | "q">>) {
+  const t = useTranslations(PROJECTS_SCREEN_COPY_NAMESPACE);
   return (
     <ProjectsEmptyState
       tab={tab}
       hasQuery={q !== ""}
       action={
         q === "" ? (
-          <NewProjectButton workspaceId={workspaceId} label={PROJECT_COPY.listAddDesktop} />
+          <NewProjectButton workspaceId={workspaceId} label={t("listAddDesktop")} />
         ) : (
           <Link href={projectTabPath(workspaceId, tab)} className="font-semibold underline">
-            {PROJECT_COPY.clearSearch}
+            {t("clearSearch")}
           </Link>
         )
       }
@@ -198,12 +214,13 @@ function LoadMore({
   isLoading,
   onLoadMore,
 }: Readonly<{ isLoading: boolean; onLoadMore: () => Promise<void> }>) {
+  const t = useTranslations(PROJECTS_SCREEN_COPY_NAMESPACE);
   const handlePress = () => {
     void onLoadMore();
   };
   return (
     <Button variant="secondary" isPending={isLoading} onPress={handlePress}>
-      {isLoading ? PROJECT_COPY.loadingMore : PROJECT_COPY.loadMore}
+      {isLoading ? t("loadingMore") : t("loadMore")}
     </Button>
   );
 }

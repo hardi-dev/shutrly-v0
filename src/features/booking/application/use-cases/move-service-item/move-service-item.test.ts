@@ -13,14 +13,32 @@ describe("moveServiceItem", () => {
     const first = definitions.rows[0]?.id;
     const second = definitions.rows[1]?.id;
     if (!first || !second) throw new Error("fixture");
-    await addServiceItem(services, definitions, bookingContext, serviceId, first, "user", {
-      type: "NUMBER",
-      value: "1",
-    });
-    await addServiceItem(services, definitions, bookingContext, serviceId, second, "user", {
-      type: "NUMBER",
-      value: "2",
-    });
+    await addServiceItem(
+      services,
+      definitions,
+      bookingContext,
+      serviceId,
+      first,
+      "user",
+      {
+        type: "NUMBER",
+        value: "1",
+      },
+      "id-ID",
+    );
+    await addServiceItem(
+      services,
+      definitions,
+      bookingContext,
+      serviceId,
+      second,
+      "user",
+      {
+        type: "NUMBER",
+        value: "2",
+      },
+      "id-ID",
+    );
     const firstId = services.rows[0]?.items[0]?.id;
     const secondId = services.rows[0]?.items[1]?.id;
     if (!firstId || !secondId) throw new Error("fixture");

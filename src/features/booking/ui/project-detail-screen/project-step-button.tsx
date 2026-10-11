@@ -1,9 +1,12 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import type { ProjectStep } from "@/features/booking/domain/project-status/project-status.types";
 import { Button } from "@/ui/primitives/button/button";
 
 import { projectStepCopy } from "../project-step-copy/project-step-copy";
+import { PROJECT_DETAIL_SCREEN_COPY_NAMESPACE } from "./project-detail-screen.copy";
 
 /** The one forward step for the project's status; pending shows the Loading label (AC-PRJ-020). */
 export function ProjectStepButton({
@@ -21,7 +24,8 @@ export function ProjectStepButton({
   className?: string;
   onAdvance: (step: ProjectStep) => Promise<void>;
 }>) {
-  const copy = projectStepCopy(step);
+  const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
+  const copy = projectStepCopy(t, step);
   const handlePress = () => {
     void onAdvance(step);
   };

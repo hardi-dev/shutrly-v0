@@ -1,9 +1,11 @@
+import type { DefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions.types";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
 
 export interface DraftItem {
   readonly definitionId: string;
   readonly name: string;
   readonly unit: string | null;
+  readonly defaultKey: DefaultItemKey | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
   readonly pickMode: "COUNT" | "QUANTITY" | null;

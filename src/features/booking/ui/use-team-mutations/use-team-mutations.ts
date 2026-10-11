@@ -1,13 +1,16 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
+import type { TeamTranslate } from "../team-copy/team-copy.types";
+import { USE_TEAM_MUTATIONS_COPY_NAMESPACE } from "./use-team-mutations.copy";
 import type { TeamMutationOutcome, TeamMutationSuccess } from "./use-team-mutations.types";
 
 async function runTeamMutation<R extends TeamMutationOutcome | undefined>(
+  t: TeamTranslate,
   call: () => Promise<R>,
   success: TeamMutationSuccess,
 ): Promise<R> {
@@ -19,10 +22,10 @@ async function runTeamMutation<R extends TeamMutationOutcome | undefined>(
   } catch (error) {
     showToast({
       tone: "danger",
-      title: TEAM_COPY.serverErrorTitle,
+      title: t("serverErrorTitle"),
       action: {
-        label: TEAM_COPY.retry,
-        onAction: () => void runTeamMutation(call, success).catch(() => undefined),
+        label: t("retry"),
+        onAction: () => void runTeamMutation(t, call, success).catch(() => undefined),
       },
     });
     throw error;
@@ -35,12 +38,13 @@ async function runTeamMutation<R extends TeamMutationOutcome | undefined>(
  * @returns `run(call, success)`
  */
 export function useTeamMutations() {
+  const t = useTranslations(USE_TEAM_MUTATIONS_COPY_NAMESPACE);
   const run = useCallback(
     <R extends TeamMutationOutcome | undefined>(
       call: () => Promise<R>,
       success: TeamMutationSuccess,
-    ) => runTeamMutation(call, success),
-    [],
+    ) => runTeamMutation(t, call, success),
+    [t],
   );
   return { run };
 }

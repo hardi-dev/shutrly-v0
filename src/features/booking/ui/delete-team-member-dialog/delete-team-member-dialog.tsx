@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { TeamMemberRecord } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
@@ -10,7 +11,7 @@ import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
+import { DELETE_TEAM_MEMBER_DIALOG_COPY_NAMESPACE } from "./delete-team-member-dialog.copy";
 import type {
   DeleteMemberView,
   DeleteTeamMemberDialogProps,
@@ -35,6 +36,7 @@ function DeleteMemberBody({
   const isMobile = useMobileViewport();
   const [isPending, setIsPending] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
+  const t = useTranslations(DELETE_TEAM_MEMBER_DIALOG_COPY_NAMESPACE);
 
   async function confirm(): Promise<void> {
     setIsPending(true);
@@ -44,10 +46,10 @@ function DeleteMemberBody({
         setIsBlocked(true);
         return;
       }
-      showToast({ tone: "success", title: TEAM_COPY.memberDeletedTitle(member.name) });
+      showToast({ tone: "success", title: t("memberDeletedTitle", { name: member.name }) });
       onOpenChange(false);
     } catch {
-      showToast({ tone: "danger", title: TEAM_COPY.serverErrorTitle });
+      showToast({ tone: "danger", title: t("serverErrorTitle") });
     } finally {
       setIsPending(false);
     }
@@ -60,9 +62,9 @@ function DeleteMemberBody({
   }
   const view: DeleteMemberView = {
     title: isBlocked
-      ? TEAM_COPY.memberDeleteBlockedTitle(member.name)
-      : TEAM_COPY.memberDeleteTitle(member.name),
-    description: isBlocked ? TEAM_COPY.memberDeleteBlockedBody : TEAM_COPY.memberDeleteBody,
+      ? t("memberDeleteBlockedTitle", { name: member.name })
+      : t("memberDeleteTitle", { name: member.name }),
+    description: isBlocked ? t("memberDeleteBlockedBody") : t("memberDeleteBody"),
     isBlocked,
     isPending,
     close,
@@ -79,6 +81,7 @@ function DeleteMemberSheet({
   view,
   onOpenChange,
 }: Readonly<{ view: DeleteMemberView; onOpenChange: (isOpen: boolean) => void }>) {
+  const t = useTranslations(DELETE_TEAM_MEMBER_DIALOG_COPY_NAMESPACE);
   return (
     <BottomSheet
       isOpen
@@ -89,7 +92,7 @@ function DeleteMemberSheet({
     >
       {view.isBlocked ? null : (
         <SheetItem
-          label={view.isPending ? TEAM_COPY.deleting : TEAM_COPY.delete}
+          label={view.isPending ? t("deleting") : t("delete")}
           icon="trash-2"
           variant="destructive"
           isPending={view.isPending}
@@ -97,7 +100,7 @@ function DeleteMemberSheet({
         />
       )}
       <SheetItem
-        label={view.isBlocked ? TEAM_COPY.close : TEAM_COPY.cancel}
+        label={view.isBlocked ? t("close") : t("cancel")}
         isDisabled={view.isPending}
         onPress={view.close}
       />
@@ -109,6 +112,7 @@ function DeleteMemberModal({
   view,
   onOpenChange,
 }: Readonly<{ view: DeleteMemberView; onOpenChange: (isOpen: boolean) => void }>) {
+  const t = useTranslations(DELETE_TEAM_MEMBER_DIALOG_COPY_NAMESPACE);
   return (
     <Modal
       isOpen
@@ -120,11 +124,11 @@ function DeleteMemberModal({
       actions={
         <>
           <Button variant="secondary" onPress={view.close} isDisabled={view.isPending}>
-            {view.isBlocked ? TEAM_COPY.close : TEAM_COPY.cancel}
+            {view.isBlocked ? t("close") : t("cancel")}
           </Button>
           {view.isBlocked ? null : (
             <Button variant="danger" onPress={view.confirm} isPending={view.isPending}>
-              {TEAM_COPY.delete}
+              {t("delete")}
             </Button>
           )}
         </>

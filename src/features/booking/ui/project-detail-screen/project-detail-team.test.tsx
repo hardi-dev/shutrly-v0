@@ -23,6 +23,7 @@ const WISUDA_TEAM = PEOPLE.map(([id, memberName, roleName]) => ({
   memberId: `m-${id}`,
   memberName,
   isMemberArchived: false,
+  defaultKey: null,
   roleName,
 }));
 
@@ -93,14 +94,16 @@ describe("Jadwal rows with a team", () => {
 
   it("AC-TEAM-011 offers Tambah tim without Atur tim for a session with no team", async () => {
     setup();
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk sesi Foto keluarga" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Tindakan untuk sesi Foto keluarga" }),
+    );
     const items = screen.getAllByRole("menuitem").map((item) => item.textContent);
     expect(items).toEqual(["Tambah tim", "Ubah sesi", "Hapus sesi"]);
   });
 
   it("AC-TEAM-011 offers Atur tim instead of Tambah tim for a session with a team", async () => {
     setup();
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk sesi Wisuda" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk sesi Wisuda" }));
     const items = screen.getAllByRole("menuitem").map((item) => item.textContent);
     expect(items).toEqual(["Atur tim", "Ubah sesi", "Hapus sesi"]);
   });
@@ -116,7 +119,7 @@ describe("Jadwal rows with a team", () => {
     );
     expect(screen.getByRole("button", { name: "Tim Wisuda: 4 anggota" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Tambah tim untuk/ })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /Aksi untuk sesi/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Tindakan untuk sesi/ })).not.toBeInTheDocument();
   });
 
   it("AC-TEAM-021 offers no session or assignment status control", () => {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -12,12 +13,13 @@ import { AddSourceDialog } from "../add-source-dialog/add-source-dialog";
 import { DeleteSourceDialog } from "../delete-source-dialog/delete-source-dialog";
 import { RenameSourceDialog } from "../rename-source-dialog/rename-source-dialog";
 import { SetupGuideCard } from "../setup-guide-card/setup-guide-card";
-import { SOURCE_COPY } from "../source-copy/source-copy.copy";
 import { PhotoSourceRow } from "../source-row/source-row";
+import { PHOTO_SOURCES_SCREEN_COPY_NAMESPACE } from "./photo-sources-screen.copy";
 import type { PhotoSourcesScreenProps } from "./photo-sources-screen.types";
 
 // eslint-disable-next-line max-lines-per-function -- coordinates the source list, guide and dialog state
 export function PhotoSourcesScreen({ workspaceId, sources, actions }: PhotoSourcesScreenProps) {
+  const t = useTranslations(PHOTO_SOURCES_SCREEN_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const [dialog, setDialog] = useState<
     | { readonly kind: "add" }
@@ -46,7 +48,7 @@ export function PhotoSourcesScreen({ workspaceId, sources, actions }: PhotoSourc
 
   const addButton = (
     <Button variant="secondary" iconLeading="plus" onPress={openAddDialog}>
-      {SOURCE_COPY.add}
+      {t("add")}
     </Button>
   );
 
@@ -57,19 +59,19 @@ export function PhotoSourcesScreen({ workspaceId, sources, actions }: PhotoSourc
     >
       {!isMobile ? <PageActions>{addButton}</PageActions> : null}
       <SectionCard
-        title={SOURCE_COPY.listTitle}
-        description={isMobile ? SOURCE_COPY.listDescriptionMobile : SOURCE_COPY.listDescription}
+        title={t("listTitle")}
+        description={isMobile ? t("listDescriptionMobile") : t("listDescription")}
         content="flush"
         actions={
           isMobile ? (
             <Button variant="secondary" iconLeading="plus" onPress={openAddDialog}>
-              {SOURCE_COPY.addShort}
+              {t("addShort")}
             </Button>
           ) : undefined
         }
       >
         {sources.length > 0 ? (
-          <ul aria-label={SOURCE_COPY.listTitle}>
+          <ul aria-label={t("listTitle")}>
             {sources.map((source, index) => (
               <PhotoSourceRow
                 key={source.id}
@@ -85,8 +87,8 @@ export function PhotoSourcesScreen({ workspaceId, sources, actions }: PhotoSourc
         ) : (
           <EmptyState
             icon="folder-open"
-            title={SOURCE_COPY.emptyTitle}
-            body={SOURCE_COPY.emptyBody}
+            title={t("emptyTitle")}
+            body={t("emptyBody")}
             action={addButton}
           />
         )}

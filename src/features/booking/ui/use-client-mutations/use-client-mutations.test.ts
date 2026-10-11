@@ -1,6 +1,9 @@
 // @vitest-environment jsdom
 
-import { renderHook } from "@testing-library/react";
+import { renderHook as renderBareHook } from "@testing-library/react";
+import { copyMessages } from "@tests/support/copy/copy-messages";
+import { NextIntlClientProvider } from "next-intl";
+import { createElement, type ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { ToastContent } from "@/ui/patterns/toast/toast.types";
@@ -11,6 +14,19 @@ vi.mock("@/ui/patterns/toast/toast", () => ({ showToast }));
 
 const { useClientMutations } = await import("./use-client-mutations");
 
+function wrapper({ children }: Readonly<{ children: ReactNode }>) {
+  // eslint-disable-next-line react/no-children-prop -- this .ts file cannot use JSX; the provider reads children from props
+  return createElement(NextIntlClientProvider, {
+    locale: "id",
+    messages: copyMessages("id"),
+    children,
+  });
+}
+
+function renderHook<T>(hook: () => T) {
+  return renderBareHook(hook, { wrapper });
+}
+
 describe("useClientMutations", () => {
   it("toasts the added client with its name", async () => {
     const { result } = renderHook(() => useClientMutations());
@@ -18,7 +34,7 @@ describe("useClientMutations", () => {
     expect(showToast).toHaveBeenCalledWith({
       tone: "success",
       title: "Klien ditambahkan",
-      body: "Rina Wedding siap dipilih saat membuat proyek.",
+      body: "Rina Wedding sudah bisa dipilih untuk proyek.",
     });
   });
 

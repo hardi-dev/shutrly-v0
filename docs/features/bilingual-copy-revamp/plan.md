@@ -1,7 +1,7 @@
 # Bilingual copy revamp — implementation plan
 
 Feature: F-22 `bilingual-copy-revamp` · Branch `codex/bilingual-copy-revamp`
-Status: IN PROGRESS. I1 done; I2 done except I2.2 (Owner checkpoint: migration 0019); I3 done except I3.2 quantity half and I3.3 (SPEC GAP, see implementation-report.md §4); I4–I8 not started. See [implementation report](implementation-report.md).
+Status: IMPLEMENTED (2026-10-11), all tasks ticked. Open for the Owner: proposed deck rows (Account menu, §14.4, §15.x), DECK GAP strings, higher-authority amendments listed under *Owner actions required*, and E2E specs blocked by the Neon websocket flake (gallery-owner-locale, build-smoke owner/gallery, journeys). See [coverage report](coverage-report.md).
 Date: 2026-10-10
 Sources: [technical design](technical-design.md) (DRAFT, §1–§16), [spec](spec.md) › *Language preference decisions (Owner, 2026-10-10)*, [acceptance criteria](acceptance-criteria.md), [coding rules](../../coding-rules.md), [architecture overview](../../architecture/overview.md), [ADR-025](../../architecture/decisions/ADR-025-next-intl-bilingual-localization.md).
 

@@ -12,6 +12,7 @@ import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { addOnFieldError } from "../add-on-text/add-on-text";
+import { useLocaleReformat } from "../locale-reformat/use-locale-reformat";
 import { ADD_ON_DIALOG_COPY_NAMESPACE } from "./add-on-dialog.copy";
 import type {
   AddOnDialogActionsProps,
@@ -106,6 +107,7 @@ function AddOnFields({ control, targets }: Readonly<AddOnFieldsProps>) {
           <TextInput
             control={control}
             name="quantity"
+            kind="quantity"
             label={t("quantityLabel")}
             description={t("quantityHelper")}
           />
@@ -114,6 +116,7 @@ function AddOnFields({ control, targets }: Readonly<AddOnFieldsProps>) {
           <TextInput
             control={control}
             name="unitPrice"
+            kind="amount"
             label={t("priceLabel")}
             prefix={t("pricePrefix")}
             description={t("priceHelper")}
@@ -125,9 +128,10 @@ function AddOnFields({ control, targets }: Readonly<AddOnFieldsProps>) {
   );
 }
 
-function TextInput({ control, name, ...rest }: Readonly<AddOnTextInputProps>) {
+function TextInput({ control, name, kind, ...rest }: Readonly<AddOnTextInputProps>) {
   const t = useTranslations(ADD_ON_DIALOG_COPY_NAMESPACE);
   const { field, fieldState } = useController({ control, name });
+  useLocaleReformat({ value: String(field.value), setValue: field.onChange, kind: kind ?? null });
   const message = fieldState.error?.message;
   return (
     <TextField

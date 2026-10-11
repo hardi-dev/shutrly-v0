@@ -10,6 +10,7 @@ import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 import { Textarea } from "@/ui/primitives/textarea/textarea";
 
+import { useLocaleReformat } from "../locale-reformat/use-locale-reformat";
 import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { projectFieldErrorText } from "../project-field-error/project-field-error";
 import type { CreateProjectState } from "../use-create-project-form/use-create-project-form.types";
@@ -41,6 +42,15 @@ function priceDescription(
   return service ? t("priceHelper", { amount: formatIdr(service.basePrice, locale) }) : undefined;
 }
 
+/** Writes the agreed price and keeps the typed text in the active language's format (AC-L10N-004). */
+function useAgreedPrice(form: CreateProjectState["form"], price: string) {
+  const setPrice = (next: string) => {
+    form.setValue("agreedPrice", next);
+  };
+  useLocaleReformat({ value: price, setValue: setPrice, kind: "amount" });
+  return setPrice;
+}
+
 /** The Detail proyek card: title, agreed price and internal notes. */
 export function ProjectDetailCard({ state }: Readonly<{ state: CreateProjectState }>) {
   const t = useTranslations(CREATE_PROJECT_SCREEN_COPY_NAMESPACE);
@@ -49,9 +59,7 @@ export function ProjectDetailCard({ state }: Readonly<{ state: CreateProjectStat
   const { form, service } = state;
   const values = form.watch();
   const { errors } = form.formState;
-  const handlePrice = (price: string) => {
-    form.setValue("agreedPrice", price);
-  };
+  const handlePrice = useAgreedPrice(form, values.agreedPrice);
   const handleNotes = (notes: string) => {
     form.setValue("notes", notes);
   };

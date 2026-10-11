@@ -14,6 +14,7 @@ import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { CatalogFieldError } from "../catalog-field-error/catalog-field-error";
 import { showCatalogSaveFailure } from "../catalog-save-feedback/catalog-save-feedback";
+import { useLocaleReformat } from "../locale-reformat/use-locale-reformat";
 import { SERVICE_ITEM_DIALOG_COPY_NAMESPACE } from "./service-item-dialog.copy";
 import type {
   ResponsiveItemDialogProps,
@@ -241,6 +242,7 @@ function PackageValueFields({
   readonly setMaximum: (value: string) => void;
 }>) {
   const t = useTranslations(SERVICE_ITEM_DIALOG_COPY_NAMESPACE);
+  useLocaleReformat({ value, setValue, kind: "quantity" });
   if (definition?.valueType === "RANGE")
     return (
       <RangeValueFields
@@ -275,6 +277,8 @@ function RangeValueFields({
   readonly setMaximum: (value: string) => void;
 }>) {
   const t = useTranslations(SERVICE_ITEM_DIALOG_COPY_NAMESPACE);
+  useLocaleReformat({ value: minimum, setValue: setMinimum, kind: "quantity" });
+  useLocaleReformat({ value: maximum, setValue: setMaximum, kind: "quantity" });
   return (
     <div className="grid grid-cols-2 gap-(--space-3)">
       <TextField

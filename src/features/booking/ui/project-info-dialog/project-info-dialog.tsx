@@ -15,6 +15,7 @@ import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 import { Textarea } from "@/ui/primitives/textarea/textarea";
 
+import { useLocaleReformat } from "../locale-reformat/use-locale-reformat";
 import { projectFieldErrorText } from "../project-field-error/project-field-error";
 import { PROJECT_INFO_DIALOG_COPY_NAMESPACE } from "./project-info-dialog.copy";
 import type { ProjectInfoDialogProps, ProjectInfoTarget } from "./project-info-dialog.types";
@@ -80,6 +81,7 @@ function InfoForm(props: Readonly<ProjectInfoDialogProps & { target: ProjectInfo
   const { target } = props;
   const [title, setTitle] = useState(target.title);
   const [price, setPrice] = useState(formatIdrNumber(target.agreedPrice, locale));
+  useLocaleReformat({ value: price, setValue: setPrice, kind: "amount" });
   const [notes, setNotes] = useState(target.notes ?? "");
   const [errors, setErrors] = useState<Readonly<Record<string, string>>>({});
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {

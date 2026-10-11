@@ -12,6 +12,7 @@ import { Select } from "@/ui/patterns/select/select";
 import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
+import { useLocaleReformat } from "../locale-reformat/use-locale-reformat";
 import { projectFieldErrorText } from "../project-field-error/project-field-error";
 import { PROJECT_ITEM_DIALOG_COPY_NAMESPACE } from "./project-item-dialog.copy";
 import type { ProjectItemDialogProps } from "./project-item-dialog.types";
@@ -26,6 +27,9 @@ export function ProjectItemDialog(props: Readonly<ProjectItemDialogProps>) {
   const [value, setValue] = useState(initialText(props.item?.value, "value"));
   const [min, setMin] = useState(initialText(props.item?.value, "min"));
   const [max, setMax] = useState(initialText(props.item?.value, "max"));
+  useLocaleReformat({ value, setValue, kind: "quantity" });
+  useLocaleReformat({ value: min, setValue: setMin, kind: "quantity" });
+  useLocaleReformat({ value: max, setValue: setMax, kind: "quantity" });
   const [errors, setErrors] = useState<Readonly<Record<string, string>>>({});
   const [isPending, setIsPending] = useState(false);
   const definition =

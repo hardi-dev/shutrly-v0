@@ -1,3 +1,4 @@
+import type { DefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions.types";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
 
 import type { DefinitionOption, SubmitErrors } from "../project-edit/project-edit.types";
@@ -12,6 +13,7 @@ export interface ProjectItemDialogProps {
   readonly item?: {
     readonly name: string;
     readonly unit: string | null;
+    readonly defaultKey: DefaultItemKey | null;
     readonly valueType: "NUMBER" | "RANGE";
     readonly selectionRequired: boolean;
     readonly value: PackageValue;

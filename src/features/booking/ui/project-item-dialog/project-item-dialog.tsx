@@ -4,7 +4,12 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
+import {
+  displayItemDefinition,
+  localizeItemDefinition,
+} from "@/features/booking/domain/default-item-definitions/default-item-definitions";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
@@ -32,10 +37,16 @@ export function ProjectItemDialog(props: Readonly<ProjectItemDialogProps>) {
   useLocaleReformat({ value: max, setValue: setMax, kind: "quantity" });
   const [errors, setErrors] = useState<Readonly<Record<string, string>>>({});
   const [isPending, setIsPending] = useState(false);
+  const appLocale = useAppLocale();
   const definition =
     props.mode === "add"
       ? props.definitions?.find((option) => option.id === definitionId)
       : props.item;
+  // D-18: unit and names show the label in the reader's language.
+  const shown = definition ? displayItemDefinition(definition, appLocale) : undefined;
+  const shownOptions = (props.definitions ?? []).map((option) =>
+    localizeItemDefinition(option, appLocale),
+  );
   const submit = async () => {
     if (!definition) {
       setErrors(toTexts({ definitionId: "REQUIRED" }));
@@ -62,7 +73,7 @@ export function ProjectItemDialog(props: Readonly<ProjectItemDialogProps>) {
     props.onOpenChange(false);
   };
   const title =
-    props.mode === "add" ? t("itemAddTitle") : t("itemEditTitle", { name: props.item?.name ?? "" });
+    props.mode === "add" ? t("itemAddTitle") : t("itemEditTitle", { name: shown?.name ?? "" });
   const description = props.mode === "add" ? t("itemAddDescription") : t("itemEditDescription");
   const confirm = (
     <Button
@@ -80,7 +91,7 @@ export function ProjectItemDialog(props: Readonly<ProjectItemDialogProps>) {
         <Select
           label={t("itemPickerLabel")}
           value={definitionId}
-          options={(props.definitions ?? []).map((option) => ({
+          options={shownOptions.map((option) => ({
             id: option.id,
             label: option.name,
             description: option.unit ?? undefined,
@@ -99,7 +110,7 @@ export function ProjectItemDialog(props: Readonly<ProjectItemDialogProps>) {
             value={min}
             onChange={setMin}
             onBlur={noop}
-            description={definition.unit ?? undefined}
+            description={shown?.unit ?? undefined}
             errorMessage={errors.min}
           />
           <TextField
@@ -108,7 +119,7 @@ export function ProjectItemDialog(props: Readonly<ProjectItemDialogProps>) {
             value={max}
             onChange={setMax}
             onBlur={noop}
-            description={definition.unit ?? undefined}
+            description={shown?.unit ?? undefined}
             errorMessage={errors.max}
           />
         </div>
@@ -119,7 +130,7 @@ export function ProjectItemDialog(props: Readonly<ProjectItemDialogProps>) {
           value={value}
           onChange={setValue}
           onBlur={noop}
-          description={definition?.unit ? t("unitHelper", { unit: definition.unit }) : undefined}
+          description={shown?.unit ? t("unitHelper", { unit: shown.unit }) : undefined}
           errorMessage={errors.value}
         />
       )}

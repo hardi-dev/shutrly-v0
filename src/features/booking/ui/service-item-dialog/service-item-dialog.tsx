@@ -4,6 +4,8 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ItemDefinitionRecord } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
+import { localizeItemDefinition } from "@/features/booking/domain/default-item-definitions/default-item-definitions";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
@@ -195,8 +197,11 @@ function ServiceItemFields({
   isEditing,
 }: Readonly<ServiceItemFieldsProps>) {
   const t = useTranslations(SERVICE_ITEM_DIALOG_COPY_NAMESPACE);
-  const definition = definitions.find((item) => item.id === definitionId);
-  const options = definitions
+  // D-18: the picker shows each platform default in the reader's language.
+  const locale = useAppLocale();
+  const shown = definitions.map((item) => localizeItemDefinition(item, locale));
+  const definition = shown.find((item) => item.id === definitionId);
+  const options = shown
     .filter((item) => item.isActive && !used.has(item.id))
     .map((item) => ({ id: item.id, label: item.name, description: item.unit ?? undefined }));
   return (

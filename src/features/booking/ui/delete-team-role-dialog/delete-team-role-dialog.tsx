@@ -1,9 +1,10 @@
 "use client";
-
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { TeamRoleRecord } from "@/features/booking/application/ports/team-role-repository/team-role-repository.port";
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
@@ -34,6 +35,7 @@ function DeleteRoleBody({
   const [isPending, setIsPending] = useState(false);
   // The table already shows the usage, so a used role opens blocked; the server re-checks.
   const t = useTranslations(DELETE_TEAM_ROLE_DIALOG_COPY_NAMESPACE);
+  const locale = useAppLocale();
   const [usage, setUsage] = useState(role.usage);
   const isBlocked = usage > 0;
 
@@ -61,8 +63,8 @@ function DeleteRoleBody({
   }
   const view: DeleteRoleView = {
     title: isBlocked
-      ? t("roleDeleteBlockedTitle", { name: role.name })
-      : t("roleDeleteTitle", { name: role.name }),
+      ? t("roleDeleteBlockedTitle", { name: displayTeamRoleName(role, locale) })
+      : t("roleDeleteTitle", { name: displayTeamRoleName(role, locale) }),
     description: isBlocked ? t("roleDeleteBlockedBody", { count: usage }) : t("roleDeleteBody"),
     isBlocked,
     isPending,

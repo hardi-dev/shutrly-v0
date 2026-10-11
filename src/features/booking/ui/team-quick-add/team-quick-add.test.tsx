@@ -15,7 +15,11 @@ const { AssignmentDialog } = await import("../assignment-dialog/assignment-dialo
 const { PROJECT_COPY } = await import("../project-copy/project-copy.copy");
 const ASSIGN_SUBMIT = PROJECT_COPY.messages.id.assignSubmit;
 
-const FOTOGRAFER = { id: "6f1c1b0e-8a5d-4a43-a3b6-3c2f7c0f1a11", name: "Fotografer" };
+const FOTOGRAFER = {
+  id: "6f1c1b0e-8a5d-4a43-a3b6-3c2f7c0f1a11",
+  name: "Fotografer",
+  defaultKey: null,
+};
 const SESSION = {
   id: "s-1",
   name: "Wisuda",
@@ -27,7 +31,9 @@ const SESSION = {
 };
 
 function quickAdd() {
-  const addAction = vi.fn().mockResolvedValue({ ok: true, member: { id: "m-1", name: "Rina" } });
+  const addAction = vi
+    .fn()
+    .mockResolvedValue({ ok: true, member: { id: "m-1", name: "Rina", defaultKey: null } });
   const value = {
     workspaceId: "ws",
     roles: [FOTOGRAFER],

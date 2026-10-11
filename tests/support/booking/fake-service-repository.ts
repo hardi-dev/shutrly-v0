@@ -136,6 +136,7 @@ export class FakeServiceRepository implements ServiceRepositoryPort {
       definitionId,
       definitionName: definition.name,
       unit: definition.unit,
+      defaultKey: definition.defaultKey,
       valueType: definition.valueType,
       selectionRequired: definition.selectionRequired,
       pickMode: definition.pickMode,

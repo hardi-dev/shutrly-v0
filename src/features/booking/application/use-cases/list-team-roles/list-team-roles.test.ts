@@ -16,8 +16,13 @@ describe("listTeamRoles", () => {
     await repository.seedDefaults(other, defaultRolesNamed(["Fotografer"]));
     repository.usage.set(repository.rows[0].id, 2);
     expect(await listTeamRoles(repository, context)).toEqual([
-      { id: expect.any(String) as string, name: "Asisten", usage: 0 },
-      { id: expect.any(String) as string, name: "Videografer", usage: 2 },
+      { id: expect.any(String) as string, name: "Asisten", defaultKey: "ASSISTANT", usage: 0 },
+      {
+        id: expect.any(String) as string,
+        name: "Videografer",
+        defaultKey: "VIDEOGRAPHER",
+        usage: 2,
+      },
     ]);
   });
 });

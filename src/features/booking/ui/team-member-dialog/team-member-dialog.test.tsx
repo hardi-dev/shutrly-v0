@@ -10,12 +10,22 @@ vi.mock("@/ui/patterns/toast/toast", () => ({ showToast }));
 
 const { TeamMemberDialog } = await import("./team-member-dialog");
 
-const FOTOGRAFER = { id: "6f1c1b0e-8a5d-4a43-a3b6-3c2f7c0f1a11", name: "Fotografer" };
-const VIDEOGRAFER = { id: "0b7d5c0c-2f7e-4a1b-9c7e-5a3c1f2d9e22", name: "Videografer" };
-const MUA = { id: "9c5a3f0e-1d2b-4c6a-8e7f-2b1a0d9c8e77", name: "MUA" };
+const FOTOGRAFER = {
+  id: "6f1c1b0e-8a5d-4a43-a3b6-3c2f7c0f1a11",
+  name: "Fotografer",
+  defaultKey: null,
+};
+const VIDEOGRAFER = {
+  id: "0b7d5c0c-2f7e-4a1b-9c7e-5a3c1f2d9e22",
+  name: "Videografer",
+  defaultKey: null,
+};
+const MUA = { id: "9c5a3f0e-1d2b-4c6a-8e7f-2b1a0d9c8e77", name: "MUA", defaultKey: null };
 
 function setup(overrides = {}) {
-  const addAction = vi.fn().mockResolvedValue({ ok: true, member: { id: "m", name: "Rina" } });
+  const addAction = vi
+    .fn()
+    .mockResolvedValue({ ok: true, member: { id: "m", name: "Rina", defaultKey: null } });
   const updateAction = vi.fn().mockResolvedValue(undefined);
   const addRoleAction = vi.fn().mockResolvedValue({ ok: true, role: MUA });
   const onOpenChange = vi.fn();

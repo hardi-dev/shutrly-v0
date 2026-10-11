@@ -3,6 +3,7 @@ import "server-only";
 import { and, asc, eq, sql } from "drizzle-orm";
 
 import type { TeamRoleRepositoryPort } from "@/features/booking/application/ports/team-role-repository/team-role-repository.port";
+import { parseDefaultTeamRoleKey } from "@/features/booking/domain/team-role/team-role";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { pgCode } from "../catalog-repository/pg-error";
@@ -105,16 +106,19 @@ async function renameRole(
  */
 export function createDrizzleTeamRoleRepository(db: DbExecutor): TeamRoleRepositoryPort {
   return {
-    list: async (context) =>
-      db
+    list: async (context) => {
+      const rows = await db
         .select({
           id: teamRole.id,
           name: teamRole.name,
+          defaultKey: teamRole.defaultKey,
           usage: usageOf(context.workspaceId, sql`${teamRole.id}`),
         })
         .from(teamRole)
         .where(eq(teamRole.workspaceId, context.workspaceId))
-        .orderBy(asc(sql`lower(${teamRole.name})`), asc(teamRole.id)),
+        .orderBy(asc(sql`lower(${teamRole.name})`), asc(teamRole.id));
+      return rows.map((row) => ({ ...row, defaultKey: parseDefaultTeamRoleKey(row.defaultKey) }));
+    },
     create: (context, name, actorId) => createRole(db, context, name, actorId),
     rename: (context, id, name, actorId) => renameRole(db, context, id, name, actorId),
     delete: (context, id) => deleteRoleOrReportUsage(db, context, id),

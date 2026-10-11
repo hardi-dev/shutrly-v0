@@ -7,6 +7,7 @@ import type {
   ItemDefinitionRecord,
   ItemDefinitionRepositoryPort,
 } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
+import { parseDefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions";
 import {
   legacySelectionType,
   parsePickMode,
@@ -24,6 +25,7 @@ interface DefinitionRow {
   readonly name: string;
   readonly valueType: string;
   readonly unit: string | null;
+  readonly defaultKey: string | null;
   readonly selectionRequired: boolean;
   readonly pickMode: string | null;
   readonly allowsPickNotes: boolean;
@@ -38,6 +40,7 @@ function toRecord(row: DefinitionRow): ItemDefinitionRecord | null {
     name: row.name,
     valueType: row.valueType,
     unit: row.unit,
+    defaultKey: parseDefaultItemKey(row.defaultKey),
     selectionRequired: row.selectionRequired,
     pickMode: parsePickMode(row.pickMode),
     allowsPickNotes: row.allowsPickNotes,
@@ -51,6 +54,7 @@ const columns = {
   name: serviceItemDefinition.name,
   valueType: serviceItemDefinition.valueType,
   unit: serviceItemDefinition.unit,
+  defaultKey: serviceItemDefinition.defaultKey,
   selectionRequired: serviceItemDefinition.selectionRequired,
   pickMode: serviceItemDefinition.pickMode,
   allowsPickNotes: serviceItemDefinition.allowsPickNotes,

@@ -1,5 +1,7 @@
 import { useTranslations } from "next-intl";
 
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
@@ -21,6 +23,7 @@ export function TeamRoleList({
   onDelete,
 }: Readonly<TeamRoleListProps>) {
   const t = useTranslations(TEAM_ROLE_LIST_COPY_NAMESPACE);
+  const locale = useAppLocale();
   return (
     <SectionCard
       title={t("rolesTitle")}
@@ -37,7 +40,7 @@ export function TeamRoleList({
               key={role.id}
               // Deviation: the export draws no leading element; ListCardItem requires one (as F-07).
               icon="user-round-cog"
-              title={role.name}
+              title={displayTeamRoleName(role, locale)}
               meta={teamUsageText(t, role.usage)}
               isLast={index === roles.length - 1}
               trailing={<TeamRoleRowActions role={role} onEdit={onEdit} onDelete={onDelete} />}

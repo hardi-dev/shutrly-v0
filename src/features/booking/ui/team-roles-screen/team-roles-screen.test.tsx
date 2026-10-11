@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useLocale } from "next-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const useMobileViewport = vi.fn();
@@ -12,8 +13,8 @@ vi.mock("@/ui/patterns/toast/toast", () => ({ showToast }));
 const { TeamRolesScreen } = await import("./team-roles-screen");
 
 const ROLES = [
-  { id: "asisten", name: "Asisten", usage: 3 },
-  { id: "drone", name: "Drone", usage: 0 },
+  { id: "asisten", name: "Asisten", defaultKey: null, usage: 3 },
+  { id: "drone", name: "Drone", defaultKey: null, usage: 0 },
 ];
 
 function setup(overrides = {}) {
@@ -155,5 +156,16 @@ describe("TeamRolesScreen", () => {
     await waitFor(() => {
       expect(trigger).toHaveFocus();
     });
+  });
+
+  it("D-18 a keyed role shows its English label in en", () => {
+    vi.mocked(useLocale).mockReturnValue("en");
+    try {
+      setup({ roles: [{ id: "p", name: "Fotografer", defaultKey: "PHOTOGRAPHER", usage: 0 }] });
+      expect(screen.getByText("Photographer")).toBeInTheDocument();
+      expect(screen.queryByText("Fotografer")).not.toBeInTheDocument();
+    } finally {
+      vi.mocked(useLocale).mockReturnValue("id");
+    }
   });
 });

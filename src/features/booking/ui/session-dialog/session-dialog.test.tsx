@@ -9,8 +9,8 @@ vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
 const { SessionDialog } = await import("./session-dialog");
 
 const MEMBERS = [
-  { id: "m1", name: "Dimas Pratama", roles: [{ id: "r1", name: "Fotografer" }] },
-  { id: "m2", name: "Sari Lestari", roles: [{ id: "r2", name: "Asisten" }] },
+  { id: "m1", name: "Dimas Pratama", roles: [{ id: "r1", name: "Fotografer", defaultKey: null }] },
+  { id: "m2", name: "Sari Lestari", roles: [{ id: "r2", name: "Asisten", defaultKey: null }] },
 ];
 
 async function pick(dialog: HTMLElement, name: string) {

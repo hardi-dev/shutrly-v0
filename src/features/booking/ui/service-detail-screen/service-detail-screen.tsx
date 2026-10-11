@@ -4,6 +4,9 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ServiceWriteResult } from "@/features/booking/application/use-cases/service-results/service-results.types";
+import { displayItemDefinition } from "@/features/booking/domain/default-item-definitions/default-item-definitions";
+import type { AppLocale } from "@/shared/locale/locale.types";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { Button } from "@/ui/primitives/button/button";
@@ -15,6 +18,7 @@ import { ServiceDetailDeleteDialog } from "../service-detail-delete-dialog/servi
 import { ServiceInfoCard } from "../service-info-card/service-info-card";
 import { ServiceItemDialog } from "../service-item-dialog/service-item-dialog";
 import { ServiceItemsCard } from "../service-items-card/service-items-card";
+import type { ServiceItem } from "../service-items-card/service-items-card.types";
 import { SERVICE_DETAIL_SCREEN_COPY_NAMESPACE } from "./service-detail-screen.copy";
 import type {
   ServiceDetailDialogs,
@@ -323,6 +327,15 @@ function ServiceDetailFormDialogs({
   );
 }
 
+/** D-18: the item name in the remove title is the label the reader sees. */
+function shownItemName(item: ServiceItem | undefined, locale: AppLocale): string {
+  if (!item) return "";
+  return displayItemDefinition(
+    { name: item.definitionName, unit: item.unit, defaultKey: item.defaultKey },
+    locale,
+  ).name;
+}
+
 function ServiceDetailDeleteDialogs({
   props,
   dialogs,
@@ -343,12 +356,13 @@ function ServiceDetailDeleteDialogs({
   function close(open: boolean): void {
     if (!open) dialogs.closeDelete();
   }
+  const deletingName = shownItemName(dialogs.deletingItem, useAppLocale());
   return (
     <>
       {dialogs.deletingItem ? (
         <ServiceDetailDeleteDialog
           isOpen
-          title={t("removeItemTitle", { name: dialogs.deletingItem.definitionName })}
+          title={t("removeItemTitle", { name: deletingName })}
           description={t("removeDescription")}
           onOpenChange={close}
           onConfirm={confirmItem}

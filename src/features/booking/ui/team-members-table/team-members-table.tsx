@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 
 import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { DataTable } from "@/ui/patterns/data-table/data-table";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
@@ -37,10 +38,11 @@ export function TeamMembersTable({
   renderActions,
 }: Readonly<TeamMembersTableProps>) {
   const t = useTranslations(TEAM_MEMBERS_TABLE_COPY_NAMESPACE);
+  const locale = useAppLocale();
   function renderCell(row: TeamMembersTableProps["rows"][number], columnId: string) {
     if (columnId === "member") return <MemberCell name={row.name} />;
     if (columnId === "whatsapp") return <span>{formatWhatsappNumber(row.whatsappNumber)}</span>;
-    if (columnId === "roles") return <span>{memberRolesLabel(row.roles)}</span>;
+    if (columnId === "roles") return <span>{memberRolesLabel(row.roles, locale)}</span>;
     return <>{renderActions?.(row)}</>;
   }
   return (

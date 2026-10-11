@@ -1,5 +1,4 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
@@ -11,6 +10,11 @@ import type {
   TeamRoleFields,
   TeamRoleInput,
 } from "@/features/booking/application/schemas/team-role-input/team-role-input.types";
+import {
+  displayTeamRoleName,
+  teamRoleSubmissionName,
+} from "@/features/booking/domain/team-role/team-role";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 
 import { useTeamMutations } from "../use-team-mutations/use-team-mutations";
 import { TEAM_ROLE_DIALOG_COPY_NAMESPACE } from "./team-role-dialog.copy";
@@ -23,19 +27,21 @@ import type { TeamRoleDialogProps } from "./team-role-dialog.types";
  */
 export function useTeamRoleForm(props: Readonly<TeamRoleDialogProps>) {
   const t = useTranslations(TEAM_ROLE_DIALOG_COPY_NAMESPACE);
+  const appLocale = useAppLocale();
   const { run } = useTeamMutations();
+  const shownName = props.role ? displayTeamRoleName(props.role, appLocale) : "";
   const form = useForm<TeamRoleInput, unknown, TeamRoleFields>({
     resolver: zodResolver(teamRoleInputSchema),
-    defaultValues: { name: props.role?.name ?? "" },
+    defaultValues: { name: shownName },
     shouldFocusError: true,
   });
   const [isPending, setIsPending] = useState(false);
   useEffect(() => {
     if (props.isOpen) {
-      form.reset({ name: props.role?.name ?? "" });
+      form.reset({ name: shownName });
       form.clearErrors();
     }
-  }, [form, props.isOpen, props.role]);
+  }, [form, props.isOpen, shownName]);
 
   async function submit(): Promise<void> {
     if (!(await form.trigger())) return;
@@ -43,9 +49,10 @@ export function useTeamRoleForm(props: Readonly<TeamRoleDialogProps>) {
     try {
       const values = form.getValues();
       const { role, workspaceId, renameAction } = props;
+      const name = role ? teamRoleSubmissionName(role, appLocale, values.name) : values.name;
       const result =
         role && renameAction
-          ? await run(() => renameAction(workspaceId, role.id, values), {
+          ? await run(() => renameAction(workspaceId, role.id, { ...values, name }), {
               title: t("roleSavedTitle"),
             })
           : await run(() => props.addAction(workspaceId, values), {

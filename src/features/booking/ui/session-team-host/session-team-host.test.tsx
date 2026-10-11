@@ -30,7 +30,7 @@ const ASSIGNED = [
 const DIMAS = {
   id: "11111111-1111-4111-8111-111111111111",
   name: "Dimas Pratama",
-  roles: [{ id: "r1", name: "Fotografer" }],
+  roles: [{ id: "r1", name: "Fotografer", defaultKey: null }],
 };
 
 function Controls({

@@ -12,9 +12,9 @@ vi.mock("@/ui/patterns/toast/toast", () => ({ showToast }));
 
 const { TeamMembersScreen } = await import("./team-members-screen");
 
-const FOTOGRAFER = { id: "r1", name: "Fotografer" };
-const VIDEOGRAFER = { id: "r2", name: "Videografer" };
-const ASISTEN = { id: "r3", name: "Asisten" };
+const FOTOGRAFER = { id: "r1", name: "Fotografer", defaultKey: null };
+const VIDEOGRAFER = { id: "r2", name: "Videografer", defaultKey: null };
+const ASISTEN = { id: "r3", name: "Asisten", defaultKey: null };
 
 const AYU = {
   id: "m1",

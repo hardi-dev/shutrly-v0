@@ -101,6 +101,7 @@ function toDraftItems(service: ServiceSnapshotSource): readonly DraftItem[] {
     definitionId: item.definitionId,
     name: item.definitionName,
     unit: item.unit,
+    defaultKey: item.defaultKey,
     valueType: item.valueType,
     selectionRequired: item.selectionRequired,
     pickMode: item.pickMode,

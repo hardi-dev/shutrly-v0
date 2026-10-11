@@ -1,5 +1,6 @@
 import type { ProjectFieldErrorKey } from "@/features/booking/application/use-cases/project-results/project-results.types";
 import type { ProjectWriteResult } from "@/features/booking/application/use-cases/project-results/project-results.types";
+import type { DefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions.types";
 
 export type EditResult = Promise<ProjectWriteResult>;
 
@@ -27,6 +28,8 @@ export interface DefinitionOption {
   readonly id: string;
   readonly name: string;
   readonly unit: string | null;
+  /** D-18: the platform key, so the picker shows the label in the reader's language. */
+  readonly defaultKey: DefaultItemKey | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
   readonly pickMode: "COUNT" | "QUANTITY" | null;

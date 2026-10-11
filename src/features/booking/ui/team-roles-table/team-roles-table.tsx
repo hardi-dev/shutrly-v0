@@ -1,5 +1,7 @@
 import { useTranslations } from "next-intl";
 
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { DataTable } from "@/ui/patterns/data-table/data-table";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
@@ -30,8 +32,10 @@ export function TeamRolesTable({
   onDelete,
 }: Readonly<TeamRolesTableProps>) {
   const t = useTranslations(TEAM_ROLES_TABLE_COPY_NAMESPACE);
+  const locale = useAppLocale();
   function renderCell(row: TeamRolesTableProps["roles"][number], columnId: string) {
-    if (columnId === "role") return <span className="truncate font-semibold">{row.name}</span>;
+    if (columnId === "role")
+      return <span className="truncate font-semibold">{displayTeamRoleName(row, locale)}</span>;
     if (columnId === "usage")
       return (
         <span className={row.usage > 0 ? undefined : "text-(--color-semantic-text-muted)"}>

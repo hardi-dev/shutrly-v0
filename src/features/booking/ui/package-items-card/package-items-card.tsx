@@ -1,7 +1,9 @@
 import { useTranslations } from "next-intl";
 
+import { displayItemDefinition } from "@/features/booking/domain/default-item-definitions/default-item-definitions";
 import { summariseServiceItems } from "@/features/booking/domain/item-summary/item-summary";
-import type { FormattingLocale } from "@/shared/locale/locale.types";
+import type { AppLocale, FormattingLocale } from "@/shared/locale/locale.types";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
@@ -29,6 +31,7 @@ export function PackageItemsCard({
 }: Readonly<PackageItemsCardProps>) {
   const t = useTranslations(PACKAGE_ITEMS_CARD_COPY_NAMESPACE);
   const locale = useFormattingLocale();
+  const shownItems = useShownPackageItems(items);
   const serviceDescription = isMobile
     ? t("packageDescriptionMobile", { serviceName })
     : t("packageDescriptionDesktop", { serviceName });
@@ -54,13 +57,13 @@ export function PackageItemsCard({
         />
       ) : (
         <ul aria-label={t("packageTitle")}>
-          {items.map((item, index) => (
+          {shownItems.map((item, index) => (
             <ListCardItem
               key={item.definitionId}
               icon={item.pickMode ? "images" : "package"}
               title={item.definitionName}
               meta={describePackageItem(t, item, locale)}
-              isLast={index === items.length - 1}
+              isLast={index === shownItems.length - 1}
               trailing={edit ? <ItemRowMenu item={item} edit={edit} /> : undefined}
             />
           ))}
@@ -68,6 +71,21 @@ export function PackageItemsCard({
       )}
     </SectionCard>
   );
+}
+
+/** D-18: the items with the names and units the reader sees; they are shown only, never saved. */
+function useShownPackageItems(items: readonly PackageCardItem[]): readonly PackageCardItem[] {
+  const appLocale = useAppLocale();
+  return items.map((item) => localizePackageItem(item, appLocale));
+}
+
+/** D-18: the item with the name and unit the reader sees. */
+function localizePackageItem(item: PackageCardItem, locale: AppLocale): PackageCardItem {
+  const shown = displayItemDefinition(
+    { name: item.definitionName, unit: item.unit, defaultKey: item.defaultKey },
+    locale,
+  );
+  return { ...item, definitionName: shown.name, unit: shown.unit };
 }
 
 function ItemRowMenu({ item, edit }: Readonly<{ item: PackageCardItem; edit: PackageCardEdit }>) {

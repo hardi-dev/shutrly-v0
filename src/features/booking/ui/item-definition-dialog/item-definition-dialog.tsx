@@ -3,7 +3,13 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
+import {
+  itemDefinitionSubmission,
+  localizeItemDefinition,
+} from "@/features/booking/domain/default-item-definitions/default-item-definitions";
 import type { PickMode } from "@/features/booking/domain/item-definition-type/item-definition-type.types";
+import type { AppLocale } from "@/shared/locale/locale.types";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
@@ -88,7 +94,8 @@ export function ItemDefinitionDialog(props: Readonly<ItemDefinitionDialogProps>)
 function useItemDefinitionForm(props: Readonly<ItemDefinitionDialogProps>) {
   const { workspaceId, definition, onOpenChange, action, updateAction } = props;
   const t = useTranslations(ITEM_DEFINITION_DIALOG_COPY_NAMESPACE);
-  const state = useItemDefinitionValues(definition);
+  const locale = useAppLocale();
+  const state = useItemDefinitionValues(definition, locale);
   const [error, setError] = useState<string | undefined>();
   const [pending, setPending] = useState(false);
   const handleOpenChange = createOpenChangeHandler(
@@ -99,12 +106,15 @@ function useItemDefinitionForm(props: Readonly<ItemDefinitionDialogProps>) {
     onOpenChange,
   );
   async function submit(): Promise<void> {
+    const text = definition
+      ? itemDefinitionSubmission(definition, locale, state)
+      : { name: state.name, unit: state.unit };
     await submitItemDefinition({
       workspaceId,
       definition,
-      name: state.name,
+      name: text.name,
+      unit: text.unit,
       valueType: state.valueType,
-      unit: state.unit,
       selectionRequired: state.selectionRequired,
       pickMode: state.pickMode,
       allowsPickNotes: state.allowsPickNotes,
@@ -128,10 +138,13 @@ function useItemDefinitionForm(props: Readonly<ItemDefinitionDialogProps>) {
 
 function useItemDefinitionValues(
   definition: ItemDefinitionDialogProps["definition"],
+  locale: AppLocale,
 ): ItemDefinitionValueState {
-  const initialName = definition?.name ?? "";
+  // D-18: the fields show the label in the reader's language; an unchanged label is saved as stored.
+  const shown = definition ? localizeItemDefinition(definition, locale) : undefined;
+  const initialName = shown?.name ?? "";
   const initialValueType = definition?.valueType ?? "NUMBER";
-  const initialUnit = definition?.unit ?? "";
+  const initialUnit = shown?.unit ?? "";
   const initialSelectionRequired = definition?.selectionRequired ?? false;
   const initialPickMode = definition?.pickMode ?? "COUNT";
   const initialPickNotes = definition?.allowsPickNotes ?? false;

@@ -1,9 +1,11 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { useLocale } from "next-intl";
+import { describe, expect, it, vi } from "vitest";
 
 import { PackageItemsCard } from "./package-items-card";
 
 const FOTO_EDIT = {
+  defaultKey: null,
   id: "i1",
   definitionId: "d1",
   definitionName: "Foto edit",
@@ -15,6 +17,7 @@ const FOTO_EDIT = {
   value: { type: "NUMBER" as const, value: "25" },
 };
 const JUMLAH = {
+  defaultKey: null,
   id: "i2",
   definitionId: "d2",
   definitionName: "Jumlah orang",
@@ -47,5 +50,21 @@ describe("PackageItemsCard (AC-PRJ-007)", () => {
     render(<PackageItemsCard serviceName="Wisuda Basic" items={[]} isMobile={false} />);
     expect(screen.getByText("Layanan ini belum punya isi paket")).toBeInTheDocument();
     expect(screen.queryByRole("list")).not.toBeInTheDocument();
+  });
+
+  it("D-18 a keyed package item shows its English label in en", () => {
+    vi.mocked(useLocale).mockReturnValue("en");
+    try {
+      render(
+        <PackageItemsCard
+          serviceName="Wisuda Basic"
+          items={[{ ...FOTO_EDIT, defaultKey: "EDITED_PHOTOS" as const }]}
+          isMobile={false}
+        />,
+      );
+      expect(screen.getByText("Edited photos")).toBeInTheDocument();
+    } finally {
+      vi.mocked(useLocale).mockReturnValue("id");
+    }
   });
 });

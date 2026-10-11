@@ -38,6 +38,7 @@ const groups = [{ ...wisuda, services: [baseService, prewed] }];
 const definitions = [
   {
     id: PROJECT_IDS.fotoEdit,
+    defaultKey: null,
     name: "Foto edit",
     unit: "foto",
     valueType: "NUMBER",
@@ -47,6 +48,7 @@ const definitions = [
   },
   {
     id: PROJECT_IDS.fotoCetak,
+    defaultKey: null,
     name: "Foto cetak",
     unit: "foto",
     valueType: "NUMBER",

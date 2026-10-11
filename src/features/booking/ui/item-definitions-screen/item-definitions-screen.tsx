@@ -4,6 +4,8 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ItemDefinitionRecord } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
+import { localizeItemDefinition } from "@/features/booking/domain/default-item-definitions/default-item-definitions";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -249,6 +251,8 @@ function DefinitionRow({
   readonly onDelete: (definition: ItemDefinitionRecord) => void;
 }>) {
   const t = useTranslations(ITEM_DEFINITIONS_SCREEN_COPY_NAMESPACE);
+  const locale = useAppLocale();
+  const shown = localizeItemDefinition(definition, locale);
   function handleEdit(): void {
     onEdit(definition);
   }
@@ -258,8 +262,8 @@ function DefinitionRow({
   return (
     <ListCardItem
       icon={definitionIcon(definition)}
-      title={definition.name}
-      meta={definitionMeta(t, definition, true)}
+      title={shown.name}
+      meta={definitionMeta(t, shown, true)}
       isLast={isLast}
       trailing={
         <DefinitionRowTrailing
@@ -288,6 +292,8 @@ function DefinitionRowTrailing({
   readonly onDelete: () => void;
 }>) {
   const t = useTranslations(ITEM_DEFINITIONS_SCREEN_COPY_NAMESPACE);
+  const locale = useAppLocale();
+  const shown = localizeItemDefinition(definition, locale);
   return (
     <span className="flex items-center gap-(--space-2)">
       {!definition.isActive ? (
@@ -298,9 +304,9 @@ function DefinitionRowTrailing({
           workspaceId={workspaceId}
           kind="definition"
           id={definition.id}
-          name={definition.name}
+          name={shown.name}
           isActive={definition.isActive}
-          meta={definitionMeta(t, definition, false)}
+          meta={definitionMeta(t, shown, false)}
           onEdit={onEdit}
           onDelete={onDelete}
           setActiveAction={setActiveAction}

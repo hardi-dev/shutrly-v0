@@ -82,6 +82,7 @@ export function PackageEditing({
         definitionId: definition.id,
         name: definition.name,
         unit: definition.unit,
+        defaultKey: definition.defaultKey,
         valueType: definition.valueType,
         selectionRequired: definition.selectionRequired,
         pickMode: definition.pickMode,

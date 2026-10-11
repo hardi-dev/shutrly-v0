@@ -1,9 +1,10 @@
 "use client";
-
 import { useTranslations } from "next-intl";
 
 import type { TeamPick } from "@/features/booking/domain/session-assignment/session-assignment.types";
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
 import { clientInitials } from "@/features/booking/ui/client-initials/client-initials";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { Select } from "@/ui/patterns/select/select";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Button } from "@/ui/primitives/button/button";
@@ -76,6 +77,7 @@ function PickedMembers({
   onRemove: (memberId: string) => void;
 }>) {
   const t = useTranslations(SESSION_TEAM_FIELD_COPY_NAMESPACE);
+  const appLocale = useAppLocale();
   if (picks.length === 0) return null;
   return (
     <ul aria-label={t("sessionTeamListLabel")} className="flex flex-col">
@@ -93,7 +95,7 @@ function PickedMembers({
                 {member?.name}
               </span>
               <span className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
-                {role?.name}
+                {role ? displayTeamRoleName(role, appLocale) : undefined}
               </span>
             </span>
             <IconButton
@@ -116,12 +118,16 @@ function AddRow({
   isDisabled,
 }: Readonly<{ picker: ReturnType<typeof useTeamPicker>; isDisabled?: boolean }>) {
   const t = useTranslations(SESSION_TEAM_FIELD_COPY_NAMESPACE);
+  const appLocale = useAppLocale();
   const { state, candidates, member } = picker;
   const memberOptions = candidates.map((candidate) => ({
     id: candidate.id,
     label: candidate.name,
   }));
-  const roleOptions = (member?.roles ?? []).map((role) => ({ id: role.id, label: role.name }));
+  const roleOptions = (member?.roles ?? []).map((role) => ({
+    id: role.id,
+    label: displayTeamRoleName(role, appLocale),
+  }));
   return (
     <div className="flex flex-col gap-(--space-3)">
       <div className="grid grid-cols-2 items-start gap-(--space-3)">

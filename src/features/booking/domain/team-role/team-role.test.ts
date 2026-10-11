@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vitest";
 
-import { DEFAULT_TEAM_ROLES, fitsTeamRoleNameLength, TEAM_ROLE_NAME_MAX_LENGTH } from "./team-role";
+import {
+  DEFAULT_TEAM_ROLES,
+  displayTeamRoleName,
+  fitsTeamRoleNameLength,
+  localizeTeamRole,
+  parseDefaultTeamRoleKey,
+  TEAM_ROLE_NAME_MAX_LENGTH,
+  teamRoleSubmissionName,
+} from "./team-role";
 import { teamRoleNameSchema } from "./team-role.schema";
 
 function issueOf(value: string): string | undefined {
@@ -39,5 +47,47 @@ describe("team role name", () => {
       "VIDEOGRAPHER",
       "ASSISTANT",
     ]);
+  });
+});
+
+describe("displayTeamRoleName (D-18)", () => {
+  it("D-18 a keyed default shows the English label in en", () => {
+    expect(displayTeamRoleName({ name: "Fotografer", defaultKey: "PHOTOGRAPHER" }, "en")).toBe(
+      "Photographer",
+    );
+  });
+
+  it("D-18 a keyed default shows the Indonesian label in id", () => {
+    expect(displayTeamRoleName({ name: "Fotografer", defaultKey: "PHOTOGRAPHER" }, "id")).toBe(
+      "Fotografer",
+    );
+  });
+
+  it("D-18 a renamed role shows its stored name", () => {
+    expect(displayTeamRoleName({ name: "Editor", defaultKey: null }, "en")).toBe("Editor");
+  });
+});
+
+describe("parseDefaultTeamRoleKey (D-18)", () => {
+  it("D-18 narrows a stored key and rejects owner or unknown values", () => {
+    expect(parseDefaultTeamRoleKey("ASSISTANT")).toBe("ASSISTANT");
+    expect(parseDefaultTeamRoleKey(null)).toBeNull();
+    expect(parseDefaultTeamRoleKey("OTHER")).toBeNull();
+  });
+});
+
+describe("localizeTeamRole (D-18)", () => {
+  it("D-18 a keyed role keeps its id and shows the locale's name", () => {
+    expect(
+      localizeTeamRole({ id: "r1", name: "Fotografer", defaultKey: "PHOTOGRAPHER" }, "en"),
+    ).toEqual({ id: "r1", name: "Photographer", defaultKey: "PHOTOGRAPHER" });
+  });
+});
+
+describe("teamRoleSubmissionName (D-18)", () => {
+  it("D-18 saving the unchanged English label submits the stored name", () => {
+    const role = { name: "Fotografer", defaultKey: "PHOTOGRAPHER" as const };
+    expect(teamRoleSubmissionName(role, "en", "Photographer")).toBe("Fotografer");
+    expect(teamRoleSubmissionName(role, "en", "Lead photographer")).toBe("Lead photographer");
   });
 });

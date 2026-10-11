@@ -1,16 +1,23 @@
 import "server-only";
 
-import type { DefaultTeamRole } from "@/features/booking/domain/team-role/team-role";
+import type {
+  DefaultTeamRole,
+  DefaultTeamRoleKey,
+} from "@/features/booking/domain/team-role/team-role";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 export interface RoleRef {
   readonly id: string;
   readonly name: string;
+  /** D-18: the platform key of a default role, null for owner roles. */
+  readonly defaultKey: DefaultTeamRoleKey | null;
 }
 
 export interface TeamRoleRecord {
   readonly id: string;
   readonly name: string;
+  /** D-18: the platform key of a default role, null for owner roles. */
+  readonly defaultKey: DefaultTeamRoleKey | null;
   /** Distinct members who hold the role or have an assignment in it (D-10). */
   readonly usage: number;
 }

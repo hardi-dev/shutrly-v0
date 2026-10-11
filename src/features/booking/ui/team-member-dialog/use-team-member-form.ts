@@ -1,5 +1,4 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
@@ -13,7 +12,9 @@ import type {
   TeamMemberFields,
   TeamMemberInput,
 } from "@/features/booking/application/schemas/team-member-input/team-member-input.types";
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
 import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 
 import type { TeamTranslate } from "../team-copy/team-copy.types";
 import { useTeamMutations } from "../use-team-mutations/use-team-mutations";
@@ -126,12 +127,13 @@ function useRoleOptions(
   roles: readonly RoleRef[],
   form: ReturnType<typeof useForm<TeamMemberInput, unknown, TeamMemberFields>>,
 ) {
+  const appLocale = useAppLocale();
   const [created, setCreated] = useState<readonly RoleRef[]>([]);
   function handleRoleCreated(role: RoleRef): void {
     setCreated((previous) => [...previous, role]);
     form.setValue("roleIds", [...form.getValues("roleIds"), role.id], { shouldValidate: true });
   }
   const all = [...roles, ...created.filter((c) => !roles.some((r) => r.id === c.id))].sort(byName);
-  const options = all.map((role) => ({ id: role.id, label: role.name }));
+  const options = all.map((role) => ({ id: role.id, label: displayTeamRoleName(role, appLocale) }));
   return { roles: all, options, handleRoleCreated };
 }

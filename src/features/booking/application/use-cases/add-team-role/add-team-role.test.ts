@@ -14,7 +14,7 @@ describe("addTeamRole", () => {
     const result = await addTeamRole(repository, context, "owner", { name: "  Editor  " });
     expect(result).toEqual({
       ok: true,
-      role: { id: expect.any(String) as string, name: "Editor" },
+      role: { id: expect.any(String) as string, name: "Editor", defaultKey: null },
     });
     expect(repository.rows.map((row) => row.name)).toEqual(["Editor"]);
   });

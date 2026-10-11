@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { FieldType } from "@/features/booking/domain/booking-field/booking-field.types";
+import type { DefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions.types";
 import type { PickMode } from "@/features/booking/domain/item-definition-type/item-definition-type.types";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
@@ -12,6 +13,8 @@ export interface ServiceItemRecord {
   readonly definitionId: string;
   readonly definitionName: string;
   readonly unit: string | null;
+  /** D-18: the platform key of the definition, null when it is owner text. */
+  readonly defaultKey: DefaultItemKey | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
   readonly pickMode: PickMode | null;

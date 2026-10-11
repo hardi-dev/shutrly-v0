@@ -2,6 +2,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useLocale } from "next-intl";
 import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -119,6 +120,7 @@ describe("ItemDefinitionDialog", () => {
         action={vi.fn()}
         definition={{
           id: "definition-1",
+          defaultKey: null,
           name: "Foto cetak",
           valueType: "NUMBER",
           unit: "lembar",
@@ -134,5 +136,44 @@ describe("ItemDefinitionDialog", () => {
     expect(screen.getByRole("radio", { name: /Foto untuk dicetak/ })).toBeDisabled();
     expect(screen.getByRole("switch", { name: "Klien bisa memberi catatan" })).toBeDisabled();
     expect(screen.getByRole("textbox", { name: "Nama item" })).toBeEnabled();
+  });
+
+  it("D-18 saving an unchanged keyed label submits the stored name, not a rename", async () => {
+    vi.mocked(useLocale).mockReturnValue("en");
+    try {
+      const updateAction = vi.fn().mockResolvedValue({ ok: true });
+      render(
+        <ItemDefinitionDialog
+          isOpen
+          onOpenChange={vi.fn()}
+          workspaceId="workspace-1"
+          action={vi.fn()}
+          updateAction={updateAction}
+          definition={{
+            id: "definition-1",
+            defaultKey: "EDITED_PHOTOS",
+            name: "Foto edit",
+            valueType: "NUMBER",
+            unit: "foto",
+            selectionRequired: true,
+            pickMode: "COUNT",
+            allowsPickNotes: true,
+            isActive: true,
+            usageCount: 0,
+          }}
+        />,
+      );
+      expect(screen.getByDisplayValue("Edited photos")).toBeInTheDocument();
+      await userEvent.click(screen.getByRole("button", { name: "Simpan" }));
+      await waitFor(() => {
+        expect(updateAction).toHaveBeenCalledWith(
+          "workspace-1",
+          "definition-1",
+          expect.objectContaining({ name: "Foto edit", unit: "foto" }),
+        );
+      });
+    } finally {
+      vi.mocked(useLocale).mockReturnValue("id");
+    }
   });
 });

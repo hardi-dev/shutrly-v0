@@ -1,5 +1,4 @@
 "use client";
-
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -7,6 +6,7 @@ import {
   formatWhatsappNumber,
   whatsappChatUrl,
 } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Menu } from "@/ui/patterns/menu/menu";
@@ -94,6 +94,7 @@ function MemberSheet({
   ...handlers
 }: Readonly<MemberActionViewProps & { isOpen: boolean; onOpenChange: (isOpen: boolean) => void }>) {
   const t = useTranslations(TEAM_MEMBER_ROW_ACTIONS_COPY_NAMESPACE);
+  const locale = useAppLocale();
   function handleOpen(): void {
     onOpenChange(true);
   }
@@ -109,7 +110,7 @@ function MemberSheet({
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         title={member.name}
-        meta={`${formatWhatsappNumber(member.whatsappNumber)} · ${memberRolesLabel(member.roles)}`}
+        meta={`${formatWhatsappNumber(member.whatsappNumber)} · ${memberRolesLabel(member.roles, locale)}`}
         variant="actions"
       >
         <MemberSheetItems member={member} {...handlers} />

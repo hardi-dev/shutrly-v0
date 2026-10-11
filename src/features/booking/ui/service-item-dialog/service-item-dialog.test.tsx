@@ -15,6 +15,7 @@ vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
 }));
 
 const DEFINITION: ItemDefinitionRecord = {
+  defaultKey: null,
   id: "definition-1",
   name: "Foto edit",
   unit: "foto",

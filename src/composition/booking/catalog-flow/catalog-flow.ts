@@ -3,6 +3,7 @@ import "server-only";
 import { notFound } from "next/navigation";
 
 import { getRequestFormattingLocale } from "@/composition/locale/request-formatting-locale/request-formatting-locale";
+import { getRequestLocale } from "@/composition/locale/request-locale/request-locale";
 import { CatalogError } from "@/features/booking/application/errors/catalog-errors/catalog-errors";
 import { catalogIdSchema } from "@/features/booking/application/schemas/catalog-id/catalog-id.schema";
 import { addBookingField } from "@/features/booking/application/use-cases/add-booking-field/add-booking-field";
@@ -67,9 +68,10 @@ function saveError(
 export async function loadServices(rawWorkspaceId: string): Promise<ServicesData> {
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   const locale = await getRequestFormattingLocale();
+  const appLocale = await getRequestLocale();
   try {
     return await withCatalogScope(({ services, categories }) =>
-      listServices(services, categories, verified.context, locale),
+      listServices(services, categories, verified.context, locale, appLocale),
     );
   } catch (error) {
     return saveError(error, {
@@ -115,9 +117,10 @@ export async function loadServiceDetail(
   const serviceId = idOrNotFound(rawServiceId);
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   const locale = await getRequestFormattingLocale();
+  const appLocale = await getRequestLocale();
   try {
     return await withCatalogScope(({ services }) =>
-      getServiceDetail(services, verified.context, serviceId, locale),
+      getServiceDetail(services, verified.context, serviceId, locale, appLocale),
     );
   } catch (error) {
     return saveError(error, {

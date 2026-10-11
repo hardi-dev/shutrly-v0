@@ -10,6 +10,8 @@ export interface ItemDefinitionRecord extends DefinitionType {
   readonly id: string;
   readonly name: string;
   readonly unit: string | null;
+  /** D-18: the platform key of a default item; null for owner items and renamed defaults. */
+  readonly defaultKey: DefaultItemKey | null;
   readonly isActive: boolean;
   readonly usageCount: number;
 }

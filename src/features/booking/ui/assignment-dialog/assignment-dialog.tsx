@@ -1,11 +1,12 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { AssignableMember } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import { formatSessionRange } from "@/features/booking/domain/session/session";
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
@@ -173,9 +174,13 @@ function AssignmentFields({
   form,
 }: Readonly<AssignmentDialogProps & { form: ReturnType<typeof useAssignmentForm> }>) {
   const t = useTranslations(ASSIGNMENT_DIALOG_COPY_NAMESPACE);
+  const appLocale = useAppLocale();
   const { state, member } = form;
   const memberOptions = members.map((candidate) => ({ id: candidate.id, label: candidate.name }));
-  const roleOptions = (member?.roles ?? []).map((role) => ({ id: role.id, label: role.name }));
+  const roleOptions = (member?.roles ?? []).map((role) => ({
+    id: role.id,
+    label: displayTeamRoleName(role, appLocale),
+  }));
   return (
     <div className="flex flex-col gap-(--space-4)">
       <Select

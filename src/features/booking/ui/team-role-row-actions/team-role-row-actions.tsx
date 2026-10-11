@@ -1,8 +1,9 @@
 "use client";
-
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Menu } from "@/ui/patterns/menu/menu";
@@ -46,7 +47,8 @@ export function TeamRoleRowActions({ role, onEdit, onDelete }: Readonly<TeamRole
 
 function RoleMenu({ role, onEdit, onDelete }: Readonly<RoleActionViewProps>) {
   const t = useTranslations(TEAM_ROLE_ROW_ACTIONS_COPY_NAMESPACE);
-  const label = t("rowActions", { name: role.name });
+  const locale = useAppLocale();
+  const label = t("rowActions", { name: displayTeamRoleName(role, locale) });
   return (
     <MenuTrigger label={label}>
       <IconButton icon="more-horizontal" size="sm" aria-label={label} />
@@ -67,6 +69,7 @@ function RoleSheet({
   onDelete,
 }: Readonly<RoleActionViewProps & { isOpen: boolean; onOpenChange: (isOpen: boolean) => void }>) {
   const t = useTranslations(TEAM_ROLE_ROW_ACTIONS_COPY_NAMESPACE);
+  const locale = useAppLocale();
   function handleOpen(): void {
     onOpenChange(true);
   }
@@ -75,13 +78,13 @@ function RoleSheet({
       <IconButton
         icon="more-horizontal"
         size="sm"
-        aria-label={t("rowActions", { name: role.name })}
+        aria-label={t("rowActions", { name: displayTeamRoleName(role, locale) })}
         onPress={handleOpen}
       />
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        title={role.name}
+        title={displayTeamRoleName(role, locale)}
         meta={teamUsageText(t, role.usage)}
         variant="actions"
       >

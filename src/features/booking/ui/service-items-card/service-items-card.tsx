@@ -1,5 +1,8 @@
 import { useTranslations } from "next-intl";
 
+import { displayItemDefinition } from "@/features/booking/domain/default-item-definitions/default-item-definitions";
+import type { AppLocale } from "@/shared/locale/locale.types";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
@@ -8,6 +11,14 @@ import { ServiceDetailRowActions } from "../service-detail-row-actions/service-d
 import type { ServiceDetailScreenProps } from "../service-detail-screen/service-detail-screen.types";
 import { SERVICE_ITEMS_CARD_COPY_NAMESPACE } from "./service-items-card.copy";
 import type { ServiceItem, ServiceItemHandler } from "./service-items-card.types";
+
+/** D-18: the item's name and unit as the reader sees them. */
+function shownItem(item: ServiceItem, locale: AppLocale) {
+  return displayItemDefinition(
+    { name: item.definitionName, unit: item.unit, defaultKey: item.defaultKey },
+    locale,
+  );
+}
 
 export function ServiceItemsCard({
   service,
@@ -83,11 +94,12 @@ function ServiceItemRow({
   readonly onMoveUp: ServiceItemHandler;
   readonly onMoveDown: ServiceItemHandler;
 }>) {
+  const shown = shownItem(item, useAppLocale());
   return (
     <ListCardItem
       icon={item.pickMode ? "images" : "package"}
-      title={item.definitionName}
-      meta={item.unit ?? ""}
+      title={shown.name}
+      meta={shown.unit ?? ""}
       isLast={index === count - 1}
       trailing={
         <ServiceItemTrailing
@@ -133,6 +145,7 @@ function ServiceItemTrailing({
   function handleMoveDown(): void {
     onMoveDown(item);
   }
+  const shown = shownItem(item, useAppLocale());
   const value =
     item.value.type === "NUMBER" ? item.value.value : `${item.value.min}–${item.value.max}`;
   return (
@@ -140,8 +153,8 @@ function ServiceItemTrailing({
       <span className="font-semibold">{value}</span>
       <ServiceDetailRowActions
         kind="item"
-        name={item.definitionName}
-        meta={item.unit ?? ""}
+        name={shown.name}
+        meta={shown.unit ?? ""}
         canMoveUp={index > 0}
         canMoveDown={index < count - 1}
         onEdit={handleEdit}

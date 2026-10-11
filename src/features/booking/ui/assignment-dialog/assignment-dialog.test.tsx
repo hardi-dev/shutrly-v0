@@ -26,14 +26,14 @@ const DIMAS = {
   id: "11111111-1111-4111-8111-111111111111",
   name: "Dimas Pratama",
   roles: [
-    { id: "r1", name: "Fotografer" },
-    { id: "r2", name: "Videografer" },
+    { id: "r1", name: "Fotografer", defaultKey: null },
+    { id: "r2", name: "Videografer", defaultKey: null },
   ],
 };
 const AYU = {
   id: "22222222-2222-4222-8222-222222222222",
   name: "Ayu Kirana",
-  roles: [{ id: "r3", name: "Asisten" }],
+  roles: [{ id: "r3", name: "Asisten", defaultKey: null }],
 };
 
 function setup(overrides = {}) {

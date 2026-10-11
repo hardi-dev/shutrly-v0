@@ -87,4 +87,36 @@ describe("platform default item keys", () => {
       .where(eq(teamRole.id, photographer.id));
     expect(renamed.key).toBeNull();
   });
+  it("D-18 the item list and get carry the key, and a renamed item has none", async () => {
+    const context = await seedWorkspace();
+    const repository = createDrizzleItemDefinitionRepository(db);
+    await seedDefaultItemDefinitions(repository, context, "id");
+    const id = await idOf(context.workspaceId, "Foto edit");
+    const listed = (await repository.list(context)).find((row) => row.id === id);
+    expect(listed?.defaultKey).toBe("EDITED_PHOTOS");
+    expect((await repository.findById(context, id))?.defaultKey).toBe("EDITED_PHOTOS");
+
+    await repository.update(context, id, {
+      name: "Foto edit baru",
+      valueType: "NUMBER",
+      unit: "foto",
+      selectionRequired: true,
+      pickMode: "COUNT",
+      allowsPickNotes: true,
+      editorUserId: null,
+    });
+    expect((await repository.findById(context, id))?.defaultKey).toBeNull();
+  });
+
+  it("D-18 the team role list carries the key, and a renamed role has none", async () => {
+    const { ownerId, ...context } = await seedWorkspace();
+    const roles = createDrizzleTeamRoleRepository(db);
+    await seedDefaultTeamRoles(roles, context, "id");
+    const photographer = (await roles.list(context)).find((row) => row.name === "Fotografer");
+    expect(photographer?.defaultKey).toBe("PHOTOGRAPHER");
+
+    await roles.rename(context, photographer?.id ?? "", "Fotografer utama", ownerId);
+    const renamed = (await roles.list(context)).find((row) => row.id === photographer?.id);
+    expect(renamed?.defaultKey).toBeNull();
+  });
 });

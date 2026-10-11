@@ -14,8 +14,8 @@ const MEMBER = {
   whatsappNumber: "6281298765432",
   email: null,
   roles: [
-    { id: "r1", name: "Fotografer" },
-    { id: "r2", name: "Videografer" },
+    { id: "r1", name: "Fotografer", defaultKey: null },
+    { id: "r2", name: "Videografer", defaultKey: null },
   ],
   isArchived: false,
 };

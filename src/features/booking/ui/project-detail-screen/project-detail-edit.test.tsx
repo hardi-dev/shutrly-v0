@@ -24,6 +24,7 @@ vi.mock("@/ui/patterns/compact-bar/compact-bar-actions", () => ({
 const DEFINITIONS = [
   {
     id: "d3",
+    defaultKey: null,
     name: "Foto cetak",
     unit: "foto",
     valueType: "NUMBER",

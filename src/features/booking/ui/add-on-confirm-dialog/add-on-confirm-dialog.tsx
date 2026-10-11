@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
@@ -7,6 +9,7 @@ import { Modal } from "@/ui/patterns/modal/modal";
 import { Button } from "@/ui/primitives/button/button";
 
 import { addOnConfirmContent } from "./add-on-confirm-content";
+import { ADD_ON_CONFIRM_DIALOG_COPY_NAMESPACE } from "./add-on-confirm-dialog.copy";
 import type {
   AddOnConfirmDialogProps,
   AddOnConfirmSurfaceProps,
@@ -15,9 +18,10 @@ import type {
 /** The approve, cancel and cancel-refused confirms: a Modal on desktop, a sheet on phones. The cancel is a standard Modal with a danger button, because the destructive Modal drops its body text (handoff › UI gotchas). @param props - which confirm, the pending flag and handlers @returns the dialog, or nothing when closed */
 export function AddOnConfirmDialog(props: Readonly<AddOnConfirmDialogProps>) {
   const locale = useFormattingLocale();
+  const t = useTranslations(ADD_ON_CONFIRM_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   if (!props.state) return null;
-  const content = addOnConfirmContent(props.state, locale);
+  const content = addOnConfirmContent(props.state, locale, t);
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) props.onClose();
   };

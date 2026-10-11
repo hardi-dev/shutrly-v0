@@ -114,7 +114,7 @@ describe("AddOnCard (addon-kartu states A–C)", () => {
         }),
       ),
     });
-    fireEvent.click(screen.getByRole("button", { name: "Aksi Tambahan 5 foto edit" }));
+    fireEvent.click(screen.getByRole("button", { name: "Tindakan untuk Tambahan 5 foto edit" }));
     fireEvent.click(await screen.findByRole("menuitem", { name: "Batalkan add-on" }));
     fireEvent.click(await screen.findByRole("button", { name: "Batalkan add-on" }));
     await act(() => Promise.resolve());

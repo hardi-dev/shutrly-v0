@@ -1,14 +1,16 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { Modal } from "@/ui/patterns/modal/modal";
 import { Button } from "@/ui/primitives/button/button";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
+import { SERVICE_DETAIL_DELETE_DIALOG_COPY_NAMESPACE } from "./service-detail-delete-dialog.copy";
 import type { ServiceDetailDeleteDialogProps } from "./service-detail-delete-dialog.types";
 
 export function ServiceDetailDeleteDialog(props: Readonly<ServiceDetailDeleteDialogProps>) {
+  const t = useTranslations(SERVICE_DETAIL_DELETE_DIALOG_COPY_NAMESPACE);
   const [isPending, setIsPending] = useState(false);
   async function confirm(): Promise<void> {
     setIsPending(true);
@@ -35,10 +37,10 @@ export function ServiceDetailDeleteDialog(props: Readonly<ServiceDetailDeleteDia
       actions={
         <>
           <Button variant="secondary" onPress={cancel} isDisabled={isPending}>
-            {CATALOG_COPY.cancel}
+            {t("cancel")}
           </Button>
           <Button variant="danger" onPress={handleConfirm} isPending={isPending}>
-            {CATALOG_COPY.deleteConfirm}
+            {t("delete")}
           </Button>
         </>
       }

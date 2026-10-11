@@ -1,10 +1,12 @@
+import { useTranslations } from "next-intl";
+
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { ServiceDetailRowActions } from "../service-detail-row-actions/service-detail-row-actions";
 import type { ServiceDetailScreenProps } from "../service-detail-screen/service-detail-screen.types";
+import { SERVICE_ITEMS_CARD_COPY_NAMESPACE } from "./service-items-card.copy";
 import type { ServiceItem, ServiceItemHandler } from "./service-items-card.types";
 
 export function ServiceItemsCard({
@@ -23,23 +25,20 @@ export function ServiceItemsCard({
     readonly onAdd?: () => void;
   }
 >) {
+  const t = useTranslations(SERVICE_ITEMS_CARD_COPY_NAMESPACE);
   return (
     <SectionCard
-      title={CATALOG_COPY.itemsTitle}
-      description={CATALOG_COPY.itemsDescription}
+      title={t("itemsTitle")}
+      description={t("itemsDescription")}
       content="flush"
-      actions={
-        onAdd ? (
-          <Button variant="secondary" iconLeading="plus" onPress={onAdd}>
-            {CATALOG_COPY.addItem}
-          </Button>
-        ) : null
-      }
+      actions={onAdd ? <AddItemButton onAdd={onAdd} /> : null}
     >
       {service.items.length === 0 ? (
-        <EmptyItems />
+        <p className="px-(--space-6) py-(--space-5) text-(--component-list-card-item-meta)">
+          {t("itemsEmpty")}
+        </p>
       ) : (
-        <ul aria-label={CATALOG_COPY.itemsTitle}>
+        <ul aria-label={t("itemsTitle")}>
           {service.items.map((item, index) => (
             <ServiceItemRow
               key={item.id}
@@ -58,11 +57,12 @@ export function ServiceItemsCard({
   );
 }
 
-function EmptyItems() {
+function AddItemButton({ onAdd }: Readonly<{ onAdd: () => void }>) {
+  const t = useTranslations(SERVICE_ITEMS_CARD_COPY_NAMESPACE);
   return (
-    <p className="px-(--space-6) py-(--space-5) text-(--component-list-card-item-meta)">
-      {CATALOG_COPY.itemsEmpty}
-    </p>
+    <Button variant="secondary" iconLeading="plus" onPress={onAdd}>
+      {t("addItem")}
+    </Button>
   );
 }
 

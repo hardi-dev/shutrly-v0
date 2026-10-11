@@ -52,7 +52,7 @@ describe("ItemDefinitionDialog", () => {
     );
     await user.type(screen.getByRole("textbox", { name: "Nama item" }), "Jumlah orang");
     await user.type(screen.getByRole("textbox", { name: "Satuan" }), "orang");
-    await user.click(screen.getByRole("button", { name: /Tipe nilai/ }));
+    await user.click(screen.getByRole("button", { name: /Format nilai/ }));
     await user.click(screen.getByRole("option", { name: /Rentang/ }));
     await user.click(screen.getByRole("button", { name: "Simpan" }));
 
@@ -64,7 +64,7 @@ describe("ItemDefinitionDialog", () => {
     await user.click(screen.getByRole("button", { name: "Buka tambah item" }));
     expect(screen.getByRole("textbox", { name: "Nama item" })).toHaveValue("");
     expect(screen.getByRole("textbox", { name: "Satuan" })).toHaveValue("");
-    expect(screen.getByRole("button", { name: /Tipe nilai/ })).toHaveTextContent("Angka");
+    expect(screen.getByRole("button", { name: /Format nilai/ })).toHaveTextContent("Angka");
   });
 
   it("AC-CAT-001 hides the pick settings while the item is not used for client selection", () => {
@@ -79,7 +79,7 @@ describe("ItemDefinitionDialog", () => {
     render(<AddDefinitionHarness action={action} />);
     await user.type(screen.getByRole("textbox", { name: "Nama item" }), "Bingkai");
     await user.click(screen.getByRole("switch", { name: "Dipakai untuk pilihan foto klien" }));
-    await user.click(screen.getByRole("radio", { name: /Jumlah per foto/ }));
+    await user.click(screen.getByRole("radio", { name: /Foto untuk dicetak/ }));
     await user.click(screen.getByRole("button", { name: "Simpan" }));
     await waitFor(() => {
       expect(action).toHaveBeenCalledWith(
@@ -99,7 +99,7 @@ describe("ItemDefinitionDialog", () => {
     render(<AddDefinitionHarness action={action} />);
     await user.type(screen.getByRole("textbox", { name: "Nama item" }), "Foto album");
     await user.click(screen.getByRole("switch", { name: "Dipakai untuk pilihan foto klien" }));
-    expect(screen.getByRole("radio", { name: /Hitung foto/ })).toBeChecked();
+    expect(screen.getByRole("radio", { name: /Foto untuk diedit/ })).toBeChecked();
     await user.click(screen.getByRole("switch", { name: "Klien bisa memberi catatan" }));
     await user.click(screen.getByRole("button", { name: "Simpan" }));
     await waitFor(() => {
@@ -131,7 +131,7 @@ describe("ItemDefinitionDialog", () => {
       />,
     );
     expect(screen.getByText("Pengaturan pilihan dikunci")).toBeInTheDocument();
-    expect(screen.getByRole("radio", { name: /Jumlah per foto/ })).toBeDisabled();
+    expect(screen.getByRole("radio", { name: /Foto untuk dicetak/ })).toBeDisabled();
     expect(screen.getByRole("switch", { name: "Klien bisa memberi catatan" })).toBeDisabled();
     expect(screen.getByRole("textbox", { name: "Nama item" })).toBeEnabled();
   });

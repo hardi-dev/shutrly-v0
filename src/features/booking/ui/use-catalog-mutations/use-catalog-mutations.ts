@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 
 import type {
@@ -8,7 +9,8 @@ import type {
 } from "@/features/booking/application/use-cases/catalog-results/catalog-results.types";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
+import type { CatalogTranslate } from "../catalog-copy/catalog-copy.types";
+import { USE_CATALOG_MUTATIONS_COPY_NAMESPACE } from "./use-catalog-mutations.copy";
 
 type MutationResult = CatalogWriteResult | undefined;
 type CatalogMutationKind = "category" | "definition" | "service";
@@ -34,37 +36,41 @@ export interface CatalogMutationActions {
   ) => Promise<CatalogDeleteResult>;
 }
 
-async function runWriteMutation(mutation: WriteMutation): Promise<MutationResult> {
+async function runWriteMutation(
+  mutation: WriteMutation,
+  t: CatalogTranslate,
+): Promise<MutationResult> {
   try {
     const result = await mutation();
     if (result?.ok === false) return result;
-    showToast({ tone: "success", title: CATALOG_COPY.savedToast });
+    showToast({ tone: "success", title: t("savedToast") });
     return result;
   } catch {
     showToast({
       tone: "danger",
-      title: CATALOG_COPY.serverErrorTitle,
-      body: CATALOG_COPY.serverErrorBody,
-      action: { label: CATALOG_COPY.retry, onAction: () => void runWriteMutation(mutation) },
+      title: t("serverErrorTitle"),
+      body: t("serverErrorBody"),
+      action: { label: t("retry"), onAction: () => void runWriteMutation(mutation, t) },
     });
     return undefined;
   }
 }
 
 export function useCatalogMutations(workspaceId: string, actions: CatalogMutationActions) {
+  const t = useTranslations(USE_CATALOG_MUTATIONS_COPY_NAMESPACE);
   const addCategory = useCallback(
     (values: unknown): Promise<MutationResult> =>
-      runWriteMutation(() => actions.addCategory(workspaceId, values)),
-    [actions, workspaceId],
+      runWriteMutation(() => actions.addCategory(workspaceId, values), t),
+    [actions, workspaceId, t],
   );
 
   const renameCategory = useCallback(
     async (categoryId: string, values: unknown): Promise<MutationResult> => {
       const rename = actions.renameCategory;
       if (!rename) return undefined;
-      return runWriteMutation(() => rename(workspaceId, categoryId, values));
+      return runWriteMutation(() => rename(workspaceId, categoryId, values), t);
     },
-    [actions, workspaceId],
+    [actions, workspaceId, t],
   );
 
   const setActive = useCallback(

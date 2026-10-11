@@ -27,7 +27,7 @@ describe("CancelProjectDialog", () => {
       />,
     );
     expect(screen.getByText("Batalkan proyek?")).toBeInTheDocument();
-    expect(screen.getByText("Opsional")).toBeInTheDocument();
+    expect(screen.getByText("(opsional)")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Batalkan proyek" }));
     expect(cancelAction).toHaveBeenCalledWith("ws", "p1", { reason: "" });
     expect(showToast).toHaveBeenCalledWith({
@@ -56,7 +56,7 @@ describe("CancelProjectDialog", () => {
       />,
     );
     expect(screen.getByText("Alasan pembatalan")).toBeInTheDocument();
-    expect(screen.queryByText("Opsional")).not.toBeInTheDocument();
+    expect(screen.queryByText("(opsional)")).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Batalkan proyek" }));
     expect(
       await screen.findByText("Isi alasan pembatalan. Wajib setelah pemotretan dimulai."),

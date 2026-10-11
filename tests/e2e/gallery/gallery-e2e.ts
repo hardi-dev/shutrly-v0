@@ -56,25 +56,33 @@ async function addClient(page: Page, workspaceId: string): Promise<void> {
 async function addService(page: Page, workspaceId: string): Promise<void> {
   await page.goto(`/w/${workspaceId}/services`);
   await page
-    .getByRole("button", { name: CATALOG_COPY.addService })
+    .getByRole("button", { name: CATALOG_COPY.messages.id.addService })
     .filter({ visible: true })
     .first()
     .click();
   const serviceDialog = page
-    .getByRole("dialog", { name: CATALOG_COPY.addServiceTitle })
+    .getByRole("dialog", { name: CATALOG_COPY.messages.id.addServiceTitle })
     .filter({ visible: true })
     .first();
-  await serviceDialog.getByRole("button", { name: CATALOG_COPY.addCategoryInline }).click();
+  await serviceDialog
+    .getByRole("button", { name: CATALOG_COPY.messages.id.addCategoryInline })
+    .click();
   const categoryDialog = page
-    .getByRole("dialog", { name: CATALOG_COPY.categoryDialogAddTitle })
+    .getByRole("dialog", { name: CATALOG_COPY.messages.id.categoryDialogAddTitle })
     .filter({ visible: true })
     .first();
-  await categoryDialog.getByRole("textbox", { name: CATALOG_COPY.nameCategory }).fill("Wisuda");
-  await categoryDialog.getByRole("button", { name: CATALOG_COPY.save }).click();
+  await categoryDialog
+    .getByRole("textbox", { name: CATALOG_COPY.messages.id.nameCategory })
+    .fill("Wisuda");
+  await categoryDialog.getByRole("button", { name: CATALOG_COPY.messages.id.save }).click();
   await expect(categoryDialog).toBeHidden();
-  await serviceDialog.getByRole("textbox", { name: CATALOG_COPY.nameService }).fill("Wisuda Basic");
-  await serviceDialog.getByRole("textbox", { name: CATALOG_COPY.basePrice }).fill("750000");
-  await serviceDialog.getByRole("button", { name: CATALOG_COPY.save }).click();
+  await serviceDialog
+    .getByRole("textbox", { name: CATALOG_COPY.messages.id.nameService })
+    .fill("Wisuda Basic");
+  await serviceDialog
+    .getByRole("textbox", { name: CATALOG_COPY.messages.id.basePrice })
+    .fill("750000");
+  await serviceDialog.getByRole("button", { name: CATALOG_COPY.messages.id.save }).click();
   await expect(page).toHaveURL(/\/services\/[0-9a-f-]+$/);
 }
 

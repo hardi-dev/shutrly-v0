@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useController, useWatch } from "react-hook-form";
 
 import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
@@ -10,8 +11,8 @@ import { Select } from "@/ui/patterns/select/select";
 import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { ADD_ON_COPY as COPY } from "../add-on-copy/add-on.copy";
 import { addOnFieldError } from "../add-on-text/add-on-text";
+import { ADD_ON_DIALOG_COPY_NAMESPACE } from "./add-on-dialog.copy";
 import type {
   AddOnDialogActionsProps,
   AddOnDialogProps,
@@ -27,6 +28,7 @@ const NO_GROUP = "none";
 /** *Tambah add-on*: description, target group, quantity and unit price with a live total; a Modal on desktop, a form sheet on phones (addon-dialog-tambah, AC-ADD-001…003, -006). @param props - open state, targets and the create action @returns the dialog */
 export function AddOnDialog(props: Readonly<AddOnDialogProps>) {
   const isMobile = useMobileViewport();
+  const t = useTranslations(ADD_ON_DIALOG_COPY_NAMESPACE);
   const { form, isPending, handleSubmit } = useAddOnForm(props);
   const save = (
     <Button
@@ -36,7 +38,7 @@ export function AddOnDialog(props: Readonly<AddOnDialogProps>) {
       isPending={isPending}
       className="max-md:w-full"
     >
-      {COPY.saveDraft}
+      {t("saveDraft")}
     </Button>
   );
   const body = (
@@ -49,8 +51,8 @@ export function AddOnDialog(props: Readonly<AddOnDialogProps>) {
       <BottomSheet
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
-        title={COPY.formTitle}
-        description={COPY.formDescription}
+        title={t("formTitle")}
+        description={t("formDescription")}
         variant="form"
         actions={save}
       >
@@ -62,8 +64,8 @@ export function AddOnDialog(props: Readonly<AddOnDialogProps>) {
     <Modal
       isOpen={props.isOpen}
       onOpenChange={props.onOpenChange}
-      title={COPY.formTitle}
-      description={COPY.formDescription}
+      title={t("formTitle")}
+      description={t("formDescription")}
       size="md"
       actions={<DesktopActions save={save} isPending={isPending} onCancel={props.onOpenChange} />}
     >
@@ -73,13 +75,14 @@ export function AddOnDialog(props: Readonly<AddOnDialogProps>) {
 }
 
 function DesktopActions({ save, isPending, onCancel }: Readonly<AddOnDialogActionsProps>) {
+  const t = useTranslations(ADD_ON_DIALOG_COPY_NAMESPACE);
   const handleCancel = () => {
     onCancel(false);
   };
   return (
     <>
       <Button variant="secondary" isDisabled={isPending} onPress={handleCancel}>
-        {COPY.formCancel}
+        {t("formCancel")}
       </Button>
       {save}
     </>
@@ -87,14 +90,15 @@ function DesktopActions({ save, isPending, onCancel }: Readonly<AddOnDialogActio
 }
 
 function AddOnFields({ control, targets }: Readonly<AddOnFieldsProps>) {
+  const t = useTranslations(ADD_ON_DIALOG_COPY_NAMESPACE);
   return (
     <>
       <TextInput
         control={control}
         name="description"
-        label={COPY.descriptionLabel}
-        placeholder={COPY.descriptionPlaceholder}
-        description={COPY.descriptionHelper}
+        label={t("descriptionLabel")}
+        placeholder={t("descriptionPlaceholder")}
+        description={t("descriptionHelper")}
       />
       <TargetSelect control={control} targets={targets} />
       <div className="flex flex-row items-start gap-(--space-4)">
@@ -102,17 +106,17 @@ function AddOnFields({ control, targets }: Readonly<AddOnFieldsProps>) {
           <TextInput
             control={control}
             name="quantity"
-            label={COPY.quantityLabel}
-            description={COPY.quantityHelper}
+            label={t("quantityLabel")}
+            description={t("quantityHelper")}
           />
         </div>
         <div className="min-w-0 flex-1">
           <TextInput
             control={control}
             name="unitPrice"
-            label={COPY.priceLabel}
-            prefix={COPY.pricePrefix}
-            description={COPY.priceHelper}
+            label={t("priceLabel")}
+            prefix={t("pricePrefix")}
+            description={t("priceHelper")}
           />
         </div>
       </div>
@@ -122,6 +126,7 @@ function AddOnFields({ control, targets }: Readonly<AddOnFieldsProps>) {
 }
 
 function TextInput({ control, name, ...rest }: Readonly<AddOnTextInputProps>) {
+  const t = useTranslations(ADD_ON_DIALOG_COPY_NAMESPACE);
   const { field, fieldState } = useController({ control, name });
   const message = fieldState.error?.message;
   return (
@@ -132,16 +137,17 @@ function TextInput({ control, name, ...rest }: Readonly<AddOnTextInputProps>) {
       onChange={field.onChange}
       onBlur={field.onBlur}
       inputRef={field.ref}
-      errorMessage={message ? addOnFieldError(name, message) : undefined}
+      errorMessage={message ? addOnFieldError(name, message, t) : undefined}
     />
   );
 }
 
 function TargetSelect({ control, targets }: Readonly<AddOnFieldsProps>) {
+  const t = useTranslations(ADD_ON_DIALOG_COPY_NAMESPACE);
   const { field, fieldState } = useController({ control, name: "selectionGroupId" });
   const options = [
     ...targets.map((group) => ({ id: group.id, label: group.name })),
-    { id: NO_GROUP, label: COPY.noGroup },
+    { id: NO_GROUP, label: t("noGroup") },
   ];
   const handleChange = (id: string) => {
     field.onChange(id === NO_GROUP ? "" : id);
@@ -149,24 +155,25 @@ function TargetSelect({ control, targets }: Readonly<AddOnFieldsProps>) {
   const message = fieldState.error?.message;
   return (
     <Select
-      label={COPY.targetLabel}
+      label={t("targetLabel")}
       name="selectionGroupId"
       options={options}
       value={field.value || NO_GROUP}
       onChange={handleChange}
-      description={COPY.targetHelper}
-      errorMessage={message ? addOnFieldError("selectionGroupId", message) : undefined}
+      description={t("targetHelper")}
+      errorMessage={message ? addOnFieldError("selectionGroupId", message, t) : undefined}
     />
   );
 }
 
 function LiveTotal({ control }: Readonly<Pick<AddOnFieldsProps, "control">>) {
+  const t = useTranslations(ADD_ON_DIALOG_COPY_NAMESPACE);
   const locale = useFormattingLocale();
   const [quantity, unitPrice] = useWatch({ control, name: ["quantity", "unitPrice"] });
   return (
     <div className="flex w-full items-center justify-between">
       <span className="text-(length:--font-size-body) text-(--color-semantic-text-secondary)">
-        {COPY.totalLabel}
+        {t("totalLabel")}
       </span>
       <span className="text-(length:--font-size-subtitle) font-bold text-(--color-semantic-text-primary)">
         {liveAddOnTotal(quantity, unitPrice, locale)}

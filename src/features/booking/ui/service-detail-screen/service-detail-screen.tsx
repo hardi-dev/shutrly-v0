@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ServiceWriteResult } from "@/features/booking/application/use-cases/service-results/service-results.types";
@@ -10,11 +11,11 @@ import { Button } from "@/ui/primitives/button/button";
 import { AddServiceDialog } from "../add-service-dialog/add-service-dialog";
 import { BookingFieldDialog } from "../booking-field-dialog/booking-field-dialog";
 import { BookingFieldsCard } from "../booking-fields-card/booking-fields-card";
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { ServiceDetailDeleteDialog } from "../service-detail-delete-dialog/service-detail-delete-dialog";
 import { ServiceInfoCard } from "../service-info-card/service-info-card";
 import { ServiceItemDialog } from "../service-item-dialog/service-item-dialog";
 import { ServiceItemsCard } from "../service-items-card/service-items-card";
+import { SERVICE_DETAIL_SCREEN_COPY_NAMESPACE } from "./service-detail-screen.copy";
 import type {
   ServiceDetailDialogs,
   ServiceDetailDialogState,
@@ -28,17 +29,14 @@ function noopServiceAction(): Promise<ServiceWriteResult> {
 
 export function ServiceDetailScreen(props: Readonly<ServiceDetailScreenProps>) {
   const { service } = props;
+  const t = useTranslations(SERVICE_DETAIL_SCREEN_COPY_NAMESPACE);
   const dialogs = useServiceDetailDialogs(props);
   return (
     <>
       {props.setActiveAction ? <ServiceDetailActions {...props} /> : null}
       <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)">
         {!service.isActive ? (
-          <Alert
-            tone="warning"
-            title={CATALOG_COPY.archivedBannerTitle}
-            body={CATALOG_COPY.archivedBannerBody}
-          />
+          <Alert tone="warning" title={t("archivedBannerTitle")} body={t("archivedBannerBody")} />
         ) : null}
         <ServiceInfoCard
           service={service}
@@ -168,6 +166,7 @@ function ServiceDetailActions({
   workspaceId,
   setActiveAction,
 }: Readonly<ServiceDetailScreenProps>) {
+  const t = useTranslations(SERVICE_DETAIL_SCREEN_COPY_NAMESPACE);
   const { pending, toggle } = useServiceActiveToggle({
     workspaceId,
     serviceId: service.id,
@@ -185,7 +184,7 @@ function ServiceDetailActions({
         onPress={handleToggle}
         isPending={pending}
       >
-        {service.isActive ? CATALOG_COPY.archive : CATALOG_COPY.unarchive}
+        {service.isActive ? t("archive") : t("unarchive")}
       </Button>
     </PageActions>
   );
@@ -328,6 +327,7 @@ function ServiceDetailDeleteDialogs({
   props,
   dialogs,
 }: Readonly<{ readonly props: ServiceDetailScreenProps; readonly dialogs: ServiceDetailDialogs }>) {
+  const t = useTranslations(SERVICE_DETAIL_SCREEN_COPY_NAMESPACE);
   async function confirmItem(): Promise<void> {
     if (props.workspaceId && props.removeItemAction && dialogs.deletingItem) {
       await props.removeItemAction(props.workspaceId, props.service.id, dialogs.deletingItem.id);
@@ -348,8 +348,8 @@ function ServiceDetailDeleteDialogs({
       {dialogs.deletingItem ? (
         <ServiceDetailDeleteDialog
           isOpen
-          title={CATALOG_COPY.removeItemTitle(dialogs.deletingItem.definitionName)}
-          description={CATALOG_COPY.removeDescription}
+          title={t("removeItemTitle", { name: dialogs.deletingItem.definitionName })}
+          description={t("removeDescription")}
           onOpenChange={close}
           onConfirm={confirmItem}
         />
@@ -357,8 +357,8 @@ function ServiceDetailDeleteDialogs({
       {dialogs.deletingField ? (
         <ServiceDetailDeleteDialog
           isOpen
-          title={CATALOG_COPY.removeFieldTitle(dialogs.deletingField.name)}
-          description={CATALOG_COPY.removeDescription}
+          title={t("removeFieldTitle", { name: dialogs.deletingField.name })}
+          description={t("removeDescription")}
           onOpenChange={close}
           onConfirm={confirmField}
         />

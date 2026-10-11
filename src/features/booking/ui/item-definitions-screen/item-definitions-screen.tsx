@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ItemDefinitionRecord } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
@@ -9,16 +10,43 @@ import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
+import {
+  CATALOG_PICK_MODE_MESSAGE_KEY,
+  CATALOG_VALUE_TYPE_MESSAGE_KEY,
+} from "../catalog-copy/catalog-copy.copy";
+import type { CatalogTranslate } from "../catalog-copy/catalog-copy.types";
 import { CatalogRowActions } from "../catalog-row-actions/catalog-row-actions";
 import { CatalogTabsBar } from "../catalog-tabs-bar/catalog-tabs-bar";
 import { definitionIcon } from "../definition-icon/definition-icon";
 import { DeleteCatalogDialog } from "../delete-catalog-dialog/delete-catalog-dialog";
 import { ItemDefinitionDialog } from "../item-definition-dialog/item-definition-dialog";
+import { ITEM_DEFINITIONS_SCREEN_COPY_NAMESPACE } from "./item-definitions-screen.copy";
 import type { ItemDefinitionsScreenProps } from "./item-definitions-screen.types";
 
-function labelForType(valueType: "NUMBER" | "RANGE"): string {
-  return CATALOG_COPY.valueTypes[valueType];
+/**
+ * The metadata line of a package item: value format, unit, the selection mode (in the row only),
+ * then the usage, e.g. "Number · photos · Used in 2 services".
+ * @param t - the catalog translator
+ * @param definition - the item definition
+ * @param withPickMode - whether the selection mode is shown
+ * @returns the translated line
+ */
+export function definitionMeta(
+  t: CatalogTranslate,
+  definition: ItemDefinitionRecord,
+  withPickMode: boolean,
+): string {
+  const pickMode =
+    withPickMode && definition.pickMode
+      ? t("pickModeMeta", { mode: t(CATALOG_PICK_MODE_MESSAGE_KEY[definition.pickMode]) })
+      : null;
+  const usage =
+    definition.usageCount > 0
+      ? t("usageSummary", { count: definition.usageCount })
+      : t("unusedSummary");
+  return [t(CATALOG_VALUE_TYPE_MESSAGE_KEY[definition.valueType]), definition.unit, pickMode, usage]
+    .filter(Boolean)
+    .join(" · ");
 }
 
 export function ItemDefinitionsScreen({
@@ -30,9 +58,10 @@ export function ItemDefinitionsScreen({
   removeAction,
 }: Readonly<ItemDefinitionsScreenProps>) {
   const dialogs = useItemDefinitionDialogs();
+  const t = useTranslations(ITEM_DEFINITIONS_SCREEN_COPY_NAMESPACE);
   const addButton = (
     <Button iconLeading="plus" onPress={dialogs.openAdd}>
-      {CATALOG_COPY.addItem}
+      {t("addItem")}
     </Button>
   );
   return (
@@ -71,10 +100,11 @@ function DefinitionGroups({
   readonly onEdit: (definition: ItemDefinitionRecord) => void;
   readonly onDelete: (definition: ItemDefinitionRecord) => void;
 }>) {
+  const t = useTranslations(ITEM_DEFINITIONS_SCREEN_COPY_NAMESPACE);
   return (
     <>
       <DefinitionGroup
-        title={CATALOG_COPY.selectionGroupTitle}
+        title={t("selectionGroupTitle")}
         definitions={definitions.selection}
         workspaceId={workspaceId}
         setActiveAction={setActiveAction}
@@ -82,7 +112,7 @@ function DefinitionGroups({
         onDelete={onDelete}
       />
       <DefinitionGroup
-        title={CATALOG_COPY.otherGroupTitle}
+        title={t("otherGroupTitle")}
         definitions={definitions.other}
         workspaceId={workspaceId}
         setActiveAction={setActiveAction}
@@ -108,6 +138,7 @@ function DefinitionDialogs({
   readonly setActiveAction: ItemDefinitionsScreenProps["setActiveAction"];
   readonly removeAction: ItemDefinitionsScreenProps["removeAction"];
 }>) {
+  const t = useTranslations(ITEM_DEFINITIONS_SCREEN_COPY_NAMESPACE);
   return (
     <>
       {addAction ? (
@@ -128,7 +159,7 @@ function DefinitionDialogs({
           kind="definition"
           entry={dialogs.deleting}
           isInUse={dialogs.deleting.usageCount > 0}
-          usage={CATALOG_COPY.definitionUsage(dialogs.deleting.usageCount)}
+          usage={t("usageSummary", { count: dialogs.deleting.usageCount })}
           onOpenChange={dialogs.closeDelete}
           removeAction={removeAction}
           setActiveAction={setActiveAction}
@@ -217,6 +248,7 @@ function DefinitionRow({
   readonly onEdit: (definition: ItemDefinitionRecord) => void;
   readonly onDelete: (definition: ItemDefinitionRecord) => void;
 }>) {
+  const t = useTranslations(ITEM_DEFINITIONS_SCREEN_COPY_NAMESPACE);
   function handleEdit(): void {
     onEdit(definition);
   }
@@ -227,12 +259,7 @@ function DefinitionRow({
     <ListCardItem
       icon={definitionIcon(definition)}
       title={definition.name}
-      meta={CATALOG_COPY.definitionMeta(
-        labelForType(definition.valueType),
-        definition.unit,
-        definition.usageCount,
-        definition.pickMode ? CATALOG_COPY.pickModes[definition.pickMode] : null,
-      )}
+      meta={definitionMeta(t, definition, true)}
       isLast={isLast}
       trailing={
         <DefinitionRowTrailing
@@ -260,10 +287,11 @@ function DefinitionRowTrailing({
   readonly onEdit: () => void;
   readonly onDelete: () => void;
 }>) {
+  const t = useTranslations(ITEM_DEFINITIONS_SCREEN_COPY_NAMESPACE);
   return (
     <span className="flex items-center gap-(--space-2)">
       {!definition.isActive ? (
-        <StatusChip tone="neutral" label={CATALOG_COPY.archived} hasDot={false} />
+        <StatusChip tone="neutral" label={t("archived")} hasDot={false} />
       ) : null}
       {setActiveAction ? (
         <CatalogRowActions
@@ -272,11 +300,7 @@ function DefinitionRowTrailing({
           id={definition.id}
           name={definition.name}
           isActive={definition.isActive}
-          meta={CATALOG_COPY.definitionMeta(
-            labelForType(definition.valueType),
-            definition.unit,
-            definition.usageCount,
-          )}
+          meta={definitionMeta(t, definition, false)}
           onEdit={onEdit}
           onDelete={onDelete}
           setActiveAction={setActiveAction}

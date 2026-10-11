@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { FieldType } from "@/features/booking/domain/booking-field/booking-field.types";
@@ -12,10 +13,12 @@ import { Button } from "@/ui/primitives/button/button";
 import { Switch } from "@/ui/primitives/switch/switch";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
+import { CATALOG_FIELD_TYPE_MESSAGE_KEY } from "../catalog-copy/catalog-copy.copy";
+import type { CatalogTranslate } from "../catalog-copy/catalog-copy.types";
 import { CatalogFieldError } from "../catalog-field-error/catalog-field-error";
 import { showCatalogSaveFailure } from "../catalog-save-feedback/catalog-save-feedback";
 import { OptionListEditor } from "../option-list-editor/option-list-editor";
+import { BOOKING_FIELD_DIALOG_COPY_NAMESPACE } from "./booking-field-dialog.copy";
 import type {
   BookingFieldDialogProps,
   BookingFieldFieldsProps,
@@ -24,14 +27,21 @@ import type {
   ResponsiveFieldDialogProps,
 } from "./booking-field-dialog.types";
 
-const FIELD_TYPE_OPTIONS: readonly { readonly id: FieldType; readonly label: string }[] = [
-  { id: "TEXT", label: "Teks" },
-  { id: "TEXTAREA", label: "Teks panjang" },
-  { id: "NUMBER", label: "Angka" },
-  { id: "DATE", label: "Tanggal" },
-  { id: "BOOLEAN", label: "Ya/Tidak" },
-  { id: "SELECT", label: "Pilihan" },
+const FIELD_TYPES: readonly FieldType[] = [
+  "TEXT",
+  "TEXTAREA",
+  "NUMBER",
+  "DATE",
+  "BOOLEAN",
+  "SELECT",
 ];
+
+function fieldTypeOptions(
+  t: CatalogTranslate,
+): readonly { readonly id: FieldType; readonly label: string }[] {
+  return FIELD_TYPES.map((id) => ({ id, label: t(CATALOG_FIELD_TYPE_MESSAGE_KEY[id]) }));
+}
+
 function noop(): void {}
 
 function createOpenChangeHandler(
@@ -49,6 +59,7 @@ function createOpenChangeHandler(
 }
 
 export function BookingFieldDialog(props: Readonly<BookingFieldDialogProps>) {
+  const t = useTranslations(BOOKING_FIELD_DIALOG_COPY_NAMESPACE);
   const form = useBookingFieldForm(props);
   const content = <BookingFieldFields {...form} />;
   function handleSubmit(): void {
@@ -56,7 +67,7 @@ export function BookingFieldDialog(props: Readonly<BookingFieldDialogProps>) {
   }
   const save = (
     <Button onPress={handleSubmit} isPending={form.pending}>
-      {props.field ? CATALOG_COPY.save : CATALOG_COPY.add}
+      {props.field ? t("save") : t("add")}
     </Button>
   );
   return (
@@ -65,8 +76,8 @@ export function BookingFieldDialog(props: Readonly<BookingFieldDialogProps>) {
       onOpenChange={form.handleOpenChange}
       content={content}
       save={save}
-      title={props.field ? CATALOG_COPY.editField : CATALOG_COPY.addFieldTitle}
-      description={CATALOG_COPY.fieldDialogDescription}
+      title={props.field ? t("editField") : t("addFieldTitle")}
+      description={t("fieldDialogDescription")}
     />
   );
 }
@@ -79,6 +90,7 @@ function useBookingFieldForm({
   action,
   updateAction,
 }: Readonly<BookingFieldDialogProps>) {
+  const t = useTranslations(BOOKING_FIELD_DIALOG_COPY_NAMESPACE);
   const state = useBookingFieldValues(field);
   const [error, setError] = useState<string | undefined>();
   const [optionErrors, setOptionErrors] = useState<Readonly<Record<number, string>>>({});
@@ -103,6 +115,7 @@ function useBookingFieldForm({
       setError,
       setOptionErrors,
       setPending,
+      t,
     });
   }
   return {
@@ -127,6 +140,7 @@ async function submitBookingField(args: BookingFieldSubmitArgs): Promise<void> {
     setError,
     setOptionErrors,
     setPending,
+    t,
   } = args;
   setPending(true);
   setError(undefined);
@@ -148,9 +162,9 @@ async function submitBookingField(args: BookingFieldSubmitArgs): Promise<void> {
       return;
     }
     onOpenChange(false);
-    showToast({ tone: "success", title: CATALOG_COPY.savedToast });
+    showToast({ tone: "success", title: t("savedToast") });
   } catch {
-    showCatalogSaveFailure({ setError, retry: () => void submitBookingField(args) });
+    showCatalogSaveFailure({ setError, retry: () => void submitBookingField(args), t });
   } finally {
     setPending(false);
   }
@@ -206,31 +220,33 @@ function BookingFieldFields({
   optionErrors,
   error,
 }: Readonly<BookingFieldFieldsProps>) {
+  const t = useTranslations(BOOKING_FIELD_DIALOG_COPY_NAMESPACE);
+  const typeOptions = fieldTypeOptions(t);
   function changeType(id: string): void {
-    const selected = FIELD_TYPE_OPTIONS.find((item) => item.id === id);
+    const selected = typeOptions.find((item) => item.id === id);
     if (selected) setFieldType(selected.id);
     if (id !== "SELECT") setOptions([]);
   }
   return (
     <div className="flex flex-col gap-(--space-4)">
       <TextField
-        label={CATALOG_COPY.fieldName}
+        label={t("fieldName")}
         name="name"
         onBlur={noop}
-        placeholder={CATALOG_COPY.fieldNamePlaceholder}
+        placeholder={t("fieldNamePlaceholder")}
         value={name}
         onChange={setName}
       />
       <Select
-        label={CATALOG_COPY.fieldType}
+        label={t("fieldType")}
         value={fieldType}
-        options={FIELD_TYPE_OPTIONS}
+        options={typeOptions}
         onChange={changeType}
       />
       {fieldType === "SELECT" ? (
         <OptionListEditor options={options} errors={optionErrors} onChange={setOptions} />
       ) : null}
-      <Switch label={CATALOG_COPY.requiredSwitch} isSelected={required} onChange={setRequired} />
+      <Switch label={t("requiredSwitch")} isSelected={required} onChange={setRequired} />
       <CatalogFieldError errorKey={error} />
     </div>
   );
@@ -245,6 +261,7 @@ function ResponsiveFieldDialog({
   description,
 }: Readonly<ResponsiveFieldDialogProps>) {
   const mobile = useMobileViewport();
+  const t = useTranslations(BOOKING_FIELD_DIALOG_COPY_NAMESPACE);
   if (mobile)
     return (
       <BottomSheet
@@ -271,7 +288,7 @@ function ResponsiveFieldDialog({
       actions={
         <>
           <Button variant="secondary" onPress={close}>
-            {CATALOG_COPY.cancel}
+            {t("cancel")}
           </Button>
           {save}
         </>

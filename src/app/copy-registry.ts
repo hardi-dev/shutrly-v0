@@ -19,6 +19,8 @@ import { RESET_PASSWORD_FORM_COPY } from "@/features/auth/ui/reset-password-form
 import { RESET_PASSWORD_SCREEN_COPY } from "@/features/auth/ui/reset-password-screen/reset-password-screen.copy";
 import { RESET_SENT_SCREEN_COPY } from "@/features/auth/ui/reset-sent-screen/reset-sent-screen.copy";
 import { VERIFY_PENDING_SCREEN_COPY } from "@/features/auth/ui/verify-pending-screen/verify-pending-screen.copy";
+import { ADD_ON_COPY } from "@/features/booking/ui/add-on-copy/add-on.copy";
+import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
 import { LANDING_FOOTER_COPY } from "@/features/landing/ui/landing-footer/landing-footer.copy";
 import { LANDING_HEADER_COPY } from "@/features/landing/ui/landing-header/landing-header.copy";
 import { LANDING_PAGE_COPY } from "@/features/landing/ui/landing-page/landing-page.copy";
@@ -121,6 +123,8 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   RESET_PASSWORD_SCREEN_COPY,
   RESET_SENT_SCREEN_COPY,
   VERIFY_PENDING_SCREEN_COPY,
+  ADD_ON_COPY,
+  CATALOG_COPY,
   SPLIT_LAYOUT_COPY,
   EDITORIAL_PANEL_COPY,
   PROFILE_LAYOUT_COPY,

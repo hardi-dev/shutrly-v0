@@ -1,4 +1,5 @@
 import { type Browser, expect, type Locator, type Page, test } from "@playwright/test";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 
 import { ADD_ON_COPY } from "@/features/booking/ui/add-on-copy/add-on.copy";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
@@ -152,23 +153,27 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
 
     // J-05: an approved add-on reopens the sent group; the client picks one more and sends again.
     await page.goto(projectPath);
-    await page.getByRole("button", { name: ADD_ON_COPY.add }).first().click();
+    await page.getByRole("button", { name: ADD_ON_COPY.messages.id.add }).first().click();
     const form = page
-      .getByRole("dialog", { name: ADD_ON_COPY.formTitle })
+      .getByRole("dialog", { name: ADD_ON_COPY.messages.id.formTitle })
       .filter({ visible: true });
     await form
-      .getByRole("textbox", { name: ADD_ON_COPY.descriptionLabel })
+      .getByRole("textbox", { name: ADD_ON_COPY.messages.id.descriptionLabel })
       .fill("Tambahan 2 foto edit");
-    await form.getByRole("textbox", { name: ADD_ON_COPY.quantityLabel }).fill("2");
-    await form.getByRole("textbox", { name: ADD_ON_COPY.priceLabel }).fill("20000");
-    await form.getByRole("button", { name: ADD_ON_COPY.saveDraft }).click();
+    await form.getByRole("textbox", { name: ADD_ON_COPY.messages.id.quantityLabel }).fill("2");
+    await form.getByRole("textbox", { name: ADD_ON_COPY.messages.id.priceLabel }).fill("20000");
+    await form.getByRole("button", { name: ADD_ON_COPY.messages.id.saveDraft }).click();
     await expect(form).toBeHidden();
     await page
-      .getByRole("button", { name: ADD_ON_COPY.actionsLabel("Tambahan 2 foto edit") })
+      .getByRole("button", {
+        name: copyTranslator("bookingAddOn")("actionsLabel", {
+          description: "Tambahan 2 foto edit",
+        }),
+      })
       .click();
-    await page.getByRole("menuitem", { name: ADD_ON_COPY.approve }).click();
-    await confirmIn(page, ADD_ON_COPY.approveConfirm);
-    await expect(visibleText(page, ADD_ON_COPY.status.APPROVED)).toBeVisible();
+    await page.getByRole("menuitem", { name: ADD_ON_COPY.messages.id.approve }).click();
+    await confirmIn(page, ADD_ON_COPY.messages.id.approveConfirm);
+    await expect(visibleText(page, ADD_ON_COPY.messages.id.statusApproved)).toBeVisible();
     await client.goto(clientPath);
     await expect(visibleText(client, "1 dari 5 foto dipilih")).toBeVisible();
     await client.getByRole("link", { name: CLIENT_HOME_COPY.actions.CONTINUE }).first().click();

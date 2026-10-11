@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -11,7 +12,7 @@ import { MenuTrigger } from "@/ui/patterns/menu/menu-trigger";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
+import { SERVICE_DETAIL_ROW_ACTIONS_COPY_NAMESPACE } from "./service-detail-row-actions.copy";
 import type {
   DetailActionHandlers,
   DetailActionSurfaceProps,
@@ -50,8 +51,9 @@ function useDetailActionHandlers(
   triggerId: string,
   isMobile: boolean,
 ): DetailActionHandlers {
-  const editLabel = props.kind === "item" ? CATALOG_COPY.editItemValue : CATALOG_COPY.editField;
-  const deleteLabel = props.kind === "item" ? CATALOG_COPY.removeItem : CATALOG_COPY.removeField;
+  const t = useTranslations(SERVICE_DETAIL_ROW_ACTIONS_COPY_NAMESPACE);
+  const editLabel = props.kind === "item" ? t("editItemValue") : t("editField");
+  const deleteLabel = props.kind === "item" ? t("removeItem") : t("removeField");
   function closeThen(callback: () => void): void {
     close();
     window.setTimeout(
@@ -87,6 +89,7 @@ function MobileDetailActions({
   setIsOpen,
   triggerId,
 }: Readonly<MobileDetailActionsProps>) {
+  const t = useTranslations(SERVICE_DETAIL_ROW_ACTIONS_COPY_NAMESPACE);
   function open(): void {
     setIsOpen(true);
   }
@@ -96,7 +99,7 @@ function MobileDetailActions({
         id={triggerId}
         icon="more-horizontal"
         size="sm"
-        aria-label={CATALOG_COPY.rowActions(props.name)}
+        aria-label={t("rowActions", { name: props.name })}
         onPress={open}
       />
       <BottomSheet
@@ -108,13 +111,13 @@ function MobileDetailActions({
       >
         <SheetItem label={handlers.editLabel} icon="pencil" onPress={handlers.onEdit} />
         <SheetItem
-          label={CATALOG_COPY.moveUp}
+          label={t("moveUp")}
           icon="arrow-up"
           isDisabled={!props.canMoveUp}
           onPress={handlers.onMoveUp}
         />
         <SheetItem
-          label={CATALOG_COPY.moveDown}
+          label={t("moveDown")}
           icon="arrow-down"
           isDisabled={!props.canMoveDown}
           onPress={handlers.onMoveDown}
@@ -135,20 +138,21 @@ function DesktopDetailActions({
   handlers,
   triggerId,
 }: Readonly<DetailActionSurfaceProps & { triggerId: string }>) {
-  const label = CATALOG_COPY.rowActions(props.name);
+  const t = useTranslations(SERVICE_DETAIL_ROW_ACTIONS_COPY_NAMESPACE);
+  const label = t("rowActions", { name: props.name });
   return (
     <MenuTrigger label={label}>
       <IconButton id={triggerId} icon="more-horizontal" size="sm" aria-label={label} />
       <Menu aria-label={label}>
         <MenuItem label={handlers.editLabel} icon="pencil" onSelect={handlers.onEdit} />
         <MenuItem
-          label={CATALOG_COPY.moveUp}
+          label={t("moveUp")}
           icon="arrow-up"
           isDisabled={!props.canMoveUp}
           onSelect={handlers.onMoveUp}
         />
         <MenuItem
-          label={CATALOG_COPY.moveDown}
+          label={t("moveDown")}
           icon="arrow-down"
           isDisabled={!props.canMoveDown}
           onSelect={handlers.onMoveDown}

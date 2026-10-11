@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ItemDefinitionRecord } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
@@ -11,9 +12,9 @@ import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogFieldError } from "../catalog-field-error/catalog-field-error";
 import { showCatalogSaveFailure } from "../catalog-save-feedback/catalog-save-feedback";
+import { SERVICE_ITEM_DIALOG_COPY_NAMESPACE } from "./service-item-dialog.copy";
 import type {
   ResponsiveItemDialogProps,
   ServiceItemDialogProps,
@@ -25,6 +26,7 @@ import type {
 function noop(): void {}
 
 export function ServiceItemDialog(props: Readonly<ServiceItemDialogProps>) {
+  const t = useTranslations(SERVICE_ITEM_DIALOG_COPY_NAMESPACE);
   const form = useServiceItemForm(props);
   const content = <ServiceItemFields {...form} definitions={props.definitions} />;
   function handleSubmit(): void {
@@ -32,7 +34,7 @@ export function ServiceItemDialog(props: Readonly<ServiceItemDialogProps>) {
   }
   const save = (
     <Button onPress={handleSubmit} isPending={form.pending}>
-      {props.item ? CATALOG_COPY.save : CATALOG_COPY.add}
+      {props.item ? t("save") : t("add")}
     </Button>
   );
   return (
@@ -41,8 +43,8 @@ export function ServiceItemDialog(props: Readonly<ServiceItemDialogProps>) {
       onOpenChange={form.handleOpenChange}
       content={content}
       save={save}
-      title={props.item ? CATALOG_COPY.editItemValue : CATALOG_COPY.addItemTitle}
-      description={CATALOG_COPY.addItemDescription}
+      title={props.item ? t("editItemValue") : t("addItemTitle")}
+      description={t("addItemDescription")}
     />
   );
 }
@@ -57,6 +59,7 @@ function useServiceItemForm({
   action,
   updateAction,
 }: Readonly<ServiceItemDialogProps>) {
+  const t = useTranslations(SERVICE_ITEM_DIALOG_COPY_NAMESPACE);
   const state = useServiceItemValues(item);
   const [error, setError] = useState<string | undefined>();
   const [pending, setPending] = useState(false);
@@ -82,20 +85,19 @@ function useServiceItemForm({
       onOpenChange: handleOpenChange,
       setError,
       setPending,
+      t,
     });
   }
-  const used = new Set(
-    items.filter((entry) => entry.id !== item?.id).map((entry) => entry.definitionId),
-  );
-  return {
-    ...state,
-    error,
-    pending,
-    submit,
-    handleOpenChange,
-    used,
-    isEditing: Boolean(item),
-  };
+  const used = usedDefinitionIds(items, item);
+  return { ...state, error, pending, submit, handleOpenChange, used, isEditing: Boolean(item) };
+}
+
+/** Definitions already used by the service's other items. */
+function usedDefinitionIds(
+  items: ServiceItemDialogProps["items"],
+  item: ServiceItemDialogProps["item"],
+): Set<string> {
+  return new Set(items.filter((entry) => entry.id !== item?.id).map((entry) => entry.definitionId));
 }
 
 function useServiceItemValues(item: ServiceItemDialogProps["item"]): ServiceItemValueState {
@@ -141,6 +143,7 @@ async function submitServiceItem(args: ServiceItemSubmitArgs): Promise<void> {
     onOpenChange,
     setError,
     setPending,
+    t,
   } = args;
   const definition = definitions.find((item) => item.id === definitionId);
   if (!definitionId || !definition) {
@@ -168,9 +171,9 @@ async function submitServiceItem(args: ServiceItemSubmitArgs): Promise<void> {
       return;
     }
     onOpenChange(false);
-    showToast({ tone: "success", title: CATALOG_COPY.savedToast });
+    showToast({ tone: "success", title: t("savedToast") });
   } catch {
-    showCatalogSaveFailure({ setError, retry: () => void submitServiceItem(args) });
+    showCatalogSaveFailure({ setError, retry: () => void submitServiceItem(args), t });
   } finally {
     setPending(false);
   }
@@ -190,6 +193,7 @@ function ServiceItemFields({
   used,
   isEditing,
 }: Readonly<ServiceItemFieldsProps>) {
+  const t = useTranslations(SERVICE_ITEM_DIALOG_COPY_NAMESPACE);
   const definition = definitions.find((item) => item.id === definitionId);
   const options = definitions
     .filter((item) => item.isActive && !used.has(item.id))
@@ -197,15 +201,13 @@ function ServiceItemFields({
   return (
     <div className="flex flex-col gap-(--space-4)">
       <Select
-        label={CATALOG_COPY.itemPicker}
+        label={t("itemPicker")}
         value={definitionId}
         options={options}
         isDisabled={isEditing}
         onChange={setDefinitionId}
-        placeholder={CATALOG_COPY.itemPicker}
-        errorMessage={
-          error === "DUPLICATE_DEFINITION" ? CATALOG_COPY.errors.DUPLICATE_DEFINITION : undefined
-        }
+        placeholder={t("itemPicker")}
+        errorMessage={error === "DUPLICATE_DEFINITION" ? t("errorDuplicateDefinition") : undefined}
       />
       <PackageValueFields
         definition={definition}
@@ -238,37 +240,60 @@ function PackageValueFields({
   readonly maximum: string;
   readonly setMaximum: (value: string) => void;
 }>) {
+  const t = useTranslations(SERVICE_ITEM_DIALOG_COPY_NAMESPACE);
   if (definition?.valueType === "RANGE")
     return (
-      <div className="grid grid-cols-2 gap-(--space-3)">
-        <TextField
-          label={CATALOG_COPY.minimum}
-          name="minimum"
-          onBlur={noop}
-          placeholder={CATALOG_COPY.minimumPlaceholder}
-          value={minimum}
-          onChange={setMinimum}
-        />
-        <TextField
-          label={CATALOG_COPY.maximum}
-          name="maximum"
-          onBlur={noop}
-          placeholder={CATALOG_COPY.maximumPlaceholder}
-          value={maximum}
-          onChange={setMaximum}
-        />
-      </div>
+      <RangeValueFields
+        minimum={minimum}
+        setMinimum={setMinimum}
+        maximum={maximum}
+        setMaximum={setMaximum}
+      />
     );
   return (
     <TextField
-      label={CATALOG_COPY.value}
+      label={t("value")}
       name="value"
       onBlur={noop}
-      placeholder={CATALOG_COPY.valuePlaceholder}
+      placeholder={t("valuePlaceholder")}
       value={value}
       onChange={setValue}
       description={definition?.unit ?? undefined}
     />
+  );
+}
+
+function RangeValueFields({
+  minimum,
+  setMinimum,
+  maximum,
+  setMaximum,
+}: Readonly<{
+  readonly minimum: string;
+  readonly setMinimum: (value: string) => void;
+  readonly maximum: string;
+  readonly setMaximum: (value: string) => void;
+}>) {
+  const t = useTranslations(SERVICE_ITEM_DIALOG_COPY_NAMESPACE);
+  return (
+    <div className="grid grid-cols-2 gap-(--space-3)">
+      <TextField
+        label={t("minimum")}
+        name="minimum"
+        onBlur={noop}
+        placeholder={t("minimumPlaceholder")}
+        value={minimum}
+        onChange={setMinimum}
+      />
+      <TextField
+        label={t("maximum")}
+        name="maximum"
+        onBlur={noop}
+        placeholder={t("maximumPlaceholder")}
+        value={maximum}
+        onChange={setMaximum}
+      />
+    </div>
   );
 }
 
@@ -281,6 +306,7 @@ function ResponsiveItemDialog({
   description,
 }: Readonly<ResponsiveItemDialogProps>) {
   const mobile = useMobileViewport();
+  const t = useTranslations(SERVICE_ITEM_DIALOG_COPY_NAMESPACE);
   if (mobile)
     return (
       <BottomSheet
@@ -307,7 +333,7 @@ function ResponsiveItemDialog({
       actions={
         <>
           <Button variant="secondary" onPress={close}>
-            {CATALOG_COPY.cancel}
+            {t("cancel")}
           </Button>
           {save}
         </>

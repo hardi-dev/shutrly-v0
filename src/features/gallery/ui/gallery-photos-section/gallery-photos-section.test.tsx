@@ -102,7 +102,7 @@ describe("GalleryPhotosSection", () => {
   it("AC-GAL-031 previews a card photo with its meta and the Drive link, and a missing one without it", async () => {
     render(<GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />);
     await userEvent.click(screen.getByRole("button", { name: "IMG_001.jpg" }));
-    const viewer = await screen.findByRole("dialog", { name: "Preview IMG_001.jpg" });
+    const viewer = await screen.findByRole("dialog", { name: "Pratinjau IMG_001.jpg" });
     expect(within(viewer).getByText("Rina-Wisuda · Proof · 1 dari 6")).toBeInTheDocument();
     expect(within(viewer).getByRole("img", { name: "IMG_001.jpg" })).toHaveAttribute(
       "src",
@@ -110,7 +110,7 @@ describe("GalleryPhotosSection", () => {
     );
     expect(within(viewer).getByRole("link", { name: "Buka di Google Drive" })).toBeInTheDocument();
     await userEvent.keyboard("{ArrowRight}");
-    const missing = await screen.findByRole("dialog", { name: "Preview IMG_002.jpg" });
+    const missing = await screen.findByRole("dialog", { name: "Pratinjau IMG_002.jpg" });
     expect(within(missing).getByText("File tidak ditemukan di Google Drive")).toBeInTheDocument();
     expect(
       within(missing).getByText("Rina-Wisuda · Proof · Hilang · 2 dari 6"),
@@ -124,7 +124,7 @@ describe("GalleryPhotosSection", () => {
     stubViewport(true);
     render(<GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />);
     await userEvent.click(screen.getByRole("button", { name: "IMG_001.jpg" }));
-    const viewer = await screen.findByRole("dialog", { name: "Preview IMG_001.jpg" });
+    const viewer = await screen.findByRole("dialog", { name: "Pratinjau IMG_001.jpg" });
     const link = within(viewer).getByRole("link", { name: "Buka di Drive" });
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveTextContent("");

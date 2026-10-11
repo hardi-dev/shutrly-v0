@@ -5,6 +5,8 @@ import type { CatalogWriteResult } from "@/features/booking/application/use-case
 import type { ServiceDetailView } from "@/features/booking/application/use-cases/service-results/service-results.types";
 import type { ServiceWriteResult } from "@/features/booking/application/use-cases/service-results/service-results.types";
 
+import type { CatalogTranslate } from "../catalog-copy/catalog-copy.types";
+
 export interface AddServiceDialogProps {
   readonly isOpen: boolean;
   readonly workspaceId: string;
@@ -46,6 +48,7 @@ export interface ResponsiveServiceDialogProps {
 }
 
 export interface AddServiceSubmitArgs {
+  readonly t: CatalogTranslate;
   readonly workspaceId: string;
   readonly service: AddServiceDialogProps["service"];
   readonly action: AddServiceDialogProps["action"];

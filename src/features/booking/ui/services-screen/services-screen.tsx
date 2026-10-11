@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { ComponentProps, ReactNode } from "react";
 import { useState } from "react";
 
@@ -12,18 +13,20 @@ import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { AddServiceDialog } from "../add-service-dialog/add-service-dialog";
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
+import type { CatalogTranslate } from "../catalog-copy/catalog-copy.types";
 import { CatalogRowActions } from "../catalog-row-actions/catalog-row-actions";
 import { CatalogTabsBar } from "../catalog-tabs-bar/catalog-tabs-bar";
 import { DeleteCatalogDialog } from "../delete-catalog-dialog/delete-catalog-dialog";
+import { SERVICES_SCREEN_COPY_NAMESPACE } from "./services-screen.copy";
 import type { ServicesScreenProps } from "./services-screen.types";
 
 export function ServicesScreen(props: Readonly<ServicesScreenProps>) {
   const dialogs = useServiceDialogs();
+  const t = useTranslations(SERVICES_SCREEN_COPY_NAMESPACE);
   const { workspaceId, groups, categories = [], addServiceAction } = props;
   const addButton = (
     <Button iconLeading="plus" onPress={dialogs.openAdd}>
-      {CATALOG_COPY.addService}
+      {t("addService")}
     </Button>
   );
   return (
@@ -67,14 +70,15 @@ function ServiceGroups({
   readonly onEdit: (service: ServiceListItem) => void;
   readonly onDelete: (service: ServiceListItem) => void;
 }>) {
+  const t = useTranslations(SERVICES_SCREEN_COPY_NAMESPACE);
   if (groups.length === 0) {
     return (
       <SectionCard content="flush">
         <EmptyState
           placement="in-card"
           icon="package"
-          title={CATALOG_COPY.servicesEmptyTitle}
-          body={CATALOG_COPY.servicesEmptyBody}
+          title={t("servicesEmptyTitle")}
+          body={t("servicesEmptyBody")}
           action={addButton}
         />
       </SectionCard>
@@ -116,6 +120,7 @@ function ServiceDialogs({
   readonly setActiveAction: ServicesScreenProps["setActiveAction"];
   readonly removeAction: ServicesScreenProps["removeAction"];
 }>) {
+  const t = useTranslations(SERVICES_SCREEN_COPY_NAMESPACE);
   return categories ? (
     <>
       {addServiceAction && (updateAction || !dialogs.editing) ? (
@@ -133,19 +138,30 @@ function ServiceDialogs({
       ) : null}
       {dialogs.deleting && setActiveAction && removeAction ? (
         <ServiceDeleteDialog
-          isOpen
-          workspaceId={workspaceId}
-          kind="service"
-          entry={dialogs.deleting}
-          isInUse={dialogs.deleting.items.length > 0}
-          usage={CATALOG_COPY.serviceUsage(dialogs.deleting.items.length)}
-          onOpenChange={dialogs.closeDelete}
+          {...deleteDialogProps(dialogs.deleting, dialogs.closeDelete, workspaceId)}
+          usage={t("serviceUsage", { count: dialogs.deleting.items.length })}
           removeAction={removeAction}
           setActiveAction={setActiveAction}
         />
       ) : null}
     </>
   ) : null;
+}
+
+/** The fixed delete-dialog props for a service row. */
+function deleteDialogProps(
+  entry: NonNullable<ReturnType<typeof useServiceDialogs>["deleting"]>,
+  onOpenChange: ReturnType<typeof useServiceDialogs>["closeDelete"],
+  workspaceId: string,
+) {
+  return {
+    isOpen: true,
+    workspaceId,
+    kind: "service" as const,
+    entry,
+    isInUse: entry.items.length > 0,
+    onOpenChange,
+  };
 }
 
 function ServiceDialog(props: ComponentProps<typeof AddServiceDialog>) {
@@ -201,6 +217,7 @@ function ServiceGroupCard({
   readonly onEdit: (service: ServiceListItem) => void;
   readonly onDelete: (service: ServiceListItem) => void;
 }>) {
+  const t = useTranslations(SERVICES_SCREEN_COPY_NAMESPACE);
   if (group.services.length === 0) {
     return (
       <EmptyServiceGroup
@@ -215,8 +232,8 @@ function ServiceGroupCard({
     <SectionCard
       title={group.categoryName}
       content="flush"
-      description={CATALOG_COPY.categoryMeta(group.services.length)}
-      actions={categoryStatusChip(group.isActive)}
+      description={t("categoryMeta", { count: group.services.length })}
+      actions={categoryStatusChip(group.isActive, t)}
     >
       <ul aria-label={group.categoryName}>
         {group.services.map((service, index) => (
@@ -244,28 +261,27 @@ function EmptyServiceGroup({
   readonly isActive: boolean;
   readonly addButton: ReactNode;
 }>) {
+  const t = useTranslations(SERVICES_SCREEN_COPY_NAMESPACE);
   return (
     <SectionCard
       title={categoryName}
       content="flush"
-      description={CATALOG_COPY.categoryMeta(0)}
-      actions={categoryStatusChip(isActive)}
+      description={t("categoryMeta", { count: 0 })}
+      actions={categoryStatusChip(isActive, t)}
     >
       <EmptyState
         placement="in-card"
         icon="package"
-        title={CATALOG_COPY.servicesEmptyTitle}
-        body={CATALOG_COPY.categoryServicesEmptyBody}
+        title={t("servicesEmptyTitle")}
+        body={t("categoryServicesEmptyBody")}
         action={addButton}
       />
     </SectionCard>
   );
 }
 
-function categoryStatusChip(isActive: boolean): ReactNode {
-  return isActive ? null : (
-    <StatusChip tone="neutral" label={CATALOG_COPY.archived} hasDot={false} />
-  );
+function categoryStatusChip(isActive: boolean, t: CatalogTranslate): ReactNode {
+  return isActive ? null : <StatusChip tone="neutral" label={t("archived")} hasDot={false} />;
 }
 
 function ServiceRow({
@@ -322,13 +338,14 @@ function ServiceRowTrailing({
   readonly onEdit: () => void;
   readonly onDelete: () => void;
 }>) {
+  const t = useTranslations(SERVICES_SCREEN_COPY_NAMESPACE);
   return (
     <span className="flex items-center gap-(--space-2)">
       <span className="text-(length:--font-size-body) font-semibold text-(--component-list-card-item-title)">
         {service.priceLabel}
       </span>
       {!service.isActive ? (
-        <StatusChip tone="neutral" label={CATALOG_COPY.archived} hasDot={false} />
+        <StatusChip tone="neutral" label={t("archived")} hasDot={false} />
       ) : null}
       {setActiveAction ? (
         <CatalogRowActions

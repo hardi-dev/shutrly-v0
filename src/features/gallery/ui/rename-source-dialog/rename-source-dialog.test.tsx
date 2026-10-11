@@ -1,11 +1,17 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
+import type { ReactElement } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { SourceValidationFailure } from "../../application/use-cases/add-workspace-source/add-workspace-source.types";
 import type { PhotoSourceItem } from "../photo-sources-screen/photo-sources-screen.types";
-import { SOURCE_COPY } from "../source-copy/source-copy.copy";
+import { SOURCE_COPY_NAMESPACE } from "../source-copy/source-copy.copy";
 import { RenameSourceDialog } from "./rename-source-dialog";
+
+const copy = copyTranslator(SOURCE_COPY_NAMESPACE, "id");
+const render = (ui: ReactElement) => renderInLocale(ui, "id");
 
 const source: PhotoSourceItem = {
   id: "source-1",
@@ -29,10 +35,10 @@ describe("RenameSourceDialog", () => {
       />,
     );
 
-    const field = screen.getByRole("textbox", { name: SOURCE_COPY.nameLabel });
+    const field = screen.getByRole("textbox", { name: copy("nameLabel") });
     await user.clear(field);
     await user.type(field, "  Arsip  ");
-    await user.click(screen.getByRole("button", { name: SOURCE_COPY.save }));
+    await user.click(screen.getByRole("button", { name: copy("save") }));
 
     await waitFor(() => {
       expect(action).toHaveBeenCalledWith("ws-1", "source-1", { displayName: "Arsip" });
@@ -60,14 +66,14 @@ describe("RenameSourceDialog", () => {
       />,
     );
 
-    const field = screen.getByRole("textbox", { name: SOURCE_COPY.nameLabel });
+    const field = screen.getByRole("textbox", { name: copy("nameLabel") });
     await user.clear(field);
     await user.type(field, "Arsip");
-    await user.click(screen.getByRole("button", { name: SOURCE_COPY.save }));
-    expect(await screen.findByText(SOURCE_COPY.nameErrors.NAME_TAKEN)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: copy("save") }));
+    expect(await screen.findByText(copy("nameErrorNameTaken"))).toBeInTheDocument();
 
     await user.clear(field);
-    await user.click(screen.getByRole("button", { name: SOURCE_COPY.save }));
-    expect(await screen.findByText(SOURCE_COPY.nameErrors.EMPTY)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: copy("save") }));
+    expect(await screen.findByText(copy("nameErrorEmpty"))).toBeInTheDocument();
   });
 });

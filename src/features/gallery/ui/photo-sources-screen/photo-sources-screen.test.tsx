@@ -1,4 +1,6 @@
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
+import type { ReactElement } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
@@ -7,6 +9,8 @@ vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
 
 const { useMobileViewport } = await import("@/ui/hooks/use-mobile-viewport/use-mobile-viewport");
 const { PhotoSourcesScreen } = await import("./photo-sources-screen");
+
+const render = (ui: ReactElement) => renderInLocale(ui, "id");
 
 const sources = [
   { id: "1", displayName: "Google Drive Utama", provider: "GOOGLE_DRIVE", isActive: true },
@@ -34,14 +38,14 @@ describe("PhotoSourcesScreen", () => {
     expect(within(list).getAllByText("Aktif")).toHaveLength(2);
     expect(within(list).getByText("Nonaktif")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Aksi untuk Google Drive Utama" }),
+      screen.getByRole("button", { name: "Tindakan untuk Google Drive Utama" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Menyiapkan folder Google Drive" }),
+      screen.getByRole("heading", { name: "Siapkan folder Google Drive" }),
     ).toBeInTheDocument();
     expect(screen.getAllByRole("listitem").length).toBeGreaterThanOrEqual(4);
     expect(screen.getByRole("figure", { name: "Contoh struktur folder" })).toBeInTheDocument();
-    expect(screen.getByText("Tautan Drive bisa melewati password gallery")).toBeInTheDocument();
+    expect(screen.getByText("Tautan Drive melewati kata sandi galeri")).toBeInTheDocument();
   });
 
   it("AC-SRC-005 renders the empty state and add action", () => {
@@ -49,7 +53,7 @@ describe("PhotoSourcesScreen", () => {
     expect(screen.getByText("Belum ada sumber foto")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah sumber" })).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Menyiapkan folder Google Drive" }),
+      screen.getByRole("heading", { name: "Siapkan folder Google Drive" }),
     ).toBeInTheDocument();
   });
 

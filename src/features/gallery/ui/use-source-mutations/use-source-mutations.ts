@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 
 import { showToast } from "@/ui/patterns/toast/toast";
@@ -8,7 +9,7 @@ import type { AddSourceInput } from "../../application/schemas/add-source/add-so
 import type { SourceNameInput } from "../../application/schemas/source-name/source-name.types";
 import type { SourceValidationFailure } from "../../application/use-cases/add-workspace-source/add-workspace-source.types";
 import type { DeleteSourceResult } from "../../application/use-cases/delete-workspace-source/delete-workspace-source.types";
-import { SOURCE_COPY } from "../source-copy/source-copy.copy";
+import { USE_SOURCE_MUTATIONS_COPY_NAMESPACE } from "./use-source-mutations.copy";
 
 export interface SourceMutationActions {
   readonly add: (
@@ -26,6 +27,7 @@ export interface SourceMutationActions {
 
 // eslint-disable-next-line max-lines-per-function -- groups the four source operations under one workspace scope
 export function useSourceMutations(workspaceId: string, actions: SourceMutationActions) {
+  const t = useTranslations(USE_SOURCE_MUTATIONS_COPY_NAMESPACE);
   const add = useCallback(
     async (values: AddSourceInput) => {
       try {
@@ -33,20 +35,20 @@ export function useSourceMutations(workspaceId: string, actions: SourceMutationA
         if (result?.ok === false) return result;
         showToast({
           tone: "success",
-          title: SOURCE_COPY.addedTitle,
-          body: SOURCE_COPY.addedBody(values.displayName),
+          title: t("addedTitle"),
+          body: t("addedBody", { name: values.displayName }),
         });
         return result;
       } catch {
         showToast({
           tone: "danger",
-          title: SOURCE_COPY.serverErrorTitle,
-          body: SOURCE_COPY.serverErrorBody,
+          title: t("serverErrorTitle"),
+          body: t("serverErrorBody"),
         });
         return undefined;
       }
     },
-    [actions, workspaceId],
+    [actions, workspaceId, t],
   );
 
   const rename = useCallback(
@@ -56,20 +58,20 @@ export function useSourceMutations(workspaceId: string, actions: SourceMutationA
         if (result?.ok === false) return result;
         showToast({
           tone: "success",
-          title: SOURCE_COPY.renamedTitle,
-          body: SOURCE_COPY.renamedBody(values.displayName),
+          title: t("renamedTitle"),
+          body: t("renamedBody", { name: values.displayName }),
         });
         return result;
       } catch {
         showToast({
           tone: "danger",
-          title: SOURCE_COPY.serverErrorTitle,
-          body: SOURCE_COPY.serverErrorBody,
+          title: t("serverErrorTitle"),
+          body: t("serverErrorBody"),
         });
         return undefined;
       }
     },
-    [actions, workspaceId],
+    [actions, workspaceId, t],
   );
 
   const setActive = useCallback(

@@ -1,20 +1,26 @@
+import { useTranslations } from "next-intl";
+
 import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
 import { DataTable } from "@/ui/patterns/data-table/data-table";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 
 import { clientInitials } from "../client-initials/client-initials";
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
+import { TEAM_COUNT_MESSAGE_KEY } from "../team-copy/team-copy.copy";
+import type { TeamTranslate } from "../team-copy/team-copy.types";
 import { memberRolesLabel } from "../team-member-roles/team-member-roles";
+import { TEAM_MEMBERS_TABLE_COPY_NAMESPACE } from "./team-members-table.copy";
 import type { TeamMembersTableProps } from "./team-members-table.types";
 
 // design.md: the WhatsApp column is 184 wide, roles 200 and the actions column 32 (literal sizes from Pencil).
-const COLUMNS = [
-  { id: "member", label: TEAM_COPY.memberColumn },
-  { id: "whatsapp", label: TEAM_COPY.whatsappColumn, width: 184 },
-  { id: "roles", label: TEAM_COPY.memberRolesColumn, width: 200 },
-  { id: "actions", "aria-label": TEAM_COPY.actionsColumn, width: 32 },
-] as const;
+function memberColumns(t: TeamTranslate) {
+  return [
+    { id: "member", label: t("memberColumn") },
+    { id: "whatsapp", label: t("whatsappColumn"), width: 184 },
+    { id: "roles", label: t("memberRolesColumn"), width: 200 },
+    { id: "actions", "aria-label": t("actionsColumn"), width: 32 },
+  ] as const;
+}
 
 /**
  * The desktop *Daftar anggota* table inside its section card.
@@ -30,6 +36,7 @@ export function TeamMembersTable({
   onEdit,
   renderActions,
 }: Readonly<TeamMembersTableProps>) {
+  const t = useTranslations(TEAM_MEMBERS_TABLE_COPY_NAMESPACE);
   function renderCell(row: TeamMembersTableProps["rows"][number], columnId: string) {
     if (columnId === "member") return <MemberCell name={row.name} />;
     if (columnId === "whatsapp") return <span>{formatWhatsappNumber(row.whatsappNumber)}</span>;
@@ -38,8 +45,8 @@ export function TeamMembersTable({
   }
   return (
     <SectionCard
-      title={TEAM_COPY.membersTitle}
-      description={TEAM_COPY.membersCount(status, count)}
+      title={t("membersTitle")}
+      description={t(TEAM_COUNT_MESSAGE_KEY[status], { count })}
       actions={search}
       content="bleed"
     >
@@ -47,8 +54,8 @@ export function TeamMembersTable({
         <div className="p-(--space-4)">{emptyState}</div>
       ) : (
         <DataTable
-          label={TEAM_COPY.membersTitle}
-          columns={COLUMNS}
+          label={t("membersTitle")}
+          columns={memberColumns(t)}
           rows={rows}
           renderCell={renderCell}
           onRowAction={onEdit}

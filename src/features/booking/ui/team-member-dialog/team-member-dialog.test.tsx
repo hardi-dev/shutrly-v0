@@ -70,7 +70,7 @@ describe("TeamMemberDialog", () => {
     expect(showToast).toHaveBeenCalledWith({
       tone: "success",
       title: "Anggota ditambahkan",
-      body: "Rina siap dipilih di jadwal proyek.",
+      body: "Rina sudah bisa ditugaskan di jadwal proyek.",
     });
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
@@ -118,7 +118,7 @@ describe("TeamMemberDialog", () => {
     });
     expect(addAction).not.toHaveBeenCalled();
     expect(showToast).toHaveBeenCalledWith(
-      expect.objectContaining({ title: "Perubahan disimpan" }),
+      expect.objectContaining({ title: "Anggota diperbarui" }),
     );
   });
 
@@ -128,8 +128,8 @@ describe("TeamMemberDialog", () => {
     await userEvent.type(screen.getByLabelText(/^Email/), "rina@");
     await userEvent.click(screen.getByRole("button", { name: "Simpan" }));
     expect(await screen.findByText("Isi nama anggota.")).toBeInTheDocument();
-    expect(screen.getByText("Nomor WhatsApp tidak valid")).toBeInTheDocument();
-    expect(screen.getByText("Masukkan email yang valid.")).toBeInTheDocument();
+    expect(screen.getByText("Masukkan nomor WhatsApp yang valid.")).toBeInTheDocument();
+    expect(screen.getByText("Masukkan alamat email yang valid.")).toBeInTheDocument();
     expect(screen.getByText("Pilih minimal satu peran.")).toBeInTheDocument();
     expect(addAction).not.toHaveBeenCalled();
   });
@@ -137,7 +137,7 @@ describe("TeamMemberDialog", () => {
   it("AC-TEAM-005 asks for a number when it is blank", async () => {
     setup();
     await userEvent.click(screen.getByRole("button", { name: "Simpan" }));
-    expect(await screen.findByText("Nomor WhatsApp wajib diisi")).toBeInTheDocument();
+    expect(await screen.findByText("Isi nomor WhatsApp.")).toBeInTheDocument();
   });
 
   it("AC-TEAM-005 limits the name to 100 characters", async () => {
@@ -145,7 +145,7 @@ describe("TeamMemberDialog", () => {
     await userEvent.click(screen.getByLabelText("Nama"));
     await userEvent.paste("a".repeat(101));
     await userEvent.click(screen.getByRole("button", { name: "Simpan" }));
-    expect(await screen.findByText("Nama paling banyak 100 karakter.")).toBeInTheDocument();
+    expect(await screen.findByText("Gunakan maksimal 100 karakter.")).toBeInTheDocument();
   });
 
   it("AC-TEAM-006 names the archived holder of a taken number and keeps the dialog open", async () => {
@@ -160,7 +160,7 @@ describe("TeamMemberDialog", () => {
     await fillValid();
     await userEvent.click(screen.getByRole("button", { name: "Simpan" }));
     expect(
-      await screen.findByText("Nomor ini sudah dipakai Budi Hartono (diarsipkan)."),
+      await screen.findByText("Nomor ini dipakai Budi Hartono (diarsipkan)."),
     ).toBeInTheDocument();
     expect(screen.getByLabelText("Nomor WhatsApp")).toHaveValue("0812-3456-7890");
     expect(onOpenChange).not.toHaveBeenCalledWith(false);

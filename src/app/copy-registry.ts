@@ -21,6 +21,8 @@ import { RESET_SENT_SCREEN_COPY } from "@/features/auth/ui/reset-sent-screen/res
 import { VERIFY_PENDING_SCREEN_COPY } from "@/features/auth/ui/verify-pending-screen/verify-pending-screen.copy";
 import { ADD_ON_COPY } from "@/features/booking/ui/add-on-copy/add-on.copy";
 import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
+import { CLIENT_COPY } from "@/features/booking/ui/client-copy/client-copy.copy";
+import { TEAM_COPY } from "@/features/booking/ui/team-copy/team-copy.copy";
 import { LANDING_FOOTER_COPY } from "@/features/landing/ui/landing-footer/landing-footer.copy";
 import { LANDING_HEADER_COPY } from "@/features/landing/ui/landing-header/landing-header.copy";
 import { LANDING_PAGE_COPY } from "@/features/landing/ui/landing-page/landing-page.copy";
@@ -125,6 +127,8 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   VERIFY_PENDING_SCREEN_COPY,
   ADD_ON_COPY,
   CATALOG_COPY,
+  CLIENT_COPY,
+  TEAM_COPY,
   SPLIT_LAYOUT_COPY,
   EDITORIAL_PANEL_COPY,
   PROFILE_LAYOUT_COPY,

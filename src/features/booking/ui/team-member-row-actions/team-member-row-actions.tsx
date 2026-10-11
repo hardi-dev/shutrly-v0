@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import {
@@ -15,8 +16,8 @@ import { MenuTrigger } from "@/ui/patterns/menu/menu-trigger";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
 import { memberRolesLabel } from "../team-member-roles/team-member-roles";
+import { TEAM_MEMBER_ROW_ACTIONS_COPY_NAMESPACE } from "./team-member-row-actions.copy";
 import type {
   MemberActionViewProps,
   TeamMemberRowActionsProps,
@@ -46,7 +47,8 @@ function MemberMenu({
   onRestore,
   onDelete,
 }: Readonly<MemberActionViewProps>) {
-  const label = TEAM_COPY.rowActions(member.name);
+  const t = useTranslations(TEAM_MEMBER_ROW_ACTIONS_COPY_NAMESPACE);
+  const label = t("rowActions", { name: member.name });
   function handleEdit(): void {
     onEdit(member);
   }
@@ -61,21 +63,21 @@ function MemberMenu({
     <MenuTrigger label={label}>
       <IconButton icon="more-horizontal" size="sm" aria-label={label} />
       <Menu aria-label={label}>
-        <MenuItem label={TEAM_COPY.edit} icon="pencil" onSelect={handleEdit} />
+        <MenuItem label={t("edit")} icon="pencil" onSelect={handleEdit} />
         <MenuItem
-          label={TEAM_COPY.openWhatsapp}
+          label={t("openWhatsapp")}
           icon="message-circle"
           href={whatsappChatUrl(member.whatsappNumber)}
           target="_blank"
         />
         <MenuItem
-          label={member.isArchived ? TEAM_COPY.restore : TEAM_COPY.archive}
+          label={member.isArchived ? t("restore") : t("archive")}
           icon={member.isArchived ? "archive-restore" : "archive"}
           onSelect={handleToggleArchive}
         />
         <MenuDivider />
         <MenuItem
-          label={TEAM_COPY.delete}
+          label={t("delete")}
           icon="trash-2"
           variant="destructive"
           onSelect={handleDelete}
@@ -91,6 +93,7 @@ function MemberSheet({
   onOpenChange,
   ...handlers
 }: Readonly<MemberActionViewProps & { isOpen: boolean; onOpenChange: (isOpen: boolean) => void }>) {
+  const t = useTranslations(TEAM_MEMBER_ROW_ACTIONS_COPY_NAMESPACE);
   function handleOpen(): void {
     onOpenChange(true);
   }
@@ -99,7 +102,7 @@ function MemberSheet({
       <IconButton
         icon="more-horizontal"
         size="sm"
-        aria-label={TEAM_COPY.rowActions(member.name)}
+        aria-label={t("rowActions", { name: member.name })}
         onPress={handleOpen}
       />
       <BottomSheet
@@ -123,6 +126,7 @@ function MemberSheetItems({
   onDelete,
   closeThen,
 }: Readonly<MemberActionViewProps>) {
+  const t = useTranslations(TEAM_MEMBER_ROW_ACTIONS_COPY_NAMESPACE);
   function handleEdit(): void {
     closeThen?.(() => {
       onEdit(member);
@@ -141,24 +145,19 @@ function MemberSheetItems({
   }
   return (
     <>
-      <SheetItem label={TEAM_COPY.edit} icon="pencil" onPress={handleEdit} />
+      <SheetItem label={t("edit")} icon="pencil" onPress={handleEdit} />
       <SheetItem
-        label={TEAM_COPY.openWhatsapp}
+        label={t("openWhatsapp")}
         icon="message-circle"
         href={whatsappChatUrl(member.whatsappNumber)}
         target="_blank"
       />
       <SheetItem
-        label={member.isArchived ? TEAM_COPY.restore : TEAM_COPY.archive}
+        label={member.isArchived ? t("restore") : t("archive")}
         icon={member.isArchived ? "archive-restore" : "archive"}
         onPress={handleToggleArchive}
       />
-      <SheetItem
-        label={TEAM_COPY.delete}
-        icon="trash-2"
-        variant="destructive"
-        onPress={handleDelete}
-      />
+      <SheetItem label={t("delete")} icon="trash-2" variant="destructive" onPress={handleDelete} />
     </>
   );
 }

@@ -12,11 +12,12 @@ vi.mock("@/ui/patterns/toast/toast", () => ({ showToast }));
 import { useCatalogMutations } from "./use-catalog-mutations";
 
 function wrapper({ children }: Readonly<{ children: ReactNode }>) {
-  return createElement(
-    NextIntlClientProvider,
-    { locale: "id", messages: copyMessages("id") },
+  // eslint-disable-next-line react/no-children-prop -- this .ts file cannot use JSX; the provider reads children from props
+  return createElement(NextIntlClientProvider, {
+    locale: "id",
+    messages: copyMessages("id"),
     children,
-  );
+  });
 }
 
 function renderHook<T>(hook: () => T) {

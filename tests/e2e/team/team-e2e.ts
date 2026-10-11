@@ -1,14 +1,18 @@
 import AxeBuilder from "@axe-core/playwright";
 import type { Page } from "@playwright/test";
 import { expect } from "@playwright/test";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 
 import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
-import { CLIENT_COPY } from "@/features/booking/ui/client-copy/client-copy.copy";
+import { CLIENT_COPY_NAMESPACE } from "@/features/booking/ui/client-copy/client-copy.copy";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
-import { TEAM_COPY } from "@/features/booking/ui/team-copy/team-copy.copy";
+import { TEAM_COPY_NAMESPACE } from "@/features/booking/ui/team-copy/team-copy.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 
 import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
+
+const clientT = copyTranslator(CLIENT_COPY_NAMESPACE, "id");
+const teamT = copyTranslator(TEAM_COPY_NAMESPACE, "id");
 
 export const axeTags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
 
@@ -31,13 +35,16 @@ export async function openWorkspace(page: Page): Promise<string> {
 
 export async function addClient(page: Page, workspaceId: string): Promise<void> {
   await page.goto(`/w/${workspaceId}/clients`);
-  await page.getByRole("button", { name: CLIENT_COPY.addClient }).first().click();
+  await page
+    .getByRole("button", { name: clientT("addClient") })
+    .first()
+    .click();
   const dialog = page
-    .getByRole("dialog", { name: CLIENT_COPY.dialogTitle })
+    .getByRole("dialog", { name: clientT("dialogTitle") })
     .filter({ visible: true });
-  await dialog.getByRole("textbox", { name: CLIENT_COPY.name }).fill("Rina");
-  await dialog.getByRole("textbox", { name: CLIENT_COPY.whatsappNumber }).fill("0812-3456-7890");
-  await dialog.getByRole("button", { name: CLIENT_COPY.save }).click();
+  await dialog.getByRole("textbox", { name: clientT("name") }).fill("Rina");
+  await dialog.getByRole("textbox", { name: clientT("whatsappNumber") }).fill("0812-3456-7890");
+  await dialog.getByRole("button", { name: clientT("saveAdd") }).click();
   await expect(dialog).toBeHidden();
 }
 
@@ -97,14 +104,17 @@ export async function addMember(
   member: E2eMember = DIMAS,
 ): Promise<void> {
   await page.goto(`/w/${workspaceId}/team`);
-  await page.getByRole("button", { name: TEAM_COPY.addMember }).first().click();
-  const dialog = page.getByRole("dialog", { name: TEAM_COPY.addMember }).filter({ visible: true });
-  await dialog.getByLabel(TEAM_COPY.memberName, { exact: true }).fill(member.name);
-  await dialog.getByLabel(TEAM_COPY.memberWhatsapp).fill(member.number);
-  await dialog.getByRole("button", { name: new RegExp(`^${TEAM_COPY.memberRoles}`) }).click();
+  await page
+    .getByRole("button", { name: teamT("addMember") })
+    .first()
+    .click();
+  const dialog = page.getByRole("dialog", { name: teamT("addMember") }).filter({ visible: true });
+  await dialog.getByLabel(teamT("memberName"), { exact: true }).fill(member.name);
+  await dialog.getByLabel(teamT("memberWhatsapp")).fill(member.number);
+  await dialog.getByRole("button", { name: new RegExp(`^${teamT("memberRoles")}`) }).click();
   for (const role of member.roles) await page.getByRole("option", { name: role }).click();
   await page.keyboard.press("Escape");
-  await dialog.getByRole("button", { name: TEAM_COPY.save }).click();
+  await dialog.getByRole("button", { name: teamT("save") }).click();
   await expect(dialog).toBeHidden();
 }
 

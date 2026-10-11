@@ -1,10 +1,11 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
+import { USE_LOAD_MORE_TEAM_MEMBERS_COPY_NAMESPACE } from "./use-load-more-team-members.copy";
 import type { UseLoadMoreTeamMembersProps } from "./use-load-more-team-members.types";
 
 /**
@@ -20,6 +21,7 @@ export function useLoadMoreTeamMembers({
   initial,
   action,
 }: Readonly<UseLoadMoreTeamMembersProps>) {
+  const t = useTranslations(USE_LOAD_MORE_TEAM_MEMBERS_COPY_NAMESPACE);
   const [page, setPage] = useState(initial);
   const [seen, setSeen] = useState(initial);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,8 +38,8 @@ export function useLoadMoreTeamMembers({
     } catch {
       showToast({
         tone: "danger",
-        title: TEAM_COPY.serverErrorTitle,
-        action: { label: TEAM_COPY.retry, onAction: () => void loadMore() },
+        title: t("serverErrorTitle"),
+        action: { label: t("retry"), onAction: () => void loadMore() },
       });
     } finally {
       setIsLoading(false);

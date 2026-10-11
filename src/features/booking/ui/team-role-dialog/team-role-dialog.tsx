@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useController } from "react-hook-form";
 
@@ -9,8 +10,8 @@ import { Modal } from "@/ui/patterns/modal/modal";
 import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
 import { teamRoleErrorText } from "../team-field-error/team-field-error";
+import { TEAM_ROLE_DIALOG_COPY_NAMESPACE } from "./team-role-dialog.copy";
 import type { TeamRoleDialogProps } from "./team-role-dialog.types";
 import { useTeamRoleForm } from "./use-team-role-form";
 
@@ -22,13 +23,14 @@ const FORM_ID = "team-role-form";
  * @returns the dialog
  */
 export function TeamRoleDialog(props: Readonly<TeamRoleDialogProps>) {
+  const t = useTranslations(TEAM_ROLE_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const { form, isPending, handleSubmit } = useTeamRoleForm(props);
-  const title = props.role ? TEAM_COPY.roleEditTitle : TEAM_COPY.addRole;
+  const title = props.role ? t("roleEditTitle") : t("addRole");
   const field = <RoleNameForm form={form} isPending={isPending} onSubmit={handleSubmit} />;
   const save = (
     <Button type="submit" form={FORM_ID} isPending={isPending} size={isMobile ? "lg" : "md"}>
-      {isPending ? TEAM_COPY.saving : TEAM_COPY.save}
+      {isPending ? t("saving") : t("save")}
     </Button>
   );
   function close(): void {
@@ -40,7 +42,7 @@ export function TeamRoleDialog(props: Readonly<TeamRoleDialogProps>) {
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         title={title}
-        description={TEAM_COPY.roleDialogDescription}
+        description={t("roleDialogDescription")}
         variant="form"
         actions={save}
       >
@@ -52,12 +54,12 @@ export function TeamRoleDialog(props: Readonly<TeamRoleDialogProps>) {
       isOpen={props.isOpen}
       onOpenChange={props.onOpenChange}
       title={title}
-      description={TEAM_COPY.roleDialogDescription}
+      description={t("roleDialogDescription")}
       size="md"
       actions={
         <>
           <Button variant="secondary" onPress={close} isDisabled={isPending}>
-            {TEAM_COPY.cancel}
+            {t("cancel")}
           </Button>
           {save}
         </>
@@ -77,19 +79,20 @@ function RoleNameForm({
   isPending: boolean;
   onSubmit: (event: SyntheticEvent<HTMLFormElement>) => void;
 }>) {
+  const t = useTranslations(TEAM_ROLE_DIALOG_COPY_NAMESPACE);
   const name = useController({ control: form.control, name: "name" });
   const message = name.fieldState.error?.message;
   return (
     <form id={FORM_ID} noValidate onSubmit={onSubmit}>
       <TextField
-        label={TEAM_COPY.roleName}
+        label={t("roleName")}
         name={name.field.name}
         value={name.field.value}
         onChange={name.field.onChange}
         onBlur={name.field.onBlur}
         inputRef={name.field.ref}
         isDisabled={isPending}
-        errorMessage={message ? teamRoleErrorText(message) : undefined}
+        errorMessage={message ? teamRoleErrorText(t, message) : undefined}
       />
     </form>
   );

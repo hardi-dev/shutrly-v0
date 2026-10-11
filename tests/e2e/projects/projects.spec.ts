@@ -1,13 +1,16 @@
 import AxeBuilder from "@axe-core/playwright";
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 
 import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
-import { CLIENT_COPY } from "@/features/booking/ui/client-copy/client-copy.copy";
+import { CLIENT_COPY_NAMESPACE } from "@/features/booking/ui/client-copy/client-copy.copy";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 
 import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
+
+const clientT = copyTranslator(CLIENT_COPY_NAMESPACE, "id");
 
 test.setTimeout(120_000);
 test.describe.configure({ retries: 2 });
@@ -42,13 +45,16 @@ async function addClient(
   number = "0812-3456-7890",
 ): Promise<void> {
   await page.goto(`/w/${workspaceId}/clients`);
-  await page.getByRole("button", { name: CLIENT_COPY.addClient }).first().click();
+  await page
+    .getByRole("button", { name: clientT("addClient") })
+    .first()
+    .click();
   const dialog = page
-    .getByRole("dialog", { name: CLIENT_COPY.dialogTitle })
+    .getByRole("dialog", { name: clientT("dialogTitle") })
     .filter({ visible: true });
-  await dialog.getByRole("textbox", { name: CLIENT_COPY.name }).fill(name);
-  await dialog.getByRole("textbox", { name: CLIENT_COPY.whatsappNumber }).fill(number);
-  await dialog.getByRole("button", { name: CLIENT_COPY.save }).click();
+  await dialog.getByRole("textbox", { name: clientT("name") }).fill(name);
+  await dialog.getByRole("textbox", { name: clientT("whatsappNumber") }).fill(number);
+  await dialog.getByRole("button", { name: clientT("saveAdd") }).click();
   await expect(dialog).toBeHidden();
 }
 
@@ -220,14 +226,14 @@ test("AC-PRJ-013 AC-PRJ-008 AC-PRJ-030 creates a client inline, edits the packag
   await page.getByRole("combobox", { name: PROJECT_COPY.clientLabel }).fill("Sar");
   await page.getByRole("option", { name: /Tambah klien baru “Sar”/ }).click();
   const clientDialog = page
-    .getByRole("dialog", { name: CLIENT_COPY.dialogTitle })
+    .getByRole("dialog", { name: clientT("dialogTitle") })
     .filter({ visible: true });
-  await expect(clientDialog.getByRole("textbox", { name: CLIENT_COPY.name })).toHaveValue("Sar");
-  await clientDialog.getByRole("textbox", { name: CLIENT_COPY.name }).fill("Sari");
+  await expect(clientDialog.getByRole("textbox", { name: clientT("name") })).toHaveValue("Sar");
+  await clientDialog.getByRole("textbox", { name: clientT("name") }).fill("Sari");
   await clientDialog
-    .getByRole("textbox", { name: CLIENT_COPY.whatsappNumber })
+    .getByRole("textbox", { name: clientT("whatsappNumber") })
     .fill("0812 3456 7891");
-  await clientDialog.getByRole("button", { name: CLIENT_COPY.save }).click();
+  await clientDialog.getByRole("button", { name: clientT("saveAdd") }).click();
   await expect(clientDialog).toBeHidden();
   // The picker takes focus back and reopens its list; close it before using the rest of the form.
   await page.keyboard.press("Escape");

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -11,7 +12,8 @@ import { MenuTrigger } from "@/ui/patterns/menu/menu-trigger";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
+import { teamUsageText } from "../team-copy/team-copy.text";
+import { TEAM_ROLE_ROW_ACTIONS_COPY_NAMESPACE } from "./team-role-row-actions.copy";
 import type { RoleActionViewProps, TeamRoleRowActionsProps } from "./team-role-row-actions.types";
 
 /**
@@ -43,19 +45,15 @@ export function TeamRoleRowActions({ role, onEdit, onDelete }: Readonly<TeamRole
 }
 
 function RoleMenu({ role, onEdit, onDelete }: Readonly<RoleActionViewProps>) {
-  const label = TEAM_COPY.rowActions(role.name);
+  const t = useTranslations(TEAM_ROLE_ROW_ACTIONS_COPY_NAMESPACE);
+  const label = t("rowActions", { name: role.name });
   return (
     <MenuTrigger label={label}>
       <IconButton icon="more-horizontal" size="sm" aria-label={label} />
       <Menu aria-label={label}>
-        <MenuItem label={TEAM_COPY.edit} icon="pencil" onSelect={onEdit} />
+        <MenuItem label={t("edit")} icon="pencil" onSelect={onEdit} />
         <MenuDivider />
-        <MenuItem
-          label={TEAM_COPY.delete}
-          icon="trash-2"
-          variant="destructive"
-          onSelect={onDelete}
-        />
+        <MenuItem label={t("delete")} icon="trash-2" variant="destructive" onSelect={onDelete} />
       </Menu>
     </MenuTrigger>
   );
@@ -68,6 +66,7 @@ function RoleSheet({
   onEdit,
   onDelete,
 }: Readonly<RoleActionViewProps & { isOpen: boolean; onOpenChange: (isOpen: boolean) => void }>) {
+  const t = useTranslations(TEAM_ROLE_ROW_ACTIONS_COPY_NAMESPACE);
   function handleOpen(): void {
     onOpenChange(true);
   }
@@ -76,23 +75,18 @@ function RoleSheet({
       <IconButton
         icon="more-horizontal"
         size="sm"
-        aria-label={TEAM_COPY.rowActions(role.name)}
+        aria-label={t("rowActions", { name: role.name })}
         onPress={handleOpen}
       />
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         title={role.name}
-        meta={TEAM_COPY.usage(role.usage)}
+        meta={teamUsageText(t, role.usage)}
         variant="actions"
       >
-        <SheetItem label={TEAM_COPY.edit} icon="pencil" onPress={onEdit} />
-        <SheetItem
-          label={TEAM_COPY.delete}
-          icon="trash-2"
-          variant="destructive"
-          onPress={onDelete}
-        />
+        <SheetItem label={t("edit")} icon="pencil" onPress={onEdit} />
+        <SheetItem label={t("delete")} icon="trash-2" variant="destructive" onPress={onDelete} />
       </BottomSheet>
     </>
   );

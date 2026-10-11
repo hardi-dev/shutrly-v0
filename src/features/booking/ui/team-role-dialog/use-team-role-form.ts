@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,8 +12,8 @@ import type {
   TeamRoleInput,
 } from "@/features/booking/application/schemas/team-role-input/team-role-input.types";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
 import { useTeamMutations } from "../use-team-mutations/use-team-mutations";
+import { TEAM_ROLE_DIALOG_COPY_NAMESPACE } from "./team-role-dialog.copy";
 import type { TeamRoleDialogProps } from "./team-role-dialog.types";
 
 /**
@@ -21,6 +22,7 @@ import type { TeamRoleDialogProps } from "./team-role-dialog.types";
  * @returns the form, the pending flag and the submit handler
  */
 export function useTeamRoleForm(props: Readonly<TeamRoleDialogProps>) {
+  const t = useTranslations(TEAM_ROLE_DIALOG_COPY_NAMESPACE);
   const { run } = useTeamMutations();
   const form = useForm<TeamRoleInput, unknown, TeamRoleFields>({
     resolver: zodResolver(teamRoleInputSchema),
@@ -44,10 +46,10 @@ export function useTeamRoleForm(props: Readonly<TeamRoleDialogProps>) {
       const result =
         role && renameAction
           ? await run(() => renameAction(workspaceId, role.id, values), {
-              title: TEAM_COPY.roleSavedTitle,
+              title: t("roleSavedTitle"),
             })
           : await run(() => props.addAction(workspaceId, values), {
-              title: TEAM_COPY.roleAddedTitle,
+              title: t("roleAddedTitle"),
             });
       if (result?.ok === false) {
         const key = result.fieldErrors.name;

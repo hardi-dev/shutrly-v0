@@ -40,7 +40,7 @@ describe("DeleteTeamMemberDialog", () => {
 
   it("AC-TEAM-007 confirms, deletes and shows the success toast", async () => {
     const { action, onOpenChange } = setup();
-    expect(screen.getByText('Hapus anggota "Dimas Pratama"?')).toBeInTheDocument();
+    expect(screen.getByText("Hapus anggota “Dimas Pratama”?")).toBeInTheDocument();
     expect(
       screen.getByText("Nama, nomor WhatsApp, email, dan perannya dihapus permanen."),
     ).toBeInTheDocument();

@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
 import { useController, useForm } from "react-hook-form";
@@ -18,9 +19,10 @@ import { Modal } from "@/ui/patterns/modal/modal";
 import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { CLIENT_COPY } from "../client-copy/client-copy.copy";
+import type { ClientTranslate } from "../client-copy/client-copy.types";
 import { clientFieldErrorText } from "../client-field-error/client-field-error";
 import { SocialLinksEditor } from "../social-links-editor/social-links-editor";
+import { CLIENT_DIALOG_COPY_NAMESPACE } from "./client-dialog.copy";
 import type { ClientDialogProps } from "./client-dialog.types";
 
 const FORM_ID = "client-form";
@@ -30,9 +32,17 @@ const DEFAULT_VALUES: ClientInput = {
   socialLinks: [{ platform: "INSTAGRAM", value: "" }],
 };
 
+function dialogCopy(t: ClientTranslate, isEditing: boolean, description?: string) {
+  return {
+    title: isEditing ? t("editDialogTitle") : t("dialogTitle"),
+    description: description ?? (isEditing ? t("editDialogDescription") : t("dialogDescription")),
+  };
+}
+
 /** Presents the add-client form as a desktop modal or a phone form sheet. */
 export function ClientDialog(props: Readonly<ClientDialogProps>) {
   const mobile = useMobileViewport();
+  const t = useTranslations(CLIENT_DIALOG_COPY_NAMESPACE);
   const controller = useClientDialogForm(props);
   const content = (
     <ClientForm controller={controller} isMobile={mobile} numberHolder={controller.numberHolder} />
@@ -41,10 +51,7 @@ export function ClientDialog(props: Readonly<ClientDialogProps>) {
   const save = (
     <ClientSaveButton isPending={controller.isPending} mobile={mobile} isEditing={isEditing} />
   );
-  const title = isEditing ? CLIENT_COPY.editDialogTitle : CLIENT_COPY.dialogTitle;
-  const description =
-    props.description ??
-    (isEditing ? CLIENT_COPY.editDialogDescription : CLIENT_COPY.dialogDescription);
+  const { title, description } = dialogCopy(t, isEditing, props.description);
   if (mobile)
     return (
       <BottomSheet
@@ -58,9 +65,9 @@ export function ClientDialog(props: Readonly<ClientDialogProps>) {
         {content}
       </BottomSheet>
     );
-  function close(): void {
+  const close = (): void => {
     props.onOpenChange(false);
-  }
+  };
   return (
     <Modal
       isOpen={props.isOpen}
@@ -71,7 +78,7 @@ export function ClientDialog(props: Readonly<ClientDialogProps>) {
       actions={
         <>
           <Button variant="secondary" onPress={close} isDisabled={controller.isPending}>
-            {CLIENT_COPY.cancel}
+            {t("cancel")}
           </Button>
           {save}
         </>
@@ -158,20 +165,21 @@ function ClientSaveButton({
   mobile,
   isEditing,
 }: Readonly<{ isPending: boolean; mobile: boolean; isEditing: boolean }>) {
+  const t = useTranslations(CLIENT_DIALOG_COPY_NAMESPACE);
   return (
     <Button type="submit" form={FORM_ID} isPending={isPending} size={mobile ? "lg" : "md"}>
-      {saveLabel(isPending, isEditing)}
+      {saveLabel(t, isPending, isEditing)}
     </Button>
   );
 }
 
-function saveLabel(isPending: boolean, isEditing: boolean): string {
-  if (isPending) return CLIENT_COPY.saving;
-  return isEditing ? CLIENT_COPY.saveEdit : CLIENT_COPY.save;
+function saveLabel(t: ClientTranslate, isPending: boolean, isEditing: boolean): string {
+  if (isPending) return t("saving");
+  return isEditing ? t("saveEdit") : t("saveAdd");
 }
 
 function ClientForm({
-  controller,
+  controller: { form, isPending, handleSubmit },
   isMobile,
   numberHolder,
 }: Readonly<{
@@ -179,40 +187,40 @@ function ClientForm({
   readonly isMobile: boolean;
   readonly numberHolder: NumberHolder | undefined;
 }>) {
-  const { form, isPending, handleSubmit } = controller;
+  const t = useTranslations(CLIENT_DIALOG_COPY_NAMESPACE);
   const name = useController({ control: form.control, name: "name" });
   const whatsappNumber = useController({ control: form.control, name: "whatsappNumber" });
   return (
     <form id={FORM_ID} noValidate onSubmit={handleSubmit} className="flex flex-col gap-(--space-4)">
       <TextField
-        label={CLIENT_COPY.name}
+        label={t("name")}
         name={name.field.name}
         value={name.field.value}
         onChange={name.field.onChange}
         onBlur={name.field.onBlur}
         inputRef={name.field.ref}
-        placeholder={CLIENT_COPY.namePlaceholder}
+        placeholder={t("namePlaceholder")}
         isDisabled={isPending}
         errorMessage={
           name.fieldState.error?.message
-            ? clientFieldErrorText(name.fieldState.error.message)
+            ? clientFieldErrorText(t, name.fieldState.error.message)
             : undefined
         }
       />
       <TextField
-        label={CLIENT_COPY.whatsappNumber}
+        label={t("whatsappNumber")}
         isOptional
         name={whatsappNumber.field.name}
         value={whatsappNumber.field.value}
         onChange={whatsappNumber.field.onChange}
         onBlur={whatsappNumber.field.onBlur}
         inputRef={whatsappNumber.field.ref}
-        placeholder={CLIENT_COPY.whatsappPlaceholder}
-        description={CLIENT_COPY.whatsappDescription}
+        placeholder={t("whatsappPlaceholder")}
+        description={t("whatsappDescription")}
         isDisabled={isPending}
         errorMessage={
           whatsappNumber.fieldState.error?.message
-            ? whatsappErrorText(whatsappNumber.fieldState.error.message, numberHolder)
+            ? whatsappErrorText(t, whatsappNumber.fieldState.error.message, numberHolder)
             : undefined
         }
       />
@@ -240,7 +248,7 @@ function ClientSocialLinks({
   );
 }
 
-function whatsappErrorText(error: string, holder?: NumberHolder): string {
-  if (error === "INVALID") return CLIENT_COPY.invalidWhatsapp;
-  return clientFieldErrorText(error, holder);
+function whatsappErrorText(t: ClientTranslate, error: string, holder?: NumberHolder): string {
+  if (error === "INVALID") return t("invalidWhatsapp");
+  return clientFieldErrorText(t, error, holder);
 }

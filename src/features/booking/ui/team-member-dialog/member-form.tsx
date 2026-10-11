@@ -1,13 +1,14 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useController } from "react-hook-form";
 
 import { MultiSelect } from "@/ui/patterns/multi-select/multi-select";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
 import { teamMemberErrorText } from "../team-field-error/team-field-error";
 import type { FieldProps, MemberFormProps, RolesFieldProps } from "./member-form.types";
+import { TEAM_MEMBER_DIALOG_COPY_NAMESPACE } from "./team-member-dialog.copy";
 
 const FORM_ID = "team-member-form";
 
@@ -30,76 +31,80 @@ export function MemberForm({ controller, onCreateRole }: Readonly<MemberFormProp
 }
 
 function NameField({ control, isPending }: Readonly<FieldProps>) {
+  const t = useTranslations(TEAM_MEMBER_DIALOG_COPY_NAMESPACE);
   const { field, fieldState } = useController({ control, name: "name" });
   const key = fieldState.error?.message;
   return (
     <TextField
-      label={TEAM_COPY.memberName}
+      label={t("memberName")}
       name={field.name}
       value={field.value}
       onChange={field.onChange}
       onBlur={field.onBlur}
       inputRef={field.ref}
-      placeholder={TEAM_COPY.memberNamePlaceholder}
+      placeholder={t("memberNamePlaceholder")}
       isDisabled={isPending}
-      errorMessage={key ? teamMemberErrorText("name", key) : undefined}
+      errorMessage={key ? teamMemberErrorText(t, "name", key) : undefined}
     />
   );
 }
 
 function WhatsappField({ control, isPending, numberHolder }: Readonly<FieldProps>) {
+  const t = useTranslations(TEAM_MEMBER_DIALOG_COPY_NAMESPACE);
   const { field, fieldState } = useController({ control, name: "whatsappNumber" });
   const key = fieldState.error?.message;
   return (
     <TextField
-      label={TEAM_COPY.memberWhatsapp}
+      label={t("memberWhatsapp")}
       name={field.name}
       value={field.value}
       onChange={field.onChange}
       onBlur={field.onBlur}
       inputRef={field.ref}
-      placeholder={TEAM_COPY.memberWhatsappPlaceholder}
-      description={TEAM_COPY.memberWhatsappHint}
+      placeholder={t("memberWhatsappPlaceholder")}
+      description={t("memberWhatsappHint")}
       isDisabled={isPending}
-      errorMessage={key ? teamMemberErrorText("whatsappNumber", key, numberHolder) : undefined}
+      errorMessage={key ? teamMemberErrorText(t, "whatsappNumber", key, numberHolder) : undefined}
     />
   );
 }
 
 function EmailField({ control, isPending }: Readonly<FieldProps>) {
+  const t = useTranslations(TEAM_MEMBER_DIALOG_COPY_NAMESPACE);
   const { field, fieldState } = useController({ control, name: "email" });
   const key = fieldState.error?.message;
   return (
     <TextField
-      label={TEAM_COPY.memberEmail}
+      label={t("memberEmail")}
       isOptional
       name={field.name}
       value={field.value}
       onChange={field.onChange}
       onBlur={field.onBlur}
       inputRef={field.ref}
-      placeholder={TEAM_COPY.memberEmailPlaceholder}
+      placeholder={t("memberEmailPlaceholder")}
       isDisabled={isPending}
-      errorMessage={key ? teamMemberErrorText("email", key) : undefined}
+      errorMessage={key ? teamMemberErrorText(t, "email", key) : undefined}
     />
   );
 }
 
 function RolesField({ control, isPending, options, onCreateRole }: Readonly<RolesFieldProps>) {
+  const t = useTranslations(TEAM_MEMBER_DIALOG_COPY_NAMESPACE);
   const { field, fieldState } = useController({ control, name: "roleIds" });
   const key = fieldState.error?.message;
   return (
     <MultiSelect
-      label={TEAM_COPY.memberRoles}
-      placeholder={TEAM_COPY.memberRolesPlaceholder}
-      description={TEAM_COPY.memberRolesHint}
-      groupLabel={TEAM_COPY.memberRolesGroup}
+      label={t("memberRoles")}
+      placeholder={t("memberRolesPlaceholder")}
+      description={t("memberRolesHint")}
+      groupLabel={t("memberRolesGroup")}
       options={options}
       selectedIds={field.value}
       onChange={field.onChange}
       isDisabled={isPending}
-      errorMessage={key ? teamMemberErrorText("roleIds", key) : undefined}
-      createAction={{ label: TEAM_COPY.createRole, onPress: onCreateRole }}
+      errorMessage={key ? teamMemberErrorText(t, "roleIds", key) : undefined}
+      createAction={{ label: t("createRole"), onPress: onCreateRole }}
     />
   );
 }

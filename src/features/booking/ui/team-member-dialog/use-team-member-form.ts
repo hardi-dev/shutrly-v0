@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -14,8 +15,9 @@ import type {
 } from "@/features/booking/application/schemas/team-member-input/team-member-input.types";
 import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
+import type { TeamTranslate } from "../team-copy/team-copy.types";
 import { useTeamMutations } from "../use-team-mutations/use-team-mutations";
+import { TEAM_MEMBER_DIALOG_COPY_NAMESPACE } from "./team-member-dialog.copy";
 import type { TeamMemberDialogProps } from "./team-member-dialog.types";
 
 const FIELDS = ["name", "whatsappNumber", "email", "roleIds"] as const;
@@ -32,16 +34,21 @@ function formValues(member: TeamMemberDialogProps["member"]): TeamMemberInput {
 
 type Run = ReturnType<typeof useTeamMutations>["run"];
 
-function saveMember(run: Run, props: Readonly<TeamMemberDialogProps>, values: TeamMemberInput) {
+function saveMember(
+  t: TeamTranslate,
+  run: Run,
+  props: Readonly<TeamMemberDialogProps>,
+  values: TeamMemberInput,
+) {
   const { member, workspaceId } = props;
   if (member) {
     return run(() => props.updateAction(workspaceId, member.id, values), {
-      title: TEAM_COPY.memberSavedTitle,
+      title: t("memberSavedTitle"),
     });
   }
   return run(() => props.addAction(workspaceId, values), {
-    title: TEAM_COPY.memberAddedTitle,
-    body: TEAM_COPY.memberReadyBody(values.name.trim()),
+    title: t("memberAddedTitle"),
+    body: t("memberReadyBody", { name: values.name.trim() }),
   });
 }
 
@@ -68,6 +75,7 @@ function reportAdded(
  * @returns the form, its state, the role options and the handlers
  */
 export function useTeamMemberForm(props: Readonly<TeamMemberDialogProps>) {
+  const t = useTranslations(TEAM_MEMBER_DIALOG_COPY_NAMESPACE);
   const { run } = useTeamMutations();
   const form = useForm<TeamMemberInput, unknown, TeamMemberFields>({
     resolver: zodResolver(teamMemberInputSchema),
@@ -89,7 +97,7 @@ export function useTeamMemberForm(props: Readonly<TeamMemberDialogProps>) {
     setIsPending(true);
     try {
       const values = form.getValues();
-      const result = await saveMember(run, props, values);
+      const result = await saveMember(t, run, props, values);
       if (result?.ok === false) {
         setNumberHolder(result.numberHolder);
         for (const field of FIELDS) {
@@ -110,14 +118,7 @@ export function useTeamMemberForm(props: Readonly<TeamMemberDialogProps>) {
     event.preventDefault();
     void submit();
   }
-  return {
-    form,
-    isPending,
-    numberHolder,
-    handleSubmit,
-    options: roleOptions.options,
-    handleRoleCreated: roleOptions.handleRoleCreated,
-  };
+  return { form, isPending, numberHolder, handleSubmit, ...roleOptions };
 }
 
 /** The role options plus the roles created inline, and the handler that selects a new one (A-5). */

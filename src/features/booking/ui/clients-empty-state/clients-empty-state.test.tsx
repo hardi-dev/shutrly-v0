@@ -1,19 +1,23 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it } from "vitest";
-
-import { Button } from "@/ui/primitives/button/button";
 
 import { ClientsEmptyState } from "./clients-empty-state";
 
-describe("ClientsEmptyState", () => {
-  it("AC-CLI-003 gives active and archived views their own copy", () => {
-    const { rerender } = render(
-      <ClientsEmptyState status="ACTIVE" action={<Button>Tambah klien</Button>} />,
-    );
-    expect(screen.getByRole("heading", { name: "Belum ada klien aktif" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Tambah klien" })).toBeInTheDocument();
-    rerender(<ClientsEmptyState status="ARCHIVED" />);
+describe("ClientsEmptyState copy", () => {
+  it("renders the active empty state in English", () => {
+    renderInLocale(<ClientsEmptyState status="ACTIVE" />, "en");
+    expect(screen.getByRole("heading", { name: "No active clients yet" })).toBeInTheDocument();
+    expect(
+      screen.getByText("Add someone booking a shoot, then choose them when creating a project."),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the archive empty state in Indonesian", () => {
+    renderInLocale(<ClientsEmptyState status="ARCHIVED" />, "id");
     expect(screen.getByRole("heading", { name: "Belum ada klien di arsip" })).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Tambah klien" })).not.toBeInTheDocument();
+    expect(
+      screen.getByText("Klien yang diarsipkan muncul di sini. Kamu bisa memulihkannya kapan saja."),
+    ).toBeInTheDocument();
   });
 });

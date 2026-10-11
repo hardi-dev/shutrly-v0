@@ -24,7 +24,7 @@ describe("ClientList", () => {
         emptyState={<p>empty</p>}
       />,
     );
-    expect(screen.getByRole("heading", { name: "Daftar klien" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Klien" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah" })).toBeInTheDocument();
     expect(screen.getByText("RI")).toBeInTheDocument();
     expect(screen.getByText("+62 812-3456-7890")).toBeInTheDocument();

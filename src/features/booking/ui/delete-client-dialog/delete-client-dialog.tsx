@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -9,7 +10,8 @@ import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 
-import { CLIENT_COPY } from "../client-copy/client-copy.copy";
+import type { ClientTranslate } from "../client-copy/client-copy.types";
+import { DELETE_CLIENT_DIALOG_COPY_NAMESPACE } from "./delete-client-dialog.copy";
 import type {
   DeleteClientDialogProps,
   DeleteState,
@@ -24,6 +26,7 @@ export function DeleteClientDialog({
   action,
 }: Readonly<DeleteClientDialogProps>) {
   const mobile = useMobileViewport();
+  const t = useTranslations(DELETE_CLIENT_DIALOG_COPY_NAMESPACE);
   const [pending, setPending] = useState(false);
   const [blocked, setBlocked] = useState(false);
   if (!client) return null;
@@ -36,10 +39,10 @@ export function DeleteClientDialog({
         setBlocked(true);
         return;
       }
-      showToast({ tone: "success", title: CLIENT_COPY.deletedTitle });
+      showToast({ tone: "success", title: t("deletedTitle") });
       onOpenChange(false);
     } catch {
-      showServerError();
+      showServerError(t);
     } finally {
       setPending(false);
     }
@@ -47,10 +50,8 @@ export function DeleteClientDialog({
   const state: DeleteState = {
     pending,
     blocked,
-    title: blocked ? CLIENT_COPY.deleteBlockedTitle : CLIENT_COPY.deleteTitle(selected.name),
-    description: blocked
-      ? CLIENT_COPY.deleteBlockedBody(selected.name)
-      : CLIENT_COPY.deleteDescription,
+    title: blocked ? t("deleteBlockedTitle") : t("deleteTitle", { name: selected.name }),
+    description: blocked ? t("deleteBlockedBody", { name: selected.name }) : t("deleteDescription"),
     close: () => {
       onOpenChange(false);
     },
@@ -65,15 +66,16 @@ export function DeleteClientDialog({
   );
 }
 
-function showServerError(): void {
+function showServerError(t: ClientTranslate): void {
   showToast({
     tone: "danger",
-    title: CLIENT_COPY.serverErrorTitle,
-    body: CLIENT_COPY.serverErrorBody,
+    title: t("serverErrorTitle"),
+    body: t("serverErrorBody"),
   });
 }
 
 function DeleteClientSheet({ state, onOpenChange }: Readonly<DeleteViewProps>) {
+  const t = useTranslations(DELETE_CLIENT_DIALOG_COPY_NAMESPACE);
   return (
     <BottomSheet
       isOpen
@@ -83,19 +85,20 @@ function DeleteClientSheet({ state, onOpenChange }: Readonly<DeleteViewProps>) {
       variant="actions"
     >
       <SheetItem
-        label={state.pending ? CLIENT_COPY.deleting : CLIENT_COPY.deleteClient}
+        label={state.pending ? t("deleting") : t("deleteClient")}
         icon="trash-2"
         variant="destructive"
         isPending={state.pending}
         isDisabled={state.blocked}
         onPress={state.confirm}
       />
-      <SheetItem label={CLIENT_COPY.cancel} isDisabled={state.pending} onPress={state.close} />
+      <SheetItem label={t("cancel")} isDisabled={state.pending} onPress={state.close} />
     </BottomSheet>
   );
 }
 
 function DeleteClientModal({ state, onOpenChange }: Readonly<DeleteViewProps>) {
+  const t = useTranslations(DELETE_CLIENT_DIALOG_COPY_NAMESPACE);
   return (
     <Modal
       isOpen
@@ -107,7 +110,7 @@ function DeleteClientModal({ state, onOpenChange }: Readonly<DeleteViewProps>) {
       actions={
         <>
           <Button variant="secondary" onPress={state.close} isDisabled={state.pending}>
-            {state.blocked ? CLIENT_COPY.close : CLIENT_COPY.cancel}
+            {state.blocked ? t("close") : t("cancel")}
           </Button>
           <Button
             variant="danger"
@@ -115,7 +118,7 @@ function DeleteClientModal({ state, onOpenChange }: Readonly<DeleteViewProps>) {
             isDisabled={state.blocked}
             isPending={state.pending}
           >
-            {CLIENT_COPY.deleteClient}
+            {t("deleteClient")}
           </Button>
         </>
       }

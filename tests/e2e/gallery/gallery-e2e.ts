@@ -1,13 +1,16 @@
 import AxeBuilder from "@axe-core/playwright";
 import type { Page } from "@playwright/test";
 import { expect } from "@playwright/test";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 
 import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
-import { CLIENT_COPY } from "@/features/booking/ui/client-copy/client-copy.copy";
+import { CLIENT_COPY_NAMESPACE } from "@/features/booking/ui/client-copy/client-copy.copy";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 
 import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
+
+const clientT = copyTranslator(CLIENT_COPY_NAMESPACE, "id");
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
 
@@ -43,13 +46,16 @@ export async function openGalleryWorkspace(
 
 async function addClient(page: Page, workspaceId: string): Promise<void> {
   await page.goto(`/w/${workspaceId}/clients`);
-  await page.getByRole("button", { name: CLIENT_COPY.addClient }).first().click();
+  await page
+    .getByRole("button", { name: clientT("addClient") })
+    .first()
+    .click();
   const dialog = page
-    .getByRole("dialog", { name: CLIENT_COPY.dialogTitle })
+    .getByRole("dialog", { name: clientT("dialogTitle") })
     .filter({ visible: true });
-  await dialog.getByRole("textbox", { name: CLIENT_COPY.name }).fill("Rina");
-  await dialog.getByRole("textbox", { name: CLIENT_COPY.whatsappNumber }).fill("0812-3456-7890");
-  await dialog.getByRole("button", { name: CLIENT_COPY.save }).click();
+  await dialog.getByRole("textbox", { name: clientT("name") }).fill("Rina");
+  await dialog.getByRole("textbox", { name: clientT("whatsappNumber") }).fill("0812-3456-7890");
+  await dialog.getByRole("button", { name: clientT("saveAdd") }).click();
   await expect(dialog).toBeHidden();
 }
 

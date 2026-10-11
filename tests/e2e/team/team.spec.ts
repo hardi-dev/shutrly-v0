@@ -1,12 +1,15 @@
 import AxeBuilder from "@axe-core/playwright";
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 
-import { TEAM_COPY } from "@/features/booking/ui/team-copy/team-copy.copy";
+import { TEAM_COPY_NAMESPACE } from "@/features/booking/ui/team-copy/team-copy.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 
 import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
 import { visibleText } from "./team-e2e";
+
+const teamT = copyTranslator(TEAM_COPY_NAMESPACE, "id");
 
 test.setTimeout(90_000);
 test.describe.configure({ retries: 2 });
@@ -33,12 +36,12 @@ async function openWorkspace(page: Page, label: string): Promise<string> {
 async function addRole(page: Page, name: string): Promise<void> {
   const mobile = page.viewportSize()?.width === 390;
   await page
-    .getByRole("button", { name: mobile ? TEAM_COPY.addRoleShort : TEAM_COPY.addRole })
+    .getByRole("button", { name: mobile ? teamT("addRoleShort") : teamT("addRole") })
     .first()
     .click();
-  const dialog = page.getByRole("dialog", { name: TEAM_COPY.addRole }).filter({ visible: true });
-  await dialog.getByRole("textbox", { name: TEAM_COPY.roleName }).fill(name);
-  await dialog.getByRole("button", { name: TEAM_COPY.save }).click();
+  const dialog = page.getByRole("dialog", { name: teamT("addRole") }).filter({ visible: true });
+  await dialog.getByRole("textbox", { name: teamT("roleName") }).fill(name);
+  await dialog.getByRole("button", { name: teamT("save") }).click();
 }
 
 test.describe("AC-TEAM-008 AC-TEAM-009 Tim › Peran", () => {
@@ -50,19 +53,19 @@ test.describe("AC-TEAM-008 AC-TEAM-009 Tim › Peran", () => {
 
     for (const name of ["Asisten", "Fotografer", "Videografer"])
       await expect(visibleText(page, name, { exact: true })).toBeVisible();
-    await expect(visibleText(page, TEAM_COPY.rolesCountDesktop(3))).toBeVisible();
+    await expect(visibleText(page, teamT("rolesCountDesktop", { count: 3 }))).toBeVisible();
     await expectTeamA11y(page);
 
     await addRole(page, "Drone");
     await expect(visibleText(page, "Drone", { exact: true })).toBeVisible();
 
     await addRole(page, "drone");
-    await expect(visibleText(page, TEAM_COPY.roleErrors.DUPLICATE)).toBeVisible();
+    await expect(visibleText(page, teamT("roleErrorDuplicate"))).toBeVisible();
     await page.keyboard.press("Escape");
 
-    await page.getByRole("button", { name: TEAM_COPY.rowActions("Drone") }).click();
-    await page.getByRole("menuitem", { name: TEAM_COPY.delete }).click();
-    await page.getByRole("button", { name: TEAM_COPY.delete, exact: true }).click();
+    await page.getByRole("button", { name: teamT("rowActions", { name: "Drone" }) }).click();
+    await page.getByRole("menuitem", { name: teamT("delete") }).click();
+    await page.getByRole("button", { name: teamT("delete"), exact: true }).click();
     await expect(visibleText(page, "Drone", { exact: true })).toHaveCount(0);
   });
 
@@ -76,16 +79,16 @@ test.describe("AC-TEAM-008 AC-TEAM-009 Tim › Peran", () => {
 async function addMember(page: Page, fields: { name: string; number: string; role: string }) {
   const mobile = page.viewportSize()?.width === 390;
   await page
-    .getByRole("button", { name: mobile ? TEAM_COPY.addMemberShort : TEAM_COPY.addMember })
+    .getByRole("button", { name: mobile ? teamT("addMemberShort") : teamT("addMember") })
     .first()
     .click();
-  const dialog = page.getByRole("dialog", { name: TEAM_COPY.addMember }).filter({ visible: true });
-  await dialog.getByLabel(TEAM_COPY.memberName, { exact: true }).fill(fields.name);
-  await dialog.getByLabel(TEAM_COPY.memberWhatsapp).fill(fields.number);
-  await dialog.getByRole("button", { name: new RegExp(`^${TEAM_COPY.memberRoles}`) }).click();
+  const dialog = page.getByRole("dialog", { name: teamT("addMember") }).filter({ visible: true });
+  await dialog.getByLabel(teamT("memberName"), { exact: true }).fill(fields.name);
+  await dialog.getByLabel(teamT("memberWhatsapp")).fill(fields.number);
+  await dialog.getByRole("button", { name: new RegExp(`^${teamT("memberRoles")}`) }).click();
   await page.getByRole("option", { name: fields.role }).click();
   await page.keyboard.press("Escape");
-  await dialog.getByRole("button", { name: TEAM_COPY.save }).click();
+  await dialog.getByRole("button", { name: teamT("save") }).click();
 }
 
 test.describe("AC-TEAM-001 AC-TEAM-002 AC-TEAM-003 AC-TEAM-004 Tim › Anggota", () => {
@@ -94,27 +97,31 @@ test.describe("AC-TEAM-001 AC-TEAM-002 AC-TEAM-003 AC-TEAM-004 Tim › Anggota",
   }) => {
     const workspaceId = await openWorkspace(page, "team-members");
     await page.goto(`/w/${workspaceId}/team`);
-    await expect(visibleText(page, TEAM_COPY.emptyActiveTitle)).toBeVisible();
+    await expect(visibleText(page, teamT("emptyActiveTitle"))).toBeVisible();
     await expectTeamA11y(page);
 
     await addMember(page, { name: "Rina Saputri", number: "0812 3456 7890", role: "Fotografer" });
     await expect(visibleText(page, "Rina Saputri")).toBeVisible({ timeout: 15_000 });
     await expect(visibleText(page, "+62 812-3456-7890")).toBeVisible();
-    await expect(visibleText(page, TEAM_COPY.membersCount("ACTIVE", 1))).toBeVisible();
+    await expect(visibleText(page, teamT("activeMembersCount", { count: 1 }))).toBeVisible();
 
-    await page.getByRole("searchbox", { name: TEAM_COPY.searchLabel }).first().fill("zzz");
-    await expect(visibleText(page, TEAM_COPY.noMatchTitle)).toBeVisible();
-    await page.getByRole("searchbox", { name: TEAM_COPY.searchLabel }).first().fill("");
+    await page
+      .getByRole("searchbox", { name: teamT("searchLabel") })
+      .first()
+      .fill("zzz");
+    await expect(visibleText(page, teamT("noMatchTitle"))).toBeVisible();
+    await page
+      .getByRole("searchbox", { name: teamT("searchLabel") })
+      .first()
+      .fill("");
     await expect(visibleText(page, "Rina Saputri")).toBeVisible();
 
     await addMember(page, { name: "Rina Kedua", number: "0812 3456 7890", role: "Fotografer" });
-    await expect(
-      visibleText(page, TEAM_COPY.memberErrors.whatsappTaken("Rina Saputri", false)),
-    ).toBeVisible();
+    await expect(visibleText(page, teamT("whatsappTaken", { name: "Rina Saputri" }))).toBeVisible();
     await page.keyboard.press("Escape");
 
     await page.goto(`/w/${workspaceId}/team/archived`);
-    await expect(visibleText(page, TEAM_COPY.emptyArchivedTitle)).toBeVisible();
+    await expect(visibleText(page, teamT("emptyArchivedTitle"))).toBeVisible();
   });
 });
 
@@ -127,27 +134,31 @@ test.describe("AC-TEAM-007 AC-TEAM-023 Tim › row menu", () => {
     await addMember(page, { name: "Dimas Pratama", number: "0812 9876 5432", role: "Fotografer" });
     await expect(visibleText(page, "Dimas Pratama")).toBeVisible();
 
-    const rowActions = TEAM_COPY.rowActions("Dimas Pratama");
+    const rowActions = teamT("rowActions", { name: "Dimas Pratama" });
     await page.getByRole("button", { name: rowActions }).click();
-    const whatsapp = page.getByRole("menuitem", { name: TEAM_COPY.openWhatsapp });
+    const whatsapp = page.getByRole("menuitem", { name: teamT("openWhatsapp") });
     await expect(whatsapp).toHaveAttribute("href", "https://wa.me/6281298765432");
-    await page.getByRole("menuitem", { name: TEAM_COPY.archive }).click();
-    await expect(visibleText(page, TEAM_COPY.archivedTitle("Dimas Pratama"))).toBeVisible();
-    await page.getByRole("button", { name: TEAM_COPY.undo }).click();
+    await page.getByRole("menuitem", { name: teamT("archive") }).click();
+    await expect(
+      visibleText(page, teamT("archivedTitle", { name: "Dimas Pratama" })),
+    ).toBeVisible();
+    await page.getByRole("button", { name: teamT("undo") }).click();
     await expect(visibleText(page, "Dimas Pratama").first()).toBeVisible();
 
     await page.getByRole("button", { name: rowActions }).click();
-    await page.getByRole("menuitem", { name: TEAM_COPY.archive }).click();
+    await page.getByRole("menuitem", { name: teamT("archive") }).click();
     await page.goto(`/w/${workspaceId}/team/archived`);
     await expect(visibleText(page, "Dimas Pratama")).toBeVisible();
     await page.getByRole("button", { name: rowActions }).click();
-    await page.getByRole("menuitem", { name: TEAM_COPY.restore }).click();
-    await expect(visibleText(page, TEAM_COPY.restoredTitle("Dimas Pratama"))).toBeVisible();
+    await page.getByRole("menuitem", { name: teamT("restore") }).click();
+    await expect(
+      visibleText(page, teamT("restoredTitle", { name: "Dimas Pratama" })),
+    ).toBeVisible();
 
     await page.goto(`/w/${workspaceId}/team`);
     await page.getByRole("button", { name: rowActions }).click();
-    await page.getByRole("menuitem", { name: TEAM_COPY.delete }).click();
-    await page.getByRole("button", { name: TEAM_COPY.delete, exact: true }).click();
-    await expect(visibleText(page, TEAM_COPY.emptyActiveTitle)).toBeVisible();
+    await page.getByRole("menuitem", { name: teamT("delete") }).click();
+    await page.getByRole("button", { name: teamT("delete"), exact: true }).click();
+    await expect(visibleText(page, teamT("emptyActiveTitle"))).toBeVisible();
   });
 });

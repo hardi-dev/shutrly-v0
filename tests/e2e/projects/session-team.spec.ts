@@ -1,8 +1,9 @@
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
-import { TEAM_COPY } from "@/features/booking/ui/team-copy/team-copy.copy";
+import { TEAM_COPY_NAMESPACE } from "@/features/booking/ui/team-copy/team-copy.copy";
 
 import {
   addClient,
@@ -16,6 +17,8 @@ import {
   staffSession,
   visibleText,
 } from "../team/team-e2e";
+
+const teamT = copyTranslator(TEAM_COPY_NAMESPACE, "id");
 
 test.setTimeout(150_000);
 test.describe.configure({ retries: 2 });
@@ -64,11 +67,13 @@ test.describe("AC-TEAM-011 AC-TEAM-013 AC-TEAM-021 AC-TEAM-026 AC-TEAM-027 Jadwa
 
     // AC-TEAM-007: an assigned member cannot be deleted, only archived.
     await page.goto(`/w/${workspaceId}/team`);
-    await page.getByRole("button", { name: TEAM_COPY.rowActions("Dimas Pratama") }).click();
-    await page.getByRole("menuitem", { name: TEAM_COPY.delete }).click();
-    await page.getByRole("button", { name: TEAM_COPY.delete, exact: true }).click();
+    await page
+      .getByRole("button", { name: teamT("rowActions", { name: "Dimas Pratama" }) })
+      .click();
+    await page.getByRole("menuitem", { name: teamT("delete") }).click();
+    await page.getByRole("button", { name: teamT("delete"), exact: true }).click();
     await expect(
-      visibleText(page, TEAM_COPY.memberDeleteBlockedTitle("Dimas Pratama")),
+      visibleText(page, teamT("memberDeleteBlockedTitle", { name: "Dimas Pratama" })),
     ).toBeVisible();
   });
 });

@@ -1,9 +1,11 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import type { TeamMemberRecord } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
+import { TEAM_MEMBERS_SCREEN_COPY_NAMESPACE } from "./team-members-screen.copy";
 import type { TeamMembersScreenProps } from "./team-members-screen.types";
 
 /**
@@ -17,29 +19,30 @@ export function useMemberArchive(
   workspaceId: string,
   action: TeamMembersScreenProps["setArchivedAction"],
 ) {
+  const t = useTranslations(TEAM_MEMBERS_SCREEN_COPY_NAMESPACE);
   async function setArchived(member: TeamMemberRecord, isArchived: boolean): Promise<void> {
     try {
       await action(workspaceId, member.id, isArchived);
     } catch {
       showToast({
         tone: "danger",
-        title: TEAM_COPY.serverErrorTitle,
+        title: t("serverErrorTitle"),
         action: {
-          label: TEAM_COPY.retry,
+          label: t("retry"),
           onAction: () => void setArchived(member, isArchived),
         },
       });
       return;
     }
     if (!isArchived) {
-      showToast({ tone: "success", title: TEAM_COPY.restoredTitle(member.name) });
+      showToast({ tone: "success", title: t("restoredTitle", { name: member.name }) });
       return;
     }
     showToast({
       tone: "success",
-      title: TEAM_COPY.archivedTitle(member.name),
-      body: TEAM_COPY.archivedBody,
-      action: { label: TEAM_COPY.undo, onAction: () => void setArchived(member, false) },
+      title: t("archivedTitle", { name: member.name }),
+      body: t("archivedBody"),
+      action: { label: t("undo"), onAction: () => void setArchived(member, false) },
     });
   }
   function archive(member: TeamMemberRecord): void {

@@ -1,12 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 import { CLIENT_SEARCH_DEBOUNCE_MS } from "@/features/booking/domain/client-search/client-search";
 import { Input } from "@/ui/primitives/input/input";
 
-import { CLIENT_COPY } from "../client-copy/client-copy.copy";
+import { CLIENT_SEARCH_FIELD_COPY_NAMESPACE } from "./client-search-field.copy";
 import type { ClientSearchFieldProps } from "./client-search-field.types";
 
 /** Updates the current client-tab URL after a short, accessible debounce. */
@@ -16,6 +17,7 @@ export function ClientSearchField({
   q,
   resultCount,
 }: Readonly<ClientSearchFieldProps>) {
+  const t = useTranslations(CLIENT_SEARCH_FIELD_COPY_NAMESPACE);
   const pathname = `/w/${workspaceId}/clients${status === "ARCHIVED" ? "/archived" : ""}`;
   const { value, change, clear } = useClientSearch(q, pathname);
   return (
@@ -23,19 +25,17 @@ export function ClientSearchField({
       <div className="w-full md:w-[320px]">
         <Input
           variant="search"
-          aria-label={CLIENT_COPY.searchLabel}
-          placeholder={CLIENT_COPY.searchPlaceholder}
+          aria-label={t("searchLabel")}
+          placeholder={t("searchPlaceholder")}
           value={value}
           onChange={change}
           iconLeading="search"
           iconTrailing={value ? "x" : undefined}
-          iconTrailingAction={
-            value ? { label: CLIENT_COPY.clearSearch, onPress: clear } : undefined
-          }
+          iconTrailingAction={value ? { label: t("clearSearch"), onPress: clear } : undefined}
         />
       </div>
       <p className="sr-only" aria-live="polite">
-        {value ? CLIENT_COPY.searchResultCount(resultCount) : ""}
+        {value ? t("searchResultCount", { count: resultCount }) : ""}
       </p>
     </>
   );

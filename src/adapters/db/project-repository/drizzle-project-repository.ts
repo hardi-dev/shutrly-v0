@@ -29,6 +29,7 @@ import type {
   SessionInput,
   SessionRecordShape,
 } from "@/features/booking/domain/session/session.types";
+import { parseDefaultTeamRoleKey } from "@/features/booking/domain/team-role/team-role";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import {
@@ -129,6 +130,7 @@ async function readAssignments(db: DbExecutor, context: WorkspaceContext, projec
       memberName: teamMember.name,
       archivedAt: teamMember.archivedAt,
       roleName: teamRole.name,
+      defaultKey: teamRole.defaultKey,
     })
     .from(sessionAssignment)
     .innerJoin(
@@ -152,7 +154,11 @@ async function readAssignments(db: DbExecutor, context: WorkspaceContext, projec
       ),
     )
     .orderBy(asc(sessionAssignment.createdAt), asc(sessionAssignment.id));
-  return rows.map(({ archivedAt, ...row }) => ({ ...row, isMemberArchived: archivedAt !== null }));
+  return rows.map(({ archivedAt, defaultKey, ...row }) => ({
+    ...row,
+    isMemberArchived: archivedAt !== null,
+    defaultKey: parseDefaultTeamRoleKey(defaultKey),
+  }));
 }
 
 async function selectDetailRow(db: DbExecutor, context: WorkspaceContext, id: string) {

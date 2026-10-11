@@ -2,7 +2,9 @@
 
 import { useTranslations } from "next-intl";
 
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
 import { clientInitials } from "@/features/booking/ui/client-initials/client-initials";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
@@ -49,6 +51,7 @@ function TeamRow({
   archivedMark: string;
   removeLabel: string;
 }>) {
+  const appLocale = useAppLocale();
   function handleRemove(): void {
     onRemove(assignment);
   }
@@ -65,7 +68,10 @@ function TeamRow({
           {name}
         </span>
         <span className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
-          {assignment.roleName}
+          {displayTeamRoleName(
+            { name: assignment.roleName, defaultKey: assignment.defaultKey },
+            appLocale,
+          )}
         </span>
       </span>
       {canEdit ? (

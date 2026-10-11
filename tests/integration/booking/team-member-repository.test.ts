@@ -12,8 +12,10 @@ import type { Db } from "@/adapters/db/client/client.types";
 import { client } from "@/adapters/db/schema/booking/client";
 import { sessionAssignment, teamMember, teamMemberRole } from "@/adapters/db/schema/booking/team";
 import { createDrizzleTeamMemberRepository } from "@/adapters/db/team-repository/drizzle-team-member-repository";
+import { createDrizzleTeamRoleRepository } from "@/adapters/db/team-repository/drizzle-team-role-repository";
 import type { TeamMemberChange } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import { teamMemberInputSchema } from "@/features/booking/application/schemas/team-member-input/team-member-input.schema";
+import { seedDefaultTeamRoles } from "@/features/booking/application/use-cases/seed-default-team-roles/seed-default-team-roles";
 import { clientSearchSchema } from "@/features/booking/domain/client-search/client-search.schema";
 
 import { openTestDb } from "../helpers/test-db";
@@ -149,6 +151,30 @@ describe("Drizzle team member repository", () => {
       isArchived: false,
     });
     expect(member.roles).toHaveLength(2);
+  });
+
+  it("D-18 a member's role carries its platform key, and a renamed platform role loses it", async () => {
+    const base = await seedTeamWorkspace(db);
+    const roles = createDrizzleTeamRoleRepository(db);
+    await seedDefaultTeamRoles(roles, base, "id");
+    const photographer = (await roles.list(base)).find(
+      (role) => role.defaultKey === "PHOTOGRAPHER",
+    );
+    const owned = await seedTeamRoles(db, base, ["Penata cahaya"]);
+    await createMember(base, {
+      name: "Dimas Pratama",
+      number: DIMAS,
+      roleIds: [photographer?.id ?? "", owned["Penata cahaya"] ?? ""],
+    });
+    const [member] = await page(base, {});
+    expect(Object.fromEntries(member.roles.map((role) => [role.name, role.defaultKey]))).toEqual({
+      Fotografer: "PHOTOGRAPHER",
+      "Penata cahaya": null,
+    });
+
+    await roles.rename(base, photographer?.id ?? "", "Fotografer utama", base.ownerId);
+    const [renamed] = await page(base, {});
+    expect(renamed.roles.find((role) => role.name === "Fotografer utama")?.defaultKey).toBeNull();
   });
 
   it("AC-TEAM-006 refuses a number held by an archived member but not by a client", async () => {

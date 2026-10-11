@@ -23,6 +23,7 @@ const WISUDA_TEAM = PEOPLE.map(([id, memberName, roleName]) => ({
   memberId: `m-${id}`,
   memberName,
   isMemberArchived: false,
+  defaultKey: null,
   roleName,
 }));
 

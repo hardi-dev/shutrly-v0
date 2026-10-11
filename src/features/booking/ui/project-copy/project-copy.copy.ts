@@ -334,6 +334,43 @@ export const PROJECT_COPY = {
       lastSessionHint: "A booked project needs at least one session.",
       lastSessionToast: "A booked project needs at least one session.",
       sessionDialogDetailDescription: "Changes are saved immediately.",
+      fieldErrorClientRequired: "Choose a client.",
+      fieldErrorClientArchived: "This client is archived. Choose another client.",
+      fieldErrorServiceRequired: "Choose a service.",
+      fieldErrorServiceInactive: "This service is no longer active. Choose another service.",
+      fieldErrorTitleEmpty: "Enter a project title.",
+      fieldErrorTitleTooLong: "Use no more than 100 characters for the title.",
+      fieldErrorNotesTooLong: "Use no more than 2,000 characters for notes.",
+      fieldErrorPriceEmpty: "Enter the agreed price.",
+      fieldErrorPriceNegative: "The price can’t be negative.",
+      fieldErrorPriceFractional: "Enter the price in whole rupiah, without decimals.",
+      fieldErrorPriceTooLarge: "The maximum price is IDR {maxPrice, number}.",
+      fieldErrorSessionRequired: "Add at least one session.",
+      fieldErrorSessionNameEmpty: "Enter a session name.",
+      fieldErrorSessionNameTooLong: "Use no more than 100 characters for the session name.",
+      fieldErrorDateEmpty: "Choose a session date.",
+      fieldErrorDateInvalid: "Choose a valid date.",
+      fieldErrorEndWithoutStart: "Enter the start time first.",
+      fieldErrorEndNotAfterStart: "The end time must be after the start time.",
+      fieldErrorLocationTooLong: "Use no more than 200 characters for the location.",
+      fieldErrorTeamInvalid: "Review this session’s team members and roles.",
+      fieldErrorItemRequired: "Choose an item.",
+      fieldErrorItemDuplicate: "This item is already in the project.",
+      fieldErrorItemInactive: "This item is no longer active. Choose another item.",
+      fieldErrorQuantityInvalid: "Enter a valid number.",
+      fieldErrorQuantityNegative: "Enter zero or a positive number.",
+      fieldErrorQuantityPrecision: "Use no more than 2 decimal places.",
+      fieldErrorQuantityTooLarge: "This number is too large.",
+      fieldErrorQuantityWhole: "Enter a whole number.",
+      fieldErrorRangeOrder: "The maximum must be at least the minimum.",
+      fieldErrorReasonRequired:
+        "Enter a cancellation reason. It’s required after the shoot starts.",
+      fieldErrorReasonTooLong: "Use no more than 500 characters for the reason.",
+      fieldErrorFieldRequired: "Fill in {fieldName}.",
+      fieldErrorFieldTooLong: "Use no more than 200 characters for {fieldName}.",
+      fieldErrorOptionInvalid: "Choose one of the listed options.",
+      fieldErrorValueInvalid: "Enter a valid value.",
+      fieldErrorGeneric: "Check this field and try again.",
     },
     id: {
       parentLabel: "Proyek",
@@ -643,6 +680,42 @@ export const PROJECT_COPY = {
       lastSessionHint: "Proyek yang sudah dipesan butuh minimal satu sesi.",
       lastSessionToast: "Proyek yang sudah dipesan butuh minimal satu sesi.",
       sessionDialogDetailDescription: "Perubahan langsung disimpan.",
+      fieldErrorClientRequired: "Pilih klien.",
+      fieldErrorClientArchived: "Klien ini diarsipkan. Pilih klien lain.",
+      fieldErrorServiceRequired: "Pilih layanan.",
+      fieldErrorServiceInactive: "Layanan ini sudah tidak aktif. Pilih layanan lain.",
+      fieldErrorTitleEmpty: "Isi judul proyek.",
+      fieldErrorTitleTooLong: "Judul proyek maksimal 100 karakter.",
+      fieldErrorNotesTooLong: "Catatan maksimal 2.000 karakter.",
+      fieldErrorPriceEmpty: "Isi harga sepakat.",
+      fieldErrorPriceNegative: "Harga tidak boleh negatif.",
+      fieldErrorPriceFractional: "Isi harga dalam rupiah bulat, tanpa desimal.",
+      fieldErrorPriceTooLarge: "Harga maksimal Rp {maxPrice, number}.",
+      fieldErrorSessionRequired: "Tambahkan minimal satu sesi.",
+      fieldErrorSessionNameEmpty: "Isi nama sesi.",
+      fieldErrorSessionNameTooLong: "Nama sesi maksimal 100 karakter.",
+      fieldErrorDateEmpty: "Pilih tanggal sesi.",
+      fieldErrorDateInvalid: "Pilih tanggal yang valid.",
+      fieldErrorEndWithoutStart: "Isi jam mulai dulu.",
+      fieldErrorEndNotAfterStart: "Jam selesai harus setelah jam mulai.",
+      fieldErrorLocationTooLong: "Lokasi maksimal 200 karakter.",
+      fieldErrorTeamInvalid: "Cek anggota dan peran tim sesi ini.",
+      fieldErrorItemRequired: "Pilih item.",
+      fieldErrorItemDuplicate: "Item ini sudah ada di proyek.",
+      fieldErrorItemInactive: "Item ini sudah tidak aktif. Pilih item lain.",
+      fieldErrorQuantityInvalid: "Isi angka yang valid.",
+      fieldErrorQuantityNegative: "Isi nol atau angka positif.",
+      fieldErrorQuantityPrecision: "Gunakan maksimal 2 angka desimal.",
+      fieldErrorQuantityTooLarge: "Angkanya terlalu besar.",
+      fieldErrorQuantityWhole: "Isi angka bulat.",
+      fieldErrorRangeOrder: "Maksimum harus sama atau lebih dari minimum.",
+      fieldErrorReasonRequired: "Isi alasan pembatalan. Wajib setelah pemotretan dimulai.",
+      fieldErrorReasonTooLong: "Alasan maksimal 500 karakter.",
+      fieldErrorFieldRequired: "Isi {fieldName}.",
+      fieldErrorFieldTooLong: "{fieldName} maksimal 200 karakter.",
+      fieldErrorOptionInvalid: "Pilih salah satu pilihan yang tersedia.",
+      fieldErrorValueInvalid: "Masukkan nilai yang valid.",
+      fieldErrorGeneric: "Cek isian ini, lalu coba lagi.",
     },
   },
 } as const;
@@ -672,4 +745,71 @@ export const ASSIGN_ERROR_MESSAGE_KEY = {
   ALREADY_ASSIGNED: "assignErrorAlreadyAssigned",
   MEMBER_ARCHIVED: "assignErrorMemberArchived",
   ROLE_NOT_HELD: "assignErrorRoleNotHeld",
+} as const;
+
+/** The quantity validation keys (value, min and max paths share them, deck §7.7). */
+const QUANTITY_FIELD_ERROR_MESSAGE_KEY = {
+  INVALID: "fieldErrorQuantityInvalid",
+  NEGATIVE: "fieldErrorQuantityNegative",
+  TOO_MANY_DECIMALS: "fieldErrorQuantityPrecision",
+  TOO_LARGE: "fieldErrorQuantityTooLarge",
+  NOT_WHOLE: "fieldErrorQuantityWhole",
+  MIN_GREATER_THAN_MAX: "fieldErrorRangeOrder",
+} as const;
+
+/** Project validation paths (leaf segment) and their stable keys mapped to message keys (deck §7.7). */
+export const PROJECT_FIELD_ERROR_MESSAGE_KEY: Readonly<
+  Partial<Record<string, Readonly<Partial<Record<string, string>>>>>
+> = {
+  clientId: {
+    REQUIRED: "fieldErrorClientRequired",
+    CLIENT_INACTIVE: "fieldErrorClientArchived",
+  },
+  serviceId: {
+    REQUIRED: "fieldErrorServiceRequired",
+    SERVICE_INACTIVE: "fieldErrorServiceInactive",
+  },
+  title: { EMPTY: "fieldErrorTitleEmpty", TOO_LONG: "fieldErrorTitleTooLong" },
+  notes: { TOO_LONG: "fieldErrorNotesTooLong" },
+  agreedPrice: {
+    EMPTY: "fieldErrorPriceEmpty",
+    NEGATIVE: "fieldErrorPriceNegative",
+    NOT_WHOLE: "fieldErrorPriceFractional",
+    TOO_LARGE: "fieldErrorPriceTooLarge",
+  },
+  sessions: { SESSION_REQUIRED: "fieldErrorSessionRequired" },
+  name: { EMPTY: "fieldErrorSessionNameEmpty", TOO_LONG: "fieldErrorSessionNameTooLong" },
+  date: { EMPTY: "fieldErrorDateEmpty", INVALID: "fieldErrorDateInvalid" },
+  endTime: {
+    END_WITHOUT_START: "fieldErrorEndWithoutStart",
+    END_NOT_AFTER_START: "fieldErrorEndNotAfterStart",
+  },
+  location: { TOO_LONG: "fieldErrorLocationTooLong" },
+  // not in Pencil: the team of a new session no longer matches the members and roles
+  team: { TEAM_INVALID: "fieldErrorTeamInvalid" },
+  definitionId: {
+    REQUIRED: "fieldErrorItemRequired",
+    DUPLICATE_DEFINITION: "fieldErrorItemDuplicate",
+    DEFINITION_INACTIVE: "fieldErrorItemInactive",
+  },
+  value: QUANTITY_FIELD_ERROR_MESSAGE_KEY,
+  min: QUANTITY_FIELD_ERROR_MESSAGE_KEY,
+  max: QUANTITY_FIELD_ERROR_MESSAGE_KEY,
+  reason: {
+    REASON_REQUIRED: "fieldErrorReasonRequired",
+    TOO_LONG: "fieldErrorReasonTooLong",
+  },
+};
+
+/** Booking-field values (`fieldValues.<key>` paths) mapped to their message keys (deck §7.7). */
+export const FIELD_VALUE_ERROR_MESSAGE_KEY: Readonly<Partial<Record<string, string>>> = {
+  REQUIRED: "fieldErrorFieldRequired",
+  TOO_LONG: "fieldErrorFieldTooLong",
+  NOT_AN_OPTION: "fieldErrorOptionInvalid",
+};
+
+/** The fallback message key for a validation key the copy does not classify (deck §7.7). */
+export const FIELD_ERROR_FALLBACK_MESSAGE_KEY = {
+  VALUE: "fieldErrorValueInvalid",
+  GENERIC: "fieldErrorGeneric",
 } as const;

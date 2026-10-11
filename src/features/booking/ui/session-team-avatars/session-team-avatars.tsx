@@ -3,7 +3,9 @@
 import { useTranslations } from "next-intl";
 
 import { avatarGroup } from "@/features/booking/domain/session-assignment/session-assignment";
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
 import { clientInitials } from "@/features/booking/ui/client-initials/client-initials";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Tooltip } from "@/ui/primitives/tooltip/tooltip";
@@ -28,6 +30,7 @@ export function SessionTeamAvatars({
 }: Readonly<SessionTeamAvatarsProps>) {
   const t = useTranslations(SESSION_TEAM_AVATARS_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
+  const appLocale = useAppLocale();
   const { shown, overflow } = avatarGroup(assignments);
   return (
     <button
@@ -54,20 +57,27 @@ export function SessionTeamAvatars({
             key={assignment.id}
             label={t("avatarTooltip", {
               name: assignment.memberName,
-              role: assignment.roleName,
+              role: displayTeamRoleName(
+                { name: assignment.roleName, defaultKey: assignment.defaultKey },
+                appLocale,
+              ),
             })}
           >
             {avatar}
           </Tooltip>
         );
       })}
-      {overflow > 0 ? (
-        <span
-          className={`${OVERLAP} ${RING} flex size-[24px] shrink-0 items-center justify-center rounded-(--component-avatar-radius) bg-(--color-semantic-surface-subtle) text-(length:--font-size-caption) font-semibold text-(--color-semantic-text-secondary)`}
-        >
-          {`+${String(overflow)}`}
-        </span>
-      ) : null}
+      {overflow > 0 ? <OverflowChip count={overflow} /> : null}
     </button>
+  );
+}
+
+function OverflowChip({ count }: Readonly<{ count: number }>) {
+  return (
+    <span
+      className={`${OVERLAP} ${RING} flex size-[24px] shrink-0 items-center justify-center rounded-(--component-avatar-radius) bg-(--color-semantic-surface-subtle) text-(length:--font-size-caption) font-semibold text-(--color-semantic-text-secondary)`}
+    >
+      {`+${String(count)}`}
+    </span>
   );
 }

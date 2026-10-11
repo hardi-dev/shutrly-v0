@@ -68,6 +68,8 @@ export class FakeTeamRoleRepository implements TeamRoleRepositoryPort {
     if (!row) return "NOT_FOUND" as const;
     const other = this.find(context, name);
     if (other && other.id !== id) return { status: "DUPLICATE" } as const;
+    // D-18: a rename clears the platform key, as the repository does (unchanged names keep it).
+    if (row.name !== name) row.defaultKey = null;
     row.name = name;
     return "UPDATED" as const;
   }

@@ -178,6 +178,7 @@ describe("detail edit controls", () => {
       memberId: `m-${id}`,
       memberName: `Anggota ${id}`,
       isMemberArchived: false,
+      defaultKey: null,
       roleName: "Asisten",
     }));
     const { edit } = setup("BOOKED", { assignments });
@@ -201,6 +202,7 @@ describe("detail edit controls", () => {
         memberId: "m1",
         memberName: "Dimas",
         isMemberArchived: false,
+        defaultKey: null,
         roleName: "Fotografer",
       },
     ];

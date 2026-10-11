@@ -18,6 +18,7 @@ import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { useLocaleReformat } from "../locale-reformat/use-locale-reformat";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { projectFieldErrorText } from "../project-field-error/project-field-error";
 import { PROJECT_ITEM_DIALOG_COPY_NAMESPACE } from "./project-item-dialog.copy";
 import type { ProjectItemDialogProps } from "./project-item-dialog.types";
@@ -49,7 +50,7 @@ export function ProjectItemDialog(props: Readonly<ProjectItemDialogProps>) {
   );
   const submit = async () => {
     if (!definition) {
-      setErrors(toTexts({ definitionId: "REQUIRED" }));
+      setErrors(toTexts(t, { definitionId: "REQUIRED" }));
       return;
     }
     const packageValue: PackageValue =
@@ -61,7 +62,7 @@ export function ProjectItemDialog(props: Readonly<ProjectItemDialogProps>) {
         value: packageValue,
       });
       if (result === null) props.onOpenChange(false);
-      else setErrors(toTexts(result));
+      else setErrors(toTexts(t, result));
     } finally {
       setIsPending(false);
     }
@@ -171,9 +172,12 @@ export function ProjectItemDialog(props: Readonly<ProjectItemDialogProps>) {
   );
 }
 
-function toTexts(errors: Readonly<Record<string, string>>): Record<string, string> {
+function toTexts(
+  t: ProjectTranslate,
+  errors: Readonly<Record<string, string>>,
+): Record<string, string> {
   return Object.fromEntries(
-    Object.entries(errors).map(([path, key]) => [path, projectFieldErrorText(path, key)]),
+    Object.entries(errors).map(([path, key]) => [path, projectFieldErrorText(t, path, key)]),
   );
 }
 

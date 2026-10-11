@@ -329,9 +329,7 @@ describe("CreateProjectScreen (S2)", () => {
     await userEvent.click(screen.getByRole("button", { name: /Tanggal wisuda/ }));
     await userEvent.click(within(screen.getByRole("grid")).getByText("15"));
     await userEvent.click(screen.getByRole("button", { name: "Simpan draf" }));
-    expect(
-      await screen.findByText("Tim sesi ini perlu diperbarui. Periksa anggota dan perannya."),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Cek anggota dan peran tim sesi ini.")).toBeInTheDocument();
     expect(push).not.toHaveBeenCalled();
   });
 });

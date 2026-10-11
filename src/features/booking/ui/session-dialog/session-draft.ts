@@ -1,5 +1,6 @@
 import { sessionInputSchema } from "@/features/booking/domain/session/session.schema";
 
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { projectFieldErrorText } from "../project-field-error/project-field-error";
 import type { SessionDraft, SessionDraftErrors, SessionWithTeam } from "./session-dialog.types";
 
@@ -26,8 +27,9 @@ const DRAFT_KEYS: readonly (keyof SessionDraftErrors)[] = [
   "location",
 ];
 
-/** Validates a draft with the shared session schema (client side is UX only, C-004). @param draft - what the Owner typed @returns the parsed session or the first error per field */
+/** Validates a draft with the shared session schema (client side is UX only, C-004). @param t - the project translate function @param draft - what the Owner typed @returns the parsed session or the first error per field */
 export function validateSessionDraft(
+  t: ProjectTranslate,
   draft: SessionDraft,
 ): { readonly session: SessionWithTeam } | { readonly errors: SessionDraftErrors } {
   const parsed = sessionInputSchema.safeParse(draft);
@@ -36,7 +38,7 @@ export function validateSessionDraft(
   for (const issue of parsed.error.issues) {
     const key = DRAFT_KEYS.find((candidate) => candidate === issue.path[0]);
     if (key && errors[key] === undefined) {
-      errors[key] = projectFieldErrorText(key, issue.message);
+      errors[key] = projectFieldErrorText(t, key, issue.message);
     }
   }
   return { errors };

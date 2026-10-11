@@ -107,7 +107,7 @@ describe("Proyek baru package edits (AC-PRJ-030)", () => {
     await userEvent.clear(field);
     await userEvent.type(field, "2,5");
     await userEvent.click(within(dialog).getByRole("button", { name: "Simpan" }));
-    expect(within(dialog).getByText("Harus angka bulat.")).toBeInTheDocument();
+    expect(within(dialog).getByText("Isi angka bulat.")).toBeInTheDocument();
     expect(screen.getByText("25 foto · hitung foto")).toBeInTheDocument();
   });
 

@@ -8,6 +8,7 @@ import { Alert } from "@/ui/patterns/alert/alert";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
 import { ClientPicker } from "../client-picker/client-picker";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { projectFieldErrorText } from "../project-field-error/project-field-error";
 import { ServicePicker } from "../service-picker/service-picker";
 import { CREATE_PROJECT_SCREEN_COPY_NAMESPACE } from "./create-project-screen.copy";
@@ -17,7 +18,7 @@ import type { CreateProjectCardProps } from "./create-project-screen.types";
 export function ClientServiceCard({ state, props }: Readonly<CreateProjectCardProps>) {
   const t = useTranslations(CREATE_PROJECT_SCREEN_COPY_NAMESPACE);
   const { errors } = state.form.formState;
-  const serviceError = errorText("serviceId", errors.serviceId?.message);
+  const serviceError = errorText(t, "serviceId", errors.serviceId?.message);
   const serviceRef = useRef<HTMLDivElement>(null);
   // An inactive-service failure from the server moves focus to Layanan (AC-PRJ-012).
   useEffect(() => {
@@ -31,7 +32,7 @@ export function ClientServiceCard({ state, props }: Readonly<CreateProjectCardPr
         onSelect={state.selectClient}
         searchAction={props.searchClientsAction}
         createAction={props.createClientAction}
-        errorMessage={errorText("clientId", errors.clientId?.message)}
+        errorMessage={errorText(t, "clientId", errors.clientId?.message)}
       />
       <div ref={serviceRef}>
         <ServicePicker
@@ -62,6 +63,6 @@ function NoServiceAlert({ workspaceId }: Readonly<{ workspaceId: string }>) {
   );
 }
 
-function errorText(path: string, key: string | undefined): string | undefined {
-  return key === undefined ? undefined : projectFieldErrorText(path, key);
+function errorText(t: ProjectTranslate, path: string, key: string | undefined): string | undefined {
+  return key === undefined ? undefined : projectFieldErrorText(t, path, key);
 }

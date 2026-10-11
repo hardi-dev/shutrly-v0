@@ -45,7 +45,7 @@ export function BookingFieldsDialog({
           Object.fromEntries(
             Object.entries(result).map(([path, key]) => {
               const field = fields.find((candidate) => path === `fieldValues.${candidate.key}`);
-              return [path, projectFieldErrorText(path, key, field?.name)];
+              return [path, projectFieldErrorText(t, path, key, field?.name)];
             }),
           ),
         );

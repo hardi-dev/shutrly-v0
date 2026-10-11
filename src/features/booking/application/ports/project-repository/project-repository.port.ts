@@ -13,6 +13,7 @@ import type {
   SessionInput,
   SessionRecordShape,
 } from "@/features/booking/domain/session/session.types";
+import type { DefaultTeamRoleKey } from "@/features/booking/domain/team-role/team-role";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { ServiceItemRecord } from "../service-repository/service-repository.port";
@@ -44,6 +45,8 @@ export interface SessionAssignmentRecord {
   readonly memberName: string;
   readonly isMemberArchived: boolean;
   readonly roleName: string;
+  /** D-18: the platform key of the role, null for an owner role; the screen shows the name in the reader's language. */
+  readonly defaultKey: DefaultTeamRoleKey | null;
 }
 
 export interface ProjectDetailRecord {

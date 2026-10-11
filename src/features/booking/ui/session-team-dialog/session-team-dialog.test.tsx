@@ -28,6 +28,7 @@ const ASSIGNMENTS = [
     memberId: "m1",
     memberName: "Dimas Pratama",
     isMemberArchived: false,
+    defaultKey: null,
     roleName: "Fotografer",
   },
   {
@@ -36,6 +37,7 @@ const ASSIGNMENTS = [
     memberId: "m2",
     memberName: "Sari Lestari",
     isMemberArchived: true,
+    defaultKey: null,
     roleName: "Asisten",
   },
 ];

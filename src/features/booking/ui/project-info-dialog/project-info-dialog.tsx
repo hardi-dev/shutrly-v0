@@ -100,7 +100,7 @@ function InfoForm(props: Readonly<ProjectInfoDialogProps & { target: ProjectInfo
         Object.fromEntries(
           Object.entries(result.fieldErrors).map(([path, key]) => [
             path,
-            projectFieldErrorText(path, key),
+            projectFieldErrorText(t, path, key),
           ]),
         ),
       );

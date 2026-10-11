@@ -18,8 +18,8 @@ import { CREATE_PROJECT_SCREEN_COPY_NAMESPACE } from "./create-project-screen.co
 
 const noop = () => undefined;
 
-function errorText(path: string, key: string | undefined): string | undefined {
-  return key === undefined ? undefined : projectFieldErrorText(path, key);
+function errorText(t: ProjectTranslate, path: string, key: string | undefined): string | undefined {
+  return key === undefined ? undefined : projectFieldErrorText(t, path, key);
 }
 
 function titlePlaceholder(
@@ -74,7 +74,7 @@ export function ProjectDetailCard({ state }: Readonly<{ state: CreateProjectStat
           onBlur={noop}
           placeholder={titlePlaceholder(t, state, isMobile)}
           description={service ? t("titleHelper") : undefined}
-          errorMessage={errorText("title", errors.title?.message)}
+          errorMessage={errorText(t, "title", errors.title?.message)}
         />
         <TextField
           label={t("priceLabel")}
@@ -85,7 +85,7 @@ export function ProjectDetailCard({ state }: Readonly<{ state: CreateProjectStat
           onBlur={noop}
           placeholder={t("pricePlaceholder")}
           description={priceDescription(t, service, locale)}
-          errorMessage={errorText("agreedPrice", errors.agreedPrice?.message)}
+          errorMessage={errorText(t, "agreedPrice", errors.agreedPrice?.message)}
         />
       </div>
       <Textarea
@@ -95,7 +95,7 @@ export function ProjectDetailCard({ state }: Readonly<{ state: CreateProjectStat
         value={values.notes ?? ""}
         onChange={handleNotes}
         placeholder={t("notesPlaceholder")}
-        errorMessage={errorText("notes", errors.notes?.message)}
+        errorMessage={errorText(t, "notes", errors.notes?.message)}
       />
     </SectionCard>
   );

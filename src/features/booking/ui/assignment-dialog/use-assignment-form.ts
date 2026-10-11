@@ -5,6 +5,11 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { AssignmentWriteResult } from "@/features/booking/application/use-cases/team-results/team-results.types";
+import {
+  type DefaultTeamRoleKey,
+  displayTeamRoleName,
+} from "@/features/booking/domain/team-role/team-role";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { showToast } from "@/ui/patterns/toast/toast";
 
 import { ASSIGN_ERROR_MESSAGE_KEY } from "../project-copy/project-copy.copy";
@@ -29,13 +34,16 @@ interface Named {
   readonly name: string;
 }
 
+type NamedRole = Named & { readonly defaultKey: DefaultTeamRoleKey | null };
+
 /** Saves the assignment and reports it; "left" means the dialog was closed or moved on. */
 async function saveAssignment(
   t: ProjectTranslate,
   props: Readonly<AssignmentDialogProps>,
   router: Router,
   member: Named,
-  role: Named,
+  role: NamedRole,
+  roleName: string,
 ): Promise<AssignmentFormState["error"] | "left"> {
   try {
     const result = await props.addAction(props.workspaceId, props.projectId, props.session.id, {
@@ -49,7 +57,7 @@ async function saveAssignment(
         body: t("assignedToastBody", {
           name: member.name,
           sessionName: props.session.name,
-          role: role.name,
+          role: roleName,
         }),
       });
       router.refresh();
@@ -88,6 +96,7 @@ export function useAssignmentForm(
 ) {
   const t = useTranslations(ASSIGNMENT_DIALOG_COPY_NAMESPACE);
   const router = useRouter();
+  const appLocale = useAppLocale();
   const [state, setState] = useState<AssignmentFormState>(() => {
     const initial = props.members.find((candidate) => candidate.id === initialMemberId);
     return initial
@@ -110,7 +119,8 @@ export function useAssignmentForm(
     const role = member?.roles.find((candidate) => candidate.id === state.roleId);
     if (!member || !role) return;
     setState((previous) => ({ ...previous, isPending: true, error: null }));
-    const outcome = await saveAssignment(t, props, router, member, role);
+    const roleName = displayTeamRoleName(role, appLocale);
+    const outcome = await saveAssignment(t, props, router, member, role, roleName);
     if (outcome !== "left") settle(outcome);
   }
   function handleSubmit(): void {

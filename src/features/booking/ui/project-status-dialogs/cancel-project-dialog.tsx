@@ -47,7 +47,7 @@ function CancelBody(
         props.onOpenChange(false);
         props.onDone();
       } else if (result.code === "VALIDATION_FAILED") {
-        setError(projectFieldErrorText("reason", result.fieldErrors.reason));
+        setError(projectFieldErrorText(t, "reason", result.fieldErrors.reason));
       } else {
         props.onOpenChange(false);
         props.onDone();

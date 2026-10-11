@@ -39,7 +39,8 @@ export async function openGalleryWorkspace(
   await registerAndVerify(page, email);
   await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Gallery Studio");
   await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
-  await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
+  // Creating the workspace seeds defaults; a cold dev compile can take tens of seconds.
+  await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/, { timeout: 45_000 });
   const workspaceId = new URL(page.url()).pathname.split("/")[2];
   await addClient(page, workspaceId);
   await addService(page, workspaceId);

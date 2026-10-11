@@ -59,7 +59,8 @@ async function addClient(page: Page, workspaceId: string): Promise<void> {
   await dialog.getByRole("textbox", { name: clientT("name") }).fill("Rina");
   await dialog.getByRole("textbox", { name: clientT("whatsappNumber") }).fill("0812-3456-7890");
   await dialog.getByRole("button", { name: clientT("saveAdd") }).click();
-  await expect(dialog).toBeHidden();
+  // The first save compiles the action in dev.
+  await expect(dialog).toBeHidden({ timeout: 30_000 });
 }
 
 async function addService(page: Page, workspaceId: string): Promise<void> {
@@ -84,7 +85,7 @@ async function addService(page: Page, workspaceId: string): Promise<void> {
     .getByRole("textbox", { name: CATALOG_COPY.messages.id.nameCategory })
     .fill("Wisuda");
   await categoryDialog.getByRole("button", { name: CATALOG_COPY.messages.id.save }).click();
-  await expect(categoryDialog).toBeHidden();
+  await expect(categoryDialog).toBeHidden({ timeout: 30_000 });
   await serviceDialog
     .getByRole("textbox", { name: CATALOG_COPY.messages.id.nameService })
     .fill("Wisuda Basic");
@@ -92,7 +93,7 @@ async function addService(page: Page, workspaceId: string): Promise<void> {
     .getByRole("textbox", { name: CATALOG_COPY.messages.id.basePrice })
     .fill("750000");
   await serviceDialog.getByRole("button", { name: CATALOG_COPY.messages.id.save }).click();
-  await expect(page).toHaveURL(/\/services\/[0-9a-f-]+$/);
+  await expect(page).toHaveURL(/\/services\/[0-9a-f-]+$/, { timeout: 30_000 });
 }
 
 /** Creates a project for *Rina*: BOOKED with one session, or a DRAFT. @returns the project page path */
@@ -115,10 +116,11 @@ export async function createProject(
     await dialog.getByRole("button", { name: new RegExp(pc("sessionDate")) }).click();
     await page.getByRole("grid").getByText("15", { exact: true }).first().click();
     await dialog.getByRole("button", { name: pc("sessionSave") }).click();
-    await expect(dialog).toBeHidden();
+    // The first save compiles the action in dev.
+    await expect(dialog).toBeHidden({ timeout: 30_000 });
   }
   const submit = mode === "BOOKED" ? pc("create") : pc("saveDraft");
   await page.getByRole("button", { name: submit }).click();
-  await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=/);
+  await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=/, { timeout: 30_000 });
   return new URL(page.url()).pathname;
 }

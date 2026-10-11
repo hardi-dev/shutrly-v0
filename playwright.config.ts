@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 
 import { defineConfig, devices } from "@playwright/test";
 import { parse } from "dotenv";
@@ -27,6 +28,15 @@ function loadSmokeFolderUrl(): void {
 
 loadSmokeFolderUrl();
 
+/**
+ * IPv4-only DNS for the server Playwright starts (scripts/dev/ipv4-only.cjs): without a working
+ * IPv6 route, Node sometimes reaches Neon over IPv6, the websocket times out and pages fail at
+ * random. Local tooling only.
+ */
+const IPV4_ONLY = {
+  NODE_OPTIONS: `--require ${path.resolve("scripts/dev/ipv4-only.cjs")}`,
+};
+
 export default defineConfig({
   testDir: "tests/e2e",
   // The real-Drive smoke test needs a public folder (F-09 Slice 8).
@@ -44,7 +54,13 @@ export default defineConfig({
         url: baseURL,
         reuseExistingServer: false,
         timeout: 900_000,
-        env: devVars(),
+        env: { ...devVars(), ...IPV4_ONLY },
       }
-    : { command: "pnpm dev", url: baseURL, reuseExistingServer: true, timeout: 120_000 },
+    : {
+        command: "pnpm dev",
+        url: baseURL,
+        reuseExistingServer: true,
+        timeout: 120_000,
+        env: IPV4_ONLY,
+      },
 });

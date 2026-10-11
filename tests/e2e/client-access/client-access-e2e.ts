@@ -37,7 +37,7 @@ export async function publishedGallery(page: Page) {
   const create = page.getByRole("dialog", { name: galleryCopy("createDialogTitle") });
   await create.getByRole("textbox", { name: galleryCopy("passwordLabel") }).fill(GALLERY_PASSWORD);
   await create.getByRole("button", { name: galleryCopy("create") }).click();
-  await expect(page).toHaveURL(`${projectPath}/gallery`);
+  await expect(page).toHaveURL(`${projectPath}/gallery`, { timeout: 30_000 });
   await page
     .getByRole("button", { name: galleryCopy("addFolder") })
     .first()

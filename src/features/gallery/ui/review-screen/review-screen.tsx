@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
@@ -13,24 +14,25 @@ import { PickRow } from "../pick-row/pick-row";
 import { ReviewConfirmDialog } from "../review-confirm-dialog/review-confirm-dialog";
 import { useReviewChanges } from "../use-review-screen/use-review-changes";
 import { useReviewSubmit } from "../use-review-screen/use-review-submit";
-import { REVIEW_COPY as COPY } from "./review-screen.copy";
+import { REVIEW_SCREEN_COPY_NAMESPACE, REVIEW_SHARED_NAMESPACE } from "./review-screen.copy";
 import type {
   ReviewFooterProps,
   ReviewListProps,
   ReviewOverlaysProps,
   ReviewScreenProps,
 } from "./review-screen.types";
-import { cardMeta, reviewHeader, sendLabelOf, unitOf } from "./review-text";
+import { cardMeta, reviewHeader, sendLabelOf } from "./review-text";
 
 function ReviewList({ changes, isEditable, onNote }: Readonly<ReviewListProps>) {
+  const t = useTranslations(REVIEW_SCREEN_COPY_NAMESPACE);
   const { state } = changes;
   if (state.picks.length === 0) {
     return (
       <EmptyState
         icon="images"
         placement="in-card"
-        title={COPY.emptyTitle}
-        body={COPY.emptyBody(state.group.name)}
+        title={t("emptyTitle")}
+        body={t("emptyBody", { name: state.group.name })}
       />
     );
   }
@@ -52,6 +54,8 @@ function ReviewList({ changes, isEditable, onNote }: Readonly<ReviewListProps>) 
 }
 
 function ReviewFooter({ changes, submit, pickHref }: Readonly<ReviewFooterProps>) {
+  const t = useTranslations(REVIEW_SCREEN_COPY_NAMESPACE);
+  const shared = useTranslations(REVIEW_SHARED_NAMESPACE);
   const { group, picks } = changes.state;
   return (
     <div className="flex flex-col-reverse gap-(--space-3) md:flex-row md:justify-end">
@@ -62,7 +66,7 @@ function ReviewFooter({ changes, submit, pickHref }: Readonly<ReviewFooterProps>
         iconLeading="plus"
         className="max-md:w-full"
       >
-        {COPY.addMore}
+        {t("addMore")}
       </Button>
       <Button
         size="lg"
@@ -72,7 +76,7 @@ function ReviewFooter({ changes, submit, pickHref }: Readonly<ReviewFooterProps>
         className="max-md:w-full"
         onPress={submit.send}
       >
-        {sendLabelOf(group, picks.length, changes.usage, submit.isSubmitting)}
+        {sendLabelOf(t, shared, group, picks.length, changes.usage, submit.isSubmitting)}
       </Button>
     </div>
   );
@@ -102,6 +106,8 @@ function ReviewOverlays({
   noteFor,
   onCloseNote,
 }: Readonly<ReviewOverlaysProps>) {
+  const t = useTranslations(REVIEW_SCREEN_COPY_NAMESPACE);
+  const shared = useTranslations(REVIEW_SHARED_NAMESPACE);
   const { group, picks } = changes.state;
   const notePick = picks.find((pick) => pick.photo.id === noteFor);
   const reload = () => {
@@ -114,7 +120,7 @@ function ReviewOverlays({
           group={group}
           usage={changes.usage}
           remaining={submit.confirmRemaining}
-          sendLabel={COPY.send(changes.usage, unitOf(group))}
+          sendLabel={t("send", { usage: changes.usage, unit: group.unit ?? shared("defaultUnit") })}
           pickHref={pickHref}
           isPending={submit.isSubmitting}
           onConfirm={submit.confirm}
@@ -136,6 +142,8 @@ function ReviewOverlays({
 
 /** Tinjau for an `OPEN` group — the picks with the print stepper, remove and note actions, *Tambah foto lagi* and *Kirim n foto* with the below-limit notice — or the read-only *Lihat pilihan* once it is sent or locked (tinjau and lihatpilihan exports, A-5, A-29, A-32, AC-SEL-008/009/018/021). @param props - gate names, token, the review and the actions @returns the page */
 export function ReviewScreen({ gate, token, view, actions }: Readonly<ReviewScreenProps>) {
+  const t = useTranslations(REVIEW_SCREEN_COPY_NAMESPACE);
+  const shared = useTranslations(REVIEW_SHARED_NAMESPACE);
   const changes = useReviewChanges({ view, token, actions });
   const submit = useReviewSubmit(actions, changes, token);
   const [noteFor, setNoteFor] = useState<string | null>(null);
@@ -146,11 +154,15 @@ export function ReviewScreen({ gate, token, view, actions }: Readonly<ReviewScre
     setNoteFor(null);
   };
   return (
-    <ClientShell gate={gate} width="narrow" header={reviewHeader(group, token, isEditable)}>
+    <ClientShell
+      gate={gate}
+      width="narrow"
+      header={reviewHeader(t, shared, group, token, isEditable)}
+    >
       <ReviewSummary changes={changes} isEditable={isEditable} />
       <SectionCard
-        title={COPY.cardTitle}
-        description={cardMeta(group, picks.length, changes.usage, isEditable)}
+        title={t("cardTitle")}
+        description={cardMeta(t, shared, group, picks.length, changes.usage, isEditable)}
         content="flush"
       >
         <ReviewList changes={changes} isEditable={isEditable} onNote={setNoteFor} />

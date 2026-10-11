@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { type SyntheticEvent, useState } from "react";
 
 import { PICK_NOTE_MAX } from "@/features/gallery/domain/client-access-limits/client-access-limits";
@@ -9,12 +10,18 @@ import { Textarea } from "@/ui/primitives/textarea/textarea";
 
 import { GalleryDialogShell } from "../gallery-dialog-shell/gallery-dialog-shell";
 import { PhotoThumb } from "../photo-thumb/photo-thumb";
-import { PICK_NOTE_COPY as COPY } from "./pick-note-sheet.copy";
-import type { NotePhotoProps, PickNoteSheetProps, SaveOutcome } from "./pick-note-sheet.types";
+import { PICK_NOTE_COPY_NAMESPACE } from "./pick-note-sheet.copy";
+import type {
+  NotePhotoProps,
+  PickNoteSheetProps,
+  PickNoteTranslate,
+  SaveOutcome,
+} from "./pick-note-sheet.types";
 
 const FORM_ID = "pick-note-form";
 
 function NotePhoto({ photo, groupName }: Readonly<NotePhotoProps>) {
+  const t = useTranslations(PICK_NOTE_COPY_NAMESPACE);
   return (
     <div className="flex items-center gap-(--space-3)">
       <PhotoThumb image={photo.thumb} size="md" />
@@ -23,23 +30,24 @@ function NotePhoto({ photo, groupName }: Readonly<NotePhotoProps>) {
           {photo.fileName}
         </span>
         <span className="truncate text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
-          {COPY.pickedFor(groupName)}
+          {t("pickedFor", { groupName })}
         </span>
       </span>
     </div>
   );
 }
 
-function errorFor(outcome: SaveOutcome): string | null {
-  if (outcome === "FAILED") return COPY.failed;
+function errorFor(t: PickNoteTranslate, outcome: SaveOutcome): string | null {
+  if (outcome === "FAILED") return t("failed");
   if (outcome === "SIGNED_OUT" || outcome.ok) return null;
-  if (outcome.code === "TOO_LONG") return COPY.tooLong(PICK_NOTE_MAX);
-  if (outcome.code === "RATE_LIMITED") return COPY.rateLimited;
-  return outcome.code === "INVALID" ? COPY.failed : null;
+  if (outcome.code === "TOO_LONG") return t("tooLong", { max: PICK_NOTE_MAX });
+  if (outcome.code === "RATE_LIMITED") return t("rateLimited");
+  return outcome.code === "INVALID" ? t("failed") : null;
 }
 
 function usePickNoteForm(props: Readonly<PickNoteSheetProps>) {
   const { target, saveNote, onClose, onSaved, onStale } = props;
+  const t = useTranslations(PICK_NOTE_COPY_NAMESPACE);
   const router = useRouter();
   const [text, setText] = useState(target.note ?? "");
   const [error, setError] = useState<string | null>(null);
@@ -57,10 +65,10 @@ function usePickNoteForm(props: Readonly<PickNoteSheetProps>) {
     else if (outcome !== "FAILED" && outcome.ok) {
       onSaved(target.photo.id, outcome.note);
       onClose();
-    } else if (errorFor(outcome) === null) {
+    } else if (errorFor(t, outcome) === null) {
       onClose();
       onStale();
-    } else setError(errorFor(outcome));
+    } else setError(errorFor(t, outcome));
   };
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -70,13 +78,14 @@ function usePickNoteForm(props: Readonly<PickNoteSheetProps>) {
     setText(value);
     setError(null);
   };
-  const shownError = isTooLong ? COPY.tooLong(PICK_NOTE_MAX) : (error ?? undefined);
+  const shownError = isTooLong ? t("tooLong", { max: PICK_NOTE_MAX }) : (error ?? undefined);
   return { text, count, isTooLong, isPending, shownError, handleSubmit, handleChange };
 }
 
 /** Writes, changes or clears the note on one pick: Modal MD on desktop, Bottom Sheet Form on phones, a 500-character counter, *Batal* / *Simpan catatan* (pilih-tulis-catatan, A-32, AC-SEL-021). @param props - the pick, the save action and callbacks @returns the sheet */
 export function PickNoteSheet(props: Readonly<PickNoteSheetProps>) {
   const { target, onClose } = props;
+  const t = useTranslations(PICK_NOTE_COPY_NAMESPACE);
   const form = usePickNoteForm(props);
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) onClose();
@@ -90,15 +99,15 @@ export function PickNoteSheet(props: Readonly<PickNoteSheetProps>) {
       isDisabled={form.isTooLong}
       className="max-md:w-full"
     >
-      {COPY.save}
+      {t("save")}
     </Button>
   );
   return (
     <GalleryDialogShell
       isOpen
       onOpenChange={handleOpenChange}
-      title={COPY.title(target.photo.fileName)}
-      description={COPY.description}
+      title={t("title", { fileName: target.photo.fileName })}
+      description={t("description")}
       size="md"
       isPending={form.isPending}
       renderPrimary={renderPrimary}
@@ -111,11 +120,11 @@ export function PickNoteSheet(props: Readonly<PickNoteSheetProps>) {
       >
         <NotePhoto photo={target.photo} groupName={target.groupName} />
         <Textarea
-          aria-label={COPY.label}
+          aria-label={t("label")}
           value={form.text}
           onChange={form.handleChange}
           rows={3}
-          helperText={COPY.helper(form.count, PICK_NOTE_MAX)}
+          helperText={t("helper", { count: form.count, max: PICK_NOTE_MAX })}
           errorMessage={form.shownError}
         />
       </form>

@@ -8,16 +8,17 @@ import { Button } from "@/ui/primitives/button/button";
 import { failedBody } from "../delivery-screen/delivery-screen-text";
 import { DownloadProgressCard } from "../delivery-screen/delivery-status";
 import { GalleryDialogShell } from "../gallery-dialog-shell/gallery-dialog-shell";
-import { CLIENT_BROWSE_COPY as COPY } from "./client-browse-screen.copy";
+import { CLIENT_BROWSE_COPY_NAMESPACE } from "./client-browse-screen.copy";
 import type { PhotosPartProps } from "./photos-actions.types";
 import { PHOTOS_STATUS_COPY_NAMESPACE } from "./photos-status.copy";
 
 /** The running download, or the failure alert with *Coba lagi* (F-20, as *Hasil akhir* AC-DEL-005). */
 export function PhotosDownloadStatus({ photos }: Readonly<PhotosPartProps>) {
   const t = useTranslations(PHOTOS_STATUS_COPY_NAMESPACE);
+  const browse = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   const { progress } = photos.download;
   if (progress.phase === "RUNNING") {
-    return <DownloadProgressCard download={photos.download} title={COPY.progressTitle} />;
+    return <DownloadProgressCard download={photos.download} title={browse("progressTitle")} />;
   }
   if (progress.phase !== "DONE" || photos.failedNames.length === 0) return null;
   return (
@@ -34,6 +35,7 @@ export function PhotosDownloadStatus({ photos }: Readonly<PhotosPartProps>) {
 /** *Unduh semua n foto?* before a download of every proof (F-20, as *Hasil akhir* A-33). */
 export function DownloadAllConfirm({ photos }: Readonly<PhotosPartProps>) {
   const t = useTranslations(PHOTOS_STATUS_COPY_NAMESPACE);
+  const browse = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) photos.closeConfirm();
   };
@@ -51,7 +53,7 @@ export function DownloadAllConfirm({ photos }: Readonly<PhotosPartProps>) {
     <GalleryDialogShell
       isOpen={photos.pendingAll !== null}
       onOpenChange={handleOpenChange}
-      title={COPY.confirmTitle(photos.pendingAll?.length ?? 0)}
+      title={browse("confirmTitle", { count: photos.pendingAll?.length ?? 0 })}
       description={t("confirmDescription")}
       size="md"
       renderPrimary={renderPrimary}

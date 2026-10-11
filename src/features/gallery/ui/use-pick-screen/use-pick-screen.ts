@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { PickPhotosPage } from "@/features/gallery/application/use-cases/browse-pick-photos/browse-pick-photos.types";
@@ -9,8 +10,8 @@ import type { PickedPhotoView } from "@/features/gallery/application/use-cases/g
 import type { SetPickResult } from "@/features/gallery/application/use-cases/set-pick/set-pick.types";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { PICK_COPY } from "../pick-screen/pick-screen.copy";
 import { selectionStateOf, usageOfState, withNote, withPick } from "./pick-selection-state";
+import { USE_PICK_NAMESPACE } from "./use-pick-screen.copy";
 import type {
   PickGridHandle,
   PickGridState,
@@ -59,24 +60,25 @@ export function usePickSelection({
   actions,
 }: UsePickSelectionInput): PickSelectionHandle {
   const router = useRouter();
+  const t = useTranslations(USE_PICK_NAMESPACE);
   const [state, setState] = useState(() => selectionStateOf(view));
   const groupId = view.group.id;
   const reload = async () => {
     const result = await actions.reload(groupId).catch(() => null);
-    if (result === null) showToast({ tone: "danger", title: PICK_COPY.failed });
+    if (result === null) showToast({ tone: "danger", title: t("failed") });
     else if (result.kind === "VIEW") setState(selectionStateOf(result.view));
     else if (result.kind === "NOT_OPEN") router.replace(`/g/${token}/picks/${groupId}/review`);
     else router.refresh();
   };
   const settle = (outcome: SendOutcome) => {
     if (outcome === "SIGNED_OUT") router.refresh();
-    else if (outcome === "FAILED") showToast({ tone: "danger", title: PICK_COPY.failed });
+    else if (outcome === "FAILED") showToast({ tone: "danger", title: t("failed") });
     else if (outcome.ok) return;
     else if (outcome.code === "RATE_LIMITED")
-      showToast({ tone: "warning", title: PICK_COPY.rateLimited });
+      showToast({ tone: "warning", title: t("rateLimited") });
     else {
       if (outcome.code === "PHOTO_NOT_SELECTABLE")
-        showToast({ tone: "danger", title: PICK_COPY.refused });
+        showToast({ tone: "danger", title: t("refused") });
       void reload();
     }
   };

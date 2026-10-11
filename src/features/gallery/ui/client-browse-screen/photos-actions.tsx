@@ -1,8 +1,8 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-import type { PickGroupView } from "@/features/gallery/application/use-cases/get-pick-view/get-pick-view.types";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Menu } from "@/ui/patterns/menu/menu";
@@ -11,8 +11,11 @@ import { MenuTrigger } from "@/ui/patterns/menu/menu-trigger";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { Button } from "@/ui/primitives/button/button";
 
-import { VIEWER_PICK_COPY } from "../viewer-pick-actions/viewer-pick-actions.copy";
-import { CLIENT_BROWSE_COPY as COPY } from "./client-browse-screen.copy";
+import {
+  BROWSE_SHARED_NAMESPACE,
+  BROWSE_VIEWER_PICK_NAMESPACE,
+  CLIENT_BROWSE_COPY_NAMESPACE,
+} from "./client-browse-screen.copy";
 import type {
   DownloadMenuProps,
   GroupPickItemProps,
@@ -28,6 +31,7 @@ const ICONS = { COUNT: "images", QUANTITY: "printer" } as const;
  * can still be picked for, *Pilih foto* as the main action; both open the same select mode. @param props -
  * the proof downloads state and the groups @returns the actions */
 export function PhotosHeaderActions({ photos, groups }: Readonly<PhotosGroupsProps>) {
+  const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const canPick = groups.some((group) => group.status === "OPEN");
   return (
@@ -40,7 +44,7 @@ export function PhotosHeaderActions({ photos, groups }: Readonly<PhotosGroupsPro
           className="max-md:w-full"
           onPress={photos.startSelecting}
         >
-          {COPY.pickPhotos}
+          {t("pickPhotos")}
         </Button>
       ) : null}
     </div>
@@ -49,11 +53,12 @@ export function PhotosHeaderActions({ photos, groups }: Readonly<PhotosGroupsPro
 
 /** *Unduh ▾*: *Unduh semua* and *Pilih beberapa* (F-20, as *Hasil akhir* A-33). */
 function PhotosDownloadMenu({ photos, isSecondary }: Readonly<DownloadMenuProps>) {
+  const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const isBusy = photos.download.progress.phase === "RUNNING" || photos.isListing;
   if (!isMobile) {
     return (
-      <MenuTrigger label={COPY.download}>
+      <MenuTrigger label={t("download")}>
         <Button
           variant={isSecondary ? "secondary" : "primary"}
           iconLeading="download"
@@ -61,11 +66,11 @@ function PhotosDownloadMenu({ photos, isSecondary }: Readonly<DownloadMenuProps>
           isPending={photos.isListing}
           isDisabled={isBusy}
         >
-          {COPY.download}
+          {t("download")}
         </Button>
-        <Menu aria-label={COPY.downloadMenu}>
-          <MenuItem label={COPY.downloadAll} icon="download" onSelect={photos.askDownloadAll} />
-          <MenuItem label={COPY.pickSeveral} icon="list-checks" onSelect={photos.startSelecting} />
+        <Menu aria-label={t("downloadMenu")}>
+          <MenuItem label={t("downloadAll")} icon="download" onSelect={photos.askDownloadAll} />
+          <MenuItem label={t("pickSeveral")} icon="list-checks" onSelect={photos.startSelecting} />
         </Menu>
       </MenuTrigger>
     );
@@ -74,6 +79,7 @@ function PhotosDownloadMenu({ photos, isSecondary }: Readonly<DownloadMenuProps>
 }
 
 function PhoneDownloadMenu({ photos, isBusy, isSecondary }: Readonly<PhoneDownloadMenuProps>) {
+  const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   const [isOpen, setIsOpen] = useState(false);
   const later = (next: () => void) => () => {
     setIsOpen(false);
@@ -93,16 +99,16 @@ function PhoneDownloadMenu({ photos, isBusy, isSecondary }: Readonly<PhoneDownlo
         isDisabled={isBusy}
         onPress={open}
       >
-        {COPY.download}
+        {t("download")}
       </Button>
-      <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen} title={COPY.download} variant="actions">
+      <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen} title={t("download")} variant="actions">
         <SheetItem
-          label={COPY.downloadAll}
+          label={t("downloadAll")}
           icon="download"
           onPress={later(photos.askDownloadAll)}
         />
         <SheetItem
-          label={COPY.pickSeveral}
+          label={t("pickSeveral")}
           icon="list-checks"
           onPress={later(photos.startSelecting)}
         />
@@ -111,18 +117,20 @@ function PhoneDownloadMenu({ photos, isBusy, isSecondary }: Readonly<PhoneDownlo
   );
 }
 
-function groupDescription(group: PickGroupView): string {
-  return VIEWER_PICK_COPY.usage(group.usage, group.limit, group.unit ?? "");
-}
-
 function GroupPickItem({ group, photos }: Readonly<GroupPickItemProps>) {
+  const viewer = useTranslations(BROWSE_VIEWER_PICK_NAMESPACE);
+  const shared = useTranslations(BROWSE_SHARED_NAMESPACE);
   const handleSelect = () => {
     photos.pickSelected(group.id, group.name);
   };
   return (
     <MenuItem
       label={group.name}
-      description={groupDescription(group)}
+      description={viewer("usage", {
+        usage: group.usage,
+        limit: group.limit,
+        unit: group.unit ?? shared("defaultUnit"),
+      })}
       icon={ICONS[group.mode]}
       isDisabled={group.status !== "OPEN"}
       onSelect={handleSelect}
@@ -132,18 +140,19 @@ function GroupPickItem({ group, photos }: Readonly<GroupPickItemProps>) {
 
 /** *Pilih untuk…* on the selection: one entry per group with its usage; closed groups disabled (F-20). */
 function BulkPickMenu({ photos, groups }: Readonly<PhotosGroupsProps>) {
+  const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   const isDisabled = photos.selectedCount === 0 || photos.isPicking;
   return (
-    <MenuTrigger label={COPY.pickFor}>
+    <MenuTrigger label={t("pickFor")}>
       <Button
         iconLeading="list-checks"
         className="max-md:flex-1"
         isDisabled={isDisabled}
         isPending={photos.isPicking}
       >
-        {COPY.pickFor}
+        {t("pickFor")}
       </Button>
-      <Menu aria-label={COPY.pickFor}>
+      <Menu aria-label={t("pickFor")}>
         {groups.map((group) => (
           <GroupPickItem key={group.id} group={group} photos={photos} />
         ))}
@@ -154,11 +163,12 @@ function BulkPickMenu({ photos, groups }: Readonly<PhotosGroupsProps>) {
 
 /** Select mode: *Batal*, *Unduh n foto* and, with groups, *Masukkan ke…* as the main action (F-20, Owner 2026-10-07, option C 2026-10-08). */
 export function SelectingActions({ photos, groups }: Readonly<PhotosGroupsProps>) {
+  const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   const count = photos.selectedCount;
   return (
     <div className="flex flex-wrap gap-(--space-2) max-md:w-full">
       <Button variant="secondary" className="max-md:flex-1" onPress={photos.stopSelecting}>
-        {COPY.cancel}
+        {t("cancel")}
       </Button>
       <Button
         iconLeading="download"
@@ -167,7 +177,7 @@ export function SelectingActions({ photos, groups }: Readonly<PhotosGroupsProps>
         isDisabled={count === 0}
         onPress={photos.downloadSelected}
       >
-        {COPY.downloadSelected(count)}
+        {t("downloadSelected", { count })}
       </Button>
       {groups.length > 0 ? <BulkPickMenu photos={photos} groups={groups} /> : null}
     </div>

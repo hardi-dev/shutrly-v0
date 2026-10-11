@@ -130,3 +130,5 @@ export const DELIVERY_SCREEN_COPY = {
     },
   },
 } as const;
+
+export { CLIENT_COPY_NAMESPACE as DELIVERY_SHARED_NAMESPACE } from "../client-copy/client-copy.copy";

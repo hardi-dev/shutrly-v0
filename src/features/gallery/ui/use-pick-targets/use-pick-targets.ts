@@ -1,23 +1,26 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { PickTargets } from "@/features/gallery/application/use-cases/list-pick-targets/list-pick-targets.types";
 import type { SetPickResult } from "@/features/gallery/application/use-cases/set-pick/set-pick.types";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { VIEWER_PICK_COPY as COPY } from "../viewer-pick-actions/viewer-pick-actions.copy";
 import { targetsOfPhoto, withStoredPick, withTargetNote } from "./pick-targets-state";
+import { USE_TARGETS_NAMESPACE } from "./use-pick-targets.copy";
 import type { PickTargetsHandle, ViewerPickActions } from "./use-pick-targets.types";
 
-function refusalToast(result: SetPickResult) {
+type TargetsTranslate = ReturnType<typeof useTranslations>;
+
+function refusalToast(t: TargetsTranslate, result: SetPickResult) {
   if (result.ok) return;
-  if (result.code === "LIMIT_REACHED") showToast({ tone: "warning", title: COPY.limitReached });
+  if (result.code === "LIMIT_REACHED") showToast({ tone: "warning", title: t("limitReached") });
   else if (result.code === "GROUP_NOT_OPEN")
-    showToast({ tone: "warning", title: COPY.groupClosed });
-  else if (result.code === "RATE_LIMITED") showToast({ tone: "warning", title: COPY.rateLimited });
-  else showToast({ tone: "danger", title: COPY.refused });
+    showToast({ tone: "warning", title: t("groupClosed") });
+  else if (result.code === "RATE_LIMITED") showToast({ tone: "warning", title: t("rateLimited") });
+  else showToast({ tone: "danger", title: t("refused") });
 }
 
 /**
@@ -33,10 +36,11 @@ export function usePickTargets(
   actions: ViewerPickActions,
 ): PickTargetsHandle {
   const router = useRouter();
+  const t = useTranslations(USE_TARGETS_NAMESPACE);
   const [targets, setTargets] = useState(initial);
   const reload = async () => {
     const next = await actions.reload().catch(() => null);
-    if (next === null) showToast({ tone: "danger", title: COPY.failed });
+    if (next === null) showToast({ tone: "danger", title: t("failed") });
     else if ("kind" in next) router.refresh();
     else setTargets(next);
   };
@@ -46,14 +50,14 @@ export function usePickTargets(
     );
     const quantity = isPicked ? 0 : 1;
     const result = await actions.setPick({ groupId, photoId, quantity }).catch(() => null);
-    if (result === null) showToast({ tone: "danger", title: COPY.failed });
+    if (result === null) showToast({ tone: "danger", title: t("failed") });
     else if ("kind" in result) router.refresh();
     else if (result.ok) {
       setTargets((current) =>
         withStoredPick(current, { groupId, photoId, quantity, usage: result.usage }),
       );
     } else {
-      refusalToast(result);
+      refusalToast(t, result);
       if (result.code !== "RATE_LIMITED") await reload();
     }
   };

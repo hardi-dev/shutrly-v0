@@ -1,15 +1,26 @@
+import { useTranslations } from "next-intl";
+
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 
-import { CLIENT_COPY } from "../client-copy/client-copy.copy";
 import { ClientShell } from "../client-shell/client-shell";
 import { GroupSummary } from "../group-summary/group-summary";
-import { CLIENT_HOME_COPY as COPY } from "./client-home-screen.copy";
+import {
+  CLIENT_HOME_COPY_NAMESPACE,
+  CLIENT_HOME_SHARED_NAMESPACE,
+} from "./client-home-screen.copy";
 import type { ClientHomeScreenProps, GroupCardProps } from "./client-home-screen.types";
 import { clientHomeSubtitle } from "./client-home-subtitle";
 
+const ACTION_KEYS = {
+  START: "actionStart",
+  CONTINUE: "actionContinue",
+  VIEW: "actionView",
+} as const;
+
 function GroupCard({ group, token, isLast }: Readonly<GroupCardProps>) {
+  const t = useTranslations(CLIENT_HOME_COPY_NAMESPACE);
   const href =
     group.action === "VIEW"
       ? `/g/${token}/picks/${group.id}/review`
@@ -17,7 +28,7 @@ function GroupCard({ group, token, isLast }: Readonly<GroupCardProps>) {
   const action =
     group.action === "NONE" ? null : (
       <Button href={href} variant={group.isPrimary ? "primary" : "secondary"}>
-        {COPY.actions[group.action]}
+        {t(ACTION_KEYS[group.action])}
       </Button>
     );
   return (
@@ -28,13 +39,14 @@ function GroupCard({ group, token, isLast }: Readonly<GroupCardProps>) {
 }
 
 function FinalReadyCard({ home, token }: Readonly<Omit<ClientHomeScreenProps, "gate">>) {
+  const t = useTranslations(CLIENT_HOME_COPY_NAMESPACE);
   return (
     <SectionCard
-      title={COPY.finalReadyTitle}
-      description={COPY.finalReadyBody(home.editedCount, home.printCount)}
+      title={t("finalReadyTitle")}
+      description={t("finalReadyBody", { edited: home.editedCount, print: home.printCount })}
       actions={
         <Button href={`/g/${token}/final`} iconLeading="download">
-          {COPY.finalReadyAction}
+          {t("finalReadyAction")}
         </Button>
       }
       content="bleed"
@@ -45,21 +57,23 @@ function FinalReadyCard({ home, token }: Readonly<Omit<ClientHomeScreenProps, "g
 }
 
 function PhotosCard({ home, token }: Readonly<Omit<ClientHomeScreenProps, "gate">>) {
+  const t = useTranslations(CLIENT_HOME_COPY_NAMESPACE);
+  const shared = useTranslations(CLIENT_HOME_SHARED_NAMESPACE);
   const delivered = home.finalDeliveryPublished;
   const meta =
     home.groups.length > 0
-      ? COPY.allPhotosMeta(home.proofCount)
-      : COPY.allPhotosMetaNoGroups(home.proofCount);
+      ? t("allPhotosMeta", { count: home.proofCount })
+      : t("allPhotosMetaNoGroups", { count: home.proofCount });
   return (
     <SectionCard
-      title={COPY.photosTitle}
-      description={delivered ? COPY.photosDescriptionDelivered : COPY.photosDescription}
+      title={t("photosTitle")}
+      description={delivered ? t("photosDescriptionDelivered") : t("photosDescription")}
       content="flush"
     >
       <ul>
         <ListCardItem
           icon="images"
-          title={CLIENT_COPY.allPhotos}
+          title={shared("allPhotos")}
           meta={meta}
           href={`/g/${token}/photos`}
           isLast={delivered}
@@ -67,8 +81,8 @@ function PhotosCard({ home, token }: Readonly<Omit<ClientHomeScreenProps, "gate"
         {delivered ? null : (
           <ListCardItem
             icon="package-check"
-            title={CLIENT_COPY.finalDelivery}
-            meta={COPY.finalPendingMeta}
+            title={shared("finalDelivery")}
+            meta={t("finalPendingMeta")}
             isLast
           />
         )}
@@ -79,20 +93,22 @@ function PhotosCard({ home, token }: Readonly<Omit<ClientHomeScreenProps, "gate"
 
 /** Beranda: *Hasil akhir siap* once delivered, *Foto Anda* and one card per group (beranda jwDqh / jXn9U / UIXl3, A-24, AC-SEL-001). @param props - gate names, the Beranda view and the token for links @returns the page */
 export function ClientHomeScreen({ gate, home, token }: Readonly<ClientHomeScreenProps>) {
+  const t = useTranslations(CLIENT_HOME_COPY_NAMESPACE);
+  const shared = useTranslations(CLIENT_HOME_SHARED_NAMESPACE);
   return (
     <ClientShell
       gate={gate}
       width="narrow"
       header={{
-        title: COPY.greeting(gate.clientFirstName),
-        subtitle: clientHomeSubtitle(home),
-        breadcrumbs: [{ label: CLIENT_COPY.home }],
+        title: t("greeting", { name: gate.clientFirstName }),
+        subtitle: clientHomeSubtitle(t, home),
+        breadcrumbs: [{ label: shared("home") }],
       }}
     >
       {home.finalDeliveryPublished ? <FinalReadyCard home={home} token={token} /> : null}
       <PhotosCard home={home} token={token} />
       {home.groups.length > 0 ? (
-        <SectionCard title={COPY.pickTitle} description={COPY.pickDescription} content="flush">
+        <SectionCard title={t("pickTitle")} description={t("pickDescription")} content="flush">
           <ul>
             {home.groups.map((group, index) => (
               <GroupCard

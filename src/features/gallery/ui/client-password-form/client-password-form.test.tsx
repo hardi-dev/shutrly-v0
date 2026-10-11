@@ -18,7 +18,7 @@ function renderForm(result: Awaited<ReturnType<ClientPasswordFormProps["action"]
 
 async function submit(password: string) {
   const user = userEvent.setup();
-  if (password) await user.type(screen.getByLabelText("Password"), password);
+  if (password) await user.type(screen.getByLabelText("Kata sandi galeri"), password);
   await user.click(screen.getByRole("button", { name: "Buka galeri" }));
 }
 
@@ -31,18 +31,18 @@ describe("ClientPasswordForm (D-5)", () => {
     });
   });
 
-  it("AC-ACC-002 shows Password salah", async () => {
+  it("AC-ACC-002 shows the incorrect password message", async () => {
     renderForm({ kind: "WRONG_PASSWORD" });
     await submit("mawar-0000");
-    expect(await screen.findByText("Password salah. Periksa lagi, lalu coba lagi.")).toBeVisible();
+    expect(await screen.findByText("Kata sandinya salah. Cek lalu coba lagi.")).toBeVisible();
   });
 
   it("AC-ACC-003 shows the wait time and locks the form", async () => {
     renderForm({ kind: "TOO_MANY_ATTEMPTS", minutes: 12 });
     await submit("mawar-0000");
-    expect(await screen.findByText("Terlalu banyak percobaan")).toBeVisible();
+    expect(await screen.findByText("Terlalu banyak percobaan. Coba lagi nanti.")).toBeVisible();
     expect(screen.getByText("Coba lagi dalam 12 menit.")).toBeVisible();
-    expect(screen.getByLabelText("Password")).toBeDisabled();
+    expect(screen.getByLabelText("Kata sandi galeri")).toBeDisabled();
     expect(screen.getByRole("button", { name: "Buka galeri" })).toBeDisabled();
   });
 

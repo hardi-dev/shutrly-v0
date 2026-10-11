@@ -1,3 +1,5 @@
+import type { useTranslations } from "next-intl";
+
 import type { ClientPhotoView } from "@/features/gallery/application/use-cases/client-views/client-views.types";
 
 import type { PhotoTarget, PickTargetsHandle } from "../use-pick-targets/use-pick-targets.types";
@@ -21,3 +23,6 @@ export interface NoteButtonProps {
   readonly fileName: string;
   readonly onNote: (target: PhotoTarget) => void;
 }
+
+/** The viewer pick translate function, passed into helpers that run outside a component. */
+export type ViewerPickTranslate = ReturnType<typeof useTranslations>;

@@ -3,17 +3,17 @@ import { copyTranslator } from "@tests/support/copy/copy-messages";
 
 import { ADD_ON_COPY } from "@/features/booking/ui/add-on-copy/add-on.copy";
 import { PROJECT_COPY_NAMESPACE } from "@/features/booking/ui/project-copy/project-copy.copy";
-import { CLIENT_COPY } from "@/features/gallery/ui/client-copy/client-copy.copy";
-import { CLIENT_HOME_COPY } from "@/features/gallery/ui/client-home-screen/client-home-screen.copy";
-import { CLIENT_PASSWORD_FORM_COPY } from "@/features/gallery/ui/client-password-form/client-password-form.copy";
+import { CLIENT_COPY_NAMESPACE } from "@/features/gallery/ui/client-copy/client-copy.copy";
+import { CLIENT_HOME_COPY_NAMESPACE } from "@/features/gallery/ui/client-home-screen/client-home-screen.copy";
+import { CLIENT_PASSWORD_FORM_COPY_NAMESPACE } from "@/features/gallery/ui/client-password-form/client-password-form.copy";
 import { DELIVERY_COPY_NAMESPACE } from "@/features/gallery/ui/delivery-copy/delivery.copy";
 import { DELIVERY_SCREEN_COPY_NAMESPACE } from "@/features/gallery/ui/delivery-screen/delivery-screen.copy";
 import {
   GALLERY_COPY_NAMESPACE,
   GALLERY_SOURCE_CHIP_MESSAGE_KEY,
 } from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
-import { PICK_NOTE_COPY } from "@/features/gallery/ui/pick-note-sheet/pick-note-sheet.copy";
-import { PICK_COPY } from "@/features/gallery/ui/pick-screen/pick-screen.copy";
+import { PICK_NOTE_COPY_NAMESPACE } from "@/features/gallery/ui/pick-note-sheet/pick-note-sheet.copy";
+import { PICK_COPY_NAMESPACE } from "@/features/gallery/ui/pick-screen/pick-screen.copy";
 import { SELECTION_OWNER_COPY_NAMESPACE } from "@/features/gallery/ui/selection-owner-text/selection-owner.copy";
 
 import {
@@ -25,6 +25,11 @@ import {
 import { clientToken, GALLERY_PASSWORD } from "./client-access-e2e";
 
 const galleryCopy = copyTranslator(GALLERY_COPY_NAMESPACE, "id");
+const clientCopy = copyTranslator(CLIENT_COPY_NAMESPACE, "id");
+const homeCopy = copyTranslator(CLIENT_HOME_COPY_NAMESPACE, "id");
+const passwordCopy = copyTranslator(CLIENT_PASSWORD_FORM_COPY_NAMESPACE, "id");
+const pickCopy = copyTranslator(PICK_COPY_NAMESPACE, "id");
+const pickNoteCopy = copyTranslator(PICK_NOTE_COPY_NAMESPACE, "id");
 const deliveryCopy = copyTranslator(DELIVERY_COPY_NAMESPACE, "id");
 const selectionCopy = copyTranslator(SELECTION_OWNER_COPY_NAMESPACE, "id");
 const deliveryScreenCopy = copyTranslator(DELIVERY_SCREEN_COPY_NAMESPACE, "id");
@@ -108,7 +113,7 @@ async function signIn(browser: Browser, clientPath: string, viewport?: typeof PH
     await expect(field).toBeVisible({ timeout: 2_000 });
   }).toPass({ timeout: 30_000 });
   await field.fill(GALLERY_PASSWORD);
-  await client.getByRole("button", { name: CLIENT_PASSWORD_FORM_COPY.submit }).click();
+  await client.getByRole("button", { name: passwordCopy("submit") }).click();
   await expect(client).toHaveURL(clientPath);
   return { context, client };
 }
@@ -121,7 +126,10 @@ async function pick(client: Page, fileName: string): Promise<void> {
 
 /** Tinjau, then *Kirim* and the below-limit confirm; the group stays open for the places left (Owner 2026-10-07). */
 async function send(client: Page): Promise<void> {
-  await client.getByRole("link", { name: PICK_COPY.review }).first().click();
+  await client
+    .getByRole("link", { name: pickCopy("review") })
+    .first()
+    .click();
   await expectGalleryA11y(client);
   await client
     .getByRole("button", { name: /^Kirim/ })
@@ -131,7 +139,7 @@ async function send(client: Page): Promise<void> {
   const confirm = client.getByRole("dialog").filter({ visible: true });
   await confirm.getByRole("button", { name: /^Kirim/ }).click();
   await expect(client).toHaveURL(/\/g\/[^/]+$/);
-  await expect(visibleText(client, CLIENT_COPY.groupStatus.OPEN)).toBeVisible();
+  await expect(visibleText(client, clientCopy("groupStatusOpen"))).toBeVisible();
 }
 
 /** Clicks a trigger until its dialog shows (a click before hydration only focuses the button), then confirms. */
@@ -162,13 +170,20 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
   try {
     // J-04: Beranda, Pilih with a note, Tinjau, Kirim; the Owner locks later.
     await expectGalleryA11y(client);
-    await client.getByRole("link", { name: CLIENT_HOME_COPY.actions.START }).first().click();
+    await client
+      .getByRole("link", { name: homeCopy("actionStart") })
+      .first()
+      .click();
     await expectGalleryA11y(client);
     await pick(client, "IMG_001.jpg");
-    await client.getByRole("button", { name: PICK_COPY.noteAdd("IMG_001.jpg") }).click();
+    await client
+      .getByRole("button", { name: pickCopy("noteAdd", { fileName: "IMG_001.jpg" }) })
+      .click();
     const note = client.getByRole("dialog").filter({ visible: true });
-    await note.getByRole("textbox", { name: PICK_NOTE_COPY.label }).fill("Tolong cerahkan sedikit");
-    await note.getByRole("button", { name: PICK_NOTE_COPY.save }).click();
+    await note
+      .getByRole("textbox", { name: pickNoteCopy("label") })
+      .fill("Tolong cerahkan sedikit");
+    await note.getByRole("button", { name: pickNoteCopy("save") }).click();
     await expect(note).toBeHidden();
     await send(client);
 
@@ -197,7 +212,10 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
     await expect(visibleText(page, ADD_ON_COPY.messages.id.statusApproved)).toBeVisible();
     await client.goto(clientPath);
     await expect(visibleText(client, "1 dari 5 foto dipilih")).toBeVisible();
-    await client.getByRole("link", { name: CLIENT_HOME_COPY.actions.CONTINUE }).first().click();
+    await client
+      .getByRole("link", { name: homeCopy("actionContinue") })
+      .first()
+      .click();
     await pick(client, "IMG_002.jpg");
     await send(client);
 

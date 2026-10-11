@@ -6,7 +6,6 @@ import type { ClientPhotoView } from "@/features/gallery/application/use-cases/c
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { Button } from "@/ui/primitives/button/button";
 
-import { CLIENT_COPY } from "../client-copy/client-copy.copy";
 import { ClientPhotoViewer } from "../client-photo-viewer/client-photo-viewer";
 import { ClientShell } from "../client-shell/client-shell";
 import type { ClientPageHeader } from "../client-shell/client-shell.types";
@@ -15,7 +14,7 @@ import { useDeliveryScreen } from "../use-delivery-screen/use-delivery-screen";
 import type { DeliveryScreenState } from "../use-delivery-screen/use-delivery-screen.types";
 import { DeliveryDownloadMenu } from "./delivery-download-menu";
 import { DeliveryFilesCard } from "./delivery-files-card";
-import { DELIVERY_SCREEN_COPY_NAMESPACE } from "./delivery-screen.copy";
+import { DELIVERY_SCREEN_COPY_NAMESPACE, DELIVERY_SHARED_NAMESPACE } from "./delivery-screen.copy";
 import type { DeliveryScreenTranslate } from "./delivery-screen.types";
 import type { DeliveryPartProps, DeliveryScreenProps } from "./delivery-screen.types";
 import { viewerMeta } from "./delivery-screen-text";
@@ -57,12 +56,13 @@ function PhoneActions({ screen }: Readonly<DeliveryPartProps>) {
 
 function deliveryHeader(
   t: DeliveryScreenTranslate,
+  shared: DeliveryScreenTranslate,
   screen: DeliveryScreenState,
   token: string,
 ): ClientPageHeader {
   const home = `/g/${token}`;
-  const trail = [{ label: CLIENT_COPY.home, href: home }, { label: t("title") }];
-  const back = { href: home, label: CLIENT_COPY.home };
+  const trail = [{ label: shared("home"), href: home }, { label: t("title") }];
+  const back = { href: home, label: shared("home") };
   if (screen.isSelecting) {
     const title = t("selectedTitle", { count: screen.selectedIds.size });
     return { title, breadcrumbs: trail, back, action: <SelectingActions screen={screen} /> };
@@ -142,10 +142,11 @@ function DeliveryViewer({ screen }: Readonly<DeliveryPartProps>) {
 /** The client's *Hasil akhir*: finished files by kind with downloads of one, several or all, progress, cancel, failures with *Coba lagi*, and the preview with *Unduh foto* (klien-8 exports, BR-DEL-001…004, A-26, A-33, AC-DEL-003…006). @param props - gate names, token and the files @returns the page */
 export function DeliveryScreen({ gate, token, files }: Readonly<DeliveryScreenProps>) {
   const t = useTranslations(DELIVERY_SCREEN_COPY_NAMESPACE);
+  const shared = useTranslations(DELIVERY_SHARED_NAMESPACE);
   const screen = useDeliveryScreen(files);
   const isMobile = useMobileViewport();
   return (
-    <ClientShell gate={gate} width="wide" header={deliveryHeader(t, screen, token)}>
+    <ClientShell gate={gate} width="wide" header={deliveryHeader(t, shared, screen, token)}>
       {isMobile ? <PhoneActions screen={screen} /> : null}
       {screen.isSelecting ? null : <DeliveryStatus screen={screen} />}
       <DeliveryFilesCard screen={screen} />

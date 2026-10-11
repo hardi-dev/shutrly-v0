@@ -25,13 +25,23 @@ import { CLIENT_COPY } from "@/features/booking/ui/client-copy/client-copy.copy"
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { TEAM_COPY } from "@/features/booking/ui/team-copy/team-copy.copy";
 import { TEMPLATE_COPY } from "@/features/communications/ui/template-copy/template-copy.copy";
+import { CLIENT_BROWSE_COPY } from "@/features/gallery/ui/client-browse-screen/client-browse-screen.copy";
+import { CLIENT_COPY as GALLERY_CLIENT_COPY } from "@/features/gallery/ui/client-copy/client-copy.copy";
+import { CLIENT_GATE_SCREEN_COPY } from "@/features/gallery/ui/client-gate-screen/client-gate-screen.copy";
+import { CLIENT_HOME_COPY } from "@/features/gallery/ui/client-home-screen/client-home-screen.copy";
+import { CLIENT_PASSWORD_FORM_COPY } from "@/features/gallery/ui/client-password-form/client-password-form.copy";
+import { CLIENT_UNAVAILABLE_COPY } from "@/features/gallery/ui/client-unavailable/client-unavailable.copy";
 import { DELIVERY_COPY } from "@/features/gallery/ui/delivery-copy/delivery.copy";
 import { DELIVERY_SCREEN_COPY } from "@/features/gallery/ui/delivery-screen/delivery-screen.copy";
 import { GALLERY_COPY } from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
 import { GALLERY_SUMMARY_COPY } from "@/features/gallery/ui/gallery-summary-text/gallery-summary.copy";
+import { PICK_NOTE_COPY } from "@/features/gallery/ui/pick-note-sheet/pick-note-sheet.copy";
+import { PICK_COPY } from "@/features/gallery/ui/pick-screen/pick-screen.copy";
 import { PROJECT_ACCESS_COPY } from "@/features/gallery/ui/project-access-card/project-access-card.copy";
+import { REVIEW_COPY } from "@/features/gallery/ui/review-screen/review-screen.copy";
 import { SELECTION_OWNER_COPY } from "@/features/gallery/ui/selection-owner-text/selection-owner.copy";
 import { SOURCE_COPY } from "@/features/gallery/ui/source-copy/source-copy.copy";
+import { VIEWER_PICK_COPY } from "@/features/gallery/ui/viewer-pick-actions/viewer-pick-actions.copy";
 import { LANDING_FOOTER_COPY } from "@/features/landing/ui/landing-footer/landing-footer.copy";
 import { LANDING_HEADER_COPY } from "@/features/landing/ui/landing-header/landing-header.copy";
 import { LANDING_PAGE_COPY } from "@/features/landing/ui/landing-page/landing-page.copy";
@@ -141,6 +151,16 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   PROJECT_COPY,
   TEMPLATE_COPY,
   SOURCE_COPY,
+  GALLERY_CLIENT_COPY,
+  CLIENT_HOME_COPY,
+  CLIENT_PASSWORD_FORM_COPY,
+  CLIENT_GATE_SCREEN_COPY,
+  CLIENT_UNAVAILABLE_COPY,
+  CLIENT_BROWSE_COPY,
+  PICK_COPY,
+  PICK_NOTE_COPY,
+  REVIEW_COPY,
+  VIEWER_PICK_COPY,
   PROJECT_ACCESS_COPY,
   GALLERY_COPY,
   DELIVERY_SCREEN_COPY,

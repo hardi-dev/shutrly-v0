@@ -1820,6 +1820,167 @@ The selected/limit/remaining wording follows BR-SEL-* and the implemented partia
 
 Do not add bulk-download, download-progress, file-retention or permanent-access promises until delivery behavior is designed.
 
+### 14.4 Proposed rows (I7.1, pending Owner review)
+
+These rows come from client gallery strings that have no deck row yet. The English is a faithful rendering of the current Indonesian and is marked `PROPOSED (pending Owner review)` in the copy file. The Owner accepts, edits or replaces each row here before it becomes deck copy.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Client gallery client-browse-screen: subtitle | Browse your photos. Open a photo to pick it for a package part. | Lihat-lihat foto Anda. Buka foto untuk memilihnya ke bagian paket. |
+| Client gallery client-browse-screen: subtitleNoGroups | See all your photos. | Lihat semua foto Anda. |
+| Client gallery client-browse-screen: cardTitle | Photos | Foto |
+| Client gallery client-browse-screen: cardMeta | {photos, plural, one {# photo} other {# photos}} | {photos, plural, other {# foto}} |
+| Client gallery client-browse-screen: cardMetaFolders | {photos, plural, one {# photo} other {# photos}} · {folders, plural, one {# folder} other {# folders}} | {photos, plural, other {# foto}} · {folders, plural, other {# folder}} |
+| Client gallery client-browse-screen: folderMeta | {name} · {photos, plural, one {# photo} other {# photos}} | {name} · {photos, plural, other {# foto}} |
+| Client gallery client-browse-screen: searchMeta | {count, plural, one {# result} other {# results}} | {count, plural, other {# hasil}} |
+| Client gallery client-browse-screen: searchPlaceholder | Search file names | Cari nama file |
+| Client gallery client-browse-screen: searchLabel | Search file names | Cari nama file |
+| Client gallery client-browse-screen: rootLabel | All folders | Semua folder |
+| Client gallery client-browse-screen: rootSummary | All folders · {folders, plural, one {# folder} other {# folders}}, {photos, plural, one {# photo} other {# photos}} | Semua folder · {folders, plural, other {# folder}}, {photos, plural, other {# foto}} |
+| Client gallery client-browse-screen: searchSummary | {count, plural, one {# photo matches} other {# photos match}} “{text}” | {count, plural, other {# foto cocok}} dengan “{text}” |
+| Client gallery client-browse-screen: folderCount | {count, plural, one {# photo} other {# photos}} | {count, plural, other {# foto}} |
+| Client gallery client-browse-screen: folderFallbackName | Folder | Folder |
+| Client gallery client-browse-screen: failedTitle | Photos couldn’t be loaded | Foto gagal dimuat |
+| Client gallery client-browse-screen: failedBody | Check your connection, then try again. | Periksa koneksi Anda, lalu coba lagi. |
+| Client gallery client-browse-screen: unavailableTitle | Photos can’t be shown yet | Foto belum bisa ditampilkan |
+| Client gallery client-browse-screen: unavailableBody | We couldn’t get the photos right now. | Kami tidak bisa mengambil foto saat ini. |
+| Client gallery client-browse-screen: emptyTitle | No photos yet | Belum ada foto |
+| Client gallery client-browse-screen: emptyBody | Your photographer hasn’t added photos here yet. | Fotografer belum menambahkan foto di sini. |
+| Client gallery client-browse-screen: searchEmptyTitle | No photos “{text}” | Tidak ada foto “{text}” |
+| Client gallery client-browse-screen: searchEmptyBody | Try another file name. | Coba nama file lain. |
+| Client gallery client-browse-screen: loadingMore | Loading more photos… | Memuat foto lainnya… |
+| Client gallery client-browse-screen: viewerMissing | This photo isn’t available anymore | Foto ini tidak tersedia lagi |
+| Client gallery client-browse-screen: downloadAll | Download all | Unduh semua |
+| Client gallery client-browse-screen: downloadMenu | Download options | Pilihan unduhan |
+| Client gallery client-browse-screen: pickSeveral | Pick several | Pilih beberapa |
+| Client gallery client-browse-screen: selectedTitle | {count, plural, one {# photo selected} other {# photos selected}} | {count, plural, other {# foto dipilih}} |
+| Client gallery client-browse-screen: downloadSelected | Download {count, plural, one {# photo} other {# photos}} | Unduh {count, plural, other {# foto}} |
+| Client gallery client-browse-screen: pickFor | Put in… | Masukkan ke… |
+| Client gallery client-browse-screen: pickPhotos | Pick photos | Pilih foto |
+| Client gallery client-browse-screen: pickedTitle | {count, plural, =0 {All photos are already in {group}} other {# photos picked for {group}}} | {count, plural, =0 {Semua foto sudah ada di {group}} other {# foto dipilih untuk {group}}} |
+| Client gallery client-browse-screen: pickLimitTitle | Picks exceed the limit | Pilihan melebihi batas |
+| Client gallery client-browse-screen: pickLimitBody | {remaining, plural, one {# photo is} other {# photos are}} left in this part. Remove some picked photos, then try again. | Sisa {remaining, plural, other {# foto}} di bagian ini. Kurangi foto yang dipilih, lalu coba lagi. |
+| Client gallery client-browse-screen: pickClosed | This part’s picks are already sent | Pilihan bagian ini sudah dikirim |
+| Client gallery client-browse-screen: pickRefused | Photos couldn’t be picked. Try again. | Foto belum bisa dipilih. Coba lagi. |
+| Client gallery client-browse-screen: progressTitle | Downloading photos | Mengunduh foto |
+| Client gallery client-browse-screen: confirmTitle | Download all {count, plural, one {# photo} other {# photos}}? | Unduh semua {count, plural, other {# foto}}? |
+| Client gallery client-browse-screen: downloadPhoto | Download photo | Unduh foto |
+| Client gallery client-copy: home | Home | Beranda |
+| Client gallery client-copy: finalDelivery | Final photos | Hasil akhir |
+| Client gallery client-copy: groupStatusOpen | Open | Terbuka |
+| Client gallery client-copy: defaultUnit | photos | foto |
+| Client gallery client-copy: usageReview | {usage} of {limit} {unit} · {remaining} left | {usage} dari {limit} {unit} · sisa {remaining} |
+| Client gallery client-copy: usageSubmitted | {usage} {unit} submitted · waiting for your photographer | {usage} {unit} dikirim · menunggu fotografer |
+| Client gallery client-copy: usageLocked | {usage} {unit} · locked by your photographer | {usage} {unit} · dikunci fotografer |
+| Client gallery client-gate-screen: description | {projectTitle} gallery from {studioName}. Your photographer sent the password with this link. | Galeri {projectTitle} dari {studioName}. Password dikirim fotografer bersama link ini. |
+| Client gallery client-home-screen: greeting | Hello, {name} | Halo, {name} |
+| Client gallery client-home-screen: subtitleStart | Choose photos for your package, then send them to your photographer. | Pilih foto untuk paket Anda, lalu kirim ke fotografer. |
+| Client gallery client-home-screen: subtitlePartly | {sent} sent. Left to choose: {open}. | {sent} sudah dikirim. Tinggal {open}. |
+| Client gallery client-home-screen: subtitleAllSent | All selections are sent. Your photographer will let you know. | Semua pilihan sudah dikirim. Fotografer akan mengabari Anda. |
+| Client gallery client-home-screen: subtitleDelivered | Your photos have been edited. | Foto Anda sudah selesai diedit. |
+| Client gallery client-home-screen: subtitleNoGroups | See all your photos. | Lihat semua foto Anda. |
+| Client gallery client-home-screen: listJoin |  and  |  dan  |
+| Client gallery client-home-screen: finalReadyTitle | Final photos are ready | Hasil akhir siap |
+| Client gallery client-home-screen: finalReadyBody | {edited, plural, one {# edited photo} other {# edited photos}} and {print, plural, one {# print photo} other {# print photos}}. Download one at a time, several, or all. | {edited, plural, other {# foto edit}} dan {print, plural, other {# foto cetak}}. Unduh satu per satu, beberapa, atau semuanya. |
+| Client gallery client-home-screen: finalReadyAction | View & download | Lihat & unduh |
+| Client gallery client-home-screen: photosTitle | Your photos | Foto Anda |
+| Client gallery client-home-screen: photosDescription | View all photos, then download the final files when they’re ready. | Lihat semua foto, lalu unduh hasil akhir saat sudah siap. |
+| Client gallery client-home-screen: photosDescriptionDelivered | View all preview photos from your session. | Lihat semua foto pratinjau dari sesi Anda. |
+| Client gallery client-home-screen: allPhotosMeta | {count, plural, one {# photo} other {# photos}} · browse and pick from previews | {count, plural, other {# foto}} · lihat-lihat dan pilih dari pratinjau |
+| Client gallery client-home-screen: allPhotosMetaNoGroups | {count, plural, one {# photo} other {# photos}} · browse previews | {count, plural, other {# foto}} · lihat-lihat pratinjau |
+| Client gallery client-home-screen: finalPendingMeta | Not available yet · appears here when your photos are edited. | Belum tersedia · muncul di sini setelah foto selesai diedit. |
+| Client gallery client-home-screen: pickTitle | Choose photos | Pilih foto |
+| Client gallery client-home-screen: pickDescription | One row for each part of your package. Choose and send each part on its own. | Satu baris untuk tiap bagian paket Anda. Pilih dan kirim tiap bagian sendiri. |
+| Client gallery client-home-screen: actionStart | Start choosing | Mulai memilih |
+| Client gallery client-home-screen: actionContinue | Continue choosing | Lanjut memilih |
+| Client gallery client-home-screen: actionView | View choices | Lihat pilihan |
+| Client gallery client-password-form: placeholder | Type the password from your photographer | Ketik password dari fotografer |
+| Client gallery client-password-form: helper | Lowercase letters and numbers, for example mawar-4821. | Huruf kecil dan angka, contoh mawar-4821. |
+| Client gallery client-password-form: empty | Enter the password from your photographer. | Isi password dari fotografer. |
+| Client gallery client-password-form: lockedBody | Try again in {minutes, plural, one {# minute} other {# minutes}}. | Coba lagi dalam {minutes, plural, other {# menit}}. |
+| Client gallery client-password-form: lockedHelper | The password isn’t checked until the time limit ends. | Password tidak diperiksa sampai batas waktu habis. |
+| Client gallery client-password-form: showPassword | Show password | Tampilkan password |
+| Client gallery client-password-form: hidePassword | Hide password | Sembunyikan password |
+| Client gallery client-password-form: failed | The password couldn’t be checked. Try again. | Gagal memeriksa password. Coba lagi. |
+| Client gallery pick-note-sheet: title | Note for {fileName} | Catatan untuk {fileName} |
+| Client gallery pick-note-sheet: description | Optional. Write what you’d like your photographer to change in this photo. | Opsional. Tulis apa yang ingin diubah fotografer dari foto ini. |
+| Client gallery pick-note-sheet: pickedFor | Picked for {groupName} | Dipilih untuk {groupName} |
+| Client gallery pick-note-sheet: label | Note | Catatan |
+| Client gallery pick-note-sheet: helper | Optional · {count}/{max} | Opsional · {count}/{max} |
+| Client gallery pick-note-sheet: save | Save note | Simpan catatan |
+| Client gallery pick-note-sheet: tooLong | Notes can be up to {max} characters. | Catatan paling banyak {max} karakter. |
+| Client gallery pick-note-sheet: failed | The note wasn’t saved. Try again. | Catatan belum tersimpan. Coba lagi. |
+| Client gallery pick-note-sheet: rateLimited | Too many changes. Try again in a moment. | Terlalu banyak perubahan, coba lagi sebentar. |
+| Client gallery pick-screen: subtitle | Choose up to {limit} {unit}. | Pilih hingga {limit} {unit}. |
+| Client gallery pick-screen: subtitleQuantity | Choose up to {limit} {unit}. Set the quantities in Review. | Pilih hingga {limit} {unit}. Atur jumlahnya di Tinjau. |
+| Client gallery pick-screen: review | Review | Tinjau |
+| Client gallery pick-screen: cardTitle | Photos | Foto |
+| Client gallery pick-screen: cardMeta | {total, plural, one {# photo} other {# photos}} · tap a photo to pick it | {total, plural, other {# foto}} · ketuk foto untuk memilih |
+| Client gallery pick-screen: filterLabel | Show photos | Tampilkan foto |
+| Client gallery pick-screen: filterPicked | Picked | Dipilih |
+| Client gallery pick-screen: limitTitle | Pick limit reached | Batas pilihan tercapai |
+| Client gallery pick-screen: limitBody | {name} already has {usage} of {limit}. Remove one photo to pick another. | {name} sudah {usage} dari {limit}. Lepas satu foto untuk memilih yang lain. |
+| Client gallery pick-screen: quantity | × {quantity} | × {quantity} |
+| Client gallery pick-screen: otherGroupQuantity | {name} × {quantity} | {name} × {quantity} |
+| Client gallery pick-screen: note | Note | Catatan |
+| Client gallery pick-screen: noteAdd | Add a note for {fileName} | Tambah catatan untuk {fileName} |
+| Client gallery pick-screen: noteEdit | Edit the note for {fileName} | Ubah catatan untuk {fileName} |
+| Client gallery pick-screen: pickedEmptyTitle | No photos picked yet | Belum ada foto dipilih |
+| Client gallery pick-screen: pickedEmptyBody | Tap photos under All photos to pick them. | Ketuk foto di Semua foto untuk memilih. |
+| Client gallery pick-screen: rateLimited | Too many changes. Try again in a moment. | Terlalu banyak perubahan, coba lagi sebentar. |
+| Client gallery pick-screen: refused | This photo can’t be picked. | Foto ini tidak bisa dipilih. |
+| Client gallery pick-screen: failed | The pick wasn’t saved. Try again. | Pilihan belum tersimpan. Coba lagi. |
+| Client gallery review-screen: title | Review {name} | Tinjau {name} |
+| Client gallery review-screen: subtitle | Check your picks. Once sent, they can’t be changed. | Periksa pilihan Anda. Setelah dikirim, pilihan tidak bisa diubah. |
+| Client gallery review-screen: subtitleSubmitted | Your picks are sent and waiting for your photographer. They can’t be changed. | Pilihan sudah dikirim dan menunggu fotografer. Pilihan tidak bisa diubah. |
+| Client gallery review-screen: subtitleLocked | Your photographer has locked these picks. They can’t be changed. | Pilihan sudah dikunci fotografer. Pilihan tidak bisa diubah. |
+| Client gallery review-screen: breadcrumbCurrent | Review | Tinjau |
+| Client gallery review-screen: backToPick | Back to picking | Kembali memilih |
+| Client gallery review-screen: cardTitle | Your picks | Pilihan Anda |
+| Client gallery review-screen: cardMetaCount | {picks, plural, one {# photo} other {# photos}} | {picks, plural, other {# foto}} |
+| Client gallery review-screen: cardMetaQuantity | {picks, plural, one {# photo} other {# photos}} · {usage} {unit}. Set the print count for each photo. | {picks, plural, other {# foto}} · {usage} {unit}. Atur jumlah cetak tiap foto. |
+| Client gallery review-screen: cardMetaQuantityReadOnly | {picks, plural, one {# photo} other {# photos}} · {usage} {unit} | {picks, plural, other {# foto}} · {usage} {unit} |
+| Client gallery review-screen: addMore | Add more photos | Tambah foto lagi |
+| Client gallery review-screen: send | Send {usage} {unit} | Kirim {usage} {unit} |
+| Client gallery review-screen: sendEmpty | Send | Kirim |
+| Client gallery review-screen: emptyTitle | No photos picked yet | Belum ada foto dipilih |
+| Client gallery review-screen: emptyBody | Go back to {name} and tap photos to pick them. | Kembali ke {name} dan ketuk foto untuk memilih. |
+| Client gallery review-screen: missingMeta | Photo unavailable. Remove it from your picks. | Foto tidak tersedia. Hapus dari pilihan Anda. |
+| Client gallery review-screen: quantityReadOnly | × {quantity} | × {quantity} |
+| Client gallery review-screen: sentToastTitle | {name} sent | {name} dikirim |
+| Client gallery review-screen: sentToastBody | Your photographer will see your picks. | Fotografer akan melihat pilihan Anda. |
+| Client gallery review-screen: sentToastBodyOpen | Your photographer will see your picks. {remaining, plural, one {# place} other {# places}} can still be picked. | Fotografer akan melihat pilihan Anda. Sisa {remaining, plural, other {# tempat}} masih bisa Anda pilih. |
+| Client gallery review-screen: groupClosed | Picks already sent | Pilihan sudah dikirim |
+| Client gallery review-screen: limitReached | Pick limit reached | Batas pilihan tercapai |
+| Client gallery review-screen: rateLimited | Too many changes. Try again in a moment. | Terlalu banyak perubahan, coba lagi sebentar. |
+| Client gallery review-screen: failed | The picks weren’t saved. Try again. | Pilihan belum tersimpan. Coba lagi. |
+| Client gallery review-screen: sendFailed | The picks weren’t sent. Try again. | Pilihan belum terkirim. Coba lagi. |
+| Client gallery review-screen: confirmTitle | Send {name} picks? | Kirim pilihan {name}? |
+| Client gallery review-screen: confirmDescription | The places left stay open after you send. | Sisa tempat tetap terbuka setelah dikirim. |
+| Client gallery review-screen: confirmBody | You’ve picked {usage} of {limit} {unit}. {remaining} places are still open, and you can change your picks until your photographer locks them. | Anda baru memilih {usage} dari {limit} {unit}. {remaining} tempat sisanya tetap terbuka, dan pilihan masih bisa diubah sampai fotografer menguncinya. |
+| Client gallery review-screen: confirmBack | Pick more | Pilih lagi |
+| Client gallery review-screen: noteTitle | Note for your photographer | Catatan untuk fotografer |
+| Client gallery review-screen: noteEdit | Edit note | Ubah catatan |
+| Client gallery review-screen: noteAdd | Add note | Tambah catatan |
+| Client gallery review-screen: remove | Remove {fileName} | Hapus {fileName} |
+| Client gallery review-screen: quantityLabel | Quantity for {fileName} | Jumlah {fileName} |
+| Client gallery viewer-pick-actions: pickFor | Pick for… | Pilih untuk… |
+| Client gallery viewer-pick-actions: note | Note | Catatan |
+| Client gallery viewer-pick-actions: noteLabel | Note for {fileName} in {groupName} | Catatan untuk {fileName} di {groupName} |
+| Client gallery viewer-pick-actions: usage | {usage} of {limit} {unit} | {usage} dari {limit} {unit} |
+| Client gallery viewer-pick-actions: hintOpen | tap to pick | ketuk untuk memilih |
+| Client gallery viewer-pick-actions: hintPicked | already picked | sudah dipilih |
+| Client gallery viewer-pick-actions: hintPickedQuantity | already picked × {quantity} | sudah dipilih × {quantity} |
+| Client gallery viewer-pick-actions: sheetMeta | {fileName} · saved automatically | {fileName} · tersimpan otomatis |
+| Client gallery viewer-pick-actions: pickedIn | Picked in: {entries} | Dipilih di: {entries} |
+| Client gallery viewer-pick-actions: pickedQuantity | {name} × {quantity} | {name} × {quantity} |
+| Client gallery viewer-pick-actions: pickedWithNote | {entry} · has a note | {entry} · ada catatan |
+| Client gallery viewer-pick-actions: limitReached | Pick limit reached | Batas pilihan tercapai |
+| Client gallery viewer-pick-actions: groupClosed | Picks already sent | Pilihan sudah dikirim |
+| Client gallery viewer-pick-actions: rateLimited | Too many changes. Try again in a moment. | Terlalu banyak perubahan, coba lagi sebentar. |
+| Client gallery viewer-pick-actions: refused | This photo can’t be picked. | Foto ini tidak bisa dipilih. |
+| Client gallery viewer-pick-actions: failed | The pick wasn’t saved. Try again. | Pilihan belum tersimpan. Coba lagi. |
+
 ## 15. Owner gallery, client access and delivery summaries
 
 **Where:** owner project gallery tabs and picks routes under `{workspace}/projects/{projectId}/gallery`.

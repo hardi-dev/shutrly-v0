@@ -137,7 +137,8 @@ export function SetupChecklistRow(props: Readonly<SetupChecklistRowProps>) {
           aria-label={t(STEP_COPY[step.key].title)}
           className={cn(
             LIST_CARD_ROW,
-            "outline-none hover:bg-(--color-semantic-surface-subtle) focus-visible:bg-(--component-list-card-item-icon-background)",
+            // The card clips outer shadows, so the focus ring is drawn inside the row (token-usage §2, C-008).
+            "outline-none hover:bg-(--color-semantic-surface-subtle) focus-visible:shadow-[inset_0_0_0_2px_var(--color-semantic-focus-ring)]",
           )}
         >
           {body}

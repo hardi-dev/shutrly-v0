@@ -39,6 +39,13 @@ describe("SetupChecklistRow", () => {
     expect(screen.queryByText("New project")).not.toBeInTheDocument();
   });
 
+  it("AC-SETUP-018 C-008 gives an open row a visible keyboard focus ring", () => {
+    renderRow({ key: "firstProject", state: "open", target: { kind: "newProject" } });
+    expect(screen.getByRole("link")).toHaveClass(
+      "focus-visible:shadow-[inset_0_0_0_2px_var(--color-semantic-focus-ring)]",
+    );
+  });
+
   it("AC-SETUP-014 interpolates the workspace name clients see until a brand name is set", () => {
     renderRow({ key: "brandName", state: "open", target: { kind: "settings" } });
     expect(screen.getByText("Optional")).toBeInTheDocument();

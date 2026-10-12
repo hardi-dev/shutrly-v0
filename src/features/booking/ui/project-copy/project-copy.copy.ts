@@ -18,8 +18,9 @@ export const PROJECT_COPY = {
       clientGroupLabel: "Clients · {count, plural, one {# match} other {# matches}}",
       clientNoMatchLabel: "No client matching “{query}”",
       noServiceTitle: "No active services yet",
-      noServiceBody: "Create or reactivate a service, then return here to create a project.",
-      noServiceAction: "Open services",
+      noServiceBody:
+        "A project starts from a service in a category. Add both in the Add service dialog.",
+      noServiceAction: "Add service",
       changeServiceTitle: "Change service?",
       changeServiceBody:
         "Your package edits will be lost. The package will be replaced with {serviceName}.",
@@ -384,8 +385,9 @@ export const PROJECT_COPY = {
       clientGroupLabel: "Klien · {count, plural, other {# cocok}}",
       clientNoMatchLabel: "Tidak ada klien yang cocok dengan “{query}”",
       noServiceTitle: "Belum ada layanan aktif",
-      noServiceBody: "Buat atau aktifkan layanan dulu, lalu kembali untuk membuat proyek.",
-      noServiceAction: "Buka layanan",
+      noServiceBody:
+        "Proyek dimulai dari layanan dalam kategori. Tambahkan keduanya di dialog Tambah layanan.",
+      noServiceAction: "Tambah layanan",
       changeServiceTitle: "Ganti layanan?",
       changeServiceBody:
         "Perubahan isi paketmu akan hilang. Isi paket diganti dengan isi {serviceName}.",

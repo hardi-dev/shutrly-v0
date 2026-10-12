@@ -413,7 +413,7 @@ Sources: `src/features/workspace/ui/*/*.copy.ts`, owner profile/workspace layout
 
 ### 4.3a Setup checklist — `{workspace}` until the first project (F-25; drafted with the Codex CLI, approved by the Owner 2026-10-12; step bodies and locked hint rewritten compact for the design, Codex option 2 with terms in lower case and *Anda* → *kamu*, approved by the Owner the same day)
 
-Shown in place of the *Empty* rows above while the workspace has no project ([F-25 spec](../setup-checklist/spec.md)). Markers reuse §1: *Required* / *Wajib*, *Optional* / *Opsional*. The two §7.2 rows marked *replaces* swap the current *No service body* and *No service CTA* when F-25 is built.
+Shown in place of the *Empty* rows above while the workspace has no project ([F-25 spec](../setup-checklist/spec.md)). Markers reuse §1: *Required* / *Wajib*, *Optional* / *Opsional*. The two §7.2 rows marked *replaces* replaced §7.2 *No service body* and *No service CTA* when F-25 was built (2026-10-12).
 
 | Element / context | English | Bahasa Indonesia | Review note |
 |---|---|---|---|
@@ -850,8 +850,8 @@ Instagram, TikTok, Facebook, YouTube, X and WhatsApp are brand names in both lan
 | Service placeholder | Choose a service | Pilih layanan |
 | Service helper | {category} · Base price {amount} | {category} · Harga dasar {amount} |
 | No service title | No active services yet | Belum ada layanan aktif |
-| No service body | Create or reactivate a service, then return here to create a project. | Buat atau aktifkan layanan dulu, lalu kembali untuk membuat proyek. |
-| No service CTA | Open services | Buka layanan |
+| No service body | A project starts from a service in a category. Add both in the Add service dialog. | Proyek dimulai dari layanan dalam kategori. Tambahkan keduanya di dialog Tambah layanan. |
+| No service CTA | Add service | Tambah layanan |
 | Change-service confirmation | Change service? | Ganti layanan? |
 | Change-service body | Your package edits will be lost. The package will be replaced with {serviceName}. | Perubahan isi paketmu akan hilang. Isi paket diganti dengan isi {serviceName}. |
 | Change-service confirm | Change service | Ganti layanan |

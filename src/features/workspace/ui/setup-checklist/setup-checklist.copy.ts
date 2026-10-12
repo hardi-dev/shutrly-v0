@@ -1,0 +1,53 @@
+// Source: copy-deck.md §4.3a "Setup checklist" (Owner-approved 2026-10-12) and §1 "Done",
+// "Required marker". Copied verbatim. Step 4's action row is approved but unused: step 4 is never
+// the current step (F-25 D-3, D-10).
+export const SETUP_CHECKLIST_COPY_NAMESPACE = "workspaceSetupChecklist";
+
+export const SETUP_CHECKLIST_COPY = {
+  namespace: SETUP_CHECKLIST_COPY_NAMESPACE,
+  surface: "owner",
+  messages: {
+    en: {
+      title: "Set up your workspace",
+      description: "Add a service first, then follow the recommended and optional steps.",
+      progress: "{done} of {total} done",
+      required: "Required",
+      recommended: "Recommended",
+      optional: "Optional",
+      done: "Done",
+      lockedHint: "This step opens after you add a service",
+      serviceTitle: "Add a service",
+      serviceBody: "Projects come from services; add categories in Add service",
+      serviceAction: "Add service",
+      packageItemsTitle: "Add package items",
+      packageItemsBody: "“Foto edit 50” limits how many photos clients pick",
+      packageItemsAction: "Add package items",
+      firstProjectTitle: "Create your first project",
+      firstProjectBody: "Fill in client and shoot date in New project",
+      firstProjectAction: "New project",
+      brandNameTitle: "Set your brand name",
+      brandNameBody: "Clients see {workspaceName} in messages and galleries until then",
+    },
+    id: {
+      title: "Siapkan ruang kerjamu",
+      description: "Tambahkan layanan dulu, lalu ikuti langkah yang disarankan dan opsional.",
+      progress: "{done} dari {total} selesai",
+      required: "Wajib",
+      recommended: "Disarankan",
+      optional: "Opsional",
+      done: "Selesai",
+      lockedHint: "Langkah ini terbuka setelah kamu menambah layanan",
+      serviceTitle: "Tambah layanan",
+      serviceBody: "Proyek berawal dari layanan; kategori bisa dibuat lewat Tambah layanan",
+      serviceAction: "Tambah layanan",
+      packageItemsTitle: "Tambah isi paket",
+      packageItemsBody: "“Foto edit 50” menentukan batas foto yang dipilih klien",
+      packageItemsAction: "Tambah isi paket",
+      firstProjectTitle: "Buat proyek pertamamu",
+      firstProjectBody: "Masukkan klien dan tanggal pemotretan lewat Proyek baru",
+      firstProjectAction: "Proyek baru",
+      brandNameTitle: "Atur nama merek",
+      brandNameBody: "Sebelum diatur, klien melihat {workspaceName} di pesan dan galeri",
+    },
+  },
+} as const;

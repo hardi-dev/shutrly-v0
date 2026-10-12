@@ -87,11 +87,11 @@ Covers: BR-WS-003, BR-ACC-003, C-101, C-104
 **Then** both get not-found, and no page shows *Proyek Bumi* or the other group's name in a breadcrumb
 
 ## AC-CRUMB-013 — A long trail keeps its ends
-Covers: (alternative flow *Long trails*; shape per OQ-5)
+Covers: (alternative flow *Long trails*; OQ-5 resolved 2026-10-12)
 
 **Given** a project titled with 60 characters and its selection group *Foto album keluarga besar*
 **When** the Owner opens that group's picks page at 1280 px
-**Then** the breadcrumb stays on one line in the bar, *Aster* and *Foto album keluarga besar* are shown in full, every crumb is still reachable by keyboard (directly or through the design's overflow control), and the page has no horizontal scroll
+**Then** the breadcrumb stays on one line in the bar, *Aster* and *Foto album keluarga besar* are shown in full, the crumbs between them shrink with *…* and show their full label as a tooltip, every crumb but the last is still a link reachable by keyboard, and the page has no horizontal scroll
 
 ## AC-CRUMB-014 — Phone back goes one level up
 Covers: (alternative flow *Phones*)

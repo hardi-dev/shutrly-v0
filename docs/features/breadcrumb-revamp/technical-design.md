@@ -1,7 +1,7 @@
 # Technical design — Breadcrumb revamp (F-22)
 
 Spec: [spec.md](spec.md) · Acceptance criteria: [acceptance-criteria.md](acceptance-criteria.md) · ADR: [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md)
-Status: PLANNED (2026-10-12; revised after review the same day). Task 8 is BLOCKED on OQ-5. Executable steps: [plan.md](plan.md).
+Status: PLANNED (2026-10-12; revised after review the same day). Task 8 unblocked: OQ-5 resolved 2026-10-12 (truncate the middle crumbs). Executable steps: [plan.md](plan.md).
 
 ## 1. Context
 Today the trail is built in three places:
@@ -135,7 +135,7 @@ Per the Owner's working rule (2026-10-05), each task runs only its related tests
 - **Slot capture:** a dynamic slot segment captures a static sibling (`projects/[projectId]` would match `new`). Mitigation: the five mirrors in Task 4. Any new Owner route with a dynamic sibling needs a mirror (ADR-025 › Consequences); there is no automated coverage test yet.
 - **Extra work per request:** the slot calls the same loaders as the page; `cache()` makes them run once per request. A slot on a page that does not call the same loader with the same arguments runs it again (ADR-018).
 - **Test churn:** tests that pin the old trails change on purpose, one task at a time.
-- **Long trails (Task 8):** blocked until OQ-5.
+- **Long trails (Task 8):** root and current stay whole; if both together are wider than the bar, the bar clips them (no horizontal page scroll, since the App Panel hides overflow).
 
 ## 12. ADR
 [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md): the Owner breadcrumb is rendered on the server by a parallel route slot.
@@ -152,13 +152,13 @@ The executable steps, with exact code and commands, are in [plan.md](plan.md). I
 | 5 | Switch the Owner shell and the profile layout to the slot; drop the browser-side trail | 001–007, 011, 014 |
 | 6 | Client trails; Beranda always present | 008, 009, 010, 014 |
 | 7 | Sidebar toggle beside the breadcrumb | 015, 016 |
-| 8 | Long trail overflow (BLOCKED on OQ-5) | 013 |
+| 8 | Long trail overflow: root and current whole, middle crumbs truncate with a tooltip | 013 |
 
 ## 14. Dependencies between tasks
 - 1 → 4; 2 → 4; 3 → 4 → 5.
 - 6 is independent of 1–5.
 - 7 edits the same Page Header, App Panel and App Shell files as 3, so it runs after 3 (the plan runs it last).
-- 8 needs 1–6 and the OQ-5 decision.
+- 8 changes only `breadcrumb-trail.tsx` and can run after 7.
 
 ## 15. Open items for the Owner
-- OQ-5: how a long trail shrinks. It blocks Task 8 only.
+- None. OQ-5 resolved 2026-10-12.

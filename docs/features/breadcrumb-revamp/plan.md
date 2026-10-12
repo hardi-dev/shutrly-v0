@@ -2675,13 +2675,233 @@ git commit -m "feat(shell): move the sidebar toggle beside the breadcrumb" -m "C
 
 ---
 
-### Task 8 (BLOCKED): Long trail overflow
+### Task 8: Long trail overflow
 
-**Covers:** AC-CRUMB-013. **Do not start.** It waits for OQ-5 (spec › Open Questions) and its Pencil frame. Report "Task 8 blocked on OQ-5" and stop.
+**Covers:** AC-CRUMB-013 (OQ-5 resolved by the Owner 2026-10-12: the root and the current page stay whole; the crumbs between them shrink with an ellipsis and carry their full label as a tooltip; frames waived).
+
+**Files:**
+- Modify: `src/ui/patterns/page-header/breadcrumb-trail.tsx`
+- Modify: `src/ui/patterns/page-header/page-header.types.ts`
+- Create: `src/ui/patterns/page-header/breadcrumb-trail.test.tsx`
+
+**Interfaces:**
+- Produces: `BreadcrumbTrailItemProps.isEdge: boolean` (true for the first and the last crumb). No public API change: `BreadcrumbTrail` and `PageHeaderTrail` keep their props.
+
+Why it works: each crumb is a flex item. A flex item does not shrink below its content unless it has `min-w-0`; the crumbs already carry `truncate`. So the middle crumbs get `min-w-0` (they shrink and end in "…") and the edge crumbs get `shrink-0` (they never shrink).
+
+- [ ] **Step 1: Write the failing test**
+
+Create `src/ui/patterns/page-header/breadcrumb-trail.test.tsx`:
+```tsx
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
+import { BreadcrumbTrail } from "./breadcrumb-trail";
+
+const LONG_TITLE = "Pernikahan Rina dan Dimas di Gedung Serbaguna Kota Lama Semarang";
+
+const ITEMS = [
+  { label: "Aster", href: "/w/A" },
+  { label: "Proyek", href: "/w/A/projects" },
+  { label: LONG_TITLE, href: "/w/A/projects/p1" },
+  { label: "Galeri", href: "/w/A/projects/p1/gallery" },
+  { label: "Pilihan klien", href: "/w/A/projects/p1/gallery/picks" },
+  { label: "Foto album keluarga besar" },
+];
+
+describe("BreadcrumbTrail (F-22 OQ-5)", () => {
+  it("AC-CRUMB-013 keeps the root and the current page whole", () => {
+    render(<BreadcrumbTrail label="Breadcrumb" items={ITEMS} />);
+
+    const root = screen.getByRole("link", { name: "Aster" });
+    expect(root).toHaveClass("shrink-0");
+    expect(root).not.toHaveAttribute("title");
+    const current = screen.getByText("Foto album keluarga besar");
+    expect(current).toHaveClass("shrink-0");
+    expect(current).toHaveAttribute("aria-current", "page");
+  });
+
+  it("AC-CRUMB-013 lets the middle crumbs shrink with their full label as a tooltip", () => {
+    render(<BreadcrumbTrail label="Breadcrumb" items={ITEMS} />);
+
+    const middle = screen.getByRole("link", { name: LONG_TITLE });
+    expect(middle).toHaveClass("min-w-0", "truncate");
+    expect(middle).not.toHaveClass("shrink-0");
+    expect(middle).toHaveAttribute("title", LONG_TITLE);
+    expect(middle).toHaveAttribute("href", "/w/A/projects/p1");
+  });
+
+  it("AC-CRUMB-013 keeps every ancestor a keyboard-reachable link", () => {
+    render(<BreadcrumbTrail label="Breadcrumb" items={ITEMS} />);
+
+    expect(screen.getAllByRole("link")).toHaveLength(5);
+  });
+
+  it("treats a single crumb as both edges", () => {
+    render(<BreadcrumbTrail label="Breadcrumb" items={[{ label: "Dasbor" }]} />);
+
+    expect(screen.getByText("Dasbor")).toHaveClass("shrink-0");
+  });
+});
+```
+
+- [ ] **Step 2: Run the test to verify it fails**
+
+Run: `npx vitest run src/ui/patterns/page-header/breadcrumb-trail.test.tsx`
+Expected: FAIL (no `shrink-0`, no `min-w-0`, no `title` yet).
+
+- [ ] **Step 3: `page-header.types.ts`**
+
+Replace
+```ts
+export interface BreadcrumbTrailItemProps {
+  readonly item: BreadcrumbItem;
+  readonly isCurrent: boolean;
+  readonly showSeparator: boolean;
+}
+```
+with
+```ts
+export interface BreadcrumbTrailItemProps {
+  readonly item: BreadcrumbItem;
+  readonly isCurrent: boolean;
+  readonly showSeparator: boolean;
+  /** The first or the last crumb: it never shrinks (F-22 OQ-5). */
+  readonly isEdge: boolean;
+}
+```
+
+- [ ] **Step 4: `breadcrumb-trail.tsx`**
+
+Edit 1: replace
+```tsx
+function BreadcrumbTrailItem({
+  item,
+  isCurrent,
+  showSeparator,
+}: Readonly<BreadcrumbTrailItemProps>) {
+  let content;
+  if (item.href && !isCurrent) {
+    content = (
+      <Link href={item.href} className={LINK}>
+        {item.label}
+      </Link>
+    );
+  } else if (item.onPress && !isCurrent) {
+    content = (
+      <AriaButton
+        onPress={item.onPress}
+        className={cn(
+          LINK,
+          "cursor-pointer data-focus-visible:rounded-(--radius-xs) data-focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
+        )}
+      >
+        {item.label}
+      </AriaButton>
+    );
+  } else {
+    content = (
+      <span
+        aria-current={isCurrent ? "page" : undefined}
+        className={
+          isCurrent
+            ? "truncate font-semibold text-(--component-page-header-breadcrumb-current)"
+            : "truncate"
+        }
+      >
+        {item.label}
+      </span>
+    );
+  }
+```
+with
+```tsx
+function BreadcrumbTrailItem({
+  item,
+  isCurrent,
+  showSeparator,
+  isEdge,
+}: Readonly<BreadcrumbTrailItemProps>) {
+  // F-22 OQ-5: the root and the current page stay whole; the crumbs between them shrink with "…".
+  const fit = isEdge ? "shrink-0" : "min-w-0";
+  const title = isEdge ? undefined : item.label;
+  let content;
+  if (item.href && !isCurrent) {
+    content = (
+      <Link href={item.href} className={cn(LINK, fit)} title={title}>
+        {item.label}
+      </Link>
+    );
+  } else if (item.onPress && !isCurrent) {
+    content = (
+      <AriaButton
+        onPress={item.onPress}
+        className={cn(
+          LINK,
+          fit,
+          "cursor-pointer data-focus-visible:rounded-(--radius-xs) data-focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
+        )}
+      >
+        {item.label}
+      </AriaButton>
+    );
+  } else {
+    content = (
+      <span
+        aria-current={isCurrent ? "page" : undefined}
+        title={title}
+        className={cn(
+          "truncate",
+          fit,
+          isCurrent && "font-semibold text-(--component-page-header-breadcrumb-current)",
+        )}
+      >
+        {item.label}
+      </span>
+    );
+  }
+```
+
+Edit 2: replace
+```tsx
+          isCurrent={index === items.length - 1}
+          showSeparator={index > 0}
+```
+with
+```tsx
+          isCurrent={index === items.length - 1}
+          showSeparator={index > 0}
+          isEdge={index === 0 || index === items.length - 1}
+```
+
+- [ ] **Step 5: Run the tests to verify they pass**
+
+Run: `npx vitest run src/ui/patterns/page-header src/features/gallery/ui/browse-toolbar src/features/gallery/ui/all-photos-modal`
+Expected: PASS. The last two folders use `BreadcrumbTrail` for the in-page folder trail; they must still pass.
+
+- [ ] **Step 6: Format, lint, typecheck**
+
+```bash
+npx prettier --write src/ui/patterns/page-header/breadcrumb-trail.tsx src/ui/patterns/page-header/page-header.types.ts src/ui/patterns/page-header/breadcrumb-trail.test.tsx
+```
+```bash
+npx eslint src/ui/patterns/page-header
+```
+```bash
+pnpm typecheck
+```
+Expected: no errors. If `max-lines-per-function` fails on `BreadcrumbTrailItem`, move the `else` branch into a small `CrumbText` component with the same markup and report it.
+
+- [ ] **Step 7: Commit**
+
+```bash
+git add src/ui/patterns/page-header/breadcrumb-trail.tsx src/ui/patterns/page-header/page-header.types.ts src/ui/patterns/page-header/breadcrumb-trail.test.tsx
+git commit -m "feat(ui): keep the breadcrumb ends whole and shrink the middle" -m "Co-Authored-By: <the session's attribution line>"
+```
 
 ---
 
-## Final report (after Task 7)
+## Final report (after Task 8)
 
 Report, in this order:
 1. The commits made (`git log --oneline -8`).

@@ -70,7 +70,7 @@ Client:
 - **Page-state titles.** When a page changes its title for an in-page state (*2 dipilih* on *Hasil akhir*), the trail keeps the route's label.
 - **Read-only review.** A group that is `SUBMITTED` or `LOCKED` shows its picks read-only on the review route (BR-SEL-005). The page title stays the group name; the trail still ends in *Tinjau*, and *{nama grup}* is not a link (R-5 exception).
 - **Semua foto for a project without groups.** Only the trail and the phone back button change: the trail becomes *Beranda › Semua foto* and phones get the *Beranda* button. The page title (the project title) and the subtitle for a project without groups stay as today (Owner 2026-10-12).
-- **Long trails.** A trail can reach six crumbs. When it doesn't fit the bar, the bar still shows the root and the current page in full. How the middle shrinks is a design decision (OQ-5).
+- **Long trails.** A trail can reach six crumbs. When it doesn't fit the bar, the root and the current page stay whole and only the crumbs between them shrink, each ending in *…* with its full label as a tooltip (`title`). Every crumb stays a keyboard-reachable link; no new control is added (OQ-5, Owner 2026-10-12).
 - **Phones.** Phones keep their back button (Compact Bar or *Beranda* button) on sub-pages. Its target is the immediate parent level, the crumb before the current one. Top-level and tab pages have no back button, as today. With R-7, *Semua foto* always has a *Beranda* button.
 
 ## Error Cases
@@ -94,7 +94,7 @@ Moves the sidebar toggle from the Sidebar's logo row and the rail's bottom butto
 
 ## Design
 - **Pencil frames are waived** for this feature (Owner 2026-10-12, sidebar toggle; extended to the trail changes on the same date, review fix). The changes add crumbs and move one existing button; they add no new screen state. The code uses the existing tokens and components. The frames and the design notes listed in FC-002 stay stale until the next design pass. This deviates from AGENTS.md (UI from Pencil exports) and is recorded here per C-012.
-- Exception: the long-trail overflow (OQ-5) is a new visual state and needs a frame before it is built.
+- The long-trail overflow (OQ-5) is waived too (Owner 2026-10-12): it reuses the existing truncation and adds no control.
 
 ## Dependencies
 - F-17 App Shell: Page Header C40 breadcrumb bar, `OwnerShell`, `PageHeadingOverride` (keeps the title, status, meta and phone back target; no longer the trail).
@@ -123,4 +123,4 @@ Checked against the constitution (C-001…C-012, C-101…C-106), BR-WS-003, BR-A
 | FC-005 | `PageHeadingOverride` reports to the shell in `useEffect`, so the first paint shows a shorter trail, which breaks R-6. | R-6, AC-CRUMB-011; F-17 `PageHeadingOverride` | Owner 2026-10-12 (review fix): keep R-6; render the Owner trail on the server through a parallel route slot (ADR-025). | RESOLVED |
 
 ## Open Questions / SPEC GAPS
-- **OQ-5 (design)** How a long trail shrinks when it doesn't fit: collapse the middle crumbs into *…* or truncate each label. It doesn't change which crumbs exist or where they link. Needs a frame before it is built (see *Design*).
+- ~~**OQ-5 (design)** How a long trail shrinks when it doesn't fit.~~ **Resolved (Owner 2026-10-12):** truncate the middle crumbs; the root and the current page stay whole (see *Long trails*).

@@ -4,5 +4,10 @@ export interface DashboardScreenProps {
   workspaceId: string;
   workspaceName: string;
   created?: boolean;
-  checklist?: SetupChecklist | null;
+  checklist: SetupChecklist | null;
+}
+
+export interface DashboardPlaceholderProps {
+  readonly workspaceId: string;
+  readonly workspaceName: string;
 }

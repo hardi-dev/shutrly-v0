@@ -1,7 +1,7 @@
 # Feature: Breadcrumb revamp — one crumb per route level
 
 ID: F-22 · Slug: `breadcrumb-revamp`
-Status: BUILT, verified; B-1 closed by the route coverage test (2026-10-12, [verification report](verification-report.md)) · Technical design: [technical-design.md](technical-design.md) · Acceptance criteria: [acceptance-criteria.md](acceptance-criteria.md) · ADR: [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md)
+Status: DONE (2026-10-12, Owner marked done; B-1 closed by the route coverage test, [verification report](verification-report.md)) · Technical design: [technical-design.md](technical-design.md) · Acceptance criteria: [acceptance-criteria.md](acceptance-criteria.md) · ADR: [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md)
 Supersedes: F-17 [S-A6 Breadcrumb depth](../app-shell-revamp/spec.md), F-10 [A-31 Skipping Beranda](../client-access/spec.md), and the per-page trails recorded in other features' designs (FC-001…FC-003)
 Also: moves the sidebar toggle beside the breadcrumb (see *Sidebar toggle*).
 

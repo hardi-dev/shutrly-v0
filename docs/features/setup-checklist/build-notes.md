@@ -43,4 +43,4 @@ Run against this worktree's dev server on port 3005 with a local, uncommitted Pl
 
 - **R-1:** the exports' header title (*Welcome to Explore Studio*) differs from the shell's (*Dashboard*); the build keeps the shell header (D-6). Owner to confirm.
 - **AC-CAT-023** (catalog axe test): not verified — rerun it alone (`npx playwright test tests/e2e/catalog/catalog.spec.ts -g AC-CAT-023`) on a free port 3000, and compare with `staging` if it still fails.
-- Next: `/sdv:verify-feature setup-checklist`.
+- **Owner decision (2026-10-12):** marked DONE after previewing on `localhost:3000`; `/sdv:verify-feature` and the AC-CAT-023 rerun were not run. Both stay open as follow-ups.

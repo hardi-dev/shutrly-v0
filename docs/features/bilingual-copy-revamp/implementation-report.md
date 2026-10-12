@@ -3,6 +3,8 @@
 Feature: F-22 `bilingual-copy-revamp` · Branch `codex/bilingual-copy-revamp` · Date: 2026-10-10
 Plan: [plan.md](plan.md) · Design: [technical-design.md](technical-design.md) · Criteria: [acceptance-criteria.md](acceptance-criteria.md)
 
+> **Superseded (2026-10-12):** this is the 2026-10-10 snapshot. The plan was completed on 2026-10-11 and merged to `staging` (PR #14); see [plan.md](plan.md) and [coverage-report.md](coverage-report.md).
+
 **Status: partial. I1 is complete. I2 and I3 are mostly complete. I4–I8 are not started.** The run stopped at Owner checkpoints and one spec gap (below). Nothing is pushed, no PR is open, and nothing is deployed.
 
 ## 1. Tasks

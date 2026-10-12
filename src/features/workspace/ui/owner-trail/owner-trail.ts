@@ -49,7 +49,12 @@ export function sectionCrumb(
   section: OwnerSection,
   t: OwnerNavTranslator,
 ): BreadcrumbItem {
-  return { label: t(SECTION_KEYS[section]), href: `/w/${workspaceId}/${section}` };
+  return { label: sectionLabel(section, t), href: `/w/${workspaceId}/${section}` };
+}
+
+/** The translated name of a workspace section, e.g. *Proyek* (F-24 page-not-found back link). @param section - the section segment @param t - the owner-nav translate function @returns the name */
+export function sectionLabel(section: OwnerSection, t: OwnerNavTranslator): string {
+  return t(SECTION_KEYS[section]);
 }
 
 /** A linked crumb for a project's detail page. @param workspaceId - the route workspace @param projectId - the project id @param title - the project title @returns the crumb */

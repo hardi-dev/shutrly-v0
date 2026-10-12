@@ -1,6 +1,6 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
-import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
+import { formattingLocale } from "@/shared/locale/locale";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
@@ -26,7 +26,8 @@ function CardAction({ card, base }: Readonly<SelectionCardActionProps>) {
 
 function CardBody({ card }: Readonly<Pick<SelectionCardProps, "card">>) {
   const t = useTranslations(SELECTION_CARD_COPY_NAMESPACE);
-  const locale = useFormattingLocale();
+  // Read on the server: SelectionCard renders in the gallery page's server tree, so no client hook here.
+  const locale = formattingLocale(useLocale());
   if (card.state === "NO_ITEMS" || card.state === "NOT_PUBLISHED") {
     return (
       <p className="p-(--space-4) text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary) md:p-(--space-6)">

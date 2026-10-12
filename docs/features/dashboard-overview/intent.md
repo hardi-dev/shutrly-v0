@@ -42,11 +42,13 @@ Evidence: the feature map calls the dashboard "a placeholder, not a verified pro
 - Editing anything from the dashboard.
 - Client-facing screens.
 
+## Owner answers (2026-10-12)
+- **Summaries in the first version:** all four: *Needs you* (projects in `DRAFT`, selections waiting for review, deliveries to publish), *Upcoming sessions*, *Projects by status*, *Galleries expiring soon*.
+- **"Needs attention":** by status only (project, selection and gallery status); no date-based rule.
+- **Window:** fixed 7 days for *Upcoming sessions* and *Galleries expiring soon*; no setting.
+- **Invoices:** ship without them now; add an invoice card after F-14.
+- **Set up branding:** dropped from the dashboard; branding stays in Settings.
+- **Activity feed / last viewed:** not in the first version.
+
 ## Open questions
-- Which summaries go in the first version? Recommended: (1) *Needs you* (projects in `DRAFT`, selections waiting for review, deliveries to publish), (2) *Upcoming sessions* (next 7 days), (3) *Projects by status*, (4) *Galleries expiring soon*.
-- Is "needs attention" defined by status only, or also by dates (e.g. a `BOOKED` project whose shoot date has passed)? This needs a rule if dates count.
-- How far ahead is "upcoming" and "expiring soon" (7 days? 14?), and is it fixed or Owner-configurable? Recommended: fixed 7 days.
-- Should the page wait for F-14 so invoices are included, or ship now and add a card later? Recommended: ship now.
-- Does *Set up branding* stay as a card, or is it dropped now that F-25 handles setup?
-- Does it need a stored "last viewed" or activity feed? Recommended: no, out of the first version.
-- Date handling: sessions and expiry in which time zone (workspace or browser)? Check BR-WS and the sessions rules in discovery.
+- Time zone for "today" and the 7-day window: discovery reads the existing session and workspace rules and follows them (Owner 2026-10-12). If no rule decides it, report a `SPEC GAP`.

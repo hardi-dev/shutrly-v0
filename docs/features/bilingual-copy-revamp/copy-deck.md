@@ -421,6 +421,7 @@ Shown in place of the *Empty* rows above while the workspace has no project ([F-
 | Checklist description | Add a service first, then follow the recommended and optional steps. | Tambahkan layanan dulu, lalu ikuti langkah yang disarankan dan opsional. | EN aligned to the ID (Owner). |
 | Progress | {done} of {total} done | {done} dari {total} selesai | Plural-safe as written. |
 | Recommended marker (step 2) | Recommended | Disarankan | |
+| Optional marker (step 4) | Optional | Opsional | §4.3a note: markers reuse §1; §1 had no plain row (added at F-25 build, 2026-10-12). |
 | Locked hint (steps 2–3) | This step opens after you add a service | Langkah ini terbuka setelah kamu menambah layanan | Compact rewrite (design 2026-10-12) replaces *Complete Add a service first.* |
 | Done status, accessible | Done | Selesai | Same as §1 *Done*. |
 | Step 1 title | Add a service | Tambah layanan | |

@@ -2,7 +2,7 @@
 
 Author: Owner (hardi-dev), 2026-10-12: "create new feature to fill the dashboard"
 Source: IDEA
-Status: DRAFT
+Status: ACCEPTED (Owner, 2026-10-13, with the answers below)
 
 ## Problem
 Once a workspace has its first project, the dashboard goes back to the F-02 placeholder: an empty-state card and the *Set up branding* prompt. F-25 replaced the placeholder only until the first project, and its intent left a full dashboard out of scope (the feature map says no feature owns it). So the page an Owner lands on every day shows nothing about their work.

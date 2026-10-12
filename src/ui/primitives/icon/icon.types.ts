@@ -83,6 +83,10 @@ export type IconName =
   | "toggle-left"
   | "list"
   | "list-checks"
+  // F-25 setup checklist steps (setup-checklist exports).
+  | "briefcase"
+  | "folder-plus"
+  | "badge-check"
   | "user-plus"
   | "key-round"
   | "user"

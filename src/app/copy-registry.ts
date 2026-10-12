@@ -55,6 +55,7 @@ import { OWNER_NAV_COPY } from "@/features/workspace/ui/owner-nav/owner-nav.copy
 import { OWNER_SHELL_COPY } from "@/features/workspace/ui/owner-shell/owner-shell.copy";
 import { PAGE_NOT_FOUND_COPY } from "@/features/workspace/ui/page-not-found-screen/page-not-found-screen.copy";
 import { SETTINGS_COPY } from "@/features/workspace/ui/settings-screen/settings-screen.copy";
+import { SETUP_CHECKLIST_COPY } from "@/features/workspace/ui/setup-checklist/setup-checklist.copy";
 import { WORKSPACE_FIELD_ERROR_COPY } from "@/features/workspace/ui/workspace-field-error/workspace-field-error.copy";
 import { WORKSPACE_NOT_FOUND_COPY } from "@/features/workspace/ui/workspace-not-found-screen/workspace-not-found-screen.copy";
 import { WORKSPACE_SWITCHER_COPY } from "@/features/workspace/ui/workspace-switcher/workspace-switcher.copy";
@@ -102,6 +103,7 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   COMING_SOON_COPY,
   CREATE_WORKSPACE_COPY,
   DASHBOARD_COPY,
+  SETUP_CHECKLIST_COPY,
   ONBOARDING_COPY,
   SETTINGS_COPY,
   WORKSPACE_FIELD_ERROR_COPY,

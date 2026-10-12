@@ -11,8 +11,13 @@ import { ServicesScreen } from "@/features/booking/ui/services-screen/services-s
 
 export default async function ServicesPage({
   params,
-}: Readonly<{ params: Promise<{ workspaceId: string }> }>) {
+  searchParams,
+}: Readonly<{
+  params: Promise<{ workspaceId: string }>;
+  searchParams: Promise<{ add?: string }>;
+}>) {
   const { workspaceId } = await params;
+  const { add } = await searchParams;
   const groups = await loadServices(workspaceId);
   const categories = await loadCategories(workspaceId);
   return (
@@ -20,6 +25,7 @@ export default async function ServicesPage({
       workspaceId={workspaceId}
       groups={groups}
       categories={categories}
+      openAddOnLoad={add === "service"}
       addServiceAction={addServiceAction}
       addCategoryAction={addCategoryAction}
       updateServiceInfoAction={updateServiceInfoAction}

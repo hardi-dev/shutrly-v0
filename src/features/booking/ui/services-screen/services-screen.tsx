@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import type { ComponentProps, ReactNode } from "react";
-import { useState } from "react";
+import type { ComponentProps, ReactNode, RefObject } from "react";
+import { useRef, useState } from "react";
 
 import type { ServiceListItem } from "@/features/booking/application/use-cases/service-results/service-results.types";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
@@ -17,11 +17,13 @@ import type { CatalogTranslate } from "../catalog-copy/catalog-copy.types";
 import { CatalogRowActions } from "../catalog-row-actions/catalog-row-actions";
 import { CatalogTabsBar } from "../catalog-tabs-bar/catalog-tabs-bar";
 import { DeleteCatalogDialog } from "../delete-catalog-dialog/delete-catalog-dialog";
+import { useOpenOnLoad } from "../use-open-on-load/use-open-on-load";
 import { SERVICES_SCREEN_COPY_NAMESPACE } from "./services-screen.copy";
 import type { ServicesScreenProps } from "./services-screen.types";
 
 export function ServicesScreen(props: Readonly<ServicesScreenProps>) {
-  const dialogs = useServiceDialogs();
+  const mainRef = useRef<HTMLElement>(null);
+  const dialogs = useServiceDialogs(props.workspaceId, props.openAddOnLoad ?? false, mainRef);
   const t = useTranslations(SERVICES_SCREEN_COPY_NAMESPACE);
   const { workspaceId, groups, categories = [], addServiceAction } = props;
   const addButton = (
@@ -30,7 +32,10 @@ export function ServicesScreen(props: Readonly<ServicesScreenProps>) {
     </Button>
   );
   return (
-    <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)">
+    <main
+      ref={mainRef}
+      className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) md:gap-(--component-panel-app-content-gap)"
+    >
       <CatalogTabsBar workspaceId={workspaceId} activeTab="services" action={addButton} />
       <PageActions>{addButton}</PageActions>
       <ServiceGroups
@@ -172,8 +177,24 @@ function ServiceDeleteDialog(props: ComponentProps<typeof DeleteCatalogDialog>) 
   return <DeleteCatalogDialog {...props} />;
 }
 
-function useServiceDialogs() {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+// `?add=service` opens Add service (F-25 D-5); closing it drops the query so refresh and Back
+// don't reopen it.
+function useServiceDialogs(
+  workspaceId: string,
+  openAddOnLoad: boolean,
+  screenRef: RefObject<HTMLElement | null>,
+) {
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [isFromLink, setIsFromLink] = useState(openAddOnLoad);
+  useOpenOnLoad(openAddOnLoad, screenRef, setDialogOpen);
+  function setIsDialogOpen(isOpen: boolean): void {
+    setDialogOpen(isOpen);
+    if (isOpen || !isFromLink) return;
+    setIsFromLink(false);
+    // The native history API syncs with the Next router without a server request, so it can't
+    // race the push to the new service's page that follows a save (F-05).
+    window.history.replaceState(null, "", `/w/${workspaceId}/services`);
+  }
   const [editing, setEditing] = useState<ServiceListItem | undefined>();
   const [deleting, setDeleting] = useState<ServiceListItem | undefined>();
   function openAdd(): void {

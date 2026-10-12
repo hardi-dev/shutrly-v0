@@ -2,6 +2,12 @@
 
 Older handoffs, the early status table, the component-library and design-system notes, and superseded next steps, moved out of [HANDOFF.md](HANDOFF.md) on 2026-10-04 to keep the file that every session reads small. Nothing was edited. Read this only when you need history; the live sources are the feature folders, `docs/design-system/` and `docs/features/README.md`.
 
+## Previous handoff — F-24 setup-flow-fixes DONE (2026-10-12)
+
+- Outcome: five defects from the new-workspace walkthrough fixed (D1, D3–D6; D2/D7 withdrawn), verified 2026-10-12 with non-blocking deviations; built on `staging`, pushed with F-25.
+- Read: [setup-flow-fixes](features/setup-flow-fixes/) (`spec.md`, `plan.md`, `build-notes.md`, `verification-report.md`); [FND-003](findings/FND-003-ui-copy-lint-misses-copy-in-constants.md) fixed.
+- Open items that outlived it are listed in HANDOFF.md › Open items.
+
 ## Previous handoff — F-10 client-access, Owner 7 revision built (2026-10-07)
 
 - Outcome: Slices 0–12 built, then Revision OT (Slices 13–16, seven manual-test findings), F-20 *client-proof-downloads* and F-21 *delivery-folder-mapping*; verified and shipped 2026-10-09 (PR #12, deploy fix PR #13).

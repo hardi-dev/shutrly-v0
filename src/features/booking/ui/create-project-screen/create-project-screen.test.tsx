@@ -255,17 +255,26 @@ describe("CreateProjectScreen (S2)", () => {
     expect(screen.getByRole("textbox", { name: /Nama kampus/ })).toHaveValue("UI");
   });
 
-  it("AC-PRJ-014 shows the no-active-service state and blocks both submit buttons", () => {
+  it("AC-PRJ-014 AC-SETUP-016 shows the no-active-service state and blocks both submit buttons", () => {
     renderScreen(undefined, { groups: [], hasActiveService: false });
     expect(screen.getByRole("button", { name: /^Layanan/ })).toBeDisabled();
     expect(
-      screen.getByText("Buat atau aktifkan layanan dulu, lalu kembali untuk membuat proyek."),
+      screen.getByText(
+        "Proyek dimulai dari layanan dalam kategori. Tambahkan keduanya di dialog Tambah layanan.",
+      ),
     ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Buka layanan" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Tambah layanan" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Simpan draf" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Buat proyek" })).toBeDisabled();
     expect(screen.queryByText("Isi paket")).not.toBeInTheDocument();
     expect(screen.queryByText("Detail pemesanan")).not.toBeInTheDocument();
+  });
+
+  it("AC-SETUP-016 sends the no-service alert's action to Add service", async () => {
+    push.mockClear();
+    renderScreen(undefined, { groups: [], hasActiveService: false });
+    await userEvent.click(screen.getByRole("button", { name: "Tambah layanan" }));
+    expect(push).toHaveBeenCalledWith("/w/ws-1/services?add=service");
   });
 
   it("AC-PRJ-012 shows SERVICE_INACTIVE under Layanan, keeps the form and focuses Layanan", async () => {

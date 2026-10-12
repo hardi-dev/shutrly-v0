@@ -1,22 +1,23 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-12 (F-24 setup-flow-fixes DONE; F-22 merged to `staging`, not verified; F-25 setup-checklist intent DRAFT) · Read this first when resuming work, then [docs/README.md](README.md). Feature status lives in [feature-map.md](product/feature-map.md), not here.
-Branch: `staging`, local, 44 commits ahead of `origin/staging` (nothing pushed). Other work sits in worktrees under `.claude/worktrees/` (`git worktree list`).
+Last updated: 2026-10-12 (F-25 setup-checklist DONE and verified, merged to `staging`; F-24 DONE; F-22 merged, not verified) · Read this first when resuming work, then [docs/README.md](README.md). Feature status lives in [feature-map.md](product/feature-map.md), not here.
+Branch: `staging` (F-25 merged from `feat/setup-checklist` by PR). Other work sits in worktrees under `.claude/worktrees/` (`git worktree list`).
 
 History (previous handoffs, early status table, Pencil and design-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-24 setup-flow-fixes DONE (2026-10-12)
+## Current handoff — F-25 setup-checklist DONE (2026-10-12)
 
-- **State:** `DONE` (verified 2026-10-12, pass with non-blocking deviations: [verification-report.md](features/setup-flow-fixes/verification-report.md), run without E2E at the Owner's request). Branch `staging`; no PR, no deploy. **Uncommitted:** `docs/product/feature-map.md` (F-24 row), `verification-report.md` and this handoff.
-- **Done this session:** a new-workspace walkthrough found the defects → [intent](features/setup-flow-fixes/intent.md), [spec](features/setup-flow-fixes/spec.md), [plan](features/setup-flow-fixes/plan.md), [build notes](features/setup-flow-fixes/build-notes.md). Built: forms post and wait for hydration (D1), catalog dialogs submit on Enter (D3), page-not-found inside a workspace (D4), folder-mapping guidance (D5), English-only catalog screens (D6). D2/D7 withdrawn (did not reproduce: dev-mode first compile).
-- **Also:** skeleton and loading titles translated (`5d39543`); `local/ui-copy` now catches copy held in a constant, [FND-003](findings/FND-003-ui-copy-lint-misses-copy-in-constants.md) FIXED (`0046817`); breadcrumb ADR renumbered to [ADR-026](architecture/decisions/ADR-026-owner-breadcrumb-parallel-route.md); F-22 docs corrected (merged by PR #14); [F-25 intent](features/setup-checklist/intent.md) captured, DRAFT.
-- **Checks:** typecheck, lint on 83 files, `tokens:check`, `pnpm build` pass; 210 related unit tests in 54 files pass. Last recorded E2E (build time): no-JS forms 10/10, page-not-found 2/2. Not run: the full suite; E2E at verification.
-- **Owner actions:** commit the uncommitted docs; decide push and PR. Update the Photo sources frames in Pencil (DV-2: they still say to add `edited`/`print`). Accept or correct the F-25 intent in its own session (discovery prompt was given in chat). At ship, say that the waitlist change reaches production with the next landing deploy (ADR-021). The exploration login is in the git-ignored `.env.seed.explore` (dev database; workspace *Explore Studio*).
+- **State:** `DONE`, verified 2026-10-12 (pass with non-blocking deviations: [verification-report.md](features/setup-checklist/verification-report.md), run without E2E at the Owner's request). Branch `feat/setup-checklist`, merged into `staging` by PR (see `git log`); nothing uncommitted.
+- **Done this session:** [intent](features/setup-checklist/intent.md) accepted with recommended answers → [spec](features/setup-checklist/spec.md) + [AC](features/setup-checklist/acceptance-criteria.md) → [design](features/setup-checklist/design.md) (Pencil [setup-checklist.pen](features/setup-checklist/setup-checklist.pen), 9 frames, [exports](features/setup-checklist/exports/INDEX.md)) → [technical design](features/setup-checklist/technical-design.md) + [plan](features/setup-checklist/plan.md) → built, iterations 1–7 ([build notes](features/setup-checklist/build-notes.md)). A new workspace's dashboard shows a four-step checklist (one button on the current step, other open steps are row links), read in one SQL statement; *New project*'s no-service alert links to `/services?add=service`.
+- **Owner decisions:** design A4 (one button per state), card centered, overrides kept out of the library; copy approved (copy-deck §4.3a, compact bodies, *kamu*, *Optional* row confirmed); AC-SETUP-001 reworded to the shell header + checklist only (DV-1); DV-2 focus ring fixed.
+- **Checks:** typecheck, lint, `tokens:check`, `pnpm build`; 107 related unit/DOM tests + 10 integration tests pass. E2E at build: `setup-checklist/checklist.spec.ts` and `workspace/workspace.spec.ts` pass (the latter updated for the checklist). Not run: full suites; E2E at verification.
+- **Owner actions:** `/sdv:ship` when F-25 (and F-24) should reach staging's deploy. The exploration login is in the main checkout's git-ignored `.env.seed.explore` (*Explore Studio*, dev database).
 - **Open items:**
-  - F-24 follow-ups, in the verification report §6: DV-3 remove the stacked padding on the page-not-found screen (one line); DV-1 native-POST test for the client gallery; DV-4/5/6 partial coverage and a button inside a link (C-008).
-  - F-22 bilingual copy: implemented and merged 2026-10-11, **not verified**. Read [coverage-report.md](features/bilingual-copy-revamp/coverage-report.md). Journey, build-smoke and `gallery-owner-locale` E2E are blocked by the Neon websocket flake; 42 `DECK GAP` strings show the same text in EN and ID; the copy deck is still `DRAFT`.
-  - Carried from the F-10 handoff, unverified since: Netlify stops a stream at 60 s / 20 MB, so a large Print download can fail on staging; the staging *Wisuda Rina* group sent 5/10 before the partial-submission change is still `SUBMITTED`; R-6 (iOS Safari bulk download) needs a real phone.
-- **Next:** `/sdv:discover-feature setup-checklist` in its own worktree once the Owner accepts the F-25 intent; F-24 needs `/sdv:ship` only when the Owner wants it deployed. Copy work: draft with the Codex CLI, Owner approves, then update the copy deck.
+  - F-25 verification §6: DV-3 hover contrast 4.40:1 on row descriptions; DV-4 locked rows marked by text only; DV-5/DV-6/DV-9 re-run at ship (F-25 E2E, screenshots at 1440/1024/390, catalog AC-CAT-023, which never completed after the build); the shared list-card row has the same missing focus ring as DV-2 (separate task).
+  - F-24 follow-ups: [verification report](features/setup-flow-fixes/verification-report.md) §6 (DV-1, DV-3…DV-6).
+  - F-22 bilingual copy: merged, **not verified** ([coverage-report.md](features/bilingual-copy-revamp/coverage-report.md)); copy deck still `DRAFT`.
+  - Carried from F-10: Netlify 60 s / 20 MB stream limit on large Print downloads; staging *Wisuda Rina* group still `SUBMITTED`; R-6 needs a real phone.
+- **Next:** `/sdv:ship setup-checklist` (gates, staging deploy, smoke test incl. the open runs above). Then pick the next feature from the [feature map](product/feature-map.md).
 
 ## Key decisions (Owner)
 

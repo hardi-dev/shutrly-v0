@@ -5,6 +5,7 @@ import { COMING_SOON_COPY } from "@/features/workspace/ui/coming-soon-screen/com
 import { CREATE_WORKSPACE_COPY } from "@/features/workspace/ui/create-workspace-dialog/create-workspace-dialog.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 import { SETTINGS_COPY } from "@/features/workspace/ui/settings-screen/settings-screen.copy";
+import { SETUP_CHECKLIST_COPY } from "@/features/workspace/ui/setup-checklist/setup-checklist.copy";
 import { WORKSPACE_NOT_FOUND_COPY } from "@/features/workspace/ui/workspace-not-found-screen/workspace-not-found-screen.copy";
 import { WORKSPACE_SWITCHER_COPY } from "@/features/workspace/ui/workspace-switcher/workspace-switcher.copy";
 import { TOAST_COPY } from "@/ui/patterns/toast/toast.copy";
@@ -38,7 +39,11 @@ test("AC-WS-002 AC-WS-007 AC-WS-016 workspace onboarding, settings and create fl
   const firstWorkspaceUrl = new URL(page.url());
   firstWorkspaceUrl.search = "";
 
-  await expect(page.getByRole("heading", { name: "Aster Wedding" })).toBeVisible();
+  // A new workspace opens on the setup checklist (F-25 AC-SETUP-001), named in the switcher.
+  await expect(page.getByRole("button", { name: "Aster Wedding" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: SETUP_CHECKLIST_COPY.messages.id.title }).first(),
+  ).toBeVisible();
   await page.goto(`${firstWorkspaceUrl.toString().replace(/\/$/, "")}/settings`);
   await page.locator('input[name="name"]:visible').fill(RENAMED_WORKSPACE_NAME);
   await page.locator('input[name="brandName"]:visible').fill("Aster Studio");
@@ -56,7 +61,10 @@ test("AC-WS-002 AC-WS-007 AC-WS-016 workspace onboarding, settings and create fl
   await dialog.getByLabel(CREATE_WORKSPACE_COPY.messages.id.label).fill("Studio Baru");
   await dialog.getByRole("button", { name: CREATE_WORKSPACE_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
-  await expect(page.getByRole("heading", { name: "Studio Baru" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Studio Baru" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: SETUP_CHECKLIST_COPY.messages.id.title }).first(),
+  ).toBeVisible();
 });
 
 test("AC-WS-022 AC-WS-025 workspace shell is accessible and unbuilt sections are safe", async ({

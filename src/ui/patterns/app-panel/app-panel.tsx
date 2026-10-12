@@ -47,7 +47,7 @@ export function AppPanel({
 export function PageContent({ children }: Readonly<PageContentProps>) {
   return (
     <div className="w-full flex-1 overflow-y-auto px-(--component-panel-app-content-padding-x) py-(--component-panel-app-content-padding-y)">
-      <div className="mx-auto flex w-full max-w-[1096px] flex-col gap-(--component-panel-app-content-gap)">
+      <div className="mx-auto flex min-h-full w-full max-w-[1096px] flex-col gap-(--component-panel-app-content-gap)">
         {children}
       </div>
     </div>

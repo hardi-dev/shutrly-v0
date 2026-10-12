@@ -1,4 +1,4 @@
-import { enterWorkspace } from "@/composition/workspace/owner-workspace/owner-workspace";
+import { loadDashboard } from "@/composition/workspace/dashboard-flow/dashboard-flow";
 import { DashboardScreen } from "@/features/workspace/ui/dashboard-screen/dashboard-screen";
 
 export default async function DashboardPage({
@@ -10,12 +10,13 @@ export default async function DashboardPage({
 }>) {
   const { workspaceId } = await params;
   const { state } = await searchParams;
-  const { workspace } = await enterWorkspace(workspaceId);
+  const { workspace, checklist } = await loadDashboard(workspaceId);
   return (
     <DashboardScreen
       workspaceId={workspaceId}
       workspaceName={workspace.name}
       created={state === "created"}
+      checklist={checklist}
     />
   );
 }

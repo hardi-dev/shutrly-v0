@@ -411,6 +411,34 @@ Sources: `src/features/workspace/ui/*/*.copy.ts`, owner profile/workspace layout
 | Empty body | Open settings to add the brand name, contact details and invoice prefix. | Buka pengaturan untuk melengkapi nama merek, kontak, dan awalan nomor tagihan. |
 | Empty CTA | Set up branding | Lengkapi identitas merek |
 
+### 4.3a Setup checklist — `{workspace}` until the first project (F-25; drafted with the Codex CLI, approved by the Owner 2026-10-12; step bodies and locked hint rewritten compact for the design, Codex option 2 with terms in lower case and *Anda* → *kamu*, approved by the Owner the same day)
+
+Shown in place of the *Empty* rows above while the workspace has no project ([F-25 spec](../setup-checklist/spec.md)). Markers reuse §1: *Required* / *Wajib*, *Optional* / *Opsional*. The two §7.2 rows marked *replaces* replaced §7.2 *No service body* and *No service CTA* when F-25 was built (2026-10-12).
+
+| Element / context | English | Bahasa Indonesia | Review note |
+|---|---|---|---|
+| Checklist title | Set up your workspace | Siapkan ruang kerjamu | Option A chosen (Owner, 2026-10-12). |
+| Checklist description | Add a service first, then follow the recommended and optional steps. | Tambahkan layanan dulu, lalu ikuti langkah yang disarankan dan opsional. | EN aligned to the ID (Owner). |
+| Progress | {done} of {total} done | {done} dari {total} selesai | Plural-safe as written. |
+| Recommended marker (step 2) | Recommended | Disarankan | |
+| Optional marker (step 4) | Optional | Opsional | §4.3a note: markers reuse §1; §1 had no plain row (added at F-25 build; confirmed by the Owner 2026-10-12). |
+| Locked hint (steps 2–3) | This step opens after you add a service | Langkah ini terbuka setelah kamu menambah layanan | Compact rewrite (design 2026-10-12) replaces *Complete Add a service first.* |
+| Done status, accessible | Done | Selesai | Same as §1 *Done*. |
+| Step 1 title | Add a service | Tambah layanan | |
+| Step 1 body | Projects come from services; add categories in Add service | Proyek berawal dari layanan; kategori bisa dibuat lewat Tambah layanan | Compact rewrite replaces the two-sentence body. |
+| Step 1 action | Add service | Tambah layanan | |
+| Step 2 title | Add package items | Tambah isi paket | Drops "that the client picks from". |
+| Step 2 body | “Foto edit 50” limits how many photos clients pick | “Foto edit 50” menentukan batas foto yang dipilih klien | Compact rewrite. |
+| Step 2 action | Add package items | Tambah isi paket | |
+| Step 3 title | Create your first project | Buat proyek pertamamu | |
+| Step 3 body | Fill in client and shoot date in New project | Masukkan klien dan tanggal pemotretan lewat Proyek baru | Compact rewrite. |
+| Step 3 action | New project | Proyek baru | Opens the form; its submit stays *Create project*. |
+| Step 4 title | Set your brand name | Atur nama merek | |
+| Step 4 body | Clients see {workspaceName} in messages and galleries until then | Sebelum diatur, klien melihat {workspaceName} di pesan dan galeri | Compact rewrite. |
+| Step 4 action | Set brand name | Atur nama merek | |
+| §7.2 No service body (*replaces*) | A project starts from a service in a category. Add both in the Add service dialog. | Proyek dimulai dari layanan dalam kategori. Tambahkan keduanya di dialog Tambah layanan. | |
+| §7.2 No service CTA (*replaces*) | Add service | Tambah layanan | |
+
 ### 4.4 Workspace settings — `{workspace}/settings`
 
 | Element / context | English | Bahasa Indonesia |
@@ -822,8 +850,8 @@ Instagram, TikTok, Facebook, YouTube, X and WhatsApp are brand names in both lan
 | Service placeholder | Choose a service | Pilih layanan |
 | Service helper | {category} · Base price {amount} | {category} · Harga dasar {amount} |
 | No service title | No active services yet | Belum ada layanan aktif |
-| No service body | Create or reactivate a service, then return here to create a project. | Buat atau aktifkan layanan dulu, lalu kembali untuk membuat proyek. |
-| No service CTA | Open services | Buka layanan |
+| No service body | A project starts from a service in a category. Add both in the Add service dialog. | Proyek dimulai dari layanan dalam kategori. Tambahkan keduanya di dialog Tambah layanan. |
+| No service CTA | Add service | Tambah layanan |
 | Change-service confirmation | Change service? | Ganti layanan? |
 | Change-service body | Your package edits will be lost. The package will be replaced with {serviceName}. | Perubahan isi paketmu akan hilang. Isi paket diganti dengan isi {serviceName}. |
 | Change-service confirm | Change service | Ganti layanan |

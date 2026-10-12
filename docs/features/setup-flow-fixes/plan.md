@@ -18,7 +18,7 @@ Status: PLANNED (2026-10-12) · Design: [technical-design.md](technical-design.m
 
 **Read first:** AC-SFX-001…004 · C-103, C-006 · technical-design › Decisions D-1…D-3, UI components, Testing (rows 001–004) · coding-rules › React, Copy, Testing · code to follow: `src/ui/hooks/use-mobile-viewport/use-mobile-viewport.ts` (+ its test), `src/features/auth/ui/use-auth-form/use-auth-form.ts`, `src/features/auth/ui/register-form/register-form.tsx` · E2E helpers: `tests/e2e/auth/auth-e2e.ts` (`register`, `registerAndVerify`, `lastLink`).
 
-- [ ] **1.1 `useHydrated`.** Test first (`use-hydrated.test.tsx`): `renderToString` of a probe component shows `false`; `render` (after effects) shows `true`. Implement:
+- [x] **1.1 `useHydrated`.** Test first (`use-hydrated.test.tsx`): `renderToString` of a probe component shows `false`; `render` (after effects) shows `true`. Implement:
   ```ts
   "use client";
 
@@ -38,9 +38,9 @@ Status: PLANNED (2026-10-12) · Design: [technical-design.md](technical-design.m
   }
   ```
   Commit `fix(ui): add a hydration flag for forms that must not submit early`.
-- [ ] **1.2 Auth forms.** Add `readonly isReady: boolean` to `AuthForm` in `use-auth-form.types.ts`; `useAuthForm` returns `isReady: useHydrated()`. In register, login, forgot-password, reset-password, profile and change-password: `<form method="post" …>` and the submit `Button` `isDisabled={!isReady || isSubmitting}`. Tests first in each form's test: `method` is `post`; the button is disabled in `renderToString` output and enabled after render. Commit `fix(auth): post auth forms and keep submit disabled until ready`.
-- [ ] **1.3 Client password, waitlist, settings.** Same change with `useHydrated()` directly: `client-password-form.tsx` (`isDisabled={!hydrated || isLocked || isSubmitting}`), `waitlist-form.tsx` (native `disabled={!hydrated || isSubmitting}`), `settings-screen.tsx` (`isDisabled={!hydrated || settings.isSubmitting}`). Tests first, as in 1.2. One commit per form: `fix(gallery): …`, `fix(landing): …`, `fix(workspace): …`.
-- [ ] **1.4 E2E without JavaScript.** New `tests/e2e/setup-flow-fixes/forms-without-js.spec.ts` (per technical-design › Testing, rows AC-SFX-001…003). For the client gallery, reuse the gallery E2E fixture used by `tests/e2e/client-access/journeys.spec.ts` (needs `E2E_FAKE_DRIVE=1` in `.dev.vars` for the run, restore after); if it can't run here, record it as not run in `build-notes.md`. Commit `test(e2e): forms never submit natively without javascript`.
+- [x] **1.2 Auth forms.** Add `readonly isReady: boolean` to `AuthForm` in `use-auth-form.types.ts`; `useAuthForm` returns `isReady: useHydrated()`. In register, login, forgot-password, reset-password, profile and change-password: `<form method="post" …>` and the submit `Button` `isDisabled={!isReady || isSubmitting}`. Tests first in each form's test: `method` is `post`; the button is disabled in `renderToString` output and enabled after render. Commit `fix(auth): post auth forms and keep submit disabled until ready`.
+- [x] **1.3 Client password, waitlist, settings.** Same change with `useHydrated()` directly: `client-password-form.tsx` (`isDisabled={!hydrated || isLocked || isSubmitting}`), `waitlist-form.tsx` (native `disabled={!hydrated || isSubmitting}`), `settings-screen.tsx` (`isDisabled={!hydrated || settings.isSubmitting}`). Tests first, as in 1.2. One commit per form: `fix(gallery): …`, `fix(landing): …`, `fix(workspace): …`.
+- [x] **1.4 E2E without JavaScript.** New `tests/e2e/setup-flow-fixes/forms-without-js.spec.ts` (per technical-design › Testing, rows AC-SFX-001…003). For the client gallery, reuse the gallery E2E fixture used by `tests/e2e/client-access/journeys.spec.ts` (needs `E2E_FAKE_DRIVE=1` in `.dev.vars` for the run, restore after); if it can't run here, record it as not run in `build-notes.md`. Commit `test(e2e): forms never submit natively without javascript`.
 
 **Done when:** the unit tests of 1.1–1.3 and `forms-without-js.spec.ts` pass; `google-button` and `account-unavailable-screen` tests pass unchanged (AC-SFX-004); typecheck and lint clean.
 
@@ -50,7 +50,7 @@ Status: PLANNED (2026-10-12) · Design: [technical-design.md](technical-design.m
 
 **Read first:** AC-SFX-009, 010 · C-008, C-005 · technical-design › D-4, Concurrency · code to follow: `src/features/booking/ui/category-dialog/category-dialog.tsx` (`FORM_ID`, `<form onSubmit>`, `CategorySaveButton` with `type="submit" form=…`) · dialogs: `add-service-dialog.tsx` (primary at line ~104, `handleSubmit` at ~197), `service-item-dialog.tsx` (~39), `booking-field-dialog.tsx` (~69), `item-definition-dialog.tsx` (~78).
 
-- [ ] **2.1–2.4 One dialog per task**, same steps each:
+- [x] **2.1–2.4 One dialog per task**, same steps each:
   1. Test first in the dialog's test: type a valid value, press Enter → the action is called once with the same arguments as clicking the primary button; press Enter twice quickly → still once; an invalid value + Enter → the same field error as clicking.
   2. `const formId = useId();` Wrap the dialog's field content in `<form id={formId} noValidate onSubmit={onFormSubmit}>`, where
      ```ts

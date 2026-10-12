@@ -97,7 +97,7 @@ export const GALLERY_COPY = {
       sourcesDescription: "Link publicly shared Drive folders, then sync to read their photos.",
       sourcesEmptyTitle: "No folders yet",
       sourcesEmptyBody:
-        "Link a project folder. Photos outside `edited` and `print` folders are for selection; those named folders hold final files.",
+        "Link a project folder. Photos are for selection unless you map a subfolder to a package item; files in mapped subfolders are final files.",
       sourcesEmptyBodyMobile: "Link the project’s Google Drive folder.",
       addFolder: "Add folder",
       addFolderMobile: "Add",
@@ -159,7 +159,7 @@ export const GALLERY_COPY = {
       syncFailedBody: "Google Drive can’t be reached. Sync couldn’t finish. Try again later.",
       linkDialogTitle: "Add folder",
       linkDialogDescription:
-        "Files in `edited` or `print` folders are final files. Other photos, including session subfolders, are for selection.",
+        "Photos stay available for selection unless their subfolder is mapped to a package item. Mapped files are final files.",
       linkSourceLabel: "Source",
       linkSourceHelper: "Active sources only.",
       linkLabel: "Google Drive folder link",
@@ -411,7 +411,7 @@ export const GALLERY_COPY = {
         "Tautkan folder Drive yang dibagikan lewat tautan publik, lalu sinkronkan untuk membaca fotonya.",
       sourcesEmptyTitle: "Belum ada folder",
       sourcesEmptyBody:
-        "Tautkan folder proyek. Foto di luar folder `edited` dan `print` untuk pilihan klien; kedua folder itu untuk hasil akhir.",
+        "Tautkan folder proyek. Foto digunakan untuk pilihan kecuali subfolder dipetakan ke item paket; file di subfolder yang dipetakan menjadi hasil akhir.",
       sourcesEmptyBodyMobile: "Tautkan folder Google Drive proyek ini.",
       addFolder: "Tambah folder",
       addFolderMobile: "Tambah",
@@ -476,7 +476,7 @@ export const GALLERY_COPY = {
         "Google Drive belum bisa dihubungi. Sinkronisasi belum selesai. Coba lagi nanti.",
       linkDialogTitle: "Tambah folder",
       linkDialogDescription:
-        "File di folder `edited` atau `print` adalah hasil akhir. Foto lainnya, termasuk di subfolder sesi, untuk pilihan klien.",
+        "Foto tetap tersedia untuk dipilih kecuali subfoldernya dipetakan ke item paket. File yang dipetakan menjadi hasil akhir.",
       linkSourceLabel: "Sumber",
       linkSourceHelper: "Hanya sumber aktif.",
       linkLabel: "Tautan folder Google Drive",

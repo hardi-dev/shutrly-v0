@@ -1,7 +1,7 @@
 # Technical design — Breadcrumb revamp (F-22)
 
 Spec: [spec.md](spec.md) · Acceptance criteria: [acceptance-criteria.md](acceptance-criteria.md) · ADR: [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md)
-Status: PLANNED (2026-10-12; revised after review the same day). Task 8 unblocked: OQ-5 resolved 2026-10-12 (truncate the middle crumbs). Executable steps: [plan.md](plan.md).
+Status: BUILT (2026-10-12; revised after review the same day). Task 8 done: OQ-5 resolved 2026-10-12 (truncate the middle crumbs). Executable steps: [plan.md](plan.md).
 
 ## 1. Context
 Today the trail is built in three places:
@@ -69,7 +69,7 @@ Under `src/app/(owner)/w/[workspaceId]/@crumbs/`:
 
 Each slot page is a thin route file (coding rules › Next.js): load names, call the builder, render `<PageHeaderTrail items>` (server-rendered; it wraps the client `BreadcrumbTrail`, whose props are serializable). Each mirror renders the catch-all page component with fixed segments (Owner 2026-10-12: no duplicated body).
 
-**Rule for future routes:** every static sibling of a dynamic slot segment needs a mirror. There is no automated check yet; see §11.
+**Rule for future routes:** every static sibling of a dynamic slot segment needs a mirror. `owner-route-coverage.test.ts` checks this for every Owner page; see §11.
 
 ### 5.4 Wiring
 - `src/app/(owner)/w/[workspaceId]/layout.tsx` receives `crumbs` and passes it to `OwnerShell`.
@@ -125,14 +125,14 @@ None.
 | AC-CRUMB-010 | `page-header.test.tsx`: plain-text crumb not focusable, `aria-current` (Task 3) |
 | AC-CRUMB-011 | manual first-load check of a gallery URL (Task 5 Step 13); the mechanism is server rendering (ADR-025) |
 | AC-CRUMB-012 | the cached loaders keep their existing workspace checks and tests (Task 2) |
-| AC-CRUMB-013 | blocked (Task 8) |
+| AC-CRUMB-013 | `breadcrumb-trail.test.tsx` (Task 8, OQ-5 truncate the middle crumbs) |
 | AC-CRUMB-014 | unchanged mechanism (`PageHeadingOverride.parent`); existing `owner-shell.test.tsx` *Kembali* tests; client back targets in `review-text.test.ts` (Task 6) |
 | AC-CRUMB-015, 016 | `sidebar.test.tsx`, `page-header.test.tsx`, `app-shell.test.tsx`, e2e `app-shell-revamp.spec.ts` (Task 7) |
 
 Per the Owner's working rule (2026-10-05), each task runs only its related tests plus prettier, eslint and typecheck on the touched files, never the full suite.
 
 ## 11. Risks
-- **Slot capture:** a dynamic slot segment captures a static sibling (`projects/[projectId]` would match `new`). Mitigation: the five mirrors in Task 4. Any new Owner route with a dynamic sibling needs a mirror (ADR-025 › Consequences); there is no automated coverage test yet.
+- **Slot capture:** a dynamic slot segment captures a static sibling (`projects/[projectId]` would match `new`). Mitigation: the five mirrors in Task 4. Any new Owner route with a dynamic sibling needs a mirror (ADR-025 › Consequences); the automated route check is `owner-route-coverage.test.ts` (B-1, 2026-10-12), which fails on a dynamic page without a slot, a static sibling without a mirror, or a stale mirror.
 - **Extra work per request:** the slot calls the same loaders as the page; `cache()` makes them run once per request. A slot on a page that does not call the same loader with the same arguments runs it again (ADR-018).
 - **Test churn:** tests that pin the old trails change on purpose, one task at a time.
 - **Long trails (Task 8):** root and current stay whole; if both together are wider than the bar, the bar clips them (no horizontal page scroll, since the App Panel hides overflow).

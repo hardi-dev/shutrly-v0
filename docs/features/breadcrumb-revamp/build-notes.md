@@ -97,4 +97,4 @@ The gate e2e failed on the commit before F-22 too:
 
 ## Open minor findings (for a later pass)
 
-Kept in `.superpowers/sdd/progress.md` (git-ignored): duplicate JSDoc on cached loaders; `OWNER_NAV_COPY.create` reused for the *Proyek baru* crumb; no automated slot-coverage test; very short middle crumbs can shrink to a few pixels beside a long title; hydration warning on `<html data-theme>` seen in an e2e log (root layout, likely pre-existing).
+Kept in `.superpowers/sdd/progress.md` (git-ignored): duplicate JSDoc on cached loaders; `OWNER_NAV_COPY.create` reused for the *Proyek baru* crumb; very short middle crumbs can shrink to a few pixels beside a long title; hydration warning on `<html data-theme>` seen in an e2e log (root layout, likely pre-existing).

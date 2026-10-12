@@ -23,7 +23,7 @@ Covers: C-007 (F-02 A-8)
 **When** they reload, open another owner page, or switch workspace in the same browser
 **Then** the rail stays collapsed until they expand it. A different browser, or one with storage unavailable, starts expanded.
 
-> **Amended by F-22 (Owner 2026-10-12; not yet built):** collapsing and expanding use the toggle at the left of the breadcrumb bar (AC-CRUMB-015). The rule above is unchanged.
+> **Amended by F-22 (Owner 2026-10-12; built):** collapsing and expanding use the toggle at the left of the breadcrumb bar (AC-CRUMB-015). The rule above is unchanged.
 
 ## AC-SHELL-003 — Tablet rail and overlay
 Covers: C-008
@@ -32,7 +32,7 @@ Covers: C-008
 **When** any owner page opens
 **Then** the 72 px rail shows every destination in F-02 order, the Page Header matches desktop, and activating the logo or expand control opens the full Sidebar as an overlay above the panel, without moving the panel. Esc, a scrim click or choosing a destination closes it, and focus returns to the control that opened it.
 
-> **Amended by F-22 (Owner 2026-10-12; not yet built):** the overlay opens from the toggle at the left of the breadcrumb bar, not from the logo or a rail control, and has no close control of its own (AC-CRUMB-016).
+> **Amended by F-22 (Owner 2026-10-12; built):** the overlay opens from the toggle at the left of the breadcrumb bar, not from the logo or a rail control, and has no close control of its own (AC-CRUMB-016).
 
 ## AC-SHELL-004 — Phone top-level header and Bottom Nav
 Covers: BR-WS-003, C-008 (S-A2, S-A3)

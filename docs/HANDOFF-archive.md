@@ -2,6 +2,12 @@
 
 Older handoffs, the early status table, the component-library and design-system notes, and superseded next steps, moved out of [HANDOFF.md](HANDOFF.md) on 2026-10-04 to keep the file that every session reads small. Nothing was edited. Read this only when you need history; the live sources are the feature folders, `docs/design-system/` and `docs/features/README.md`.
 
+## Previous handoff — F-25 setup-checklist DONE (2026-10-12)
+
+- Outcome: a new workspace's dashboard shows a four-step setup checklist until the first project; verified 2026-10-12 (non-blocking deviations, run without E2E); merged to `staging`, PR #15.
+- Read: [setup-checklist](features/setup-checklist/) (`intent.md`, `spec.md`, `design.md`, `technical-design.md`, `plan.md`, `build-notes.md`, `verification-report.md`).
+- Open items that outlived it are listed in HANDOFF.md › Open items.
+
 ## Previous handoff — F-24 setup-flow-fixes DONE (2026-10-12)
 
 - Outcome: five defects from the new-workspace walkthrough fixed (D1, D3–D6; D2/D7 withdrawn), verified 2026-10-12 with non-blocking deviations; built on `staging`, pushed with F-25.

@@ -1,23 +1,24 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-12 (F-25 setup-checklist DONE and verified, merged to `staging`; F-24 DONE; F-22 merged, not verified) · Read this first when resuming work, then [docs/README.md](README.md). Feature status lives in [feature-map.md](product/feature-map.md), not here.
-Branch: `staging` (F-25 merged from `feat/setup-checklist` by PR). Other work sits in worktrees under `.claude/worktrees/` (`git worktree list`).
+Last updated: 2026-10-13 (F-26 dashboard-overview SPECIFIED; F-25 DONE, merged to `staging`; F-24 DONE; F-22 merged, not verified) · Read this first when resuming work, then [docs/README.md](README.md). Feature status lives in [feature-map.md](product/feature-map.md), not here.
+Branch: `docs/dashboard-feature-row` (F-26 docs, pushed, no PR; based on `staging` after F-25's PR #15). Other work sits in worktrees under `.claude/worktrees/` (`git worktree list`).
 
 History (previous handoffs, early status table, Pencil and design-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-25 setup-checklist DONE (2026-10-12)
+## Current handoff — F-26 dashboard-overview SPECIFIED (2026-10-13)
 
-- **State:** `DONE`, verified 2026-10-12 (pass with non-blocking deviations: [verification-report.md](features/setup-checklist/verification-report.md), run without E2E at the Owner's request). Branch `feat/setup-checklist`, merged into `staging` by PR (see `git log`); nothing uncommitted.
-- **Done this session:** [intent](features/setup-checklist/intent.md) accepted with recommended answers → [spec](features/setup-checklist/spec.md) + [AC](features/setup-checklist/acceptance-criteria.md) → [design](features/setup-checklist/design.md) (Pencil [setup-checklist.pen](features/setup-checklist/setup-checklist.pen), 9 frames, [exports](features/setup-checklist/exports/INDEX.md)) → [technical design](features/setup-checklist/technical-design.md) + [plan](features/setup-checklist/plan.md) → built, iterations 1–7 ([build notes](features/setup-checklist/build-notes.md)). A new workspace's dashboard shows a four-step checklist (one button on the current step, other open steps are row links), read in one SQL statement; *New project*'s no-service alert links to `/services?add=service`.
-- **Owner decisions:** design A4 (one button per state), card centered, overrides kept out of the library; copy approved (copy-deck §4.3a, compact bodies, *kamu*, *Optional* row confirmed); AC-SETUP-001 reworded to the shell header + checklist only (DV-1); DV-2 focus ring fixed.
-- **Checks:** typecheck, lint, `tokens:check`, `pnpm build`; 107 related unit/DOM tests + 10 integration tests pass. E2E at build: `setup-checklist/checklist.spec.ts` and `workspace/workspace.spec.ts` pass (the latter updated for the checklist). Not run: full suites; E2E at verification.
-- **Owner actions:** `/sdv:ship` when F-25 (and F-24) should reach staging's deploy. The exploration login is in the main checkout's git-ignored `.env.seed.explore` (*Explore Studio*, dev database).
+- **State:** F-26 `SPECIFIED` (spec status READY FOR DESIGN). Branch `docs/dashboard-feature-row` from `staging` (after the F-25 merge), pushed, **no PR**; nothing uncommitted. Docs only, no code.
+- **Done this session:** F-25 merged to `staging` (PR #15). F-26 added to the [feature map](product/feature-map.md) → [intent](features/dashboard-overview/intent.md) ACCEPTED 2026-10-13 → [spec](features/dashboard-overview/spec.md) + [AC-DASH-001..020](features/dashboard-overview/acceptance-criteria.md). After the first project the dashboard shows *Needs you*, *Upcoming sessions* (7 days), *Projects by status*, *Galleries expiring soon*; replaces the F-02 placeholder and drops *Set up branding*. F-25 spec/design carry a "superseded by F-26" note.
+- **Owner decisions (in the spec):** status-only attention; fixed 7-day window; ship without invoices (card after F-14); no activity feed; FC-001 time zone `Asia/Jakarta` as F-07/F-09; FC-002 F-25 note.
+- **Checks:** none needed (docs only).
+- **Owner actions:** decide whether `docs/dashboard-feature-row` gets a PR to `staging` now or carries on into design; import the design library when `/sdv:design-feature` asks.
 - **Open items:**
-  - F-25 verification §6: DV-3 hover contrast 4.40:1 on row descriptions; DV-4 locked rows marked by text only; DV-5/DV-6/DV-9 re-run at ship (F-25 E2E, screenshots at 1440/1024/390, catalog AC-CAT-023, which never completed after the build); the shared list-card row has the same missing focus ring as DV-2 (separate task).
-  - F-24 follow-ups: [verification report](features/setup-flow-fixes/verification-report.md) §6 (DV-1, DV-3…DV-6).
+  - F-25: DV-3, DV-4, and DV-5/DV-6/DV-9 re-runs at ship ([verification report](features/setup-checklist/verification-report.md) §6); shared list-card row focus ring (separate task).
+  - F-24 follow-ups: [verification report](features/setup-flow-fixes/verification-report.md) §6.
   - F-22 bilingual copy: merged, **not verified** ([coverage-report.md](features/bilingual-copy-revamp/coverage-report.md)); copy deck still `DRAFT`.
   - Carried from F-10: Netlify 60 s / 20 MB stream limit on large Print downloads; staging *Wisuda Rina* group still `SUBMITTED`; R-6 needs a real phone.
-- **Next:** `/sdv:ship setup-checklist` (gates, staging deploy, smoke test incl. the open runs above). Then pick the next feature from the [feature map](product/feature-map.md).
+  - `/sdv:ship setup-checklist` not run yet (staging deploy of F-24/F-25).
+- **Next:** `/sdv:design-feature dashboard-overview` (flows are simple, modelling skipped). New copy goes through Codex + Owner approval into the copy deck.
 
 ## Key decisions (Owner)
 

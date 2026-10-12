@@ -44,7 +44,7 @@ Covers: BR-PRJ-008 (A-4)
 
 **Given** the dashboard of AC-SETUP-001
 **When** the Owner chooses step 1's action
-**Then** *Services* opens with the *Add service* dialog already open; closing the dialog leaves them on *Services*.
+**Then** *Services* opens with the *Add service* dialog already open; closing the dialog leaves them on *Services*; saving a service opens its page (F-05 AC-CAT-010).
 
 ## AC-SETUP-006 — An active service completes step 1 and unlocks steps 2–3
 Covers: BR-CAT-008, BR-PRJ-008

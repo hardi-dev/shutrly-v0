@@ -1,6 +1,6 @@
 # Feature: Setup checklist (F-25)
 
-Status: SPECIFIED (2026-10-12) · Intent: [intent.md](intent.md) (ACCEPTED 2026-10-12) · Journeys: J-01 (*Dashboard*), J-02, J-03 · Ships after [F-24 `setup-flow-fixes`](../setup-flow-fixes/intent.md)
+Status: SPECIFIED (2026-10-12) · Intent: [intent.md](intent.md) (ACCEPTED 2026-10-12) · Journeys: J-01 (*Dashboard*), J-02, J-03 · Builds on [F-24 `setup-flow-fixes`](../setup-flow-fixes/spec.md) (DONE)
 
 ## Goal
 A new Owner sees on the dashboard what to set up before the first project and in what order, starting with the one blocker (a service). Each step leads to the screen that does it and shows as done once the data exists. The checklist is gone once the workspace has a project.
@@ -36,9 +36,9 @@ Steps rows 5–9 of the intent's table are not shown (intent › Recommended ans
 
 ## Main Flow — first project from a new workspace
 1. The Owner creates a workspace and lands on the dashboard (J-01). It shows the greeting and the checklist in place of the *Set up branding* empty state. Step 1 is not done; steps 2 and 3 are locked; step 4 is not done.
-2. The Owner chooses step 1's action. *Services* opens with *Add service* open. They save a service (with a new or existing category).
-3. Back on the dashboard, step 1 shows as done; steps 2 and 3 are unlocked.
-4. The Owner chooses step 2's action. With one service, its page opens; they add *Foto edit* to it. Back on the dashboard, step 2 shows as done.
+2. The Owner chooses step 1's action. *Services* opens with *Add service* open. They save a service (with a new or existing category), and the new service's page opens (F-05), where package items are added.
+3. They add *Foto edit* to it there. Back on the dashboard, steps 1 and 2 show as done and step 3 is unlocked.
+4. Had they returned before adding items, step 2's action opens the same service page (one active service).
 5. The Owner chooses step 3's action and creates the project in *New project* (client and session inside it, F-07).
 6. On the next dashboard load the workspace has a project: the checklist is gone and the dashboard shows today's placeholder, *Set up branding* included.
 
@@ -84,7 +84,7 @@ Steps rows 5–9 of the intent's table are not shown (intent › Recommended ans
 - **A-4:** the *Add service* deep link is a URL on *Services* that opens the dialog on load; closing the dialog leaves the Owner on *Services*. Its form is decided in the plan.
 
 ## Dependencies
-- **F-24 `setup-flow-fixes` (ships first).** The checklist sends Owners through *Add service* and the catalog screens it fixes. F-25 relies on: defect 7 (after *Add service* the Owner stays on the list, sees the new service and gets a toast whose action opens it — the bridge from step 1 to step 2), defect 2 (the new service appears in the list at once), defect 3 (catalog dialogs submit on Enter), defect 6 (English catalog screens show English only). F-25 doesn't fix these.
+- **F-24 `setup-flow-fixes` (DONE on `staging`, merged into this branch 2026-10-12).** The checklist sends Owners through the catalog screens it fixed: catalog dialogs submit on Enter (D3) and English catalog screens show English only (D6). D2 and D7 were withdrawn as not reproduced: saving *Add service* opens the new service's page, as F-05 specifies (F-05 step 4, AC-CAT-010). F-25 relies on that navigation to bridge step 1 to step 2.
 - F-05 catalog (services, service items, definitions), F-07 projects (*New project*), F-02 workspace (dashboard, settings), F-22 copy deck.
 
 ## Out of Scope

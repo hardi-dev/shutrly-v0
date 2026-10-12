@@ -1,7 +1,7 @@
 # Technical design — Breadcrumb revamp (F-22)
 
 Spec: [spec.md](spec.md) · Acceptance criteria: [acceptance-criteria.md](acceptance-criteria.md) · ADR: [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md)
-Status: PLANNED (2026-10-12; revised after review the same day). Iteration 7 is BLOCKED on OQ-5.
+Status: PLANNED (2026-10-12; revised after review the same day). Task 8 is BLOCKED on OQ-5. Executable steps: [plan.md](plan.md).
 
 ## 1. Context
 Today the trail is built in three places:
@@ -33,37 +33,22 @@ No new server action or API route. New read-only loaders in `src/composition/` (
 ## 5. Logic
 
 ### 5.1 Pure trail builder (Owner)
-New unit `src/features/workspace/domain/owner-trail/owner-trail.ts` (+ `.types.ts`, `.test.ts`). No React import.
+New unit `src/features/workspace/ui/owner-trail/owner-trail.ts` (+ `.test.ts`). No React import. It lives in `ui/`, not `domain/`, because it reads `OWNER_NAV_COPY` and the coding rules forbid `domain` from importing `ui` copy.
 
 ```ts
-interface TrailCrumb { readonly label: string; readonly href?: string } // no href = plain text
-
-// Root first, then ancestors, then the current page (R-1, R-2, R-5).
-ownerTrail(input: {
-  workspaceId: string;
-  workspaceName: string;
-  ancestors: readonly TrailCrumb[];
-  current: string;
-  isRoot?: boolean;            // the Dashboard: returns [{ label: current }]
-}): readonly TrailCrumb[]
-
-// Fixed labels for the catch-all slot (sections, tabs, `new`, Segera hadir).
-// Returns null for an unknown path, so the main route's notFound() decides.
-staticOwnerTrail(segments: readonly string[], ctx: { workspaceId; workspaceName }): readonly TrailCrumb[] | null
+ownerTrail(input: { workspaceId; workspaceName; ancestors: readonly BreadcrumbItem[]; current: string }): readonly BreadcrumbItem[]
+dashboardTrail(): readonly BreadcrumbItem[]                 // [Dasbor]
+sectionCrumb(workspaceId, section: OwnerSection): BreadcrumbItem
+projectCrumb(workspaceId, projectId, title): BreadcrumbItem
+staticOwnerTrail(segments, workspaceId, workspaceName): readonly BreadcrumbItem[] | null // null = unknown path
 ```
 
-`staticOwnerTrail` covers `projects`, `projects/completed`, `projects/cancelled`, `projects/new`, `clients`, `clients/archived`, `team`, `team/archived`, `team/roles`, `services`, `services/categories`, `services/items`, `message-templates`, `photo-sources`, `settings`, `invoices`, `search`, `notifications`. Labels come from `OWNER_NAV_COPY` (including `projectTabs`, `clientTabs`, `teamTabs`, `serviceTabs`) and `PROJECT_COPY.createTitle`.
+`staticOwnerTrail` covers `projects`, `projects/completed`, `projects/cancelled`, `projects/new`, `clients`, `clients/archived`, `team`, `team/archived`, `team/roles`, `services`, `services/categories`, `services/items`, `message-templates`, `photo-sources`, `settings`, `invoices`, `search`, `notifications`. Labels come from `OWNER_NAV_COPY` (including `projectTabs`, `clientTabs`, `teamTabs`, `serviceTabs`, and `create` for *Proyek baru*). Labels owned by other features (*Galeri*, *Pilihan klien*, template labels) are passed in by the slot pages in `app/`, which may import any feature's `ui`.
 
-**Labels vs. titles (R-3).** The crumb label and the page `<h1>` are separate. The resolvers in `owner-nav.tsx` keep returning `title` (the `<h1>`: *Proyek* on every projects tab), and the builder sets the crumb label (*Selesai*). `PageHeading.breadcrumbs` is removed from `owner-nav.types.ts` in iteration 4.
+**Labels vs. titles (R-3).** The crumb label and the page `<h1>` are separate. The resolvers in `owner-nav.tsx` keep returning `title` (the `<h1>`: *Proyek* on every projects tab), and the builder sets the crumb label (*Selesai*). `PageHeading.breadcrumbs` is removed from `owner-nav.types.ts` (plan Task 5).
 
-### 5.2 Name loaders (Owner)
-New unit `src/composition/workspace/owner-trail-names/owner-trail-names.ts`, each function wrapped in React `cache()`:
-- `loadTrailWorkspace(rawWorkspaceId)` → `{ id, name }` through `verifyOwnerWorkspace`;
-- `loadTrailProject(rawWorkspaceId, rawProjectId)` → `{ title }`, scoped to the workspace;
-- `loadTrailService(rawWorkspaceId, rawServiceId)` → `{ name }`;
-- `loadTrailGroup(rawWorkspaceId, rawProjectId, rawGroupId)` → `{ name }`, scoped to the project.
-
-Each one validates its raw ids like the existing loaders, throws `notFound()` for a missing or foreign entity, and reads through the existing scoped repositories. The builder looks up the repository read used by `loadProjectDetail`, `loadServiceDetail` and `loadSelectionGroupDetail` and reuses it; it does not write new SQL if a scoped read exists. The template label needs no DB: slug → `TEMPLATE_COPY[type].label`, or `null` for an unknown slug.
+### 5.2 Names: the existing loaders, cached
+No new loader. The slot pages call the same composition loaders as their pages, and those loaders are wrapped in React `cache()`, so a slot and its page share one query per request: `verifyOwnerWorkspace`, `loadProjectDetail` (`.title`), `loadServiceDetail` (`.name`), `loadGalleryPage` (`.project.title`), `loadSelectionGroups` (`.projectTitle`), `loadSelectionGroupDetail` (`.projectTitle`, `.group.name`). They already validate ids, verify the workspace and throw `notFound()` for a foreign entity (AC-CRUMB-012). The modules are `server-only`, not `"use server"`, so exporting a cached `const` is allowed; outside a server render `cache()` just calls the function. The template label needs no DB: the slot finds the editor in `messageTemplateSubPages(workspaceId)` by path and uses its `title`, or renders nothing for an unknown slug.
 
 ### 5.3 Slot routes (ADR-025)
 Under `src/app/(owner)/w/[workspaceId]/@crumbs/`:
@@ -73,24 +58,24 @@ Under `src/app/(owner)/w/[workspaceId]/@crumbs/`:
 | `default.tsx` | `null` (Next 16 requirement) |
 | `page.tsx` | `Dasbor` |
 | `[...segments]/page.tsx` | `staticOwnerTrail(segments)`; `null` when unknown |
-| `projects/new/page.tsx`, `projects/completed/page.tsx`, `projects/cancelled/page.tsx` | static mirrors (iteration 3) |
+| `projects/new/page.tsx`, `projects/completed/page.tsx`, `projects/cancelled/page.tsx` | static mirrors (plan Task 4) |
 | `projects/[projectId]/page.tsx` | Aster › Proyek › {judul} |
 | `projects/[projectId]/gallery/page.tsx` | … › {judul} › Galeri |
 | `projects/[projectId]/gallery/picks/page.tsx` | … › Galeri › Pilihan klien |
 | `projects/[projectId]/gallery/picks/[groupId]/page.tsx` | … › Pilihan klien › {grup} |
-| `services/categories/page.tsx`, `services/items/page.tsx` | static mirrors (iteration 3) |
+| `services/categories/page.tsx`, `services/items/page.tsx` | static mirrors (plan Task 4) |
 | `services/[serviceId]/page.tsx` | Aster › Layanan › {nama} |
 | `message-templates/[templateType]/page.tsx` | Aster › Template pesan › {label} |
 
-Each slot page is a thin route file (coding rules › Next.js): load names, call the builder, render `<BreadcrumbTrail>` with the items (server-rendered; `BreadcrumbTrail` is a client component with serializable props). The mirrors reuse the catch-all's function.
+Each slot page is a thin route file (coding rules › Next.js): load names, call the builder, render `<PageHeaderTrail items>` (server-rendered; it wraps the client `BreadcrumbTrail`, whose props are serializable). Each mirror repeats the catch-all's four lines with fixed segments.
 
-**Rule for future routes:** every static sibling of a dynamic slot segment needs a mirror. A test lists the main-tree routes and fails if one has no slot match (§10).
+**Rule for future routes:** every static sibling of a dynamic slot segment needs a mirror. There is no automated check yet; see §11.
 
 ### 5.4 Wiring
 - `src/app/(owner)/w/[workspaceId]/layout.tsx` receives `crumbs` and passes it to `OwnerShell`.
-- `OwnerShell` → `AppShell` (`panelCrumbs?: ReactNode`) → `AppPanel` → `PageHeader` (`trail?: ReactNode`). When `trail` is set, `BreadcrumbRow` renders it in place of the generated `BreadcrumbTrail`.
+- `OwnerShell` (`trail?: ReactNode`) → `AppShell` (`panelTrail?: ReactNode`) → `AppPanel` (`trail`) → `PageHeader` (`trail?: ReactNode`). When `trail` is set, `BreadcrumbRow` renders it in place of the generated trail.
 - `src/app/(owner)/profile/layout.tsx` passes the static trail *Profil* (no slot outside `/w`).
-- **Transition (iterations 2–3):** a pure allow-list `hasServerTrail(pathname, workspaceId)` in the same unit decides whether `OwnerShell` uses `crumbs` or the old assembly. It grows per iteration and is deleted in iteration 4 together with the old assembly. Each commit therefore keeps every route with a correct or previous trail, never an empty bar.
+- **Transition:** no allow-list. The slot routes are added first while the layout still ignores `crumbs` (Next renders them; nothing shows them). One later commit makes the layout pass `crumbs` and removes the old browser-side assembly. Every commit keeps a working trail.
 
 ### 5.5 Client trails
 - `reviewHeader` (`review-text.ts`): the read-only branch returns `Beranda › {grup} (no href) › Tinjau`. The editable branch is unchanged.
@@ -100,18 +85,18 @@ Each slot page is a thin route file (coding rules › Next.js): load names, call
 
 ## 6. UI components
 
-| Component | Change | Iteration |
+| Component | Change | Plan task |
 |---|---|---|
-| `PageHeader` (`page-header.tsx`, `.types.ts`) | `trail?: ReactNode` (replaces generated trail); `leading?: ReactNode` (toggle) | 2, 6 |
-| `AppPanel` (`app-panel.tsx`, `.types.ts`) | pass `trail`, `leading`; remove the English default `parent = "Workspace"` | 2, 4, 6 |
-| `AppShell` (`app-shell.tsx`, `.types.ts`) | `panelCrumbs`; toggle | 2, 6 |
-| `OwnerShell` (`owner-shell.tsx`) | uses `crumbs`; old `panelBreadcrumbs` assembly removed | 2, 4 |
-| `owner-nav.tsx`, `.types.ts` | `breadcrumbs` removed from resolvers and `PageHeading` | 4 |
+| `PageHeader` (`page-header.tsx`, `.types.ts`) | `trail?: ReactNode` and `PageHeaderTrail` (Task 3); `leading?: ReactNode` (toggle, Task 7) | 3, 7 |
+| `AppPanel` (`app-panel.tsx`, `.types.ts`) | pass `trail`, `leading`. The English default `parent = "Workspace"` stays: production always passes `parent`, and the AppPanel unit tests rely on the default | 3, 7 |
+| `AppShell` (`app-shell.tsx`, `.types.ts`) | `panelTrail` (Task 3); toggle (Task 7) | 3, 7 |
+| `OwnerShell` (`owner-shell.tsx`) | `trail` prop from the layout; old `panelBreadcrumbs` assembly removed | 5 |
+| `owner-nav.tsx`, `.types.ts` | `breadcrumbs` removed from resolvers and `PageHeading` | 5 |
 | `PageHeadingOverride` | unchanged contract (`parent` stays: phone Compact Bar target) | — |
-| `Sidebar` (`sidebar.tsx`, `.types.ts`) | remove `onCollapse`, `onExpand`, logo-row and rail buttons | 6 |
-| Client header helpers | composition only | 5 |
+| `Sidebar` (`sidebar.tsx`, `.types.ts`) | remove `onCollapse`, `onExpand`, logo-row and rail buttons | 7 |
+| Client header helpers | composition only | 6 |
 
-**Copy.** New strings go into `*.copy.ts` (lint `local/ui-copy`). The literal `"Layanan"` in `services/[serviceId]/page.tsx` becomes `OWNER_NAV_COPY.services` (iteration 3).
+**Copy.** New strings go into `*.copy.ts` (lint `local/ui-copy`). The literal `"Layanan"` in `services/[serviceId]/page.tsx` becomes `OWNER_NAV_COPY.services` (plan Task 5).
 
 ## 7. Validation and errors
 - Slot pages validate raw ids like the existing loaders (`galleryIdOrNotFound` and equivalents).
@@ -128,119 +113,52 @@ None.
 
 ## 10. Testing strategy (AC → test)
 
-| AC | Test |
+| AC | Test (plan task) |
 |---|---|
-| AC-CRUMB-001 | `owner-trail.test.ts` (`isRoot`), e2e `app-shell-revamp.spec.ts` (replaces *Aster Wedding Dasbor*) |
-| AC-CRUMB-002 | `owner-trail.test.ts` › `staticOwnerTrail` per section |
-| AC-CRUMB-003 | `owner-trail.test.ts` › tab routes; `owner-nav.test.tsx` titles stay the section name |
-| AC-CRUMB-004, 006 | `owner-trail.test.ts` with ancestors; `owner-trail-names.test.ts`; e2e on project, gallery, service, template pages |
-| AC-CRUMB-005 | same, for picks and a picks group |
-| AC-CRUMB-007 | `owner-shell.test.tsx` or profile layout test: `Profil` only |
-| AC-CRUMB-008 | `review-text.test.ts`: editable vs read-only (no href on the group crumb) |
-| AC-CRUMB-009 | `client-browse-screen` test (title, subtitle, trail, back); e2e: a project without groups lands on Beranda |
-| AC-CRUMB-010 | `page-header.test.tsx`: nav label, link focus order, `aria-current`, the plain-text exception not focusable |
-| AC-CRUMB-011 | e2e: fetch the gallery URL and assert the server HTML contains the full trail; client navigation asserts the first visible trail |
-| AC-CRUMB-012 | `owner-trail-names.test.ts` (foreign project/service/group → not found); e2e for a foreign project id |
-| AC-CRUMB-013 | blocked (iteration 7) |
-| AC-CRUMB-014 | `owner-shell.test.tsx`: Compact Bar parent per sub-page (unchanged mechanism); client back targets in the header helper tests |
-| AC-CRUMB-015, 016 | `sidebar.test.tsx`, `app-shell.test.tsx`, e2e `app-shell-revamp.spec.ts` |
-| Slot coverage | `owner-trail-routes.test.ts`: every `page.tsx` under `src/app/(owner)/w/[workspaceId]/` (outside `@crumbs`) has a matching slot route or a catch-all entry |
+| AC-CRUMB-001 | `owner-trail.test.ts` (`dashboardTrail`), e2e `app-shell-revamp.spec.ts` expects `Dasbor` (Tasks 1, 5) |
+| AC-CRUMB-002 | `owner-trail.test.ts` › each section (Task 1) |
+| AC-CRUMB-003 | `owner-trail.test.ts` › tab routes and *Proyek baru* (Task 1); `owner-nav.test.tsx` titles stay the section name (Task 5) |
+| AC-CRUMB-004, 005, 006 | `owner-trail.test.ts` with ancestors (Task 1); slot pages verified by typecheck and the manual first-load check (Tasks 4, 5) |
+| AC-CRUMB-007 | profile layout passes `Profil` (Task 5) |
+| AC-CRUMB-008 | `review-text.test.ts`: editable vs read-only (Task 6) |
+| AC-CRUMB-009 | `client-browse-screen.test.tsx` (title, subtitle, trail, back); integration `home.test.ts` unchanged (Task 6) |
+| AC-CRUMB-010 | `page-header.test.tsx`: plain-text crumb not focusable, `aria-current` (Task 3) |
+| AC-CRUMB-011 | manual first-load check of a gallery URL (Task 5 Step 13); the mechanism is server rendering (ADR-025) |
+| AC-CRUMB-012 | the cached loaders keep their existing workspace checks and tests (Task 2) |
+| AC-CRUMB-013 | blocked (Task 8) |
+| AC-CRUMB-014 | unchanged mechanism (`PageHeadingOverride.parent`); existing `owner-shell.test.tsx` *Kembali* tests; client back targets in `review-text.test.ts` (Task 6) |
+| AC-CRUMB-015, 016 | `sidebar.test.tsx`, `page-header.test.tsx`, `app-shell.test.tsx`, e2e `app-shell-revamp.spec.ts` (Task 7) |
 
-Per the Owner's working rule (2026-10-05), each iteration runs only its related tests plus prettier, eslint and typecheck on the touched files, never the full suite.
+Per the Owner's working rule (2026-10-05), each task runs only its related tests plus prettier, eslint and typecheck on the touched files, never the full suite.
 
 ## 11. Risks
-- **Slot capture:** a dynamic slot segment captures a static sibling (`projects/[projectId]` would match `new`). Mitigation: mirrors and the coverage test.
-- **Extra queries:** a slot loader that can't share the page's cached function adds one lookup (ADR-018). Keep the lookups to one indexed read.
-- **Test churn:** many tests pin the old trails; they change on purpose, one iteration at a time.
-- **Transition code:** the `hasServerTrail` allow-list must be deleted in iteration 4; its removal is in that iteration's checklist.
-- **Long trails (iteration 7):** blocked until OQ-5.
+- **Slot capture:** a dynamic slot segment captures a static sibling (`projects/[projectId]` would match `new`). Mitigation: the five mirrors in Task 4. Any new Owner route with a dynamic sibling needs a mirror (ADR-025 › Consequences); there is no automated coverage test yet.
+- **Extra work per request:** the slot calls the same loaders as the page; `cache()` makes them run once per request. A slot on a page that does not call the same loader with the same arguments runs it again (ADR-018).
+- **Test churn:** tests that pin the old trails change on purpose, one task at a time.
+- **Long trails (Task 8):** blocked until OQ-5.
 
 ## 12. ADR
 [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md): the Owner breadcrumb is rendered on the server by a parallel route slot.
 
 ## 13. Iterations
+The executable steps, with exact code and commands, are in [plan.md](plan.md). It is written so Claude Haiku 5.5 can run it task by task. One commit per task.
 
-Each iteration: plan → implement (test-first) → test → verify → commit. One commit per iteration, conventional, English, lowercase, no trailing period, with the session's Co-Authored-By line.
+| Task | Content | AC |
+|---|---|---|
+| 1 | Owner trail builder (`features/workspace/ui/owner-trail`) | 001–003, 007 (groundwork) |
+| 2 | Cache the shared loaders | 012 (kept), ADR-025 |
+| 3 | Page Header takes a server-rendered trail (`trail`, `PageHeaderTrail`, `panelTrail`) | 010 |
+| 4 | `@crumbs` slot routes, mirrors and dynamic pages (not shown yet) | 001–006 |
+| 5 | Switch the Owner shell and the profile layout to the slot; drop the browser-side trail | 001–007, 011, 014 |
+| 6 | Client trails; Beranda always present | 008, 009, 010, 014 |
+| 7 | Sidebar toggle beside the breadcrumb | 015, 016 |
+| 8 | Long trail overflow (BLOCKED on OQ-5) | 013 |
 
-### Iteration 1 — Trail builder and name loaders
-**Covers:** groundwork for AC-CRUMB-001…007, AC-CRUMB-012.
-**Read first:** spec R-1…R-5, the trail tables; this doc §5.1, §5.2, §8; ADR-025; `coding-rules.md` › Files, Functions and comments, Copy, Testing; `owner-nav.copy.ts`; `verifyOwnerWorkspace` (`owner-workspace.ts:51`); the scoped reads behind `loadProjectDetail`, `loadServiceDetail`, `loadSelectionGroupDetail`.
-**Checklist:**
-- [ ] `owner-trail.ts` with `ownerTrail` and `staticOwnerTrail`; failing tests first for root, ancestors, dashboard, each static route and an unknown path.
-- [ ] `owner-trail-names.ts` with the four cached loaders; tests for a found name, a foreign workspace, a foreign project and a group of another project.
-**Done:** both units are tested and green; nothing renders them yet.
-**Commit:** `feat(workspace): add owner breadcrumb builder and scoped name loaders`
-
-### Iteration 2 — Slot wiring, dashboard, profile, sections and tabs
-**Covers:** AC-CRUMB-001, 002, 003, 007, 010 (owner), 011 (static routes).
-**Read first:** ADR-025; this doc §5.3, §5.4, §6; Next docs `node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/parallel-routes.md` and `upgrading/version-16.md` › *Parallel Routes `default.js` requirement*; `layout.tsx` (workspace and profile); `owner-shell.tsx`; `app-shell.tsx`; `app-panel.tsx`; `page-header.tsx`.
-**Checklist:**
-- [ ] `@crumbs/default.tsx`, `@crumbs/page.tsx`, `@crumbs/[...segments]/page.tsx`.
-- [ ] Layout passes `crumbs`; `OwnerShell` → `AppShell.panelCrumbs` → `AppPanel` → `PageHeader.trail`.
-- [ ] `hasServerTrail` allow-list: dashboard and the static routes; others keep the old assembly.
-- [ ] Profile layout passes `Profil`.
-- [ ] Tests: page-header `trail` slot and accessibility; owner-shell uses `crumbs` for allow-listed paths; e2e AC-SHELL-001 expectation becomes `Dasbor`.
-**Done:** the dashboard, profile, sections and tabs show the spec trails in the server HTML; project and service pages still show their previous trail.
-**Commit:** `feat(shell): render the owner breadcrumb from a server slot`
-
-### Iteration 3 — Project, gallery, service and template pages
-**Covers:** AC-CRUMB-004, 006, 011, 012.
-**Read first:** this doc §5.3 (mirrors), §7, §8; the slot pages from iteration 2; `services/[serviceId]/page.tsx`; `template-sub-pages.ts`; `TEMPLATE_COPY`.
-**Checklist:**
-- [ ] Slot pages `projects/[projectId]`, `projects/[projectId]/gallery`, `services/[serviceId]`, `message-templates/[templateType]`.
-- [ ] Mirrors `projects/new`, `projects/completed`, `projects/cancelled`, `services/categories`, `services/items`.
-- [ ] Extend `hasServerTrail`.
-- [ ] `services/[serviceId]/page.tsx`: `parent` label from `OWNER_NAV_COPY.services`.
-- [ ] `owner-trail-routes.test.ts` (slot coverage).
-- [ ] e2e: the gallery URL's server HTML has the full trail; a foreign project id gives 404.
-**Done:** those pages show the spec trails on first paint; no static route is captured by a dynamic slot segment.
-**Commit:** `feat(shell): show full owner trails on project, gallery, service and template pages`
-
-### Iteration 4 — Picks pages and removal of the old assembly
-**Covers:** AC-CRUMB-005, 012, 014 (owner).
-**Read first:** this doc §5.3, §6; picks main pages; `owner-shell.tsx`; `owner-nav.tsx`, `owner-nav.types.ts`; `app-panel.tsx`.
-**Checklist:**
-- [ ] Slot pages `.../gallery/picks` and `.../gallery/picks/[groupId]`.
-- [ ] Delete `hasServerTrail` and the old `panelBreadcrumbs` assembly in `OwnerShell`.
-- [ ] Remove `breadcrumbs` from `resolveServicesHeading` and `PageHeading`; update `owner-nav.test.tsx`.
-- [ ] Remove the `parent = "Workspace"` default in `AppPanel`.
-- [ ] Tests: picks trails; Compact Bar parent per sub-page unchanged.
-**Done:** every Owner route's trail comes from the slot; `rg panelBreadcrumbs` finds no assembly code; related tests green.
-**Commit:** `feat(shell): show full owner trails on picks pages and drop the client-side trail`
-
-### Iteration 5 — Client trails and Beranda always present
-**Covers:** AC-CRUMB-008, 009, 010 (client), 014 (client).
-**Read first:** spec R-5 exception, R-7, *Semua foto for a project without groups*; this doc §5.5; `review-text.ts` and its test; `client-browse-screen.tsx`; `client-home.ts` and its test; `src/app/(client)/g/[token]/page.tsx`, `photos/page.tsx`, `picks/[groupId]/page.tsx` (D-2 redirect); client-access AC-SEL-012 and AC-SEL-020 amendment notes.
-**Checklist:**
-- [ ] Read-only review: group crumb without `href`, then *Tinjau*.
-- [ ] Remove the `ALL_PHOTOS` redirect; Beranda shows only the *Semua foto* card for a project without groups and final delivery.
-- [ ] `baseHeader`: `hasHome` → `hasGroups`; trail `Beranda › Semua foto` and `back` to Beranda always; title and subtitle unchanged.
-- [ ] `clientLanding`: delete or keep per §5.5.
-- [ ] Tests: review trail both branches; browse header for a project without groups; e2e AC-SEL-012/020 per their amendment.
-**Done:** related client tests and the client e2e for a project without groups pass.
-**Commit:** `feat(gallery): keep beranda in the client trail and show tinjau on read-only reviews`
-
-### Iteration 6 — Sidebar toggle beside the breadcrumb
-**Covers:** AC-CRUMB-015, 016.
-**Read first:** spec › *Sidebar toggle*; F-17 amendment notes (spec Desktop/Tablet rows, AC-SHELL-001…003); this doc §6; `sidebar.tsx`, `sidebar.types.ts`, `sidebar.test.tsx`; `app-shell.tsx`, `app-shell.test.tsx`; `page-header.tsx`; e2e `app-shell-revamp.spec.ts` lines 83–91, 170.
-**Checklist:**
-- [ ] `SidebarProps`: remove `onCollapse`, `onExpand`; `SidebarLogo` renders the brand only; remove the compact footer expand button.
-- [ ] `PageHeader`/`AppPanel`: `leading` slot left of the trail, rendered only when set.
-- [ ] `AppShell`: one `sidebarToggle` with two `IconButton`s carrying `data-sidebar-toggle`: `hidden xl:flex` (icon and label follow `isDesktopSidebarCollapsed`; collapses or expands) and `hidden md:flex xl:hidden` (*Buka sidebar*; opens the overlay); pass it as `leading`.
-- [ ] Remove `onCollapse`/`onExpand` from `DesktopSidebar`, `onExpand` from `TabletRail`, `onCollapse` from `TabletSidebarOverlay`; delete `handleCloseTabletSidebar`.
-- [ ] Tests: sidebar has no collapse or expand button and keeps logout; desktop toggle collapses, expands, is remembered, and keeps focus; tablet toggle opens the overlay and focus returns after Esc; e2e selectors point at the breadcrumb toggle.
-**Done:** related unit tests and the e2e shell spec pass.
-**Commit:** `feat(shell): move the sidebar toggle beside the breadcrumb`
-
-### Iteration 7 — Long trail overflow (BLOCKED)
-**Covers:** AC-CRUMB-013.
-**Blocked on:** OQ-5 and its frame (spec › *Design*). Once decided: `/sdv:design-feature breadcrumb-revamp` for the overflow state, then this iteration.
-
-## 14. Dependencies between iterations
-- 1 → 2 → 3 → 4: each builds on the builder and the slot.
-- 5 is independent of 1–4 (client side, its own `ClientPageHeader`). It can run any time.
-- 6 is independent of the trail work. It touches `PageHeader` and `AppPanel` like iterations 2 and 4, so run it after 4 or rebase the props.
-- 7 needs 1–5 and the OQ-5 decision.
+## 14. Dependencies between tasks
+- 1 → 4; 2 → 4; 3 → 4 → 5.
+- 6 is independent of 1–5.
+- 7 edits the same Page Header, App Panel and App Shell files as 3, so it runs after 3 (the plan runs it last).
+- 8 needs 1–6 and the OQ-5 decision.
 
 ## 15. Open items for the Owner
-- OQ-5: how a long trail shrinks. It blocks iteration 7 only.
+- OQ-5: how a long trail shrinks. It blocks Task 8 only.

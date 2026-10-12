@@ -19,9 +19,9 @@ In React, a parent's output cannot be changed by a child during the same render.
    - one slot page per route with a dynamic name: `projects/[projectId]`, `projects/[projectId]/gallery`, `.../gallery/picks`, `.../gallery/picks/[groupId]`, `services/[serviceId]`, `message-templates/[templateType]`;
    - **every static sibling of a dynamic slot segment is mirrored** in the slot (`projects/new`, `projects/completed`, `projects/cancelled`, `services/categories`, `services/items`), because a dynamic slot segment would otherwise capture it (`projects/[projectId]` would match `new`);
    - `@crumbs/default.tsx` returns `null` (Next 16 requirement).
-3. **Names come from small scoped loaders** in `src/composition/` (one per entity: project title, service name, group name). Each verifies the workspace like every Owner loader (BR-WS-003, C-101). Each is wrapped in React `cache()`, so a second call with the same arguments in the same request doesn't query again.
+3. **Names come from the existing scoped loaders**, wrapped in React `cache()`: `verifyOwnerWorkspace`, `loadProjectDetail`, `loadServiceDetail`, `loadGalleryPage`, `loadSelectionGroups`, `loadSelectionGroupDetail`. They already verify the workspace (BR-WS-003, C-101). A slot and its page call them with the same arguments in the same request, so the query runs once.
 4. **`PageHeadingOverride` stays** for the title, status, meta and the phone Compact Bar parent. It no longer touches the trail.
-5. **The trail items are built by one pure function** (`src/features/workspace/domain/owner-trail/`), used by every slot page, so the root, ancestors and current crumb follow one rule.
+5. **The trail items are built by one pure unit** (`src/features/workspace/ui/owner-trail/`; in `ui/` because it reads the nav copy), used by every slot page, so the root, ancestors and current crumb follow one rule.
 6. **Out of scope:** the client area. Its pages already render their own header on the server (`ClientShell`), so they have no flash.
 
 ## Alternatives considered
@@ -32,7 +32,7 @@ In React, a parent's output cannot be changed by a child during the same render.
 
 ## Consequences
 - Every Owner route under `/w/[workspaceId]` has a matching slot route. A new Owner route with a dynamic name needs a slot page, and every new static sibling of a dynamic segment needs a mirror. The catch-all covers the rest. Missing one shows the wrong trail, so the slot has a test per route (F-22 technical design).
-- Pages with a dynamic name run one extra small query per request (verify + select one name), unless the page's own loader shares the same cached function. This counts against the free-tier budget (ADR-018). It is one indexed lookup per navigation.
+- Because the slot reuses the page's cached loader, a page with a dynamic name runs no extra query. A future slot whose page does not call the same loader with the same arguments would run it twice; that counts against the free-tier budget (ADR-018).
 - A foreign or missing entity makes the slot loader throw `notFound()`, the same as the page. The route returns 404 and no foreign name is rendered (AC-CRUMB-012).
 - The profile page is outside `/w/[workspaceId]`. Its layout passes the static trail *Profil* directly.
 - The trail logic leaves `owner-nav.tsx` (`resolvePageHeading` keeps the title, subtitle and tabs only) and `owner-shell.tsx` (no `panelBreadcrumbs` assembly).

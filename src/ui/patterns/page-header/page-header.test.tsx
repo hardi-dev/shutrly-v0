@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { PageHeader } from "./page-header";
+import { PageHeader, PageHeaderTrail } from "./page-header";
 
 describe("PageHeader", () => {
   it("renders breadcrumb, one heading, utilities and action", () => {
@@ -59,6 +59,49 @@ describe("PageHeader", () => {
     expect(
       screen.getAllByText("Kategori").find((element) => element.getAttribute("aria-current")),
     ).toHaveAttribute("aria-current", "page");
+  });
+
+  it("F-22 renders a trail made elsewhere in place of the generated one", () => {
+    render(
+      <PageHeader
+        parent="Aster"
+        current="Galeri"
+        title="Galeri"
+        trail={
+          <PageHeaderTrail
+            items={[
+              { label: "Aster", href: "/w/A" },
+              { label: "Proyek", href: "/w/A/projects" },
+              { label: "Galeri" },
+            ]}
+          />
+        }
+      />,
+    );
+
+    const nav = screen.getByRole("navigation", { name: "Breadcrumb" });
+    expect(nav).toHaveTextContent("AsterProyekGaleri");
+    expect(screen.getByRole("link", { name: "Proyek" })).toHaveAttribute("href", "/w/A/projects");
+    expect(screen.getAllByRole("navigation", { name: "Breadcrumb" })).toHaveLength(1);
+  });
+
+  it("AC-CRUMB-010 a crumb without href is plain text and not focusable", () => {
+    render(
+      <PageHeader
+        parent="Beranda"
+        current="Tinjau"
+        title="Foto cetak"
+        breadcrumbs={[
+          { label: "Beranda", href: "/g/T" },
+          { label: "Foto cetak" },
+          { label: "Tinjau" },
+        ]}
+      />,
+    );
+
+    expect(screen.queryByRole("link", { name: "Foto cetak" })).toBeNull();
+    expect(screen.getByText("Foto cetak", { selector: "span" })).not.toHaveAttribute("tabindex");
+    expect(screen.getByText("Tinjau")).toHaveAttribute("aria-current", "page");
   });
 
   it("AC-PRJ-015 puts the adornment after the title and the meta in place of the subtitle", () => {

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { cn } from "@/ui/cn/cn";
 
 import { Tabs } from "../tabs/tabs";
@@ -16,10 +18,12 @@ export function PageHeader({
   meta,
   action,
   utilities,
+  trail,
   tabs,
   isFlush = false,
 }: Readonly<PageHeaderProps>) {
   const breadcrumbItems = breadcrumbs ?? [{ label: parent }, { label: current }];
+  const breadcrumbTrail = trail ?? <PageHeaderTrail items={breadcrumbItems} />;
 
   return (
     <header
@@ -28,7 +32,7 @@ export function PageHeader({
         !isFlush && "border-b border-(--component-page-header-border)",
       )}
     >
-      <BreadcrumbRow items={breadcrumbItems} utilities={utilities} isFlush={isFlush} />
+      <BreadcrumbRow trail={breadcrumbTrail} utilities={utilities} isFlush={isFlush} />
       <div
         className={cn(
           "flex items-center justify-between gap-(--component-page-header-hero-gap) pb-(--component-page-header-hero-padding-bottom) pt-(--component-page-header-hero-padding-top)",
@@ -54,12 +58,23 @@ export function PageHeader({
   );
 }
 
+/** The Page Header breadcrumb, also rendered on the server by the Owner `@crumbs` slot (ADR-025). @param props - the crumbs; the last one is current @returns the trail */
+export function PageHeaderTrail({ items }: Readonly<{ items: readonly BreadcrumbItem[] }>) {
+  return (
+    <BreadcrumbTrail
+      label={PAGE_HEADER_COPY.breadcrumb}
+      items={items}
+      className="min-h-(--space-10) flex-1"
+    />
+  );
+}
+
 function BreadcrumbRow({
-  items,
+  trail,
   utilities,
   isFlush,
 }: Readonly<{
-  items: readonly BreadcrumbItem[];
+  trail: ReactNode;
   utilities: PageHeaderProps["utilities"];
   isFlush: boolean;
 }>) {
@@ -70,11 +85,7 @@ function BreadcrumbRow({
         isFlush ? "px-0" : "pr-(--space-7) pl-(--component-page-header-breadcrumb-padding-x)",
       )}
     >
-      <BreadcrumbTrail
-        label={PAGE_HEADER_COPY.breadcrumb}
-        items={items}
-        className="min-h-(--space-10) flex-1"
-      />
+      {trail}
       {utilities ? <div className="flex items-center gap-(--space-1)">{utilities}</div> : null}
     </div>
   );

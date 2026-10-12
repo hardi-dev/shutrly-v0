@@ -107,6 +107,16 @@ describe("AppShell (C30/C37)", () => {
     );
   });
 
+  it("F-22 passes a server-rendered trail to the desktop page header", () => {
+    render(
+      <AppShell {...props} title="Galeri" panelTrail={<span>Jejak server</span>}>
+        <p>isi</p>
+      </AppShell>,
+    );
+
+    expect(screen.getByText("Jejak server")).toBeInTheDocument();
+  });
+
   it("uses mobileSubtitle for the mobile header and falls back to subtitle", () => {
     const { rerender } = render(
       <AppShell {...props} subtitle="Ringkasan desktop" mobileSubtitle="Ringkasan ponsel">

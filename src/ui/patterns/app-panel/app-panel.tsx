@@ -13,6 +13,7 @@ export function AppPanel({
   utilities,
   actions,
   tabs,
+  trail,
   children,
 }: Readonly<AppPanelProps>) {
   return (
@@ -33,6 +34,7 @@ export function AppPanel({
         utilities={utilities}
         action={actions}
         tabs={tabs}
+        trail={trail}
       />
       {children}
     </main>

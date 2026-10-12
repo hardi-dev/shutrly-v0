@@ -35,6 +35,8 @@ export interface PageHeaderProps {
   meta?: string;
   action?: ReactNode;
   utilities?: ReactNode;
+  /** A trail rendered elsewhere (the Owner `@crumbs` slot, ADR-025); replaces the one built from `breadcrumbs`. */
+  trail?: ReactNode;
   tabs?: { readonly label: string; readonly tabs: readonly TabLink[] };
   /** No horizontal padding and no outer border: the page puts it in a bordered band whose column already lines it up (client shell, `ra85A`). */
   isFlush?: boolean;

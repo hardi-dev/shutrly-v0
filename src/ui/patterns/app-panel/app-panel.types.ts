@@ -13,6 +13,7 @@ export interface AppPanelProps {
   meta?: string;
   actions?: ReactNode;
   tabs?: NonNullable<PageHeaderProps["tabs"]>;
+  trail?: ReactNode;
   children: ReactNode;
 }
 

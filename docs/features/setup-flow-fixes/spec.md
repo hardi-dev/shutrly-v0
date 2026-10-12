@@ -10,7 +10,7 @@ As a new Owner setting up Shutrly for the first time, I want every setup screen 
 
 ## Preconditions
 - The app runs with the workspace, catalog, message-template, source and gallery features as on `staging` (F-02…F-10, F-21, F-22 merged).
-- No business rule changes. One feature-spec change: F-05 *Tambah layanan* landing (see *Business rules and owning artifacts*).
+- No business rule or feature-spec changes.
 
 ## Scope by defect
 
@@ -29,10 +29,8 @@ Correction to the intent: the Google button and the *account unavailable* sign-o
 
 **Behavior (Owner 2026-10-12):** each form above submits with `POST`, never `GET`. Its submit button is disabled until the page is interactive. A native submit that still reaches the server (e.g. the button is enabled by some other means) creates, changes or signs in nothing, and the input appears in no URL, log or analytics event (C-103, C-006).
 
-### D2 + D7 — *Add service* confirms the save and points to the next step
-**Found:** after *Add service*, the toast says *Changes saved* but the list still reads "0 services" until a reload, and nothing leads to the new service, where package items are added. Discovery: F-05 specified "opens the service detail page" and the code tries to navigate there, but the navigation doesn't happen. Cause unproven; the technical design finds it.
-
-**Behavior (Owner 2026-10-12, amends F-05):** after a successful *Add service*, the dialog closes, the Owner stays on *Services*, and the new service appears in its category at once, with no reload. A success toast names what was saved and has one action that opens the new service, so the Owner can add package items and booking fields. It uses the existing toast with an action (as the archive toast with *Undo*). No Pencil frame. Editing an existing service's info (*Edit*) keeps today's behavior: dialog closes, toast, page updated.
+### D2 + D7 — Withdrawn (not reproduced)
+**Found:** after *Add service*, the list looked stale and the Owner stayed on it. **On retry (2026-10-12)** the dialog saved and opened the new service, as F-05 specifies (`history.pushState` to `/services/<id>`, no console error). The walkthrough most likely read the page while the dev server was still compiling the service route on first use, then reloaded, which cancelled the navigation. Unproven, but every observation fits, and a production build has no on-demand compile. **Owner (2026-10-12): withdrawn; F-05's behavior stays** (the F-05 amendment was reverted). AC-SFX-005…008 are withdrawn.
 
 ### D3 — Catalog dialogs submit on Enter
 **Found:** pressing Enter in *Add package item* does nothing; *Add service* and *Add booking field* behave the same. Their primary button isn't a submit button, unlike the category, team-member and client dialogs.
@@ -55,27 +53,24 @@ Correction to the intent: the Google button and the *account unavailable* sign-o
 **Behavior:** both strings have an English and an Indonesian version, and each locale shows its own (BR-L10N-002). The check that caught nothing (EN = ID text passes the parity gate) is noted for the technical design: the parity gate can't tell an untranslated entry from a deliberate one.
 
 ## Copy
-New or changed copy (D2 toast, D4 *page not found*, D5, D6) is drafted in EN and ID with the Codex CLI, approved by the Owner, added to F-22's `copy-deck.md` (and the stale deck rows corrected: §15 source guide steps and annotations, the folder-classification note, the gallery empty body, add-folder description and edited/print explanations), then copied into the `*.copy.ts` modules verbatim (Owner 2026-10-12).
+New or changed copy (D4 *page not found*, D5, D6) is drafted in EN and ID with the Codex CLI, approved by the Owner, added to F-22's `copy-deck.md` (and the stale deck rows corrected: §15 source guide steps and annotations, the folder-classification note, the gallery empty body, add-folder description and edited/print explanations), then copied into the `*.copy.ts` modules verbatim (Owner 2026-10-12).
 
 ## Main flow (the walkthrough, fixed)
 1. A prospective Owner opens `/register` on a slow connection and presses *Create account* before the page is ready: nothing is submitted. Once ready, the form posts and the account is created (J-01).
 2. After verifying and creating a workspace, the Owner opens *Photo sources* and reads guidance that matches folder mapping (D5).
-3. In *Services*, the Owner adds a category, then *Add service*: the dialog closes, the service shows in its category, and the toast's action opens it (D2, D7).
+3. In *Services*, the Owner adds a category, then *Add service*, which opens the new service (F-05, unchanged).
 4. On the service, the Owner adds package items and a booking field, pressing Enter to save each (D3), and reads English-only text on the English UI (D6).
 5. A mistyped or old link inside the workspace shows *page not found* with a way back, not "Workspace not found" (D4).
 
 ## Alternative and error flows
 - **D1, slow page:** the button stays disabled until ready; no spinner promise is made beyond today's submitting state.
 - **D1, validation or server error after posting:** unchanged from today (field errors, `AuthErrorAlert`, the gallery's lockout).
-- **D2, save fails:** unchanged: the dialog stays open with the error and retry; no toast, the list is unchanged.
-- **D2, toast dismissed or timed out:** the new service is still in the list; the Owner opens it from there.
 - **D3, Enter with invalid input:** the same field errors as clicking the button; the dialog stays open.
 - **D4, record deleted while open:** the next navigation or refresh shows *page not found*.
 - **D4, breadcrumb:** the *page not found* state has a breadcrumb that doesn't name the missing record (F-23).
 
 ## Business rules and owning artifacts
-- C-103, C-006 (D1); C-101, BR-WS-003 (D4); BR-GAL-007 (D5); BR-L10N-002 (D6); C-007, C-008 (states, keyboard; D2, D3, D4).
-- **F-05 catalog amended first** (C-011): spec main flow step 4 and A-2, and AC-CAT-010 now describe *stay on Services + toast with an action*, marked as amended by F-24 (Owner 2026-10-12).
+- C-103, C-006 (D1); C-101, BR-WS-003 (D4); BR-GAL-007 (D5); BR-L10N-002 (D6); C-007, C-008 (states, keyboard; D3, D4).
 - No `BR-*` changes.
 
 ## Dependencies
@@ -96,11 +91,11 @@ New or changed copy (D2 toast, D4 *page not found*, D5, D6) is drafted in EN and
 
 | ID | Concern | Sources | Status |
 |---|---|---|---|
-| FC-001 | The Owner's *stay on the list + toast* contradicts F-05, which specifies opening the service detail page after *Add service*. | F-05 spec step 4, A-2, AC-CAT-010; intent D7 | RESOLVED: the Owner chose the toast (2026-10-12); F-05 amended first (C-011). |
+| FC-001 | The Owner's *stay on the list + toast* contradicts F-05, which specifies opening the service detail page after *Add service*. | F-05 spec step 4, A-2, AC-CAT-010; intent D7 | WITHDRAWN: D2/D7 did not reproduce; F-05 unchanged, the amendment was reverted (Owner 2026-10-12). |
 | FC-002 | F-22's rule "copy only from `copy-deck.md`, verbatim" vs. the deck's own `edited`/`print` rows, which contradict BR-GAL-007 as amended by F-21; and D2/D4 need copy that the deck doesn't have. | F-22 plan rules; BR-GAL-007; copy-deck §15–§16 | RESOLVED: deck rows are corrected and new rows added, drafted with Codex and approved by the Owner, then copied verbatim (Owner 2026-10-12). |
 | FC-003 | Discovery widened the accepted intent: D1 from auth forms to every page-rendered client-submitted form (gallery password, waitlist, settings); D4 from the template route to every missing record inside a workspace. | Intent › Scope; C-010 | RESOLVED: the Owner approved both widenings (2026-10-12). |
 | FC-004 | Disabling submit until the page is interactive means a visitor without working JavaScript can't submit at all. C-008 targets keyboard and assistive-tech access, not no-JS use, and the forms already need JavaScript to work. | C-008; D1 decision | RESOLVED: the Owner chose disabled-until-ready (2026-10-12); progressive enhancement is out of scope. |
-| FC-005 | AGENTS.md: UI tasks are built from Pencil HTML exports. D2 (toast with an action) and D4 (*page not found* in the shell) change UI. | AGENTS.md › UI tasks; Owner decisions | RESOLVED: no Pencil frame for D2 or D4; D4 is built from the existing EmptyState pattern inside the shell. An Owner exception to the export rule for F-24 (Owner 2026-10-12). |
+| FC-005 | AGENTS.md: UI tasks are built from Pencil HTML exports. D2 (toast with an action) and D4 (*page not found* in the shell) change UI. | AGENTS.md › UI tasks; Owner decisions | RESOLVED: no Pencil frame for D4 (D2 withdrawn); D4 is built from the existing EmptyState pattern inside the shell. An Owner exception to the export rule for F-24 (Owner 2026-10-12). |
 | FC-006 | Two ADRs share the number 025 (`ADR-025-next-intl-bilingual-localization`, `ADR-025-owner-breadcrumb-parallel-route`). Not caused by F-24; D4 touches the breadcrumb ADR. | `docs/architecture/decisions/` | RESOLVED: the breadcrumb ADR is renumbered to [ADR-026](../../architecture/decisions/ADR-026-owner-breadcrumb-parallel-route.md) and every reference updated (Owner 2026-10-12, commit `47625f0`). |
 
 ## Open questions

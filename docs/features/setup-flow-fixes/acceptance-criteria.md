@@ -33,35 +33,9 @@ Covers: (D1 correction)
 **Given** the Google sign-in button and the *account unavailable* sign-out form
 **Then** they keep submitting through their server actions, with and without JavaScript, as today.
 
-## D2 + D7 — Add service
+## D2 + D7 — Withdrawn
 
-## AC-SFX-005 — The new service shows at once
-Covers: C-007; amends AC-CAT-010 (D2)
-
-**Given** the Owner on *Services* with category *Wedding* and no services
-**When** they save *Add service* with *Wedding Basic*, *Wedding*, 5000000
-**Then** the dialog closes, the Owner stays on *Services*, and *Wedding* shows "1 service" and *Wedding Basic* · IDR 5,000,000 without a reload.
-
-## AC-SFX-006 — The toast leads to the next step
-Covers: C-007, C-008; amends AC-CAT-010 (D7)
-
-**Given** AC-SFX-005 has just happened
-**Then** a success toast names the saved service and has one action
-**When** the Owner activates the action (pointer or keyboard)
-**Then** the *Wedding Basic* service page opens with empty *Package items* and *Booking details* sections
-**And** if the toast is dismissed or times out, the service stays in the list and opens from there.
-
-## AC-SFX-007 — Failure is unchanged
-Covers: C-007 (D2)
-
-**Given** *Add service* fails (validation or server)
-**Then** the dialog stays open with the error (and retry for a server error), no success toast appears, and the list is unchanged.
-
-## AC-SFX-008 — Editing service info is unchanged
-Covers: (D2)
-
-**Given** the Owner on a service page edits its info and saves
-**Then** the dialog closes, a success toast appears, the page shows the new values, and the Owner stays on the page.
+AC-SFX-005, AC-SFX-006, AC-SFX-007 and AC-SFX-008 are **withdrawn** (Owner 2026-10-12): the defect did not reproduce, and F-05's AC-CAT-010 (the service page opens after *Add service*) stays in force. The IDs are not reused.
 
 ## D3 — Enter submits catalog dialogs
 

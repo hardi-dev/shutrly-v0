@@ -10,8 +10,8 @@ Covers: BR-WS-003, C-008 (S-A1, S-A2, S-A3)
 **Given** an Owner inside workspace A at a width ≥ 1280 px
 **When** they open any owner page
 **Then** the page renders with:
-- the Sidebar, which shows the logo row with collapse, A's name in the switcher (no decorative mark), the full F-02 navigation in F-02 order, and the Account block;
-- the App Panel, whose Page Header has a breadcrumb (`A` › the page's nav label) and a hero with the page's single `<h1>`;
+- the Sidebar, which shows the logo row with collapse (amended by F-22, Owner 2026-10-12: the logo row has no collapse button; the toggle sits left of the breadcrumb, AC-CRUMB-015), A's name in the switcher (no decorative mark), the full F-02 navigation in F-02 order, and the Account block;
+- the App Panel, whose Page Header has a breadcrumb (`A` › the page's nav label; superseded by F-22 [breadcrumb-revamp](../breadcrumb-revamp/acceptance-criteria.md), Owner 2026-10-12) and a hero with the page's single `<h1>`;
 - the content canvas, with its Container at most 1096 px and centred.
 
 The breadcrumb bar ends with the Search and Notifications icon buttons (S-A2).
@@ -23,12 +23,16 @@ Covers: C-007 (F-02 A-8)
 **When** they reload, open another owner page, or switch workspace in the same browser
 **Then** the rail stays collapsed until they expand it. A different browser, or one with storage unavailable, starts expanded.
 
+> **Amended by F-22 (Owner 2026-10-12; not yet built):** collapsing and expanding use the toggle at the left of the breadcrumb bar (AC-CRUMB-015). The rule above is unchanged.
+
 ## AC-SHELL-003 — Tablet rail and overlay
 Covers: C-008
 
 **Given** an Owner at 768–1279 px
 **When** any owner page opens
 **Then** the 72 px rail shows every destination in F-02 order, the Page Header matches desktop, and activating the logo or expand control opens the full Sidebar as an overlay above the panel, without moving the panel. Esc, a scrim click or choosing a destination closes it, and focus returns to the control that opened it.
+
+> **Amended by F-22 (Owner 2026-10-12; not yet built):** the overlay opens from the toggle at the left of the breadcrumb bar, not from the logo or a rail control, and has no close control of its own (AC-CRUMB-016).
 
 ## AC-SHELL-004 — Phone top-level header and Bottom Nav
 Covers: BR-WS-003, C-008 (S-A2, S-A3)

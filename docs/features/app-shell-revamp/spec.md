@@ -42,8 +42,8 @@ No new server data. The only persisted preference is the per-browser collapse st
 ## Layouts and breakpoints
 | Width | Layout |
 |---|---|
-| ≥ 1280 px (desktop) | Sidebar 252, expanded by default; the collapse button switches to the 72 px rail inline and the panel grows. The choice is remembered per browser (F-02 A-8). App Panel with the Page Header and the content canvas (Container max 1096, centred). |
-| 768–1279 px (tablet) | **Owner 2026-09-29: keep the F-02 rail in v3 styling.** The 72 px rail is the default. Its logo/expand control opens the full Sidebar as a dismissible overlay above the panel, never pushing it. The panel uses the same Page Header as desktop; the Container fills the width. The collapse preference doesn't apply. |
+| ≥ 1280 px (desktop) | Sidebar 252, expanded by default; the collapse button switches to the 72 px rail inline and the panel grows. The choice is remembered per browser (F-02 A-8). App Panel with the Page Header and the content canvas (Container max 1096, centred). **Amended by F-22 (Owner 2026-10-12; not yet built):** the only collapse/expand control is the toggle at the left of the breadcrumb bar; the logo row and the rail have none ([breadcrumb-revamp](../breadcrumb-revamp/spec.md) › Sidebar toggle). |
+| 768–1279 px (tablet) | **Owner 2026-09-29: keep the F-02 rail in v3 styling.** The 72 px rail is the default. Its logo/expand control opens the full Sidebar as a dismissible overlay above the panel, never pushing it. The panel uses the same Page Header as desktop; the Container fills the width. The collapse preference doesn't apply. **Amended by F-22 (Owner 2026-10-12; not yet built):** the overlay opens from the toggle at the left of the breadcrumb bar, not from the logo or a rail control; the overlay has no close control of its own and closes with Esc, a scrim click or a destination. |
 | < 768 px (phone) | Mobile shell: top-level header or sub-page compact bar, the content sheet, and a Bottom Nav fixed at the bottom. |
 
 ## Main Flow — desktop / tablet page
@@ -52,7 +52,7 @@ No new server data. The only persisted preference is the per-browser collapse st
    - the Sidebar, or the rail on tablet, with the active workspace name in the switcher;
    - the full F-02 navigation, with the current destination active;
    - the Account block;
-   - the App Panel. Its Page Header has a breadcrumb bar (Parent = workspace name, Current = the page's nav label) and a hero (the page `<h1>` title, an optional one-line subtitle, and at most one primary action).
+   - the App Panel. Its Page Header has a breadcrumb bar (Parent = workspace name, Current = the page's nav label; superseded by F-22, see S-A6) and a hero (the page `<h1>` title, an optional one-line subtitle, and at most one primary action).
 3. The page content renders in the content canvas below the Page Header.
 
 ## Main Flow — phone, top-level page
@@ -132,7 +132,7 @@ No new server data. The only persisted preference is the per-browser collapse st
 - **S-A3 Scrolling:** the desktop Sidebar stays at viewport height while the panel scrolls. On phones the top-level header scrolls with the content, and the sub-page compact bar and the Bottom Nav stay fixed.
 - **S-A4 Menu destinations:** on a phone, when the current page is a menu-sheet destination (Layanan, Tim, Template pesan, Sumber klien, Pengaturan), no Bottom Nav tab is active. The Menu button stays in its default state, and the page title identifies the location.
 - **S-A5 Page Header content:** title, subtitle and action come from the page. The Dashboard keeps its current F-02 content; its greeting, badges and metrics are out of scope.
-- **S-A6 Breadcrumb depth:** one Parent and one Current item (C40 rule). Sub-pages on desktop use workspace › parent destination › page only when a later feature needs it. F-17 ships the two-level form.
+- ~~**S-A6 Breadcrumb depth:** one Parent and one Current item (C40 rule). Sub-pages on desktop use workspace › parent destination › page only when a later feature needs it. F-17 ships the two-level form.~~ **Superseded by F-22 (Owner 2026-10-12):** the breadcrumb has one crumb per route level, from the root to the current page ([breadcrumb-revamp](../breadcrumb-revamp/spec.md) R-1…R-6). This also replaces the breadcrumb wording in Main Flow step 2, S-A2 and AC-SHELL-001. Not yet built.
 
 ## Dependencies
 - F-02 Workspace (routes, resolver, switch/create actions, *Segera hadir*, Profile shell).

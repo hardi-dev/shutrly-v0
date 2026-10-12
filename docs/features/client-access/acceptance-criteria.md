@@ -224,6 +224,8 @@ Covers: BR-SEL-001, BR-DEL-001 (A-24, A-31)
 **When** the client enters the password, and later the Owner publishes final delivery
 **Then** the client first lands on *Semua foto* with no select controls and no *Pilih untuk…*; after the publish they land on Beranda with *Hasil akhir* as the top card
 
+> **Amended by F-22 (Owner 2026-10-12, A-31 withdrawn; not yet built):** before the publish the client lands on Beranda with only the *Semua foto* card, and *Semua foto* has no select controls and no *Pilih untuk…*. See AC-CRUMB-009.
+
 
 ## AC-SEL-021 — A note per picked photo
 Covers: BR-CAT-007, BR-SEL-004, BR-SEL-005 (A-32)
@@ -238,6 +240,8 @@ Covers: BR-SEL-001
 **Given** a project with no selection item and a published gallery
 **When** the client opens it
 **Then** *Semua foto* opens directly (A-31), with no group card, no select control and no *Pilih untuk…*
+
+> **Amended by F-22 (Owner 2026-10-12, A-31 withdrawn; not yet built):** the client lands on Beranda with no group card; *Semua foto*, opened from it, has no select control and no *Pilih untuk…*.
 
 ## AC-SEL-013 — Groups follow deal edits while booked
 Covers: BR-SEL-001, BR-PRJ-009

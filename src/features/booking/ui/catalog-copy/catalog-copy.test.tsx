@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { CatalogFieldError } from "../catalog-field-error/catalog-field-error";
 import { OptionListEditor } from "../option-list-editor/option-list-editor";
-import { CATALOG_COPY_NAMESPACE } from "./catalog-copy.copy";
+import { CATALOG_COPY, CATALOG_COPY_NAMESPACE } from "./catalog-copy.copy";
 
 describe("catalog copy", () => {
   it("pluralises the service count in English and Indonesian", () => {
@@ -35,5 +35,16 @@ describe("catalog copy", () => {
   it("renders a catalog field error in English", () => {
     renderInLocale(<CatalogFieldError errorKey="NAME_TAKEN" />, "en");
     expect(screen.getByRole("alert")).toHaveTextContent("This name is already in use.");
+  });
+
+  it("uses English for the pick-mode line and the booking field dialog subtitle (F-24 D6, AC-SFX-017)", () => {
+    expect(CATALOG_COPY.messages.en.pickModeMeta).toBe("Client choice: {mode}");
+    expect(CATALOG_COPY.messages.en.fieldDialogDescription).toBe(
+      "Filled in when creating a project from this service.",
+    );
+    expect(CATALOG_COPY.messages.id.pickModeMeta).toBe("Pilihan klien: {mode}");
+    expect(CATALOG_COPY.messages.id.fieldDialogDescription).toBe(
+      "Diisi saat membuat proyek dari layanan ini.",
+    );
   });
 });

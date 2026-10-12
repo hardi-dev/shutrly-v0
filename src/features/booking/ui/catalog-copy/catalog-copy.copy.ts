@@ -117,8 +117,7 @@ export const CATALOG_COPY = {
       fieldMetaChoicesOptional: "{type}: {options} · Optional",
       requiredSwitch: "Required field",
       addFieldTitle: "Add booking field",
-      // DECK GAP: no deck row for the booking-field dialog description.
-      fieldDialogDescription: "Diisi saat membuat proyek dari layanan ini.",
+      fieldDialogDescription: "Filled in when creating a project from this service.",
       options: "Choices",
       addOptionButton: "Add choice",
       optionLabel: "Choice {index}",
@@ -147,8 +146,8 @@ export const CATALOG_COPY = {
       pickModeCountDescription: "The client chooses photos to edit. Counted per photo.",
       pickModeQuantity: "Photos to print",
       pickModeQuantityDescription: "The client chooses photos and the number of prints.",
-      // DECK GAP: no deck row for the selection-type meta, the locked-selection note or the notes switch.
-      pickModeMeta: "Pilihan klien: {mode}",
+      // DECK GAP: no deck row for the locked-selection note or the notes switch.
+      pickModeMeta: "Client choice: {mode}",
       pickLockedTitle: "Pengaturan pilihan dikunci",
       pickLockedBody: "Item ini dipakai paket atau proyek. Nama dan satuan masih bisa diubah.",
       pickNotesSwitch: "Klien bisa memberi catatan",

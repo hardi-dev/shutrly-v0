@@ -2,8 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-const router = vi.hoisted(() => ({ push: vi.fn(), replace: vi.fn() }));
-vi.mock("next/navigation", () => ({ useRouter: () => router }));
+vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
 vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
   useMobileViewport: () => false,
 }));
@@ -12,13 +11,14 @@ import { ServicesScreen } from "./services-screen";
 
 describe("ServicesScreen", () => {
   it("AC-SETUP-005 opens Add service from the link and drops the query when closed", async () => {
-    router.replace.mockClear();
+    const replaceState = vi.spyOn(window.history, "replaceState");
     render(
       <ServicesScreen workspaceId="ws-1" groups={[]} addServiceAction={vi.fn()} openAddOnLoad />,
     );
     expect(await screen.findByRole("dialog")).toBeInTheDocument();
     await userEvent.keyboard("{Escape}");
-    expect(router.replace).toHaveBeenCalledWith("/w/ws-1/services", { scroll: false });
+    expect(replaceState).toHaveBeenCalledWith(null, "", "/w/ws-1/services");
+    replaceState.mockRestore();
   });
 
   it("AC-SETUP-005 keeps Add service closed without the link", () => {

@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import type { ComponentProps, ReactNode, RefObject } from "react";
 import { useRef, useState } from "react";
@@ -185,7 +184,6 @@ function useServiceDialogs(
   openAddOnLoad: boolean,
   screenRef: RefObject<HTMLElement | null>,
 ) {
-  const router = useRouter();
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [isFromLink, setIsFromLink] = useState(openAddOnLoad);
   useOpenOnLoad(openAddOnLoad, screenRef, setDialogOpen);
@@ -193,7 +191,9 @@ function useServiceDialogs(
     setDialogOpen(isOpen);
     if (isOpen || !isFromLink) return;
     setIsFromLink(false);
-    router.replace(`/w/${workspaceId}/services`, { scroll: false });
+    // The native history API syncs with the Next router without a server request, so it can't
+    // race the push to the new service's page that follows a save (F-05).
+    window.history.replaceState(null, "", `/w/${workspaceId}/services`);
   }
   const [editing, setEditing] = useState<ServiceListItem | undefined>();
   const [deleting, setDeleting] = useState<ServiceListItem | undefined>();

@@ -54,19 +54,43 @@ describe("AppShell (C30/C37)", () => {
     expect(screen.queryByRole("dialog", { name: "Navigasi utama" })).toBeNull();
   });
 
-  it("opens the tablet sidebar as a dismissible navigation dialog", async () => {
+  it("AC-CRUMB-016 the breadcrumb toggle opens the tablet overlay, which has no close button", async () => {
     const user = userEvent.setup();
-    const { getAllByRole, queryByRole } = render(
+    const { queryByRole } = render(
       <AppShell {...props}>
         <p>Konten workspace</p>
       </AppShell>,
     );
 
-    await user.click(getAllByRole("button", { name: "Buka sidebar" })[0]);
-    expect(screen.getByRole("dialog", { name: "Navigasi utama" })).toBeInTheDocument();
+    const toggles = screen.getAllByRole("button", { name: "Buka sidebar" });
+    expect(toggles).toHaveLength(1);
+    await user.click(toggles[0]);
+    const dialog = screen.getByRole("dialog", { name: "Navigasi utama" });
+    expect(dialog.querySelector("[data-sidebar-toggle]")).toBeNull();
+
+    await user.keyboard("{Escape}");
+    expect(queryByRole("dialog", { name: "Navigasi utama" })).toBeNull();
+  });
+
+  it("AC-CRUMB-015 the breadcrumb toggle collapses and expands the desktop sidebar", async () => {
+    const user = userEvent.setup();
+    render(
+      <AppShell {...props}>
+        <p>Konten workspace</p>
+      </AppShell>,
+    );
 
     await user.click(screen.getByRole("button", { name: "Ciutkan sidebar" }));
-    expect(queryByRole("dialog", { name: "Navigasi utama" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Ciutkan sidebar" })).toBeNull();
+    expect(window.localStorage.getItem("shutrly.sidebar.collapsed")).toBe("true");
+
+    const expand = screen
+      .getAllByRole("button", { name: "Buka sidebar" })
+      .find((button) => button.closest(".xl\\:flex"));
+    expect(expand).toBeDefined();
+    if (expand) await user.click(expand);
+    expect(screen.getByRole("button", { name: "Ciutkan sidebar" })).toBeInTheDocument();
+    expect(window.localStorage.getItem("shutrly.sidebar.collapsed")).toBe("false");
   });
 
   it("F-17 sub-page: breadcrumb parent and a Compact Bar back link to the parent", () => {

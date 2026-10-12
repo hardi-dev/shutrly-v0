@@ -23,8 +23,6 @@ export function Sidebar({
   children,
   navBottom,
   isCompact = false,
-  onCollapse,
-  onExpand,
   onLogout,
   workspaceSwitcher,
 }: Readonly<SidebarProps>) {
@@ -38,7 +36,7 @@ export function Sidebar({
         }
         aria-label={SIDEBAR_COPY.label}
       >
-        <SidebarLogo isCompact={isCompact} onCollapse={onCollapse} />
+        <SidebarLogo isCompact={isCompact} />
         {!isCompact ? (
           <div data-testid="sidebar-divider" className="h-px bg-(--component-sidebar-divider)" />
         ) : null}
@@ -68,14 +66,6 @@ export function Sidebar({
           ) : null}
         </nav>
         <SidebarDivider isCompact={isCompact} />
-        {isCompact && onExpand ? (
-          <IconButton
-            icon="panel-left-open"
-            aria-label={SIDEBAR_COPY.expand}
-            data-sidebar-toggle=""
-            onPress={onExpand}
-          />
-        ) : null}
         <SidebarAccount account={account} isCompact={isCompact} onLogout={onLogout} />
       </aside>
     </NavItemCompactContext.Provider>
@@ -118,10 +108,7 @@ export function SidebarBrandLogo({ className }: Readonly<{ className?: string }>
   );
 }
 
-function SidebarLogo({
-  isCompact,
-  onCollapse,
-}: Readonly<{ isCompact: boolean; onCollapse?: () => void }>) {
+function SidebarLogo({ isCompact }: Readonly<{ isCompact: boolean }>) {
   if (isCompact) {
     return (
       <div className="flex size-(--space-10) shrink-0 items-center justify-center">
@@ -133,13 +120,6 @@ function SidebarLogo({
   return (
     <div className="flex items-center gap-(--space-2) px-(--space-2)">
       <SidebarBrandLogo className="flex-1" />
-      <IconButton
-        icon="panel-left"
-        size="sm"
-        aria-label={SIDEBAR_COPY.collapse}
-        data-sidebar-toggle=""
-        onPress={onCollapse}
-      />
     </div>
   );
 }

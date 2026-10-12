@@ -19,6 +19,7 @@ export function PageHeader({
   action,
   utilities,
   trail,
+  leading,
   tabs,
   isFlush = false,
 }: Readonly<PageHeaderProps>) {
@@ -32,7 +33,12 @@ export function PageHeader({
         !isFlush && "border-b border-(--component-page-header-border)",
       )}
     >
-      <BreadcrumbRow trail={breadcrumbTrail} utilities={utilities} isFlush={isFlush} />
+      <BreadcrumbRow
+        trail={breadcrumbTrail}
+        utilities={utilities}
+        leading={leading}
+        isFlush={isFlush}
+      />
       <div
         className={cn(
           "flex items-center justify-between gap-(--component-page-header-hero-gap) pb-(--component-page-header-hero-padding-bottom) pt-(--component-page-header-hero-padding-top)",
@@ -49,11 +55,7 @@ export function PageHeader({
         </div>
         {action ? <div className="flex shrink-0 items-center gap-(--space-2)">{action}</div> : null}
       </div>
-      {tabs ? (
-        <div className={isFlush ? "px-0" : "px-(--component-page-header-tabs-padding-x)"}>
-          <Tabs label={tabs.label} tabs={tabs.tabs} hasTrack={false} />
-        </div>
-      ) : null}
+      {tabs ? <HeaderTabs tabs={tabs} isFlush={isFlush} /> : null}
     </header>
   );
 }
@@ -72,10 +74,12 @@ export function PageHeaderTrail({ items }: Readonly<{ items: readonly Breadcrumb
 function BreadcrumbRow({
   trail,
   utilities,
+  leading,
   isFlush,
 }: Readonly<{
   trail: ReactNode;
   utilities: PageHeaderProps["utilities"];
+  leading: PageHeaderProps["leading"];
   isFlush: boolean;
 }>) {
   return (
@@ -85,8 +89,20 @@ function BreadcrumbRow({
         isFlush ? "px-0" : "pr-(--space-7) pl-(--component-page-header-breadcrumb-padding-x)",
       )}
     >
+      {leading ? <div className="flex shrink-0 items-center">{leading}</div> : null}
       {trail}
       {utilities ? <div className="flex items-center gap-(--space-1)">{utilities}</div> : null}
+    </div>
+  );
+}
+
+function HeaderTabs({
+  tabs,
+  isFlush,
+}: Readonly<{ tabs: NonNullable<PageHeaderProps["tabs"]>; isFlush: boolean }>) {
+  return (
+    <div className={isFlush ? "px-0" : "px-(--component-page-header-tabs-padding-x)"}>
+      <Tabs label={tabs.label} tabs={tabs.tabs} hasTrack={false} />
     </div>
   );
 }

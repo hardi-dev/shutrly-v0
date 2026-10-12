@@ -28,34 +28,29 @@ describe("Sidebar (C29)", () => {
     expect(screen.getByText("hardi@example.com")).toBeInTheDocument();
   });
 
-  it("exposes collapse and logout actions", () => {
-    const onCollapse = vi.fn();
+  it("exposes the logout action and owns no sidebar toggle (F-22)", () => {
     const onLogout = vi.fn();
     render(
       <Sidebar
         workspace={{ name: "Studio Lime" }}
         account={{ name: "Hardi Ansari", email: "hardi@example.com", initials: "HA" }}
-        onCollapse={onCollapse}
         onLogout={onLogout}
       >
         <span>Nav</span>
       </Sidebar>,
     );
 
-    screen.getByRole("button", { name: "Ciutkan sidebar" }).click();
     screen.getByRole("button", { name: "Keluar" }).click();
-    expect(onCollapse).toHaveBeenCalledOnce();
     expect(onLogout).toHaveBeenCalledOnce();
+    expect(screen.queryByRole("button", { name: "Ciutkan sidebar" })).toBeNull();
   });
 
-  it("renders the compact rail mode with a grouped nav and an expand control", () => {
-    const onExpand = vi.fn();
+  it("renders the compact rail mode with a grouped nav and no expand control (F-22)", () => {
     render(
       <Sidebar
         workspace={{ name: "Studio Lime" }}
         account={{ name: "Hardi Ansari", email: "hardi@example.com", initials: "HA" }}
         isCompact
-        onExpand={onExpand}
       >
         <NavItem href="/projects" label="Proyek" icon="folder-kanban" isActive isCompact />
       </Sidebar>,
@@ -69,8 +64,7 @@ describe("Sidebar (C29)", () => {
     ).toBeInTheDocument();
     expect(workspaceSwitcher.querySelector('svg[data-icon="camera"]')).toBeNull();
     expect(screen.getAllByTestId("sidebar-divider")[0]).toHaveClass("w-(--space-8)");
-    screen.getByRole("button", { name: "Buka sidebar" }).click();
-    expect(onExpand).toHaveBeenCalledOnce();
+    expect(screen.queryByRole("button", { name: "Buka sidebar" })).toBeNull();
   });
 
   it("uses the aperture brand mark in the expanded and compact logo", () => {

@@ -104,6 +104,21 @@ describe("PageHeader", () => {
     expect(screen.getByText("Tinjau")).toHaveAttribute("aria-current", "page");
   });
 
+  it("AC-CRUMB-015 renders the leading control before the trail", () => {
+    render(
+      <PageHeader
+        parent="Aster"
+        current="Dasbor"
+        title="Dasbor"
+        leading={<button type="button">Toggle</button>}
+      />,
+    );
+
+    const toggle = screen.getByRole("button", { name: "Toggle" });
+    const nav = screen.getByRole("navigation", { name: "Breadcrumb" });
+    expect(toggle.compareDocumentPosition(nav) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
   it("AC-PRJ-015 puts the adornment after the title and the meta in place of the subtitle", () => {
     render(
       <PageHeader

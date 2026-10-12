@@ -16,8 +16,6 @@ export interface SidebarProps {
   children: ReactNode;
   navBottom?: ReactNode;
   isCompact?: boolean;
-  onCollapse?: () => void;
-  onExpand?: () => void;
   onLogout?: () => void;
   workspaceSwitcher?: ReactNode | ((isCompact: boolean) => ReactNode);
 }

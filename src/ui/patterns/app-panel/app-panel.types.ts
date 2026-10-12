@@ -14,6 +14,8 @@ export interface AppPanelProps {
   actions?: ReactNode;
   tabs?: NonNullable<PageHeaderProps["tabs"]>;
   trail?: ReactNode;
+  /** Sits left of the breadcrumb, e.g. the sidebar toggle (F-22). */
+  leading?: ReactNode;
   children: ReactNode;
 }
 

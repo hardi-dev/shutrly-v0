@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Dialog, Modal as AriaModal, ModalOverlay } from "react-aria-components";
 
 import { useLayoutChange } from "@/ui/hooks/use-layout-change/use-layout-change";
+import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { AppPanel, PageContent } from "../app-panel/app-panel";
 import { BottomNav } from "../bottom-nav/bottom-nav";
@@ -12,6 +13,7 @@ import { CompactBar } from "../compact-bar/compact-bar";
 import { COMPACT_BAR_ACTIONS_ID } from "../compact-bar/compact-bar-actions";
 import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
 import { Sidebar } from "../sidebar/sidebar";
+import { SIDEBAR_COPY } from "../sidebar/sidebar.copy";
 import { APP_SHELL_COPY } from "./app-shell.copy";
 import type { AppShellProps } from "./app-shell.types";
 import { readCollapsed, writeCollapsed } from "./sidebar-collapse-preference";
@@ -64,10 +66,6 @@ export function AppShell({
     setIsTabletSidebarOpen(true);
   }
 
-  function handleCloseTabletSidebar() {
-    setIsTabletSidebarOpen(false);
-  }
-
   function handleCollapseDesktopSidebar() {
     setIsDesktopSidebarCollapsed(true);
     writeCollapsed(true);
@@ -80,6 +78,32 @@ export function AppShell({
     requestAnimationFrame(focusSidebarToggle);
   }
 
+  // F-22: one toggle left of the breadcrumb; it collapses or expands the desktop Sidebar and opens the tablet overlay.
+  const sidebarToggle = (
+    <>
+      <div className="hidden xl:flex">
+        <IconButton
+          icon={isDesktopSidebarCollapsed ? "panel-left-open" : "panel-left"}
+          size="sm"
+          aria-label={isDesktopSidebarCollapsed ? SIDEBAR_COPY.expand : SIDEBAR_COPY.collapse}
+          data-sidebar-toggle=""
+          onPress={
+            isDesktopSidebarCollapsed ? handleExpandDesktopSidebar : handleCollapseDesktopSidebar
+          }
+        />
+      </div>
+      <div className="hidden md:flex xl:hidden">
+        <IconButton
+          icon="panel-left-open"
+          size="sm"
+          aria-label={SIDEBAR_COPY.expand}
+          data-sidebar-toggle=""
+          onPress={handleOpenTabletSidebar}
+        />
+      </div>
+    </>
+  );
+
   return (
     <div className="flex min-h-dvh bg-(--color-semantic-surface-muted) md:pt-(--space-3) md:pr-(--space-3) md:pb-(--space-3)">
       <a href={`#${APP_SHELL_CONTENT_ID}`} className="sr-only focus:not-sr-only max-md:hidden">
@@ -91,8 +115,6 @@ export function AppShell({
         nav={nav}
         navBottom={navBottom}
         isCompact={isDesktopSidebarCollapsed}
-        onCollapse={handleCollapseDesktopSidebar}
-        onExpand={handleExpandDesktopSidebar}
         workspaceSwitcher={workspaceSwitcher}
         onLogout={onLogout}
       />
@@ -101,7 +123,6 @@ export function AppShell({
         account={account}
         nav={nav}
         navBottom={navBottom}
-        onExpand={handleOpenTabletSidebar}
         workspaceSwitcher={workspaceSwitcher}
       />
       <DesktopContent
@@ -116,6 +137,7 @@ export function AppShell({
         panelTabs={panelTabs}
         panelBreadcrumbs={panelBreadcrumbs}
         panelTrail={panelTrail}
+        sidebarToggle={sidebarToggle}
       >
         {children}
       </DesktopContent>
@@ -151,7 +173,6 @@ export function AppShell({
         account={account}
         nav={nav}
         navBottom={navBottom}
-        onCollapse={handleCloseTabletSidebar}
         workspaceSwitcher={workspaceSwitcher}
         onLogout={onLogout}
       />
@@ -184,14 +205,10 @@ function DesktopSidebar({
   nav,
   navBottom,
   isCompact,
-  onCollapse,
-  onExpand,
   workspaceSwitcher,
   onLogout,
 }: Readonly<Pick<AppShellProps, "workspace" | "account" | "nav" | "navBottom">> & {
   isCompact: boolean;
-  onCollapse: () => void;
-  onExpand: () => void;
   workspaceSwitcher: AppShellProps["workspaceSwitcher"];
   onLogout?: () => void;
 }) {
@@ -202,8 +219,6 @@ function DesktopSidebar({
         workspace={workspace}
         account={account}
         isCompact={isCompact}
-        onExpand={onExpand}
-        onCollapse={onCollapse}
         workspaceSwitcher={workspaceSwitcher}
         onLogout={onLogout}
         navBottom={navBottom}
@@ -219,10 +234,8 @@ function TabletRail({
   account,
   nav,
   navBottom,
-  onExpand,
   workspaceSwitcher,
 }: Readonly<Pick<AppShellProps, "workspace" | "account" | "nav" | "navBottom">> & {
-  onExpand: () => void;
   workspaceSwitcher: AppShellProps["workspaceSwitcher"];
 }) {
   return (
@@ -231,7 +244,6 @@ function TabletRail({
         workspace={workspace}
         account={account}
         isCompact
-        onExpand={onExpand}
         navBottom={navBottom}
         workspaceSwitcher={workspaceSwitcher}
       >
@@ -253,6 +265,7 @@ function DesktopContent({
   panelTabs,
   panelBreadcrumbs,
   panelTrail,
+  sidebarToggle,
   children,
 }: Readonly<{
   id: string;
@@ -266,6 +279,7 @@ function DesktopContent({
   panelTabs: AppShellProps["panelTabs"];
   panelBreadcrumbs: AppShellProps["panelBreadcrumbs"];
   panelTrail: AppShellProps["panelTrail"];
+  sidebarToggle: ReactNode;
   children: AppShellProps["children"];
 }>) {
   return (
@@ -282,6 +296,7 @@ function DesktopContent({
         tabs={panelTabs}
         breadcrumbs={panelBreadcrumbs}
         trail={panelTrail}
+        leading={sidebarToggle}
       >
         <PageContent>{children}</PageContent>
       </AppPanel>
@@ -342,7 +357,6 @@ function TabletSidebarOverlay({
   account,
   nav,
   navBottom,
-  onCollapse,
   workspaceSwitcher,
   onLogout,
 }: Readonly<{
@@ -352,7 +366,6 @@ function TabletSidebarOverlay({
   account: AppShellProps["account"];
   nav: AppShellProps["nav"];
   navBottom: AppShellProps["navBottom"];
-  onCollapse: () => void;
   workspaceSwitcher: AppShellProps["workspaceSwitcher"];
   onLogout?: () => void;
 }>) {
@@ -368,7 +381,6 @@ function TabletSidebarOverlay({
           <Sidebar
             workspace={workspace}
             account={account}
-            onCollapse={onCollapse}
             navBottom={navBottom}
             workspaceSwitcher={workspaceSwitcher}
             onLogout={onLogout}

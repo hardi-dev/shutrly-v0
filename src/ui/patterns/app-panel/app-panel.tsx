@@ -14,6 +14,7 @@ export function AppPanel({
   actions,
   tabs,
   trail,
+  leading,
   children,
 }: Readonly<AppPanelProps>) {
   return (
@@ -35,6 +36,7 @@ export function AppPanel({
         action={actions}
         tabs={tabs}
         trail={trail}
+        leading={leading}
       />
       {children}
     </main>

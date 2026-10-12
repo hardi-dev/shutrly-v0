@@ -1,6 +1,7 @@
 import "server-only";
 
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { CatalogError } from "@/features/booking/application/errors/catalog-errors/catalog-errors";
 import { catalogIdSchema } from "@/features/booking/application/schemas/catalog-id/catalog-id.schema";
@@ -106,7 +107,7 @@ export async function loadItemDefinitions(rawWorkspaceId: string): Promise<ItemD
   }
 }
 
-export async function loadServiceDetail(
+async function loadServiceDetailUncached(
   rawWorkspaceId: string,
   rawServiceId: string,
 ): Promise<ServiceDetailData> {
@@ -125,6 +126,9 @@ export async function loadServiceDetail(
     });
   }
 }
+
+/** Loads a service's detail; one lookup per request (ADR-025). */
+export const loadServiceDetail = cache(loadServiceDetailUncached);
 
 export async function addCatalogCategory(rawWorkspaceId: string, input: unknown) {
   const account = await requireOwnerOrRedirect();

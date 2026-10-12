@@ -1,6 +1,7 @@
 import "server-only";
 
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { ProjectError } from "@/features/booking/application/errors/project-errors/project-errors";
 import type { ProjectRepositoryPort } from "@/features/booking/application/ports/project-repository/project-repository.port";
@@ -92,7 +93,7 @@ export async function searchClientsEntry(rawWorkspaceId: string, query: unknown)
   }
 }
 
-export async function loadProjectDetail(rawWorkspaceId: string, rawProjectId: string) {
+async function loadProjectDetailUncached(rawWorkspaceId: string, rawProjectId: string) {
   const projectId = idOrNotFound(rawProjectId);
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
@@ -103,6 +104,9 @@ export async function loadProjectDetail(rawWorkspaceId: string, rawProjectId: st
     return saveError(error, verified.context.workspaceId, "detail");
   }
 }
+
+/** Loads a project's detail; one lookup per request (ADR-025). */
+export const loadProjectDetail = cache(loadProjectDetailUncached);
 
 export async function advanceProjectEntry(
   rawWorkspaceId: string,

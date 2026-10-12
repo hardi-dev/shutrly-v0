@@ -1,5 +1,7 @@
 import "server-only";
 
+import { cache } from "react";
+
 import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { getGalleryCard } from "@/features/gallery/application/use-cases/get-gallery-card/get-gallery-card";
 import { getGalleryPage } from "@/features/gallery/application/use-cases/get-gallery-page/get-gallery-page";
@@ -67,7 +69,7 @@ export async function loadGalleryCard(rawWorkspaceId: string, rawProjectId: stri
 }
 
 /** Loads the gallery page of a project. @param rawWorkspaceId - untrusted workspace id @param rawProjectId - untrusted project id @returns the page view */
-export async function loadGalleryPage(rawWorkspaceId: string, rawProjectId: string) {
+async function loadGalleryPageUncached(rawWorkspaceId: string, rawProjectId: string) {
   const projectId = galleryIdOrNotFound(rawProjectId);
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
@@ -88,3 +90,6 @@ export async function loadGalleryPage(rawWorkspaceId: string, rawProjectId: stri
     return gallerySaveError(error, verified.context.workspaceId, "page");
   }
 }
+
+/** Loads the gallery page of a project; one lookup per request (ADR-025). */
+export const loadGalleryPage = cache(loadGalleryPageUncached);

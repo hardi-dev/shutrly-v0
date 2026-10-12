@@ -1,6 +1,7 @@
 import "server-only";
 
 import { notFound, redirect } from "next/navigation";
+import { cache } from "react";
 
 import { seedDefaultItemDefinitions } from "@/features/booking/application/use-cases/seed-default-item-definitions/seed-default-item-definitions";
 import { seedDefaultTeamRoles } from "@/features/booking/application/use-cases/seed-default-team-roles/seed-default-team-roles";
@@ -48,7 +49,7 @@ export async function loadOnboardingAccount() {
 }
 
 /** Verifies a workspace for an owner without writing last-opened state. @param rawId - untrusted route or action ID @returns the verified workspace @throws Next notFound for an unowned or malformed ID */
-export async function verifyOwnerWorkspace(rawId: string): Promise<VerifiedWorkspace> {
+async function verifyOwnerWorkspaceUncached(rawId: string): Promise<VerifiedWorkspace> {
   const account = await requireOwnerOrRedirect();
   const owner = asOwnerUserId(account.id);
   return withWorkspaceScope(async ({ repository }) => {
@@ -63,6 +64,9 @@ export async function verifyOwnerWorkspace(rawId: string): Promise<VerifiedWorks
     }
   });
 }
+
+/** Verifies a workspace for an owner without writing last-opened state; one lookup per request (ADR-025). */
+export const verifyOwnerWorkspace = cache(verifyOwnerWorkspaceUncached);
 
 /** Verifies a workspace and conditionally records it as opened for a normal workspace page. @param rawId - untrusted route ID @returns the verified workspace context and summary */
 export async function enterWorkspace(rawId: string): Promise<VerifiedWorkspace> {

@@ -1,18 +1,7 @@
 import type { BreadcrumbItem } from "@/ui/patterns/page-header/page-header.types";
 
 import { OWNER_NAV_COPY } from "../owner-nav/owner-nav.copy";
-
-export type OwnerSection =
-  | "projects"
-  | "clients"
-  | "team"
-  | "services"
-  | "message-templates"
-  | "photo-sources"
-  | "settings"
-  | "invoices"
-  | "search"
-  | "notifications";
+import type { OwnerSection, OwnerTrailInput } from "./owner-trail.types";
 
 const SECTION_LABELS = new Map<string, string>([
   ["projects", OWNER_NAV_COPY.projects],
@@ -39,12 +28,7 @@ const SUB_PAGE_LABELS = new Map<string, string>([
 ]);
 
 /** Builds an Owner breadcrumb: the workspace root, the ancestors, then the current page as plain text (F-22 R-1, R-2, R-5). @param input - workspace, ancestors and the current label @returns the crumbs */
-export function ownerTrail(input: {
-  workspaceId: string;
-  workspaceName: string;
-  ancestors: readonly BreadcrumbItem[];
-  current: string;
-}): readonly BreadcrumbItem[] {
+export function ownerTrail(input: OwnerTrailInput): readonly BreadcrumbItem[] {
   return [
     { label: input.workspaceName, href: `/w/${input.workspaceId}` },
     ...input.ancestors,

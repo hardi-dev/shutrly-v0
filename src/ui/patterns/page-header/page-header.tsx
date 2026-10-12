@@ -1,11 +1,15 @@
-import type { ReactNode } from "react";
-
 import { cn } from "@/ui/cn/cn";
 
 import { Tabs } from "../tabs/tabs";
 import { BreadcrumbTrail } from "./breadcrumb-trail";
 import { PAGE_HEADER_COPY } from "./page-header.copy";
-import type { BreadcrumbItem, PageHeaderProps } from "./page-header.types";
+import type {
+  BreadcrumbRowProps,
+  HeaderTabsProps,
+  HeaderTitleProps,
+  PageHeaderProps,
+  PageHeaderTrailProps,
+} from "./page-header.types";
 
 /** Renders the breadcrumb, utility actions and hero title for an app page. */
 export function PageHeader({
@@ -61,7 +65,7 @@ export function PageHeader({
 }
 
 /** The Page Header breadcrumb, also rendered on the server by the Owner `@crumbs` slot (ADR-025). @param props - the crumbs; the last one is current @returns the trail */
-export function PageHeaderTrail({ items }: Readonly<{ items: readonly BreadcrumbItem[] }>) {
+export function PageHeaderTrail({ items }: Readonly<PageHeaderTrailProps>) {
   return (
     <BreadcrumbTrail
       label={PAGE_HEADER_COPY.breadcrumb}
@@ -71,35 +75,30 @@ export function PageHeaderTrail({ items }: Readonly<{ items: readonly Breadcrumb
   );
 }
 
-function BreadcrumbRow({
-  trail,
-  utilities,
-  leading,
-  isFlush,
-}: Readonly<{
-  trail: ReactNode;
-  utilities: PageHeaderProps["utilities"];
-  leading: PageHeaderProps["leading"];
-  isFlush: boolean;
-}>) {
+// F-22: a leading control (the sidebar toggle) takes the 32 px left of the hero gutter, so the first crumb stays on the title's edge (40 px = space-10) as it was before the toggle.
+function BreadcrumbRow({ trail, utilities, leading, isFlush }: Readonly<BreadcrumbRowProps>) {
+  const paddingLeft = leading
+    ? "pl-(--space-2)"
+    : "pl-(--component-page-header-breadcrumb-padding-x)";
   return (
     <div
       className={cn(
         "flex items-center gap-(--component-page-header-breadcrumb-gap) border-b border-(--component-page-header-border) py-(--space-1-5)",
-        isFlush ? "px-0" : "pr-(--space-7) pl-(--component-page-header-breadcrumb-padding-x)",
+        isFlush ? "px-0" : cn("pr-(--space-7)", paddingLeft),
       )}
     >
-      {leading ? <div className="flex shrink-0 items-center">{leading}</div> : null}
+      {leading ? (
+        <div className="-mr-(--space-2) flex w-(--space-8) shrink-0 items-center justify-center">
+          {leading}
+        </div>
+      ) : null}
       {trail}
       {utilities ? <div className="flex items-center gap-(--space-1)">{utilities}</div> : null}
     </div>
   );
 }
 
-function HeaderTabs({
-  tabs,
-  isFlush,
-}: Readonly<{ tabs: NonNullable<PageHeaderProps["tabs"]>; isFlush: boolean }>) {
+function HeaderTabs({ tabs, isFlush }: Readonly<HeaderTabsProps>) {
   return (
     <div className={isFlush ? "px-0" : "px-(--component-page-header-tabs-padding-x)"}>
       <Tabs label={tabs.label} tabs={tabs.tabs} hasTrack={false} />
@@ -107,10 +106,7 @@ function HeaderTabs({
   );
 }
 
-function HeaderTitle({
-  title,
-  adornment,
-}: Readonly<{ title: string; adornment: PageHeaderProps["titleAdornment"] }>) {
+function HeaderTitle({ title, adornment }: Readonly<HeaderTitleProps>) {
   const heading = (
     <h1 className="text-(length:--font-size-display) font-bold tracking-(--font-letter-spacing-display) text-(--component-page-header-title)">
       {title}

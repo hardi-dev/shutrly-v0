@@ -6,19 +6,18 @@ import { Button as AriaButton } from "react-aria-components";
 import { cn } from "@/ui/cn/cn";
 import { Icon } from "@/ui/primitives/icon/icon";
 
-import type { BreadcrumbTrailItemProps, BreadcrumbTrailProps } from "./page-header.types";
+import type {
+  BreadcrumbTrailItemProps,
+  BreadcrumbTrailProps,
+  CrumbTextProps,
+} from "./page-header.types";
 
 const NAV =
   "flex min-w-0 items-center gap-(--component-page-header-breadcrumb-gap) text-(length:--font-size-body-sm) font-medium text-(--component-page-header-breadcrumb-text)";
 const LINK =
   "truncate outline-none hover:text-(--component-page-header-breadcrumb-current) focus-visible:rounded-(--radius-xs) focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]";
 
-function CrumbText({
-  label,
-  isCurrent,
-  fit,
-  title,
-}: Readonly<{ label: string; isCurrent: boolean; fit: string; title: string | undefined }>) {
+function CrumbText({ label, isCurrent, fit, title }: Readonly<CrumbTextProps>) {
   return (
     <span
       aria-current={isCurrent ? "page" : undefined}

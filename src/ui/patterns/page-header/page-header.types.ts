@@ -45,3 +45,31 @@ export interface PageHeaderProps {
   /** No horizontal padding and no outer border: the page puts it in a bordered band whose column already lines it up (client shell, `ra85A`). */
   isFlush?: boolean;
 }
+
+export interface PageHeaderTrailProps {
+  readonly items: readonly BreadcrumbItem[];
+}
+
+export interface BreadcrumbRowProps {
+  readonly trail: ReactNode;
+  readonly utilities: PageHeaderProps["utilities"];
+  readonly leading: PageHeaderProps["leading"];
+  readonly isFlush: boolean;
+}
+
+export interface HeaderTabsProps {
+  readonly tabs: NonNullable<PageHeaderProps["tabs"]>;
+  readonly isFlush: boolean;
+}
+
+export interface HeaderTitleProps {
+  readonly title: string;
+  readonly adornment: PageHeaderProps["titleAdornment"];
+}
+
+export interface CrumbTextProps {
+  readonly label: string;
+  readonly isCurrent: boolean;
+  readonly fit: string;
+  readonly title: string | undefined;
+}

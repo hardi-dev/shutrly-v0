@@ -8,6 +8,8 @@ export interface ServicesScreenProps {
   readonly workspaceId: string;
   readonly groups: readonly ServiceListGroup[];
   readonly categories?: readonly CategoryRecord[];
+  /** Opens Add service on first render (`?add=service`, F-25 D-5). */
+  readonly openAddOnLoad?: boolean;
   readonly addServiceAction?: (workspaceId: string, values: unknown) => Promise<ServiceWriteResult>;
   readonly addCategoryAction?: (
     workspaceId: string,

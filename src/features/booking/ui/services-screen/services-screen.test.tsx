@@ -1,7 +1,9 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
+const router = vi.hoisted(() => ({ push: vi.fn(), replace: vi.fn() }));
+vi.mock("next/navigation", () => ({ useRouter: () => router }));
 vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
   useMobileViewport: () => false,
 }));
@@ -9,6 +11,21 @@ vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
 import { ServicesScreen } from "./services-screen";
 
 describe("ServicesScreen", () => {
+  it("AC-SETUP-005 opens Add service from the link and drops the query when closed", async () => {
+    router.replace.mockClear();
+    render(
+      <ServicesScreen workspaceId="ws-1" groups={[]} addServiceAction={vi.fn()} openAddOnLoad />,
+    );
+    expect(await screen.findByRole("dialog")).toBeInTheDocument();
+    await userEvent.keyboard("{Escape}");
+    expect(router.replace).toHaveBeenCalledWith("/w/ws-1/services", { scroll: false });
+  });
+
+  it("AC-SETUP-005 keeps Add service closed without the link", () => {
+    render(<ServicesScreen workspaceId="ws-1" groups={[]} addServiceAction={vi.fn()} />);
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
   it("renders an empty state inside every category section without services", () => {
     render(
       <ServicesScreen

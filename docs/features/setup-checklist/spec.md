@@ -32,19 +32,27 @@ None. The checklist has no stored state and no write of its own. It is derived o
 | 3 | Create the first project (client and session are entered in *New project*) | — | never shown as done: once a project exists the checklist is gone | Opens *New project* | until step 1 is done |
 | 4 | Set the brand name (clients see it; until then they see the workspace name) | Optional | step 4 fact | Opens *Settings* | never |
 
+**Step states (design 2026-10-12, [design.md](design.md)):**
+- **Current** — the first step, in the order 1 → 2 → 3 → 4, that is neither done nor locked. Exactly one step is current. It shows its action as the **only button** on the checklist (primary).
+- **Open** — not done, not locked, not current. The whole row is a link that opens the step's action target; no button.
+- **Done** — shown done (success icon and a *Done* marker in place of the step's own marker); no button and no link.
+- **Locked** — steps 2 and 3 until step 1 is done: lock icon and the locked hint in place of the description; no button and no link.
+
+Step 3 is never done while the checklist shows, so step 4 is never current: it is an open row link until done. Every step has one short description line (copy-deck §4.3a).
+
 Steps rows 5–9 of the intent's table are not shown (intent › Recommended answers 2): templates already work in EN and ID, the Drive folder is per project, team is optional, invoices aren't built.
 
 ## Main Flow — first project from a new workspace
 1. The Owner creates a workspace and lands on the dashboard (J-01). It shows the greeting and the checklist in place of the *Set up branding* empty state. Step 1 is not done; steps 2 and 3 are locked; step 4 is not done.
-2. The Owner chooses step 1's action. *Services* opens with *Add service* open. They save a service (with a new or existing category), and the new service's page opens (F-05), where package items are added.
-3. They add *Foto edit* to it there. Back on the dashboard, steps 1 and 2 show as done and step 3 is unlocked.
-4. Had they returned before adding items, step 2's action opens the same service page (one active service).
-5. The Owner chooses step 3's action and creates the project in *New project* (client and session inside it, F-07).
+2. The Owner chooses step 1's button (the current step). *Services* opens with *Add service* open. They save a service (with a new or existing category), and the new service's page opens (F-05), where package items are added.
+3. They add *Foto edit* to it there. Back on the dashboard, steps 1 and 2 show as done and step 3 is current.
+4. Had they returned before adding items, step 2 would be current and its button opens the same service page (one active service); step 3 would be an open row link.
+5. The Owner chooses step 3's button and creates the project in *New project* (client and session inside it, F-07).
 6. On the next dashboard load the workspace has a project: the checklist is gone and the dashboard shows today's placeholder, *Set up branding* included.
 
 ## Alternative Flows
-- **A1 — Skip step 2.** Step 3 is usable once step 1 is done, whatever step 2's state. Creating the project hides the checklist with step 2 not done.
-- **A2 — Step 4 first or any time.** Step 4 is never locked; saving a brand name in *Settings* marks it done.
+- **A1 — Skip step 2.** Once step 1 is done, step 3 is an open row link while step 2 is current; choosing the row opens *New project*. Creating the project hides the checklist with step 2 not done.
+- **A2 — Step 4 first or any time.** Step 4 is never locked; it is an open row link that opens *Settings*, and saving a brand name in *Settings* marks it done.
 - **A3 — Several services.** With two or more active services, step 2's action opens *Services*. Step 2 is done as soon as any one of them has a selection item.
 - **A4 — Data removed before the first project.** Every state is re-derived: archiving or deleting the only active service makes step 1 not done and locks steps 2–3 again; removing the last selection item from active services makes step 2 not done; clearing the brand name makes step 4 not done.
 - **A5 — Existing workspace with projects.** It never shows the checklist.
@@ -55,12 +63,13 @@ Steps rows 5–9 of the intent's table are not shown (intent › Recommended ans
 - **E2 — Workspace the Owner can't open.** Unchanged: the existing not-found / unavailable handling of `enterWorkspace` (BR-WS-003).
 
 ## UI States (C-007)
-- **Default:** greeting + checklist (title, short description, progress, four steps).
-- **Step states:** not done (actionable), done (shown done; its action may stay available), locked (not actionable, with the hint to add a service first).
+- **Default:** greeting + checklist (title, short description, progress, four steps), the card centered in the content area (desktop, also vertically).
+- **Step states:** current (one button), open (row link), done, locked — see *Steps*.
+- **Phone:** the current step's button sits under its description, sized to its label and aligned with the text.
 - **Loading:** the dashboard is server-rendered; no client loading state beyond the existing route loading UI.
 - **After the first project:** today's placeholder (greeting, *Set up branding* empty state), unchanged.
-- Done and locked are conveyed by text or accessible name as well as visuals (C-008, WCAG 2.1 AA); a locked step is not a focusable link.
-- Visual layout, device variants and the progress display are decided in `/sdv:design-feature` (the design wins on UX details).
+- Done and locked are conveyed by text or accessible name as well as visuals (C-008, WCAG 2.1 AA); locked and done steps are not focusable; an open row is one link whose accessible name is the step title.
+- Layout and device variants: [design.md](design.md).
 
 ## Business Rules
 - BR-CAT-011 — nothing is seeded or created for the Owner; the checklist only reads.
@@ -78,7 +87,7 @@ Steps rows 5–9 of the intent's table are not shown (intent › Recommended ans
 - **Copy:** new strings come from rows in [copy-deck.md](../bilingual-copy-revamp/copy-deck.md) §4.3a (includes the two §7.2 replacements), drafted with the Codex CLI and approved by the Owner on 2026-10-12.
 
 ## Assumptions (low-risk, reversible)
-- **A-1:** a done step keeps its action available (e.g. step 1 still opens *Add service*); design may change this.
+- ~~**A-1:** a done step keeps its action available.~~ Withdrawn by the design (2026-10-12): done steps have no button and no link.
 - **A-2:** the checklist re-derives on each dashboard load; no live update while the dashboard stays open.
 - **A-3:** step 4 counts any non-empty brand name, including one equal to the workspace name.
 - **A-4:** the *Add service* deep link is a URL on *Services* that opens the dialog on load; closing the dialog leaves the Owner on *Services*. Its form is decided in the plan.
@@ -96,6 +105,8 @@ Steps rows 5–9 of the intent's table are not shown (intent › Recommended ans
 - The F-24 defects.
 
 ## Open Questions / SPEC GAPS
+Design changes (Owner, 2026-10-12, design wins on UX): one button per state on the current step, other open steps are row links, done steps show a success icon and *Done* with no action (A-1 withdrawn), one compact description per step. Recorded in *Steps*, AC-SETUP-001/006/012/014 and the new AC-SETUP-020.
+
 None open. The intent's five questions are answered in [intent.md](intent.md) › Recommended answers; the three follow-ups (step order, step 1 target, step 2 target) were answered by the Owner on 2026-10-12 and are in *Steps* above.
 
 ## Flagged Concerns

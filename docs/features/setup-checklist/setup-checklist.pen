@@ -1,0 +1,3221 @@
+{
+  "version": "2.21",
+  "children": [
+    {
+      "id": "u4OTj3",
+      "type": "ref",
+      "ref": "X:y9uBJl",
+      "name": "D2 · Dashboard — step 1 done (desktop)",
+      "x": 0,
+      "y": 1060,
+      "descendants": {
+        "X:fNszT/X:rAUNw": {
+          "content": "Explore Studio"
+        },
+        "X:fNszT/X:llfv5/X:m6S2m": {
+          "content": "Dashboard"
+        },
+        "X:fNszT/X:llfv5/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:nHXqh/X:m6S2m": {
+          "content": "Projects"
+        },
+        "X:fNszT/X:nHXqh/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:wwfj3/X:m6S2m": {
+          "content": "Clients"
+        },
+        "X:fNszT/X:wwfj3/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:lz7Bj/X:m6S2m": {
+          "content": "Invoices"
+        },
+        "X:fNszT/X:lz7Bj/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:qldzY/X:p1hGy": {
+          "content": "CATALOG"
+        },
+        "X:fNszT/X:P4ZpeX/X:m6S2m": {
+          "content": "Services"
+        },
+        "X:fNszT/X:P4ZpeX/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:V2Udn4/X:m6S2m": {
+          "content": "Team"
+        },
+        "X:fNszT/X:V2Udn4/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:f1BvVe/X:m6S2m": {
+          "content": "Message templates"
+        },
+        "X:fNszT/X:f1BvVe/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:I3aJo/X:m6S2m": {
+          "content": "Photo sources"
+        },
+        "X:fNszT/X:I3aJo/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:E2Dl5F/X:m6S2m": {
+          "content": "Settings"
+        },
+        "X:fNszT/X:E2Dl5F/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:EpYE1": {
+          "content": "Hardi Santoso"
+        },
+        "X:fNszT/X:pMF7b": {
+          "content": "hardi@explore.studio"
+        },
+        "X:Sw0yD/X:MST3f/X:EPpbd": {
+          "content": "Explore Studio"
+        },
+        "X:Sw0yD/X:MST3f/X:Hh5tj": {
+          "content": "Dashboard"
+        },
+        "X:Sw0yD/X:MST3f/X:HsrFT": {
+          "content": "Welcome to Explore Studio"
+        },
+        "X:Sw0yD/X:MST3f/X:i8XPWU": {
+          "content": "Your workspace: Explore Studio."
+        },
+        "X:Sw0yD/X:MST3f/X:U9JxE": {
+          "enabled": false
+        },
+        "X:Sw0yD/X:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "XXfoF",
+              "name": "Container",
+              "width": 1096,
+              "height": 717,
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "id": "y33Py",
+                  "type": "ref",
+                  "ref": "X:G8WO8q",
+                  "name": "Setup checklist",
+                  "width": 720,
+                  "descendants": {
+                    "X:BXWnC": {
+                      "content": "Set up your workspace"
+                    },
+                    "X:nHCW8": {
+                      "content": "Add a service first, then follow the recommended and optional steps."
+                    },
+                    "X:QcKHK": {
+                      "type": "frame",
+                      "id": "xPUxp",
+                      "name": "Actions",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QLs1Q",
+                          "name": "Progress",
+                          "fill": "$X:color/semantic/text/secondary",
+                          "content": "1 of 4 done",
+                          "fontFamily": "$X:font/family/base",
+                          "fontSize": "$X:font/size/body-sm",
+                          "fontWeight": "$X:font/weight/semibold"
+                        }
+                      ]
+                    },
+                    "X:f60zS": {
+                      "type": "frame",
+                      "id": "Q6kz5",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        "$X:component/section-card/flush/padding-y",
+                        "$X:component/section-card/flush/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "GZttr",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Add a service (done)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:c4tOj9": {
+                              "fill": "$X:color/semantic/status/success/bg"
+                            },
+                            "X:wDTkG": {
+                              "icon": "check",
+                              "fill": "$X:color/semantic/status/success/fg"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "e6H4P0",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "RcPey",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/secondary",
+                                  "content": "Add a service",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "DrFHs",
+                                  "type": "ref",
+                                  "ref": "X:GyfYn",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Done"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Projects come from services; add categories in Add service",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "BBxYf",
+                              "name": "Trailing",
+                              "width": "fit_content(0)",
+                              "height": 42,
+                              "gap": "$X:space/4",
+                              "alignItems": "center"
+                            }
+                          }
+                        },
+                        {
+                          "id": "SMJQx",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Add package items (current)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "list-checks"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "y3DEih",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Fubmr",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/primary",
+                                  "content": "Add package items",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "BqbRZ",
+                                  "type": "ref",
+                                  "ref": "X:D7LAk7",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Recommended"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "“Foto edit 50” limits how many photos clients pick",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "bZMyu",
+                              "name": "Trailing",
+                              "height": 42,
+                              "gap": "$X:space/4",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "id": "IbXGj",
+                                  "type": "ref",
+                                  "ref": "X:Q49yf7",
+                                  "name": "Action",
+                                  "descendants": {
+                                    "X:xnhuK": {
+                                      "content": "Add package items"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "aNDDF",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Create your first project (link, hover)",
+                          "width": "fill_container",
+                          "fill": "$X:color/semantic/surface/subtle",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "folder-plus"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "tLtNH",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "xyH3w",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/primary",
+                                  "content": "Create your first project",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Fill in client and shoot date in New project",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "dqSOT",
+                              "name": "Trailing",
+                              "height": 42,
+                              "gap": "$X:space/4",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "nlTMb",
+                                  "name": "Chevron",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "chevron-right",
+                                  "library": "lucide",
+                                  "fill": "$X:color/semantic/text/muted"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "uJkof",
+                          "type": "ref",
+                          "ref": "X:Bf3eg",
+                          "name": "Set your brand name (link)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "badge-check"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "hhzjY",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "w8MG5",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/primary",
+                                  "content": "Set your brand name",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "FzE36",
+                                  "type": "ref",
+                                  "ref": "X:w7OAR",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Optional"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Clients see Explore Studio in messages and galleries until then",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "E2izb",
+                              "name": "Trailing",
+                              "height": 42,
+                              "gap": "$X:space/4",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "Pzt6i",
+                                  "name": "Chevron",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "chevron-right",
+                                  "library": "lucide",
+                                  "fill": "$X:color/semantic/text/muted"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "X:fwm7P": {
+          "enabled": false
+        },
+        "X:VJpuD": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "id": "liGsJ",
+      "type": "ref",
+      "ref": "X:y9uBJl",
+      "name": "D1 · Dashboard — new workspace (desktop)",
+      "x": 0,
+      "y": 0,
+      "descendants": {
+        "X:fNszT/X:rAUNw": {
+          "content": "Explore Studio"
+        },
+        "X:fNszT/X:llfv5/X:m6S2m": {
+          "content": "Dashboard"
+        },
+        "X:fNszT/X:llfv5/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:nHXqh/X:m6S2m": {
+          "content": "Projects"
+        },
+        "X:fNszT/X:nHXqh/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:wwfj3/X:m6S2m": {
+          "content": "Clients"
+        },
+        "X:fNszT/X:wwfj3/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:lz7Bj/X:m6S2m": {
+          "content": "Invoices"
+        },
+        "X:fNszT/X:lz7Bj/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:qldzY/X:p1hGy": {
+          "content": "CATALOG"
+        },
+        "X:fNszT/X:P4ZpeX/X:m6S2m": {
+          "content": "Services"
+        },
+        "X:fNszT/X:P4ZpeX/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:V2Udn4/X:m6S2m": {
+          "content": "Team"
+        },
+        "X:fNszT/X:V2Udn4/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:f1BvVe/X:m6S2m": {
+          "content": "Message templates"
+        },
+        "X:fNszT/X:f1BvVe/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:I3aJo/X:m6S2m": {
+          "content": "Photo sources"
+        },
+        "X:fNszT/X:I3aJo/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:E2Dl5F/X:m6S2m": {
+          "content": "Settings"
+        },
+        "X:fNszT/X:E2Dl5F/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:EpYE1": {
+          "content": "Hardi Santoso"
+        },
+        "X:fNszT/X:pMF7b": {
+          "content": "hardi@explore.studio"
+        },
+        "X:Sw0yD/X:MST3f/X:EPpbd": {
+          "content": "Explore Studio"
+        },
+        "X:Sw0yD/X:MST3f/X:Hh5tj": {
+          "content": "Dashboard"
+        },
+        "X:Sw0yD/X:MST3f/X:HsrFT": {
+          "content": "Welcome to Explore Studio"
+        },
+        "X:Sw0yD/X:MST3f/X:i8XPWU": {
+          "content": "Your workspace: Explore Studio."
+        },
+        "X:Sw0yD/X:MST3f/X:U9JxE": {
+          "enabled": false
+        },
+        "X:Sw0yD/X:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "cibgD",
+              "name": "Container",
+              "width": 1096,
+              "height": 717,
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "id": "f4Gwq",
+                  "type": "ref",
+                  "ref": "X:G8WO8q",
+                  "name": "Setup checklist",
+                  "width": 720,
+                  "descendants": {
+                    "X:BXWnC": {
+                      "content": "Set up your workspace"
+                    },
+                    "X:nHCW8": {
+                      "content": "Add a service first, then follow the recommended and optional steps."
+                    },
+                    "X:QcKHK": {
+                      "type": "frame",
+                      "id": "wN6YG",
+                      "name": "Actions",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "rVEkN",
+                          "name": "Progress",
+                          "fill": "$X:color/semantic/text/secondary",
+                          "content": "0 of 4 done",
+                          "fontFamily": "$X:font/family/base",
+                          "fontSize": "$X:font/size/body-sm",
+                          "fontWeight": "$X:font/weight/semibold"
+                        }
+                      ]
+                    },
+                    "X:f60zS": {
+                      "type": "frame",
+                      "id": "FG1uA",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        "$X:component/section-card/flush/padding-y",
+                        "$X:component/section-card/flush/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "AFFAH",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Add a service (current)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "briefcase"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "v0GYM",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "vzKXr",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/primary",
+                                  "content": "Add a service",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "i9YKi",
+                                  "type": "ref",
+                                  "ref": "X:g26Cg6",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Required"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Projects come from services; add categories in Add service",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "wm0JW",
+                              "name": "Trailing",
+                              "height": 42,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "id": "VSJOw",
+                                  "type": "ref",
+                                  "ref": "X:Q49yf7",
+                                  "name": "Action",
+                                  "descendants": {
+                                    "X:xnhuK": {
+                                      "content": "Add service"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "yMsKU",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Add package items (locked)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "lock",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "H0oHF",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "riOCw",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/secondary",
+                                  "content": "Add package items",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "z4vf7",
+                                  "type": "ref",
+                                  "ref": "X:D7LAk7",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Recommended"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "This step opens after you add a service",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "LWQx8",
+                              "name": "Trailing",
+                              "width": "fit_content(0)",
+                              "height": 42,
+                              "alignItems": "center"
+                            }
+                          }
+                        },
+                        {
+                          "id": "I3jGuF",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Create your first project (locked)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "lock",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "wT1hC",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "F4p5c",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/secondary",
+                                  "content": "Create your first project",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "This step opens after you add a service",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "v7hySY",
+                              "name": "Trailing",
+                              "width": "fit_content(0)",
+                              "height": 42,
+                              "alignItems": "center"
+                            }
+                          }
+                        },
+                        {
+                          "id": "lXMLQ",
+                          "type": "ref",
+                          "ref": "X:Bf3eg",
+                          "name": "Set your brand name (link)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "badge-check"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "HcyJk",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "xSW9n",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/primary",
+                                  "content": "Set your brand name",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "OFRjj",
+                                  "type": "ref",
+                                  "ref": "X:w7OAR",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Optional"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Clients see Explore Studio in messages and galleries until then",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "zYU38",
+                              "name": "Trailing",
+                              "height": 42,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "c8SOe",
+                                  "name": "Chevron",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "chevron-right",
+                                  "library": "lucide",
+                                  "fill": "$X:color/semantic/text/muted"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "X:fwm7P": {
+          "enabled": false
+        },
+        "X:VJpuD": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "id": "J29pj",
+      "type": "ref",
+      "ref": "X:y9uBJl",
+      "name": "D3 · Dashboard — only the first project left (desktop)",
+      "x": 0,
+      "y": 2120,
+      "descendants": {
+        "X:fNszT/X:rAUNw": {
+          "content": "Explore Studio"
+        },
+        "X:fNszT/X:llfv5/X:m6S2m": {
+          "content": "Dashboard"
+        },
+        "X:fNszT/X:llfv5/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:nHXqh/X:m6S2m": {
+          "content": "Projects"
+        },
+        "X:fNszT/X:nHXqh/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:wwfj3/X:m6S2m": {
+          "content": "Clients"
+        },
+        "X:fNszT/X:wwfj3/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:lz7Bj/X:m6S2m": {
+          "content": "Invoices"
+        },
+        "X:fNszT/X:lz7Bj/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:qldzY/X:p1hGy": {
+          "content": "CATALOG"
+        },
+        "X:fNszT/X:P4ZpeX/X:m6S2m": {
+          "content": "Services"
+        },
+        "X:fNszT/X:P4ZpeX/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:V2Udn4/X:m6S2m": {
+          "content": "Team"
+        },
+        "X:fNszT/X:V2Udn4/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:f1BvVe/X:m6S2m": {
+          "content": "Message templates"
+        },
+        "X:fNszT/X:f1BvVe/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:I3aJo/X:m6S2m": {
+          "content": "Photo sources"
+        },
+        "X:fNszT/X:I3aJo/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:E2Dl5F/X:m6S2m": {
+          "content": "Settings"
+        },
+        "X:fNszT/X:E2Dl5F/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:EpYE1": {
+          "content": "Hardi Santoso"
+        },
+        "X:fNszT/X:pMF7b": {
+          "content": "hardi@explore.studio"
+        },
+        "X:Sw0yD/X:MST3f/X:EPpbd": {
+          "content": "Explore Studio"
+        },
+        "X:Sw0yD/X:MST3f/X:Hh5tj": {
+          "content": "Dashboard"
+        },
+        "X:Sw0yD/X:MST3f/X:HsrFT": {
+          "content": "Welcome to Explore Studio"
+        },
+        "X:Sw0yD/X:MST3f/X:i8XPWU": {
+          "content": "Your workspace: Explore Studio."
+        },
+        "X:Sw0yD/X:MST3f/X:U9JxE": {
+          "enabled": false
+        },
+        "X:Sw0yD/X:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "ieiOC",
+              "name": "Container",
+              "width": 1096,
+              "height": 717,
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "id": "Tjlkw",
+                  "type": "ref",
+                  "ref": "X:G8WO8q",
+                  "name": "Setup checklist",
+                  "width": 720,
+                  "descendants": {
+                    "X:BXWnC": {
+                      "content": "Set up your workspace"
+                    },
+                    "X:nHCW8": {
+                      "content": "Add a service first, then follow the recommended and optional steps."
+                    },
+                    "X:QcKHK": {
+                      "type": "frame",
+                      "id": "x0cmkn",
+                      "name": "Actions",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "oH03q",
+                          "name": "Progress",
+                          "fill": "$X:color/semantic/text/secondary",
+                          "content": "3 of 4 done",
+                          "fontFamily": "$X:font/family/base",
+                          "fontSize": "$X:font/size/body-sm",
+                          "fontWeight": "$X:font/weight/semibold"
+                        }
+                      ]
+                    },
+                    "X:f60zS": {
+                      "type": "frame",
+                      "id": "zfJxq",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        "$X:component/section-card/flush/padding-y",
+                        "$X:component/section-card/flush/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "xltoo",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Add a service (done)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:c4tOj9": {
+                              "fill": "$X:color/semantic/status/success/bg"
+                            },
+                            "X:wDTkG": {
+                              "icon": "check",
+                              "fill": "$X:color/semantic/status/success/fg"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "fR9oH",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "kZgx0",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/secondary",
+                                  "content": "Add a service",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "oPGJp",
+                                  "type": "ref",
+                                  "ref": "X:GyfYn",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Done"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Projects come from services; add categories in Add service",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "FOacz",
+                              "name": "Trailing",
+                              "width": "fit_content(0)",
+                              "height": 42,
+                              "alignItems": "center"
+                            }
+                          }
+                        },
+                        {
+                          "id": "aQC66",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Add package items (done)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:c4tOj9": {
+                              "fill": "$X:color/semantic/status/success/bg"
+                            },
+                            "X:wDTkG": {
+                              "icon": "check",
+                              "fill": "$X:color/semantic/status/success/fg"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "F2zgpl",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "fExR4",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/secondary",
+                                  "content": "Add package items",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "S4Nsea",
+                                  "type": "ref",
+                                  "ref": "X:GyfYn",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Done"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "“Foto edit 50” limits how many photos clients pick",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "wH4T2",
+                              "name": "Trailing",
+                              "width": "fit_content(0)",
+                              "height": 42,
+                              "alignItems": "center"
+                            }
+                          }
+                        },
+                        {
+                          "id": "hib6j",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Create your first project (current)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "folder-plus"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "SlUcs",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "h1XMLe",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/primary",
+                                  "content": "Create your first project",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Fill in client and shoot date in New project",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "t9egU",
+                              "name": "Trailing",
+                              "height": 42,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "id": "cRbE7",
+                                  "type": "ref",
+                                  "ref": "X:Q49yf7",
+                                  "name": "Action",
+                                  "descendants": {
+                                    "X:xnhuK": {
+                                      "content": "New project"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "cyQFq",
+                          "type": "ref",
+                          "ref": "X:Bf3eg",
+                          "name": "Set your brand name (done)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:c4tOj9": {
+                              "fill": "$X:color/semantic/status/success/bg"
+                            },
+                            "X:wDTkG": {
+                              "icon": "check",
+                              "fill": "$X:color/semantic/status/success/fg"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "nVGNM",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "SYq8d",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/secondary",
+                                  "content": "Set your brand name",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "mDJAW",
+                                  "type": "ref",
+                                  "ref": "X:GyfYn",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Done"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Clients see Explore Studio in messages and galleries until then",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "dcmHK",
+                              "name": "Trailing",
+                              "width": "fit_content(0)",
+                              "height": 42,
+                              "alignItems": "center"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "X:fwm7P": {
+          "enabled": false
+        },
+        "X:VJpuD": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "id": "nUEqD",
+      "type": "ref",
+      "ref": "X:y9uBJl",
+      "name": "D4 · New project — no active service (desktop)",
+      "x": 0,
+      "y": 3180,
+      "descendants": {
+        "X:fNszT/X:rAUNw": {
+          "content": "Explore Studio"
+        },
+        "X:fNszT/X:llfv5": {
+          "id": "LrhiE",
+          "type": "ref",
+          "ref": "X:K0UQ06",
+          "name": "Nav Dashboard",
+          "descendants": {
+            "X:MpR9k": {
+              "icon": "layout-dashboard"
+            },
+            "X:m6S2m": {
+              "content": "Dashboard"
+            },
+            "X:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "X:fNszT/X:nHXqh": {
+          "id": "W8znx",
+          "type": "ref",
+          "ref": "X:CInVy",
+          "name": "Nav Projects",
+          "descendants": {
+            "X:MpR9k": {
+              "icon": "folder"
+            },
+            "X:m6S2m": {
+              "content": "Projects"
+            },
+            "X:E6JiYt": {
+              "enabled": false
+            }
+          }
+        },
+        "X:fNszT/X:wwfj3/X:m6S2m": {
+          "content": "Clients"
+        },
+        "X:fNszT/X:wwfj3/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:lz7Bj/X:m6S2m": {
+          "content": "Invoices"
+        },
+        "X:fNszT/X:lz7Bj/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:qldzY/X:p1hGy": {
+          "content": "CATALOG"
+        },
+        "X:fNszT/X:P4ZpeX/X:m6S2m": {
+          "content": "Services"
+        },
+        "X:fNszT/X:P4ZpeX/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:V2Udn4/X:m6S2m": {
+          "content": "Team"
+        },
+        "X:fNszT/X:V2Udn4/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:f1BvVe/X:m6S2m": {
+          "content": "Message templates"
+        },
+        "X:fNszT/X:f1BvVe/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:I3aJo/X:m6S2m": {
+          "content": "Photo sources"
+        },
+        "X:fNszT/X:I3aJo/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:E2Dl5F/X:m6S2m": {
+          "content": "Settings"
+        },
+        "X:fNszT/X:E2Dl5F/X:E6JiYt": {
+          "enabled": false
+        },
+        "X:fNszT/X:EpYE1": {
+          "content": "Hardi Santoso"
+        },
+        "X:fNszT/X:pMF7b": {
+          "content": "hardi@explore.studio"
+        },
+        "X:Sw0yD/X:MST3f/X:EPpbd": {
+          "content": "Projects"
+        },
+        "X:Sw0yD/X:MST3f/X:Hh5tj": {
+          "content": "New project"
+        },
+        "X:Sw0yD/X:MST3f/X:HsrFT": {
+          "content": "New project"
+        },
+        "X:Sw0yD/X:MST3f/X:i8XPWU": {
+          "content": "Choose a client and service, then record what you’ve agreed on."
+        },
+        "X:Sw0yD/X:MST3f/X:U9JxE": {
+          "enabled": false
+        },
+        "X:Sw0yD/X:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "s0j823",
+              "name": "Container",
+              "width": 1096,
+              "layout": "vertical",
+              "gap": "$X:space/6",
+              "alignItems": "center",
+              "children": [
+                {
+                  "id": "j0d1oo",
+                  "type": "ref",
+                  "ref": "X:rHONT",
+                  "name": "Client and service",
+                  "width": 720,
+                  "descendants": {
+                    "X:BXWnC": {
+                      "content": "Client and service"
+                    },
+                    "X:nHCW8": {
+                      "content": "Choose who the project is for and which service it starts from.",
+                      "enabled": false
+                    },
+                    "X:DElnV": {
+                      "type": "frame",
+                      "id": "M6eoHA",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": "$X:component/section-card/content/gap",
+                      "padding": "$X:component/section-card/content/padding",
+                      "children": [
+                        {
+                          "id": "YmqSA",
+                          "type": "ref",
+                          "ref": "X:CiTrY",
+                          "name": "Client",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:Et1pR/X:Gmk0c": {
+                              "content": "Client"
+                            },
+                            "X:Et1pR/X:c67yIW/X:tvTDd": {
+                              "content": "Find or add a client"
+                            },
+                            "X:Et1pR/X:uh4XA": {
+                              "enabled": false
+                            }
+                          }
+                        },
+                        {
+                          "id": "fu5rd",
+                          "type": "ref",
+                          "ref": "X:umHpv",
+                          "name": "Service (disabled)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:Et1pR/X:Gmk0c": {
+                              "content": "Service"
+                            },
+                            "X:Et1pR/X:c67yIW/X:tvTDd": {
+                              "content": "No active services yet"
+                            },
+                            "X:Et1pR/X:c67yIW/X:CykHo": {
+                              "content": "No active services yet"
+                            },
+                            "X:Et1pR/X:uh4XA": {
+                              "enabled": false
+                            }
+                          }
+                        },
+                        {
+                          "id": "F69mQV",
+                          "type": "ref",
+                          "ref": "X:S5bhVn",
+                          "name": "No service alert",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:k7lq2": {
+                              "icon": "info"
+                            },
+                            "X:m0dqT6": {
+                              "content": "No active services yet"
+                            },
+                            "X:fhch4": {
+                              "content": "A project starts from a service in a category. Add both in the Add service dialog."
+                            },
+                            "X:M54Ca": {
+                              "enabled": true,
+                              "content": "Add service"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "akKHz",
+                  "name": "Form actions",
+                  "width": 720,
+                  "gap": "$X:space/3",
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "id": "p4zWk",
+                      "type": "ref",
+                      "ref": "X:iQ7e5",
+                      "name": "Save draft (disabled)",
+                      "descendants": {
+                        "X:xnhuK": {
+                          "content": "Save draft"
+                        }
+                      }
+                    },
+                    {
+                      "id": "h9B1QT",
+                      "type": "ref",
+                      "ref": "X:lBKcT",
+                      "name": "Create project (disabled)",
+                      "descendants": {
+                        "X:xnhuK": {
+                          "content": "Create project"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "X:fwm7P": {
+          "enabled": false
+        },
+        "X:VJpuD": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "id": "Rbpwx",
+      "type": "ref",
+      "ref": "X:c6qPz7",
+      "name": "M1 · Dashboard — new workspace (mobile)",
+      "x": 1520,
+      "y": 0,
+      "descendants": {
+        "X:n0MP5/X:Y9IhU/X:t4WDgJ": {
+          "content": "Explore Studio"
+        },
+        "X:n0MP5/X:K1jSfD": {
+          "content": "Dashboard"
+        },
+        "X:n0MP5/X:EYvag": {
+          "content": "Your workspace: Explore Studio."
+        },
+        "X:HvRky": {
+          "type": "frame",
+          "id": "kQtjR",
+          "name": "Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$X:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$X:component/panel/app/radius",
+            "$X:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$X:space/6",
+          "padding": [
+            "$X:space/5",
+            "$X:space/4"
+          ],
+          "children": [
+            {
+              "id": "RJs4J",
+              "type": "ref",
+              "ref": "X:Q82mo",
+              "name": "Setup checklist",
+              "width": "fill_container",
+              "descendants": {
+                "X:BXWnC": {
+                  "content": "Set up your workspace"
+                },
+                "X:nHCW8": {
+                  "content": "Add a service first, then follow the recommended and optional steps."
+                },
+                "X:QcKHK": {
+                  "type": "frame",
+                  "id": "w0R1mE",
+                  "name": "Actions",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "zqAbV",
+                      "name": "Progress",
+                      "fill": "$X:color/semantic/text/secondary",
+                      "content": "0 of 4 done",
+                      "fontFamily": "$X:font/family/base",
+                      "fontSize": "$X:font/size/body-sm",
+                      "fontWeight": "$X:font/weight/semibold"
+                    }
+                  ]
+                },
+                "X:AdZ4y": {
+                  "type": "frame",
+                  "id": "NjmA7",
+                  "name": "Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "padding": [
+                    "$X:component/section-card/flush/padding-y",
+                    "$X:component/section-card/compact/flush/padding-x"
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "obmv6",
+                      "name": "Current step",
+                      "width": "fill_container",
+                      "stroke": "$X:component/list-card/item/border",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "padding": [
+                        0,
+                        0,
+                        "$X:space/3",
+                        0
+                      ],
+                      "children": [
+                        {
+                          "id": "IIcAB",
+                          "type": "ref",
+                          "ref": "X:Bf3eg",
+                          "name": "Add a service (current)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "briefcase"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "jG8Mn",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "s7J1k",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/primary",
+                                  "content": "Add a service",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "EXQID",
+                                  "type": "ref",
+                                  "ref": "X:g26Cg6",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Required"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Projects come from services; add categories in Add service",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "mgJGe",
+                              "name": "Trailing",
+                              "width": "fit_content(0)",
+                              "height": "fit_content(0)",
+                              "alignItems": "center"
+                            }
+                          }
+                        },
+                        {
+                          "type": "frame",
+                          "id": "N4jI3",
+                          "name": "Action row",
+                          "width": "fill_container",
+                          "padding": [
+                            0,
+                            "$X:space/3",
+                            0,
+                            60
+                          ],
+                          "children": [
+                            {
+                              "id": "tLA3p",
+                              "type": "ref",
+                              "ref": "X:Q49yf7",
+                              "name": "Action",
+                              "width": "fit_content",
+                              "descendants": {
+                                "X:xnhuK": {
+                                  "content": "Add service"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "vH5IV",
+                      "type": "ref",
+                      "ref": "X:PV6HB",
+                      "name": "Add package items (locked)",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:wDTkG": {
+                          "icon": "lock",
+                          "fill": "$X:color/semantic/text/muted"
+                        },
+                        "X:O7pUR": {
+                          "type": "frame",
+                          "id": "l8vXWZ",
+                          "name": "Title row",
+                          "gap": "$X:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "XyDwK",
+                              "name": "Title",
+                              "fill": "$X:color/semantic/text/secondary",
+                              "content": "Add package items",
+                              "fontFamily": "$X:font/family/base",
+                              "fontSize": "$X:font/size/body",
+                              "fontWeight": "$X:font/weight/semibold"
+                            },
+                            {
+                              "id": "BABda",
+                              "type": "ref",
+                              "ref": "X:D7LAk7",
+                              "name": "Marker",
+                              "descendants": {
+                                "X:SD1o7": {
+                                  "content": "Recommended"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "X:k9OCFf": {
+                          "content": "This step opens after you add a service",
+                          "fill": "$X:color/semantic/text/muted"
+                        },
+                        "X:zUF3j": {
+                          "type": "frame",
+                          "id": "jWpBB",
+                          "name": "Trailing",
+                          "width": "fit_content(0)",
+                          "height": "fit_content(0)",
+                          "alignItems": "center"
+                        }
+                      }
+                    },
+                    {
+                      "id": "kJgtl",
+                      "type": "ref",
+                      "ref": "X:PV6HB",
+                      "name": "Create your first project (locked)",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:wDTkG": {
+                          "icon": "lock",
+                          "fill": "$X:color/semantic/text/muted"
+                        },
+                        "X:O7pUR": {
+                          "type": "frame",
+                          "id": "HULap",
+                          "name": "Title row",
+                          "gap": "$X:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "DPjiv",
+                              "name": "Title",
+                              "fill": "$X:color/semantic/text/secondary",
+                              "content": "Create your first project",
+                              "fontFamily": "$X:font/family/base",
+                              "fontSize": "$X:font/size/body",
+                              "fontWeight": "$X:font/weight/semibold"
+                            }
+                          ]
+                        },
+                        "X:k9OCFf": {
+                          "content": "This step opens after you add a service",
+                          "fill": "$X:color/semantic/text/muted"
+                        },
+                        "X:zUF3j": {
+                          "type": "frame",
+                          "id": "FVsxh",
+                          "name": "Trailing",
+                          "width": "fit_content(0)",
+                          "height": "fit_content(0)",
+                          "alignItems": "center"
+                        }
+                      }
+                    },
+                    {
+                      "id": "IAvxW",
+                      "type": "ref",
+                      "ref": "X:Bf3eg",
+                      "name": "Set your brand name (link)",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:wDTkG": {
+                          "icon": "badge-check"
+                        },
+                        "X:O7pUR": {
+                          "type": "frame",
+                          "id": "CzwNj",
+                          "name": "Title row",
+                          "gap": "$X:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "i98We",
+                              "name": "Title",
+                              "fill": "$X:color/semantic/text/primary",
+                              "content": "Set your brand name",
+                              "fontFamily": "$X:font/family/base",
+                              "fontSize": "$X:font/size/body",
+                              "fontWeight": "$X:font/weight/semibold"
+                            },
+                            {
+                              "id": "Q1oFNA",
+                              "type": "ref",
+                              "ref": "X:w7OAR",
+                              "name": "Marker",
+                              "descendants": {
+                                "X:SD1o7": {
+                                  "content": "Optional"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "X:k9OCFf": {
+                          "content": "Clients see Explore Studio in messages and galleries until then",
+                          "fill": "$X:color/semantic/text/muted"
+                        },
+                        "X:zUF3j": {
+                          "type": "frame",
+                          "id": "a9Gel",
+                          "name": "Trailing",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "shyOc",
+                              "name": "Chevron",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "chevron-right",
+                              "library": "lucide",
+                              "fill": "$X:color/semantic/text/muted"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "X:SpGXb/X:uzabE": {
+          "id": "n7H75",
+          "type": "ref",
+          "ref": "X:bKADv",
+          "name": "Tab Dashboard",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "layout-dashboard"
+            },
+            "X:sJlqM": {
+              "content": "Dashboard"
+            }
+          }
+        },
+        "X:SpGXb/X:Ryjdm": {
+          "id": "jqUJi",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Projects",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "folder-kanban"
+            },
+            "X:sJlqM": {
+              "content": "Projects"
+            }
+          }
+        },
+        "X:SpGXb/X:YChMw": {
+          "id": "T4I4r",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Clients",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "users"
+            },
+            "X:sJlqM": {
+              "content": "Clients"
+            }
+          }
+        },
+        "X:SpGXb/X:wTYuN": {
+          "id": "PaFfL",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Invoices",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "receipt"
+            },
+            "X:sJlqM": {
+              "content": "Invoices"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "eEfVG",
+      "type": "ref",
+      "ref": "X:c6qPz7",
+      "name": "M2 · Dashboard — step 1 done (mobile)",
+      "x": 1520,
+      "y": 1060,
+      "descendants": {
+        "X:n0MP5/X:Y9IhU/X:t4WDgJ": {
+          "content": "Explore Studio"
+        },
+        "X:n0MP5/X:K1jSfD": {
+          "content": "Dashboard"
+        },
+        "X:n0MP5/X:EYvag": {
+          "content": "Your workspace: Explore Studio."
+        },
+        "X:HvRky": {
+          "type": "frame",
+          "id": "o87ct6",
+          "name": "Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$X:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$X:component/panel/app/radius",
+            "$X:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$X:space/6",
+          "padding": [
+            "$X:space/5",
+            "$X:space/4"
+          ],
+          "children": [
+            {
+              "id": "UzuIy",
+              "type": "ref",
+              "ref": "X:Q82mo",
+              "name": "Setup checklist",
+              "width": "fill_container",
+              "descendants": {
+                "X:BXWnC": {
+                  "content": "Set up your workspace"
+                },
+                "X:nHCW8": {
+                  "content": "Add a service first, then follow the recommended and optional steps."
+                },
+                "X:QcKHK": {
+                  "type": "frame",
+                  "id": "st8q6",
+                  "name": "Actions",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "JCf7B",
+                      "name": "Progress",
+                      "fill": "$X:color/semantic/text/secondary",
+                      "content": "1 of 4 done",
+                      "fontFamily": "$X:font/family/base",
+                      "fontSize": "$X:font/size/body-sm",
+                      "fontWeight": "$X:font/weight/semibold"
+                    }
+                  ]
+                },
+                "X:AdZ4y": {
+                  "type": "frame",
+                  "id": "gRBrL",
+                  "name": "Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "padding": [
+                    "$X:component/section-card/flush/padding-y",
+                    "$X:component/section-card/compact/flush/padding-x"
+                  ],
+                  "children": [
+                    {
+                      "id": "p7yE6",
+                      "type": "ref",
+                      "ref": "X:PV6HB",
+                      "name": "Add a service (done)",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:c4tOj9": {
+                          "fill": "$X:color/semantic/status/success/bg"
+                        },
+                        "X:wDTkG": {
+                          "icon": "check",
+                          "fill": "$X:color/semantic/status/success/fg"
+                        },
+                        "X:O7pUR": {
+                          "type": "frame",
+                          "id": "AvBGJ",
+                          "name": "Title row",
+                          "gap": "$X:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "XrnIn",
+                              "name": "Title",
+                              "fill": "$X:color/semantic/text/secondary",
+                              "content": "Add a service",
+                              "fontFamily": "$X:font/family/base",
+                              "fontSize": "$X:font/size/body",
+                              "fontWeight": "$X:font/weight/semibold"
+                            },
+                            {
+                              "id": "IuQ8P",
+                              "type": "ref",
+                              "ref": "X:GyfYn",
+                              "name": "Marker",
+                              "descendants": {
+                                "X:SD1o7": {
+                                  "content": "Done"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "X:k9OCFf": {
+                          "content": "Projects come from services; add categories in Add service",
+                          "fill": "$X:color/semantic/text/muted"
+                        },
+                        "X:zUF3j": {
+                          "type": "frame",
+                          "id": "voONV",
+                          "name": "Trailing",
+                          "width": "fit_content(0)",
+                          "height": "fit_content(0)",
+                          "alignItems": "center"
+                        }
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "IJHjk",
+                      "name": "Current step",
+                      "width": "fill_container",
+                      "stroke": "$X:component/list-card/item/border",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "padding": [
+                        0,
+                        0,
+                        "$X:space/3",
+                        0
+                      ],
+                      "children": [
+                        {
+                          "id": "Dxo4q",
+                          "type": "ref",
+                          "ref": "X:Bf3eg",
+                          "name": "Add package items (current)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "list-checks"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "Ce1fE",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "hDU8L",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/primary",
+                                  "content": "Add package items",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "OdZfh",
+                                  "type": "ref",
+                                  "ref": "X:D7LAk7",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Recommended"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "“Foto edit 50” limits how many photos clients pick",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "UD0gY",
+                              "name": "Trailing",
+                              "width": "fit_content(0)",
+                              "height": "fit_content(0)",
+                              "alignItems": "center"
+                            }
+                          }
+                        },
+                        {
+                          "type": "frame",
+                          "id": "R6ApRy",
+                          "name": "Action row",
+                          "width": "fill_container",
+                          "padding": [
+                            0,
+                            "$X:space/3",
+                            0,
+                            60
+                          ],
+                          "children": [
+                            {
+                              "id": "OWBEW",
+                              "type": "ref",
+                              "ref": "X:Q49yf7",
+                              "name": "Action",
+                              "width": "fit_content",
+                              "descendants": {
+                                "X:xnhuK": {
+                                  "content": "Add package items"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "mFzAi",
+                      "type": "ref",
+                      "ref": "X:PV6HB",
+                      "name": "Create your first project (link)",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:wDTkG": {
+                          "icon": "folder-plus"
+                        },
+                        "X:O7pUR": {
+                          "type": "frame",
+                          "id": "oZ2yv",
+                          "name": "Title row",
+                          "gap": "$X:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "GVq66",
+                              "name": "Title",
+                              "fill": "$X:color/semantic/text/primary",
+                              "content": "Create your first project",
+                              "fontFamily": "$X:font/family/base",
+                              "fontSize": "$X:font/size/body",
+                              "fontWeight": "$X:font/weight/semibold"
+                            }
+                          ]
+                        },
+                        "X:k9OCFf": {
+                          "content": "Fill in client and shoot date in New project",
+                          "fill": "$X:color/semantic/text/muted"
+                        },
+                        "X:zUF3j": {
+                          "type": "frame",
+                          "id": "G1VvUQ",
+                          "name": "Trailing",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "nNpF1",
+                              "name": "Chevron",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "chevron-right",
+                              "library": "lucide",
+                              "fill": "$X:color/semantic/text/muted"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "id": "B1aHPC",
+                      "type": "ref",
+                      "ref": "X:Bf3eg",
+                      "name": "Set your brand name (link)",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:wDTkG": {
+                          "icon": "badge-check"
+                        },
+                        "X:O7pUR": {
+                          "type": "frame",
+                          "id": "Kpvls",
+                          "name": "Title row",
+                          "gap": "$X:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "E19SA",
+                              "name": "Title",
+                              "fill": "$X:color/semantic/text/primary",
+                              "content": "Set your brand name",
+                              "fontFamily": "$X:font/family/base",
+                              "fontSize": "$X:font/size/body",
+                              "fontWeight": "$X:font/weight/semibold"
+                            },
+                            {
+                              "id": "JPAqJ",
+                              "type": "ref",
+                              "ref": "X:w7OAR",
+                              "name": "Marker",
+                              "descendants": {
+                                "X:SD1o7": {
+                                  "content": "Optional"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "X:k9OCFf": {
+                          "content": "Clients see Explore Studio in messages and galleries until then",
+                          "fill": "$X:color/semantic/text/muted"
+                        },
+                        "X:zUF3j": {
+                          "type": "frame",
+                          "id": "pBGZr",
+                          "name": "Trailing",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "i8NyEl",
+                              "name": "Chevron",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "chevron-right",
+                              "library": "lucide",
+                              "fill": "$X:color/semantic/text/muted"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "X:SpGXb/X:uzabE": {
+          "id": "MhqOZ",
+          "type": "ref",
+          "ref": "X:bKADv",
+          "name": "Tab Dashboard",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "layout-dashboard"
+            },
+            "X:sJlqM": {
+              "content": "Dashboard"
+            }
+          }
+        },
+        "X:SpGXb/X:Ryjdm": {
+          "id": "g4AgZ",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Projects",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "folder-kanban"
+            },
+            "X:sJlqM": {
+              "content": "Projects"
+            }
+          }
+        },
+        "X:SpGXb/X:YChMw": {
+          "id": "Vskwo",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Clients",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "users"
+            },
+            "X:sJlqM": {
+              "content": "Clients"
+            }
+          }
+        },
+        "X:SpGXb/X:wTYuN": {
+          "id": "bLK40",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Invoices",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "receipt"
+            },
+            "X:sJlqM": {
+              "content": "Invoices"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "KsvGt",
+      "type": "ref",
+      "ref": "X:c6qPz7",
+      "name": "M3 · Dashboard — only the first project left (mobile)",
+      "x": 1520,
+      "y": 2120,
+      "descendants": {
+        "X:n0MP5/X:Y9IhU/X:t4WDgJ": {
+          "content": "Explore Studio"
+        },
+        "X:n0MP5/X:K1jSfD": {
+          "content": "Dashboard"
+        },
+        "X:n0MP5/X:EYvag": {
+          "content": "Your workspace: Explore Studio."
+        },
+        "X:HvRky": {
+          "type": "frame",
+          "id": "a7k3ww",
+          "name": "Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$X:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$X:component/panel/app/radius",
+            "$X:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$X:space/6",
+          "padding": [
+            "$X:space/5",
+            "$X:space/4"
+          ],
+          "children": [
+            {
+              "id": "loqL3",
+              "type": "ref",
+              "ref": "X:Q82mo",
+              "name": "Setup checklist",
+              "width": "fill_container",
+              "descendants": {
+                "X:BXWnC": {
+                  "content": "Set up your workspace"
+                },
+                "X:nHCW8": {
+                  "content": "Add a service first, then follow the recommended and optional steps."
+                },
+                "X:QcKHK": {
+                  "type": "frame",
+                  "id": "k5R5Vr",
+                  "name": "Actions",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "l4AtY1",
+                      "name": "Progress",
+                      "fill": "$X:color/semantic/text/secondary",
+                      "content": "3 of 4 done",
+                      "fontFamily": "$X:font/family/base",
+                      "fontSize": "$X:font/size/body-sm",
+                      "fontWeight": "$X:font/weight/semibold"
+                    }
+                  ]
+                },
+                "X:AdZ4y": {
+                  "type": "frame",
+                  "id": "BpvqU",
+                  "name": "Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "padding": [
+                    "$X:component/section-card/flush/padding-y",
+                    "$X:component/section-card/compact/flush/padding-x"
+                  ],
+                  "children": [
+                    {
+                      "id": "X8JvEa",
+                      "type": "ref",
+                      "ref": "X:PV6HB",
+                      "name": "Add a service (done)",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:c4tOj9": {
+                          "fill": "$X:color/semantic/status/success/bg"
+                        },
+                        "X:wDTkG": {
+                          "icon": "check",
+                          "fill": "$X:color/semantic/status/success/fg"
+                        },
+                        "X:O7pUR": {
+                          "type": "frame",
+                          "id": "vAQi1",
+                          "name": "Title row",
+                          "gap": "$X:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "MDbqI",
+                              "name": "Title",
+                              "fill": "$X:color/semantic/text/secondary",
+                              "content": "Add a service",
+                              "fontFamily": "$X:font/family/base",
+                              "fontSize": "$X:font/size/body",
+                              "fontWeight": "$X:font/weight/semibold"
+                            },
+                            {
+                              "id": "pIZfo",
+                              "type": "ref",
+                              "ref": "X:GyfYn",
+                              "name": "Marker",
+                              "descendants": {
+                                "X:SD1o7": {
+                                  "content": "Done"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "X:k9OCFf": {
+                          "content": "Projects come from services; add categories in Add service",
+                          "fill": "$X:color/semantic/text/muted"
+                        },
+                        "X:zUF3j": {
+                          "type": "frame",
+                          "id": "y2PTSX",
+                          "name": "Trailing",
+                          "width": "fit_content(0)",
+                          "height": "fit_content(0)",
+                          "alignItems": "center"
+                        }
+                      }
+                    },
+                    {
+                      "id": "GQeMp",
+                      "type": "ref",
+                      "ref": "X:PV6HB",
+                      "name": "Add package items (done)",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:c4tOj9": {
+                          "fill": "$X:color/semantic/status/success/bg"
+                        },
+                        "X:wDTkG": {
+                          "icon": "check",
+                          "fill": "$X:color/semantic/status/success/fg"
+                        },
+                        "X:O7pUR": {
+                          "type": "frame",
+                          "id": "w8aCI",
+                          "name": "Title row",
+                          "gap": "$X:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "uQ2f0",
+                              "name": "Title",
+                              "fill": "$X:color/semantic/text/secondary",
+                              "content": "Add package items",
+                              "fontFamily": "$X:font/family/base",
+                              "fontSize": "$X:font/size/body",
+                              "fontWeight": "$X:font/weight/semibold"
+                            },
+                            {
+                              "id": "NoaQ8",
+                              "type": "ref",
+                              "ref": "X:GyfYn",
+                              "name": "Marker",
+                              "descendants": {
+                                "X:SD1o7": {
+                                  "content": "Done"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "X:k9OCFf": {
+                          "content": "“Foto edit 50” limits how many photos clients pick",
+                          "fill": "$X:color/semantic/text/muted"
+                        },
+                        "X:zUF3j": {
+                          "type": "frame",
+                          "id": "eMvON",
+                          "name": "Trailing",
+                          "width": "fit_content(0)",
+                          "height": "fit_content(0)",
+                          "alignItems": "center"
+                        }
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "oZJsw",
+                      "name": "Current step",
+                      "width": "fill_container",
+                      "stroke": "$X:component/list-card/item/border",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "padding": [
+                        0,
+                        0,
+                        "$X:space/3",
+                        0
+                      ],
+                      "children": [
+                        {
+                          "id": "E2yXJ",
+                          "type": "ref",
+                          "ref": "X:Bf3eg",
+                          "name": "Create your first project (current)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "folder-plus"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "K2rKi",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "n5iCAX",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/primary",
+                                  "content": "Create your first project",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Fill in client and shoot date in New project",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "vv4um",
+                              "name": "Trailing",
+                              "width": "fit_content(0)",
+                              "height": "fit_content(0)",
+                              "alignItems": "center"
+                            }
+                          }
+                        },
+                        {
+                          "type": "frame",
+                          "id": "spOgL",
+                          "name": "Action row",
+                          "width": "fill_container",
+                          "padding": [
+                            0,
+                            "$X:space/3",
+                            0,
+                            60
+                          ],
+                          "children": [
+                            {
+                              "id": "tudi4",
+                              "type": "ref",
+                              "ref": "X:Q49yf7",
+                              "name": "Action",
+                              "width": "fit_content",
+                              "descendants": {
+                                "X:xnhuK": {
+                                  "content": "New project"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "x3wca",
+                      "type": "ref",
+                      "ref": "X:Bf3eg",
+                      "name": "Set your brand name (done)",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:c4tOj9": {
+                          "fill": "$X:color/semantic/status/success/bg"
+                        },
+                        "X:wDTkG": {
+                          "icon": "check",
+                          "fill": "$X:color/semantic/status/success/fg"
+                        },
+                        "X:O7pUR": {
+                          "type": "frame",
+                          "id": "X8XrUy",
+                          "name": "Title row",
+                          "gap": "$X:space/2",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "e4tcEB",
+                              "name": "Title",
+                              "fill": "$X:color/semantic/text/secondary",
+                              "content": "Set your brand name",
+                              "fontFamily": "$X:font/family/base",
+                              "fontSize": "$X:font/size/body",
+                              "fontWeight": "$X:font/weight/semibold"
+                            },
+                            {
+                              "id": "xmPzA",
+                              "type": "ref",
+                              "ref": "X:GyfYn",
+                              "name": "Marker",
+                              "descendants": {
+                                "X:SD1o7": {
+                                  "content": "Done"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "X:k9OCFf": {
+                          "content": "Clients see Explore Studio in messages and galleries until then",
+                          "fill": "$X:color/semantic/text/muted"
+                        },
+                        "X:zUF3j": {
+                          "type": "frame",
+                          "id": "p0F8l",
+                          "name": "Trailing",
+                          "width": "fit_content(0)",
+                          "height": "fit_content(0)",
+                          "alignItems": "center"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "X:SpGXb/X:uzabE": {
+          "id": "wSgoF",
+          "type": "ref",
+          "ref": "X:bKADv",
+          "name": "Tab Dashboard",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "layout-dashboard"
+            },
+            "X:sJlqM": {
+              "content": "Dashboard"
+            }
+          }
+        },
+        "X:SpGXb/X:Ryjdm": {
+          "id": "Nohuc",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Projects",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "folder-kanban"
+            },
+            "X:sJlqM": {
+              "content": "Projects"
+            }
+          }
+        },
+        "X:SpGXb/X:YChMw": {
+          "id": "ksyRO",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Clients",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "users"
+            },
+            "X:sJlqM": {
+              "content": "Clients"
+            }
+          }
+        },
+        "X:SpGXb/X:wTYuN": {
+          "id": "MPGD4",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Invoices",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "receipt"
+            },
+            "X:sJlqM": {
+              "content": "Invoices"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "iPdZV",
+      "type": "ref",
+      "ref": "X:c6qPz7",
+      "name": "M4 · New project — no active service (mobile)",
+      "x": 1520,
+      "y": 3180,
+      "descendants": {
+        "X:n0MP5/X:Y9IhU/X:t4WDgJ": {
+          "content": "Explore Studio"
+        },
+        "X:n0MP5/X:K1jSfD": {
+          "content": "New project"
+        },
+        "X:n0MP5/X:EYvag": {
+          "content": "Choose a client and service, then record what you’ve agreed on."
+        },
+        "X:HvRky": {
+          "type": "frame",
+          "id": "dBHGy",
+          "name": "Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$X:color/semantic/surface/canvas",
+          "cornerRadius": [
+            "$X:component/panel/app/radius",
+            "$X:component/panel/app/radius",
+            0,
+            0
+          ],
+          "layout": "vertical",
+          "gap": "$X:space/6",
+          "padding": [
+            "$X:space/5",
+            "$X:space/4"
+          ],
+          "children": [
+            {
+              "id": "Yq9BI",
+              "type": "ref",
+              "ref": "X:lYGAJ",
+              "name": "Client and service",
+              "width": "fill_container",
+              "descendants": {
+                "X:BXWnC": {
+                  "content": "Client and service"
+                },
+                "X:nHCW8": {
+                  "enabled": false
+                },
+                "X:DElnV": {
+                  "type": "frame",
+                  "id": "M3IAr",
+                  "name": "Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$X:component/section-card/content/gap",
+                  "padding": "$X:component/section-card/compact/content/padding",
+                  "children": [
+                    {
+                      "id": "j2CBkI",
+                      "type": "ref",
+                      "ref": "X:CiTrY",
+                      "name": "Client",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:Et1pR/X:Gmk0c": {
+                          "content": "Client"
+                        },
+                        "X:Et1pR/X:c67yIW/X:tvTDd": {
+                          "content": "Find or add a client"
+                        },
+                        "X:Et1pR/X:uh4XA": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "TvNc0",
+                      "type": "ref",
+                      "ref": "X:umHpv",
+                      "name": "Service (disabled)",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:Et1pR/X:Gmk0c": {
+                          "content": "Service"
+                        },
+                        "X:Et1pR/X:c67yIW/X:tvTDd": {
+                          "content": "No active services yet"
+                        },
+                        "X:Et1pR/X:c67yIW/X:CykHo": {
+                          "content": "No active services yet"
+                        },
+                        "X:Et1pR/X:uh4XA": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "VYhws",
+                      "type": "ref",
+                      "ref": "X:S5bhVn",
+                      "name": "No service alert",
+                      "width": "fill_container",
+                      "descendants": {
+                        "X:k7lq2": {
+                          "icon": "info"
+                        },
+                        "X:m0dqT6": {
+                          "content": "No active services yet"
+                        },
+                        "X:fhch4": {
+                          "content": "A project starts from a service in a category. Add both in the Add service dialog."
+                        },
+                        "X:M54Ca": {
+                          "enabled": true,
+                          "content": "Add service"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "frame",
+              "id": "HUWF0",
+              "name": "Form actions",
+              "width": "fill_container",
+              "gap": "$X:space/3",
+              "children": [
+                {
+                  "id": "GPIRv",
+                  "type": "ref",
+                  "ref": "X:nqNHl",
+                  "name": "Save draft (disabled)",
+                  "width": "fill_container",
+                  "descendants": {
+                    "X:xnhuK": {
+                      "content": "Save draft"
+                    }
+                  }
+                },
+                {
+                  "id": "kOiIb",
+                  "type": "ref",
+                  "ref": "X:V8sGx",
+                  "name": "Create project (disabled)",
+                  "width": "fill_container",
+                  "descendants": {
+                    "X:xnhuK": {
+                      "content": "Create project"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "X:SpGXb/X:uzabE": {
+          "id": "wPaNQ",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Dashboard",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "layout-dashboard"
+            },
+            "X:sJlqM": {
+              "content": "Dashboard"
+            }
+          }
+        },
+        "X:SpGXb/X:Ryjdm": {
+          "id": "wqxfE",
+          "type": "ref",
+          "ref": "X:bKADv",
+          "name": "Tab Projects",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "folder-kanban"
+            },
+            "X:sJlqM": {
+              "content": "Projects"
+            }
+          }
+        },
+        "X:SpGXb/X:YChMw": {
+          "id": "MiZo2",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Clients",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "users"
+            },
+            "X:sJlqM": {
+              "content": "Clients"
+            }
+          }
+        },
+        "X:SpGXb/X:wTYuN": {
+          "id": "sWMf7",
+          "type": "ref",
+          "ref": "X:x1Mgr3",
+          "name": "Tab Invoices",
+          "descendants": {
+            "X:Tz5za": {
+              "icon": "receipt"
+            },
+            "X:sJlqM": {
+              "content": "Invoices"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "X0t9KY",
+      "type": "ref",
+      "ref": "X:lQnS8",
+      "name": "T1 · Dashboard — new workspace (tablet)",
+      "x": 2080,
+      "y": 0,
+      "descendants": {
+        "X:f4EPF6/X:dqxPf/X:mKYsh": {
+          "enabled": false
+        },
+        "X:f4EPF6/X:t9sZGC/X:mKYsh": {
+          "enabled": false
+        },
+        "X:QhPny/X:MST3f/X:EPpbd": {
+          "content": "Explore Studio"
+        },
+        "X:QhPny/X:MST3f/X:Hh5tj": {
+          "content": "Dashboard"
+        },
+        "X:QhPny/X:MST3f/X:HsrFT": {
+          "content": "Welcome to Explore Studio"
+        },
+        "X:QhPny/X:MST3f/X:i8XPWU": {
+          "content": "Your workspace: Explore Studio."
+        },
+        "X:QhPny/X:MST3f/X:U9JxE": {
+          "enabled": false
+        },
+        "X:QhPny/X:d2hCuQ": {
+          "children": [
+            {
+              "type": "frame",
+              "id": "w5bKq",
+              "name": "Container",
+              "width": "fill_container",
+              "layout": "vertical",
+              "alignItems": "center",
+              "children": [
+                {
+                  "id": "Ha2Tz",
+                  "type": "ref",
+                  "ref": "X:G8WO8q",
+                  "name": "Setup checklist",
+                  "width": 720,
+                  "descendants": {
+                    "X:BXWnC": {
+                      "content": "Set up your workspace"
+                    },
+                    "X:nHCW8": {
+                      "content": "Add a service first, then follow the recommended and optional steps."
+                    },
+                    "X:QcKHK": {
+                      "type": "frame",
+                      "id": "nQXTR",
+                      "name": "Actions",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QXjMf",
+                          "name": "Progress",
+                          "fill": "$X:color/semantic/text/secondary",
+                          "content": "0 of 4 done",
+                          "fontFamily": "$X:font/family/base",
+                          "fontSize": "$X:font/size/body-sm",
+                          "fontWeight": "$X:font/weight/semibold"
+                        }
+                      ]
+                    },
+                    "X:f60zS": {
+                      "type": "frame",
+                      "id": "YPlDv",
+                      "name": "Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        "$X:component/section-card/flush/padding-y",
+                        "$X:component/section-card/flush/padding-x"
+                      ],
+                      "children": [
+                        {
+                          "id": "Z6rcT",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Add a service (current)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "briefcase"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "R6q5G",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "vjkux",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/primary",
+                                  "content": "Add a service",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "HjLW9",
+                                  "type": "ref",
+                                  "ref": "X:g26Cg6",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Required"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Projects come from services; add categories in Add service",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "gNQfv",
+                              "name": "Trailing",
+                              "height": 42,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "id": "IVM5s",
+                                  "type": "ref",
+                                  "ref": "X:Q49yf7",
+                                  "name": "Action",
+                                  "descendants": {
+                                    "X:xnhuK": {
+                                      "content": "Add service"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "U2kDK7",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Add package items (locked)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "lock",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "I3IOLz",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "m0PM0",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/secondary",
+                                  "content": "Add package items",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "ssy3h",
+                                  "type": "ref",
+                                  "ref": "X:D7LAk7",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Recommended"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "This step opens after you add a service",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "h20y7",
+                              "name": "Trailing",
+                              "width": "fit_content(0)",
+                              "height": 42,
+                              "alignItems": "center"
+                            }
+                          }
+                        },
+                        {
+                          "id": "LgoVx",
+                          "type": "ref",
+                          "ref": "X:PV6HB",
+                          "name": "Create your first project (locked)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "lock",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "eaaOe",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "o4loC",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/secondary",
+                                  "content": "Create your first project",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "This step opens after you add a service",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "hXEpX",
+                              "name": "Trailing",
+                              "width": "fit_content(0)",
+                              "height": 42,
+                              "alignItems": "center"
+                            }
+                          }
+                        },
+                        {
+                          "id": "o7P72",
+                          "type": "ref",
+                          "ref": "X:Bf3eg",
+                          "name": "Set your brand name (link)",
+                          "width": "fill_container",
+                          "descendants": {
+                            "X:wDTkG": {
+                              "icon": "badge-check"
+                            },
+                            "X:O7pUR": {
+                              "type": "frame",
+                              "id": "l7kHAO",
+                              "name": "Title row",
+                              "gap": "$X:space/2",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "slj9T",
+                                  "name": "Title",
+                                  "fill": "$X:color/semantic/text/primary",
+                                  "content": "Set your brand name",
+                                  "fontFamily": "$X:font/family/base",
+                                  "fontSize": "$X:font/size/body",
+                                  "fontWeight": "$X:font/weight/semibold"
+                                },
+                                {
+                                  "id": "f2rbnb",
+                                  "type": "ref",
+                                  "ref": "X:w7OAR",
+                                  "name": "Marker",
+                                  "descendants": {
+                                    "X:SD1o7": {
+                                      "content": "Optional"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "X:k9OCFf": {
+                              "content": "Clients see Explore Studio in messages and galleries until then",
+                              "fill": "$X:color/semantic/text/muted"
+                            },
+                            "X:zUF3j": {
+                              "type": "frame",
+                              "id": "EqHbl",
+                              "name": "Trailing",
+                              "height": 42,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "FH1Dh",
+                                  "name": "Chevron",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "chevron-right",
+                                  "library": "lucide",
+                                  "fill": "$X:color/semantic/text/muted"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "X:bbU0M": {
+          "enabled": false
+        },
+        "X:z9osf8": {
+          "enabled": false
+        }
+      }
+    }
+  ],
+  "imports": {
+    "X": "../../design-system/design-system.lib.pen"
+  },
+  "fileToken": "33c55eed-4698-4732-85f8-2f9905c302f6"
+}

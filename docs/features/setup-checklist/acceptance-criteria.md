@@ -12,7 +12,7 @@ Covers: BR-CAT-011, BR-WS-003
 **Then**:
 - the greeting is shown, followed by the checklist with four steps in order: add a service, add package items, create the first project, set the brand name;
 - step 1 is marked *Required*, step 2 *Recommended*, step 4 *Optional*;
-- no step is done; steps 2 and 3 are locked; steps 1 and 4 are actionable;
+- no step is done; step 1 is current and shows the only button, *Add service*; steps 2 and 3 are locked (no button, no link); step 4 is an open row link with no button;
 - the *Set up branding* empty state is not shown;
 - no category, service or other record was created by opening the dashboard.
 
@@ -51,7 +51,7 @@ Covers: BR-CAT-008, BR-PRJ-008
 
 **Given** a workspace with no project
 **When** it has one active service *Wedding Basic* (category *Wedding*) and the Owner opens the dashboard
-**Then** step 1 shows done, and steps 2 and 3 are actionable.
+**Then** step 1 shows done with no button; step 2 is current and shows the only button, *Add package items*; step 3 is an open row link.
 
 ## AC-SETUP-007 — Archived services don't count
 Covers: BR-CAT-008
@@ -96,7 +96,7 @@ Covers: BR-CAT-005
 Covers: BR-PRJ-008, BR-SEL-001
 
 **Given** a workspace with no project and one active service without a selection item
-**When** the Owner chooses step 3's action
+**When** the Owner chooses the step 3 row (an open row link while step 2 is current)
 **Then** *New project* opens with the service available, and creating a project there succeeds (F-07). On the next dashboard load the checklist is gone.
 
 ## AC-SETUP-013 — Locked steps can't be used
@@ -113,8 +113,8 @@ Covers: BR-WS-004 (A-3)
 
 **Given** a workspace with no project and an empty brand name
 **When** the Owner opens the dashboard
-**Then** step 4 is not done, is actionable even though step 1 isn't done, and its text names the workspace name clients see until then.
-**When** they choose step 4's action, save the brand name *Explore Photo* in *Settings*, and return to the dashboard
+**Then** step 4 is not done, is an open row link even though step 1 isn't done, and its description names the workspace name clients see until then.
+**When** they choose the step 4 row, save the brand name *Explore Photo* in *Settings*, and return to the dashboard
 **Then** step 4 shows done. Clearing the brand name makes it not done again.
 
 ## Re-derivation
@@ -159,3 +159,16 @@ Covers: ADR-018
 **Given** a workspace with no project
 **When** the dashboard loads
 **Then** the checklist facts come from existence/count reads in one database round trip, without loading services with their items or any row lists.
+
+## One button per state
+
+## AC-SETUP-020 — Only the current step has a button
+Covers: design 2026-10-12 ([design.md](design.md))
+
+**Given** a workspace with no project, in turn: nothing done; step 1 done; steps 1, 2 and 4 done
+**When** the Owner opens the dashboard
+**Then** exactly one button is shown on the checklist, on the first step in order 1 → 2 → 3 → 4 that is neither done nor locked (*Add service*, then *Add package items*, then *New project*); it is a primary button;
+- every other step that is neither done nor locked is a single row link with a chevron that opens its target;
+- done steps show the success icon and a *Done* marker, with no button and no link;
+- on a phone the button sits under the step's description, sized to its label.
+

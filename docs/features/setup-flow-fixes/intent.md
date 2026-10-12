@@ -13,11 +13,11 @@ On 2026-10-12 an agent registered a new Owner on `localhost:3000` (dev database 
 4. **A wrong message-template URL says "Workspace not found".** Opening `/w/<id>/message-templates/GALLERY_SHARE` (an unknown template slug) renders "Workspace not found · This workspace isn't available" for a workspace that exists. An unknown template is a not-found page, not a missing workspace (BR-WS-003).
 5. **The photo-source guide still teaches the old `edited` / `print` folder convention.** *Photo sources* › *Set up your Google Drive folder* step 3 says "For final delivery, add subfolders named `edited` and `print` later", with a folder diagram labelled *Edited files* / *Print files*. F-21 replaced that rule: subfolders are mapped to package items by hand and no name is recognised (BR-GAL-007). The same stale wording is in the gallery copy (`gallery-copy.copy.ts`, EN and ID). A new Owner following the guide sets up their Drive the wrong way.
 6. **Indonesian text on English catalog screens.** With the UI in English, *Services* › *Package items* shows "Pilihan klien: Photos to edit", and the *Add booking field* dialog subtitle reads "Diisi saat membuat proyek dari layanan ini." The English entries of `pickModeMeta` and `fieldDialogDescription` in `catalog-copy.copy.ts` hold the Indonesian strings (BR-L10N-002).
-7. **The *Add service* dialog can't finish setting up a service.** Its subtitle says package items and booking fields are set up "after creating the service", but saving keeps the Owner on the list (see 2) instead of taking them to the new service, where those sections are. A new Owner can end up with a service that has no package items, so the client has nothing to pick against.
+7. **The *Add service* dialog can't finish setting up a service.** Its subtitle says package items and booking fields are set up "after creating the service", but after saving nothing points to the new service, where those sections are, and the list doesn't even show it yet (see 2). A new Owner can end up with a service that has no package items, so the client has nothing to pick against.
 
 ## Proposed outcome
-- No auth form can send credentials in a URL, with or without JavaScript.
-- After *Add service*, the Owner sees the new service at once and can carry on with its package items without hunting for it.
+- No auth form can send credentials in a URL, with or without JavaScript: the forms post, and their submit buttons stay disabled until the page is ready (Owner, 2026-10-12).
+- After *Add service*, the Owner stays on the list, sees the new service in it at once, and gets a success toast whose action opens the new service so they can carry on with its package items (Owner, 2026-10-12). It follows the existing toast-with-action pattern (`showToast` with `action`, as in the archive toast in `catalog-row-actions.tsx`) and needs no Pencil frame.
 - Every catalog dialog submits on Enter, like the other dialogs.
 - An unknown template URL shows a not-found page; "Workspace not found" appears only for a workspace the Owner can't open.
 - Every guide and help text about Drive folders matches folder mapping (BR-GAL-007 as amended by F-21), in English and Indonesian.
@@ -33,7 +33,8 @@ On 2026-10-12 an agent registered a new Owner on `localhost:3000` (dev database 
 ## Constraints
 - C-103: no credentials or secrets in URLs or logs.
 - BR-GAL-007 (amended by F-21) is the source of truth for folder wording; the copy follows the rule, not the other way round.
-- BR-L10N-002; copy changes follow the F-22 copy rules (text from `copy-deck.md` where it exists).
+- BR-L10N-002. Copy is fixed here and the matching rows of F-22's `copy-deck.md` are corrected in the same change, so F-22 inherits them (Owner, 2026-10-12). The deck predates F-21 and still teaches `edited`/`print` (rows for the source guide steps and annotations, the folder-classification note, the gallery empty body, the add-folder description and the edited-folder explanation), so it can't be copied as it stands.
+- New or changed copy (EN and ID) is drafted with the Codex CLI, which the Owner prefers for copy, and approved by the Owner before it's built (Owner, 2026-10-12).
 - Each fix gets a test that would have caught it (findings rule, `docs/findings/README.md`).
 - No change to business rules: these are defects against existing rules.
 
@@ -44,7 +45,7 @@ On 2026-10-12 an agent registered a new Owner on `localhost:3000` (dev database 
 - Thousands separators in the price input (*Rp 5000000* while typing): seen, not judged a defect; raise separately if wanted.
 
 ## Open questions
-- Defect 7: should *Add service* open the new service's page after saving, or stay on the list and highlight the new row with a link? This is a UX choice, so it may need a Pencil frame (design wins over docs on UX).
-- Defect 6 overlaps F-22, which is partly built on `codex/bilingual-copy-revamp`. Fix the two strings here on `staging`, or leave them to F-22 and accept the mixed text until it merges? Fixing here risks a merge conflict in `catalog-copy.copy.ts`.
-- Defect 5: does the copy deck already have mapping-era wording for the source guide and gallery help, or does new copy need writing (and Owner approval)?
-- Defect 1: besides `method="post"`, should the forms refuse to submit until hydrated? A plain `POST` without JavaScript would still go to the page route, so what the server does with it needs checking during discovery.
+- ~~Defect 7: open the new service after saving, or stay on the list?~~ Stay on the list and show a toast, using the existing toast implementation as the example; no Pencil frame (Owner, 2026-10-12). Assumption, low risk and reversible: the toast's action opens the new service. Confirm in discovery.
+- ~~Defect 6: fix here or leave to F-22?~~ Fix here and update the deck (Owner, 2026-10-12). Risk carried into discovery: `codex/bilingual-copy-revamp` is not merged into `staging` yet, so the copy files and the deck may conflict when it merges.
+- ~~Defect 5: does the deck already have mapping-era wording?~~ No: the deck has the old `edited`/`print` wording. New EN/ID copy is drafted with the Codex CLI and approved by the Owner (Owner, 2026-10-12).
+- ~~Defect 1: `method="post"` only, or also no submit before hydration?~~ Both (Owner, 2026-10-12). Discovery still checks what the server does with a plain `POST` to an auth page.

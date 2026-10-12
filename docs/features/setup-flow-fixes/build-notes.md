@@ -69,3 +69,74 @@ Not run: the full suite (`pnpm test`, full E2E), per the brief.
 - The 5 timeouts in the full `src/features/auth/ui` run were not re-checked against a baseline commit. They are 5–9 s timeouts in pre-existing tests, and each affected file passes when run alone. Running the folder in parallel is the likely cause, but this was not proven.
 - `pnpm typecheck` was run after 1.4 and after the final helper fix, not after each commit.
 - The waitlist change ships to production with the next landing deploy (technical-design › Risks). Not deployed; noted for the ship notes.
+
+## Iteration 3.3 and 4 (build)
+
+Branch `staging`, work in this checkout, no push, no deploy. Iterations 5 and 6 are not started.
+
+### Commits (in order)
+
+| Task | Commit | Subject |
+|---|---|---|
+| 3.3 | d84ca25d | docs(copy): approve setup flow fix copy |
+| 4.2 | a6237861 | fix(workspace): pick the way back from a missing page |
+| 4.3 | e851d0e9 | fix(workspace): show page not found inside the workspace |
+| 4.4 | 5d425e66 | test(e2e): missing pages inside a workspace |
+
+Each commit ends with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`, as the build brief asked. The record commit is `docs(setup-flow-fixes): record iteration 4`.
+
+### Task 3.3 (copy)
+
+- `copy-draft.md`: status set to the Owner's approval. A "Final approved copy" table was added with the approved EN and ID text. The earlier proposed table is kept as the record.
+- `copy-deck.md`: 15 edits, each checked to match exactly once.
+  - New §17.1 *Page not found inside a workspace* (4 rows).
+  - §9.1 step 3, and the two example-folder labels, replaced with the approved text.
+  - §10.3 empty body and add description replaced with the approved text.
+  - §5.4 pick-mode meta row and §5.5 dialog description row added. Neither existed in the deck before.
+  - §10.5 `edited`/`print` explanation rows marked *Removed (F-24)*. No replacement text was written, because none is approved.
+  - Notes that called `edited`/`print` required or recognised (top note, §9 intro, §9.1 notes, §4 root-only row) reworded to BR-GAL-007 (subfolders mapped to package items; no folder name is special).
+  - Every changed row is marked `Approved (Owner, 2026-10-12)`, except the §10.5 removal rows.
+
+### Spike: D-6 case (case a, not b)
+
+Date 2026-10-12, dev server on port 3000 (reused, not restarted). Owner registered by a throwaway Playwright spec (deleted afterwards). Page: `/w/<own>/projects/<random uuid>`.
+
+| Run | Setup | Result |
+|---|---|---|
+| 1 | placeholder `w/[workspaceId]/not-found.tsx` only | HTTP 404. The page shows "Ruang kerja tidak ditemukan" (`w/not-found.tsx`). The `[workspaceId]` boundary's marker is absent. The whole shell is replaced. This is the case the spec called (b) before any fix. |
+| 2 | run 1 plus `@crumbs/not-found.tsx` returning `null` | HTTP 404. The marker renders inside `<main>`. The sidebar nav (*Navigasi utama*) stays. No breadcrumb nav is rendered (the trail is empty). |
+
+Conclusion: case (a) holds. The `@crumbs/not-found.tsx` file is needed, and no ADR-026 amendment is required. No stop was needed. Both placeholders were removed before committing, so no spike file is in a commit.
+
+Gap found: the trail is empty on *page not found*. AC-SFX-014 says the breadcrumb shows the workspace and, where it exists, the parent section. The current implementation shows neither: the trail never names the missing record (AC-SFX-014's hard rule holds), but it also does not show the workspace or section. This is a deviation to report to the Owner. Fixing it would need the slot not-found handler to rebuild the ancestors from the pathname, which is more than D-6 specifies.
+
+### Test runs
+
+| Scope | Command | Result |
+|---|---|---|
+| 4.2 back target (red first) | `npx vitest run src/features/workspace/ui/page-not-found-screen` | red: module missing. Green: 1 file, 6 passed |
+| 4.2 with owner trail | `npx vitest run src/features/workspace/ui/owner-trail src/features/workspace/ui/page-not-found-screen` | 3 files, 13 passed |
+| 4.3 screen (red first) | `npx vitest run src/features/workspace/ui/page-not-found-screen` | red: 1 file failed (module missing). Green, with `owner-trail`: 4 files, 17 passed |
+| 4.3 related set | `npx vitest run src/features/workspace/ui/owner-trail src/features/workspace/ui/owner-shell src/app/copy-registry.test.ts src/features/workspace/ui/page-not-found-screen src/features/workspace/ui/workspace-not-found-screen` | 7 files, 34 passed (includes `owner-route-coverage.test.ts`) |
+| 4.4 E2E (first run) | `npx playwright test tests/e2e/setup-flow-fixes/page-not-found.spec.ts` | 1 passed, 1 failed. The failure was the 5 s redirect check in the shared `openWorkspace` helper (dev server cold). |
+| 4.4 E2E (after retries: 2) | same command | 2 passed (55.8 s), first attempt, no retry used |
+| typecheck | `pnpm typecheck` (`next typegen && tsc --noEmit`) | exit 0 |
+| lint | `prettier --write` + `eslint --fix` on each changed file, then the pre-commit hook on each commit | clean |
+
+Not run: the full suite and the full E2E run, per the brief.
+
+### Deviations from the plan, with reasons
+
+1. **Spike outcome.** Case (a) held, so 4.1 did not stop for an ADR-026 amendment (see above). The empty trail (AC-SFX-014 wording) is reported as a gap.
+2. **`owner-trail.ts` changed outside the plan's file list.** `isOwnerSection` is exported, and a new `sectionLabel(section, t)` is used by `sectionCrumb`. The label behaviour is unchanged. Needed by the back link (4.2) and by the screen's `{section}` value (4.3).
+3. **`page-not-found-back-target.ts` fallback.** A pathname with no workspace segment returns `/workspace` (the existing "Back to workspaces" target). The boundary only renders under `/w/[workspaceId]`, so this is a defensive branch with no test.
+4. **`retries: 2` in `page-not-found.spec.ts`.** The shared owner helpers wait 5 s for the post-sign-up redirect, which a cold dev server can miss. The team and catalog specs already use the same retries. No retry was needed in the final run.
+5. **Copy text.** The approved text is used verbatim, including `doesn't` with a straight apostrophe, as the brief's table has it. The rest of the deck uses curly apostrophes. Owner may want the apostrophe normalised.
+6. **§10.5 removed rows.** The brief asked for the `edited`/`print` explanations to be reworded. No approved wording exists for them, so they are marked *Removed (F-24)* and no new copy was written. The keys themselves are removed in iteration 5 (D-7).
+7. **§9 intro note also reworded.** "preserves actual required folder names" was not on the brief's list, but it is the same claim, so it was changed.
+
+### Not verified / open
+
+- The E2E spec checks AC-SFX-014 as "no breadcrumb text contains the requested id or name". With the trail empty, that check passes trivially. It does not check that the workspace or section is shown (gap above).
+- The E2E specs have not been checked against a build before the boundary change (no red run of the E2E spec, only the unit tests were red first).
+- Visual check of the page-not-found state in a browser is part of plan 6.1, not done here.

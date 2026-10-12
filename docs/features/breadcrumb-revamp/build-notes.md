@@ -45,6 +45,29 @@ Final report for [plan.md](plan.md), in the order the plan's *Final report* asks
 - Sidebar toggle: desktop collapse 252 → 72 px and back, stored preference, focus kept on the toggle; tablet overlay opens, has no sidebar button, Esc returns focus to the toggle (AC-CRUMB-015, 016).
 - Long trail at 768 px with a 60-character title: root and current whole, middle truncated with tooltip, no overflow or horizontal scroll (AC-CRUMB-013).
 
+## Acceptance criteria — evidence
+
+| AC | Automated | Browser (controller, 2026-10-12) |
+|---|---|---|
+| 001 Dashboard = *Dasbor* | `owner-trail.test.ts`; e2e `app-shell-revamp.spec.ts` | `/w/[id]` server HTML → `Dasbor` |
+| 002 Section pages | `owner-trail.test.ts` | 7 sections in server HTML (`[Gallery Studio] › Proyek`, …) |
+| 003 Tab routes | `owner-trail.test.ts` | completed, cancelled, clients/archived, team/roles, services/categories, services/items |
+| 004 Project pages | `owner-trail.test.ts` | new, detail, gallery: `[Gallery Studio] › [Proyek] › [Wisuda Basic — Rina] › Galeri` |
+| 005 Picks under gallery | `owner-trail.test.ts` | picks list: `… › [Galeri] › Pilihan klien` (no seeded group in that workspace for the group page) |
+| 006 Service and template | `owner-trail.test.ts` | template editor `… › [Template pesan] › Bagikan gallery` |
+| 007 Profile | layout passes *Profil* | `/profile` → `Profil` |
+| 008 Client trails | `review-text.test.ts` | open group `… › [Foto edit] › Tinjau`; read-only `… › Foto edit › Tinjau` (no link); *Hasil akhir*, *Semua foto* |
+| 009 Beranda always | `client-browse-screen.test.tsx`; e2e `gate.spec.ts` | project without groups lands on Beranda; `/photos` → `[Beranda] › Semua foto`, title = project title |
+| 010 Accessible trail | `page-header.test.tsx` | ancestors are focusable links, current is a non-focusable `span` with `aria-current="page"`, separators `aria-hidden` |
+| 011 First paint | — (server rendering, ADR-025) | trail present in the raw server HTML on 16 routes |
+| 012 Tenant/token names | loaders' scoped tests | foreign project (detail, gallery, picks) and unknown service → 404, no trail, no foreign title; Rina token + Fajar group → 404 |
+| 013 Long trail | `breadcrumb-trail.test.tsx` | 768 px, 60-char title: ends whole, middle truncated, no overflow |
+| 014 Phone back | `owner-shell.test.tsx` (Compact Bar parent) | gallery → project, picks → gallery, client open review → its Pilih page; owner picks-group page not browser-checked (no seeded group in the test workspace; same `PageHeadingOverride.parent` mechanism) |
+| 015 Desktop toggle | `sidebar`, `page-header`, `app-shell` tests; e2e shell | 252 ↔ 72 px, preference stored, focus kept |
+| 016 Tablet toggle | `app-shell.test.tsx`; e2e shell | overlay opens, no sidebar button inside, Esc returns focus to the toggle |
+
+Note from the browser checks: while the Browser pane is hidden, Chromium delays hydration of the page segment, so the shell title shows the section name until the pane is shown. The breadcrumb is unaffected because it is server-rendered.
+
 ## 3. Skipped or changed steps
 
 - Task 5 Step 13 (browser check) was skipped by the subagent (no browser pane) and done by the controller instead (section 2).
@@ -59,6 +82,9 @@ Final report for [plan.md](plan.md), in the order the plan's *Final report* asks
 - Task 4 Step 11: the project title lives on `ProjectDetailRecord` (port), not in `get-project-detail.types.ts`; the check passed there.
 
 ## 5. Working tree
+
+Not pushed and no PR, as the plan's Global Constraints require ("Do not push. Do not open a PR.").
+
 
 `git status --short` at the end shows only files that were dirty before this work: `.agents/skills/sdv-ux-task-effectiveness/*`, `.claude/commands/sdv/ux-task-effectiveness.md`, `.claude/skills/ux-task-effectiveness/SKILL.md`, `docs/features/ux-task-effectiveness/`.
 

@@ -2,6 +2,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { serverFormDom, submitButton } from "@tests/support/forms/server-form";
 import { describe, expect, it, vi } from "vitest";
 
 import { ClientPasswordForm } from "./client-password-form";
@@ -59,5 +60,19 @@ describe("ClientPasswordForm (D-5)", () => {
     await waitFor(() => {
       expect(refresh).toHaveBeenCalled();
     });
+  });
+});
+
+describe("ClientPasswordForm before and after the page is interactive (AC-SFX-001, AC-SFX-002)", () => {
+  it("posts natively and keeps submit disabled until ready", () => {
+    const dom = serverFormDom(<ClientPasswordForm action={vi.fn()} />);
+    expect(dom.querySelector("form")).toHaveAttribute("method", "post");
+    expect(submitButton(dom)).toBeDisabled();
+  });
+
+  it("enables submit once the page is interactive", () => {
+    const { container } = render(<ClientPasswordForm action={vi.fn()} />);
+    expect(container.querySelector("form")).toHaveAttribute("method", "post");
+    expect(submitButton(container)).toBeEnabled();
   });
 });

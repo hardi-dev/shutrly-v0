@@ -9,7 +9,7 @@ import { fireEvent } from "@testing-library/react";
  */
 export function pressEnterInField(field: HTMLElement, primary: HTMLElement): void {
   const form = field.closest("form");
-  if (!form || primary.form !== form)
+  if (!form || !(primary instanceof HTMLButtonElement) || primary.form !== form)
     throw new Error("the primary button does not submit this form");
   fireEvent.submit(form);
 }

@@ -31,7 +31,7 @@ Status: APPROVED (Owner 2026-10-12: "approve") · Pencil source: [setup-checklis
 | New project — no active service | `nUEqD` | `iPdZV` | — | 3180 | Only *Client and service* is drawn: Client combobox, Service field disabled with *No active services yet*, Alert/Info with *Add service*, *Save draft* and *Create project* disabled. The rest of the page is unchanged F-07 design | AC-SETUP-016 |
 
 Not drawn, on purpose:
-- **After the first project:** the dashboard returns to today's placeholder; its design is F-02 `workspace.pen` › Dashboard empty state (`gCkJa` / `K6WCRa`).
+- **After the first project:** the dashboard returns to today's placeholder; its design is F-02 `workspace.pen` › Dashboard empty state (`gCkJa` / `K6WCRa`). *(Superseded by F-26 [dashboard-overview](../dashboard-overview/spec.md), Owner 2026-10-13: after the first project the dashboard shows the overview, without* Set up branding*.)*
 - **Loading / error:** server-rendered page with the existing route loading UI and owner error handling (spec E1); no checklist-specific state.
 - **Dark mode, focus rings:** follow the library tokens and components; not drawn separately (GAP-01).
 

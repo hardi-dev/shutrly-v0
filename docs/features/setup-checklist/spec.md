@@ -48,7 +48,7 @@ Steps rows 5–9 of the intent's table are not shown (intent › Recommended ans
 3. They add *Foto edit* to it there. Back on the dashboard, steps 1 and 2 show as done and step 3 is current.
 4. Had they returned before adding items, step 2 would be current and its button opens the same service page (one active service); step 3 would be an open row link.
 5. The Owner chooses step 3's button and creates the project in *New project* (client and session inside it, F-07).
-6. On the next dashboard load the workspace has a project: the checklist is gone and the dashboard shows today's placeholder, *Set up branding* included.
+6. On the next dashboard load the workspace has a project: the checklist is gone and the dashboard shows today's placeholder, *Set up branding* included. *(Superseded by F-26 [dashboard-overview](../dashboard-overview/spec.md), Owner 2026-10-13: after the first project the dashboard shows the overview, without* Set up branding*.)*
 
 ## Alternative Flows
 - **A1 — Skip step 2.** Once step 1 is done, step 3 is an open row link while step 2 is current; choosing the row opens *New project*. Creating the project hides the checklist with step 2 not done.
@@ -67,7 +67,7 @@ Steps rows 5–9 of the intent's table are not shown (intent › Recommended ans
 - **Step states:** current (one button), open (row link), done, locked — see *Steps*.
 - **Phone:** the current step's button sits under its description, sized to its label and aligned with the text.
 - **Loading:** the dashboard is server-rendered; no client loading state beyond the existing route loading UI.
-- **After the first project:** today's placeholder (greeting, *Set up branding* empty state), unchanged.
+- **After the first project:** today's placeholder (greeting, *Set up branding* empty state), unchanged. *(Superseded by F-26 [dashboard-overview](../dashboard-overview/spec.md), Owner 2026-10-13: after the first project the dashboard shows the overview, without* Set up branding*.)*
 - Done and locked are conveyed by text or accessible name as well as visuals (C-008, WCAG 2.1 AA); locked and done steps are not focusable; an open row is one link whose accessible name is the step title.
 - Layout and device variants: [design.md](design.md).
 

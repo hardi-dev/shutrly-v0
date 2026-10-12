@@ -32,3 +32,4 @@ Status: OPEN · Found: <date> · Found by: <who/what> · Area: <feature or layer
 |---|---|---|---|
 | [FND-001](FND-001-reset-password-hangs-on-workers.md) | `POST /reset-password` hangs on Cloudflare Workers | OPEN | 2026-10-05 |
 | [FND-002](FND-002-gallery-page-save-failed-once-in-e2e.md) | Gallery page render logged `SAVE_FAILED` once during an E2E run | OPEN | 2026-10-05 |
+| [FND-003](FND-003-ui-copy-lint-misses-copy-in-constants.md) | `local/ui-copy` misses user-facing copy held in a constant | OPEN | 2026-10-12 |

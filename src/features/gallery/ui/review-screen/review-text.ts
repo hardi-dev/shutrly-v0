@@ -7,7 +7,7 @@ import { REVIEW_COPY as COPY } from "./review-screen.copy";
 /** The unit word a group counts in, *foto* when the item names none. @param group - the group @returns the unit */
 export const unitOf = (group: PickGroupView): string => group.unit ?? CLIENT_COPY.defaultUnit;
 
-/** The page header of Tinjau (breadcrumb Beranda › group › Tinjau, phone *Kembali memilih*) or of the read-only view (Beranda › group, phone *Beranda*) (tinjau, lihatpilihan exports, A-26, A-29). @param group - the group @param token - the client access token @param isEditable - whether the group is `OPEN` @returns the header */
+/** The page header of Tinjau (breadcrumb Beranda › group › Tinjau, phone *Kembali memilih*) or of the read-only view (Beranda › group, not linked › Tinjau, phone *Beranda*; F-22) (tinjau, lihatpilihan exports, A-26, A-29). @param group - the group @param token - the client access token @param isEditable - whether the group is `OPEN` @returns the header */
 export function reviewHeader(
   group: PickGroupView,
   token: string,
@@ -30,7 +30,12 @@ export function reviewHeader(
   return {
     title: group.name,
     subtitle: group.status === "LOCKED" ? COPY.subtitleLocked : COPY.subtitleSubmitted,
-    breadcrumbs: [{ label: CLIENT_COPY.home, href: home }, { label: group.name }],
+    // F-22 R-5: the group's Pilih page redirects a non-OPEN group back here, so its crumb is plain text.
+    breadcrumbs: [
+      { label: CLIENT_COPY.home, href: home },
+      { label: group.name },
+      { label: COPY.breadcrumbCurrent },
+    ],
     back: { href: home, label: CLIENT_COPY.home },
   };
 }

@@ -50,6 +50,7 @@ function renderScreen(
   action: ClientBrowseAction,
   initialPage: ClientBrowsePageView | null = ROOT,
   photosActions: Partial<PhotosActions> = {},
+  isPhotosOnly = false,
 ) {
   const all = {
     listDownloads: vi.fn(() =>
@@ -68,7 +69,7 @@ function renderScreen(
     <ClientBrowseScreen
       gate={GATE}
       token="T1"
-      hasHome
+      isPhotosOnly={isPhotosOnly}
       initialPage={initialPage}
       browseAction={action}
       targets={{ groups: [EDIT_GROUP], picks: [] }}
@@ -89,6 +90,15 @@ describe("ClientBrowseScreen (D-15, A-26)", () => {
     expect(screen.getByText("24 foto · 1 folder")).toBeVisible();
     expect(screen.getByText("Semua folder · 1 folder, 2 foto")).toBeVisible();
     expect(screen.getByRole("button", { name: /Akad/ })).toBeVisible();
+    expect(screen.getAllByRole("link", { name: "Beranda" })[0]).toHaveAttribute("href", "/g/T1");
+  });
+
+  it("AC-CRUMB-009 keeps Beranda in the trail for a project without groups, with its own title", () => {
+    renderScreen(vi.fn(), ROOT, {}, true);
+    expect(
+      screen.getAllByRole("heading", { level: 1, name: "Wisuda Rina" }).length,
+    ).toBeGreaterThan(0);
+    expect(screen.getAllByText("Lihat semua foto Anda.").length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: "Beranda" })[0]).toHaveAttribute("href", "/g/T1");
   });
 

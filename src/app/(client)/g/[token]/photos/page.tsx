@@ -28,7 +28,7 @@ export default async function ClientPhotosPage({
     <ClientBrowseScreen
       gate={result.gate}
       token={token}
-      hasHome={result.value.home.landing === "HOME"}
+      isPhotosOnly={result.value.home.landing === "ALL_PHOTOS"}
       initialPage={result.value.firstPage}
       browseAction={browseClientPhotosAction.bind(null, token)}
       targets={result.value.targets}

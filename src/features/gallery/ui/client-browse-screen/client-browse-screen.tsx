@@ -73,18 +73,11 @@ function Trail({ state, onRoot }: Readonly<Pick<ClientBrowseCardProps, "state" |
 function baseHeader(
   gate: ClientBrowseScreenProps["gate"],
   token: string,
-  hasHome: boolean,
+  isPhotosOnly: boolean,
 ): ClientPageHeader {
-  if (!hasHome) {
-    return {
-      title: gate.projectTitle,
-      subtitle: COPY.subtitleNoGroups,
-      breadcrumbs: [{ label: CLIENT_COPY.allPhotos }],
-    };
-  }
   return {
-    title: CLIENT_COPY.allPhotos,
-    subtitle: COPY.subtitle,
+    title: isPhotosOnly ? gate.projectTitle : CLIENT_COPY.allPhotos,
+    subtitle: isPhotosOnly ? COPY.subtitleNoGroups : COPY.subtitle,
     breadcrumbs: [
       { label: CLIENT_COPY.home, href: `/g/${token}` },
       { label: CLIENT_COPY.allPhotos },
@@ -162,11 +155,11 @@ function PhotosTop({ photos, groups }: Readonly<PhotosGroupsProps>) {
   );
 }
 
-/** The client's *Semua foto* page: search, folders, the photo grid and the read-only viewer (klien-3, pratinjau NxnKv, AC-ACC-011/013, A-26, A-31). @param props - gate names, token, whether Beranda exists, the first page and the browse action @returns the page */
+/** The client's *Semua foto* page: search, folders, the photo grid and the read-only viewer (klien-3, pratinjau NxnKv, AC-ACC-011/013, A-26, A-31). @param props - gate names, token, whether Beranda holds only this page, the first page and the browse action @returns the page */
 export function ClientBrowseScreen({
   gate,
   token,
-  hasHome,
+  isPhotosOnly,
   initialPage,
   browseAction,
   targets,
@@ -187,7 +180,7 @@ export function ClientBrowseScreen({
     <ClientShell
       gate={gate}
       width="wide"
-      header={browseHeader(baseHeader(gate, token, hasHome), photos, handle.targets.groups)}
+      header={browseHeader(baseHeader(gate, token, isPhotosOnly), photos, handle.targets.groups)}
     >
       <PhotosTop photos={photos} groups={handle.targets.groups} />
       {browse.state.hasFailed ? (

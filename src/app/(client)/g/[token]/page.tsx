@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import { signInGalleryAction } from "@/app/actions/client-access/sign-in";
 import { loadClientHomeEntry } from "@/composition/gallery/client-gallery-flow/client-gallery-flow";
@@ -12,7 +12,6 @@ export default async function ClientGalleryPage({ params }: Readonly<PageProps<"
   if (result.kind === "PASSWORD") {
     return <ClientGateScreen gate={result.gate} action={signInGalleryAction.bind(null, token)} />;
   }
-  // A-31: without groups and final delivery, Beranda would hold one card.
-  if (result.value.landing === "ALL_PHOTOS") redirect(`/g/${token}/photos`);
+  // F-22 R-7: Beranda always renders, even with only the Semua foto card (A-31 withdrawn).
   return <ClientHomeScreen gate={result.gate} home={result.value} token={token} />;
 }

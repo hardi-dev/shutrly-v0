@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { type SyntheticEvent, useId, useState } from "react";
 
 import type { ItemDefinitionRecord } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
 import { localizeItemDefinition } from "@/features/booking/domain/default-item-definitions/default-item-definitions";
@@ -30,13 +30,22 @@ function noop(): void {}
 
 export function ServiceItemDialog(props: Readonly<ServiceItemDialogProps>) {
   const t = useTranslations(SERVICE_ITEM_DIALOG_COPY_NAMESPACE);
+  const formId = useId();
   const form = useServiceItemForm(props);
-  const content = <ServiceItemFields {...form} definitions={props.definitions} />;
-  function handleSubmit(): void {
-    void form.submit();
+  const content = (
+    <ServiceItemFields
+      {...form}
+      definitions={props.definitions}
+      formId={formId}
+      onFormSubmit={onFormSubmit}
+    />
+  );
+  function onFormSubmit(event: SyntheticEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    if (!form.pending) void form.submit();
   }
   const save = (
-    <Button onPress={handleSubmit} isPending={form.pending}>
+    <Button type="submit" form={formId} isPending={form.pending}>
       {props.item ? t("save") : t("add")}
     </Button>
   );
@@ -195,6 +204,8 @@ function ServiceItemFields({
   error,
   used,
   isEditing,
+  formId,
+  onFormSubmit,
 }: Readonly<ServiceItemFieldsProps>) {
   const t = useTranslations(SERVICE_ITEM_DIALOG_COPY_NAMESPACE);
   // D-18: the picker shows each platform default in the reader's language.
@@ -205,7 +216,7 @@ function ServiceItemFields({
     .filter((item) => item.isActive && !used.has(item.id))
     .map((item) => ({ id: item.id, label: item.name, description: item.unit ?? undefined }));
   return (
-    <div className="flex flex-col gap-(--space-4)">
+    <form id={formId} noValidate onSubmit={onFormSubmit} className="flex flex-col gap-(--space-4)">
       <Select
         label={t("itemPicker")}
         value={definitionId}
@@ -225,7 +236,7 @@ function ServiceItemFields({
         setMaximum={setMaximum}
       />
       <CatalogFieldError errorKey={error} />
-    </div>
+    </form>
   );
 }
 

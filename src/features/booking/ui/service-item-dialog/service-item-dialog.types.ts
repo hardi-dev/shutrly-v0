@@ -38,6 +38,8 @@ export interface ServiceItemFieldsProps {
   readonly error?: string;
   readonly used: ReadonlySet<string>;
   readonly isEditing: boolean;
+  readonly formId: string;
+  readonly onFormSubmit: (event: SyntheticEvent<HTMLFormElement>) => void;
 }
 
 export interface ResponsiveItemDialogProps extends ServiceItemDialogProps {
@@ -75,4 +77,4 @@ export interface ServiceItemValueState {
   readonly maximum: string;
   readonly setMaximum: (value: string) => void;
 }
-import type { ReactNode } from "react";
+import type { ReactNode, SyntheticEvent } from "react";

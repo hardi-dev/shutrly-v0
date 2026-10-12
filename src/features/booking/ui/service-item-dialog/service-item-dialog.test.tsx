@@ -2,6 +2,7 @@
 
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { pressEnterInField } from "@tests/support/forms/implicit-submit";
 import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -110,6 +111,68 @@ describe("ServiceItemDialog", () => {
     expect(screen.getByRole("textbox", { name: "Maksimum" })).toHaveAttribute(
       "placeholder",
       "Contoh: 2",
+    );
+  });
+});
+
+describe("ServiceItemDialog submits on Enter (AC-SFX-009, AC-SFX-010)", () => {
+  const props = {
+    isOpen: true,
+    onOpenChange: vi.fn(),
+    workspaceId: "workspace-1",
+    serviceId: "service-1",
+    definitions: [DEFINITION],
+    items: [],
+  } as const;
+
+  async function chooseDefinitionAndType(value: string) {
+    await userEvent.click(screen.getByRole("button", { name: /Isi paket/ }));
+    await userEvent.click(
+      within(await screen.findByRole("listbox")).getByRole("option", { name: /Foto edit/ }),
+    );
+    const field = screen.getByRole("textbox", { name: "Nilai" });
+    await userEvent.type(field, value);
+    return field;
+  }
+
+  it("AC-SFX-009 Enter in the value field saves once with the same input as Add", async () => {
+    const action: ServiceItemDialogProps["action"] = vi.fn().mockResolvedValue({ ok: true });
+    render(<ServiceItemDialog {...props} action={action} />);
+    const field = await chooseDefinitionAndType("25");
+    pressEnterInField(field, screen.getByRole("button", { name: "Tambah" }));
+    await waitFor(() => {
+      expect(action).toHaveBeenCalledTimes(1);
+    });
+    expect(action).toHaveBeenCalledWith("workspace-1", "service-1", {
+      definitionId: "definition-1",
+      value: { type: "NUMBER", value: "25" },
+    });
+  });
+
+  it("AC-SFX-010 a second Enter while saving sends no second save", async () => {
+    const action: ServiceItemDialogProps["action"] = vi.fn(
+      () => new Promise<never>(() => undefined),
+    );
+    render(<ServiceItemDialog {...props} action={action} />);
+    const field = await chooseDefinitionAndType("25");
+    const primary = screen.getByRole("button", { name: "Tambah" });
+    pressEnterInField(field, primary);
+    pressEnterInField(field, primary);
+    expect(action).toHaveBeenCalledTimes(1);
+  });
+
+  it("AC-SFX-009 Enter shows the same field error as Add", async () => {
+    const action: ServiceItemDialogProps["action"] = vi.fn().mockResolvedValue({
+      ok: false,
+      code: "VALIDATION_FAILED",
+      fieldErrors: { definitionId: "DUPLICATE_DEFINITION" },
+    });
+    render(<ServiceItemDialog {...props} action={action} />);
+    const field = await chooseDefinitionAndType("25");
+    pressEnterInField(field, screen.getByRole("button", { name: "Tambah" }));
+    // The same message shows in the picker and in the field-error line, as after a click.
+    expect((await screen.findAllByText("Item ini sudah ada di layanan.")).length).toBeGreaterThan(
+      0,
     );
   });
 });

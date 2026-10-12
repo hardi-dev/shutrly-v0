@@ -1,5 +1,5 @@
 {
-  "version": "2.19",
+  "version": "2.21",
   "children": [
     {
       "type": "frame",
@@ -140,6 +140,9 @@
       "width": 1440,
       "height": 960,
       "descendants": {
+        "A:fNszT/A:zKSMJ": {
+          "enabled": false
+        },
         "A:fNszT/A:llfv5": {
           "id": "TgfDy",
           "type": "ref",
@@ -186,11 +189,115 @@
           "name": "Page Header",
           "width": "fill_container",
           "descendants": {
-            "A:EPpbd": {
-              "content": "Aster Wedding"
-            },
-            "A:Hh5tj": {
-              "content": "Dasbor"
+            "A:rvmSQ": {
+              "type": "frame",
+              "id": "pIIwU",
+              "name": "Breadcrumb bar",
+              "width": "fill_container",
+              "height": 52,
+              "stroke": "$A:component/page-header/border",
+              "strokeWidth": {
+                "bottom": 1
+              },
+              "gap": "$A:component/page-header/breadcrumb/gap",
+              "padding": [
+                0,
+                "$A:component/panel/app/header/padding-x",
+                0,
+                "$A:space/8"
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "McAtt",
+                  "name": "Sidebar toggle slot",
+                  "width": 32,
+                  "height": 32,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "id": "bbJxl",
+                      "type": "ref",
+                      "ref": "A:VA96y",
+                      "name": "Sidebar toggle",
+                      "descendants": {
+                        "A:wSyzB": {
+                          "icon": "panel-left",
+                          "x": 8.03834428469169,
+                          "y": 8,
+                          "rotation": -0.13731048651617114
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "IC7Od",
+                  "name": "Parent",
+                  "fill": "$A:component/page-header/breadcrumb/text",
+                  "content": "Aster Wedding",
+                  "fontFamily": "$A:font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "icon",
+                  "id": "y1nVU",
+                  "name": "Separator",
+                  "width": 14,
+                  "height": 14,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$A:component/page-header/breadcrumb/text"
+                },
+                {
+                  "type": "text",
+                  "id": "qV8VC",
+                  "name": "Current",
+                  "fill": "$A:component/page-header/breadcrumb/current",
+                  "content": "Dasbor",
+                  "fontFamily": "$A:font/family/base",
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "JIy4i",
+                  "name": "Spacer",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "vbk5K",
+                  "name": "Utilities",
+                  "gap": "$A:space/1",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "id": "mFfk8",
+                      "type": "ref",
+                      "ref": "A:VA96y",
+                      "name": "Search",
+                      "descendants": {
+                        "A:wSyzB": {
+                          "icon": "search"
+                        }
+                      }
+                    },
+                    {
+                      "id": "s6W67L",
+                      "type": "ref",
+                      "ref": "A:VA96y",
+                      "name": "Notifications"
+                    }
+                  ]
+                }
+              ]
             },
             "A:HsrFT": {
               "content": "Dasbor"

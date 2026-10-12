@@ -53,7 +53,7 @@ Final report for [plan.md](plan.md), in the order the plan's *Final report* asks
 | 002 Section pages | `owner-trail.test.ts` | 7 sections in server HTML (`[Gallery Studio] › Proyek`, …) |
 | 003 Tab routes | `owner-trail.test.ts` | completed, cancelled, clients/archived, team/roles, services/categories, services/items |
 | 004 Project pages | `owner-trail.test.ts` | new, detail, gallery: `[Gallery Studio] › [Proyek] › [Wisuda Basic — Rina] › Galeri` |
-| 005 Picks under gallery | `owner-trail.test.ts` | picks list: `… › [Galeri] › Pilihan klien` (no seeded group in that workspace for the group page) |
+| 005 Picks under gallery | `owner-trail.test.ts` | picks list `… › [Galeri] › Pilihan klien`; picks group (seed workspace *Studio Contoh*, separate Playwright context) `[Studio Contoh] › [Proyek] › [Wisuda Rina] › [Galeri] › [Pilihan klien] › Foto edit` |
 | 006 Service and template | `owner-trail.test.ts` | template editor `… › [Template pesan] › Bagikan gallery` |
 | 007 Profile | layout passes *Profil* | `/profile` → `Profil` |
 | 008 Client trails | `review-text.test.ts` | open group `… › [Foto edit] › Tinjau`; read-only `… › Foto edit › Tinjau` (no link); *Hasil akhir*, *Semua foto* |
@@ -62,7 +62,7 @@ Final report for [plan.md](plan.md), in the order the plan's *Final report* asks
 | 011 First paint | — (server rendering, ADR-025) | trail present in the raw server HTML on 16 routes |
 | 012 Tenant/token names | loaders' scoped tests | foreign project (detail, gallery, picks) and unknown service → 404, no trail, no foreign title; Rina token + Fajar group → 404 |
 | 013 Long trail | `breadcrumb-trail.test.tsx` | 768 px, 60-char title: ends whole, middle truncated, no overflow |
-| 014 Phone back | `owner-shell.test.tsx` (Compact Bar parent) | gallery → project, picks → gallery, client open review → its Pilih page; owner picks-group page not browser-checked (no seeded group in the test workspace; same `PageHeadingOverride.parent` mechanism) |
+| 014 Phone back | `owner-shell.test.tsx` (Compact Bar parent) | gallery → project, picks → gallery, picks group → *Pilihan klien* (title *Foto edit*), client open review → its Pilih page |
 | 015 Desktop toggle | `sidebar`, `page-header`, `app-shell` tests; e2e shell | 252 ↔ 72 px, preference stored, focus kept |
 | 016 Tablet toggle | `app-shell.test.tsx`; e2e shell | overlay opens, no sidebar button inside, Esc returns focus to the toggle |
 

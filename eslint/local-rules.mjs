@@ -48,6 +48,49 @@ function calleeName(callee) {
   return null;
 }
 
+/** The identifier an expression starts from: `A` for `A`, `A.b[c]` and `A[0].d` (FND-003). */
+function rootIdentifier(node) {
+  let current = node;
+  while (current?.type === "MemberExpression") current = current.object;
+  return current?.type === "Identifier" ? current : null;
+}
+
+/** True when a constant's initializer holds a non-empty string anywhere in its value (FND-003). */
+function holdsString(node) {
+  if (!node) return false;
+  if (isNonEmptyString(node)) return true;
+  if (node.type === "TemplateLiteral") return node.quasis.some((q) => q.value.cooked.trim() !== "");
+  if (node.type === "ObjectExpression") {
+    return node.properties.some((prop) => prop.type === "Property" && holdsString(prop.value));
+  }
+  if (node.type === "ArrayExpression") return node.elements.some(holdsString);
+  if (node.type === "TSAsExpression" || node.type === "TSSatisfiesExpression") {
+    return holdsString(node.expression);
+  }
+  if (node.type === "ConditionalExpression") {
+    return holdsString(node.consequent) || holdsString(node.alternate);
+  }
+  return false;
+}
+
+/** True when `node` reads a module-level `const` that holds user-facing text (FND-003). */
+function readsModuleCopyConstant(context, node) {
+  const root = rootIdentifier(node);
+  if (!root) return false;
+  let scope = context.sourceCode.getScope(node);
+  while (scope) {
+    const variable = scope.set.get(root.name);
+    if (variable) {
+      if (variable.scope.type !== "module") return false;
+      const def = variable.defs[0];
+      const isConst = def?.type === "Variable" && def.parent?.kind === "const";
+      return isConst && holdsString(def.node.init);
+    }
+    scope = scope.upper;
+  }
+  return false;
+}
+
 /** User-facing copy comes from a sibling *.copy.ts constant, never inline JSX or a literal namespace. */
 const uiCopy = {
   meta: {
@@ -83,7 +126,14 @@ const uiCopy = {
         if (node.name.type !== "JSXIdentifier" || !COPY_PROPS.has(node.name.name)) return;
         const value =
           node.value?.type === "JSXExpressionContainer" ? node.value.expression : node.value;
-        if (isNonEmptyString(value) || value?.type === "TemplateLiteral") {
+        const isInline = isNonEmptyString(value) || value?.type === "TemplateLiteral";
+        if (isInline || readsModuleCopyConstant(context, value)) {
+          context.report({ node, messageId: "inline" });
+        }
+      },
+      JSXExpressionContainer(node) {
+        const isChild = node.parent.type === "JSXElement" || node.parent.type === "JSXFragment";
+        if (isChild && readsModuleCopyConstant(context, node.expression)) {
           context.report({ node, messageId: "inline" });
         }
       },

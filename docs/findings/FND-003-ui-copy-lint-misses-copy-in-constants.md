@@ -1,6 +1,6 @@
 # FND-003 — `local/ui-copy` misses copy held in a constant
 
-Status: OPEN · Found: 2026-10-12 · Found by: skeleton translation audit (F-24 follow-up, Owner request) · Area: lint / coding rules (`eslint/local-rules.mjs`) · Severity: medium. Untranslated or hard-coded text can reach the UI without any gate failing, which breaks BR-L10N-002. One real case shipped.
+Status: FIXED (2026-10-12, option A, Owner) · Found: 2026-10-12 · Found by: skeleton translation audit (F-24 follow-up, Owner request) · Area: lint / coding rules (`eslint/local-rules.mjs`) · Severity: medium. Untranslated or hard-coded text can reach the UI without any gate failing, which breaks BR-L10N-002. One real case shipped.
 
 ## Symptom
 `src/features/booking/ui/catalog-skeletons/catalog-skeletons.tsx` held the Indonesian titles *Layanan*, *Kategori*, *Item paket* and *Memuat layanan* in a module-level `TITLES` constant. They rendered as `<SectionCard title={TITLES[variant]}>`, so the English UI showed Indonesian loading titles, and project pages showed the service title. Lint, the pre-commit hook and the copy parity gate all passed.
@@ -34,3 +34,9 @@ Recommendation: **A**, plus a one-time sweep with the new rule to find any other
 ## Related
 - BR-L10N-002 · `docs/coding-rules.md` › Copy · F-24 build notes › *Follow-up: loading copy*
 - F-22 bilingual copy revamp (the 42 `DECK GAP` strings are a different case: they live in copy modules, EN = ID on purpose)
+
+## Resolution (2026-10-12)
+Option A, chosen by the Owner. `local/ui-copy` now traces a copy prop's value, and a JSX child expression, back through ESLint scope analysis. It reports when the value reads a module-level `const` whose initializer holds a non-empty string (directly, or inside an object, array, `as`/`satisfies` or conditional). Imported bindings and local variables are not checked: copy modules are imported, and props and `t()` results are not constants.
+- Tests in `tests/lint/coding-rules.test.ts`: two rejects (constant into `title`, constant as a child) and one accept (number constant, key map passed to `t()`, imported namespace, prop). Red first (2 failed), then 8/8 passed.
+- Sweep: ESLint over all 380 `src/**/*.tsx` (tests and stories excluded): 0 `local/ui-copy` reports and no other messages. The pre-fix `catalog-skeletons.tsx` (`5d39543^`) is reported at `title={TITLES[variant]}`, so the rule catches the original case.
+- `docs/coding-rules.md` › Copy now describes the wider rule.

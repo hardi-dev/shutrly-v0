@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, SyntheticEvent } from "react";
 
 import type { ItemDefinitionRecord } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
 import type { CatalogWriteResult } from "@/features/booking/application/use-cases/catalog-results/catalog-results.types";
@@ -37,6 +37,8 @@ export interface ItemDefinitionFieldsProps {
   readonly setAllowsPickNotes: (value: boolean) => void;
   readonly locked: boolean;
   readonly error?: string;
+  readonly formId: string;
+  readonly onFormSubmit: (event: SyntheticEvent<HTMLFormElement>) => void;
 }
 
 export interface ItemDefinitionValueState {

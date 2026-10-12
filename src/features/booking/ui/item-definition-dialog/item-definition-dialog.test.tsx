@@ -2,6 +2,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { pressEnterInField } from "@tests/support/forms/implicit-submit";
 import { useLocale } from "next-intl";
 import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -175,5 +176,82 @@ describe("ItemDefinitionDialog", () => {
     } finally {
       vi.mocked(useLocale).mockReturnValue("id");
     }
+  });
+});
+
+describe("ItemDefinitionDialog submits on Enter (AC-SFX-009, AC-SFX-010)", () => {
+  it("AC-SFX-009 Enter in the name field saves with the same input as Save", async () => {
+    const clicked: ItemDefinitionDialogProps["action"] = vi.fn().mockResolvedValue({ ok: true });
+    const first = render(
+      <ItemDefinitionDialog
+        isOpen
+        onOpenChange={vi.fn()}
+        workspaceId="workspace-1"
+        action={clicked}
+      />,
+    );
+    await userEvent.type(screen.getByRole("textbox", { name: "Nama item" }), "Jumlah orang");
+    await userEvent.click(screen.getByRole("button", { name: "Simpan" }));
+    await waitFor(() => {
+      expect(clicked).toHaveBeenCalledTimes(1);
+    });
+    first.unmount();
+
+    const entered: ItemDefinitionDialogProps["action"] = vi.fn().mockResolvedValue({ ok: true });
+    render(
+      <ItemDefinitionDialog
+        isOpen
+        onOpenChange={vi.fn()}
+        workspaceId="workspace-1"
+        action={entered}
+      />,
+    );
+    const name = screen.getByRole("textbox", { name: "Nama item" });
+    await userEvent.type(name, "Jumlah orang");
+    pressEnterInField(name, screen.getByRole("button", { name: "Simpan" }));
+    await waitFor(() => {
+      expect(entered).toHaveBeenCalledTimes(1);
+    });
+    expect(entered).toHaveBeenCalledWith(...vi.mocked(clicked).mock.calls[0]);
+  });
+
+  it("AC-SFX-010 a second Enter while saving sends no second save", async () => {
+    const action: ItemDefinitionDialogProps["action"] = vi.fn(
+      () => new Promise<never>(() => undefined),
+    );
+    render(
+      <ItemDefinitionDialog
+        isOpen
+        onOpenChange={vi.fn()}
+        workspaceId="workspace-1"
+        action={action}
+      />,
+    );
+    const name = screen.getByRole("textbox", { name: "Nama item" });
+    await userEvent.type(name, "Jumlah orang");
+    const primary = screen.getByRole("button", { name: "Simpan" });
+    pressEnterInField(name, primary);
+    pressEnterInField(name, primary);
+    expect(action).toHaveBeenCalledTimes(1);
+  });
+
+  it("AC-SFX-009 Enter shows the same server field error as Save", async () => {
+    const action: ItemDefinitionDialogProps["action"] = vi.fn().mockResolvedValue({
+      ok: false,
+      code: "VALIDATION_FAILED",
+      fieldErrors: { name: "NAME_TAKEN" },
+    });
+    render(
+      <ItemDefinitionDialog
+        isOpen
+        onOpenChange={vi.fn()}
+        workspaceId="workspace-1"
+        action={action}
+      />,
+    );
+    const name = screen.getByRole("textbox", { name: "Nama item" });
+    await userEvent.type(name, "Jumlah orang");
+    pressEnterInField(name, screen.getByRole("button", { name: "Simpan" }));
+    expect((await screen.findAllByText(/sudah/)).length).toBeGreaterThan(0);
   });
 });

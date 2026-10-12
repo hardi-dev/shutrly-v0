@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { type SyntheticEvent, useId, useState } from "react";
 
 import {
   itemDefinitionSubmission,
@@ -69,13 +69,15 @@ function pickModeOptions(t: CatalogTranslate, isLocked: boolean): readonly Optio
 
 export function ItemDefinitionDialog(props: Readonly<ItemDefinitionDialogProps>) {
   const t = useTranslations(ITEM_DEFINITION_DIALOG_COPY_NAMESPACE);
+  const formId = useId();
   const form = useItemDefinitionForm(props);
-  const content = <ItemDefinitionFields {...form} />;
-  function handleSubmit(): void {
-    void form.submit();
+  const content = <ItemDefinitionFields {...form} formId={formId} onFormSubmit={onFormSubmit} />;
+  function onFormSubmit(event: SyntheticEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    if (!form.pending) void form.submit();
   }
   const save = (
-    <Button onPress={handleSubmit} isPending={form.pending}>
+    <Button type="submit" form={formId} isPending={form.pending}>
       {t("save")}
     </Button>
   );
@@ -249,11 +251,13 @@ function ItemDefinitionFields({
   unit,
   setUnit,
   error,
+  formId,
+  onFormSubmit,
   ...typeFields
 }: Readonly<ItemDefinitionFieldsProps>) {
   const t = useTranslations(ITEM_DEFINITION_DIALOG_COPY_NAMESPACE);
   return (
-    <div className="flex flex-col gap-(--space-4)">
+    <form id={formId} noValidate onSubmit={onFormSubmit} className="flex flex-col gap-(--space-4)">
       <TextField
         label={t("nameItem")}
         name="name"
@@ -275,7 +279,7 @@ function ItemDefinitionFields({
       />
       <DefinitionTypeFields {...typeFields} />
       <CatalogFieldError errorKey={error} />
-    </div>
+    </form>
   );
 }
 

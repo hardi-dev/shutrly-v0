@@ -28,6 +28,7 @@ const ASSIGNMENTS = [
     memberId: "m1",
     memberName: "Dimas Pratama",
     isMemberArchived: false,
+    defaultKey: null,
     roleName: "Fotografer",
   },
   {
@@ -36,6 +37,7 @@ const ASSIGNMENTS = [
     memberId: "m2",
     memberName: "Sari Lestari",
     isMemberArchived: true,
+    defaultKey: null,
     roleName: "Asisten",
   },
 ];
@@ -87,7 +89,7 @@ describe("SessionTeamDialog", () => {
       name: "Hapus Sari Lestari dari Wisuda?",
     });
     expect(
-      within(confirm).getByText("Penugasannya dihapus dari sesi ini. Sari tetap ada di Tim."),
+      within(confirm).getByText("Penugasan ini dihapus. Sari tetap ada di daftar tim."),
     ).toBeInTheDocument();
     expect(removeAction).not.toHaveBeenCalled();
     await userEvent.click(within(confirm).getByRole("button", { name: "Batal" }));
@@ -119,7 +121,7 @@ describe("SessionTeamDialog", () => {
     await waitFor(() => {
       expect(showToast).toHaveBeenCalledWith({
         tone: "danger",
-        title: "Proyek dibatalkan; tim tidak bisa diubah.",
+        title: "Proyek ini dibatalkan. Timnya tidak bisa diubah.",
       });
     });
     expect(refresh).toHaveBeenCalled();
@@ -150,7 +152,7 @@ describe("SessionTeamDialog", () => {
     setup({ canEdit: false });
     const dialog = screen.getByRole("dialog", { name: "Tim · Wisuda" });
     expect(
-      within(dialog).getByText("Proyek dibatalkan, tim tidak bisa diubah."),
+      within(dialog).getByText("Proyek ini dibatalkan. Timnya tidak bisa diubah."),
     ).toBeInTheDocument();
     expect(within(dialog).getByText("Dimas Pratama")).toBeInTheDocument();
     expect(

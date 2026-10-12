@@ -1,29 +1,35 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ClientPhotoView } from "@/features/gallery/application/use-cases/client-views/client-views.types";
 import type { SetPicksResult } from "@/features/gallery/application/use-cases/set-picks/set-picks.types";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { CLIENT_BROWSE_COPY as COPY } from "../client-browse-screen/client-browse-screen.copy";
 import { useSequentialDownload } from "../use-sequential-download/use-sequential-download";
 import type { DownloadItem } from "../use-sequential-download/use-sequential-download.types";
+import { USE_DOWNLOADS_NAMESPACE } from "./use-proof-downloads.copy";
 import type { ProofDownloads, ProofDownloadsInput } from "./use-proof-downloads.types";
 
-function pickToast(result: SetPicksResult, groupName: string): void {
+type DownloadsTranslate = ReturnType<typeof useTranslations>;
+
+function pickToast(t: DownloadsTranslate, result: SetPicksResult, groupName: string): void {
   if (result.ok) {
-    showToast({ tone: "success", title: COPY.pickedTitle(result.added, groupName) });
+    showToast({
+      tone: "success",
+      title: t("pickedTitle", { count: result.added, group: groupName }),
+    });
   } else if (result.code === "LIMIT_REACHED") {
     showToast({
       tone: "warning",
-      title: COPY.pickLimitTitle,
-      body: COPY.pickLimitBody(result.remaining),
+      title: t("pickLimitTitle"),
+      body: t("pickLimitBody", { remaining: result.remaining }),
     });
   } else if (result.code === "GROUP_NOT_OPEN")
-    showToast({ tone: "warning", title: COPY.pickClosed });
-  else showToast({ tone: "danger", title: COPY.pickRefused });
+    showToast({ tone: "warning", title: t("pickClosed") });
+  else showToast({ tone: "danger", title: t("pickRefused") });
 }
 
 function useSelection() {
@@ -50,6 +56,7 @@ function useSelection() {
 /** *Unduh semua*: lists every proof, then waits for the confirm (F-20). */
 function useDownloadAll(input: Readonly<ProofDownloadsInput>) {
   const router = useRouter();
+  const t = useTranslations(USE_DOWNLOADS_NAMESPACE);
   const [pendingAll, setPendingAll] = useState<readonly DownloadItem[] | null>(null);
   const [isListing, setIsListing] = useState(false);
   const ask = async () => {
@@ -57,7 +64,7 @@ function useDownloadAll(input: Readonly<ProofDownloadsInput>) {
     const files = await input.actions.listDownloads().catch(() => null);
     setIsListing(false);
     if (files === null)
-      showToast({ tone: "danger", title: COPY.failedTitle, body: COPY.failedBody });
+      showToast({ tone: "danger", title: t("failedTitle"), body: t("failedBody") });
     else if ("kind" in files) router.refresh();
     else
       setPendingAll(
@@ -73,16 +80,17 @@ function usePickSelected(
   selection: ReturnType<typeof useSelection>,
 ) {
   const router = useRouter();
+  const t = useTranslations(USE_DOWNLOADS_NAMESPACE);
   const [isPicking, setIsPicking] = useState(false);
   const pick = async (groupId: string, groupName: string) => {
     setIsPicking(true);
     const photoIds = [...selection.selected.keys()];
     const result = await input.actions.setPicks({ groupId, photoIds }).catch(() => null);
     setIsPicking(false);
-    if (result === null) showToast({ tone: "danger", title: COPY.pickRefused });
+    if (result === null) showToast({ tone: "danger", title: t("pickRefused") });
     else if ("kind" in result) router.refresh();
     else {
-      pickToast(result, groupName);
+      pickToast(t, result, groupName);
       if (result.ok) {
         selection.stopSelecting();
         await input.onPicked();

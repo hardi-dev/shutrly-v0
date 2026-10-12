@@ -30,12 +30,21 @@ export const teamRole = pgTable(
     id: idColumn(),
     workspaceId: workspaceIdColumn().references(() => workspace.id, { onDelete: "restrict" }),
     name: text("name").notNull(),
+    // Platform-default identity (D-18); a rename clears it. Null for owner roles.
+    defaultKey: text("default_key"),
     updatedBy: text("updated_by").references(() => user.id, { onDelete: "set null" }),
     ...auditColumns(),
   },
   (t) => [
     tenantKey(t),
     uniqueIndex("team_role_workspace_name_uq").on(t.workspaceId, sql`lower(${t.name})`),
+    uniqueIndex("team_role_workspace_default_key_uq")
+      .on(t.workspaceId, t.defaultKey)
+      .where(sql`${t.defaultKey} is not null`),
+    check(
+      "team_role_default_key_ck",
+      sql`${t.defaultKey} is null or ${t.defaultKey} in ('PHOTOGRAPHER','VIDEOGRAPHER','ASSISTANT')`,
+    ),
     check(
       "team_role_name_ck",
       sql`char_length(${t.name}) between 1 and 50 and ${t.name} = btrim(${t.name})`,

@@ -57,8 +57,8 @@ const DIMAS: AssignableMember = {
   id: "11111111-1111-4111-8111-111111111111",
   name: "Dimas Pratama",
   roles: [
-    { id: "22222222-2222-4222-8222-222222222222", name: "Fotografer" },
-    { id: "33333333-3333-4333-8333-333333333333", name: "Videografer" },
+    { id: "22222222-2222-4222-8222-222222222222", name: "Fotografer", defaultKey: null },
+    { id: "33333333-3333-4333-8333-333333333333", name: "Videografer", defaultKey: null },
   ],
 };
 
@@ -92,14 +92,14 @@ describe("CreateProjectScreen (S2)", () => {
 
   it("AC-PRJ-006 starts empty: pickers, placeholders, no package and no booking fields", () => {
     renderScreen();
-    expect(screen.getByText("Klien & layanan")).toBeInTheDocument();
+    expect(screen.getByText("Klien dan layanan")).toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Klien" })).toHaveAttribute(
       "placeholder",
       "Cari atau tambah klien",
     );
     expect(screen.getByRole("textbox", { name: "Judul proyek" })).toHaveAttribute(
       "placeholder",
-      "Terisi otomatis setelah memilih layanan",
+      "Terisi setelah memilih layanan",
     );
     expect(screen.getByRole("textbox", { name: "Harga sepakat" })).toHaveAttribute(
       "placeholder",
@@ -107,7 +107,7 @@ describe("CreateProjectScreen (S2)", () => {
     );
     expect(screen.getByText("Belum ada sesi")).toBeInTheDocument();
     expect(screen.queryByText("Isi paket")).not.toBeInTheDocument();
-    expect(screen.queryByText("Field booking")).not.toBeInTheDocument();
+    expect(screen.queryByText("Detail pemesanan")).not.toBeInTheDocument();
   });
 
   it("AC-PRJ-006 shows the client matches with their number and project count", async () => {
@@ -119,7 +119,7 @@ describe("CreateProjectScreen (S2)", () => {
     expect(
       screen.getByRole("option", { name: /Rina Kartika Belum ada nomor WhatsApp/ }),
     ).toBeInTheDocument();
-    expect(screen.getByText("KLIEN · 2 COCOK")).toBeInTheDocument();
+    expect(screen.getByText("Klien · 2 cocok")).toBeInTheDocument();
   });
 
   it("AC-PRJ-007 picking a client and a service fills title, price, items and fields", async () => {
@@ -131,11 +131,11 @@ describe("CreateProjectScreen (S2)", () => {
     );
     expect(screen.getByRole("textbox", { name: "Harga sepakat" })).toHaveValue("750.000");
     expect(screen.getByText("Harga dasar layanan: Rp 750.000")).toBeInTheDocument();
-    expect(screen.getByText("Wisuda · harga dasar Rp 750.000")).toBeInTheDocument();
+    expect(screen.getByText("Wisuda · Harga dasar Rp 750.000")).toBeInTheDocument();
     expect(screen.getByText("25 foto · hitung foto")).toBeInTheDocument();
     expect(screen.getByText("1–3 orang")).toBeInTheDocument();
     expect(screen.getByText("Isi paket")).toBeInTheDocument();
-    expect(screen.getByText("Field booking")).toBeInTheDocument();
+    expect(screen.getByText("Detail pemesanan")).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: /Nama kampus/ })).toBeInTheDocument();
     expect(screen.getByText("+62 812-3456-7890")).toBeInTheDocument();
   });
@@ -259,15 +259,13 @@ describe("CreateProjectScreen (S2)", () => {
     renderScreen(undefined, { groups: [], hasActiveService: false });
     expect(screen.getByRole("button", { name: /^Layanan/ })).toBeDisabled();
     expect(
-      screen.getByText(
-        "Proyek dibuat dari layanan. Buat atau aktifkan layanan dulu, lalu kembali ke sini.",
-      ),
+      screen.getByText("Buat atau aktifkan layanan dulu, lalu kembali untuk membuat proyek."),
     ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Buka Layanan" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Buka layanan" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Simpan draf" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Buat proyek" })).toBeDisabled();
     expect(screen.queryByText("Isi paket")).not.toBeInTheDocument();
-    expect(screen.queryByText("Field booking")).not.toBeInTheDocument();
+    expect(screen.queryByText("Detail pemesanan")).not.toBeInTheDocument();
   });
 
   it("AC-PRJ-012 shows SERVICE_INACTIVE under Layanan, keeps the form and focuses Layanan", async () => {
@@ -331,9 +329,7 @@ describe("CreateProjectScreen (S2)", () => {
     await userEvent.click(screen.getByRole("button", { name: /Tanggal wisuda/ }));
     await userEvent.click(within(screen.getByRole("grid")).getByText("15"));
     await userEvent.click(screen.getByRole("button", { name: "Simpan draf" }));
-    expect(
-      await screen.findByText("Tim sesi ini perlu diperbarui. Periksa anggota dan perannya."),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Cek anggota dan peran tim sesi ini.")).toBeInTheDocument();
     expect(push).not.toHaveBeenCalled();
   });
 });

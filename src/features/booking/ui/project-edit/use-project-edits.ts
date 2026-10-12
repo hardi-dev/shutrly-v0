@@ -1,33 +1,36 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import type { ProjectWriteResult } from "@/features/booking/application/use-cases/project-results/project-results.types";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
+import { PROJECT_EDIT_COPY_NAMESPACE } from "./project-edit.copy";
 import type { SubmitErrors } from "./project-edit.types";
 
 /** Runs a detail edit and turns its outcome into a toast and a refresh; field errors go back to the dialog (AC-PRJ-017…019, 029). @returns `run(call)` */
 export function useProjectEdits() {
+  const t = useTranslations(PROJECT_EDIT_COPY_NAMESPACE);
   const router = useRouter();
   const run = async (call: () => Promise<ProjectWriteResult>): Promise<SubmitErrors> => {
     try {
       const result = await call();
       if (result === undefined) {
-        showToast({ tone: "success", title: PROJECT_COPY.editSavedToast });
+        showToast({ tone: "success", title: t("editSavedToast") });
         router.refresh();
         return null;
       }
       if (result.code === "VALIDATION_FAILED") return result.fieldErrors;
-      showFailure(result);
+      showFailure(t, result);
       router.refresh();
       return null;
     } catch {
       showToast({
         tone: "danger",
-        title: PROJECT_COPY.serverErrorTitle,
-        body: PROJECT_COPY.serverErrorBody,
+        title: t("serverErrorTitle"),
+        body: t("serverErrorBody"),
       });
       return {};
     }
@@ -35,41 +38,42 @@ export function useProjectEdits() {
   return { run };
 }
 
-function showFailure(result: Exclude<ProjectWriteResult, undefined>): void {
+function showFailure(t: ProjectTranslate, result: Exclude<ProjectWriteResult, undefined>): void {
   const { code } = result;
   if (result.code === "SELECTION_IN_USE") {
+    const usage = [String(result.usage), result.unit].filter(Boolean).join(" ");
     showToast({
       tone: "danger",
-      title: PROJECT_COPY.selectionInUseTitle,
-      body: PROJECT_COPY.selectionInUseBody(result.usage, result.unit),
+      title: t("selectionInUseTitle"),
+      body: t("selectionInUseBody", { usage }),
     });
   } else if (code === "SELECTION_CLOSED") {
     showToast({
       tone: "danger",
-      title: PROJECT_COPY.selectionClosedTitle,
-      body: PROJECT_COPY.selectionClosedBody,
+      title: t("selectionClosedTitle"),
+      body: t("selectionClosedBody"),
     });
   } else if (code === "SELECTION_HAS_ADD_ON") {
     showToast({
       tone: "danger",
-      title: PROJECT_COPY.selectionHasAddOnTitle,
-      body: PROJECT_COPY.selectionHasAddOnBody,
+      title: t("selectionHasAddOnTitle"),
+      body: t("selectionHasAddOnBody"),
     });
   } else if (code === "LAST_SESSION") {
-    showToast({ tone: "danger", title: PROJECT_COPY.lastSessionToast });
+    showToast({ tone: "danger", title: t("lastSessionToast") });
   } else if (code === "DEAL_LOCKED") {
     showToast({
       tone: "danger",
-      title: PROJECT_COPY.dealLockedTitle,
-      body: PROJECT_COPY.dealLockedBody,
+      title: t("dealLockedTitle"),
+      body: t("dealLockedBody"),
     });
   } else if (code === "PROJECT_CANCELLED") {
-    showToast({ tone: "danger", title: PROJECT_COPY.infoCancelledTitle });
+    showToast({ tone: "danger", title: t("infoCancelledTitle") });
   } else {
     showToast({
       tone: "danger",
-      title: PROJECT_COPY.toastStaleTitle,
-      body: PROJECT_COPY.toastStaleBody,
+      title: t("toastStaleTitle"),
+      body: t("toastStaleBody"),
     });
   }
 }

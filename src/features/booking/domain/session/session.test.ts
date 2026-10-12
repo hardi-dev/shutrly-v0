@@ -96,12 +96,14 @@ describe("session formatters", () => {
   });
 
   it("formats the weekday date with and without a time", () => {
-    expect(formatSessionWhen(timed)).toBe("Sel, 10 Nov 2026 · 07.30");
-    expect(formatSessionWhen(session({ date: "2026-11-10" }))).toBe("Sel, 10 Nov 2026");
+    expect(formatSessionWhen(timed, "id-ID")).toBe("Sel, 10 Nov 2026 · 07.30");
+    expect(formatSessionWhen(session({ date: "2026-11-10" }), "id-ID")).toBe("Sel, 10 Nov 2026");
   });
 
   it("formats the full range and drops the missing parts", () => {
-    expect(formatSessionRange(timed)).toBe("Sel, 10 Nov 2026 · 07.30–10.00 · Balairung UI, Depok");
+    expect(formatSessionRange(timed, "id-ID")).toBe(
+      "Sel, 10 Nov 2026 · 07.30–10.00 · Balairung UI, Depok",
+    );
     expect(
       formatSessionRange(
         session({
@@ -110,18 +112,19 @@ describe("session formatters", () => {
           endTime: "07:15",
           location: "Rumah Rina, Depok",
         }),
+        "id-ID",
       ),
     ).toBe("Sel, 10 Nov 2026 · 06.30–07.15 · Rumah Rina, Depok");
-    expect(formatSessionRange(session({ date: "2026-11-10", startTime: "06:30" }))).toBe(
+    expect(formatSessionRange(session({ date: "2026-11-10", startTime: "06:30" }), "id-ID")).toBe(
       "Sel, 10 Nov 2026 · 06.30",
     );
-    expect(formatSessionRange(session({ date: "2026-11-10", location: "Depok" }))).toBe(
+    expect(formatSessionRange(session({ date: "2026-11-10", location: "Depok" }), "id-ID")).toBe(
       "Sel, 10 Nov 2026 · Depok",
     );
   });
 
   it("formats the short date", () => {
-    expect(formatShortDate("2026-11-10")).toBe("10 Nov 2026");
-    expect(formatShortDate("2026-10-02")).toBe("2 Okt 2026");
+    expect(formatShortDate("2026-11-10", "id-ID")).toBe("10 Nov 2026");
+    expect(formatShortDate("2026-10-02", "id-ID")).toBe("2 Okt 2026");
   });
 });

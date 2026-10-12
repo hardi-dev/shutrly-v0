@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId } from "react";
 import { FieldError, Label, Text, TextField as AriaTextField } from "react-aria-components";
 
@@ -7,7 +8,7 @@ import { cn } from "@/ui/cn/cn";
 
 import { Icon } from "../icon/icon";
 import { Input } from "../input/input";
-import { TEXT_FIELD_COPY } from "./text-field.copy";
+import { TEXT_FIELD_COPY_NAMESPACE } from "./text-field.copy";
 import type { TextFieldContentProps, TextFieldProps } from "./text-field.types";
 
 const MESSAGE = "text-(length:--font-size-label)";
@@ -53,6 +54,12 @@ function TextFieldContent({ ...props }: Readonly<TextFieldContentProps>) {
   );
 }
 
+/** The "(optional)" suffix after a field label, in the active locale (copy-deck §1). @returns the suffix */
+export function OptionalSuffix() {
+  const t = useTranslations(TEXT_FIELD_COPY_NAMESPACE);
+  return <>{t("optionalSuffix")}</>;
+}
+
 function TextFieldLabel({ label, isOptional }: Readonly<TextFieldContentProps>) {
   if (!label) return null;
   return (
@@ -62,7 +69,7 @@ function TextFieldLabel({ label, isOptional }: Readonly<TextFieldContentProps>) 
       </Label>
       {isOptional ? (
         <span className="text-(length:--font-size-label) text-(--component-input-helper)">
-          {TEXT_FIELD_COPY.optionalSuffix}
+          <OptionalSuffix />
         </span>
       ) : null}
     </div>

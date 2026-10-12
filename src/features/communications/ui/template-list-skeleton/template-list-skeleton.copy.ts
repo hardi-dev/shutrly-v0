@@ -1,2 +1,4 @@
-// not in Pencil: screen-reader text for the loading state (C-008).
-export const TEMPLATE_LIST_SKELETON_COPY = { loading: "Memuat template pesan…" } as const;
+// Names the TEMPLATE_COPY_NAMESPACE namespace for this folder's components (the local ui-copy rule reads a sibling copy import).
+import { TEMPLATE_COPY_NAMESPACE } from "../template-copy/template-copy.copy";
+
+export const TEMPLATE_LIST_SKELETON_COPY_NAMESPACE = TEMPLATE_COPY_NAMESPACE;

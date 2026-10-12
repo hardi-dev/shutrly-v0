@@ -1,3 +1,4 @@
+import type { useTranslations } from "next-intl";
 import type { Control } from "react-hook-form";
 
 import type {
@@ -36,3 +37,5 @@ export interface SettingsFieldProps {
 }
 
 export type SettingsControl = Control<SettingsValues, unknown, SettingsValues>;
+
+export type SettingsTranslate = ReturnType<typeof useTranslations>;

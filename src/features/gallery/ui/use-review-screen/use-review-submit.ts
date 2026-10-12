@@ -1,11 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { REVIEW_COPY as COPY } from "../review-screen/review-screen.copy";
+import { USE_REVIEW_NAMESPACE } from "./use-review-screen.copy";
 import type {
   ReviewActions,
   ReviewChangesHandle,
@@ -29,6 +30,7 @@ export function useReviewSubmit(
   token: string,
 ): ReviewSubmitHandle {
   const router = useRouter();
+  const t = useTranslations(USE_REVIEW_NAMESPACE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmRemaining, setConfirmRemaining] = useState<number | null>(null);
   const { group } = changes.state;
@@ -38,22 +40,24 @@ export function useReviewSubmit(
       .submit({ groupId: group.id, confirmBelowLimit })
       .catch(() => "FAILED" as const);
     setIsSubmitting(false);
-    if (outcome === "FAILED") showToast({ tone: "danger", title: COPY.sendFailed });
+    if (outcome === "FAILED") showToast({ tone: "danger", title: t("sendFailed") });
     else if ("kind" in outcome) router.refresh();
     else if (outcome.ok) {
       showToast({
         tone: "success",
-        title: COPY.sentToastTitle(outcome.groupName),
+        title: t("sentToastTitle", { name: outcome.groupName }),
         body:
-          outcome.remaining > 0 ? COPY.sentToastBodyOpen(outcome.remaining) : COPY.sentToastBody,
+          outcome.remaining > 0
+            ? t("sentToastBodyOpen", { remaining: outcome.remaining })
+            : t("sentToastBody"),
       });
       router.push(`/g/${token}`);
     } else if (outcome.code === "NEEDS_CONFIRMATION") setConfirmRemaining(outcome.remaining);
     else if (outcome.code === "GROUP_NOT_OPEN") router.refresh();
     else if (outcome.code === "RATE_LIMITED")
-      showToast({ tone: "warning", title: COPY.rateLimited });
+      showToast({ tone: "warning", title: t("rateLimited") });
     else {
-      showToast({ tone: "danger", title: COPY.sendFailed });
+      showToast({ tone: "danger", title: t("sendFailed") });
       void changes.reload();
     }
   };

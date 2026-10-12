@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { forwardRef } from "react";
 import { Button as AriaButton, Link as AriaLink } from "react-aria-components";
 
@@ -7,6 +8,7 @@ import { cn } from "@/ui/cn/cn";
 import { CountBadge } from "@/ui/primitives/count-badge/count-badge";
 import { Icon } from "@/ui/primitives/icon/icon";
 
+import { ICON_BUTTON_COPY_NAMESPACE } from "./icon-button.copy";
 import type { IconButtonProps, IconButtonSize, IconButtonTone } from "./icon-button.types";
 
 const SIZE_CLASSES = {
@@ -43,17 +45,20 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
     className,
     icon,
     badgeCount = 0,
-    badgeLabel = "belum dibaca",
+    badgeLabel,
     href,
     target,
     ...props
   },
   ref,
 ) {
-  const label =
-    badgeCount > 0
-      ? `${props["aria-label"]}, ${String(Math.min(badgeCount, 99))} ${badgeLabel}`
-      : props["aria-label"];
+  const t = useTranslations(ICON_BUTTON_COPY_NAMESPACE);
+  const cappedCount = Math.min(badgeCount, 99);
+  const badgeText =
+    badgeLabel === undefined
+      ? t("unreadBadge", { count: cappedCount })
+      : `${String(cappedCount)} ${badgeLabel}`;
+  const label = badgeCount > 0 ? `${props["aria-label"]}, ${badgeText}` : props["aria-label"];
   const classes = iconButtonClasses(size, tone, className);
   if (href !== undefined) {
     const rel = target === "_blank" ? "noopener noreferrer" : undefined;

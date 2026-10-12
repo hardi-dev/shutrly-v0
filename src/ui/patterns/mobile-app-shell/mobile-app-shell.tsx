@@ -1,5 +1,7 @@
+import { useTranslations } from "next-intl";
+
 import { MobileHeader } from "../mobile-header/mobile-header";
-import { MOBILE_APP_SHELL_COPY } from "./mobile-app-shell.copy";
+import { MOBILE_APP_SHELL_COPY_NAMESPACE } from "./mobile-app-shell.copy";
 import type { MobileAppShellProps } from "./mobile-app-shell.types";
 
 /** Renders the responsive mobile Owner shell with app bar, content and Bottom Nav slots (C35). */
@@ -11,15 +13,17 @@ export function MobileAppShell({
   actions,
   sheet,
   isOverlayOpen = false,
+  // DECK GAP: no copy-deck row or Indonesian text for this placeholder workspace name; kept as-is.
   workspace = "Workspace",
   utilities,
   onWorkspacePress,
   header,
 }: Readonly<MobileAppShellProps>) {
+  const t = useTranslations(MOBILE_APP_SHELL_COPY_NAMESPACE);
   return (
     <div className="flex w-full min-h-dvh flex-col bg-(--color-semantic-surface-muted)">
       <a href="#mobile-app-content" className="sr-only focus:not-sr-only">
-        {MOBILE_APP_SHELL_COPY.skip}
+        {t("skip")}
       </a>
       {header ?? (
         <MobileHeader

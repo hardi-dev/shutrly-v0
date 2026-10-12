@@ -1,11 +1,29 @@
-// Translated from auth.pen m3QGM / hTP6i (English); Indonesian per CONFLICT-1 (2026-09-27).
+// Source: copy-deck.md §2.2. Copied verbatim.
+export const REGISTER_FORM_COPY_NAMESPACE = "authRegisterForm";
+
 export const REGISTER_FORM_COPY = {
-  name: "Nama Anda",
-  namePlaceholder: "Nama lengkap Anda",
-  email: "Email",
-  emailPlaceholder: "anda@studio.com",
-  password: "Kata sandi",
-  passwordPlaceholder: "Minimal 8 karakter",
-  submit: "Buat akun",
-  submitting: "Membuat akun…", // not in Pencil
+  namespace: REGISTER_FORM_COPY_NAMESPACE,
+  surface: "auth",
+  messages: {
+    en: {
+      name: "Your name",
+      namePlaceholder: "Full name",
+      email: "Email",
+      emailPlaceholder: "you@studio.com",
+      password: "Password",
+      passwordPlaceholder: "8–128 characters",
+      submit: "Create account",
+      submitting: "Creating account…",
+    },
+    id: {
+      name: "Namamu",
+      namePlaceholder: "Nama lengkap",
+      email: "Email",
+      emailPlaceholder: "nama@studio.com",
+      password: "Kata sandi",
+      passwordPlaceholder: "8–128 karakter",
+      submit: "Buat akun",
+      submitting: "Membuat akun…",
+    },
+  },
 } as const;

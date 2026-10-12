@@ -38,6 +38,7 @@ const groups = [{ ...wisuda, services: [baseService, prewed] }];
 const definitions = [
   {
     id: PROJECT_IDS.fotoEdit,
+    defaultKey: null,
     name: "Foto edit",
     unit: "foto",
     valueType: "NUMBER",
@@ -47,6 +48,7 @@ const definitions = [
   },
   {
     id: PROJECT_IDS.fotoCetak,
+    defaultKey: null,
     name: "Foto cetak",
     unit: "foto",
     valueType: "NUMBER",
@@ -85,7 +87,7 @@ describe("Proyek baru package edits (AC-PRJ-030)", () => {
   it("AC-PRJ-030 changes an item's value and shows it in the row", async () => {
     renderScreen();
     await pickWisuda();
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk item Foto edit" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk item Foto edit" }));
     await userEvent.click(screen.getByRole("menuitem", { name: "Ubah nilai" }));
     const dialog = screen.getByRole("dialog", { name: "Ubah nilai · Foto edit" });
     const field = within(dialog).getByRole("textbox", { name: "Jumlah" });
@@ -98,22 +100,22 @@ describe("Proyek baru package edits (AC-PRJ-030)", () => {
   it("AC-PRJ-017 refuses a decimal on a selection item and leaves the draft unchanged", async () => {
     renderScreen();
     await pickWisuda();
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk item Foto edit" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk item Foto edit" }));
     await userEvent.click(screen.getByRole("menuitem", { name: "Ubah nilai" }));
     const dialog = screen.getByRole("dialog", { name: "Ubah nilai · Foto edit" });
     const field = within(dialog).getByRole("textbox", { name: "Jumlah" });
     await userEvent.clear(field);
     await userEvent.type(field, "2,5");
     await userEvent.click(within(dialog).getByRole("button", { name: "Simpan" }));
-    expect(within(dialog).getByText("Harus angka bulat.")).toBeInTheDocument();
+    expect(within(dialog).getByText("Isi angka bulat.")).toBeInTheDocument();
     expect(screen.getByText("25 foto · hitung foto")).toBeInTheDocument();
   });
 
   it("AC-PRJ-030 removes an item after confirming", async () => {
     renderScreen();
     await pickWisuda();
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk item Jumlah orang" }));
-    await userEvent.click(screen.getByRole("menuitem", { name: "Hapus" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk item Jumlah orang" }));
+    await userEvent.click(screen.getByRole("menuitem", { name: "Hapus item" }));
     expect(screen.getByText("Hapus Jumlah orang?")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Hapus item" }));
     expect(screen.queryByText("Jumlah orang")).not.toBeInTheDocument();
@@ -145,15 +147,15 @@ describe("Proyek baru package edits (AC-PRJ-030)", () => {
   it("AC-PRJ-030 asks before replacing an edited package and keeps the edits on Batal", async () => {
     renderScreen();
     await pickWisuda();
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk item Jumlah orang" }));
-    await userEvent.click(screen.getByRole("menuitem", { name: "Hapus" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk item Jumlah orang" }));
+    await userEvent.click(screen.getByRole("menuitem", { name: "Hapus item" }));
     await userEvent.click(screen.getByRole("button", { name: "Hapus item" }));
     await userEvent.click(screen.getByRole("button", { name: /^Layanan/ }));
     await userEvent.click(screen.getByRole("option", { name: "Prewed Basic" }));
     expect(screen.getByText("Ganti layanan?")).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Perubahan isi paket akan hilang. Isi paket diganti dengan isi Prewed Basic.",
+        "Perubahan isi paketmu akan hilang. Isi paket diganti dengan isi Prewed Basic.",
       ),
     ).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Batal" }));
@@ -164,8 +166,8 @@ describe("Proyek baru package edits (AC-PRJ-030)", () => {
   it("AC-PRJ-030 replaces the package, price and title when the change is confirmed", async () => {
     renderScreen();
     await pickWisuda();
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk item Jumlah orang" }));
-    await userEvent.click(screen.getByRole("menuitem", { name: "Hapus" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk item Jumlah orang" }));
+    await userEvent.click(screen.getByRole("menuitem", { name: "Hapus item" }));
     await userEvent.click(screen.getByRole("button", { name: "Hapus item" }));
     await userEvent.click(screen.getByRole("button", { name: /^Layanan/ }));
     await userEvent.click(screen.getByRole("option", { name: "Prewed Basic" }));
@@ -174,6 +176,6 @@ describe("Proyek baru package edits (AC-PRJ-030)", () => {
     expect(screen.getByRole("textbox", { name: "Judul proyek" })).toHaveValue(
       "Prewed Basic — Rina",
     );
-    expect(screen.getByText("Layanan ini belum punya item paket")).toBeInTheDocument();
+    expect(screen.getByText("Layanan ini belum punya isi paket")).toBeInTheDocument();
   });
 });

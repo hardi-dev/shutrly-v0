@@ -41,7 +41,9 @@ describe("AppShell (C30/C37)", () => {
     );
     expect(screen.getAllByText("Konten workspace").length).toBeGreaterThan(0);
     expect(screen.getAllByRole("main").length).toBeGreaterThan(0);
-    expect(screen.getAllByRole("complementary", { name: "Sidebar" }).length).toBeGreaterThan(0);
+    expect(
+      screen.getAllByRole("complementary", { name: "Navigasi samping" }).length,
+    ).toBeGreaterThan(0);
   });
 
   it("keeps the tablet overlay closed by default", () => {
@@ -62,12 +64,12 @@ describe("AppShell (C30/C37)", () => {
       </AppShell>,
     );
 
-    const toggles = screen.getAllByRole("button", { name: "Buka sidebar" });
+    const toggles = screen.getAllByRole("button", { name: "Buka navigasi samping" });
     expect(toggles).toHaveLength(1);
     await user.click(toggles[0]);
     const dialog = screen.getByRole("dialog", { name: "Navigasi utama" });
     expect(dialog.querySelector("[data-sidebar-toggle]")).toBeNull();
-    expect(within(dialog).queryByRole("button", { name: /sidebar/i })).toBeNull();
+    expect(within(dialog).queryByRole("button", { name: /navigasi samping/i })).toBeNull();
 
     await user.keyboard("{Escape}");
     expect(queryByRole("dialog", { name: "Navigasi utama" })).toBeNull();
@@ -81,19 +83,19 @@ describe("AppShell (C30/C37)", () => {
       </AppShell>,
     );
 
-    await user.click(screen.getByRole("button", { name: "Ciutkan sidebar" }));
+    await user.click(screen.getByRole("button", { name: "Ciutkan navigasi samping" }));
     await waitFor(() => {
-      expect(document.activeElement?.getAttribute("aria-label")).toBe("Buka sidebar");
+      expect(document.activeElement?.getAttribute("aria-label")).toBe("Buka navigasi samping");
     });
-    expect(screen.queryByRole("button", { name: "Ciutkan sidebar" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Ciutkan navigasi samping" })).toBeNull();
     expect(window.localStorage.getItem("shutrly.sidebar.collapsed")).toBe("true");
 
     const expand = screen
-      .getAllByRole("button", { name: "Buka sidebar" })
+      .getAllByRole("button", { name: "Buka navigasi samping" })
       .find((button) => button.closest(".xl\\:flex"));
     expect(expand).toBeDefined();
     if (expand) await user.click(expand);
-    expect(screen.getByRole("button", { name: "Ciutkan sidebar" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Ciutkan navigasi samping" })).toBeInTheDocument();
     expect(window.localStorage.getItem("shutrly.sidebar.collapsed")).toBe("false");
   });
 

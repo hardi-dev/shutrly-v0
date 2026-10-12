@@ -108,11 +108,13 @@ describe("selection groups (D-10)", () => {
     const itemId = items["Foto edit"];
 
     expect(
-      await run((scope) => updateItemWithGroup(scope, edit, itemId, value("5"))),
+      await run((scope) => updateItemWithGroup(scope, edit, itemId, value("5"), "id-ID")),
     ).toBeUndefined();
     expect((await listGroups(target.projectId))[0].baseLimit).toBe(5);
 
-    expect(await run((scope) => updateItemWithGroup(scope, edit, itemId, value("1")))).toEqual({
+    expect(
+      await run((scope) => updateItemWithGroup(scope, edit, itemId, value("1"), "id-ID")),
+    ).toEqual({
       ok: false,
       code: "SELECTION_IN_USE",
       usage: 2,
@@ -135,10 +137,15 @@ describe("selection groups (D-10)", () => {
       })
       .returning({ id: serviceItemDefinition.id });
     const added = await run((scope) =>
-      addItemWithGroup(scope, edit, {
-        definitionId: cetak.id,
-        value: { type: "NUMBER", value: "2" },
-      }),
+      addItemWithGroup(
+        scope,
+        edit,
+        {
+          definitionId: cetak.id,
+          value: { type: "NUMBER", value: "2" },
+        },
+        "id-ID",
+      ),
     );
     expect(added).toBeUndefined();
     expect((await listGroups(target.projectId)).map((row) => [row.baseLimit, row.status])).toEqual([
@@ -235,9 +242,15 @@ describe("selection groups (D-10)", () => {
       projectId: target.projectId,
     };
     const result = await runDealEditTransaction(db, (scope) =>
-      updateItemWithGroup(scope, edit, items["Foto edit"], {
-        value: { type: "NUMBER", value: "4" },
-      }),
+      updateItemWithGroup(
+        scope,
+        edit,
+        items["Foto edit"],
+        {
+          value: { type: "NUMBER", value: "4" },
+        },
+        "id-ID",
+      ),
     );
     expect(result).toEqual({ ok: false, code: "SELECTION_CLOSED" });
   });

@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { user } from "@/adapters/db/schema/auth/auth";
+import { renderAuthEmail } from "@/adapters/email/auth-email-templates/auth-email-templates";
 import { requireOwner } from "@/features/auth/application/policy/owner-access/owner-access";
 import { changePassword } from "@/features/auth/application/use-cases/change-password/change-password";
 import { loginOwner } from "@/features/auth/application/use-cases/login-owner/login-owner";
@@ -84,5 +85,51 @@ describe("auth flows on the real adapters", () => {
     const refreshed = result.setCookies.length > 0 ? cookieHeaders(result.setCookies) : current;
     expect(await h.deps.identity.getSessionUserId(refreshed)).not.toBeNull();
     expect(await h.deps.identity.getSessionUserId(other)).toBeNull();
+  });
+});
+
+describe("auth emails in the screen language (D-17)", () => {
+  it("D-17 a register request in Indonesian sends the Indonesian verification email", async () => {
+    const id = await openAuthHarness({ locale: "id" });
+    try {
+      const email = normaliseEmail(uniqueEmail());
+      await registerOwner(id.deps, { name: "Alya", email, password: PASSWORD }, meta());
+      await id.settle();
+      const link = id.sender.linksTo(email, "VERIFY_EMAIL").at(0);
+      if (!link) throw new Error("expected a verification link");
+      expect(link.locale).toBe("id");
+      expect(renderAuthEmail(link).subject).toBe("Verifikasi email Shutrly kamu");
+    } finally {
+      await id.close();
+    }
+  });
+});
+
+describe("the sign-up language becomes the owner's language (D-22)", () => {
+  async function storedLocale(harness: AuthHarness, email: string): Promise<string | undefined> {
+    const rows = await harness.db
+      .select({ locale: user.locale })
+      .from(user)
+      .where(eq(user.email, email));
+    return rows.at(0)?.locale;
+  }
+
+  it("D-22 a register request in Indonesian stores user.locale id", async () => {
+    const id = await openAuthHarness({ locale: "id" });
+    try {
+      const email = normaliseEmail(uniqueEmail());
+      await registerOwner(id.deps, { name: "Alya", email, password: PASSWORD }, meta());
+      await id.settle();
+      expect(await storedLocale(id, email)).toBe("id");
+    } finally {
+      await id.close();
+    }
+  });
+
+  it("D-22 a register request without a choice stores en", async () => {
+    const email = normaliseEmail(uniqueEmail());
+    await registerOwner(h.deps, { name: "Alya", email, password: PASSWORD }, meta());
+    await h.settle();
+    expect(await storedLocale(h, email)).toBe("en");
   });
 });

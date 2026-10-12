@@ -1,7 +1,21 @@
-// Translated from auth.pen o9WtCo (English); Indonesian per CONFLICT-1 (2026-09-27).
+// Source: copy-deck.md §2.4. Copied verbatim.
+export const FORGOT_PASSWORD_FORM_COPY_NAMESPACE = "authForgotPasswordForm";
+
 export const FORGOT_PASSWORD_FORM_COPY = {
-  email: "Email",
-  emailPlaceholder: "anda@studio.com",
-  submit: "Kirim tautan atur ulang",
-  submitting: "Mengirim…", // not in Pencil
+  namespace: FORGOT_PASSWORD_FORM_COPY_NAMESPACE,
+  surface: "auth",
+  messages: {
+    en: {
+      email: "Email",
+      emailPlaceholder: "you@studio.com",
+      submit: "Send reset link",
+      submitting: "Sending…",
+    },
+    id: {
+      email: "Email",
+      emailPlaceholder: "nama@studio.com",
+      submit: "Kirim tautan atur ulang",
+      submitting: "Mengirim…",
+    },
+  },
 } as const;

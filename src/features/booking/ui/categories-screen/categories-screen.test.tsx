@@ -15,7 +15,9 @@ describe("CategoriesScreen", () => {
     expect(screen.getByTestId("empty-state")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Belum ada kategori" })).toBeInTheDocument();
     expect(
-      screen.getByText("Buat kategori seperti Wisuda atau Wedding untuk mengelompokkan layanan."),
+      screen.getByText(
+        "Tambahkan kategori, misalnya Wisuda atau Keluarga, untuk mengelompokkan layanan.",
+      ),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah kategori" })).toBeInTheDocument();
     expect(screen.getByRole("main")).toHaveClass(

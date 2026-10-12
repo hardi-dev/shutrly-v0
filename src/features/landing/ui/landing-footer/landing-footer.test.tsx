@@ -1,25 +1,23 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it } from "vitest";
 
-import { LANDING_PAGE_COPY as COPY } from "../landing-page/landing-page.copy";
 import { LandingFooter } from "./landing-footer";
 
-describe("LandingFooter", () => {
-  it("AC-LND-011 links Privacy to the privacy note under the form", () => {
-    render(<LandingFooter />);
-    expect(screen.getByRole("link", { name: COPY.privacy })).toHaveAttribute("href", "#privacy");
-  });
-
-  it("AC-LND-011 links Contact to the removal and contact address", () => {
-    render(<LandingFooter />);
-    expect(screen.getByRole("link", { name: COPY.contact })).toHaveAttribute(
+describe("LandingFooter copy", () => {
+  it("AC-LND-011 links Privacy to the privacy note and Contact to the contact address in English", () => {
+    renderInLocale(<LandingFooter />, "en");
+    expect(screen.getByRole("link", { name: "Privacy" })).toHaveAttribute("href", "#privacy");
+    expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute(
       "href",
-      `mailto:${COPY.contactEmail}`,
+      "mailto:hello@shutrly.space",
     );
+    expect(screen.getByRole("contentinfo")).toHaveTextContent("© 2026 Shutrly");
   });
 
-  it("shows the copyright year", () => {
-    render(<LandingFooter />);
-    expect(screen.getByRole("contentinfo")).toHaveTextContent(COPY.copyright);
+  it("AC-L10N-002 renders the footer links in Indonesian", () => {
+    renderInLocale(<LandingFooter />, "id");
+    expect(screen.getByRole("link", { name: "Privasi" })).toHaveAttribute("href", "#privacy");
+    expect(screen.getByRole("link", { name: "Kontak" })).toBeInTheDocument();
   });
 });

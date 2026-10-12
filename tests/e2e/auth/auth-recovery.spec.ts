@@ -15,35 +15,43 @@ test("AC-AUTH-016 AC-AUTH-017 forgot → reset → sign in with the new password
   await registerAndVerify(page, email);
   await page.context().clearCookies();
   await page.goto("/forgot-password");
-  await page.getByLabel(FORGOT_PASSWORD_FORM_COPY.email).fill(email);
-  await page.getByRole("button", { name: FORGOT_PASSWORD_FORM_COPY.submit }).click();
-  await expect(page.getByRole("heading", { name: RESET_SENT_SCREEN_COPY.title })).toBeVisible();
+  await page.getByLabel(FORGOT_PASSWORD_FORM_COPY.messages.id.email).fill(email);
+  await page.getByRole("button", { name: FORGOT_PASSWORD_FORM_COPY.messages.id.submit }).click();
+  await expect(
+    page.getByRole("heading", { name: RESET_SENT_SCREEN_COPY.messages.id.title }),
+  ).toBeVisible();
 
   const link = await lastLink(page, email, "RESET_PASSWORD");
   await page.goto(link);
   await page
-    .getByRole("textbox", { name: RESET_PASSWORD_FORM_COPY.password, exact: true })
+    .getByRole("textbox", { name: RESET_PASSWORD_FORM_COPY.messages.id.password, exact: true })
     .fill(NEW_PASSWORD);
   await page
-    .getByRole("textbox", { name: RESET_PASSWORD_FORM_COPY.confirm, exact: true })
+    .getByRole("textbox", { name: RESET_PASSWORD_FORM_COPY.messages.id.confirm, exact: true })
     .fill(NEW_PASSWORD);
-  await page.getByRole("button", { name: RESET_PASSWORD_FORM_COPY.submit }).click();
+  await page.getByRole("button", { name: RESET_PASSWORD_FORM_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/login$/);
 
   await page.goto(link);
-  const expired = page.getByRole("heading", { name: INVALID_RESET_LINK_SCREEN_COPY.title });
+  const expired = page.getByRole("heading", {
+    name: INVALID_RESET_LINK_SCREEN_COPY.messages.id.title,
+  });
   await expect(expired).toBeVisible();
 
   await page.goto("/login");
-  await page.getByLabel(LOGIN_FORM_COPY.email).fill(email);
-  await page.getByRole("textbox", { name: LOGIN_FORM_COPY.password }).fill(NEW_PASSWORD);
-  await page.getByRole("button", { name: LOGIN_FORM_COPY.submit }).click();
+  await page.getByLabel(LOGIN_FORM_COPY.messages.id.email).fill(email);
+  await page
+    .getByRole("textbox", { name: LOGIN_FORM_COPY.messages.id.password })
+    .fill(NEW_PASSWORD);
+  await page.getByRole("button", { name: LOGIN_FORM_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/onboarding\/workspace$/);
 });
 
 test("AC-AUTH-016 an unknown email sees the same confirmation", async ({ page }) => {
   await page.goto("/forgot-password");
-  await page.getByLabel(FORGOT_PASSWORD_FORM_COPY.email).fill(uniqueEmail("nobody"));
-  await page.getByRole("button", { name: FORGOT_PASSWORD_FORM_COPY.submit }).click();
-  await expect(page.getByRole("heading", { name: RESET_SENT_SCREEN_COPY.title })).toBeVisible();
+  await page.getByLabel(FORGOT_PASSWORD_FORM_COPY.messages.id.email).fill(uniqueEmail("nobody"));
+  await page.getByRole("button", { name: FORGOT_PASSWORD_FORM_COPY.messages.id.submit }).click();
+  await expect(
+    page.getByRole("heading", { name: RESET_SENT_SCREEN_COPY.messages.id.title }),
+  ).toBeVisible();
 });

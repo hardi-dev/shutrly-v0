@@ -29,7 +29,7 @@ describe("AddServiceDialog", () => {
 
     expect(screen.getByRole("textbox", { name: "Nama layanan" })).toHaveAttribute(
       "placeholder",
-      "Contoh: Wisuda Basic",
+      "Contoh: Wisuda Dasar",
     );
     expect(screen.getByRole("textbox", { name: "Harga dasar" })).toHaveAttribute(
       "placeholder",

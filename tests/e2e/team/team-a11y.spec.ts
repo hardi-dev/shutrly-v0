@@ -1,8 +1,9 @@
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 
-import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
-import { TEAM_COPY } from "@/features/booking/ui/team-copy/team-copy.copy";
+import { PROJECT_COPY_NAMESPACE } from "@/features/booking/ui/project-copy/project-copy.copy";
+import { TEAM_COPY_NAMESPACE } from "@/features/booking/ui/team-copy/team-copy.copy";
 
 import {
   addClient,
@@ -14,6 +15,10 @@ import {
   setupStaffedProject,
   visibleText,
 } from "./team-e2e";
+
+const pc = copyTranslator(PROJECT_COPY_NAMESPACE, "id");
+
+const teamT = copyTranslator(TEAM_COPY_NAMESPACE, "id");
 
 test.setTimeout(240_000);
 test.describe.configure({ retries: 2 });
@@ -40,10 +45,10 @@ async function checkTimTabs(page: Page, workspaceId: string, isPhone: boolean): 
     await expectA11y(page);
   }
   await page
-    .getByRole("button", { name: isPhone ? TEAM_COPY.addRoleShort : TEAM_COPY.addRole })
+    .getByRole("button", { name: isPhone ? teamT("addRoleShort") : teamT("addRole") })
     .first()
     .click();
-  await expectDialogA11y(page, TEAM_COPY.addRole);
+  await expectDialogA11y(page, teamT("addRole"));
 }
 
 async function checkMemberSurfaces(
@@ -53,13 +58,13 @@ async function checkMemberSurfaces(
 ): Promise<void> {
   await page.goto(`/w/${workspaceId}/team`);
   await page
-    .getByRole("button", { name: isPhone ? TEAM_COPY.addMemberShort : TEAM_COPY.addMember })
+    .getByRole("button", { name: isPhone ? teamT("addMemberShort") : teamT("addMember") })
     .first()
     .click();
-  await expectDialogA11y(page, TEAM_COPY.addMember);
-  await page.getByRole("button", { name: TEAM_COPY.rowActions("Dimas Pratama") }).click();
+  await expectDialogA11y(page, teamT("addMember"));
+  await page.getByRole("button", { name: teamT("rowActions", { name: "Dimas Pratama" }) }).click();
   // Phones open a sheet of buttons, desktop a menu: look for the label itself.
-  await expect(visibleText(page, TEAM_COPY.archive, { exact: true })).toBeVisible();
+  await expect(visibleText(page, teamT("archive"), { exact: true })).toBeVisible();
   await expectA11y(page);
   await page.keyboard.press("Escape");
 }
@@ -68,8 +73,8 @@ async function checkProjectSurfaces(page: Page, projectPath: string): Promise<vo
   await page.goto(projectPath);
   const team = await openAturTim(page, "Resepsi", 1);
   await expectA11y(page);
-  await team.getByRole("button", { name: PROJECT_COPY.teamAddMember }).click();
-  await expectDialogA11y(page, PROJECT_COPY.assignTitle("Resepsi"));
+  await team.getByRole("button", { name: pc("teamAddMember") }).click();
+  await expectDialogA11y(page, pc("assignTitle", { sessionName: "Resepsi" }));
 }
 
 for (const viewport of VIEWPORTS) {
@@ -94,12 +99,12 @@ test("AC-TEAM-011 reaches user-plus by keyboard, opens the form with Enter and E
   await addClient(page, workspaceId);
   await addService(page, workspaceId);
   await createBookedProject(page, workspaceId);
-  const addTeam = page.getByRole("button", { name: PROJECT_COPY.addTeamFor("Resepsi") });
+  const addTeam = page.getByRole("button", { name: pc("addTeamFor", { sessionName: "Resepsi" }) });
   await addTeam.focus();
   await expect(addTeam).toBeFocused();
   await page.keyboard.press("Enter");
   const form = page
-    .getByRole("dialog", { name: PROJECT_COPY.assignTitle("Resepsi") })
+    .getByRole("dialog", { name: pc("assignTitle", { sessionName: "Resepsi" }) })
     .filter({ visible: true });
   await expect(form).toBeVisible();
   await page.keyboard.press("Escape");

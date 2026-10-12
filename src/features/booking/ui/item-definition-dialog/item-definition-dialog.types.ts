@@ -4,6 +4,8 @@ import type { ItemDefinitionRecord } from "@/features/booking/application/ports/
 import type { CatalogWriteResult } from "@/features/booking/application/use-cases/catalog-results/catalog-results.types";
 import type { PickMode } from "@/features/booking/domain/item-definition-type/item-definition-type.types";
 
+import type { CatalogTranslate } from "../catalog-copy/catalog-copy.types";
+
 export interface ItemDefinitionDialogProps {
   readonly isOpen: boolean;
   readonly workspaceId: string;
@@ -60,6 +62,7 @@ export interface ResponsiveItemDefinitionDialogProps extends ItemDefinitionDialo
 }
 
 export interface ItemDefinitionSubmitArgs {
+  readonly t: CatalogTranslate;
   readonly workspaceId: string;
   readonly definition?: ItemDefinitionRecord;
   readonly name: string;

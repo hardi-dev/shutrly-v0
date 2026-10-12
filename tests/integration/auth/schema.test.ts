@@ -40,4 +40,15 @@ describe("auth schema", () => {
     const upper = { ...base(), email: email.toUpperCase() };
     await expect(db.insert(user).values(upper)).rejects.toThrow();
   });
+
+  it("BR-L10N-001 a new user row defaults to locale en", async () => {
+    const row = base();
+    await db.insert(user).values(row);
+    const [saved] = await db.select().from(user).where(eq(user.id, row.id));
+    expect(saved).toMatchObject({ locale: "en" });
+  });
+
+  it("BR-L10N-001 the database refuses a locale outside en and id", async () => {
+    await expect(db.insert(user).values({ ...base(), locale: "fr" })).rejects.toThrow();
+  });
 });

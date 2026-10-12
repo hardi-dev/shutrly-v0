@@ -1,31 +1,43 @@
 import type { ProjectStep } from "@/features/booking/domain/project-status/project-status.types";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import type { ProjectStepCopy } from "./project-step-copy.types";
 
-const STEP_COPY: Readonly<Record<ProjectStep, ProjectStepCopy>> = {
+const STEP_MESSAGE_KEY = {
   CONFIRM_BOOKING: {
-    label: PROJECT_COPY.stepConfirm,
-    pendingLabel: PROJECT_COPY.stepConfirmPending,
+    label: "stepConfirm",
+    pendingLabel: "stepConfirmPending",
     icon: "calendar-check",
-    toastTitle: PROJECT_COPY.toastConfirmedTitle,
+    toastTitle: "toastConfirmedTitle",
   },
   START_SHOOTING: {
-    label: PROJECT_COPY.stepStart,
-    pendingLabel: PROJECT_COPY.stepStartPending,
+    label: "stepStart",
+    pendingLabel: "stepStartPending",
     icon: "camera",
-    toastTitle: PROJECT_COPY.toastStartedTitle,
-    toastBody: PROJECT_COPY.toastStartedBody,
+    toastTitle: "toastStartedTitle",
+    toastBody: "toastStartedBody",
   },
   FINISH_SHOOTING: {
-    label: PROJECT_COPY.stepFinish,
-    pendingLabel: PROJECT_COPY.stepFinishPending,
+    label: "stepFinish",
+    pendingLabel: "stepFinishPending",
     icon: "circle-check-big",
-    toastTitle: PROJECT_COPY.toastFinishedTitle,
+    toastTitle: "toastFinishedTitle",
   },
-};
+} as const;
 
-/** Looks up a step's button label, pending label, icon and success toast. @param step - the step @returns its copy */
-export function projectStepCopy(step: ProjectStep): ProjectStepCopy {
-  return STEP_COPY[step];
+/**
+ * Looks up a step's button label, pending label, icon and success toast.
+ * @param t - the project translator
+ * @param step - the step
+ * @returns its copy
+ */
+export function projectStepCopy(t: ProjectTranslate, step: ProjectStep): ProjectStepCopy {
+  const keys = STEP_MESSAGE_KEY[step];
+  return {
+    label: t(keys.label),
+    pendingLabel: t(keys.pendingLabel),
+    icon: keys.icon,
+    toastTitle: t(keys.toastTitle),
+    toastBody: "toastBody" in keys ? t(keys.toastBody) : undefined,
+  };
 }

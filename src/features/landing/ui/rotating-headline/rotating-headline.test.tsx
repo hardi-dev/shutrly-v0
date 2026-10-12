@@ -1,22 +1,33 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it } from "vitest";
 
 import { RotatingHeadline } from "./rotating-headline";
-import { ROTATING_HEADLINE_COPY as COPY } from "./rotating-headline.copy";
 
-describe("RotatingHeadline", () => {
-  it("AC-LND-001 names the page with one stable heading, whatever word is showing", () => {
-    render(<RotatingHeadline />);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveAccessibleName(COPY.accessible);
+describe("RotatingHeadline copy", () => {
+  it("AC-LND-001 names the page with one stable heading in English, whatever word is showing", () => {
+    renderInLocale(<RotatingHeadline />, "en");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+      "Less busywork. More photography.",
+    );
   });
 
-  it("starts on the first word of the rotation and keeps the others out of sight", () => {
-    render(<RotatingHeadline />);
+  it("starts on the first English word and keeps the others out of sight", () => {
+    renderInLocale(<RotatingHeadline />, "en");
     const shown = (word: string) =>
       screen.getAllByText(word).some((element) => element.classList.contains("opacity-100"));
-    expect(shown(COPY.words[0])).toBe(true);
-    expect(shown(COPY.words[1])).toBe(false);
-    expect(shown(COPY.words[2])).toBe(false);
-    expect(screen.getByText(COPY.stable)).toBeInTheDocument();
+    expect(shown("busywork.")).toBe(true);
+    expect(shown("paperwork.")).toBe(false);
+    expect(shown("back-and-forth.")).toBe(false);
+    expect(screen.getByText("More photography.")).toBeInTheDocument();
+  });
+
+  it("AC-L10N-002 renders the headline in Indonesian", () => {
+    renderInLocale(<RotatingHeadline />, "id");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+      "Lebih sedikit kerja admin. Lebih banyak waktu untuk fotografi.",
+    );
+    expect(screen.getByText("Lebih banyak waktu untuk fotografi.")).toBeInTheDocument();
+    expect(screen.getAllByText("kerja admin.").length).toBeGreaterThan(0);
   });
 });

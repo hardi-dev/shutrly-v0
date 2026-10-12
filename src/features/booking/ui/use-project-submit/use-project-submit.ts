@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import type { FieldPath } from "react-hook-form";
 
@@ -9,13 +10,13 @@ import type { ProjectFailure } from "@/features/booking/application/use-cases/pr
 import { validateFieldValues } from "@/features/booking/domain/booking-field-value/booking-field-value";
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import type {
   CreateForm,
   CreateProjectMode,
   UseCreateProjectFormInput,
 } from "../use-create-project-form/use-create-project-form.types";
 import type { ProjectPicks } from "../use-create-project-form/use-create-project-form.types";
+import { USE_PROJECT_SUBMIT_COPY_NAMESPACE } from "./use-project-submit.copy";
 
 const FORM_PATH = /^(clientId|serviceId|title|agreedPrice|notes|sessions|items|fieldValues)(\.|$)/;
 
@@ -49,6 +50,7 @@ export function useProjectSubmit(
   picks: ProjectPicks,
   input: Readonly<UseCreateProjectFormInput>,
 ) {
+  const t = useTranslations(USE_PROJECT_SUBMIT_COPY_NAMESPACE);
   const router = useRouter();
   const [pendingMode, setPendingMode] = useState<CreateProjectMode | null>(null);
   const submit = async (mode: CreateProjectMode): Promise<void> => {
@@ -73,9 +75,9 @@ export function useProjectSubmit(
     } catch {
       showToast({
         tone: "danger",
-        title: PROJECT_COPY.serverErrorTitle,
-        body: PROJECT_COPY.serverErrorBody,
-        action: { label: PROJECT_COPY.retry, onAction: () => void submit(mode) },
+        title: t("serverErrorTitle"),
+        body: t("serverErrorBody"),
+        action: { label: t("retry"), onAction: () => void submit(mode) },
       });
     } finally {
       setPendingMode(null);

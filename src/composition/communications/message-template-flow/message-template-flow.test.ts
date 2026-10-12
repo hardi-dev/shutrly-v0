@@ -33,7 +33,12 @@ describe("saveMessageTemplate", () => {
     ).resolves.toEqual({ ok: true });
     expect(updateContent).toHaveBeenCalledWith(
       { workspaceId: "ws-1" },
-      { type: "GALLERY_SHARE", content: "Halo {{galleryUrl}}", editorUserId: "owner_1" },
+      {
+        type: "GALLERY_SHARE",
+        isDefault: false,
+        content: "Halo {{galleryUrl}}",
+        editorUserId: "owner_1",
+      },
     );
   });
 

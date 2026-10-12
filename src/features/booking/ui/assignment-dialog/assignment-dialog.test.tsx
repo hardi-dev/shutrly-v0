@@ -26,14 +26,14 @@ const DIMAS = {
   id: "11111111-1111-4111-8111-111111111111",
   name: "Dimas Pratama",
   roles: [
-    { id: "r1", name: "Fotografer" },
-    { id: "r2", name: "Videografer" },
+    { id: "r1", name: "Fotografer", defaultKey: null },
+    { id: "r2", name: "Videografer", defaultKey: null },
   ],
 };
 const AYU = {
   id: "22222222-2222-4222-8222-222222222222",
   name: "Ayu Kirana",
-  roles: [{ id: "r3", name: "Asisten" }],
+  roles: [{ id: "r3", name: "Asisten", defaultKey: null }],
 };
 
 function setup(overrides = {}) {
@@ -71,7 +71,9 @@ describe("AssignmentDialog", () => {
     setup();
     expect(screen.getByRole("dialog", { name: "Tambah anggota · Resepsi" })).toBeInTheDocument();
     expect(screen.getByText(/Balairung UI, Depok/)).toBeInTheDocument();
-    expect(screen.getByText("Hanya anggota aktif yang belum ada di sesi ini.")).toBeInTheDocument();
+    expect(
+      screen.getByText("Anggota aktif yang belum ditugaskan di sesi ini."),
+    ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah" })).toBeDisabled();
     await pick(/^Anggota/, "Dimas Pratama");
     expect(screen.getByRole("button", { name: /^Peran/ })).toHaveTextContent("Fotografer");
@@ -92,7 +94,7 @@ describe("AssignmentDialog", () => {
     });
     expect(showToast).toHaveBeenCalledWith({
       tone: "success",
-      title: "Anggota ditambahkan",
+      title: "Anggota ditugaskan",
       body: "Dimas Pratama bertugas di Resepsi sebagai Videografer.",
     });
     expect(refresh).toHaveBeenCalled();
@@ -108,9 +110,9 @@ describe("AssignmentDialog", () => {
   });
 
   it.each([
-    ["ALREADY_ASSIGNED", "Dimas Pratama sudah ada di sesi ini."],
-    ["MEMBER_ARCHIVED", "Dimas Pratama sudah diarsipkan."],
-    ["ROLE_NOT_HELD", "Dimas Pratama tidak punya peran ini lagi."],
+    ["ALREADY_ASSIGNED", "Dimas Pratama sudah ditugaskan di sesi ini."],
+    ["MEMBER_ARCHIVED", "Dimas Pratama diarsipkan. Pilih anggota lain."],
+    ["ROLE_NOT_HELD", "Dimas Pratama tidak punya peran ini lagi. Pilih peran lain."],
   ])("AC-TEAM-013 shows %s as a form error and keeps the dialog open", async (code, text) => {
     const { onSaved, onOpenChange } = setup({
       addAction: vi.fn().mockResolvedValue({ ok: false, code }),
@@ -132,7 +134,7 @@ describe("AssignmentDialog", () => {
     await waitFor(() => {
       expect(showToast).toHaveBeenCalledWith({
         tone: "danger",
-        title: "Proyek dibatalkan; tim tidak bisa diubah.",
+        title: "Proyek ini dibatalkan. Timnya tidak bisa diubah.",
       });
     });
     expect(refresh).toHaveBeenCalled();
@@ -158,7 +160,7 @@ describe("AssignmentDialog", () => {
       screen.getByText("Tambahkan anggota di halaman Tim dulu, lalu kembali ke sini."),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah" })).toBeDisabled();
-    await userEvent.click(screen.getByRole("button", { name: "Buka Tim" }));
+    await userEvent.click(screen.getByRole("button", { name: "Buka tim" }));
     expect(push).toHaveBeenCalledWith("/w/ws/team");
   });
 

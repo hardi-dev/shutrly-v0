@@ -1,6 +1,7 @@
 "use client";
 /* eslint-disable max-lines-per-function -- one place owns which detail edit dialog is open and what each submit sends */
 
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useState } from "react";
 
@@ -9,17 +10,22 @@ import type { SessionInput } from "@/features/booking/domain/session/session.typ
 
 import { BookingFieldsDialog } from "../booking-fields-dialog/booking-fields-dialog";
 import { ProjectConfirmDialog } from "../project-confirm-dialog/project-confirm-dialog";
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import type { DefinitionOption, ProjectEditActions } from "../project-edit/project-edit.types";
 import { useProjectEdits } from "../project-edit/use-project-edits";
 import { ProjectItemDialog } from "../project-item-dialog/project-item-dialog";
 import { SessionDialog } from "../session-dialog/session-dialog";
+import { PROJECT_DETAIL_SCREEN_COPY_NAMESPACE } from "./project-detail-screen.copy";
 import type { DetailEditHandlers, EditOpen } from "./project-detail-screen.types";
 
 /** AC-TEAM-020: the delete body names the session's team when it has one. */
-function deleteSessionBody(project: ProjectDetailView, session: { readonly id: string }): string {
+function deleteSessionBody(
+  t: ProjectTranslate,
+  project: ProjectDetailView,
+  session: { readonly id: string },
+): string {
   const count = project.assignments.filter((a) => a.sessionId === session.id).length;
-  return count > 0 ? PROJECT_COPY.deleteSessionTeamBody(count) : PROJECT_COPY.deleteSessionBody;
+  return count > 0 ? t("deleteSessionTeamBody", { count }) : t("deleteSessionBody");
 }
 
 /** Owns the detail edit dialogs; every submit goes through `use-project-edits` (AC-PRJ-017, 019, 029). */
@@ -39,6 +45,7 @@ export function DetailEditing({
   addSessionRequest: number;
   children: (handlers: DetailEditHandlers) => ReactNode;
 }>) {
+  const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
   const edits = useProjectEdits();
   const [open, setOpen] = useState<EditOpen>(null);
   const [handledRequest, setHandledRequest] = useState(addSessionRequest);
@@ -133,9 +140,9 @@ export function DetailEditing({
         <ProjectConfirmDialog
           isOpen
           onOpenChange={close}
-          title={PROJECT_COPY.removeItemTitle(open.item.name)}
-          body={PROJECT_COPY.removeItemBody}
-          confirmLabel={PROJECT_COPY.removeItemConfirm}
+          title={t("removeItemTitle", { name: open.item.name })}
+          body={t("removeItemBody")}
+          confirmLabel={t("removeItemConfirm")}
           onConfirm={confirmRemoveItem}
         />
       ) : null}
@@ -151,16 +158,16 @@ export function DetailEditing({
         isOpen={open?.kind === "addSession" || open?.kind === "editSession"}
         onOpenChange={close}
         session={editedSession}
-        description={PROJECT_COPY.sessionDialogDetailDescription}
+        description={t("sessionDialogDetailDescription")}
         onSave={saveSession}
       />
       {open?.kind === "deleteSession" ? (
         <ProjectConfirmDialog
           isOpen
           onOpenChange={close}
-          title={PROJECT_COPY.deleteSessionTitle(open.session.name)}
-          body={deleteSessionBody(project, open.session)}
-          confirmLabel={PROJECT_COPY.deleteSessionConfirm}
+          title={t("deleteSessionTitle", { sessionName: open.session.name })}
+          body={deleteSessionBody(t, project, open.session)}
+          confirmLabel={t("deleteSessionConfirm")}
           onConfirm={confirmDeleteSession}
         />
       ) : null}

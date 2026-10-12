@@ -1,6 +1,4 @@
-export const VARIABLE_CHIP_COPY = {
-  required: "wajib",
-  // not in Pencil: the chip's accessible name.
-  insert: (name: string, isRequired: boolean) =>
-    `Sisipkan {{${name}}}${isRequired ? ", wajib" : ""}`,
-} as const;
+// Names the TEMPLATE_COPY_NAMESPACE namespace for this folder's components (the local ui-copy rule reads a sibling copy import).
+import { TEMPLATE_COPY_NAMESPACE } from "../template-copy/template-copy.copy";
+
+export const VARIABLE_CHIP_COPY_NAMESPACE = TEMPLATE_COPY_NAMESPACE;

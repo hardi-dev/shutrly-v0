@@ -1,14 +1,17 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { formatSessionRange } from "@/features/booking/domain/session/session";
 import { firstName } from "@/features/booking/domain/session-assignment/session-assignment";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
 import { Button } from "@/ui/primitives/button/button";
 
 import { ProjectConfirmDialog } from "../project-confirm-dialog/project-confirm-dialog";
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { SESSION_TEAM_DIALOG_COPY_NAMESPACE } from "./session-team-dialog.copy";
 import type { SessionTeamDialogProps, SessionTeamShellProps } from "./session-team-dialog.types";
 import { SessionTeamRows } from "./session-team-rows";
 import { useRemoveAssignment } from "./use-remove-assignment";
@@ -21,6 +24,8 @@ import { useRemoveAssignment } from "./use-remove-assignment";
  * @returns the dialog as a desktop modal or a phone form sheet, with the remove confirmation
  */
 export function SessionTeamDialog(props: Readonly<SessionTeamDialogProps>) {
+  const t = useTranslations(SESSION_TEAM_DIALOG_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
   const remove = useRemoveAssignment(props);
   const { session, assignments, canEdit } = props;
   function close(): void {
@@ -31,13 +36,13 @@ export function SessionTeamDialog(props: Readonly<SessionTeamDialogProps>) {
       <SessionTeamShell
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
-        title={PROJECT_COPY.teamTitle(session.name)}
-        description={formatSessionRange(session)}
+        title={t("teamTitle", { sessionName: session.name })}
+        description={formatSessionRange(session, locale)}
         actions={<SessionTeamActions canEdit={canEdit} onAdd={props.onAddMember} onClose={close} />}
       >
         {canEdit ? null : (
           <p className="pb-(--space-2) text-(length:--font-size-body-sm) text-(--color-semantic-text-muted)">
-            {PROJECT_COPY.teamCancelledNote}
+            {t("teamCancelledNote")}
           </p>
         )}
         <SessionTeamRows
@@ -51,9 +56,12 @@ export function SessionTeamDialog(props: Readonly<SessionTeamDialogProps>) {
         key={remove.target?.id ?? "none"}
         isOpen={remove.target !== null}
         onOpenChange={remove.handleOpenChange}
-        title={PROJECT_COPY.removeAssignmentTitle(remove.target?.memberName ?? "", session.name)}
-        body={PROJECT_COPY.removeAssignmentBody(firstName(remove.target?.memberName ?? ""))}
-        confirmLabel={PROJECT_COPY.removeAssignmentConfirm}
+        title={t("removeAssignmentTitle", {
+          name: remove.target?.memberName ?? "",
+          sessionName: session.name,
+        })}
+        body={t("removeAssignmentBody", { name: firstName(remove.target?.memberName ?? "") })}
+        confirmLabel={t("removeAssignmentConfirm")}
         onConfirm={remove.confirm}
       />
     </>
@@ -65,22 +73,23 @@ function SessionTeamActions({
   onAdd,
   onClose,
 }: Readonly<{ canEdit: boolean; onAdd: () => void; onClose: () => void }>) {
+  const t = useTranslations(SESSION_TEAM_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const size = isMobile ? "lg" : "md";
   if (!canEdit) {
     // The phone sheet has no footer button: its close control is enough (export).
     return isMobile ? null : (
       <Button variant="secondary" onPress={onClose}>
-        {PROJECT_COPY.teamClose}
+        {t("teamClose")}
       </Button>
     );
   }
   return (
     <>
       <Button variant="secondary" size={size} iconLeading="user-plus" onPress={onAdd}>
-        {PROJECT_COPY.teamAddMember}
+        {t("teamAddMember")}
       </Button>
-      {isMobile ? null : <Button onPress={onClose}>{PROJECT_COPY.teamDone}</Button>}
+      {isMobile ? null : <Button onPress={onClose}>{t("teamDone")}</Button>}
     </>
   );
 }

@@ -1,19 +1,22 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import type { AssignableMember } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import { compareSessions, formatSessionRange } from "@/features/booking/domain/session/session";
 import type { SessionRecordShape } from "@/features/booking/domain/session/session.types";
 import type { TeamPick } from "@/features/booking/domain/session-assignment/session-assignment.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { SessionDialog } from "../session-dialog/session-dialog";
 import type { SessionWithTeam } from "../session-dialog/session-dialog.types";
 import { SessionRowActions } from "../session-row-actions/session-row-actions";
 import { SessionTeamAvatars } from "../session-team-avatars/session-team-avatars";
+import { SESSIONS_CARD_COPY_NAMESPACE } from "./sessions-card.copy";
 import type { SessionRowProps, SessionsCardProps } from "./sessions-card.types";
 import { picksAsAssignments } from "./team-assignments";
 import { useSessionEditing } from "./use-session-editing";
@@ -27,21 +30,20 @@ function toShape(session: SessionWithTeam, index: number): SessionRecordShape {
 
 /** Lists the sessions in date order with add, edit and delete, kept in the form until the project is saved. */
 export function SessionsCard(props: Readonly<SessionsCardProps>) {
+  const t = useTranslations(SESSIONS_CARD_COPY_NAMESPACE);
   const editing = useSessionEditing(props);
   const rows = props.sessions.map(toShape).sort(compareSessions);
   return (
     <>
       <SectionCard
-        title={PROJECT_COPY.scheduleTitle}
+        title={t("scheduleTitle")}
         description={
-          props.isMobile
-            ? PROJECT_COPY.scheduleDescriptionMobile
-            : PROJECT_COPY.scheduleDescriptionDesktop
+          props.isMobile ? t("scheduleDescriptionMobile") : t("scheduleDescriptionDesktop")
         }
         content="flush"
         actions={
           <Button variant="secondary" iconLeading="plus" onPress={editing.handleAdd}>
-            {props.isMobile ? PROJECT_COPY.addSessionMobile : PROJECT_COPY.addSessionDesktop}
+            {t("addSession")}
           </Button>
         }
       >
@@ -85,18 +87,19 @@ function SessionList({
   onEdit: (index: number) => void;
   onRemove: (index: number) => void;
 }>) {
+  const t = useTranslations(SESSIONS_CARD_COPY_NAMESPACE);
   if (rows.length === 0) {
     return (
       <EmptyState
         icon="calendar"
         placement="in-card"
-        title={PROJECT_COPY.scheduleEmptyTitle}
-        body={PROJECT_COPY.scheduleEmptyBody}
+        title={t("scheduleEmptyTitle")}
+        body={t("scheduleEmptyBody")}
       />
     );
   }
   return (
-    <ul aria-label={PROJECT_COPY.scheduleTitle}>
+    <ul aria-label={t("scheduleTitle")}>
       {rows.map((row, position) => (
         <SessionRow
           key={row.id}
@@ -141,6 +144,7 @@ function SessionRowTeam({
 }
 
 function SessionRow({ row, isLast, team, onEdit, onRemove }: Readonly<SessionRowProps>) {
+  const locale = useFormattingLocale();
   const index = Number(row.id);
   const handleEdit = () => {
     onEdit(index);
@@ -152,7 +156,7 @@ function SessionRow({ row, isLast, team, onEdit, onRemove }: Readonly<SessionRow
     <ListCardItem
       icon="calendar"
       title={row.name}
-      meta={formatSessionRange(row)}
+      meta={formatSessionRange(row, locale)}
       isLast={isLast}
       trailing={
         <div className="flex items-center gap-(--space-2)">

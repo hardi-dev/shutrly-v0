@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import type { OwnerLocaleAction } from "../account-menu/account-menu.types";
+
 export interface OwnerSubPage {
   path: string;
   title: string;
@@ -18,6 +20,8 @@ export interface OwnerShellProps {
   onSwitch: (workspaceId: string) => Promise<void>;
   onCreate: (formData: FormData) => Promise<void>;
   logoutAction?: () => Promise<void>;
+  /** Saves the owner's language from the account menu; omit to hide the language group. */
+  localeAction?: OwnerLocaleAction;
   subPages?: readonly OwnerSubPage[];
   /** The breadcrumb rendered on the server (`@crumbs` slot or the profile layout, ADR-025). */
   trail?: ReactNode;

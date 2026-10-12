@@ -1,19 +1,21 @@
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 
 import { LandingBackdrop } from "../landing-backdrop/landing-backdrop";
 import { LandingFooter } from "../landing-footer/landing-footer";
 import { LandingHeader } from "../landing-header/landing-header";
 import { RotatingHeadline } from "../rotating-headline/rotating-headline";
 import { WaitlistForm } from "../waitlist-form/waitlist-form";
-import { LANDING_PAGE_COPY as COPY } from "./landing-page.copy";
+import { LANDING_PAGE_COPY_NAMESPACE } from "./landing-page.copy";
 
 // Hero size, radii and the mockup boxes are a DESIGN TOKEN GAP (plan.md › Token mapping).
 function ProductMockup() {
+  const t = useTranslations(LANDING_PAGE_COPY_NAMESPACE);
   return (
     <div className="relative -mt-(--space-5) flex min-h-0 w-full flex-1 items-start justify-center overflow-hidden md:mt-0">
       <Image
         src="/landing/phone-projects.webp"
-        alt={COPY.phoneAlt}
+        alt={t("phoneAlt")}
         width={941}
         height={1671}
         unoptimized
@@ -22,7 +24,7 @@ function ProductMockup() {
       />
       <Image
         src="/landing/laptop-projects.webp"
-        alt={COPY.laptopAlt}
+        alt={t("laptopAlt")}
         width={1536}
         height={1024}
         unoptimized
@@ -41,9 +43,11 @@ function ProductMockup() {
  * @returns the page
  */
 export function LandingPage() {
+  const t = useTranslations(LANDING_PAGE_COPY_NAMESPACE);
+  const locale = useLocale();
   return (
     <div
-      lang="en"
+      lang={locale}
       className="min-h-dvh bg-(--color-semantic-surface-panel) px-(--space-2) md:px-(--space-4)"
     >
       <div className="relative isolate flex h-[807px] flex-col overflow-hidden rounded-b-[28px] bg-[color-mix(in_srgb,var(--color-primitive-blue-50)_40%,var(--color-primitive-neutral-0))] px-(--space-5) pt-(--space-4) md:h-[996px] md:rounded-b-[32px] md:px-14 md:pt-(--space-7)">
@@ -54,12 +58,11 @@ export function LandingPage() {
             <div className="flex w-full flex-col items-center pt-(--space-10) pb-(--space-8) md:pt-(--space-12)">
               <div className="flex w-full flex-col items-center gap-(--space-3) text-center md:w-[820px] md:gap-(--space-4)">
                 <p className="text-(length:--font-size-overline) font-semibold tracking-[1.5px] text-(--color-semantic-text-secondary) md:text-(length:--font-size-caption) md:tracking-[1.7px]">
-                  {COPY.audience}
+                  {t("audience")}
                 </p>
                 <RotatingHeadline />
                 <p className="text-[15px]/[24px] text-(--color-semantic-text-secondary) md:w-[600px] md:text-(length:--font-size-title) md:leading-[29px]">
-                  {COPY.description[0]} <br className="hidden md:inline" />
-                  {COPY.description[1]}
+                  {t("description")}
                 </p>
               </div>
               <div className="w-full pt-(--space-6) md:w-[536px]">

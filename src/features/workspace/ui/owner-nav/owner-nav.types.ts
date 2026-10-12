@@ -1,3 +1,6 @@
+import type { useTranslations } from "next-intl";
+
+import type { BreadcrumbItem } from "@/ui/patterns/page-header/page-header.types";
 import type { TabLink } from "@/ui/patterns/tabs/tabs.types";
 
 export interface OwnerNavProps {
@@ -17,8 +20,12 @@ export interface PageHeading {
   title: string;
   subtitle?: string;
   mobileSubtitle?: string;
+  breadcrumbs?: readonly BreadcrumbItem[];
   tabs?: {
     readonly label: string;
     readonly tabs: readonly TabLink[];
   };
 }
+
+/** The owner-nav translate function (next-intl), passed to the heading resolvers. */
+export type OwnerNavTranslator = ReturnType<typeof useTranslations>;

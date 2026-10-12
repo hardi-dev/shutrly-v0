@@ -48,6 +48,7 @@ export function projectDetailView(
     service: { id: "sv1", name: "Wisuda Basic", basePrice: "750000" },
     items: [
       {
+        defaultKey: null,
         id: "i1",
         definitionId: "d1",
         name: "Foto edit",

@@ -4,6 +4,7 @@ import { isPackageEdited, reducePackageDraft } from "./package-draft";
 import type { DraftItem } from "./package-draft.types";
 
 const FOTO_EDIT: DraftItem = {
+  defaultKey: null,
   definitionId: "d1",
   name: "Foto edit",
   unit: "foto",
@@ -14,6 +15,7 @@ const FOTO_EDIT: DraftItem = {
   value: { type: "NUMBER", value: "25" },
 };
 const ORANG: DraftItem = {
+  defaultKey: null,
   definitionId: "d2",
   name: "Jumlah orang",
   unit: "orang",
@@ -24,6 +26,7 @@ const ORANG: DraftItem = {
   value: { type: "RANGE", min: "1", max: "3" },
 };
 const CETAK: DraftItem = {
+  defaultKey: null,
   definitionId: "d3",
   name: "Foto cetak",
   unit: "foto",

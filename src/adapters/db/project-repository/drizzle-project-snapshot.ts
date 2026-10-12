@@ -115,6 +115,8 @@ async function insertItems(
         projectId,
         definitionId: item.definitionId,
         name: definition.name,
+        // C-102: the snapshot keeps the platform key; a later definition rename does not change it.
+        defaultKey: definition.defaultKey,
         valueType: definition.valueType,
         value: item.value,
         unit: definition.unit,

@@ -1,23 +1,26 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { AddOnConfirmDialog } from "../add-on-confirm-dialog/add-on-confirm-dialog";
-import { ADD_ON_COPY as COPY } from "../add-on-copy/add-on.copy";
 import { AddOnDialog } from "../add-on-dialog/add-on-dialog";
 import { AddOnMenu } from "../add-on-menu/add-on-menu";
 import { addOnMeta, addOnStatusChip } from "../add-on-text/add-on-text";
 import { useAddOnActions } from "../use-add-on-actions/use-add-on-actions";
+import { ADD_ON_CARD_COPY_NAMESPACE } from "./add-on-card.copy";
 import type { AddOnCardBodyProps, AddOnCardProps, AddOnRowProps } from "./add-on-card.types";
 
 /** The project page's *Add-on* card: empty, the list with status chips, and the locked-group note, with *Tambah add-on* and each row's actions (addon-kartu states A–C, spec §4, AC-ADD-001). @param props - workspace, project, the card view and the server actions @returns the card */
 export function AddOnCard(props: Readonly<AddOnCardProps>) {
   const isMobile = useMobileViewport();
+  const t = useTranslations(ADD_ON_CARD_COPY_NAMESPACE);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const flows = useAddOnActions(props);
   const { card } = props;
@@ -32,14 +35,14 @@ export function AddOnCard(props: Readonly<AddOnCardProps>) {
       className="max-md:w-full"
       onPress={handleAdd}
     >
-      {COPY.add}
+      {t("add")}
     </Button>
   ) : null;
   return (
     <>
       <SectionCard
-        title={COPY.cardTitle}
-        description={COPY.cardDescription}
+        title={t("cardTitle")}
+        description={t("cardDescription")}
         actions={isMobile ? undefined : addButton}
         content="flush"
       >
@@ -67,10 +70,13 @@ export function AddOnCard(props: Readonly<AddOnCardProps>) {
 }
 
 function CardBody({ card, flows }: Readonly<AddOnCardBodyProps>) {
+  const t = useTranslations(ADD_ON_CARD_COPY_NAMESPACE);
   const note =
-    card.lockedGroupNames.length > 0 ? COPY.lockedNote(card.lockedGroupNames.join(", ")) : null;
+    card.lockedGroupNames.length > 0
+      ? t("lockedNote", { names: card.lockedGroupNames.join(", ") })
+      : null;
   if (card.addOns.length === 0) {
-    return <p className={NOTE_CLASS}>{note ?? COPY.empty}</p>;
+    return <p className={NOTE_CLASS}>{note ?? t("empty")}</p>;
   }
   return (
     <div className="flex flex-col gap-(--space-3) p-(--space-4) md:p-(--space-6)">
@@ -92,6 +98,8 @@ const NOTE_CLASS =
   "p-(--space-4) text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary) md:p-(--space-6)";
 
 function AddOnRow({ row, flows }: Readonly<AddOnRowProps>) {
+  const t = useTranslations(ADD_ON_CARD_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
   const handleApprove = () => {
     flows.open({ kind: "APPROVE", row });
   };
@@ -108,10 +116,10 @@ function AddOnRow({ row, flows }: Readonly<AddOnRowProps>) {
           {row.description}
         </span>
         <span className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
-          {addOnMeta(row)}
+          {addOnMeta(row, locale, t)}
         </span>
       </span>
-      <StatusChip {...addOnStatusChip(row.status)} hasDot />
+      <StatusChip {...addOnStatusChip(row.status, t)} hasDot />
       <AddOnMenu
         row={row}
         onApprove={handleApprove}

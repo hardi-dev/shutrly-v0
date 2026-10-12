@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 import { useState } from "react";
 
 import { AppShell } from "@/ui/patterns/app-shell/app-shell";
@@ -16,33 +18,69 @@ import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
+import { AccountMenu } from "../account-menu/account-menu";
+import type { OwnerLocaleAction } from "../account-menu/account-menu.types";
 import { CreateWorkspaceDialog } from "../create-workspace-dialog/create-workspace-dialog";
-import { OwnerNav, OwnerNavBottom, resolvePageHeading } from "../owner-nav/owner-nav";
-import { OWNER_NAV_COPY } from "../owner-nav/owner-nav.copy";
+import {
+  OwnerNav,
+  OwnerNavBottom,
+  resolvePageHeading,
+  useOwnerNavTranslations,
+} from "../owner-nav/owner-nav";
+import type { OwnerNavTranslator } from "../owner-nav/owner-nav.types";
 import { PageHeadingOverrideProvider } from "../page-heading-override/page-heading-override";
 import type { PageHeadingOverrideValue } from "../page-heading-override/page-heading-override.types";
 import {
   sortWorkspaces,
   useWorkspaceSwitch,
+  useWorkspaceSwitcherTranslations,
   WorkspaceSwitcher,
 } from "../workspace-switcher/workspace-switcher";
-import { WORKSPACE_SWITCHER_COPY } from "../workspace-switcher/workspace-switcher.copy";
-import { OWNER_SHELL_COPY } from "./owner-shell.copy";
+import {
+  MobileAccountGroup,
+  MobileAccountSheets,
+  useMobileAccountSheets,
+} from "./mobile-account-sheets";
+import type { MobileAccountSheet } from "./mobile-account-sheets.types";
+import { OWNER_SHELL_COPY_NAMESPACE } from "./owner-shell.copy";
 import type { OwnerShellProps } from "./owner-shell.types";
 
-const MOBILE_ITEMS: BottomNavProps["items"] = [
-  { href: "", label: OWNER_NAV_COPY.dashboard, icon: "layout-grid", isActive: false },
-  { href: "/projects", label: OWNER_NAV_COPY.projects, icon: "folder-kanban", isActive: false },
-  { href: "/clients", label: OWNER_NAV_COPY.clients, icon: "users", isActive: false },
-  { href: "/invoices", label: OWNER_NAV_COPY.invoices, icon: "receipt", isActive: false },
-];
+/** The bottom-nav destinations, labelled from the owner-nav copy. */
+function mobileBottomItems(
+  t: OwnerNavTranslator,
+  workspaceId: string,
+  pathname: string,
+): BottomNavProps["items"] {
+  return [
+    mobileItem(
+      { href: "", label: t("dashboard"), icon: "layout-grid", isActive: false },
+      workspaceId,
+      pathname,
+    ),
+    mobileItem(
+      { href: "/projects", label: t("projects"), icon: "folder-kanban", isActive: false },
+      workspaceId,
+      pathname,
+    ),
+    mobileItem(
+      { href: "/clients", label: t("clients"), icon: "users", isActive: false },
+      workspaceId,
+      pathname,
+    ),
+    mobileItem(
+      { href: "/invoices", label: t("invoices"), icon: "receipt", isActive: false },
+      workspaceId,
+      pathname,
+    ),
+  ];
+}
 
+/** The menu-sheet destinations: section, owner-nav copy key and icon. */
 const MOBILE_MENU_ITEMS = [
-  ["services", OWNER_NAV_COPY.services, "package"],
-  ["team", OWNER_NAV_COPY.team, "user-round-cog"],
-  ["message-templates", OWNER_NAV_COPY.messageTemplates, "message-square-text"],
-  ["photo-sources", OWNER_NAV_COPY.photoSources, "folder-open"],
-  ["settings", OWNER_NAV_COPY.settings, "settings"],
+  ["services", "services", "package"],
+  ["team", "team", "user-round-cog"],
+  ["message-templates", "messageTemplates", "message-square-text"],
+  ["photo-sources", "photoSources", "folder-open"],
 ] as const;
 
 // eslint-disable-next-line max-lines-per-function -- coordinates responsive shell regions
@@ -57,13 +95,15 @@ export function OwnerShell({
   onSwitch,
   onCreate,
   logoutAction,
+  localeAction,
   subPages,
   trail,
 }: Readonly<OwnerShellProps>) {
   const currentPathname = usePathname();
+  const navT = useOwnerNavTranslations();
   const subPage = subPages?.find((page) => page.path === currentPathname);
   const [headingOverride, setHeadingOverride] = useState<PageHeadingOverrideValue | null>(null);
-  const resolvedHeading = resolvePageHeading(currentPathname, workspaceId, workspaceName);
+  const resolvedHeading = resolvePageHeading(currentPathname, workspaceId, workspaceName, navT);
   const heading = headingOverride ?? subPage ?? resolvedHeading ?? { title };
   let shellSubPage: AppShellSubPage | undefined;
   if (headingOverride) {
@@ -97,18 +137,16 @@ export function OwnerShell({
     setIsMobileMenuOpen(false);
     router.push(`/w/${workspaceId}/${section}`);
   };
-  const mobileItems = [
-    mobileItem(MOBILE_ITEMS[0], workspaceId, currentPathname),
-    mobileItem(MOBILE_ITEMS[1], workspaceId, currentPathname),
-    mobileItem(MOBILE_ITEMS[2], workspaceId, currentPathname),
-    mobileItem(MOBILE_ITEMS[3], workspaceId, currentPathname),
-  ] as const;
+  const mobileItems = mobileBottomItems(navT, workspaceId, currentPathname);
   const handleOpenCreate = () => {
     setIsCreateOpen(true);
   };
   const handleMobileCreate = () => {
     setIsMobileWorkspaceSwitcherOpen(false);
     handleOpenCreate();
+  };
+  const handleOpenProfile = () => {
+    router.push("/profile");
   };
   const handleOpenMobileWorkspaceSwitcher = () => {
     setIsMobileMenuOpen(false);
@@ -117,6 +155,15 @@ export function OwnerShell({
   const handleLogout = () => {
     void logoutAction?.();
   };
+  const renderAccountMenu = (trigger: ReactNode) => (
+    <AccountMenu
+      workspaceId={workspaceId}
+      localeAction={localeAction}
+      onLogout={logoutAction ? handleLogout : undefined}
+    >
+      {trigger}
+    </AccountMenu>
+  );
   const renderWorkspaceSwitcher = (isCompact: boolean) => (
     <WorkspaceSwitcher
       currentName={workspaceName}
@@ -154,9 +201,10 @@ export function OwnerShell({
           }
           panelActions={<div id={PAGE_ACTIONS_ID} className="flex items-center gap-(--space-2)" />}
           onLogout={logoutAction ? handleLogout : undefined}
+          accountMenu={renderAccountMenu}
           mobileBottomNav={{
             items: mobileItems,
-            ctaLabel: OWNER_NAV_COPY.create,
+            ctaLabel: navT("create"),
             onCtaPress: handleCreateProject,
           }}
           mobileUtilities={
@@ -177,6 +225,8 @@ export function OwnerShell({
                 accountName={accountName}
                 accountEmail={accountEmail}
                 onNavigate={handleMobileNavigate}
+                onOpenProfile={handleOpenProfile}
+                localeAction={localeAction}
                 onLogout={logoutAction ? handleLogout : undefined}
               />
               <MobileWorkspaceSwitcherSheet
@@ -208,6 +258,8 @@ export function MobileWorkspaceSheet({
   accountName,
   accountEmail,
   onNavigate,
+  onOpenProfile,
+  localeAction,
   onLogout,
 }: Readonly<{
   isOpen: boolean;
@@ -217,37 +269,97 @@ export function MobileWorkspaceSheet({
   workspaces?: OwnerShellProps["workspaces"];
   onOpenWorkspaceSwitcher?: () => void;
   onNavigate: (section: string) => void;
+  onOpenProfile?: () => void;
+  localeAction?: OwnerLocaleAction;
   onLogout?: () => void;
 }>) {
+  const t = useTranslations(OWNER_SHELL_COPY_NAMESPACE);
+  const { subSheet, openSheet, closeSubSheet } = useMobileAccountSheets(onOpenChange);
+  return (
+    <>
+      <BottomSheet
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        title={t("mobileMenuTitle")}
+        headerLeading={<MobileSheetLogo />}
+        variant="menu"
+      >
+        <MobileMenuBody
+          accountName={accountName}
+          accountEmail={accountEmail}
+          hasLanguage={localeAction !== undefined}
+          onNavigate={onNavigate}
+          onOpenProfile={onOpenProfile}
+          onOpenSheet={openSheet}
+          onMenuOpenChange={onOpenChange}
+          onLogout={onLogout}
+        />
+      </BottomSheet>
+      <MobileAccountSheets subSheet={subSheet} onChange={closeSubSheet} action={localeAction} />
+    </>
+  );
+}
+
+/** The menu body: catalog, account rows and the account block (the profile link). */
+function MobileMenuBody({
+  accountName,
+  accountEmail,
+  hasLanguage,
+  onNavigate,
+  onOpenProfile,
+  onOpenSheet,
+  onMenuOpenChange,
+  onLogout,
+}: Readonly<{
+  accountName: string;
+  accountEmail: string;
+  hasLanguage: boolean;
+  onNavigate: (section: string) => void;
+  onOpenProfile?: () => void;
+  onOpenSheet: (sheet: MobileAccountSheet) => void;
+  onMenuOpenChange: (isOpen: boolean) => void;
+  onLogout?: () => void;
+}>) {
+  const t = useTranslations(OWNER_SHELL_COPY_NAMESPACE);
+  const handleClose = () => {
+    onMenuOpenChange(false);
+  };
+  const handleProfile = () => {
+    handleClose();
+    onOpenProfile?.();
+  };
+  const handleSettings = () => {
+    onNavigate("settings");
+  };
+  return (
+    <>
+      <MobileCatalogItems onNavigate={onNavigate} />
+      <MobileSheetGroupLabel label={t("accountGroup")} />
+      <MobileAccountGroup
+        hasLanguage={hasLanguage}
+        onProfile={handleProfile}
+        onOpenSheet={onOpenSheet}
+        onNavigateSettings={handleSettings}
+        onLogout={onLogout}
+      />
+      <MobileSheetAccount name={accountName} email={accountEmail} onOpenProfile={handleClose} />
+    </>
+  );
+}
+
+/** The catalog destinations of the mobile menu, labelled from the owner-nav copy. */
+function MobileCatalogItems({ onNavigate }: Readonly<{ onNavigate: (section: string) => void }>) {
+  const navT = useOwnerNavTranslations();
   const handleNavigate = (section: string) => () => {
     onNavigate(section);
   };
-  const handleClose = () => {
-    onOpenChange(false);
-  };
-
   return (
-    <BottomSheet
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      title={OWNER_SHELL_COPY.mobileMenuTitle}
-      headerLeading={<MobileSheetLogo />}
-      variant="menu"
-    >
-      <MobileSheetGroupLabel label={OWNER_NAV_COPY.catalog} />
-      {MOBILE_MENU_ITEMS.slice(0, 2).map(([section, label, icon]) => (
-        <SheetItem key={section} label={label} icon={icon} onPress={handleNavigate(section)} />
+    <>
+      <MobileSheetGroupLabel label={navT("catalog")} />
+      {MOBILE_MENU_ITEMS.map(([section, key, icon]) => (
+        <SheetItem key={section} label={navT(key)} icon={icon} onPress={handleNavigate(section)} />
       ))}
-      {MOBILE_MENU_ITEMS.slice(2).map(([section, label, icon]) => (
-        <SheetItem key={section} label={label} icon={icon} onPress={handleNavigate(section)} />
-      ))}
-      <MobileSheetAccount
-        name={accountName}
-        email={accountEmail}
-        onOpenProfile={handleClose}
-        onLogout={onLogout}
-      />
-    </BottomSheet>
+    </>
   );
 }
 
@@ -255,14 +367,11 @@ function DesktopUtilities({
   onSearch,
   onNotifications,
 }: Readonly<{ onSearch: () => void; onNotifications: () => void }>) {
+  const t = useTranslations(OWNER_SHELL_COPY_NAMESPACE);
   return (
     <>
-      <IconButton icon="search" aria-label={OWNER_SHELL_COPY.search} onPress={onSearch} />
-      <IconButton
-        icon="bell"
-        aria-label={OWNER_SHELL_COPY.notifications}
-        onPress={onNotifications}
-      />
+      <IconButton icon="search" aria-label={t("search")} onPress={onSearch} />
+      <IconButton icon="bell" aria-label={t("notifications")} onPress={onNotifications} />
     </>
   );
 }
@@ -272,15 +381,12 @@ function MobileUtilities({
   onNotifications,
   onMenu,
 }: Readonly<{ onSearch: () => void; onNotifications: () => void; onMenu: () => void }>) {
+  const t = useTranslations(OWNER_SHELL_COPY_NAMESPACE);
   return (
     <>
-      <IconButton icon="search" aria-label={OWNER_SHELL_COPY.search} onPress={onSearch} />
-      <IconButton
-        icon="bell"
-        aria-label={OWNER_SHELL_COPY.notifications}
-        onPress={onNotifications}
-      />
-      <IconButton icon="menu" aria-label={OWNER_SHELL_COPY.menu} onPress={onMenu} />
+      <IconButton icon="search" aria-label={t("search")} onPress={onSearch} />
+      <IconButton icon="bell" aria-label={t("notifications")} onPress={onNotifications} />
+      <IconButton icon="menu" aria-label={t("menu")} onPress={onMenu} />
     </>
   );
 }
@@ -300,6 +406,7 @@ export function MobileWorkspaceSwitcherSheet({
   onSwitch: (workspaceId: string) => Promise<void>;
   onCreate: () => void;
 }>) {
+  const t = useWorkspaceSwitcherTranslations();
   const { pendingId, selectWorkspace } = useWorkspaceSwitch(currentName, onSwitch);
   const isPending = pendingId !== null;
   const handleSwitch = (workspaceId: string) => () => {
@@ -312,8 +419,8 @@ export function MobileWorkspaceSwitcherSheet({
     <BottomSheet
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      title={WORKSPACE_SWITCHER_COPY.menuLabel}
-      meta={WORKSPACE_SWITCHER_COPY.count(workspaces.length)}
+      title={t("menuLabel")}
+      meta={t("count", { count: workspaces.length })}
       variant="menu"
       actions={<CreateWorkspaceButton isDisabled={isPending} onPress={onCreate} />}
     >
@@ -334,6 +441,7 @@ function CreateWorkspaceButton({
   isDisabled,
   onPress,
 }: Readonly<{ isDisabled: boolean; onPress: () => void }>) {
+  const t = useWorkspaceSwitcherTranslations();
   return (
     <Button
       variant="primary"
@@ -343,7 +451,7 @@ function CreateWorkspaceButton({
       isDisabled={isDisabled}
       onPress={onPress}
     >
-      {WORKSPACE_SWITCHER_COPY.create}
+      {t("create")}
     </Button>
   );
 }
@@ -366,8 +474,7 @@ function MobileSheetAccount({
   name,
   email,
   onOpenProfile,
-  onLogout,
-}: Readonly<{ name: string; email: string; onOpenProfile: () => void; onLogout?: () => void }>) {
+}: Readonly<{ name: string; email: string; onOpenProfile: () => void }>) {
   return (
     <div className="flex items-center gap-(--component-sidebar-account-gap) border-t border-(--component-sheet-item-border) px-(--component-sheet-item-padding-x) pb-(--space-1) pt-(--space-3)">
       <Link
@@ -377,12 +484,6 @@ function MobileSheetAccount({
       >
         <MobileSheetAccountText name={name} email={email} />
       </Link>
-      <IconButton
-        icon="log-out"
-        size="sm"
-        aria-label={OWNER_SHELL_COPY.logout}
-        onPress={onLogout}
-      />
     </div>
   );
 }

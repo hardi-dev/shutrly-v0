@@ -1,8 +1,10 @@
+import { useTranslations } from "next-intl";
+
 import { AuthIntro } from "../auth-intro/auth-intro";
 import { AuthPrompt } from "../auth-prompt/auth-prompt";
 import { GoogleButton } from "../google-button/google-button";
 import { LoginForm } from "../login-form/login-form";
-import { LOGIN_SCREEN_COPY as COPY } from "./login-screen.copy";
+import { LOGIN_SCREEN_COPY_NAMESPACE } from "./login-screen.copy";
 import type { LoginScreenProps } from "./login-screen.types";
 
 /**
@@ -11,15 +13,16 @@ import type { LoginScreenProps } from "./login-screen.types";
  * @returns the screen content inside `AuthSplitLayout`
  */
 export function LoginScreen({ action, googleAction, initialError }: Readonly<LoginScreenProps>) {
+  const t = useTranslations(LOGIN_SCREEN_COPY_NAMESPACE);
   return (
     <>
-      <AuthIntro title={COPY.title} lead={COPY.lead} />
+      <AuthIntro title={t("title")} lead={t("lead")} />
       <LoginForm
         action={action}
         initialError={initialError}
         secondaryAction={<GoogleButton action={googleAction} />}
       />
-      <AuthPrompt prompt={COPY.switchPrompt} href="/register" link={COPY.switchLink} />
+      <AuthPrompt prompt={t("switchPrompt")} href="/register" link={t("switchLink")} />
     </>
   );
 }

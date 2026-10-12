@@ -25,5 +25,5 @@ export async function addTeamRole(
   if (!parsed.success) return teamRoleValidationFailure(parsed.error.issues);
   const result = await repository.create(context, parsed.data.name, actorId);
   if (result.status === "DUPLICATE") return teamRoleDuplicate();
-  return { ok: true, role: { id: result.id, name: parsed.data.name } };
+  return { ok: true, role: { id: result.id, name: parsed.data.name, defaultKey: null } };
 }

@@ -2,6 +2,8 @@ import type { ItemDefinitionRecord } from "@/features/booking/application/ports/
 import type { ServiceItemRecord } from "@/features/booking/application/ports/service-repository/service-repository.port";
 import type { CatalogWriteResult } from "@/features/booking/application/use-cases/catalog-results/catalog-results.types";
 
+import type { CatalogTranslate } from "../catalog-copy/catalog-copy.types";
+
 export interface ServiceItemDialogProps {
   readonly isOpen: boolean;
   readonly workspaceId: string;
@@ -46,6 +48,7 @@ export interface ResponsiveItemDialogProps extends ServiceItemDialogProps {
 }
 
 export interface ServiceItemSubmitArgs {
+  readonly t: CatalogTranslate;
   readonly workspaceId: string;
   readonly serviceId: string;
   readonly definitionId: string | null;

@@ -1,16 +1,18 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { Button } from "@/ui/primitives/button/button";
 
 import { DeleteTeamRoleDialog } from "../delete-team-role-dialog/delete-team-role-dialog";
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
 import { TeamRoleDialog } from "../team-role-dialog/team-role-dialog";
 import { TeamRoleList } from "../team-role-list/team-role-list";
 import { TeamRolesTable } from "../team-roles-table/team-roles-table";
 import { TeamTabsBar } from "../team-tabs-bar/team-tabs-bar";
+import { TEAM_ROLES_SCREEN_COPY_NAMESPACE } from "./team-roles-screen.copy";
 import type { RolesDialogsProps, TeamRolesScreenProps } from "./team-roles-screen.types";
 import { useRolesDialog } from "./use-roles-dialog";
 
@@ -21,19 +23,20 @@ import { useRolesDialog } from "./use-roles-dialog";
  */
 export function TeamRolesScreen(props: Readonly<TeamRolesScreenProps>) {
   const { workspaceId, roles } = props;
+  const t = useTranslations(TEAM_ROLES_SCREEN_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const { dialog, openAdd, openEdit, openDelete, handleOpenChange } = useRolesDialog();
   const addButton = (
     <Button iconLeading="plus" onPress={openAdd}>
-      {isMobile ? TEAM_COPY.addRoleShort : TEAM_COPY.addRole}
+      {isMobile ? t("addRoleShort") : t("addRole")}
     </Button>
   );
   const emptyState = (
     <EmptyState
       placement="in-card"
       icon="user-round-cog"
-      title={TEAM_COPY.rolesEmptyTitle}
-      body={TEAM_COPY.rolesEmptyBody}
+      title={t("rolesEmptyTitle")}
+      body={t("rolesEmptyBody")}
       action={isMobile ? addButton : undefined}
     />
   );

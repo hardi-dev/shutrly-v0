@@ -1,21 +1,17 @@
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import type { ProjectListRow } from "@/features/booking/application/ports/project-list-reader/project-list-reader.port";
 import { formatSessionWhen } from "@/features/booking/domain/session/session";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { DataTable } from "@/ui/patterns/data-table/data-table";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { PROJECT_COUNT_MESSAGE_KEY } from "../project-copy/project-copy.copy";
 import { ProjectStatusChip } from "../project-status-chip/project-status-chip";
+import { PROJECTS_TABLE_COPY_NAMESPACE } from "./projects-table.copy";
 import type { ProjectsTableProps } from "./projects-table.types";
-
-const COLUMNS = [
-  { id: "project", label: PROJECT_COPY.columnProject },
-  { id: "event", label: PROJECT_COPY.columnEvent, width: 240 },
-  { id: "status", label: PROJECT_COPY.columnStatus, width: 124 },
-  { id: "actions", "aria-label": PROJECT_COPY.columnActions, width: 32 },
-] as const;
 
 /** Renders the desktop project table inside its Section Card; only the PROYEK text is a link. */
 export function ProjectsTable({
@@ -27,6 +23,13 @@ export function ProjectsTable({
   search,
   renderMenu,
 }: Readonly<ProjectsTableProps>) {
+  const t = useTranslations(PROJECTS_TABLE_COPY_NAMESPACE);
+  const columns = [
+    { id: "project", label: t("columnProject") },
+    { id: "event", label: t("columnEvent"), width: 240 },
+    { id: "status", label: t("columnStatus"), width: 124 },
+    { id: "actions", "aria-label": t("columnActions"), width: 32 },
+  ] as const;
   const renderCell = (row: ProjectListRow, columnId: string): ReactNode => (
     <TableCell
       workspaceId={workspaceId}
@@ -37,20 +40,15 @@ export function ProjectsTable({
   );
   return (
     <SectionCard
-      title={PROJECT_COPY.listTitle}
-      description={PROJECT_COPY.listCount(tab, count)}
+      title={t("listTitle")}
+      description={t(PROJECT_COUNT_MESSAGE_KEY[tab], { count })}
       actions={search}
       content="bleed"
     >
       {rows.length === 0 ? (
         <div className="p-(--space-4)">{emptyState}</div>
       ) : (
-        <DataTable
-          label={PROJECT_COPY.listTitle}
-          columns={COLUMNS}
-          rows={rows}
-          renderCell={renderCell}
-        />
+        <DataTable label={t("listTitle")} columns={columns} rows={rows} renderCell={renderCell} />
       )}
     </SectionCard>
   );
@@ -69,6 +67,7 @@ function TableCell({
 }
 
 function ProjectCell({ workspaceId, row }: Readonly<{ workspaceId: string; row: ProjectListRow }>) {
+  const t = useTranslations(PROJECTS_TABLE_COPY_NAMESPACE);
   return (
     <span className="flex min-w-0 flex-col">
       <Link
@@ -78,21 +77,21 @@ function ProjectCell({ workspaceId, row }: Readonly<{ workspaceId: string; row: 
         {row.title}
       </Link>
       <span className="truncate text-(length:--font-size-label) text-(--color-semantic-text-muted)">
-        {PROJECT_COPY.clientService(row.clientName, row.serviceName)}
+        {t("clientService", { client: row.clientName, service: row.serviceName })}
       </span>
     </span>
   );
 }
 
 function EventCell({ row }: Readonly<{ row: ProjectListRow }>) {
+  const t = useTranslations(PROJECTS_TABLE_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
   const shown = row.shownSession;
   if (shown === null) {
-    return (
-      <span className="text-(--color-semantic-text-muted)">{PROJECT_COPY.metaNoSchedule}</span>
-    );
+    return <span className="text-(--color-semantic-text-muted)">{t("metaNoSchedule")}</span>;
   }
-  const extra = row.sessionCount > 1 ? PROJECT_COPY.metaExtra(row.sessionCount - 1) : null;
-  const when = formatSessionWhen(shown);
+  const extra = row.sessionCount > 1 ? t("metaExtra", { count: row.sessionCount - 1 }) : null;
+  const when = formatSessionWhen(shown, locale);
   return (
     <span className="flex min-w-0 flex-col">
       <span className="truncate">

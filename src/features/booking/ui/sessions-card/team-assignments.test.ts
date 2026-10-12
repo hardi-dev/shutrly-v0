@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { picksAsAssignments } from "./team-assignments";
 
 const MEMBERS = [
-  { id: "m1", name: "Dimas Pratama", roles: [{ id: "r1", name: "Fotografer" }] },
-  { id: "m2", name: "Sari Lestari", roles: [{ id: "r2", name: "Asisten" }] },
+  { id: "m1", name: "Dimas Pratama", roles: [{ id: "r1", name: "Fotografer", defaultKey: null }] },
+  { id: "m2", name: "Sari Lestari", roles: [{ id: "r2", name: "Asisten", defaultKey: null }] },
 ];
 
 describe("picksAsAssignments", () => {

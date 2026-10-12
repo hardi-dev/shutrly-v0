@@ -1,21 +1,25 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import type { TeamPick } from "@/features/booking/domain/session-assignment/session-assignment.types";
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
 import { clientInitials } from "@/features/booking/ui/client-initials/client-initials";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { Select } from "@/ui/patterns/select/select";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
-import { TEXT_FIELD_COPY } from "@/ui/primitives/text-field/text-field.copy";
+import { OptionalSuffix } from "@/ui/primitives/text-field/text-field";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { AddTeamMemberButton, useCanQuickAddMember } from "../team-quick-add/team-quick-add";
+import { SESSION_TEAM_FIELD_COPY_NAMESPACE } from "./session-team-field.copy";
 import type { SessionTeamFieldProps } from "./session-team-field.types";
 import type { useTeamPicker } from "./use-team-picker";
 
-function teamHint(isEmpty: boolean, canQuickAdd: boolean): string {
-  if (!isEmpty) return PROJECT_COPY.sessionTeamHint;
-  return canQuickAdd ? PROJECT_COPY.sessionTeamNoneQuick : PROJECT_COPY.sessionTeamNone;
+function teamHint(t: ProjectTranslate, isEmpty: boolean, canQuickAdd: boolean): string {
+  if (!isEmpty) return t("sessionTeamHint");
+  return canQuickAdd ? t("sessionTeamNoneQuick") : t("sessionTeamNone");
 }
 
 /**
@@ -26,17 +30,21 @@ function teamHint(isEmpty: boolean, canQuickAdd: boolean): string {
  * @returns the field
  */
 export function SessionTeamField(props: Readonly<SessionTeamFieldProps>) {
+  const t = useTranslations(SESSION_TEAM_FIELD_COPY_NAMESPACE);
   const { picker } = props;
   const canQuickAdd = useCanQuickAddMember() && props.onMemberAdded !== undefined;
   return (
     <div className="flex flex-col gap-(--space-3)">
       <div className="flex flex-col gap-(--space-1)">
         <span className="text-(length:--font-size-label) font-semibold text-(--component-input-label)">
-          {PROJECT_COPY.sessionTeamLabel}
-          <span className="font-normal text-(--color-semantic-text-muted)">{` ${TEXT_FIELD_COPY.optionalSuffix}`}</span>
+          {t("sessionTeamLabel")}
+          <span className="font-normal text-(--color-semantic-text-muted)">
+            {" "}
+            <OptionalSuffix />
+          </span>
         </span>
         <span className="text-(length:--font-size-label) text-(--component-input-helper)">
-          {teamHint(props.members.length === 0, canQuickAdd)}
+          {teamHint(t, props.members.length === 0, canQuickAdd)}
         </span>
       </div>
       {props.members.length === 0 && props.onMemberAdded ? (
@@ -68,9 +76,11 @@ function PickedMembers({
   isDisabled?: boolean;
   onRemove: (memberId: string) => void;
 }>) {
+  const t = useTranslations(SESSION_TEAM_FIELD_COPY_NAMESPACE);
+  const appLocale = useAppLocale();
   if (picks.length === 0) return null;
   return (
-    <ul aria-label={PROJECT_COPY.sessionTeamListLabel} className="flex flex-col">
+    <ul aria-label={t("sessionTeamListLabel")} className="flex flex-col">
       {picks.map((pick) => {
         const member = members.find((m) => m.id === pick.memberId);
         const role = member?.roles.find((r) => r.id === pick.roleId);
@@ -85,14 +95,14 @@ function PickedMembers({
                 {member?.name}
               </span>
               <span className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
-                {role?.name}
+                {role ? displayTeamRoleName(role, appLocale) : undefined}
               </span>
             </span>
             <IconButton
               icon="trash-2"
               size="sm"
               tone="danger"
-              aria-label={PROJECT_COPY.teamRemoveLabel}
+              aria-label={t("teamRemoveLabel")}
               isDisabled={isDisabled}
               onPress={handleRemove}
             />
@@ -107,26 +117,31 @@ function AddRow({
   picker,
   isDisabled,
 }: Readonly<{ picker: ReturnType<typeof useTeamPicker>; isDisabled?: boolean }>) {
+  const t = useTranslations(SESSION_TEAM_FIELD_COPY_NAMESPACE);
+  const appLocale = useAppLocale();
   const { state, candidates, member } = picker;
   const memberOptions = candidates.map((candidate) => ({
     id: candidate.id,
     label: candidate.name,
   }));
-  const roleOptions = (member?.roles ?? []).map((role) => ({ id: role.id, label: role.name }));
+  const roleOptions = (member?.roles ?? []).map((role) => ({
+    id: role.id,
+    label: displayTeamRoleName(role, appLocale),
+  }));
   return (
     <div className="flex flex-col gap-(--space-3)">
       <div className="grid grid-cols-2 items-start gap-(--space-3)">
         <Select
-          label={PROJECT_COPY.sessionTeamMember}
-          placeholder={PROJECT_COPY.assignMemberPlaceholder}
+          label={t("sessionTeamMember")}
+          placeholder={t("assignMemberPlaceholder")}
           options={memberOptions}
           value={state.memberId}
           onChange={picker.selectMember}
           isDisabled={isDisabled}
         />
         <Select
-          label={PROJECT_COPY.sessionTeamRole}
-          placeholder={PROJECT_COPY.assignRolePlaceholder}
+          label={t("sessionTeamRole")}
+          placeholder={t("assignRolePlaceholder")}
           options={roleOptions}
           value={state.roleId}
           onChange={picker.selectRole}
@@ -139,7 +154,7 @@ function AddRow({
         isDisabled={isDisabled || state.roleId === null}
         onPress={picker.add}
       >
-        {PROJECT_COPY.teamAddMember}
+        {t("teamAddMember")}
       </Button>
     </div>
   );

@@ -1,8 +1,10 @@
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/ui/cn/cn";
 
 import { Tabs } from "../tabs/tabs";
 import { BreadcrumbTrail } from "./breadcrumb-trail";
-import { PAGE_HEADER_COPY } from "./page-header.copy";
+import { PAGE_HEADER_COPY_NAMESPACE } from "./page-header.copy";
 import type {
   BreadcrumbRowProps,
   HeaderTabsProps,
@@ -28,7 +30,7 @@ export function PageHeader({
   isFlush = false,
 }: Readonly<PageHeaderProps>) {
   const breadcrumbItems = breadcrumbs ?? [{ label: parent }, { label: current }];
-  const breadcrumbTrail = trail ?? <PageHeaderTrail items={breadcrumbItems} />;
+  const breadcrumbTrail = trail ?? <PageHeaderBreadcrumb items={breadcrumbItems} />;
 
   return (
     <header
@@ -64,15 +66,15 @@ export function PageHeader({
   );
 }
 
-/** The Page Header breadcrumb, also rendered on the server by the Owner `@crumbs` slot (ADR-025). @param props - the crumbs; the last one is current @returns the trail */
-export function PageHeaderTrail({ items }: Readonly<PageHeaderTrailProps>) {
-  return (
-    <BreadcrumbTrail
-      label={PAGE_HEADER_COPY.breadcrumb}
-      items={items}
-      className="min-h-(--space-10) flex-1"
-    />
-  );
+/** The client-side Page Header trail, labelled by the page-header translation. @param props - the crumbs; the last one is current @returns the trail */
+function PageHeaderBreadcrumb({ items }: Readonly<Pick<PageHeaderTrailProps, "items">>) {
+  const t = useTranslations(PAGE_HEADER_COPY_NAMESPACE);
+  return <PageHeaderTrail items={items} label={t("breadcrumb")} />;
+}
+
+/** The Page Header breadcrumb, also rendered on the server by the Owner `@crumbs` slot (ADR-025). The label comes from the caller, so the server slot can pass its own translation. @param props - the crumbs and the trail label; the last one is current @returns the trail */
+export function PageHeaderTrail({ items, label }: Readonly<PageHeaderTrailProps>) {
+  return <BreadcrumbTrail label={label} items={items} className="min-h-(--space-10) flex-1" />;
 }
 
 // F-22: the sidebar toggle's 8 px inner padding puts its icon on the title's edge, so the leading row starts 8 px left of it (space-8, not space-10).

@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { createRef, type SubmitEvent } from "react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -167,5 +168,25 @@ describe("TextField", () => {
     );
     await user.click(screen.getByRole("button", { name: "Kirim" }));
     expect(onSubmit).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("TextField optional suffix in both locales (I6.1)", () => {
+  it.each([
+    ["en", "(optional)"],
+    ["id", "(opsional)"],
+  ] as const)("%s shows the optional suffix", (locale, suffix) => {
+    renderInLocale(
+      <TextField
+        label="Nomor telepon"
+        name="phone"
+        value=""
+        onChange={vi.fn()}
+        onBlur={vi.fn()}
+        isOptional
+      />,
+      locale,
+    );
+    expect(screen.getByText(suffix)).toBeInTheDocument();
   });
 });

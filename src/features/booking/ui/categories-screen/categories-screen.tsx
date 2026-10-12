@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useState } from "react";
 
@@ -11,19 +12,20 @@ import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogRowActions } from "../catalog-row-actions/catalog-row-actions";
 import { CatalogTabsBar } from "../catalog-tabs-bar/catalog-tabs-bar";
 import { CategoryDialog } from "../category-dialog/category-dialog";
 import { DeleteCatalogDialog } from "../delete-catalog-dialog/delete-catalog-dialog";
+import { CATEGORIES_SCREEN_COPY_NAMESPACE } from "./categories-screen.copy";
 import type { CategoriesScreenProps, CategoryDialogsProps } from "./categories-screen.types";
 
 export function CategoriesScreen(props: Readonly<CategoriesScreenProps>) {
   const { workspaceId, categories, addAction, renameAction, setActiveAction, removeAction } = props;
   const dialogs = useCategoryDialogs();
+  const t = useTranslations(CATEGORIES_SCREEN_COPY_NAMESPACE);
   const addButton = (
     <Button iconLeading="plus" onPress={dialogs.openAdd}>
-      {CATALOG_COPY.addCategory}
+      {t("addCategory")}
     </Button>
   );
   return (
@@ -31,8 +33,8 @@ export function CategoriesScreen(props: Readonly<CategoriesScreenProps>) {
       <CatalogTabsBar workspaceId={workspaceId} activeTab="categories" action={addButton} />
       <PageActions>{addButton}</PageActions>
       <SectionCard
-        title={CATALOG_COPY.categoriesTitle}
-        description={CATALOG_COPY.categoriesDescription}
+        title={t("categoriesTitle")}
+        description={t("categoriesDescription")}
         content="flush"
       >
         <CategoryRows
@@ -106,20 +108,21 @@ function CategoryRows({
     readonly onDelete: (category: CategoryRecord) => void;
   }
 >) {
+  const t = useTranslations(CATEGORIES_SCREEN_COPY_NAMESPACE);
   if (categories.length === 0) {
     return (
       <EmptyState
         placement="in-card"
         icon="folder"
-        title={CATALOG_COPY.categoriesEmptyTitle}
-        body={CATALOG_COPY.categoriesEmptyBody}
+        title={t("categoriesEmptyTitle")}
+        body={t("categoriesEmptyBody")}
         action={addButton}
       />
     );
   }
 
   return (
-    <ul aria-label={CATALOG_COPY.categoriesTitle}>
+    <ul aria-label={t("categoriesTitle")}>
       {categories.map((category, index) => (
         <CategoryRow
           key={category.id}
@@ -153,6 +156,7 @@ function CategoryRow({
   readonly onRename: (category: CategoryRecord) => void;
   readonly onDelete: (category: CategoryRecord) => void;
 }>) {
+  const t = useTranslations(CATEGORIES_SCREEN_COPY_NAMESPACE);
   function handleRename(): void {
     onRename(category);
   }
@@ -163,7 +167,7 @@ function CategoryRow({
     <ListCardItem
       icon="folder"
       title={category.name}
-      meta={CATALOG_COPY.categoryMeta(category.serviceCount)}
+      meta={t("categoryMeta", { count: category.serviceCount })}
       isLast={isLast}
       trailing={
         !category.isActive || (setActiveAction && removeAction) ? (
@@ -196,6 +200,7 @@ function CategoryRowTrailing({
   readonly onRename: (category: CategoryRecord) => void;
   readonly onDelete: (category: CategoryRecord) => void;
 }>) {
+  const t = useTranslations(CATEGORIES_SCREEN_COPY_NAMESPACE);
   function handleRename(): void {
     onRename(category);
   }
@@ -205,7 +210,7 @@ function CategoryRowTrailing({
   return (
     <span className="flex items-center gap-(--space-2)">
       {!category.isActive ? (
-        <StatusChip tone="neutral" label={CATALOG_COPY.archived} hasDot={false} />
+        <StatusChip tone="neutral" label={t("archived")} hasDot={false} />
       ) : null}
       {setActiveAction && removeAction ? (
         <CatalogRowActions
@@ -214,7 +219,7 @@ function CategoryRowTrailing({
           id={category.id}
           name={category.name}
           isActive={category.isActive}
-          meta={CATALOG_COPY.categoryMeta(category.serviceCount)}
+          meta={t("categoryMeta", { count: category.serviceCount })}
           onRename={handleRename}
           onDelete={handleDelete}
           setActiveAction={setActiveAction}
@@ -237,6 +242,7 @@ function CategoryDialogs(props: Readonly<CategoryDialogsProps>) {
     setActiveAction,
     closeDelete,
   } = props;
+  const t = useTranslations(CATEGORIES_SCREEN_COPY_NAMESPACE);
   return (
     <>
       {addAction && renameAction ? (
@@ -257,7 +263,7 @@ function CategoryDialogs(props: Readonly<CategoryDialogsProps>) {
           kind="category"
           entry={deleting}
           isInUse={deleting.serviceCount > 0}
-          usage={CATALOG_COPY.categoryUsage(deleting.serviceCount)}
+          usage={t("categoryUsage", { count: deleting.serviceCount })}
           onOpenChange={closeDelete}
           removeAction={removeAction}
           setActiveAction={setActiveAction}

@@ -1,3 +1,5 @@
+import type { useTranslations } from "next-intl";
+
 import type {
   GalleryCardView,
   GallerySummaryView,
@@ -42,3 +44,8 @@ export interface EmptyText {
   readonly title: string;
   readonly body: string;
 }
+
+/** The three translators the card summary rows read: the summary, the selection and the delivery namespace. */
+export type SummaryTranslators = Readonly<
+  Record<"summaryT" | "selectionT" | "deliveryT", ReturnType<typeof useTranslations>>
+>;

@@ -1,7 +1,9 @@
+import { useTranslations } from "next-intl";
+
 import { AuthIntro } from "../auth-intro/auth-intro";
 import { AuthPrompt } from "../auth-prompt/auth-prompt";
 import { ForgotPasswordForm } from "../forgot-password-form/forgot-password-form";
-import { FORGOT_PASSWORD_SCREEN_COPY as COPY } from "./forgot-password-screen.copy";
+import { FORGOT_PASSWORD_SCREEN_COPY_NAMESPACE } from "./forgot-password-screen.copy";
 import type { ForgotPasswordScreenProps } from "./forgot-password-screen.types";
 
 /**
@@ -10,11 +12,12 @@ import type { ForgotPasswordScreenProps } from "./forgot-password-screen.types";
  * @returns the screen content inside `AuthSplitLayout`
  */
 export function ForgotPasswordScreen({ action }: Readonly<ForgotPasswordScreenProps>) {
+  const t = useTranslations(FORGOT_PASSWORD_SCREEN_COPY_NAMESPACE);
   return (
     <>
-      <AuthIntro title={COPY.title} lead={COPY.lead} />
+      <AuthIntro title={t("title")} lead={t("lead")} />
       <ForgotPasswordForm action={action} />
-      <AuthPrompt prompt={COPY.switchPrompt} href="/login" link={COPY.back} />
+      <AuthPrompt prompt={t("switchPrompt")} href="/login" link={t("back")} />
     </>
   );
 }

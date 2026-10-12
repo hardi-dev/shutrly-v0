@@ -79,7 +79,7 @@ describe("BookingFieldInput (A-3)", () => {
       />,
     );
     const trigger = screen.getByRole("button", { name: /Ukuran toga/ });
-    expect(trigger).toHaveTextContent("Pilih ukuran toga");
+    expect(trigger).toHaveTextContent("Pilih Ukuran toga");
     await userEvent.click(trigger);
     await userEvent.click(screen.getByRole("option", { name: "M" }));
     expect(onChange).toHaveBeenCalledWith("M");
@@ -95,7 +95,7 @@ describe("BookingFieldInput (A-3)", () => {
       />,
     );
     const trigger = screen.getByRole("button", { name: /Pakai toga/ });
-    expect(trigger).toHaveTextContent("Pilih pakai toga");
+    expect(trigger).toHaveTextContent("Pilih Pakai toga");
     await userEvent.click(trigger);
     await userEvent.click(screen.getByRole("option", { name: "Ya" }));
     expect(onChange).toHaveBeenCalledWith(true);

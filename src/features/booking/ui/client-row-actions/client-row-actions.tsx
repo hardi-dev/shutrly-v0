@@ -1,6 +1,7 @@
 "use client";
 /* eslint-disable max-lines-per-function, no-restricted-syntax, @typescript-eslint/no-confusing-void-expression -- responsive action groups share callbacks */
 
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import {
@@ -16,14 +17,15 @@ import { MenuTrigger } from "@/ui/patterns/menu/menu-trigger";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { CLIENT_COPY } from "../client-copy/client-copy.copy";
+import { CLIENT_ROW_ACTIONS_COPY_NAMESPACE } from "./client-row-actions.copy";
 import type { ClientRowActionsProps } from "./client-row-actions.types";
 
 /** Responsive row-action menu for a client record. */
 export function ClientRowActions(props: Readonly<ClientRowActionsProps>) {
   const mobile = useMobileViewport();
+  const t = useTranslations(CLIENT_ROW_ACTIONS_COPY_NAMESPACE);
   const [isOpen, setIsOpen] = useState(false);
-  const actionLabel = CLIENT_COPY.rowActions(props.client.name);
+  const actionLabel = t("rowActions", { name: props.client.name });
   const archive = props.status === "ACTIVE";
   useRestoreActionFocus(actionLabel, props.client.id);
   function closeThen(action: () => void): void {
@@ -54,7 +56,7 @@ export function ClientRowActions(props: Readonly<ClientRowActionsProps>) {
           meta={
             props.client.whatsappNumber
               ? formatWhatsappNumber(props.client.whatsappNumber)
-              : CLIENT_COPY.noWhatsapp
+              : t("noWhatsapp")
           }
           variant="actions"
         >
@@ -103,29 +105,25 @@ function DesktopItems({
   onRestore,
   onDelete,
 }: Readonly<ClientRowActionsProps & { archive: boolean }>) {
+  const t = useTranslations(CLIENT_ROW_ACTIONS_COPY_NAMESPACE);
   return (
     <>
-      <MenuItem label={CLIENT_COPY.edit} icon="pencil" onSelect={onEdit} />
+      <MenuItem label={t("edit")} icon="pencil" onSelect={onEdit} />
       {client.whatsappNumber ? (
         <MenuItem
-          label={CLIENT_COPY.openWhatsapp}
+          label={t("openWhatsapp")}
           icon="message-circle"
           href={whatsappChatUrl(client.whatsappNumber)}
           target="_blank"
         />
       ) : null}
       <MenuItem
-        label={archive ? CLIENT_COPY.archive : CLIENT_COPY.restore}
+        label={archive ? t("archive") : t("restore")}
         icon={archive ? "archive" : "archive-restore"}
         onSelect={archive ? onArchive : onRestore}
       />
       <MenuDivider />
-      <MenuItem
-        label={CLIENT_COPY.delete}
-        icon="trash-2"
-        variant="destructive"
-        onSelect={onDelete}
-      />
+      <MenuItem label={t("delete")} icon="trash-2" variant="destructive" onSelect={onDelete} />
     </>
   );
 }
@@ -141,24 +139,25 @@ function MobileItems({
 }: Readonly<
   ClientRowActionsProps & { archive: boolean; closeThen: (action: () => void) => void }
 >) {
+  const t = useTranslations(CLIENT_ROW_ACTIONS_COPY_NAMESPACE);
   return (
     <>
-      <SheetItem label={CLIENT_COPY.edit} icon="pencil" onPress={() => closeThen(onEdit)} />
+      <SheetItem label={t("edit")} icon="pencil" onPress={() => closeThen(onEdit)} />
       {client.whatsappNumber ? (
         <SheetItem
-          label={CLIENT_COPY.openWhatsapp}
+          label={t("openWhatsapp")}
           icon="message-circle"
           href={whatsappChatUrl(client.whatsappNumber)}
           target="_blank"
         />
       ) : null}
       <SheetItem
-        label={archive ? CLIENT_COPY.archive : CLIENT_COPY.restore}
+        label={archive ? t("archive") : t("restore")}
         icon={archive ? "archive" : "archive-restore"}
         onPress={() => closeThen(archive ? onArchive : onRestore)}
       />
       <SheetItem
-        label={CLIENT_COPY.delete}
+        label={t("delete")}
         icon="trash-2"
         variant="destructive"
         onPress={() => closeThen(onDelete)}

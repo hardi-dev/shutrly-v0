@@ -5,7 +5,7 @@ import { Button } from "@/ui/primitives/button/button";
 
 import { SheetItem } from "../sheet-item/sheet-item";
 import { BottomSheet } from "./bottom-sheet";
-import { BOTTOM_SHEET_COPY } from "./bottom-sheet.copy";
+import { BOTTOM_SHEET_STORY_COPY } from "./bottom-sheet.stories.copy";
 
 function handleNoop() {
   return undefined;
@@ -17,7 +17,7 @@ const meta = {
   args: {
     isOpen: false,
     onOpenChange: handleNoop,
-    title: BOTTOM_SHEET_COPY.actions.title,
+    title: BOTTOM_SHEET_STORY_COPY.actions.title,
     children: null,
   },
   parameters: { designSystemSpec: "docs/design-system/components/bottom-sheet.md" },
@@ -40,17 +40,25 @@ function ActionSheetStory() {
   }
   return (
     <>
-      <Button onPress={handleOpen}>{BOTTOM_SHEET_COPY.actions.title}</Button>
+      <Button onPress={handleOpen}>{BOTTOM_SHEET_STORY_COPY.actions.title}</Button>
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={setIsOpen}
-        title={BOTTOM_SHEET_COPY.actions.title}
-        meta={BOTTOM_SHEET_COPY.actions.meta}
+        title={BOTTOM_SHEET_STORY_COPY.actions.title}
+        meta={BOTTOM_SHEET_STORY_COPY.actions.meta}
       >
-        <SheetItem label={BOTTOM_SHEET_COPY.actions.download} icon="send" onPress={handleClose} />
-        <SheetItem label={BOTTOM_SHEET_COPY.actions.share} icon="share-2" onPress={handleClose} />
         <SheetItem
-          label={BOTTOM_SHEET_COPY.actions.delete}
+          label={BOTTOM_SHEET_STORY_COPY.actions.download}
+          icon="send"
+          onPress={handleClose}
+        />
+        <SheetItem
+          label={BOTTOM_SHEET_STORY_COPY.actions.share}
+          icon="share-2"
+          onPress={handleClose}
+        />
+        <SheetItem
+          label={BOTTOM_SHEET_STORY_COPY.actions.delete}
           icon="trash-2"
           variant="destructive"
           onPress={handleClose}
@@ -70,25 +78,25 @@ function FormSheetStory() {
   }
   return (
     <>
-      <Button onPress={handleOpen}>{BOTTOM_SHEET_COPY.form.title}</Button>
+      <Button onPress={handleOpen}>{BOTTOM_SHEET_STORY_COPY.form.title}</Button>
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={setIsOpen}
-        title={BOTTOM_SHEET_COPY.form.title}
-        description={BOTTOM_SHEET_COPY.form.description}
+        title={BOTTOM_SHEET_STORY_COPY.form.title}
+        description={BOTTOM_SHEET_STORY_COPY.form.description}
         variant="form"
         actions={
           <>
             <Button variant="secondary" size="lg" onPress={handleClose}>
-              {BOTTOM_SHEET_COPY.form.cancel}
+              {BOTTOM_SHEET_STORY_COPY.form.cancel}
             </Button>
             <Button size="lg" onPress={handleClose}>
-              {BOTTOM_SHEET_COPY.form.confirm}
+              {BOTTOM_SHEET_STORY_COPY.form.confirm}
             </Button>
           </>
         }
       >
-        <p>{BOTTOM_SHEET_COPY.form.body}</p>
+        <p>{BOTTOM_SHEET_STORY_COPY.form.body}</p>
       </BottomSheet>
     </>
   );
@@ -104,20 +112,28 @@ function MenuSheetStory() {
   }
   return (
     <>
-      <Button onPress={handleOpen}>{BOTTOM_SHEET_COPY.menu.title}</Button>
+      <Button onPress={handleOpen}>{BOTTOM_SHEET_STORY_COPY.menu.title}</Button>
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={setIsOpen}
-        title={BOTTOM_SHEET_COPY.menu.title}
+        title={BOTTOM_SHEET_STORY_COPY.menu.title}
         variant="menu"
       >
         <SheetItem
-          label={BOTTOM_SHEET_COPY.menu.workspace}
+          label={BOTTOM_SHEET_STORY_COPY.menu.workspace}
           icon="chevrons-up-down"
           onPress={handleClose}
         />
-        <SheetItem label={BOTTOM_SHEET_COPY.menu.settings} icon="settings" onPress={handleClose} />
-        <SheetItem label={BOTTOM_SHEET_COPY.menu.logout} icon="log-out" onPress={handleClose} />
+        <SheetItem
+          label={BOTTOM_SHEET_STORY_COPY.menu.settings}
+          icon="settings"
+          onPress={handleClose}
+        />
+        <SheetItem
+          label={BOTTOM_SHEET_STORY_COPY.menu.logout}
+          icon="log-out"
+          onPress={handleClose}
+        />
       </BottomSheet>
     </>
   );

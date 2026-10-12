@@ -23,7 +23,7 @@ describe("ClientsTable", () => {
   it("AC-CLI-001 AC-CLI-021 renders the client details and total", () => {
     render(<ClientsTable status="ACTIVE" count={38} rows={rows} emptyState={<p>empty</p>} />);
 
-    const table = screen.getByRole("grid", { name: "Daftar klien" });
+    const table = screen.getByRole("grid", { name: "Klien" });
     expect(within(table).getByText("RI")).toBeInTheDocument();
     expect(within(table).getByText("Rina")).toBeInTheDocument();
     expect(within(table).getByText("+62 812-3456-7890")).toBeInTheDocument();

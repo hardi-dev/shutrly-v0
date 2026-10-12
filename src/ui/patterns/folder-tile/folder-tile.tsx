@@ -1,11 +1,12 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Button as AriaButton } from "react-aria-components";
 
 import { cn } from "@/ui/cn/cn";
 import { Icon } from "@/ui/primitives/icon/icon";
 
-import { FOLDER_TILE_COPY } from "./folder-tile.copy";
+import { FOLDER_TILE_COPY_NAMESPACE } from "./folder-tile.copy";
 import type { FolderTileProps } from "./folder-tile.types";
 
 // C47: the same footprint as a Photo Tile; the wrap height is a literal per grid (folder-tile.md › Gaps).
@@ -16,9 +17,10 @@ const FOCUS =
 
 /** A folder in the photo grid: icon, name and photo count; one button that opens it (C47). @param props - name, count label and press handler @returns the tile */
 export function FolderTile({ name, countLabel, onPress }: Readonly<FolderTileProps>) {
+  const t = useTranslations(FOLDER_TILE_COPY_NAMESPACE);
   return (
     <AriaButton
-      aria-label={FOLDER_TILE_COPY.label(name, countLabel)}
+      aria-label={t("label", { name, countLabel })}
       onPress={onPress}
       className={cn(
         "flex w-full min-w-0 cursor-pointer flex-col gap-(--component-folder-tile-gap) rounded-(--component-folder-tile-radius) text-left",

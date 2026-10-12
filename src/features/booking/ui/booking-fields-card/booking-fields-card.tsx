@@ -1,10 +1,14 @@
+import { useTranslations } from "next-intl";
+
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
+import { CATALOG_FIELD_TYPE_MESSAGE_KEY } from "../catalog-copy/catalog-copy.copy";
+import type { CatalogTranslate } from "../catalog-copy/catalog-copy.types";
 import { ServiceDetailRowActions } from "../service-detail-row-actions/service-detail-row-actions";
 import type { ServiceDetailScreenProps } from "../service-detail-screen/service-detail-screen.types";
+import { BOOKING_FIELDS_CARD_COPY_NAMESPACE } from "./booking-fields-card.copy";
 import type { BookingField, BookingFieldHandler } from "./booking-fields-card.types";
 
 export function BookingFieldsCard({
@@ -23,23 +27,20 @@ export function BookingFieldsCard({
     readonly onAdd?: () => void;
   }
 >) {
+  const t = useTranslations(BOOKING_FIELDS_CARD_COPY_NAMESPACE);
   return (
     <SectionCard
-      title={CATALOG_COPY.fieldsTitle}
-      description={CATALOG_COPY.fieldsDescription}
+      title={t("fieldsTitle")}
+      description={t("fieldsDescription")}
       content="flush"
-      actions={
-        onAdd ? (
-          <Button variant="secondary" iconLeading="plus" onPress={onAdd}>
-            {CATALOG_COPY.addField}
-          </Button>
-        ) : null
-      }
+      actions={onAdd ? <AddFieldButton onAdd={onAdd} /> : null}
     >
       {service.fields.length === 0 ? (
-        <EmptyFields />
+        <p className="px-(--space-6) py-(--space-5) text-(--component-list-card-item-meta)">
+          {t("fieldsEmpty")}
+        </p>
       ) : (
-        <ul aria-label={CATALOG_COPY.fieldsTitle}>
+        <ul aria-label={t("fieldsTitle")}>
           {service.fields.map((field, index) => (
             <BookingFieldRow
               key={field.id}
@@ -58,12 +59,29 @@ export function BookingFieldsCard({
   );
 }
 
-function EmptyFields() {
+function AddFieldButton({ onAdd }: Readonly<{ onAdd: () => void }>) {
+  const t = useTranslations(BOOKING_FIELDS_CARD_COPY_NAMESPACE);
   return (
-    <p className="px-(--space-6) py-(--space-5) text-(--component-list-card-item-meta)">
-      {CATALOG_COPY.fieldsEmpty}
-    </p>
+    <Button variant="secondary" iconLeading="plus" onPress={onAdd}>
+      {t("addField")}
+    </Button>
   );
+}
+
+/**
+ * The metadata line of a booking field, e.g. "Text · Required" or "Choice: Campus A · Required".
+ * @param t - the catalog translator
+ * @param field - the booking field
+ * @returns the translated line
+ */
+export function bookingFieldMeta(t: CatalogTranslate, field: BookingField): string {
+  const type = t(CATALOG_FIELD_TYPE_MESSAGE_KEY[field.fieldType]);
+  if (field.options) {
+    const key = field.isRequired ? "fieldMetaChoicesRequired" : "fieldMetaChoicesOptional";
+    return t(key, { type, options: field.options.join(", ") });
+  }
+  const key = field.isRequired ? "fieldMetaRequired" : "fieldMetaOptional";
+  return t(key, { type });
 }
 
 function BookingFieldRow({
@@ -83,15 +101,12 @@ function BookingFieldRow({
   readonly onMoveUp: BookingFieldHandler;
   readonly onMoveDown: BookingFieldHandler;
 }>) {
+  const t = useTranslations(BOOKING_FIELDS_CARD_COPY_NAMESPACE);
   return (
     <ListCardItem
       icon="align-left"
       title={field.name}
-      meta={CATALOG_COPY.fieldMeta(
-        CATALOG_COPY.fieldTypes[field.fieldType],
-        field.isRequired,
-        field.options,
-      )}
+      meta={bookingFieldMeta(t, field)}
       isLast={index === count - 1}
       trailing={
         <BookingFieldTrailing
@@ -125,6 +140,7 @@ function BookingFieldTrailing({
   readonly onMoveUp: BookingFieldHandler;
   readonly onMoveDown: BookingFieldHandler;
 }>) {
+  const t = useTranslations(BOOKING_FIELDS_CARD_COPY_NAMESPACE);
   function handleEdit(): void {
     onEdit(field);
   }
@@ -137,16 +153,11 @@ function BookingFieldTrailing({
   function handleMoveDown(): void {
     onMoveDown(field);
   }
-  const meta = CATALOG_COPY.fieldMeta(
-    CATALOG_COPY.fieldTypes[field.fieldType],
-    field.isRequired,
-    field.options,
-  );
   return (
     <ServiceDetailRowActions
       kind="field"
       name={field.name}
-      meta={meta}
+      meta={bookingFieldMeta(t, field)}
       canMoveUp={index > 0}
       canMoveDown={index < count - 1}
       onEdit={handleEdit}

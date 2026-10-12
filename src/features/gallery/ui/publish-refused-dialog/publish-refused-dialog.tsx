@@ -1,27 +1,29 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
 import { Button } from "@/ui/primitives/button/button";
 
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
+import { PUBLISH_REFUSED_DIALOG_COPY_NAMESPACE } from "./publish-refused-dialog.copy";
 import type { PublishRefusedDialogProps } from "./publish-refused-dialog.types";
 
 function RefusedBody({ failures }: Readonly<Pick<PublishRefusedDialogProps, "failures">>) {
-  const names = failures
-    .map((failure) => failure.name ?? GALLERY_COPY.sourceFallbackName)
-    .join(" · ");
+  const t = useTranslations(PUBLISH_REFUSED_DIALOG_COPY_NAMESPACE);
+  const names = failures.map((failure) => failure.name ?? t("sourceFallbackName")).join(" · ");
   return (
     <div className="flex flex-col gap-(--space-2) text-(length:--font-size-body)">
       {names === "" ? null : <p className="font-semibold">{names}</p>}
-      <p className="text-(--component-input-helper)">{GALLERY_COPY.publishRefusedHint}</p>
+      <p className="text-(--component-input-helper)">{t("publishRefusedHint")}</p>
     </div>
   );
 }
 
 /** *Galeri belum bisa dipublikasikan*: names the folders that failed the publish-time check (BR-GAL-004, AC-GAL-017). */
 export function PublishRefusedDialog({ failures, onClose }: Readonly<PublishRefusedDialogProps>) {
+  const t = useTranslations(PUBLISH_REFUSED_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) onClose();
@@ -34,16 +36,16 @@ export function PublishRefusedDialog({ failures, onClose }: Readonly<PublishRefu
       onPress={onClose}
       className="max-md:w-full"
     >
-      {GALLERY_COPY.close}
+      {t("close")}
     </Button>
   );
-  const description = GALLERY_COPY.publishRefusedNone;
+  const description = t("publishRefusedNone");
   if (isMobile) {
     return (
       <BottomSheet
         isOpen
         onOpenChange={handleOpenChange}
-        title={GALLERY_COPY.publishRefusedTitle}
+        title={t("publishRefusedTitle")}
         description={description}
         variant="actions"
         actions={close}
@@ -56,7 +58,7 @@ export function PublishRefusedDialog({ failures, onClose }: Readonly<PublishRefu
     <Modal
       isOpen
       onOpenChange={handleOpenChange}
-      title={GALLERY_COPY.publishRefusedTitle}
+      title={t("publishRefusedTitle")}
       description={description}
       size="sm"
       actions={close}

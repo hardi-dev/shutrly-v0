@@ -1,12 +1,18 @@
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { templateGroupOf } from "@/features/communications/domain/template-type/template-type";
 import { cn } from "@/ui/cn/cn";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Icon } from "@/ui/primitives/icon/icon";
 
-import { TEMPLATE_COPY, TEMPLATE_GROUP_COPY } from "../template-copy/template-copy.copy";
+import {
+  TEMPLATE_GROUP_MESSAGE_KEY,
+  TEMPLATE_LABEL_MESSAGE_KEY,
+  TEMPLATE_PURPOSE_MESSAGE_KEY,
+} from "../template-copy/template-copy.copy";
 import { messageTemplateHref } from "../template-sub-pages/template-sub-pages";
+import { TEMPLATE_LIST_SCREEN_COPY_NAMESPACE } from "./template-list-screen.copy";
 import type {
   TemplateGroupCardProps,
   TemplateListRowProps,
@@ -44,10 +50,11 @@ export function TemplateListScreen({ workspaceId, types }: Readonly<TemplateList
 }
 
 function TemplateGroupCard({ group, workspaceId, types }: Readonly<TemplateGroupCardProps>) {
+  const t = useTranslations(TEMPLATE_LIST_SCREEN_COPY_NAMESPACE);
   const rows = types.filter((type) => templateGroupOf(type) === group);
-  const copy = TEMPLATE_GROUP_COPY[group];
+  const keys = TEMPLATE_GROUP_MESSAGE_KEY[group];
   return (
-    <SectionCard title={copy.title} description={copy.description} content="flush">
+    <SectionCard title={t(keys.title)} description={t(keys.description)} content="flush">
       <ul className="flex flex-col">
         {rows.map((type, index) => (
           <TemplateListRow
@@ -63,7 +70,7 @@ function TemplateGroupCard({ group, workspaceId, types }: Readonly<TemplateGroup
 }
 
 function TemplateListRow({ type, href, isLast }: Readonly<TemplateListRowProps>) {
-  const copy = TEMPLATE_COPY[type];
+  const t = useTranslations(TEMPLATE_LIST_SCREEN_COPY_NAMESPACE);
   return (
     <li>
       <Link
@@ -75,10 +82,10 @@ function TemplateListRow({ type, href, isLast }: Readonly<TemplateListRowProps>)
         </span>
         <span className="flex min-w-0 flex-1 flex-col gap-(--space-0-5)">
           <span className="text-(length:--font-size-body) font-semibold text-(--component-list-card-item-title)">
-            {copy.label}
+            {t(TEMPLATE_LABEL_MESSAGE_KEY[type])}
           </span>
           <span className="text-(length:--font-size-body-sm) text-(--component-list-card-item-meta)">
-            {copy.purpose}
+            {t(TEMPLATE_PURPOSE_MESSAGE_KEY[type])}
           </span>
         </span>
         <Icon name="chevron-right" size="sm" className="text-(--component-list-card-item-meta)" />

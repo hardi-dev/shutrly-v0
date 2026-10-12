@@ -1,25 +1,31 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useIntersectionSentinel } from "@/ui/hooks/use-intersection-sentinel/use-intersection-sentinel";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { PhotoTile } from "@/ui/patterns/photo-tile/photo-tile";
 import type { PhotoTileBadge, PhotoTileNote } from "@/ui/patterns/photo-tile/photo-tile.types";
 
 import { CLIENT_GRID } from "../client-browse-grid/client-browse-grid";
-import { CLIENT_BROWSE_COPY } from "../client-browse-screen/client-browse-screen.copy";
-import { PICK_COPY as COPY } from "./pick-screen.copy";
+import { PICK_BROWSE_NAMESPACE, PICK_COPY_NAMESPACE } from "./pick-screen.copy";
 import type { PickGridProps, PickTileProps } from "./pick-screen.types";
-import { otherGroupMarker } from "./pick-text";
+import { otherGroupMarker, type PickTranslate } from "./pick-text";
 
-function badgeOf({ pick, others, group }: Readonly<PickTileProps>): PhotoTileBadge | undefined {
-  if (pick && group.mode === "QUANTITY")
-    return { label: COPY.quantity(pick.quantity), tone: "info" };
-  const marker = otherGroupMarker(others);
+function badgeOf(
+  t: PickTranslate,
+  { pick, others, group }: Readonly<PickTileProps>,
+): PhotoTileBadge | undefined {
+  if (pick && group.mode === "QUANTITY") {
+    return { label: t("quantity", { quantity: pick.quantity }), tone: "info" };
+  }
+  const marker = otherGroupMarker(t, others);
   return marker === null ? undefined : { label: marker, tone: "neutral" };
 }
 
 function PickTile(props: Readonly<PickTileProps>) {
   const { photo, pick, group, isFull, onToggle, onNote } = props;
+  const t = useTranslations(PICK_COPY_NAMESPACE);
   const handleChange = (isSelected: boolean) => {
     onToggle(photo, isSelected);
   };
@@ -31,9 +37,11 @@ function PickTile(props: Readonly<PickTileProps>) {
     pick && group.allowsPickNotes
       ? {
           hasNote: pick.note !== null,
-          label: COPY.note,
+          label: t("note"),
           accessibleLabel:
-            pick.note === null ? COPY.noteAdd(photo.fileName) : COPY.noteEdit(photo.fileName),
+            pick.note === null
+              ? t("noteAdd", { fileName: photo.fileName })
+              : t("noteEdit", { fileName: photo.fileName }),
           onPress: handleNote,
         }
       : undefined;
@@ -45,10 +53,33 @@ function PickTile(props: Readonly<PickTileProps>) {
         fallbackSrc={photo.thumb.fallbackSrc}
         isMissing={photo.missing}
         selection={{ isSelected: pick !== undefined, isDisabled: isFull, onChange: handleChange }}
-        badge={badgeOf(props)}
+        badge={badgeOf(t, props)}
         note={note}
       />
     </li>
+  );
+}
+
+function EmptyPicks({ isAll }: Readonly<{ isAll: boolean }>) {
+  const t = useTranslations(PICK_COPY_NAMESPACE);
+  const browse = useTranslations(PICK_BROWSE_NAMESPACE);
+  if (isAll) {
+    return (
+      <EmptyState
+        icon="images"
+        placement="in-card"
+        title={browse("emptyTitle")}
+        body={browse("emptyBody")}
+      />
+    );
+  }
+  return (
+    <EmptyState
+      icon="images"
+      placement="in-card"
+      title={t("pickedEmptyTitle")}
+      body={t("pickedEmptyBody")}
+    />
   );
 }
 
@@ -64,23 +95,7 @@ export function PickGrid({ filter, selection, grid, onNote }: Readonly<PickGridP
   );
   const { state } = selection;
   const photos = isAll ? grid.state.photos : Array.from(state.picks.values(), (pick) => pick.photo);
-  if (photos.length === 0) {
-    return isAll ? (
-      <EmptyState
-        icon="images"
-        placement="in-card"
-        title={CLIENT_BROWSE_COPY.emptyTitle}
-        body={CLIENT_BROWSE_COPY.emptyBody}
-      />
-    ) : (
-      <EmptyState
-        icon="images"
-        placement="in-card"
-        title={COPY.pickedEmptyTitle}
-        body={COPY.pickedEmptyBody}
-      />
-    );
-  }
+  if (photos.length === 0) return <EmptyPicks isAll={isAll} />;
   return (
     <div aria-busy={grid.state.isLoadingMore} className="flex flex-col gap-(--space-5)">
       <ul className={CLIENT_GRID}>

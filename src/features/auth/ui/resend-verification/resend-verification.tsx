@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import type { AuthErrorCode } from "@/features/auth/application/errors/auth-errors/auth-errors.types";
@@ -7,7 +8,7 @@ import { Alert } from "@/ui/patterns/alert/alert";
 import { Button } from "@/ui/primitives/button/button";
 
 import { AuthErrorAlert } from "../auth-error-alert/auth-error-alert";
-import { RESEND_VERIFICATION_COPY as COPY } from "./resend-verification.copy";
+import { RESEND_VERIFICATION_COPY_NAMESPACE } from "./resend-verification.copy";
 import type { CooldownProps, ResendVerificationProps } from "./resend-verification.types";
 
 /** A-6: the resend button's cooldown. UX only; the server rate limit is the authority. */
@@ -15,9 +16,10 @@ const COOLDOWN_SECONDS = 60;
 const SECOND_MS = 1000;
 
 function Cooldown({ secondsLeft }: Readonly<CooldownProps>) {
+  const t = useTranslations(RESEND_VERIFICATION_COPY_NAMESPACE);
   return (
     <p className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
-      {COPY.cooldownPrefix} {secondsLeft} {COPY.cooldownSuffix}
+      {t("cooldown", { seconds: secondsLeft })}
     </p>
   );
 }
@@ -28,10 +30,8 @@ function Cooldown({ secondsLeft }: Readonly<CooldownProps>) {
  * @param props - the resend server action and an optional button label
  * @returns the control
  */
-export function ResendVerification({
-  action,
-  label = COPY.resend,
-}: Readonly<ResendVerificationProps>) {
+export function ResendVerification({ action, label }: Readonly<ResendVerificationProps>) {
+  const t = useTranslations(RESEND_VERIFICATION_COPY_NAMESPACE);
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [error, setError] = useState<AuthErrorCode | null>(null);
   const [busy, setBusy] = useState(false);
@@ -69,14 +69,14 @@ export function ResendVerification({
   return (
     <div className="flex flex-col gap-(--space-3)">
       {error ? <AuthErrorAlert code={error} /> : null}
-      {secondsLeft > 0 ? <Alert tone="info" title={COPY.sent} live /> : null}
+      {secondsLeft > 0 ? <Alert tone="info" title={t("sent")} live /> : null}
       <Button
         variant="secondary"
         size="lg"
         isDisabled={busy || secondsLeft > 0}
         onPress={handlePress}
       >
-        {label}
+        {label ?? t("resend")}
       </Button>
       {secondsLeft > 0 ? <Cooldown secondsLeft={secondsLeft} /> : null}
     </div>

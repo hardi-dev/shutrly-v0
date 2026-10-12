@@ -22,6 +22,7 @@ export const PROJECT_IDS = {
 
 export const fotoEditItem = {
   id: "item-1",
+  defaultKey: null,
   definitionId: PROJECT_IDS.fotoEdit,
   definitionName: "Foto edit",
   unit: "foto",
@@ -34,6 +35,7 @@ export const fotoEditItem = {
 
 export const jumlahOrangItem = {
   id: "item-2",
+  defaultKey: null,
   definitionId: PROJECT_IDS.jumlahOrang,
   definitionName: "Jumlah orang",
   unit: "orang",

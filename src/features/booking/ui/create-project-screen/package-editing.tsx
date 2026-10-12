@@ -1,27 +1,31 @@
 "use client";
 /* eslint-disable max-lines-per-function -- one place owns which package dialog is open and what each submit does */
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ActiveDefinition } from "@/features/booking/application/ports/project-repository/project-repository.port";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
 import { validateItemList } from "@/features/booking/domain/project-items/project-items";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 
 import { PackageItemsCard } from "../package-items-card/package-items-card";
 import type { PackageCardItem } from "../package-items-card/package-items-card.types";
 import { ProjectConfirmDialog } from "../project-confirm-dialog/project-confirm-dialog";
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import type { SubmitErrors } from "../project-edit/project-edit.types";
 import { ProjectItemDialog } from "../project-item-dialog/project-item-dialog";
 import type { CreateProjectState } from "../use-create-project-form/use-create-project-form.types";
+import { CREATE_PROJECT_SCREEN_COPY_NAMESPACE } from "./create-project-screen.copy";
 import type { PackageEditOpen } from "./create-project-screen.types";
 
 function checkValue(
   definitionId: string,
   rules: { valueType: "NUMBER" | "RANGE"; selectionRequired: boolean },
   value: PackageValue,
+  locale: FormattingLocale,
 ): { value: PackageValue } | { errors: SubmitErrors } {
-  const checked = validateItemList([{ definitionId, value }], { [definitionId]: rules });
+  const checked = validateItemList([{ definitionId, value }], { [definitionId]: rules }, locale);
   const errors = Object.fromEntries(
     Object.entries(checked.errors).map(([path, problem]) => [
       path.replace(/^items\.\d+\./, ""),
@@ -45,6 +49,8 @@ export function PackageEditing({
   definitions: readonly ActiveDefinition[];
   isMobile: boolean;
 }>) {
+  const t = useTranslations(CREATE_PROJECT_SCREEN_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
   const [open, setOpen] = useState<PackageEditOpen>(null);
   const close = (isOpen: boolean) => {
     if (!isOpen) setOpen(null);
@@ -68,7 +74,7 @@ export function PackageEditing({
   const submitAdd = (input: { definitionId?: string; value: PackageValue }) => {
     const definition = definitions.find((candidate) => candidate.id === input.definitionId);
     if (!definition) return Promise.resolve<SubmitErrors>({ definitionId: "REQUIRED" });
-    const checked = checkValue(definition.id, definition, input.value);
+    const checked = checkValue(definition.id, definition, input.value, locale);
     if ("errors" in checked) return Promise.resolve(checked.errors);
     state.dispatchPackage({
       type: "ADD",
@@ -76,6 +82,7 @@ export function PackageEditing({
         definitionId: definition.id,
         name: definition.name,
         unit: definition.unit,
+        defaultKey: definition.defaultKey,
         valueType: definition.valueType,
         selectionRequired: definition.selectionRequired,
         pickMode: definition.pickMode,
@@ -88,7 +95,7 @@ export function PackageEditing({
   const submitEdit = (input: { value: PackageValue }) => {
     if (open?.kind !== "edit") return Promise.resolve<SubmitErrors>(null);
     const item = open.item;
-    const checked = checkValue(item.definitionId, item, input.value);
+    const checked = checkValue(item.definitionId, item, input.value, locale);
     if ("errors" in checked) return Promise.resolve(checked.errors);
     state.dispatchPackage({
       type: "UPDATE_VALUE",
@@ -138,9 +145,9 @@ export function PackageEditing({
         <ProjectConfirmDialog
           isOpen
           onOpenChange={close}
-          title={PROJECT_COPY.removeItemTitle(open.item.name)}
-          body={PROJECT_COPY.removeItemBody}
-          confirmLabel={PROJECT_COPY.removeItemConfirm}
+          title={t("removeItemTitle", { name: open.item.name })}
+          body={t("removeItemBody")}
+          confirmLabel={t("removeItemConfirm")}
           onConfirm={confirmRemove}
         />
       ) : null}

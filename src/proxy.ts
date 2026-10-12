@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 import { isLandingOnly } from "@/composition/app-stage/app-stage";
+import { GALLERY_TOKEN_HEADER } from "@/shared/gallery-token/gallery-token-header";
 
 // Next 16 Proxy (formerly middleware): the production gate, then an early cookie-presence
 // redirect. The owner guard in composition is the authority on every page, action and route
@@ -12,6 +13,8 @@ import { isLandingOnly } from "@/composition/app-stage/app-stage";
 const LANDING_PATHS = ["/", "/api/waitlist", "/robots.txt"];
 // Not a route, so a rewrite here renders the root not-found page with HTTP 404 (no redirect, A-5).
 const NOT_FOUND_PATH = "/_gated";
+// Gallery token header (D-7): set only on the forwarded request, never on the response.
+const GALLERY_PATH = /^\/g\/([^/]+)(?:\/|$)/;
 
 const PUBLIC_PREFIXES = [
   "/login",
@@ -52,6 +55,20 @@ export function isLandingPath(pathname: string): boolean {
 }
 
 /**
+ * Copy the request headers for the forwarded request, dropping any client-supplied gallery token
+ * and setting the token of a /g/<token> path.
+ * @param request - the incoming request
+ * @returns the headers to forward to server rendering
+ */
+export function forwardHeaders(request: NextRequest): Headers {
+  const headers = new Headers(request.headers);
+  headers.delete(GALLERY_TOKEN_HEADER);
+  const token = GALLERY_PATH.exec(request.nextUrl.pathname)?.[1];
+  if (token) headers.set(GALLERY_TOKEN_HEADER, token);
+  return headers;
+}
+
+/**
  * On a landing-only production, answer every other path with the not-found page; elsewhere, send
  * a request without any session cookie to `/login` before rendering an owner page.
  * @param request - the incoming request
@@ -60,13 +77,16 @@ export function isLandingPath(pathname: string): boolean {
 export async function proxy(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
   if (!isLandingPath(pathname) && (await isLandingOnly())) {
-    return NextResponse.rewrite(new URL(NOT_FOUND_PATH, request.url));
+    return NextResponse.rewrite(new URL(NOT_FOUND_PATH, request.url), {
+      request: { headers: forwardHeaders(request) },
+    });
   }
-  if (isPublicPath(pathname) || isLandingPath(pathname)) return NextResponse.next();
+  const forward = { request: { headers: forwardHeaders(request) } };
+  if (isPublicPath(pathname) || isLandingPath(pathname)) return NextResponse.next(forward);
   const hasSession = request.cookies
     .getAll()
     .some((cookie) => cookie.name.endsWith("session_token"));
-  if (hasSession) return NextResponse.next();
+  if (hasSession) return NextResponse.next(forward);
   return NextResponse.redirect(new URL("/login", request.url));
 }
 

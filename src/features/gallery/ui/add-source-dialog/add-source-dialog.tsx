@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useState } from "react";
 import { useController, useForm, useWatch } from "react-hook-form";
@@ -16,47 +17,53 @@ import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { addSourceSchema } from "../../application/schemas/add-source/add-source.schema";
-import { PROVIDER_COPY, SOURCE_COPY } from "../source-copy/source-copy.copy";
+import { PROVIDER_ICON } from "../source-copy/source-copy.copy";
+import type { SourceTranslate } from "../source-copy/source-copy.types";
 import { sourceNameErrorText } from "../source-name-error/source-name-error";
+import { ADD_SOURCE_DIALOG_COPY_NAMESPACE } from "./add-source-dialog.copy";
 import type { AddSourceDialogProps } from "./add-source-dialog.types";
 
 const FORM_ID = "add-source-form";
-const PROVIDER_OPTIONS: readonly OptionCardOption[] = [
-  {
-    value: "GOOGLE_DRIVE",
-    title: PROVIDER_COPY.GOOGLE_DRIVE.title,
-    description: PROVIDER_COPY.GOOGLE_DRIVE.description,
-    icon: PROVIDER_COPY.GOOGLE_DRIVE.icon,
-  },
-  {
-    value: "DROPBOX",
-    title: PROVIDER_COPY.DROPBOX.title,
-    icon: PROVIDER_COPY.DROPBOX.icon,
-    isDisabled: true,
-    badge: SOURCE_COPY.comingSoon,
-  },
-  {
-    value: "ONEDRIVE",
-    title: PROVIDER_COPY.ONEDRIVE.title,
-    icon: PROVIDER_COPY.ONEDRIVE.icon,
-    isDisabled: true,
-    badge: SOURCE_COPY.comingSoon,
-  },
-  {
-    value: "AMAZON_S3",
-    title: PROVIDER_COPY.AMAZON_S3.title,
-    icon: PROVIDER_COPY.AMAZON_S3.icon,
-    isDisabled: true,
-    badge: SOURCE_COPY.comingSoon,
-  },
-  {
-    value: "CUSTOM_URL",
-    title: PROVIDER_COPY.CUSTOM_URL.title,
-    icon: PROVIDER_COPY.CUSTOM_URL.icon,
-    isDisabled: true,
-    badge: SOURCE_COPY.comingSoon,
-  },
-];
+
+function providerOptions(t: SourceTranslate): readonly OptionCardOption[] {
+  const soon = t("comingSoon");
+  return [
+    {
+      value: "GOOGLE_DRIVE",
+      title: t("providerGoogleDrive"),
+      description: t("providerGoogleDriveDescription"),
+      icon: PROVIDER_ICON.GOOGLE_DRIVE,
+    },
+    {
+      value: "DROPBOX",
+      title: t("providerDropbox"),
+      icon: PROVIDER_ICON.DROPBOX,
+      isDisabled: true,
+      badge: soon,
+    },
+    {
+      value: "ONEDRIVE",
+      title: t("providerOneDrive"),
+      icon: PROVIDER_ICON.ONEDRIVE,
+      isDisabled: true,
+      badge: soon,
+    },
+    {
+      value: "AMAZON_S3",
+      title: t("providerAmazonS3"),
+      icon: PROVIDER_ICON.AMAZON_S3,
+      isDisabled: true,
+      badge: soon,
+    },
+    {
+      value: "CUSTOM_URL",
+      title: t("providerCustomUrl"),
+      icon: PROVIDER_ICON.CUSTOM_URL,
+      isDisabled: true,
+      badge: soon,
+    },
+  ];
+}
 
 // eslint-disable-next-line max-lines-per-function -- coordinates the shared form and two responsive dialog shells
 export function AddSourceDialog({
@@ -65,6 +72,7 @@ export function AddSourceDialog({
   onOpenChange,
   action,
 }: Readonly<AddSourceDialogProps>) {
+  const t = useTranslations(ADD_SOURCE_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const [isPending, setIsPending] = useState(false);
   const form = useForm<{ displayName: string; provider: "GOOGLE_DRIVE" }>({
@@ -89,16 +97,16 @@ export function AddSourceDialog({
       }
       showToast({
         tone: "success",
-        title: SOURCE_COPY.addedTitle,
-        body: SOURCE_COPY.addedBody(values.displayName),
+        title: t("addedTitle"),
+        body: t("addedBody", { name: values.displayName }),
       });
       onOpenChange(false);
     } catch {
       showToast({
         tone: "danger",
-        title: SOURCE_COPY.serverErrorTitle,
-        body: SOURCE_COPY.serverErrorBody,
-        action: { label: SOURCE_COPY.retry, onAction: handleRetry },
+        title: t("serverErrorTitle"),
+        body: t("serverErrorBody"),
+        action: { label: t("retry"), onAction: handleRetry },
       });
     } finally {
       setIsPending(false);
@@ -125,29 +133,24 @@ export function AddSourceDialog({
   const formContent = (
     <form id={FORM_ID} noValidate onSubmit={handleSubmit} className="flex flex-col gap-(--space-4)">
       <OptionCardGroup
-        label={SOURCE_COPY.providerLabel}
-        options={PROVIDER_OPTIONS}
+        label={t("providerLabel")}
+        options={providerOptions(t)}
         value={provider}
         onChange={handleProviderChange}
         isLabelVisible
       />
       <TextField
-        label={SOURCE_COPY.nameLabel}
+        label={t("nameLabel")}
         name={field.name}
-        placeholder={SOURCE_COPY.namePlaceholder}
-        description={SOURCE_COPY.nameHelper}
-        errorMessage={sourceNameErrorText(fieldState.error?.message ?? "")}
+        placeholder={t("namePlaceholder")}
+        description={t("nameHelper")}
+        errorMessage={sourceNameErrorText(t, fieldState.error?.message ?? "")}
         value={field.value}
         onChange={field.onChange}
         onBlur={field.onBlur}
         inputRef={field.ref}
       />
-      <Alert
-        tone="warning"
-        title={SOURCE_COPY.warningTitle}
-        body={SOURCE_COPY.warningBodyShort}
-        live={false}
-      />
+      <Alert tone="warning" title={t("warningTitle")} body={t("warningBodyShort")} live={false} />
     </form>
   );
 
@@ -159,7 +162,7 @@ export function AddSourceDialog({
       isPending={isPending}
       className={isMobile ? "w-full" : undefined}
     >
-      {isPending ? SOURCE_COPY.adding : SOURCE_COPY.add}
+      {isPending ? t("adding") : t("add")}
     </Button>
   );
 
@@ -168,8 +171,8 @@ export function AddSourceDialog({
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        title={SOURCE_COPY.addTitle}
-        description={SOURCE_COPY.addDescription}
+        title={t("addTitle")}
+        description={t("addDescription")}
         variant="form"
         actions={submitButton}
       >
@@ -182,13 +185,13 @@ export function AddSourceDialog({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      title={SOURCE_COPY.addTitle}
-      description={SOURCE_COPY.addDescription}
+      title={t("addTitle")}
+      description={t("addDescription")}
       size="md"
       actions={
         <>
           <Button variant="secondary" onPress={handleCancel} isDisabled={isPending}>
-            {SOURCE_COPY.cancel}
+            {t("cancel")}
           </Button>
           {submitButton}
         </>

@@ -1,3 +1,4 @@
+import type { useTranslations } from "next-intl";
 import type { Control, FieldValues, Path } from "react-hook-form";
 
 export interface ControlledTextFieldProps<T extends FieldValues> {
@@ -8,3 +9,6 @@ export interface ControlledTextFieldProps<T extends FieldValues> {
   autoComplete?: string;
   placeholder?: string;
 }
+
+/** The field's translate function, passed to the error mapping. */
+export type FieldTranslate = ReturnType<typeof useTranslations>;

@@ -3,9 +3,11 @@ import "server-only";
 import { and, eq, sql } from "drizzle-orm";
 
 import type {
+  ItemDefinitionInput,
   ItemDefinitionRecord,
   ItemDefinitionRepositoryPort,
 } from "@/features/booking/application/ports/item-definition-repository/item-definition-repository.port";
+import { parseDefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions";
 import {
   legacySelectionType,
   parsePickMode,
@@ -23,6 +25,7 @@ interface DefinitionRow {
   readonly name: string;
   readonly valueType: string;
   readonly unit: string | null;
+  readonly defaultKey: string | null;
   readonly selectionRequired: boolean;
   readonly pickMode: string | null;
   readonly allowsPickNotes: boolean;
@@ -37,6 +40,7 @@ function toRecord(row: DefinitionRow): ItemDefinitionRecord | null {
     name: row.name,
     valueType: row.valueType,
     unit: row.unit,
+    defaultKey: parseDefaultItemKey(row.defaultKey),
     selectionRequired: row.selectionRequired,
     pickMode: parsePickMode(row.pickMode),
     allowsPickNotes: row.allowsPickNotes,
@@ -50,6 +54,7 @@ const columns = {
   name: serviceItemDefinition.name,
   valueType: serviceItemDefinition.valueType,
   unit: serviceItemDefinition.unit,
+  defaultKey: serviceItemDefinition.defaultKey,
   selectionRequired: serviceItemDefinition.selectionRequired,
   pickMode: serviceItemDefinition.pickMode,
   allowsPickNotes: serviceItemDefinition.allowsPickNotes,
@@ -112,17 +117,7 @@ export function createDrizzleItemDefinitionRepository(
       try {
         const rows = await db
           .update(serviceItemDefinition)
-          .set({
-            name: input.name,
-            valueType: input.valueType,
-            unit: input.unit,
-            selectionRequired: input.selectionRequired,
-            selectionType: legacySelectionType(input.pickMode),
-            pickMode: input.pickMode,
-            allowsPickNotes: input.allowsPickNotes,
-            updatedBy: input.editorUserId,
-            updatedAt: new Date(),
-          })
+          .set(updateValues(input))
           .where(
             and(
               eq(serviceItemDefinition.workspaceId, context.workspaceId),
@@ -202,10 +197,38 @@ export function createDrizzleItemDefinitionRepository(
             selectionType: legacySelectionType(input.pickMode),
             pickMode: input.pickMode,
             allowsPickNotes: input.allowsPickNotes,
+            defaultKey: input.defaultKey ?? null,
             updatedBy: input.editorUserId,
           })),
         )
         .onConflictDoNothing();
     },
   };
+} /**
+ * The columns one definition update writes (D-18 clears the key on rename).
+ * @param input - the edited definition
+ * @returns the column values for the UPDATE
+ */
+function updateValues(input: ItemDefinitionInput) {
+  return {
+    name: input.name,
+    defaultKey: keyUnlessRenamed(input),
+    valueType: input.valueType,
+    unit: input.unit,
+    selectionRequired: input.selectionRequired,
+    selectionType: legacySelectionType(input.pickMode),
+    pickMode: input.pickMode,
+    allowsPickNotes: input.allowsPickNotes,
+    updatedBy: input.editorUserId,
+    updatedAt: new Date(),
+  };
+}
+
+/**
+ * D-18: a rename or unit change clears the platform key in the same UPDATE, with no read-then-write.
+ * @param input - the new name and unit
+ * @returns the SQL that keeps the key only when name and unit are unchanged
+ */
+function keyUnlessRenamed(input: ItemDefinitionInput) {
+  return sql`case when ${serviceItemDefinition.name} is distinct from ${input.name} or ${serviceItemDefinition.unit} is distinct from ${input.unit} then null else ${serviceItemDefinition.defaultKey} end`;
 }

@@ -3,6 +3,7 @@ import "server-only";
 import { and, asc, eq, sql } from "drizzle-orm";
 
 import type { TeamRoleRepositoryPort } from "@/features/booking/application/ports/team-role-repository/team-role-repository.port";
+import { parseDefaultTeamRoleKey } from "@/features/booking/domain/team-role/team-role";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { pgCode } from "../catalog-repository/pg-error";
@@ -82,7 +83,13 @@ async function renameRole(
   try {
     const rows = await db
       .update(teamRole)
-      .set({ name, updatedBy: actor, updatedAt: new Date() })
+      // D-18: a rename clears the platform key in the same UPDATE.
+      .set({
+        name,
+        defaultKey: sql`case when ${teamRole.name} is distinct from ${name} then null else ${teamRole.defaultKey} end`,
+        updatedBy: actor,
+        updatedAt: new Date(),
+      })
       .where(and(eq(teamRole.workspaceId, context.workspaceId), eq(teamRole.id, id)))
       .returning({ id: teamRole.id });
     return rows.length > 0 ? ("UPDATED" as const) : ("NOT_FOUND" as const);
@@ -99,24 +106,33 @@ async function renameRole(
  */
 export function createDrizzleTeamRoleRepository(db: DbExecutor): TeamRoleRepositoryPort {
   return {
-    list: async (context) =>
-      db
+    list: async (context) => {
+      const rows = await db
         .select({
           id: teamRole.id,
           name: teamRole.name,
+          defaultKey: teamRole.defaultKey,
           usage: usageOf(context.workspaceId, sql`${teamRole.id}`),
         })
         .from(teamRole)
         .where(eq(teamRole.workspaceId, context.workspaceId))
-        .orderBy(asc(sql`lower(${teamRole.name})`), asc(teamRole.id)),
+        .orderBy(asc(sql`lower(${teamRole.name})`), asc(teamRole.id));
+      return rows.map((row) => ({ ...row, defaultKey: parseDefaultTeamRoleKey(row.defaultKey) }));
+    },
     create: (context, name, actorId) => createRole(db, context, name, actorId),
     rename: (context, id, name, actorId) => renameRole(db, context, id, name, actorId),
     delete: (context, id) => deleteRoleOrReportUsage(db, context, id),
-    async seedDefaults(context, names) {
-      if (names.length === 0) return;
+    async seedDefaults(context, roles) {
+      if (roles.length === 0) return;
       await db
         .insert(teamRole)
-        .values(names.map((name) => ({ workspaceId: context.workspaceId, name })))
+        .values(
+          roles.map((role) => ({
+            workspaceId: context.workspaceId,
+            name: role.name,
+            defaultKey: role.defaultKey,
+          })),
+        )
         .onConflictDoNothing();
     },
   };

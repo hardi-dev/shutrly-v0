@@ -1,29 +1,72 @@
-// The project page's *Akses klien* card and *Ganti link* (owner-5-akses-klien exports, F-10 Slice 10).
+// Source: copy-deck.md §15 "Client access" (the card, its actions, notes and rotate-link dialog) and §10.2 "Client access". Copied verbatim.
+// Rows marked PROPOSED have no deck row yet; they are listed in copy-deck.md §15.x for Owner review.
+import { GALLERY_COPY_NAMESPACE } from "../gallery-copy/gallery-copy.copy";
+
+export const PROJECT_ACCESS_COPY_NAMESPACE = "projectAccess";
+/** The gallery namespace, for the expiry fact the card shows (read through this sibling). */
+export const PROJECT_ACCESS_GALLERY_NAMESPACE = GALLERY_COPY_NAMESPACE;
+
 export const PROJECT_ACCESS_COPY = {
-  title: "Akses klien",
-  description: "Link dan password untuk klien.",
-  rotateLink: "Ganti link",
-  rotatePassword: "Ganti password",
-  link: "Link",
-  password: "Password",
-  expiry: "Kedaluwarsa",
-  inactive: "Tidak aktif",
-  draftNote: "Klien belum bisa membuka link ini sampai galeri dipublikasikan.",
-  archivedNote: "Galeri diarsipkan. Link tidak bisa dibuka dan tidak bisa diganti.",
-  dialogTitle: "Ganti link galeri?",
-  dialogDescription: "Link lama berhenti bekerja.",
-  dialogBody: "Semua link yang sudah Anda bagikan, termasuk link invoice, tidak bisa dibuka lagi.",
-  dialogNote: "Password tidak berubah. Bagikan link baru ke klien.",
-  cancel: "Batal",
-  // not in Pencil: copy button names and the toasts
-  copyLink: "Salin link",
-  copyPassword: "Salin password",
-  copied: "Disalin",
-  // not in Pencil: the browser refused the clipboard, so the text is shown whole and selected
-  copyFailedTitle: "Belum tersalin",
-  copyFailedBody:
-    "Teksnya sudah ditandai. Salin dengan Ctrl+C atau ⌘C, atau tekan lama lalu Salin.",
-  rotatedToast: "Link baru siap. Bagikan ke klien.",
-  cancelledToast: "Proyek dibatalkan, link tidak bisa diganti.",
-  failedToast: "Gagal mengganti link. Coba lagi.",
+  namespace: PROJECT_ACCESS_COPY_NAMESPACE,
+  surface: "owner",
+  messages: {
+    en: {
+      title: "Client access",
+      description: "Link and password for the client.",
+      rotateLink: "Change link",
+      rotatePassword: "Change password",
+      link: "Link",
+      password: "Password",
+      expiry: "Expires",
+      inactive: "Inactive",
+      draftNote: "The client can’t open this link until the gallery is published.",
+      archivedNote: "The gallery is archived. The link can’t be opened or changed.",
+      dialogTitle: "Change the gallery link?",
+      dialogDescription: "The old link will stop working.",
+      dialogBody: "All shared links, including invoice links, will stop working.",
+      dialogNote: "The password won’t change. Share the new link with the client.",
+      cancel: "Cancel",
+      copyLink: "Copy link",
+      copyPassword: "Copy password",
+      // PROPOSED (pending Owner review): the copy toast is shared by the link and the password.
+      copied: "Copied",
+      // PROPOSED (pending Owner review): the link copy failed; the password row (§10.1) covers only the password.
+      copyFailedTitle: "Link couldn’t be copied",
+      // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
+      copyFailedBody:
+        "The text is selected. Copy it with Ctrl+C or ⌘C, or press and hold, then Copy.",
+      // PROPOSED (pending Owner review): the rotate toasts.
+      rotatedToast: "New link ready. Share it with the client.",
+      // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
+      cancelledToast: "The project was canceled, so the link can’t be changed.",
+      // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
+      failedToast: "Couldn’t change the link. Try again.",
+    },
+    id: {
+      title: "Akses klien",
+      description: "Link dan password untuk klien.",
+      rotateLink: "Ganti link",
+      rotatePassword: "Ganti password",
+      link: "Link",
+      password: "Password",
+      expiry: "Kedaluwarsa",
+      inactive: "Tidak aktif",
+      draftNote: "Klien belum bisa membuka link ini sampai galeri dipublikasikan.",
+      archivedNote: "Galeri diarsipkan. Link tidak bisa dibuka dan tidak bisa diganti.",
+      dialogTitle: "Ganti link galeri?",
+      dialogDescription: "Link lama berhenti bekerja.",
+      dialogBody: "Semua link yang sudah dibagikan, termasuk link invoice, tidak bisa dibuka lagi.",
+      dialogNote: "Password tidak berubah. Bagikan link baru ke klien.",
+      cancel: "Batal",
+      copyLink: "Salin link",
+      copyPassword: "Salin password",
+      copied: "Disalin",
+      copyFailedTitle: "Link belum tersalin",
+      copyFailedBody:
+        "Teksnya sudah ditandai. Salin dengan Ctrl+C atau ⌘C, atau tekan lama lalu Salin.",
+      rotatedToast: "Link baru siap. Bagikan ke klien.",
+      cancelledToast: "Proyek dibatalkan, link tidak bisa diganti.",
+      failedToast: "Gagal mengganti link. Coba lagi.",
+    },
+  },
 } as const;

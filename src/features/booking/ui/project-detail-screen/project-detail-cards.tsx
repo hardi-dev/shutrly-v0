@@ -1,8 +1,11 @@
+import { useTranslations } from "next-intl";
+
 import { formatIdr } from "@/features/booking/domain/idr-amount/idr-amount";
 import { needsSession } from "@/features/booking/domain/project-status/project-status";
 import { formatSessionRange } from "@/features/booking/domain/session/session";
 import { assignmentsBySession } from "@/features/booking/domain/session-assignment/session-assignment";
 import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -10,13 +13,14 @@ import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { describePackageItem } from "../package-items-card/package-items-card";
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { ProjectRowMenu } from "../project-row-menu/project-row-menu";
 import type { RowMenuEntry } from "../project-row-menu/project-row-menu.types";
 import { SessionRowActions } from "../session-row-actions/session-row-actions";
 import type { SessionTeamAction } from "../session-row-actions/session-row-actions.types";
 import { SessionTeamAvatars } from "../session-team-avatars/session-team-avatars";
 import { displayBookingValue } from "./booking-value-display";
+import { PROJECT_DETAIL_SCREEN_COPY_NAMESPACE } from "./project-detail-screen.copy";
 import type {
   DetailEditHandlers,
   ProjectDetailCardProps,
@@ -26,9 +30,12 @@ import type {
 } from "./project-detail-screen.types";
 import { ProjectFacts } from "./project-facts";
 
-function lockedDescription(project: ProjectDetailCardProps["project"]): string | undefined {
-  if (project.status === "CANCELLED") return PROJECT_COPY.cancelledDescription;
-  return project.canEditDeal ? undefined : PROJECT_COPY.lockedDescription;
+function lockedDescription(
+  t: ProjectTranslate,
+  project: ProjectDetailCardProps["project"],
+): string | undefined {
+  if (project.status === "CANCELLED") return t("cancelledDescription");
+  return project.canEditDeal ? undefined : t("lockedDescription");
 }
 
 /** Info card: client, service, agreed price and internal notes; Ubah info shows while the project can change. */
@@ -37,28 +44,30 @@ export function ProjectInfoCard({
   isMobile,
   onEdit,
 }: Readonly<ProjectDetailCardProps & { onEdit?: () => void }>) {
+  const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
   const number = project.client.whatsappNumber;
   const client = number
     ? `${project.client.name} · ${formatWhatsappNumber(number)}`
     : project.client.name;
   return (
     <SectionCard
-      title={PROJECT_COPY.infoTitle}
+      title={t("infoTitle")}
       content="flush"
       actions={
         onEdit && project.canEditInfo ? (
           <Button variant="secondary" iconLeading="pencil" onPress={onEdit}>
-            {isMobile ? PROJECT_COPY.infoEditMobile : PROJECT_COPY.infoEditDesktop}
+            {isMobile ? t("infoEditMobile") : t("infoEditDesktop")}
           </Button>
         ) : null
       }
     >
       <ProjectFacts
         facts={[
-          { label: PROJECT_COPY.infoClient, value: client },
-          { label: PROJECT_COPY.infoService, value: project.service.name },
-          { label: PROJECT_COPY.infoPrice, value: formatIdr(project.agreedPrice) },
-          { label: PROJECT_COPY.infoNotes, value: project.notes },
+          { label: t("infoClient"), value: client },
+          { label: t("infoService"), value: project.service.name },
+          { label: t("infoPrice"), value: formatIdr(project.agreedPrice, locale) },
+          { label: t("infoNotes"), value: project.notes },
         ]}
       />
     </SectionCard>
@@ -71,20 +80,18 @@ export function ProjectPackageCard({
   isMobile,
   edit,
 }: Readonly<ProjectDetailCardProps & { edit?: DetailEditHandlers }>) {
-  const description =
-    lockedDescription(project) ??
-    (isMobile
-      ? PROJECT_COPY.packageDescriptionDetailMobile
-      : PROJECT_COPY.packageDescriptionDetailDesktop(project.service.name));
+  const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
+  const description = packageDescription(t, project, isMobile);
   return (
     <SectionCard
-      title={PROJECT_COPY.packageTitle}
+      title={t("packageTitle")}
       description={description}
       content="flush"
       actions={
         edit && project.canEditDeal ? (
           <Button variant="secondary" iconLeading="plus" onPress={edit.onAddItem}>
-            {isMobile ? PROJECT_COPY.addItemMobile : PROJECT_COPY.addItemDesktop}
+            {isMobile ? t("addItemMobile") : t("addItemDesktop")}
           </Button>
         ) : null
       }
@@ -93,17 +100,17 @@ export function ProjectPackageCard({
         <EmptyState
           icon="package"
           placement="in-card"
-          title={PROJECT_COPY.packageEmptyTitle}
-          body={PROJECT_COPY.packageEmptyBody}
+          title={t("packageEmptyTitle")}
+          body={t("packageEmptyBody")}
         />
       ) : (
-        <ul aria-label={PROJECT_COPY.packageTitle}>
+        <ul aria-label={t("packageTitle")}>
           {project.items.map((item, index) => (
             <ListCardItem
               key={item.id}
               icon={item.pickMode ? "images" : "package"}
               title={item.name}
-              meta={describePackageItem({ ...item, definitionName: item.name })}
+              meta={describePackageItem(t, { ...item, definitionName: item.name }, locale)}
               isLast={index === project.items.length - 1}
               trailing={
                 edit && project.canEditDeal ? <ItemMenu item={item} edit={edit} /> : undefined
@@ -123,16 +130,17 @@ function ItemMenu({
   item: ProjectDetailCardProps["project"]["items"][number];
   edit: DetailEditHandlers;
 }>) {
+  const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
   const entries: RowMenuEntry[] = [
     {
-      label: PROJECT_COPY.itemEditValue,
+      label: t("itemEditValue"),
       icon: "pencil",
       onSelect: () => {
         edit.onEditItem(item);
       },
     },
     {
-      label: PROJECT_COPY.itemRemove,
+      label: t("itemRemove"),
       icon: "trash-2",
       isDestructive: true,
       onSelect: () => {
@@ -142,26 +150,43 @@ function ItemMenu({
   ];
   return (
     <ProjectRowMenu
-      label={PROJECT_COPY.itemActions(item.name)}
+      label={t("itemActions", { name: item.name })}
       title={item.name}
       entries={entries}
     />
   );
 }
 
-function scheduleDescription({ project, isMobile }: Readonly<ProjectDetailCardProps>): string {
-  if (project.status === "CANCELLED") return PROJECT_COPY.cancelledDescription;
-  return isMobile
-    ? PROJECT_COPY.scheduleDescriptionDetailMobile
-    : PROJECT_COPY.scheduleDescriptionDetailDesktop;
+function packageDescription(
+  t: ProjectTranslate,
+  project: ProjectDetailCardProps["project"],
+  isMobile: boolean,
+): string | undefined {
+  return (
+    lockedDescription(t, project) ??
+    (isMobile
+      ? t("packageDescriptionDetailMobile")
+      : t("packageDescriptionDetailDesktop", { serviceName: project.service.name }))
+  );
 }
 
-function fieldsDescription({ project, isMobile }: Readonly<ProjectDetailCardProps>): string {
-  const locked = lockedDescription(project);
+function scheduleDescription(
+  t: ProjectTranslate,
+  { project, isMobile }: Readonly<ProjectDetailCardProps>,
+): string {
+  if (project.status === "CANCELLED") return t("cancelledDescription");
+  return isMobile ? t("scheduleDescriptionDetailMobile") : t("scheduleDescriptionDetailDesktop");
+}
+
+function fieldsDescription(
+  t: ProjectTranslate,
+  { project, isMobile }: Readonly<ProjectDetailCardProps>,
+): string {
+  const locked = lockedDescription(t, project);
   if (locked !== undefined) return locked;
   return isMobile
-    ? PROJECT_COPY.fieldsDescriptionDetailMobile(project.service.name)
-    : PROJECT_COPY.fieldsDescriptionDetailDesktop(project.service.name);
+    ? t("fieldsDescriptionDetailMobile", { serviceName: project.service.name })
+    : t("fieldsDescriptionDetailDesktop", { serviceName: project.service.name });
 }
 
 /** Schedule card: sessions in date order; Tambah sesi and the session ⋯ show while the project is not cancelled. */
@@ -170,20 +195,21 @@ export function ProjectScheduleCard(
     ProjectDetailCardProps & { edit?: DetailEditHandlers; team?: SessionTeamHandlers }
   >,
 ) {
-  const { project, isMobile, edit, team } = props;
+  const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
+  const { project, edit, team } = props;
   const byUnit = assignmentsBySession(project.assignments);
-  const description = scheduleDescription(props);
+  const description = scheduleDescription(t, props);
   const canEdit = edit !== undefined && project.canEditSchedule;
   const isLastOfBooked = needsSession(project.status) && project.sessions.length <= 1;
   return (
     <SectionCard
-      title={PROJECT_COPY.scheduleTitle}
+      title={t("scheduleTitle")}
       description={description}
       content="flush"
       actions={
         canEdit ? (
           <Button variant="secondary" iconLeading="plus" onPress={edit.onAddSession}>
-            {isMobile ? PROJECT_COPY.addSessionMobile : PROJECT_COPY.addSessionDesktop}
+            {t("addSession")}
           </Button>
         ) : null
       }
@@ -192,11 +218,11 @@ export function ProjectScheduleCard(
         <EmptyState
           icon="calendar"
           placement="in-card"
-          title={PROJECT_COPY.scheduleEmptyTitle}
-          body={PROJECT_COPY.scheduleDetailEmptyBody}
+          title={t("scheduleEmptyTitle")}
+          body={t("scheduleDetailEmptyBody")}
         />
       ) : (
-        <ul aria-label={PROJECT_COPY.scheduleTitle}>
+        <ul aria-label={t("scheduleTitle")}>
           {project.sessions.map((session, index) => (
             <SessionRow
               key={session.id}
@@ -224,6 +250,7 @@ function SessionRow({
   edit,
   isLastOfBooked,
 }: Readonly<SessionRowProps>) {
+  const locale = useFormattingLocale();
   const menu = edit ? (
     <SessionMenu
       session={session}
@@ -238,7 +265,7 @@ function SessionRow({
     <ListCardItem
       icon="calendar"
       title={session.name}
-      meta={formatSessionRange(session)}
+      meta={formatSessionRange(session, locale)}
       isLast={isLastRow}
       trailing={
         <SessionTrailing
@@ -261,6 +288,7 @@ function SessionTrailing({
   team,
   menu,
 }: Readonly<SessionTrailingProps>) {
+  const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
   function handleManage(): void {
     team?.onManage(session);
   }
@@ -281,7 +309,7 @@ function SessionTrailing({
       <IconButton
         icon="user-plus"
         size="sm"
-        aria-label={PROJECT_COPY.addTeamFor(session.name)}
+        aria-label={t("addTeamFor", { sessionName: session.name })}
         onPress={handleAdd}
       />
     );
@@ -310,6 +338,7 @@ function SessionMenu({
   canEditTeam: boolean;
   team?: SessionTeamHandlers;
 }>) {
+  const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
   const handleEdit = () => {
     edit.onEditSession(session);
   };
@@ -325,15 +354,15 @@ function SessionMenu({
   let teamAction: SessionTeamAction | undefined;
   if (canEditTeam && team) {
     teamAction = hasTeam
-      ? { label: PROJECT_COPY.manageTeam, icon: "users", onSelect: handleManage }
-      : { label: PROJECT_COPY.addTeam, icon: "user-plus", onSelect: handleAdd };
+      ? { label: t("manageTeam"), icon: "users", onSelect: handleManage }
+      : { label: t("addTeam"), icon: "user-plus", onSelect: handleAdd };
   }
   return (
     <SessionRowActions
       name={session.name}
       onEdit={handleEdit}
       onDelete={handleDelete}
-      deleteHint={isLast ? PROJECT_COPY.lastSessionHint : undefined}
+      deleteHint={isLast ? t("lastSessionHint") : undefined}
       isDetail
       teamAction={teamAction}
     />
@@ -344,18 +373,20 @@ function SessionMenu({
 export function ProjectFieldsReadCard(
   props: Readonly<ProjectDetailCardProps & { edit?: DetailEditHandlers }>,
 ) {
+  const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
   const { project, edit } = props;
   if (project.fields.length === 0) return null;
-  const description = fieldsDescription(props);
+  const description = fieldsDescription(t, props);
   return (
     <SectionCard
-      title={PROJECT_COPY.fieldsTitle}
+      title={t("fieldsTitle")}
       description={description}
       content="flush"
       actions={
         edit && project.canEditDeal ? (
           <Button variant="secondary" iconLeading="pencil" onPress={edit.onEditFields}>
-            {PROJECT_COPY.fieldsEdit}
+            {t("fieldsEdit")}
           </Button>
         ) : null
       }
@@ -363,7 +394,7 @@ export function ProjectFieldsReadCard(
       <ProjectFacts
         facts={project.fields.map((field) => ({
           label: field.name,
-          value: displayBookingValue(field),
+          value: displayBookingValue(t, field, locale),
         }))}
       />
     </SectionCard>

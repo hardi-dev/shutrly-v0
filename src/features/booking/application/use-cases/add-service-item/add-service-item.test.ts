@@ -13,17 +13,35 @@ describe("addServiceItem", () => {
     const peopleId = definitions.rows[2]?.id;
     if (!editId || !peopleId) throw new Error("fixture");
     expect(
-      await addServiceItem(services, definitions, bookingContext, serviceId, editId, "user", {
-        type: "NUMBER",
-        value: "25",
-      }),
+      await addServiceItem(
+        services,
+        definitions,
+        bookingContext,
+        serviceId,
+        editId,
+        "user",
+        {
+          type: "NUMBER",
+          value: "25",
+        },
+        "id-ID",
+      ),
     ).toEqual({ ok: true });
     expect(
-      await addServiceItem(services, definitions, bookingContext, serviceId, peopleId, "user", {
-        type: "RANGE",
-        min: "1",
-        max: "2",
-      }),
+      await addServiceItem(
+        services,
+        definitions,
+        bookingContext,
+        serviceId,
+        peopleId,
+        "user",
+        {
+          type: "RANGE",
+          min: "1",
+          max: "2",
+        },
+        "id-ID",
+      ),
     ).toEqual({ ok: true });
     expect(services.rows[0]?.items.map(({ value }) => value)).toEqual([
       { type: "NUMBER", value: "25" },
@@ -36,34 +54,70 @@ describe("addServiceItem", () => {
     const editId = definitions.rows[0]?.id;
     if (!editId) throw new Error("fixture");
     expect(
-      await addServiceItem(services, definitions, bookingContext, serviceId, editId, "user", {
-        type: "NUMBER",
-        value: "2.5",
-      }),
+      await addServiceItem(
+        services,
+        definitions,
+        bookingContext,
+        serviceId,
+        editId,
+        "user",
+        {
+          type: "NUMBER",
+          value: "2.5",
+        },
+        "id-ID",
+      ),
     ).toEqual({
       ok: false,
       code: "VALIDATION_FAILED",
-      fieldErrors: { value: "NOT_WHOLE" },
+      fieldErrors: { value: "INVALID" },
     });
-    await addServiceItem(services, definitions, bookingContext, serviceId, editId, "user", {
-      type: "NUMBER",
-      value: "2",
-    });
-    expect(
-      await addServiceItem(services, definitions, bookingContext, serviceId, editId, "user", {
+    await addServiceItem(
+      services,
+      definitions,
+      bookingContext,
+      serviceId,
+      editId,
+      "user",
+      {
         type: "NUMBER",
-        value: "3",
-      }),
+        value: "2",
+      },
+      "id-ID",
+    );
+    expect(
+      await addServiceItem(
+        services,
+        definitions,
+        bookingContext,
+        serviceId,
+        editId,
+        "user",
+        {
+          type: "NUMBER",
+          value: "3",
+        },
+        "id-ID",
+      ),
     ).toEqual({
       ok: false,
       code: "VALIDATION_FAILED",
       fieldErrors: { definitionId: "DUPLICATE_DEFINITION" },
     });
     expect(
-      await addServiceItem(services, definitions, bookingContext, serviceId, editId, "user", {
-        type: "NUMBER",
-        value: "-1",
-      }),
+      await addServiceItem(
+        services,
+        definitions,
+        bookingContext,
+        serviceId,
+        editId,
+        "user",
+        {
+          type: "NUMBER",
+          value: "-1",
+        },
+        "id-ID",
+      ),
     ).toEqual({
       ok: false,
       code: "VALIDATION_FAILED",
@@ -77,11 +131,20 @@ describe("addServiceItem", () => {
     const editId = definitions.rows[0]?.id;
     if (!peopleId || !editId) throw new Error("fixture");
     expect(
-      await addServiceItem(services, definitions, bookingContext, serviceId, peopleId, "user", {
-        type: "RANGE",
-        min: "3",
-        max: "2",
-      }),
+      await addServiceItem(
+        services,
+        definitions,
+        bookingContext,
+        serviceId,
+        peopleId,
+        "user",
+        {
+          type: "RANGE",
+          min: "3",
+          max: "2",
+        },
+        "id-ID",
+      ),
     ).toEqual({
       ok: false,
       code: "VALIDATION_FAILED",
@@ -89,10 +152,19 @@ describe("addServiceItem", () => {
     });
     definitions.rows[0] = { ...definitions.rows[0], isActive: false };
     expect(
-      await addServiceItem(services, definitions, bookingContext, serviceId, editId, "user", {
-        type: "NUMBER",
-        value: "2",
-      }),
+      await addServiceItem(
+        services,
+        definitions,
+        bookingContext,
+        serviceId,
+        editId,
+        "user",
+        {
+          type: "NUMBER",
+          value: "2",
+        },
+        "id-ID",
+      ),
     ).toEqual({
       ok: false,
       code: "VALIDATION_FAILED",

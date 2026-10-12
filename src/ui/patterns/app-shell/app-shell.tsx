@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { Dialog, Modal as AriaModal, ModalOverlay } from "react-aria-components";
@@ -13,8 +14,8 @@ import { CompactBar } from "../compact-bar/compact-bar";
 import { COMPACT_BAR_ACTIONS_ID } from "../compact-bar/compact-bar-actions";
 import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
 import { Sidebar } from "../sidebar/sidebar";
-import { SIDEBAR_COPY } from "../sidebar/sidebar.copy";
-import { APP_SHELL_COPY } from "./app-shell.copy";
+import type { SidebarAccountMenu } from "../sidebar/sidebar.types";
+import { APP_SHELL_COPY_NAMESPACE, SIDEBAR_COPY_NAMESPACE } from "./app-shell.copy";
 import type { AppShellProps } from "./app-shell.types";
 import { readCollapsed, writeCollapsed } from "./sidebar-collapse-preference";
 
@@ -28,6 +29,7 @@ export function AppShell({
   workspace,
   account,
   onLogout,
+  accountMenu,
   children,
   nav,
   navBottom,
@@ -47,6 +49,8 @@ export function AppShell({
   workspaceSwitcher,
   subPage,
 }: Readonly<AppShellProps>) {
+  const t = useTranslations(APP_SHELL_COPY_NAMESPACE);
+  const sidebarT = useTranslations(SIDEBAR_COPY_NAMESPACE);
   const [isDesktopSidebarCollapsed, setIsDesktopSidebarCollapsed] = useState(false);
   const [isTabletSidebarOpen, setIsTabletSidebarOpen] = useState(false);
 
@@ -85,7 +89,7 @@ export function AppShell({
         <IconButton
           icon={isDesktopSidebarCollapsed ? "panel-left-open" : "panel-left"}
           size="sm"
-          aria-label={isDesktopSidebarCollapsed ? SIDEBAR_COPY.expand : SIDEBAR_COPY.collapse}
+          aria-label={isDesktopSidebarCollapsed ? sidebarT("expand") : sidebarT("collapse")}
           data-sidebar-toggle=""
           onPress={
             isDesktopSidebarCollapsed ? handleExpandDesktopSidebar : handleCollapseDesktopSidebar
@@ -96,7 +100,7 @@ export function AppShell({
         <IconButton
           icon="panel-left-open"
           size="sm"
-          aria-label={SIDEBAR_COPY.expand}
+          aria-label={sidebarT("expand")}
           data-sidebar-toggle=""
           onPress={handleOpenTabletSidebar}
         />
@@ -107,7 +111,7 @@ export function AppShell({
   return (
     <div className="flex min-h-dvh bg-(--color-semantic-surface-muted) md:pt-(--space-3) md:pr-(--space-3) md:pb-(--space-3)">
       <a href={`#${APP_SHELL_CONTENT_ID}`} className="sr-only focus:not-sr-only max-md:hidden">
-        {APP_SHELL_COPY.skip}
+        {t("skip")}
       </a>
       <DesktopSidebar
         workspace={workspace}
@@ -117,6 +121,7 @@ export function AppShell({
         isCompact={isDesktopSidebarCollapsed}
         workspaceSwitcher={workspaceSwitcher}
         onLogout={onLogout}
+        accountMenu={accountMenu}
       />
       <TabletRail
         workspace={workspace}
@@ -175,6 +180,7 @@ export function AppShell({
         navBottom={navBottom}
         workspaceSwitcher={workspaceSwitcher}
         onLogout={onLogout}
+        accountMenu={accountMenu}
       />
     </div>
   );
@@ -207,10 +213,12 @@ function DesktopSidebar({
   isCompact,
   workspaceSwitcher,
   onLogout,
+  accountMenu,
 }: Readonly<Pick<AppShellProps, "workspace" | "account" | "nav" | "navBottom">> & {
   isCompact: boolean;
   workspaceSwitcher: AppShellProps["workspaceSwitcher"];
   onLogout?: () => void;
+  accountMenu?: SidebarAccountMenu;
 }) {
   return (
     // The Sidebar stays pinned while the page (header and content) scrolls.
@@ -221,6 +229,7 @@ function DesktopSidebar({
         isCompact={isCompact}
         workspaceSwitcher={workspaceSwitcher}
         onLogout={onLogout}
+        accountMenu={accountMenu}
         navBottom={navBottom}
       >
         {nav}
@@ -359,6 +368,7 @@ function TabletSidebarOverlay({
   navBottom,
   workspaceSwitcher,
   onLogout,
+  accountMenu,
 }: Readonly<{
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
@@ -368,7 +378,9 @@ function TabletSidebarOverlay({
   navBottom: AppShellProps["navBottom"];
   workspaceSwitcher: AppShellProps["workspaceSwitcher"];
   onLogout?: () => void;
+  accountMenu?: SidebarAccountMenu;
 }>) {
+  const t = useTranslations(APP_SHELL_COPY_NAMESPACE);
   return (
     <ModalOverlay
       isOpen={isOpen}
@@ -377,13 +389,14 @@ function TabletSidebarOverlay({
       className="fixed inset-0 z-50 bg-(--component-modal-scrim)"
     >
       <AriaModal className="h-full w-fit max-w-[calc(100%_-_32px)] bg-(--color-semantic-surface-panel)">
-        <Dialog aria-label={APP_SHELL_COPY.tabletOverlay} className="h-full outline-none">
+        <Dialog aria-label={t("tabletOverlay")} className="h-full outline-none">
           <Sidebar
             workspace={workspace}
             account={account}
             navBottom={navBottom}
             workspaceSwitcher={workspaceSwitcher}
             onLogout={onLogout}
+            accountMenu={accountMenu}
           >
             {nav}
           </Sidebar>

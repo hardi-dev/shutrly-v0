@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 
 import { Alert } from "@/ui/patterns/alert/alert";
@@ -7,10 +8,10 @@ import { Select } from "@/ui/patterns/select/select";
 import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { GalleryDialogShell } from "../gallery-dialog-shell/gallery-dialog-shell";
 import { galleryErrorText } from "../gallery-error-text/gallery-error-text";
 import { useLinkSourceForm } from "../use-link-source-form/use-link-source-form";
+import { LINK_SOURCE_DIALOG_COPY_NAMESPACE } from "./link-source-dialog.copy";
 import type {
   FolderInUseDialogProps,
   LinkSourceDialogProps,
@@ -21,6 +22,7 @@ const FORM_ID = "link-source-form";
 
 /** *Tambah folder*: an active source, the Drive folder link and a label, with the public-link warning (BR-SRC-004, AC-GAL-005, 009–011). */
 export function LinkSourceDialog(props: Readonly<LinkSourceDialogProps>) {
+  const t = useTranslations(LINK_SOURCE_DIALOG_COPY_NAMESPACE);
   const state = useLinkSourceForm(props);
   const renderAdd = (isMobile: boolean) => (
     <Button
@@ -30,7 +32,7 @@ export function LinkSourceDialog(props: Readonly<LinkSourceDialogProps>) {
       isPending={state.isPending}
       className="max-md:w-full"
     >
-      {GALLERY_COPY.addFolder}
+      {t("addFolder")}
     </Button>
   );
   if (state.inUse !== null) return <FolderInUseDialog isOpen={props.isOpen} state={state} />;
@@ -38,8 +40,8 @@ export function LinkSourceDialog(props: Readonly<LinkSourceDialogProps>) {
     <GalleryDialogShell
       isOpen={props.isOpen}
       onOpenChange={props.onOpenChange}
-      title={GALLERY_COPY.linkDialogTitle}
-      description={GALLERY_COPY.linkDialogDescription}
+      title={t("linkDialogTitle")}
+      description={t("linkDialogDescription")}
       size="md"
       isPending={state.isPending}
       renderPrimary={renderAdd}
@@ -50,6 +52,7 @@ export function LinkSourceDialog(props: Readonly<LinkSourceDialogProps>) {
 }
 
 function LinkSourceFields({ formId, state, options }: Readonly<LinkSourceFieldsProps>) {
+  const t = useTranslations(LINK_SOURCE_DIALOG_COPY_NAMESPACE);
   const { source, link, label } = state.fields;
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     void state.submit(event);
@@ -57,46 +60,43 @@ function LinkSourceFields({ formId, state, options }: Readonly<LinkSourceFieldsP
   return (
     <form id={formId} noValidate onSubmit={handleSubmit} className="flex flex-col gap-(--space-4)">
       <Select
-        label={GALLERY_COPY.linkSourceLabel}
+        label={t("linkSourceLabel")}
         options={options.map((option) => ({ id: option.id, label: option.name }))}
         value={source.field.value === "" ? null : source.field.value}
         onChange={source.field.onChange}
-        description={GALLERY_COPY.linkSourceHelper}
-        errorMessage={galleryErrorText(source.fieldState.error?.message)}
+        description={t("linkSourceHelper")}
+        errorMessage={galleryErrorText(t, source.fieldState.error?.message)}
       />
       <TextField
-        label={GALLERY_COPY.linkLabel}
+        label={t("linkLabel")}
         name={link.field.name}
         type="url"
-        placeholder={GALLERY_COPY.linkPlaceholder}
+        placeholder={t("linkPlaceholder")}
         value={link.field.value}
         onChange={link.field.onChange}
         onBlur={link.field.onBlur}
         inputRef={link.field.ref}
-        description={GALLERY_COPY.linkHelper}
-        errorMessage={galleryErrorText(link.fieldState.error?.message, "link")}
+        description={t("linkHelper")}
+        errorMessage={galleryErrorText(t, link.fieldState.error?.message, "link")}
       />
       <TextField
-        label={GALLERY_COPY.labelLabel}
+        label={t("labelLabel")}
         isOptional
         name={label.field.name}
-        placeholder={GALLERY_COPY.labelPlaceholder}
+        placeholder={t("labelPlaceholder")}
         value={label.field.value}
         onChange={label.field.onChange}
         onBlur={label.field.onBlur}
-        description={GALLERY_COPY.labelHelper}
-        errorMessage={galleryErrorText(label.fieldState.error?.message, "label")}
+        description={t("labelHelper")}
+        errorMessage={galleryErrorText(t, label.fieldState.error?.message, "label")}
       />
-      <Alert
-        tone="warning"
-        title={GALLERY_COPY.publicLinkTitle}
-        body={GALLERY_COPY.publicLinkBody}
-      />
+      <Alert tone="warning" title={t("publicLinkTitle")} body={t("publicLinkBody")} />
     </form>
   );
 }
 
 function FolderInUseDialog({ isOpen, state }: Readonly<FolderInUseDialogProps>) {
+  const t = useTranslations(LINK_SOURCE_DIALOG_COPY_NAMESPACE);
   const renderConfirm = (isMobile: boolean) => (
     <Button
       size={isMobile ? "lg" : "md"}
@@ -104,7 +104,7 @@ function FolderInUseDialog({ isOpen, state }: Readonly<FolderInUseDialogProps>) 
       onPress={state.confirmInUse}
       className="max-md:w-full"
     >
-      {GALLERY_COPY.folderInUseConfirm}
+      {t("folderInUseConfirm")}
     </Button>
   );
   const handleOpenChange = (open: boolean) => {
@@ -114,13 +114,13 @@ function FolderInUseDialog({ isOpen, state }: Readonly<FolderInUseDialogProps>) 
     <GalleryDialogShell
       isOpen={isOpen}
       onOpenChange={handleOpenChange}
-      title={GALLERY_COPY.folderInUseTitle}
+      title={t("folderInUseTitle")}
       size="sm"
       isPending={state.isPending}
       renderPrimary={renderConfirm}
     >
       <p className="text-(length:--font-size-body) text-(--component-input-helper)">
-        {GALLERY_COPY.folderInUseBody(state.inUse?.projects ?? "")}
+        {t("folderInUseBody", { projects: state.inUse?.projects ?? "" })}
       </p>
     </GalleryDialogShell>
   );

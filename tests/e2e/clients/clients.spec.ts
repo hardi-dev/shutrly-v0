@@ -1,13 +1,16 @@
 import AxeBuilder from "@axe-core/playwright";
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 
-import { CLIENT_COPY } from "@/features/booking/ui/client-copy/client-copy.copy";
+import { CLIENT_COPY_NAMESPACE } from "@/features/booking/ui/client-copy/client-copy.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 import { OWNER_NAV_COPY } from "@/features/workspace/ui/owner-nav/owner-nav.copy";
 import { WORKSPACE_NOT_FOUND_COPY } from "@/features/workspace/ui/workspace-not-found-screen/workspace-not-found-screen.copy";
 
 import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
+
+const clientT = copyTranslator(CLIENT_COPY_NAMESPACE, "id");
 
 test.setTimeout(90_000);
 test.describe.configure({ retries: 2 });
@@ -27,8 +30,8 @@ async function expectClientsA11y(page: Page): Promise<void> {
 
 async function openWorkspace(page: Page, label: string): Promise<string> {
   await registerAndVerify(page, uniqueEmail(label));
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Clients Studio");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Clients Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
   return new URL(page.url()).pathname.split("/")[2];
 }
@@ -46,35 +49,39 @@ async function addClient(
 ): Promise<void> {
   const mobile = page.viewportSize()?.width === 390;
   await page
-    .getByRole("button", { name: mobile ? CLIENT_COPY.add : CLIENT_COPY.addClient })
+    .getByRole("button", { name: mobile ? clientT("add") : clientT("addClient") })
     .first()
     .click();
   const dialog = page
-    .getByRole("dialog", { name: CLIENT_COPY.dialogTitle })
+    .getByRole("dialog", { name: clientT("dialogTitle") })
     .filter({ visible: true });
-  await dialog.getByRole("textbox", { name: CLIENT_COPY.name }).fill(values.name);
+  await dialog.getByRole("textbox", { name: clientT("name") }).fill(values.name);
   if (values.whatsappNumber)
     await dialog
-      .getByRole("textbox", { name: CLIENT_COPY.whatsappNumber })
+      .getByRole("textbox", { name: clientT("whatsappNumber") })
       .fill(values.whatsappNumber);
   if (values.instagram)
     await dialog
-      .getByRole("textbox", { name: CLIENT_COPY.socialValueField("Instagram", 1) })
+      .getByRole("textbox", {
+        name: clientT("socialValueField", { platform: "Instagram", index: 1 }),
+      })
       .fill(values.instagram);
   if (values.tiktok) {
-    await dialog.getByRole("button", { name: CLIENT_COPY.addSocialLink }).click();
-    await dialog.getByRole("button", { name: CLIENT_COPY.socialPlatformField(2) }).click();
+    await dialog.getByRole("button", { name: clientT("addSocialLink") }).click();
+    await dialog
+      .getByRole("button", { name: clientT("socialPlatformField", { index: 2 }) })
+      .click();
     await page.getByRole("option", { name: "TikTok" }).click();
     await dialog
-      .getByRole("textbox", { name: CLIENT_COPY.socialValueField("TikTok", 2) })
+      .getByRole("textbox", { name: clientT("socialValueField", { platform: "TikTok", index: 2 }) })
       .fill(values.tiktok);
   }
-  await dialog.getByRole("button", { name: CLIENT_COPY.save }).click();
+  await dialog.getByRole("button", { name: clientT("saveAdd") }).click();
   await expect(dialog).toBeHidden();
 }
 
 async function openActions(page: Page, name: string): Promise<void> {
-  await page.getByRole("button", { name: CLIENT_COPY.rowActions(name) }).click();
+  await page.getByRole("button", { name: clientT("rowActions", { name }) }).click();
 }
 
 test("AC-CLI-001 AC-CLI-003 navigates a new workspace to both empty client tabs", async ({
@@ -83,14 +90,13 @@ test("AC-CLI-001 AC-CLI-003 navigates a new workspace to both empty client tabs"
   const workspaceId = await openWorkspace(page, "clients-empty");
 
   await openClients(page, workspaceId);
-  await expect(page.getByRole("link", { name: OWNER_NAV_COPY.clients }).first()).toHaveAttribute(
-    "aria-current",
-    "page",
-  );
-  await expect(page.getByRole("heading", { name: CLIENT_COPY.emptyActiveTitle })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: OWNER_NAV_COPY.messages.id.clients }).first(),
+  ).toHaveAttribute("aria-current", "page");
+  await expect(page.getByRole("heading", { name: clientT("emptyActiveTitle") })).toBeVisible();
 
   await openClients(page, workspaceId, true);
-  await expect(page.getByRole("heading", { name: CLIENT_COPY.emptyArchivedTitle })).toBeVisible();
+  await expect(page.getByRole("heading", { name: clientT("emptyArchivedTitle") })).toBeVisible();
 });
 
 test("AC-CLI-006 AC-CLI-010 AC-CLI-012 AC-CLI-021 adds a client, reports a taken number, and edits it", async ({
@@ -107,32 +113,35 @@ test("AC-CLI-006 AC-CLI-010 AC-CLI-012 AC-CLI-021 adds a client, reports a taken
   });
 
   const clientsMain = page.getByRole("main", { name: "Klien" });
-  const clientTable = page.getByRole("grid", { name: CLIENT_COPY.listTitle });
+  const clientTable = page.getByRole("grid", { name: clientT("listTitle") });
   await expect(clientTable.getByText("+62 812-3456-7890")).toBeVisible();
   await expect(clientsMain.getByText("1 klien aktif")).toBeVisible();
   await expect(clientTable.getByText("Instagram · @rina.wed")).toBeVisible();
   await page.reload();
   await expect(clientTable.getByText("+62 812-3456-7890")).toBeVisible();
 
-  await page.getByRole("button", { name: CLIENT_COPY.addClient }).first().click();
+  await page
+    .getByRole("button", { name: clientT("addClient") })
+    .first()
+    .click();
   const duplicateDialog = page
-    .getByRole("dialog", { name: CLIENT_COPY.dialogTitle })
+    .getByRole("dialog", { name: clientT("dialogTitle") })
     .filter({ visible: true });
-  await duplicateDialog.getByRole("textbox", { name: CLIENT_COPY.name }).fill("Budi");
+  await duplicateDialog.getByRole("textbox", { name: clientT("name") }).fill("Budi");
   await duplicateDialog
-    .getByRole("textbox", { name: CLIENT_COPY.whatsappNumber })
+    .getByRole("textbox", { name: clientT("whatsappNumber") })
     .fill("0812 3456 7890");
-  await duplicateDialog.getByRole("button", { name: CLIENT_COPY.save }).click();
+  await duplicateDialog.getByRole("button", { name: clientT("saveAdd") }).click();
   await expect(duplicateDialog.getByText("Nomor ini sudah dipakai Rina Wedding")).toBeVisible();
 
   await page.keyboard.press("Escape");
   await expect(duplicateDialog).toBeHidden();
   await clientTable.getByText("Rina Wedding").click();
   const editDialog = page
-    .getByRole("dialog", { name: CLIENT_COPY.editDialogTitle })
+    .getByRole("dialog", { name: clientT("editDialogTitle") })
     .filter({ visible: true });
-  await editDialog.getByRole("textbox", { name: CLIENT_COPY.name }).fill("Rina & Dimas");
-  await editDialog.getByRole("button", { name: CLIENT_COPY.saveEdit }).click();
+  await editDialog.getByRole("textbox", { name: clientT("name") }).fill("Rina & Dimas");
+  await editDialog.getByRole("button", { name: clientT("saveEdit") }).click();
   await expect(editDialog).toBeHidden();
   await expect(clientTable.getByText("Rina & Dimas")).toBeVisible();
 });
@@ -145,34 +154,34 @@ test("AC-CLI-013 AC-CLI-014 AC-CLI-021 archives, restores, and deletes a client"
   await addClient(page, { name: "Rina Wedding", whatsappNumber: "0812-3456-7890" });
 
   await openActions(page, "Rina Wedding");
-  await page.getByRole("menuitem", { name: CLIENT_COPY.archive }).click();
-  await expect(page.getByText(CLIENT_COPY.archivedTitle)).toBeVisible();
+  await page.getByRole("menuitem", { name: clientT("archive") }).click();
+  await expect(page.getByText(clientT("archivedTitle"))).toBeVisible();
   await expect(page.getByRole("main", { name: "Klien" }).getByText("0 klien aktif")).toBeVisible();
-  await page.getByRole("button", { name: CLIENT_COPY.undo }).click();
+  await page.getByRole("button", { name: clientT("undo") }).click();
   await expect(page.getByRole("main", { name: "Klien" }).getByText("1 klien aktif")).toBeVisible();
 
   await openActions(page, "Rina Wedding");
-  await page.getByRole("menuitem", { name: CLIENT_COPY.archive }).click();
+  await page.getByRole("menuitem", { name: clientT("archive") }).click();
   await expect(page.getByRole("main", { name: "Klien" }).getByText("0 klien aktif")).toBeVisible();
   await openClients(page, workspaceId, true);
   await expect(
-    page.getByRole("grid", { name: CLIENT_COPY.listTitle }).getByRole("rowheader", {
+    page.getByRole("grid", { name: clientT("listTitle") }).getByRole("rowheader", {
       name: "Rina Wedding",
     }),
   ).toBeVisible();
   await openActions(page, "Rina Wedding");
-  await page.getByRole("menuitem", { name: CLIENT_COPY.restore }).click();
-  await expect(page.getByText(CLIENT_COPY.restoredTitle)).toBeVisible();
+  await page.getByRole("menuitem", { name: clientT("restore") }).click();
+  await expect(page.getByText(clientT("restoredTitle"))).toBeVisible();
 
   await openClients(page, workspaceId);
   await openActions(page, "Rina Wedding");
-  await page.getByRole("menuitem", { name: CLIENT_COPY.delete }).click();
+  await page.getByRole("menuitem", { name: clientT("delete") }).click();
   const deleteDialog = page.getByRole("alertdialog", {
-    name: CLIENT_COPY.deleteTitle("Rina Wedding"),
+    name: clientT("deleteTitle", { name: "Rina Wedding" }),
   });
-  await deleteDialog.getByRole("button", { name: CLIENT_COPY.deleteClient }).click();
-  await expect(page.getByText(CLIENT_COPY.deletedTitle)).toBeVisible();
-  await expect(page.getByRole("heading", { name: CLIENT_COPY.emptyActiveTitle })).toBeVisible();
+  await deleteDialog.getByRole("button", { name: clientT("deleteClient") }).click();
+  await expect(page.getByText(clientT("deletedTitle"))).toBeVisible();
+  await expect(page.getByRole("heading", { name: clientT("emptyActiveTitle") })).toBeVisible();
 });
 
 test("AC-CLI-004 searches, reloads its query, shows no match, and clears it", async ({ page }) => {
@@ -181,18 +190,18 @@ test("AC-CLI-004 searches, reloads its query, shows no match, and clears it", as
   await addClient(page, { name: "Rina Wedding", whatsappNumber: "0812-3456-7890" });
   await addClient(page, { name: "Budi Foto", whatsappNumber: "0813-4567-8901" });
 
-  const search = page.getByRole("searchbox", { name: CLIENT_COPY.searchLabel });
+  const search = page.getByRole("searchbox", { name: clientT("searchLabel") });
   await search.fill("RIN");
   await expect(page).toHaveURL(/\?q=RIN$/);
-  const clientTable = page.getByRole("grid", { name: CLIENT_COPY.listTitle });
+  const clientTable = page.getByRole("grid", { name: clientT("listTitle") });
   await expect(clientTable.getByRole("rowheader", { name: "Rina Wedding" })).toBeVisible();
   await expect(clientTable.getByRole("rowheader", { name: "Budi Foto" })).toHaveCount(0);
   await page.reload();
   await expect(search).toHaveValue("RIN");
 
   await search.fill("zzz");
-  await expect(page.getByRole("heading", { name: CLIENT_COPY.noMatchTitle })).toBeVisible();
-  await page.getByRole("button", { name: CLIENT_COPY.clearSearch }).click();
+  await expect(page.getByRole("heading", { name: clientT("noMatchTitle") })).toBeVisible();
+  await page.getByRole("button", { name: clientT("clearSearch") }).click();
   await expect(page).toHaveURL(new RegExp(`/w/${workspaceId}/clients$`));
   await expect(clientTable.getByRole("rowheader", { name: "Rina Wedding" })).toBeVisible();
 });
@@ -203,7 +212,7 @@ test("AC-CLI-016 opens WhatsApp with the stored number", async ({ page }) => {
   await addClient(page, { name: "Rina Wedding", whatsappNumber: "0812-3456-7890" });
 
   await openActions(page, "Rina Wedding");
-  await expect(page.getByRole("menuitem", { name: CLIENT_COPY.openWhatsapp })).toHaveAttribute(
+  await expect(page.getByRole("menuitem", { name: clientT("openWhatsapp") })).toHaveAttribute(
     "href",
     "https://wa.me/6281234567890",
   );
@@ -219,7 +228,7 @@ test("AC-CLI-018 prevents a second owner opening another workspace clients", asy
     await openWorkspace(other, "clients-owner-b");
     await other.goto(`/w/${workspaceId}/clients`);
     await expect(
-      other.getByRole("heading", { name: WORKSPACE_NOT_FOUND_COPY.title }),
+      other.getByRole("heading", { name: WORKSPACE_NOT_FOUND_COPY.messages.id.title }),
     ).toBeVisible();
   } finally {
     await other.close();
@@ -249,17 +258,17 @@ for (const viewport of [
     await addClient(page, { name: clientName });
     await expectClientsA11y(page);
 
-    const search = page.getByRole("searchbox", { name: CLIENT_COPY.searchLabel });
+    const search = page.getByRole("searchbox", { name: clientT("searchLabel") });
     await search.fill("zzz");
-    await expect(page.getByRole("heading", { name: CLIENT_COPY.noMatchTitle })).toBeVisible();
+    await expect(page.getByRole("heading", { name: clientT("noMatchTitle") })).toBeVisible();
     await expectClientsA11y(page);
-    await page.getByRole("button", { name: CLIENT_COPY.clearSearch }).click();
+    await page.getByRole("button", { name: clientT("clearSearch") }).click();
 
     await openActions(page, clientName);
     await expectClientsA11y(page);
-    await pressRowAction(page, viewport.width === 390, CLIENT_COPY.edit);
+    await pressRowAction(page, viewport.width === 390, clientT("edit"));
     const editDialog = page
-      .getByRole("dialog", { name: CLIENT_COPY.editDialogTitle })
+      .getByRole("dialog", { name: clientT("editDialogTitle") })
       .filter({ visible: true });
     await expect(editDialog).toBeVisible();
     await expectClientsA11y(page);
@@ -267,10 +276,10 @@ for (const viewport of [
     await expect(editDialog).toBeHidden();
 
     await openActions(page, clientName);
-    await pressRowAction(page, viewport.width === 390, CLIENT_COPY.delete);
+    await pressRowAction(page, viewport.width === 390, clientT("delete"));
     const deleteDialog = page
       .getByRole(viewport.width === 390 ? "dialog" : "alertdialog", {
-        name: CLIENT_COPY.deleteTitle(clientName),
+        name: clientT("deleteTitle", { name: clientName }),
       })
       .filter({ visible: true });
     await expect(deleteDialog).toBeVisible();
@@ -285,28 +294,34 @@ test("AC-CLI-020 supports keyboard row, action-menu, and social-row paths", asyn
   await openClients(page, workspaceId);
   await addClient(page, { name: "Rina Keyboard" });
 
-  const table = page.getByRole("grid", { name: CLIENT_COPY.listTitle });
+  const table = page.getByRole("grid", { name: clientT("listTitle") });
   const row = table.getByRole("row", { name: /Rina Keyboard/ });
   await row.focus();
   await page.keyboard.press("Enter");
   const dialog = page
-    .getByRole("dialog", { name: CLIENT_COPY.editDialogTitle })
+    .getByRole("dialog", { name: clientT("editDialogTitle") })
     .filter({ visible: true });
   await expect(dialog).toBeVisible();
-  await dialog.getByRole("button", { name: CLIENT_COPY.addSocialLink }).click();
+  await dialog.getByRole("button", { name: clientT("addSocialLink") }).click();
   await dialog
-    .getByRole("button", { name: CLIENT_COPY.removeSocialLinkField("Instagram", 2) })
+    .getByRole("button", {
+      name: clientT("removeSocialLinkField", { platform: "Instagram", index: 2 }),
+    })
     .click();
   await expect(
-    dialog.getByRole("textbox", { name: CLIENT_COPY.socialValueField("Instagram", 1) }),
+    dialog.getByRole("textbox", {
+      name: clientT("socialValueField", { platform: "Instagram", index: 1 }),
+    }),
   ).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(row).toBeFocused();
 
-  const actions = page.getByRole("button", { name: CLIENT_COPY.rowActions("Rina Keyboard") });
+  const actions = page.getByRole("button", {
+    name: clientT("rowActions", { name: "Rina Keyboard" }),
+  });
   await actions.focus();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("menuitem", { name: CLIENT_COPY.edit })).toBeVisible();
+  await expect(page.getByRole("menuitem", { name: clientT("edit") })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(actions).toBeFocused();
 });

@@ -19,6 +19,7 @@ export function SheetItem({
   description,
   icon,
   count,
+  value,
   isSelected = false,
   isDisabled = false,
   isPending = false,
@@ -33,6 +34,7 @@ export function SheetItem({
       description={description}
       icon={icon}
       count={count}
+      value={value}
       isSelected={isSelected}
       isPending={isPending}
     />
@@ -78,16 +80,21 @@ function SheetItemContent({
   description,
   icon,
   count,
+  value,
   isSelected = false,
   isPending = false,
 }: Readonly<
-  Pick<SheetItemProps, "label" | "description" | "icon" | "count" | "isSelected" | "isPending">
+  Pick<
+    SheetItemProps,
+    "label" | "description" | "icon" | "count" | "value" | "isSelected" | "isPending"
+  >
 >) {
   return (
     <>
       {sheetItemLeading(isPending, icon)}
       <SheetItemText label={label} description={description} isSelected={isSelected} />
       {count !== undefined ? <CountBadge count={count} /> : null}
+      {value !== undefined ? <SheetItemValue value={value} /> : null}
       {isSelected ? (
         <Icon
           name="check"
@@ -105,6 +112,22 @@ function sheetItemLeading(isPending: boolean, icon: SheetItemProps["icon"]) {
   return icon ? (
     <Icon name={icon} aria-hidden="true" className="text-(--component-sheet-item-icon)" />
   ) : null;
+}
+
+function SheetItemValue({ value }: Readonly<{ value: string }>) {
+  return (
+    <>
+      <span className="text-(length:--font-size-body-sm) text-(--color-semantic-text-muted)">
+        {value}
+      </span>
+      <Icon
+        name="chevron-right"
+        aria-hidden="true"
+        data-testid="sheet-item-chevron"
+        className="text-(--component-sheet-item-icon)"
+      />
+    </>
+  );
 }
 
 function SheetItemText({

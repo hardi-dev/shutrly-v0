@@ -6,7 +6,7 @@ import { PasswordProposalField } from "./password-proposal-field";
 
 function renderField(overrides: Partial<Parameters<typeof PasswordProposalField>[0]> = {}) {
   const props = {
-    label: "Password galeri",
+    label: "Kata sandi galeri",
     description: "Dibuat otomatis, mudah diketik klien.",
     field: {
       name: "password",
@@ -27,7 +27,7 @@ function renderField(overrides: Partial<Parameters<typeof PasswordProposalField>
 describe("PasswordProposalField", () => {
   it("AC-GAL-001 shows the proposal with its helper and a Buat ulang button", async () => {
     const props = renderField();
-    expect(screen.getByRole("textbox", { name: "Password galeri" })).toHaveValue("mawar-4821");
+    expect(screen.getByRole("textbox", { name: "Kata sandi galeri" })).toHaveValue("mawar-4821");
     expect(screen.getByText("Dibuat otomatis, mudah diketik klien.")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Buat ulang" }));
     expect(props.onRegenerate).toHaveBeenCalled();
@@ -36,7 +36,7 @@ describe("PasswordProposalField", () => {
   it("AC-GAL-001 puts the button inside the input, so it never drifts from it", () => {
     renderField();
     const button = screen.getByRole("button", { name: "Buat ulang" });
-    const input = screen.getByRole("textbox", { name: "Password galeri" });
+    const input = screen.getByRole("textbox", { name: "Kata sandi galeri" });
     expect(input.parentElement?.contains(button)).toBe(true);
   });
 
@@ -53,6 +53,6 @@ describe("PasswordProposalField", () => {
 
   it("C-007 leaves the field itself editable while a new proposal is loading", () => {
     renderField({ isRegenerating: true });
-    expect(screen.getByRole("textbox", { name: "Password galeri" })).toBeEnabled();
+    expect(screen.getByRole("textbox", { name: "Kata sandi galeri" })).toBeEnabled();
   });
 });

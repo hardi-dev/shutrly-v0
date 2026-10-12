@@ -1,13 +1,20 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
+import type { ReactElement } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { SOURCE_COPY } from "../source-copy/source-copy.copy";
+import { SOURCE_COPY_NAMESPACE } from "../source-copy/source-copy.copy";
 import { SourceRowActions } from "./source-row-actions";
 
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
+
+import { copyTranslator } from "@tests/support/copy/copy-messages";
+
+const copy = copyTranslator(SOURCE_COPY_NAMESPACE, "id");
+const render = (ui: ReactElement) => renderInLocale(ui, "id");
 
 const source = {
   id: "source-1",
@@ -48,11 +55,11 @@ describe("SourceRowActions", () => {
     );
 
     await user.click(
-      screen.getByRole("button", { name: SOURCE_COPY.rowActions(source.displayName) }),
+      screen.getByRole("button", { name: copy("rowActions", { name: source.displayName }) }),
     );
-    expect(screen.getByRole("menuitem", { name: SOURCE_COPY.rename })).toBeInTheDocument();
-    expect(screen.getByRole("menuitem", { name: SOURCE_COPY.deactivate })).toBeInTheDocument();
-    expect(screen.getByRole("menuitem", { name: SOURCE_COPY.delete })).toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: copy("rename") })).toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: copy("deactivate") })).toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: copy("delete") })).toBeInTheDocument();
     expect(screen.getByRole("separator")).toBeInTheDocument();
   });
 
@@ -69,10 +76,10 @@ describe("SourceRowActions", () => {
       />,
     );
     await user.click(
-      screen.getByRole("button", { name: SOURCE_COPY.rowActions(source.displayName) }),
+      screen.getByRole("button", { name: copy("rowActions", { name: source.displayName }) }),
     );
-    expect(screen.getByRole("menuitem", { name: SOURCE_COPY.activate })).toBeInTheDocument();
-    expect(screen.queryByRole("menuitem", { name: SOURCE_COPY.deactivate })).toBeNull();
+    expect(screen.getByRole("menuitem", { name: copy("activate") })).toBeInTheDocument();
+    expect(screen.queryByRole("menuitem", { name: copy("deactivate") })).toBeNull();
   });
 
   it("uses an actions sheet on phones with source context", async () => {
@@ -88,11 +95,11 @@ describe("SourceRowActions", () => {
       />,
     );
     await user.click(
-      screen.getByRole("button", { name: SOURCE_COPY.rowActions(source.displayName) }),
+      screen.getByRole("button", { name: copy("rowActions", { name: source.displayName }) }),
     );
     expect(screen.getByRole("dialog", { name: source.displayName })).toBeInTheDocument();
     expect(screen.getByText("Google Drive · Aktif")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: SOURCE_COPY.rename })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: copy("rename") })).toBeInTheDocument();
   });
 
   it("AC-SRC-011 deactivates without confirmation and offers undo", async () => {
@@ -108,14 +115,14 @@ describe("SourceRowActions", () => {
       />,
     );
     await user.click(
-      screen.getByRole("button", { name: SOURCE_COPY.rowActions(source.displayName) }),
+      screen.getByRole("button", { name: copy("rowActions", { name: source.displayName }) }),
     );
-    await user.click(screen.getByRole("menuitem", { name: SOURCE_COPY.deactivate }));
+    await user.click(screen.getByRole("menuitem", { name: copy("deactivate") }));
     await waitFor(() => {
       expect(setActiveAction).toHaveBeenCalledWith("ws-1", "source-1", false);
     });
     expect(showToast).toHaveBeenCalledWith(
-      expect.objectContaining({ title: SOURCE_COPY.deactivatedTitle }),
+      expect.objectContaining({ title: copy("deactivatedTitle") }),
     );
     const toast = vi.mocked(showToast).mock.calls.at(-1)?.[0];
     toast?.action?.onAction();

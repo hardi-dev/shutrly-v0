@@ -5,18 +5,21 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 export interface MessageTemplateRecord {
   readonly type: TemplateType;
-  readonly content: string;
+  /** True when the platform default is shown; `content` is then null (D-12, D-13). */
+  readonly isDefault: boolean;
+  readonly content: string | null;
   readonly updatedAt: Date;
 }
 
+/** A platform default: stored as `is_default = true, content = NULL`. */
 export interface MessageTemplateSeed {
   readonly type: TemplateType;
-  readonly content: string;
 }
 
 export interface MessageTemplateUpdate {
   readonly type: TemplateType;
-  readonly content: string;
+  readonly isDefault: boolean;
+  readonly content: string | null;
   readonly editorUserId: string;
 }
 

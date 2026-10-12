@@ -21,8 +21,8 @@ async function expectCatalogA11y(page: Page): Promise<void> {
 
 async function createWorkspace(page: Page): Promise<string> {
   await registerAndVerify(page, uniqueEmail("catalog-a11y"));
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Catalog A11y Studio");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Catalog A11y Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
   return new URL(page.url()).pathname.split("/")[2];
 }
@@ -30,25 +30,33 @@ async function createWorkspace(page: Page): Promise<string> {
 async function createServiceForA11y(page: Page, workspaceId: string): Promise<void> {
   await page.goto(`/w/${workspaceId}/services`);
   await page
-    .getByRole("button", { name: CATALOG_COPY.addService })
+    .getByRole("button", { name: CATALOG_COPY.messages.id.addService })
     .filter({ visible: true })
     .first()
     .click();
   const serviceDialog = page
-    .getByRole("dialog", { name: CATALOG_COPY.addServiceTitle })
+    .getByRole("dialog", { name: CATALOG_COPY.messages.id.addServiceTitle })
     .filter({ visible: true })
     .first();
-  await serviceDialog.getByRole("button", { name: CATALOG_COPY.addCategoryInline }).click();
+  await serviceDialog
+    .getByRole("button", { name: CATALOG_COPY.messages.id.addCategoryInline })
+    .click();
   const categoryDialog = page
-    .getByRole("dialog", { name: CATALOG_COPY.categoryDialogAddTitle })
+    .getByRole("dialog", { name: CATALOG_COPY.messages.id.categoryDialogAddTitle })
     .filter({ visible: true })
     .first();
-  await categoryDialog.getByRole("textbox", { name: CATALOG_COPY.nameCategory }).fill("A11y");
-  await categoryDialog.getByRole("button", { name: CATALOG_COPY.save }).click();
+  await categoryDialog
+    .getByRole("textbox", { name: CATALOG_COPY.messages.id.nameCategory })
+    .fill("A11y");
+  await categoryDialog.getByRole("button", { name: CATALOG_COPY.messages.id.save }).click();
   await expect(categoryDialog).toBeHidden();
-  await serviceDialog.getByRole("textbox", { name: CATALOG_COPY.nameService }).fill("A11y Service");
-  await serviceDialog.getByRole("textbox", { name: CATALOG_COPY.basePrice }).fill("750000");
-  await serviceDialog.getByRole("button", { name: CATALOG_COPY.save }).click();
+  await serviceDialog
+    .getByRole("textbox", { name: CATALOG_COPY.messages.id.nameService })
+    .fill("A11y Service");
+  await serviceDialog
+    .getByRole("textbox", { name: CATALOG_COPY.messages.id.basePrice })
+    .fill("750000");
+  await serviceDialog.getByRole("button", { name: CATALOG_COPY.messages.id.save }).click();
   await expect(page).toHaveURL(/\/services\/[0-9a-f-]+$/);
 }
 
@@ -56,43 +64,53 @@ test("AC-CAT-003 AC-CAT-004 AC-CAT-009 AC-CAT-010 creates a service from an empt
   page,
 }) => {
   await registerAndVerify(page, uniqueEmail("catalog"));
-  await page.getByLabel(ONBOARDING_COPY.nameLabel).fill("Catalog Studio");
-  await page.getByRole("button", { name: ONBOARDING_COPY.submit }).click();
+  await page.getByLabel(ONBOARDING_COPY.messages.id.nameLabel).fill("Catalog Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.id.submit }).click();
   await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/);
 
   await page.getByRole("link", { name: "Layanan", exact: true }).first().click();
   await expect(page).toHaveURL(/\/services$/);
   await expect(
-    page.getByRole("heading", { name: CATALOG_COPY.servicesEmptyTitle, exact: true }).first(),
+    page
+      .getByRole("heading", { name: CATALOG_COPY.messages.id.servicesEmptyTitle, exact: true })
+      .first(),
   ).toBeVisible();
 
   await page
-    .getByRole("button", { name: CATALOG_COPY.addService })
+    .getByRole("button", { name: CATALOG_COPY.messages.id.addService })
     .filter({ visible: true })
     .first()
     .click();
   const serviceDialog = page
-    .getByRole("dialog", { name: CATALOG_COPY.addServiceTitle })
+    .getByRole("dialog", { name: CATALOG_COPY.messages.id.addServiceTitle })
     .filter({ visible: true })
     .first();
-  await serviceDialog.getByRole("button", { name: CATALOG_COPY.addCategoryInline }).click();
+  await serviceDialog
+    .getByRole("button", { name: CATALOG_COPY.messages.id.addCategoryInline })
+    .click();
 
   const categoryDialog = page
-    .getByRole("dialog", { name: CATALOG_COPY.categoryDialogAddTitle })
+    .getByRole("dialog", { name: CATALOG_COPY.messages.id.categoryDialogAddTitle })
     .filter({ visible: true })
     .first();
-  await categoryDialog.getByRole("textbox", { name: CATALOG_COPY.nameCategory }).fill("Wisuda");
-  await categoryDialog.getByRole("button", { name: CATALOG_COPY.save }).click();
+  await categoryDialog
+    .getByRole("textbox", { name: CATALOG_COPY.messages.id.nameCategory })
+    .fill("Wisuda");
+  await categoryDialog.getByRole("button", { name: CATALOG_COPY.messages.id.save }).click();
   await expect(categoryDialog).toBeHidden();
 
-  await serviceDialog.getByRole("textbox", { name: CATALOG_COPY.nameService }).fill("Wisuda Basic");
-  await serviceDialog.getByRole("textbox", { name: CATALOG_COPY.basePrice }).fill("750000");
-  await serviceDialog.getByRole("button", { name: CATALOG_COPY.save }).click();
+  await serviceDialog
+    .getByRole("textbox", { name: CATALOG_COPY.messages.id.nameService })
+    .fill("Wisuda Basic");
+  await serviceDialog
+    .getByRole("textbox", { name: CATALOG_COPY.messages.id.basePrice })
+    .fill("750000");
+  await serviceDialog.getByRole("button", { name: CATALOG_COPY.messages.id.save }).click();
 
   await expect(page).toHaveURL(/\/services\/[0-9a-f-]+$/);
   await expect(page.getByRole("heading", { name: "Wisuda Basic" }).first()).toBeVisible();
-  await expect(page.getByText(CATALOG_COPY.itemsTitle).first()).toBeVisible();
-  await expect(page.getByText(CATALOG_COPY.fieldsTitle).first()).toBeVisible();
+  await expect(page.getByText(CATALOG_COPY.messages.id.itemsTitle).first()).toBeVisible();
+  await expect(page.getByText(CATALOG_COPY.messages.id.fieldsTitle).first()).toBeVisible();
 });
 
 for (const viewport of [
@@ -122,21 +140,23 @@ for (const viewport of [
       .first();
     await itemActionButton.click();
     if (viewport.name === "phone") {
-      await page.getByRole("button", { name: CATALOG_COPY.edit, exact: true }).click();
+      await page.getByRole("button", { name: CATALOG_COPY.messages.id.edit, exact: true }).click();
       await expect(itemActionSheet).toBeHidden();
     } else {
-      await page.getByRole("menuitem", { name: CATALOG_COPY.edit, exact: true }).click();
+      await page
+        .getByRole("menuitem", { name: CATALOG_COPY.messages.id.edit, exact: true })
+        .click();
     }
     await expect(
       page
-        .getByRole("dialog", { name: CATALOG_COPY.definitionDialogEditTitle })
+        .getByRole("dialog", { name: CATALOG_COPY.messages.id.definitionDialogEditTitle })
         .filter({ visible: true }),
     ).toBeVisible();
     await expectCatalogA11y(page);
     await page.keyboard.press("Escape");
     await expect(
       page
-        .getByRole("dialog", { name: CATALOG_COPY.definitionDialogEditTitle })
+        .getByRole("dialog", { name: CATALOG_COPY.messages.id.definitionDialogEditTitle })
         .filter({ visible: true }),
     ).toBeHidden();
     await expect(itemActionButton).toBeFocused();
@@ -146,25 +166,29 @@ for (const viewport of [
     await expectCatalogA11y(page);
 
     const addItemButton = page
-      .getByRole("button", { name: CATALOG_COPY.addItem })
+      .getByRole("button", { name: CATALOG_COPY.messages.id.addItem })
       .filter({ visible: true })
       .first();
     await addItemButton.click();
     await expectCatalogA11y(page);
     await page.keyboard.press("Escape");
     await expect(
-      page.getByRole("dialog", { name: CATALOG_COPY.addItemTitle }).filter({ visible: true }),
+      page
+        .getByRole("dialog", { name: CATALOG_COPY.messages.id.addItemTitle })
+        .filter({ visible: true }),
     ).toBeHidden();
 
     const addFieldButton = page
-      .getByRole("button", { name: CATALOG_COPY.addField })
+      .getByRole("button", { name: CATALOG_COPY.messages.id.addField })
       .filter({ visible: true })
       .first();
     await addFieldButton.click();
     await expectCatalogA11y(page);
     await page.keyboard.press("Escape");
     await expect(
-      page.getByRole("dialog", { name: CATALOG_COPY.addFieldTitle }).filter({ visible: true }),
+      page
+        .getByRole("dialog", { name: CATALOG_COPY.messages.id.addFieldTitle })
+        .filter({ visible: true }),
     ).toBeHidden();
   });
 }

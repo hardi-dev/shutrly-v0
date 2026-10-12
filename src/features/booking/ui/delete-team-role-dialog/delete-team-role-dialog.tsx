@@ -1,8 +1,10 @@
 "use client";
-
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { TeamRoleRecord } from "@/features/booking/application/ports/team-role-repository/team-role-repository.port";
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
@@ -10,7 +12,7 @@ import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
+import { DELETE_TEAM_ROLE_DIALOG_COPY_NAMESPACE } from "./delete-team-role-dialog.copy";
 import type { DeleteRoleView, DeleteTeamRoleDialogProps } from "./delete-team-role-dialog.types";
 
 /**
@@ -32,6 +34,8 @@ function DeleteRoleBody({
   const isMobile = useMobileViewport();
   const [isPending, setIsPending] = useState(false);
   // The table already shows the usage, so a used role opens blocked; the server re-checks.
+  const t = useTranslations(DELETE_TEAM_ROLE_DIALOG_COPY_NAMESPACE);
+  const locale = useAppLocale();
   const [usage, setUsage] = useState(role.usage);
   const isBlocked = usage > 0;
 
@@ -43,10 +47,10 @@ function DeleteRoleBody({
         setUsage(result.usage);
         return;
       }
-      showToast({ tone: "success", title: TEAM_COPY.roleDeletedTitle });
+      showToast({ tone: "success", title: t("roleDeletedTitle") });
       onOpenChange(false);
     } catch {
-      showToast({ tone: "danger", title: TEAM_COPY.serverErrorTitle });
+      showToast({ tone: "danger", title: t("serverErrorTitle") });
     } finally {
       setIsPending(false);
     }
@@ -59,9 +63,9 @@ function DeleteRoleBody({
   }
   const view: DeleteRoleView = {
     title: isBlocked
-      ? TEAM_COPY.roleDeleteBlockedTitle(role.name)
-      : TEAM_COPY.roleDeleteTitle(role.name),
-    description: isBlocked ? TEAM_COPY.roleDeleteBlockedBody(usage) : TEAM_COPY.roleDeleteBody,
+      ? t("roleDeleteBlockedTitle", { name: displayTeamRoleName(role, locale) })
+      : t("roleDeleteTitle", { name: displayTeamRoleName(role, locale) }),
+    description: isBlocked ? t("roleDeleteBlockedBody", { count: usage }) : t("roleDeleteBody"),
     isBlocked,
     isPending,
     close,
@@ -78,6 +82,7 @@ function DeleteRoleSheet({
   view,
   onOpenChange,
 }: Readonly<{ view: DeleteRoleView; onOpenChange: (isOpen: boolean) => void }>) {
+  const t = useTranslations(DELETE_TEAM_ROLE_DIALOG_COPY_NAMESPACE);
   return (
     <BottomSheet
       isOpen
@@ -88,7 +93,7 @@ function DeleteRoleSheet({
     >
       {view.isBlocked ? null : (
         <SheetItem
-          label={view.isPending ? TEAM_COPY.deleting : TEAM_COPY.delete}
+          label={view.isPending ? t("deleting") : t("delete")}
           icon="trash-2"
           variant="destructive"
           isPending={view.isPending}
@@ -96,7 +101,7 @@ function DeleteRoleSheet({
         />
       )}
       <SheetItem
-        label={view.isBlocked ? TEAM_COPY.close : TEAM_COPY.cancel}
+        label={view.isBlocked ? t("close") : t("cancel")}
         isDisabled={view.isPending}
         onPress={view.close}
       />
@@ -108,6 +113,7 @@ function DeleteRoleModal({
   view,
   onOpenChange,
 }: Readonly<{ view: DeleteRoleView; onOpenChange: (isOpen: boolean) => void }>) {
+  const t = useTranslations(DELETE_TEAM_ROLE_DIALOG_COPY_NAMESPACE);
   return (
     <Modal
       isOpen
@@ -119,11 +125,11 @@ function DeleteRoleModal({
       actions={
         <>
           <Button variant="secondary" onPress={view.close} isDisabled={view.isPending}>
-            {view.isBlocked ? TEAM_COPY.close : TEAM_COPY.cancel}
+            {view.isBlocked ? t("close") : t("cancel")}
           </Button>
           {view.isBlocked ? null : (
             <Button variant="danger" onPress={view.confirm} isPending={view.isPending}>
-              {TEAM_COPY.delete}
+              {t("delete")}
             </Button>
           )}
         </>

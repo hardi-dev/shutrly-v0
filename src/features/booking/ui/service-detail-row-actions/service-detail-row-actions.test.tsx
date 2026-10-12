@@ -23,7 +23,7 @@ describe("ServiceDetailRowActions", () => {
         onDelete={vi.fn()}
       />,
     );
-    await user.click(screen.getByRole("button", { name: "Aksi untuk Foto cetak" }));
+    await user.click(screen.getByRole("button", { name: "Tindakan untuk Foto cetak" }));
     expect(screen.getByRole("menuitem", { name: "Ubah nilai" })).toBeInTheDocument();
     expect(screen.getByRole("menuitem", { name: "Naikkan" })).toBeEnabled();
     expect(screen.getByRole("menuitem", { name: "Turunkan" })).toHaveAttribute(

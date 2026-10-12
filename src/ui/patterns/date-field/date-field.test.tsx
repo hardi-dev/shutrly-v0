@@ -1,5 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useLocale } from "next-intl";
+import { I18nProvider } from "react-aria-components";
 import { describe, expect, it, vi } from "vitest";
 
 import { DateField } from "./date-field";
@@ -75,5 +77,23 @@ describe("DateField (C25 calendar)", () => {
     );
     expect(screen.getByText("Pilih tanggal sesi.")).toBeInTheDocument();
     expect(screen.getByText("(opsional)")).toBeInTheDocument();
+  });
+
+  it("AC-L10N-005 the date field follows the app provider locale", () => {
+    vi.mocked(useLocale).mockReturnValue("en");
+    const { unmount } = render(
+      <I18nProvider locale="en-US">
+        <DateField label="Date" value="2026-11-10" onChange={vi.fn()} display="date" />
+      </I18nProvider>,
+    );
+    expect(screen.getByText("Nov 10, 2026")).toBeInTheDocument();
+    unmount();
+    vi.mocked(useLocale).mockReturnValue("id");
+    render(
+      <I18nProvider locale="id-ID">
+        <DateField label="Tanggal" value="2026-11-10" onChange={vi.fn()} display="date" />
+      </I18nProvider>,
+    );
+    expect(screen.getByText("10 Nov 2026")).toBeInTheDocument();
   });
 });

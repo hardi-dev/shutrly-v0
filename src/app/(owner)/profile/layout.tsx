@@ -1,6 +1,8 @@
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { logoutAction } from "@/app/actions/auth/login";
+import { setOwnerLocaleAction } from "@/app/actions/auth/profile";
 import { createWorkspaceAction } from "@/app/actions/workspace/create";
 import { switchWorkspaceAction } from "@/app/actions/workspace/switch";
 import { requireOwnerOrRedirect } from "@/composition/auth/owner-guard/owner-guard";
@@ -9,11 +11,13 @@ import { loadWorkspaceSwitcher } from "@/composition/workspace/workspace-flow/wo
 import { OwnerShell } from "@/features/workspace/ui/owner-shell/owner-shell";
 import { PageHeaderTrail } from "@/ui/patterns/page-header/page-header";
 
-import { PROFILE_LAYOUT_COPY } from "./layout.copy";
+import { PAGE_HEADER_COPY_NAMESPACE, PROFILE_LAYOUT_COPY_NAMESPACE } from "./layout.copy";
 
 export default async function ProfileLayout({ children }: Readonly<{ children: ReactNode }>) {
   const [account, workspace] = await Promise.all([requireOwnerOrRedirect(), resolveOwnerHome()]);
   const workspaces = await loadWorkspaceSwitcher(workspace.id);
+  const t = await getTranslations(PROFILE_LAYOUT_COPY_NAMESPACE);
+  const crumbT = await getTranslations(PAGE_HEADER_COPY_NAMESPACE);
 
   return (
     <OwnerShell
@@ -21,12 +25,13 @@ export default async function ProfileLayout({ children }: Readonly<{ children: R
       workspaceName={workspace.name}
       accountName={account.name}
       accountEmail={account.email}
-      title={PROFILE_LAYOUT_COPY.title}
+      title={t("title")}
       workspaces={workspaces}
       onSwitch={switchWorkspaceAction}
       onCreate={createWorkspaceAction}
       logoutAction={logoutAction}
-      trail={<PageHeaderTrail items={[{ label: PROFILE_LAYOUT_COPY.title }]} />}
+      localeAction={setOwnerLocaleAction}
+      trail={<PageHeaderTrail items={[{ label: t("title") }]} label={crumbT("breadcrumb")} />}
     >
       {children}
     </OwnerShell>

@@ -14,7 +14,9 @@ describe("PageHeader", () => {
         action={<button type="button">Tambah</button>}
       />,
     );
-    expect(screen.getByRole("navigation", { name: "Breadcrumb" })).toHaveTextContent("AsterDasbor");
+    expect(screen.getByRole("navigation", { name: "Lokasi halaman" })).toHaveTextContent(
+      "AsterDasbor",
+    );
     expect(screen.getByRole("heading", { name: "Dasbor" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Cari" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tambah" })).toBeInTheDocument();
@@ -53,7 +55,7 @@ describe("PageHeader", () => {
 
     expect(screen.getByRole("link", { name: "Aster" })).toHaveAttribute("href", "/w/A");
     expect(screen.getByRole("link", { name: "Layanan" })).toHaveAttribute("href", "/w/A/services");
-    expect(screen.getByRole("navigation", { name: "Breadcrumb" })).toHaveTextContent(
+    expect(screen.getByRole("navigation", { name: "Lokasi halaman" })).toHaveTextContent(
       "AsterLayananKategori",
     );
     expect(
@@ -69,6 +71,7 @@ describe("PageHeader", () => {
         title="Galeri"
         trail={
           <PageHeaderTrail
+            label="Lokasi halaman"
             items={[
               { label: "Aster", href: "/w/A" },
               { label: "Proyek", href: "/w/A/projects" },
@@ -79,10 +82,10 @@ describe("PageHeader", () => {
       />,
     );
 
-    const nav = screen.getByRole("navigation", { name: "Breadcrumb" });
+    const nav = screen.getByRole("navigation", { name: "Lokasi halaman" });
     expect(nav).toHaveTextContent("AsterProyekGaleri");
     expect(screen.getByRole("link", { name: "Proyek" })).toHaveAttribute("href", "/w/A/projects");
-    expect(screen.getAllByRole("navigation", { name: "Breadcrumb" })).toHaveLength(1);
+    expect(screen.getAllByRole("navigation", { name: "Lokasi halaman" })).toHaveLength(1);
   });
 
   it("AC-CRUMB-010 a crumb without href is plain text and not focusable", () => {
@@ -115,7 +118,7 @@ describe("PageHeader", () => {
     );
 
     const toggle = screen.getByRole("button", { name: "Toggle" });
-    const nav = screen.getByRole("navigation", { name: "Breadcrumb" });
+    const nav = screen.getByRole("navigation", { name: "Lokasi halaman" });
     expect(toggle.compareDocumentPosition(nav) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 

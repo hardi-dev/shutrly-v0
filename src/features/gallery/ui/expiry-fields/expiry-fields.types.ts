@@ -1,3 +1,5 @@
+import type { useTranslations } from "next-intl";
+
 import type { GalleryExpiryInput } from "@/features/gallery/application/schemas/gallery-expiry/gallery-expiry.types";
 
 export interface ExpiryFieldsProps {
@@ -8,3 +10,6 @@ export interface ExpiryFieldsProps {
   readonly daysError?: string;
   readonly daysHelper: string;
 }
+
+/** The expiry fields translate function, passed into the option labels. */
+export type ExpiryTranslate = ReturnType<typeof useTranslations>;

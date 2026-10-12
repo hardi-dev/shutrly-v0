@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import type { OwnerNavTranslator } from "../owner-nav/owner-nav.types";
 import {
   dashboardTrail,
   ownerTrail,
@@ -8,9 +9,34 @@ import {
   staticOwnerTrail,
 } from "./owner-trail";
 
+// The owner-nav messages (Indonesian) the trail reads; the translator stands in for next-intl.
+const LABELS: Readonly<Record<string, string>> = {
+  dashboard: "Dasbor",
+  projects: "Proyek",
+  clients: "Klien",
+  team: "Tim",
+  services: "Layanan",
+  messageTemplates: "Templat pesan",
+  photoSources: "Sumber foto",
+  settings: "Pengaturan",
+  invoices: "Tagihan",
+  search: "Cari",
+  notifications: "Notifikasi",
+  create: "Proyek baru",
+  projectTabCompleted: "Selesai",
+  projectTabCancelled: "Dibatalkan",
+  clientTabArchived: "Arsip",
+  teamTabArchived: "Arsip",
+  teamTabRoles: "Peran",
+  serviceTabCategories: "Kategori",
+  serviceTabItems: "Item paket",
+};
+
+const t = ((key: string) => LABELS[key] ?? key) as OwnerNavTranslator;
+
 describe("owner trail (F-22 R-1…R-5)", () => {
   it("AC-CRUMB-001 the Dashboard is the single crumb Dasbor", () => {
-    expect(dashboardTrail()).toEqual([{ label: "Dasbor" }]);
+    expect(dashboardTrail(t)).toEqual([{ label: "Dasbor" }]);
   });
 
   it("puts the workspace root first, then the ancestors, then the current page", () => {
@@ -18,7 +44,7 @@ describe("owner trail (F-22 R-1…R-5)", () => {
       ownerTrail({
         workspaceId: "A",
         workspaceName: "Aster",
-        ancestors: [sectionCrumb("A", "projects"), projectCrumb("A", "p1", "Rina & Dimas")],
+        ancestors: [sectionCrumb("A", "projects", t), projectCrumb("A", "p1", "Rina & Dimas")],
         current: "Galeri",
       }),
     ).toEqual([
@@ -35,15 +61,15 @@ describe("owner trail (F-22 R-1…R-5)", () => {
       ["clients", "Klien"],
       ["team", "Tim"],
       ["services", "Layanan"],
-      ["message-templates", "Template pesan"],
+      ["message-templates", "Templat pesan"],
       ["photo-sources", "Sumber foto"],
       ["settings", "Pengaturan"],
-      ["invoices", "Invoice"],
-      ["search", "Pencarian"],
+      ["invoices", "Tagihan"],
+      ["search", "Cari"],
       ["notifications", "Notifikasi"],
     ];
     for (const [segment, label] of cases) {
-      expect(staticOwnerTrail([segment], "A", "Aster")).toEqual([
+      expect(staticOwnerTrail([segment], "A", "Aster", t)).toEqual([
         { label: "Aster", href: "/w/A" },
         { label },
       ]);
@@ -62,7 +88,7 @@ describe("owner trail (F-22 R-1…R-5)", () => {
       ["services", "items", "Layanan", "Item paket"],
     ];
     for (const [section, sub, sectionLabel, label] of cases) {
-      expect(staticOwnerTrail([section, sub], "A", "Aster")).toEqual([
+      expect(staticOwnerTrail([section, sub], "A", "Aster", t)).toEqual([
         { label: "Aster", href: "/w/A" },
         { label: sectionLabel, href: `/w/A/${section}` },
         { label },
@@ -71,9 +97,9 @@ describe("owner trail (F-22 R-1…R-5)", () => {
   });
 
   it("returns null for a path it does not know, so the route's notFound decides", () => {
-    expect(staticOwnerTrail(["unknown"], "A", "Aster")).toBeNull();
-    expect(staticOwnerTrail(["projects", "p1"], "A", "Aster")).toBeNull();
-    expect(staticOwnerTrail(["constructor"], "A", "Aster")).toBeNull();
-    expect(staticOwnerTrail([], "A", "Aster")).toBeNull();
+    expect(staticOwnerTrail(["unknown"], "A", "Aster", t)).toBeNull();
+    expect(staticOwnerTrail(["projects", "p1"], "A", "Aster", t)).toBeNull();
+    expect(staticOwnerTrail(["constructor"], "A", "Aster", t)).toBeNull();
+    expect(staticOwnerTrail([], "A", "Aster", t)).toBeNull();
   });
 });

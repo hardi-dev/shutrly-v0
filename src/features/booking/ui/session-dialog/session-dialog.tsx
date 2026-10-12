@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useState } from "react";
 
@@ -12,9 +13,9 @@ import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 import { TimeField } from "@/ui/primitives/time-field/time-field";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { SessionTeamField } from "../session-team-field/session-team-field";
 import { useTeamPicker } from "../session-team-field/use-team-picker";
+import { SESSION_DIALOG_COPY_NAMESPACE } from "./session-dialog.copy";
 import type { SessionDialogProps } from "./session-dialog.types";
 import { useSessionDraft } from "./use-session-draft";
 
@@ -23,12 +24,13 @@ const noop = () => undefined;
 
 /** Adds or edits one session in a modal (desktop) or a form sheet (phone), validated by the shared session schema. */
 export function SessionDialog(props: Readonly<SessionDialogProps>) {
+  const t = useTranslations(SESSION_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const isEditing = props.session !== null;
-  const title = isEditing ? PROJECT_COPY.sessionEditTitle : PROJECT_COPY.sessionDialogTitle;
+  const title = isEditing ? t("sessionEditTitle") : t("sessionDialogTitle");
   const save = (
     <Button type="submit" form={FORM_ID} size={isMobile ? "lg" : "md"}>
-      {isEditing ? PROJECT_COPY.sessionSaveEdit : PROJECT_COPY.sessionSave}
+      {isEditing ? t("sessionSaveEdit") : t("sessionSave")}
     </Button>
   );
   const handleCancel = () => {
@@ -40,7 +42,7 @@ export function SessionDialog(props: Readonly<SessionDialogProps>) {
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         title={title}
-        description={props.description ?? PROJECT_COPY.sessionDialogDescription}
+        description={props.description ?? t("sessionDialogDescription")}
         variant="form"
         actions={save}
       >
@@ -53,12 +55,12 @@ export function SessionDialog(props: Readonly<SessionDialogProps>) {
       isOpen={props.isOpen}
       onOpenChange={props.onOpenChange}
       title={title}
-      description={props.description ?? PROJECT_COPY.sessionDialogDescription}
+      description={props.description ?? t("sessionDialogDescription")}
       size="md"
       actions={
         <>
           <Button variant="secondary" onPress={handleCancel}>
-            {PROJECT_COPY.sessionCancel}
+            {t("sessionCancel")}
           </Button>
           {save}
         </>
@@ -113,26 +115,27 @@ function SessionFields({
   errors,
   update,
 }: Readonly<Pick<ReturnType<typeof useSessionDraft>, "draft" | "errors" | "update">>) {
+  const t = useTranslations(SESSION_DIALOG_COPY_NAMESPACE);
   const handleDate = (date: string | null) => {
     update("date")(date ?? "");
   };
   return (
     <>
       <TextField
-        label={PROJECT_COPY.sessionName}
+        label={t("sessionName")}
         name="name"
         value={draft.name}
         onChange={update("name")}
         onBlur={noop}
-        placeholder={PROJECT_COPY.sessionNamePlaceholder}
+        placeholder={t("sessionNamePlaceholder")}
         errorMessage={errors.name}
       />
       <DateField
-        label={PROJECT_COPY.sessionDate}
+        label={t("sessionDate")}
         value={draft.date === "" ? null : draft.date}
         onChange={handleDate}
         display="weekday"
-        placeholder={PROJECT_COPY.sessionDatePlaceholder}
+        placeholder={t("sessionDatePlaceholder")}
         errorMessage={errors.date}
       />
       <SessionTimes
@@ -143,13 +146,13 @@ function SessionFields({
         onEnd={update("endTime")}
       />
       <TextField
-        label={PROJECT_COPY.sessionLocation}
+        label={t("sessionLocation")}
         isOptional
         name="location"
         value={draft.location}
         onChange={update("location")}
         onBlur={noop}
-        placeholder={PROJECT_COPY.sessionLocationPlaceholder}
+        placeholder={t("sessionLocationPlaceholder")}
         errorMessage={errors.location}
       />
     </>
@@ -169,16 +172,12 @@ function SessionTimes({
   onStart: (value: string | null) => void;
   onEnd: (value: string | null) => void;
 }>) {
+  const t = useTranslations(SESSION_DIALOG_COPY_NAMESPACE);
   return (
     <div className="grid grid-cols-2 items-start gap-(--space-3)">
+      <TimeField label={t("sessionStart")} value={startTime} onChange={onStart} isOptional />
       <TimeField
-        label={PROJECT_COPY.sessionStart}
-        value={startTime}
-        onChange={onStart}
-        isOptional
-      />
-      <TimeField
-        label={PROJECT_COPY.sessionEnd}
+        label={t("sessionEnd")}
         value={endTime}
         onChange={onEnd}
         isOptional

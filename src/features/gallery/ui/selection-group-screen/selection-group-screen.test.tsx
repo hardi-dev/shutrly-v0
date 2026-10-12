@@ -107,10 +107,8 @@ describe("SelectionGroupScreen (owner-2 exports)", () => {
       missingNames: ["IMG_010.jpg"],
     });
     renderScreen(view);
-    expect(screen.getByText("1 foto pilihan tidak ada lagi di Drive")).toBeTruthy();
-    expect(
-      screen.getByText("IMG_010.jpg tetap dihitung. Cari filenya di Drive atau kunci apa adanya."),
-    ).toBeTruthy();
+    expect(screen.getByText(/1 foto pilihan tidak ada lagi di Drive/)).toBeTruthy();
+    expect(screen.getByText("Foto tetap dihitung.")).toBeTruthy();
     expect(screen.getByText("Hilang")).toBeTruthy();
     expect(screen.getByText("2 dari 8 foto")).toBeTruthy();
   });
@@ -139,7 +137,7 @@ describe("SelectionGroupScreen (owner-2 exports)", () => {
       ...view,
       group: { ...view.group, status: "OPEN", submittedAt: null },
     });
-    expect(screen.getByText("Klien masih bisa mengubah pilihan")).toBeTruthy();
+    expect(screen.getByText("Pilihan masih terbuka")).toBeTruthy();
     expect(screen.getByText("Diubah 5 Okt 2026, 13.52")).toBeTruthy();
     expect(screen.getByRole("button", { name: "Tutup pilihan" })).toBeTruthy();
     expect(screen.queryByRole("button", { name: "Kunci pilihan" })).toBeNull();

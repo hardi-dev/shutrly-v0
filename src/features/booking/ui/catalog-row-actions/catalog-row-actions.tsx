@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -12,7 +13,8 @@ import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { showToast } from "@/ui/patterns/toast/toast";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
+import { CATALOG_ENTITY_MESSAGE_KEY } from "../catalog-copy/catalog-copy.copy";
+import { CATALOG_ROW_ACTIONS_COPY_NAMESPACE } from "./catalog-row-actions.copy";
 import type {
   CatalogActionSurfaceProps,
   CatalogRowActionsProps,
@@ -51,6 +53,21 @@ export function CatalogRowActions(props: Readonly<CatalogRowActionsProps>) {
   return <DesktopCatalogActions props={props} handlers={handlers} triggerId={triggerId} />;
 }
 
+/** Closes the menu, then returns focus to the trigger and runs the callback after the hand-off. */
+function closeThenFocus(close: () => void, triggerId: string, isMobile: boolean) {
+  return (callback?: () => void): void => {
+    close();
+    if (!callback) return;
+    window.setTimeout(
+      () => {
+        document.getElementById(triggerId)?.focus();
+        callback();
+      },
+      isMobile ? SHEET_HANDOFF_DELAY_MS : 0,
+    );
+  };
+}
+
 function useRowActionHandlers(
   props: Readonly<CatalogRowActionsProps>,
   close: () => void,
@@ -58,26 +75,18 @@ function useRowActionHandlers(
   isMobile: boolean,
 ): RowActionHandlers {
   const { isActive, kind, onEdit, onRename, onDelete } = props;
-  function closeThen(callback?: () => void): void {
-    close();
-    if (callback) {
-      window.setTimeout(
-        () => {
-          document.getElementById(triggerId)?.focus();
-          callback();
-        },
-        isMobile ? SHEET_HANDOFF_DELAY_MS : 0,
-      );
-    }
-  }
+  const t = useTranslations(CATALOG_ROW_ACTIONS_COPY_NAMESPACE);
+  const closeThen = closeThenFocus(close, triggerId, isMobile);
   async function active(): Promise<void> {
     const nextActive = !isActive;
     await props.setActiveAction(props.workspaceId, kind, props.id, nextActive);
     showToast({
       tone: "success",
-      title: nextActive ? CATALOG_COPY.unarchivedToast : CATALOG_COPY.archivedToast(kind),
+      title: nextActive
+        ? t("unarchivedToast")
+        : t("archivedToast", { kind: t(CATALOG_ENTITY_MESSAGE_KEY[kind]) }),
       action: {
-        label: CATALOG_COPY.undo,
+        label: t("undo"),
         onAction: () => {
           void props.setActiveAction(props.workspaceId, kind, props.id, !nextActive);
         },
@@ -85,7 +94,7 @@ function useRowActionHandlers(
     });
   }
   return {
-    actionLabel: isActive ? CATALOG_COPY.archive : CATALOG_COPY.unarchive,
+    actionLabel: isActive ? t("archive") : t("unarchive"),
     onEdit: () => {
       closeThen(onEdit);
     },
@@ -109,6 +118,7 @@ function MobileCatalogActions({
   setIsOpen,
   triggerId,
 }: Readonly<MobileCatalogActionsProps>) {
+  const t = useTranslations(CATALOG_ROW_ACTIONS_COPY_NAMESPACE);
   function handleOpen(): void {
     setIsOpen(true);
   }
@@ -119,7 +129,7 @@ function MobileCatalogActions({
         id={triggerId}
         icon="more-horizontal"
         size="sm"
-        aria-label={CATALOG_COPY.rowActions(props.name)}
+        aria-label={t("rowActions", { name: props.name })}
         onPress={handleOpen}
       />
       <BottomSheet
@@ -136,17 +146,18 @@ function MobileCatalogActions({
 }
 
 function CatalogSheetItems({ kind, handlers }: Readonly<CatalogSheetItemsProps>) {
+  const t = useTranslations(CATALOG_ROW_ACTIONS_COPY_NAMESPACE);
   return (
     <>
       {kind === "service" || kind === "definition" ? (
-        <SheetItem label={CATALOG_COPY.edit} icon="pencil" onPress={handlers.onEdit} />
+        <SheetItem label={t("edit")} icon="pencil" onPress={handlers.onEdit} />
       ) : null}
       {kind === "category" ? (
-        <SheetItem label={CATALOG_COPY.rename} icon="pencil" onPress={handlers.onRename} />
+        <SheetItem label={t("rename")} icon="pencil" onPress={handlers.onRename} />
       ) : null}
       <SheetItem label={handlers.actionLabel} icon="power" onPress={handlers.onActive} />
       <SheetItem
-        label={CATALOG_COPY.delete}
+        label={t("delete")}
         icon="trash-2"
         variant="destructive"
         onPress={handlers.onDelete}
@@ -160,21 +171,22 @@ function DesktopCatalogActions({
   handlers,
   triggerId,
 }: Readonly<CatalogActionSurfaceProps & { triggerId: string }>) {
-  const label = CATALOG_COPY.rowActions(props.name);
+  const t = useTranslations(CATALOG_ROW_ACTIONS_COPY_NAMESPACE);
+  const label = t("rowActions", { name: props.name });
   return (
     <MenuTrigger label={label}>
       <IconButton id={triggerId} icon="more-horizontal" size="sm" aria-label={label} />
       <Menu aria-label={label}>
         {props.kind === "service" || props.kind === "definition" ? (
-          <MenuItem label={CATALOG_COPY.edit} icon="pencil" onSelect={handlers.onEdit} />
+          <MenuItem label={t("edit")} icon="pencil" onSelect={handlers.onEdit} />
         ) : null}
         {props.kind === "category" ? (
-          <MenuItem label={CATALOG_COPY.rename} icon="pencil" onSelect={handlers.onRename} />
+          <MenuItem label={t("rename")} icon="pencil" onSelect={handlers.onRename} />
         ) : null}
         <MenuItem label={handlers.actionLabel} icon="power" onSelect={handlers.onActive} />
         <MenuDivider />
         <MenuItem
-          label={CATALOG_COPY.delete}
+          label={t("delete")}
           icon="trash-2"
           variant="destructive"
           onSelect={handlers.onDelete}

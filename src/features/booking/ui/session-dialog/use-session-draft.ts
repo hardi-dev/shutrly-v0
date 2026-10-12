@@ -1,10 +1,12 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
 
 import type { TeamPick } from "@/features/booking/domain/session-assignment/session-assignment.types";
 
+import { SESSION_DIALOG_COPY_NAMESPACE } from "./session-dialog.copy";
 import type { SessionDraft, SessionDraftErrors, SessionWithTeam } from "./session-dialog.types";
 import { toSessionDraft, validateSessionDraft } from "./session-draft";
 
@@ -15,6 +17,7 @@ export function useSessionDraft(
   onSave: (session: SessionWithTeam) => void,
 ) {
   const [draft, setDraft] = useState<SessionDraft>(() => toSessionDraft(session));
+  const t = useTranslations(SESSION_DIALOG_COPY_NAMESPACE);
   const [errors, setErrors] = useState<SessionDraftErrors>({});
   useEffect(() => {
     if (!isOpen) return;
@@ -34,7 +37,7 @@ export function useSessionDraft(
   // `pending` is a member and role chosen in the team field but not added yet: saving keeps it.
   const submit = (event: SyntheticEvent<HTMLFormElement>, pending: TeamPick | null): boolean => {
     event.preventDefault();
-    const result = validateSessionDraft(draft);
+    const result = validateSessionDraft(t, draft);
     if ("errors" in result) {
       setErrors(result.errors);
       return false;

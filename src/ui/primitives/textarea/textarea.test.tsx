@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it, vi } from "vitest";
 
 import { Textarea } from "./textarea";
@@ -53,5 +54,15 @@ describe("Textarea (C04)", () => {
     expect(screen.getByRole("textbox", { name: "Isi" })).toHaveAttribute("rows", "10");
     expect(screen.getByText("12 / 2.000")).toBeInTheDocument();
     expect(screen.getByText("Bantuan")).toBeInTheDocument();
+  });
+});
+
+describe("Textarea optional suffix in both locales (I6.1)", () => {
+  it.each([
+    ["en", "(optional)"],
+    ["id", "(opsional)"],
+  ] as const)("%s shows the optional suffix", (locale, suffix) => {
+    renderInLocale(<Textarea label="Catatan" optional />, locale);
+    expect(screen.getByText(suffix)).toBeInTheDocument();
   });
 });

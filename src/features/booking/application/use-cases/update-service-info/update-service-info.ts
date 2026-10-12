@@ -1,11 +1,12 @@
 import "server-only";
 
 import { normaliseCatalogName } from "@/features/booking/domain/catalog-name/catalog-name";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { CatalogError } from "../../errors/catalog-errors/catalog-errors";
 import type { ServiceRepositoryPort } from "../../ports/service-repository/service-repository.port";
-import { serviceInfoSchema } from "../../schemas/service-info/service-info.schema";
+import { createServiceInfoSchema } from "../../schemas/service-info/service-info.schema";
 import { validationFailure } from "../catalog-results/catalog-results";
 import type { ServiceWriteResult } from "../service-results/service-results.types";
 
@@ -15,8 +16,9 @@ export async function updateServiceInfo(
   id: string,
   editorUserId: string,
   input: unknown,
+  locale: FormattingLocale,
 ): Promise<ServiceWriteResult> {
-  const parsed = serviceInfoSchema.safeParse(input);
+  const parsed = createServiceInfoSchema(locale).safeParse(input);
   if (!parsed.success) return validationFailure(parsed.error.issues[0]);
   const result = await repository.updateInfo(context, id, {
     ...parsed.data,

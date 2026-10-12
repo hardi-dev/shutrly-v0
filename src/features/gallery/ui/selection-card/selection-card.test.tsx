@@ -71,7 +71,7 @@ describe("SelectionCard (card export states A–E)", () => {
         ],
       }),
     );
-    expect(screen.getByText("Klien sudah mengirim satu bagian.")).toBeTruthy();
+    expect(screen.getByText("Klien sudah mengirim 1 bagian.")).toBeTruthy();
     expect(screen.getByText("8 dari 8 foto · 3 catatan · dikirim 5 Okt 2026")).toBeTruthy();
     expect(screen.getByRole("link", { name: "Tinjau pilihan" })).toBeTruthy();
   });

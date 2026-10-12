@@ -1,10 +1,11 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { USE_LOAD_MORE_PROJECTS_COPY_NAMESPACE } from "./use-load-more-projects.copy";
 import type { UseLoadMoreProjectsProps } from "./use-load-more-projects.types";
 
 /** Appends the next keyset page and resets when the server sends new data (tab, search or refresh) (AC-PRJ-005). */
@@ -16,6 +17,7 @@ export function useLoadMoreProjects({
   initial,
   action,
 }: Readonly<UseLoadMoreProjectsProps>) {
+  const t = useTranslations(USE_LOAD_MORE_PROJECTS_COPY_NAMESPACE);
   const [page, setPage] = useState(initial);
   const [seenInitial, setSeenInitial] = useState(initial);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,8 +36,8 @@ export function useLoadMoreProjects({
     } catch {
       showToast({
         tone: "danger",
-        title: PROJECT_COPY.serverErrorTitle,
-        body: PROJECT_COPY.serverErrorBody,
+        title: t("serverErrorTitle"),
+        body: t("serverErrorBody"),
       });
     } finally {
       setIsLoading(false);

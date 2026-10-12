@@ -8,9 +8,9 @@ import { LOGIN_FORM_COPY as COPY } from "./login-form.copy";
 
 async function submit() {
   const user = userEvent.setup();
-  await user.type(screen.getByLabelText(COPY.email), "owner@example.com");
-  await user.type(screen.getByLabelText(COPY.password), "correct-horse");
-  await user.click(screen.getByRole("button", { name: COPY.submit }));
+  await user.type(screen.getByLabelText(COPY.messages.id.email), "owner@example.com");
+  await user.type(screen.getByLabelText(COPY.messages.id.password), "correct-horse");
+  await user.click(screen.getByRole("button", { name: COPY.messages.id.submit }));
 }
 
 describe("LoginForm", () => {
@@ -21,7 +21,7 @@ describe("LoginForm", () => {
     render(<LoginForm action={action} />);
     await submit();
     const alert = await screen.findByRole("alert");
-    expect(alert).toHaveTextContent(AUTH_ERROR_COPY.INVALID_CREDENTIALS);
+    expect(alert).toHaveTextContent(AUTH_ERROR_COPY.messages.id.INVALID_CREDENTIALS);
     expect(alert.querySelectorAll("p")).toHaveLength(1);
     await waitFor(() => {
       expect(alert).toHaveFocus();
@@ -32,17 +32,19 @@ describe("LoginForm", () => {
     const action = vi.fn(() => new Promise<undefined>(() => undefined));
     render(<LoginForm action={action} />);
     await submit();
-    expect(await screen.findByRole("button", { name: COPY.submitting })).toBeDisabled();
+    expect(await screen.findByRole("button", { name: COPY.messages.id.submitting })).toBeDisabled();
   });
 
   it("AC-AUTH-029 shows a Google error from the redirect", () => {
     render(<LoginForm action={vi.fn()} initialError="GOOGLE_CANCELLED" />);
-    expect(screen.getByRole("alert")).toHaveTextContent(AUTH_ERROR_COPY.GOOGLE_CANCELLED);
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      AUTH_ERROR_COPY.messages.id.GOOGLE_CANCELLED,
+    );
   });
 
   it("AC-AUTH-016 links to password recovery", () => {
     render(<LoginForm action={vi.fn()} />);
-    expect(screen.getByRole("link", { name: COPY.forgot })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: COPY.messages.id.forgot })).toHaveAttribute(
       "href",
       "/forgot-password",
     );

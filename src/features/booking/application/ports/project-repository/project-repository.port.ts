@@ -2,6 +2,7 @@ import "server-only";
 
 import type { SnapshotField } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
 import type { BookingValue } from "@/features/booking/domain/booking-field-value/booking-field-value.types";
+import type { DefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions.types";
 import type { PickMode } from "@/features/booking/domain/item-definition-type/item-definition-type.types";
 import type { PackageValue } from "@/features/booking/domain/package-value/package-value.types";
 import type {
@@ -12,6 +13,7 @@ import type {
   SessionInput,
   SessionRecordShape,
 } from "@/features/booking/domain/session/session.types";
+import type { DefaultTeamRoleKey } from "@/features/booking/domain/team-role/team-role";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { ServiceItemRecord } from "../service-repository/service-repository.port";
@@ -21,6 +23,8 @@ export interface ProjectItemRecord {
   readonly definitionId: string;
   readonly name: string;
   readonly unit: string | null;
+  /** D-18: the snapshot copies the platform key (Q-2); null for owner items. */
+  readonly defaultKey: DefaultItemKey | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
   readonly pickMode: PickMode | null;
@@ -41,6 +45,8 @@ export interface SessionAssignmentRecord {
   readonly memberName: string;
   readonly isMemberArchived: boolean;
   readonly roleName: string;
+  /** D-18: the platform key of the role, null for an owner role; the screen shows the name in the reader's language. */
+  readonly defaultKey: DefaultTeamRoleKey | null;
 }
 
 export interface ProjectDetailRecord {
@@ -198,6 +204,8 @@ export interface ActiveDefinition {
   readonly id: string;
   readonly name: string;
   readonly unit: string | null;
+  /** D-18: the platform key of a default item; null for owner items. */
+  readonly defaultKey: DefaultItemKey | null;
   readonly valueType: "NUMBER" | "RANGE";
   readonly selectionRequired: boolean;
   readonly pickMode: PickMode | null;

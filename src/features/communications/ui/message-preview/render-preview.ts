@@ -9,10 +9,10 @@ import {
 } from "@/features/communications/domain/variable-catalogue/variable-catalogue";
 import type { TemplateVariable } from "@/features/communications/domain/variable-catalogue/variable-catalogue.types";
 
-import { MESSAGE_PREVIEW_COPY as COPY } from "./message-preview.copy";
+import { PREVIEW_SAMPLE } from "./message-preview.sample";
 
 function sampleValue(name: TemplateVariable, brandName: string): string {
-  return name === "brandName" ? brandName : COPY.sample[name];
+  return name === "brandName" ? brandName : PREVIEW_SAMPLE[name];
 }
 
 /**

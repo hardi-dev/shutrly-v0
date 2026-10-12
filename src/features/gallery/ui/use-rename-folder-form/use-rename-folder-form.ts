@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useController, useForm } from "react-hook-form";
 
 import { renameGallerySourceSchema } from "@/features/gallery/application/schemas/rename-gallery-source/rename-gallery-source.schema";
@@ -9,9 +10,9 @@ import type {
   RenameGallerySourceValues,
 } from "@/features/gallery/application/schemas/rename-gallery-source/rename-gallery-source.types";
 
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import type { FolderMappingState } from "../use-folder-mapping/use-folder-mapping.types";
 import { useLifecycleRunner } from "../use-lifecycle-runner/use-lifecycle-runner";
+import { USE_RENAME_FOLDER_FORM_COPY_NAMESPACE } from "./use-rename-folder-form.copy";
 import type { UseRenameFolderFormInput } from "./use-rename-folder-form.types";
 
 /** Owns *Edit folder*: the label, empty for the Drive folder name (AC-GAL-037), and the save of the subfolder mapping (F-21). @param input - ids, the folder, the actions and the close handler @param mapping - the subfolder mapping state @returns the label field, its error, submit and the pending flag */
@@ -19,6 +20,7 @@ export function useRenameFolderForm(
   input: Readonly<UseRenameFolderFormInput>,
   mapping: FolderMappingState,
 ) {
+  const t = useTranslations(USE_RENAME_FOLDER_FORM_COPY_NAMESPACE);
   const runner = useLifecycleRunner();
   const form = useForm<RenameGallerySourceInput, unknown, RenameGallerySourceValues>({
     resolver: zodResolver(renameGallerySourceSchema),
@@ -35,7 +37,7 @@ export function useRenameFolderForm(
           mappings: mapping.entries(),
         });
       },
-      { title: GALLERY_COPY.renamedTitle },
+      { title: t("renamedTitle") },
     );
     if (result?.ok) input.onClose();
     else if (result && "fieldErrors" in result)

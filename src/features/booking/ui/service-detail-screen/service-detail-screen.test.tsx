@@ -37,14 +37,16 @@ describe("ServiceDetailScreen", () => {
     );
 
     const infoCard = screen.getByRole("region", { name: "Info layanan" });
-    const itemsCard = screen.getByRole("region", { name: "Item paket" });
-    const fieldsCard = screen.getByRole("region", { name: "Field booking" });
+    const itemsCard = screen.getByRole("region", { name: "Isi paket" });
+    const fieldsCard = screen.getByRole("region", { name: "Detail pemesanan" });
 
     expect(within(infoCard).getByRole("button", { name: "Ubah" })).toBeInTheDocument();
     expect(infoCard).toHaveTextContent("Status");
     expect(infoCard).toHaveTextContent("Aktif");
-    expect(within(itemsCard).getByRole("button", { name: "Tambah item" })).toBeInTheDocument();
-    expect(within(fieldsCard).getByRole("button", { name: "Tambah field" })).toBeInTheDocument();
+    expect(within(itemsCard).getByRole("button", { name: "Tambah isi paket" })).toBeInTheDocument();
+    expect(
+      within(fieldsCard).getByRole("button", { name: "Tambah kolom pemesanan" }),
+    ).toBeInTheDocument();
     expect(screen.getAllByTestId("button-icon-leading")).toHaveLength(3);
   });
 });

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ClientOption } from "@/features/booking/application/ports/project-repository/project-repository.port";
@@ -8,28 +9,45 @@ import { formatWhatsappNumber } from "@/features/booking/domain/whatsapp-number/
 import { Combobox } from "@/ui/patterns/combobox/combobox";
 
 import { ClientDialog } from "../client-dialog/client-dialog";
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { useClientSearch } from "../use-client-search/use-client-search";
+import { CLIENT_PICKER_COPY_NAMESPACE } from "./client-picker.copy";
 import type { ClientPickerProps } from "./client-picker.types";
 import { useClientCreation } from "./use-client-creation";
 
-function describeClient(client: ClientOption) {
+function describeClient(t: ProjectTranslate, client: ClientOption) {
   return {
     label: client.name,
     description: client.whatsappNumber
-      ? PROJECT_COPY.clientNote(formatWhatsappNumber(client.whatsappNumber), client.projectCount)
-      : PROJECT_COPY.clientNoNumber,
+      ? t("clientNote", {
+          number: formatWhatsappNumber(client.whatsappNumber),
+          count: client.projectCount,
+        })
+      : t("clientNoNumber"),
   };
 }
 
-function groupLabelFor(count: number, query: string): string {
+function describeItemFor(t: ProjectTranslate) {
+  return (client: ClientOption) => describeClient(t, client);
+}
+
+function createLabelFor(t: ProjectTranslate, text: string) {
+  return t("clientCreateLabel", { query: text.trim() });
+}
+
+function helperOf(client: ClientOption | null): string | undefined {
+  return client?.whatsappNumber ? formatWhatsappNumber(client.whatsappNumber) : undefined;
+}
+
+function groupLabelFor(t: ProjectTranslate, count: number, query: string): string {
   return count === 0 && query.trim() !== ""
-    ? PROJECT_COPY.clientNoMatchLabel(query.trim())
-    : PROJECT_COPY.clientGroupLabel(count);
+    ? t("clientNoMatchLabel", { query: query.trim() })
+    : t("clientGroupLabel", { count });
 }
 
 /** Picks one active client with a searchable combobox; typing searches the server (AC-PRJ-006). */
 export function ClientPicker(props: Readonly<ClientPickerProps>) {
+  const t = useTranslations(CLIENT_PICKER_COPY_NAMESPACE);
   const [text, setText] = useState(props.selectedClient?.name ?? "");
   const search = useClientSearch({
     workspaceId: props.workspaceId,
@@ -52,25 +70,22 @@ export function ClientPicker(props: Readonly<ClientPickerProps>) {
     setText(client.name);
     props.onSelect(client);
   };
-  const helper = props.selectedClient?.whatsappNumber
-    ? formatWhatsappNumber(props.selectedClient.whatsappNumber)
-    : undefined;
   return (
     <>
       <Combobox
-        label={PROJECT_COPY.clientLabel}
-        placeholder={PROJECT_COPY.clientPlaceholder}
+        label={t("clientLabel")}
+        placeholder={t("clientPlaceholder")}
         items={search.items}
         selectedId={props.selectedClient?.id ?? null}
         inputValue={text}
         onInputChange={setText}
         onSelect={handleSelect}
-        renderItem={describeClient}
-        groupLabel={groupLabelFor(search.items.length, text)}
-        description={helper}
+        renderItem={describeItemFor(t)}
+        groupLabel={groupLabelFor(t, search.items.length, text)}
+        description={helperOf(props.selectedClient)}
         errorMessage={props.errorMessage}
         isLoading={search.isLoading}
-        createLabel={props.createAction ? PROJECT_COPY.clientCreateLabel(text.trim()) : undefined}
+        createLabel={props.createAction ? createLabelFor(t, text) : undefined}
         onCreate={props.createAction ? creation.open : undefined}
       />
       {props.createAction ? (
@@ -84,6 +99,7 @@ function ClientCreationDialog({
   workspaceId,
   creation,
 }: Readonly<{ workspaceId: string; creation: ReturnType<typeof useClientCreation> }>) {
+  const t = useTranslations(CLIENT_PICKER_COPY_NAMESPACE);
   return (
     <ClientDialog
       isOpen={creation.query !== null}
@@ -92,7 +108,7 @@ function ClientCreationDialog({
       onSubmit={creation.submit}
       mode="add"
       initialName={creation.query ?? ""}
-      description={PROJECT_COPY.clientDialogDescription}
+      description={t("clientDialogDescription")}
       onCreated={creation.onCreated}
     />
   );

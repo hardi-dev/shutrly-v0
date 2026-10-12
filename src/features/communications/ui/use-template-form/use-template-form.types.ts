@@ -1,7 +1,10 @@
 import type { BaseSyntheticEvent } from "react";
 import type { UseFormReturn } from "react-hook-form";
 
-import type { UpdateMessageTemplateFailure } from "@/features/communications/application/use-cases/update-message-template/update-message-template.types";
+import type {
+  TemplateSaveMode,
+  UpdateMessageTemplateFailure,
+} from "@/features/communications/application/use-cases/update-message-template/update-message-template.types";
 import type { TemplateType } from "@/features/communications/domain/template-type/template-type.types";
 import type { TemplateVariable } from "@/features/communications/domain/variable-catalogue/variable-catalogue.types";
 
@@ -11,6 +14,7 @@ export interface TemplateFormValues {
 
 export type SaveTemplateAction = (
   values: TemplateFormValues,
+  mode: TemplateSaveMode,
 ) => Promise<UpdateMessageTemplateFailure | undefined>;
 
 export interface TemplateFormOptions {

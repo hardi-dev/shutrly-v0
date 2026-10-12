@@ -1,16 +1,19 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { Button } from "@/ui/primitives/button/button";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import type { CreateProjectState } from "../use-create-project-form/use-create-project-form.types";
+import { CREATE_PROJECT_SCREEN_COPY_NAMESPACE } from "./create-project-screen.copy";
 
 /** Simpan draf and Buat proyek: right-aligned under the form on desktop, a sticky half-width bar on phones. */
 export function CreateProjectActions({
   state,
   isDisabled = false,
 }: Readonly<{ state: CreateProjectState; isDisabled?: boolean }>) {
+  const t = useTranslations(CREATE_PROJECT_SCREEN_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const size = isMobile ? "lg" : "md";
   const handleSaveDraft = () => {
@@ -29,7 +32,7 @@ export function CreateProjectActions({
         isDisabled={isDisabled || state.pendingMode === "BOOKED"}
         onPress={handleSaveDraft}
       >
-        {state.pendingMode === "DRAFT" ? PROJECT_COPY.savingDraft : PROJECT_COPY.saveDraft}
+        {state.pendingMode === "DRAFT" ? t("savingDraft") : t("saveDraft")}
       </Button>
       <Button
         size={size}
@@ -38,7 +41,7 @@ export function CreateProjectActions({
         isDisabled={isDisabled || state.pendingMode === "DRAFT"}
         onPress={handleCreate}
       >
-        {state.pendingMode === "BOOKED" ? PROJECT_COPY.creating : PROJECT_COPY.create}
+        {state.pendingMode === "BOOKED" ? t("creating") : t("create")}
       </Button>
     </div>
   );

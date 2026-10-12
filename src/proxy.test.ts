@@ -73,3 +73,43 @@ describe("proxy (production gate, then early redirect)", () => {
     expect(isLandingOnly).toHaveBeenCalled();
   });
 });
+
+describe("proxy forwards the gallery token header (C-103, D-7)", () => {
+  const FORWARDED = "x-middleware-request-x-shutrly-gallery-token";
+  const SESSION = { cookie: "better-auth.session_token=abc" };
+
+  it("AC-L10N-001 forwards the gallery token to the server for /g/<token> paths", async () => {
+    const response = await proxy(request("/g/tok-123/photos"));
+    expect(response.headers.get(FORWARDED)).toBe("tok-123");
+    expect((await proxy(request("/g/tok-123"))).headers.get(FORWARDED)).toBe("tok-123");
+  });
+
+  it("C-103 strips a forged token header from every incoming request", async () => {
+    const forged = { "x-shutrly-gallery-token": "forged" };
+    expect((await proxy(request("/login", forged))).headers.get(FORWARDED)).toBeNull();
+    expect(
+      (await proxy(request("/w/x", { ...forged, ...SESSION }))).headers.get(FORWARDED),
+    ).toBeNull();
+  });
+
+  it("C-103 strips a forged token on the landing-only rewrite too", async () => {
+    vi.mocked(isLandingOnly).mockResolvedValue(true);
+    const forged = { "x-shutrly-gallery-token": "forged" };
+    const response = await proxy(request("/w/x", forged));
+    expect(rewrittenTo(response)).toBe("http://localhost:3000/_gated");
+    expect(response.headers.get(FORWARDED)).toBeNull();
+  });
+
+  it("AC-L10N-001 forwards the token through the landing-only rewrite for gallery links", async () => {
+    vi.mocked(isLandingOnly).mockResolvedValue(true);
+    const response = await proxy(request("/g/tok-123/photos"));
+    expect(rewrittenTo(response)).toBe("http://localhost:3000/_gated");
+    expect(response.headers.get(FORWARDED)).toBe("tok-123");
+  });
+
+  it("C-103 never echoes the token header on the response", async () => {
+    const response = await proxy(request("/g/tok-123/photos"));
+    expect(response.headers.get("x-shutrly-gallery-token")).toBeNull();
+    expect(response.headers.get("location")).toBeNull();
+  });
+});

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/require-await -- the fake mirrors the asynchronous repository port */
-
 import type {
   ActiveDefinition,
   ClientOption,
@@ -18,6 +17,7 @@ import type {
   ServiceOptionGroup,
   ServiceSnapshotSource,
 } from "@/features/booking/application/ports/project-repository/project-repository.port";
+import type { DefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions.types";
 import type { StepTransition } from "@/features/booking/domain/project-status/project-status.types";
 import type { ProjectStatus } from "@/features/booking/domain/project-status/project-status.types";
 import { compareSessions } from "@/features/booking/domain/session/session";
@@ -34,6 +34,7 @@ export interface FakeClient {
 export interface FakeDefinition extends DefinitionRules {
   readonly name: string;
   readonly unit: string | null;
+  readonly defaultKey?: DefaultItemKey | null;
   readonly pickMode: "COUNT" | "QUANTITY" | null;
   readonly allowsPickNotes: boolean;
 }
@@ -121,6 +122,7 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
       definitionId: item.definitionId,
       name: definition?.name ?? "",
       unit: definition?.unit ?? null,
+      defaultKey: definition?.defaultKey ?? null,
       valueType: definition?.valueType ?? "NUMBER",
       selectionRequired: definition?.selectionRequired ?? false,
       pickMode: definition?.pickMode ?? null,
@@ -228,6 +230,7 @@ export class FakeProjectRepository implements ProjectRepositoryPort {
         id: row.id,
         name: row.name,
         unit: row.unit,
+        defaultKey: row.defaultKey ?? null,
         valueType: row.valueType,
         selectionRequired: row.selectionRequired,
         pickMode: row.pickMode,

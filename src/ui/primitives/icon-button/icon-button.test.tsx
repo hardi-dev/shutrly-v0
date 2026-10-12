@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { describe, expect, it, vi } from "vitest";
 
 import { IconButton } from "./icon-button";
@@ -26,7 +27,9 @@ describe("IconButton (C02)", () => {
 
   it("renders a capped unread badge and extends the accessible name", () => {
     render(<IconButton icon="info" aria-label="Notifikasi" badgeCount={120} />);
-    expect(screen.getByRole("button", { name: "Notifikasi, 99 belum dibaca" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Notifikasi, 99 notifikasi belum dibaca" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("99+")).toBeInTheDocument();
   });
 
@@ -62,4 +65,39 @@ describe("IconButton (C02)", () => {
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });
+});
+
+describe("IconButton unread badge in both locales (OCM-09)", () => {
+  it.each([
+    {
+      locale: "en",
+      label: "Notifications",
+      badgeCount: 1,
+      name: "Notifications, 1 unread notification",
+    },
+    {
+      locale: "en",
+      label: "Notifications",
+      badgeCount: 3,
+      name: "Notifications, 3 unread notifications",
+    },
+    {
+      locale: "id",
+      label: "Notifikasi",
+      badgeCount: 1,
+      name: "Notifikasi, 1 notifikasi belum dibaca",
+    },
+    {
+      locale: "id",
+      label: "Notifikasi",
+      badgeCount: 3,
+      name: "Notifikasi, 3 notifikasi belum dibaca",
+    },
+  ] as const)(
+    "$locale badge for $badgeCount names the button $name",
+    ({ locale, label, badgeCount, name }) => {
+      renderInLocale(<IconButton icon="info" aria-label={label} badgeCount={badgeCount} />, locale);
+      expect(screen.getByRole("button", { name })).toBeInTheDocument();
+    },
+  );
 });

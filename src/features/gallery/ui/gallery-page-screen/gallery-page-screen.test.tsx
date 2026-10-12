@@ -61,7 +61,7 @@ describe("GalleryPageScreen", () => {
     );
     expect(order.every((at) => at >= 0)).toBe(true);
     expect([...order].sort((a, b) => a - b)).toEqual(order);
-    expect(screen.queryByRole("button", { name: "Salin password" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Salin kata sandi" })).not.toBeInTheDocument();
   });
 
   it("design shows the status and meta in the phone header block", () => {

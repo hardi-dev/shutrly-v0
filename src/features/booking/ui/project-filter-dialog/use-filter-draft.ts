@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { EMPTY_PROJECT_FILTER } from "@/features/booking/domain/project-list-query/project-list-filter";
@@ -8,8 +9,8 @@ import { filterFormSchema } from "@/features/booking/domain/project-list-query/p
 import type { ProjectFilter } from "@/features/booking/domain/project-list-query/project-list-filter.types";
 import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { projectListUrl } from "../project-search-field/project-tab-path";
+import { PROJECT_FILTER_DIALOG_COPY_NAMESPACE } from "./project-filter-dialog.copy";
 
 /** Holds the dialog's draft filter and applies it to the URL, keeping the search text (A-11). @param input - workspace, tab, search and the URL filter @returns the draft and its actions */
 export function useFilterDraft(input: {
@@ -18,6 +19,7 @@ export function useFilterDraft(input: {
   q: string;
   filter: ProjectFilter;
 }) {
+  const t = useTranslations(PROJECT_FILTER_DIALOG_COPY_NAMESPACE);
   const router = useRouter();
   const [draft, setDraft] = useState<ProjectFilter>(input.filter);
   const [toError, setToError] = useState<string | undefined>();
@@ -38,7 +40,7 @@ export function useFilterDraft(input: {
   const apply = (): boolean => {
     const result = filterFormSchema.safeParse(draft);
     if (!result.success) {
-      setToError(PROJECT_COPY.filterToBeforeFrom);
+      setToError(t("filterToBeforeFrom"));
       return false;
     }
     go(draft);

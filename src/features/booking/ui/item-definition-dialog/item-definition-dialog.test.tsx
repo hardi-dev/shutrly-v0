@@ -2,6 +2,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useLocale } from "next-intl";
 import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -52,7 +53,7 @@ describe("ItemDefinitionDialog", () => {
     );
     await user.type(screen.getByRole("textbox", { name: "Nama item" }), "Jumlah orang");
     await user.type(screen.getByRole("textbox", { name: "Satuan" }), "orang");
-    await user.click(screen.getByRole("button", { name: /Tipe nilai/ }));
+    await user.click(screen.getByRole("button", { name: /Format nilai/ }));
     await user.click(screen.getByRole("option", { name: /Rentang/ }));
     await user.click(screen.getByRole("button", { name: "Simpan" }));
 
@@ -64,7 +65,7 @@ describe("ItemDefinitionDialog", () => {
     await user.click(screen.getByRole("button", { name: "Buka tambah item" }));
     expect(screen.getByRole("textbox", { name: "Nama item" })).toHaveValue("");
     expect(screen.getByRole("textbox", { name: "Satuan" })).toHaveValue("");
-    expect(screen.getByRole("button", { name: /Tipe nilai/ })).toHaveTextContent("Angka");
+    expect(screen.getByRole("button", { name: /Format nilai/ })).toHaveTextContent("Angka");
   });
 
   it("AC-CAT-001 hides the pick settings while the item is not used for client selection", () => {
@@ -79,7 +80,7 @@ describe("ItemDefinitionDialog", () => {
     render(<AddDefinitionHarness action={action} />);
     await user.type(screen.getByRole("textbox", { name: "Nama item" }), "Bingkai");
     await user.click(screen.getByRole("switch", { name: "Dipakai untuk pilihan foto klien" }));
-    await user.click(screen.getByRole("radio", { name: /Jumlah per foto/ }));
+    await user.click(screen.getByRole("radio", { name: /Foto untuk dicetak/ }));
     await user.click(screen.getByRole("button", { name: "Simpan" }));
     await waitFor(() => {
       expect(action).toHaveBeenCalledWith(
@@ -99,7 +100,7 @@ describe("ItemDefinitionDialog", () => {
     render(<AddDefinitionHarness action={action} />);
     await user.type(screen.getByRole("textbox", { name: "Nama item" }), "Foto album");
     await user.click(screen.getByRole("switch", { name: "Dipakai untuk pilihan foto klien" }));
-    expect(screen.getByRole("radio", { name: /Hitung foto/ })).toBeChecked();
+    expect(screen.getByRole("radio", { name: /Foto untuk diedit/ })).toBeChecked();
     await user.click(screen.getByRole("switch", { name: "Klien bisa memberi catatan" }));
     await user.click(screen.getByRole("button", { name: "Simpan" }));
     await waitFor(() => {
@@ -119,6 +120,7 @@ describe("ItemDefinitionDialog", () => {
         action={vi.fn()}
         definition={{
           id: "definition-1",
+          defaultKey: null,
           name: "Foto cetak",
           valueType: "NUMBER",
           unit: "lembar",
@@ -131,8 +133,47 @@ describe("ItemDefinitionDialog", () => {
       />,
     );
     expect(screen.getByText("Pengaturan pilihan dikunci")).toBeInTheDocument();
-    expect(screen.getByRole("radio", { name: /Jumlah per foto/ })).toBeDisabled();
+    expect(screen.getByRole("radio", { name: /Foto untuk dicetak/ })).toBeDisabled();
     expect(screen.getByRole("switch", { name: "Klien bisa memberi catatan" })).toBeDisabled();
     expect(screen.getByRole("textbox", { name: "Nama item" })).toBeEnabled();
+  });
+
+  it("D-18 saving an unchanged keyed label submits the stored name, not a rename", async () => {
+    vi.mocked(useLocale).mockReturnValue("en");
+    try {
+      const updateAction = vi.fn().mockResolvedValue({ ok: true });
+      render(
+        <ItemDefinitionDialog
+          isOpen
+          onOpenChange={vi.fn()}
+          workspaceId="workspace-1"
+          action={vi.fn()}
+          updateAction={updateAction}
+          definition={{
+            id: "definition-1",
+            defaultKey: "EDITED_PHOTOS",
+            name: "Foto edit",
+            valueType: "NUMBER",
+            unit: "foto",
+            selectionRequired: true,
+            pickMode: "COUNT",
+            allowsPickNotes: true,
+            isActive: true,
+            usageCount: 0,
+          }}
+        />,
+      );
+      expect(screen.getByDisplayValue("Edited photos")).toBeInTheDocument();
+      await userEvent.click(screen.getByRole("button", { name: "Simpan" }));
+      await waitFor(() => {
+        expect(updateAction).toHaveBeenCalledWith(
+          "workspace-1",
+          "definition-1",
+          expect.objectContaining({ name: "Foto edit", unit: "foto" }),
+        );
+      });
+    } finally {
+      vi.mocked(useLocale).mockReturnValue("id");
+    }
   });
 });

@@ -1,6 +1,7 @@
 "use client";
 /* eslint-disable max-lines-per-function -- responsive dialog shell plus the field form share one submit flow */
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ProjectFieldRecord } from "@/features/booking/application/ports/project-repository/project-repository.port";
@@ -11,9 +12,9 @@ import { Modal } from "@/ui/patterns/modal/modal";
 import { Button } from "@/ui/primitives/button/button";
 
 import { BookingFieldInput } from "../booking-field-input/booking-field-input";
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import type { SubmitErrors } from "../project-edit/project-edit.types";
 import { projectFieldErrorText } from "../project-field-error/project-field-error";
+import { BOOKING_FIELDS_DIALOG_COPY_NAMESPACE } from "./booking-fields-dialog.copy";
 
 /** Ubah field booking: the snapshotted fields by type; names and types never change (AC-PRJ-017). */
 export function BookingFieldsDialog({
@@ -27,6 +28,7 @@ export function BookingFieldsDialog({
   fields: readonly ProjectFieldRecord[];
   onSubmit: (values: Record<string, BookingValue>) => Promise<SubmitErrors>;
 }>) {
+  const t = useTranslations(BOOKING_FIELDS_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const [values, setValues] = useState<Record<string, BookingValue>>(() =>
     Object.fromEntries(fields.map((field) => [field.key, field.value])),
@@ -43,7 +45,7 @@ export function BookingFieldsDialog({
           Object.fromEntries(
             Object.entries(result).map(([path, key]) => {
               const field = fields.find((candidate) => path === `fieldValues.${candidate.key}`);
-              return [path, projectFieldErrorText(path, key, field?.name)];
+              return [path, projectFieldErrorText(t, path, key, field?.name)];
             }),
           ),
         );
@@ -68,7 +70,7 @@ export function BookingFieldsDialog({
       size={isMobile ? "lg" : "md"}
       className="max-md:w-full"
     >
-      {PROJECT_COPY.itemSave}
+      {t("itemSave")}
     </Button>
   );
   const body = (
@@ -89,8 +91,8 @@ export function BookingFieldsDialog({
       <BottomSheet
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        title={PROJECT_COPY.fieldsDialogTitle}
-        description={PROJECT_COPY.fieldsDialogDescription}
+        title={t("fieldsDialogTitle")}
+        description={t("fieldsDialogDescription")}
         variant="form"
         actions={save}
       >
@@ -102,13 +104,13 @@ export function BookingFieldsDialog({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      title={PROJECT_COPY.fieldsDialogTitle}
-      description={PROJECT_COPY.fieldsDialogDescription}
+      title={t("fieldsDialogTitle")}
+      description={t("fieldsDialogDescription")}
       size="md"
       actions={
         <>
           <Button variant="secondary" onPress={handleCancel}>
-            {PROJECT_COPY.itemCancel}
+            {t("itemCancel")}
           </Button>
           {save}
         </>

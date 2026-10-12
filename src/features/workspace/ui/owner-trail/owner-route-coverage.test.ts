@@ -4,7 +4,11 @@ import { fileURLToPath } from "node:url";
 
 import { describe, expect, it } from "vitest";
 
+import type { OwnerNavTranslator } from "../owner-nav/owner-nav.types";
 import { staticOwnerTrail } from "./owner-trail";
+
+// Only the route's existence matters here, so the translator returns the key itself.
+const keyT = ((key: string) => key) as OwnerNavTranslator;
 
 const WORKSPACE_ROOT = fileURLToPath(
   new URL("../../../../app/(owner)/w/[workspaceId]", import.meta.url),
@@ -60,7 +64,7 @@ describe("owner route coverage for the breadcrumb slot (F-22, ADR-025)", () => {
         failures.push(`${route}: dynamic page without a slot page at the same path`);
       } else if (parentsWithDynamicSlot.has(parentOf(route))) {
         failures.push(`${route}: static sibling of a dynamic slot segment, needs a mirror`);
-      } else if (staticOwnerTrail(segments, "workspace", "Workspace") === null) {
+      } else if (staticOwnerTrail(segments, "workspace", "Workspace", keyT) === null) {
         failures.push(`${route}: the catch-all cannot name this page`);
       }
     }

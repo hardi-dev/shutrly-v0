@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { type ReactNode, useId, useLayoutEffect, useRef } from "react";
 import { Dialog, Modal as AriaModal, ModalOverlay } from "react-aria-components";
 
@@ -7,7 +8,7 @@ import { cn } from "@/ui/cn/cn";
 import { useRestoreFocus } from "@/ui/hooks/use-restore-focus/use-restore-focus";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { MODAL_COPY } from "./modal.copy";
+import { MODAL_COPY_NAMESPACE } from "./modal.copy";
 import type { ModalContentProps, ModalHeaderProps, ModalProps, ModalSize } from "./modal.types";
 
 const SIZE_CLASSES: Record<ModalSize, string> = {
@@ -123,6 +124,7 @@ function ModalHeader({
   description,
   onClose,
 }: Readonly<ModalHeaderProps>) {
+  const t = useTranslations(MODAL_COPY_NAMESPACE);
   return (
     <header className="flex shrink-0 items-start gap-(--component-modal-header-gap) border-b border-(--component-modal-header-border) px-(--component-modal-header-padding-x) py-(--component-modal-header-padding-y)">
       <div className="flex min-w-0 flex-1 flex-col gap-(--component-modal-header-text-gap)">
@@ -141,7 +143,7 @@ function ModalHeader({
           </p>
         ) : null}
       </div>
-      <IconButton icon="x" size="sm" aria-label={MODAL_COPY.close} onPress={onClose} />
+      <IconButton icon="x" size="sm" aria-label={t("close")} onPress={onClose} />
     </header>
   );
 }

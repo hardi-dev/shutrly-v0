@@ -2,12 +2,12 @@
 /* eslint-disable max-lines-per-function -- the host owns one dialog state for every menu action */
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ClientInput } from "@/features/booking/application/schemas/client-input/client-input.types";
 import { buildProjectMenu } from "@/features/booking/domain/project-menu/project-menu";
 
-import { CLIENT_COPY } from "../client-copy/client-copy.copy";
 import { ClientDialog } from "../client-dialog/client-dialog";
 import { ProjectInfoDialog } from "../project-info-dialog/project-info-dialog";
 import { ProjectMenu } from "../project-menu/project-menu";
@@ -15,6 +15,7 @@ import { CancelProjectDialog } from "../project-status-dialogs/cancel-project-di
 import { DeleteDraftDialog } from "../project-status-dialogs/delete-draft-dialog";
 import { useClientMutations } from "../use-client-mutations/use-client-mutations";
 import { useProjectActions } from "../use-project-actions/use-project-actions";
+import { PROJECT_MENU_HOST_COPY_NAMESPACE } from "./project-menu-host.copy";
 import type {
   OpenDialog,
   ProjectMenuHostProps,
@@ -24,6 +25,7 @@ import type {
 /** Owns the ⋯ menus and the dialogs they open, so list rows and the detail page behave the same (AC-PRJ-022, 023, 027). */
 export function ProjectMenuHost(props: Readonly<ProjectMenuHostProps>) {
   const router = useRouter();
+  const t = useTranslations(PROJECT_MENU_HOST_COPY_NAMESPACE);
   const [dialog, setDialog] = useState<OpenDialog>(null);
   const mutations = useClientMutations();
   const steps = useProjectActions({
@@ -66,7 +68,7 @@ export function ProjectMenuHost(props: Readonly<ProjectMenuHostProps>) {
     const result = await mutations.run(
       values.name,
       () => props.actions.updateClientAction(workspaceId, clientId, values),
-      { title: CLIENT_COPY.savedTitle },
+      { title: t("savedTitle") },
     );
     if (result?.ok !== false) refresh();
     return result;

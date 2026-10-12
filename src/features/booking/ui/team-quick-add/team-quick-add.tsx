@@ -1,11 +1,12 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { createContext, type SyntheticEvent, useContext, useState } from "react";
 
 import { Button } from "@/ui/primitives/button/button";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
 import { TeamMemberDialog } from "../team-member-dialog/team-member-dialog";
+import { TEAM_QUICK_ADD_COPY_NAMESPACE } from "./team-quick-add.copy";
 import type {
   AddTeamMemberButtonProps,
   TeamQuickAddProviderProps,
@@ -26,6 +27,7 @@ export function useCanQuickAddMember(): boolean {
 
 /** *Tambah anggota*: opens the Tim page's member dialog on top of the current dialog and hands back the new member (Revision OT #1, #2; Owner 2026-10-07: stacked). Renders nothing without a provider. */
 export function AddTeamMemberButton({ onAdded, isDisabled }: Readonly<AddTeamMemberButtonProps>) {
+  const t = useTranslations(TEAM_QUICK_ADD_COPY_NAMESPACE);
   const value = useContext(TeamQuickAddContext);
   const [isOpen, setIsOpen] = useState(false);
   if (value === null) return null;
@@ -44,7 +46,7 @@ export function AddTeamMemberButton({ onAdded, isDisabled }: Readonly<AddTeamMem
         isDisabled={isDisabled}
         onPress={handleOpen}
       >
-        {PROJECT_COPY.addTeamMember}
+        {t("addTeamMember")}
       </Button>
       <TeamMemberDialog
         isOpen={isOpen}

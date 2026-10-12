@@ -27,7 +27,7 @@ describe("CancelProjectDialog", () => {
       />,
     );
     expect(screen.getByText("Batalkan proyek?")).toBeInTheDocument();
-    expect(screen.getByText("Opsional")).toBeInTheDocument();
+    expect(screen.getByText("(opsional)")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Batalkan proyek" }));
     expect(cancelAction).toHaveBeenCalledWith("ws", "p1", { reason: "" });
     expect(showToast).toHaveBeenCalledWith({
@@ -56,7 +56,7 @@ describe("CancelProjectDialog", () => {
       />,
     );
     expect(screen.getByText("Alasan pembatalan")).toBeInTheDocument();
-    expect(screen.queryByText("Opsional")).not.toBeInTheDocument();
+    expect(screen.queryByText("(opsional)")).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Batalkan proyek" }));
     expect(
       await screen.findByText("Isi alasan pembatalan. Wajib setelah pemotretan dimulai."),
@@ -91,9 +91,9 @@ describe("DeleteDraftDialog", () => {
   it.each([
     [
       true,
-      "Draf beserta isi paket, jadwal, dan field booking-nya dihapus permanen. Penugasan tim ikut terhapus.",
+      "Draf, isi paket, jadwal, dan kolom pemesanannya dihapus permanen. Penugasan tim ikut dihapus.",
     ],
-    [false, "Draf beserta isi paket, jadwal, dan field booking-nya dihapus permanen."],
+    [false, "Draf, isi paket, jadwal, dan kolom pemesanannya dihapus permanen."],
   ])("AC-TEAM-020 hasTeam=%s: the confirmation body", (hasTeam, body) => {
     render(
       <DeleteDraftDialog

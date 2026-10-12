@@ -22,23 +22,27 @@ function renderSections(hasPassword: boolean, passwordChanged = false) {
 describe("AccountSections (t7CXVK / TInkk)", () => {
   it("AC-AUTH-020 shows the email read-only and the name editable", () => {
     renderSections(true);
-    expect(screen.getByLabelText(PROFILE_FORM_COPY.email)).toHaveAttribute("readonly");
-    expect(screen.getByLabelText(PROFILE_FORM_COPY.name)).toHaveValue("Alya Pratama");
+    expect(screen.getByLabelText(PROFILE_FORM_COPY.messages.id.email)).toHaveAttribute("readonly");
+    expect(screen.getByLabelText(PROFILE_FORM_COPY.messages.id.name)).toHaveValue("Alya Pratama");
   });
 
   it("AC-AUTH-019 shows the password section for password accounts", () => {
     renderSections(true);
-    expect(screen.getByLabelText(CHANGE_PASSWORD_FORM_COPY.current)).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(CHANGE_PASSWORD_FORM_COPY.messages.id.current),
+    ).toBeInTheDocument();
   });
 
   it("AC-AUTH-019 shows the success state after the refreshed session redirect", () => {
     renderSections(true, true);
-    expect(screen.getByRole("status")).toHaveTextContent(CHANGE_PASSWORD_FORM_COPY.done);
+    expect(screen.getByRole("status")).toHaveTextContent(
+      CHANGE_PASSWORD_FORM_COPY.messages.id.done,
+    );
   });
 
   it("AC-AUTH-030 BR-AUTH-008 hides it for Google-only accounts", () => {
     renderSections(false);
-    expect(screen.queryByLabelText(CHANGE_PASSWORD_FORM_COPY.current)).toBeNull();
-    expect(screen.getByText(ACCOUNT_SECTIONS_COPY.googleOnlyTitle)).toBeInTheDocument();
+    expect(screen.queryByLabelText(CHANGE_PASSWORD_FORM_COPY.messages.id.current)).toBeNull();
+    expect(screen.getByText(ACCOUNT_SECTIONS_COPY.messages.id.googleOnlyTitle)).toBeInTheDocument();
   });
 });

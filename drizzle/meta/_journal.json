@@ -134,6 +134,27 @@
       "when": 1791383483913,
       "tag": "0018_folder_map",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1791632665018,
+      "tag": "0019_locale_preferences",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1791641369305,
+      "tag": "0020_default_template_flag",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1791653283454,
+      "tag": "0021_default_item_keys",
+      "breakpoints": true
     }
   ]
 }

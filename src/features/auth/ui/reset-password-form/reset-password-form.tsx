@@ -1,12 +1,14 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { resetPasswordSchema } from "@/features/auth/application/use-cases/reset-password/reset-password.schema";
 import { Button } from "@/ui/primitives/button/button";
 
 import { AuthErrorAlert } from "../auth-error-alert/auth-error-alert";
 import { ControlledTextField } from "../controlled-text-field/controlled-text-field";
 import { useAuthForm } from "../use-auth-form/use-auth-form";
-import { RESET_PASSWORD_FORM_COPY as COPY } from "./reset-password-form.copy";
+import { RESET_PASSWORD_FORM_COPY_NAMESPACE } from "./reset-password-form.copy";
 import type { ResetPasswordFormProps } from "./reset-password-form.types";
 
 /**
@@ -15,6 +17,7 @@ import type { ResetPasswordFormProps } from "./reset-password-form.types";
  * @returns the form
  */
 export function ResetPasswordForm({ token, action }: Readonly<ResetPasswordFormProps>) {
+  const t = useTranslations(RESET_PASSWORD_FORM_COPY_NAMESPACE);
   const { form, server, onSubmit, isSubmitting } = useAuthForm({
     schema: resetPasswordSchema,
     defaultValues: { token, password: "", confirm: "" },
@@ -29,21 +32,21 @@ export function ResetPasswordForm({ token, action }: Readonly<ResetPasswordFormP
           control={control}
           name="password"
           type="password"
-          label={COPY.password}
-          placeholder={COPY.passwordPlaceholder}
+          label={t("password")}
+          placeholder={t("passwordPlaceholder")}
           autoComplete="new-password"
         />
         <ControlledTextField
           control={control}
           name="confirm"
           type="password"
-          label={COPY.confirm}
-          placeholder={COPY.confirmPlaceholder}
+          label={t("confirm")}
+          placeholder={t("confirmPlaceholder")}
           autoComplete="new-password"
         />
       </div>
       <Button type="submit" size="lg" isDisabled={isSubmitting}>
-        {isSubmitting ? COPY.submitting : COPY.submit}
+        {isSubmitting ? t("submitting") : t("submit")}
       </Button>
     </form>
   );

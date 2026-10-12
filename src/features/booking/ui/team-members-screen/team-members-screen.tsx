@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import type { TeamMemberRecord } from "@/features/booking/application/ports/team-member-repository/team-member-repository.port";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -8,7 +9,6 @@ import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { Button } from "@/ui/primitives/button/button";
 
 import { DeleteTeamMemberDialog } from "../delete-team-member-dialog/delete-team-member-dialog";
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
 import { TeamMemberDialog } from "../team-member-dialog/team-member-dialog";
 import { TeamMemberList } from "../team-member-list/team-member-list";
 import { TeamMemberRowActions } from "../team-member-row-actions/team-member-row-actions";
@@ -17,6 +17,7 @@ import { TeamMembersEmptyState } from "../team-members-empty-state/team-members-
 import { TeamMembersTable } from "../team-members-table/team-members-table";
 import { TeamTabsBar } from "../team-tabs-bar/team-tabs-bar";
 import { useLoadMoreTeamMembers } from "../use-load-more-team-members/use-load-more-team-members";
+import { TEAM_MEMBERS_SCREEN_COPY_NAMESPACE } from "./team-members-screen.copy";
 import type {
   LoadMoreButtonProps,
   MemberDialogsProps,
@@ -34,6 +35,7 @@ import { useMemberDialog } from "./use-member-dialog";
  */
 export function TeamMembersScreen(props: Readonly<TeamMembersScreenProps>) {
   const { workspaceId, status, q } = props;
+  const t = useTranslations(TEAM_MEMBERS_SCREEN_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const dialog = useMemberDialog();
   const pager = useLoadMoreTeamMembers({
@@ -45,7 +47,7 @@ export function TeamMembersScreen(props: Readonly<TeamMembersScreenProps>) {
   });
   const addButton = (
     <Button iconLeading="plus" onPress={dialog.openAdd}>
-      {isMobile ? TEAM_COPY.addMemberShort : TEAM_COPY.addMember}
+      {isMobile ? t("addMemberShort") : t("addMember")}
     </Button>
   );
   return (
@@ -137,6 +139,7 @@ function MemberRowMenu({
 }
 
 function MembersEmpty({ workspaceId, status, q, isMobile, onAdd }: Readonly<MembersBodyProps>) {
+  const t = useTranslations(TEAM_MEMBERS_SCREEN_COPY_NAMESPACE);
   const router = useRouter();
   function handleClearSearch(): void {
     router.replace(`/w/${workspaceId}/team${status === "ARCHIVED" ? "/archived" : ""}`);
@@ -148,7 +151,7 @@ function MembersEmpty({ workspaceId, status, q, isMobile, onAdd }: Readonly<Memb
       addAction={
         isMobile ? (
           <Button iconLeading="plus" onPress={onAdd}>
-            {TEAM_COPY.addMember}
+            {t("addMember")}
           </Button>
         ) : undefined
       }
@@ -158,12 +161,13 @@ function MembersEmpty({ workspaceId, status, q, isMobile, onAdd }: Readonly<Memb
 }
 
 function LoadMoreButton({ isLoading, onLoadMore }: Readonly<LoadMoreButtonProps>) {
+  const t = useTranslations(TEAM_MEMBERS_SCREEN_COPY_NAMESPACE);
   function handlePress(): void {
     void onLoadMore();
   }
   return (
     <Button variant="secondary" isPending={isLoading} onPress={handlePress}>
-      {isLoading ? TEAM_COPY.loadingMore : TEAM_COPY.loadMore}
+      {isLoading ? t("loadingMore") : t("loadMore")}
     </Button>
   );
 }

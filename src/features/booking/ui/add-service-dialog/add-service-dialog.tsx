@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -11,10 +12,10 @@ import { showToast } from "@/ui/patterns/toast/toast";
 import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { CATALOG_COPY } from "../catalog-copy/catalog-copy.copy";
 import { CatalogFieldError } from "../catalog-field-error/catalog-field-error";
 import { showCatalogSaveFailure } from "../catalog-save-feedback/catalog-save-feedback";
 import { CategoryDialog } from "../category-dialog/category-dialog";
+import { ADD_SERVICE_DIALOG_COPY_NAMESPACE } from "./add-service-dialog.copy";
 import type {
   AddServiceDialogProps,
   AddServiceFieldsProps,
@@ -44,6 +45,7 @@ export function AddServiceDialog({
   updateAction,
   addCategoryAction,
 }: Readonly<AddServiceDialogProps>) {
+  const t = useTranslations(ADD_SERVICE_DIALOG_COPY_NAMESPACE);
   const form = useAddServiceForm({ workspaceId, service, onOpenChange, action, updateAction });
   const handleOpenChange = createDialogOpenChangeHandler(onOpenChange, form.close);
   const inlineCategory = useInlineCategory({
@@ -67,10 +69,8 @@ export function AddServiceDialog({
         onClose={form.close}
         content={content}
         save={save}
-        title={service ? CATALOG_COPY.editServiceTitle : CATALOG_COPY.addServiceTitle}
-        description={
-          service ? CATALOG_COPY.editServiceDescription : CATALOG_COPY.addServiceDescription
-        }
+        title={service ? t("editServiceTitle") : t("addServiceTitle")}
+        description={service ? t("editServiceDescription") : t("addServiceDescription")}
       />
       {addCategoryAction ? (
         <InlineCategoryDialog
@@ -99,9 +99,10 @@ function ServiceFieldsContent({
 function ServiceSaveButton({
   form,
 }: Readonly<{ readonly form: ReturnType<typeof useAddServiceForm> }>) {
+  const t = useTranslations(ADD_SERVICE_DIALOG_COPY_NAMESPACE);
   return (
     <Button onPress={form.handleSubmit} isPending={form.isPending}>
-      {CATALOG_COPY.save}
+      {t("save")}
     </Button>
   );
 }
@@ -165,6 +166,7 @@ function useAddServiceForm({
   "workspaceId" | "service" | "onOpenChange" | "action" | "updateAction"
 >) {
   const router = useRouter();
+  const t = useTranslations(ADD_SERVICE_DIALOG_COPY_NAMESPACE);
   const values = useAddServiceValues(service);
   const [error, setError] = useState<string | undefined>();
   const [isPending, setIsPending] = useState(false);
@@ -189,6 +191,7 @@ function useAddServiceForm({
       setError,
       setPending: setIsPending,
       push: navigate,
+      t,
     });
   }
   function handleSubmit(): void {
@@ -239,6 +242,7 @@ async function submitAddService(args: AddServiceSubmitArgs): Promise<void> {
     setError,
     setPending,
     push,
+    t,
   } = args;
   setPending(true);
   setError(undefined);
@@ -254,10 +258,10 @@ async function submitAddService(args: AddServiceSubmitArgs): Promise<void> {
       return;
     }
     close();
-    showToast({ tone: "success", title: CATALOG_COPY.savedToast });
+    showToast({ tone: "success", title: t("savedToast") });
     if (!service && result?.serviceId) push(`/w/${workspaceId}/services/${result.serviceId}`);
   } catch {
-    showCatalogSaveFailure({ setError, retry: () => void submitAddService(args) });
+    showCatalogSaveFailure({ setError, retry: () => void submitAddService(args), t });
   } finally {
     setPending(false);
   }
@@ -274,6 +278,7 @@ function AddServiceFields({
   error,
   onAddCategory,
 }: Readonly<AddServiceFieldsProps>) {
+  const t = useTranslations(ADD_SERVICE_DIALOG_COPY_NAMESPACE);
   const options = categories
     .filter((category) => category.isActive)
     .map((category) => ({ id: category.id, label: category.name }));
@@ -281,18 +286,16 @@ function AddServiceFields({
     <div className="flex flex-col gap-(--space-4)">
       <ServiceNameField name={name} onNameChange={onNameChange} />
       <Select
-        label={CATALOG_COPY.category}
+        label={t("category")}
         options={options}
         value={categoryId}
-        placeholder={CATALOG_COPY.categoryPlaceholder}
+        placeholder={t("categoryPlaceholder")}
         onChange={onCategoryChange}
-        errorMessage={
-          error === "CATEGORY_REQUIRED" ? CATALOG_COPY.errors.CATEGORY_REQUIRED : undefined
-        }
+        errorMessage={error === "CATEGORY_REQUIRED" ? t("errorCategoryRequired") : undefined}
       />
       {onAddCategory ? (
         <Button variant="secondary" iconLeading="plus" onPress={onAddCategory}>
-          {CATALOG_COPY.addCategoryInline}
+          {t("addCategoryInline")}
         </Button>
       ) : null}
       <ServicePriceField basePrice={basePrice} onBasePriceChange={onBasePriceChange} />
@@ -305,12 +308,13 @@ function ServiceNameField({
   name,
   onNameChange,
 }: Pick<AddServiceFieldsProps, "name" | "onNameChange">) {
+  const t = useTranslations(ADD_SERVICE_DIALOG_COPY_NAMESPACE);
   return (
     <TextField
-      label={CATALOG_COPY.nameService}
+      label={t("nameService")}
       name="name"
       onBlur={noop}
-      placeholder={CATALOG_COPY.nameServicePlaceholder}
+      placeholder={t("nameServicePlaceholder")}
       value={name}
       onChange={onNameChange}
     />
@@ -321,16 +325,17 @@ function ServicePriceField({
   basePrice,
   onBasePriceChange,
 }: Pick<AddServiceFieldsProps, "basePrice" | "onBasePriceChange">) {
+  const t = useTranslations(ADD_SERVICE_DIALOG_COPY_NAMESPACE);
   return (
     <TextField
-      label={CATALOG_COPY.basePrice}
+      label={t("basePrice")}
       name="basePrice"
       onBlur={noop}
-      placeholder={CATALOG_COPY.basePricePlaceholder}
-      prefix={CATALOG_COPY.currencyPrefix}
+      placeholder={t("basePricePlaceholder")}
+      prefix={t("currencyPrefix")}
       value={basePrice}
       onChange={onBasePriceChange}
-      description={CATALOG_COPY.basePriceHelp}
+      description={t("basePriceHelp")}
     />
   );
 }
@@ -345,6 +350,7 @@ function ResponsiveServiceDialog({
   description,
 }: Readonly<ResponsiveServiceDialogProps>) {
   const mobile = useMobileViewport();
+  const t = useTranslations(ADD_SERVICE_DIALOG_COPY_NAMESPACE);
   if (mobile)
     return (
       <BottomSheet
@@ -368,7 +374,7 @@ function ResponsiveServiceDialog({
       actions={
         <>
           <Button variant="secondary" onPress={onClose}>
-            {CATALOG_COPY.cancel}
+            {t("cancel")}
           </Button>
           {save}
         </>

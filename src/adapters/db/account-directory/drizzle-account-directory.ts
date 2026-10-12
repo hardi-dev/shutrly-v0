@@ -7,6 +7,7 @@ import type { AccountDirectoryPort } from "@/features/auth/application/ports/acc
 import { asAuthUserId, isAccountStatus } from "@/features/auth/domain/account/account";
 import type { AccountRecord } from "@/features/auth/domain/account/account.types";
 import { normaliseEmail } from "@/features/auth/domain/credentials/credentials";
+import { appLocaleSchema } from "@/shared/locale/locale.schema";
 
 import type { Db } from "../client/client.types";
 import { account, session, user } from "../schema/auth/auth";
@@ -21,6 +22,7 @@ async function loadAccount(db: Db, where: SQL): Promise<AccountRecord | null> {
       name: user.name,
       status: user.status,
       emailVerified: user.emailVerified,
+      locale: user.locale,
     })
     .from(user)
     .where(where);
@@ -32,12 +34,15 @@ async function loadAccount(db: Db, where: SQL): Promise<AccountRecord | null> {
     .select({ id: account.id })
     .from(account)
     .where(and(eq(account.userId, row.id), eq(account.providerId, CREDENTIAL)));
+  // The CHECK constraint on user.locale makes a violation a bug, so it is asserted, not defaulted.
+  const locale = appLocaleSchema.parse(row.locale);
   const { id, email, status, ...rest } = row;
   return {
     ...rest,
     id: asAuthUserId(id),
     email: normaliseEmail(email),
     status,
+    locale,
     hasPassword: credentials.length > 0,
   };
 }
@@ -56,6 +61,9 @@ export function createDrizzleAccountDirectory(db: Db): AccountDirectoryPort {
     findByEmail: (email) => loadAccount(db, sql`lower(${user.email}) = ${email}`),
     getById: (id) => loadAccount(db, eq(user.id, id)),
     revokeAllSessions: revokeAll,
+    async setLocale(id, locale) {
+      await db.update(user).set({ locale, updatedAt: new Date() }).where(eq(user.id, id));
+    },
     async setStatusAndRevokeSessions(id, status) {
       await db.transaction(async (tx) => {
         await tx.update(user).set({ status, updatedAt: new Date() }).where(eq(user.id, id));

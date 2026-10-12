@@ -1,33 +1,48 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { NavItem } from "@/ui/patterns/nav-item/nav-item";
 import { SidebarNavGroup } from "@/ui/patterns/sidebar/sidebar";
 
-import { OWNER_NAV_COPY } from "./owner-nav.copy";
-import type { OwnerNavProps } from "./owner-nav.types";
-import type { ActiveNavState, PageHeading } from "./owner-nav.types";
+import { OWNER_NAV_COPY_NAMESPACE } from "./owner-nav.copy";
+import type {
+  ActiveNavState,
+  OwnerNavProps,
+  OwnerNavTranslator,
+  PageHeading,
+} from "./owner-nav.types";
+
+/**
+ * The Owner navigation copy. The shell reads its menu labels through this hook too.
+ * @returns the translate function for the owner-nav namespace
+ */
+export function useOwnerNavTranslations(): OwnerNavTranslator {
+  return useTranslations(OWNER_NAV_COPY_NAMESPACE);
+}
 
 /** Renders the complete Owner workspace navigation with route-aware active states. @param props - workspace route context @returns the navigation items */
 export function OwnerNav({ workspaceId, pathname }: Readonly<OwnerNavProps>) {
+  const t = useOwnerNavTranslations();
   return (
     <SidebarNavGroup>
       <OwnerNavItems
         workspaceId={workspaceId}
         pathname={pathname}
         items={[
-          ["", OWNER_NAV_COPY.dashboard, "layout-grid"],
-          ["projects", OWNER_NAV_COPY.projects, "folder-kanban"],
-          ["clients", OWNER_NAV_COPY.clients, "users"],
-          ["invoices", OWNER_NAV_COPY.invoices, "receipt"],
+          ["", t("dashboard"), "layout-grid"],
+          ["projects", t("projects"), "folder-kanban"],
+          ["clients", t("clients"), "users"],
+          ["invoices", t("invoices"), "receipt"],
         ]}
       />
-      <SidebarNavGroup label={OWNER_NAV_COPY.catalog}>
+      <SidebarNavGroup label={t("catalog")}>
         <OwnerNavItems
           workspaceId={workspaceId}
           pathname={pathname}
           items={[
-            ["services", OWNER_NAV_COPY.services, "package"],
-            ["team", OWNER_NAV_COPY.team, "user-round-cog"],
+            ["services", t("services"), "package"],
+            ["team", t("team"), "user-round-cog"],
           ]}
         />
       </SidebarNavGroup>
@@ -48,15 +63,15 @@ export function resolveActiveNav(pathname: string, workspaceId: string): ActiveN
   return { nav: null, tab: null };
 }
 
-const SECTION_TITLES: Readonly<Record<string, string>> = {
-  projects: OWNER_NAV_COPY.projects,
-  clients: OWNER_NAV_COPY.clients,
-  invoices: OWNER_NAV_COPY.invoices,
-  services: OWNER_NAV_COPY.services,
-  "message-templates": OWNER_NAV_COPY.messageTemplates,
-  "photo-sources": OWNER_NAV_COPY.photoSources,
-  search: OWNER_NAV_COPY.search,
-  notifications: OWNER_NAV_COPY.notifications,
+const SECTION_TITLE_KEYS: Readonly<Record<string, string>> = {
+  projects: "projects",
+  clients: "clients",
+  invoices: "invoices",
+  services: "services",
+  "message-templates": "messageTemplates",
+  "photo-sources": "photoSources",
+  search: "search",
+  notifications: "notifications",
 };
 
 /**
@@ -64,80 +79,84 @@ const SECTION_TITLES: Readonly<Record<string, string>> = {
  * @param pathname - the current pathname
  * @param workspaceId - the workspace in the URL
  * @param workspaceName - the workspace name used in the dashboard subtitle
+ * @param t - the owner-nav translate function
  * @returns the heading, or null outside the workspace routes
  */
 export function resolvePageHeading(
   pathname: string,
   workspaceId: string,
   workspaceName: string,
+  t: OwnerNavTranslator,
 ): PageHeading | null {
   const prefix = `/w/${workspaceId}`;
   if (pathname === prefix || pathname === `${prefix}/`) {
-    return {
-      title: OWNER_NAV_COPY.dashboard,
-      subtitle: OWNER_NAV_COPY.dashboardSubtitle(workspaceName),
-    };
+    return { title: t("dashboard"), subtitle: t("dashboardSubtitle", { workspaceName }) };
   }
   if (!pathname.startsWith(`${prefix}/`)) return null;
   const section = pathname.slice(prefix.length).split("/")[1] ?? "";
   if (section === "settings") {
-    return { title: OWNER_NAV_COPY.settings, subtitle: OWNER_NAV_COPY.settingsSubtitle };
+    return { title: t("settings"), subtitle: t("settingsSubtitle") };
   }
   if (section === "message-templates") {
-    return {
-      title: OWNER_NAV_COPY.messageTemplates,
-      subtitle: OWNER_NAV_COPY.messageTemplatesSubtitle,
-    };
+    return { title: t("messageTemplates"), subtitle: t("messageTemplatesSubtitle") };
   }
   if (section === "photo-sources") {
-    return { title: OWNER_NAV_COPY.photoSources, subtitle: OWNER_NAV_COPY.photoSourcesSubtitle };
+    return { title: t("photoSources"), subtitle: t("photoSourcesSubtitle") };
   }
-  if (section === "clients") return resolveClientsHeading(pathname, prefix);
-  if (section === "projects") return resolveProjectsHeading(pathname, prefix);
-  if (section === "team") return resolveTeamHeading(pathname, prefix);
-  if (section === "services") return resolveServicesHeading(pathname, prefix);
-  const title = SECTION_TITLES[section];
-  return title ? { title, subtitle: OWNER_NAV_COPY.comingSoonSubtitle } : null;
+  if (section === "clients") return resolveClientsHeading(pathname, prefix, t);
+  if (section === "projects") return resolveProjectsHeading(pathname, prefix, t);
+  if (section === "team") return resolveTeamHeading(pathname, prefix, t);
+  if (section === "services") return resolveServicesHeading(pathname, prefix, workspaceName, t);
+  const titleKey = SECTION_TITLE_KEYS[section];
+  return titleKey ? { title: t(titleKey), subtitle: t("comingSoonSubtitle") } : null;
 }
 
-function resolveProjectsHeading(pathname: string, prefix: string): PageHeading {
+function resolveProjectsHeading(
+  pathname: string,
+  prefix: string,
+  t: OwnerNavTranslator,
+): PageHeading {
   const base = `${prefix}/projects`;
   const rest = pathname.slice(base.length).split("/").filter(Boolean).join("/");
   const tabs = [
-    { label: OWNER_NAV_COPY.projectTabs.active, href: base, isActive: rest === "" },
+    { label: t("projectTabActive"), href: base, isActive: rest === "" },
     {
-      label: OWNER_NAV_COPY.projectTabs.completed,
+      label: t("projectTabCompleted"),
       href: `${base}/completed`,
       isActive: rest === "completed",
     },
     {
-      label: OWNER_NAV_COPY.projectTabs.cancelled,
+      label: t("projectTabCancelled"),
       href: `${base}/cancelled`,
       isActive: rest === "cancelled",
     },
   ];
   // Proyek baru and a project's detail are sub-pages: they set their own heading and have no tabs.
-  if (!tabs.some((tab) => tab.isActive)) return { title: OWNER_NAV_COPY.projects };
+  if (!tabs.some((tab) => tab.isActive)) return { title: t("projects") };
   return {
-    title: OWNER_NAV_COPY.projects,
-    subtitle: OWNER_NAV_COPY.projectsSubtitle,
-    mobileSubtitle: OWNER_NAV_COPY.projectsMobileSubtitle,
-    tabs: { label: OWNER_NAV_COPY.projectsTabsLabel, tabs },
+    title: t("projects"),
+    subtitle: t("projectsSubtitle"),
+    mobileSubtitle: t("projectsMobileSubtitle"),
+    tabs: { label: t("projectsTabsLabel"), tabs },
   };
 }
 
-function resolveClientsHeading(pathname: string, prefix: string): PageHeading {
+function resolveClientsHeading(
+  pathname: string,
+  prefix: string,
+  t: OwnerNavTranslator,
+): PageHeading {
   const archived = pathname === `${prefix}/clients/archived`;
   return {
-    title: OWNER_NAV_COPY.clients,
-    subtitle: OWNER_NAV_COPY.clientsSubtitle,
-    mobileSubtitle: OWNER_NAV_COPY.clientsMobileSubtitle,
+    title: t("clients"),
+    subtitle: t("clientsSubtitle"),
+    mobileSubtitle: t("clientsMobileSubtitle"),
     tabs: {
-      label: OWNER_NAV_COPY.clientsTabsLabel,
+      label: t("clientsTabsLabel"),
       tabs: [
-        { label: OWNER_NAV_COPY.clientTabs.active, href: `${prefix}/clients`, isActive: !archived },
+        { label: t("clientTabActive"), href: `${prefix}/clients`, isActive: !archived },
         {
-          label: OWNER_NAV_COPY.clientTabs.archived,
+          label: t("clientTabArchived"),
           href: `${prefix}/clients/archived`,
           isActive: archived,
         },
@@ -146,61 +165,70 @@ function resolveClientsHeading(pathname: string, prefix: string): PageHeading {
   };
 }
 
-function resolveTeamHeading(pathname: string, prefix: string): PageHeading {
+function resolveTeamHeading(pathname: string, prefix: string, t: OwnerNavTranslator): PageHeading {
   const base = `${prefix}/team`;
   const archived = pathname === `${base}/archived`;
   const roles = pathname === `${base}/roles`;
   return {
-    title: OWNER_NAV_COPY.team,
-    subtitle: OWNER_NAV_COPY.teamSubtitle,
-    mobileSubtitle: OWNER_NAV_COPY.teamMobileSubtitle,
+    title: t("team"),
+    subtitle: t("teamSubtitle"),
+    mobileSubtitle: t("teamMobileSubtitle"),
     tabs: {
-      label: OWNER_NAV_COPY.teamTabsLabel,
+      label: t("teamTabsLabel"),
       tabs: [
-        { label: OWNER_NAV_COPY.teamTabs.active, href: base, isActive: !archived && !roles },
-        { label: OWNER_NAV_COPY.teamTabs.archived, href: `${base}/archived`, isActive: archived },
-        { label: OWNER_NAV_COPY.teamTabs.roles, href: `${base}/roles`, isActive: roles },
+        { label: t("teamTabActive"), href: base, isActive: !archived && !roles },
+        { label: t("teamTabArchived"), href: `${base}/archived`, isActive: archived },
+        { label: t("teamTabRoles"), href: `${base}/roles`, isActive: roles },
       ],
     },
   };
 }
 
-function resolveServicesHeading(pathname: string, prefix: string): PageHeading {
+function resolveServicesHeading(
+  pathname: string,
+  prefix: string,
+  workspaceName: string,
+  t: OwnerNavTranslator,
+): PageHeading {
   const servicesPrefix = `${prefix}/services`;
   const rest = pathname.slice(servicesPrefix.length).split("/").filter(Boolean).join("/");
   const tabs = [
-    { href: servicesPrefix, label: OWNER_NAV_COPY.serviceTabs.services, isActive: rest === "" },
+    { href: servicesPrefix, label: t("serviceTabServices"), isActive: rest === "" },
     {
       href: `${servicesPrefix}/categories`,
-      label: OWNER_NAV_COPY.serviceTabs.categories,
+      label: t("serviceTabCategories"),
       isActive: rest === "categories",
     },
     {
       href: `${servicesPrefix}/items`,
-      label: OWNER_NAV_COPY.serviceTabs.items,
+      label: t("serviceTabItems"),
       isActive: rest === "items",
     },
   ] as const;
   const activeTab = tabs.find((tab) => tab.isActive);
-  if (!activeTab)
-    return { title: OWNER_NAV_COPY.services, subtitle: OWNER_NAV_COPY.servicesSubtitle };
+  if (!activeTab) return { title: t("services"), subtitle: t("servicesSubtitle") };
   return {
     title: activeTab.label,
-    subtitle: OWNER_NAV_COPY.servicesSubtitle,
-    tabs: { label: OWNER_NAV_COPY.servicesTabsLabel, tabs },
+    subtitle: t("servicesSubtitle"),
+    breadcrumbs: [
+      { label: workspaceName, href: prefix },
+      ...(rest === "" ? [] : [{ label: t("services"), href: servicesPrefix }]),
+      { label: activeTab.label },
+    ],
+    tabs: { label: t("servicesTabsLabel"), tabs },
   };
 }
 
 export function OwnerNavBottom({ workspaceId, pathname }: Readonly<OwnerNavProps>) {
+  const t = useOwnerNavTranslations();
   return (
     <SidebarNavGroup>
       <OwnerNavItems
         workspaceId={workspaceId}
         pathname={pathname}
         items={[
-          ["message-templates", OWNER_NAV_COPY.messageTemplates, "message-square-text"],
-          ["photo-sources", OWNER_NAV_COPY.photoSources, "folder-open"],
-          ["settings", OWNER_NAV_COPY.settings, "settings"],
+          ["message-templates", t("messageTemplates"), "message-square-text"],
+          ["photo-sources", t("photoSources"), "folder-open"],
         ]}
       />
     </SidebarNavGroup>

@@ -1,6 +1,9 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { lockIntentFor } from "@/features/gallery/domain/selection-group-status/selection-group-status";
+import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -10,9 +13,9 @@ import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 import { galleryMediaUrl } from "../gallery-media-url/gallery-media-url";
 import { LockSelectionDialog } from "../lock-selection-dialog/lock-selection-dialog";
 import { PhotoThumb } from "../photo-thumb/photo-thumb";
-import { SELECTION_OWNER_COPY as COPY } from "../selection-owner-text/selection-owner.copy";
 import { groupMeta, groupStatusChip } from "../selection-owner-text/selection-owner-text";
 import { useLockSelection } from "../use-lock-selection/use-lock-selection";
+import { SELECTION_GROUPS_SCREEN_COPY_NAMESPACE } from "./selection-groups-screen.copy";
 import type {
   GroupCardProps,
   GroupsBannerProps,
@@ -20,18 +23,26 @@ import type {
 } from "./selection-groups-screen.types";
 
 function GroupsBanner({ page }: Readonly<GroupsBannerProps>) {
+  const t = useTranslations(SELECTION_GROUPS_SCREEN_COPY_NAMESPACE);
   const sent = page.groups.filter((group) => group.status === "SUBMITTED");
   if (sent.length > 0) {
-    const names = sent.map((group) => group.name).join(COPY.namesJoin);
-    return <Alert tone="warning" title={COPY.sentBannerTitle(names)} body={COPY.sentBannerBody} />;
+    const names = sent.map((group) => group.name).join(t("namesJoin"));
+    return (
+      <Alert
+        tone="warning"
+        title={t("sentBannerTitle", { names: names })}
+        body={t("sentBannerBody")}
+      />
+    );
   }
   if (page.state === "OPEN") {
-    return <Alert tone="info" title={COPY.waitingTitle} body={COPY.waitingBody} />;
+    return <Alert tone="info" title={t("waitingTitle")} body={t("waitingBody")} />;
   }
   return null;
 }
 
 function GroupActions({ workspaceId, projectId, group, lock }: Readonly<GroupCardProps>) {
+  const t = useTranslations(SELECTION_GROUPS_SCREEN_COPY_NAMESPACE);
   const request = (intent: "LOCK" | "CLOSE") => () => {
     lock.request({ group, intent });
   };
@@ -42,16 +53,16 @@ function GroupActions({ workspaceId, projectId, group, lock }: Readonly<GroupCar
         iconLeading="eye"
         href={`/w/${workspaceId}/projects/${projectId}/gallery/picks/${group.id}`}
       >
-        {COPY.viewPicks}
+        {t("viewPicks")}
       </Button>
       {lockIntentFor(group) === "LOCK" ? (
         <Button iconLeading="lock" onPress={request("LOCK")}>
-          {COPY.lockPicks}
+          {t("lockPicks")}
         </Button>
       ) : null}
       {lockIntentFor(group) === "CLOSE" ? (
         <Button variant="secondary" onPress={request("CLOSE")}>
-          {COPY.closePicks}
+          {t("closePicks")}
         </Button>
       ) : null}
     </div>
@@ -59,12 +70,14 @@ function GroupActions({ workspaceId, projectId, group, lock }: Readonly<GroupCar
 }
 
 function GroupCard(props: Readonly<GroupCardProps>) {
+  const t = useTranslations(SELECTION_GROUPS_SCREEN_COPY_NAMESPACE);
+  const locale = useFormattingLocale();
   const { workspaceId, group } = props;
   return (
     <SectionCard
       title={group.name}
-      description={groupMeta(group, true)}
-      actions={<StatusChip {...groupStatusChip(group.status)} hasDot />}
+      description={groupMeta(t, group, true, locale)}
+      actions={<StatusChip {...groupStatusChip(t, group.status)} hasDot />}
     >
       <div className="flex flex-col gap-(--space-4)">
         <ul className="flex flex-wrap items-center gap-(--space-2)">
@@ -78,7 +91,7 @@ function GroupCard(props: Readonly<GroupCardProps>) {
           ))}
           {group.preview.more > 0 ? (
             <li className="text-(length:--font-size-body-sm) font-medium text-(--color-semantic-text-secondary)">
-              {COPY.moreThumbs(group.preview.more)}
+              {t("moreThumbs", { count: group.preview.more })}
             </li>
           ) : null}
         </ul>
@@ -95,14 +108,15 @@ export function SelectionGroupsScreen({
   page,
   lockAction,
 }: Readonly<SelectionGroupsScreenProps>) {
+  const t = useTranslations(SELECTION_GROUPS_SCREEN_COPY_NAMESPACE);
   const lock = useLockSelection({ workspaceId, projectId, lockAction });
   if (page.state === "NO_ITEMS" || page.state === "NOT_PUBLISHED") {
     return (
       <main className="mx-auto w-full max-w-(--size-content-max)">
         <EmptyState
           icon="images"
-          title={COPY.cardTitle}
-          body={page.state === "NO_ITEMS" ? COPY.cardNoItems : COPY.cardNotPublishedNote}
+          title={t("cardTitle")}
+          body={page.state === "NO_ITEMS" ? t("cardNoItems") : t("cardNotPublishedNote")}
         />
       </main>
     );

@@ -19,6 +19,7 @@ import type {
   ServiceOptionGroup,
   ServiceSnapshotSource,
 } from "@/features/booking/application/ports/project-repository/project-repository.port";
+import { parseDefaultItemKey } from "@/features/booking/domain/default-item-definitions/default-item-definitions";
 import { canonicalIdrAmount } from "@/features/booking/domain/idr-amount/idr-amount";
 import { parsePickMode } from "@/features/booking/domain/item-definition-type/item-definition-type";
 import { PROJECT_STATUSES } from "@/features/booking/domain/project-status/project-status";
@@ -28,6 +29,7 @@ import type {
   SessionInput,
   SessionRecordShape,
 } from "@/features/booking/domain/session/session.types";
+import { parseDefaultTeamRoleKey } from "@/features/booking/domain/team-role/team-role";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import {
@@ -60,6 +62,7 @@ function toItem(row: typeof projectItem.$inferSelect): ProjectItemRecord | null 
     definitionId: row.definitionId,
     name: row.name,
     unit: row.unit,
+    defaultKey: parseDefaultItemKey(row.defaultKey),
     valueType: row.valueType,
     selectionRequired: row.selectionRequired,
     pickMode: parsePickMode(row.pickMode),
@@ -127,6 +130,7 @@ async function readAssignments(db: DbExecutor, context: WorkspaceContext, projec
       memberName: teamMember.name,
       archivedAt: teamMember.archivedAt,
       roleName: teamRole.name,
+      defaultKey: teamRole.defaultKey,
     })
     .from(sessionAssignment)
     .innerJoin(
@@ -150,7 +154,11 @@ async function readAssignments(db: DbExecutor, context: WorkspaceContext, projec
       ),
     )
     .orderBy(asc(sessionAssignment.createdAt), asc(sessionAssignment.id));
-  return rows.map(({ archivedAt, ...row }) => ({ ...row, isMemberArchived: archivedAt !== null }));
+  return rows.map(({ archivedAt, defaultKey, ...row }) => ({
+    ...row,
+    isMemberArchived: archivedAt !== null,
+    defaultKey: parseDefaultTeamRoleKey(defaultKey),
+  }));
 }
 
 async function selectDetailRow(db: DbExecutor, context: WorkspaceContext, id: string) {
@@ -266,6 +274,7 @@ async function listActiveDefinitions(
             id: row.id,
             name: row.name,
             unit: row.unit,
+            defaultKey: parseDefaultItemKey(row.defaultKey),
             valueType: row.valueType,
             selectionRequired: row.selectionRequired,
             pickMode: parsePickMode(row.pickMode),
@@ -328,6 +337,7 @@ async function addItemRow(
     projectId,
     definitionId: definition.id,
     name: definition.name,
+    defaultKey: definition.defaultKey,
     valueType: definition.valueType,
     value: input.value,
     unit: definition.unit,

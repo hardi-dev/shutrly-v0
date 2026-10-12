@@ -1,11 +1,12 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { MouseEvent } from "react";
 
 import { cn } from "@/ui/cn/cn";
 import { Icon } from "@/ui/primitives/icon/icon";
 
-import { VARIABLE_CHIP_COPY as COPY } from "./variable-chip.copy";
+import { VARIABLE_CHIP_COPY_NAMESPACE } from "./variable-chip.copy";
 import type { VariableChipProps } from "./variable-chip.types";
 
 const CHIP = [
@@ -27,6 +28,7 @@ const REQUIRED =
  * @returns the chip button
  */
 export function VariableChip({ name, isRequired, onInsert }: Readonly<VariableChipProps>) {
+  const t = useTranslations(VARIABLE_CHIP_COPY_NAMESPACE);
   const handleClick = () => {
     onInsert(name);
   };
@@ -37,7 +39,9 @@ export function VariableChip({ name, isRequired, onInsert }: Readonly<VariableCh
   return (
     <button
       type="button"
-      aria-label={COPY.insert(name, isRequired)}
+      aria-label={
+        isRequired ? t("insertRequiredVariable", { name }) : t("insertVariable", { name })
+      }
       onClick={handleClick}
       onMouseDown={handleMouseDown}
       className={cn(CHIP, isRequired ? REQUIRED : DEFAULT)}
@@ -49,7 +53,7 @@ export function VariableChip({ name, isRequired, onInsert }: Readonly<VariableCh
       />
       <span className="font-medium">{name}</span>
       {isRequired ? (
-        <span className="text-(length:--font-size-caption)">{COPY.required}</span>
+        <span className="text-(length:--font-size-caption)">{t("requiredMarker")}</span>
       ) : null}
     </button>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/ui/cn/cn";
@@ -7,11 +8,11 @@ import { copyText, selectContents } from "@/ui/copy-text/copy-text";
 import { showToast } from "@/ui/patterns/toast/toast";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
-import { PROJECT_ACCESS_COPY as COPY } from "./project-access-card.copy";
-import type { AccessRowProps } from "./project-access-card.types";
+import { PROJECT_ACCESS_COPY_NAMESPACE } from "./project-access-card.copy";
+import type { AccessRowProps, ProjectAccessTranslate } from "./project-access-card.types";
 
 /** *Salin*: copies, or, when the browser refuses, shows the whole text selected for a manual copy. */
-function useRowCopy(text: string | undefined) {
+function useRowCopy(text: string | undefined, t: ProjectAccessTranslate) {
   const valueRef = useRef<HTMLSpanElement>(null);
   const [isRevealed, setIsRevealed] = useState(false);
   const [selectRequest, setSelectRequest] = useState(0);
@@ -21,19 +22,20 @@ function useRowCopy(text: string | undefined) {
   const copy = async () => {
     if (text === undefined) return;
     if (await copyText(text)) {
-      showToast({ tone: "success", title: COPY.copied });
+      showToast({ tone: "success", title: t("copied") });
       return;
     }
     setIsRevealed(true);
     setSelectRequest((count) => count + 1);
-    showToast({ tone: "warning", title: COPY.copyFailedTitle, body: COPY.copyFailedBody });
+    showToast({ tone: "warning", title: t("copyFailedTitle"), body: t("copyFailedBody") });
   };
   return { valueRef, isRevealed, copy };
 }
 
 /** One fact of the card: label over value, with *Salin* when it can be copied; a refused clipboard shows the whole text selected (aksesklien-kartu rows). @param props - label, value, copy text and tone @returns the row */
 export function AccessRow({ label, value, copy, isMuted = false }: Readonly<AccessRowProps>) {
-  const { valueRef, isRevealed, copy: copyRow } = useRowCopy(copy?.text);
+  const t = useTranslations(PROJECT_ACCESS_COPY_NAMESPACE);
+  const { valueRef, isRevealed, copy: copyRow } = useRowCopy(copy?.text, t);
   const handleCopy = () => {
     void copyRow();
   };

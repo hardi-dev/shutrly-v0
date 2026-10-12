@@ -3,11 +3,17 @@ import { existsSync, readFileSync } from "node:fs";
 import { neon } from "@neondatabase/serverless";
 import type { Page } from "@playwright/test";
 import { expect } from "@playwright/test";
+import { copyTranslator } from "@tests/support/copy/copy-messages";
 import { parse } from "dotenv";
 
-import { GALLERY_COPY } from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
+import {
+  GALLERY_COPY_NAMESPACE,
+  GALLERY_SOURCE_CHIP_MESSAGE_KEY,
+} from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
 
 import { createProject, openGalleryWorkspace, visibleText } from "../gallery/gallery-e2e";
+
+const galleryCopy = copyTranslator(GALLERY_COPY_NAMESPACE, "id");
 
 export const GALLERY_PASSWORD = "mawar-4821";
 // The real-Drive public folder from .env.test (same as the F-09 smoke test).
@@ -27,22 +33,30 @@ export async function clientToken(projectId: string): Promise<string> {
 export async function publishedGallery(page: Page) {
   const workspaceId = await openGalleryWorkspace(page);
   const projectPath = await createProject(page, workspaceId, "BOOKED");
-  await page.getByRole("button", { name: GALLERY_COPY.create }).click();
-  const create = page.getByRole("dialog", { name: GALLERY_COPY.createDialogTitle });
-  await create.getByRole("textbox", { name: GALLERY_COPY.passwordLabel }).fill(GALLERY_PASSWORD);
-  await create.getByRole("button", { name: GALLERY_COPY.create }).click();
-  await expect(page).toHaveURL(`${projectPath}/gallery`);
-  await page.getByRole("button", { name: GALLERY_COPY.addFolder }).first().click();
-  const link = page.getByRole("dialog", { name: GALLERY_COPY.linkDialogTitle });
-  await link.getByRole("textbox", { name: GALLERY_COPY.linkLabel }).fill(FOLDER_URL);
-  await link.getByRole("button", { name: GALLERY_COPY.addFolder }).click();
-  await expect(visibleText(page, GALLERY_COPY.sourceChip.SUCCEEDED)).toBeVisible({
+  await page.getByRole("button", { name: galleryCopy("create") }).click();
+  const create = page.getByRole("dialog", { name: galleryCopy("createDialogTitle") });
+  await create.getByRole("textbox", { name: galleryCopy("passwordLabel") }).fill(GALLERY_PASSWORD);
+  await create.getByRole("button", { name: galleryCopy("create") }).click();
+  await expect(page).toHaveURL(`${projectPath}/gallery`, { timeout: 30_000 });
+  await page
+    .getByRole("button", { name: galleryCopy("addFolder") })
+    .first()
+    .click();
+  const link = page.getByRole("dialog", { name: galleryCopy("linkDialogTitle") });
+  await link.getByRole("textbox", { name: galleryCopy("linkLabel") }).fill(FOLDER_URL);
+  await link.getByRole("button", { name: galleryCopy("addFolder") }).click();
+  await expect(
+    visibleText(page, galleryCopy(GALLERY_SOURCE_CHIP_MESSAGE_KEY.SUCCEEDED)),
+  ).toBeVisible({
     timeout: 120_000,
   });
-  await page.getByRole("button", { name: GALLERY_COPY.publish }).first().click();
-  const publish = page.getByRole("dialog", { name: GALLERY_COPY.publishDialogTitle });
-  await publish.getByRole("button", { name: GALLERY_COPY.publish }).click();
-  await expect(visibleText(page, GALLERY_COPY.publishedTitle)).toBeVisible();
+  await page
+    .getByRole("button", { name: galleryCopy("publish") })
+    .first()
+    .click();
+  const publish = page.getByRole("dialog", { name: galleryCopy("publishDialogTitle") });
+  await publish.getByRole("button", { name: galleryCopy("publish") }).click();
+  await expect(visibleText(page, galleryCopy("publishedTitle"))).toBeVisible();
   const projectId = projectPath.split("/").at(-1) ?? "";
   return { projectId, clientPath: `/g/${await clientToken(projectId)}` };
 }

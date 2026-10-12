@@ -21,7 +21,7 @@ describe("CatalogRowActions", () => {
         setActiveAction={setActive}
       />,
     );
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Wisuda Basic" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Wisuda Basic" }));
     expect(screen.getByRole("menuitem", { name: "Ubah" })).toBeInTheDocument();
     expect(screen.getByRole("menuitem", { name: "Arsipkan" })).toBeInTheDocument();
     expect(screen.getByRole("menuitem", { name: "Hapus" })).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe("CatalogRowActions", () => {
         setActiveAction={setActive}
       />,
     );
-    await userEvent.click(screen.getByRole("button", { name: "Aksi untuk Wisuda Basic" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Wisuda Basic" }));
     await userEvent.click(screen.getByRole("menuitem", { name: "Arsipkan" }));
     expect(setActive).toHaveBeenCalledWith("ws-1", "service", "service-1", false);
   });

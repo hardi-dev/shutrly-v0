@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 
 import { bookingFieldSchema } from "./booking-field/booking-field.schema";
-import { serviceInfoSchema } from "./service-info/service-info.schema";
+import { createServiceInfoSchema } from "./service-info/service-info.schema";
 
 describe("service schemas", () => {
   it("AC-CAT-010 canonicalises an IDR amount", () => {
     expect(
-      serviceInfoSchema.parse({
+      createServiceInfoSchema("id-ID").parse({
         name: "Wisuda Basic",
         categoryId: "00000000-0000-4000-8000-000000000001",
         basePrice: "750.000",

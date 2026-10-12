@@ -19,12 +19,17 @@ import type {
   TeamRoleRecord,
   TeamRoleRepositoryPort,
 } from "@/features/booking/application/ports/team-role-repository/team-role-repository.port";
+import type {
+  DefaultTeamRole,
+  DefaultTeamRoleKey,
+} from "@/features/booking/domain/team-role/team-role";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 interface StoredRole {
   readonly id: string;
   readonly workspaceId: string;
   name: string;
+  defaultKey?: DefaultTeamRoleKey | null;
 }
 
 export class FakeTeamRoleRepository implements TeamRoleRepositoryPort {
@@ -42,14 +47,19 @@ export class FakeTeamRoleRepository implements TeamRoleRepositoryPort {
   async list(context: WorkspaceContext): Promise<readonly TeamRoleRecord[]> {
     return this.rows
       .filter((row) => row.workspaceId === context.workspaceId)
-      .map((row) => ({ id: row.id, name: row.name, usage: this.usage.get(row.id) ?? 0 }))
+      .map((row) => ({
+        id: row.id,
+        name: row.name,
+        defaultKey: row.defaultKey ?? null,
+        usage: this.usage.get(row.id) ?? 0,
+      }))
       .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
   }
 
   async create(context: WorkspaceContext, name: string) {
     if (this.find(context, name)) return { status: "DUPLICATE" } as const;
     const id = crypto.randomUUID();
-    this.rows.push({ id, workspaceId: context.workspaceId, name });
+    this.rows.push({ id, workspaceId: context.workspaceId, name, defaultKey: null });
     return { status: "CREATED", id } as const;
   }
 
@@ -58,6 +68,8 @@ export class FakeTeamRoleRepository implements TeamRoleRepositoryPort {
     if (!row) return "NOT_FOUND" as const;
     const other = this.find(context, name);
     if (other && other.id !== id) return { status: "DUPLICATE" } as const;
+    // D-18: a rename clears the platform key, as the repository does (unchanged names keep it).
+    if (row.name !== name) row.defaultKey = null;
     row.name = name;
     return "UPDATED" as const;
   }
@@ -71,10 +83,15 @@ export class FakeTeamRoleRepository implements TeamRoleRepositoryPort {
     return "DELETED" as const;
   }
 
-  async seedDefaults(context: WorkspaceContext, names: readonly string[]) {
-    for (const name of names) {
-      if (!this.find(context, name))
-        this.rows.push({ id: crypto.randomUUID(), workspaceId: context.workspaceId, name });
+  async seedDefaults(context: WorkspaceContext, roles: readonly DefaultTeamRole[]) {
+    for (const role of roles) {
+      if (!this.find(context, role.name))
+        this.rows.push({
+          id: crypto.randomUUID(),
+          workspaceId: context.workspaceId,
+          name: role.name,
+          defaultKey: role.defaultKey,
+        });
     }
   }
 }
@@ -94,7 +111,10 @@ export class FakeTeamMemberRepository implements TeamMemberRepositoryPort {
   readonly rows: StoredMember[] = [];
   /** IDs of members with an assignment, standing in for `session_assignment`. */
   readonly assigned = new Set<string>();
-  readonly roles = new Map<string, { workspaceId: string; name: string }>();
+  readonly roles = new Map<
+    string,
+    { workspaceId: string; name: string; defaultKey?: DefaultTeamRoleKey | null }
+  >();
 
   private record(row: StoredMember): TeamMemberRecord {
     return {
@@ -102,7 +122,11 @@ export class FakeTeamMemberRepository implements TeamMemberRepositoryPort {
       name: row.name,
       whatsappNumber: row.whatsappNumber,
       email: row.email,
-      roles: row.roleIds.map((id) => ({ id, name: this.roles.get(id)?.name ?? "" })),
+      roles: row.roleIds.map((id) => ({
+        id,
+        name: this.roles.get(id)?.name ?? "",
+        defaultKey: this.roles.get(id)?.defaultKey ?? null,
+      })),
       isArchived: row.archived,
     };
   }

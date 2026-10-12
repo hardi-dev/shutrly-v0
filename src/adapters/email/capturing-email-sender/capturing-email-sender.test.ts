@@ -17,7 +17,13 @@ describe("capturing email sender (E2E only)", () => {
   });
 
   it("AC-AUTH-004 keeps the links per recipient", async () => {
-    const link = { kind: "VERIFY_EMAIL", to: "e2e@x.dev", name: "E", url: "u" } as const;
+    const link = {
+      kind: "VERIFY_EMAIL",
+      to: "e2e@x.dev",
+      name: "E",
+      url: "u",
+      locale: "en",
+    } as const;
     await createCapturingEmailSender().send(link);
     expect(capturedLinks("E2E@x.dev")).toEqual([link]);
   });

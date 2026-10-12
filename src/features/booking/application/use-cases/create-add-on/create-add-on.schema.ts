@@ -6,7 +6,8 @@ import {
   addOnTotal,
   isAddOnTotalInRange,
 } from "@/features/booking/domain/add-on/add-on";
-import { agreedPriceSchema } from "@/features/booking/domain/project-record/project-record.schema";
+import { createAgreedPriceSchema } from "@/features/booking/domain/project-record/project-record.schema";
+import type { FormattingLocale } from "@/shared/locale/locale.types";
 
 /** A-10: a whole number ≥ 1, typed as text in the form. */
 const addOnQuantitySchema = z.union([z.string(), z.number()]).transform((raw, ctx) => {
@@ -30,18 +31,19 @@ const addOnQuantitySchema = z.union([z.string(), z.number()]).transform((raw, ct
 
 // The form and createAddOnAction share this schema (AC-ADD-006). Status, total, currency and
 // project are never read from the browser (C-004).
-export const createAddOnSchema = z
-  .object({
-    description: z.string().trim().min(1, "EMPTY").max(ADD_ON_DESCRIPTION_MAX, "TOO_LONG"),
-    selectionGroupId: z
-      .union([z.uuid({ error: "NOT_AN_OPTION" }), z.literal(""), z.null()])
-      .optional()
-      .transform((id) => id || null),
-    quantity: addOnQuantitySchema,
-    unitPrice: agreedPriceSchema,
-  })
-  .superRefine((input, ctx) => {
-    if (!isAddOnTotalInRange(addOnTotal(input.quantity, input.unitPrice))) {
-      ctx.addIssue({ code: "custom", path: ["unitPrice"], message: "TOO_LARGE" });
-    }
-  });
+export const createAddOnSchema = (locale: FormattingLocale) =>
+  z
+    .object({
+      description: z.string().trim().min(1, "EMPTY").max(ADD_ON_DESCRIPTION_MAX, "TOO_LONG"),
+      selectionGroupId: z
+        .union([z.uuid({ error: "NOT_AN_OPTION" }), z.literal(""), z.null()])
+        .optional()
+        .transform((id) => id || null),
+      quantity: addOnQuantitySchema,
+      unitPrice: createAgreedPriceSchema(locale),
+    })
+    .superRefine((input, ctx) => {
+      if (!isAddOnTotalInRange(addOnTotal(input.quantity, input.unitPrice))) {
+        ctx.addIssue({ code: "custom", path: ["unitPrice"], message: "TOO_LARGE" });
+      }
+    });

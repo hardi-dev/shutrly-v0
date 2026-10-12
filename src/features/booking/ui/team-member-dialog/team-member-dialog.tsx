@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -7,9 +8,9 @@ import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { Modal } from "@/ui/patterns/modal/modal";
 import { Button } from "@/ui/primitives/button/button";
 
-import { TEAM_COPY } from "../team-copy/team-copy.copy";
 import { TeamRoleDialog } from "../team-role-dialog/team-role-dialog";
 import { MemberForm } from "./member-form";
+import { TEAM_MEMBER_DIALOG_COPY_NAMESPACE } from "./team-member-dialog.copy";
 import type { ShellProps, TeamMemberDialogProps } from "./team-member-dialog.types";
 import { useTeamMemberForm } from "./use-team-member-form";
 
@@ -22,9 +23,10 @@ const MEMBER_FORM_ID = "team-member-form";
  * @returns the dialog
  */
 export function TeamMemberDialog(props: Readonly<TeamMemberDialogProps>) {
+  const t = useTranslations(TEAM_MEMBER_DIALOG_COPY_NAMESPACE);
   const controller = useTeamMemberForm(props);
   const [isRoleDialogOpen, setIsRoleDialogOpen] = useState(false);
-  const title = props.member ? TEAM_COPY.memberEditTitle : TEAM_COPY.addMember;
+  const title = props.member ? t("memberEditTitle") : t("addMember");
   function handleCreateRole(): void {
     setIsRoleDialogOpen(true);
   }
@@ -53,6 +55,18 @@ export function TeamMemberDialog(props: Readonly<TeamMemberDialogProps>) {
   );
 }
 
+function MemberSaveButton({
+  isPending,
+  isMobile,
+}: Readonly<{ isPending: boolean; isMobile: boolean }>) {
+  const t = useTranslations(TEAM_MEMBER_DIALOG_COPY_NAMESPACE);
+  return (
+    <Button type="submit" form={MEMBER_FORM_ID} isPending={isPending} size={isMobile ? "lg" : "md"}>
+      {isPending ? t("saving") : t("save")}
+    </Button>
+  );
+}
+
 function MemberDialogShell({
   isOpen,
   onOpenChange,
@@ -60,12 +74,9 @@ function MemberDialogShell({
   isPending,
   children,
 }: Readonly<ShellProps>) {
+  const t = useTranslations(TEAM_MEMBER_DIALOG_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
-  const save = (
-    <Button type="submit" form={MEMBER_FORM_ID} isPending={isPending} size={isMobile ? "lg" : "md"}>
-      {isPending ? TEAM_COPY.saving : TEAM_COPY.save}
-    </Button>
-  );
+  const save = <MemberSaveButton isPending={isPending} isMobile={isMobile} />;
   function close(): void {
     onOpenChange(false);
   }
@@ -75,7 +86,7 @@ function MemberDialogShell({
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         title={title}
-        description={TEAM_COPY.memberDialogDescription}
+        description={t("memberDialogDescription")}
         variant="form"
         actions={save}
       >
@@ -88,12 +99,12 @@ function MemberDialogShell({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       title={title}
-      description={TEAM_COPY.memberDialogDescription}
+      description={t("memberDialogDescription")}
       size="md"
       actions={
         <>
           <Button variant="secondary" onPress={close} isDisabled={isPending}>
-            {TEAM_COPY.cancel}
+            {t("cancel")}
           </Button>
           {save}
         </>

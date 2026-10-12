@@ -42,12 +42,8 @@ describe("DeliveryCard (hasilakhirowner-kartu A–E)", () => {
   it("AC-DEL-001 B: confirms before publishing, naming the files and the new status", async () => {
     const actions = renderCard(READY);
     fireEvent.click(screen.getByRole("button", { name: "Publikasikan hasil akhir" }));
-    expect(
-      await screen.findByText(
-        "24 file Foto edit dan 6 file Foto cetak akan terlihat oleh klien. Status proyek menjadi Terkirim.",
-      ),
-    ).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "Publikasikan" }));
+    expect(await screen.findByText("Status proyek menjadi Terkirim.")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Publikasikan hasil akhir" }));
     await vi.waitFor(() => {
       expect(actions.publishAction).toHaveBeenCalledWith("w1", "p1");
     });
@@ -69,7 +65,11 @@ describe("DeliveryCard (hasilakhirowner-kartu A–E)", () => {
     expect(screen.getByText(/Belum ada hasil akhir yang tersinkron\. Buat/)).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Publikasikan hasil akhir" }));
     expect(await screen.findByText("Hasil akhir belum bisa dipublikasikan")).toBeTruthy();
-    expect(screen.getByText("Galeri harus berstatus dipublikasikan.")).toBeTruthy();
+    expect(
+      screen.getByText(
+        "Galeri harus dipublikasikan lebih dulu supaya klien bisa membuka hasil akhir.",
+      ),
+    ).toBeTruthy();
   });
 
   it("C: a published delivery shows its date and no button (Tandai selesai moved to the project header, A-34)", () => {

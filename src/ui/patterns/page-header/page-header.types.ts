@@ -48,6 +48,8 @@ export interface PageHeaderProps {
 
 export interface PageHeaderTrailProps {
   readonly items: readonly BreadcrumbItem[];
+  /** The trail's accessible name, translated by the caller (the server slot calls `getTranslations`). */
+  readonly label: string;
 }
 
 export interface BreadcrumbRowProps {

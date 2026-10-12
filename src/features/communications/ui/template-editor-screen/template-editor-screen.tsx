@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useController } from "react-hook-form";
 
@@ -20,42 +21,42 @@ import { Textarea } from "@/ui/primitives/textarea/textarea";
 
 import { MessagePreview } from "../message-preview/message-preview";
 import { previewHasPasswordNote, renderPreview } from "../message-preview/render-preview";
-import { TEMPLATE_COPY } from "../template-copy/template-copy.copy";
+import { TEMPLATE_LABEL_MESSAGE_KEY } from "../template-copy/template-copy.copy";
 import { templateProblemText } from "../template-problem-text/template-problem-text";
 import { UnsavedChangesDialog } from "../unsaved-changes-dialog/unsaved-changes-dialog";
 import { useTemplateForm } from "../use-template-form/use-template-form";
 import { useUnsavedChangesGuard } from "../use-unsaved-changes-guard/use-unsaved-changes-guard";
 import { VariableChip } from "../variable-chip/variable-chip";
-import { TEMPLATE_EDITOR_COPY as COPY } from "./template-editor-screen.copy";
+import { TEMPLATE_EDITOR_SCREEN_COPY_NAMESPACE } from "./template-editor-screen.copy";
 import type {
   EditorLayoutProps,
   EditorPartProps,
   TemplateEditorScreenProps,
 } from "./template-editor-screen.types";
 
-const VIEWS = [
-  { id: "edit", label: COPY.edit },
-  { id: "preview", label: COPY.preview },
-];
-
 /**
  * Template editor v3: content and variables beside a live preview on desktop; one card with
- * Edit/Pratinjau tabs on phones; save and restore below; toasts for saved and failed saves.
+ * Edit/Preview tabs on phones; save and restore below; toasts for saved and failed saves.
  * @param props - the editor data and the bound save action
  * @returns the editor form
  */
 export function TemplateEditorScreen({ editor, action }: Readonly<TemplateEditorScreenProps>) {
-  const label = TEMPLATE_COPY[editor.type].label;
+  const t = useTranslations(TEMPLATE_EDITOR_SCREEN_COPY_NAMESPACE);
+  const label = t(TEMPLATE_LABEL_MESSAGE_KEY[editor.type]);
   const isMobile = useMobileViewport();
   const handleSaved = () => {
-    showToast({ tone: "success", title: COPY.saved, body: COPY.savedBody(label) });
+    showToast({
+      tone: "success",
+      title: t("savedTitle"),
+      body: t("savedBody", { templateName: label }),
+    });
   };
   const handleFailed = (retry: () => void) => {
     showToast({
       tone: "danger",
-      title: COPY.serverErrorTitle,
-      body: COPY.serverErrorBody,
-      action: { label: COPY.retry, onAction: retry },
+      title: t("serverErrorTitle"),
+      body: t("serverErrorBody"),
+      action: { label: t("retry"), onAction: retry },
     });
   };
   const template = useTemplateForm({
@@ -86,19 +87,20 @@ export function TemplateEditorScreen({ editor, action }: Readonly<TemplateEditor
 }
 
 function DesktopEditor({ preview, ...part }: Readonly<EditorLayoutProps>) {
+  const t = useTranslations(TEMPLATE_EDITOR_SCREEN_COPY_NAMESPACE);
   return (
     <>
       {/* 5:3 split ≈ the 664/400 columns; no width token exists (D-M3). */}
       <div className="flex min-w-0 flex-[5_1_0%] flex-col gap-(--component-panel-app-content-gap)">
-        <SectionCard title={COPY.contentTitle} description={COPY.contentDescription}>
+        <SectionCard title={t("contentTitle")} description={t("contentDescription")}>
           <ContentField {...part} />
           <VariableList {...part} />
         </SectionCard>
         <EditorActions {...part} />
       </div>
       <SectionCard
-        title={COPY.previewTitle}
-        description={COPY.previewDescription}
+        title={t("preview")}
+        description={t("previewDescription")}
         className="min-w-0 flex-[3_1_0%]"
       >
         <MessagePreview text={preview} showsPasswordNote={previewHasPasswordNote(part.type)} />
@@ -108,15 +110,20 @@ function DesktopEditor({ preview, ...part }: Readonly<EditorLayoutProps>) {
 }
 
 function MobileEditor({ preview, ...part }: Readonly<EditorLayoutProps>) {
+  const t = useTranslations(TEMPLATE_EDITOR_SCREEN_COPY_NAMESPACE);
   const [view, setView] = useState("edit");
+  const views = [
+    { id: "edit", label: t("edit") },
+    { id: "preview", label: t("preview") },
+  ];
   return (
     <>
       <SectionCard
-        title={COPY.mobileTitle}
+        title={t("mobileTitle")}
         actions={
           <SegmentedControl
-            label={COPY.viewLabel}
-            options={VIEWS}
+            label={t("viewLabel")}
+            options={views}
             selectedId={view}
             onChange={setView}
           />
@@ -137,6 +144,7 @@ function MobileEditor({ preview, ...part }: Readonly<EditorLayoutProps>) {
 }
 
 function ContentField({ template, type, isMobile }: Readonly<EditorPartProps>) {
+  const t = useTranslations(TEMPLATE_EDITOR_SCREEN_COPY_NAMESPACE);
   const { field, fieldState } = useController({ control: template.form.control, name: "content" });
   const setRef = (element: HTMLTextAreaElement | null) => {
     field.ref(element);
@@ -144,26 +152,30 @@ function ContentField({ template, type, isMobile }: Readonly<EditorPartProps>) {
   };
   return (
     <Textarea
-      aria-label={COPY.contentLabel}
+      aria-label={t("contentLabel")}
       name={field.name}
       // 13 / 12 lines of 21 px ≈ the 300 / 280 px textarea in v8MaG / byw9B (D-M4).
       rows={isMobile ? 13 : 12}
       value={field.value}
       onChange={field.onChange}
       textareaRef={setRef}
-      helperText={isMobile ? COPY.mobileHelper : COPY.helper}
-      errorMessage={templateProblemText(type, fieldState.error?.message)}
-      trailingMeta={COPY.counter(templateContentLength(field.value), TEMPLATE_CONTENT_MAX_LENGTH)}
+      helperText={isMobile ? t("mobileHelper") : t("helper")}
+      errorMessage={templateProblemText(t, type, fieldState.error?.message)}
+      trailingMeta={t("counter", {
+        length: templateContentLength(field.value),
+        max: TEMPLATE_CONTENT_MAX_LENGTH,
+      })}
     />
   );
 }
 
 function VariableList({ template, type, isMobile }: Readonly<EditorPartProps>) {
+  const t = useTranslations(TEMPLATE_EDITOR_SCREEN_COPY_NAMESPACE);
   const required = requiredVariable(type);
   return (
     <div className="flex flex-col gap-(--space-2)">
       <p className="text-(length:--font-size-label) font-semibold text-(--component-input-label)">
-        {COPY.variablesTitle}
+        {t("variablesTitle")}
       </p>
       <div className="flex flex-wrap gap-(--space-2)">
         {allowedVariables(type).map((name) => (
@@ -176,13 +188,14 @@ function VariableList({ template, type, isMobile }: Readonly<EditorPartProps>) {
         ))}
       </div>
       <p className="text-(length:--font-size-label) text-(--color-semantic-text-muted)">
-        {isMobile ? COPY.mobileVariablesHint : COPY.variablesHint}
+        {isMobile ? t("mobileVariablesHint") : t("variablesHint")}
       </p>
     </div>
   );
 }
 
 function EditorActions({ template, isMobile }: Readonly<EditorPartProps>) {
+  const t = useTranslations(TEMPLATE_EDITOR_SCREEN_COPY_NAMESPACE);
   const size = isMobile ? "lg" : "md";
   const save = (
     <Button
@@ -192,7 +205,7 @@ function EditorActions({ template, isMobile }: Readonly<EditorPartProps>) {
       isPending={template.isSubmitting}
       className={isMobile ? "w-full" : undefined}
     >
-      {template.isSubmitting ? COPY.saving : COPY.save}
+      {template.isSubmitting ? t("saving") : t("save")}
     </Button>
   );
   const restore = (
@@ -204,7 +217,7 @@ function EditorActions({ template, isMobile }: Readonly<EditorPartProps>) {
       onPress={template.restoreDefault}
       className={isMobile ? "w-full" : undefined}
     >
-      {COPY.restore}
+      {t("restore")}
     </Button>
   );
   return isMobile ? (

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import type { FieldValues } from "react-hook-form";
 import { useController } from "react-hook-form";
@@ -7,12 +8,15 @@ import { useController } from "react-hook-form";
 import { fieldErrorKeySchema } from "@/features/auth/application/errors/auth-errors/auth-errors.schema";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { CONTROLLED_TEXT_FIELD_COPY, FIELD_ERROR_COPY } from "./controlled-text-field.copy";
-import type { ControlledTextFieldProps } from "./controlled-text-field.types";
+import {
+  CONTROLLED_TEXT_FIELD_COPY_NAMESPACE,
+  FIELD_ERROR_MESSAGE_KEY,
+} from "./controlled-text-field.copy";
+import type { ControlledTextFieldProps, FieldTranslate } from "./controlled-text-field.types";
 
-function errorText(message: string | undefined): string | undefined {
+function errorText(message: string | undefined, t: FieldTranslate): string | undefined {
   const key = fieldErrorKeySchema.safeParse(message);
-  return key.success ? FIELD_ERROR_COPY[key.data] : undefined;
+  return key.success ? t(FIELD_ERROR_MESSAGE_KEY[key.data]) : undefined;
 }
 
 /**
@@ -26,6 +30,7 @@ export function ControlledTextField<T extends FieldValues>({
   name,
   ...field
 }: Readonly<ControlledTextFieldProps<T>>) {
+  const t = useTranslations(CONTROLLED_TEXT_FIELD_COPY_NAMESPACE);
   const { field: bound, fieldState } = useController({ control, name });
   const isPassword = field.type === "password";
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -36,9 +41,7 @@ export function ControlledTextField<T extends FieldValues>({
   if (isPassword) {
     iconTrailing = isPasswordVisible ? "eye-off" : "eye";
     iconTrailingAction = {
-      label: isPasswordVisible
-        ? CONTROLLED_TEXT_FIELD_COPY.hidePassword
-        : CONTROLLED_TEXT_FIELD_COPY.showPassword,
+      label: isPasswordVisible ? t("hidePassword") : t("showPassword"),
       onPress: () => {
         setIsPasswordVisible((visible) => !visible);
       },
@@ -55,7 +58,7 @@ export function ControlledTextField<T extends FieldValues>({
       inputRef={bound.ref}
       iconTrailing={iconTrailing}
       iconTrailingAction={iconTrailingAction}
-      errorMessage={errorText(fieldState.error?.message)}
+      errorMessage={errorText(fieldState.error?.message, t)}
     />
   );
 }

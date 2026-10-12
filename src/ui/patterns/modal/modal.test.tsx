@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { useState } from "react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { Button } from "@/ui/primitives/button/button";
 
@@ -106,5 +107,20 @@ describe("Modal (C31)", () => {
     expect(screen.queryByRole("dialog", { name: "Tambah anggota tim" })).not.toBeInTheDocument();
     expect(screen.getByRole("dialog", { name: "Tambah sesi" })).toBeInTheDocument();
     expect(trigger).toHaveFocus();
+  });
+});
+
+describe("Modal close control in both locales (I6.1)", () => {
+  it.each([
+    ["en", "Close"],
+    ["id", "Tutup"],
+  ] as const)("%s names the close icon button", (locale, name) => {
+    renderInLocale(
+      <Modal isOpen onOpenChange={vi.fn()} title="Buat workspace">
+        Isi modal
+      </Modal>,
+      locale,
+    );
+    expect(screen.getByRole("button", { name })).toBeInTheDocument();
   });
 });

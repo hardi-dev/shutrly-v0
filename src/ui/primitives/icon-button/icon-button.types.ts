@@ -14,7 +14,7 @@ export interface IconButtonProps {
   isDisabled?: boolean;
   className?: string;
   badgeCount?: number;
-  /** The words after the count in the accessible name; default "belum dibaca" (notifications). */
+  /** Words after the count in the accessible name. Omit to use the localized unread-notifications copy. */
   badgeLabel?: string;
   "data-client-row-action"?: string;
   /** Renders the icon button as a link, e.g. *Buka di Drive* on phones (F-09). */

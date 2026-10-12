@@ -34,11 +34,15 @@ const DIMAS = {
   id: "m1",
   name: "Dimas Pratama",
   roles: [
-    { id: "r1", name: "Fotografer" },
-    { id: "r2", name: "Videografer" },
+    { id: "r1", name: "Fotografer", defaultKey: null },
+    { id: "r2", name: "Videografer", defaultKey: null },
   ],
 };
-const SARI = { id: "m2", name: "Sari Lestari", roles: [{ id: "r3", name: "Asisten" }] };
+const SARI = {
+  id: "m2",
+  name: "Sari Lestari",
+  roles: [{ id: "r3", name: "Asisten", defaultKey: null }],
+};
 
 describe("SessionTeamField", () => {
   it("AC-TEAM-028 lists the picks with their roles and removes one", async () => {

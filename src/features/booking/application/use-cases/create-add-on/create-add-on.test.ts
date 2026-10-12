@@ -27,7 +27,7 @@ function setup(status: string | null = "POST_PROCESSING", verdict: AddOnTargetVe
 }
 
 const run = (deps: CreateAddOnDeps, input: unknown) =>
-  createAddOn(deps, CONTEXT, "owner-1", "p", input);
+  createAddOn(deps, CONTEXT, "owner-1", "p", input, "id-ID");
 
 describe("createAddOn (D-16)", () => {
   it("AC-ADD-001 stores a draft with the total computed on the server", async () => {

@@ -620,4 +620,23 @@ describe("Drizzle project repository", () => {
       { type: "RANGE", min: "1", max: "3" },
     ]);
   });
+
+  it("D-18 a snapshot item copies the platform key into the project detail", async () => {
+    const context = await seedWorkspace();
+    const ids = await seedCatalog(context.workspaceId, context.ownerId);
+    await db
+      .update(serviceItemDefinition)
+      .set({ defaultKey: "EDITED_PHOTOS" })
+      .where(eq(serviceItemDefinition.id, ids.fotoEdit));
+    const repository = createDrizzleProjectRepository(db);
+    const created = await repository.createSnapshot(context, snapshot(ids, context.ownerId));
+    if (created.status !== "CREATED") throw new Error("not created");
+    const detail = await repository.findDetail(context, created.id);
+    expect(detail?.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ definitionId: ids.fotoEdit, defaultKey: "EDITED_PHOTOS" }),
+        expect.objectContaining({ definitionId: ids.jumlahOrang, defaultKey: null }),
+      ]),
+    );
+  });
 });

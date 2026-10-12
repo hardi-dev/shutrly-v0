@@ -34,7 +34,10 @@ describe("ClientDialog", () => {
     useMobileViewport.mockReturnValue(isMobile);
     render(<ClientDialog isOpen workspaceId="x" onOpenChange={vi.fn()} onSubmit={vi.fn()} />);
 
-    expect(screen.getByLabelText("Nama klien")).toHaveAttribute("placeholder", "mis. Rina & Dimas");
+    expect(screen.getByLabelText("Nama klien")).toHaveAttribute(
+      "placeholder",
+      "Contoh: Rina & Dimas",
+    );
     expect(screen.getByLabelText("Nomor WhatsApp")).toHaveAttribute(
       "placeholder",
       "0812 3456 7890",
@@ -50,7 +53,7 @@ describe("ClientDialog", () => {
     render(<ClientDialog isOpen workspaceId="x" onOpenChange={vi.fn()} onSubmit={vi.fn()} />);
 
     const value = screen.getByRole("textbox", { name: /Instagram/ });
-    const remove = screen.getByRole("button", { name: /^Hapus Instagram/ });
+    const remove = screen.getByRole("button", { name: /^Hapus akun Instagram/ });
     // Phone: platform and remove on the first line, the value full width below it.
     const removeFirst = Boolean(
       remove.compareDocumentPosition(value) & Node.DOCUMENT_POSITION_FOLLOWING,
@@ -80,20 +83,18 @@ describe("ClientDialog", () => {
     await userEvent.type(screen.getByLabelText("Nama klien"), "Rina");
     await userEvent.type(screen.getByLabelText("Nomor WhatsApp"), "0812-3456-7890");
     await userEvent.click(screen.getByRole("button", { name: "Tambah klien" }));
-    expect(
-      await screen.findByText("Nomor ini sudah dipakai Budi (diarsipkan)"),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Nomor ini dipakai Budi (diarsipkan).")).toBeInTheDocument();
     expect(screen.getByRole("dialog", { name: "Tambah klien" })).toBeInTheDocument();
   });
 
   it("adds and removes only the selected social row", async () => {
     useMobileViewport.mockReturnValue(false);
     render(<ClientDialog isOpen workspaceId="x" onOpenChange={vi.fn()} onSubmit={vi.fn()} />);
-    expect(screen.getAllByRole("button", { name: /^Hapus Instagram/ })).toHaveLength(1);
-    await userEvent.click(screen.getByRole("button", { name: "Tambah media sosial" }));
-    expect(screen.getAllByRole("button", { name: /^Hapus Instagram/ })).toHaveLength(2);
-    await userEvent.click(screen.getAllByRole("button", { name: /^Hapus Instagram/ })[1]);
-    expect(screen.getAllByRole("button", { name: /^Hapus Instagram/ })).toHaveLength(1);
+    expect(screen.getAllByRole("button", { name: /^Hapus akun Instagram/ })).toHaveLength(1);
+    await userEvent.click(screen.getByRole("button", { name: "Tambah akun media sosial" }));
+    expect(screen.getAllByRole("button", { name: /^Hapus akun Instagram/ })).toHaveLength(2);
+    await userEvent.click(screen.getAllByRole("button", { name: /^Hapus akun Instagram/ })[1]);
+    expect(screen.getAllByRole("button", { name: /^Hapus akun Instagram/ })).toHaveLength(1);
   });
 
   it("uses the form sheet with no cancel button on phones", () => {
@@ -128,7 +129,7 @@ describe("ClientDialog", () => {
     expect(screen.getByRole("dialog", { name: "Ubah klien" })).toBeInTheDocument();
     expect(screen.getByLabelText("Nama klien")).toHaveValue("Rina Wedding");
     expect(screen.getByLabelText("Nomor WhatsApp")).toHaveValue("+62 812-3456-7890");
-    await userEvent.click(screen.getByRole("button", { name: "Simpan" }));
+    await userEvent.click(screen.getByRole("button", { name: "Simpan perubahan" }));
     expect(submit).toHaveBeenCalledWith("x", {
       name: "Rina Wedding",
       whatsappNumber: "+62 812-3456-7890",
@@ -156,7 +157,7 @@ describe("ClientDialog", () => {
       />,
     );
 
-    await userEvent.click(screen.getByRole("button", { name: "Tambah media sosial" }));
+    await userEvent.click(screen.getByRole("button", { name: "Tambah akun media sosial" }));
 
     expect(screen.getByRole("button", { name: "Platform media sosial 1" })).toHaveTextContent(
       "Instagram",

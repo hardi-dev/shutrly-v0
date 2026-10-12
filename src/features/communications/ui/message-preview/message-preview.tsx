@@ -1,6 +1,9 @@
+import { useTranslations } from "next-intl";
+
 import { Icon } from "@/ui/primitives/icon/icon";
 
-import { MESSAGE_PREVIEW_COPY as COPY } from "./message-preview.copy";
+import { MESSAGE_PREVIEW_COPY_NAMESPACE } from "./message-preview.copy";
+import { PREVIEW_TIME } from "./message-preview.sample";
 import type { MessagePreviewProps } from "./message-preview.types";
 
 /**
@@ -10,15 +13,16 @@ import type { MessagePreviewProps } from "./message-preview.types";
  * @returns the preview region
  */
 export function MessagePreview({ text, showsPasswordNote }: Readonly<MessagePreviewProps>) {
+  const t = useTranslations(MESSAGE_PREVIEW_COPY_NAMESPACE);
   return (
-    <section aria-label={COPY.regionLabel} className="flex flex-col gap-(--space-3)">
+    <section aria-label={t("previewRegion")} className="flex flex-col gap-(--space-3)">
       {text === null ? (
         <p
           role="status"
           className="flex items-center gap-(--space-2) rounded-(--radius-md) bg-(--color-semantic-surface-sunken) p-(--space-4) text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)"
         >
           <Icon name="circle-alert" size="sm" className="text-(--component-input-error-text)" />
-          {COPY.error}
+          {t("previewError")}
         </p>
       ) : (
         <div className="rounded-(--radius-md) bg-(--color-semantic-surface-sunken) p-(--space-4)">
@@ -27,14 +31,14 @@ export function MessagePreview({ text, showsPasswordNote }: Readonly<MessagePrev
               {text}
             </p>
             <span className="self-end text-(length:--font-size-caption) text-(--color-semantic-text-muted)">
-              {COPY.time}
+              {PREVIEW_TIME}
             </span>
           </div>
         </div>
       )}
       {showsPasswordNote && text !== null ? (
         <p className="text-(length:--font-size-caption) text-(--color-semantic-text-muted)">
-          {COPY.passwordNote}
+          {t("passwordNote")}
         </p>
       ) : null}
     </section>

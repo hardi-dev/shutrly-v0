@@ -1,15 +1,22 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderInLocale } from "@tests/support/copy/render-in-locale";
+import type { ReactElement } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { showToast } from "@/ui/patterns/toast/toast";
 
 import type { AddSourceInput } from "../../application/schemas/add-source/add-source.types";
 import type { SourceValidationFailure } from "../../application/use-cases/add-workspace-source/add-workspace-source.types";
-import { SOURCE_COPY } from "../source-copy/source-copy.copy";
+import { SOURCE_COPY_NAMESPACE } from "../source-copy/source-copy.copy";
 import { AddSourceDialog } from "./add-source-dialog";
 
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
+
+import { copyTranslator } from "@tests/support/copy/copy-messages";
+
+const copy = copyTranslator(SOURCE_COPY_NAMESPACE, "id");
+const render = (ui: ReactElement) => renderInLocale(ui, "id");
 
 const actionResult = (): Promise<SourceValidationFailure | undefined> => Promise.resolve(undefined);
 
@@ -47,11 +54,8 @@ describe("AddSourceDialog", () => {
       <AddSourceDialog isOpen workspaceId="ws-1" onOpenChange={onOpenChange} action={action} />,
     );
 
-    await user.type(
-      screen.getByRole("textbox", { name: SOURCE_COPY.nameLabel }),
-      "Google Drive Arsip",
-    );
-    await user.click(screen.getByRole("button", { name: SOURCE_COPY.add }));
+    await user.type(screen.getByRole("textbox", { name: copy("nameLabel") }), "Google Drive Arsip");
+    await user.click(screen.getByRole("button", { name: copy("add") }));
 
     await waitFor(() => {
       expect(action).toHaveBeenCalledWith("ws-1", {
@@ -62,8 +66,8 @@ describe("AddSourceDialog", () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
     expect(showToast).toHaveBeenCalledWith({
       tone: "success",
-      title: SOURCE_COPY.addedTitle,
-      body: SOURCE_COPY.addedBody("Google Drive Arsip"),
+      title: copy("addedTitle"),
+      body: copy("addedBody", { name: "Google Drive Arsip" }),
     });
   });
 
@@ -72,7 +76,7 @@ describe("AddSourceDialog", () => {
     expect(screen.getByRole("radio", { name: /Dropbox.*Segera hadir/ })).toBeDisabled();
     expect(screen.getByRole("radio", { name: /OneDrive.*Segera hadir/ })).toBeDisabled();
     expect(screen.getByRole("radio", { name: /Amazon S3.*Segera hadir/ })).toBeDisabled();
-    expect(screen.getByRole("radio", { name: /Custom URL.*Segera hadir/ })).toBeDisabled();
+    expect(screen.getByRole("radio", { name: /Tautan khusus.*Segera hadir/ })).toBeDisabled();
   });
 
   it("AC-SRC-008 validates an empty source name before calling the action", async () => {
@@ -80,9 +84,9 @@ describe("AddSourceDialog", () => {
     const action = vi.fn(actionResult);
     renderDialog(action);
 
-    await user.click(screen.getByRole("button", { name: SOURCE_COPY.add }));
+    await user.click(screen.getByRole("button", { name: copy("add") }));
 
-    expect(await screen.findByText(SOURCE_COPY.nameErrors.EMPTY)).toBeInTheDocument();
+    expect(await screen.findByText(copy("nameErrorEmpty"))).toBeInTheDocument();
     expect(action).not.toHaveBeenCalled();
   });
 
@@ -97,10 +101,10 @@ describe("AddSourceDialog", () => {
     );
     renderDialog(action);
 
-    await user.type(screen.getByRole("textbox", { name: SOURCE_COPY.nameLabel }), "Arsip");
-    await user.click(screen.getByRole("button", { name: SOURCE_COPY.add }));
+    await user.type(screen.getByRole("textbox", { name: copy("nameLabel") }), "Arsip");
+    await user.click(screen.getByRole("button", { name: copy("add") }));
 
-    expect(await screen.findByText(SOURCE_COPY.nameErrors.NAME_TAKEN)).toBeInTheDocument();
+    expect(await screen.findByText(copy("nameErrorNameTaken"))).toBeInTheDocument();
   });
 
   it("AC-SRC-014 keeps the dialog open and retries after a rejected action", async () => {
@@ -108,13 +112,13 @@ describe("AddSourceDialog", () => {
     const action = vi.fn().mockRejectedValue(new Error("network"));
     renderDialog(action);
 
-    await user.type(screen.getByRole("textbox", { name: SOURCE_COPY.nameLabel }), "Arsip");
-    await user.click(screen.getByRole("button", { name: SOURCE_COPY.add }));
+    await user.type(screen.getByRole("textbox", { name: copy("nameLabel") }), "Arsip");
+    await user.click(screen.getByRole("button", { name: copy("add") }));
     await waitFor(() => {
       expect(showToast).toHaveBeenCalledWith(expect.objectContaining({ tone: "danger" }));
     });
-    expect(screen.getByRole("dialog", { name: SOURCE_COPY.addTitle })).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: SOURCE_COPY.nameLabel })).toHaveValue("Arsip");
+    expect(screen.getByRole("dialog", { name: copy("addTitle") })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: copy("nameLabel") })).toHaveValue("Arsip");
 
     const toast = vi.mocked(showToast).mock.calls.at(-1)?.[0];
     toast?.action?.onAction();
@@ -136,11 +140,11 @@ describe("AddSourceDialog", () => {
     );
     renderDialog(action);
 
-    await user.type(screen.getByRole("textbox", { name: SOURCE_COPY.nameLabel }), "Arsip");
-    const submit = screen.getByRole("button", { name: SOURCE_COPY.add });
+    await user.type(screen.getByRole("textbox", { name: copy("nameLabel") }), "Arsip");
+    const submit = screen.getByRole("button", { name: copy("add") });
     await user.click(submit);
 
-    expect(await screen.findByRole("button", { name: SOURCE_COPY.adding })).toHaveAttribute(
+    expect(await screen.findByRole("button", { name: copy("adding") })).toHaveAttribute(
       "data-pending",
       "true",
     );

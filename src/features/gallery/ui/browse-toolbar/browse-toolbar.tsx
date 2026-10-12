@@ -1,17 +1,20 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BreadcrumbTrail } from "@/ui/patterns/page-header/breadcrumb-trail";
 import { Input } from "@/ui/primitives/input/input";
 
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
+import { BROWSE_TOOLBAR_COPY_NAMESPACE } from "./browse-toolbar.copy";
 import type { BrowseToolbarProps, BrowseTrailProps } from "./browse-toolbar.types";
 
 function BrowseTrail({ location, page, crumbs, onNavigate }: Readonly<BrowseTrailProps>) {
+  const t = useTranslations(BROWSE_TOOLBAR_COPY_NAMESPACE);
   if (location.search !== "") {
     return (
       <p className="text-(length:--font-size-body-sm) font-medium text-(--component-page-header-breadcrumb-text)">
-        {GALLERY_COPY.searchSummary(page?.summary?.photoCount ?? 0, location.search)}
+        {t("searchSummary", { count: page?.summary?.photoCount ?? 0, text: location.search })}
       </p>
     );
   }
@@ -29,10 +32,12 @@ function BrowseTrail({ location, page, crumbs, onNavigate }: Readonly<BrowseTrai
   });
   return (
     <BreadcrumbTrail
-      label={GALLERY_COPY.breadcrumbLabel}
+      label={t("breadcrumbLabel")}
       items={items}
       trailing={
-        summary ? GALLERY_COPY.crumbFolders(summary.folderCount, summary.photoCount) : undefined
+        summary
+          ? t("crumbFolders", { folders: summary.folderCount, photos: summary.photoCount })
+          : undefined
       }
       className="flex-wrap"
     />
@@ -41,6 +46,7 @@ function BrowseTrail({ location, page, crumbs, onNavigate }: Readonly<BrowseTrai
 
 /** *Semua foto*'s toolbar: the breadcrumb (or the search summary) and *Cari nama file*; phones put the search first (AC-GAL-028, 029). */
 export function BrowseToolbar(props: Readonly<BrowseToolbarProps>) {
+  const t = useTranslations(BROWSE_TOOLBAR_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const { searchText, onSearch } = props;
   const handleClear = () => {
@@ -50,12 +56,12 @@ export function BrowseToolbar(props: Readonly<BrowseToolbarProps>) {
     <div className="w-full md:w-[280px]">
       <Input
         variant="search"
-        aria-label={GALLERY_COPY.searchLabel}
-        placeholder={GALLERY_COPY.searchLabel}
+        aria-label={t("searchLabel")}
+        placeholder={t("searchLabel")}
         iconLeading="search"
         iconTrailing={searchText ? "x" : undefined}
         iconTrailingAction={
-          searchText ? { label: GALLERY_COPY.clearSearch, onPress: handleClear } : undefined
+          searchText ? { label: t("clearSearch"), onPress: handleClear } : undefined
         }
         value={searchText}
         onChange={onSearch}

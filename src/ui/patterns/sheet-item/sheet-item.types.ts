@@ -7,6 +7,8 @@ export interface SheetItemProps {
   description?: string;
   icon?: IconName;
   count?: number;
+  /** Secondary text at the trailing edge, followed by a chevron (the current choice of a sub-sheet). */
+  value?: string;
   isSelected?: boolean;
   isDisabled?: boolean;
   variant?: SheetItemVariant;

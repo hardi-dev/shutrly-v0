@@ -1,6 +1,8 @@
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { logoutAction } from "@/app/actions/auth/login";
+import { setOwnerLocaleAction } from "@/app/actions/auth/profile";
 import { createWorkspaceAction } from "@/app/actions/workspace/create";
 import { switchWorkspaceAction } from "@/app/actions/workspace/switch";
 import { requireOwnerOrRedirect } from "@/composition/auth/owner-guard/owner-guard";
@@ -9,7 +11,10 @@ import { loadWorkspaceSwitcher } from "@/composition/workspace/workspace-flow/wo
 import { messageTemplateSubPages } from "@/features/communications/ui/template-sub-pages/template-sub-pages";
 import { OwnerShell } from "@/features/workspace/ui/owner-shell/owner-shell";
 
-import { WORKSPACE_LAYOUT_COPY } from "./layout.copy";
+import {
+  MESSAGE_TEMPLATE_SUB_PAGES_COPY_NAMESPACE,
+  WORKSPACE_LAYOUT_COPY_NAMESPACE,
+} from "./layout.copy";
 
 export default async function WorkspaceLayout({
   children,
@@ -17,6 +22,8 @@ export default async function WorkspaceLayout({
   params,
 }: Readonly<{ children: ReactNode; crumbs: ReactNode; params: Promise<{ workspaceId: string }> }>) {
   const { workspaceId } = await params;
+  const t = await getTranslations(WORKSPACE_LAYOUT_COPY_NAMESPACE);
+  const templateT = await getTranslations(MESSAGE_TEMPLATE_SUB_PAGES_COPY_NAMESPACE);
   const [account, verified, workspaces] = await Promise.all([
     requireOwnerOrRedirect(),
     verifyOwnerWorkspace(workspaceId),
@@ -28,12 +35,13 @@ export default async function WorkspaceLayout({
       workspaceName={verified.workspace.name}
       accountName={account.name}
       accountEmail={account.email}
-      title={WORKSPACE_LAYOUT_COPY.title}
+      title={t("title")}
       workspaces={workspaces}
       onSwitch={switchWorkspaceAction}
       onCreate={createWorkspaceAction}
       logoutAction={logoutAction}
-      subPages={messageTemplateSubPages(workspaceId)}
+      localeAction={setOwnerLocaleAction}
+      subPages={messageTemplateSubPages(templateT, workspaceId)}
       trail={crumbs}
     >
       {children}

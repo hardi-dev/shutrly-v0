@@ -32,7 +32,7 @@ describe("ClientsScreen", () => {
   it("renders the desktop table tree", () => {
     useMobileViewport.mockReturnValue(false);
     render(<ClientsScreen {...props} />);
-    expect(screen.getByRole("grid", { name: "Daftar klien" })).toBeInTheDocument();
+    expect(screen.getByRole("grid", { name: "Klien" })).toBeInTheDocument();
     expect(screen.queryByRole("radiogroup", { name: "Status klien" })).not.toBeInTheDocument();
   });
 
@@ -40,7 +40,7 @@ describe("ClientsScreen", () => {
     useMobileViewport.mockReturnValue(true);
     render(<ClientsScreen {...props} />);
     expect(screen.getByRole("radiogroup", { name: "Status klien" })).toBeInTheDocument();
-    expect(screen.getByRole("list", { name: "Daftar klien" })).toBeInTheDocument();
+    expect(screen.getByRole("list", { name: "Klien" })).toBeInTheDocument();
   });
 
   it("AC-CLI-012 opens the edit dialog when a desktop row is selected", async () => {
@@ -57,13 +57,13 @@ describe("ClientsScreen", () => {
     await userEvent.click(screen.getByText("Rina"));
     await userEvent.clear(screen.getByLabelText("Nama klien"));
     await userEvent.type(screen.getByLabelText("Nama klien"), "Rina Baru");
-    await userEvent.click(screen.getByRole("button", { name: "Simpan" }));
+    await userEvent.click(screen.getByRole("button", { name: "Simpan perubahan" }));
     expect(action).toHaveBeenCalled();
   });
 
   it("AC-CLI-004 renders the no-match state for a query with no rows", () => {
     useMobileViewport.mockReturnValue(false);
     render(<ClientsScreen {...props} rows={[]} count={1} q="zzz" />);
-    expect(screen.getByRole("heading", { name: "Tidak ada klien yang cocok" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Belum ada klien yang cocok" })).toBeVisible();
   });
 });

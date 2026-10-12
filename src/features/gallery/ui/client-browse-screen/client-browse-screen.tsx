@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { FolderTileView } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos.types";
@@ -11,7 +12,7 @@ import { Icon } from "@/ui/primitives/icon/icon";
 import { Input } from "@/ui/primitives/input/input";
 
 import { ClientBrowseGrid } from "../client-browse-grid/client-browse-grid";
-import { CLIENT_COPY } from "../client-copy/client-copy.copy";
+import type { ClientTranslate } from "../client-copy/client-copy.types";
 import { ClientShell } from "../client-shell/client-shell";
 import type { ClientPageHeader } from "../client-shell/client-shell.types";
 import { CLIENT_BROWSE_START, useClientBrowse } from "../use-client-browse/use-client-browse";
@@ -19,26 +20,27 @@ import { usePickTargets } from "../use-pick-targets/use-pick-targets";
 import { useProofDownloads } from "../use-proof-downloads/use-proof-downloads";
 import type { ProofDownloads } from "../use-proof-downloads/use-proof-downloads.types";
 import { BrowseViewer } from "./browse-viewer";
-import { CLIENT_BROWSE_COPY as COPY } from "./client-browse-screen.copy";
+import { BROWSE_SHARED_NAMESPACE, CLIENT_BROWSE_COPY_NAMESPACE } from "./client-browse-screen.copy";
 import type {
   BrowseCardProps,
   ClientBrowseCardProps,
   ClientBrowseScreenProps,
   SearchFieldProps,
 } from "./client-browse-screen.types";
-import { browseCardMeta, browseSummary } from "./client-browse-text";
+import { browseCardMeta, browseSummary, type BrowseTranslate } from "./client-browse-text";
 import { PhotosHeaderActions, SelectingActions } from "./photos-actions";
 import type { PhotosGroupsProps } from "./photos-actions.types";
 import { DownloadAllConfirm, PhotosDownloadStatus } from "./photos-status";
 
 function SearchField({ searchText, onSearch, className }: Readonly<SearchFieldProps>) {
+  const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   return (
     <div className={className}>
       <Input
         variant="search"
         iconLeading="search"
-        aria-label={COPY.searchLabel}
-        placeholder={COPY.searchPlaceholder}
+        aria-label={t("searchLabel")}
+        placeholder={t("searchPlaceholder")}
         value={searchText}
         onChange={onSearch}
       />
@@ -47,7 +49,8 @@ function SearchField({ searchText, onSearch, className }: Readonly<SearchFieldPr
 }
 
 function Trail({ state, onRoot }: Readonly<Pick<ClientBrowseCardProps, "state" | "onRoot">>) {
-  const summary = browseSummary(state);
+  const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
+  const summary = browseSummary(t, state);
   if (summary !== null) {
     return (
       <p className="text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
@@ -62,32 +65,32 @@ function Trail({ state, onRoot }: Readonly<Pick<ClientBrowseCardProps, "state" |
         onClick={onRoot}
         className="font-medium underline-offset-2 hover:underline"
       >
-        {COPY.rootLabel}
+        {t("rootLabel")}
       </button>
       <Icon name="chevron-right" size="sm" aria-hidden="true" />
-      <span className="text-(--color-semantic-text-primary)">{browseCardMeta(state)}</span>
+      <span className="text-(--color-semantic-text-primary)">{browseCardMeta(t, state)}</span>
     </p>
   );
 }
 
 function baseHeader(
+  t: BrowseTranslate,
+  shared: ClientTranslate,
   gate: ClientBrowseScreenProps["gate"],
   token: string,
   isPhotosOnly: boolean,
 ): ClientPageHeader {
   return {
-    title: isPhotosOnly ? gate.projectTitle : CLIENT_COPY.allPhotos,
-    subtitle: isPhotosOnly ? COPY.subtitleNoGroups : COPY.subtitle,
-    breadcrumbs: [
-      { label: CLIENT_COPY.home, href: `/g/${token}` },
-      { label: CLIENT_COPY.allPhotos },
-    ],
-    back: { href: `/g/${token}`, label: CLIENT_COPY.home },
+    title: isPhotosOnly ? gate.projectTitle : shared("allPhotos"),
+    subtitle: isPhotosOnly ? t("subtitleNoGroups") : t("subtitle"),
+    breadcrumbs: [{ label: shared("home"), href: `/g/${token}` }, { label: shared("allPhotos") }],
+    back: { href: `/g/${token}`, label: shared("home") },
   };
 }
 
 // F-20: *Unduh ▾* and *Pilih foto* in the header, or the select-mode title and actions.
 function browseHeader(
+  t: BrowseTranslate,
   base: ClientPageHeader,
   photos: ProofDownloads,
   groups: readonly PickGroupView[],
@@ -96,16 +99,17 @@ function browseHeader(
     return { ...base, action: <PhotosHeaderActions photos={photos} groups={groups} /> };
   return {
     ...base,
-    title: COPY.selectedTitle(photos.selectedCount),
+    title: t("selectedTitle", { count: photos.selectedCount }),
     subtitle: undefined,
     action: <SelectingActions photos={photos} groups={groups} />,
   };
 }
 
 function BrowseCard({ browse, onOpenPhoto, downloads }: Readonly<BrowseCardProps>) {
+  const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   const { state } = browse;
   const openFolder = (folder: FolderTileView) => {
-    const name = folder.name || COPY.folderFallbackName;
+    const name = folder.name || t("folderFallbackName");
     const trail = [...state.location.trail, name];
     void browse.go({ sourceId: folder.sourceId, path: folder.path, search: "", trail });
   };
@@ -118,8 +122,8 @@ function BrowseCard({ browse, onOpenPhoto, downloads }: Readonly<BrowseCardProps
   const search = { searchText: browse.searchText, onSearch: browse.search };
   return (
     <SectionCard
-      title={COPY.cardTitle}
-      description={browseCardMeta(state)}
+      title={t("cardTitle")}
+      description={browseCardMeta(t, state)}
       actions={<SearchField {...search} className="hidden md:block md:w-[260px]" />}
     >
       <SearchField {...search} className="md:hidden" />
@@ -155,6 +159,18 @@ function PhotosTop({ photos, groups }: Readonly<PhotosGroupsProps>) {
   );
 }
 
+function useBrowseHeader(
+  gate: ClientBrowseScreenProps["gate"],
+  token: string,
+  isPhotosOnly: boolean,
+  photos: ProofDownloads,
+  groups: readonly PickGroupView[],
+): ClientPageHeader {
+  const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
+  const shared = useTranslations(BROWSE_SHARED_NAMESPACE);
+  return browseHeader(t, baseHeader(t, shared, gate, token, isPhotosOnly), photos, groups);
+}
+
 /** The client's *Semua foto* page: search, folders, the photo grid and the read-only viewer (klien-3, pratinjau NxnKv, AC-ACC-011/013, A-26, A-31). @param props - gate names, token, whether Beranda holds only this page, the first page and the browse action @returns the page */
 export function ClientBrowseScreen({
   gate,
@@ -166,6 +182,7 @@ export function ClientBrowseScreen({
   pickActions,
   photosActions,
 }: Readonly<ClientBrowseScreenProps>) {
+  const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   const browse = useClientBrowse(browseAction, initialPage);
   const handle = usePickTargets(targets, pickActions);
   const photos = useProofDownloads({ token, actions: photosActions, onPicked: handle.reload });
@@ -176,19 +193,16 @@ export function ClientBrowseScreen({
   const close = () => {
     setOpen(null);
   };
+  const header = useBrowseHeader(gate, token, isPhotosOnly, photos, handle.targets.groups);
   return (
-    <ClientShell
-      gate={gate}
-      width="wide"
-      header={browseHeader(baseHeader(gate, token, isPhotosOnly), photos, handle.targets.groups)}
-    >
+    <ClientShell gate={gate} width="wide" header={header}>
       <PhotosTop photos={photos} groups={handle.targets.groups} />
       {browse.state.hasFailed ? (
         <Alert
           tone="danger"
-          title={COPY.failedTitle}
-          body={COPY.failedBody}
-          action={{ label: COPY.retry, onAction: retry }}
+          title={t("failedTitle")}
+          body={t("failedBody")}
+          action={{ label: t("retry"), onAction: retry }}
         />
       ) : null}
       <BrowseCard browse={browse} onOpenPhoto={setOpen} downloads={photos} />

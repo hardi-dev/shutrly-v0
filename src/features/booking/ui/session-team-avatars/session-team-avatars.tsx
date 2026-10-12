@@ -1,12 +1,16 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { avatarGroup } from "@/features/booking/domain/session-assignment/session-assignment";
+import { displayTeamRoleName } from "@/features/booking/domain/team-role/team-role";
 import { clientInitials } from "@/features/booking/ui/client-initials/client-initials";
+import { useAppLocale } from "@/ui/hooks/use-app-locale/use-app-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Tooltip } from "@/ui/primitives/tooltip/tooltip";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { SESSION_TEAM_AVATARS_COPY_NAMESPACE } from "./session-team-avatars.copy";
 import type { SessionTeamAvatarsProps } from "./session-team-avatars.types";
 
 // design.md: the avatars overlap by 6, carry a 2 ring in the card colour and the +n chip is 24 × 24.
@@ -24,13 +28,15 @@ export function SessionTeamAvatars({
   assignments,
   onOpen,
 }: Readonly<SessionTeamAvatarsProps>) {
+  const t = useTranslations(SESSION_TEAM_AVATARS_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
+  const appLocale = useAppLocale();
   const { shown, overflow } = avatarGroup(assignments);
   return (
     <button
       type="button"
       onClick={onOpen}
-      aria-label={PROJECT_COPY.teamGroupLabel(sessionName, assignments.length)}
+      aria-label={t("teamGroupLabel", { sessionName, count: assignments.length })}
       className="flex items-center rounded-(--component-avatar-radius) p-(--space-1) outline-none focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]"
     >
       {shown.map((assignment) => {
@@ -49,19 +55,29 @@ export function SessionTeamAvatars({
         ) : (
           <Tooltip
             key={assignment.id}
-            label={PROJECT_COPY.avatarTooltip(assignment.memberName, assignment.roleName)}
+            label={t("avatarTooltip", {
+              name: assignment.memberName,
+              role: displayTeamRoleName(
+                { name: assignment.roleName, defaultKey: assignment.defaultKey },
+                appLocale,
+              ),
+            })}
           >
             {avatar}
           </Tooltip>
         );
       })}
-      {overflow > 0 ? (
-        <span
-          className={`${OVERLAP} ${RING} flex size-[24px] shrink-0 items-center justify-center rounded-(--component-avatar-radius) bg-(--color-semantic-surface-subtle) text-(length:--font-size-caption) font-semibold text-(--color-semantic-text-secondary)`}
-        >
-          {`+${String(overflow)}`}
-        </span>
-      ) : null}
+      {overflow > 0 ? <OverflowChip count={overflow} /> : null}
     </button>
+  );
+}
+
+function OverflowChip({ count }: Readonly<{ count: number }>) {
+  return (
+    <span
+      className={`${OVERLAP} ${RING} flex size-[24px] shrink-0 items-center justify-center rounded-(--component-avatar-radius) bg-(--color-semantic-surface-subtle) text-(length:--font-size-caption) font-semibold text-(--color-semantic-text-secondary)`}
+    >
+      {`+${String(count)}`}
+    </span>
   );
 }

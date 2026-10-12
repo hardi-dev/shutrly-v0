@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 
 import type { GallerySourceView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
@@ -10,7 +11,7 @@ import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { DeleteFolderDialog } from "../delete-folder-dialog/delete-folder-dialog";
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
+import type { GalleryTranslate } from "../gallery-copy/gallery-copy.types";
 import type { GalleryMenuEntry } from "../gallery-row-menu/gallery-row-menu.types";
 import { GallerySourceRow } from "../gallery-source-row/gallery-source-row";
 import { LinkSourceDialog } from "../link-source-dialog/link-source-dialog";
@@ -19,6 +20,7 @@ import { SourcesCard } from "../sources-card/sources-card";
 import { useGallerySync } from "../use-gallery-sync/use-gallery-sync";
 import type { GallerySyncState } from "../use-gallery-sync/use-gallery-sync.types";
 import { useSourceDialogs } from "../use-source-dialogs/use-source-dialogs";
+import { GALLERY_SOURCES_SECTION_COPY_NAMESPACE } from "./gallery-sources-section.copy";
 import type {
   AddFolderButtonProps,
   GallerySourcesSectionProps,
@@ -162,6 +164,7 @@ function SourceDialogs(props: Readonly<SourceDialogsProps>) {
 
 /** The ⋯ entries of one folder row: *Sinkronkan*, *Ganti nama* and *Hapus* (AC-GAL-007, AC-GAL-013, AC-GAL-037). @param source - the row @param list - the list's state and handlers @returns the entries, none when read-only */
 function folderMenuEntries(
+  t: GalleryTranslate,
   source: GallerySourceView,
   { sync, isEditable, isLastLocked, onDelete, onRename }: Readonly<SourceListProps>,
 ): GalleryMenuEntry[] {
@@ -177,27 +180,28 @@ function folderMenuEntries(
   };
   return [
     {
-      label: GALLERY_COPY.sync,
+      label: t("sync"),
       icon: "refresh-cw",
       isDisabled: sync.isRunning,
       onSelect: handleSync,
     },
-    { label: GALLERY_COPY.renameFolder, icon: "pencil", onSelect: handleRename },
+    { label: t("renameFolder"), icon: "pencil", onSelect: handleRename },
     {
-      label: GALLERY_COPY.deleteFolder,
+      label: t("deleteFolder"),
       icon: "trash-2",
       isDestructive: true,
       isDisabled: isLastLocked,
-      description: GALLERY_COPY.deleteLastHint,
+      description: t("deleteLastHint"),
       onSelect: handleDelete,
     },
   ];
 }
 
 function SourceList(props: Readonly<SourceListProps>) {
+  const t = useTranslations(GALLERY_SOURCES_SECTION_COPY_NAMESPACE);
   const { sources, sync, isEditable, isArchived } = props;
   return (
-    <ul aria-label={GALLERY_COPY.sourcesTitle} className="px-(--space-1) md:px-(--space-3)">
+    <ul aria-label={t("sourcesTitle")} className="px-(--space-1) md:px-(--space-3)">
       {sources.map((source, index) => (
         <GallerySourceRow
           key={source.id}
@@ -206,7 +210,7 @@ function SourceList(props: Readonly<SourceListProps>) {
           progress={sync.progressOf(source.id)}
           isArchived={isArchived}
           isReadOnly={!isEditable}
-          menuEntries={folderMenuEntries(source, props)}
+          menuEntries={folderMenuEntries(t, source, props)}
           isLast={index === sources.length - 1}
         />
       ))}
@@ -215,15 +219,17 @@ function SourceList(props: Readonly<SourceListProps>) {
 }
 
 function AddFolderButton({ onAdd }: Readonly<AddFolderButtonProps>) {
+  const t = useTranslations(GALLERY_SOURCES_SECTION_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   return (
     <Button variant="secondary" iconLeading="plus" onPress={onAdd}>
-      {isMobile ? GALLERY_COPY.addFolderMobile : GALLERY_COPY.addFolder}
+      {isMobile ? t("addFolderMobile") : t("addFolder")}
     </Button>
   );
 }
 
 function SourcesHeaderActions({ sync, page, onAdd }: Readonly<SourcesHeaderActionsProps>) {
+  const t = useTranslations(GALLERY_SOURCES_SECTION_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const active = page.sources.filter((source) => !source.removed);
   const handleSyncAll = () => {
@@ -232,7 +238,7 @@ function SourcesHeaderActions({ sync, page, onAdd }: Readonly<SourcesHeaderActio
   const syncAll = isMobile ? (
     <IconButton
       icon="refresh-cw"
-      aria-label={GALLERY_COPY.syncAll}
+      aria-label={t("syncAll")}
       isDisabled={sync.isRunning}
       onPress={handleSyncAll}
     />
@@ -244,7 +250,7 @@ function SourcesHeaderActions({ sync, page, onAdd }: Readonly<SourcesHeaderActio
       isDisabled={active.length === 0}
       onPress={handleSyncAll}
     >
-      {sync.isRunning ? GALLERY_COPY.syncAllRunning : GALLERY_COPY.syncAll}
+      {sync.isRunning ? t("syncAllRunning") : t("syncAll")}
     </Button>
   );
   return (

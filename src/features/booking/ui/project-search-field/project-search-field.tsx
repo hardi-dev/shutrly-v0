@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 import type { ProjectFilter } from "@/features/booking/domain/project-list-query/project-list-filter.types";
@@ -8,7 +9,7 @@ import { PROJECT_SEARCH_DEBOUNCE_MS } from "@/features/booking/domain/project-li
 import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 import { Input } from "@/ui/primitives/input/input";
 
-import { PROJECT_COPY } from "../project-copy/project-copy.copy";
+import { PROJECT_SEARCH_FIELD_COPY_NAMESPACE } from "./project-search-field.copy";
 import { projectListUrl } from "./project-tab-path";
 
 /** Updates the current project-tab URL after a short debounce; clearing it drops `?q=` (AC-PRJ-004). */
@@ -25,6 +26,7 @@ export function ProjectSearchField({
   filter: ProjectFilter;
   resultCount: number;
 }>) {
+  const t = useTranslations(PROJECT_SEARCH_FIELD_COPY_NAMESPACE);
   const { value, change, clear } = useProjectSearch(q, (text) =>
     projectListUrl(workspaceId, tab, text, filter),
   );
@@ -33,19 +35,17 @@ export function ProjectSearchField({
       <div className="w-full md:w-[320px]">
         <Input
           variant="search"
-          aria-label={PROJECT_COPY.searchLabel}
-          placeholder={PROJECT_COPY.searchLabel}
+          aria-label={t("searchLabel")}
+          placeholder={t("searchLabel")}
           value={value}
           onChange={change}
           iconLeading="search"
           iconTrailing={value ? "x" : undefined}
-          iconTrailingAction={
-            value ? { label: PROJECT_COPY.clearSearch, onPress: clear } : undefined
-          }
+          iconTrailingAction={value ? { label: t("clearSearch"), onPress: clear } : undefined}
         />
       </div>
       <p className="sr-only" aria-live="polite">
-        {value ? PROJECT_COPY.searchResultCount(resultCount) : ""}
+        {value ? t("searchResultCount", { count: resultCount }) : ""}
       </p>
     </>
   );

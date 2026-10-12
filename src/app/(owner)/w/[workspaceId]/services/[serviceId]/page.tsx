@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 import {
   addBookingFieldAction,
   addServiceItemAction,
@@ -15,10 +17,10 @@ import {
   loadItemDefinitions,
   loadServiceDetail,
 } from "@/composition/booking/catalog-flow/catalog-flow";
-import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
 import { ServiceDetailScreen } from "@/features/booking/ui/service-detail-screen/service-detail-screen";
-import { OWNER_NAV_COPY } from "@/features/workspace/ui/owner-nav/owner-nav.copy";
 import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
+
+import { SERVICE_DETAIL_PAGE_COPY_NAMESPACE } from "./page.copy";
 
 export default async function ServiceDetailPage({
   params,
@@ -27,12 +29,13 @@ export default async function ServiceDetailPage({
   const service = await loadServiceDetail(workspaceId, serviceId);
   const categories = await loadCategories(workspaceId);
   const definitions = await loadItemDefinitions(workspaceId);
+  const t = await getTranslations(SERVICE_DETAIL_PAGE_COPY_NAMESPACE);
   return (
     <>
       <PageHeadingOverride
         title={service.name}
-        subtitle={CATALOG_COPY.serviceDetailSubtitle}
-        parent={{ label: OWNER_NAV_COPY.services, href: `/w/${workspaceId}/services` }}
+        subtitle={t("serviceDetailSubtitle")}
+        parent={{ label: t("tabServices"), href: `/w/${workspaceId}/services` }}
       />
       <ServiceDetailScreen
         service={service}

@@ -37,6 +37,7 @@ export class FakeItemDefinitionRepository implements ItemDefinitionRepositoryPor
     this.rows.push({
       ...input,
       id,
+      defaultKey: input.defaultKey ?? null,
       workspaceId: context.workspaceId,
       isActive: true,
       usageCount: 0,
@@ -56,6 +57,8 @@ export class FakeItemDefinitionRepository implements ItemDefinitionRepositoryPor
     this.rows[index] = {
       ...row,
       ...input,
+      // D-18: a rename or unit change clears the platform key, as the repository does.
+      defaultKey: row.name === input.name && row.unit === input.unit ? row.defaultKey : null,
       updatedBy: input.editorUserId,
       usageCount: this.usage.get(id) ?? 0,
     };

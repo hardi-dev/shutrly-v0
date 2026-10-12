@@ -18,7 +18,7 @@ describe("BottomNav (C34)", () => {
       />,
     );
 
-    expect(screen.getByRole("navigation", { name: "Utama" })).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Navigasi utama" })).toBeInTheDocument();
     expect(screen.getAllByRole("link")).toHaveLength(4);
     const cta = screen.getByRole("button", { name: "Proyek baru" });
     expect(cta).toBeInTheDocument();

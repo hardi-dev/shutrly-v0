@@ -1,23 +1,11 @@
+// Source: copy-deck.md §1 "Common actions and states" (Close dialog/sheet/viewer). Copied verbatim.
+export const BOTTOM_SHEET_COPY_NAMESPACE = "bottomSheet";
+
 export const BOTTOM_SHEET_COPY = {
-  close: "Tutup",
-  actions: {
-    title: "Foto proyek",
-    meta: "IMG_2041.jpg",
-    download: "Unduh foto",
-    share: "Bagikan foto",
-    delete: "Hapus dari pilihan",
-  },
-  form: {
-    title: "Pilih tindakan",
-    description: "Pilih tindakan untuk foto ini.",
-    body: "Konten form",
-    cancel: "Batal",
-    confirm: "Simpan",
-  },
-  menu: {
-    title: "Lainnya",
-    workspace: "Pindah workspace",
-    settings: "Pengaturan",
-    logout: "Keluar",
+  namespace: BOTTOM_SHEET_COPY_NAMESPACE,
+  surface: "shared",
+  messages: {
+    en: { close: "Close" },
+    id: { close: "Tutup" },
   },
 } as const;

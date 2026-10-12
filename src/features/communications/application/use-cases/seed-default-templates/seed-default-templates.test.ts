@@ -1,7 +1,6 @@
 import { FakeMessageTemplateRepository } from "@tests/support/communications/fake-message-template-repository";
 import { describe, expect, it } from "vitest";
 
-import { DEFAULT_TEMPLATE_CONTENT } from "@/features/communications/domain/default-templates/default-templates";
 import { asWorkspaceId } from "@/shared/workspace-context/workspace-context";
 
 import { seedDefaultTemplates } from "./seed-default-templates";
@@ -16,7 +15,8 @@ describe("seedDefaultTemplates", () => {
     expect(repository.rows).toHaveLength(5);
     expect(repository.rows.at(0)).toMatchObject({
       type: "GALLERY_SHARE",
-      content: DEFAULT_TEMPLATE_CONTENT.GALLERY_SHARE,
+      isDefault: true,
+      content: null,
       updatedBy: null,
     });
   });

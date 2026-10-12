@@ -1,26 +1,29 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { DateField } from "@/ui/patterns/date-field/date-field";
 import { RadioGroup } from "@/ui/primitives/radio/radio-group";
 import { TextField } from "@/ui/primitives/text-field/text-field";
 
-import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { galleryErrorText } from "../gallery-error-text/gallery-error-text";
-import type { ExpiryFieldsProps } from "./expiry-fields.types";
+import { EXPIRY_FIELDS_COPY_NAMESPACE } from "./expiry-fields.copy";
+import type { ExpiryFieldsProps, ExpiryTranslate } from "./expiry-fields.types";
 
 const DEFAULT_DAYS = 30;
-const OPTIONS = [
-  { value: "NONE", label: GALLERY_COPY.expiryOptionNone },
-  { value: "DATE", label: GALLERY_COPY.expiryOptionDate },
-  { value: "DAYS", label: GALLERY_COPY.expiryOptionDays },
-];
+function expiryOptions(t: ExpiryTranslate) {
+  return [
+    { value: "NONE", label: t("expiryOptionNone") },
+    { value: "DATE", label: t("expiryOptionDate") },
+    { value: "DAYS", label: t("expiryOptionDays") },
+  ];
+}
 const noop = () => undefined;
 
 /** The expiry radio group of *Buat galeri* and *Kedaluwarsa galeri*: none, a date or a number of days (BR-GAL-005, A-4). */
-export function ExpiryFields(props: Readonly<ExpiryFieldsProps>) {
-  const { value, onChange } = props;
+export function ExpiryFields({ value, onChange, ...props }: Readonly<ExpiryFieldsProps>) {
+  const t = useTranslations(EXPIRY_FIELDS_COPY_NAMESPACE);
   const [daysText, setDaysText] = useState(value.type === "DAYS" ? String(value.days) : "");
   const handleType = (type: string) => {
     if (type === "DATE") onChange({ type: "DATE", date: "" });
@@ -39,31 +42,31 @@ export function ExpiryFields(props: Readonly<ExpiryFieldsProps>) {
   return (
     <div className="flex flex-col gap-(--space-3)">
       <RadioGroup
-        label={GALLERY_COPY.expiryLabel}
-        options={OPTIONS}
+        label={t("expiryLabel")}
+        options={expiryOptions(t)}
         value={value.type}
         onChange={handleType}
       />
       {value.type === "DATE" ? (
         <DateField
-          label={GALLERY_COPY.expiryDateLabel}
+          label={t("expiryDateLabel")}
           value={value.date === "" ? null : value.date}
           onChange={handleDate}
           display="weekday"
-          description={GALLERY_COPY.expiryDateHelper}
-          errorMessage={galleryErrorText(props.dateError)}
+          description={t("expiryDateHelper")}
+          errorMessage={galleryErrorText(t, props.dateError)}
         />
       ) : null}
       {value.type === "DAYS" ? (
         <TextField
-          label={GALLERY_COPY.expiryDaysLabel}
+          label={t("expiryDaysLabel")}
           name="expiryDays"
           type="text"
           value={daysText}
           onChange={handleDays}
           onBlur={noop}
           description={props.daysHelper}
-          errorMessage={galleryErrorText(props.daysError)}
+          errorMessage={galleryErrorText(t, props.daysError)}
         />
       ) : null}
     </div>

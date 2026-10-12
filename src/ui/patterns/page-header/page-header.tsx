@@ -75,11 +75,9 @@ export function PageHeaderTrail({ items }: Readonly<PageHeaderTrailProps>) {
   );
 }
 
-// F-22: a leading control (the sidebar toggle) takes the 32 px left of the hero gutter, so the first crumb stays on the title's edge (40 px = space-10) as it was before the toggle.
+// F-22: the leading control (the sidebar toggle) fills the 32 px before the row gap, so the first crumb stays on the title's edge (space-10) as it was before the toggle.
 function BreadcrumbRow({ trail, utilities, leading, isFlush }: Readonly<BreadcrumbRowProps>) {
-  const paddingLeft = leading
-    ? "pl-(--space-2)"
-    : "pl-(--component-page-header-breadcrumb-padding-x)";
+  const paddingLeft = leading ? "pl-0" : "pl-(--component-page-header-breadcrumb-padding-x)";
   return (
     <div
       className={cn(
@@ -88,9 +86,7 @@ function BreadcrumbRow({ trail, utilities, leading, isFlush }: Readonly<Breadcru
       )}
     >
       {leading ? (
-        <div className="-mr-(--space-2) flex w-(--space-8) shrink-0 items-center justify-center">
-          {leading}
-        </div>
+        <div className="flex w-(--space-8) shrink-0 items-center justify-center">{leading}</div>
       ) : null}
       {trail}
       {utilities ? <div className="flex items-center gap-(--space-1)">{utilities}</div> : null}

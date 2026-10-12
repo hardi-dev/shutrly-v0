@@ -28,7 +28,7 @@ On 2026-10-12 an agent registered a new Owner on `localhost:3000` (dev database 
 - Owner: *Services* list, *Add service*, *Add package item*, *Add booking field* (F-05 `catalog`).
 - Owner: message template editor route (F-03 `message-templates`).
 - Owner: *Photo sources* guide (F-04 `source-config`) and gallery folder help text (F-09 `gallery`).
-- Copy catalogues for EN and ID (F-22 `bilingual-copy-revamp`).
+- Copy catalogues for EN and ID, and the copy deck (F-22 `bilingual-copy-revamp`, merged into `staging`).
 
 ## Constraints
 - C-103: no credentials or secrets in URLs or logs.
@@ -46,6 +46,6 @@ On 2026-10-12 an agent registered a new Owner on `localhost:3000` (dev database 
 
 ## Open questions
 - ~~Defect 7: open the new service after saving, or stay on the list?~~ Stay on the list and show a toast, using the existing toast implementation as the example; no Pencil frame (Owner, 2026-10-12). Assumption, low risk and reversible: the toast's action opens the new service. Confirm in discovery.
-- ~~Defect 6: fix here or leave to F-22?~~ Fix here and update the deck (Owner, 2026-10-12). Risk carried into discovery: `codex/bilingual-copy-revamp` is not merged into `staging` yet, so the copy files and the deck may conflict when it merges.
+- ~~Defect 6: fix here or leave to F-22?~~ Fix here and update the deck (Owner, 2026-10-12). No merge risk: F-22's `codex/bilingual-copy-revamp` was merged into `staging` on 2026-10-11 (PR #14) and has no commits left outside it, so the strings are fixed on `staging` directly (checked 2026-10-12).
 - ~~Defect 5: does the deck already have mapping-era wording?~~ No: the deck has the old `edited`/`print` wording. New EN/ID copy is drafted with the Codex CLI and approved by the Owner (Owner, 2026-10-12).
 - ~~Defect 1: `method="post"` only, or also no submit before hydration?~~ Both (Owner, 2026-10-12). Discovery still checks what the server does with a plain `POST` to an auth page.

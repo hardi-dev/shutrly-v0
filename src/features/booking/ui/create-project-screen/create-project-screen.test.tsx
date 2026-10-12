@@ -270,6 +270,13 @@ describe("CreateProjectScreen (S2)", () => {
     expect(screen.queryByText("Detail pemesanan")).not.toBeInTheDocument();
   });
 
+  it("AC-SETUP-016 sends the no-service alert's action to Add service", async () => {
+    push.mockClear();
+    renderScreen(undefined, { groups: [], hasActiveService: false });
+    await userEvent.click(screen.getByRole("button", { name: "Tambah layanan" }));
+    expect(push).toHaveBeenCalledWith("/w/ws-1/services?add=service");
+  });
+
   it("AC-PRJ-012 shows SERVICE_INACTIVE under Layanan, keeps the form and focuses Layanan", async () => {
     const createAction = vi.fn().mockResolvedValue({
       ok: false,

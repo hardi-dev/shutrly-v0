@@ -51,7 +51,7 @@ function NoServiceAlert({ workspaceId }: Readonly<{ workspaceId: string }>) {
   const t = useTranslations(CREATE_PROJECT_SCREEN_COPY_NAMESPACE);
   const router = useRouter();
   const handleAction = () => {
-    router.push(`/w/${workspaceId}/services`);
+    router.push(`/w/${workspaceId}/services?add=service`);
   };
   return (
     <Alert

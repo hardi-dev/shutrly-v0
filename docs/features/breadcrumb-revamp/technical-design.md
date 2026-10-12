@@ -67,7 +67,7 @@ Under `src/app/(owner)/w/[workspaceId]/@crumbs/`:
 | `services/[serviceId]/page.tsx` | Aster › Layanan › {nama} |
 | `message-templates/[templateType]/page.tsx` | Aster › Template pesan › {label} |
 
-Each slot page is a thin route file (coding rules › Next.js): load names, call the builder, render `<PageHeaderTrail items>` (server-rendered; it wraps the client `BreadcrumbTrail`, whose props are serializable). Each mirror repeats the catch-all's four lines with fixed segments.
+Each slot page is a thin route file (coding rules › Next.js): load names, call the builder, render `<PageHeaderTrail items>` (server-rendered; it wraps the client `BreadcrumbTrail`, whose props are serializable). Each mirror renders the catch-all page component with fixed segments (Owner 2026-10-12: no duplicated body).
 
 **Rule for future routes:** every static sibling of a dynamic slot segment needs a mirror. There is no automated check yet; see §11.
 

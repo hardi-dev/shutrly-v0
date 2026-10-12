@@ -21,4 +21,6 @@ export interface AuthForm<T extends FieldValues> {
   server: ServerFailure<T>;
   onSubmit: (event?: BaseSyntheticEvent) => void;
   isSubmitting: boolean;
+  /** False until the page is interactive; the submit button stays disabled until then (F-24 D1). */
+  isReady: boolean;
 }

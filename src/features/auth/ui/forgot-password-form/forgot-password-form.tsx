@@ -18,13 +18,13 @@ import type { ForgotPasswordFormProps } from "./forgot-password-form.types";
  */
 export function ForgotPasswordForm({ action }: Readonly<ForgotPasswordFormProps>) {
   const t = useTranslations(FORGOT_PASSWORD_FORM_COPY_NAMESPACE);
-  const { form, server, onSubmit, isSubmitting } = useAuthForm({
+  const { form, server, onSubmit, isSubmitting, isReady } = useAuthForm({
     schema: requestPasswordResetSchema,
     defaultValues: { email: "" },
     action,
   });
   return (
-    <form noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-6)">
+    <form method="post" noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-6)">
       {server.formError ? <AuthErrorAlert code={server.formError} /> : null}
       <ControlledTextField
         control={form.control}
@@ -34,7 +34,7 @@ export function ForgotPasswordForm({ action }: Readonly<ForgotPasswordFormProps>
         placeholder={t("emailPlaceholder")}
         autoComplete="email"
       />
-      <Button type="submit" size="lg" isDisabled={isSubmitting}>
+      <Button type="submit" size="lg" isDisabled={!isReady || isSubmitting}>
         {isSubmitting ? t("submitting") : t("submit")}
       </Button>
     </form>

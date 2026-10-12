@@ -21,7 +21,7 @@ const DEFAULTS = { name: "", email: "", password: "" };
  */
 export function RegisterForm({ action, secondaryAction }: Readonly<RegisterFormProps>) {
   const t = useTranslations(REGISTER_FORM_COPY_NAMESPACE);
-  const { form, server, onSubmit, isSubmitting } = useAuthForm({
+  const { form, server, onSubmit, isSubmitting, isReady } = useAuthForm({
     schema: registerOwnerSchema,
     defaultValues: DEFAULTS,
     action,
@@ -29,7 +29,7 @@ export function RegisterForm({ action, secondaryAction }: Readonly<RegisterFormP
   const { control } = form;
   return (
     <div className="flex flex-col gap-(--space-3)">
-      <form noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-6)">
+      <form method="post" noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-6)">
         {server.formError ? <AuthErrorAlert code={server.formError} /> : null}
         <div className="flex flex-col gap-(--space-4)">
           <ControlledTextField
@@ -56,7 +56,7 @@ export function RegisterForm({ action, secondaryAction }: Readonly<RegisterFormP
             autoComplete="new-password"
           />
         </div>
-        <Button type="submit" size="lg" isDisabled={isSubmitting}>
+        <Button type="submit" size="lg" isDisabled={!isReady || isSubmitting}>
           {isSubmitting ? t("submitting") : t("submit")}
         </Button>
       </form>

@@ -30,14 +30,14 @@ export function ProfileForm({ email, name, action }: Readonly<ProfileFormProps>)
   function markSaved(): void {
     setSaved(true);
   }
-  const { form, server, onSubmit, isSubmitting } = useAuthForm({
+  const { form, server, onSubmit, isSubmitting, isReady } = useAuthForm({
     schema: updateDisplayNameSchema,
     defaultValues: { name },
     action,
     onSuccess: markSaved,
   });
   return (
-    <form noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-4)">
+    <form method="post" noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-4)">
       {server.formError ? <AuthErrorAlert code={server.formError} /> : null}
       {saved && !isSubmitting ? <Alert tone="info" title={t("saved")} live /> : null}
       <TextField
@@ -56,7 +56,7 @@ export function ProfileForm({ email, name, action }: Readonly<ProfileFormProps>)
         autoComplete="name"
       />
       <div>
-        <Button type="submit" isDisabled={isSubmitting}>
+        <Button type="submit" isDisabled={!isReady || isSubmitting}>
           {isSubmitting ? t("saving") : t("save")}
         </Button>
       </div>

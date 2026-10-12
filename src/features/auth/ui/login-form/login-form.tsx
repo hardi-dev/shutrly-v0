@@ -25,7 +25,7 @@ export function LoginForm({
   secondaryAction,
 }: Readonly<LoginFormProps>) {
   const t = useTranslations(LOGIN_FORM_COPY_NAMESPACE);
-  const { form, server, onSubmit, isSubmitting } = useAuthForm({
+  const { form, server, onSubmit, isSubmitting, isReady } = useAuthForm({
     schema: loginOwnerSchema,
     defaultValues: DEFAULTS,
     action,
@@ -34,7 +34,7 @@ export function LoginForm({
   const { control } = form;
   return (
     <div className="flex flex-col gap-(--space-3)">
-      <form noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-6)">
+      <form method="post" noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-6)">
         {shownError ? <AuthErrorAlert code={shownError} /> : null}
         <div className="flex flex-col gap-(--space-4)">
           <ControlledTextField
@@ -57,7 +57,7 @@ export function LoginForm({
             <AuthTextLink href="/forgot-password">{t("forgot")}</AuthTextLink>
           </div>
         </div>
-        <Button type="submit" size="lg" isDisabled={isSubmitting}>
+        <Button type="submit" size="lg" isDisabled={!isReady || isSubmitting}>
           {isSubmitting ? t("submitting") : t("submit")}
         </Button>
       </form>

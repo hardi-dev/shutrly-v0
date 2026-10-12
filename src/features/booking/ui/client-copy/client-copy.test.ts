@@ -19,4 +19,9 @@ describe("CLIENT_COPY", () => {
     expect(en(CLIENT_COUNT_MESSAGE_KEY.ACTIVE, { count: 1 })).toBe("1 active client");
     expect(en(CLIENT_COUNT_MESSAGE_KEY.ACTIVE, { count: 3 })).toBe("3 active clients");
   });
+
+  it("BR-L10N-002 shows the load-more pending label in each language", () => {
+    expect(en("loadingMore")).toBe("Loading…");
+    expect(id("loadingMore")).toBe("Memuat…");
+  });
 });

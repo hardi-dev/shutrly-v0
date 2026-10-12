@@ -2198,6 +2198,16 @@ Shown inside the workspace shell when a page or record under `/w/{workspaceId}` 
 | Back to section · Approved (Owner, 2026-10-12) | Back to {section} | Kembali ke {section} |
 | Back to dashboard · Approved (Owner, 2026-10-12) | Back to dashboard | Kembali ke dasbor |
 
+### 17.2 Loading titles and pending labels (F-24)
+
+Skeleton card titles and *load more* pending labels, so a loading screen follows the active language (BR-L10N-002). The *Services*, *Categories* and *Package items* skeletons reuse the approved tab labels (`tabServices`, `tabCategories`, `tabItems`). Sources: `catalog-copy.copy.ts`, `project-copy.copy.ts`, `client-copy.copy.ts`, `team-copy.copy.ts`.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Service page loading title (`loadingService`) · Approved (Owner, 2026-10-12) | Loading service… | Memuat layanan… |
+| Project page and New project loading title (`loadingProject`) · Approved (Owner, 2026-10-12) | Loading project… | Memuat proyek… |
+| Clients and Team *load more* pending label (`loadingMore`) · Approved (Owner, 2026-10-12; same as the project list) | Loading… | Memuat… |
+
 ## 18. Deferred surfaces and editorial coverage
 
 ### Scope boundaries

@@ -25,8 +25,8 @@ export const CLIENT_COPY = {
       noMatchTitle: "No matching clients",
       noMatchBody: "Try another name or part of a WhatsApp number.",
       loadMore: "Load more",
-      // DECK GAP: no deck row for the pending "load more" label; the Indonesian text is kept.
-      loadingMore: "Memuat…",
+      // F-24 (Owner 2026-10-12): same pending label as the project list.
+      loadingMore: "Loading…",
       noWhatsapp: "No WhatsApp number yet",
       noSocialLinks: "—",
       openWhatsapp: "Open WhatsApp",

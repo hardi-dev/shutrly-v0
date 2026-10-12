@@ -12,6 +12,8 @@ export const CATALOG_COPY = {
       tabServices: "Services",
       tabCategories: "Categories",
       tabItems: "Package items",
+      // F-24 (Owner 2026-10-12): catalog detail loading title.
+      loadingService: "Loading service…",
       addService: "Add service",
       addCategory: "Add category",
       addCategoryInline: "New category",
@@ -189,6 +191,7 @@ export const CATALOG_COPY = {
       tabServices: "Layanan",
       tabCategories: "Kategori",
       tabItems: "Isi paket",
+      loadingService: "Memuat layanan…",
       addService: "Tambah layanan",
       addCategory: "Tambah kategori",
       addCategoryInline: "Kategori baru",

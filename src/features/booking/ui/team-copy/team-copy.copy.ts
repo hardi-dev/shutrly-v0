@@ -33,8 +33,8 @@ export const TEAM_COPY = {
       noMatchTitle: "No matching members",
       noMatchBody: "Try another name or WhatsApp number.",
       loadMore: "Load more",
-      // DECK GAP: no deck row for the pending "load more" label; the Indonesian text is kept.
-      loadingMore: "Memuat…",
+      // F-24 (Owner 2026-10-12): same pending label as the project list.
+      loadingMore: "Loading…",
       memberEditTitle: "Edit member",
       memberAddedTitle: "Member added",
       memberReadyBody: "{name} can now be assigned to project sessions.",

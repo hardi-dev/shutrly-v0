@@ -1,6 +1,7 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderInLocale } from "@tests/support/copy/render-in-locale";
+import { serverFormDom, submitButton } from "@tests/support/forms/server-form";
 import { describe, expect, it, vi } from "vitest";
 
 import type { AppLocale } from "@/shared/locale/locale.types";
@@ -96,5 +97,22 @@ describe("SettingsScreen", () => {
     expect(screen.getByText(copy.serverErrorTitle)).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: copy.name })).toHaveValue(profile.name);
     expect(screen.getByRole("button", { name: copy.save })).toBeEnabled();
+  });
+});
+
+describe("SettingsScreen before and after the page is interactive (AC-SFX-001, AC-SFX-002)", () => {
+  it("posts natively and keeps save disabled until ready", () => {
+    const dom = serverFormDom(<SettingsScreen action={vi.fn()} profile={profile} />);
+    expect(dom.querySelector("form")).toHaveAttribute("method", "post");
+    expect(submitButton(dom)).toBeDisabled();
+  });
+
+  it("enables save once the page is interactive", () => {
+    const { container } = renderInLocale(
+      <SettingsScreen action={vi.fn()} profile={profile} />,
+      "id",
+    );
+    expect(container.querySelector("form")).toHaveAttribute("method", "post");
+    expect(submitButton(container)).toBeEnabled();
   });
 });

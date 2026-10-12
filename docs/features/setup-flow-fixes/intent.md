@@ -2,7 +2,7 @@
 
 Author: Owner (hardi-dev), from an agent walkthrough on 2026-10-12
 Source: BUG
-Status: DRAFT
+Status: ACCEPTED (Owner, 2026-10-12)
 
 ## Problem
 On 2026-10-12 an agent registered a new Owner on `localhost:3000` (dev database `shutrly-staging-us`), created the workspace *Explore Studio* and set up every piece of master data a new Owner needs before a first booking: a category, a service with package items and a booking field, a team member, a client, and a look at photo sources, message templates and settings. Seven defects showed up along the way. Each one makes the first-run setup slower, confusing or unsafe for a new Owner. They must be fixed before the setup checklist ([F-25](../setup-checklist/intent.md)) sends new Owners through these screens.

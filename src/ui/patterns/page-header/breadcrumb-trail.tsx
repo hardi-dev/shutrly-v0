@@ -13,15 +13,40 @@ const NAV =
 const LINK =
   "truncate outline-none hover:text-(--component-page-header-breadcrumb-current) focus-visible:rounded-(--radius-xs) focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]";
 
+function CrumbText({
+  label,
+  isCurrent,
+  fit,
+  title,
+}: Readonly<{ label: string; isCurrent: boolean; fit: string; title: string | undefined }>) {
+  return (
+    <span
+      aria-current={isCurrent ? "page" : undefined}
+      title={title}
+      className={cn(
+        "truncate",
+        fit,
+        isCurrent && "font-semibold text-(--component-page-header-breadcrumb-current)",
+      )}
+    >
+      {label}
+    </span>
+  );
+}
+
 function BreadcrumbTrailItem({
   item,
   isCurrent,
   showSeparator,
+  isEdge,
 }: Readonly<BreadcrumbTrailItemProps>) {
+  // F-22 OQ-5: the root and the current page stay whole; the crumbs between them shrink with "…".
+  const fit = isEdge ? "shrink-0" : "min-w-0";
+  const title = isEdge ? undefined : item.label;
   let content;
   if (item.href && !isCurrent) {
     content = (
-      <Link href={item.href} className={LINK}>
+      <Link href={item.href} className={cn(LINK, fit)} title={title}>
         {item.label}
       </Link>
     );
@@ -31,6 +56,7 @@ function BreadcrumbTrailItem({
         onPress={item.onPress}
         className={cn(
           LINK,
+          fit,
           "cursor-pointer data-focus-visible:rounded-(--radius-xs) data-focus-visible:shadow-[0_0_0_2px_var(--color-semantic-focus-ring),0_0_0_4px_var(--color-semantic-focus-glow)]",
         )}
       >
@@ -38,18 +64,7 @@ function BreadcrumbTrailItem({
       </AriaButton>
     );
   } else {
-    content = (
-      <span
-        aria-current={isCurrent ? "page" : undefined}
-        className={
-          isCurrent
-            ? "truncate font-semibold text-(--component-page-header-breadcrumb-current)"
-            : "truncate"
-        }
-      >
-        {item.label}
-      </span>
-    );
+    content = <CrumbText label={item.label} isCurrent={isCurrent} fit={fit} title={title} />;
   }
   return (
     <>
@@ -79,6 +94,7 @@ export function BreadcrumbTrail({
           item={item}
           isCurrent={index === items.length - 1}
           showSeparator={index > 0}
+          isEdge={index === 0 || index === items.length - 1}
         />
       ))}
       {trailing ? <span className="shrink-0 font-normal">{trailing}</span> : null}

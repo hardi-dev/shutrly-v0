@@ -21,6 +21,8 @@ export interface BreadcrumbTrailItemProps {
   readonly item: BreadcrumbItem;
   readonly isCurrent: boolean;
   readonly showSeparator: boolean;
+  /** The first or the last crumb: it never shrinks (F-22 OQ-5). */
+  readonly isEdge: boolean;
 }
 
 export interface PageHeaderProps {

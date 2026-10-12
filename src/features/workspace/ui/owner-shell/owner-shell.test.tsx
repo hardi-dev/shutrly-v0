@@ -166,6 +166,33 @@ describe("OwnerShell sub-pages", () => {
     expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute("href", "/w/A/services");
   });
 
+  it("F-22 shows the trail it is given, not one built in the browser", () => {
+    render(
+      <OwnerShell
+        workspaceId="A"
+        workspaceName="Aster Wedding"
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        title="Aster Wedding"
+        workspaces={workspaces}
+        onSwitch={vi.fn()}
+        onCreate={vi.fn()}
+        trail={<span>Aster Wedding › Template pesan › Bagikan gallery</span>}
+      >
+        <PageHeadingOverride
+          title="Wisuda Basic"
+          parent={{ label: "Layanan", href: "/w/A/services" }}
+        />
+        <p>isi</p>
+      </OwnerShell>,
+    );
+
+    expect(
+      screen.getByText("Aster Wedding › Template pesan › Bagikan gallery"),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute("href", "/w/A/services");
+  });
+
   it("AC-PRJ-007 the phone create action opens Proyek baru", async () => {
     render(
       <OwnerShell

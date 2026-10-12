@@ -95,7 +95,7 @@ export function resolvePageHeading(
   if (section === "clients") return resolveClientsHeading(pathname, prefix);
   if (section === "projects") return resolveProjectsHeading(pathname, prefix);
   if (section === "team") return resolveTeamHeading(pathname, prefix);
-  if (section === "services") return resolveServicesHeading(pathname, prefix, workspaceName);
+  if (section === "services") return resolveServicesHeading(pathname, prefix);
   const title = SECTION_TITLES[section];
   return title ? { title, subtitle: OWNER_NAV_COPY.comingSoonSubtitle } : null;
 }
@@ -165,11 +165,7 @@ function resolveTeamHeading(pathname: string, prefix: string): PageHeading {
   };
 }
 
-function resolveServicesHeading(
-  pathname: string,
-  prefix: string,
-  workspaceName: string,
-): PageHeading {
+function resolveServicesHeading(pathname: string, prefix: string): PageHeading {
   const servicesPrefix = `${prefix}/services`;
   const rest = pathname.slice(servicesPrefix.length).split("/").filter(Boolean).join("/");
   const tabs = [
@@ -191,11 +187,6 @@ function resolveServicesHeading(
   return {
     title: activeTab.label,
     subtitle: OWNER_NAV_COPY.servicesSubtitle,
-    breadcrumbs: [
-      { label: workspaceName, href: prefix },
-      ...(rest === "" ? [] : [{ label: OWNER_NAV_COPY.services, href: servicesPrefix }]),
-      { label: activeTab.label },
-    ],
     tabs: { label: OWNER_NAV_COPY.servicesTabsLabel, tabs },
   };
 }

@@ -9,7 +9,6 @@ import type { AppShellSubPage } from "@/ui/patterns/app-shell/app-shell.types";
 import type { BottomNavProps } from "@/ui/patterns/bottom-nav/bottom-nav.types";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
 import { PAGE_ACTIONS_ID } from "@/ui/patterns/page-actions/page-actions";
-import type { BreadcrumbItem } from "@/ui/patterns/page-header/page-header.types";
 import { SheetItem } from "@/ui/patterns/sheet-item/sheet-item";
 import { SidebarBrandLogo } from "@/ui/patterns/sidebar/sidebar";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
@@ -59,6 +58,7 @@ export function OwnerShell({
   onCreate,
   logoutAction,
   subPages,
+  trail,
 }: Readonly<OwnerShellProps>) {
   const currentPathname = usePathname();
   const subPage = subPages?.find((page) => page.path === currentPathname);
@@ -66,20 +66,12 @@ export function OwnerShell({
   const resolvedHeading = resolvePageHeading(currentPathname, workspaceId, workspaceName);
   const heading = headingOverride ?? subPage ?? resolvedHeading ?? { title };
   let shellSubPage: AppShellSubPage | undefined;
-  let panelBreadcrumbs: readonly BreadcrumbItem[] | undefined;
   if (headingOverride) {
     shellSubPage = {
       parent: headingOverride.parent,
       hidesBottomNav: headingOverride.hidesBottomNav,
     };
   } else if (subPage) shellSubPage = { parent: subPage.parent };
-  if (headingOverride) {
-    panelBreadcrumbs = [headingOverride.parent, { label: headingOverride.title }];
-  } else if (subPage) {
-    panelBreadcrumbs = [subPage.parent, { label: subPage.title }];
-  } else if ("breadcrumbs" in heading) {
-    panelBreadcrumbs = heading.breadcrumbs;
-  }
   const panelTabs = "tabs" in heading ? heading.tabs : undefined;
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -148,7 +140,7 @@ export function OwnerShell({
           mobileSubtitle={"mobileSubtitle" in heading ? heading.mobileSubtitle : undefined}
           workspace={{ name: workspaceName }}
           subPage={shellSubPage}
-          panelBreadcrumbs={panelBreadcrumbs}
+          panelTrail={trail}
           panelTabs={panelTabs}
           account={{ name: accountName, email: accountEmail, initials: initials(accountName) }}
           nav={<OwnerNav workspaceId={workspaceId} pathname={currentPathname} />}

@@ -13,8 +13,9 @@ import { WORKSPACE_LAYOUT_COPY } from "./layout.copy";
 
 export default async function WorkspaceLayout({
   children,
+  crumbs,
   params,
-}: Readonly<{ children: ReactNode; params: Promise<{ workspaceId: string }> }>) {
+}: Readonly<{ children: ReactNode; crumbs: ReactNode; params: Promise<{ workspaceId: string }> }>) {
   const { workspaceId } = await params;
   const [account, verified, workspaces] = await Promise.all([
     requireOwnerOrRedirect(),
@@ -33,6 +34,7 @@ export default async function WorkspaceLayout({
       onCreate={createWorkspaceAction}
       logoutAction={logoutAction}
       subPages={messageTemplateSubPages(workspaceId)}
+      trail={crumbs}
     >
       {children}
     </OwnerShell>

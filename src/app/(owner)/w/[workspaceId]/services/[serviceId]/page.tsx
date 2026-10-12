@@ -17,6 +17,7 @@ import {
 } from "@/composition/booking/catalog-flow/catalog-flow";
 import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
 import { ServiceDetailScreen } from "@/features/booking/ui/service-detail-screen/service-detail-screen";
+import { OWNER_NAV_COPY } from "@/features/workspace/ui/owner-nav/owner-nav.copy";
 import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
 
 export default async function ServiceDetailPage({
@@ -31,7 +32,7 @@ export default async function ServiceDetailPage({
       <PageHeadingOverride
         title={service.name}
         subtitle={CATALOG_COPY.serviceDetailSubtitle}
-        parent={{ label: "Layanan", href: `/w/${workspaceId}/services` }}
+        parent={{ label: OWNER_NAV_COPY.services, href: `/w/${workspaceId}/services` }}
       />
       <ServiceDetailScreen
         service={service}

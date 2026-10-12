@@ -19,4 +19,6 @@ export interface OwnerShellProps {
   onCreate: (formData: FormData) => Promise<void>;
   logoutAction?: () => Promise<void>;
   subPages?: readonly OwnerSubPage[];
+  /** The breadcrumb rendered on the server (`@crumbs` slot or the profile layout, ADR-025). */
+  trail?: ReactNode;
 }

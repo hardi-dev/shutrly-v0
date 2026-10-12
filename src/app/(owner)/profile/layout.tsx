@@ -7,6 +7,7 @@ import { requireOwnerOrRedirect } from "@/composition/auth/owner-guard/owner-gua
 import { resolveOwnerHome } from "@/composition/workspace/owner-workspace/owner-workspace";
 import { loadWorkspaceSwitcher } from "@/composition/workspace/workspace-flow/workspace-flow";
 import { OwnerShell } from "@/features/workspace/ui/owner-shell/owner-shell";
+import { PageHeaderTrail } from "@/ui/patterns/page-header/page-header";
 
 import { PROFILE_LAYOUT_COPY } from "./layout.copy";
 
@@ -25,6 +26,7 @@ export default async function ProfileLayout({ children }: Readonly<{ children: R
       onSwitch={switchWorkspaceAction}
       onCreate={createWorkspaceAction}
       logoutAction={logoutAction}
+      trail={<PageHeaderTrail items={[{ label: PROFILE_LAYOUT_COPY.title }]} />}
     >
       {children}
     </OwnerShell>

@@ -36,7 +36,7 @@ async function createSecondWorkspace(page: Page, current: string, name: string):
   const dialog = page.getByRole("dialog");
   await dialog.getByLabel(CREATE_WORKSPACE_COPY.label).fill(name);
   await dialog.getByRole("button", { name: CREATE_WORKSPACE_COPY.submit }).click();
-  await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toContainText(name);
+  await expect(page.getByRole("button", { name }).first()).toBeVisible();
   await page.getByRole("button", { name: TOAST_COPY.close }).click();
 }
 
@@ -60,7 +60,7 @@ test("AC-SHELL-001 AC-SHELL-003 AC-SHELL-004 AC-SHELL-012 shell layouts are acce
         await expect(page.getByRole("button", { name: OWNER_SHELL_COPY.menu })).toBeVisible();
       } else {
         await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toHaveText(
-          /Aster Wedding\s*Dasbor/,
+          /^\s*Dasbor\s*$/,
         );
         await expect(page.getByRole("navigation", { name: "Utama" })).toBeVisible();
       }
@@ -117,7 +117,7 @@ test("AC-SHELL-009 switching workspaces, failure toast and retry", async ({ page
 
   await page.unrouteAll();
   await toast.getByRole("button", { name: WORKSPACE_SWITCHER_COPY.retry }).click();
-  await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toContainText("Aster Wedding");
+  await expect(page.getByRole("button", { name: "Aster Wedding" }).first()).toBeVisible();
   await expect(toast).toHaveCount(0);
 });
 

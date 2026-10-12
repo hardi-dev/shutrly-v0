@@ -118,9 +118,9 @@ export const GALLERY_COPY = {
       visibilityHidden: "Hidden until final delivery. Clients can’t select these photos.",
       visibilityMissing: "Missing photos are hidden until found again.",
       visibilityFoldedEdited:
-        "Hidden until final delivery. `edited` folders are merged into their parent folder.",
+        "Hidden until final delivery is published. Files come from subfolders mapped to an edited-photo package item.",
       visibilityFoldedPrint:
-        "Hidden until final delivery. `print` folders are merged into their parent folder.",
+        "Hidden until final delivery is published. Files come from subfolders mapped to a printed-photo package item.",
       accessTitle: "Client access",
       rotatePassword: "Change password",
       rotatePasswordMobile: "Change",
@@ -433,9 +433,9 @@ export const GALLERY_COPY = {
         "Disembunyikan sampai hasil akhir dikirim. Foto ini tidak bisa dipilih klien.",
       visibilityMissing: "Foto yang hilang disembunyikan sampai ditemukan lagi.",
       visibilityFoldedEdited:
-        "Disembunyikan sampai hasil akhir dikirim. Folder `edited` digabung ke folder induknya.",
+        "Disembunyikan sampai hasil akhir dipublikasikan. File berasal dari subfolder yang dipetakan ke item paket Hasil edit.",
       visibilityFoldedPrint:
-        "Disembunyikan sampai hasil akhir dikirim. Folder `print` digabung ke folder induknya.",
+        "Disembunyikan sampai hasil akhir dipublikasikan. File berasal dari subfolder yang dipetakan ke item paket Foto cetak.",
       accessTitle: "Akses klien",
       rotatePassword: "Ganti kata sandi",
       rotatePasswordMobile: "Ganti",

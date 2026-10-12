@@ -25,4 +25,15 @@ describe("gallery copy matches the deck (F-24 AC-SFX-016)", () => {
       GALLERY_COPY.messages.id.linkDialogDescription,
     );
   });
+
+  it("has the approved Edited and Print tab rows: visibilityFoldedEdited, visibilityFoldedPrint", () => {
+    expectDeckRow(
+      GALLERY_COPY.messages.en.visibilityFoldedEdited,
+      GALLERY_COPY.messages.id.visibilityFoldedEdited,
+    );
+    expectDeckRow(
+      GALLERY_COPY.messages.en.visibilityFoldedPrint,
+      GALLERY_COPY.messages.id.visibilityFoldedPrint,
+    );
+  });
 });

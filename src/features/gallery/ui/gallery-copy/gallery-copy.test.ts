@@ -5,12 +5,25 @@ import { GALLERY_COPY } from "./gallery-copy.copy";
 // A folder name written as code, e.g. `edited`: no guidance may present one as special (AC-SFX-015).
 const FOLDER_NAME = /`(edited|print)`/i;
 
-// Open item (F-24, not resolved): the Edited and Print tab lines still read `visibilityFoldedEdited`
-// and `visibilityFoldedPrint` in browse-text.kindVisibility, and no approved replacement exists. They
-// are the only exception until the Owner approves wording; no other message may name a folder.
-const OPEN_FOLDED_KEYS: readonly string[] = ["visibilityFoldedEdited", "visibilityFoldedPrint"];
+// Folder names as plain words too: no message may name an edited or print folder (AC-SFX-015).
+const FOLDER_WORD = /\b(edited|print)\b folders?/i;
 
 describe("gallery copy: folder guidance (F-24 D5, AC-SFX-015)", () => {
+  it("shows the approved Edited and Print tab explanations in both locales", () => {
+    expect(GALLERY_COPY.messages.en.visibilityFoldedEdited).toBe(
+      "Hidden until final delivery is published. Files come from subfolders mapped to an edited-photo package item.",
+    );
+    expect(GALLERY_COPY.messages.id.visibilityFoldedEdited).toBe(
+      "Disembunyikan sampai hasil akhir dipublikasikan. File berasal dari subfolder yang dipetakan ke item paket Hasil edit.",
+    );
+    expect(GALLERY_COPY.messages.en.visibilityFoldedPrint).toBe(
+      "Hidden until final delivery is published. Files come from subfolders mapped to a printed-photo package item.",
+    );
+    expect(GALLERY_COPY.messages.id.visibilityFoldedPrint).toBe(
+      "Disembunyikan sampai hasil akhir dipublikasikan. File berasal dari subfolder yang dipetakan ke item paket Foto cetak.",
+    );
+  });
+
   it("shows the approved empty-state body in English", () => {
     expect(GALLERY_COPY.messages.en.sourcesEmptyBody).toBe(
       "Link a project folder. Photos are for selection unless you map a subfolder to a package item; files in mapped subfolders are final files.",
@@ -32,11 +45,11 @@ describe("gallery copy: folder guidance (F-24 D5, AC-SFX-015)", () => {
     );
   });
 
-  it("names no folder as special, apart from the open folded-tab keys", () => {
+  it("names no edited or print folder in any message", () => {
     for (const messages of [GALLERY_COPY.messages.en, GALLERY_COPY.messages.id]) {
       for (const [key, value] of Object.entries(messages)) {
-        if (OPEN_FOLDED_KEYS.includes(key)) continue;
         expect(value, key).not.toMatch(FOLDER_NAME);
+        expect(value, key).not.toMatch(FOLDER_WORD);
       }
     }
   });

@@ -1414,8 +1414,8 @@ A failed multi-step sync may have already saved earlier steps. These error messa
 | Canceled-draft visibility | Won’t be visible to clients. | Tidak akan terlihat oleh klien. |
 | Final-file visibility | Hidden until final delivery. Clients can’t select these photos. | Disembunyikan sampai hasil akhir dikirim. Foto ini tidak bisa dipilih klien. |
 | Missing visibility | Missing photos are hidden until found again. | Foto yang hilang disembunyikan sampai ditemukan lagi. |
-| Edited-folder explanation · Pending (F-24) | PENDING (F-24): key `visibilityFoldedEdited` is shown under the Edited tab (`browse-text.kindVisibility`); new wording awaits Owner approval. No folder name is special (BR-GAL-007); no replacement text is approved. | — |
-| Print-folder explanation · Pending (F-24) | PENDING (F-24): key `visibilityFoldedPrint` is shown under the Print tab (`browse-text.kindVisibility`); new wording awaits Owner approval. No folder name is special (BR-GAL-007); no replacement text is approved. | — |
+| Edited-tab explanation · Approved (Owner, 2026-10-12) | Hidden until final delivery is published. Files come from subfolders mapped to an edited-photo package item. | Disembunyikan sampai hasil akhir dipublikasikan. File berasal dari subfolder yang dipetakan ke item paket Hasil edit. |
+| Print-tab explanation · Approved (Owner, 2026-10-12) | Hidden until final delivery is published. Files come from subfolders mapped to a printed-photo package item. | Disembunyikan sampai hasil akhir dipublikasikan. File berasal dari subfolder yang dipetakan ke item paket Foto cetak. |
 
 ### 10.6 Publish, expiry and password changes
 

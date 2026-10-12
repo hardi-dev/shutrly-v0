@@ -12,7 +12,7 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 - **Production:** the waitlist form change (D1, ADR-021) reaches production with the next landing deploy. The ship notes must say so.
 - **Built since the first handoff:** the Edited and Print tab lines on *Semua foto* (`visibilityFoldedEdited` / `visibilityFoldedPrint`) carry the Owner-approved copy (2026-10-12, commit 1d85fed4); plan task 5.4 is ticked.
 - **Open for the Owner:** (1) The approved EN Photo sources diagram labels mix an Indonesian folder name with English (*Hasil Edit → mapped to Edited photos later*); confirm that is intended. (2) The services loading skeleton shows the Indonesian *Memuat layanan* on the EN UI (`catalog-skeletons.tsx`, pre-existing, not fixed).
-- **Next step:** `/sdv:verify-feature setup-flow-fixes`. Not run here: the full suite, and the client gallery case of `forms-without-js.spec.ts` (needs `E2E_CLIENT_GALLERY_PATH`).
+- **Next step:** `/sdv:verify-feature setup-flow-fixes`. Not run here: the full suite. The client gallery case of `forms-without-js.spec.ts` passed with `E2E_CLIENT_GALLERY_PATH` set to the seeded *Wisuda Rina* link (10/10, see build-notes › Follow-up).
 
 ## Current handoff — F-10 client-access, Owner 7 revision built, pending verification (2026-10-07)
 

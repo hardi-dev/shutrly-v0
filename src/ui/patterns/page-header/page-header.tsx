@@ -75,14 +75,13 @@ export function PageHeaderTrail({ items }: Readonly<PageHeaderTrailProps>) {
   );
 }
 
-// F-22: the leading control (the sidebar toggle) fills the 32 px before the row gap, so the first crumb stays on the title's edge (space-10) as it was before the toggle.
+// F-22: the leading control (the sidebar toggle) sits on the title's edge; the trail starts after its 32 px slot and the row gap.
 function BreadcrumbRow({ trail, utilities, leading, isFlush }: Readonly<BreadcrumbRowProps>) {
-  const paddingLeft = leading ? "pl-0" : "pl-(--component-page-header-breadcrumb-padding-x)";
   return (
     <div
       className={cn(
         "flex items-center gap-(--component-page-header-breadcrumb-gap) border-b border-(--component-page-header-border) py-(--space-1-5)",
-        isFlush ? "px-0" : cn("pr-(--space-7)", paddingLeft),
+        isFlush ? "px-0" : "pr-(--space-7) pl-(--component-page-header-breadcrumb-padding-x)",
       )}
     >
       {leading ? (

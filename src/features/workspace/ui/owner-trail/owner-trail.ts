@@ -61,7 +61,8 @@ export function projectCrumb(
   return { label: title, href: `/w/${workspaceId}/projects/${projectId}` };
 }
 
-function isOwnerSection(value: string): value is OwnerSection {
+/** True for a path segment that names a workspace section (F-24 page-not-found back link). @param value - a path segment @returns whether it is an Owner section */
+export function isOwnerSection(value: string): value is OwnerSection {
   return Object.hasOwn(SECTION_KEYS, value);
 }
 

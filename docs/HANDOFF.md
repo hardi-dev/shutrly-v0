@@ -1,47 +1,22 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-12 (F-24 setup-flow-fixes built, pending verification; F-10 client-access DONE pending verification, Slices 0–12 built incl. the Owner 7 revision; F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending Owner acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
-Branch: `feat/client-access` (F-10, worktree `.claude/worktrees/pull-branch-main-21161f`). F-09 free-tier rework is on `feat/gallery-free-tier`, F-07 on `feat/projects`, F-08 Team designed on `feat/team-sessions`.
+Last updated: 2026-10-12 (F-24 setup-flow-fixes DONE; F-22 merged to `staging`, not verified; F-25 setup-checklist intent DRAFT) · Read this first when resuming work, then [docs/README.md](README.md). Feature status lives in [feature-map.md](product/feature-map.md), not here.
+Branch: `staging`, local, 44 commits ahead of `origin/staging` (nothing pushed). Other work sits in worktrees under `.claude/worktrees/` (`git worktree list`).
 
-History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
+History (previous handoffs, early status table, Pencil and design-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## F-24 setup-flow-fixes — built, pending verification (2026-10-12)
+## Current handoff — F-24 setup-flow-fixes DONE (2026-10-12)
 
-- **State:** feature map `DONE, pending verification`. All six iterations are built and recorded in [build-notes.md](features/setup-flow-fixes/build-notes.md) (sections *Iterations 1–2*, *Iteration 3.3 and 4*, *Iteration 5 and 6*). Branch `staging`; the commits are local and **not pushed**; no deploy, no PR.
-- **Read:** [plan.md](features/setup-flow-fixes/plan.md) (ticked), [acceptance-criteria.md](features/setup-flow-fixes/acceptance-criteria.md) (AC-SFX-001…017; 005…008 withdrawn), [copy-draft.md](features/setup-flow-fixes/copy-draft.md) (approved copy).
-- **Production:** the waitlist form change (D1, ADR-021) reaches production with the next landing deploy. The ship notes must say so.
-- **Built since the first handoff:** the Edited and Print tab lines on *Semua foto* (`visibilityFoldedEdited` / `visibilityFoldedPrint`) carry the Owner-approved copy (2026-10-12, commit 1d85fed4); plan task 5.4 is ticked.
-- **Open for the Owner:** (1) The approved EN Photo sources diagram labels mix an Indonesian folder name with English (*Hasil Edit → mapped to Edited photos later*); confirm that is intended. (2) The services loading skeleton shows the Indonesian *Memuat layanan* on the EN UI (`catalog-skeletons.tsx`, pre-existing, not fixed).
-- **Next step:** `/sdv:verify-feature setup-flow-fixes`. Not run here: the full suite. The client gallery case of `forms-without-js.spec.ts` passed with `E2E_CLIENT_GALLERY_PATH` set to the seeded *Wisuda Rina* link (10/10, see build-notes › Follow-up).
-
-## Current handoff — F-10 client-access, Owner 7 revision built, pending verification (2026-10-07)
-
-- **State:** feature map `DONE, pending verification` (Slices 0–12). Branch `feat/client-access` (worktree `.claude/worktrees/pull-branch-main-21161f`), pushed to origin on 2026-10-07 (`9849df1`, Owner asked), no PR yet. Every slice has an implementation record in [technical-design.md](features/client-access/technical-design.md); [plan.md](features/client-access/plan.md) is fully ticked.
-- **Slice 12 (Owner 7, built 2026-10-07):** *Akses klien*, *Pilihan klien* and *Hasil akhir* are on the gallery page (720 column, *Foto* 6 photos in 3 columns); the project page keeps *Add-on*, its *Galeri* card has the *Pilihan klien* / *Hasil akhir* summary rows and no password, and *Tandai selesai* is the header action of a `DELIVERED` project (phone action bar) with the meta *Hasil akhir dipublikasikan {date}*. The picks pages moved to `/projects/[id]/gallery/pilihan[/groupId]`; the old URLs are 404 (Owner: no redirect). *Salin* on *Akses klien* shows the whole value selected when the browser refuses the clipboard (Owner chose this over a deprecated `execCommand` fallback).
-- **Checks (last run):** typecheck, lint on changed files, the touched dom/unit tests, `gallery-sync` integration and `tests/e2e/client-access/journeys.spec.ts` pass; Slices 0–11 checks as recorded. Screenshots at 1440/390 matched `HT8V6`, `iGwTx`, `r71J5`, `QUSVb`. Not run: the full suite (project rule), `gate.spec.ts` (real Drive), R-6 (real phone).
-- **Partial submission (Owner 2026-10-07):** a client send below the limit keeps the group `OPEN` (picks still changeable) until a send at the limit or the Owner's *Kunci pilihan*; built in `756ad74`, docs `ad65b7f`, deployed `68cdc10` (see the technical-design record). The updated journeys E2E has not run yet.
-- **Answered 2026-10-07 (option B, finding #5): studio-specific subfolder names.** Final-delivery files are found only in subfolders named `edited` / `print` (case-insensitive, any depth, BR-GAL-007, `photo-classification.ts`); other names (`Final`, `Hasil Edit`, `Cetak`…) are read as proofs. Options offered, no answer yet: **A** workspace setting with extra names per kind, defaults kept (recommended); **B** per source, the Owner picks the Edited/Print subfolder when adding a Drive folder; **C** a wider built-in synonym list; **D** keep the convention and hint after sync. Any choice is a new rule (intent → spec/AC → Pencil → build, likely its own F-09 slice), needs a re-sync to reclassify stored photos, and must decide what happens to a pick whose photo becomes Edited. Start with `/sdv:capture-intent` once the Owner picks.
-- **Owner manual test (2026-10-07) → Revision OT:** seven findings, all decided, in [manual-test-findings.md](features/client-access/manual-test-findings.md); plan › *Revision OT* (Slices 13–16). Slice 13 (English route segments: `/g/[token]/photos`, `/final`, `/picks/…`, `/download/…`, Owner `…/gallery/picks`) is built. The subfolder-name question below is answered: option B (finding #5).
-- **Revision OT + F-20 + F-21 (2026-10-07):** all seven manual-test findings are fixed. Slices 13–16 built; F-20 *client-proof-downloads* (#6) and F-21 *delivery-folder-mapping* (#5) built straight from their accepted intents without spec/AC/Pencil (Owner), recorded in each feature's `build-notes.md`. Migration `0018_folder_map` is on the dev database. BR-GAL-007 replaced (subfolders mapped to package items; no folder name is recognised by itself), BR-DEL-004 amended (proof downloads).
-- **Resume at:** (1) Owner reviews on `localhost:3000`: folder ⋯ › *Edit folder* (subfolder mapping), the new-folders toast after *Sinkronkan*, *Hasil akhir* tabs per item, `/g/{token}/photos` downloads and *Pilih beberapa* › *Pilih untuk…*; (2) sync Pencil with the UI built without frames (Revision OT, F-20, F-21); (3) verify the React key warning on the gallery page (fix `8dd3737`); (4) `/sdv:verify-feature client-access` (+ F-20, F-21), push, PR, `/sdv:ship` (run `0018` on staging/production at ship).
-- **Staging (Netlify, ADR-020):** `68cdc10` is deployed to `staging--shutrly.netlify.app` (`/api/health`, `/login` 200). `CLIENT_SESSION_KEY` is a Netlify secret; all three databases (dev, Netlify staging us-east-2, old staging) record migrations `0000`–`0017`. Seed: `pnpm db:seed` ([tech-stack › Seed data](architecture/tech-stack.md#seed-data)), Owner `owner@shutrly.test`, passwords and client link in the git-ignored `.env.seed.dev`, `.env.seed.staging`, `.env.seed.staging-old` of this worktree (never in chat). *Wisuda Rina* (BOOKED, 113 photos, published); no final delivery because the example Drive folder has no `edited`/`print` subfolder, so *Tandai selesai* can't be seen on staging. Deploy from a checkout outside `.claude/` (see `CLAUDE.md`); the scratch checkout `…/92dd845c-…/scratchpad/deploy-src` can be reused (`git checkout --detach <sha>`, `NETLIFY_SITE_ID` from the main checkout's `.netlify/state.json`, `scripts/deploy/netlify-deploy.sh staging`).
-- **Owner actions:** push and open the PR; stop the dev server of the main checkout that holds port 3000 (started from this session's browser pane; it fails with missing env keys and blocks Playwright, whose base URL is fixed to 3000); provision `CLIENT_SESSION_KEY` for production if it isn't this Netlify site; run `0015`–`0017` on production at ship; promote *Photo Tile/Selectable* in `design-system.lib.pen`; fix two Pencil drifts (the add-on dialog's target field label/helper; the publish confirm says *Dikirim* where the status is *Terkirim*); decide whether F-09's now-unused `AccessCard` and `CopyPasswordButton` may be deleted.
+- **State:** `DONE` (verified 2026-10-12, pass with non-blocking deviations: [verification-report.md](features/setup-flow-fixes/verification-report.md), run without E2E at the Owner's request). Branch `staging`; no PR, no deploy. **Uncommitted:** `docs/product/feature-map.md` (F-24 row), `verification-report.md` and this handoff.
+- **Done this session:** a new-workspace walkthrough found the defects → [intent](features/setup-flow-fixes/intent.md), [spec](features/setup-flow-fixes/spec.md), [plan](features/setup-flow-fixes/plan.md), [build notes](features/setup-flow-fixes/build-notes.md). Built: forms post and wait for hydration (D1), catalog dialogs submit on Enter (D3), page-not-found inside a workspace (D4), folder-mapping guidance (D5), English-only catalog screens (D6). D2/D7 withdrawn (did not reproduce: dev-mode first compile).
+- **Also:** skeleton and loading titles translated (`5d39543`); `local/ui-copy` now catches copy held in a constant, [FND-003](findings/FND-003-ui-copy-lint-misses-copy-in-constants.md) FIXED (`0046817`); breadcrumb ADR renumbered to [ADR-026](architecture/decisions/ADR-026-owner-breadcrumb-parallel-route.md); F-22 docs corrected (merged by PR #14); [F-25 intent](features/setup-checklist/intent.md) captured, DRAFT.
+- **Checks:** typecheck, lint on 83 files, `tokens:check`, `pnpm build` pass; 210 related unit tests in 54 files pass. Last recorded E2E (build time): no-JS forms 10/10, page-not-found 2/2. Not run: the full suite; E2E at verification.
+- **Owner actions:** commit the uncommitted docs; decide push and PR. Update the Photo sources frames in Pencil (DV-2: they still say to add `edited`/`print`). Accept or correct the F-25 intent in its own session (discovery prompt was given in chat). At ship, say that the waitlist change reaches production with the next landing deploy (ADR-021). The exploration login is in the git-ignored `.env.seed.explore` (dev database; workspace *Explore Studio*).
 - **Open items:**
-  - Netlify streams stop at 60 s / 20 MB, so a large Print download from `/g/[token]/unduh/[photoId]` can fail on staging; test needs a `print` subfolder with a file over 20 MB in the example Drive folder (`1yyis5Mp…`), then sync, publish final delivery and download from the client link.
-  - The two staging Owners were seeded with the older seed (direct inserts); compatibility is proven on dev only.
-  - The staging *Wisuda Rina* group sent 5/10 before the partial-submission change is still `SUBMITTED`; offered to set it back to `OPEN` on the staging database (Owner hasn't answered).
-  - Seen once: *Only plain objects … Client Components* on the client *Tinjau* route during a failed throwaway run; not reproduced.
-  - The client *Dibuka lagi* chip is not built; R-6 (iOS Safari bulk download) needs a real phone; tablet and dark mode are not drawn (GAP-01, GAP-04).
-  - Fixture-Drive E2E needs `E2E_FAKE_DRIVE=1` in this worktree's `.dev.vars` for the run (restore after; `retries: 2`).
-
-## F-22 bilingual copy — implemented and merged, not verified (updated 2026-10-12)
-
-- **State:** plan [IMPLEMENTED](features/bilingual-copy-revamp/plan.md) on 2026-10-11 (I1–I8 ticked). Merged to `staging` by PR #14 on 2026-10-11 (`2e5d94e`); `codex/bilingual-copy-revamp` and `claude/f22-bilingual-copy-revamp-be9ecb` have no commits outside `staging` (checked 2026-10-12). Feature map: `IN PROGRESS`.
-- **Read first:** [coverage-report.md](features/bilingual-copy-revamp/coverage-report.md) (I8 status, open items). [implementation-report.md](features/bilingual-copy-revamp/implementation-report.md) is the 2026-10-10 snapshot and is superseded.
-- **Open for the Owner:** proposed copy-deck rows (Account menu, §14.4, §15.x); 42 `DECK GAP` markers (EN = ID text until the deck has a row); higher-authority amendments listed in the plan under *Owner actions required*; the copy deck is still `DRAFT`.
-- **Not verified:** journey E2E (`tests/e2e/locale/journeys.spec.ts`), build-smoke owner/gallery and `gallery-owner-locale` are blocked by the Neon websocket flake (`Failed query … ErrorEvent`). Next: fix or work around the flake, run them, then `/sdv:verify-feature bilingual-copy-revamp`.
-- **Known stale deck rows:** the deck predates F-21 and still teaches `edited`/`print` folders; F-24 `setup-flow-fixes` corrects those rows.
-- **Rules that still apply to copy work:** copy text from `copy-deck.md` verbatim, never invented (new copy is drafted with the Codex CLI and approved by the Owner); related tests only; lint per file; no `head`.
+  - F-24 follow-ups, in the verification report §6: DV-3 remove the stacked padding on the page-not-found screen (one line); DV-1 native-POST test for the client gallery; DV-4/5/6 partial coverage and a button inside a link (C-008).
+  - F-22 bilingual copy: implemented and merged 2026-10-11, **not verified**. Read [coverage-report.md](features/bilingual-copy-revamp/coverage-report.md). Journey, build-smoke and `gallery-owner-locale` E2E are blocked by the Neon websocket flake; 42 `DECK GAP` strings show the same text in EN and ID; the copy deck is still `DRAFT`.
+  - Carried from the F-10 handoff, unverified since: Netlify stops a stream at 60 s / 20 MB, so a large Print download can fail on staging; the staging *Wisuda Rina* group sent 5/10 before the partial-submission change is still `SUBMITTED`; R-6 (iOS Safari bulk download) needs a real phone.
+- **Next:** `/sdv:discover-feature setup-checklist` in its own worktree once the Owner accepts the F-25 intent; F-24 needs `/sdv:ship` only when the Owner wants it deployed. Copy work: draft with the Codex CLI, Owner approves, then update the copy deck.
 
 ## Key decisions (Owner)
 
@@ -68,35 +43,6 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 
 - Open `.pen` files with `open -a Pen <abs-path>`, and inspect or edit them only via the Pencil MCP.
 - **Pen does not autosave MCP edits.** Press ⌘S in each Pen window, and check the file mtime and size before committing.
-- **`TakeScreenshot` only renders the file in the frontmost Pen window** (otherwise it's blank). Run `open -a Pen <file>` first. Screenshots of nodes created in the same call can be stale, so take them in a separate call.
-- **Pencil limits:**
-  - Opacity variables are percent, and binding `opacity:"$opacity/disabled"` resolves to 0.4.
-  - `width`/`height` can't bind to variables.
-  - There's no `wrap` on frames and no stroke offset or spread (focus = 2 px outer ring + `focus/glow`; the offset is handled in code).
-  - `metadata` is dropped on `ref` nodes, so variant axes live in `context` and the registry.
-- **Slots:** `Insert(instance+"/slot")` is refused. Use `Replace(instance+"/slotId", {type:"frame",…})`, then Insert into the new frame. A `Get` visitor that walks into an instance with a replaced slot throws, so scans call `ctx.skipChildren()` on non-reusable refs.
-- `Get` layout `problems` can be stale right after big inserts, so re-scan in a separate call. Hidden (`enabled:false`) layers in bases show as "clipped"; that's expected.
-- **Token change workflow:**
-  1. Edit `scripts/gen_tokens.py`.
-  2. Run `gen_tokens.py`, then `verify_json.py`.
-  3. `SetVariables` with the changed keys from `scripts/pencil-vars.json`.
-  4. Compare the checksum (`verify_vars.py` against the FNV JS in Pencil).
-  5. Refresh boards 02 and 06 and the cover counts.
-  6. Update the registry and specs.
-  7. ⌘S.
-- **Shell:** `head` on this machine isn't coreutils; use `sed -n`.
-- **Library size / Pen stability (2026-09-26):**
-  - `design-system.lib.pen` is about 3.2 MB (30 component pages).
-  - During session 4, Pen closed the file mid-edit. After reopening, some MCP calls failed with `reading 'id'` on edits that propagate to many instances: inserting into a master slot that instances have `Replace`d, and whole-document `Get`.
-  - **Don't ⌘S a window in that state.** Close it without saving, reopen, and verify the variable checksum first.
-  - Save (⌘S) after every page, not at the end.
-  - **Root cause found:** the failures weren't file size. App Panel `C5QYo` had `slot: []` (an empty allowed-list), and every insert into it threw `reading 'id'`. Listing the allowed components fixed it. Saving works at ~3.25 MB, so no split is needed for now.
-- **Slots gotchas:**
-  - Never leave `slot: []`. An empty list rejects every insert with `Cannot read properties of undefined (reading 'id')`.
-  - Pencil can't `Replace`/`Copy` into a slot of an instance nested **inside another master** (`reading 'parent'`, or "use Update/Replace"). Fill slots only on top-level instances, e.g. `Replace(<shell>/Sw0yD/d2hCuQ/bBehO, …)`.
-  - A replaced node keeps its new ID in the instance path: re-replace `KS7sb/XNJJO`, not `KS7sb/C5QYo`.
-- **Master edits that break the file (2026-09-26):** `Move`-ing a newly inserted layer inside a deeply nested master (Table Cell / Header Cell) corrupted every existing Table instance in memory and emptied the Table master's row cells; Pen then refused to save ("pen.dev can't save your changes"). Rules: insert new layers at the **end** of a master, never `Move` them; after every master edit run `Get((n,ctx)=>{ctx.skipChildren();return n.name})` (whole-doc check) and test pages one per call (`Get(pageId,{depth:30})`) — errors abort the whole call. Broken instances are fixed by deleting and rebuilding them. An IPC error (`reading 'parent'`) can leave a half-applied change: close without saving and reopen.
-- **Pencil targets the frontmost Pen window**, whatever `filePath` says: run `open -a Pen <file>` before switching files, and check `GetVariables` (the library has variables; `exploration.pen` has none).
 - **Design exports:** builds read the raw exports through `exports/INDEX.md` (`scripts/sdv/index-exports.py`). The compact exports were dropped on 2026-10-04 because their stripped bases didn't render the real UI (Owner).
 - **Pen library import in a worktree** can point at the main checkout's library; verify and never remove a used import (see `CLAUDE.md` › Mistakes to avoid).
 - **CLI save isn't possible:** `osascript` keystrokes are blocked (no Accessibility permission), so the Owner presses ⌘S.
@@ -104,3 +50,4 @@ History (previous handoffs, early status table, component-library notes): [HANDO
 - **F-10 browser passes:** the Owner pages need a signed-in Owner. The test Owner can be made owner of the throwaway studio's workspace for a pass by updating `workspace.owner_user_id` on the non-production database, then restoring it. `.claude/launch.json` entry `dev-client-access` runs this worktree's server.
 - **Machine:** `head` and `timeout` are not available (macOS); `head` is also listed in `CLAUDE.md` › Mistakes to avoid and was typed again this session. A bare `cat > file` waits for input.
 - **UI gotchas (F-10):** the destructive `Modal` drops its body text, so use a standard dialog when the export has a body; a `size-*` class needs a block or flex parent (`PhotoThumb` is `block`); `Button` only takes icons from its allow-list in `button.types.ts`.
+- Pencil limits, slot and token-change notes, and the library-stability history: [archive](HANDOFF-archive.md#pencil-and-design-library-working-notes-moved-from-handoffmd-2026-10-12).

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
@@ -67,6 +67,7 @@ describe("AppShell (C30/C37)", () => {
     await user.click(toggles[0]);
     const dialog = screen.getByRole("dialog", { name: "Navigasi utama" });
     expect(dialog.querySelector("[data-sidebar-toggle]")).toBeNull();
+    expect(within(dialog).queryByRole("button", { name: /sidebar/i })).toBeNull();
 
     await user.keyboard("{Escape}");
     expect(queryByRole("dialog", { name: "Navigasi utama" })).toBeNull();
@@ -81,6 +82,9 @@ describe("AppShell (C30/C37)", () => {
     );
 
     await user.click(screen.getByRole("button", { name: "Ciutkan sidebar" }));
+    await waitFor(() => {
+      expect(document.activeElement?.getAttribute("aria-label")).toBe("Buka sidebar");
+    });
     expect(screen.queryByRole("button", { name: "Ciutkan sidebar" })).toBeNull();
     expect(window.localStorage.getItem("shutrly.sidebar.collapsed")).toBe("true");
 

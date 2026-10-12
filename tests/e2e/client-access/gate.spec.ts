@@ -39,14 +39,19 @@ test("AC-ACC-001 AC-ACC-002 AC-ACC-004 AC-ACC-007 AC-ACC-012 the client gate end
     await expect(visitor.getByText(CLIENT_PASSWORD_FORM_COPY.wrongPassword)).toBeVisible();
     await expectGalleryA11y(visitor);
 
-    // A-31: the default service has no selection item, so the client lands on Semua foto.
+    // F-22 R-7 (A-31 withdrawn): even without selection items the client lands on Beranda.
     await enterPassword(visitor, GALLERY_PASSWORD);
-    await expect(visitor).toHaveURL(`${clientPath}/photos`);
+    await expect(visitor).toHaveURL(clientPath);
     await visitor.reload();
-    await expect(visitor).toHaveURL(`${clientPath}/photos`);
+    await expect(visitor).toHaveURL(clientPath);
+    await visitor.goto(`${clientPath}/photos`);
     await expect(
       visitor.getByText(CLIENT_BROWSE_COPY.cardTitle, { exact: true }).first(),
     ).toBeVisible();
+    await expect(visitor.getByRole("link", { name: "Beranda" }).first()).toHaveAttribute(
+      "href",
+      clientPath,
+    );
     const cookie = (await client.cookies()).find((item) => item.name === "shutrly_gallery");
     expect(cookie).toMatchObject({ httpOnly: true, secure: true, path: clientPath });
 

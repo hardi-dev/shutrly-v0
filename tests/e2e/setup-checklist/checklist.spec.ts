@@ -14,6 +14,8 @@ test.describe.configure({ retries: 1 });
 
 const copy = SETUP_CHECKLIST_COPY.messages.en;
 const catalog = CATALOG_COPY.messages.en;
+const progress = (done: number) =>
+  copy.progress.replace("{done}", String(done)).replace("{total}", "4");
 
 function checklist(page: Page) {
   return page.getByRole("region", { name: copy.title }).filter({ visible: true }).first();
@@ -54,7 +56,7 @@ test("AC-SETUP-001 AC-SETUP-005 AC-SETUP-006 AC-SETUP-016 a new owner follows th
   // AC-SETUP-001: the checklist replaces the branding prompt; step 1 holds the only button.
   const card = checklist(page);
   await expect(card).toBeVisible();
-  await expect(card.getByText("0 of 4 done")).toBeVisible();
+  await expect(card.getByText(progress(0))).toBeVisible();
   await expect(card.getByRole("link")).toHaveCount(2);
   await expect(card.getByRole("link", { name: copy.serviceAction })).toBeVisible();
   await expect(card.getByRole("link", { name: copy.brandNameTitle })).toBeVisible();
@@ -86,7 +88,7 @@ test("AC-SETUP-001 AC-SETUP-005 AC-SETUP-006 AC-SETUP-016 a new owner follows th
   // AC-SETUP-006: step 1 is done, step 2 holds the only button, step 3 is a row link.
   await page.goto(`/w/${workspaceId}`);
   const after = checklist(page);
-  await expect(after.getByText("1 of 4 done")).toBeVisible();
+  await expect(after.getByText(progress(1))).toBeVisible();
   await expect(after.getByText(copy.done, { exact: true })).toBeVisible();
   await expect(after.getByRole("link", { name: copy.serviceAction })).toHaveCount(0);
   await expect(after.getByRole("link", { name: copy.packageItemsAction })).toHaveAttribute(

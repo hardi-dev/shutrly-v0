@@ -29,7 +29,7 @@ const SUB_PAGE_KEYS = new Map<string, OwnerNavKey>([
   ["services/items", "serviceTabItems"],
 ]);
 
-/** Builds an Owner breadcrumb: the workspace root, the ancestors, then the current page as plain text (F-22 R-1, R-2, R-5). @param input - workspace, ancestors and the current label @returns the crumbs */
+/** Builds an Owner breadcrumb: the workspace root, the ancestors, then the current page as plain text (F-23 R-1, R-2, R-5). @param input - workspace, ancestors and the current label @returns the crumbs */
 export function ownerTrail(input: OwnerTrailInput): readonly BreadcrumbItem[] {
   return [
     { label: input.workspaceName, href: `/w/${input.workspaceId}` },
@@ -38,7 +38,7 @@ export function ownerTrail(input: OwnerTrailInput): readonly BreadcrumbItem[] {
   ];
 }
 
-/** The Dashboard is the Owner root, so its trail is the single crumb *Dasbor* (F-22 R-2). @param t - the owner-nav translate function @returns the crumbs */
+/** The Dashboard is the Owner root, so its trail is the single crumb *Dasbor* (F-23 R-2). @param t - the owner-nav translate function @returns the crumbs */
 export function dashboardTrail(t: OwnerNavTranslator): readonly BreadcrumbItem[] {
   return [{ label: t("dashboard") }];
 }
@@ -65,7 +65,7 @@ function isOwnerSection(value: string): value is OwnerSection {
   return Object.hasOwn(SECTION_KEYS, value);
 }
 
-/** The trail of a route whose labels are fixed: a section, a section tab, or *Proyek baru* (F-22 R-4). @param segments - the path below `/w/[id]` @param workspaceId - the verified route workspace @param workspaceName - its name @param t - the owner-nav translate function @returns the crumbs, or null for an unknown path */
+/** The trail of a route whose labels are fixed: a section, a section tab, or *Proyek baru* (F-23 R-4). @param segments - the path below `/w/[id]` @param workspaceId - the verified route workspace @param workspaceName - its name @param t - the owner-nav translate function @returns the crumbs, or null for an unknown path */
 export function staticOwnerTrail(
   segments: readonly string[],
   workspaceId: string,

@@ -1,4 +1,4 @@
-# Acceptance Criteria — Breadcrumb revamp (F-22)
+# Acceptance Criteria — Breadcrumb revamp (F-23)
 
 Spec: [spec.md](spec.md). Trails are checked on desktop (≥ 1280 px) unless a criterion says otherwise. `Aster` is the workspace name; `›` separates crumbs; the last crumb is the current page.
 

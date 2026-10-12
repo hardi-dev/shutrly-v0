@@ -169,7 +169,7 @@ describe("OwnerShell sub-pages", () => {
     expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute("href", "/w/A/services");
   });
 
-  it("F-22 shows the trail it is given, not one built in the browser", () => {
+  it("F-23 shows the trail it is given, not one built in the browser", () => {
     render(
       <OwnerShell
         workspaceId="A"

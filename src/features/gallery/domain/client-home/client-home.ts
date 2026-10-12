@@ -6,7 +6,7 @@ import type {
   HomeGroupInput,
 } from "./client-home.types";
 
-/** Whether Beranda holds only the *Semua foto* card (A-24). Since F-22 R-7 the client still lands on Beranda; *Semua foto* uses this for its title and subtitle. @param groupCount - selection groups of the project @param finalDeliveryPublished - whether final delivery is published @returns `ALL_PHOTOS` when Beranda would hold one card, else `HOME` */
+/** Whether Beranda holds only the *Semua foto* card (A-24). Since F-23 R-7 the client still lands on Beranda; *Semua foto* uses this for its title and subtitle. @param groupCount - selection groups of the project @param finalDeliveryPublished - whether final delivery is published @returns `ALL_PHOTOS` when Beranda would hold one card, else `HOME` */
 export function clientLanding(groupCount: number, finalDeliveryPublished: boolean): ClientLanding {
   return groupCount === 0 && !finalDeliveryPublished ? "ALL_PHOTOS" : "HOME";
 }

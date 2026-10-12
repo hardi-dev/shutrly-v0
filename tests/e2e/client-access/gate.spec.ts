@@ -54,7 +54,7 @@ test("AC-ACC-001 AC-ACC-002 AC-ACC-004 AC-ACC-007 AC-ACC-012 the client gate end
     await expect(visitor.getByText(passwordCopy("wrongPassword"))).toBeVisible();
     await expectGalleryA11y(visitor);
 
-    // F-22 R-7 (A-31 withdrawn): even without selection items the client lands on Beranda.
+    // F-23 R-7 (A-31 withdrawn): even without selection items the client lands on Beranda.
     await enterPassword(visitor, GALLERY_PASSWORD);
     await expect(visitor.getByRole("heading", { name: gateCopy("title") })).toBeHidden();
     await expect(visitor).toHaveURL(clientPath);

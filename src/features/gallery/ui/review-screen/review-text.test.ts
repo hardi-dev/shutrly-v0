@@ -25,7 +25,7 @@ const group: PickGroupView = {
   status: "OPEN",
 };
 
-describe("reviewHeader (F-22 R-5)", () => {
+describe("reviewHeader (F-23 R-5)", () => {
   it("AC-CRUMB-008 links the group crumb while the group is OPEN", () => {
     expect(reviewHeader(t, shared, group, "T", true).breadcrumbs).toEqual([
       { label: "Beranda", href: "/g/T" },

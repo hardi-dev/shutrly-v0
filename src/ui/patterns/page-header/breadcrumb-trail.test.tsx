@@ -14,7 +14,7 @@ const ITEMS = [
   { label: "Foto album keluarga besar" },
 ];
 
-describe("BreadcrumbTrail (F-22 OQ-5)", () => {
+describe("BreadcrumbTrail (F-23 OQ-5)", () => {
   it("AC-CRUMB-013 keeps the root and the current page whole", () => {
     render(<BreadcrumbTrail label="Breadcrumb" items={ITEMS} />);
 

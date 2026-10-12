@@ -1,6 +1,6 @@
 # Feature: Breadcrumb revamp — one crumb per route level
 
-ID: F-22 · Slug: `breadcrumb-revamp`
+ID: F-23 · Slug: `breadcrumb-revamp`
 Status: DONE (2026-10-12, Owner marked done; B-1 closed by the route coverage test, [verification report](verification-report.md)) · Technical design: [technical-design.md](technical-design.md) · Acceptance criteria: [acceptance-criteria.md](acceptance-criteria.md) · ADR: [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md)
 Supersedes: F-17 [S-A6 Breadcrumb depth](../app-shell-revamp/spec.md), F-10 [A-31 Skipping Beranda](../client-access/spec.md), and the per-page trails recorded in other features' designs (FC-001…FC-003)
 Also: moves the sidebar toggle beside the breadcrumb (see *Sidebar toggle*).
@@ -116,7 +116,7 @@ Checked against the constitution (C-001…C-012, C-101…C-106), BR-WS-003, BR-A
 
 | ID | Concern | Conflicting sources | Owner decision | Status |
 |---|---|---|---|---|
-| FC-001 | The route-level rule replaces the two-level rule and the "workspace › nav label" form. | F-17 spec S-A6 and Main Flow step 2, AC-SHELL-001, F-17 design.md:47 | Owner 2026-10-12: the old spec is wrong; depth follows the route. F-17 S-A6, step 2 and AC-SHELL-001 carry a *superseded by F-22* note. | RESOLVED |
+| FC-001 | The route-level rule replaces the two-level rule and the "workspace › nav label" form. | F-17 spec S-A6 and Main Flow step 2, AC-SHELL-001, F-17 design.md:47 | Owner 2026-10-12: the old spec is wrong; depth follows the route. F-17 S-A6, step 2 and AC-SHELL-001 carry a *superseded by F-23* note. | RESOLVED |
 | FC-002 | Per-page trails recorded in feature designs and plans and drawn in Pencil contradict R-1: catalog *Layanan › {service}*, projects *Proyek › {title}* and *Proyek › Proyek baru*, message-templates *Template pesan › Bagikan gallery*, clients *Aster Wedding › Klien* on both tabs. The "design wins over docs on UX" practice would keep them. | catalog/design.md:45–49, projects/design.md:106, projects/plan.md:485, message-templates/design.md:32, clients/design.md:42, clients/plan.md:436, the Pencil frames | Owner 2026-10-12: the route rule wins over recorded designs. Frames are waived for this feature (see *Design*); the frames and those notes are synced in the next design pass, and the code does not wait for them. | RESOLVED |
 | FC-003 | R-1 gives *Beranda › Semua foto*, but F-10 A-31 skipped Beranda (redirect) for projects without groups and final delivery, so the crumb would loop back to *Semua foto*. | client-access spec A-31, step 5 and the no-selection alternative flow; AC-SEL-012, AC-SEL-020 | Owner 2026-10-12: Beranda always renders (R-7). A-31 is struck through as withdrawn in the client-access spec, and AC-SEL-012 and AC-SEL-020 carry an amendment note. | RESOLVED |
 | FC-004 | The *{nama grup}* crumb on a read-only review links to `/picks/[groupId]`, which redirects a non-`OPEN` group back to the review (F-10 D-2): a loop. | R-5, OQ-4; `src/app/(client)/g/[token]/picks/[groupId]/page.tsx` | Owner 2026-10-12 (review fix): the crumb is plain text in that case (R-5 exception). | RESOLVED |

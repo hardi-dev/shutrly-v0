@@ -1,4 +1,4 @@
-# Build notes — Breadcrumb revamp (F-22)
+# Build notes — Breadcrumb revamp (F-23)
 
 Final report for [plan.md](plan.md), in the order the plan's *Final report* asks for. Built 2026-10-12 on `staging` (not pushed) by Claude Haiku 5.5 subagents (medium effort), one implementer and one reviewer per task, coordinated by the controller session.
 
@@ -88,9 +88,9 @@ Not pushed and no PR, as the plan's Global Constraints require ("Do not push. Do
 
 `git status --short` at the end shows only files that were dirty before this work: `.agents/skills/sdv-ux-task-effectiveness/*`, `.claude/commands/sdv/ux-task-effectiveness.md`, `.claude/skills/ux-task-effectiveness/SKILL.md`, `docs/features/ux-task-effectiveness/`.
 
-## Pre-existing issues fixed on the way (not caused by F-22)
+## Pre-existing issues fixed on the way (not caused by F-23)
 
-The gate e2e failed on the commit before F-22 too:
+The gate e2e failed on the commit before F-23 too:
 - it opened the client link ~65 ms after `published_at` and got the neutral 404 (now retried until the gate answers);
 - `getByLabel('Password')` matched three elements (now `getByPlaceholder`);
 - `next dev` rewrites `Cache-Control` to `no-cache, must-revalidate` (Next 16.3.6 `base-server.js`), so the exact production value is asserted by `secrets-sweep.test.ts` against `next.config.ts`, and the e2e asserts "not public" plus `X-Robots-Tag: noindex`.

@@ -82,7 +82,7 @@ export function AppShell({
     requestAnimationFrame(focusSidebarToggle);
   }
 
-  // F-22: one toggle left of the breadcrumb; it collapses or expands the desktop Sidebar and opens the tablet overlay.
+  // F-23: one toggle left of the breadcrumb; it collapses or expands the desktop Sidebar and opens the tablet overlay.
   const sidebarToggle = (
     <>
       <div className="hidden xl:flex">

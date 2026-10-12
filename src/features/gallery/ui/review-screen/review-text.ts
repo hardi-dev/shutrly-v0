@@ -12,7 +12,7 @@ export type ReviewTranslate = ReturnType<typeof useTranslations>;
 export const unitOf = (shared: ClientTranslate, group: PickGroupView): string =>
   group.unit ?? shared("defaultUnit");
 
-/** The page header of Tinjau (breadcrumb Beranda › group › Tinjau, phone *Kembali memilih*) or of the read-only view (Beranda › group, not linked › Tinjau, phone *Beranda*; F-22) (tinjau, lihatpilihan exports, A-26, A-29). @param t - the review translate function @param shared - the shared client translate function @param group - the group @param token - the client access token @param isEditable - whether the group is `OPEN` @returns the header */
+/** The page header of Tinjau (breadcrumb Beranda › group › Tinjau, phone *Kembali memilih*) or of the read-only view (Beranda › group, not linked › Tinjau, phone *Beranda*; F-23) (tinjau, lihatpilihan exports, A-26, A-29). @param t - the review translate function @param shared - the shared client translate function @param group - the group @param token - the client access token @param isEditable - whether the group is `OPEN` @returns the header */
 export function reviewHeader(
   t: ReviewTranslate,
   shared: ClientTranslate,
@@ -37,7 +37,7 @@ export function reviewHeader(
   return {
     title: group.name,
     subtitle: group.status === "LOCKED" ? t("subtitleLocked") : t("subtitleSubmitted"),
-    // F-22 R-5: the group's Pilih page redirects a non-OPEN group back here, so its crumb is plain text.
+    // F-23 R-5: the group's Pilih page redirects a non-OPEN group back here, so its crumb is plain text.
     breadcrumbs: [
       { label: shared("home"), href: home },
       { label: group.name },

@@ -63,7 +63,7 @@ describe("PageHeader", () => {
     ).toHaveAttribute("aria-current", "page");
   });
 
-  it("F-22 renders a trail made elsewhere in place of the generated one", () => {
+  it("F-23 renders a trail made elsewhere in place of the generated one", () => {
     render(
       <PageHeader
         parent="Aster"

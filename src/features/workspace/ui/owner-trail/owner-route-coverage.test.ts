@@ -52,7 +52,7 @@ function dynamicParents(routes: readonly string[]): Set<string> {
   return parents;
 }
 
-describe("owner route coverage for the breadcrumb slot (F-22, ADR-025)", () => {
+describe("owner route coverage for the breadcrumb slot (F-23, ADR-025)", () => {
   it("AC-CRUMB-004…006 every Owner page has a slot page or a trail the catch-all names", () => {
     const slotExact = new Set(slotRoutes);
     const parentsWithDynamicSlot = dynamicParents(slotRoutes);

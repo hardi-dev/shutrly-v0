@@ -34,7 +34,7 @@ const LABELS: Readonly<Record<string, string>> = {
 
 const t = ((key: string) => LABELS[key] ?? key) as OwnerNavTranslator;
 
-describe("owner trail (F-22 R-1…R-5)", () => {
+describe("owner trail (F-23 R-1…R-5)", () => {
   it("AC-CRUMB-001 the Dashboard is the single crumb Dasbor", () => {
     expect(dashboardTrail(t)).toEqual([{ label: "Dasbor" }]);
   });

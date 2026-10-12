@@ -12,6 +12,6 @@ export default async function ClientGalleryPage({ params }: Readonly<PageProps<"
   if (result.kind === "PASSWORD") {
     return <ClientGateScreen gate={result.gate} action={signInGalleryAction.bind(null, token)} />;
   }
-  // F-22 R-7: Beranda always renders, even with only the Semua foto card (A-31 withdrawn).
+  // F-23 R-7: Beranda always renders, even with only the Semua foto card (A-31 withdrawn).
   return <ClientHomeScreen gate={result.gate} home={result.value} token={token} />;
 }

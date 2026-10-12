@@ -1,4 +1,4 @@
-# Technical design — Breadcrumb revamp (F-22)
+# Technical design — Breadcrumb revamp (F-23)
 
 Spec: [spec.md](spec.md) · Acceptance criteria: [acceptance-criteria.md](acceptance-criteria.md) · ADR: [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md)
 Status: BUILT (2026-10-12; revised after review the same day). Task 8 done: OQ-5 resolved 2026-10-12 (truncate the middle crumbs). Executable steps: [plan.md](plan.md).

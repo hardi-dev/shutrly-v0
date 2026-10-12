@@ -19,7 +19,7 @@ import type { PhotosActions } from "../use-proof-downloads/use-proof-downloads.t
 export interface ClientBrowseScreenProps {
   readonly gate: ClientGateView;
   readonly token: string;
-  /** True when Beranda holds only the *Semua foto* card (no groups, no final delivery): the page keeps the project title and the no-groups subtitle; the trail still starts at Beranda (F-22 R-7). */
+  /** True when Beranda holds only the *Semua foto* card (no groups, no final delivery): the page keeps the project title and the no-groups subtitle; the trail still starts at Beranda (F-23 R-7). */
   readonly isPhotosOnly: boolean;
   /** The root page loaded by the server, or null when it failed. */
   readonly initialPage: ClientBrowsePageView | null;

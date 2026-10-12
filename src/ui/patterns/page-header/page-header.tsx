@@ -77,7 +77,7 @@ export function PageHeaderTrail({ items, label }: Readonly<PageHeaderTrailProps>
   return <BreadcrumbTrail label={label} items={items} className="min-h-(--space-10) flex-1" />;
 }
 
-// F-22: the sidebar toggle's 8 px inner padding puts its icon on the title's edge, so the leading row starts 8 px left of it (space-8, not space-10).
+// F-23: the sidebar toggle's 8 px inner padding puts its icon on the title's edge, so the leading row starts 8 px left of it (space-8, not space-10).
 function BreadcrumbRow({ trail, utilities, leading, isFlush }: Readonly<BreadcrumbRowProps>) {
   const paddingLeft = leading
     ? "pl-(--space-8)"

@@ -21,7 +21,7 @@ export interface BreadcrumbTrailItemProps {
   readonly item: BreadcrumbItem;
   readonly isCurrent: boolean;
   readonly showSeparator: boolean;
-  /** The first or the last crumb: it never shrinks (F-22 OQ-5). */
+  /** The first or the last crumb: it never shrinks (F-23 OQ-5). */
   readonly isEdge: boolean;
 }
 
@@ -39,7 +39,7 @@ export interface PageHeaderProps {
   utilities?: ReactNode;
   /** A trail rendered elsewhere (the Owner `@crumbs` slot, ADR-025); replaces the one built from `breadcrumbs`. */
   trail?: ReactNode;
-  /** Sits left of the breadcrumb, e.g. the sidebar toggle (F-22). */
+  /** Sits left of the breadcrumb, e.g. the sidebar toggle (F-23). */
   leading?: ReactNode;
   tabs?: { readonly label: string; readonly tabs: readonly TabLink[] };
   /** No horizontal padding and no outer border: the page puts it in a bordered band whose column already lines it up (client shell, `ra85A`). */

@@ -1,4 +1,4 @@
-# Breadcrumb revamp (F-22) Implementation Plan
+# Breadcrumb revamp (F-23) Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 >
@@ -90,7 +90,7 @@ import {
   staticOwnerTrail,
 } from "./owner-trail";
 
-describe("owner trail (F-22 R-1…R-5)", () => {
+describe("owner trail (F-23 R-1…R-5)", () => {
   it("AC-CRUMB-001 the Dashboard is the single crumb Dasbor", () => {
     expect(dashboardTrail()).toEqual([{ label: "Dasbor" }]);
   });
@@ -211,7 +211,7 @@ const SUB_PAGE_LABELS = new Map<string, string>([
   ["services/items", OWNER_NAV_COPY.serviceTabs.items],
 ]);
 
-/** Builds an Owner breadcrumb: the workspace root, the ancestors, then the current page as plain text (F-22 R-1, R-2, R-5). @param input - workspace, ancestors and the current label @returns the crumbs */
+/** Builds an Owner breadcrumb: the workspace root, the ancestors, then the current page as plain text (F-23 R-1, R-2, R-5). @param input - workspace, ancestors and the current label @returns the crumbs */
 export function ownerTrail(input: {
   workspaceId: string;
   workspaceName: string;
@@ -225,7 +225,7 @@ export function ownerTrail(input: {
   ];
 }
 
-/** The Dashboard is the Owner root, so its trail is the single crumb *Dasbor* (F-22 R-2). @returns the crumbs */
+/** The Dashboard is the Owner root, so its trail is the single crumb *Dasbor* (F-23 R-2). @returns the crumbs */
 export function dashboardTrail(): readonly BreadcrumbItem[] {
   return [{ label: OWNER_NAV_COPY.dashboard }];
 }
@@ -240,7 +240,7 @@ export function projectCrumb(workspaceId: string, projectId: string, title: stri
   return { label: title, href: `/w/${workspaceId}/projects/${projectId}` };
 }
 
-/** The trail of a route whose labels are fixed: a section, a section tab, or *Proyek baru* (F-22 R-4). @param segments - the path below `/w/[id]` @param workspaceId - the verified route workspace @param workspaceName - its name @returns the crumbs, or null for an unknown path */
+/** The trail of a route whose labels are fixed: a section, a section tab, or *Proyek baru* (F-23 R-4). @param segments - the path below `/w/[id]` @param workspaceId - the verified route workspace @param workspaceName - its name @returns the crumbs, or null for an unknown path */
 export function staticOwnerTrail(
   segments: readonly string[],
   workspaceId: string,
@@ -599,7 +599,7 @@ Then, in the same file, replace
 ```
 with
 ```tsx
-  it("F-22 renders a trail made elsewhere in place of the generated one", () => {
+  it("F-23 renders a trail made elsewhere in place of the generated one", () => {
     render(
       <PageHeader
         parent="Aster"
@@ -651,7 +651,7 @@ In `src/ui/patterns/app-shell/app-shell.test.tsx`, replace
 ```
 with
 ```tsx
-  it("F-22 passes a server-rendered trail to the desktop page header", () => {
+  it("F-23 passes a server-rendered trail to the desktop page header", () => {
     render(
       <AppShell {...props} title="Galeri" panelTrail={<span>Jejak server</span>}>
         <p>isi</p>
@@ -1272,7 +1272,7 @@ In `src/features/workspace/ui/owner-shell/owner-shell.test.tsx`, replace
 ```
 with
 ```tsx
-  it("F-22 shows the trail it is given, not one built in the browser", () => {
+  it("F-23 shows the trail it is given, not one built in the browser", () => {
     render(
       <OwnerShell
         workspaceId="A"
@@ -1684,7 +1684,7 @@ const group: PickGroupView = {
   status: "OPEN",
 };
 
-describe("reviewHeader (F-22 R-5)", () => {
+describe("reviewHeader (F-23 R-5)", () => {
   it("AC-CRUMB-008 links the group crumb while the group is OPEN", () => {
     expect(reviewHeader(group, "T", true).breadcrumbs).toEqual([
       { label: "Beranda", href: "/g/T" },
@@ -1722,7 +1722,7 @@ Replace
 ```
 with
 ```ts
-    // F-22 R-5: the group's Pilih page redirects a non-OPEN group back here, so its crumb is plain text.
+    // F-23 R-5: the group's Pilih page redirects a non-OPEN group back here, so its crumb is plain text.
     breadcrumbs: [
       { label: CLIENT_COPY.home, href: home },
       { label: group.name },
@@ -1739,7 +1739,7 @@ Then replace the start of the doc comment
 ```
 with
 ```ts
-/** The page header of Tinjau (breadcrumb Beranda › group › Tinjau, phone *Kembali memilih*) or of the read-only view (Beranda › group, not linked › Tinjau, phone *Beranda*; F-22)
+/** The page header of Tinjau (breadcrumb Beranda › group › Tinjau, phone *Kembali memilih*) or of the read-only view (Beranda › group, not linked › Tinjau, phone *Beranda*; F-23)
 ```
 
 - [ ] **Step 4: Run it to verify it passes**
@@ -1812,7 +1812,7 @@ Replace
 ```
 with
 ```ts
-  /** True when Beranda holds only the *Semua foto* card (no groups, no final delivery): the page keeps the project title and the no-groups subtitle; the trail still starts at Beranda (F-22 R-7). */
+  /** True when Beranda holds only the *Semua foto* card (no groups, no final delivery): the page keeps the project title and the no-groups subtitle; the trail still starts at Beranda (F-23 R-7). */
   readonly isPhotosOnly: boolean;
 ```
 
@@ -1905,7 +1905,7 @@ and replace
 ```
 with
 ```tsx
-  // F-22 R-7: Beranda always renders, even with only the Semua foto card (A-31 withdrawn).
+  // F-23 R-7: Beranda always renders, even with only the Semua foto card (A-31 withdrawn).
   return <ClientHomeScreen
 ```
 
@@ -1917,7 +1917,7 @@ In `src/features/gallery/domain/client-home/client-home.ts`, replace
 ```
 with
 ```ts
-/** Whether Beranda holds only the *Semua foto* card (A-24). Since F-22 R-7 the client still lands on Beranda; *Semua foto* uses this for its title and subtitle. @param groupCount - selection groups of the project @param finalDeliveryPublished - whether final delivery is published @returns `ALL_PHOTOS` when Beranda would hold one card, else `HOME` */
+/** Whether Beranda holds only the *Semua foto* card (A-24). Since F-23 R-7 the client still lands on Beranda; *Semua foto* uses this for its title and subtitle. @param groupCount - selection groups of the project @param finalDeliveryPublished - whether final delivery is published @returns `ALL_PHOTOS` when Beranda would hold one card, else `HOME` */
 ```
 Do not change the function body or its test.
 
@@ -2000,7 +2000,7 @@ Edit 1: replace
 ```
 with
 ```tsx
-  it("exposes the logout action and owns no sidebar toggle (F-22)", () => {
+  it("exposes the logout action and owns no sidebar toggle (F-23)", () => {
     const onLogout = vi.fn();
     render(
       <Sidebar
@@ -2032,7 +2032,7 @@ Edit 2: replace
 ```
 with
 ```tsx
-  it("renders the compact rail mode with a grouped nav and no expand control (F-22)", () => {
+  it("renders the compact rail mode with a grouped nav and no expand control (F-23)", () => {
     render(
       <Sidebar
         workspace={{ name: "Studio Lime" }}
@@ -2249,7 +2249,7 @@ In `page-header.types.ts`, replace
 with
 ```ts
   trail?: ReactNode;
-  /** Sits left of the breadcrumb, e.g. the sidebar toggle (F-22). */
+  /** Sits left of the breadcrumb, e.g. the sidebar toggle (F-23). */
   leading?: ReactNode;
   tabs?: { readonly label: string; readonly tabs: readonly TabLink[] };
 ```
@@ -2339,7 +2339,7 @@ In `app-panel.types.ts`, replace
 with
 ```ts
   trail?: ReactNode;
-  /** Sits left of the breadcrumb, e.g. the sidebar toggle (F-22). */
+  /** Sits left of the breadcrumb, e.g. the sidebar toggle (F-23). */
   leading?: ReactNode;
   children: ReactNode;
 ```
@@ -2407,7 +2407,7 @@ with
     requestAnimationFrame(focusSidebarToggle);
   }
 
-  // F-22: one toggle left of the breadcrumb; it collapses or expands the desktop Sidebar and opens the tablet overlay.
+  // F-23: one toggle left of the breadcrumb; it collapses or expands the desktop Sidebar and opens the tablet overlay.
   const sidebarToggle = (
     <>
       <div className="hidden xl:flex">
@@ -2709,7 +2709,7 @@ const ITEMS = [
   { label: "Foto album keluarga besar" },
 ];
 
-describe("BreadcrumbTrail (F-22 OQ-5)", () => {
+describe("BreadcrumbTrail (F-23 OQ-5)", () => {
   it("AC-CRUMB-013 keeps the root and the current page whole", () => {
     render(<BreadcrumbTrail label="Breadcrumb" items={ITEMS} />);
 
@@ -2766,7 +2766,7 @@ export interface BreadcrumbTrailItemProps {
   readonly item: BreadcrumbItem;
   readonly isCurrent: boolean;
   readonly showSeparator: boolean;
-  /** The first or the last crumb: it never shrinks (F-22 OQ-5). */
+  /** The first or the last crumb: it never shrinks (F-23 OQ-5). */
   readonly isEdge: boolean;
 }
 ```
@@ -2822,7 +2822,7 @@ function BreadcrumbTrailItem({
   showSeparator,
   isEdge,
 }: Readonly<BreadcrumbTrailItemProps>) {
-  // F-22 OQ-5: the root and the current page stay whole; the crumbs between them shrink with "…".
+  // F-23 OQ-5: the root and the current page stay whole; the crumbs between them shrink with "…".
   const fit = isEdge ? "shrink-0" : "min-w-0";
   const title = isEdge ? undefined : item.label;
   let content;

@@ -39,7 +39,7 @@ function BreadcrumbTrailItem({
   showSeparator,
   isEdge,
 }: Readonly<BreadcrumbTrailItemProps>) {
-  // F-22 OQ-5: the root and the current page stay whole; the crumbs between them shrink with "…".
+  // F-23 OQ-5: the root and the current page stay whole; the crumbs between them shrink with "…".
   const fit = isEdge ? "shrink-0" : "min-w-0";
   const title = isEdge ? undefined : item.label;
   let content;

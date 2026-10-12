@@ -1,4 +1,4 @@
-# Verification report — Breadcrumb revamp (F-22)
+# Verification report — Breadcrumb revamp (F-23)
 
 Date: 2026-10-12 · Branch: `staging` at `45cf18c6` (range `f34cd45e..HEAD`, not pushed) · Verifier: `/sdv:verify-feature breadcrumb-revamp`, run without E2E tests (Owner: "tanpa e2e test")
 **Result: NOT DONE.** One blocking item (B-1). Every acceptance criterion has passing evidence, and the quality gate passes.
@@ -67,7 +67,7 @@ Business rules: BR-WS-003 / C-101: every slot verifies the URL workspace before 
 | Rule | Result | Note |
 |---|---|---|
 | G2 no primitives | PASS | No `color.primitive.*` in the diff |
-| G4 no hard-coded values | PASS for the new code | The new classes are layout utilities only (`shrink-0`, `min-w-0`, `truncate`, `hidden md:flex xl:flex`). The focus-ring arbitrary shadow `0_0_0_2px…4px` in `breadcrumb-trail.tsx` was there before F-22 (advisory, not F-22's) |
+| G4 no hard-coded values | PASS for the new code | The new classes are layout utilities only (`shrink-0`, `min-w-0`, `truncate`, `hidden md:flex xl:flex`). The focus-ring arbitrary shadow `0_0_0_2px…4px` in `breadcrumb-trail.tsx` was there before F-23 (advisory, not F-23's) |
 | G3 component tokens first | PASS | The bar keeps `component.page-header.breadcrumb-*` |
 | G5 fg/bg pairing | PASS | Crumb text (`breadcrumb-text`, `breadcrumb-current`) stays on the Page Header background; the colours didn't change |
 | SP1 / SP2 / SP7 / SP8 | PASS | The toggle is separated from the trail by the row's `gap` (`breadcrumb-gap` = `space.2`). The leading wrapper adds no padding or margin. |
@@ -78,7 +78,7 @@ Business rules: BR-WS-003 / C-101: every slot verifies the URL workspace before 
 ## 5. Blocking
 
 ### B-1 — CONFLICT: ADR-025 says each slot route has a test; none exists
-- **ADR-025 › Consequences** (higher authority) says: "Missing one shows the wrong trail, so the slot has a test per route (F-22 technical design)."
+- **ADR-025 › Consequences** (higher authority) says: "Missing one shows the wrong trail, so the slot has a test per route (F-23 technical design)."
 - **Technical design §5.3 and §11** (lower authority) say: "There is no automated check yet." The build notes list "no automated slot-coverage test" as an open finding.
 - **Impact:** the trails are correct today (browser-checked on 16 routes). A future Owner route with a dynamic name, or a new static sibling of `projects/[projectId]` or `services/[serviceId]`, would get the wrong trail or a stale one, and no test would catch it. ADR-025 names that exact regression.
 - **Fix, pick one:**
@@ -92,13 +92,13 @@ Business rules: BR-WS-003 / C-101: every slot verifies the URL workspace before 
 | D-1 | **Design-system and Pencil drift** (waived, C-012). (1) The library *Sidebar* component still draws the collapse button in the logo row and the expand button on the rail; the code removed both. (2) The C40 Page Header breadcrumb bar has no leading toggle slot. (3) The per-page trails drawn in feature frames and recorded in `catalog/design.md`, `projects/design.md`, `message-templates/design.md`, `clients/design.md` contradict R-1 (FC-002). | spec › *Design*, FC-002 | Sync in the next design pass: Sidebar and C40 in `design-system.lib.pen`, then the affected frames and design notes |
 | D-2 | The toggle sits inside the bar's left padding (`breadcrumb-padding-x` = `space.10`), so on desktop and tablet the first crumb now starts right of the hero title's left edge, offset by the toggle's width plus `space.2`. No design reference was drawn for it. | page-header.tsx `BreadcrumbRow` | Owner looks at it in the review. If it should line up, decide it in the design pass (D-1) |
 | D-3 | Coding-rule conventions (not linted): `owner-trail.ts` exports `type OwnerSection` from an implementation file (rule: exported types go in `owner-trail.types.ts`); `ownerTrail(input: { … })` takes an inline object type literal (rule: extract a named interface); `PageHeaderTrail` and `CrumbText` use inline props literals (an existing pattern in that file) | coding-rules › *Where types and schemas live* | Move `OwnerSection` and an `OwnerTrailInput` interface to `owner-trail.types.ts` (5 minutes, no behaviour change) |
-| D-4 | Doc status drift (C-011): `technical-design.md` still says `Status: PLANNED` (this run updated `spec.md`); technical design §10 still says AC-CRUMB-013 is "blocked (Task 8)"; the F-22 amendment notes in `app-shell-revamp/acceptance-criteria.md` (lines 26, 35) and `client-access/acceptance-criteria.md` (lines 227, 244) still say "not yet built" | those files | Update the status lines and drop "not yet built" when B-1 is closed |
+| D-4 | Doc status drift (C-011): `technical-design.md` still says `Status: PLANNED` (this run updated `spec.md`); technical design §10 still says AC-CRUMB-013 is "blocked (Task 8)"; the F-23 amendment notes in `app-shell-revamp/acceptance-criteria.md` (lines 26, 35) and `client-access/acceptance-criteria.md` (lines 227, 244) still say "not yet built" | those files | Update the status lines and drop "not yet built" when B-1 is closed |
 | D-5 | Minor code findings from the build: duplicate JSDoc on the cached loaders (for example `gallery-flow.ts` lines 71 and 94); `OWNER_NAV_COPY.create` reused as the *Proyek baru* crumb label (same text today, but a different meaning); very short middle crumbs can shrink to a few pixels beside a long title; a hydration warning on `<html data-theme>` once in an e2e log (root layout, likely pre-existing) | build notes › *Open minor findings* | Later cleanup; record them in `docs/findings/` if they aren't fixed with B-1 |
 | D-6 | No E2E was re-run in this verification (Owner instruction). AC-001, 009, 015 and 016 rely partly on the last green e2e run of 2026-10-12. | — | Run the two specs once before `/sdv:ship` |
-| D-7 | The branch is local on `staging` (not pushed, no PR). The feature map says it is awaiting the Owner's review on `localhost`. | feature map F-22 | Owner reviews the change |
+| D-7 | The branch is local on `staging` (not pushed, no PR). The feature map says it is awaiting the Owner's review on `localhost`. | feature map F-23 | Owner reviews the change |
 
 ## 7. Status
 
-The feature map (F-22) is set to **BUILT, verified 2026-10-12, 1 blocking item (B-1)**. It is not `DONE`. Close B-1 with option (a) or (b), then re-run `/sdv:verify-feature breadcrumb-revamp` (B-1 only, plus the D-4 doc fixes) to set it to `DONE`.
+The feature map (F-23) is set to **BUILT, verified 2026-10-12, 1 blocking item (B-1)**. It is not `DONE`. Close B-1 with option (a) or (b), then re-run `/sdv:verify-feature breadcrumb-revamp` (B-1 only, plus the D-4 doc fixes) to set it to `DONE`.
 
 **Follow-up (2026-10-12, same day):** B-1 closed with option (a). `src/features/workspace/ui/owner-trail/owner-route-coverage.test.ts` lists every Owner page and slot page; it fails on a dynamic page with no slot, a static sibling of a dynamic slot segment with no mirror, a static page the catch-all cannot name, or a slot page with no real page. `[section]` is the one exception (served by the catch-all). The test was checked by adding a temporary dynamic page, which made it fail; the page was removed. D-4 doc status lines are updated. D-3 and the other non-blocking items are still open. Re-run `/sdv:verify-feature breadcrumb-revamp` to set the status to `DONE`.

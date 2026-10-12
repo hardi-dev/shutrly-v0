@@ -58,7 +58,7 @@ describe("Sidebar (C29)", () => {
     expect(screen.getByText("hardi@example.com")).toBeInTheDocument();
   });
 
-  it("exposes the logout action and owns no sidebar toggle (F-22)", () => {
+  it("exposes the logout action and owns no sidebar toggle (F-23)", () => {
     const onLogout = vi.fn();
     render(
       <Sidebar
@@ -75,7 +75,7 @@ describe("Sidebar (C29)", () => {
     expect(screen.queryByRole("button", { name: "Ciutkan navigasi samping" })).toBeNull();
   });
 
-  it("renders the compact rail mode with a grouped nav and no expand control (F-22)", () => {
+  it("renders the compact rail mode with a grouped nav and no expand control (F-23)", () => {
     render(
       <Sidebar
         workspace={{ name: "Studio Lime" }}

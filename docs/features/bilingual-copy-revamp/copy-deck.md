@@ -2194,7 +2194,7 @@ Shown inside the workspace shell when a page or record under `/w/{workspaceId}` 
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Title · Approved (Owner, 2026-10-12) | Page not found | Halaman tidak ditemukan |
-| Body · Approved (Owner, 2026-10-12) | This page doesn't exist or was removed. | Halaman ini tidak ada atau sudah dihapus. |
+| Body · Approved (Owner, 2026-10-12) | This page doesn’t exist or was removed. | Halaman ini tidak ada atau sudah dihapus. |
 | Back to section · Approved (Owner, 2026-10-12) | Back to {section} | Kembali ke {section} |
 | Back to dashboard · Approved (Owner, 2026-10-12) | Back to dashboard | Kembali ke dasbor |
 

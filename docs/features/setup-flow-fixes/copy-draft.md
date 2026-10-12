@@ -36,7 +36,7 @@ This is the text the Owner approved. It is copied verbatim into `copy-deck.md` a
 | key | file | final EN | final ID |
 |---|---|---|---|
 | pageNotFound title | `page-not-found-screen.copy.ts` (new) | Page not found | Halaman tidak ditemukan |
-| pageNotFound body | `page-not-found-screen.copy.ts` (new) | This page doesn't exist or was removed. | Halaman ini tidak ada atau sudah dihapus. |
+| pageNotFound body | `page-not-found-screen.copy.ts` (new) | This page doesn’t exist or was removed. | Halaman ini tidak ada atau sudah dihapus. |
 | pageNotFound backToSection (`{section}`) | `page-not-found-screen.copy.ts` (new) | Back to {section} | Kembali ke {section} |
 | pageNotFound backToDashboard | `page-not-found-screen.copy.ts` (new) | Back to dashboard | Kembali ke dasbor |
 | guideStep3 | `source-copy.copy.ts` | Later, map any subfolder to a package item on the gallery page. Files in mapped subfolders are final files; unmapped photos stay available for selection. | Nanti, petakan subfolder apa pun ke item paket di halaman galeri. File di subfolder yang dipetakan menjadi hasil akhir; foto yang belum dipetakan tetap tersedia untuk dipilih. |

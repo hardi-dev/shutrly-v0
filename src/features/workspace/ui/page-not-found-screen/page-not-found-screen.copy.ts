@@ -9,7 +9,7 @@ export const PAGE_NOT_FOUND_COPY = {
   messages: {
     en: {
       title: "Page not found",
-      body: "This page doesn't exist or was removed.",
+      body: "This page doesn’t exist or was removed.",
       backToSection: "Back to {section}",
       backToDashboard: "Back to dashboard",
     },
@@ -21,3 +21,5 @@ export const PAGE_NOT_FOUND_COPY = {
     },
   },
 } as const;
+
+export { PAGE_HEADER_COPY_NAMESPACE } from "@/ui/patterns/page-header/page-header.copy";

@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
 import { verifyOwnerWorkspace } from "@/composition/workspace/owner-workspace/owner-workspace";
@@ -21,7 +22,7 @@ export default async function TemplateCrumbs({
   const page = messageTemplateSubPages(templateT, workspaceId).find(
     (subPage) => subPage.path === path,
   );
-  if (!page) return null;
+  if (!page) notFound();
   const t = await getTranslations(OWNER_NAV_COPY_NAMESPACE);
   const crumbT = await getTranslations(PAGE_HEADER_COPY_NAMESPACE);
   const items = ownerTrail({

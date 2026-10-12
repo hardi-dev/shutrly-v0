@@ -16,7 +16,7 @@ describe("PageNotFoundScreen (AC-SFX-011, AC-SFX-012)", () => {
   it("says the page is missing and links back to its section in English", () => {
     renderInLocale(<PageNotFoundScreen />, "en");
     expect(screen.getByRole("heading", { name: "Page not found" })).toBeInTheDocument();
-    expect(screen.getByText("This page doesn't exist or was removed.")).toBeInTheDocument();
+    expect(screen.getByText("This page doesn’t exist or was removed.")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Back to Projects" })).toHaveAttribute(
       "href",
       "/w/W/projects",

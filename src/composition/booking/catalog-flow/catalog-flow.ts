@@ -133,7 +133,7 @@ async function loadServiceDetailUncached(
   }
 }
 
-/** Loads a service's detail; one lookup per request (ADR-025). */
+/** Loads a service's detail; one lookup per request (ADR-026). */
 export const loadServiceDetail = cache(loadServiceDetailUncached);
 
 export async function addCatalogCategory(rawWorkspaceId: string, input: unknown) {

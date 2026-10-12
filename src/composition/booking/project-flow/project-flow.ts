@@ -107,7 +107,7 @@ async function loadProjectDetailUncached(rawWorkspaceId: string, rawProjectId: s
   }
 }
 
-/** Loads a project's detail; one lookup per request (ADR-025). */
+/** Loads a project's detail; one lookup per request (ADR-026). */
 export const loadProjectDetail = cache(loadProjectDetailUncached);
 
 export async function advanceProjectEntry(

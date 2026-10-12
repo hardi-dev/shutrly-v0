@@ -37,7 +37,7 @@ export interface PageHeaderProps {
   meta?: string;
   action?: ReactNode;
   utilities?: ReactNode;
-  /** A trail rendered elsewhere (the Owner `@crumbs` slot, ADR-025); replaces the one built from `breadcrumbs`. */
+  /** A trail rendered elsewhere (the Owner `@crumbs` slot, ADR-026); replaces the one built from `breadcrumbs`. */
   trail?: ReactNode;
   /** Sits left of the breadcrumb, e.g. the sidebar toggle (F-23). */
   leading?: ReactNode;

@@ -6,11 +6,11 @@
 
 **Goal:** Every desktop breadcrumb shows one crumb per route level, the Owner trail is complete on first paint, Beranda always exists for clients, and the sidebar toggle sits left of the breadcrumb.
 
-**Architecture:** A pure builder (`src/features/workspace/ui/owner-trail/`) makes the Owner crumbs. A Next.js parallel route slot `@crumbs` under `src/app/(owner)/w/[workspaceId]/` renders them on the server (ADR-025). Shared loaders are wrapped in React `cache()` so the slot and the page share one query. Client trails are plain composition changes. The toggle is a `leading` slot in the Page Header.
+**Architecture:** A pure builder (`src/features/workspace/ui/owner-trail/`) makes the Owner crumbs. A Next.js parallel route slot `@crumbs` under `src/app/(owner)/w/[workspaceId]/` renders them on the server (ADR-026). Shared loaders are wrapped in React `cache()` so the slot and the page share one query. Client trails are plain composition changes. The toggle is a `leading` slot in the Page Header.
 
 **Tech Stack:** Next.js 16 (App Router, parallel routes), React 19 (`cache`), TypeScript, Tailwind v4 tokens, React Aria, Vitest + Testing Library, Playwright.
 
-**Read before starting:** [spec.md](spec.md), [acceptance-criteria.md](acceptance-criteria.md), [technical-design.md](technical-design.md), [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md).
+**Read before starting:** [spec.md](spec.md), [acceptance-criteria.md](acceptance-criteria.md), [technical-design.md](technical-design.md), [ADR-026](../../architecture/decisions/ADR-026-owner-breadcrumb-parallel-route.md).
 
 ## Global Constraints
 
@@ -288,7 +288,7 @@ git commit -m "feat(workspace): add owner breadcrumb builder" -m "Co-Authored-By
 
 ### Task 2: Cache the shared loaders
 
-**Covers:** ADR-025 point 3 (the slot and the page share one query); AC-CRUMB-012 stays enforced by the same loaders.
+**Covers:** ADR-026 point 3 (the slot and the page share one query); AC-CRUMB-012 stays enforced by the same loaders.
 
 **Files:**
 - Modify: `src/composition/workspace/owner-workspace/owner-workspace.ts`
@@ -339,7 +339,7 @@ export async function enterWorkspace(rawId: string): Promise<VerifiedWorkspace> 
 ```
 with
 ```ts
-/** Verifies a workspace for an owner without writing last-opened state; one lookup per request (ADR-025). */
+/** Verifies a workspace for an owner without writing last-opened state; one lookup per request (ADR-026). */
 export const verifyOwnerWorkspace = cache(verifyOwnerWorkspaceUncached);
 
 /** Verifies a workspace and conditionally records it as opened for a normal workspace page. @param rawId - untrusted route ID @returns the verified workspace context and summary */
@@ -383,7 +383,7 @@ with
   }
 }
 
-/** Loads a project's detail; one lookup per request (ADR-025). */
+/** Loads a project's detail; one lookup per request (ADR-026). */
 export const loadProjectDetail = cache(loadProjectDetailUncached);
 ```
 Before Edit 3, run `grep -n '"detail");' src/composition/booking/project-flow/project-flow.ts` and check it prints exactly one line. If it prints more than one, stop and report.
@@ -422,7 +422,7 @@ async function loadServiceDetailUncached(
 Edit 3: run `sed -n '/async function loadServiceDetailUncached/,/^}/p' src/composition/booking/catalog-flow/catalog-flow.ts` to see the whole function. Right after its closing `}` line (the first line that is exactly `}` after the function start), insert:
 ```ts
 
-/** Loads a service's detail; one lookup per request (ADR-025). */
+/** Loads a service's detail; one lookup per request (ADR-026). */
 export const loadServiceDetail = cache(loadServiceDetailUncached);
 ```
 
@@ -455,7 +455,7 @@ async function loadGalleryPageUncached(rawWorkspaceId: string, rawProjectId: str
 Edit 3: run `sed -n '/async function loadGalleryPageUncached/,/^}/p' src/composition/gallery/gallery-flow/gallery-flow.ts`. Right after its closing `}` line, insert:
 ```ts
 
-/** Loads the gallery page of a project; one lookup per request (ADR-025). */
+/** Loads the gallery page of a project; one lookup per request (ADR-026). */
 export const loadGalleryPage = cache(loadGalleryPageUncached);
 ```
 
@@ -497,7 +497,7 @@ with
   }
 }
 
-/** Loads the *Pilihan klien* page; one lookup per request (ADR-025). */
+/** Loads the *Pilihan klien* page; one lookup per request (ADR-026). */
 export const loadSelectionGroups = cache(loadSelectionGroupsUncached);
 ```
 
@@ -530,7 +530,7 @@ with
   }
 }
 
-/** Loads one group with its picks for the Owner; one lookup per request (ADR-025). */
+/** Loads one group with its picks for the Owner; one lookup per request (ADR-026). */
 export const loadSelectionGroupDetail = cache(loadSelectionGroupDetailUncached);
 ```
 
@@ -679,7 +679,7 @@ Replace
 with
 ```ts
   utilities?: ReactNode;
-  /** A trail rendered elsewhere (the Owner `@crumbs` slot, ADR-025); replaces the one built from `breadcrumbs`. */
+  /** A trail rendered elsewhere (the Owner `@crumbs` slot, ADR-026); replaces the one built from `breadcrumbs`. */
   trail?: ReactNode;
   tabs?: { readonly label: string; readonly tabs: readonly TabLink[] };
 ```
@@ -729,7 +729,7 @@ function BreadcrumbRow({
 ```
 with
 ```tsx
-/** The Page Header breadcrumb, also rendered on the server by the Owner `@crumbs` slot (ADR-025). @param props - the crumbs; the last one is current @returns the trail */
+/** The Page Header breadcrumb, also rendered on the server by the Owner `@crumbs` slot (ADR-026). @param props - the crumbs; the last one is current @returns the trail */
 export function PageHeaderTrail({ items }: Readonly<{ items: readonly BreadcrumbItem[] }>) {
   return (
     <BreadcrumbTrail
@@ -827,7 +827,7 @@ In `app-shell.types.ts`, replace
 with
 ```ts
   panelBreadcrumbs?: NonNullable<PageHeaderProps["breadcrumbs"]>;
-  /** A trail rendered on the server (ADR-025); wins over `panelBreadcrumbs`. */
+  /** A trail rendered on the server (ADR-026); wins over `panelBreadcrumbs`. */
   panelTrail?: ReactNode;
 ```
 
@@ -1315,7 +1315,7 @@ Replace
 with
 ```ts
   subPages?: readonly OwnerSubPage[];
-  /** The breadcrumb rendered on the server (`@crumbs` slot or the profile layout, ADR-025). */
+  /** The breadcrumb rendered on the server (`@crumbs` slot or the profile layout, ADR-026). */
   trail?: ReactNode;
 }
 ```

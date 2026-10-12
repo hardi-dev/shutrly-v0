@@ -3,7 +3,7 @@
 Date: 2026-10-12 · Branch: `staging` at `45cf18c6` (range `f34cd45e..HEAD`, not pushed) · Verifier: `/sdv:verify-feature breadcrumb-revamp`, run without E2E tests (Owner: "tanpa e2e test")
 **Result: NOT DONE.** One blocking item (B-1). Every acceptance criterion has passing evidence, and the quality gate passes.
 
-Artifacts checked: [constitution](../../constitution.md) (C-001…C-012, C-101, C-104), [coding rules](../../coding-rules.md) v2.0, BR-WS-003, BR-ACC-003, BR-SEL-001, BR-SEL-005, [spec](spec.md), [acceptance criteria](acceptance-criteria.md), [technical design](technical-design.md), [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md), ADR-018, [build notes](build-notes.md), [token usage rules](../../design-system/token-usage.md) (APPROVED, so deviations from them count as real deviations, not advisory), and the F-17 and F-10 amendment notes.
+Artifacts checked: [constitution](../../constitution.md) (C-001…C-012, C-101, C-104), [coding rules](../../coding-rules.md) v2.0, BR-WS-003, BR-ACC-003, BR-SEL-001, BR-SEL-005, [spec](spec.md), [acceptance criteria](acceptance-criteria.md), [technical design](technical-design.md), [ADR-026](../../architecture/decisions/ADR-026-owner-breadcrumb-parallel-route.md), ADR-018, [build notes](build-notes.md), [token usage rules](../../design-system/token-usage.md) (APPROVED, so deviations from them count as real deviations, not advisory), and the F-17 and F-10 amendment notes.
 
 ## 1. Quality gate (re-run 2026-10-12)
 
@@ -34,7 +34,7 @@ Artifacts checked: [constitution](../../constitution.md) (C-001…C-012, C-101, 
 | 008 Client trails | `review-text.test.ts` AC-CRUMB-008 (open: linked group; read-only: plain group + *Tinjau*) | PASS |
 | 009 Beranda always | A-31 redirect removed in `g/[token]/page.tsx`; `client-browse-screen.test.tsx` AC-CRUMB-009; gate e2e (last run) | PASS |
 | 010 Accessible trail | `page-header.test.tsx` AC-CRUMB-010; `<nav aria-label>`, `aria-current="page"`, separators `aria-hidden` | PASS |
-| 011 First paint | ADR-025 mechanism (server-rendered slot); raw server HTML checked on 16 routes (build notes) | PASS (documented verification, C-009) |
+| 011 First paint | ADR-026 mechanism (server-rendered slot); raw server HTML checked on 16 routes (build notes) | PASS (documented verification, C-009) |
 | 012 Tenant and token names | slots use the scoped cached loaders (`verifyOwnerWorkspace`, `loadProjectDetail`, `loadGalleryPage`, `loadSelectionGroups`, `loadSelectionGroupDetail`, `loadServiceDetail`), which throw `notFound()`; browser check of foreign IDs → 404 | PASS |
 | 013 Long trail | `breadcrumb-trail.test.tsx` AC-CRUMB-013 (4 tests); browser check at 768 px | PASS |
 | 014 Phone back | `PageHeadingOverride.parent` unchanged on each page; `owner-shell.test.tsx`; `review-text.ts` back targets | PASS |
@@ -52,8 +52,8 @@ Business rules: BR-WS-003 / C-101: every slot verifies the URL workspace before 
 | C-010 scope | PASS. The sidebar toggle was added by the Owner (spec › *Sidebar toggle*). The fixes to the pre-existing gate e2e are recorded in the build notes. |
 | C-012 deviations recorded | PASS for the Pencil waiver (spec › *Design*). FAIL for B-1. |
 | ADR-018 budget | PASS. Every dynamic slot calls the same cached loader with the same arguments as its page and layout (checked in each page file), so no extra query runs. |
-| ADR-025 decision 1–6 | PASS: slot, catch-all, mirrors, `default.tsx`, cached loaders, `PageHeadingOverride` kept, client out of scope |
-| ADR-025 › Consequences ("the slot has a test per route") | PASS after B-1 fix: `owner-route-coverage.test.ts` (2026-10-12, option a) |
+| ADR-026 decision 1–6 | PASS: slot, catch-all, mirrors, `default.tsx`, cached loaders, `PageHeadingOverride` kept, client out of scope |
+| ADR-026 › Consequences ("the slot has a test per route") | PASS after B-1 fix: `owner-route-coverage.test.ts` (2026-10-12, option a) |
 | Architecture boundaries | PASS (lint). `owner-trail` sits in `features/workspace/ui` because it reads nav copy, as the technical design says. |
 | Copy in `*.copy.ts` | PASS (lint `local/ui-copy`). The literal `"Layanan"` in the service page is replaced by `OWNER_NAV_COPY.services`. |
 | Coding-rule conventions (not linted) | Deviations D-3 |
@@ -77,13 +77,13 @@ Business rules: BR-WS-003 / C-101: every slot verifies the URL workspace before 
 
 ## 5. Blocking
 
-### B-1 — CONFLICT: ADR-025 says each slot route has a test; none exists
-- **ADR-025 › Consequences** (higher authority) says: "Missing one shows the wrong trail, so the slot has a test per route (F-23 technical design)."
+### B-1 — CONFLICT: ADR-026 says each slot route has a test; none exists
+- **ADR-026 › Consequences** (higher authority) says: "Missing one shows the wrong trail, so the slot has a test per route (F-23 technical design)."
 - **Technical design §5.3 and §11** (lower authority) say: "There is no automated check yet." The build notes list "no automated slot-coverage test" as an open finding.
-- **Impact:** the trails are correct today (browser-checked on 16 routes). A future Owner route with a dynamic name, or a new static sibling of `projects/[projectId]` or `services/[serviceId]`, would get the wrong trail or a stale one, and no test would catch it. ADR-025 names that exact regression.
+- **Impact:** the trails are correct today (browser-checked on 16 routes). A future Owner route with a dynamic name, or a new static sibling of `projects/[projectId]` or `services/[serviceId]`, would get the wrong trail or a stale one, and no test would catch it. ADR-026 names that exact regression.
 - **Fix, pick one:**
   - **(a) Recommended, about 30 minutes:** add a unit test that lists every `page.tsx` under `src/app/(owner)/w/[workspaceId]/` (outside `@crumbs`). For each one, it asserts there is either a matching `@crumbs` page, or a path that `staticOwnerTrail` resolves (`(list)` group stripped, `[section]` checked against the *Segera hadir* sections). It also asserts that every static sibling of a dynamic slot segment has a mirror. The Owner trail then has automated coverage for AC-004…006 at route level.
-  - **(b) Owner decision:** amend ADR-025 › Consequences to "no automated coverage check; checked by review", with the date and the Owner's words. A test isn't needed after that.
+  - **(b) Owner decision:** amend ADR-026 › Consequences to "no automated coverage check; checked by review", with the date and the Owner's words. A test isn't needed after that.
 
 ## 6. Non-blocking deviations
 

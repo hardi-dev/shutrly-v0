@@ -1,6 +1,8 @@
-# ADR-025: The Owner breadcrumb is rendered on the server by a parallel route slot
+# ADR-026: The Owner breadcrumb is rendered on the server by a parallel route slot
 
 Status: Accepted (Owner, 2026-10-12: "fix semua sesuai rekomendasi kamu", review of F-23)
+
+Renumbered from ADR-025 on 2026-10-12 (Owner, F-24 discovery FC-006): ADR-025 is the next-intl localization decision.
 Date: 2026-10-12
 Feature: [F-23 breadcrumb-revamp](../../features/breadcrumb-revamp/spec.md) (R-6, AC-CRUMB-011)
 

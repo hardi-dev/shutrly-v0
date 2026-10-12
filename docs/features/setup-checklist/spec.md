@@ -63,7 +63,7 @@ Steps rows 5–9 of the intent's table are not shown (intent › Recommended ans
 - **E2 — Workspace the Owner can't open.** Unchanged: the existing not-found / unavailable handling of `enterWorkspace` (BR-WS-003).
 
 ## UI States (C-007)
-- **Default:** greeting + checklist (title, short description, progress, four steps), the card centered in the content area (desktop, also vertically).
+- **Default:** the shell header (*Dashboard*) and the checklist only (no in-content greeting; Owner 2026-10-12, DV-1) (title, short description, progress, four steps), the card centered in the content area (desktop, also vertically).
 - **Step states:** current (one button), open (row link), done, locked — see *Steps*.
 - **Phone:** the current step's button sits under its description, sized to its label and aligned with the text.
 - **Loading:** the dashboard is server-rendered; no client loading state beyond the existing route loading UI.

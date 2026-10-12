@@ -10,7 +10,7 @@ Covers: BR-CAT-011, BR-WS-003
 **Given** an Owner who has just created the workspace *Explore Studio* (no categories, services, clients or projects; the four seeded package items, five templates and the *Google Drive* source exist)
 **When** the dashboard opens
 **Then**:
-- the greeting is shown, followed by the checklist with four steps in order: add a service, add package items, create the first project, set the brand name;
+- the shell header stays *Dashboard* / *Your workspace: Explore Studio.*, and the content area shows only the checklist (no in-content greeting) with four steps in order: add a service, add package items, create the first project, set the brand name *(reworded by the Owner 2026-10-12, verification DV-1: the exports' header title was a frame artifact)*;
 - step 1 is marked *Required*, step 2 *Recommended*, step 4 *Optional*;
 - no step is done; step 1 is current and shows the only button, *Add service*; steps 2 and 3 are locked (no button, no link); step 4 is an open row link with no button;
 - the *Set up branding* empty state is not shown;

@@ -82,7 +82,7 @@ Covers: BR-CUR-001, BR-CUR-003, BR-CAT-009 (A-2, A-6, A-7)
 
 **Given** an active category *Wisuda*
 **When** the Owner creates *Wisuda Basic*, category *Wisuda*, price *750000*
-**Then** it is saved active with base price exactly 750000 and currency `IDR`, and the service detail page opens with empty *Item paket* and *Field booking* sections.
+**Then** it is saved active with base price exactly 750000 and currency `IDR`, the *Layanan* list shows it without a reload, and a success toast offers to open it; opening it shows empty *Item paket* and *Field booking* sections. *(Amended by F-24 setup-flow-fixes, AC-SFX-006, Owner 2026-10-12.)*
 
 ## AC-CAT-011 — Attach items with typed values
 Covers: BR-CAT-001, BR-CAT-002, BR-CAT-005

@@ -37,7 +37,7 @@ As a photographer (Owner), I want to set up my packages once, for example *Wisud
 1. Owner opens *Layanan*. The server verifies the workspace. The *Layanan* tab lists services by category; a new workspace has none, so the empty state points to *Tambah layanan* and, if no category exists, to *Tambah kategori* first (A-6).
 2. **Item paket:** the tab already holds the four seeded definitions (BR-CAT-011). The Owner adds another, e.g. *Album* (`NUMBER`, unit *buah*, no selection). The server validates it (BR-CAT-001, 002, 007, 009) and saves it.
 3. **Kategori:** the Owner adds *Wisuda*. The server validates the name (BR-CAT-009).
-4. **Tambah layanan:** the Owner enters *Wisuda Basic*, category *Wisuda*, price 750000. The server stores the price as exact IDR with currency `IDR` (BR-CUR-001, BR-CUR-003) and opens the service detail page.
+4. **Tambah layanan:** the Owner enters *Wisuda Basic*, category *Wisuda*, price 750000. The server stores the price as exact IDR with currency `IDR` (BR-CUR-001, BR-CUR-003). The Owner stays on *Layanan*, which shows the new service at once, and a success toast offers to open it to add package items. *(Amended by F-24 setup-flow-fixes, Owner 2026-10-12; previously opened the service detail page, which broke in practice.)*
 5. **Attach items:** the Owner adds *Foto edit* = 25, *Foto cetak* = 5, *Jumlah orang* = 1–2. For each, the server checks the definition is active, same workspace and not yet in the service (BR-CAT-005), and validates the value against its type (BR-CAT-001, BR-CAT-002).
 6. **Add booking fields:** *Nama kampus* (*Teks*, required), *Tanggal wisuda* (*Tanggal*, required), *Ukuran toga* (*Pilihan*: S, M, L, optional). The server derives a key from each name, unique in the service (BR-CAT-006, A-3).
 7. Each save shows a success toast. The service is active and available to F-07.
@@ -99,7 +99,7 @@ stateDiagram-v2
 
 ## Assumptions (low-risk, reversible — confirm or change anytime)
 - **A-1 Nav:** the existing slot *Layanan* (`services`, icon `package`) becomes the real page; *Tim* stays *Segera hadir*. The tabs use the Segmented control (C23).
-- **A-2 Service detail sub-page:** `/w/[workspaceId]/services/[serviceId]`, using the F-17 sub-page bar. Creating a service asks only name, category and price, then opens this page.
+- **A-2 Service detail sub-page:** `/w/[workspaceId]/services/[serviceId]`, using the F-17 sub-page bar. Creating a service asks only name, category and price; the Owner reaches this page from the list or the success toast's action *(amended by F-24, Owner 2026-10-12; previously opened it directly)*.
 - **A-3 Booking field key:** generated from the name when the field is created (lowercase, `_`-separated, suffixed `_2`, `_3` on clash), hidden from the Owner, and unchanged when the field is renamed, so project snapshots stay stable. *Pilihan* options: 1–50 options, each 1–60 characters, unique ignoring case, ordered as entered.
 - **A-4 Unit:** optional free text, up to 20 characters, e.g. *foto*, *lembar*, *orang*, *jam*.
 - **A-5 Reorder:** move up / down buttons; no drag and drop in MVP.

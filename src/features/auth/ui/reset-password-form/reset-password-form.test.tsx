@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { serverFormDom, submitButton } from "@tests/support/forms/server-form";
 import { describe, expect, it, vi } from "vitest";
 
 import { CONTROLLED_TEXT_FIELD_COPY } from "../controlled-text-field/controlled-text-field.copy";
@@ -33,5 +34,19 @@ describe("ResetPasswordForm (RFaNT)", () => {
       password: "new-horse-1",
       confirm: "new-horse-1",
     });
+  });
+});
+
+describe("ResetPasswordForm before and after the page is interactive (AC-SFX-001, AC-SFX-002)", () => {
+  it("posts natively and keeps submit disabled until ready", () => {
+    const dom = serverFormDom(<ResetPasswordForm token="t" action={vi.fn()} />);
+    expect(dom.querySelector("form")).toHaveAttribute("method", "post");
+    expect(submitButton(dom)).toBeDisabled();
+  });
+
+  it("enables submit once the page is interactive", () => {
+    const { container } = render(<ResetPasswordForm token="t" action={vi.fn()} />);
+    expect(container.querySelector("form")).toHaveAttribute("method", "post");
+    expect(submitButton(container)).toBeEnabled();
   });
 });

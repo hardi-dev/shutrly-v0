@@ -2,6 +2,44 @@
 
 Older handoffs, the early status table, the component-library and design-system notes, and superseded next steps, moved out of [HANDOFF.md](HANDOFF.md) on 2026-10-04 to keep the file that every session reads small. Nothing was edited. Read this only when you need history; the live sources are the feature folders, `docs/design-system/` and `docs/features/README.md`.
 
+## Previous handoff — F-10 client-access, Owner 7 revision built (2026-10-07)
+
+- Outcome: Slices 0–12 built, then Revision OT (Slices 13–16, seven manual-test findings), F-20 *client-proof-downloads* and F-21 *delivery-folder-mapping*; verified and shipped 2026-10-09 (PR #12, deploy fix PR #13).
+- Read: [client-access](features/client-access/) (`spec.md`, `technical-design.md`, `plan.md`, [manual-test-findings.md](features/client-access/manual-test-findings.md)), [F-20](features/client-proof-downloads/build-notes.md), [F-21](features/delivery-folder-mapping/build-notes.md).
+- Open items that outlived it are listed in HANDOFF.md › Open items.
+
+## Pencil and design-library working notes (moved from HANDOFF.md, 2026-10-12)
+
+- **`TakeScreenshot` only renders the file in the frontmost Pen window** (otherwise it's blank). Run `open -a Pen <file>` first. Screenshots of nodes created in the same call can be stale, so take them in a separate call.
+- **Pencil limits:**
+  - Opacity variables are percent, and binding `opacity:"$opacity/disabled"` resolves to 0.4.
+  - `width`/`height` can't bind to variables.
+  - There's no `wrap` on frames and no stroke offset or spread (focus = 2 px outer ring + `focus/glow`; the offset is handled in code).
+  - `metadata` is dropped on `ref` nodes, so variant axes live in `context` and the registry.
+- **Slots:** `Insert(instance+"/slot")` is refused. Use `Replace(instance+"/slotId", {type:"frame",…})`, then Insert into the new frame. A `Get` visitor that walks into an instance with a replaced slot throws, so scans call `ctx.skipChildren()` on non-reusable refs.
+- `Get` layout `problems` can be stale right after big inserts, so re-scan in a separate call. Hidden (`enabled:false`) layers in bases show as "clipped"; that's expected.
+- **Token change workflow:**
+  1. Edit `scripts/gen_tokens.py`.
+  2. Run `gen_tokens.py`, then `verify_json.py`.
+  3. `SetVariables` with the changed keys from `scripts/pencil-vars.json`.
+  4. Compare the checksum (`verify_vars.py` against the FNV JS in Pencil).
+  5. Refresh boards 02 and 06 and the cover counts.
+  6. Update the registry and specs.
+  7. ⌘S.
+- **Shell:** `head` on this machine isn't coreutils; use `sed -n`.
+- **Library size / Pen stability (2026-09-26):**
+  - `design-system.lib.pen` is about 3.2 MB (30 component pages).
+  - During session 4, Pen closed the file mid-edit. After reopening, some MCP calls failed with `reading 'id'` on edits that propagate to many instances: inserting into a master slot that instances have `Replace`d, and whole-document `Get`.
+  - **Don't ⌘S a window in that state.** Close it without saving, reopen, and verify the variable checksum first.
+  - Save (⌘S) after every page, not at the end.
+  - **Root cause found:** the failures weren't file size. App Panel `C5QYo` had `slot: []` (an empty allowed-list), and every insert into it threw `reading 'id'`. Listing the allowed components fixed it. Saving works at ~3.25 MB, so no split is needed for now.
+- **Slots gotchas:**
+  - Never leave `slot: []`. An empty list rejects every insert with `Cannot read properties of undefined (reading 'id')`.
+  - Pencil can't `Replace`/`Copy` into a slot of an instance nested **inside another master** (`reading 'parent'`, or "use Update/Replace"). Fill slots only on top-level instances, e.g. `Replace(<shell>/Sw0yD/d2hCuQ/bBehO, …)`.
+  - A replaced node keeps its new ID in the instance path: re-replace `KS7sb/XNJJO`, not `KS7sb/C5QYo`.
+- **Master edits that break the file (2026-09-26):** `Move`-ing a newly inserted layer inside a deeply nested master (Table Cell / Header Cell) corrupted every existing Table instance in memory and emptied the Table master's row cells; Pen then refused to save ("pen.dev can't save your changes"). Rules: insert new layers at the **end** of a master, never `Move` them; after every master edit run `Get((n,ctx)=>{ctx.skipChildren();return n.name})` (whole-doc check) and test pages one per call (`Get(pageId,{depth:30})`) — errors abort the whole call. Broken instances are fixed by deleting and rebuilding them. An IPC error (`reading 'parent'`) can leave a half-applied change: close without saving and reopen.
+- **Pencil targets the frontmost Pen window**, whatever `filePath` says: run `open -a Pen <file>` before switching files, and check `GetVariables` (the library has variables; `exploration.pen` has none).
+
 ## Previous handoff — F-09 free-tier rework PLANNED, F-09 Gallery DONE (2026-10-05)
 
 - Staging moved to Netlify (Owner 2026-10-06, [ADR-020](architecture/decisions/ADR-020-staging-on-netlify.md)) after the Cloudflare Worker hit error 1102; the Owner re-registers and re-links a gallery folder on staging, adds the OAuth redirect URI and rotates the staging secrets.

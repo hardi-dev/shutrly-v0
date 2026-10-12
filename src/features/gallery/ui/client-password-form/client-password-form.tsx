@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { type BaseSyntheticEvent, useState } from "react";
 
+import { useHydrated } from "@/ui/hooks/use-hydrated/use-hydrated";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { Button } from "@/ui/primitives/button/button";
 import { TextField } from "@/ui/primitives/text-field/text-field";
@@ -27,17 +28,21 @@ export function ClientPasswordForm({ action }: Readonly<ClientPasswordFormProps>
   const t = useTranslations(CLIENT_PASSWORD_FORM_COPY_NAMESPACE);
   const { field, problem, submit, isSubmitting } = useClientPasswordForm(action);
   const [isVisible, setIsVisible] = useState(false);
+  const hydrated = useHydrated();
   const isLocked = problem?.kind === "TOO_MANY_ATTEMPTS";
   const toggle = { label: isVisible ? t("hidePassword") : t("showPassword"), onPress: show };
   const eye = isVisible ? "eye-off" : "eye";
   function show(): void {
     setIsVisible((visible) => !visible);
   }
-  function handleSubmit(event: BaseSyntheticEvent): void {
-    void submit(event);
-  }
+  const handleSubmit = (event: BaseSyntheticEvent): void => void submit(event);
   return (
-    <form noValidate onSubmit={handleSubmit} className="flex w-full flex-col gap-(--space-6)">
+    <form
+      method="post"
+      noValidate
+      onSubmit={handleSubmit}
+      className="flex w-full flex-col gap-(--space-6)"
+    >
       {isLocked ? (
         <Alert
           tone="warning"
@@ -63,7 +68,7 @@ export function ClientPasswordForm({ action }: Readonly<ClientPasswordFormProps>
         onBlur={field.onBlur}
         inputRef={field.ref}
       />
-      <Button type="submit" size="lg" isDisabled={isLocked || isSubmitting}>
+      <Button type="submit" size="lg" isDisabled={!hydrated || isLocked || isSubmitting}>
         {isSubmitting ? t("submitting") : t("submit")}
       </Button>
     </form>

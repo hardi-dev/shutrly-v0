@@ -10,7 +10,7 @@ This is the single editorial review document for the bilingual revamp. It groups
 - `{name}`, `{count}`, `{date}` and similar values are editorial placeholders. Preserve supplied identity names, identifiers, file/folder names, links and passwords. Whole sentences must become localized message factories with plural rules; do not concatenate translated fragments. WhatsApp variables retain their existing `{{variableName}}` syntax.
 - Counts use locale formatting and correct English singular/plural. `{amount}` remains an exact IDR value. Existing currency/timezone and parsing behavior must be preserved; formatting examples do not approve a new parser.
 - Shared copy in section 1 applies wherever its action exists. Feature tables add context-specific wording. Mobile may use a shorter visible label only when its accessible name retains the full action.
-- Proposed terminology: **Workspace → Ruang kerja**, **Invoice → Tagihan**, **Booking → Pemesanan**, **Proof → Foto pilihan**, **Edited → Hasil edit**, **Print → Foto cetak**. This chooses fully localized UI wording for review, superseding the earlier borrowed-term proposal only after Owner approval. Database enums and required Drive subfolder names `edited` and `print` stay unchanged.
+- Proposed terminology: **Workspace → Ruang kerja**, **Invoice → Tagihan**, **Booking → Pemesanan**, **Proof → Foto pilihan**, **Edited → Hasil edit**, **Print → Foto cetak**. This chooses fully localized UI wording for review, superseding the earlier borrowed-term proposal only after Owner approval. Database enums stay unchanged. Drive subfolder names are not required: subfolders are mapped to package items (BR-GAL-007), and no folder name is special.
 - Ordinary descriptive content needs matching reviewed EN/ID versions. Internal notes, cancellation reasons and existing free-text display titles still need classification/legacy policy; this deck does not translate actual user records or identity names.
 - Existing limits and consequences are taken from current copy, validation and feature rules. They must stay tied to their owning constants. A draft marked **Future surface** is not approved for implementation without its feature spec and Pencil exports.
 - This is a static editorial draft, not a browser, layout or accessibility verification. Recipient-language, persistence, readiness and historical-data decisions remain open under [localization policy](../../product/localization.md).
@@ -30,7 +30,7 @@ Product authority: [overview](../../product/overview.md), [scope](../../product/
 | “The agreed deal never drifts” / “frozen” | Catalog changes do not rewrite project records; explicit project edits remain possible until shooting. | C-102, BR-CAT-003, BR-PRJ-009. |
 | “No upload/storage cost” | Originals stay in Drive; no free-storage or zero-cost claim. | Provider storage costs and Shutrly pricing are separate; pricing remains undecided. |
 | “Private gallery” without qualification | Describe app-level link/password access and disclose public Drive/image-link limits nearby. | BR-ACC-005, BR-SRC-004, ADR-019. Do not claim complete media revocation. |
-| Root-only selection-photo guide | Ordinary session subfolders are supported; reserve `edited`/`print` for final files. | BR-GAL-007. Folder names are identifiers, not translated UI labels. |
+| Root-only selection-photo guide | Ordinary session subfolders are supported; subfolders mapped to a package item hold final files. | BR-GAL-007. Folder names are identifiers, not translated UI labels. |
 | Sync errors say “existing photos unchanged” | Say sync could not finish, with a retry action; do not promise rollback. | ADR-019: completed earlier sync steps may already be saved. |
 | “Only booked projects” | Confirm booking before creating a gallery; do not imply later live stages are ineligible. | BR-GAL-009 allows BOOKED through COMPLETED, excluding DRAFT/CANCELLED. |
 | “Variables” as the main editor explanation | Explain inserting project details and checking the sample message. Preserve exact placeholder syntax in the detailed helper. | F-03 renderer includes client, brand, gallery and invoice values; no automatic sending. |
@@ -590,6 +590,7 @@ Use a translated entity type in the archive message, not an English enum or a ra
 | Edit-selection description | The client chooses photos to edit. Counted per photo. | Klien memilih foto untuk diedit. Dihitung per foto. |
 | Print-selection option | Photos to print | Foto untuk dicetak |
 | Print-selection description | The client chooses photos and the number of prints. | Klien memilih foto dan jumlah cetaknya. |
+| Pick-mode meta · Approved (Owner, 2026-10-12) | Client choice: {mode} | Pilihan klien: {mode} |
 | Usage summary | Used in {count} services | Dipakai di {count} layanan |
 | Unused summary | Not used yet | Belum dipakai |
 | Locked definition | Value type and selection settings are locked because this item is used by a service. | Tipe nilai dan pengaturan pilihan terkunci karena item ini sudah dipakai layanan. |
@@ -607,6 +608,7 @@ Use a translated entity type in the archive message, not an English enum or a ra
 
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
+| Dialog description · Approved (Owner, 2026-10-12) | Filled in when creating a project from this service. | Diisi saat membuat proyek dari layanan ini. |
 | Field name | Field name | Nama kolom |
 | Field-name example | e.g. University name | Contoh: Nama kampus |
 | Field type | Field type | Tipe kolom |
@@ -1184,7 +1186,7 @@ The final generic error intentionally avoids assuming every field is numeric. `{
 
 ## 9. Photo sources
 
-**Page:** `{workspace}/photo-sources`; add, rename and delete dialogs. Source: `source-copy.copy.ts`. Provider brands stay unchanged. The folder guide preserves actual required folder names.
+**Page:** `{workspace}/photo-sources`; add, rename and delete dialogs. Source: `source-copy.copy.ts`. Provider brands stay unchanged. The folder guide describes mapping subfolders to package items; it names no required folder.
 
 ### 9.1 Source list and Google Drive guide
 
@@ -1208,20 +1210,20 @@ The final generic error intentionally avoids assuming every field is numeric. `{
 | Guide mobile description | Paste the folder link when setting up a gallery. | Tempel tautan folder saat menyiapkan galeri. |
 | Step 1 | Start with a main folder for each project. | Mulai dengan satu folder utama untuk tiap proyek. |
 | Step 2 | Put photos for selection in the main folder or session subfolders. | Taruh foto pilihan di folder utama atau subfolder sesi. |
-| Step 3 | For final delivery, add subfolders named `edited` and `print` later. | Untuk hasil akhir, tambahkan subfolder bernama `edited` dan `print` nanti. |
+| Step 3 · Approved (Owner, 2026-10-12) | Later, map any subfolder to a package item on the gallery page. Files in mapped subfolders are final files; unmapped photos stay available for selection. | Nanti, petakan subfolder apa pun ke item paket di halaman galeri. File di subfolder yang dipetakan menjadi hasil akhir; foto yang belum dipetakan tetap tersedia untuk dipilih. |
 | Step 4 | Share the main folder: General access → Anyone with the link → Viewer. | Bagikan folder utama: Akses umum → Siapa saja yang memiliki link → Pelihat. |
 | Folder-tree accessible name | Example folder structure | Contoh struktur folder |
 | Root example name | Rina & Dimas | Rina & Dimas |
 | Root example annotation | Selection photos or session subfolders | Foto pilihan atau subfolder sesi |
-| `edited` annotation | Edited files, added later | Hasil edit, ditambahkan nanti |
-| `print` annotation | Print files, added later | File cetak, ditambahkan nanti |
+| Edited example label · Approved (Owner, 2026-10-12) | Hasil Edit → mapped to Edited photos later | Hasil Edit → dipetakan ke Hasil edit nanti |
+| Printed example label · Approved (Owner, 2026-10-12) | Cetak → mapped to Printed photos later | Cetak → dipetakan ke Foto cetak nanti |
 | Public-link warning title | Drive links bypass the gallery password | Tautan Drive melewati kata sandi galeri |
 | Public-link warning body | Anyone with the Drive folder link can view its photos directly without the gallery password. Share only the Shutrly gallery link with clients. | Siapa pun yang punya tautan folder Drive bisa melihat fotonya langsung tanpa kata sandi galeri. Ke klien, bagikan hanya tautan galeri Shutrly. |
 | Warning mobile body | Anyone with the Drive link can view the photos directly. Share only the Shutrly gallery link with clients. | Siapa pun yang punya tautan Drive bisa melihat fotonya langsung. Ke klien, bagikan hanya tautan galeri Shutrly. |
 
-Drive folder classification follows BR-GAL-007: the nearest ancestor named `edited` or `print` determines final-file kind; other photos, including ordinary session subfolders, are selectable photos in the intended selection feature. Sync occurs when you link a folder or request it, not continuously or on a schedule.
+Drive folder classification follows BR-GAL-007: a file inside a subfolder mapped to a package item is a final file (the longest mapped folder above it wins); other photos, including ordinary session subfolders, are selectable photos. No folder name is special. Sync occurs when you link a folder or request it, not continuously or on a schedule.
 
-Google Drive sharing labels refer to Drive’s own language. The Indonesian `link` in step 4 is its exact setting name; do not rename the external setting or actual `edited`/`print` folder names to match display terminology.
+Google Drive sharing labels refer to Drive’s own language. The Indonesian `link` in step 4 is its exact setting name; do not rename the external setting to match display terminology. Folder names belong to the photographer; no name is special.
 
 ### 9.2 Source dialogs, notifications and validation
 
@@ -1340,10 +1342,10 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 | Sources section | Photo sources | Sumber foto |
 | Sources description | Link publicly shared Drive folders, then sync to read their photos. | Tautkan folder Drive yang dibagikan lewat tautan publik, lalu sinkronkan untuk membaca fotonya. |
 | Empty title | No folders yet | Belum ada folder |
-| Empty body | Link a project folder. Photos outside `edited` and `print` folders are for selection; those named folders hold final files. | Tautkan folder proyek. Foto di luar folder `edited` dan `print` untuk pilihan klien; kedua folder itu untuk hasil akhir. |
+| Empty body · Approved (Owner, 2026-10-12) | Link a project folder. Photos are for selection unless you map a subfolder to a package item; files in mapped subfolders are final files. | Tautkan folder proyek. Foto digunakan untuk pilihan kecuali subfolder dipetakan ke item paket; file di subfolder yang dipetakan menjadi hasil akhir. |
 | Empty body mobile | Link the project’s Google Drive folder. | Tautkan folder Google Drive proyek ini. |
 | Add-folder title/action | Add folder | Tambah folder |
-| Add description | Files in `edited` or `print` folders are final files. Other photos, including session subfolders, are for selection. | File di folder `edited` atau `print` adalah hasil akhir. Foto lainnya, termasuk di subfolder sesi, untuk pilihan klien. |
+| Add description · Approved (Owner, 2026-10-12) | Photos stay available for selection unless their subfolder is mapped to a package item. Mapped files are final files. | Foto tetap tersedia untuk dipilih kecuali subfoldernya dipetakan ke item paket. File yang dipetakan menjadi hasil akhir. |
 | Source label | Source | Sumber |
 | Source helper | Active sources only. | Hanya sumber aktif. |
 | Folder-link label | Google Drive folder link | Tautan folder Google Drive |
@@ -1439,8 +1441,8 @@ A failed multi-step sync may have already saved earlier steps. These error messa
 | Canceled-draft visibility | Won’t be visible to clients. | Tidak akan terlihat oleh klien. |
 | Final-file visibility | Hidden until final delivery. Clients can’t select these photos. | Disembunyikan sampai hasil akhir dikirim. Foto ini tidak bisa dipilih klien. |
 | Missing visibility | Missing photos are hidden until found again. | Foto yang hilang disembunyikan sampai ditemukan lagi. |
-| Edited-folder explanation | Hidden until final delivery. `edited` folders are merged into their parent folder. | Disembunyikan sampai hasil akhir dikirim. Folder `edited` digabung ke folder induknya. |
-| Print-folder explanation | Hidden until final delivery. `print` folders are merged into their parent folder. | Disembunyikan sampai hasil akhir dikirim. Folder `print` digabung ke folder induknya. |
+| Edited-tab explanation · Approved (Owner, 2026-10-12) | Hidden until final delivery is published. Files come from subfolders mapped to an edited-photo package item. | Disembunyikan sampai hasil akhir dipublikasikan. File berasal dari subfolder yang dipetakan ke item paket Hasil edit. |
+| Print-tab explanation · Approved (Owner, 2026-10-12) | Hidden until final delivery is published. Files come from subfolders mapped to a printed-photo package item. | Disembunyikan sampai hasil akhir dipublikasikan. File berasal dari subfolder yang dipetakan ke item paket Foto cetak. |
 
 ### 10.6 Publish, expiry and password changes
 
@@ -2211,6 +2213,27 @@ Approval changes the selection limit only for an unlocked target group. It does 
 | Stepper accessible actions | Decrease / Increase | Kurangi / Tambah |
 
 The stepper labels are included because they are shipped product controls, not story/demo copy.
+
+### 17.1 Page not found inside a workspace (F-24)
+
+Shown inside the workspace shell when a page or record under `/w/{workspaceId}` does not exist (AC-SFX-011, 012). Source: `page-not-found-screen.copy.ts`.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Title · Approved (Owner, 2026-10-12) | Page not found | Halaman tidak ditemukan |
+| Body · Approved (Owner, 2026-10-12) | This page doesn’t exist or was removed. | Halaman ini tidak ada atau sudah dihapus. |
+| Back to section · Approved (Owner, 2026-10-12) | Back to {section} | Kembali ke {section} |
+| Back to dashboard · Approved (Owner, 2026-10-12) | Back to dashboard | Kembali ke dasbor |
+
+### 17.2 Loading titles and pending labels (F-24)
+
+Skeleton card titles and *load more* pending labels, so a loading screen follows the active language (BR-L10N-002). The *Services*, *Categories* and *Package items* skeletons reuse the approved tab labels (`tabServices`, `tabCategories`, `tabItems`). Sources: `catalog-copy.copy.ts`, `project-copy.copy.ts`, `client-copy.copy.ts`, `team-copy.copy.ts`.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Service page loading title (`loadingService`) · Approved (Owner, 2026-10-12) | Loading service… | Memuat layanan… |
+| Project page and New project loading title (`loadingProject`) · Approved (Owner, 2026-10-12) | Loading project… | Memuat proyek… |
+| Clients and Team *load more* pending label (`loadingMore`) · Approved (Owner, 2026-10-12; same as the project list) | Loading… | Memuat… |
 
 ## 18. Deferred surfaces and editorial coverage
 

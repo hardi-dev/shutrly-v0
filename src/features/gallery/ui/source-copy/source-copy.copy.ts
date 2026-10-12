@@ -30,12 +30,13 @@ export const SOURCE_COPY = {
       guideDescriptionMobile: "Paste the folder link when setting up a gallery.",
       guideStep1: "Start with a main folder for each project.",
       guideStep2: "Put photos for selection in the main folder or session subfolders.",
-      guideStep3: "For final delivery, add subfolders named `edited` and `print` later.",
+      guideStep3:
+        "Later, map any subfolder to a package item on the gallery page. Files in mapped subfolders are final files; unmapped photos stay available for selection.",
       guideStep4: "Share the main folder: General access → Anyone with the link → Viewer.",
       treeRoot: "Rina & Dimas",
       treeRootMeta: "Selection photos or session subfolders",
-      treeEdited: "Edited files, added later",
-      treePrint: "Print files, added later",
+      treeEdited: "Hasil Edit → mapped to Edited photos later",
+      treePrint: "Cetak → mapped to Printed photos later",
       folderTreeLabel: "Example folder structure",
       warningTitle: "Drive links bypass the gallery password",
       warningBody:
@@ -108,12 +109,13 @@ export const SOURCE_COPY = {
       guideDescriptionMobile: "Tempel tautan folder saat menyiapkan galeri.",
       guideStep1: "Mulai dengan satu folder utama untuk tiap proyek.",
       guideStep2: "Taruh foto pilihan di folder utama atau subfolder sesi.",
-      guideStep3: "Untuk hasil akhir, tambahkan subfolder bernama `edited` dan `print` nanti.",
+      guideStep3:
+        "Nanti, petakan subfolder apa pun ke item paket di halaman galeri. File di subfolder yang dipetakan menjadi hasil akhir; foto yang belum dipetakan tetap tersedia untuk dipilih.",
       guideStep4: "Bagikan folder utama: Akses umum → Siapa saja yang memiliki link → Pelihat.",
       treeRoot: "Rina & Dimas",
       treeRootMeta: "Foto pilihan atau subfolder sesi",
-      treeEdited: "Hasil edit, ditambahkan nanti",
-      treePrint: "File cetak, ditambahkan nanti",
+      treeEdited: "Hasil Edit → dipetakan ke Hasil edit nanti",
+      treePrint: "Cetak → dipetakan ke Foto cetak nanti",
       folderTreeLabel: "Contoh struktur folder",
       warningTitle: "Tautan Drive melewati kata sandi galeri",
       warningBody:

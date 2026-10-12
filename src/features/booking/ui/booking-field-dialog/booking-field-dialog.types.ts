@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, SyntheticEvent } from "react";
 
 import type { BookingFieldRecord } from "@/features/booking/application/ports/service-repository/service-repository.port";
 import type { CatalogWriteResult } from "@/features/booking/application/use-cases/catalog-results/catalog-results.types";
@@ -36,6 +36,8 @@ export interface BookingFieldFieldsProps {
   readonly setOptions: (value: readonly string[]) => void;
   readonly optionErrors: Readonly<Record<number, string>>;
   readonly error?: string;
+  readonly formId: string;
+  readonly onFormSubmit: (event: SyntheticEvent<HTMLFormElement>) => void;
 }
 
 export interface ResponsiveFieldDialogProps extends BookingFieldDialogProps {

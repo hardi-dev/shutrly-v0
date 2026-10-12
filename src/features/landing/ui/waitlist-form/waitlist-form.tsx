@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useId, useRef } from "react";
 
 import { cn } from "@/ui/cn/cn";
+import { useHydrated } from "@/ui/hooks/use-hydrated/use-hydrated";
 
 import { LANDING_CONTACT_EMAIL } from "../landing-page/landing-page.copy";
 import { postWaitlist } from "../post-waitlist/post-waitlist";
@@ -76,7 +77,7 @@ function WaitlistJoined() {
   );
 }
 
-function WaitlistPill({ id, error, isSubmitting, field }: Readonly<WaitlistPillProps>) {
+function WaitlistPill({ id, error, isSubmitting, isReady, field }: Readonly<WaitlistPillProps>) {
   const t = useTranslations(WAITLIST_FORM_COPY_NAMESPACE);
   return (
     <div
@@ -97,7 +98,7 @@ function WaitlistPill({ id, error, isSubmitting, field }: Readonly<WaitlistPillP
       />
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={!isReady || isSubmitting}
         className="h-full shrink-0 rounded-(--radius-full) bg-(--color-semantic-action-primary) px-(--space-5) text-(length:--font-size-body) font-semibold text-(--color-semantic-action-on-primary) hover:bg-(--color-semantic-action-primary-hover) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--color-semantic-focus-ring) disabled:opacity-(--opacity-disabled) md:w-[178px]"
       >
         {isSubmitting ? (
@@ -154,13 +155,19 @@ export function WaitlistForm({ action = postWaitlist }: Readonly<WaitlistFormPro
   const t = useTranslations(WAITLIST_FORM_COPY_NAMESPACE);
   const { form, onSubmit, isSubmitting, outcome } = useWaitlistForm(action);
   const id = useId();
+  const isReady = useHydrated();
   if (outcome === "JOINED") return <WaitlistJoined />;
   const errorKey = ERROR_KEY.get(form.formState.errors.email?.message ?? "");
   const error = errorKey ? t(errorKey) : undefined;
   const formKey = FORM_ERROR_KEY.get(outcome ?? "");
   const formError = formKey ? t(formKey) : undefined;
   return (
-    <form noValidate onSubmit={onSubmit} className="relative flex w-full flex-col gap-(--space-2)">
+    <form
+      method="post"
+      noValidate
+      onSubmit={onSubmit}
+      className="relative flex w-full flex-col gap-(--space-2)"
+    >
       <label htmlFor={`${id}-email`} className="sr-only">
         {t("emailLabel")}
       </label>
@@ -168,6 +175,7 @@ export function WaitlistForm({ action = postWaitlist }: Readonly<WaitlistFormPro
         id={id}
         error={error}
         isSubmitting={isSubmitting}
+        isReady={isReady}
         field={form.register("email")}
       />
       <WaitlistBotField id={id} field={form.register("website")} />

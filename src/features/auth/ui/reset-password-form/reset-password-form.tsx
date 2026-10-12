@@ -18,14 +18,14 @@ import type { ResetPasswordFormProps } from "./reset-password-form.types";
  */
 export function ResetPasswordForm({ token, action }: Readonly<ResetPasswordFormProps>) {
   const t = useTranslations(RESET_PASSWORD_FORM_COPY_NAMESPACE);
-  const { form, server, onSubmit, isSubmitting } = useAuthForm({
+  const { form, server, onSubmit, isSubmitting, isReady } = useAuthForm({
     schema: resetPasswordSchema,
     defaultValues: { token, password: "", confirm: "" },
     action,
   });
   const { control } = form;
   return (
-    <form noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-6)">
+    <form method="post" noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-6)">
       {server.formError ? <AuthErrorAlert code={server.formError} /> : null}
       <div className="flex flex-col gap-(--space-4)">
         <ControlledTextField
@@ -45,7 +45,7 @@ export function ResetPasswordForm({ token, action }: Readonly<ResetPasswordFormP
           autoComplete="new-password"
         />
       </div>
-      <Button type="submit" size="lg" isDisabled={isSubmitting}>
+      <Button type="submit" size="lg" isDisabled={!isReady || isSubmitting}>
         {isSubmitting ? t("submitting") : t("submit")}
       </Button>
     </form>

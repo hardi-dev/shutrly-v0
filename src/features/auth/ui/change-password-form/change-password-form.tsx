@@ -64,7 +64,7 @@ export function ChangePasswordForm({
     setDone(true);
     form.reset();
   }
-  const { form, server, onSubmit, isSubmitting } = useAuthForm({
+  const { form, server, onSubmit, isSubmitting, isReady } = useAuthForm({
     schema: changePasswordSchema,
     defaultValues: DEFAULTS,
     action,
@@ -72,12 +72,12 @@ export function ChangePasswordForm({
   });
   const { control } = form;
   return (
-    <form noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-4)">
+    <form method="post" noValidate onSubmit={onSubmit} className="flex flex-col gap-(--space-4)">
       {server.formError ? <AuthErrorAlert code={server.formError} /> : null}
       {done && !isSubmitting ? <Alert tone="info" title={t("done")} live /> : null}
       <PasswordFields control={control} />
       <div>
-        <Button type="submit" isDisabled={isSubmitting}>
+        <Button type="submit" isDisabled={!isReady || isSubmitting}>
           {isSubmitting ? t("submitting") : t("submit")}
         </Button>
       </div>

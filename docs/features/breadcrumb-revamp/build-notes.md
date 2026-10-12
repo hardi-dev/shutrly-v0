@@ -59,7 +59,7 @@ Final report for [plan.md](plan.md), in the order the plan's *Final report* asks
 | 008 Client trails | `review-text.test.ts` | open group `… › [Foto edit] › Tinjau`; read-only `… › Foto edit › Tinjau` (no link); *Hasil akhir*, *Semua foto* |
 | 009 Beranda always | `client-browse-screen.test.tsx`; e2e `gate.spec.ts` | project without groups lands on Beranda; `/photos` → `[Beranda] › Semua foto`, title = project title |
 | 010 Accessible trail | `page-header.test.tsx` | ancestors are focusable links, current is a non-focusable `span` with `aria-current="page"`, separators `aria-hidden` |
-| 011 First paint | — (server rendering, ADR-025) | trail present in the raw server HTML on 16 routes |
+| 011 First paint | — (server rendering, ADR-026) | trail present in the raw server HTML on 16 routes |
 | 012 Tenant/token names | loaders' scoped tests | foreign project (detail, gallery, picks) and unknown service → 404, no trail, no foreign title; Rina token + Fajar group → 404 |
 | 013 Long trail | `breadcrumb-trail.test.tsx` | 768 px, 60-char title: ends whole, middle truncated, no overflow |
 | 014 Phone back | `owner-shell.test.tsx` (Compact Bar parent) | gallery → project, picks → gallery, picks group → *Pilihan klien* (title *Foto edit*), client open review → its Pilih page |

@@ -91,5 +91,5 @@ async function loadGalleryPageUncached(rawWorkspaceId: string, rawProjectId: str
   }
 }
 
-/** Loads the gallery page of a project; one lookup per request (ADR-025). */
+/** Loads the gallery page of a project; one lookup per request (ADR-026). */
 export const loadGalleryPage = cache(loadGalleryPageUncached);

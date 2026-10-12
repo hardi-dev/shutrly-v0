@@ -15,6 +15,8 @@ On 2026-10-12 an agent registered a new Owner on `localhost:3000` (dev database 
 6. **Indonesian text on English catalog screens.** With the UI in English, *Services* › *Package items* shows "Pilihan klien: Photos to edit", and the *Add booking field* dialog subtitle reads "Diisi saat membuat proyek dari layanan ini." The English entries of `pickModeMeta` and `fieldDialogDescription` in `catalog-copy.copy.ts` hold the Indonesian strings (BR-L10N-002).
 7. **The *Add service* dialog can't finish setting up a service.** Its subtitle says package items and booking fields are set up "after creating the service", but after saving nothing points to the new service, where those sections are, and the list doesn't even show it yet (see 2). A new Owner can end up with a service that has no package items, so the client has nothing to pick against.
 
+> **Discovery update (2026-10-12):** defects 2 and 7 did not reproduce (a dev-mode first compile of the service route) and are withdrawn; see [spec.md](spec.md) › D2 + D7.
+
 ## Proposed outcome
 - No auth form can send credentials in a URL, with or without JavaScript: the forms post, and their submit buttons stay disabled until the page is ready (Owner, 2026-10-12).
 - After *Add service*, the Owner stays on the list, sees the new service in it at once, and gets a success toast whose action opens the new service so they can carry on with its package items (Owner, 2026-10-12). It follows the existing toast-with-action pattern (`showToast` with `action`, as in the archive toast in `catalog-row-actions.tsx`) and needs no Pencil frame.

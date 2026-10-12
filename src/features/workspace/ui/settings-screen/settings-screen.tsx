@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import type { FieldPath } from "react-hook-form";
 import { useController } from "react-hook-form";
 
+import { useHydrated } from "@/ui/hooks/use-hydrated/use-hydrated";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { showToast } from "@/ui/patterns/toast/toast";
@@ -36,6 +37,7 @@ function ignoreEdit(): void {
  */
 export function SettingsScreen({ action, profile }: Readonly<SettingsScreenProps>) {
   const t = useTranslations(SETTINGS_COPY_NAMESPACE);
+  const hydrated = useHydrated();
   const settings = useSettingsForm({
     profile,
     action,
@@ -43,6 +45,7 @@ export function SettingsScreen({ action, profile }: Readonly<SettingsScreenProps
   });
   return (
     <form
+      method="post"
       noValidate
       onSubmit={settings.onSubmit}
       className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-6) md:gap-(--component-panel-app-content-gap)"
@@ -55,7 +58,7 @@ export function SettingsScreen({ action, profile }: Readonly<SettingsScreenProps
         <Button
           type="submit"
           size="lg"
-          isDisabled={settings.isSubmitting}
+          isDisabled={!hydrated || settings.isSubmitting}
           className="w-full md:w-auto md:px-(--component-button-md-padding-x) md:py-(--component-button-md-padding-y)"
         >
           {settings.isSubmitting ? t("saving") : t("save")}

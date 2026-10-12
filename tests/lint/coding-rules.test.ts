@@ -43,4 +43,39 @@ describe("coding rules enforced by lint", () => {
       ),
     ).toContain("local/ui-copy");
   });
+
+  it("FND-003 rejects copy held in a module constant and passed to a copy prop", async () => {
+    const ids = await ruleIds(
+      "src/ui/x.tsx",
+      [
+        'const TITLES = { a: "Layanan", b: "Kategori" } as const;',
+        'export const A = ({ k }: { k: "a" | "b" }) => <section title={TITLES[k]} />;',
+      ].join("\n"),
+    );
+    expect(ids).toContain("local/ui-copy");
+  });
+
+  it("FND-003 rejects copy held in a module constant and rendered as a JSX child", async () => {
+    const ids = await ruleIds(
+      "src/ui/x.tsx",
+      ['const LABEL = "Memuat layanan";', "export const A = () => <p>{LABEL}</p>;"].join("\n"),
+    );
+    expect(ids).toContain("local/ui-copy");
+  });
+
+  it("FND-003 accepts constants without strings, imported copy and local values", async () => {
+    const ids = await ruleIds(
+      "src/ui/x.tsx",
+      [
+        'import { X_COPY_NAMESPACE } from "./x.copy";',
+        "const COUNT = 3;",
+        'const KEY = { a: "tabServices" } as const;',
+        "export const A = ({ label }: { label: string }) => {",
+        "  const t = useTranslations(X_COPY_NAMESPACE);",
+        "  return <section title={t(KEY.a)} aria-label={label}>{COUNT}</section>;",
+        "};",
+      ].join("\n"),
+    );
+    expect(ids).not.toContain("local/ui-copy");
+  });
 });

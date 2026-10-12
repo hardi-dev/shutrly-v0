@@ -28,6 +28,7 @@ import {
   useOwnerNavTranslations,
 } from "../owner-nav/owner-nav";
 import type { OwnerNavTranslator } from "../owner-nav/owner-nav.types";
+import { OwnerWorkspaceProvider } from "../owner-workspace-context/owner-workspace-context";
 import { PageHeadingOverrideProvider } from "../page-heading-override/page-heading-override";
 import type { PageHeadingOverrideValue } from "../page-heading-override/page-heading-override.types";
 import {
@@ -175,80 +176,84 @@ export function OwnerShell({
   );
 
   return (
-    <PageHeadingOverrideProvider onChange={setHeadingOverride}>
-      <>
-        <AppShell
-          title={heading.title}
-          subtitle={heading.subtitle}
-          panelTitleAdornment={
-            headingOverride?.status ? <StatusChip {...headingOverride.status} /> : undefined
-          }
-          panelMeta={headingOverride?.meta}
-          mobileSubtitle={"mobileSubtitle" in heading ? heading.mobileSubtitle : undefined}
-          workspace={{ name: workspaceName }}
-          subPage={shellSubPage}
-          panelTrail={trail}
-          panelTabs={panelTabs}
-          account={{ name: accountName, email: accountEmail, initials: initials(accountName) }}
-          nav={<OwnerNav workspaceId={workspaceId} pathname={currentPathname} />}
-          navBottom={<OwnerNavBottom workspaceId={workspaceId} pathname={currentPathname} />}
-          workspaceSwitcher={renderWorkspaceSwitcher}
-          panelUtilities={
-            <DesktopUtilities
-              onSearch={handleOpenSearch}
-              onNotifications={handleOpenNotifications}
-            />
-          }
-          panelActions={<div id={PAGE_ACTIONS_ID} className="flex items-center gap-(--space-2)" />}
-          onLogout={logoutAction ? handleLogout : undefined}
-          accountMenu={renderAccountMenu}
-          mobileBottomNav={{
-            items: mobileItems,
-            ctaLabel: navT("create"),
-            onCtaPress: handleCreateProject,
-          }}
-          mobileUtilities={
-            <MobileUtilities
-              onSearch={handleOpenSearch}
-              onNotifications={handleOpenNotifications}
-              onMenu={handleOpenMobileMenu}
-            />
-          }
-          onMobileWorkspacePress={handleOpenMobileWorkspaceSwitcher}
-          onLayoutChange={handleLayoutChange}
-          mobileSheet={
-            <>
-              <MobileWorkspaceSheet
-                isOpen={isMobileMenuOpen}
-                onOpenChange={setIsMobileMenuOpen}
-                workspaces={workspaces}
-                accountName={accountName}
-                accountEmail={accountEmail}
-                onNavigate={handleMobileNavigate}
-                onOpenProfile={handleOpenProfile}
-                localeAction={localeAction}
-                onLogout={logoutAction ? handleLogout : undefined}
+    <OwnerWorkspaceProvider workspaceId={workspaceId} workspaceName={workspaceName}>
+      <PageHeadingOverrideProvider onChange={setHeadingOverride}>
+        <>
+          <AppShell
+            title={heading.title}
+            subtitle={heading.subtitle}
+            panelTitleAdornment={
+              headingOverride?.status ? <StatusChip {...headingOverride.status} /> : undefined
+            }
+            panelMeta={headingOverride?.meta}
+            mobileSubtitle={"mobileSubtitle" in heading ? heading.mobileSubtitle : undefined}
+            workspace={{ name: workspaceName }}
+            subPage={shellSubPage}
+            panelTrail={trail}
+            panelTabs={panelTabs}
+            account={{ name: accountName, email: accountEmail, initials: initials(accountName) }}
+            nav={<OwnerNav workspaceId={workspaceId} pathname={currentPathname} />}
+            navBottom={<OwnerNavBottom workspaceId={workspaceId} pathname={currentPathname} />}
+            workspaceSwitcher={renderWorkspaceSwitcher}
+            panelUtilities={
+              <DesktopUtilities
+                onSearch={handleOpenSearch}
+                onNotifications={handleOpenNotifications}
               />
-              <MobileWorkspaceSwitcherSheet
-                isOpen={isMobileWorkspaceSwitcherOpen}
-                onOpenChange={setIsMobileWorkspaceSwitcherOpen}
-                currentName={workspaceName}
-                workspaces={workspaces}
-                onSwitch={onSwitch}
-                onCreate={handleMobileCreate}
+            }
+            panelActions={
+              <div id={PAGE_ACTIONS_ID} className="flex items-center gap-(--space-2)" />
+            }
+            onLogout={logoutAction ? handleLogout : undefined}
+            accountMenu={renderAccountMenu}
+            mobileBottomNav={{
+              items: mobileItems,
+              ctaLabel: navT("create"),
+              onCtaPress: handleCreateProject,
+            }}
+            mobileUtilities={
+              <MobileUtilities
+                onSearch={handleOpenSearch}
+                onNotifications={handleOpenNotifications}
+                onMenu={handleOpenMobileMenu}
               />
-            </>
-          }
-        >
-          {children}
-        </AppShell>
-        <CreateWorkspaceDialog
-          isOpen={isCreateOpen}
-          onOpenChange={setIsCreateOpen}
-          action={onCreate}
-        />
-      </>
-    </PageHeadingOverrideProvider>
+            }
+            onMobileWorkspacePress={handleOpenMobileWorkspaceSwitcher}
+            onLayoutChange={handleLayoutChange}
+            mobileSheet={
+              <>
+                <MobileWorkspaceSheet
+                  isOpen={isMobileMenuOpen}
+                  onOpenChange={setIsMobileMenuOpen}
+                  workspaces={workspaces}
+                  accountName={accountName}
+                  accountEmail={accountEmail}
+                  onNavigate={handleMobileNavigate}
+                  onOpenProfile={handleOpenProfile}
+                  localeAction={localeAction}
+                  onLogout={logoutAction ? handleLogout : undefined}
+                />
+                <MobileWorkspaceSwitcherSheet
+                  isOpen={isMobileWorkspaceSwitcherOpen}
+                  onOpenChange={setIsMobileWorkspaceSwitcherOpen}
+                  currentName={workspaceName}
+                  workspaces={workspaces}
+                  onSwitch={onSwitch}
+                  onCreate={handleMobileCreate}
+                />
+              </>
+            }
+          >
+            {children}
+          </AppShell>
+          <CreateWorkspaceDialog
+            isOpen={isCreateOpen}
+            onOpenChange={setIsCreateOpen}
+            action={onCreate}
+          />
+        </>
+      </PageHeadingOverrideProvider>
+    </OwnerWorkspaceProvider>
   );
 }
 

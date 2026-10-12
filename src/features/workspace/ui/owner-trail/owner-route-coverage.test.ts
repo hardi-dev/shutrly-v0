@@ -14,10 +14,10 @@ const WORKSPACE_ROOT = fileURLToPath(
   new URL("../../../../app/(owner)/w/[workspaceId]", import.meta.url),
 );
 
-// `[section]` renders the *Segera hadir* screens; the catch-all slot names those sections (ADR-025).
+// `[section]` renders the *Segera hadir* screens; the catch-all slot names those sections (ADR-026).
 const CATCH_ALL_PAGES = new Set(["[section]"]);
 
-/** Lists the route of every `page.tsx` below a folder, without route groups such as `(list)` (ADR-025). @param root - the folder to walk @param prefix - the folders walked so far, relative to root @param skip - folder names to ignore at the top level only @returns the routes, e.g. `projects/[projectId]`; the root is `""` */
+/** Lists the route of every `page.tsx` below a folder, without route groups such as `(list)` (ADR-026). @param root - the folder to walk @param prefix - the folders walked so far, relative to root @param skip - folder names to ignore at the top level only @returns the routes, e.g. `projects/[projectId]`; the root is `""` */
 function listPageRoutes(
   root: string,
   prefix: readonly string[] = [],
@@ -52,7 +52,7 @@ function dynamicParents(routes: readonly string[]): Set<string> {
   return parents;
 }
 
-describe("owner route coverage for the breadcrumb slot (F-23, ADR-025)", () => {
+describe("owner route coverage for the breadcrumb slot (F-23, ADR-026)", () => {
   it("AC-CRUMB-004…006 every Owner page has a slot page or a trail the catch-all names", () => {
     const slotExact = new Set(slotRoutes);
     const parentsWithDynamicSlot = dynamicParents(slotRoutes);

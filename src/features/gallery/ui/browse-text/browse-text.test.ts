@@ -44,8 +44,8 @@ describe("browse text", () => {
 
   it("AC-GAL-014 marks proof by status and edited as hidden until delivery", () => {
     expect(kindVisibility(t, "PROOF", "PUBLISHED")).toBe("Terlihat oleh klien sekarang.");
-    expect(kindVisibility(t, "EDITED", "PUBLISHED")).toMatch(
-      /^Disembunyikan sampai hasil akhir dikirim/,
+    expect(kindVisibility(t, "EDITED", "PUBLISHED")).toBe(
+      "Disembunyikan sampai hasil akhir dipublikasikan. File berasal dari subfolder yang dipetakan ke item paket Hasil edit.",
     );
   });
 });

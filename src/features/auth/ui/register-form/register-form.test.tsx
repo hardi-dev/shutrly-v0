@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { serverFormDom, submitButton } from "@tests/support/forms/server-form";
 import { describe, expect, it, vi } from "vitest";
 
 import { AUTH_ERROR_COPY } from "../auth-error-alert/auth-error-alert.copy";
@@ -79,5 +80,19 @@ describe("RegisterForm", () => {
     await waitFor(() => {
       expect(alert).toHaveFocus();
     });
+  });
+});
+
+describe("RegisterForm before and after the page is interactive (AC-SFX-001, AC-SFX-002)", () => {
+  it("posts natively and keeps submit disabled until ready", () => {
+    const dom = serverFormDom(<RegisterForm action={vi.fn()} />);
+    expect(dom.querySelector("form")).toHaveAttribute("method", "post");
+    expect(submitButton(dom)).toBeDisabled();
+  });
+
+  it("enables submit once the page is interactive", () => {
+    const { container } = render(<RegisterForm action={vi.fn()} />);
+    expect(container.querySelector("form")).toHaveAttribute("method", "post");
+    expect(submitButton(container)).toBeEnabled();
   });
 });

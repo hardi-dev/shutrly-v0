@@ -26,7 +26,8 @@ export function OptionListEditor({
     <div className="flex flex-col gap-(--space-3)" aria-label={t("options")}>
       {options.map((option, index) => (
         <OptionInput
-          key={`${String(index)}-${option}`}
+          // Keyed by row, not by text: a text key re-mounts the field on every keystroke and drops focus.
+          key={index}
           option={option}
           index={index}
           error={errors[index]}

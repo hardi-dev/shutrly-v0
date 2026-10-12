@@ -32,7 +32,7 @@ export interface AppShellProps {
   panelUtilities?: ReactNode;
   panelTabs?: NonNullable<PageHeaderProps["tabs"]>;
   panelBreadcrumbs?: NonNullable<PageHeaderProps["breadcrumbs"]>;
-  /** A trail rendered on the server (ADR-025); wins over `panelBreadcrumbs`. */
+  /** A trail rendered on the server (ADR-026); wins over `panelBreadcrumbs`. */
   panelTrail?: ReactNode;
   mobileBottomNav: BottomNavProps;
   mobileSheet?: ReactNode;

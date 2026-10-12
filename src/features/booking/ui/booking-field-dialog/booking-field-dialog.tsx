@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { type SyntheticEvent, useId, useState } from "react";
 
 import type { FieldType } from "@/features/booking/domain/booking-field/booking-field.types";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
@@ -60,13 +60,15 @@ function createOpenChangeHandler(
 
 export function BookingFieldDialog(props: Readonly<BookingFieldDialogProps>) {
   const t = useTranslations(BOOKING_FIELD_DIALOG_COPY_NAMESPACE);
+  const formId = useId();
   const form = useBookingFieldForm(props);
-  const content = <BookingFieldFields {...form} />;
-  function handleSubmit(): void {
-    void form.submit();
+  const content = <BookingFieldFields {...form} formId={formId} onFormSubmit={onFormSubmit} />;
+  function onFormSubmit(event: SyntheticEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    if (!form.pending) void form.submit();
   }
   const save = (
-    <Button onPress={handleSubmit} isPending={form.pending}>
+    <Button type="submit" form={formId} isPending={form.pending}>
       {props.field ? t("save") : t("add")}
     </Button>
   );
@@ -219,6 +221,8 @@ function BookingFieldFields({
   setOptions,
   optionErrors,
   error,
+  formId,
+  onFormSubmit,
 }: Readonly<BookingFieldFieldsProps>) {
   const t = useTranslations(BOOKING_FIELD_DIALOG_COPY_NAMESPACE);
   const typeOptions = fieldTypeOptions(t);
@@ -228,7 +232,7 @@ function BookingFieldFields({
     if (id !== "SELECT") setOptions([]);
   }
   return (
-    <div className="flex flex-col gap-(--space-4)">
+    <form id={formId} noValidate onSubmit={onFormSubmit} className="flex flex-col gap-(--space-4)">
       <TextField
         label={t("fieldName")}
         name="name"
@@ -248,7 +252,7 @@ function BookingFieldFields({
       ) : null}
       <Switch label={t("requiredSwitch")} isSelected={required} onChange={setRequired} />
       <CatalogFieldError errorKey={error} />
-    </div>
+    </form>
   );
 }
 

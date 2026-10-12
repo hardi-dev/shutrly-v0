@@ -236,6 +236,8 @@ export const PROJECT_COPY = {
       noMatchBody: "Try another title or part of the client’s name.",
       loadMore: "Load more",
       loadingMore: "Loading…",
+      // F-24 (Owner 2026-10-12): project page loading title.
+      loadingProject: "Loading project…",
       // DECK GAP: no deck row for the list subtitle; the Indonesian text is kept.
       listSubtitleDesktop: "Setiap pemotretan yang kamu pegang, dari draf sampai selesai.",
       // DECK GAP: no deck row for the list subtitle; the Indonesian text is kept.
@@ -587,6 +589,7 @@ export const PROJECT_COPY = {
       noMatchBody: "Coba judul lain atau sebagian nama klien.",
       loadMore: "Muat lebih banyak",
       loadingMore: "Memuat…",
+      loadingProject: "Memuat proyek…",
       listSubtitleDesktop: "Setiap pemotretan yang kamu pegang, dari draf sampai selesai.",
       listSubtitleMobile: "Pemotretan dari draf sampai selesai.",
       filterButton: "Saring",

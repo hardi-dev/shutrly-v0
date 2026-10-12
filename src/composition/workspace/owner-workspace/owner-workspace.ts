@@ -66,7 +66,7 @@ async function verifyOwnerWorkspaceUncached(rawId: string): Promise<VerifiedWork
   });
 }
 
-/** Verifies a workspace for an owner without writing last-opened state; one lookup per request (ADR-025). */
+/** Verifies a workspace for an owner without writing last-opened state; one lookup per request (ADR-026). */
 export const verifyOwnerWorkspace = cache(verifyOwnerWorkspaceUncached);
 
 /** Verifies a workspace and conditionally records it as opened for a normal workspace page. @param rawId - untrusted route ID @returns the verified workspace context and summary */

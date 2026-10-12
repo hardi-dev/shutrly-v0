@@ -1,6 +1,6 @@
 # Technical design — Breadcrumb revamp (F-23)
 
-Spec: [spec.md](spec.md) · Acceptance criteria: [acceptance-criteria.md](acceptance-criteria.md) · ADR: [ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md)
+Spec: [spec.md](spec.md) · Acceptance criteria: [acceptance-criteria.md](acceptance-criteria.md) · ADR: [ADR-026](../../architecture/decisions/ADR-026-owner-breadcrumb-parallel-route.md)
 Status: BUILT (2026-10-12; revised after review the same day). Task 8 done: OQ-5 resolved 2026-10-12 (truncate the middle crumbs). Executable steps: [plan.md](plan.md).
 
 ## 1. Context
@@ -10,7 +10,7 @@ Today the trail is built in three places:
 - the client screens (`review-text.ts`, `client-browse-screen.tsx`, `pick-screen.tsx`, `delivery-screen.tsx`), which render on the server through `ClientShell` and have no flash.
 
 The plan:
-- **Owner:** the trail moves to a server-rendered parallel route slot `@crumbs` (ADR-025), built by one pure function. `PageHeadingOverride` keeps the title, status, meta and phone back target, and stops touching the trail.
+- **Owner:** the trail moves to a server-rendered parallel route slot `@crumbs` (ADR-026), built by one pure function. `PageHeadingOverride` keeps the title, status, meta and phone back target, and stops touching the trail.
 - **Client:** composition changes only, plus removing the A-31 redirect.
 - **Sidebar toggle:** a `leading` slot in the breadcrumb bar.
 
@@ -50,7 +50,7 @@ staticOwnerTrail(segments, workspaceId, workspaceName): readonly BreadcrumbItem[
 ### 5.2 Names: the existing loaders, cached
 No new loader. The slot pages call the same composition loaders as their pages, and those loaders are wrapped in React `cache()`, so a slot and its page share one query per request: `verifyOwnerWorkspace`, `loadProjectDetail` (`.title`), `loadServiceDetail` (`.name`), `loadGalleryPage` (`.project.title`), `loadSelectionGroups` (`.projectTitle`), `loadSelectionGroupDetail` (`.projectTitle`, `.group.name`). They already validate ids, verify the workspace and throw `notFound()` for a foreign entity (AC-CRUMB-012). The modules are `server-only`, not `"use server"`, so exporting a cached `const` is allowed; outside a server render `cache()` just calls the function. The template label needs no DB: the slot finds the editor in `messageTemplateSubPages(workspaceId)` by path and uses its `title`, or renders nothing for an unknown slug.
 
-### 5.3 Slot routes (ADR-025)
+### 5.3 Slot routes (ADR-026)
 Under `src/app/(owner)/w/[workspaceId]/@crumbs/`:
 
 | File | Trail |
@@ -123,7 +123,7 @@ None.
 | AC-CRUMB-008 | `review-text.test.ts`: editable vs read-only (Task 6) |
 | AC-CRUMB-009 | `client-browse-screen.test.tsx` (title, subtitle, trail, back); integration `home.test.ts` unchanged (Task 6) |
 | AC-CRUMB-010 | `page-header.test.tsx`: plain-text crumb not focusable, `aria-current` (Task 3) |
-| AC-CRUMB-011 | manual first-load check of a gallery URL (Task 5 Step 13); the mechanism is server rendering (ADR-025) |
+| AC-CRUMB-011 | manual first-load check of a gallery URL (Task 5 Step 13); the mechanism is server rendering (ADR-026) |
 | AC-CRUMB-012 | the cached loaders keep their existing workspace checks and tests (Task 2) |
 | AC-CRUMB-013 | `breadcrumb-trail.test.tsx` (Task 8, OQ-5 truncate the middle crumbs) |
 | AC-CRUMB-014 | unchanged mechanism (`PageHeadingOverride.parent`); existing `owner-shell.test.tsx` *Kembali* tests; client back targets in `review-text.test.ts` (Task 6) |
@@ -132,13 +132,13 @@ None.
 Per the Owner's working rule (2026-10-05), each task runs only its related tests plus prettier, eslint and typecheck on the touched files, never the full suite.
 
 ## 11. Risks
-- **Slot capture:** a dynamic slot segment captures a static sibling (`projects/[projectId]` would match `new`). Mitigation: the five mirrors in Task 4. Any new Owner route with a dynamic sibling needs a mirror (ADR-025 › Consequences); the automated route check is `owner-route-coverage.test.ts` (B-1, 2026-10-12), which fails on a dynamic page without a slot, a static sibling without a mirror, or a stale mirror.
+- **Slot capture:** a dynamic slot segment captures a static sibling (`projects/[projectId]` would match `new`). Mitigation: the five mirrors in Task 4. Any new Owner route with a dynamic sibling needs a mirror (ADR-026 › Consequences); the automated route check is `owner-route-coverage.test.ts` (B-1, 2026-10-12), which fails on a dynamic page without a slot, a static sibling without a mirror, or a stale mirror.
 - **Extra work per request:** the slot calls the same loaders as the page; `cache()` makes them run once per request. A slot on a page that does not call the same loader with the same arguments runs it again (ADR-018).
 - **Test churn:** tests that pin the old trails change on purpose, one task at a time.
 - **Long trails (Task 8):** root and current stay whole; if both together are wider than the bar, the bar clips them (no horizontal page scroll, since the App Panel hides overflow).
 
 ## 12. ADR
-[ADR-025](../../architecture/decisions/ADR-025-owner-breadcrumb-parallel-route.md): the Owner breadcrumb is rendered on the server by a parallel route slot.
+[ADR-026](../../architecture/decisions/ADR-026-owner-breadcrumb-parallel-route.md): the Owner breadcrumb is rendered on the server by a parallel route slot.
 
 ## 13. Iterations
 The executable steps, with exact code and commands, are in [plan.md](plan.md). It is written so Claude Haiku 5.5 can run it task by task. One commit per task.
@@ -146,7 +146,7 @@ The executable steps, with exact code and commands, are in [plan.md](plan.md). I
 | Task | Content | AC |
 |---|---|---|
 | 1 | Owner trail builder (`features/workspace/ui/owner-trail`) | 001–003, 007 (groundwork) |
-| 2 | Cache the shared loaders | 012 (kept), ADR-025 |
+| 2 | Cache the shared loaders | 012 (kept), ADR-026 |
 | 3 | Page Header takes a server-rendered trail (`trail`, `PageHeaderTrail`, `panelTrail`) | 010 |
 | 4 | `@crumbs` slot routes, mirrors and dynamic pages (not shown yet) | 001–006 |
 | 5 | Switch the Owner shell and the profile layout to the slot; drop the browser-side trail | 001–007, 011, 014 |

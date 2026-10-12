@@ -11,6 +11,7 @@ export interface WaitlistPillProps {
   id: string;
   error: string | undefined;
   isSubmitting: boolean;
+  isReady: boolean;
   field: UseFormRegisterReturn<"email">;
 }
 

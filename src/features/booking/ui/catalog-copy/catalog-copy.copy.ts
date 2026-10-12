@@ -12,6 +12,8 @@ export const CATALOG_COPY = {
       tabServices: "Services",
       tabCategories: "Categories",
       tabItems: "Package items",
+      // F-24 (Owner 2026-10-12): catalog detail loading title.
+      loadingService: "Loading service…",
       addService: "Add service",
       addCategory: "Add category",
       addCategoryInline: "New category",
@@ -117,8 +119,7 @@ export const CATALOG_COPY = {
       fieldMetaChoicesOptional: "{type}: {options} · Optional",
       requiredSwitch: "Required field",
       addFieldTitle: "Add booking field",
-      // DECK GAP: no deck row for the booking-field dialog description.
-      fieldDialogDescription: "Diisi saat membuat proyek dari layanan ini.",
+      fieldDialogDescription: "Filled in when creating a project from this service.",
       options: "Choices",
       addOptionButton: "Add choice",
       optionLabel: "Choice {index}",
@@ -147,8 +148,8 @@ export const CATALOG_COPY = {
       pickModeCountDescription: "The client chooses photos to edit. Counted per photo.",
       pickModeQuantity: "Photos to print",
       pickModeQuantityDescription: "The client chooses photos and the number of prints.",
-      // DECK GAP: no deck row for the selection-type meta, the locked-selection note or the notes switch.
-      pickModeMeta: "Pilihan klien: {mode}",
+      // DECK GAP: no deck row for the locked-selection note or the notes switch.
+      pickModeMeta: "Client choice: {mode}",
       pickLockedTitle: "Pengaturan pilihan dikunci",
       pickLockedBody: "Item ini dipakai paket atau proyek. Nama dan satuan masih bisa diubah.",
       pickNotesSwitch: "Klien bisa memberi catatan",
@@ -190,6 +191,7 @@ export const CATALOG_COPY = {
       tabServices: "Layanan",
       tabCategories: "Kategori",
       tabItems: "Isi paket",
+      loadingService: "Memuat layanan…",
       addService: "Tambah layanan",
       addCategory: "Tambah kategori",
       addCategoryInline: "Kategori baru",

@@ -60,7 +60,7 @@ async function loadSelectionGroupsUncached(rawWorkspaceId: string, rawProjectId:
   }
 }
 
-/** Loads the *Pilihan klien* page; one lookup per request (ADR-025). */
+/** Loads the *Pilihan klien* page; one lookup per request (ADR-026). */
 export const loadSelectionGroups = cache(loadSelectionGroupsUncached);
 
 /** Loads one group with its picks for the Owner (AC-SEL-010, AC-SEL-015). @param rawWorkspaceId - untrusted workspace id @param rawProjectId - untrusted project id @param rawGroupId - untrusted group id @returns the detail view */
@@ -80,7 +80,7 @@ async function loadSelectionGroupDetailUncached(
   }
 }
 
-/** Loads one group with its picks for the Owner; one lookup per request (ADR-025). */
+/** Loads one group with its picks for the Owner; one lookup per request (ADR-026). */
 export const loadSelectionGroupDetail = cache(loadSelectionGroupDetailUncached);
 
 /** Locks or closes a group for the signed-in Owner (AC-SEL-011, BR-AUD-001). @param rawWorkspaceId - untrusted workspace id @param rawProjectId - untrusted project id @param input - untrusted `{ groupId, intent }` @returns the lock result */

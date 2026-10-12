@@ -72,7 +72,7 @@ function PageHeaderBreadcrumb({ items }: Readonly<Pick<PageHeaderTrailProps, "it
   return <PageHeaderTrail items={items} label={t("breadcrumb")} />;
 }
 
-/** The Page Header breadcrumb, also rendered on the server by the Owner `@crumbs` slot (ADR-025). The label comes from the caller, so the server slot can pass its own translation. @param props - the crumbs and the trail label; the last one is current @returns the trail */
+/** The Page Header breadcrumb, also rendered on the server by the Owner `@crumbs` slot (ADR-026). The label comes from the caller, so the server slot can pass its own translation. @param props - the crumbs and the trail label; the last one is current @returns the trail */
 export function PageHeaderTrail({ items, label }: Readonly<PageHeaderTrailProps>) {
   return <BreadcrumbTrail label={label} items={items} className="min-h-(--space-10) flex-1" />;
 }

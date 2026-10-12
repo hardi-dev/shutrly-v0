@@ -6,6 +6,8 @@ import { useState } from "react";
 import type { FieldValues } from "react-hook-form";
 import { useForm } from "react-hook-form";
 
+import { useHydrated } from "@/ui/hooks/use-hydrated/use-hydrated";
+
 import { useServerFailure } from "../use-server-failure/use-server-failure";
 import type { AuthForm, AuthFormOptions } from "./use-auth-form.types";
 
@@ -19,7 +21,7 @@ function toError(error: unknown): Error {
  * and server failures routed by `useServerFailure`. An unexpected error is rethrown during
  * render so the route's error boundary shows the generic retry state (C-007).
  * @param options - the shared schema, default values, server action and optional success hook
- * @returns the form, the server-failure state, the submit handler and the submitting flag
+ * @returns the form, the server-failure state, the submit handler, the submitting flag and readiness
  */
 export function useAuthForm<T extends FieldValues>(options: AuthFormOptions<T>): AuthForm<T> {
   const { schema, defaultValues, action, onSuccess } = options;
@@ -30,6 +32,7 @@ export function useAuthForm<T extends FieldValues>(options: AuthFormOptions<T>):
     shouldFocusError: true,
   });
   const server = useServerFailure<T>();
+  const isReady = useHydrated();
   if (crash) throw crash;
 
   async function submit(values: T): Promise<void> {
@@ -48,5 +51,5 @@ export function useAuthForm<T extends FieldValues>(options: AuthFormOptions<T>):
     handle(event).catch(fail);
   }
 
-  return { form, server, onSubmit, isSubmitting: form.formState.isSubmitting };
+  return { form, server, onSubmit, isSubmitting: form.formState.isSubmitting, isReady };
 }

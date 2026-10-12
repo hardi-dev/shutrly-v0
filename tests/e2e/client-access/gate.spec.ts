@@ -13,7 +13,7 @@ test.skip(!FOLDER_URL, "GALLERY_SMOKE_FOLDER_URL is not set");
 test.setTimeout(300_000);
 
 async function enterPassword(page: Page, password: string): Promise<void> {
-  await page.getByLabel(CLIENT_PASSWORD_FORM_COPY.password).fill(password);
+  await page.getByPlaceholder(CLIENT_PASSWORD_FORM_COPY.placeholder).fill(password);
   await page.getByRole("button", { name: CLIENT_PASSWORD_FORM_COPY.submit }).click();
 }
 
@@ -37,7 +37,11 @@ test("AC-ACC-001 AC-ACC-002 AC-ACC-004 AC-ACC-007 AC-ACC-012 the client gate end
   try {
     const visitor = await client.newPage();
     const response = await visitor.goto(clientPath);
-    expect(response?.headers()["cache-control"]).toBe("private, no-store");
+    // `next dev` rewrites Cache-Control to "no-cache, must-revalidate" on every page, so the
+    // production value "private, no-store" is pinned against next.config in the integration
+    // test secrets-sweep (AC-ACC-012). Here: never publicly cacheable, never indexed.
+    expect(response?.headers()["cache-control"]).not.toMatch(/public|s-maxage/);
+    expect(response?.headers()["x-robots-tag"]).toBe("noindex");
     await expectGalleryA11y(visitor);
 
     await enterPassword(visitor, "mawar-0000");
@@ -46,6 +50,9 @@ test("AC-ACC-001 AC-ACC-002 AC-ACC-004 AC-ACC-007 AC-ACC-012 the client gate end
 
     // F-22 R-7 (A-31 withdrawn): even without selection items the client lands on Beranda.
     await enterPassword(visitor, GALLERY_PASSWORD);
+    await expect(
+      visitor.getByRole("heading", { name: CLIENT_GATE_SCREEN_COPY.title }),
+    ).toBeHidden();
     await expect(visitor).toHaveURL(clientPath);
     await visitor.reload();
     await expect(visitor).toHaveURL(clientPath);

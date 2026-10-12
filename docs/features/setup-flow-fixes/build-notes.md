@@ -243,3 +243,10 @@ Findings (things that looked wrong; none were fixed here):
 - `plan.md`: 5.1 ticked with a note about the kept keys (deviation 1); 5.2, 5.3, 6.1, 6.2 and 6.3 ticked.
 - `docs/product/feature-map.md`: F-24 row has the status `DONE, pending verification (2026-10-12; …)` after its existing links.
 - `docs/HANDOFF.md`: new section *F-24 setup-flow-fixes — built, pending verification (2026-10-12)* above the F-10 handoff, with the open Owner questions and the next step `/sdv:verify-feature setup-flow-fixes`.
+
+## Follow-up (2026-10-12, review)
+
+- **Client gallery no-JS case run.** `E2E_CLIENT_GALLERY_PATH` set to the path of the seeded *Wisuda Rina* client link (`SEED_CLIENT_WISUDA_RINA` in the git-ignored `.env.seed.dev-demo`; token not recorded here), then `npx playwright test tests/e2e/setup-flow-fixes/forms-without-js.spec.ts --retries=0`: **10 passed, 0 skipped**. AC-SFX-001…003 now have E2E evidence for the gallery password form too.
+- **Related unit set re-run by the reviewer:** 48 files, 183 tests passed; `pnpm typecheck` exit 0.
+- **Open:** plan task 5.4 (Edited/Print tab explanations, `visibilityFoldedEdited`/`visibilityFoldedPrint`): copy pending Owner approval of a Codex draft. Until then AC-SFX-015 is not met for those two strings.
+- **Seen, out of scope:** the services loading skeleton has a hard-coded Indonesian label (`src/features/booking/ui/catalog-skeletons/catalog-skeletons.tsx` line 10, "Memuat layanan") on the English UI (BR-L10N-002). Not part of F-24.

@@ -23,9 +23,14 @@ test("AC-ACC-001 AC-ACC-002 AC-ACC-004 AC-ACC-007 AC-ACC-012 the client gate end
 }) => {
   const { clientPath } = await publishedGallery(page);
 
-  // AC-ACC-007: the signed-in Owner still gets the password screen.
-  await page.goto(clientPath);
-  await expect(page.getByRole("heading", { name: CLIENT_GATE_SCREEN_COPY.title })).toBeVisible();
+  // AC-ACC-007: the signed-in Owner still gets the password screen. The publish can reach the
+  // client route a moment after the Owner UI shows it, so retry the first load until it answers.
+  await expect(async () => {
+    await page.goto(clientPath);
+    await expect(page.getByRole("heading", { name: CLIENT_GATE_SCREEN_COPY.title })).toBeVisible({
+      timeout: 2_000,
+    });
+  }).toPass({ timeout: 30_000 });
 
   const client = await browser.newContext();
   const phone = await browser.newContext({ viewport: { width: 390, height: 844 } });

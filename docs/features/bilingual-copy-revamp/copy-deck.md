@@ -411,7 +411,7 @@ Sources: `src/features/workspace/ui/*/*.copy.ts`, owner profile/workspace layout
 | Empty body | Open settings to add the brand name, contact details and invoice prefix. | Buka pengaturan untuk melengkapi nama merek, kontak, dan awalan nomor tagihan. |
 | Empty CTA | Set up branding | Lengkapi identitas merek |
 
-### 4.3a Setup checklist — `{workspace}` until the first project (F-25; drafted with the Codex CLI, approved by the Owner 2026-10-12)
+### 4.3a Setup checklist — `{workspace}` until the first project (F-25; drafted with the Codex CLI, approved by the Owner 2026-10-12; step bodies and locked hint rewritten compact for the design, Codex option 2 with terms in lower case and *Anda* → *kamu*, approved by the Owner the same day)
 
 Shown in place of the *Empty* rows above while the workspace has no project ([F-25 spec](../setup-checklist/spec.md)). Markers reuse §1: *Required* / *Wajib*, *Optional* / *Opsional*. The two §7.2 rows marked *replaces* swap the current *No service body* and *No service CTA* when F-25 is built.
 
@@ -421,19 +421,19 @@ Shown in place of the *Empty* rows above while the workspace has no project ([F-
 | Checklist description | Add a service first, then follow the recommended and optional steps. | Tambahkan layanan dulu, lalu ikuti langkah yang disarankan dan opsional. | EN aligned to the ID (Owner). |
 | Progress | {done} of {total} done | {done} dari {total} selesai | Plural-safe as written. |
 | Recommended marker (step 2) | Recommended | Disarankan | |
-| Locked hint (steps 2–3) | Complete Add a service first. | Selesaikan Tambah layanan dulu. | |
+| Locked hint (steps 2–3) | This step opens after you add a service | Langkah ini terbuka setelah kamu menambah layanan | Compact rewrite (design 2026-10-12) replaces *Complete Add a service first.* |
 | Done status, accessible | Done | Selesai | Same as §1 *Done*. |
 | Step 1 title | Add a service | Tambah layanan | |
-| Step 1 body | Add a service to create projects. Each service belongs to a category, which you can create in the Add service dialog. | Tambahkan layanan untuk membuat proyek. Setiap layanan termasuk dalam kategori yang bisa dibuat di dialog Tambah layanan. | |
+| Step 1 body | Projects come from services; add categories in Add service | Proyek berawal dari layanan; kategori bisa dibuat lewat Tambah layanan | Compact rewrite replaces the two-sentence body. |
 | Step 1 action | Add service | Tambah layanan | |
 | Step 2 title | Add package items | Tambah isi paket | Drops "that the client picks from". |
-| Step 2 body | Add options clients can pick, such as “Foto edit 50” for 50 selectable photos. | Tambahkan pilihan yang bisa dipilih klien, seperti “Foto edit 50” untuk 50 foto. | |
+| Step 2 body | “Foto edit 50” limits how many photos clients pick | “Foto edit 50” menentukan batas foto yang dipilih klien | Compact rewrite. |
 | Step 2 action | Add package items | Tambah isi paket | |
 | Step 3 title | Create your first project | Buat proyek pertamamu | |
-| Step 3 body | Add your client and shoot date in the New project form. | Tambahkan klien dan tanggal pemotretan di formulir Proyek baru. | |
+| Step 3 body | Fill in client and shoot date in New project | Masukkan klien dan tanggal pemotretan lewat Proyek baru | Compact rewrite. |
 | Step 3 action | New project | Proyek baru | Opens the form; its submit stays *Create project*. |
 | Step 4 title | Set your brand name | Atur nama merek | |
-| Step 4 body | Clients see your brand name in messages and galleries. Until then, they see {workspaceName}. | Klien melihat nama merekmu di pesan dan galeri. Sebelum diatur, mereka melihat {workspaceName}. | |
+| Step 4 body | Clients see {workspaceName} in messages and galleries until then | Sebelum diatur, klien melihat {workspaceName} di pesan dan galeri | Compact rewrite. |
 | Step 4 action | Set brand name | Atur nama merek | |
 | §7.2 No service body (*replaces*) | A project starts from a service in a category. Add both in the Add service dialog. | Proyek dimulai dari layanan dalam kategori. Tambahkan keduanya di dialog Tambah layanan. | |
 | §7.2 No service CTA (*replaces*) | Add service | Tambah layanan | |

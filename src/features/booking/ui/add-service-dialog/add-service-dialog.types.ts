@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, SyntheticEvent } from "react";
 
 import type { CategoryRecord } from "@/features/booking/application/ports/category-repository/category-repository.port";
 import type { CatalogWriteResult } from "@/features/booking/application/use-cases/catalog-results/catalog-results.types";
@@ -35,6 +35,8 @@ export interface AddServiceFieldsProps {
   readonly onBasePriceChange: (value: string) => void;
   readonly error?: string;
   readonly onAddCategory?: () => void;
+  readonly formId: string;
+  readonly onFormSubmit: (event: SyntheticEvent<HTMLFormElement>) => void;
 }
 
 export interface ResponsiveServiceDialogProps {

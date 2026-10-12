@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { type SyntheticEvent, useId, useState } from "react";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { BottomSheet } from "@/ui/patterns/bottom-sheet/bottom-sheet";
@@ -46,6 +46,7 @@ export function AddServiceDialog({
   addCategoryAction,
 }: Readonly<AddServiceDialogProps>) {
   const t = useTranslations(ADD_SERVICE_DIALOG_COPY_NAMESPACE);
+  const formId = useId();
   const form = useAddServiceForm({ workspaceId, service, onOpenChange, action, updateAction });
   const handleOpenChange = createDialogOpenChangeHandler(onOpenChange, form.close);
   const inlineCategory = useInlineCategory({
@@ -58,9 +59,10 @@ export function AddServiceDialog({
       categories={inlineCategory.categories}
       onAddCategory={addCategoryAction ? inlineCategory.open : undefined}
       form={form}
+      formId={formId}
     />
   );
-  const save = <ServiceSaveButton form={form} />;
+  const save = <ServiceSaveButton form={form} formId={formId} />;
   return (
     <>
       <ResponsiveServiceDialog
@@ -88,20 +90,30 @@ function ServiceFieldsContent({
   categories,
   onAddCategory,
   form,
+  formId,
 }: Readonly<{
   readonly categories: AddServiceDialogProps["categories"];
   readonly onAddCategory?: () => void;
   readonly form: ReturnType<typeof useAddServiceForm>;
+  readonly formId: string;
 }>) {
-  return <AddServiceFields categories={categories} onAddCategory={onAddCategory} {...form} />;
+  return (
+    <AddServiceFields
+      categories={categories}
+      onAddCategory={onAddCategory}
+      {...form}
+      formId={formId}
+    />
+  );
 }
 
 function ServiceSaveButton({
   form,
-}: Readonly<{ readonly form: ReturnType<typeof useAddServiceForm> }>) {
+  formId,
+}: Readonly<{ readonly form: ReturnType<typeof useAddServiceForm>; readonly formId: string }>) {
   const t = useTranslations(ADD_SERVICE_DIALOG_COPY_NAMESPACE);
   return (
-    <Button onPress={form.handleSubmit} isPending={form.isPending}>
+    <Button type="submit" form={formId} isPending={form.isPending}>
       {t("save")}
     </Button>
   );
@@ -175,9 +187,6 @@ function useAddServiceForm({
     onOpenChange(false);
     setError(undefined);
   }
-  function navigate(path: string): void {
-    router.push(path);
-  }
   async function submit(): Promise<void> {
     await submitAddService({
       workspaceId,
@@ -190,19 +199,22 @@ function useAddServiceForm({
       close,
       setError,
       setPending: setIsPending,
-      push: navigate,
+      push: (path) => {
+        router.push(path);
+      },
       t,
     });
   }
-  function handleSubmit(): void {
-    void submit();
+  function onFormSubmit(event: SyntheticEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    if (!isPending) void submit();
   }
   return {
     ...values,
     error,
     isPending,
     close,
-    handleSubmit,
+    onFormSubmit,
   };
 }
 
@@ -277,13 +289,15 @@ function AddServiceFields({
   onBasePriceChange,
   error,
   onAddCategory,
+  formId,
+  onFormSubmit,
 }: Readonly<AddServiceFieldsProps>) {
   const t = useTranslations(ADD_SERVICE_DIALOG_COPY_NAMESPACE);
   const options = categories
     .filter((category) => category.isActive)
     .map((category) => ({ id: category.id, label: category.name }));
   return (
-    <div className="flex flex-col gap-(--space-4)">
+    <form id={formId} noValidate onSubmit={onFormSubmit} className="flex flex-col gap-(--space-4)">
       <ServiceNameField name={name} onNameChange={onNameChange} />
       <Select
         label={t("category")}
@@ -300,7 +314,7 @@ function AddServiceFields({
       ) : null}
       <ServicePriceField basePrice={basePrice} onBasePriceChange={onBasePriceChange} />
       <CatalogFieldError errorKey={error} />
-    </div>
+    </form>
   );
 }
 

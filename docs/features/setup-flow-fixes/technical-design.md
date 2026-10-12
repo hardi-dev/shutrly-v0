@@ -22,7 +22,7 @@ F-24 fixes the setup-flow defects that discovery confirmed: D1 (forms can submit
   - (a) If `@crumbs` throws and the `[workspaceId]` boundary renders `PageNotFoundScreen` *inside the trail*, add `@crumbs/[...]/not-found.tsx` handling (`@crumbs/not-found.tsx`, which renders `null`) and re-check.
   - (b) If (a) doesn't work in this Next version, the slot pages catch the loader's not-found and render the ancestors-only trail (`ownerTrail` without `current`). That changes ADR-026 point 38 ("the slot loader throws `notFound()`"), so stop and ask the Owner to amend ADR-026 first (C-011).
   - The spike records which case held in `build-notes.md`. AC-SFX-014 holds in every case: the trail never names the missing record.
-- **D-7 Copy first, then code.** D4's new strings and the replacements for D5 and D6 are drafted with the Codex CLI. The Owner approves them, they're written into `copy-deck.md` (new rows, plus the stale §15/§16 rows corrected), and then they're copied verbatim into the `*.copy.ts` modules. Dead keys `visibilityFoldedEdited` and `visibilityFoldedPrint` (`gallery-copy.copy.ts`, EN and ID; no reader) are removed with D5, not reworded.
+- **D-7 Copy first, then code.** D4's new strings and the replacements for D5 and D6 are drafted with the Codex CLI. The Owner approves them, they're written into `copy-deck.md` (new rows, plus the stale §15/§16 rows corrected), and then they're copied verbatim into the `*.copy.ts` modules. `visibilityFoldedEdited` and `visibilityFoldedPrint` (`gallery-copy.copy.ts`, EN and ID) are **reworded**, not removed: planning thought they had no reader, but `browse-text.kindVisibility` shows them under the Edited and Print tabs (corrected 2026-10-12, build).
 
 ## Database changes
 None.
@@ -47,7 +47,7 @@ None. No business rule changes; all logic added is UI-level and pure (`pageNotFo
 | `features/workspace/ui/page-not-found-screen/` (new) | `PageNotFoundScreen`, `.copy.ts`, `.types.ts`, `page-not-found-back-target.ts` + tests | D4 |
 | `app/(owner)/w/[workspaceId]/not-found.tsx` (new) | renders `PageNotFoundScreen` | D4 |
 | `app/(owner)/w/[workspaceId]/@crumbs/…` | per the D-6 spike | D4 |
-| `features/gallery/ui/source-copy/`, `gallery-copy/` | approved copy; dead keys removed | D5 |
+| `features/gallery/ui/source-copy/`, `gallery-copy/` | approved copy, including the Edited/Print tab explanations | D5 |
 | `features/booking/ui/catalog-copy/` | EN `pickModeMeta`, `fieldDialogDescription` | D6 |
 
 Not changed: `google-button` and `account-unavailable-screen` (server-action forms, AC-SFX-004); dialog forms outside the catalog (spec › Out of scope).
@@ -77,7 +77,7 @@ Unchanged. Field and server errors keep today's components. `PageNotFoundScreen`
 | AC-SFX-011, 013 | unit: `page-not-found-back-target.test.ts` (table of pathnames → targets); `page-not-found-screen.test.tsx` (EN and ID copy, link). E2E `tests/e2e/setup-flow-fixes/page-not-found.spec.ts` (seeded owner): unknown template slug, a random project uuid, a random service uuid, an unknown section → *page not found* inside the shell; a random workspace uuid → "Workspace not found". |
 | AC-SFX-012 | same E2E: owner B opens owner A's project and service ids under B's workspace → the same *page not found* text, and the page doesn't contain A's project title. |
 | AC-SFX-014 | same E2E: on each *page not found*, the breadcrumb (`nav` with the breadcrumb label) doesn't contain the requested id or a record name. |
-| AC-SFX-015 | unit: `features/gallery/ui/source-copy/source-copy.test.ts` + `gallery-copy` test: no EN or ID message matches `` /`(edited\|print)`/ `` and no key `visibilityFolded*` exists. |
+| AC-SFX-015 | unit: `features/gallery/ui/source-copy/source-copy.test.ts` + `gallery-copy` test: no EN or ID message matches `` /`(edited\|print)`/ `` (the Edited/Print tab explanations included). |
 | AC-SFX-016 | unit, one `*.deck.test.ts` beside each changed copy module (`source-copy`, `gallery-copy`, `catalog-copy`, `page-not-found-screen`): every F-24 string equals its row in `docs/features/bilingual-copy-revamp/copy-deck.md` (read with `fs`; the keys and rows are listed in the test). |
 | AC-SFX-017 | unit in `catalog-copy`: the EN `pickModeMeta` and `fieldDialogDescription` differ from their ID values and equal the approved EN rows. |
 

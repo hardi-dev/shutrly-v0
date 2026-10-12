@@ -1414,8 +1414,8 @@ A failed multi-step sync may have already saved earlier steps. These error messa
 | Canceled-draft visibility | Won’t be visible to clients. | Tidak akan terlihat oleh klien. |
 | Final-file visibility | Hidden until final delivery. Clients can’t select these photos. | Disembunyikan sampai hasil akhir dikirim. Foto ini tidak bisa dipilih klien. |
 | Missing visibility | Missing photos are hidden until found again. | Foto yang hilang disembunyikan sampai ditemukan lagi. |
-| Edited-folder explanation · Removed (F-24) | Removed: key `visibilityFoldedEdited` has no reader. No folder name is special (BR-GAL-007); no replacement text is approved. | — |
-| Print-folder explanation · Removed (F-24) | Removed: key `visibilityFoldedPrint` has no reader. No folder name is special (BR-GAL-007); no replacement text is approved. | — |
+| Edited-folder explanation · Pending (F-24) | PENDING (F-24): key `visibilityFoldedEdited` is shown under the Edited tab (`browse-text.kindVisibility`); new wording awaits Owner approval. No folder name is special (BR-GAL-007); no replacement text is approved. | — |
+| Print-folder explanation · Pending (F-24) | PENDING (F-24): key `visibilityFoldedPrint` is shown under the Print tab (`browse-text.kindVisibility`); new wording awaits Owner approval. No folder name is special (BR-GAL-007); no replacement text is approved. | — |
 
 ### 10.6 Publish, expiry and password changes
 

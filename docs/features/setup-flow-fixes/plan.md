@@ -99,9 +99,9 @@ Status: PLANNED (2026-10-12) · Design: [technical-design.md](technical-design.m
 
 **Read first:** AC-SFX-015…017 · BR-GAL-007, BR-L10N-002 · technical-design › D-7, Testing (015–017) · approved rows in `copy-deck.md` (iteration 3) · `source-copy.copy.ts`, `gallery-copy.copy.ts`, `catalog-copy.copy.ts`, `setup-guide-card.tsx`.
 
-- [ ] **5.1 Guidance copy (D5).** Test first: no EN or ID message in `source-copy` or `gallery-copy` matches `` /`(edited|print)`/ ``, and `visibilityFoldedEdited`/`visibilityFoldedPrint` don't exist (AC-SFX-015). Replace the five strings verbatim from the deck, delete the two dead keys in both locales, and update the tests that assert the old text (`git grep -n "edited\` and" src tests`). Commit `fix(gallery): describe folder mapping in the drive guidance`.
-- [ ] **5.2 Catalog English (D6).** Test first (AC-SFX-017): EN `pickModeMeta` and `fieldDialogDescription` equal the approved rows and differ from ID. Replace the EN values. Commit `fix(catalog): show english pick mode and booking field copy`.
-- [ ] **5.3 Deck parity (AC-SFX-016).** One test per changed copy module that reads `copy-deck.md` with `fs` and checks each F-24 string appears verbatim (list the keys and rows in the test). Commit `test(copy): setup flow fix copy matches the deck`.
+- [x] **5.1 Guidance copy (D5).** Partly: the five strings are replaced; the two dead-looking keys are kept because `browse-text.kindVisibility` reads them (see build-notes, Iteration 5 and 6, deviation 1). Test first: no EN or ID message in `source-copy` or `gallery-copy` matches `` /`(edited|print)`/ ``, and `visibilityFoldedEdited`/`visibilityFoldedPrint` don't exist (AC-SFX-015). Replace the five strings verbatim from the deck, delete the two dead keys in both locales, and update the tests that assert the old text (`git grep -n "edited\` and" src tests`). Commit `fix(gallery): describe folder mapping in the drive guidance`.
+- [x] **5.2 Catalog English (D6).** Test first (AC-SFX-017): EN `pickModeMeta` and `fieldDialogDescription` equal the approved rows and differ from ID. Replace the EN values. Commit `fix(catalog): show english pick mode and booking field copy`.
+- [x] **5.3 Deck parity (AC-SFX-016).** One test per changed copy module that reads `copy-deck.md` with `fs` and checks each F-24 string appears verbatim (list the keys and rows in the test). Commit `test(copy): setup flow fix copy matches the deck`.
 
 **Done when:** the copy tests pass in EN and ID, the existing tests of the touched screens pass, and `catalog-parity` / `copy-registry` tests pass.
 
@@ -111,8 +111,8 @@ Status: PLANNED (2026-10-12) · Design: [technical-design.md](technical-design.m
 
 **Read first:** all AC-SFX · this plan's *Done when* lines · `build-notes.md`.
 
-- [ ] **6.1 Browser check** on the dev server (`preview_start` with the `dev` config; stop only your own server): register page before and after load, catalog dialogs with Enter, a missing project and template URL, *Photo sources* guide, *Package items* in EN and ID. Screenshots into `build-notes.md` (paths only).
-- [ ] **6.2 Record.** `build-notes.md`: what was built per iteration, tests run and results, the D-6 case, anything not run and why. Tick this plan. Feature map F-24 → `IN PROGRESS` → `DONE, pending verification`. Update `docs/HANDOFF.md` (Current handoff).
-- [ ] **6.3** Commit `docs(setup-flow-fixes): record the build`. Recommend `/sdv:verify-feature setup-flow-fixes`.
+- [x] **6.1 Browser check** on the dev server (`preview_start` with the `dev` config; stop only your own server): register page before and after load, catalog dialogs with Enter, a missing project and template URL, *Photo sources* guide, *Package items* in EN and ID. Screenshots into `build-notes.md` (paths only).
+- [x] **6.2 Record.** `build-notes.md`: what was built per iteration, tests run and results, the D-6 case, anything not run and why. Tick this plan. Feature map F-24 → `IN PROGRESS` → `DONE, pending verification`. Update `docs/HANDOFF.md` (Current handoff).
+- [x] **6.3** Commit `docs(setup-flow-fixes): record the build`. Recommend `/sdv:verify-feature setup-flow-fixes`.
 
 **Done when:** every AC-SFX (except the withdrawn 005…008) has a passing test or a documented check, and the docs say so.

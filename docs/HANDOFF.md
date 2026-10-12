@@ -1,9 +1,17 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-07 (F-10 client-access DONE pending verification, Slices 0–12 built incl. the Owner 7 revision; F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending Owner acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
+Last updated: 2026-10-12 (F-24 setup-flow-fixes built, pending verification; F-10 client-access DONE pending verification, Slices 0–12 built incl. the Owner 7 revision; F-00–F-03, F-06, F-07, F-17 DONE; F-04, F-05 merged, verification owed; F-09 Gallery DONE, pending Owner acceptance) · Read this first when resuming work, then [docs/README.md](README.md).
 Branch: `feat/client-access` (F-10, worktree `.claude/worktrees/pull-branch-main-21161f`). F-09 free-tier rework is on `feat/gallery-free-tier`, F-07 on `feat/projects`, F-08 Team designed on `feat/team-sessions`.
 
 History (previous handoffs, early status table, component-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
+
+## F-24 setup-flow-fixes — built, pending verification (2026-10-12)
+
+- **State:** feature map `DONE, pending verification`. All six iterations are built and recorded in [build-notes.md](features/setup-flow-fixes/build-notes.md) (sections *Iterations 1–2*, *Iteration 3.3 and 4*, *Iteration 5 and 6*). Branch `staging`; the commits are local and **not pushed**; no deploy, no PR.
+- **Read:** [plan.md](features/setup-flow-fixes/plan.md) (ticked), [acceptance-criteria.md](features/setup-flow-fixes/acceptance-criteria.md) (AC-SFX-001…017; 005…008 withdrawn), [copy-draft.md](features/setup-flow-fixes/copy-draft.md) (approved copy).
+- **Production:** the waitlist form change (D1, ADR-021) reaches production with the next landing deploy. The ship notes must say so.
+- **Open for the Owner:** (1) the Edited and Print tab lines on *Semua foto* (`visibilityFoldedEdited` / `visibilityFoldedPrint`) still name the `edited` and `print` folders; they are read by `browse-text.kindVisibility`, so they were kept, and no replacement wording is approved. The deck §10.5 rows that call them unread are wrong. (2) The approved EN Photo sources diagram labels mix an Indonesian folder name with English (*Hasil Edit → mapped to Edited photos later*); confirm that is intended. (3) The services loading skeleton shows the Indonesian *Memuat layanan* on the EN UI (`catalog-skeletons.tsx`, pre-existing, not fixed).
+- **Next step:** `/sdv:verify-feature setup-flow-fixes`. Not run here: the full suite, and the client gallery case of `forms-without-js.spec.ts` (needs `E2E_CLIENT_GALLERY_PATH`).
 
 ## Current handoff — F-10 client-access, Owner 7 revision built, pending verification (2026-10-07)
 

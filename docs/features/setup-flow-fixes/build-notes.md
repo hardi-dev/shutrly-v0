@@ -140,3 +140,106 @@ Not run: the full suite and the full E2E run, per the brief.
 - The E2E spec checks AC-SFX-014 as "no breadcrumb text contains the requested id or name". With the trail empty, that check passes trivially. It does not check that the workspace or section is shown (gap above).
 - The E2E specs have not been checked against a build before the boundary change (no red run of the E2E spec, only the unit tests were red first).
 - Visual check of the page-not-found state in a browser is part of plan 6.1, not done here.
+
+## Iteration 5 and 6 (build)
+
+Branch `staging`, this checkout, no push, no deploy, no PR. Commits end with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`, as the build brief asked.
+
+### Commits (in order)
+
+| Task | Commit | Subject |
+|---|---|---|
+| Iteration 4 gap, and the copy apostrophe | e218acd0 | fix(workspace): show the workspace and section crumbs on page not found |
+| 5.1 | d5fb8377 | fix(gallery): describe folder mapping in the drive guidance |
+| 5.2 | e8020ecd | fix(catalog): show english pick mode and booking field copy |
+| 5.3 | c9eb233a | test(copy): setup flow fix copy matches the deck |
+| 6.3 | (this commit) | docs(setup-flow-fixes): record the build |
+
+### Part A: the breadcrumb on page not found (AC-SFX-014)
+
+The gap recorded under *Iteration 3.3 and 4* is closed: the page-not-found trail was empty. Owner decision (2026-10-12): *Build workspace › section*.
+
+- **How.** The crumb slot's `not-found.tsx` renders `PageNotFoundCrumbs` (client). Not-found files get no props, so the component reads the path with `usePathname()` and the verified workspace from a new `OwnerWorkspaceProvider` (`features/workspace/ui/owner-workspace-context/`), which `OwnerShell` wraps around its tree. The trail comes from the pure helper `pageNotFoundTrail` (`page-not-found-trail.ts`): the workspace crumb, then the section crumb when the URL's first segment after the workspace id is a known owner section. It never reads the loaded record.
+- **Unknown routes.** `@crumbs/[...segments]/page.tsx` and `@crumbs/message-templates/[templateType]/page.tsx` returned `null` for a route that doesn't exist, so the slot had nothing to show. They now call `notFound()`, which reaches the crumb not-found. Every real route already has a static trail (checked against the file list), so only nonexistent routes change.
+- **Shape.** The section is the last crumb, so `BreadcrumbTrail` renders it as current text (`aria-current="page"`), not a link. The workspace is a link when a section follows it; on an unknown section it stands alone as current text.
+- **Copy.** The EN body is the approved curly-apostrophe text (*doesn’t*) in `page-not-found-screen.copy.ts`, its test, the deck row and `copy-draft.md`. The apostrophe test was red first (1 failed, 3 passed), then green. Spec and AC prose keep their wording.
+- **Red first.** The helper and the crumb component were tested before they existed: `page-not-found-trail.test.ts` and `page-not-found-crumbs.test.tsx` failed on the missing modules (2 files failed, 10 passed).
+- **E2E.** `tests/e2e/setup-flow-fixes/page-not-found.spec.ts` now asserts, on every missing URL, that the breadcrumb holds the workspace name (*Session Team Studio*) and the section label (*Proyek*, *Templat pesan*, *Layanan*) and no requested id or name.
+
+### Iteration 5 (copy in code)
+
+- **5.1 (D5).** `source-copy` and `gallery-copy`: `guideStep3`, `treeEdited`, `treePrint`, `sourcesEmptyBody`, `linkDialogDescription` now carry the approved EN and ID text verbatim from `copy-draft.md` (the same text as the deck rows). Red first: `source-copy.test.ts` and `gallery-copy.test.ts` (new): 8 failed and 4 passed across 3 files, including the catalog test. Green after the copy change: 3 files, 12 passed.
+- **5.2 (D6).** `catalog-copy`: EN `pickModeMeta` = `Client choice: {mode}`, EN `fieldDialogDescription` = `Filled in when creating a project from this service.`; ID unchanged. The two `DECK GAP` comments that covered them were removed. Test: `catalog-copy.test.tsx`, new case.
+- **5.3 (AC-SFX-016).** One deck-parity test per changed copy module: `source-copy.deck.test.ts`, `gallery-copy.deck.test.ts`, `catalog-copy.deck.test.ts`, `page-not-found-screen.deck.test.ts`. Each reads `docs/features/bilingual-copy-revamp/copy-deck.md` with `fs` and checks each EN/ID pair appears as one row, verbatim.
+- **Old text.** `git grep` over `src` and `tests` for the old strings found no test asserting them; the only remaining hits are the new text.
+
+### Tests run and results
+
+| Scope | Command | Result |
+|---|---|---|
+| Part A, unit | `NODE_OPTIONS=--max-old-space-size=6144 npx vitest run src/features/workspace/ui/page-not-found-screen` | 4 files, 17 passed |
+| Part A, related | `… npx vitest run src/features/workspace/ui/page-not-found-screen src/features/workspace/ui/owner-trail src/features/workspace/ui/owner-shell src/app/copy-registry.test.ts src/features/workspace/ui/workspace-not-found-screen` | 9 files, 41 passed |
+| Part A, E2E (first run) | `npx playwright test tests/e2e/setup-flow-fixes/page-not-found.spec.ts` | 1 failed (the trail was empty on unknown template and section URLs; fixed by the `notFound()` change), 1 passed |
+| Part A, E2E (after fixes) | same command, `--retries=0` | 2 passed (first attempt) |
+| Iteration 5, copy red | `… npx vitest run src/features/gallery/ui/source-copy src/features/gallery/ui/gallery-copy src/features/booking/ui/catalog-copy` | 8 failed, 4 passed (red, before the copy change) |
+| Iteration 5, copy green | same | 3 files, 12 passed |
+| Iteration 5, deck tests | `… npx vitest run src/features/gallery/ui/source-copy src/features/gallery/ui/gallery-copy src/features/booking/ui/catalog-copy src/features/workspace/ui/page-not-found-screen` | 11 files, 33 passed |
+| Typecheck (after Part A) | `pnpm typecheck` | exit 0 |
+| **All F-24 related, together (final)** | `NODE_OPTIONS=--max-old-space-size=6144 npx vitest run src/ui/hooks/use-hydrated src/features/auth/ui src/features/gallery/ui/client-password-form src/features/landing/ui/waitlist-form src/features/workspace/ui/settings-screen src/features/booking/ui/add-service-dialog src/features/booking/ui/service-item-dialog src/features/booking/ui/booking-field-dialog src/features/booking/ui/item-definition-dialog src/features/booking/ui/option-list-editor src/features/booking/ui/catalog-copy src/features/workspace/ui/page-not-found-screen src/features/workspace/ui/owner-trail src/features/workspace/ui/owner-shell src/features/gallery/ui/source-copy src/features/gallery/ui/gallery-copy src/features/gallery/ui/setup-guide-card src/app/copy-registry.test.ts` | **47 files, 179 tests passed (exit 0)**. `owner-shell` was added to the brief's list because it changed. The five 5-second auth timeouts from Iteration 1–2 did not recur. |
+| **E2E folder (final)** | `npx playwright test tests/e2e/setup-flow-fixes/` | **11 passed, 1 skipped (exit 0)**. Skipped: the client gallery case in `forms-without-js.spec.ts` (needs `E2E_CLIENT_GALLERY_PATH`). |
+| **Typecheck (final)** | `pnpm typecheck` | **exit 0** |
+| Lint | `prettier --write` and `eslint --fix` on each changed file; the pre-commit hook on every commit | clean (every commit exit 0) |
+
+### 6.1 Browser check
+
+Dev server on port 3000, reused (not started or stopped). A throwaway spec, `tests/e2e/setup-flow-fixes/zz-f24-browse-check.spec.ts`, drove two throwaway Owners, one in EN and one in ID (dev database, `f24-en+…` and `f24-id+…@test.shutrly.dev`). The spec is deleted and not committed; `git status` was clean afterwards. Screenshots are in the session scratchpad, folder `f24-shots/` (names only, as the plan asks):
+
+| File | What it shows | Checked |
+|---|---|---|
+| `01-register-no-js.png` | `/register` with JavaScript disabled: *Create account* is disabled | viewed; the spec asserts `toBeDisabled()` |
+| `02-register-js.png` | `/register` with JavaScript: submit enabled | captured; the spec asserts `toBeEnabled()` |
+| `04-en-` / `04-id-add-service-dialog-before-enter.png` | Add service dialog with a name and price, before Enter | captured |
+| `05-en-after-enter-service-page.png` | After Enter in the price field: *Changes saved*, service page open (*Wisuda Basic*) | viewed (second run) |
+| `06-en-add-booking-field-dialog.png` | *Add booking field*, subtitle *Filled in when creating a project from this service.* | viewed |
+| `07-en/id-package-items-dialog.png` | *Add package item* dialog | captured, not viewed |
+| `08-en-package-items.png` | *Package items*: *Client choice: Photos to edit*, *Client choice: Photos to print* | viewed |
+| `08-id-package-items.png` | *Isi paket*: *Pilihan klien: Foto untuk dicetak*, *Pilihan klien: Foto untuk diedit* | viewed |
+| `09-en-missing-project.png` | *Page not found*, *This page doesn’t exist or was removed.*, breadcrumb *F24 Studio › Projects* | viewed |
+| `09-id-missing-project.png` | *Halaman tidak ditemukan*, breadcrumb *F24 Studio › Proyek* | viewed |
+| `10-en-photo-sources.png` | *Photo sources* guide: step 3 is the approved text; diagram labels are the approved EN text | viewed |
+| `10-id-photo-sources.png` | the ID guide | captured, not viewed |
+
+Results:
+- D1: the no-JS register button is disabled; with JavaScript it is enabled.
+- D3: a real Enter key in the Add service dialog saves the service and opens its page (AC-SFX-009 in a browser, for that dialog only).
+- D4 and AC-SFX-014: both missing-project pages show the workspace and section crumbs, with no record id.
+- D5: the EN guide shows the approved text.
+- D6: the EN package items and booking field dialog are English; the ID ones are Indonesian.
+
+Findings (things that looked wrong; none were fixed here):
+1. **Indonesian loading text on the EN UI.** The first capture of the EN service page, taken during loading, showed the skeleton *Memuat layanan*. It is hard-coded in `src/features/booking/ui/catalog-skeletons/catalog-skeletons.tsx` (line 10, `detail`). It predates F-24 and is outside its scope. It needs its own copy key.
+2. **Mixed-language diagram labels.** The approved EN labels *Hasil Edit → mapped to Edited photos later* and *Cetak → mapped to Printed photos later* put Indonesian folder names in the English UI. They are implemented as approved; the Owner should confirm.
+3. **Edited and Print tab lines.** `visibilityFoldedEdited` and `visibilityFoldedPrint` are still shown on the Edited and Print tabs of *Semua foto* (through `browse-text.kindVisibility`). They name `edited` and `print` folders. The tab screens were not reached in the browser (see Not run).
+4. **Breadcrumb shape.** On page not found the section is the current item, so it is plain text, not a link. This follows the trail's convention and the Owner's *workspace › section*, but a link back to the section would be more useful; the back button in the body already does that.
+
+### Not run, and why
+
+- The full test suite and the full E2E run (per the brief).
+- The client gallery case of `forms-without-js.spec.ts` (needs `E2E_CLIENT_GALLERY_PATH`, a published gallery over the fake Drive).
+- The Edited and Print tab lines in the browser (needs a gallery with photos in those tabs). The string is confirmed in code and in `browse-text.test.ts`.
+- Enter in the *Add package item* and *Add booking field* dialogs in a real browser (only Add service was checked; the unit tests cover the others).
+- A browser check of the Indonesian photo-sources screen (captured, not viewed).
+
+### Deviations from the plan, with reasons
+
+1. **5.1 dead keys kept.** The plan and D-7 say `visibilityFoldedEdited` and `visibilityFoldedPrint` have no reader, and the deck's §10.5 rows say so. Both are wrong: `browse-text.kindVisibility` (`src/features/gallery/ui/browse-text/browse-text.ts`, line 55) reads them for the Edited and Print tabs of *Semua foto*. Deleting them would break that line, and no approved replacement exists, so I did not invent wording. They are kept. `gallery-copy.test.ts` (AC-SFX-015) lists them as the one open exception, and any other message that names a folder fails the test. The §10.5 rows in the deck were left unchanged (they are Owner-approved records); they need correcting once the Owner decides the wording.
+2. **Iteration 4 gap closed in Part A (outside the plan's file list).** To show the workspace and section crumbs, I added `owner-workspace-context/` (new), `page-not-found-crumbs.tsx` and `page-not-found-trail.ts` (new), a provider in `owner-shell.tsx`, a re-export of the page-header namespace in `page-not-found-screen.copy.ts`, and `notFound()` in two crumb routes. The alternative was a DB read in the not-found file, which the docs don't allow (no params).
+3. **Deck tests: four files, one per changed copy module.** That is how the plan states 5.3. The gallery and source copy also have new unit test files (`source-copy.test.ts`, `gallery-copy.test.ts`).
+4. **Curly apostrophe.** The Owner's *doesn’t* was applied to the copy module, its test, the deck row and `copy-draft.md`. The apostrophe in spec and AC prose was left alone.
+5. **Copy drift check.** Approved text is used verbatim, including the arrows in the example labels (see finding 2).
+
+### Plan and docs
+
+- `plan.md`: 5.1 ticked with a note about the kept keys (deviation 1); 5.2, 5.3, 6.1, 6.2 and 6.3 ticked.
+- `docs/product/feature-map.md`: F-24 row has the status `DONE, pending verification (2026-10-12; …)` after its existing links.
+- `docs/HANDOFF.md`: new section *F-24 setup-flow-fixes — built, pending verification (2026-10-12)* above the F-10 handoff, with the open Owner questions and the next step `/sdv:verify-feature setup-flow-fixes`.

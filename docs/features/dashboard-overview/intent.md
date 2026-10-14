@@ -2,7 +2,7 @@
 
 Author: Owner (hardi-dev), 2026-10-12: "create new feature to fill the dashboard"
 Source: IDEA
-Status: ACCEPTED (Owner, 2026-10-13, with the answers below)
+Status: ACCEPTED (Owner, 2026-10-13, with the answers below) · Revised by the Owner 2026-10-14 during design (see *Owner revision* at the end)
 
 ## Problem
 Once a workspace has its first project, the dashboard goes back to the F-02 placeholder: an empty-state card and the *Set up branding* prompt. F-25 replaced the placeholder only until the first project, and its intent left a full dashboard out of scope (the feature map says no feature owns it). So the page an Owner lands on every day shows nothing about their work.
@@ -52,3 +52,13 @@ Evidence: the feature map calls the dashboard "a placeholder, not a verified pro
 
 ## Open questions
 - Time zone for "today" and the 7-day window: discovery reads the existing session and workspace rules and follows them (Owner 2026-10-12). If no rule decides it, report a `SPEC GAP`.
+
+## Owner revision (2026-10-14, during `/sdv:design-feature`)
+The Owner chose the dashboard layout already drawn in the design library (C30 App shell · 1920: greeting, metric tiles, *Booking & Produksi* table) over the four summaries, and decided:
+- **Layout:** page header with *New project* as its primary action and a new subtitle, no greeting; four metric tiles in lifecycle order: *New projects*, *To review*, *In editing*, *Delivered*; a *Active projects* table of up to 10 active projects, without tabs, with the project list's search and filter (columns project and client, service, next session, status, agreed price).
+- **Summaries:** *Needs you*, *Upcoming sessions*, *Projects by status* and *Galleries expiring soon* are no longer separate parts; this replaces the 2026-10-12 answer "all four".
+- **Not read-only any more:** each row has the project list's ⋯ menu, reused unchanged ("reuse the existing menu, update the spec"). This lifts the constraint "Read-only" and the out-of-scope item "Editing anything from the dashboard", for the existing menu actions only.
+- **Money:** the project's agreed price is shown; invoice, payment and revenue figures still wait for F-14.
+- **New projects this month** counts projects created this month: no booking time is stored, and no new column is added.
+- **Trends and charts:** the two monthly tiles show a trend badge (against the same days of last month) and a 7-month sparkline; this lifts "Charts, trends over time" from the out-of-scope list for those two tiles only. The live tiles show a ring instead (share waiting 3+ days; share ready to edit), since no history is stored for them.
+- **Width:** the page uses the 720 centered column, an exception to the layout rule for dashboards; the table has no *Service* column.

@@ -10,7 +10,7 @@ import { DASHBOARD_OVERVIEW_COPY } from "@/features/booking/ui/dashboard-overvie
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 
 // The named test Owner is kept in the git-ignored .env.test (scripts/dev/show-test-owner.sh).
-// The journey is read-only: it never changes the Owner's data.
+// Only the last test changes data: it adds two drafts to the test Owner and confirms them (plan 7.1).
 const testEnv: Record<string, string | undefined> = existsSync(".env.test")
   ? parse(readFileSync(".env.test"))
   : {};
@@ -109,4 +109,79 @@ test("AC-DASH-026 on the phone the active projects are list cards with a full-wi
   await signIn(page);
   await expect(page.getByRole("list", { name: en.tableTitle })).toBeVisible();
   await expect(page.getByRole("link", { name: en.footerLink })).toBeVisible();
+});
+
+/** Adds a draft from the first client and the first service, with one session on the 15th; returns the project id (AC-PRJ-029). @returns the project id */
+async function createDraft(page: Page, workspaceId: string): Promise<string> {
+  await page.goto(`/w/${workspaceId}/projects/new`);
+  await page.getByRole("combobox", { name: project.clientLabel }).click();
+  await page.getByRole("option").first().click();
+  await page.getByRole("button", { name: new RegExp(project.serviceLabel) }).click();
+  await page.getByRole("option").first().click();
+  await page.getByRole("button", { name: project.addSession }).click();
+  const dialog = page
+    .getByRole("dialog", { name: project.sessionDialogTitle })
+    .filter({ visible: true });
+  await dialog.getByRole("textbox", { name: project.sessionName }).fill("Sesi e2e");
+  await dialog.getByRole("button", { name: new RegExp(project.sessionDate) }).click();
+  await page.getByRole("grid").getByText("15", { exact: true }).first().click();
+  await dialog.getByRole("button", { name: project.sessionSave }).click();
+  await expect(dialog).toBeHidden();
+  await expect(page.getByText("Sesi e2e").filter({ visible: true }).first()).toBeVisible();
+  await page.getByRole("button", { name: project.saveDraft }).click();
+  await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=/, { timeout: 30_000 });
+  const id = /\/projects\/([0-9a-f-]+)/.exec(page.url());
+  if (!id) throw new Error("the draft's URL has no project id");
+  return id[1];
+}
+
+/** The dashboard row of one project (AC-DASH-026). @returns the row locator */
+function rowOf(page: Page, workspaceId: string, id: string) {
+  return page
+    .getByRole("row")
+    .filter({ has: page.locator(`a[href="/w/${workspaceId}/projects/${id}"]`) })
+    .first();
+}
+
+/** The active total from the table footer, *Showing N of M active projects* (AC-DASH-026). @returns M */
+async function activeTotal(page: Page): Promise<number> {
+  const footer = page
+    .getByText(/Showing \d+ of \d+/)
+    .filter({ visible: true })
+    .first();
+  const match = /of (\d+)/.exec((await footer.textContent()) ?? "");
+  if (!match) throw new Error("the footer has no active total");
+  return Number(match[1]);
+}
+
+test("AC-DASH-030 AC-DASH-032 drafts confirmed from the row menu and from their page show on the overview", async ({
+  page,
+}) => {
+  const workspaceId = await signIn(page);
+  await page.goto(`/w/${workspaceId}`);
+  const before = await activeTotal(page);
+
+  const menuDraft = await createDraft(page, workspaceId);
+  await page.goto(`/w/${workspaceId}`);
+  expect(await activeTotal(page)).toBe(before + 1);
+  await rowOf(page, workspaceId, menuDraft)
+    .getByRole("button", { name: /^Actions for / })
+    .click();
+  await page.getByRole("menuitem", { name: project.stepConfirm }).click();
+  await expect(rowOf(page, workspaceId, menuDraft).getByText(project.statusBooked)).toBeVisible();
+
+  const pageDraft = await createDraft(page, workspaceId);
+  await page.goto(`/w/${workspaceId}/projects/${pageDraft}`);
+  await page
+    .getByRole("button", { name: project.stepConfirm })
+    .filter({ visible: true })
+    .first()
+    .click();
+  await expect(
+    page.getByText(project.toastConfirmedTitle).filter({ visible: true }).first(),
+  ).toBeVisible();
+
+  await page.goto(`/w/${workspaceId}`);
+  await expect(rowOf(page, workspaceId, pageDraft).getByText(project.statusBooked)).toBeVisible();
+  expect(await activeTotal(page)).toBe(before + 2);
 });

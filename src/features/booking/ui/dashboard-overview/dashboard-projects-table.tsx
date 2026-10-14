@@ -91,10 +91,10 @@ export function DashboardNoMatch({ workspaceId }: Readonly<{ workspaceId: string
 function ActiveRows(props: Readonly<DashboardProjectsTableProps>) {
   const t = useTranslations(DASHBOARD_OVERVIEW_COPY_NAMESPACE);
   const columns = [
-    { id: "project", label: t("columnProject") },
-    { id: "next", label: t("columnNextSession"), width: 150 },
-    { id: "status", label: t("columnStatus"), width: 130 },
-    { id: "price", label: t("columnAgreedPrice"), width: 110 },
+    { id: "project", label: t("columnProject").toUpperCase() },
+    { id: "next", label: t("columnNextSession").toUpperCase(), width: 150 },
+    { id: "status", label: t("columnStatus").toUpperCase(), width: 130 },
+    { id: "price", label: t("columnAgreedPrice").toUpperCase(), width: 110 },
     { id: "actions", "aria-label": t("columnActions"), width: 32 },
   ] as const;
   const renderCell = (row: ActiveProjectRow, columnId: string): ReactNode => (
@@ -134,7 +134,9 @@ function DashboardCell({
   if (columnId === "project") return <ProjectCell workspaceId={workspaceId} row={row} />;
   if (columnId === "next") return <DashboardNextSession session={row.shownSession} today={today} />;
   if (columnId === "status") return <ProjectStatusChip status={row.status} />;
-  if (columnId === "price") return <span>{formatIdr(row.agreedPrice, locale)}</span>;
+  if (columnId === "price") {
+    return <span className="whitespace-nowrap">{formatIdr(row.agreedPrice, locale)}</span>;
+  }
   return <>{menu}</>;
 }
 
@@ -144,7 +146,7 @@ function ProjectCell({
 }: Readonly<{ workspaceId: string; row: ActiveProjectRow }>) {
   return (
     <span className="flex min-w-0 items-center gap-(--space-3)">
-      <Avatar size="sm" initials={clientInitials(row.clientName)} aria-hidden />
+      <Avatar size="md" initials={clientInitials(row.clientName)} aria-hidden />
       <span className="flex min-w-0 flex-col">
         <Link
           href={`/w/${workspaceId}/projects/${row.id}`}

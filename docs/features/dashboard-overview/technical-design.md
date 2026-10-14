@@ -1,6 +1,6 @@
 # Technical Design — Dashboard overview (F-26)
 
-Status: PLANNED 2026-10-15, for Owner review · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md), [exports/INDEX.md](exports/INDEX.md) · Plan: [plan.md](plan.md)
+Status: IN PROGRESS (built 2026-10-15, awaiting verification) · Spec: [spec.md](spec.md) · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md), [exports/INDEX.md](exports/INDEX.md) · Plan: [plan.md](plan.md)
 
 ## Context
 Today `/w/{workspaceId}` renders `DashboardScreen` (`features/workspace`). It shows F-25's checklist while the workspace has no project, and otherwise the F-02 placeholder (a greeting, *Set up branding*). `loadDashboard` (`composition/workspace/dashboard-flow`) verifies the workspace and reads the setup facts in one statement.
@@ -140,7 +140,15 @@ It is read-only, with no transaction. The two statements may see slightly differ
 Only related tests run per iteration (CLAUDE.md). Integration tests seed their own workspaces on the shared non-production DB.
 
 ## Implementation iterations
-See [plan.md](plan.md): 7 iterations, each with *Read first*, a checklist and a done check.
+See [plan.md](plan.md): 7 iterations, each with *Read first*, a checklist and a done check. Built on `feat/dashboard-overview`; the deviations are in [build-notes.md](build-notes.md).
+
+- [x] 1 Domain: windows, tiles, next-session label (`d80c4689`)
+- [x] 2 Read port, two-statement adapter, use case (`ea7b9fbf`, `48c7c50c`)
+- [x] 3 Composition, route and the dashboard slot (`bfc30713`)
+- [x] 4 `src/ui`: metric tile, delta, spark, ring; table footer (`4ec35f92`, `61a25476`, `ee219398`, `2107cb38`)
+- [x] 5 Overview UI: desktop and tablet, with the shared-unit refactor and the F-07 fix (`eb7a100c`, `a64e9497`, `a7d8cb83`); fidelity pass against the exports (see build-notes)
+- [x] 6 Overview UI: phone (`d9c1dd85`); fidelity pass against the exports (see build-notes)
+- [x] 7 E2E, accessibility, close (`b9f849c2`; mutating journey and fidelity commit follow)
 
 ## Risks / open questions
 - **R-1 Date order (D-11):** the export shows *Sat 18 Oct, 07:00* (a sample whose weekday is also wrong for 2026); the app's EN formatter gives *Sun, Oct 18, 07:00*. Verification reports it, and the Owner may ask for `en-GB` order later (one formatter change).

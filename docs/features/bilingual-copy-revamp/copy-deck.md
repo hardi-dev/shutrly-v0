@@ -149,7 +149,7 @@ Descriptions explain an action and its useful result only where supported. Do no
 | Collapse sidebar | Collapse sidebar | Ciutkan navigasi samping |
 | Expand sidebar | Expand sidebar | Buka navigasi samping |
 | Breadcrumb accessible name | Page location | Lokasi halaman |
-| Dashboard subtitle | Your workspace: {workspaceName}. | Ruang kerjamu: {workspaceName}. |
+| Dashboard subtitle | Track active projects, sessions and delivered work. | Pantau proyek aktif, sesi, dan hasil yang sudah dikirim. |
 | Projects subtitle | Check each shoot’s package, agreed price and schedule. | Cek paket, harga sepakat, dan jadwal tiap pemotretan. |
 | Projects mobile subtitle | Project details and shoot schedules. | Detail proyek dan jadwal pemotretan. |
 | Clients subtitle | Save client contacts so you can choose them when creating a project. | Simpan kontak klien agar bisa dipilih saat membuat proyek. |
@@ -410,6 +410,32 @@ Sources: `src/features/workspace/ui/*/*.copy.ts`, owner profile/workspace layout
 | Empty title | Set up this workspace’s brand details | Lengkapi identitas merek ruang kerja ini |
 | Empty body | Open settings to add the brand name, contact details and invoice prefix. | Buka pengaturan untuk melengkapi nama merek, kontak, dan awalan nomor tagihan. |
 | Empty CTA | Set up branding | Lengkapi identitas merek |
+
+### 4.3b Dashboard overview — `{workspace}` once the workspace has a project (F-26; drafted with the Codex CLI. Tile labels shortened to fit one line and approved by the Owner 2026-10-14, no period caption; the table, empty-state and screen-reader rows approved 2026-10-15, *Harga sepakat* kept from §7, title *Active projects* chosen by the Owner. Reused unchanged: §7.1 search, filter, no match and *No sessions scheduled*; §7.3 statuses and the row menu)
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Tile: projects created this month | New projects | Proyek baru |
+| Tile: selection groups waiting for review | To review | Perlu dicek |
+| Tile: projects in post-production | In editing | Sedang diedit |
+| Tile: final deliveries published this month | Delivered | Terkirim |
+| Table title | Active projects | Proyek aktif |
+| Column: project | Project | Proyek |
+| Column: next session | Next session | Sesi berikutnya |
+| Column: status | Status | Status |
+| Column: agreed price | Agreed price | Harga sepakat |
+| Footer count (ICU plural on `total`) | Showing {shown} of {total, plural, one {# active project} other {# active projects}} | Menampilkan {shown} dari {total} proyek aktif |
+| Footer link | View all projects | Lihat semua proyek |
+| Next session today, no time | Today | Hari ini |
+| Next session today, with time | Today, {time} | Hari ini, {time} |
+| Badge on *To review* | {count} waiting | {count} menunggu |
+| Empty title, only completed or canceled projects | No active projects | Belum ada proyek aktif |
+| Empty body | Completed and canceled projects are in the project list. | Proyek selesai dan dibatalkan ada di daftar proyek. |
+| Empty action | View project list | Lihat daftar proyek |
+| Screen reader: ring on *To review* | {waiting} of {total} waiting 3 days or more | {waiting} dari {total} menunggu 3 hari atau lebih |
+| Screen reader: ring on *In editing* | {ready} of {total} ready to edit | {ready} dari {total} siap diedit |
+| Screen reader: sparkline | {label} per month, last 7 months | {label} per bulan, 7 bulan terakhir |
+| Screen reader: trend badge | {delta} compared with the same days last month | {delta} dibandingkan dengan hari yang sama bulan lalu |
 
 ### 4.3a Setup checklist — `{workspace}` until the first project (F-25; drafted with the Codex CLI, approved by the Owner 2026-10-12; step bodies and locked hint rewritten compact for the design, Codex option 2 with terms in lower case and *Anda* → *kamu*, approved by the Owner the same day)
 

@@ -15,6 +15,8 @@ export interface DataTableProps<Row extends { readonly id: string }> {
   readonly rows: readonly Row[];
   readonly renderCell: (row: Row, columnId: string) => ReactNode;
   readonly onRowAction?: (row: Row) => void;
+  /** Rendered below the grid, e.g. a count and a link (AC-DASH-026). */
+  readonly footer?: ReactNode;
 }
 
 export interface DataTableSkeletonProps {

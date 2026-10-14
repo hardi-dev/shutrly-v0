@@ -2,6 +2,7 @@ export const DATA_TABLE_STORY_COPY = {
   title: "Daftar klien",
   subtitle: "38 klien aktif",
   zeroActive: "0 klien aktif",
+  footer: "Menampilkan 2 dari 2 klien",
   label: "Daftar klien",
   searchLabel: "Cari klien",
   empty: "Belum ada klien",

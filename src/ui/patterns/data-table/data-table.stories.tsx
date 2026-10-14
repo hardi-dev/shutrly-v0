@@ -59,6 +59,20 @@ export const Populated: StoryObj<typeof meta> = {
   ),
 };
 
+export const WithFooter: StoryObj<typeof meta> = {
+  render: () => (
+    <SectionCard title={COPY.title} description={COPY.subtitle} content="bleed">
+      <DataTable
+        label={COPY.label}
+        columns={columns}
+        rows={COPY.rows}
+        renderCell={renderCell}
+        footer={COPY.footer}
+      />
+    </SectionCard>
+  ),
+};
+
 export const Empty: StoryObj<typeof meta> = {
   render: () => (
     <SectionCard title={COPY.title} description={COPY.zeroActive}>

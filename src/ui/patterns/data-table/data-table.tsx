@@ -17,6 +17,7 @@ export function DataTable<RowData extends { readonly id: string }>({
   rows,
   renderCell,
   onRowAction,
+  footer,
 }: Readonly<DataTableProps<RowData>>) {
   function handleRowAction(key: Key): void {
     const row = rows.find((item) => item.id === String(key));
@@ -48,12 +49,19 @@ export function DataTable<RowData extends { readonly id: string }>({
   }
 
   return (
-    <Table aria-label={label} onRowAction={handleRowAction} className="w-full">
-      <TableHeader columns={columns} className={DATA_TABLE_HEADER_CLASS}>
-        {createColumnRenderer(columns[0]?.id)}
-      </TableHeader>
-      <TableBody items={rows}>{renderRow}</TableBody>
-    </Table>
+    <>
+      <Table aria-label={label} onRowAction={handleRowAction} className="w-full">
+        <TableHeader columns={columns} className={DATA_TABLE_HEADER_CLASS}>
+          {createColumnRenderer(columns[0]?.id)}
+        </TableHeader>
+        <TableBody items={rows}>{renderRow}</TableBody>
+      </Table>
+      {footer === undefined ? null : (
+        <div className="border-t border-(--component-table-row-border) px-(--component-table-row-padding-x) py-(--component-table-row-padding-y) text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)">
+          {footer}
+        </div>
+      )}
+    </>
   );
 }
 

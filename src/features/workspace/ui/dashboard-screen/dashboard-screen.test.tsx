@@ -26,45 +26,36 @@ describe("DashboardScreen copy", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("AC-SETUP-002 keeps today's placeholder once the workspace has a project", () => {
+  it("AC-DASH-002 shows the overview, not the checklist, once the workspace has a project", () => {
     renderInLocale(
-      <DashboardScreen workspaceId="ws-1" workspaceName="Aster Wedding" checklist={null} />,
+      <DashboardScreen
+        workspaceId="ws-1"
+        workspaceName="Aster Wedding"
+        checklist={null}
+        overview={<p>Overview slot</p>}
+      />,
       "en",
     );
+    expect(screen.getByText("Overview slot")).toBeInTheDocument();
     expect(
       screen.queryByRole("heading", { name: "Set up your workspace" }),
     ).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Set up branding" })).toBeInTheDocument();
   });
 
-  it("AC-L10N-002 renders the empty workspace dashboard in English", () => {
+  it("AC-DASH-001 renders no placeholder copy around the overview", () => {
     renderInLocale(
-      <DashboardScreen workspaceId="ws-1" workspaceName="Aster Wedding" checklist={null} />,
+      <DashboardScreen
+        workspaceId="ws-1"
+        workspaceName="Aster Wedding"
+        checklist={null}
+        overview={<p>Overview slot</p>}
+      />,
       "en",
     );
-    expect(screen.getByRole("heading", { name: "Welcome to Aster Wedding" })).toBeInTheDocument();
+    expect(screen.queryByText("Set up this workspace’s brand details")).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Set up branding" })).not.toBeInTheDocument();
     expect(
-      screen.getByText("Use the navigation to open your projects, clients or services."),
-    ).toBeInTheDocument();
-    expect(screen.getByText("Set up this workspace’s brand details")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Set up branding" })).toHaveAttribute(
-      "href",
-      "/w/ws-1/settings",
-    );
-  });
-
-  it("AC-L10N-002 renders the empty workspace dashboard in Indonesian", () => {
-    renderInLocale(
-      <DashboardScreen workspaceId="ws-1" workspaceName="Aster Wedding" checklist={null} />,
-      "id",
-    );
-    expect(
-      screen.getByRole("heading", { name: "Selamat datang di Aster Wedding" }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText("Buka proyek, klien, atau layanan lewat navigasi."),
-    ).toBeInTheDocument();
-    expect(screen.getByText("Lengkapi identitas merek ruang kerja ini")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Lengkapi identitas merek" })).toBeInTheDocument();
+      screen.queryByRole("heading", { name: "Welcome to Aster Wedding" }),
+    ).not.toBeInTheDocument();
   });
 });

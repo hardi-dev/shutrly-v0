@@ -83,7 +83,13 @@ describe("resolveActiveNav", () => {
 
 describe("resolvePageHeading", () => {
   it.each([
-    ["/w/A", { title: "Dasbor", subtitle: "Ruang kerjamu: Aster." }],
+    [
+      "/w/A",
+      {
+        title: "Dasbor",
+        subtitle: "Pantau proyek aktif, sesi, dan hasil yang sudah dikirim.",
+      },
+    ],
     [
       "/w/A/clients",
       {

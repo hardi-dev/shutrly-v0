@@ -404,12 +404,12 @@ Sources: `src/features/workspace/ui/*/*.copy.ts`, owner profile/workspace layout
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Title | Dashboard | Dasbor |
-| Welcome, complete message | Welcome to {workspaceName} | Selamat datang di {workspaceName} |
+| Welcome, complete message *(retired by F-26, 2026-10-15)* | Welcome to {workspaceName} | Selamat datang di {workspaceName} |
 | Created toast | Workspace created | Ruang kerja dibuat |
-| Description; existing placeholder dashboard | Use the navigation to open your projects, clients or services. | Buka proyek, klien, atau layanan lewat navigasi. |
-| Empty title | Set up this workspace’s brand details | Lengkapi identitas merek ruang kerja ini |
-| Empty body | Open settings to add the brand name, contact details and invoice prefix. | Buka pengaturan untuk melengkapi nama merek, kontak, dan awalan nomor tagihan. |
-| Empty CTA | Set up branding | Lengkapi identitas merek |
+| Description; existing placeholder dashboard *(retired by F-26, 2026-10-15)* | Use the navigation to open your projects, clients or services. | Buka proyek, klien, atau layanan lewat navigasi. |
+| Empty title *(retired by F-26, 2026-10-15)* | Set up this workspace’s brand details | Lengkapi identitas merek ruang kerja ini |
+| Empty body *(retired by F-26, 2026-10-15)* | Open settings to add the brand name, contact details and invoice prefix. | Buka pengaturan untuk melengkapi nama merek, kontak, dan awalan nomor tagihan. |
+| Empty CTA *(retired by F-26, 2026-10-15)* | Set up branding | Lengkapi identitas merek |
 
 ### 4.3b Dashboard overview — `{workspace}` once the workspace has a project (F-26; drafted with the Codex CLI. Tile labels shortened to fit one line and approved by the Owner 2026-10-14, no period caption; the table, empty-state and screen-reader rows approved 2026-10-15, *Harga sepakat* kept from §7, title *Active projects* chosen by the Owner. Reused unchanged: §7.1 search, filter, no match and *No sessions scheduled*; §7.3 statuses and the row menu)
 

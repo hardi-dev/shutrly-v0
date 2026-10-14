@@ -1,4 +1,5 @@
-// Source: copy-deck.md §4.3 "Dashboard" rows. Copied verbatim.
+// Source: copy-deck.md §4.3 "Dashboard" rows. Copied verbatim. The placeholder rows (greeting,
+// description, empty state, CTA) are retired by F-26 (2026-10-15); the overview has its own copy.
 export const DASHBOARD_COPY_NAMESPACE = "workspaceDashboard";
 
 export const DASHBOARD_COPY = {
@@ -6,20 +7,10 @@ export const DASHBOARD_COPY = {
   surface: "owner",
   messages: {
     en: {
-      greeting: "Welcome to {workspaceName}",
       created: "Workspace created",
-      subtitle: "Use the navigation to open your projects, clients or services.",
-      emptyTitle: "Set up this workspace’s brand details",
-      emptyBody: "Open settings to add the brand name, contact details and invoice prefix.",
-      settings: "Set up branding",
     },
     id: {
-      greeting: "Selamat datang di {workspaceName}",
       created: "Ruang kerja dibuat",
-      subtitle: "Buka proyek, klien, atau layanan lewat navigasi.",
-      emptyTitle: "Lengkapi identitas merek ruang kerja ini",
-      emptyBody: "Buka pengaturan untuk melengkapi nama merek, kontak, dan awalan nomor tagihan.",
-      settings: "Lengkapi identitas merek",
     },
   },
 } as const;

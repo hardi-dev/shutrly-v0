@@ -90,7 +90,7 @@ export function resolvePageHeading(
 ): PageHeading | null {
   const prefix = `/w/${workspaceId}`;
   if (pathname === prefix || pathname === `${prefix}/`) {
-    return { title: t("dashboard"), subtitle: t("dashboardSubtitle", { workspaceName }) };
+    return { title: t("dashboard"), subtitle: t("dashboardSubtitle") };
   }
   if (!pathname.startsWith(`${prefix}/`)) return null;
   const section = pathname.slice(prefix.length).split("/")[1] ?? "";

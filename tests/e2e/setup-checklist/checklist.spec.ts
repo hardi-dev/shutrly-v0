@@ -3,7 +3,6 @@ import { expect, test } from "@playwright/test";
 
 import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
-import { DASHBOARD_COPY } from "@/features/workspace/ui/dashboard-screen/dashboard-screen.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 import { SETUP_CHECKLIST_COPY } from "@/features/workspace/ui/setup-checklist/setup-checklist.copy";
 
@@ -61,9 +60,8 @@ test("AC-SETUP-001 AC-SETUP-005 AC-SETUP-006 AC-SETUP-016 a new owner follows th
   await expect(card.getByRole("link", { name: copy.serviceAction })).toBeVisible();
   await expect(card.getByRole("link", { name: copy.brandNameTitle })).toBeVisible();
   await expect(card.getByText(copy.lockedHint)).toHaveCount(2);
-  await expect(page.getByRole("link", { name: DASHBOARD_COPY.messages.en.settings })).toHaveCount(
-    0,
-  );
+  // The retired F-02 branding prompt (copy-deck §4.3, retired by F-26) must not appear.
+  await expect(page.getByRole("link", { name: "Set up branding" })).toHaveCount(0);
 
   // AC-SETUP-016: New project without a service explains it and leads to Add service.
   await page.goto(`/w/${workspaceId}/projects/new`);

@@ -1,13 +1,17 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-15 (F-26 dashboard-overview PLANNED; F-25 DONE, merged to `staging`; F-24 DONE; F-22 merged, not verified) · Read this first when resuming work, then [docs/README.md](README.md). Feature status lives in [feature-map.md](product/feature-map.md), not here.
-Branch: `docs/dashboard-feature-row` (F-26 spec, design and plan, pushed, no PR; based on `staging` after F-25's PR #15). Other work sits in worktrees under `.claude/worktrees/` (`git worktree list`).
+Last updated: 2026-10-15 (F-26 dashboard-overview IN PROGRESS, built, awaiting verification; F-25 DONE, merged to `staging`; F-24 DONE; F-22 merged, not verified) · Read this first when resuming work, then [docs/README.md](README.md). Feature status lives in [feature-map.md](product/feature-map.md), not here.
+Branch: `feat/dashboard-overview` (worktree `.claude/worktrees/dashboard-overview`, from `docs/dashboard-feature-row`, 12 commits on top of the F-26 docs; nothing pushed, no PR). Other work sits in worktrees under `.claude/worktrees/` (`git worktree list`).
 
 History (previous handoffs, early status table, Pencil and design-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-26 dashboard-overview PLANNED (2026-10-15)
+## Current handoff — F-26 dashboard-overview built, awaiting verification (2026-10-15)
 
-- **State:** F-26 `PLANNED`. Branch `docs/dashboard-feature-row` (from `staging` after PR #15), pushed, **no PR**; nothing uncommitted. Docs and design only, no code yet.
+- **State:** F-26 `IN PROGRESS` (built). All seven plan iterations are committed on `feat/dashboard-overview`; build notes and deviations: [build-notes.md](features/dashboard-overview/build-notes.md). Nothing uncommitted.
+- **Checks:** typecheck and eslint clean; related unit suites green; integration 12 + 7 green (R-2 timings 0.31 ms and 0.54 ms, no index); e2e `tests/e2e/dashboard-overview/overview.spec.ts` 5/5 against `pnpm dev`.
+- **Not verified:** the visual fidelity pass against the exports (plan 5.7, 6.4); Storybook stories not run; the mutating e2e cases (confirm booking from the row menu, confirm a draft) and the fresh-owner checklist case.
+- **Next:** `/sdv:verify-feature dashboard-overview` (visual pass against the exports at 1440, tablet and 390; the mutating e2e cases), then the Owner decides on a PR to `staging`. Before a deploy, note that the phone layout and the tablet are not yet compared with the exports.
+- **Old state (kept for reference):** F-26 was `PLANNED` on `docs/dashboard-feature-row` (spec, design and plan, pushed, no PR).
 - **Done this session:**
   - Design approved by the Owner 2026-10-15 ([design.md](features/dashboard-overview/design.md), 11 exports): the Owner's library plan replaced the four summaries. *New project* in the header, four tiles (trend and sparkline on *New projects* and *Delivered*, a ring on *To review* and *In editing*), and the *Active projects* table (10 rows, the project list's search, filter and ⋯ menu), in the 720 column.
   - [spec](features/dashboard-overview/spec.md), [AC](features/dashboard-overview/acceptance-criteria.md) (004–017 and 028 withdrawn, 021–037 new) and [intent](features/dashboard-overview/intent.md) revised to that direction; copy deck §1 subtitle and §4.3b approved.

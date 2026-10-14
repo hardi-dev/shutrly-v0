@@ -12,6 +12,12 @@ export interface ShownSession {
   readonly extraCount: number;
   readonly isPast: boolean;
 }
+export type NextSessionLabel =
+  | { readonly kind: "NONE" }
+  | { readonly kind: "TODAY" }
+  | { readonly kind: "TODAY_AT"; readonly time: string }
+  | { readonly kind: "DATE"; readonly date: string; readonly time: string | null };
+
 export interface SessionInput {
   readonly name: string;
   readonly date: string;

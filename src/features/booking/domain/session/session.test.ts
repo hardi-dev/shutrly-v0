@@ -2,9 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import {
   compareSessions,
+  formatSessionDayTime,
   formatSessionRange,
   formatSessionWhen,
   formatShortDate,
+  nextSessionLabel,
   pickShownSession,
   SESSION_LOCATION_MAX_LENGTH,
   SESSION_NAME_MAX_LENGTH,
@@ -126,5 +128,30 @@ describe("session formatters", () => {
   it("formats the short date", () => {
     expect(formatShortDate("2026-11-10", "id-ID")).toBe("10 Nov 2026");
     expect(formatShortDate("2026-10-02", "id-ID")).toBe("2 Okt 2026");
+  });
+
+  it("AC-DASH-027 formats the day and time without a year, in each locale", () => {
+    const next = session({ date: "2026-10-18", startTime: "07:00" });
+    expect(formatSessionDayTime(next, "en-US")).toBe("Sun, Oct 18, 07:00");
+    expect(formatSessionDayTime(next, "id-ID")).toBe("Min, 18 Okt, 07.00");
+    expect(formatSessionDayTime(session({ date: "2026-10-18" }), "en-US")).toBe("Sun, Oct 18");
+  });
+});
+
+describe("nextSessionLabel (AC-DASH-027)", () => {
+  const today = "2026-10-14";
+
+  it("reads none, today, today with a time, or a later date", () => {
+    expect(nextSessionLabel(null, today)).toEqual({ kind: "NONE" });
+    expect(nextSessionLabel(session({ date: today }), today)).toEqual({ kind: "TODAY" });
+    expect(nextSessionLabel(session({ date: today, startTime: "09:00" }), today)).toEqual({
+      kind: "TODAY_AT",
+      time: "09:00",
+    });
+    expect(nextSessionLabel(session({ date: "2026-10-18", startTime: "07:00" }), today)).toEqual({
+      kind: "DATE",
+      date: "2026-10-18",
+      time: "07:00",
+    });
   });
 });

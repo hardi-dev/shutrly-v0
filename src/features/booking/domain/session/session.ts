@@ -1,6 +1,6 @@
 import type { FormattingLocale } from "@/shared/locale/locale.types";
 
-import type { SessionRecordShape, ShownSession } from "./session.types";
+import type { NextSessionLabel, SessionRecordShape, ShownSession } from "./session.types";
 
 export const SESSION_NAME_MAX_LENGTH = 100;
 export const SESSION_LOCATION_MAX_LENGTH = 200;
@@ -43,6 +43,21 @@ const DATE_FORMATS: Readonly<
       timeZone: "UTC",
     }),
   },
+});
+// The weekday, day and month with no year, for the dashboard's next-session column (AC-DASH-027).
+const DAY_MONTH_FORMATS: Readonly<Record<FormattingLocale, Intl.DateTimeFormat>> = Object.freeze({
+  "id-ID": new Intl.DateTimeFormat("id-ID", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    timeZone: "UTC",
+  }),
+  "en-US": new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    timeZone: "UTC",
+  }),
 });
 // The 24-hour separator per locale: "07.30" in Indonesian, "07:30" in English (D-23).
 const TIME_SEPARATOR: Readonly<Record<FormattingLocale, string>> = Object.freeze({
@@ -100,6 +115,28 @@ export function formatShortDate(date: string, locale: FormattingLocale): string 
 export function formatSessionWhen(session: SessionRecordShape, locale: FormattingLocale): string {
   const date = formatWeekdayDate(session.date, locale);
   return session.startTime === null ? date : `${date} · ${displayTime(session.startTime, locale)}`;
+}
+
+/** Formats a session's weekday, day and month, with its start time if any, and no year (D-11). @param session - the session @param locale - the formatting locale @returns e.g. "Sun, Oct 18, 07:00" */
+export function formatSessionDayTime(
+  session: SessionRecordShape,
+  locale: FormattingLocale,
+): string {
+  const day = DAY_MONTH_FORMATS[locale].format(atMidnight(session.date));
+  return session.startTime === null ? day : `${day}, ${displayTime(session.startTime, locale)}`;
+}
+
+/** Picks the label for a project's next session, relative to today (AC-DASH-027). @param session - the next session or null @param today - YYYY-MM-DD in the schedule zone @returns the label kind and its parts */
+export function nextSessionLabel(
+  session: SessionRecordShape | null,
+  today: string,
+): NextSessionLabel {
+  if (session === null) return { kind: "NONE" };
+  if (session.date !== today) {
+    return { kind: "DATE", date: session.date, time: session.startTime };
+  }
+  if (session.startTime === null) return { kind: "TODAY" };
+  return { kind: "TODAY_AT", time: session.startTime };
 }
 
 /** Formats a session's date, time range and location, dropping missing parts. @param session - the session @returns e.g. "Sel, 10 Nov 2026 · 06.30–07.15 · Rumah Rina, Depok" */

@@ -22,6 +22,7 @@ import { VERIFY_PENDING_SCREEN_COPY } from "@/features/auth/ui/verify-pending-sc
 import { ADD_ON_COPY } from "@/features/booking/ui/add-on-copy/add-on.copy";
 import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
 import { CLIENT_COPY } from "@/features/booking/ui/client-copy/client-copy.copy";
+import { DASHBOARD_OVERVIEW_COPY } from "@/features/booking/ui/dashboard-overview/dashboard-overview.copy";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
 import { TEAM_COPY } from "@/features/booking/ui/team-copy/team-copy.copy";
 import { TEMPLATE_COPY } from "@/features/communications/ui/template-copy/template-copy.copy";
@@ -103,6 +104,7 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   COMING_SOON_COPY,
   CREATE_WORKSPACE_COPY,
   DASHBOARD_COPY,
+  DASHBOARD_OVERVIEW_COPY,
   SETUP_CHECKLIST_COPY,
   ONBOARDING_COPY,
   SETTINGS_COPY,

@@ -12,6 +12,8 @@ export interface DashboardOverviewInput {
 
 export interface DashboardOverview {
   readonly tiles: MetricTiles;
+  /** YYYY-MM-DD in the schedule zone; the next-session label is relative to it. */
+  readonly today: string;
   readonly table: {
     readonly rows: readonly ActiveProjectRow[];
     readonly total: number;

@@ -73,7 +73,8 @@ export function codePointCount(value: string): number {
 }
 
 const atMidnight = (date: string) => new Date(`${date}T00:00:00Z`);
-function displayTime(time: string, locale: FormattingLocale): string {
+/** Formats a start time with the locale's separator, e.g. "07.30" in Indonesian (D-23). @param time - HH:MM @param locale - the formatting locale @returns the display time */
+export function displayTime(time: string, locale: FormattingLocale): string {
   return time.replace(":", TIME_SEPARATOR[locale]);
 }
 

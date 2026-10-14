@@ -351,6 +351,8 @@ describe("active projects table (AC-DASH-003, 026, 027, 036, 037)", () => {
     });
     expect(page.rows).toHaveLength(10);
     expect(page.total).toBe(12);
+    // The price is canonical text, so formatIdr can read it (D-9, ADR-007).
+    expect(page.rows[0].agreedPrice).toBe("750000");
   });
 
   it("AC-DASH-027 orders by next session: untimed first, then time, then projects with none", async () => {

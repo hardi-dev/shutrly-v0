@@ -30,6 +30,7 @@ export async function loadDashboardOverview(
   ]);
   return {
     tiles: buildMetricTiles(facts, windows),
+    today: windows.today,
     table: { rows: page.rows, total: page.total, search, filter: input.filter },
   };
 }

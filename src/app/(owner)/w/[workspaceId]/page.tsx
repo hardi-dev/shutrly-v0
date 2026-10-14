@@ -1,3 +1,5 @@
+import { PROJECT_MENU_ACTIONS } from "@/app/actions/booking/project-menu-actions";
+import { searchFilterClientsAction } from "@/app/actions/booking/projects";
 import { loadDashboard } from "@/composition/workspace/dashboard-flow/dashboard-flow";
 import { DashboardOverview } from "@/features/booking/ui/dashboard-overview/dashboard-overview";
 import { DashboardScreen } from "@/features/workspace/ui/dashboard-screen/dashboard-screen";
@@ -18,7 +20,18 @@ export default async function DashboardPage({
       workspaceName={workspace.name}
       created={query.state === "created"}
       checklist={checklist}
-      overview={overview === null ? null : <DashboardOverview />}
+      overview={
+        overview === null ? null : (
+          <DashboardOverview
+            workspaceId={workspaceId}
+            overview={overview.overview}
+            services={overview.services}
+            filterClient={overview.filterClient}
+            menuActions={PROJECT_MENU_ACTIONS}
+            searchClientsAction={searchFilterClientsAction}
+          />
+        )
+      }
     />
   );
 }

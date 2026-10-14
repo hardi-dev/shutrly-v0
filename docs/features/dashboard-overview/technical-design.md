@@ -150,3 +150,4 @@ See [plan.md](plan.md): 7 iterations, each with *Read first*, a checklist and a 
   - These are additive with defaults. The project list's tests must stay green; run `projects-screen`, `project-filter-dialog` and `data-table` tests in iterations 4–5.
 - **R-4 Reopened groups:** a `SUBMITTED` group reopened by an approved add-on is `OPEN` with `submitted_at` set, so it counts in *To review*. That is consistent with BR-SEL-005 (the Owner can lock it).
 - **R-5 Trend partial day:** this month counts up to *now*, while last month counts its whole day *d*. This is accepted as "the same days" (spec); it is noted here so the tests don't assert otherwise.
+- **R-6 F-07 bug found while planning:** the project list shows the empty-tab state instead of the no-match state when only filters match nothing (`hasQuery` checks `q` only, but F-07 spec › *Filter* says no match). It is fixed in plan iteration 5.1 as a separate `fix(projects)` commit.

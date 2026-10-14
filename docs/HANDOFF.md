@@ -1,24 +1,29 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-13 (F-26 dashboard-overview SPECIFIED; F-25 DONE, merged to `staging`; F-24 DONE; F-22 merged, not verified) · Read this first when resuming work, then [docs/README.md](README.md). Feature status lives in [feature-map.md](product/feature-map.md), not here.
-Branch: `docs/dashboard-feature-row` (F-26 docs, pushed, no PR; based on `staging` after F-25's PR #15). Other work sits in worktrees under `.claude/worktrees/` (`git worktree list`).
+Last updated: 2026-10-15 (F-26 dashboard-overview PLANNED; F-25 DONE, merged to `staging`; F-24 DONE; F-22 merged, not verified) · Read this first when resuming work, then [docs/README.md](README.md). Feature status lives in [feature-map.md](product/feature-map.md), not here.
+Branch: `docs/dashboard-feature-row` (F-26 spec, design and plan, pushed, no PR; based on `staging` after F-25's PR #15). Other work sits in worktrees under `.claude/worktrees/` (`git worktree list`).
 
 History (previous handoffs, early status table, Pencil and design-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-26 dashboard-overview SPECIFIED (2026-10-13)
+## Current handoff — F-26 dashboard-overview PLANNED (2026-10-15)
 
-- **State:** F-26 `SPECIFIED` (spec status READY FOR DESIGN). Branch `docs/dashboard-feature-row` from `staging` (after the F-25 merge), pushed, **no PR**; nothing uncommitted. Docs only, no code.
-- **Done this session:** F-25 merged to `staging` (PR #15). F-26 added to the [feature map](product/feature-map.md) → [intent](features/dashboard-overview/intent.md) ACCEPTED 2026-10-13 → [spec](features/dashboard-overview/spec.md) + [AC-DASH-001..020](features/dashboard-overview/acceptance-criteria.md). After the first project the dashboard shows *Needs you*, *Upcoming sessions* (7 days), *Projects by status*, *Galleries expiring soon*; replaces the F-02 placeholder and drops *Set up branding*. F-25 spec/design carry a "superseded by F-26" note.
-- **Owner decisions (in the spec):** status-only attention; fixed 7-day window; ship without invoices (card after F-14); no activity feed; FC-001 time zone `Asia/Jakarta` as F-07/F-09; FC-002 F-25 note.
-- **Checks:** none needed (docs only).
-- **Owner actions:** decide whether `docs/dashboard-feature-row` gets a PR to `staging` now or carries on into design; import the design library when `/sdv:design-feature` asks.
+- **State:** F-26 `PLANNED`. Branch `docs/dashboard-feature-row` (from `staging` after PR #15), pushed, **no PR**; nothing uncommitted. Docs and design only, no code yet.
+- **Done this session:**
+  - Design approved by the Owner 2026-10-15 ([design.md](features/dashboard-overview/design.md), 11 exports): the Owner's library plan replaced the four summaries. *New project* in the header, four tiles (trend and sparkline on *New projects* and *Delivered*, a ring on *To review* and *In editing*), and the *Active projects* table (10 rows, the project list's search, filter and ⋯ menu), in the 720 column.
+  - [spec](features/dashboard-overview/spec.md), [AC](features/dashboard-overview/acceptance-criteria.md) (004–017 and 028 withdrawn, 021–037 new) and [intent](features/dashboard-overview/intent.md) revised to that direction; copy deck §1 subtitle and §4.3b approved.
+  - [technical-design.md](features/dashboard-overview/technical-design.md) (D-1…D-14, R-1…R-6) and [plan.md](features/dashboard-overview/plan.md) (7 iterations): the overview lives in `features/booking` and fills a slot on the workspace dashboard; two read statements per visit; no migration, dependency or ADR.
+- **Checks:** none needed (docs only). The plan was self-reviewed: weekday, Jakarta boundary and `formatIdr`/`canonicalIdrAmount` fixes.
+- **Owner actions:** review the technical design (status *PLANNED, for Owner review*); decide when `docs/dashboard-feature-row` gets a PR to `staging`; at verification, accept or change the EN date order (R-1: *Sun, Oct 18, 07:00* vs the export's *Sat 18 Oct, 07:00*).
 - **Open items:**
+  - F-07 bug found while planning: the project list shows the empty-tab state when only filters match nothing; fixed in F-26 plan iteration 5.1 (technical design R-6).
+  - Between F-26 iterations 3 and 5 the dashboard with projects renders empty on the branch; don't deploy it in between.
+  - F-25 checklist frames still show the old subtitle; note it at F-26 verification, no re-export.
   - F-25: DV-3, DV-4, and DV-5/DV-6/DV-9 re-runs at ship ([verification report](features/setup-checklist/verification-report.md) §6); shared list-card row focus ring (separate task).
   - F-24 follow-ups: [verification report](features/setup-flow-fixes/verification-report.md) §6.
   - F-22 bilingual copy: merged, **not verified** ([coverage-report.md](features/bilingual-copy-revamp/coverage-report.md)); copy deck still `DRAFT`.
   - Carried from F-10: Netlify 60 s / 20 MB stream limit on large Print downloads; staging *Wisuda Rina* group still `SUBMITTED`; R-6 needs a real phone.
   - `/sdv:ship setup-checklist` not run yet (staging deploy of F-24/F-25).
-- **Next:** `/sdv:design-feature dashboard-overview` (flows are simple, modelling skipped). New copy goes through Codex + Owner approval into the copy deck.
+- **Next:** `/sdv:build-feature dashboard-overview 1` in a fresh session (domain: metric windows, tiles, next-session label).
 
 ## Key decisions (Owner)
 

@@ -111,7 +111,8 @@ It replaces the F-02 placeholder. Seven iterations, test-first, one commit per t
 - [ ] **3.3** `DashboardScreen`:
   - replace `DashboardPlaceholder` with an `overview: ReactNode` prop;
   - remove the placeholder copy rows (D-14) from `dashboard-screen.copy.ts`, keeping `created`;
-  - update the test.
+  - update the test;
+  - copy deck §4.3: mark *Welcome, complete message*, *Description; existing placeholder dashboard*, *Empty title*, *Empty body* and *Empty CTA* as retired by F-26 (2026-10-15), keeping *Title* and *Created toast*.
 - [ ] **3.4** `owner-nav.copy.ts › dashboardSubtitle` → *Track active projects, sessions and delivered work.* / *Pantau proyek aktif, sesi, dan hasil yang sudah dikirim.* (copy deck §1). Drop the `{workspaceName}` argument where it is passed, and update the tests that assert the old text.
 - [ ] **3.5** `page.tsx`: pass all `searchParams` to `loadDashboard`. Render `overview={data.overview === null ? null : <DashboardOverview …/>}` with a stub `DashboardOverview` in `features/booking/ui/dashboard-overview/` that renders nothing yet (iteration 5 fills it), so the route builds. Between iterations 3 and 5 a workspace with projects shows an empty dashboard on this branch only; don't deploy it in between.
 - [ ] Commit `feat(dashboard): load the overview once the workspace has a project`.
@@ -153,7 +154,8 @@ It replaces the F-02 placeholder. Seven iterations, test-first, one commit per t
 - [ ] **5.1** Shared-unit changes (R-3), with tests first:
   - `projectListUrl` → `listUrlAt(path, q, filter)`, keeping `projectListUrl` as a wrapper;
   - `ProjectSearchField` and `useFilterDraft`/`ProjectFilterDialog` get an optional `basePath`;
-  - move `rowTarget` to `project-menu-host/project-row-target.ts`.
+  - move `rowTarget` to `project-menu-host/project-row-target.ts`;
+  - **fix in F-07 (found while planning F-26):** the project list passes `hasQuery={q !== ""}`, so filters that match nothing show the empty-tab state with *New project* instead of the no-match state. F-07 spec › *Filter* says no match shows *No matching projects*, whose *Clear search* also clears the filters. Use `q !== "" || activeFilterGroupCount(filter, tab) > 0` in `projects-screen.tsx` (desktop and phone), and add a `projects-screen.test.tsx` case for a filter-only no-match. Commit it separately as `fix(projects): show the no-match state when filters match nothing`.
   - Run the `projects-screen`, `project-filter-dialog` and `project-search-field` tests.
 - [ ] **5.2** `dashboard-overview.copy.ts`: the §4.3b rows, verbatim with the source comment, registered in `src/app/copy-registry.ts`.
 - [ ] **5.3** `dashboard-metric-tiles/`: the four tiles in lifecycle order:

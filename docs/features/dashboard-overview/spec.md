@@ -144,4 +144,4 @@ Checked against the constitution (C-001…C-012, C-101…C-106), the rules liste
 
 ## Open Questions / SPEC GAPS
 - **Q-1 Trends and sparklines:** resolved 2026-10-14 (FC-006, *Metrics*).
-- **Q-2 Phone and tablet:** how the tiles and the table sit on a phone (cards instead of table rows) and on a tablet is for `/sdv:design-feature`.
+- **Q-2 Phone and tablet:** resolved 2026-10-15 by the approved design (phone: tiles 2×2 and a list card; tablet: the desktop layout in the tablet shell; [design.md](design.md) › *Screen and state map*).

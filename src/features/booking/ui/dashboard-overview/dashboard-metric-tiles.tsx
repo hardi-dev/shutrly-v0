@@ -14,10 +14,14 @@ import { MetricDelta } from "@/ui/primitives/metric-delta/metric-delta";
 import { DASHBOARD_OVERVIEW_COPY_NAMESPACE } from "./dashboard-overview.copy";
 
 /** Four tiles in lifecycle order. The monthly tiles show a trend and a 7-month spark; the live tiles show a ring, and *To review* a waiting badge (AC-DASH-021…035). @param props - the tile values @returns the tile row */
-export function DashboardMetricTiles({ tiles }: Readonly<{ tiles: MetricTiles }>) {
+export function DashboardMetricTiles({
+  tiles,
+  isMobile = false,
+}: Readonly<{ tiles: MetricTiles; isMobile?: boolean }>) {
   const t = useTranslations(DASHBOARD_OVERVIEW_COPY_NAMESPACE);
+  const grid = isMobile ? "grid grid-cols-2 gap-(--space-3)" : "grid grid-cols-4 gap-(--space-4)";
   return (
-    <div className="grid grid-cols-4 gap-(--space-4)">
+    <div className={grid}>
       <MonthlyTile
         label={t("tileNewProjects")}
         value={tiles.newProjects.value}

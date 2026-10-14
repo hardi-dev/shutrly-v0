@@ -1,7 +1,7 @@
 import { screen, within } from "@testing-library/react";
 import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import { useLocale } from "next-intl";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { ActiveProjectRow } from "@/features/booking/application/ports/dashboard-overview-reader/dashboard-overview-reader.port";
 import type { DashboardOverview } from "@/features/booking/application/use-cases/load-dashboard-overview/load-dashboard-overview.types";
@@ -10,12 +10,16 @@ import { EMPTY_PROJECT_FILTER } from "@/features/booking/domain/project-list-que
 
 import { DashboardOverview as Overview } from "./dashboard-overview";
 
-const { push, replace, refresh } = vi.hoisted(() => ({
+const { push, replace, refresh, isMobile } = vi.hoisted(() => ({
   push: vi.fn(),
   replace: vi.fn(),
   refresh: vi.fn(),
+  isMobile: { value: false },
 }));
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push, replace, refresh }) }));
+vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
+  useMobileViewport: () => isMobile.value,
+}));
 vi.mock("@/ui/patterns/page-actions/page-actions", () => ({
   PageActions: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="page-actions">{children}</div>
@@ -117,7 +121,7 @@ function overviewWith(table: Partial<DashboardOverview["table"]>): DashboardOver
 
 function renderOverview(overview: DashboardOverview, locale: "en" | "id" = "en") {
   vi.mocked(useLocale).mockReturnValue(locale);
-  renderInLocale(
+  return renderInLocale(
     <Overview
       workspaceId="ws"
       overview={overview}
@@ -212,5 +216,55 @@ describe("DashboardOverview (F-26)", () => {
     expect(screen.getByText("Menampilkan 4 dari 12 proyek aktif")).toBeInTheDocument();
     expect(screen.getByText("Hari ini, 09.00")).toBeInTheDocument();
     expect(within(screen.getByRole("grid")).getByText("Wisuda Rina")).toBeInTheDocument();
+  });
+});
+
+describe("DashboardOverview on the phone (F-26 phone layout)", () => {
+  beforeEach(() => {
+    isMobile.value = true;
+  });
+  afterEach(() => {
+    isMobile.value = false;
+  });
+
+  it("AC-DASH-021 adds no header action, since the shell's bottom action creates a project", () => {
+    renderOverview(overviewWith({}));
+    expect(screen.queryByTestId("page-actions")).not.toBeInTheDocument();
+  });
+
+  it("AC-DASH-033 lays the four tiles out two by two", () => {
+    const { container } = renderOverview(overviewWith({}));
+    expect(container.querySelector(".grid-cols-2")).not.toBeNull();
+    expect(container.querySelector(".grid-cols-4")).toBeNull();
+  });
+
+  it("AC-DASH-030 shows each project as a list card with its client and next session", () => {
+    renderOverview(overviewWith({}));
+    expect(screen.getByRole("list", { name: "Active projects" })).toBeInTheDocument();
+    expect(screen.getByText("Rina Saputri · Today")).toBeInTheDocument();
+    expect(screen.getByText("Budi · No sessions scheduled")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Actions for Wisuda Rina" })).toBeInTheDocument();
+  });
+
+  it("AC-DASH-026 shows the count as the card description and a full-width link", () => {
+    renderOverview(overviewWith({}));
+    expect(screen.getByText("Showing 4 of 12 active projects")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "View all projects" })).toHaveAttribute(
+      "href",
+      "/w/ws/projects",
+    );
+  });
+
+  it("AC-DASH-029 shows the no-active state with no search on the phone", () => {
+    renderOverview(overviewWith({ rows: [], total: 0 }));
+    expect(screen.getByText("No active projects")).toBeInTheDocument();
+    expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
+  });
+
+  it("AC-DASH-037 shows the no-match state with the search still in place", () => {
+    renderOverview(overviewWith({ rows: [], total: 12, search: "Lamaran" }));
+    expect(screen.getByRole("searchbox")).toHaveValue("Lamaran");
+    expect(screen.getByText("No matching projects")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Clear search" })).toHaveAttribute("href", "/w/ws");
   });
 });

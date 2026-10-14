@@ -11,6 +11,7 @@ import {
   EMPTY_PROJECT_FILTER,
 } from "@/features/booking/domain/project-list-query/project-list-filter";
 import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
+import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 
 import { ProjectFilterDialog } from "../project-filter-dialog/project-filter-dialog";
@@ -21,6 +22,7 @@ import { NewProjectButton } from "../projects-screen/new-project-button";
 import { DashboardMetricTiles } from "./dashboard-metric-tiles";
 import { DASHBOARD_PROJECT_COPY_NAMESPACE } from "./dashboard-overview.copy";
 import type { DashboardOverviewProps } from "./dashboard-overview.types";
+import { DashboardProjectsList } from "./dashboard-projects-list";
 import { DashboardProjectsTable } from "./dashboard-projects-table";
 
 /** The workspace dashboard overview (F-26): the header action *New project*, four metric tiles, and the *Active projects* table with the project list's search, filter and row menu. @param props - the workspace, the overview, the filter options and the menu actions @returns the overview */
@@ -32,8 +34,8 @@ export function DashboardOverview({
   menuActions,
   searchClientsAction,
 }: Readonly<DashboardOverviewProps>) {
-  const tp = useTranslations(DASHBOARD_PROJECT_COPY_NAMESPACE);
   const router = useRouter();
+  const isMobile = useMobileViewport();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const handleDeleted = () => {
     router.refresh();
@@ -43,9 +45,7 @@ export function DashboardOverview({
   };
   return (
     <div className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--component-panel-app-content-gap)">
-      <PageActions>
-        <NewProjectButton workspaceId={workspaceId} label={tp("listAddDesktop")} />
-      </PageActions>
+      <OverviewHeader workspaceId={workspaceId} isMobile={isMobile} />
       <ProjectMenuHost
         workspaceId={workspaceId}
         actions={menuActions}
@@ -57,6 +57,7 @@ export function DashboardOverview({
             workspaceId={workspaceId}
             overview={overview}
             menu={api}
+            isMobile={isMobile}
             onOpenFilter={handleOpenFilter}
           />
         )}
@@ -107,15 +108,31 @@ function DashboardFilterDialog({
   );
 }
 
+/** The header action *New project* on the desktop. On the phone the shell's bottom-nav action creates a project, so the page adds none (F-26 design). @param props - the workspace and the viewport @returns the action, or nothing on the phone */
+function OverviewHeader({
+  workspaceId,
+  isMobile,
+}: Readonly<{ workspaceId: string; isMobile: boolean }>) {
+  const tp = useTranslations(DASHBOARD_PROJECT_COPY_NAMESPACE);
+  if (isMobile) return null;
+  return (
+    <PageActions>
+      <NewProjectButton workspaceId={workspaceId} label={tp("listAddDesktop")} />
+    </PageActions>
+  );
+}
+
 function OverviewContent({
   workspaceId,
   overview,
   menu,
+  isMobile,
   onOpenFilter,
 }: Readonly<{
   workspaceId: string;
   overview: DashboardOverview;
   menu: ProjectMenuApi;
+  isMobile: boolean;
   onOpenFilter: () => void;
 }>) {
   const tp = useTranslations(DASHBOARD_PROJECT_COPY_NAMESPACE);
@@ -125,20 +142,25 @@ function OverviewContent({
   const filter = table.filter ?? EMPTY_PROJECT_FILTER;
   const hasQuery = q !== "" || activeFilterGroupCount(filter, "ACTIVE") > 0;
   const renderMenu = (row: ActiveProjectRow) => menu.menuFor(rowTarget(tp, row, locale));
+  const listProps = {
+    workspaceId,
+    rows: table.rows,
+    total: table.total,
+    q,
+    filter,
+    today,
+    hasQuery,
+    onOpenFilter,
+    renderMenu,
+  };
   return (
     <>
-      <DashboardMetricTiles tiles={tiles} />
-      <DashboardProjectsTable
-        workspaceId={workspaceId}
-        rows={table.rows}
-        total={table.total}
-        q={q}
-        filter={filter}
-        today={today}
-        hasQuery={hasQuery}
-        onOpenFilter={onOpenFilter}
-        renderMenu={renderMenu}
-      />
+      <DashboardMetricTiles tiles={tiles} isMobile={isMobile} />
+      {isMobile ? (
+        <DashboardProjectsList {...listProps} />
+      ) : (
+        <DashboardProjectsTable {...listProps} />
+      )}
     </>
   );
 }

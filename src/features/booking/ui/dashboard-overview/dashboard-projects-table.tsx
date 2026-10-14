@@ -34,7 +34,9 @@ export function DashboardProjectsTable(props: Readonly<DashboardProjectsTablePro
       content="bleed"
     >
       {isNoActive ? (
-        <DashboardNoActive workspaceId={props.workspaceId} />
+        <div className="p-(--space-4)">
+          <DashboardNoActive workspaceId={props.workspaceId} />
+        </div>
       ) : (
         <TableBody {...props} />
       )}
@@ -42,7 +44,8 @@ export function DashboardProjectsTable(props: Readonly<DashboardProjectsTablePro
   );
 }
 
-function DashboardSearchRow(props: Readonly<DashboardProjectsTableProps>) {
+/** The search field and the filter button of the active list (AC-DASH-036, 037). @param props - the search, the filter and the workspace @returns the search row */
+export function DashboardSearchRow(props: Readonly<DashboardProjectsTableProps>) {
   return (
     <div className="flex w-full items-center gap-(--space-2)">
       <ProjectSearchField
@@ -59,24 +62,29 @@ function DashboardSearchRow(props: Readonly<DashboardProjectsTableProps>) {
 }
 
 function TableBody(props: Readonly<DashboardProjectsTableProps>) {
-  if (props.rows.length === 0) return <NoMatch workspaceId={props.workspaceId} />;
+  if (props.rows.length === 0) {
+    return (
+      <div className="p-(--space-4)">
+        <DashboardNoMatch workspaceId={props.workspaceId} />
+      </div>
+    );
+  }
   return <ActiveRows {...props} />;
 }
 
-function NoMatch({ workspaceId }: Readonly<{ workspaceId: string }>) {
+/** The no-match state: a search or filter matches nothing; *Clear search* returns to the overview (AC-DASH-037). @param props - the workspace @returns the empty state */
+export function DashboardNoMatch({ workspaceId }: Readonly<{ workspaceId: string }>) {
   const tp = useTranslations(DASHBOARD_PROJECT_COPY_NAMESPACE);
   return (
-    <div className="p-(--space-4)">
-      <ProjectsEmptyState
-        tab="ACTIVE"
-        hasQuery
-        action={
-          <Link href={`/w/${workspaceId}`} className="font-semibold underline">
-            {tp("clearSearch")}
-          </Link>
-        }
-      />
-    </div>
+    <ProjectsEmptyState
+      tab="ACTIVE"
+      hasQuery
+      action={
+        <Link href={`/w/${workspaceId}`} className="font-semibold underline">
+          {tp("clearSearch")}
+        </Link>
+      }
+    />
   );
 }
 

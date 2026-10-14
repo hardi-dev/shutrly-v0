@@ -82,23 +82,22 @@ describe("ListCardItem (C42 two-line)", () => {
     expect(screen.queryByRole("img")).toBeNull();
   });
 
-  it("requires exactly one leading icon or avatar", () => {
+  it("rejects both a leading icon and an avatar", () => {
     expect(() =>
       render(
         <ul>
           <ListCardItem icon="image" avatarInitials="RI" title="Rina" meta="+62 812" />
         </ul>,
       ),
-    ).toThrow("exactly one of icon or avatarInitials");
+    ).toThrow("at most one of icon or avatarInitials");
   });
 
-  it("requires a leading icon or avatar", () => {
-    expect(() =>
-      render(
-        <ul>
-          <ListCardItem title="Rina" meta="+62 812" />
-        </ul>,
-      ),
-    ).toThrow("exactly one of icon or avatarInitials");
+  it("renders with no leading element, as the phone list on the F-26 export", () => {
+    render(
+      <ul>
+        <ListCardItem title="Rina" meta="+62 812" />
+      </ul>,
+    );
+    expect(screen.getByText("Rina")).toBeInTheDocument();
   });
 });

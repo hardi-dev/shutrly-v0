@@ -21,7 +21,7 @@ R-2 (query cost, `EXPLAIN ANALYZE`, read-only, largest workspace of 65 projects 
 - **Folder layout.** The overview's components sit in one folder, `features/booking/ui/dashboard-overview/`, not in the plan's sub-folders. One copy module per folder keeps the `local/ui-copy` rule satisfied.
 - **Metric delta spoken text.** `MetricDelta` takes `srText` (visible value `aria-hidden`, spoken text in `sr-only`), not `aria-label`, because an `aria-label` on a plain `span` is not announced.
 - **Phone header action.** None. The phone frame has no *New project* text; its `+` is the shell's bottom-nav CTA, which already creates a project.
-- **Phone card avatar.** `ListCardItem` requires `icon` or `avatarInitials`; the phone card uses the client's initials, the same avatar as the desktop row.
+- **Phone card leading element (decided).** The export phone rows have no leading element, so the phone list has none. To allow that, the shared `ListCardItem` rule changed from "exactly one of icon or avatarInitials" to "at most one"; its tests were updated. Other lists are unaffected: they still pass an icon or initials.
 - **`footerCount` (Indonesian).** Wrapped in a single-form plural (`{total, plural, other {…}}`) so the copy-registry parity check passes. The output is the deck's text.
 - **`today` in the use case output.** Added after the plan: the next-session label is relative to the same clock as the metrics.
 - **F-07 commits.** The refactor and the fix are split, but the fix commit `a64e9497` also carries `projects-screen.test.tsx` (the test was staged with its folder).
@@ -38,10 +38,9 @@ R-2 (query cost, `EXPLAIN ANALYZE`, read-only, largest workspace of 65 projects 
 - `pnpm build`: passes on the final code (rerun after the last tile, table and density changes).
 - Fidelity pass (plan 5.7 and 6.4): the live page was screenshotted at 1440, 1024 and 390 and compared with the three default exports. Tile layout, uppercase table heads, the spark and ring placement, the 2×2 phone tiles, the card list and the full-width link now match in structure. Fixes made in this pass: the tile label/badge row and the bottom-right chart (`metric-tile.tsx`), uppercase column heads, `nowrap` on the price, the `md` avatar.
 
-## Remaining differences (accepted, for verification)
+## Remaining differences
 
 - **Table row height.** Fixed in this pass: `DataTable` takes an opt-in `relaxed` density (24 px cell padding) for the overview only; rows now measure about 87 px against the export's 85 px. Other tables keep the list density.
-- **Phone card leading element.** The export has no leading avatar on the list cards; ours shows the client's initials, because `ListCardItem` requires one of `icon` or `avatarInitials`.
 - **Sample data.** The test Owner's data differs from the export's fixtures (names, counts, prices), so the comparison is structural.
-- **R-1 date order.** EN renders *Sun, Oct 18, 07:00* (app order), the export shows *Sat 18 Oct, 07:00*. Left for the Owner at verification.
+- **R-1 date order (decided).** EN now renders the design order, *Sun 18 Oct, 07:00* (`en-GB` day-month, as the export shows *Sat 18 Oct, 07:00*). The export weekday is a sample (18 Oct 2026 is a Sunday), so the real weekday is shown. The Owner rule is that the design wins over the spec on UX details; AC-DASH-027 and the spec are synced to it.
 - **Full suite.** Not run, per the related-checks rule.

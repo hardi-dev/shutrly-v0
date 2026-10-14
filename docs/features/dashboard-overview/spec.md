@@ -59,7 +59,7 @@ An empty ring shows when the share is 0, and no ring when the count is 0. The ri
 | Column | Value |
 |---|---|
 | Project | project title (a link to the project page), with the client's name under it and the client's initials avatar |
-| Next session | the earliest session dated today or later: *Today*, *Today, 09:00*, *Sun, Oct 18, 07:00* (the locale's date order, no year); the start time only when set; *No sessions scheduled* when there is none (copy deck §7.1, the project list's row; no em dash in UI text) |
+| Next session | the earliest session dated today or later: *Today*, *Today, 09:00*, *Sun 18 Oct, 07:00* (the locale's date order, no year); the start time only when set; *No sessions scheduled* when there is none (copy deck §7.1, the project list's row; no em dash in UI text) |
 | Status | the project status chip, as on the project list |
 | Agreed price | `project.agreed_price` in IDR (Owner 2026-10-14: shown; it is not an invoice figure) |
 | ⋯ | the project row menu (below) |

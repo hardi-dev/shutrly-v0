@@ -95,8 +95,8 @@ function LinkedListCardRow({
  */
 export function ListCardItem(props: Readonly<ListCardItemProps>) {
   const { icon, avatarInitials, title, trailing, href, isLast = false } = props;
-  if (Boolean(icon) === Boolean(avatarInitials)) {
-    throw new Error("ListCardItem requires exactly one of icon or avatarInitials");
+  if (icon && avatarInitials) {
+    throw new Error("ListCardItem takes at most one of icon or avatarInitials");
   }
   const body = <ListCardBody {...props} />;
 

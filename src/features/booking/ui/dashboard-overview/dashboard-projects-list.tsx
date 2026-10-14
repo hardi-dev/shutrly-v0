@@ -5,7 +5,6 @@ import { ListCardItem } from "@/ui/patterns/list-card-item/list-card-item";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 
-import { clientInitials } from "../client-initials/client-initials";
 import { listUrlAt, projectTabPath } from "../project-search-field/project-tab-path";
 import { ProjectStatusChip } from "../project-status-chip/project-status-chip";
 import { DashboardNoActive } from "./dashboard-empty";
@@ -64,7 +63,6 @@ function CardRows(props: Readonly<DashboardProjectsTableProps>) {
       {props.rows.map((row, index) => (
         <ListCardItem
           key={row.id}
-          avatarInitials={clientInitials(row.clientName)}
           title={row.title}
           href={`/w/${props.workspaceId}/projects/${row.id}`}
           meta={`${row.clientName} · ${nextSessionText(row.shownSession, props.today, texts, locale)}`}

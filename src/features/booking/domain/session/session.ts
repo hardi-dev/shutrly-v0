@@ -52,7 +52,8 @@ const DAY_MONTH_FORMATS: Readonly<Record<FormattingLocale, Intl.DateTimeFormat>>
     month: "short",
     timeZone: "UTC",
   }),
-  "en-US": new Intl.DateTimeFormat("en-US", {
+  // en-GB orders day before month, as the design does ("Sat 18 Oct, 07:00").
+  "en-US": new Intl.DateTimeFormat("en-GB", {
     weekday: "short",
     day: "numeric",
     month: "short",

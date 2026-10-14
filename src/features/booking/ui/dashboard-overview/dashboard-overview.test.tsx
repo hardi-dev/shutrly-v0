@@ -162,7 +162,7 @@ describe("DashboardOverview (F-26)", () => {
     renderOverview(overviewWith({}));
     expect(screen.getByText("Today")).toBeInTheDocument();
     expect(screen.getByText("Today, 09:00")).toBeInTheDocument();
-    expect(screen.getByText("Sun, Oct 18, 07:00")).toBeInTheDocument();
+    expect(screen.getByText("Sun 18 Oct, 07:00")).toBeInTheDocument();
     expect(screen.getByText("No sessions scheduled")).toBeInTheDocument();
   });
 

@@ -132,9 +132,9 @@ describe("session formatters", () => {
 
   it("AC-DASH-027 formats the day and time without a year, in each locale", () => {
     const next = session({ date: "2026-10-18", startTime: "07:00" });
-    expect(formatSessionDayTime(next, "en-US")).toBe("Sun, Oct 18, 07:00");
+    expect(formatSessionDayTime(next, "en-US")).toBe("Sun 18 Oct, 07:00");
     expect(formatSessionDayTime(next, "id-ID")).toBe("Min, 18 Okt, 07.00");
-    expect(formatSessionDayTime(session({ date: "2026-10-18" }), "en-US")).toBe("Sun, Oct 18");
+    expect(formatSessionDayTime(session({ date: "2026-10-18" }), "en-US")).toBe("Sun 18 Oct");
   });
 });
 

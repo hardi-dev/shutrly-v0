@@ -33,16 +33,15 @@ R-2 (query cost, `EXPLAIN ANALYZE`, read-only, largest workspace of 65 projects 
 - Eslint: clean on every touched file. Prettier was run with `--ignore-path /dev/null`, because prettier skips anything under `.claude/` and this worktree lives there.
 - `tokens:check`: passes.
 - Integration `tests/integration/booking/dashboard-overview-reader.test.ts`: 12 pass (AC-DASH-003, 022–027, 033–037, and the canonical price). `project-list.test.ts`: 7 pass.
-- E2E `tests/e2e/dashboard-overview/overview.spec.ts`: 6 pass against `pnpm dev` (Playwright started it): AC-DASH-001/002, 036/037, 030 (keyboard and name), 020 (axe desktop and phone), 026 (phone list), and 030/032 (two drafts created and confirmed, one from the row menu and one on its page; the counts and statuses change on the overview).
+- E2E `tests/e2e/dashboard-overview/overview.spec.ts`: 7 pass (the last one, AC-DASH-002, registers a new Owner, creates a workspace and expects the setup checklist and no overview table) against `pnpm dev` (Playwright started it): AC-DASH-001/002, 036/037, 030 (keyboard and name), 020 (axe desktop and phone), 026 (phone list), and 030/032 (two drafts created and confirmed, one from the row menu and one on its page; the counts and statuses change on the overview).
 - Storybook: `pnpm storybook:build` exits 0, so every new story compiles. The stories were not opened interactively.
-- `pnpm build`: passes (routes include `/w/[workspaceId]`).
+- `pnpm build`: passes on the final code (rerun after the last tile, table and density changes).
 - Fidelity pass (plan 5.7 and 6.4): the live page was screenshotted at 1440, 1024 and 390 and compared with the three default exports. Tile layout, uppercase table heads, the spark and ring placement, the 2×2 phone tiles, the card list and the full-width link now match in structure. Fixes made in this pass: the tile label/badge row and the bottom-right chart (`metric-tile.tsx`), uppercase column heads, `nowrap` on the price, the `md` avatar.
 
 ## Remaining differences (accepted, for verification)
 
-- **Table row height.** Export rows are about 85 px tall; ours are about 62 px. Row padding comes from the shared `DataTable`, which this feature does not restyle.
+- **Table row height.** Fixed in this pass: `DataTable` takes an opt-in `relaxed` density (24 px cell padding) for the overview only; rows now measure about 87 px against the export's 85 px. Other tables keep the list density.
 - **Phone card leading element.** The export has no leading avatar on the list cards; ours shows the client's initials, because `ListCardItem` requires one of `icon` or `avatarInitials`.
 - **Sample data.** The test Owner's data differs from the export's fixtures (names, counts, prices), so the comparison is structural.
 - **R-1 date order.** EN renders *Sun, Oct 18, 07:00* (app order), the export shows *Sat 18 Oct, 07:00*. Left for the Owner at verification.
-- **Not covered by e2e:** the fresh-owner checklist case (AC-DASH-002 for a new workspace; the checklist itself is covered by the setup-checklist spec).
 - **Full suite.** Not run, per the related-checks rule.

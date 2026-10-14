@@ -8,6 +8,10 @@ import { parse } from "dotenv";
 import { LOGIN_FORM_COPY } from "@/features/auth/ui/login-form/login-form.copy";
 import { DASHBOARD_OVERVIEW_COPY } from "@/features/booking/ui/dashboard-overview/dashboard-overview.copy";
 import { PROJECT_COPY } from "@/features/booking/ui/project-copy/project-copy.copy";
+import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
+import { SETUP_CHECKLIST_COPY } from "@/features/workspace/ui/setup-checklist/setup-checklist.copy";
+
+import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
 
 // The named test Owner is kept in the git-ignored .env.test (scripts/dev/show-test-owner.sh).
 // Only the last test changes data: it adds two drafts to the test Owner and confirms them (plan 7.1).
@@ -184,4 +188,19 @@ test("AC-DASH-030 AC-DASH-032 drafts confirmed from the row menu and from their 
   await page.goto(`/w/${workspaceId}`);
   await expect(rowOf(page, workspaceId, pageDraft).getByText(project.statusBooked)).toBeVisible();
   expect(await activeTotal(page)).toBe(before + 2);
+});
+
+test("AC-DASH-002 a new Owner with no project sees the setup checklist, not the overview", async ({
+  page,
+}) => {
+  await registerAndVerify(page, uniqueEmail("dashboard-new"), "en");
+  await page.getByLabel(ONBOARDING_COPY.messages.en.nameLabel).fill("Dashboard Studio");
+  await page.getByRole("button", { name: ONBOARDING_COPY.messages.en.submit }).click();
+  await expect(page).toHaveURL(/\/w\/[0-9a-f-]+(?:\?.*)?$/, { timeout: 60_000 });
+  const checklist = page
+    .getByRole("region", { name: SETUP_CHECKLIST_COPY.messages.en.title })
+    .filter({ visible: true })
+    .first();
+  await expect(checklist).toBeVisible();
+  await expect(page.getByRole("heading", { name: en.tableTitle })).toHaveCount(0);
 });

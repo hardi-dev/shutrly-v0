@@ -148,7 +148,7 @@ See [plan.md](plan.md): 7 iterations, each with *Read first*, a checklist and a 
 - [x] 4 `src/ui`: metric tile, delta, spark, ring; table footer (`4ec35f92`, `61a25476`, `ee219398`, `2107cb38`)
 - [x] 5 Overview UI: desktop and tablet, with the shared-unit refactor and the F-07 fix (`eb7a100c`, `a64e9497`, `a7d8cb83`); fidelity pass against the exports (see build-notes)
 - [x] 6 Overview UI: phone (`d9c1dd85`); fidelity pass against the exports (see build-notes)
-- [x] 7 E2E, accessibility, close (`b9f849c2`; mutating journey and fidelity commit follow)
+- [x] 7 E2E, accessibility, close (`b9f849c2`; mutating journey, fidelity fixes and the fresh-owner case in `75670a7f` and the next commit)
 
 ## Risks / open questions
 - **R-1 Date order (D-11):** the export shows *Sat 18 Oct, 07:00* (a sample whose weekday is also wrong for 2026); the app's EN formatter gives *Sun, Oct 18, 07:00*. Verification reports it, and the Owner may ask for `en-GB` order later (one formatter change).

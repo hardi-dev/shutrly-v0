@@ -17,6 +17,8 @@ export interface DataTableProps<Row extends { readonly id: string }> {
   readonly onRowAction?: (row: Row) => void;
   /** Rendered below the grid, e.g. a count and a link (AC-DASH-026). */
   readonly footer?: ReactNode;
+  /** Taller rows (24 px cell padding) for the dashboard overview, as on its export; the default is the list density. */
+  readonly relaxed?: boolean;
 }
 
 export interface DataTableSkeletonProps {

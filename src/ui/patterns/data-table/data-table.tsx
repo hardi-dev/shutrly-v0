@@ -18,11 +18,9 @@ export function DataTable<RowData extends { readonly id: string }>({
   renderCell,
   onRowAction,
   footer,
+  relaxed = false,
 }: Readonly<DataTableProps<RowData>>) {
-  function handleRowAction(key: Key): void {
-    const row = rows.find((item) => item.id === String(key));
-    if (row) onRowAction?.(row);
-  }
+  const handleRowAction = rowActionHandler(rows, onRowAction);
 
   function renderRow(row: RowData) {
     function renderRowCell(column: DataTableColumn) {
@@ -30,7 +28,7 @@ export function DataTable<RowData extends { readonly id: string }>({
         <Cell
           key={column.id}
           style={column.width === undefined ? undefined : { width: column.width }}
-          className={getCellClassName(column)}
+          className={getCellClassName(column, relaxed)}
         >
           {renderCell(row, column.id)}
         </Cell>
@@ -65,6 +63,16 @@ export function DataTable<RowData extends { readonly id: string }>({
   );
 }
 
+function rowActionHandler<Row extends { readonly id: string }>(
+  rows: readonly Row[],
+  onRowAction: ((row: Row) => void) | undefined,
+): (key: Key) => void {
+  return (key) => {
+    const row = rows.find((item) => item.id === String(key));
+    if (row) onRowAction?.(row);
+  };
+}
+
 function createColumnRenderer(firstColumnId: string | undefined) {
   return function renderColumn(column: DataTableColumn) {
     return (
@@ -90,9 +98,10 @@ function getColumnClassName(column: DataTableColumn): string {
   );
 }
 
-function getCellClassName(column: DataTableColumn): string {
+function getCellClassName(column: DataTableColumn, relaxed: boolean): string {
   return cn(
-    "px-(--component-table-row-padding-x) py-(--component-table-row-padding-y) text-(length:--font-size-body-sm) text-(--component-table-cell-text)",
+    "px-(--component-table-row-padding-x) text-(length:--font-size-body-sm) text-(--component-table-cell-text)",
+    relaxed ? "py-(--space-6)" : "py-(--component-table-row-padding-y)",
     column.width === undefined ? "flex-1" : "shrink-0",
   );
 }

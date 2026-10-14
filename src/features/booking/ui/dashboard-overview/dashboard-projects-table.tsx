@@ -113,6 +113,7 @@ function ActiveRows(props: Readonly<DashboardProjectsTableProps>) {
       rows={props.rows}
       renderCell={renderCell}
       footer={<FooterCount {...props} />}
+      relaxed
     />
   );
 }

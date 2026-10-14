@@ -1,7 +1,7 @@
 # Feature: Dashboard overview
 
 ID: F-26
-Status: DESIGNED (specified 2026-10-13; revised to the Owner's design direction 2026-10-14; design approved 2026-10-15) · Intent: [intent.md](intent.md), ACCEPTED 2026-10-13, Owner revision 2026-10-14 · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [dashboard-overview.pen](dashboard-overview.pen)
+Status: PLANNED (specified 2026-10-13; revised to the Owner's design direction 2026-10-14; design approved 2026-10-15; planned 2026-10-15, [technical-design.md](technical-design.md), [plan.md](plan.md)) · Intent: [intent.md](intent.md), ACCEPTED 2026-10-13, Owner revision 2026-10-14 · AC: [acceptance-criteria.md](acceptance-criteria.md) · Design: [dashboard-overview.pen](dashboard-overview.pen)
 
 ## Goal
 Once a workspace has a project, the dashboard shows four numbers about the work moving through the studio, and lists the active projects with their next session, status and agreed price, each with the same ⋯ menu the project list uses. It replaces the F-02 placeholder (and its *Set up branding* prompt) that F-25 left in place after the first project.
@@ -59,7 +59,7 @@ An empty ring shows when the share is 0, and no ring when the count is 0. The ri
 | Column | Value |
 |---|---|
 | Project | project title (a link to the project page), with the client's name under it and the client's initials avatar |
-| Next session | the earliest session dated today or later: *Today*, *Today, 09:00*, *Sat 18 Oct, 07:00*; the start time only when set; *Not scheduled* when there is none (draft copy; no em dash in UI text) |
+| Next session | the earliest session dated today or later: *Today*, *Today, 09:00*, *Sun, Oct 18, 07:00* (the locale's date order, no year); the start time only when set; *No sessions scheduled* when there is none (copy deck §7.1, the project list's row; no em dash in UI text) |
 | Status | the project status chip, as on the project list |
 | Agreed price | `project.agreed_price` in IDR (Owner 2026-10-14: shown; it is not an invoice figure) |
 | ⋯ | the project row menu (below) |
@@ -79,7 +79,7 @@ Each item keeps its existing dialog, toast and stale-status handling. After an a
 ## Main Flow
 1. The Owner opens the workspace dashboard (`/w/{workspaceId}`).
 2. The server verifies the workspace (BR-WS-003), finds it has a project, and reads the four counts and the first 10 active projects in a few cheap queries (ADR-018).
-3. The dashboard shows the page header, the metric tiles and the table on *All*.
+3. The dashboard shows the page header, the metric tiles and the table.
 4. The Owner searches or filters the table, opens a project, follows *View all projects*, or acts from a row menu.
 5. Coming back, or finishing a menu action, reads the data again; nothing is cached across requests or stored.
 

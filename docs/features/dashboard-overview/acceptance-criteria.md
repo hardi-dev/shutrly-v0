@@ -91,7 +91,7 @@ Covers: BR-TEAM-003
 
 **Given** today is 2026-10-14 and active projects with: a session today without a start time; a session today at 09:00; a past session 2026-10-12 and the next one 2026-10-18 07:00; no session from today on
 **When** the dashboard opens
-**Then** *Next session* reads *Today*, *Today, 09:00*, *Sat 18 Oct, 07:00* and *Not scheduled*, and the rows are in that order (untimed first on the same day, projects without a next session last, oldest created first, A-3).
+**Then** *Next session* reads *Today*, *Today, 09:00*, *Sun, Oct 18, 07:00* (ID *Min, 18 Okt, 07.00*; the locale's date order, technical design D-11) and *No sessions scheduled*, and the rows are in that order (untimed first on the same day, projects without a next session last, oldest created first, A-3).
 
 ## AC-DASH-028 — Tabs
 

@@ -9,15 +9,16 @@ import { filterFormSchema } from "@/features/booking/domain/project-list-query/p
 import type { ProjectFilter } from "@/features/booking/domain/project-list-query/project-list-filter.types";
 import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 
-import { projectListUrl } from "../project-search-field/project-tab-path";
+import { listUrlAt, projectTabPath } from "../project-search-field/project-tab-path";
 import { PROJECT_FILTER_DIALOG_COPY_NAMESPACE } from "./project-filter-dialog.copy";
 
-/** Holds the dialog's draft filter and applies it to the URL, keeping the search text (A-11). @param input - workspace, tab, search and the URL filter @returns the draft and its actions */
+/** Holds the dialog's draft filter and applies it to the URL, keeping the search text (A-11). `basePath` applies it to another page, such as the dashboard (F-26). @param input - workspace, tab, search, the URL filter and an optional path @returns the draft and its actions */
 export function useFilterDraft(input: {
   workspaceId: string;
   tab: ProjectTab;
   q: string;
   filter: ProjectFilter;
+  basePath?: string;
 }) {
   const t = useTranslations(PROJECT_FILTER_DIALOG_COPY_NAMESPACE);
   const router = useRouter();
@@ -35,7 +36,8 @@ export function useFilterDraft(input: {
     setToError(undefined);
   };
   const go = (filter: ProjectFilter) => {
-    router.replace(projectListUrl(input.workspaceId, input.tab, input.q, filter));
+    const path = input.basePath ?? projectTabPath(input.workspaceId, input.tab);
+    router.replace(listUrlAt(path, input.q, filter));
   };
   const apply = (): boolean => {
     const result = filterFormSchema.safeParse(draft);

@@ -8,19 +8,23 @@ const SUFFIX: Readonly<Record<ProjectTab, string>> = {
   CANCELLED: "/cancelled",
 };
 
-/** The list URL of a tab with the search and filter params (A-11); empty parts are left out. @param workspaceId - the workspace @param tab - the tab @param q - the search text @param filter - the filter @returns the path with its query string */
+/** The URL of a path with the search and filter params (A-11); empty parts are left out. The dashboard uses its own path (F-26). @param path - the path without a query @param q - the search text @param filter - the filter @returns the path with its query string */
+export function listUrlAt(path: string, q: string, filter: ProjectFilter): string {
+  const params = new URLSearchParams();
+  if (q !== "") params.set("q", q);
+  for (const [key, value] of filterToParams(filter)) params.set(key, value);
+  const query = params.toString();
+  return query === "" ? path : path + "?" + query;
+}
+
+/** The list URL of a tab with the search and filter params (A-11). @param workspaceId - the workspace @param tab - the tab @param q - the search text @param filter - the filter @returns the path with its query string */
 export function projectListUrl(
   workspaceId: string,
   tab: ProjectTab,
   q: string,
   filter: ProjectFilter,
 ): string {
-  const params = new URLSearchParams();
-  if (q !== "") params.set("q", q);
-  for (const [key, value] of filterToParams(filter)) params.set(key, value);
-  const query = params.toString();
-  const path = projectTabPath(workspaceId, tab);
-  return query === "" ? path : path + "?" + query;
+  return listUrlAt(projectTabPath(workspaceId, tab), q, filter);
 }
 
 /** The list route of a tab. @param workspaceId - the workspace @param tab - the tab @returns the path without a query */

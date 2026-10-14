@@ -20,6 +20,8 @@ export interface ProjectFilterDialogProps {
   readonly services: readonly FilterServiceOption[];
   readonly initialClient: FilterClientOption | null;
   readonly searchClientsAction: SearchFilterClientsCall;
+  /** Where Terapkan and Atur ulang go; the project list when omitted (F-26 uses the dashboard). */
+  readonly basePath?: string;
 }
 
 export interface FilterDraftApi {

@@ -7,22 +7,18 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 
 import type { ProjectListRow } from "@/features/booking/application/ports/project-list-reader/project-list-reader.port";
-import { formatShortDate } from "@/features/booking/domain/session/session";
-import type { FormattingLocale } from "@/shared/locale/locale.types";
 import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { Button } from "@/ui/primitives/button/button";
 
-import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { ProjectFilterButton } from "../project-filter-button/project-filter-button";
 import { ProjectFilterDialog } from "../project-filter-dialog/project-filter-dialog";
 import { ProjectList } from "../project-list/project-list";
 import { ProjectMenuHost } from "../project-menu-host/project-menu-host";
-import type { ProjectMenuTarget } from "../project-menu-host/project-menu-host.types";
+import { rowTarget } from "../project-menu-host/project-row-target";
 import { ProjectSearchField } from "../project-search-field/project-search-field";
 import { projectTabPath } from "../project-search-field/project-tab-path";
-import { projectStatusChip } from "../project-status-chip/project-status-props";
 import { ProjectsEmptyState } from "../projects-empty-state/projects-empty-state";
 import { ProjectsTable } from "../projects-table/projects-table";
 import { ProjectsTabsBar } from "../projects-tabs-bar/projects-tabs-bar";
@@ -138,31 +134,6 @@ function ProjectsBody(
       />
     </>
   );
-}
-
-function rowTarget(
-  t: ProjectTranslate,
-  row: ProjectListRow,
-  locale: FormattingLocale,
-): ProjectMenuTarget {
-  const when =
-    row.shownSession === null
-      ? t("metaNoSchedule")
-      : formatShortDate(row.shownSession.date, locale);
-  return {
-    id: row.id,
-    title: row.title,
-    status: row.status,
-    hasTeam: row.hasTeam,
-    clientId: row.clientId,
-    clientName: row.clientName,
-    whatsappNumber: row.clientWhatsappNumber,
-    meta: t("menuSheetMeta", {
-      client: row.clientName,
-      when,
-      status: projectStatusChip(t, row.status).label,
-    }),
-  };
 }
 
 function ProjectsSearchRow(

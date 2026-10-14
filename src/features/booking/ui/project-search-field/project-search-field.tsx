@@ -10,26 +10,27 @@ import type { ProjectTab } from "@/features/booking/domain/project-status/projec
 import { Input } from "@/ui/primitives/input/input";
 
 import { PROJECT_SEARCH_FIELD_COPY_NAMESPACE } from "./project-search-field.copy";
-import { projectListUrl } from "./project-tab-path";
+import { listUrlAt, projectTabPath } from "./project-tab-path";
 
-/** Updates the current project-tab URL after a short debounce; clearing it drops `?q=` (AC-PRJ-004). */
+/** Updates the current project-tab URL after a short debounce; clearing it drops `?q=` (AC-PRJ-004). `basePath` points it at another page, such as the dashboard (F-26). */
 export function ProjectSearchField({
   workspaceId,
   tab,
   q,
   filter,
   resultCount,
+  basePath,
 }: Readonly<{
   workspaceId: string;
   tab: ProjectTab;
   q: string;
   filter: ProjectFilter;
   resultCount: number;
+  basePath?: string;
 }>) {
   const t = useTranslations(PROJECT_SEARCH_FIELD_COPY_NAMESPACE);
-  const { value, change, clear } = useProjectSearch(q, (text) =>
-    projectListUrl(workspaceId, tab, text, filter),
-  );
+  const path = basePath ?? projectTabPath(workspaceId, tab);
+  const { value, change, clear } = useProjectSearch(q, (text) => listUrlAt(path, text, filter));
   return (
     <>
       <div className="w-full md:w-[320px]">

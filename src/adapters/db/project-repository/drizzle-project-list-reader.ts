@@ -53,7 +53,8 @@ function toSession(row: RawRow): SessionRecordShape | null {
   };
 }
 
-function toRow(row: RawRow): ProjectListRow | null {
+/** Maps one raw list or dashboard row; an unknown status is dropped. @param row - the raw row @returns the list row or null */
+export function toRow(row: RawRow): ProjectListRow | null {
   const status = PROJECT_STATUSES.find((candidate) => candidate === row.status);
   if (status === undefined) return null;
   return {

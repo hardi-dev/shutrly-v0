@@ -15,7 +15,14 @@ export function escapeLike(text: string): string {
   return text.replace(LIKE_SPECIAL, (character) => `\\${character}`);
 }
 
-function statusList(tab: ProjectListReadQuery["tab"]): SQL {
+/** Matches the title or the client name, ignoring case; no search matches every row (F-07). @param search - trimmed search text or null @returns the predicate */
+export function searchPredicate(search: string | null): SQL {
+  if (search === null) return sql``;
+  const pattern = "%" + escapeLike(search) + "%";
+  return sql`and (p.title ilike ${pattern} escape '\\' or c.name ilike ${pattern} escape '\\')`;
+}
+
+export function statusList(tab: ProjectListReadQuery["tab"]): SQL {
   return sql.join(
     tabStatuses(tab).map((status) => sql`${status}`),
     sql`, `,
@@ -27,7 +34,7 @@ function sqlList(values: readonly string[], cast?: "uuid"): SQL {
   return sql.join(items, sql`, `);
 }
 
-function filterPredicates(filter: ProjectListReadQuery["filter"]): SQL {
+export function filterPredicates(filter: ProjectListReadQuery["filter"]): SQL {
   if (filter === null) return sql``;
   const parts: SQL[] = [];
   if (filter.statuses.length > 0) {
@@ -51,11 +58,6 @@ function scheduleFilter(filter: NonNullable<ProjectListReadQuery["filter"]>): SQ
 }
 
 function baseCte(context: WorkspaceContext, query: ProjectListReadQuery): SQL {
-  const pattern = query.search === null ? "" : "%" + escapeLike(query.search) + "%";
-  const search =
-    query.search === null
-      ? sql``
-      : sql`and (p.title ilike ${pattern} escape '\\' or c.name ilike ${pattern} escape '\\')`;
   return sql`
     with base as (
       select p.id, p.title, p.status, p.created_at, p.client_id, c.name as client_name,
@@ -70,7 +72,7 @@ function baseCte(context: WorkspaceContext, query: ProjectListReadQuery): SQL {
       join service s on s.workspace_id = p.workspace_id and s.id = p.service_id
       ${shownSessionJoin(query.today)}
       where p.workspace_id = ${context.workspaceId} and p.status in (${statusList(query.tab)})
-      ${search}
+      ${searchPredicate(query.search)}
       ${filterPredicates(query.filter)}
     )`;
 }

@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 
 import type { ProjectListRow } from "@/features/booking/application/ports/project-list-reader/project-list-reader.port";
+import { activeFilterGroupCount } from "@/features/booking/domain/project-list-query/project-list-filter";
 import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
@@ -102,7 +103,7 @@ function ProjectsBody(
     <NewProjectButton workspaceId={props.workspaceId} label={label} />
   );
   const search = <ProjectsSearchRow {...props} />;
-  const emptyState = <ProjectsEmpty workspaceId={props.workspaceId} tab={props.tab} q={props.q} />;
+  const emptyState = <ProjectsEmpty {...props} />;
   if (isMobile) {
     return (
       <>
@@ -162,19 +163,22 @@ function ProjectsEmpty({
   workspaceId,
   tab,
   q,
-}: Readonly<Pick<ProjectsScreenProps, "workspaceId" | "tab" | "q">>) {
+  filter,
+}: Readonly<Pick<ProjectsScreenProps, "workspaceId" | "tab" | "q" | "filter">>) {
   const t = useTranslations(PROJECTS_SCREEN_COPY_NAMESPACE);
+  // A filter that matches nothing is a no-match too, not the empty tab (F-07 spec › Filter).
+  const hasQuery = q !== "" || activeFilterGroupCount(filter, tab) > 0;
   return (
     <ProjectsEmptyState
       tab={tab}
-      hasQuery={q !== ""}
+      hasQuery={hasQuery}
       action={
-        q === "" ? (
-          <NewProjectButton workspaceId={workspaceId} label={t("listAddDesktop")} />
-        ) : (
+        hasQuery ? (
           <Link href={projectTabPath(workspaceId, tab)} className="font-semibold underline">
             {t("clearSearch")}
           </Link>
+        ) : (
+          <NewProjectButton workspaceId={workspaceId} label={t("listAddDesktop")} />
         )
       }
     />

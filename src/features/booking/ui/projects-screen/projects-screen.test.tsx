@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { ProjectListRow } from "@/features/booking/application/ports/project-list-reader/project-list-reader.port";
+import type { ProjectFilter } from "@/features/booking/domain/project-list-query/project-list-filter.types";
 import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 
 import { ProjectsScreen } from "./projects-screen";
@@ -77,7 +78,13 @@ const NO_SESSION: ProjectListRow = {
 
 function renderScreen(
   rows: readonly ProjectListRow[],
-  overrides: { tab?: ProjectTab; q?: string; nextCursor?: string | null; count?: number } = {},
+  overrides: {
+    tab?: ProjectTab;
+    q?: string;
+    nextCursor?: string | null;
+    count?: number;
+    filter?: ProjectFilter;
+  } = {},
   loadMore = vi.fn(() => Promise.resolve({ items: [NO_SESSION], nextCursor: null })),
 ) {
   render(
@@ -89,6 +96,7 @@ function renderScreen(
       initialPage={{ items: rows, nextCursor: overrides.nextCursor ?? null }}
       loadMoreAction={loadMore}
       {...FILTER_PROPS}
+      filter={overrides.filter ?? FILTER_PROPS.filter}
     />,
   );
   return loadMore;
@@ -142,6 +150,19 @@ describe("ProjectsScreen", () => {
     renderScreen([], { q: "andra", count: 12 });
     expect(screen.getByText("Belum ada proyek yang cocok")).toBeInTheDocument();
     expect(screen.getByText("12 proyek aktif")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Hapus pencarian" })).toHaveAttribute(
+      "href",
+      "/w/ws/projects",
+    );
+  });
+
+  it("F-07 shows the no-match state, not the empty tab, when only a filter matches nothing", () => {
+    renderScreen([], {
+      count: 12,
+      filter: { ...FILTER_PROPS.filter, statuses: ["BOOKED"] },
+    });
+    expect(screen.getByText("Belum ada proyek yang cocok")).toBeInTheDocument();
+    expect(screen.queryByText("Belum ada proyek")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Hapus pencarian" })).toHaveAttribute(
       "href",
       "/w/ws/projects",

@@ -1,14 +1,15 @@
 # Verification report — Dashboard overview (F-26)
 
-Verified 2026-10-18 on `staging` at `ada1e321` (the F-26 commits from `d80c4689` to `ada1e321`). Command: `/sdv:verify-feature dashboard-overview`. Status: **IN PROGRESS** — one acceptance criterion has no evidence (AC-DASH-019), so nothing is left unrecorded but the feature is not `DONE` yet.
+Verified 2026-10-18 on `staging` at `ada1e321` (the F-26 commits from `d80c4689` to `ada1e321`), plus the AC-DASH-019 test added the same day. Command: `/sdv:verify-feature dashboard-overview`. Status: **DONE** — every active acceptance criterion has passing evidence, and nothing blocking remains.
 
 ## Evidence
 
 | Check | Result |
 |---|---|
 | `pnpm typecheck` (`next typegen && tsc --noEmit`) | pass, exit 0 |
-| `eslint` on the dashboard folders, the metric patterns and the dashboard reader | pass, exit 0 |
-| Related unit tests (`src/features/booking`, `src/composition/{booking,workspace}`, dashboard screen, metric patterns, data table, metric delta, project menu host) | 189 files, 918 tests pass |
+| `eslint` on the dashboard folders, the metric patterns, the dashboard reader and the use-case test | pass, exit 0 |
+| Related unit tests (`src/features/booking`, `src/composition/{booking,workspace}`, dashboard screen, metric patterns, data table, metric delta, project menu host) | 189 files, 918 tests pass (before the AC-DASH-019 test) |
+| AC-DASH-019 test (`load-dashboard-overview.test.ts`) and `src/app/error.test.tsx` | 8 of 8 pass, including the retry test (AC-FND-010) |
 | Integration `tests/integration/booking/dashboard-overview-reader.test.ts` | 12 of 12 pass |
 | Owner manual check (1440, tablet, 390; mutating journeys: confirm a draft, row-menu actions) | reported by the Owner as done, 2026-10-18; not automated and not in this report's run |
 | E2E `tests/e2e/dashboard-overview/overview.spec.ts` | not re-run here (needs `pnpm dev` and the database); last recorded run 7 of 7 in [build notes](build-notes.md) |
@@ -23,7 +24,7 @@ Active criteria: AC-DASH-001…003, 018, 020…027, 029…037. AC-DASH-004…017
 | 002 checklist without a project | pass | e2e (fresh Owner); dashboard-screen test |
 | 003 only this workspace's data | pass | integration reader test |
 | 018 language | pass | unit (copy catalogue) |
-| 019 read error shows the error page | **no evidence** | not tested. The flow has no catch of its own (`dashboard-overview-flow.ts:14`), so errors reach the app error boundary `src/app/error.tsx`. Whether that is the owner error page with retry is not confirmed |
+| 019 read error shows the error page | pass | use-case test: a failed read rejects with no partial overview; `src/app/error.test.tsx` covers the page and its retry. The flow has no catch of its own (`dashboard-overview-flow.ts:14`), so the error reaches `src/app/error.tsx`, the only error page in the app |
 | 020 accessibility (axe, keyboard, names) | pass | e2e axe desktop and phone; keyboard and name checks |
 | 021 header and New project | pass | unit |
 | 022 new projects | pass | integration |
@@ -44,7 +45,7 @@ Active criteria: AC-DASH-001…003, 018, 020…027, 029…037. AC-DASH-004…017
 
 ## Deviations and open items
 
-- **AC-DASH-019 has no test.** This blocks `DONE`. A small test that makes the read fail and asserts the error page with retry would close it.
+- **AC-DASH-019 wording.** The AC says "the existing owner error page with retry". No owner-specific error page exists; the owner routes use the app-wide `src/app/error.tsx`, which has the retry button. Recorded here as the existing page, not a new one.
 - **AC-DASH-031** is covered only by the AC-DASH-029 case, not by its own test. Non-blocking.
 - **Build notes name 7 e2e cases; the handoff said 5/5.** The build notes are the later record. Non-blocking.
 - **R-1 date order** is now the design order (`Sun 18 Oct, 07:00`), recorded in [build notes](build-notes.md). The spec and AC-DASH-027 match this.
@@ -52,4 +53,4 @@ Active criteria: AC-DASH-001…003, 018, 020…027, 029…037. AC-DASH-004…017
 
 ## Next
 
-Add the AC-DASH-019 test (or accept it as a recorded deviation, Owner decision). Then set F-26 to `DONE` and run `/sdv:handoff`.
+Run `/sdv:handoff` to refresh `HANDOFF.md`, then `/sdv:ship dashboard-overview` when the Owner wants a deploy.

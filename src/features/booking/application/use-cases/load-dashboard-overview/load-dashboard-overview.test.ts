@@ -87,4 +87,15 @@ describe("loadDashboardOverview (AC-DASH-003, 022…027, 036, 037)", () => {
       expect.objectContaining({ search: null }),
     );
   });
+
+  it("rejects when a read fails, with no partial overview (AC-DASH-019)", async () => {
+    const { reader, listActiveProjects } = fakeReader();
+    const failure = new Error("connection reset");
+    vi.mocked(reader.readMetrics).mockRejectedValueOnce(failure);
+
+    await expect(
+      loadDashboardOverview(reader, context, { q: null, filter: null, now }),
+    ).rejects.toBe(failure);
+    expect(listActiveProjects).toHaveBeenCalledTimes(1);
+  });
 });

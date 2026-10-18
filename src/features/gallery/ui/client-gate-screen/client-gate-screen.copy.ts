@@ -14,7 +14,7 @@ export const CLIENT_GATE_SCREEN_COPY = {
     id: {
       title: "Buka galerimu",
       description:
-        "Galeri {projectTitle} dari {studioName}. Password dikirim fotografer bersama link ini.",
+        "Galeri {projectTitle} dari {studioName}. Kata sandi dikirim fotografer bersama link ini.",
     },
   },
 } as const;

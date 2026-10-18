@@ -1973,7 +1973,7 @@ These rows come from client gallery strings that have no deck row yet. The Engli
 | Client gallery client-copy: usageReview | {usage} of {limit} {unit} · {remaining} left | {usage} dari {limit} {unit} · sisa {remaining} |
 | Client gallery client-copy: usageSubmitted | {usage} {unit} submitted · waiting for your photographer | {usage} {unit} dikirim · menunggu fotografer |
 | Client gallery client-copy: usageLocked | {usage} {unit} · locked by your photographer | {usage} {unit} · dikunci fotografer |
-| Client gallery client-gate-screen: description | {projectTitle} gallery from {studioName}. Your photographer sent the password with this link. | Galeri {projectTitle} dari {studioName}. Password dikirim fotografer bersama link ini. |
+| Client gallery client-gate-screen: description | {projectTitle} gallery from {studioName}. Your photographer sent the password with this link. | Galeri {projectTitle} dari {studioName}. Kata sandi dikirim fotografer bersama link ini. |
 | Client gallery client-home-screen: greeting | Hello, {name} | Halo, {name} |
 | Client gallery client-home-screen: subtitleStart | Choose photos for your package, then send them to your photographer. | Pilih foto untuk paket Anda, lalu kirim ke fotografer. |
 | Client gallery client-home-screen: subtitlePartly | {sent} sent. Left to choose: {open}. | {sent} sudah dikirim. Tinggal {open}. |
@@ -1997,14 +1997,14 @@ These rows come from client gallery strings that have no deck row yet. The Engli
 | Client gallery client-home-screen: actionStart | Start choosing | Mulai memilih |
 | Client gallery client-home-screen: actionContinue | Continue choosing | Lanjut memilih |
 | Client gallery client-home-screen: actionView | View choices | Lihat pilihan |
-| Client gallery client-password-form: placeholder | Type the password from your photographer | Ketik password dari fotografer |
+| Client gallery client-password-form: placeholder | Type the password from your photographer | Ketik kata sandi dari fotografer |
 | Client gallery client-password-form: helper | Lowercase letters and numbers, for example mawar-4821. | Huruf kecil dan angka, contoh mawar-4821. |
-| Client gallery client-password-form: empty | Enter the password from your photographer. | Isi password dari fotografer. |
+| Client gallery client-password-form: empty | Enter the password from your photographer. | Isi kata sandi dari fotografer. |
 | Client gallery client-password-form: lockedBody | Try again in {minutes, plural, one {# minute} other {# minutes}}. | Coba lagi dalam {minutes, plural, other {# menit}}. |
-| Client gallery client-password-form: lockedHelper | The password isn’t checked until the time limit ends. | Password tidak diperiksa sampai batas waktu habis. |
-| Client gallery client-password-form: showPassword | Show password | Tampilkan password |
-| Client gallery client-password-form: hidePassword | Hide password | Sembunyikan password |
-| Client gallery client-password-form: failed | The password couldn’t be checked. Try again. | Gagal memeriksa password. Coba lagi. |
+| Client gallery client-password-form: lockedHelper | The password isn’t checked until the time limit ends. | Kata sandi tidak diperiksa sampai batas waktu habis. |
+| Client gallery client-password-form: showPassword | Show password | Tampilkan kata sandi |
+| Client gallery client-password-form: hidePassword | Hide password | Sembunyikan kata sandi |
+| Client gallery client-password-form: failed | The password couldn’t be checked. Try again. | Gagal memeriksa kata sandi. Coba lagi. |
 | Client gallery pick-note-sheet: title | Note for {fileName} | Catatan untuk {fileName} |
 | Client gallery pick-note-sheet: description | Optional. Write what you’d like your photographer to change in this photo. | Opsional. Tulis apa yang ingin diubah fotografer dari foto ini. |
 | Client gallery pick-note-sheet: pickedFor | Picked for {groupName} | Dipilih untuk {groupName} |
@@ -2090,8 +2090,8 @@ These rows come from client gallery strings that have no deck row yet. The Engli
 
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
-| Client access card | Client access / Link and password for the client. | Akses klien / Link dan password untuk klien. |
-| Access actions | Change link / Change password / Copy link / Copy password / Link / Password / Expires / Inactive | Ganti link / Ganti password / Salin link / Salin password / Link / Password / Kedaluwarsa / Tidak aktif |
+| Client access card | Client access / Link and password for the client. | Akses klien / Link dan kata sandi untuk klien. |
+| Access actions | Change link / Change password / Copy link / Copy password / Link / Password / Expires / Inactive | Ganti link / Ganti kata sandi / Salin link / Salin kata sandi / Link / Kata sandi / Kedaluwarsa / Tidak aktif |
 | Draft and archived notes | The client can’t open this link until the gallery is published. / The gallery is archived. The link can’t be opened or changed. | Klien belum bisa membuka link ini sampai galeri dipublikasikan. / Galeri diarsipkan. Link tidak bisa dibuka dan tidak bisa diganti. |
 | Rotate-link confirmation | Change the gallery link? The old link will stop working. All shared links, including invoice links, will stop working. The password won’t change. Share the new link with the client. | Ganti link galeri? Link lama berhenti bekerja. Semua link yang sudah dibagikan, termasuk link invoice, tidak bisa dibuka lagi. Password tidak berubah. Bagikan link baru ke klien. |
 | Selection card | Client selections / See the client’s photo selections and lock them when finished. / The client chooses photos through the gallery. | Pilihan klien / Lihat pilihan foto klien dan kunci setelah selesai. / Klien memilih foto lewat galeri. |

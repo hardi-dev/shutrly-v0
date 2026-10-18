@@ -86,7 +86,7 @@ describe("GalleryLifecycle", () => {
     }
   });
 
-  it("AC-GAL-021 Ganti password opens with a proposal and rotates it", async () => {
+  it("AC-GAL-021 Ganti kata sandi opens with a proposal and rotates it", async () => {
     const rotatePasswordAction = vi.fn(() => Promise.resolve({ ok: true as const }));
     const proposeAction = vi.fn(() => Promise.resolve("melati-2759"));
     render(

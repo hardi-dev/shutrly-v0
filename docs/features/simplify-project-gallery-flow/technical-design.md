@@ -183,3 +183,14 @@ Leftover for iteration 6/7: gallery writer `publishFinalDelivery` keeps its name
 - *Beranda* always lists *Hasil akhir*: the unavailable meta, or a link to `/final` with the counts. `FinalReadyCard` and the DELIVERED greeting still follow *Tandai terkirim* (`finalDeliveryPublished`).
 - Copy: EN `finalReadyNoDate` uses an ICU plural; draft rows `actionStartDisabledHint` and `finalReadyStatus` are unused (no place in the design); `noPhotosTitle` is the existing `clientBrowse.emptyTitle`.
 - Checks: vitest on client home, browse, delivery and visibility pass; integration `client-access/home` and `secrets-sweep` pass. Committed with `--no-verify` after prettier and eslint on its 13 files, because the shared index held other agents' files. No screenshot taken.
+
+## Implementation record — iteration 9
+- 9.1: `tests/e2e/simplify-project-gallery-flow/flow.spec.ts` (9fb0b868) books a project, links the fixture folder, opens *Kirim link ke klien* and has the client sign in with the generated password and see the proofs; passes in about 40 s (AC-GFL-001, 007, 008, 013, 020, 021).
+- Old e2e specs moved to the booked gallery (b0e49f94, 36b87943, 7877a625, af05f10b, plus the smoke spec): `gallery-create.spec` removed; gallery-sync, client-access gate and journeys, locale journeys, the build smoke's client gallery and the real-Drive smoke book a project instead of create/publish, and J-06 uses *Tandai terkirim* and checks finished files before delivery (AC-GFL-017, 019).
+- Bug found by e2e and fixed (996dacb6): `createGroupForItem` still required `gallery.status = 'PUBLISHED'`, so an item added after booking got no selection group (BR-SEL-001). The client-access integration fixture wrote `PUBLISHED` galleries and hid it; it now writes none (84 integration tests pass).
+- Copy fix (d32c0ffd): the Indonesian access card said *Password*; it now says *kata sandi* (Owner decision).
+- Stale expectations that predate F-27 were fixed on the way: Beranda landing (F-23 R-7), the unknown-link page in English, the Drive subfolder *Edited*, *foto pilihan* instead of *proof*, a link helper that waited on a page-wide chip, a pre-hydration click, and tight timeouts on remote-database saves.
+- E2E results: fake Drive — flow, gallery-sync, client journeys pass; real Drive (`GALLERY_SMOKE_FOLDER_URL`) — gate, owner-language gallery, both locale journeys, build-smoke client gallery pass; real-Drive smoke (link, sync, preview, close via expiry today, reopen) passes in 45 s.
+- 9.2: F-09 and F-10 spec and acceptance criteria carry a superseded-by-F-27 note; feature map F-27 → BUILT.
+- Visual check: partial. The flow-spec screenshot of the gallery page was compared with the design and caught the *Password* wording; no full desktop/phone screenshot pass against every export was done.
+- 9.3 (migration 0023) is not done: it waits for the Owner after the F-27 code is on staging.

@@ -160,8 +160,8 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 - Criteria: all AC-GFL; technical-design › *Testing strategy*, D-12.
 - Code to follow: `tests/e2e/` existing gallery and client-access specs.
 
-- [ ] **9.1** `tests/e2e/simplify-project-gallery-flow/flow.spec.ts`: book → gallery exists → link fixture → share dialog shows message → client signs in with the password (AC-GFL-001, 008, 013, 021).
-- [ ] **9.2** Update superseded docs: F-09 and F-10 specs/AC get a header note pointing at F-27 and ADR-028 for publish, archive, delete draft, A-17, A-23; feature map F-27 → BUILT.
+- [x] **9.1** `tests/e2e/simplify-project-gallery-flow/flow.spec.ts`: book → gallery exists → link fixture → share dialog shows message → client signs in with the password (AC-GFL-001, 008, 013, 021).
+- [x] **9.2** Update superseded docs: F-09 and F-10 specs/AC get a header note pointing at F-27 and ADR-028 for publish, archive, delete draft, A-17, A-23; feature map F-27 → BUILT.
 - [ ] **9.3** **Owner gate:** after the F-27 code is on staging, generate `0023_drop_gallery_status.sql` (drop `status`, `published_at`, `published_by`, `archived_at`, `archived_by`, `expiry_days`), review, commit, migrate, report.
 - [ ] Commits: `test(e2e): book, share and open a gallery`, `docs(gallery): point superseded rules at f-27`, `feat(db): drop gallery status columns`.
 

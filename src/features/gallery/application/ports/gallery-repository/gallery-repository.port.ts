@@ -32,6 +32,8 @@ export interface GalleryCreateWriter {
   readonly insert: (gallery: NewGallery) => Promise<"CREATED" | "ALREADY_EXISTS">;
   /** True when the workspace source exists and is active (BR-SRC-006). */
   readonly isWorkspaceSourceActive: (workspaceSourceId: string) => Promise<boolean>;
+  /** Creates one OPEN selection group per selection item of the gallery's project (BR-SEL-001). */
+  readonly createSelectionGroups: (galleryId: string) => Promise<number>;
   /** Links the first folder of the gallery inserted in this transaction (Revision OT #3). */
   readonly insertSource: (
     galleryId: string,

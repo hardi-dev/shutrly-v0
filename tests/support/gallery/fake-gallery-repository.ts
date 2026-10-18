@@ -32,6 +32,8 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
   /** Folders linked while creating a gallery (Revision OT #3). */
   readonly linkedFolders: (NewGallerySource & { galleryId: string })[] = [];
   readonly photos: (GalleryPhotoRecord & { galleryId: string; workspaceId: string })[] = [];
+  /** The galleries whose selection groups were created, in order. */
+  readonly selectionGroups: string[] = [];
 
   addProject(project: StoredProject): void {
     this.projects.push(project);
@@ -92,6 +94,10 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
       },
       isWorkspaceSourceActive: async (workspaceSourceId: string) =>
         this.activeWorkspaceSources.has(workspaceSourceId),
+      createSelectionGroups: async (galleryId: string) => {
+        this.selectionGroups.push(galleryId);
+        return 1;
+      },
       insertSource: async (galleryId: string, source: NewGallerySource) => {
         this.linkedFolders.push({ ...source, galleryId });
         return { sourceId: `source-${String(this.linkedFolders.length)}` };

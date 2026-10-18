@@ -6,7 +6,7 @@
   - 15 frames pasted: from `client-access.pen` `HT8V6`, `iGwTx`, `r71J5`, `QUSVb`, `jwDqh`, `YcDEU`, `w7R5h`, `LxqJO`; from `gallery.pen` `qj2c9`, `skcOw`, `OU5yj`, `yeXEI`, `u50YVM`, `SKq3v`, `ZiJzF`.
   - **Deviation, Owner-approved 2026-10-18:** pasting across files detached every library instance into plain frames. All ~10,000 token references were remapped from `$3:` / `$r:` to `$Y:` through MCP (0 old prefixes, 0 unknown tokens afterwards), so colours, spacing and type still follow the library, but later library component changes don't reach these frames. They exist only for this feature's design and exports.
   - The two source files were left unchanged (the temporary copy frames were reverted with `git restore`).
-- **Exports:** 23 HTML exports in [`exports/`](exports/) (html-tailwind, through Pencil MCP), one per state frame, named `<screen>-<state>-<device>-<frameId>.html`; photos load from Unsplash URLs, no local assets.
+- **Exports:** 27 HTML exports in [`exports/`](exports/) (html-tailwind, through Pencil MCP), one per state frame, named `<screen>-<state>-<device>-<frameId>.html`; photos load from Unsplash URLs, no local assets.
 - **Export index:** `python3 scripts/sdv/index-exports.py simplify-project-gallery-flow` wrote [`exports/INDEX.md`](exports/INDEX.md): 12 states, every file matched.
 - **Rules:** `docs/design-system/token-usage.md` v3.1 (APPROVED).
 - **Direction:** change only what F-27 changes. Start from the current frames — F-09 [gallery.pen](../gallery/gallery.pen) and F-10 [client-access.pen](../client-access/client-access.pen) (gallery page `HT8V6` / `iGwTx`, *Akses klien* `zMo79` / `DIPEh`) — and keep their structure, components and copy, minus the gallery status.
@@ -21,6 +21,7 @@ All F-27 frames sit left of the library boards (x < 0). Desktop frames are 1440 
 | Dialogs (D) | 2600 |
 | Project pages and Galeri card board (P) | 4000 |
 | Client (C) | 6400 |
+| Share dialog (K) | 8000 |
 
 ### Gallery page (`/projects/[id]/gallery`)
 | # | State | Desktop | Phone | AC |
@@ -49,6 +50,14 @@ All F-27 frames sit left of the library boards (x < 0). Desktop frames are 1440 
 |---|---|---|---|---|
 | C1 | *Beranda* before any photo: *Semua foto* says the photographer hasn't added photos yet; groups at 0, *Mulai memilih* disabled | `Iut8G` | `loSnK` | AC-GFL-009 |
 | C2 | *Semua foto* with no photos (the F-10 empty state, count 0) | `EMw7t` | `maNA0` | AC-GFL-009 |
+
+### Share dialog (Owner 2026-10-18: a modal on desktop, a bottom sheet on phones, not a page)
+| # | State | Desktop | Phone | AC |
+|---|---|---|---|---|
+| K1 | *Kirim link galeri*: *Kepada*, the rendered `GALLERY_SHARE` message in the preview bubble, password note, *Ubah template*; *Salin pesan* + *Buka WhatsApp* | `g55bdZ` | `ttcfb` | AC-GFL-021, 022, 023 |
+| K2 | Client without a WhatsApp number: Alert, *Tambah nomor WhatsApp*, *Buka WhatsApp* disabled | `Ca2HG` | `a6CB4A` | AC-GFL-024 |
+
+The dialogs sit over the F-09 gallery frame used by D1–D3. The preview bubble follows F-03's message preview (`communications/ui/message-preview`). The refused state (AC-GFL-025) uses the gallery dialogs' error pattern and isn't drawn.
 
 ### *Kirim link ke klien* (Owner design review 2026-10-18, intent D-11)
 Primary button with the `send` icon, a copy of the library Button/Primary/MD. Shown where BR-GAL-010 holds: G2 and the P4/P7 pages, board states P3 and P4. Hidden in G1, G3, G4 and board states P1, P2, P5, P6. Placement (Owner design review 2026-10-18): on the *Galeri* card, last in the header actions, after *Kelola galeri* (desktop), full width below the card content (phones); on the gallery page, in the page header after the ⋯ menu (desktop) and in the sticky action bar (phones). *Akses klien* keeps *Ganti link* and *Ganti password* as in F-10. The F-09 gallery frames behind D1–D3 keep their old header and don't show it. AC-GFL-020.

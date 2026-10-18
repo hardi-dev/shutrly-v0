@@ -36,6 +36,8 @@ Evidence: the gallery status drives about 60 source files (`src/features/gallery
 | D-8 | Projects already booked without a gallery | Agent default (no users yet): the migration creates their galleries, so every `BOOKED`-or-later project has one. |
 | D-9 | *Publikasikan hasil akhir* (added in design review) | Removed too. `EDITED` / `PRINT` files are visible to the client as soon as a sync finds them (BR-DEL-002). |
 | D-11 | Where the Owner shares the link (added in design review) | A *Kirim link ke klien* button on the project's *Galeri* card and in the gallery page header, besides the project menu (BR-GAL-010). |
+| D-12 | The share action itself (found while planning: F-15 is not built) | Built in F-27 for `GALLERY_SHARE` only: a share dialog (modal on desktop, bottom sheet on phones; Owner 2026-10-18, not a page) that renders the workspace's template (F-03), *Salin pesan* and *Buka WhatsApp*. The other F-15 messages stay in F-15. |
+| D-13 | Message language | The Owner's active language (BR-L10N-006 exception). |
 | D-10 | How a project reaches `DELIVERED` without that publish | A manual Owner step, *Tandai terkirim*, in the project header like the other status steps; it needs at least one finished file (BR-DEL-003). |
 
 ## Affected users and systems

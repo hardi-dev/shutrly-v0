@@ -110,6 +110,33 @@ When the Owner opens the project page and the gallery page
 Then the *Galeri* card and the gallery page header each show *Kirim link ke klien*, which opens the same `GALLERY_SHARE` message preview as the project menu
 And given a gallery with no folder, expired, or on a cancelled project, neither place shows it.
 
+## Share dialog
+**AC-GFL-021 — The share dialog renders the template** (BR-GAL-010, BR-MSG-003, BR-MSG-006, BR-L10N-006)
+Given a booked project for *Rina* with a linked folder, password `mawar-4821` and the default `GALLERY_SHARE` template, and the Owner's active language is Indonesian
+When the Owner selects *Kirim link ke klien*
+Then the share dialog (modal on desktop, bottom sheet on phones) shows *Rina*, her WhatsApp number, and the Indonesian template rendered with the project title, brand name, gallery link and `mawar-4821`
+And with English active, the English content is rendered.
+
+**AC-GFL-022 — *Buka WhatsApp* builds the deep link** (BR-MSG-001, BR-MSG-004, ADR-006)
+Given the share dialog of AC-GFL-021
+When the Owner selects *Buka WhatsApp*
+Then a new tab opens `https://wa.me/6281234567890?text=` followed by the URL-encoded message, nothing is sent by Shutrly, and no log line contains the password or the link.
+
+**AC-GFL-023 — *Salin pesan*** (BR-MSG-001)
+Given the share dialog
+When the Owner selects *Salin pesan*
+Then the rendered message is on the clipboard and a toast confirms it.
+
+**AC-GFL-024 — Client without a WhatsApp number** (BR-CLI-002)
+Given the client has no WhatsApp number
+When the Owner opens the share dialog
+Then an Alert says so, *Buka WhatsApp* is disabled, *Salin pesan* works, and after adding a number through *Tambah nomor WhatsApp* the dialog shows it and *Buka WhatsApp* is enabled.
+
+**AC-GFL-025 — Share only when sharing is allowed** (BR-GAL-010, BR-WS-003)
+Given a screen opened before the folder was removed, the gallery expired or the project was cancelled
+When the Owner opens the share dialog
+Then the server refuses, the dialog shows *Link galeri belum bisa dikirim* with *Tutup*, and no message or password is returned; another workspace's project id is not found.
+
 ## Seed
 **AC-GFL-018 — The demo seed runs end to end** (ADR-028)
 Given a new Owner email

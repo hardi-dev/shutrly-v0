@@ -4,7 +4,7 @@
 
 Raw Pencil HTML exports, one complete frame per file. Read only the states your task names,
 one file at a time. *Design note* and *AC* come from [design.md](../design.md).
-Total: 23 files, 1796 KB.
+Total: 27 files, 2227 KB.
 
 ## dialog
 
@@ -28,6 +28,13 @@ Total: 23 files, 1796 KB.
 | State | Desktop | Mobile | Design note | AC |
 |---|---|---|---|---|
 | `kartu-galeri-board` | [`M4XBCN`](kartu-galeri-board-desktop-M4XBCN.html) · 66 KB | — | P1–P6 | AC-GFL-004, 007, 012, 013, 016 |
+
+## kirim
+
+| State | Desktop | Mobile | Design note | AC |
+|---|---|---|---|---|
+| `kirim-link-preview` | [`g55bdZ`](kirim-link-preview-desktop-g55bdZ.html) · 135 KB | [`ttcfb`](kirim-link-preview-mobile-ttcfb.html) · 75 KB | K1 | AC-GFL-021, 022, 023 |
+| `kirim-link-tanpa-nomor` | [`Ca2HG`](kirim-link-tanpa-nomor-desktop-Ca2HG.html) · 139 KB | [`a6CB4A`](kirim-link-tanpa-nomor-mobile-a6CB4A.html) · 80 KB | K2 | AC-GFL-024 |
 
 ## klien
 

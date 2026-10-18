@@ -1,7 +1,7 @@
 # Feature: Simplify project and gallery creation
 
 ID: F-27 · Slug: `simplify-project-gallery-flow`
-Status: DESIGNED (2026-10-18) · Intent: [intent.md](intent.md) (ACCEPTED 2026-10-18) · Journeys: J-03 (book a project), J-04 (Owner half: link Drive folder, share gallery)
+Status: PLANNED (2026-10-18) · Intent: [intent.md](intent.md) (ACCEPTED 2026-10-18) · Journeys: J-03 (book a project), J-04 (Owner half: link Drive folder, share gallery)
 Changes: F-07 `projects` (booking creates the gallery), F-09 `gallery` (no status, no *Buat galeri*, publish, archive or delete), F-10 `client-access` (availability, A-17, A-23, menu item). Rules: BR-GAL-001, 002, 004, 005, 009, 010; BR-ACC-001; BR-SEL-001; BR-PRJ-004, 010; BR-DEL-002, 003. Architecture: [ADR-028](../../architecture/decisions/ADR-028-gallery-without-stored-status.md).
 
 ## Goal
@@ -30,7 +30,16 @@ As an Owner, I want a booked project to come with its gallery ready, so I only p
 5. From the moment a folder is linked, *Kirim link ke klien* shows on the project's *Galeri* card and in the gallery page header, and *Kirim link galeri* in the project menu (BR-GAL-010). It builds the `GALLERY_SHARE` message with the password filled in (BR-MSG-003), unchanged from F-10.
 6. The client opens `/g/{token}`, enters the password, and sees the gallery (BR-ACC-001). There is no publish step anywhere.
 
+## Main Flow — share the gallery link (D-12)
+1. The Owner selects *Kirim link ke klien* (project *Galeri* card, gallery page header) or *Kirim link galeri* (project menu). Shown only when BR-GAL-010 holds.
+2. The share dialog opens: a modal on desktop, a bottom sheet on phones (Owner 2026-10-18). The server verifies the workspace and BR-GAL-010, loads the workspace's `GALLERY_SHARE` template, and renders it in the Owner's active language (BR-L10N-006 exception) with `clientName`, `projectTitle`, `brandName`, `galleryUrl` and `galleryPassword` (decrypted server-side, BR-MSG-003).
+3. The dialog shows *Kepada* (client name and WhatsApp number), the rendered text in the message preview, the password note, *Ubah template*, and the actions *Salin pesan* and *Buka WhatsApp*.
+4. *Buka WhatsApp* opens `https://wa.me/<number>?text=<message>` in a new tab (BR-MSG-001, ADR-006). *Salin pesan* copies the text and shows a toast. Shutrly records nothing about the message (BR-MSG-001).
+
 ## Alternative Flows
+- **Client without a WhatsApp number:** an Alert says so; *Buka WhatsApp* is disabled; *Tambah nomor WhatsApp* opens the F-06 client edit dialog; after saving, the share dialog shows the number (A-8). *Salin pesan* still works.
+- **BR-GAL-010 fails when the dialog asks the server** (a stale screen: folder removed, gallery expired, project cancelled): the dialog shows *Link galeri belum bisa dikirim* with the reason and only *Tutup* (A-9).
+- **Ubah template** opens the F-03 editor for `GALLERY_SHARE` in the same tab; the dialog renders the saved template the next time it opens.
 - **Draft project:** no gallery exists. The *Galeri* card says the gallery is created when the project is booked (as today, without *Buat galeri*).
 - **Draft deleted:** nothing to delete on the gallery side (BR-PRJ-010).
 - **Client opens the link before photos arrive:** after the password, the client sees an empty state (*Photos aren't ready yet*) instead of the photo grid; selection groups exist but nothing can be picked (intent D-5).
@@ -50,6 +59,7 @@ As an Owner, I want a booked project to come with its gallery ready, so I only p
 | Gallery creation fails while booking or confirming | The whole booking is rolled back; F-07's error message; the project stays as it was |
 | Expiry duration not in the preset list, or a date in the past other than today | Refused with a field error (A-1, A-2) |
 | Any gallery change (sync, source, expiry, password) on a `CANCELLED` project | Refused; the page is read-only (BR-GAL-009) |
+| Share request for another workspace's project, or a forged id | Not found (BR-WS-003) |
 | Removing a folder whose photos a client picked | Refused, as today (BR-GAL-009) |
 | *Tandai terkirim* without a synced finished file, or from another status | Refused with the reason; the button is disabled with a hint (BR-DEL-003) |
 | Client opens an expired gallery or one of a cancelled project | The neutral unavailable page, same status code as an unknown token (F-10 A-3, unchanged) |
@@ -62,7 +72,7 @@ As an Owner, I want a booked project to come with its gallery ready, so I only p
 - Client gallery: the new empty state when there are no visible photos.
 
 ## Business Rules
-BR-GAL-001, BR-GAL-002, BR-GAL-003, BR-GAL-004, BR-GAL-005, BR-GAL-006, BR-GAL-009, BR-GAL-010, BR-ACC-001, BR-SEL-001, BR-PRJ-004, BR-PRJ-010, BR-DEL-002, BR-DEL-003, BR-MSG-003.
+BR-MSG-001, BR-MSG-003, BR-MSG-004, BR-MSG-006, BR-CLI-002, BR-L10N-006 (exception), BR-GAL-001, BR-GAL-002, BR-GAL-003, BR-GAL-004, BR-GAL-005, BR-GAL-006, BR-GAL-009, BR-GAL-010, BR-ACC-001, BR-SEL-001, BR-PRJ-004, BR-PRJ-010, BR-DEL-002, BR-DEL-003, BR-MSG-003.
 
 ## Assumptions (low-risk, reversible — confirm or change anytime)
 - **A-1 Duration presets:** 7, 14, 30, 60 and 90 days (intent open question). Changing the list is a copy and constant change.
@@ -70,6 +80,10 @@ BR-GAL-001, BR-GAL-002, BR-GAL-003, BR-GAL-004, BR-GAL-005, BR-GAL-006, BR-GAL-0
 - **A-3 Status chip replacement:** the Owner sees *Kedaluwarsa* when expired, *Ditutup* on a cancelled project, and no chip otherwise (intent open question).
 - **A-4 Client empty state** is one line of copy in EN and ID, inside the existing gallery shell; no new design frame beyond the state.
 - **A-6 *Tandai terkirim* placement:** the project header step, like *Selesai pemotretan*, from `BOOKED`, `SHOOTING` and `POST_PROCESSING` (the statuses BR-DEL-003 already allowed); the `FINAL_DELIVERY` message (*Kirim hasil akhir*) stays in the menu on `DELIVERED`.
+- **A-7 Share dialog:** no route; the dialog loads its message through a server action when it opens, so the password is fetched only on demand.
+- **A-8 *Tambah nomor WhatsApp*:** reuses the F-06 edit-client dialog over the share dialog; no new client screen.
+- **A-9 Refused share:** the dialog's error state reuses the gallery dialogs' error pattern; it is not drawn separately.
+- **A-10 Rendering:** the message is rendered on the server per request and never stored or logged; the server action's response is never cached (BR-MSG-003/004, C-103).
 - **A-5 Migration order:** release 1 ships code that ignores `status`, `published_at`, `archived_at` and `expiry_days` and creates galleries on booking, plus the backfill script; release 2 drops the columns and their checks (ADR-028 point 4, ADR-027).
 
 ## Dependencies
@@ -92,6 +106,8 @@ BR-GAL-001, BR-GAL-002, BR-GAL-003, BR-GAL-004, BR-GAL-005, BR-GAL-006, BR-GAL-0
 | FC-004 | BR-GAL-002 let the Owner keep, regenerate or replace the proposed password at creation; there is no creation dialog now. | BR-GAL-002, BR-GAL-003 | Shutrly generates it; the Owner replaces it through rotation. BR-GAL-002 amended. | RESOLVED |
 | FC-005 | ADR-019 point 5 bumps `contentVersion` on publish and archive, point 6 cleans up "archived" galleries. | ADR-019 | Amended by ADR-028 point 5. | RESOLVED |
 | FC-007 | Removing *Publikasikan hasil akhir* changes BR-DEL-002/003 and BR-PRJ-004, beyond the intent's out-of-scope line on final delivery. | intent › Out of scope, BR-DEL-002, BR-DEL-003 | Owner widened the scope in design review (intent D-9, D-10); rules and intent updated first. | RESOLVED |
+| FC-008 | The share dialog builds part of F-15 (`whatsapp-share`, TODO). | feature map F-15, intent out of scope | Owner, 2026-10-18 (D-12): build the `GALLERY_SHARE` share dialog in F-27; other message types stay in F-15. | RESOLVED |
+| FC-009 | Message language from the Owner's active language contradicts BR-L10N-006 ("dashboard language does not imply recipient language") and F-22's AC-L10N-010 note in `render-template-for-recipient`. | BR-L10N-006 | Owner, 2026-10-18 (D-13): an exception for WhatsApp share messages, recorded in BR-L10N-006. `render-template-for-recipient` still takes the language as an argument; the share flow passes the Owner's request locale explicitly. | RESOLVED |
 | FC-006 | F-09 and F-10 specs and acceptance criteria still describe publish, archive, delete draft, A-17 and A-23. | F-09 spec/AC, F-10 spec/AC | Higher authority (BR, ADR-028) now wins; this spec supersedes those parts, and the technical design lists each superseded AC so the build updates or removes its tests. | RESOLVED |
 
 ## Open Questions / SPEC GAPS

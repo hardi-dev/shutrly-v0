@@ -1560,6 +1560,34 @@ A failed multi-step sync may have already saved earlier steps. These error messa
 | Save failure title | Changes couldn’t be saved | Perubahan belum tersimpan |
 | Save failure body | Check your connection, then try again. | Cek koneksi, lalu coba lagi. |
 
+### 10.9 Share gallery link — share dialog and entry points (F-27 iteration 6)
+
+Source: `gallery-share-dialog.copy.ts` (`galleryShare`), Owner-approved in `copy-draft.md` iteration 6. Owner decisions of 2026-10-18: `{name}` in the `GALLERY_SHARE` message is the client’s first name, and a failed copy shows the *copyFailed* toast. The project menu rows are in §10.9 too; the gallery card and page button reuse the §10.1 *Kirim link ke klien* row.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Dialog title (K1, K2) | Send link to client | Kirim link ke klien |
+| Dialog description | Check the message, then send it from WhatsApp. Shutrly doesn’t send anything itself. | Periksa pesannya, lalu kirim dari WhatsApp. Shutrly tidak mengirim apa pun sendiri. |
+| Recipient label | To | Kepada |
+| Recipient value | {name} · {phone} | {name} · {phone} |
+| Recipient without number | {name} · no WhatsApp number | {name} · belum ada nomor WhatsApp |
+| Password note (K1) | The gallery password is in this message. Anyone who gets it can open the gallery. | Kata sandi galeri ikut di pesan ini. Siapa pun yang menerima pesan ini bisa membuka galeri. |
+| Edit template link | Edit template | Ubah template |
+| Copy message button | Copy message | Salin pesan |
+| Copied toast title and body | Message copied / Paste it into WhatsApp. | Pesan disalin / Tempel di WhatsApp. |
+| Copy failed toast (Owner 2026-10-18) | Couldn’t copy the message. Copy it from the message box. | Pesan tidak bisa disalin. Salin manual dari kotak pesan. |
+| Open WhatsApp button | Open WhatsApp | Buka WhatsApp |
+| No-number alert title (K2) | {name} doesn’t have a WhatsApp number yet | {name} belum punya nomor WhatsApp |
+| No-number alert body (K2) | Add a number in the client’s details to open WhatsApp. You can still copy the message. | Tambahkan nomor di data klien untuk membuka WhatsApp. Kamu tetap bisa menyalin pesannya. |
+| Add number action (K2) | Add WhatsApp number | Tambah nomor WhatsApp |
+| Loading state | Preparing the message… | Menyiapkan pesan… |
+| Error state title | The gallery link can’t be sent yet | Link galeri belum bisa dikirim |
+| Error state body | Try again in a moment. The gallery can’t be shared right now. | Coba lagi sebentar lagi. Galeri belum bisa dibagikan saat ini. |
+| Close (error state) | Close | Tutup |
+| Project ⋯ menu: share item (AC-GFL-013, 014, 020) | Send link to client | Kirim link ke klien |
+| Project ⋯ menu: Tandai terkirim item (A-6) | Mark as delivered | Tandai terkirim |
+| Project ⋯ menu: Tandai terkirim hint, no finished file (AC-GFL-017) | No final files are synced yet. Sync the final-files folder first. | Belum ada hasil akhir yang tersinkron. Sinkronkan folder hasil akhir dulu. |
+
 ## 11. Message templates and WhatsApp defaults
 
 **Pages:** `{workspace}/message-templates` and `{workspace}/message-templates/{templateType}`. Sources: communications UI copy and `default-templates.ts`. There are five logical templates; paired languages do not create ten template types. Real sharing remains a future feature and always requires the Owner’s action.
@@ -1918,7 +1946,7 @@ These rows come from client gallery strings that have no deck row yet. The Engli
 | Client gallery client-browse-screen: unavailableTitle | Photos can’t be shown yet | Foto belum bisa ditampilkan |
 | Client gallery client-browse-screen: unavailableBody | We couldn’t get the photos right now. | Kami tidak bisa mengambil foto saat ini. |
 | Client gallery client-browse-screen: emptyTitle | No photos yet | Belum ada foto |
-| Client gallery client-browse-screen: emptyBody | Your photographer hasn’t added photos here yet. | Fotografer belum menambahkan foto di sini. |
+| Client gallery client-browse-screen: emptyBody (changed in F-27 iteration 7, was “Your photographer hasn’t added photos here yet.”) | The photographer hasn’t added photos to this gallery yet. Try again later. | Fotografer belum menambahkan foto ke galeri ini. Coba lagi nanti. |
 | Client gallery client-browse-screen: searchEmptyTitle | No photos “{text}” | Tidak ada foto “{text}” |
 | Client gallery client-browse-screen: searchEmptyBody | Try another file name. | Coba nama file lain. |
 | Client gallery client-browse-screen: loadingMore | Loading more photos… | Memuat foto lainnya… |
@@ -1952,16 +1980,18 @@ These rows come from client gallery strings that have no deck row yet. The Engli
 | Client gallery client-home-screen: subtitleAllSent | All selections are sent. Your photographer will let you know. | Semua pilihan sudah dikirim. Fotografer akan mengabari Anda. |
 | Client gallery client-home-screen: subtitleDelivered | Your photos have been edited. | Foto Anda sudah selesai diedit. |
 | Client gallery client-home-screen: subtitleNoGroups | See all your photos. | Lihat semua foto Anda. |
+| Client gallery client-home-screen: subtitleNoPhotos (new, F-27 iteration 7; Owner-approved, C1 empty *Beranda*) | No photos yet · the photographer hasn’t added any. Try again later. | Belum ada foto · fotografer belum menambahkan foto. Coba lagi nanti. |
 | Client gallery client-home-screen: listJoin |  and  |  dan  |
 | Client gallery client-home-screen: finalReadyTitle | Final photos are ready | Hasil akhir siap |
 | Client gallery client-home-screen: finalReadyBody | {edited, plural, one {# edited photo} other {# edited photos}} and {print, plural, one {# print photo} other {# print photos}}. Download one at a time, several, or all. | {edited, plural, other {# foto edit}} dan {print, plural, other {# foto cetak}}. Unduh satu per satu, beberapa, atau semuanya. |
 | Client gallery client-home-screen: finalReadyAction | View & download | Lihat & unduh |
+| Client gallery client-home-screen: finalReadyNoDate (new, F-27 iteration 7; EN uses ICU plural, ID keeps the same wording with a plural wrapper; no delivery date) | {edited, plural, one {# edited photo} other {# edited photos}} · {print, plural, one {# print photo} other {# print photos}} | {edited, plural, other {# Foto edit}} · {print, plural, other {# Foto cetak}} |
 | Client gallery client-home-screen: photosTitle | Your photos | Foto Anda |
 | Client gallery client-home-screen: photosDescription | View all photos, then download the final files when they’re ready. | Lihat semua foto, lalu unduh hasil akhir saat sudah siap. |
 | Client gallery client-home-screen: photosDescriptionDelivered | View all preview photos from your session. | Lihat semua foto pratinjau dari sesi Anda. |
 | Client gallery client-home-screen: allPhotosMeta | {count, plural, one {# photo} other {# photos}} · browse and pick from previews | {count, plural, other {# foto}} · lihat-lihat dan pilih dari pratinjau |
 | Client gallery client-home-screen: allPhotosMetaNoGroups | {count, plural, one {# photo} other {# photos}} · browse previews | {count, plural, other {# foto}} · lihat-lihat pratinjau |
-| Client gallery client-home-screen: finalPendingMeta | Not available yet · appears here when your photos are edited. | Belum tersedia · muncul di sini setelah foto selesai diedit. |
+| Client gallery client-home-screen: finalUnavailable (replaces finalPendingMeta, F-27 iteration 7; *Hasil akhir* row when no finished file is visible yet) | Not available yet · it appears here once the photos are edited. | Belum tersedia · muncul di sini setelah foto selesai diedit. |
 | Client gallery client-home-screen: pickTitle | Choose photos | Pilih foto |
 | Client gallery client-home-screen: pickDescription | One row for each part of your package. Choose and send each part on its own. | Satu baris untuk tiap bagian paket Anda. Pilih dan kirim tiap bagian sendiri. |
 | Client gallery client-home-screen: actionStart | Start choosing | Mulai memilih |
@@ -2241,6 +2271,19 @@ These rows come from owner gallery strings that have no deck row yet. The Englis
 | P4 row, AC-GFL-006 | Delivered {when} · {edited} edited photos · {print} print photos | Terkirim {when} · {edited} Foto edit · {print} Foto cetak |
 | P4 status | Delivered | Terkirim |
 | No synced finished file | No final files are synced yet. Create a final-files subfolder in Drive, map it to a package item in Edit folder, then sync the gallery. | Belum ada hasil akhir yang tersinkron. Buat subfolder hasil akhir di Drive, petakan ke item paket lewat Edit folder, lalu sinkronkan galeri. |
+
+### 15.y Tandai selesai — DELIVERED to COMPLETED (restored in F-27 iteration 6)
+
+The iteration 5 draft removed these rows by mistake and reused the `delivery.complete*` keys for *Tandai terkirim*. The original approved wording is restored under new keys (`delivery.finish*`, `finishedToast`, `finishStaleToast`); the confirm has no body, because the original body described a publish that ADR-028 removed.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Header step on a DELIVERED project (`delivery.finish`) | Mark complete | Tandai selesai |
+| Confirm title (`delivery.finishTitle`) | Mark the project complete? | Tandai proyek selesai? |
+| Confirm description (`delivery.finishDescription`) | Project {title} will be marked Completed. | Proyek {title} akan berstatus Selesai. |
+| Confirm button | Mark complete | Tandai selesai |
+| Success toast (`delivery.finishedToast`) | Project marked complete | Proyek ditandai selesai |
+| Stale status toast (`delivery.finishStaleToast`) | The project status has changed. Reload the page. | Status proyek sudah berubah. Muat ulang halaman. |
 
 ## 16. Add-ons
 

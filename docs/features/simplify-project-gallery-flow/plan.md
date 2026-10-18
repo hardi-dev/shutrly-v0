@@ -119,10 +119,10 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 - Exports: `kirim-link-preview` desktop + mobile, `kirim-link-tanpa-nomor` desktop + mobile.
 - Code to follow: `src/features/communications/application/use-cases/render-template-for-recipient/`, `get-message-template/`, `src/features/communications/ui/message-preview/`, `src/composition/gallery/access-card-flow/` (client link reader, app URL), `src/features/gallery/application/use-cases/gallery-views/` (decrypt), `src/features/booking/ui/client-dialog/` (A-8), gallery dialogs (`gallery-dialog-shell`).
 
-- [ ] **6.1** Test first, then `composition/gallery/gallery-share-flow/`: `loadGalleryShareEntry` returns recipient, rendered text and `waUrl` or `NOT_SHAREABLE`; no logging of text or URL (AC-GFL-021, 022, 025).
-- [ ] **6.2** `features/gallery/ui/gallery-share-dialog/` (no booking import; *Tambah nomor WhatsApp* calls an `onAddNumber` prop, A-8): Modal on desktop, Bottom Sheet on phones; loading, error, K1, K2; *Salin pesan* (clipboard + toast), *Buka WhatsApp* (`<a target="_blank" rel="noopener noreferrer">`), *Ubah template* link to the F-03 editor, an app-level host renders the F-06 client dialog for `onAddNumber` and reloads the share data on save (AC-GFL-023, 024).
-- [ ] **6.3** Entry points: gallery card, gallery page header / action bar, project detail menu `SHARE_GALLERY`; the project page composition computes `canShareGallery` from the gallery card data and passes it to the menu host; list and dashboard rows pass false (AC-GFL-013, 014, 020, A-11).
-- [ ] **6.4** Fidelity pass against the four exports.
+- [x] **6.1** Test first, then `composition/gallery/gallery-share-flow/`: `loadGalleryShareEntry` returns recipient, rendered text and `waUrl` or `NOT_SHAREABLE`; no logging of text or URL (AC-GFL-021, 022, 025).
+- [x] **6.2** `features/gallery/ui/gallery-share-dialog/` (no booking import; *Tambah nomor WhatsApp* calls an `onAddNumber` prop, A-8): Modal on desktop, Bottom Sheet on phones; loading, error, K1, K2; *Salin pesan* (clipboard + toast), *Buka WhatsApp* (`<a target="_blank" rel="noopener noreferrer">`), *Ubah template* link to the F-03 editor, an app-level host renders the F-06 client dialog for `onAddNumber` and reloads the share data on save (AC-GFL-023, 024).
+- [x] **6.3** Entry points: gallery card, gallery page header / action bar, project detail menu `SHARE_GALLERY`; the project page composition computes `canShareGallery` from the gallery card data and passes it to the menu host; list and dashboard rows pass false (AC-GFL-013, 014, 020, A-11).
+- [x] **6.4** Fidelity pass against the four exports (dialog structure only; visual check pending iteration 9).
 - [ ] Commits: `feat(gallery): load the gallery share message`, `feat(gallery): share dialog`, `feat(projects): share gallery from the menu and cards`.
 
 **Done when** the loader and dialog tests pass and the dialog matches K1/K2 on both devices.
@@ -134,8 +134,8 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 - Exports: `klien-beranda-tanpa-foto`, `klien-semua-foto-tanpa-foto` (desktop and mobile).
 - Code to follow: `src/features/gallery/ui/client-home-screen/`, `client-browse-screen/`, `delivery-screen/`, `src/composition/gallery/client-gallery-flow/`.
 
-- [ ] **7.1** Client home with no visible photo: empty copy in *Semua foto*, *Mulai memilih* disabled (AC-GFL-009).
-- [ ] **7.2** *Hasil akhir* for the client lists synced finished files without a delivery date (AC-GFL-019).
+- [x] **7.1** Client home with no visible photo: empty copy in *Semua foto*, *Mulai memilih* disabled (AC-GFL-009).
+- [x] **7.2** *Hasil akhir* for the client lists synced finished files without a delivery date (AC-GFL-019).
 - [ ] Commit `feat(gallery): client gallery before photos and finished files once synced`.
 
 **Done when** client component tests pass.

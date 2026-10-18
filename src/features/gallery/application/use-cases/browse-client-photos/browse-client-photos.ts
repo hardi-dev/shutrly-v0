@@ -1,7 +1,6 @@
 import "server-only";
 
 import { clientListKey } from "@/features/gallery/domain/client-list-key/client-list-key";
-import { clientBrowseKind } from "@/features/gallery/domain/client-photo-visibility/client-photo-visibility";
 
 import type { ClientListCachePort } from "../../ports/client-list-cache/client-list-cache.port";
 import { browsePageSchema } from "../../schemas/browse-page/browse-page.schema";
@@ -59,9 +58,7 @@ export async function browseClientPhotos(
   input: unknown,
 ): Promise<ClientBrowsePageView> {
   const parsed = browseQuerySchema.safeParse(input);
-  const query = parsed.success
-    ? { ...parsed.data, kind: clientBrowseKind(parsed.data.kind, client.finalDeliveryPublished) }
-    : input;
+  const query = parsed.success ? parsed.data : input;
   const page = await readPage(deps, client, query);
   return {
     mode: page.mode,

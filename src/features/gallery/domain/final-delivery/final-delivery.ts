@@ -6,19 +6,15 @@ import type {
 } from "./final-delivery.types";
 
 /**
- * The gallery's reasons to refuse final delivery: no synced finished file, or a gallery that isn't
- * published (missing, draft, expired or archived) (BR-DEL-003, A-17, AC-DEL-002). Every reason is
- * returned, in the order the refusal dialog lists them.
- * @param facts - effective gallery status and the finished-file count
- * @returns the reasons, empty when the gallery side allows publishing
+ * The gallery's reasons to refuse marking final delivery: only a missing synced finished file,
+ * since a gallery has no state that blocks delivery (BR-DEL-003, BR-DEL-002, AC-GFL-017).
+ * @param facts - the finished-file count
+ * @returns NO_FINISHED_FILE when there is no finished file, otherwise an empty list
  */
 export function galleryDeliveryReasons(
   facts: GalleryDeliveryFacts,
 ): readonly FinalDeliveryReason[] {
-  const reasons: FinalDeliveryReason[] = [];
-  if (facts.finishedCount === 0) reasons.push("NO_FINISHED_FILE");
-  if (facts.status !== "PUBLISHED") reasons.push("GALLERY_NOT_PUBLISHED");
-  return reasons;
+  return facts.finishedCount === 0 ? ["NO_FINISHED_FILE"] : [];
 }
 
 /**

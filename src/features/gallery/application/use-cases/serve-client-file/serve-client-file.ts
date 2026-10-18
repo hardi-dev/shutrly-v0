@@ -29,7 +29,7 @@ export async function serveClientFile(
     isMissing: photo.missing,
     isSourceRemoved: photo.sourceRemoved,
   };
-  if (!isServableToClient(facts, client.finalDeliveryPublished)) return NOTHING;
+  if (!isServableToClient(facts)) return NOTHING;
   const file = await deps.provider.download({
     fileId: photo.externalFileId,
     resourceKey: photo.resourceKey,

@@ -51,19 +51,17 @@ describe("publishFinalDelivery (D-17, BR-DEL-003)", () => {
     expect(publish).not.toHaveBeenCalled();
   });
 
-  it("AC-DEL-002 refuses an expired gallery", async () => {
-    const { deps } = setup({ expiresAt: new Date("2026-10-01T00:00:00Z") });
-    expect(await publishFinalDelivery(deps, CONTEXT, "o", "p")).toEqual({
-      ok: false,
-      reasons: ["GALLERY_NOT_PUBLISHED"],
-    });
+  it("AC-GFL-017 an expired gallery does not block marking delivered", async () => {
+    const { deps, publish } = setup({ expiresAt: new Date("2026-10-01T00:00:00Z") });
+    expect(await publishFinalDelivery(deps, CONTEXT, "o", "p")).toEqual({ ok: true });
+    expect(publish).toHaveBeenCalledOnce();
   });
 
-  it("A-17 a project without a gallery gets both reasons", async () => {
+  it("AC-GFL-017 a project without a gallery gets only the finished-file reason", async () => {
     const { deps } = setup(null);
     expect(await publishFinalDelivery(deps, CONTEXT, "o", "p")).toEqual({
       ok: false,
-      reasons: ["NO_FINISHED_FILE", "GALLERY_NOT_PUBLISHED"],
+      reasons: ["NO_FINISHED_FILE"],
     });
   });
 });

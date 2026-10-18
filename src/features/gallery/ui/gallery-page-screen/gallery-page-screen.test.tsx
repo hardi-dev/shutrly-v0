@@ -64,10 +64,10 @@ describe("GalleryPageScreen", () => {
     expect(screen.queryByRole("button", { name: "Salin kata sandi" })).not.toBeInTheDocument();
   });
 
-  it("design shows the status and meta in the phone header block", () => {
+  it("AC-GFL-001 the phone header of an open gallery shows the meta line and no status chip", () => {
     stubViewport(true);
     render(<GalleryPageScreen workspaceId="ws-1" page={PAGE} actions={ACTIONS} />);
-    expect(screen.getByText("Dipublikasikan")).toBeInTheDocument();
+    expect(screen.queryByText("Dipublikasikan")).not.toBeInTheDocument();
     expect(screen.getByText("Belum ada folder · Tanpa kedaluwarsa")).toBeInTheDocument();
   });
 });

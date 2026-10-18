@@ -50,7 +50,9 @@ describe("GalleryPhotosSection", () => {
       <GalleryPhotosSection workspaceId="ws-1" page={PAGE} browseAction={vi.fn()} />,
     );
     expect(screen.getByText("8 foto pilihan (1 hilang) · 3 hasil akhir")).toBeInTheDocument();
-    expect(screen.getByText(/Terlihat oleh klien sekarang\./)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Terlihat oleh klien yang punya link dan kata sandi\./),
+    ).toBeInTheDocument();
     expect(container.querySelectorAll("img")).toHaveLength(6);
     expect(screen.getByText("Hilang")).toBeInTheDocument();
   });

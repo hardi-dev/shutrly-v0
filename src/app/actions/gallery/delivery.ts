@@ -9,7 +9,8 @@ import {
 
 const PROJECTS = "/w/[workspaceId]/projects";
 
-export async function publishFinalDeliveryAction(workspaceId: string, projectId: string) {
+/** Marks the project delivered from the header or the menu (AC-GFL-017); the refusal names what is missing. @param workspaceId - workspace id @param projectId - project id @returns undefined once written, or the refusal */
+export async function markDeliveredAction(workspaceId: string, projectId: string) {
   const result = await markDeliveredEntry(workspaceId, projectId);
   if (result === undefined) revalidatePath(PROJECTS, "layout");
   return result;

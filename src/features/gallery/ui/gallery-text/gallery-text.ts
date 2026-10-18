@@ -11,16 +11,15 @@ import {
 import type { GalleryTranslate } from "../gallery-copy/gallery-copy.types";
 import type { ExpiryFact, ExpiryFacts, MetaFacts } from "./gallery-text.types";
 
-const STATE_TONE: Readonly<Record<GalleryState, StatusChipProps["tone"]>> = {
-  OPEN: "success",
+const STATE_TONE: Readonly<Record<Exclude<GalleryState, "OPEN">, StatusChipProps["tone"]>> = {
   EXPIRED: "warning",
   CLOSED: "neutral",
 };
 
-/** Builds the Status Chip props for a gallery state (design.md › Layout). @param state - derived gallery state @returns tone, label and dot */
+/** Builds the Status Chip props for a gallery that is not open: expired or closed (design P5, P6). @param state - derived gallery state, never OPEN @returns tone, label and dot */
 export function galleryStatusChip(
   t: GalleryTranslate,
-  state: GalleryState,
+  state: Exclude<GalleryState, "OPEN">,
 ): Pick<StatusChipProps, "tone" | "label" | "hasDot"> {
   return { tone: STATE_TONE[state], label: t(GALLERY_STATUS_MESSAGE_KEY[state]), hasDot: true };
 }

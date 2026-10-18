@@ -6,7 +6,6 @@ import { proposeGalleryPasswordEntry } from "@/composition/gallery/gallery-flow/
 import {
   browseGalleryPhotosEntry,
   checkFolderInUseEntry,
-  checkNewGalleryFolderEntry,
   deleteGallerySourceEntry,
   getFolderMappingEntry,
   linkGallerySourceEntry,
@@ -47,13 +46,6 @@ export async function checkFolderInUseAction(
   link: string,
 ): Promise<FolderUseResult> {
   return checkFolderInUseEntry(workspaceId, galleryId, link);
-}
-
-export async function checkNewGalleryFolderAction(
-  workspaceId: string,
-  link: string,
-): Promise<FolderUseResult> {
-  return checkNewGalleryFolderEntry(workspaceId, link);
 }
 
 export async function linkGallerySourceAction(

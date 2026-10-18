@@ -80,7 +80,7 @@ describe("GalleryLifecycle", () => {
         actions={fakePageActions()}
       />,
     );
-    expect(screen.getByText("Galeri diarsipkan")).toBeInTheDocument();
+    expect(screen.getByText("Proyek dibatalkan, galeri ditutup")).toBeInTheDocument();
     for (const name of ["Ubah kedaluwarsa", "Menu galeri", "Sinkronkan semua", "Tambah folder"]) {
       expect(screen.queryByRole("button", { name })).not.toBeInTheDocument();
     }

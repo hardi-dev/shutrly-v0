@@ -22,7 +22,6 @@ const BASE = {
 
 describe("gallery text", () => {
   it("AC-GAL-016 AC-GAL-020 labels each derived state", () => {
-    expect(galleryStatusChip(t, "OPEN").label).toBe("Dipublikasikan");
     expect(galleryStatusChip(t, "EXPIRED")).toMatchObject({
       tone: "warning",
       label: "Kedaluwarsa",
@@ -80,9 +79,11 @@ describe("gallery text", () => {
       ).text,
     ).toBe("Sel, 3 Nov 2026 (kedaluwarsa)");
     expect(galleryVisibilityText(t, "EXPIRED")).toBe(
-      "Disembunyikan dari klien selama galeri kedaluwarsa.",
+      "Tidak terlihat oleh klien selama galeri kedaluwarsa.",
     );
     expect(galleryVisibilityText(t, "CLOSED")).toBe("Disembunyikan dari klien.");
-    expect(galleryVisibilityText(t, "OPEN")).toBe("Terlihat oleh klien sekarang.");
+    expect(galleryVisibilityText(t, "OPEN")).toBe(
+      "Terlihat oleh klien yang punya link dan kata sandi.",
+    );
   });
 });

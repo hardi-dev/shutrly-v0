@@ -99,7 +99,7 @@ describe("final delivery (D-17, sequence 3)", () => {
     const access = await createDrizzleClientAccessRepository(db).findByTokenUnscoped(rina.token);
     expect(access?.finalDeliveryPublishedAt).not.toBeNull();
     expect(await card(rina.projectId)).toMatchObject({
-      state: "PUBLISHED",
+      state: "DELIVERED",
       editedCount: 2,
       printCount: 1,
       // F-21: files seeded without an item count under their kind

@@ -46,7 +46,7 @@ describe("getDeliveryCard (hasilakhirowner-kartu)", () => {
     });
   });
 
-  it("AC-DEL-007 C: published on a delivered project offers Tandai selesai", async () => {
+  it("AC-GFL-017 a delivered project shows its delivery date", async () => {
     const at = new Date("2026-10-05T10:10:00Z");
     const card = await run({
       ...FACTS,
@@ -54,18 +54,17 @@ describe("getDeliveryCard (hasilakhirowner-kartu)", () => {
       gallery: { ...GALLERY, finalDeliveryPublishedAt: at },
     });
     expect(card).toMatchObject({
-      state: "PUBLISHED",
+      state: "DELIVERED",
       publishedAt: at.toISOString(),
-      canComplete: true,
     });
   });
 
-  it("E: an expired gallery is not active", async () => {
+  it("AC-GFL-019 an expired gallery still shows its synced finished files", async () => {
     const card = await run({
       ...FACTS,
       gallery: { ...GALLERY, expiresAt: new Date("2026-10-01T00:00:00Z") },
     });
-    expect(card.state).toBe("GALLERY_INACTIVE");
+    expect(card.state).toBe("READY");
   });
 
   it("C-101 another workspace's project is not found", async () => {

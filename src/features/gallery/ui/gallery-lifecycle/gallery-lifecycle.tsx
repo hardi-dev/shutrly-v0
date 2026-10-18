@@ -142,7 +142,6 @@ function GalleryDialogs(props: Readonly<GalleryDialogsProps>) {
       <ExpiryDialog
         workspaceId={workspaceId}
         galleryId={page.gallery.id}
-        isDraft={false}
         setExpiryAction={actions.setExpiryAction}
         onClose={onClose}
       />
@@ -157,6 +156,13 @@ export function GalleryLifecycle(props: Readonly<GalleryLifecycleProps>) {
   const [open, setOpen] = useState<GalleryDialogsProps["open"]>(null);
   const { page } = props;
   const header = galleryHeaderActions(page.gallery.state);
+  const menuMeta =
+    page.gallery.state === "OPEN"
+      ? page.project.title
+      : t("menuSheetMeta", {
+          status: t(GALLERY_STATUS_MESSAGE_KEY[page.gallery.state]),
+          project: page.project.title,
+        });
   const handleClose = () => {
     setOpen(null);
   };
@@ -165,10 +171,7 @@ export function GalleryLifecycle(props: Readonly<GalleryLifecycleProps>) {
       <HeaderControls
         primary={header.primary}
         menu={header.menu}
-        menuMeta={t("menuSheetMeta", {
-          status: t(GALLERY_STATUS_MESSAGE_KEY[page.gallery.state]),
-          project: page.project.title,
-        })}
+        menuMeta={menuMeta}
         onChoose={setOpen}
       />
       <GalleryDialogs {...props} open={open} onClose={handleClose} />

@@ -15,7 +15,7 @@ import {
   removeSessionAssignmentAction,
 } from "@/app/actions/booking/session-team";
 import { TEAM_QUICK_ADD_ACTIONS } from "@/app/actions/booking/team-quick-add-actions";
-import { completeProjectAction, publishFinalDeliveryAction } from "@/app/actions/gallery/delivery";
+import { markDeliveredAction } from "@/app/actions/gallery/delivery";
 import { loadAddOnCard } from "@/composition/booking/add-on-flow/add-on-flow";
 import {
   loadProjectDefinitions,
@@ -40,9 +40,9 @@ import { TeamQuickAddProvider } from "@/features/booking/ui/team-quick-add/team-
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
 import type { SelectionCardView } from "@/features/gallery/application/use-cases/owner-selection-views/owner-selection-views.types";
-import { CompleteProjectButton } from "@/features/gallery/ui/complete-project-button/complete-project-button";
 import { deliveredHeaderMeta } from "@/features/gallery/ui/delivery-text/delivery-text";
 import { GalleryCard } from "@/features/gallery/ui/gallery-card/gallery-card";
+import { MarkDeliveredButton } from "@/features/gallery/ui/mark-delivered-button/mark-delivered-button";
 import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
 import type { FormattingLocale } from "@/shared/locale/locale.types";
 import { ToastOnMount } from "@/ui/patterns/toast/toast";
@@ -81,7 +81,7 @@ export default async function ProjectDetailPage({
           editActions={PROJECT_EDIT_ACTIONS}
           definitions={definitions}
           {...cards}
-          headerAction={completeSlot(workspaceId, projectId, delivery)}
+          headerAction={markDeliveredSlot(workspaceId, projectId, delivery, project.nextStep)}
           headerMeta={deliveredMeta ?? undefined}
           assignableMembers={assignableMembers}
           addAssignmentAction={addSessionAssignmentAction}
@@ -168,16 +168,18 @@ function headerMetaText(
   return projectMetaLine(project.client.name, deliveredMeta);
 }
 
-const DELIVERY_ACTIONS = {
-  publishAction: publishFinalDeliveryAction,
-  completeAction: completeProjectAction,
-};
+const DELIVERY_ACTIONS = { markDeliveredAction };
 
-// *Tandai selesai* is the header's main action on a DELIVERED project (A-34, AC-DEL-007).
-function completeSlot(workspaceId: string, projectId: string, card: DeliveryCardView) {
-  if (!card.canComplete) return null;
+// *Tandai terkirim* is the header's step on POST_PROCESSING (F-27 AC-GFL-017); the project detail hides its step button and shows this one.
+function markDeliveredSlot(
+  workspaceId: string,
+  projectId: string,
+  card: DeliveryCardView,
+  nextStep: ProjectDetailView["nextStep"],
+) {
+  if (nextStep !== "MARK_DELIVERED") return null;
   return (
-    <CompleteProjectButton
+    <MarkDeliveredButton
       workspaceId={workspaceId}
       projectId={projectId}
       card={card}

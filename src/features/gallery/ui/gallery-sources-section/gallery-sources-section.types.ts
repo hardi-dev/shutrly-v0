@@ -25,8 +25,6 @@ export interface SourceListProps {
   readonly sync: GallerySyncState;
   readonly isEditable: boolean;
   readonly isArchived: boolean;
-  /** The last active folder of a published or expired gallery can't be deleted. */
-  readonly isLastLocked: boolean;
   readonly onDelete: (source: GallerySourceView) => void;
   readonly onRename: (source: GallerySourceView) => void;
 }

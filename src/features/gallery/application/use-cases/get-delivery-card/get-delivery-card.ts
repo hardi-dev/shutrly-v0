@@ -1,7 +1,6 @@
 import "server-only";
 
 import { deliveryCardState } from "@/features/gallery/domain/final-delivery/final-delivery";
-import { galleryState } from "@/features/gallery/domain/gallery-state/gallery-state";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { GalleryError } from "../../errors/gallery-errors/gallery-errors";
@@ -26,11 +25,9 @@ export async function getDeliveryCard(
   const { gallery } = facts;
   const editedCount = gallery?.editedCount ?? 0;
   const printCount = gallery?.printCount ?? 0;
-  const state = gallery ? galleryState(facts.projectStatus, gallery.expiresAt, deps.now) : null;
   const publishedAt = gallery?.finalDeliveryPublishedAt ?? null;
   return {
     state: deliveryCardState({
-      state,
       finishedCount: editedCount + printCount,
       published: publishedAt !== null,
       projectStatus: facts.projectStatus,

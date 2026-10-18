@@ -4,7 +4,6 @@ import { copyTranslator } from "@tests/support/copy/copy-messages";
 import {
   GALLERY_COPY_NAMESPACE,
   GALLERY_ERROR_MESSAGE_KEY,
-  GALLERY_STATUS_MESSAGE_KEY,
 } from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
 
 import { createProject, expectGalleryA11y, openGalleryWorkspace, visibleText } from "./gallery-e2e";
@@ -54,7 +53,6 @@ test("AC-GAL-001 AC-GAL-003 AC-GAL-027 creates a gallery from a booked project a
   await expectGalleryA11y(page);
 
   await page.goto(projectPath);
-  await expect(visibleText(page, galleryCopy(GALLERY_STATUS_MESSAGE_KEY.OPEN))).toBeVisible();
   await expect(visibleText(page, "mawar-4821")).toBeVisible();
   await expect(page.getByRole("button", { name: galleryCopy("create") })).toHaveCount(0);
 });

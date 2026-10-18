@@ -27,7 +27,15 @@ export interface GallerySummaryRowsProps {
   readonly rows: readonly GallerySummaryRow[];
 }
 
-export interface NoGalleryProps extends GalleryCardProps {
+export interface NoGalleryProps {
+  readonly card: GalleryCardView;
+}
+
+export interface NoFolderProps {
+  readonly galleryHref: string;
+}
+
+export interface AddFolderButtonProps {
   readonly galleryHref: string;
 }
 

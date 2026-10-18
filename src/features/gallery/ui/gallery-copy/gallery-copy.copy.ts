@@ -8,15 +8,12 @@ export const GALLERY_COPY = {
   messages: {
     en: {
       cardTitle: "Gallery",
-      cardDescription: "Project photos from your Google Drive folders.",
-      cardEmptyTitle: "No gallery yet",
-      cardEmptyBody:
-        "Create a password-protected gallery, then link the project’s Google Drive folders.",
-      cardDraftProjectTitle: "Galleries are available after booking",
-      cardDraftProjectBody: "Confirm the booking, then create a gallery for this project.",
+      cardDescription: "Project photos from your Google Drive folder.",
+      cardDraftProjectTitle: "Gallery is created when the project is booked",
+      cardDraftProjectBody:
+        "Confirm the booking first; the gallery and its password are created automatically.",
       cardCancelledTitle: "Gallery unavailable",
       cardCancelledBody: "This project is canceled, so a gallery can’t be created.",
-      create: "Create gallery",
       manage: "Manage gallery",
       manageMobile: "Manage",
       view: "View gallery",
@@ -45,11 +42,9 @@ export const GALLERY_COPY = {
       // PROPOSED (pending Owner review): the proof count shown in the card's summary.
       proofCount: "{count, plural, one {# selection photo} other {# selection photos}}",
       statusDraft: "Draft",
-      statusPublished: "Published",
       statusExpired: "Expired",
       statusArchived: "Archived",
       pageTitle: "Gallery",
-      createDialogTitle: "Create gallery",
       accessDescription: "Clients use the gallery link and this password to open the gallery.",
       passwordLabel: "Gallery password",
       passwordHelper:
@@ -62,10 +57,8 @@ export const GALLERY_COPY = {
       expiryDateLabel: "Expiry date",
       expiryDateHelper: "The gallery expires at the end of that day. You can change it later.",
       expiryDaysLabel: "Number of days",
-      expiryDaysHelperDraft: "Counted from publishing. You can change it later.",
-      expiryDaysHelperLive: "Counted from when you save.",
+      expiryDaysHelperLive: "Counted from when you save. The gallery closes on {date}.",
       cancel: "Cancel",
-      createdTitle: "Gallery created",
       createdBody: "Add a Google Drive folder to get started.",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
       createdWithFolderBody: "The Google Drive folder is syncing.",
@@ -97,7 +90,7 @@ export const GALLERY_COPY = {
       sourcesDescription: "Link publicly shared Drive folders, then sync to read their photos.",
       sourcesEmptyTitle: "No folders yet",
       sourcesEmptyBody:
-        "Link a project folder. Photos are for selection unless you map a subfolder to a package item; files in mapped subfolders are final files.",
+        "No folder yet. Add a Google Drive folder with this project’s photos; then you can send the gallery link to the client.",
       sourcesEmptyBodyMobile: "Link the project’s Google Drive folder.",
       addFolder: "Add folder",
       addFolderMobile: "Add",
@@ -111,10 +104,10 @@ export const GALLERY_COPY = {
       viewAll: "View all photos",
       viewAllMobile: "All photos",
       visibilityDraft: "Visible to clients after publishing.",
-      visibilityPublished: "Visible to clients now.",
+      visibilityPublished: "Visible to clients with the link and password.",
       visibilityExpired: "Hidden from clients while the gallery is expired.",
       visibilityArchived: "Hidden from clients.",
-      visibilityCancelled: "Won’t be visible to clients.",
+      visibilityCancelled: "Hidden from clients: the project was cancelled.",
       visibilityHidden: "Hidden until final delivery. Clients can’t select these photos.",
       visibilityMissing: "Missing photos are hidden until found again.",
       visibilityFoldedEdited:
@@ -124,7 +117,6 @@ export const GALLERY_COPY = {
       accessTitle: "Client access",
       rotatePassword: "Change password",
       rotatePasswordMobile: "Change",
-      publish: "Publish gallery",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
       galleryMenu: "Gallery menu",
       galleryMenuTitle: "Gallery",
@@ -193,7 +185,6 @@ export const GALLERY_COPY = {
       menuSheetMeta: "{status} · {project}",
       openInDrive: "Open in Google Drive",
       openInDriveMobile: "Open in Drive",
-      publishDialogTitle: "Publish this gallery?",
       publishDialogBody:
         "Folders are checked again now. After that, clients can open the gallery using its link and password.",
       publishExpiry: "Expiry: {text}.",
@@ -204,14 +195,11 @@ export const GALLERY_COPY = {
       publishRefusedHint:
         "Check that the folder is shared with “Anyone with the link”, then try again.",
       close: "Close",
-      publishedTitle: "Gallery published",
       publishedBody: "Share the gallery link and password with your client.",
       expiryDialogTitle: "Gallery expiry",
-      expiryDialogBody:
-        "After expiry, clients can’t open the gallery until you change its expiry settings.",
+      expiryDialogBody: "After expiry, the client can’t open the gallery until you change it.",
       expirySave: "Save",
       expirySavedTitle: "Expiry saved",
-      reopenedTitle: "Gallery reopened",
       changeExpiry: "Change expiry",
       rotateDialogTitle: "Change gallery password",
       rotateDialogBody:
@@ -220,11 +208,10 @@ export const GALLERY_COPY = {
       rotateHelper: "Generated for you. You can change it to 6–64 characters.",
       rotatedTitle: "Password changed",
       rotatedBody: "Share the new password with your client. The old password no longer works.",
-      deleteFolder: "Unlink folder",
-      deleteFolderTitle: "Unlink {name}?",
+      deleteFolder: "Remove folder",
+      deleteFolderTitle: "Remove {name}?",
       deleteFolderBody:
         "{count, plural, one {# photo will be hidden from clients.} other {# photos will be hidden from clients.}} The Drive folder stays unchanged. To use this folder again, add it as a new folder.",
-      deleteLastHint: "A published gallery needs at least one active folder.",
       folderDeletedTitle: "Folder unlinked",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
       renameFolder: "Edit folder",
@@ -260,29 +247,18 @@ export const GALLERY_COPY = {
       mapFolders: "Map",
       save: "Save",
       saving: "Saving…",
-      archiveDialogTitle: "Archive this gallery?",
       archiveDialogBody:
         "Clients will no longer be able to open it. An archived gallery can’t be published again.",
-      archive: "Archive gallery",
-      archivedTitle: "Gallery archived",
-      deleteDialogTitle: "Delete this draft gallery?",
       deleteDialogBody:
         "The gallery, {folders} folders and {photos} photo records will be deleted from Shutrly. Google Drive files stay unchanged.",
-      deleteGallery: "Delete gallery",
-      deletedTitle: "Draft gallery deleted",
       expiredAlertTitle: "Gallery expired since {date}",
       expiredAlertBody:
-        "Set a new expiry date or remove expiry to reopen it with the same link and password.",
+        "The client can’t open the gallery. Set a new date or remove the expiry to open it again with the same link and password.",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
       cancelledAlertTitle: "Project canceled",
       cancelledAlertBody:
         "This draft can’t be published, synced or edited. You can still delete it.",
-      // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
-      archivedAlertTitle: "Gallery archived",
-      archivedAlertBody:
-        "You can view this gallery, but can’t sync or edit it. Clients can’t open it.",
-      cardFailedTitle:
-        "{count, plural, one {# folder couldn’t be synced} other {# folders couldn’t be synced}}",
+      cardFailedTitle: "{count} folder failed to sync",
       cardFailedBody: "{names} couldn’t be read. Open the gallery for details.",
       allPhotosTitle: "All photos",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
@@ -324,17 +300,34 @@ export const GALLERY_COPY = {
       sourceTooDeep: "{count} folders exceed the depth limit",
       sourceLastSyncedAt: "Last synced {when}",
       sourceNever: "Not synced yet",
+      deleteLastFolderBody:
+        "This is the gallery’s last folder. {count} photos from it are removed from the gallery, and Send link to client stays hidden until you add a folder. The folder in Google Drive doesn’t change.",
+      expiryPreset: "{count, plural, one {# day} other {# days}}",
+      expiryDurationLabel: "Duration",
+      cardClosedAlertBody:
+        "The client can no longer open the gallery. Photos, folders and the client’s selections stay saved and can only be viewed.",
+      pickStatusFinal: "Selections are final.",
+      finalDownloadNote: "The client can download once files are synced.",
+      finalEmpty: "No final files yet.",
+      pickNoteEmpty: "The client can choose once photos arrive.",
+      pageMetaNoFolder: "{title} · No folder yet · No expiry",
+      sendLink: "Send link to client",
+      cardClosedTitle: "Project cancelled, gallery closed",
+      statusClosed: "Closed",
+      cardSyncingSummary:
+        "{count, plural, one {# folder} other {# folders}} · syncing {done} of {total} folders",
+      addFolderCta: "Add Drive folder",
+      cardNoFolderBody:
+        "The gallery is ready with a password. Add a Google Drive folder with this project’s photos, then send the link to the client.",
+      cardNoFolderTitle: "No folder yet",
     },
     id: {
       cardTitle: "Galeri",
       cardDescription: "Foto proyek dari folder Google Drive kamu.",
-      cardEmptyTitle: "Belum ada galeri",
-      cardEmptyBody: "Buat galeri dengan kata sandi, lalu tautkan folder Google Drive proyek ini.",
-      cardDraftProjectTitle: "Galeri tersedia setelah pemesanan dikonfirmasi",
-      cardDraftProjectBody: "Konfirmasi pemesanan dulu, lalu buat galeri untuk proyek ini.",
+      cardDraftProjectTitle: "Galeri dibuat saat proyek dibooking",
+      cardDraftProjectBody: "Konfirmasi booking dulu; galeri dan kata sandinya dibuat otomatis.",
       cardCancelledTitle: "Galeri tidak tersedia",
       cardCancelledBody: "Proyek ini dibatalkan, jadi galeri tidak bisa dibuat.",
-      create: "Buat galeri",
       manage: "Kelola galeri",
       manageMobile: "Kelola",
       view: "Lihat galeri",
@@ -360,11 +353,9 @@ export const GALLERY_COPY = {
       expiredSince: "Kedaluwarsa sejak {date}",
       proofCount: "{count, plural, other {# foto pilihan}}",
       statusDraft: "Draf",
-      statusPublished: "Dipublikasikan",
       statusExpired: "Kedaluwarsa",
       statusArchived: "Diarsipkan",
       pageTitle: "Galeri",
-      createDialogTitle: "Buat galeri",
       accessDescription: "Klien membuka galeri dengan tautan dan kata sandi ini.",
       passwordLabel: "Kata sandi galeri",
       passwordHelper:
@@ -377,10 +368,8 @@ export const GALLERY_COPY = {
       expiryDateLabel: "Tanggal kedaluwarsa",
       expiryDateHelper: "Galeri kedaluwarsa di akhir hari itu. Bisa diubah nanti.",
       expiryDaysLabel: "Jumlah hari",
-      expiryDaysHelperDraft: "Dihitung sejak galeri dipublikasikan. Bisa diubah nanti.",
-      expiryDaysHelperLive: "Dihitung sejak disimpan.",
+      expiryDaysHelperLive: "Dihitung dari saat disimpan. Galeri tertutup pada {date}.",
       cancel: "Batal",
-      createdTitle: "Galeri dibuat",
       createdBody: "Tambahkan folder Google Drive untuk mulai.",
       createdWithFolderBody: "Folder Google Drive sedang disinkronkan.",
       errorTooShort: "Gunakan minimal 6 karakter.",
@@ -389,7 +378,7 @@ export const GALLERY_COPY = {
       errorInvalid: "Cek isian ini, lalu coba lagi.",
       errorNotWhole: "Isi jumlah hari dengan angka bulat.",
       errorOutOfRange: "Isi antara 1 dan 3.650 hari.",
-      errorPastDate: "Pilih hari ini atau tanggal setelahnya.",
+      errorPastDate: "Pilih hari ini atau tanggal sesudahnya.",
       errorNotDrive: "Tempel tautan folder Google Drive.",
       errorNotFolder: "Ini tautan file. Tempel tautan folder Google Drive.",
       errorFolderLinked: "Folder ini sudah ada di galeri ini.",
@@ -411,7 +400,7 @@ export const GALLERY_COPY = {
         "Tautkan folder Drive yang dibagikan lewat tautan publik, lalu sinkronkan untuk membaca fotonya.",
       sourcesEmptyTitle: "Belum ada folder",
       sourcesEmptyBody:
-        "Tautkan folder proyek. Foto digunakan untuk pilihan kecuali subfolder dipetakan ke item paket; file di subfolder yang dipetakan menjadi hasil akhir.",
+        "Belum ada folder. Tambahkan folder Google Drive berisi foto proyek ini; setelah itu kamu bisa mengirim link galeri ke klien.",
       sourcesEmptyBodyMobile: "Tautkan folder Google Drive proyek ini.",
       addFolder: "Tambah folder",
       addFolderMobile: "Tambah",
@@ -425,10 +414,10 @@ export const GALLERY_COPY = {
       viewAll: "Lihat semua foto",
       viewAllMobile: "Semua foto",
       visibilityDraft: "Terlihat oleh klien setelah galeri dipublikasikan.",
-      visibilityPublished: "Terlihat oleh klien sekarang.",
-      visibilityExpired: "Disembunyikan dari klien selama galeri kedaluwarsa.",
+      visibilityPublished: "Terlihat oleh klien yang punya link dan kata sandi.",
+      visibilityExpired: "Tidak terlihat oleh klien selama galeri kedaluwarsa.",
       visibilityArchived: "Disembunyikan dari klien.",
-      visibilityCancelled: "Tidak akan terlihat oleh klien.",
+      visibilityCancelled: "Tidak terlihat oleh klien: proyek dibatalkan.",
       visibilityHidden:
         "Disembunyikan sampai hasil akhir dikirim. Foto ini tidak bisa dipilih klien.",
       visibilityMissing: "Foto yang hilang disembunyikan sampai ditemukan lagi.",
@@ -439,7 +428,6 @@ export const GALLERY_COPY = {
       accessTitle: "Akses klien",
       rotatePassword: "Ganti kata sandi",
       rotatePasswordMobile: "Ganti",
-      publish: "Publikasikan galeri",
       galleryMenu: "Menu galeri",
       galleryMenuTitle: "Galeri",
       syncAll: "Sinkronkan semua",
@@ -504,7 +492,6 @@ export const GALLERY_COPY = {
       menuSheetMeta: "{status} · {project}",
       openInDrive: "Buka di Google Drive",
       openInDriveMobile: "Buka di Drive",
-      publishDialogTitle: "Publikasikan galeri ini?",
       publishDialogBody:
         "Folder dicek ulang sekarang. Setelah itu, klien bisa membuka galeri dengan tautan dan kata sandinya.",
       publishExpiry: "Kedaluwarsa: {text}.",
@@ -514,14 +501,12 @@ export const GALLERY_COPY = {
       publishRefusedHint:
         "Pastikan folder dibagikan sebagai “Siapa saja yang memiliki link”, lalu coba lagi.",
       close: "Tutup",
-      publishedTitle: "Galeri dipublikasikan",
       publishedBody: "Bagikan tautan galeri dan kata sandi ke klien.",
       expiryDialogTitle: "Kedaluwarsa galeri",
       expiryDialogBody:
-        "Setelah kedaluwarsa, klien tidak bisa membuka galeri sampai kamu mengubah pengaturannya.",
+        "Setelah kedaluwarsa, klien tidak bisa membuka galeri sampai kamu mengubahnya.",
       expirySave: "Simpan",
       expirySavedTitle: "Kedaluwarsa disimpan",
-      reopenedTitle: "Galeri dibuka lagi",
       changeExpiry: "Ubah kedaluwarsa",
       rotateDialogTitle: "Ganti kata sandi galeri",
       rotateDialogBody:
@@ -534,7 +519,6 @@ export const GALLERY_COPY = {
       deleteFolderTitle: "Lepas {name}?",
       deleteFolderBody:
         "{count, plural, other {# foto disembunyikan dari klien.}} Folder di Drive tidak berubah. Untuk memakainya lagi, tambahkan sebagai folder baru.",
-      deleteLastHint: "Galeri yang dipublikasikan butuh minimal satu folder aktif.",
       folderDeletedTitle: "Folder dilepas",
       renameFolder: "Edit folder",
       renameDialogTitle: "Edit folder",
@@ -554,26 +538,17 @@ export const GALLERY_COPY = {
       mapFolders: "Petakan",
       save: "Simpan",
       saving: "Menyimpan…",
-      archiveDialogTitle: "Arsipkan galeri ini?",
       archiveDialogBody:
         "Klien tidak bisa membuka galeri lagi. Galeri yang diarsipkan tidak bisa dipublikasikan kembali.",
-      archive: "Arsipkan galeri",
-      archivedTitle: "Galeri diarsipkan",
-      deleteDialogTitle: "Hapus galeri draf ini?",
       deleteDialogBody:
         "Galeri, {folders} folder, dan data {photos} foto dihapus dari Shutrly. File Google Drive tidak berubah.",
-      deleteGallery: "Hapus galeri",
-      deletedTitle: "Galeri draf dihapus",
       expiredAlertTitle: "Galeri kedaluwarsa sejak {date}",
       expiredAlertBody:
-        "Atur tanggal baru atau hapus kedaluwarsa untuk membukanya lagi dengan tautan dan kata sandi yang sama.",
+        "Klien tidak bisa membuka galeri. Atur tanggal baru atau hapus kedaluwarsa untuk membukanya lagi dengan link dan kata sandi yang sama.",
       cancelledAlertTitle: "Proyek dibatalkan",
       cancelledAlertBody:
         "Draf ini tidak bisa dipublikasikan, disinkronkan, atau diubah. Kamu masih bisa menghapusnya.",
-      archivedAlertTitle: "Galeri diarsipkan",
-      archivedAlertBody:
-        "Galeri ini bisa dilihat, tetapi tidak bisa disinkronkan atau diubah. Klien tidak bisa membukanya.",
-      cardFailedTitle: "{count, plural, other {# folder belum bisa disinkronkan}}",
+      cardFailedTitle: "{count} folder gagal disinkronkan",
       cardFailedBody: "{names} belum bisa dibaca. Buka galeri untuk melihat penyebabnya.",
       allPhotosTitle: "Semua foto",
       allPhotosDescription: "{project} · {totals}",
@@ -607,15 +582,34 @@ export const GALLERY_COPY = {
       sourceTooDeep: "{count} folder melewati batas kedalaman",
       sourceLastSyncedAt: "Terakhir disinkronkan {when}",
       sourceNever: "Belum disinkronkan",
+      deleteLastFolderBody:
+        "Ini folder terakhir galeri. {count} foto dari folder ini dihapus dari galeri, dan Kirim link ke klien tidak muncul sampai kamu menambah folder lagi. Folder di Google Drive tidak berubah.",
+      expiryPreset: "{count, plural, other {# hari}}",
+      expiryDurationLabel: "Durasi",
+      cardClosedAlertBody:
+        "Klien tidak bisa membuka galeri lagi. Foto, folder dan pilihan klien tetap tersimpan dan hanya bisa dilihat.",
+      pickStatusFinal: "Pilihan sudah final.",
+      finalDownloadNote: "Klien bisa mengunduh begitu file tersinkron.",
+      finalEmpty: "Belum ada file hasil akhir.",
+      pickNoteEmpty: "Klien bisa memilih setelah foto masuk.",
+      pageMetaNoFolder: "{title} · Belum ada folder · Tanpa kedaluwarsa",
+      sendLink: "Kirim link ke klien",
+      cardClosedTitle: "Proyek dibatalkan, galeri ditutup",
+      statusClosed: "Ditutup",
+      cardSyncingSummary:
+        "{count, plural, other {# folder}} · menyinkronkan {done} dari {total} folder",
+      addFolderCta: "Tambah folder Drive",
+      cardNoFolderBody:
+        "Galeri sudah siap dengan kata sandi. Tambahkan folder Google Drive berisi foto proyek ini, lalu kirim link ke klien.",
+      cardNoFolderTitle: "Belum ada folder",
     },
   },
 } as const;
 
 /** The gallery state words, keyed by the derived state (F-27 D-1). */
 export const GALLERY_STATUS_MESSAGE_KEY = {
-  OPEN: "statusPublished",
   EXPIRED: "statusExpired",
-  CLOSED: "statusArchived",
+  CLOSED: "statusClosed",
 } as const;
 
 /** What the client sees of the gallery, keyed by the derived state (F-27 D-1). */

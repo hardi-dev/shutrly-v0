@@ -97,11 +97,6 @@ describe("ProjectAccessCard (aksesklien-kartu A–C)", () => {
     });
   });
 
-  it("B: a draft gallery explains the link can't be opened yet", () => {
-    renderCard({ ...CARD, state: "DRAFT" });
-    expect(screen.getByText(/sampai galeri dipublikasikan/)).toBeTruthy();
-  });
-
   it("C: an archived gallery shows no link and no buttons", () => {
     renderCard({ ...CARD, state: "INACTIVE" });
     expect(screen.getByText("Tidak aktif")).toBeTruthy();

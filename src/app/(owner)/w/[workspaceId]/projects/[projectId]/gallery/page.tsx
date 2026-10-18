@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
 import { rotateClientLinkAction } from "@/app/actions/booking/client-link";
-import { completeProjectAction, publishFinalDeliveryAction } from "@/app/actions/gallery/delivery";
 import {
   proposeGalleryPasswordAction,
   rotateGalleryPasswordAction,
@@ -47,7 +46,9 @@ export default async function GalleryPage({
     <>
       <PageHeadingOverride
         title={t("pageTitle")}
-        status={galleryStatusChip(t, page.gallery.state)}
+        status={
+          page.gallery.state === "OPEN" ? undefined : galleryStatusChip(t, page.gallery.state)
+        }
         meta={galleryMetaText(t, page.gallery, page.project.title, locale)}
         parent={{ label: page.project.title, href: `/w/${workspaceId}/projects/${projectId}` }}
         hidesBottomNav
@@ -66,7 +67,7 @@ export default async function GalleryPage({
             card={selection}
           />
         }
-        deliveryCard={deliveryCardSlot(workspaceId, projectId, delivery)}
+        deliveryCard={deliveryCardSlot(delivery)}
       />
     </>
   );
@@ -92,20 +93,7 @@ function accessCardSlot(workspaceId: string, card: AccessCardView | null) {
   );
 }
 
-const DELIVERY_ACTIONS = {
-  publishAction: publishFinalDeliveryAction,
-  completeAction: completeProjectAction,
-};
-
-function deliveryCardSlot(workspaceId: string, projectId: string, card: DeliveryCardView) {
+function deliveryCardSlot(card: DeliveryCardView) {
   if (!card.isShown) return null;
-  return (
-    <DeliveryCard
-      key="delivery"
-      workspaceId={workspaceId}
-      projectId={projectId}
-      card={card}
-      actions={DELIVERY_ACTIONS}
-    />
-  );
+  return <DeliveryCard key="delivery" card={card} />;
 }

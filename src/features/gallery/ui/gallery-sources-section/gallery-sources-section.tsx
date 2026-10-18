@@ -59,7 +59,6 @@ export function GallerySourcesSection({
           sync={sync}
           isEditable={isEditable}
           isArchived={page.gallery.state === "CLOSED"}
-          isLastLocked={false}
           onDelete={dialogs.setDeleting}
           onRename={dialogs.setRenaming}
         />
@@ -125,6 +124,7 @@ function SourceDialogs(props: Readonly<SourceDialogsProps>) {
         <DeleteFolderDialog
           workspaceId={workspaceId}
           source={props.deleting}
+          isLast={page.gallery.activeSourceCount <= 1}
           deleteSourceAction={actions.deleteSourceAction}
           onClose={props.onCloseDelete}
         />
@@ -160,7 +160,7 @@ function SourceDialogs(props: Readonly<SourceDialogsProps>) {
 function folderMenuEntries(
   t: GalleryTranslate,
   source: GallerySourceView,
-  { sync, isEditable, isLastLocked, onDelete, onRename }: Readonly<SourceListProps>,
+  { sync, isEditable, onDelete, onRename }: Readonly<SourceListProps>,
 ): GalleryMenuEntry[] {
   if (!isEditable || source.removed) return [];
   const handleSync = () => {
@@ -184,8 +184,6 @@ function folderMenuEntries(
       label: t("deleteFolder"),
       icon: "trash-2",
       isDestructive: true,
-      isDisabled: isLastLocked,
-      description: t("deleteLastHint"),
       onSelect: handleDelete,
     },
   ];

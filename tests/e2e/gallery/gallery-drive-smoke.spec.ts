@@ -98,7 +98,6 @@ async function publishThenArchive(page: Page): Promise<void> {
   await expectGalleryA11y(page);
   await publish.getByRole("button", { name: galleryCopy("publish") }).click();
   await expect(visibleText(page, galleryCopy("publishedTitle"))).toBeVisible();
-  await expect(visibleText(page, galleryCopy(GALLERY_STATUS_MESSAGE_KEY.OPEN))).toBeVisible();
 
   const expiry = await openFromMenu(
     page,

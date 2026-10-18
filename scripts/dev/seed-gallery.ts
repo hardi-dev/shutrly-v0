@@ -17,7 +17,7 @@ import { workspaceSourceConfig } from "@/adapters/db/schema/gallery/workspace-so
 import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-source-repository/drizzle-workspace-source-repository";
 import { createGoogleDriveProvider } from "@/adapters/source/google-drive-provider/google-drive-provider";
 import type { GalleryScope } from "@/composition/gallery/gallery-scope/gallery-scope.types";
-import { runMarkDeliveredTransaction } from "@/composition/gallery/mark-delivered-scope/mark-delivered-scope";
+import { runMarkDeliveredTransaction } from "@/composition/gallery/mark-delivered-scope/mark-delivered-transaction";
 import {
   createGalleryForBooking,
   prepareGalleryPassword,

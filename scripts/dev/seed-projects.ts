@@ -4,14 +4,15 @@ import { createWebCryptoAccessTokenGenerator } from "@/adapters/crypto/access-to
 import { createDrizzleProjectRepository } from "@/adapters/db/project-repository/drizzle-project-repository";
 import { createNeonRateLimiter } from "@/adapters/db/rate-limiter/neon-rate-limiter";
 import { createDrizzleSelectionRepository } from "@/adapters/db/selection-repository/drizzle-selection-repository";
-import {
-  approveAddOnWithLimit,
-  createAddOnWithTarget,
-} from "@/composition/booking/add-on-edits/add-on-edits";
-import { runAddOnTransaction } from "@/composition/booking/add-on-scope/add-on-scope";
+import type { AddOnTarget } from "@/composition/booking/add-on-edits/add-on-edits.types";
+import { approveAddOnWithLimit } from "@/composition/booking/add-on-edits/add-on-limit-edits";
+import type { AddOnScope } from "@/composition/booking/add-on-scope/add-on-scope.types";
+import { runAddOnTransaction } from "@/composition/booking/add-on-scope/add-on-transaction";
+import { addOnTargetsOf } from "@/composition/booking/add-on-targets/add-on-targets";
 import { advanceProject } from "@/features/booking/application/use-cases/advance-project/advance-project";
 import { cancelProject } from "@/features/booking/application/use-cases/cancel-project/cancel-project";
 import { completeProject } from "@/features/booking/application/use-cases/complete-project/complete-project";
+import { createAddOn } from "@/features/booking/application/use-cases/create-add-on/create-add-on";
 import { createProject } from "@/features/booking/application/use-cases/create-project/create-project";
 import { lockSelectionGroup } from "@/features/gallery/application/use-cases/lock-selection-group/lock-selection-group";
 import type { ClientContext } from "@/features/gallery/application/use-cases/resolve-client-access/resolve-client-access.types";
@@ -117,6 +118,18 @@ async function groupId(studio: Studio, projectId: string, name: string): Promise
   return group.id;
 }
 
+/** Creates an add-on the way the Owner's form does, in Indonesian (the seeded text), without the request locale. */
+function createSeedAddOn(scope: AddOnScope, target: AddOnTarget, values: unknown) {
+  return createAddOn(
+    { addOns: scope.addOns, targets: addOnTargetsOf(scope.selections) },
+    target.context,
+    target.actorId,
+    target.projectId,
+    values,
+    "id-ID",
+  );
+}
+
 /** *Wisuda Rina*: an approved add-on (+5 *Foto edit*) and a draft one; both groups stay open with some picks. */
 async function seedOpenSelection(studio: Studio, projectId: string, seeded: SeededGallery) {
   const edit = await groupId(studio, projectId, "Foto edit");
@@ -129,7 +142,7 @@ async function seedOpenSelection(studio: Studio, projectId: string, seeded: Seed
       quantity: "5",
       unitPrice: "50000",
     };
-    const created = check("add-on", await createAddOnWithTarget(scope, target, extra));
+    const created = check("add-on", await createSeedAddOn(scope, target, extra));
     done(
       "approve add-on",
       await approveAddOnWithLimit(scope, target, { addOnId: created.addOnId }),
@@ -140,7 +153,7 @@ async function seedOpenSelection(studio: Studio, projectId: string, seeded: Seed
       quantity: "1",
       unitPrice: "750000",
     };
-    check("draft add-on", await createAddOnWithTarget(scope, target, album));
+    check("draft add-on", await createSeedAddOn(scope, target, album));
   });
   const client = await clientOf(studio, projectId, seeded);
   const deps = selectionDeps(studio);

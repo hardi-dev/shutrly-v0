@@ -94,9 +94,9 @@ stateDiagram-v2
       DRAFT --> BOOKED : Owner
       BOOKED --> SHOOTING : Owner
       SHOOTING --> POST_PROCESSING : Owner
-      POST_PROCESSING --> DELIVERED : publish final delivery
-      BOOKED --> DELIVERED : publish final delivery
-      SHOOTING --> DELIVERED : publish final delivery
+      POST_PROCESSING --> DELIVERED : Owner (Tandai terkirim)
+      BOOKED --> DELIVERED : Owner (Tandai terkirim)
+      SHOOTING --> DELIVERED : Owner (Tandai terkirim)
       DELIVERED --> COMPLETED : Owner
       DRAFT --> CANCELLED
       BOOKED --> CANCELLED

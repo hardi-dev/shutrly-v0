@@ -12,7 +12,8 @@ F-09 gave the gallery its own lifecycle (`DRAFT → PUBLISHED → EXPIRED | ARCH
 2. **The gallery is created with the project's move to `BOOKED`**, in the same transaction, through the composition layer (ADR-016): the projects feature doesn't write gallery tables itself. The selection groups are created in that transaction too (BR-SEL-001).
 3. **Expiry** is stored only as `expires_at`. A duration chosen by the Owner is turned into `expires_at` when it is saved; no pending duration is stored.
 4. **Migration:** drop `gallery.status` and the publish and archive columns (`published_at`, `archived_at` and any pending-duration column) only after the code that reads them is deployed, because the deployed `staging` code shares the database (ADR-027). Projects `BOOKED` or later without a gallery get one, with a generated password, in a data migration (intent D-8).
-5. **ADR-019 amended:** `contentVersion` increments on sync, expiry change, password rotation and source removal (publish and archive are gone). Point 6's deferred clean-up keys on galleries of projects `CANCELLED` or `COMPLETED` more than 6 months ago instead of "archived".
+5. **No final-delivery publish either** (intent D-9, D-10): finished files are visible once synced (BR-DEL-002). *Tandai terkirim* is a project status step that keeps writing `gallery.final_delivery_published_at` (read by F-26), so that column stays.
+6. **ADR-019 amended:** `contentVersion` increments on sync, expiry change, password rotation and source removal (publish and archive are gone). Point 6's deferred clean-up keys on galleries of projects `CANCELLED` or `COMPLETED` more than 6 months ago instead of "archived".
 
 ## Alternatives considered
 - **Keep the status, auto-publish on the first folder:** fewer clicks, but two lifecycles remain for the Owner and the code.

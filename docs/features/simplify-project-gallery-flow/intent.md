@@ -34,6 +34,9 @@ Evidence: the gallery status drives about 60 source files (`src/features/gallery
 | D-6 | Final delivery's extra condition (A-17, "gallery is `PUBLISHED`") | Dropped. Only BR-DEL-003's checks remain. *Publikasikan hasil akhir* (final delivery) is a separate action and stays. |
 | D-7 | Expiry input | Keep both a date and a duration. The duration is a dropdown of presets (7, 14, 30, … days) and counts from the moment the Owner saves it, since there is no publish to count from. |
 | D-8 | Projects already booked without a gallery | Agent default (no users yet): the migration creates their galleries, so every `BOOKED`-or-later project has one. |
+| D-9 | *Publikasikan hasil akhir* (added in design review) | Removed too. `EDITED` / `PRINT` files are visible to the client as soon as a sync finds them (BR-DEL-002). |
+| D-11 | Where the Owner shares the link (added in design review) | A *Kirim link ke klien* button on the project's *Galeri* card and in the gallery page header, besides the project menu (BR-GAL-010). |
+| D-10 | How a project reaches `DELIVERED` without that publish | A manual Owner step, *Tandai terkirim*, in the project header like the other status steps; it needs at least one finished file (BR-DEL-003). |
 
 ## Affected users and systems
 - Owner: *New project* and confirm draft (F-07 `projects`), the project's *Galeri* card and the gallery page (F-09 `gallery`), the project menu's *Kirim link galeri* (F-10).
@@ -53,7 +56,7 @@ Evidence: the gallery status drives about 60 source files (`src/features/gallery
 ## Out of scope
 - Changing the project lifecycle (`DRAFT → BOOKED → …`, BR-PRJ-004).
 - Linking the Drive folder inside *New project* (option B of the walkthrough). This can come later.
-- Folder mapping (BR-GAL-007), photo browsing, client selection and final delivery behaviour, apart from where they read the gallery status.
+- Folder mapping (BR-GAL-007), photo browsing and client selection, apart from where they read the gallery status. Final delivery changes only as D-9 and D-10 say.
 
 ## Open questions
 - The exact preset list for the duration dropdown (D-7). Proposed: 7, 14, 30, 60, 90 days.

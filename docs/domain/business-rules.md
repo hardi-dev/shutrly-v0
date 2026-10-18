@@ -185,7 +185,7 @@ Each project gets one cryptographically random, unique, high-entropy client acce
 
 ### BR-PRJ-004 — Project lifecycle
 `DRAFT → BOOKED → SHOOTING → POST_PROCESSING → DELIVERED → COMPLETED`; `DRAFT | BOOKED | SHOOTING → CANCELLED` (cancel from `SHOOTING` requires an audit reason). `CANCELLED` is terminal in MVP.
-`DRAFT → BOOKED`, `BOOKED → SHOOTING` and `SHOOTING → POST_PROCESSING` are manual Owner actions, one step forward at a time; sessions never move a project's status. Moving a project to `BOOKED` (created as `BOOKED` or confirmed from `DRAFT`) requires at least one session (BR-TEAM-003). Publishing final delivery moves a `BOOKED`, `SHOOTING` or `POST_PROCESSING` project to `DELIVERED` (BR-DEL-003). No transition goes backwards. *(F-07 discovery, Owner 2026-10-02.)*
+`DRAFT → BOOKED`, `BOOKED → SHOOTING` and `SHOOTING → POST_PROCESSING` are manual Owner actions, one step forward at a time; sessions never move a project's status. Moving a project to `BOOKED` (created as `BOOKED` or confirmed from `DRAFT`) requires at least one session (BR-TEAM-003). The Owner's *Tandai terkirim* moves a `BOOKED`, `SHOOTING` or `POST_PROCESSING` project to `DELIVERED` (BR-DEL-003; was "publishing final delivery" until F-27, Owner 2026-10-18). No transition goes backwards. *(F-07 discovery, Owner 2026-10-02.)*
 
 ### BR-PRJ-005 — Completion is manual
 Only the Owner can move a `DELIVERED` project to `COMPLETED`, recording actor and timestamp. Outstanding invoice balances are shown as a warning but never block completion.
@@ -278,7 +278,7 @@ An optional gallery slug never grants access.
 A gallery belongs to one project of the same workspace (BR-WS-002) and is created by Shutrly with it (BR-GAL-001). On a `CANCELLED` project the gallery is closed and read-only: no sync, no source changes, no expiry or password changes (BR-GAL-005). Each gallery source is created from an active workspace source (BR-SRC-006) and a public folder link (BR-SRC-002). A folder (by its provider folder ID) is linked at most once per gallery; another gallery may link the same folder, and the Owner is warned. The Owner may delete any source of a gallery that isn't closed, the last one included: the gallery source record and every photo synced from it are deleted. Deletion is refused only while a client pick references one of its photos (BR-SEL-*). Another gallery's link to the same folder is a separate source and is not affected. Sources removed before 2026-10-07 keep their photos hidden, like missing photos (BR-GAL-006). The Owner may rename a gallery source's label (1–60 characters, trimmed; empty shows the folder name). *(F-09 discovery, Owner 2026-10-04; delete and rename: Owner manual test, 2026-10-07; created with the project, last source removable, no archive: F-27, Owner 2026-10-18.)*
 
 ### BR-GAL-010 — Sharing needs a linked folder
-The Owner's *Kirim link galeri* action (BR-MSG-003) is offered on a project from `BOOKED` to `COMPLETED` whose gallery has at least one active source and is open (BR-GAL-005), even before its first sync finishes. *(F-27, Owner 2026-10-18; replaces "`SHOOTING` to `COMPLETED`" in the feature map's project menu.)*
+The Owner's *Kirim link galeri* action (BR-MSG-003) is offered on a project from `BOOKED` to `COMPLETED` whose gallery has at least one active source and is open (BR-GAL-005), even before its first sync finishes. It is the same action in three places: the project menu, the project's *Galeri* card and the gallery page header (*Kirim link ke klien*); where the condition fails it isn't shown. *(F-27, Owner 2026-10-18; replaces "`SHOOTING` to `COMPLETED`" in the feature map's project menu; card buttons added in design review.)*
 
 ---
 
@@ -339,11 +339,11 @@ Clients see "used / effective" per group, without a separate add-on bucket.
 ### BR-DEL-001 — Same link, same password
 Final delivery uses the existing gallery link and password. No separate delivery URL.
 
-### BR-DEL-002 — Hidden until published
-`EDITED`/`PRINT` files are hidden from clients until final delivery is published. They are never selectable and never count toward limits. *Hasil akhir* shows them per package item (F-21).
+### BR-DEL-002 — Visible once synced
+*(Replaced 2026-10-18, F-27, Owner; was "hidden until final delivery is published".)* `EDITED`/`PRINT` files are visible to a client of an open gallery (BR-GAL-005) as soon as a sync finds them in a mapped folder (BR-GAL-007); there is no publish step. They are never selectable and never count toward limits. *Hasil akhir* shows them per package item (F-21).
 
-### BR-DEL-003 — Publishing final delivery
-Requires at least one synced `EDITED` or `PRINT` file and a project in `BOOKED`, `SHOOTING` or `POST_PROCESSING` (BR-PRJ-004); records `finalDeliveryPublishedAt` and moves the project to `DELIVERED` (never to `COMPLETED`).
+### BR-DEL-003 — Marking the project delivered
+*(Replaced 2026-10-18, F-27, Owner; was "publishing final delivery".)* The Owner marks a project delivered (*Tandai terkirim*) as a manual project step. It requires at least one synced `EDITED` or `PRINT` file and a project in `BOOKED`, `SHOOTING` or `POST_PROCESSING` (BR-PRJ-004); it records the time (stored as `finalDeliveryPublishedAt`) and the actor (BR-AUD-001) and moves the project to `DELIVERED` (never to `COMPLETED`). It doesn't change what the client sees (BR-DEL-002).
 
 ### BR-DEL-004 — Independent finished files
 Each finished file is an independent download with no link to its original proof photo; no inference from names/paths. The client may download one file, several chosen files, or all finished files at once; a bulk download never exposes the Drive folder link or folder ID (BR-ACC-005). *(Download modes: F-10 discovery, Owner 2026-10-05.)* **Proofs (F-20, Owner 2026-10-07):** a signed-in client may also download the original of any visible proof of the gallery — one, the selected ones, or all — before and after final delivery, never through the folder link or folder ID; downloads are not tracked.

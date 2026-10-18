@@ -93,10 +93,22 @@ Given a `BOOKED` project with a synced gallery
 When the Owner cancels the project
 Then the client gets the neutral unavailable page, the Owner sees the gallery read-only with *Ditutup*, and sync, source, expiry and password changes are refused.
 
-**AC-GFL-017 — Final delivery needs only BR-DEL-003** (BR-DEL-003)
+**AC-GFL-017 — *Tandai terkirim* moves the project to `DELIVERED`** (BR-DEL-003, BR-PRJ-004)
 Given a `POST_PROCESSING` project whose gallery has one synced `EDITED` file
-When the Owner publishes final delivery
-Then it succeeds and the project is `DELIVERED`, with no gallery publish step before it.
+When the Owner confirms *Tandai terkirim*
+Then the project is `DELIVERED` with the time and actor recorded, and the gallery page has no *Publikasikan hasil akhir*
+And given a project with no synced finished file, *Tandai terkirim* is disabled and the server refuses it.
+
+**AC-GFL-019 — Finished files are visible once synced** (BR-DEL-002)
+Given an open gallery whose *Foto edit* item is mapped to the subfolder `Edited`
+When a sync finds `E_001.jpg` in `Edited`
+Then the client sees it under *Hasil akhir* and can download it, with the project still `POST_PROCESSING`.
+
+**AC-GFL-020 — Share from the cards** (BR-GAL-010, BR-MSG-003)
+Given a `BOOKED` project whose gallery has a linked folder
+When the Owner opens the project page and the gallery page
+Then the *Galeri* card and the gallery page header each show *Kirim link ke klien*, which opens the same `GALLERY_SHARE` message preview as the project menu
+And given a gallery with no folder, expired, or on a cancelled project, neither place shows it.
 
 ## Seed
 **AC-GFL-018 — The demo seed runs end to end** (ADR-028)

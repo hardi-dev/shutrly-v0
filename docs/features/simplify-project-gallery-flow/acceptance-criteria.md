@@ -65,8 +65,8 @@ Then it refuses with a field error and the expiry is unchanged.
 
 **AC-GFL-012 — Close by setting today, reopen by changing it** (BR-GAL-005)
 Given an open gallery
-When the Owner sets the expiry to today and that moment passes
-Then the Owner sees *Kedaluwarsa* and the client gets the neutral unavailable page
+When the Owner sets the expiry to today
+Then at once the Owner sees *Kedaluwarsa* and the client gets the neutral unavailable page
 And when the Owner then clears the expiry, the client gets in again with the same link and password.
 
 ## Sharing and sources
@@ -79,7 +79,7 @@ And when the Owner links a folder, it is shown even while the first sync is runn
 **AC-GFL-014 — *Kirim link galeri* from `BOOKED` to `COMPLETED`** (BR-GAL-010)
 Given projects with a linked folder in each status
 When the Owner opens each project menu
-Then *Kirim link galeri* shows for `BOOKED`, `SHOOTING`, `POST_PROCESSING`, `DELIVERED` and `COMPLETED`, and not for `CANCELLED` or an expired gallery.
+Then the project detail ⋯ menu shows *Kirim link galeri* for `BOOKED`, `SHOOTING`, `POST_PROCESSING`, `DELIVERED` and `COMPLETED`, and not for `CANCELLED` or an expired gallery; the project list and dashboard row menus never show it (A-11).
 
 **AC-GFL-015 — The last folder can be removed** (BR-GAL-009)
 Given a gallery whose only source has no picked photos
@@ -97,7 +97,8 @@ Then the client gets the neutral unavailable page, the Owner sees the gallery re
 Given a `POST_PROCESSING` project whose gallery has one synced `EDITED` file
 When the Owner confirms *Tandai terkirim*
 Then the project is `DELIVERED` with the time and actor recorded, and the gallery page has no *Publikasikan hasil akhir*
-And given a project with no synced finished file, *Tandai terkirim* is disabled and the server refuses it.
+And given a project with no synced finished file, *Tandai terkirim* is disabled and the server refuses it
+And on a `BOOKED` or `SHOOTING` project *Tandai terkirim* is in the project detail ⋯ menu, not the header (A-6).
 
 **AC-GFL-019 — Finished files are visible once synced** (BR-DEL-002)
 Given an open gallery whose *Foto edit* item is mapped to the subfolder `Edited`

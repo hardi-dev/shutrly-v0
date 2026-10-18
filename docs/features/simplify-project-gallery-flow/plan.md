@@ -1,6 +1,6 @@
 # Plan — Simplify project and gallery creation (F-27)
 
-Status: PLANNED (2026-10-18) · Design: [technical-design.md](technical-design.md) · Spec: [spec.md](spec.md) · Criteria: [acceptance-criteria.md](acceptance-criteria.md) · Exports: [exports/INDEX.md](exports/INDEX.md) · ADR: [ADR-028](../../architecture/decisions/ADR-028-gallery-without-stored-status.md)
+Status: PLANNED (2026-10-18; self-review applied 2026-10-18, Owner accepted A–C) · Design: [technical-design.md](technical-design.md) · Spec: [spec.md](spec.md) · Criteria: [acceptance-criteria.md](acceptance-criteria.md) · Exports: [exports/INDEX.md](exports/INDEX.md) · ADR: [ADR-028](../../architecture/decisions/ADR-028-gallery-without-stored-status.md)
 
 **Goal:**
 - a booked project already has its gallery;
@@ -23,26 +23,26 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 
 ---
 
-## Iteration 1 — Domain: gallery state, visibility, expiry, deep link, project steps
+## Iteration 1 — Domain: gallery state, visibility, expiry, deep link, menu input
 
 **Read first:**
-- Criteria: AC-GFL-006, 008, 010, 011, 012, 014, 016, 017, 019, 022 · A-1, A-6.
-- Rules: BR-GAL-005, BR-GAL-010, BR-ACC-001, BR-DEL-002, BR-DEL-003, BR-PRJ-004, BR-MSG-001, BR-CLI-002.
-- technical-design › D-1, D-2, D-6, D-7, D-8, D-10, D-11.
-- coding-rules › Pure domain + orchestration, Functions and comments, Where types and schemas live.
-- Code to follow: `src/features/gallery/domain/gallery-status/`, `client-gallery-availability/`, `client-photo-visibility/`, `final-delivery/`, `gallery-expiry/`; `src/features/booking/domain/project-status/`, `project-menu/`.
+- Criteria: AC-GFL-008, 010, 011, 012, 014, 016, 019, 022 · A-1, A-2, A-11.
+- Rules: BR-GAL-005, BR-GAL-010, BR-ACC-001, BR-DEL-002, BR-DEL-003, BR-MSG-001, BR-CLI-002.
+- technical-design › D-1, D-2, D-6, D-8, D-10, D-11.
+- coding-rules › Pure domain + orchestration, Functions and comments, Where types and schemas live, Testing, Quality Gate, Easy to break.
+- Code to follow: `src/features/gallery/domain/gallery-status/`, `client-gallery-availability/`, `client-photo-visibility/`, `final-delivery/`, `gallery-expiry/`; `src/features/booking/domain/project-menu/`.
+- Callers updated in this iteration (signature only, so typecheck stays green): `resolve-client-access`, `serve-client-photo`, `serve-client-file`, `browse-client-photos`, `publish-final-delivery`, `set-gallery-expiry`, `create-gallery`.
 
-- [ ] **1.1** Test first, `gallery-state.test.ts`, then `features/gallery/domain/gallery-state/gallery-state{,.types}.ts`: `galleryState(projectStatus, expiresAt, now)` → `OPEN | EXPIRED | CLOSED` (CLOSED wins over EXPIRED); `isWritable(state)`; `canShareGallery({ projectStatus, state, activeSourceCount })` (BR-GAL-010: `BOOKED`…`COMPLETED`, OPEN, ≥ 1 source).
-- [ ] **1.2** `client-gallery-availability`: input `{ projectStatus, expiresAt, now }`; true only for OPEN. Update its tests (AC-GFL-008, 012, 016).
-- [ ] **1.3** `client-photo-visibility`: drop `finalDeliveryPublished` from `isInFinalDelivery`, `isServableToClient`, `clientBrowseKind`; tests for a synced `EDITED` file visible without delivery (AC-GFL-019).
-- [ ] **1.4** `final-delivery`: `galleryDeliveryReasons` returns only `NO_FINISHED_FILE`; `deliveryCardState` loses `GALLERY_INACTIVE` and `PUBLISHED` → `DELIVERED` (project status) (AC-GFL-017).
-- [ ] **1.5** `gallery-expiry`: `GALLERY_EXPIRY_PRESETS = [7, 14, 30, 60, 90]`; `resolveExpiry(input, now)` without status, `DAYS` → `now + days`, returns `{ expiresAt }`; delete `expiryOnPublish` and `expiryDays` (AC-GFL-010, 011).
+- [ ] **1.1** Test first, `gallery-state.test.ts`, then `features/gallery/domain/gallery-state/gallery-state{,.types}.ts`: `galleryState(projectStatus, expiresAt, now)` → `OPEN | EXPIRED | CLOSED` (CLOSED wins over EXPIRED); `isWritable(state)`; `canShareGallery({ projectStatus, state, activeSourceCount })` (BR-GAL-010: `BOOKED`…`COMPLETED`, OPEN, ≥ 1 source). Additive: nothing else changes yet.
+- [ ] **1.2** `client-gallery-availability`: input `{ projectStatus, expiresAt, now }`, true only for OPEN; `resolve-client-access` stops passing the stored status. Tests (AC-GFL-008, 012, 016).
+- [ ] **1.3** `client-photo-visibility`: drop `finalDeliveryPublished` from `isInFinalDelivery`, `isServableToClient`, `clientBrowseKind`; update the three callers; tests for a synced `EDITED` file visible without delivery (AC-GFL-019).
+- [ ] **1.4** `final-delivery`: `galleryDeliveryReasons` returns only `NO_FINISHED_FILE`; `publish-final-delivery` stops passing the status. `deliveryCardState` stays until iteration 5 (it drives the card UI).
+- [ ] **1.5** `gallery-expiry`: `GALLERY_EXPIRY_PRESETS = [7, 14, 30, 60, 90]`; `resolveExpiry(input, now)` without status: `DAYS` → `now + days`, a `DATE` of today → `now` (A-2), a later date → end of that day; return shape unchanged (`expiryDays: null`) until iteration 2. `create-gallery` and `set-gallery-expiry` drop the status argument. `expiryOnPublish` stays until iteration 3 deletes publish (AC-GFL-010, 011, 012).
 - [ ] **1.6** `features/communications/domain/whatsapp-link/`: `whatsappLink(number | null, text)` → `https://wa.me/<number>?text=<encoded>` or null (AC-GFL-022: `6281234567890`, newlines and `&` encoded).
-- [ ] **1.7** Booking: `project-status` step `MARK_DELIVERED` (`BOOKED | SHOOTING | POST_PROCESSING → DELIVERED`, the header step after `FINISH_SHOOTING`, A-6); `project-menu` input `canShareGallery` → item `SHARE_GALLERY` in *Kirim ke klien*, `CHAT_WHATSAPP` stays when no template item applies (feature map › Project menu).
-- [ ] **1.8** Delete `gallery-status/gallery-status.ts` and its types once nothing in `domain/` imports them; rewrite `gallery-header-actions` on `GalleryState` (no publish, archive, delete).
-- [ ] Commits: `feat(gallery): derive gallery state from project status and expiry`, `feat(gallery): show finished files once synced`, `feat(gallery): expiry presets`, `feat(communications): whatsapp deep link`, `feat(projects): mark delivered step and share menu item`.
+- [ ] **1.7** `project-menu`: input `canShareGallery` (default false at every caller for now) → item `SHARE_GALLERY` in *Kirim ke klien*; `CHAT_WHATSAPP` stays when no template item applies. Callers that build list and dashboard rows always pass false (A-11). `MARK_DELIVERED` is **not** added here (iteration 4).
+- [ ] Commits: `feat(gallery): derive gallery state from project status and expiry`, `feat(gallery): open galleries without publish and show finished files once synced`, `feat(gallery): expiry presets and close today at once`, `feat(communications): whatsapp deep link`, `feat(projects): share gallery menu item`.
 
-**Done when** the domain tests pass. Typecheck is expected to fail in application and adapters, which iterations 2 and 3 fix; don't commit an iteration-1 change that touches them.
+**Done when** the domain tests and the touched callers' tests pass, `pnpm typecheck` and lint are clean, and there is no I/O in `domain/`.
 
 ## Iteration 2 — Migration 0022 and adapters
 
@@ -56,6 +56,7 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 - [ ] **2.2** Rows and lock SQL return `{ expiresAt, projectStatus }`; ports drop `status`, `expiryDays`, `publishedAt`; `GalleryCreateWriter.insert` without status; delete writer methods `publish`, `archive`, `deleteDraft`; `setExpiry(expiresAt, actor, now)`.
 - [ ] **2.3** Client access repository: record drops `galleryStatus`; availability from `galleryState`.
 - [ ] **2.4** Integration test `tests/integration/gallery/gallery-without-status.test.ts`: insert a gallery without status; client access on it is available; a `CANCELLED` project's gallery isn't (AC-GFL-008, 016).
+- [ ] **2.5** Writers stop bumping `content_version` for publish and archive (removed); sync, expiry, rotation and source removal still bump it (D-15).
 - [ ] Commits: `feat(db): drop gallery status constraints`, `refactor(gallery): read gallery state instead of status in adapters`.
 
 **Done when** the migration is applied and reported, the integration file passes, and adapters typecheck.
@@ -69,7 +70,7 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 
 - [ ] **3.1** Test first, then `create-gallery-for-booking`: deps `{ galleries, cipher, hasher, passwords, newId }`; inputs `context, actorId, projectId, prepared` where `prepared = await prepareGalleryPassword(deps, context)` returns `{ galleryId, password, passwordHash }` (runs before the transaction); inside: insert with no expiry and no source, then `createSelectionGroups()`; `ALREADY_EXISTS` → no-op success (idempotent for the backfill).
 - [ ] **3.2** Switch every reader in the technical-design list to `galleryState` / `isWritable`; `delete-gallery-source` drops the last-source refusal (AC-GFL-015); `set-gallery-expiry` uses the presets schema (AC-GFL-010, 011); serve/browse use cases drop the delivery flag (AC-GFL-019).
-- [ ] **3.3** Delete `publish-gallery`, `archive-gallery`, `archive-gallery-of-cancelled-project`, `delete-draft-gallery`, `create-gallery`, `propose-gallery-password` if rotation no longer needs it, their schemas and results; `publish-final-delivery` → `record-final-delivery` (no status check).
+- [ ] **3.3** Delete `publish-gallery`, `archive-gallery`, `archive-gallery-of-cancelled-project`, `delete-draft-gallery`, `create-gallery`, their schemas and results, `expiryOnPublish`, and `domain/gallery-status/` (rewrite `gallery-header-actions` on `GalleryState`); keep `propose-gallery-password` (the rotate dialog's *Buat ulang* uses it); `publish-final-delivery` → `record-final-delivery` (no status check).
 - [ ] Commits: `feat(gallery): create the gallery and its selection groups for a booked project`, `refactor(gallery): use cases on the derived gallery state`, `refactor(gallery): remove publish, archive and draft deletion`.
 
 **Done when** gallery use-case tests pass and `src/features/gallery` typechecks.
@@ -84,7 +85,7 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 
 - [ ] **4.1** `composition/booking/booking-gallery-scope/`: one transaction over project and gallery repositories; `createProjectWithGallery` (gallery only when `mode === "BOOKED"`) and `confirmBookingWithGallery`; password prepared before `db.transaction`. Unit test with fakes: a gallery failure rolls back the project (AC-GFL-003).
 - [ ] **4.2** `createProjectEntry` and `advanceProjectEntry` (`CONFIRM_BOOKING`) use it; `cancelProjectEntry` stops calling the archive use case and uses the plain project scope (delete `project-cancellation-scope` if unused).
-- [ ] **4.3** `final-delivery-scope` → `mark-delivered-scope` (`markDeliveredWithProject`, `runMarkDeliveredTransaction`); `advanceProjectEntry` routes `MARK_DELIVERED` to it; `publishFinalDeliveryEntry` removed.
+- [ ] **4.3** `final-delivery-scope` → `mark-delivered-scope` (`markDeliveredWithProject`, `runMarkDeliveredTransaction`). Add `ProjectStep` `MARK_DELIVERED` in the same commit as its routing: `advanceProject` refuses it (never `moveStatus`), `advanceProjectEntry` sends it to the transaction; `nextStep(POST_PROCESSING) = MARK_DELIVERED`; the project menu adds a `MARK_DELIVERED` item on `BOOKED` and `SHOOTING` (A-6). Domain tests for the placement; `publishFinalDeliveryEntry` removed.
 - [ ] **4.4** Integration `tests/integration/booking/booking-creates-gallery.test.ts`: create as `BOOKED` → one gallery + one `OPEN` group; confirm draft → same; cancel → client access unavailable; mark delivered with an `EDITED` photo → `DELIVERED` (AC-GFL-001, 002, 016, 017).
 - [ ] Commits: `feat(projects): booking creates the gallery in the same transaction`, `feat(projects): mark delivered as a project step`.
 
@@ -102,7 +103,7 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 - [ ] **5.1** Copy: draft new/changed strings (card states P1–P7, *Ditutup*, Alerts, expiry presets and helper, last-folder dialog, *Tandai terkirim* and its confirm/hint, *Kirim link ke klien*) with Codex; Owner approves; update `copy-deck.md` and the `*.copy.ts` files.
 - [ ] **5.2** Gallery page and card states without status; *Kirim link ke klien* placeholders wired to the dialog from iteration 6 (render hidden until then).
 - [ ] **5.3** Expiry Select of presets with the resulting date; date error (AC-GFL-010, 011).
-- [ ] **5.4** *Hasil akhir* card without publish; *Tandai terkirim* header step with confirm and disabled hint (AC-GFL-017).
+- [ ] **5.4** *Hasil akhir* card without publish (`deliveryCardState` drops `GALLERY_INACTIVE` and `PUBLISHED` → `DELIVERED`); *Tandai terkirim* header step on `POST_PROCESSING` and menu item on `BOOKED`/`SHOOTING`, with confirm and disabled hint (AC-GFL-017).
 - [ ] **5.5** Delete `create-gallery-dialog`, `create-gallery-folder-fields`, `use-create-gallery-*`, `publish-refused-dialog`, the publish/archive/delete parts of `gallery-lifecycle`, `use-lifecycle-runner` parts, and their tests.
 - [ ] **5.6** Fidelity pass against the exports above, one file at a time.
 - [ ] Commits per component group.
@@ -119,8 +120,8 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 - Code to follow: `src/features/communications/application/use-cases/render-template-for-recipient/`, `get-message-template/`, `src/features/communications/ui/message-preview/`, `src/composition/gallery/access-card-flow/` (client link reader, app URL), `src/features/gallery/application/use-cases/gallery-views/` (decrypt), `src/features/booking/ui/client-dialog/` (A-8), gallery dialogs (`gallery-dialog-shell`).
 
 - [ ] **6.1** Test first, then `composition/gallery/gallery-share-flow/`: `loadGalleryShareEntry` returns recipient, rendered text and `waUrl` or `NOT_SHAREABLE`; no logging of text or URL (AC-GFL-021, 022, 025).
-- [ ] **6.2** `features/gallery/ui/gallery-share-dialog/`: Modal on desktop, Bottom Sheet on phones; loading, error, K1, K2; *Salin pesan* (clipboard + toast), *Buka WhatsApp* (`<a target="_blank" rel="noopener noreferrer">`), *Ubah template* link to the F-03 editor, *Tambah nomor WhatsApp* opens the F-06 client dialog and reloads the share data on save (AC-GFL-023, 024).
-- [ ] **6.3** Entry points: gallery card, gallery page header / action bar, project menu `SHARE_GALLERY` (AC-GFL-013, 014, 020).
+- [ ] **6.2** `features/gallery/ui/gallery-share-dialog/` (no booking import; *Tambah nomor WhatsApp* calls an `onAddNumber` prop, A-8): Modal on desktop, Bottom Sheet on phones; loading, error, K1, K2; *Salin pesan* (clipboard + toast), *Buka WhatsApp* (`<a target="_blank" rel="noopener noreferrer">`), *Ubah template* link to the F-03 editor, an app-level host renders the F-06 client dialog for `onAddNumber` and reloads the share data on save (AC-GFL-023, 024).
+- [ ] **6.3** Entry points: gallery card, gallery page header / action bar, project detail menu `SHARE_GALLERY`; the project page composition computes `canShareGallery` from the gallery card data and passes it to the menu host; list and dashboard rows pass false (AC-GFL-013, 014, 020, A-11).
 - [ ] **6.4** Fidelity pass against the four exports.
 - [ ] Commits: `feat(gallery): load the gallery share message`, `feat(gallery): share dialog`, `feat(projects): share gallery from the menu and cards`.
 
@@ -147,7 +148,7 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 
 - [ ] **8.1** Confirm R-4: trace the `next/headers` import in the seed path; fix by importing only scope-free modules.
 - [ ] **8.2** Seed books projects (gallery from iteration 4), links the Drive fixture, maps folders, no publish; delivered fixture uses `runMarkDeliveredTransaction`.
-- [ ] **8.3** `scripts/dev/backfill-galleries.ts` + `pnpm db:backfill-galleries`; run against `.dev.vars`; report counts.
+- [ ] **8.3** `scripts/dev/backfill-galleries.ts` + `pnpm db:backfill-galleries` (own `db`, no `request-db` import, D-13); integration test `tests/integration/gallery/backfill-galleries.test.ts`: a `SHOOTING` project without a gallery gets one with its groups, and a second run creates nothing (AC-GFL-005); run against `.dev.vars`; report counts.
 - [ ] **8.4** `scripts/dev/seed-staging.sh <new email>` exits 0 and writes the credentials file (AC-GFL-018).
 - [ ] Commits: `fix(seed): run without a request scope`, `feat(seed): booked projects get galleries`, `feat(db): backfill galleries for booked projects`.
 

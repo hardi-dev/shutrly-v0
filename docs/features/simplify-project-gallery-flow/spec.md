@@ -27,11 +27,11 @@ As an Owner, I want a booked project to come with its gallery ready, so I only p
 2. In the same transaction Shutrly creates the project's gallery (BR-GAL-001): a generated password (BR-GAL-002), no expiry, no sources, and one selection group per selection item (BR-SEL-001). If any part fails, nothing is saved and the Owner sees the existing F-07 error.
 3. The project page's *Galeri* card shows that the gallery has no folder yet, with *Tambah folder Drive* leading to the gallery page's *Sumber foto*. There is no *Buat galeri*.
 4. The Owner links a folder; the sync runs as in F-09 (BR-GAL-006, BR-GAL-007).
-5. From the moment a folder is linked, *Kirim link ke klien* shows on the project's *Galeri* card and in the gallery page header, and *Kirim link galeri* in the project menu (BR-GAL-010). It builds the `GALLERY_SHARE` message with the password filled in (BR-MSG-003), unchanged from F-10.
+5. From the moment a folder is linked, *Kirim link ke klien* shows on the project's *Galeri* card and in the gallery page header, and *Kirim link galeri* in the project detail's ⋯ menu (BR-GAL-010; not in the list and dashboard row menus). It builds the `GALLERY_SHARE` message with the password filled in (BR-MSG-003), unchanged from F-10.
 6. The client opens `/g/{token}`, enters the password, and sees the gallery (BR-ACC-001). There is no publish step anywhere.
 
 ## Main Flow — share the gallery link (D-12)
-1. The Owner selects *Kirim link ke klien* (project *Galeri* card, gallery page header) or *Kirim link galeri* (project menu). Shown only when BR-GAL-010 holds.
+1. The Owner selects *Kirim link ke klien* (project *Galeri* card, gallery page header) or *Kirim link galeri* (project detail ⋯ menu). Shown only when BR-GAL-010 holds.
 2. The share dialog opens: a modal on desktop, a bottom sheet on phones (Owner 2026-10-18). The server verifies the workspace and BR-GAL-010, loads the workspace's `GALLERY_SHARE` template, and renders it in the Owner's active language (BR-L10N-006 exception) with `clientName`, `projectTitle`, `brandName`, `galleryUrl` and `galleryPassword` (decrypted server-side, BR-MSG-003).
 3. The dialog shows *Kepada* (client name and WhatsApp number), the rendered text in the message preview, the password note, *Ubah template*, and the actions *Salin pesan* and *Buka WhatsApp*.
 4. *Buka WhatsApp* opens `https://wa.me/<number>?text=<message>` in a new tab (BR-MSG-001, ADR-006). *Salin pesan* copies the text and shows a toast. Shutrly records nothing about the message (BR-MSG-001).
@@ -44,7 +44,7 @@ As an Owner, I want a booked project to come with its gallery ready, so I only p
 - **Draft deleted:** nothing to delete on the gallery side (BR-PRJ-010).
 - **Client opens the link before photos arrive:** after the password, the client sees an empty state (*Photos aren't ready yet*) instead of the photo grid; selection groups exist but nothing can be picked (intent D-5).
 - **Set an expiry:** the Owner picks a date, or a duration from the presets; a duration becomes `expiresAt` = now + duration on save (BR-GAL-005). The card shows the resulting date.
-- **Close by hand:** the Owner sets the expiry to today. The gallery shows *Kedaluwarsa* to the Owner and is unavailable to clients. A later date, or clearing the expiry, reopens it with the same link and password (BR-GAL-005).
+- **Close by hand:** the Owner sets the expiry to today; it takes effect at once (A-2). The gallery shows *Kedaluwarsa* to the Owner and is unavailable to clients. A later date, or clearing the expiry, reopens it with the same link and password (BR-GAL-005).
 - **Expiry passes:** the gallery is expired for every reader without a job, as today (F-09 A-7).
 - **Remove the last folder:** allowed unless a client pick references one of its photos (BR-GAL-009). *Kirim link galeri* disappears (BR-GAL-010); a client who already has the link sees the empty state.
 - **Project cancelled:** the gallery is closed for good, derived from the project status: read-only for the Owner, unavailable to clients (BR-GAL-005, BR-PRJ-010). Nothing is written to the gallery.
@@ -76,12 +76,13 @@ BR-MSG-001, BR-MSG-003, BR-MSG-004, BR-MSG-006, BR-CLI-002, BR-L10N-006 (excepti
 
 ## Assumptions (low-risk, reversible — confirm or change anytime)
 - **A-1 Duration presets:** 7, 14, 30, 60 and 90 days (intent open question). Changing the list is a copy and constant change.
-- **A-2 Expiry date:** today or later; today closes the gallery (intent D-3). A date in the past is refused, so "closed by hand" always reads as today.
+- **A-2 Expiry date:** today or later. Today closes the gallery at once: `expiresAt` = the moment of saving. A later date means the end of that day in Asia/Jakarta. A date in the past is refused (Owner 2026-10-18, self-review C).
 - **A-3 Status chip replacement:** the Owner sees *Kedaluwarsa* when expired, *Ditutup* on a cancelled project, and no chip otherwise (intent open question).
 - **A-4 Client empty state** is one line of copy in EN and ID, inside the existing gallery shell; no new design frame beyond the state.
-- **A-6 *Tandai terkirim* placement:** the project header step, like *Selesai pemotretan*, from `BOOKED`, `SHOOTING` and `POST_PROCESSING` (the statuses BR-DEL-003 already allowed); the `FINAL_DELIVERY` message (*Kirim hasil akhir*) stays in the menu on `DELIVERED`.
+- **A-6 *Tandai terkirim* placement (Owner 2026-10-18, self-review A):** the project header step on `POST_PROCESSING` (after *Selesai pemotretan*); on `BOOKED` and `SHOOTING` an item in the project detail's ⋯ menu, since the header holds one step per status. Both use the same confirm dialog. The `FINAL_DELIVERY` message (*Kirim hasil akhir*) stays in the menu on `DELIVERED`.
 - **A-7 Share dialog:** no route; the dialog loads its message through a server action when it opens, so the password is fetched only on demand.
-- **A-8 *Tambah nomor WhatsApp*:** reuses the F-06 edit-client dialog over the share dialog; no new client screen.
+- **A-8 *Tambah nomor WhatsApp*:** reuses the F-06 edit-client dialog over the share dialog; no new client screen. The two dialogs are wired together outside `features/gallery/ui` (feature boundary): the share dialog takes an `onAddNumber` slot, and the app-level host renders the booking client dialog.
+- **A-11 Row menus (Owner 2026-10-18, self-review B):** the project list and dashboard row menus don't get *Kirim link galeri*; they keep *Chat WhatsApp*. Only the project detail ⋯ menu, the *Galeri* card and the gallery page header share.
 - **A-9 Refused share:** the dialog's error state reuses the gallery dialogs' error pattern; it is not drawn separately.
 - **A-10 Rendering:** the message is rendered on the server per request and never stored or logged; the server action's response is never cached (BR-MSG-003/004, C-103).
 - **A-5 Migration order:** release 1 ships code that ignores `status`, `published_at`, `archived_at` and `expiry_days` and creates galleries on booking, plus the backfill script; release 2 drops the columns and their checks (ADR-028 point 4, ADR-027).

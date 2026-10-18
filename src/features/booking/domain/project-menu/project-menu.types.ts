@@ -5,6 +5,7 @@ export type ProjectMenuItem =
   | { readonly kind: "EDIT_INFO" }
   | { readonly kind: "CHAT_WHATSAPP" }
   | { readonly kind: "ADD_WHATSAPP_NUMBER" }
+  | { readonly kind: "SHARE_GALLERY" }
   | { readonly kind: "CANCEL" }
   | { readonly kind: "DELETE_DRAFT" };
 
@@ -17,4 +18,6 @@ export interface ProjectMenuGroups {
 export interface ProjectMenuInput {
   readonly status: ProjectStatus;
   readonly hasWhatsappNumber: boolean;
+  /** Whether BR-GAL-010 lets the Owner share the gallery; list and dashboard rows always pass false (A-11). */
+  readonly canShareGallery: boolean;
 }

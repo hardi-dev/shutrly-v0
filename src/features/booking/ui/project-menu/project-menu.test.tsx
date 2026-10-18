@@ -24,7 +24,11 @@ function renderMenu(status: ProjectStatus, whatsappNumber: string | null = "6281
     <ProjectMenu
       title="Wisuda Basic — Rina"
       meta="Rina · 10 Nov 2026 · Dibooking"
-      groups={buildProjectMenu({ status, hasWhatsappNumber: whatsappNumber !== null })}
+      groups={buildProjectMenu({
+        status,
+        hasWhatsappNumber: whatsappNumber !== null,
+        canShareGallery: false,
+      })}
       whatsappNumber={whatsappNumber}
       variant="row"
       handlers={handlers}

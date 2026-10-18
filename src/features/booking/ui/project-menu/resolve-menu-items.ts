@@ -1,13 +1,25 @@
 /* eslint-disable max-lines-per-function -- one switch maps every menu item kind to its label, icon and action */
+import type { ProjectMenuItem } from "@/features/booking/domain/project-menu/project-menu.types";
 import { whatsappChatUrl } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
 
 import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { projectStepCopy } from "../project-step-copy/project-step-copy";
 import type { ProjectMenuHandlers, ProjectMenuProps, ResolvedMenuItem } from "./project-menu.types";
 
+type RenderableItem = Exclude<ProjectMenuItem, { readonly kind: "SHARE_GALLERY" }>;
+
+/**
+ * SHARE_GALLERY is hidden until its copy is approved (F-27 iteration 6); no caller enables it yet.
+ * @param item - a menu item
+ * @returns false for SHARE_GALLERY
+ */
+function isRenderable(item: ProjectMenuItem): item is RenderableItem {
+  return item.kind !== "SHARE_GALLERY";
+}
+
 function resolve(
   t: ProjectTranslate,
-  item: ProjectMenuProps["groups"]["project"][number],
+  item: RenderableItem,
   whatsappNumber: string | null,
   handlers: ProjectMenuHandlers,
 ): ResolvedMenuItem {
@@ -83,8 +95,10 @@ export function resolveMenuGroups(
   t: ProjectTranslate,
   props: Pick<ProjectMenuProps, "groups" | "whatsappNumber" | "handlers">,
 ) {
-  const map = (items: ProjectMenuProps["groups"]["project"]) =>
-    items.map((item) => resolve(t, item, props.whatsappNumber, props.handlers));
+  const map = (items: readonly ProjectMenuItem[]) =>
+    items
+      .filter(isRenderable)
+      .map((item) => resolve(t, item, props.whatsappNumber, props.handlers));
   return {
     project: map(props.groups.project),
     sendToClient: map(props.groups.sendToClient),

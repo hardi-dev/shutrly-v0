@@ -89,7 +89,7 @@ export function projectDetailView(
     canEditSchedule: status !== "CANCELLED",
     canEditInfo: status !== "CANCELLED",
     canEditTeam: status !== "CANCELLED",
-    menu: buildProjectMenu({ status, hasWhatsappNumber: true }),
+    menu: buildProjectMenu({ status, hasWhatsappNumber: true, canShareGallery: false }),
     ...overrides,
   };
 }

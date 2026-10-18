@@ -82,6 +82,7 @@ export function ProjectMenuHost(props: Readonly<ProjectMenuHostProps>) {
       groups={buildProjectMenu({
         status: target.status,
         hasWhatsappNumber: target.whatsappNumber !== null,
+        canShareGallery: false,
       })}
       handlers={{
         onStep: (step) => void steps.advance(step, target.id),

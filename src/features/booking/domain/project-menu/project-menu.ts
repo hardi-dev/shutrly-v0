@@ -8,9 +8,9 @@ export function buildProjectMenu(input: ProjectMenuInput): ProjectMenuGroups {
   const project: ProjectMenuItem[] = [];
   if (step !== null) project.push({ kind: "STEP", step });
   if (!isClosed) project.push({ kind: "EDIT_INFO" });
-  const sendToClient: ProjectMenuItem[] = [
-    input.hasWhatsappNumber ? { kind: "CHAT_WHATSAPP" } : { kind: "ADD_WHATSAPP_NUMBER" },
-  ];
+  const sendToClient: ProjectMenuItem[] = input.canShareGallery
+    ? [{ kind: "SHARE_GALLERY" }]
+    : [input.hasWhatsappNumber ? { kind: "CHAT_WHATSAPP" } : { kind: "ADD_WHATSAPP_NUMBER" }];
   let destructive: ProjectMenuItem[] = [];
   if (canDeleteDraft(input.status)) destructive = [{ kind: "DELETE_DRAFT" }];
   else if (canCancel(input.status)) destructive = [{ kind: "CANCEL" }];

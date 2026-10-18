@@ -4,7 +4,7 @@ import type { ProjectStatus } from "../project-status/project-status.types";
 import { buildProjectMenu } from "./project-menu";
 
 const kinds = (status: ProjectStatus, hasWhatsappNumber = true) => {
-  const menu = buildProjectMenu({ status, hasWhatsappNumber });
+  const menu = buildProjectMenu({ status, hasWhatsappNumber, canShareGallery: false });
   return [
     menu.project.map((item) => (item.kind === "STEP" ? item.step : item.kind)),
     menu.sendToClient.map((item) => item.kind),
@@ -27,5 +27,18 @@ describe("project menu (AC-PRJ-027)", () => {
 
   it("AC-PRJ-027 offers Tambah nomor WhatsApp when the client has no number", () => {
     expect(kinds("BOOKED", false)[1]).toEqual(["ADD_WHATSAPP_NUMBER"]);
+  });
+
+  it("AC-GFL-020 offers Kirim link galeri in place of Chat WhatsApp when the gallery can be shared", () => {
+    const menu = buildProjectMenu({
+      status: "BOOKED",
+      hasWhatsappNumber: true,
+      canShareGallery: true,
+    });
+    expect(menu.sendToClient.map((item) => item.kind)).toEqual(["SHARE_GALLERY"]);
+  });
+
+  it("A-11 keeps Chat WhatsApp when the gallery can't be shared (A-11 row menus)", () => {
+    expect(kinds("BOOKED", true)[1]).toEqual(["CHAT_WHATSAPP"]);
   });
 });

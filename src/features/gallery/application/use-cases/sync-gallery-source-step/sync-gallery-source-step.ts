@@ -1,9 +1,6 @@
 import "server-only";
 
-import {
-  canSync,
-  legacyGalleryStatus,
-} from "@/features/gallery/domain/gallery-status/gallery-status";
+import { galleryState, isWritable } from "@/features/gallery/domain/gallery-state/gallery-state";
 import { startCursor, syncProgress, walkStep } from "@/features/gallery/domain/sync-step/sync-step";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
@@ -65,12 +62,8 @@ export async function syncGallerySourceStep(
 ): Promise<SyncStepOutcome> {
   const target = await deps.sources.findSyncTarget(context, sourceId);
   if (!target) throw new GalleryError("NOT_FOUND");
-  const status = legacyGalleryStatus(
-    target.gallery.projectStatus,
-    target.gallery.expiresAt,
-    deps.now,
-  );
-  if (target.removed || !canSync(status, target.gallery.projectStatus)) {
+  const state = galleryState(target.gallery.projectStatus, target.gallery.expiresAt, deps.now);
+  if (target.removed || !isWritable(state)) {
     return galleryFailure("INVALID_STATE");
   }
   if (!target.runOpen) {

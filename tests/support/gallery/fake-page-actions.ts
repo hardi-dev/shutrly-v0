@@ -10,15 +10,12 @@ export function fakePageActions(overrides: Partial<GalleryPageActions> = {}): Ga
     linkSourceAction: vi.fn(),
     syncSourceAction: vi.fn(),
     browseAction: vi.fn(),
-    publishAction: vi.fn(),
     setExpiryAction: vi.fn(),
     rotatePasswordAction: vi.fn(),
     deleteSourceAction: vi.fn(),
     renameSourceAction: vi.fn(),
     folderMappingAction: vi.fn(() => Promise.resolve({ folders: [], items: [], mappings: [] })),
     setFolderMappingAction: vi.fn(),
-    archiveAction: vi.fn(),
-    deleteDraftAction: vi.fn(),
     ...overrides,
   };
 }

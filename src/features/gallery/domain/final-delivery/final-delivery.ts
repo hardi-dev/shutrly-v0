@@ -20,12 +20,12 @@ export function galleryDeliveryReasons(
 /**
  * Which state the Owner's *Hasil akhir* card shows: completed, published, gallery not active, no
  * finished file yet, or ready (hasilakhirowner-kartu states A–E).
- * @param facts - gallery status, finished files, whether delivery is published, project status
+ * @param facts - derived gallery state, finished files, whether delivery is published, project status
  * @returns the card state
  */
 export function deliveryCardState(facts: DeliveryCardFacts): DeliveryCardState {
   if (facts.projectStatus === "COMPLETED") return "COMPLETED";
   if (facts.published) return "PUBLISHED";
-  if (facts.status !== "PUBLISHED") return "GALLERY_INACTIVE";
+  if (facts.state !== "OPEN") return "GALLERY_INACTIVE";
   return facts.finishedCount === 0 ? "NO_FILES" : "READY";
 }

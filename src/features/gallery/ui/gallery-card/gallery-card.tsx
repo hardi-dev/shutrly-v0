@@ -13,7 +13,6 @@ import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
-import { CreateGalleryDialog } from "../create-gallery-dialog/create-gallery-dialog";
 import type { GalleryTranslate } from "../gallery-copy/gallery-copy.types";
 import { GalleryFacts } from "../gallery-facts/gallery-facts";
 import type { GalleryFact } from "../gallery-facts/gallery-facts.types";
@@ -24,7 +23,6 @@ import {
   galleryStatusChip,
   photoCountsText,
 } from "../gallery-text/gallery-text";
-import { useCreateGalleryLauncher } from "../use-create-gallery-launcher/use-create-gallery-launcher";
 import {
   GALLERY_CARD_COPY_NAMESPACE,
   GALLERY_CARD_DELIVERY_NAMESPACE,
@@ -62,7 +60,7 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
       content="flush"
       actions={
         <Button variant="secondary" iconLeading="arrow-right" onPress={handleManage}>
-          {card.gallery.status === "ARCHIVED" ? t("view") : manageLabel}
+          {card.gallery.state === "CLOSED" ? t("view") : manageLabel}
         </Button>
       }
     >
@@ -114,20 +112,8 @@ function noGalleryText(t: GalleryTranslate, card: GalleryCardView): EmptyText {
   return { title: t("cardCancelledTitle"), body: t("cardCancelledBody") };
 }
 
-function NoGallery(props: Readonly<NoGalleryProps>) {
+function NoGallery({ card }: Readonly<NoGalleryProps>) {
   const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
-  const router = useRouter();
-  const { card } = props;
-  const launcher = useCreateGalleryLauncher({
-    workspaceId: props.workspaceId,
-    projectId: card.project.id,
-    proposeAction: props.proposeAction,
-  });
-  // Revision OT #3: a folder linked while creating syncs once the gallery page opens.
-  const handleCreated = (_galleryId: string, sourceId: string | null) => {
-    launcher.close();
-    router.push(sourceId ? `${props.galleryHref}?sync=${sourceId}` : props.galleryHref);
-  };
   return (
     <SectionCard title={t("cardTitle")} description={t("cardDescription")}>
       <EmptyState
@@ -135,33 +121,7 @@ function NoGallery(props: Readonly<NoGalleryProps>) {
         placement="in-card"
         title={noGalleryText(t, card).title}
         body={noGalleryText(t, card).body}
-        action={
-          card.canCreate ? (
-            <Button
-              variant="secondary"
-              iconLeading="plus"
-              isPending={launcher.isOpening}
-              onPress={launcher.handleOpen}
-            >
-              {t("create")}
-            </Button>
-          ) : undefined
-        }
       />
-      {launcher.initialPassword === null ? null : (
-        <CreateGalleryDialog
-          isOpen
-          onOpenChange={launcher.handleOpenChange}
-          workspaceId={props.workspaceId}
-          projectId={card.project.id}
-          initialPassword={launcher.initialPassword}
-          linkableSources={card.linkableSources ?? []}
-          createAction={props.createAction}
-          proposeAction={props.proposeAction}
-          checkFolderAction={props.checkFolderAction}
-          onCreated={handleCreated}
-        />
-      )}
     </SectionCard>
   );
 }
@@ -172,7 +132,7 @@ function GallerySummaryFacts({ gallery, isMobile }: Readonly<GallerySummaryFacts
   const expiry = galleryExpiryFact(t, gallery, locale);
   const status: GalleryFact = {
     label: t("factStatus"),
-    value: <StatusChip {...galleryStatusChip(t, gallery.status)} />,
+    value: <StatusChip {...galleryStatusChip(t, gallery.state)} />,
   };
   const photos: GalleryFact = {
     label: t("factPhotos"),

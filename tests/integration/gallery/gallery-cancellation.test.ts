@@ -6,17 +6,15 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { createWebCryptoGalleryPasswordCipher } from "@/adapters/crypto/gallery-password-cipher/web-crypto-gallery-password-cipher";
 import type { Db } from "@/adapters/db/client/client.types";
-import { createDrizzleGalleryRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-repository";
 import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
 import { createDrizzleProjectRepository } from "@/adapters/db/project-repository/drizzle-project-repository";
 import { project } from "@/adapters/db/schema/booking/project";
 import { gallery } from "@/adapters/db/schema/gallery/gallery";
 import { cancelProject } from "@/features/booking/application/use-cases/cancel-project/cancel-project";
-import { archiveGalleryOfCancelledProject } from "@/features/gallery/application/use-cases/archive-gallery-of-cancelled-project/archive-gallery-of-cancelled-project";
-import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
 
 import { openTestDb } from "../helpers/test-db";
+import { createBookedGallery } from "./helpers/booked-gallery";
 import { type GallerySeed, seedGalleryWorkspace } from "./helpers/gallery-seed";
 
 let db: Db;
@@ -39,26 +37,20 @@ function lifecycleDeps() {
 }
 
 async function galleryFor(seed: GallerySeed) {
-  const created = await createGallery(
-    {
-      galleries: createDrizzleGalleryRepository(db),
-      cipher,
-      hasher: fakeHasher,
-      newId: () => crypto.randomUUID(),
-      now: new Date(),
-    },
+  const { galleryId, result } = await createBookedGallery(
+    db,
+    { cipher, hasher: fakeHasher },
     seed.context,
     seed.ownerId,
     seed.bookedProjectId,
-    { password: "mawar-4821", expiry: { type: "NONE" } },
   );
-  if (!created.ok) throw new Error("create failed");
-  await linkGallerySource(lifecycleDeps(), seed.context, seed.ownerId, created.galleryId, {
+  if (!result.ok) throw new Error("create failed");
+  await linkGallerySource(lifecycleDeps(), seed.context, seed.ownerId, galleryId, {
     workspaceSourceId: seed.sourceConfigId,
     link: `https://drive.google.com/drive/folders/${RINA_FOLDER_ID}`,
     label: "",
   });
-  return created.galleryId;
+  return galleryId;
 }
 
 /** Cancels the project in one transaction, as `withProjectCancellationScope` does; the gallery is not written (AC-GFL-016). */
@@ -69,12 +61,6 @@ function cancelInOneTransaction(seed: GallerySeed, failAfterCancel: boolean) {
       reason: "",
     });
     if (result !== undefined) throw new Error("cancel refused");
-    await archiveGalleryOfCancelledProject(
-      { sources: createDrizzleGallerySourceRepository(tx), now: new Date() },
-      seed.context,
-      seed.ownerId,
-      seed.bookedProjectId,
-    );
     if (failAfterCancel) throw new Error("forced failure");
   });
 }

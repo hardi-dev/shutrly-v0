@@ -2,20 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 
+import { proposeGalleryPasswordEntry } from "@/composition/gallery/gallery-flow/gallery-flow";
 import {
-  createGalleryEntry,
-  proposeGalleryPasswordEntry,
-} from "@/composition/gallery/gallery-flow/gallery-flow";
-import {
-  archiveGalleryEntry,
   browseGalleryPhotosEntry,
   checkFolderInUseEntry,
   checkNewGalleryFolderEntry,
-  deleteDraftGalleryEntry,
   deleteGallerySourceEntry,
   getFolderMappingEntry,
   linkGallerySourceEntry,
-  publishGalleryEntry,
   renameGallerySourceEntry,
   rotateGalleryPasswordEntry,
   setFolderMappingEntry,
@@ -23,7 +17,6 @@ import {
   syncGallerySourceEntry,
 } from "@/composition/gallery/gallery-source-flow/gallery-source-flow";
 import type { BrowseQuery } from "@/features/gallery/application/schemas/browse-query/browse-query.types";
-import type { CreateGalleryInput } from "@/features/gallery/application/schemas/create-gallery/create-gallery.types";
 import type { SetFolderMappingInput } from "@/features/gallery/application/schemas/folder-mapping/folder-mapping.types";
 import type { LinkGallerySourceInput } from "@/features/gallery/application/schemas/link-gallery-source/link-gallery-source.types";
 import type { RenameGallerySourceInput } from "@/features/gallery/application/schemas/rename-gallery-source/rename-gallery-source.types";
@@ -32,11 +25,9 @@ import type { SetGalleryExpiryInput } from "@/features/gallery/application/schem
 import type { BrowsePageView } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos.types";
 import type { FolderUseResult } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use.types";
 import type { FolderMappingView } from "@/features/gallery/application/use-cases/folder-mapping/folder-mapping.types";
-import type { CreateGalleryResult } from "@/features/gallery/application/use-cases/gallery-results/gallery-results.types";
 import type {
   ExpiryResult,
   GalleryWriteResult,
-  PublishResult,
 } from "@/features/gallery/application/use-cases/gallery-results/gallery-results.types";
 import type { LinkGallerySourceResult } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source.types";
 import type { SyncStepOutcome } from "@/features/gallery/application/use-cases/sync-gallery-source-step/sync-gallery-source-step.types";
@@ -48,16 +39,6 @@ export async function proposeGalleryPasswordAction(
   projectId: string,
 ): Promise<string> {
   return proposeGalleryPasswordEntry(workspaceId, projectId);
-}
-
-export async function createGalleryAction(
-  workspaceId: string,
-  projectId: string,
-  values: CreateGalleryInput,
-): Promise<CreateGalleryResult> {
-  const result = await createGalleryEntry(workspaceId, projectId, values);
-  if (result.ok) revalidatePath(PROJECTS, "layout");
-  return result;
 }
 
 export async function checkFolderInUseAction(
@@ -102,15 +83,6 @@ export async function browseGalleryPhotosAction(
   query: BrowseQuery,
 ): Promise<BrowsePageView> {
   return browseGalleryPhotosEntry(workspaceId, galleryId, query);
-}
-
-export async function publishGalleryAction(
-  workspaceId: string,
-  galleryId: string,
-): Promise<PublishResult> {
-  const result = await publishGalleryEntry(workspaceId, galleryId);
-  revalidatePath(PROJECTS, "layout");
-  return result;
 }
 
 export async function setGalleryExpiryAction(
@@ -165,24 +137,6 @@ export async function setFolderMappingAction(
   values: SetFolderMappingInput,
 ): Promise<GalleryWriteResult> {
   const result = await setFolderMappingEntry(workspaceId, sourceId, values);
-  revalidatePath(PROJECTS, "layout");
-  return result;
-}
-
-export async function archiveGalleryAction(
-  workspaceId: string,
-  galleryId: string,
-): Promise<GalleryWriteResult> {
-  const result = await archiveGalleryEntry(workspaceId, galleryId);
-  revalidatePath(PROJECTS, "layout");
-  return result;
-}
-
-export async function deleteDraftGalleryAction(
-  workspaceId: string,
-  galleryId: string,
-): Promise<GalleryWriteResult> {
-  const result = await deleteDraftGalleryEntry(workspaceId, galleryId);
   revalidatePath(PROJECTS, "layout");
   return result;
 }

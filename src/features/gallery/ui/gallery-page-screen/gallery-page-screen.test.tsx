@@ -17,7 +17,7 @@ const PAGE = {
   project: { id: "p-1", title: "Wisuda Basic — Rina", status: "BOOKED" as const },
   gallery: {
     id: "g-1",
-    status: "DRAFT" as const,
+    state: "OPEN" as const,
     password: "mawar-4821",
     expiresAt: null,
     expiryDays: null,
@@ -67,7 +67,7 @@ describe("GalleryPageScreen", () => {
   it("design shows the status and meta in the phone header block", () => {
     stubViewport(true);
     render(<GalleryPageScreen workspaceId="ws-1" page={PAGE} actions={ACTIONS} />);
-    expect(screen.getByText("Draf")).toBeInTheDocument();
+    expect(screen.getByText("Dipublikasikan")).toBeInTheDocument();
     expect(screen.getByText("Belum ada folder · Tanpa kedaluwarsa")).toBeInTheDocument();
   });
 });

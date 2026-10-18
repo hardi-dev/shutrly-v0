@@ -1,8 +1,6 @@
 import "server-only";
 
-import { archiveGallery } from "@/features/gallery/application/use-cases/archive-gallery/archive-gallery";
 import { browseGalleryPhotos } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos";
-import { deleteDraftGallery } from "@/features/gallery/application/use-cases/delete-draft-gallery/delete-draft-gallery";
 import { deleteGallerySource } from "@/features/gallery/application/use-cases/delete-gallery-source/delete-gallery-source";
 import { findFolderUse } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use";
 import {
@@ -10,7 +8,6 @@ import {
   setFolderMapping,
 } from "@/features/gallery/application/use-cases/folder-mapping/folder-mapping";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
-import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
 import { renameGallerySource } from "@/features/gallery/application/use-cases/rename-gallery-source/rename-gallery-source";
 import { rotateGalleryPassword } from "@/features/gallery/application/use-cases/rotate-gallery-password/rotate-gallery-password";
 import { setGalleryExpiry } from "@/features/gallery/application/use-cases/set-gallery-expiry/set-gallery-expiry";
@@ -101,20 +98,6 @@ export async function browseGalleryPhotosEntry(
   }
 }
 
-/** Publishes a draft gallery (AC-GAL-016, 017). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @returns the publish result */
-export async function publishGalleryEntry(rawWorkspaceId: string, rawGalleryId: string) {
-  const galleryId = galleryIdOrNotFound(rawGalleryId);
-  const account = await requireOwnerOrRedirect();
-  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
-  try {
-    return await withGalleryScope((scope) =>
-      publishGallery(scope, verified.context, account.id, galleryId),
-    );
-  } catch (error) {
-    return gallerySaveError(error, verified.context.workspaceId, "publish");
-  }
-}
-
 /** Changes the gallery expiry (AC-GAL-018…020). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @param values - untrusted `{ expiry }` @returns the expiry result */
 export async function setGalleryExpiryEntry(
   rawWorkspaceId: string,
@@ -180,34 +163,6 @@ export async function renameGallerySourceEntry(
     );
   } catch (error) {
     return gallerySaveError(error, verified.context.workspaceId, "rename-source");
-  }
-}
-
-/** Archives a gallery (AC-GAL-022). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @returns the write result */
-export async function archiveGalleryEntry(rawWorkspaceId: string, rawGalleryId: string) {
-  const galleryId = galleryIdOrNotFound(rawGalleryId);
-  const account = await requireOwnerOrRedirect();
-  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
-  try {
-    return await withGalleryScope((scope) =>
-      archiveGallery(scope, verified.context, account.id, galleryId),
-    );
-  } catch (error) {
-    return gallerySaveError(error, verified.context.workspaceId, "archive");
-  }
-}
-
-/** Deletes a draft gallery (AC-GAL-023). @param rawWorkspaceId - untrusted workspace id @param rawGalleryId - untrusted gallery id @returns the write result */
-export async function deleteDraftGalleryEntry(rawWorkspaceId: string, rawGalleryId: string) {
-  const galleryId = galleryIdOrNotFound(rawGalleryId);
-  await requireOwnerOrRedirect();
-  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
-  try {
-    return await withGalleryScope((scope) =>
-      deleteDraftGallery(scope, verified.context, galleryId),
-    );
-  } catch (error) {
-    return gallerySaveError(error, verified.context.workspaceId, "delete-draft");
   }
 }
 

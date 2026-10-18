@@ -10,12 +10,12 @@ import type { FolderMappingView } from "@/features/gallery/application/use-cases
 import type {
   ExpiryResult,
   GalleryWriteResult,
-  PublishResult,
 } from "@/features/gallery/application/use-cases/gallery-results/gallery-results.types";
 import type { LinkGallerySourceResult } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source.types";
 import type { SyncStepOutcome } from "@/features/gallery/application/use-cases/sync-gallery-source-step/sync-gallery-source-step.types";
 
-import type { ProposePasswordAction } from "../use-create-gallery-form/use-create-gallery-form.types";
+/** Proposes an easy-to-type gallery password for a project (BR-GAL-002). */
+export type ProposePasswordAction = (workspaceId: string, projectId: string) => Promise<string>;
 
 // The server actions the gallery page's client screens call, handed down from the route.
 export interface GalleryPageActions {
@@ -31,7 +31,6 @@ export interface GalleryPageActions {
     values: LinkGallerySourceInput,
   ) => Promise<LinkGallerySourceResult>;
   readonly syncSourceAction: (workspaceId: string, sourceId: string) => Promise<SyncStepOutcome>;
-  readonly publishAction: (workspaceId: string, galleryId: string) => Promise<PublishResult>;
   readonly setExpiryAction: (
     workspaceId: string,
     galleryId: string,
@@ -60,11 +59,6 @@ export interface GalleryPageActions {
     workspaceId: string,
     sourceId: string,
     values: SetFolderMappingInput,
-  ) => Promise<GalleryWriteResult>;
-  readonly archiveAction: (workspaceId: string, galleryId: string) => Promise<GalleryWriteResult>;
-  readonly deleteDraftAction: (
-    workspaceId: string,
-    galleryId: string,
   ) => Promise<GalleryWriteResult>;
   readonly browseAction: (
     workspaceId: string,

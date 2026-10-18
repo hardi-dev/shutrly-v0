@@ -16,7 +16,6 @@ import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repo
 import { gallery, galleryPhoto, gallerySource } from "@/adapters/db/schema/gallery/gallery";
 import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-source-repository/drizzle-workspace-source-repository";
 import { browseGalleryPhotos } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos";
-import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { findFolderUse } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use";
 import { getGalleryCard } from "@/features/gallery/application/use-cases/get-gallery-card/get-gallery-card";
 import { getGalleryPage } from "@/features/gallery/application/use-cases/get-gallery-page/get-gallery-page";
@@ -26,6 +25,7 @@ import { syncGallerySourceStep } from "@/features/gallery/application/use-cases/
 import type { SyncStepOutcome } from "@/features/gallery/application/use-cases/sync-gallery-source-step/sync-gallery-source-step.types";
 
 import { openTestDb } from "../helpers/test-db";
+import { createBookedGallery } from "./helpers/booked-gallery";
 import { type GallerySeed, seedGalleryWorkspace } from "./helpers/gallery-seed";
 import { mapFixtureFolders } from "./helpers/map-fixture-folders";
 
@@ -49,21 +49,15 @@ function deps(provider: FakeDriveProvider) {
 }
 
 async function withGallery(seed: GallerySeed): Promise<string> {
-  const created = await createGallery(
-    {
-      galleries: createDrizzleGalleryRepository(db),
-      cipher: fakeCipher,
-      hasher: fakeHasher,
-      newId: () => crypto.randomUUID(),
-      now: new Date(),
-    },
+  const { galleryId, result } = await createBookedGallery(
+    db,
+    { cipher: fakeCipher, hasher: fakeHasher },
     seed.context,
     seed.ownerId,
     seed.bookedProjectId,
-    { password: "mawar-4821", expiry: { type: "NONE" } },
   );
-  if (!created.ok) throw new Error("create failed");
-  return created.galleryId;
+  if (!result.ok) throw new Error("create failed");
+  return galleryId;
 }
 
 function linkValues(seed: GallerySeed, folderId = RINA_FOLDER_ID) {

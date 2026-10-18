@@ -32,7 +32,7 @@ const CARD: AccessCardView = {
   maskedLink: "shutrly.app/g/••••••••3kQ9",
   gallery: {
     id: "g1",
-    status: "PUBLISHED",
+    state: "OPEN",
     password: "mawar-4821",
     expiresAt: null,
     expiryDays: null,

@@ -1,15 +1,12 @@
 import type { GalleryPageActions } from "@/features/gallery/ui/gallery-actions/gallery-actions.types";
 
 import {
-  archiveGalleryAction,
   browseGalleryPhotosAction,
   checkFolderInUseAction,
-  deleteDraftGalleryAction,
   deleteGallerySourceAction,
   getFolderMappingAction,
   linkGallerySourceAction,
   proposeGalleryPasswordAction,
-  publishGalleryAction,
   renameGallerySourceAction,
   rotateGalleryPasswordAction,
   setFolderMappingAction,
@@ -24,13 +21,10 @@ export const GALLERY_PAGE_ACTIONS: GalleryPageActions = {
   linkSourceAction: linkGallerySourceAction,
   syncSourceAction: syncGallerySourceAction,
   browseAction: browseGalleryPhotosAction,
-  publishAction: publishGalleryAction,
   setExpiryAction: setGalleryExpiryAction,
   rotatePasswordAction: rotateGalleryPasswordAction,
   deleteSourceAction: deleteGallerySourceAction,
   renameSourceAction: renameGallerySourceAction,
   folderMappingAction: getFolderMappingAction,
   setFolderMappingAction,
-  archiveAction: archiveGalleryAction,
-  deleteDraftAction: deleteDraftGalleryAction,
 };

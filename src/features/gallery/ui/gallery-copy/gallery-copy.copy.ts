@@ -611,20 +611,18 @@ export const GALLERY_COPY = {
   },
 } as const;
 
-/** The gallery status words, keyed by the status code. */
+/** The gallery state words, keyed by the derived state (F-27 D-1). */
 export const GALLERY_STATUS_MESSAGE_KEY = {
-  DRAFT: "statusDraft",
-  PUBLISHED: "statusPublished",
+  OPEN: "statusPublished",
   EXPIRED: "statusExpired",
-  ARCHIVED: "statusArchived",
+  CLOSED: "statusArchived",
 } as const;
 
-/** What the client sees of the gallery, keyed by the status code. */
+/** What the client sees of the gallery, keyed by the derived state (F-27 D-1). */
 export const GALLERY_VISIBILITY_MESSAGE_KEY = {
-  DRAFT: "visibilityDraft",
-  PUBLISHED: "visibilityPublished",
+  OPEN: "visibilityPublished",
   EXPIRED: "visibilityExpired",
-  ARCHIVED: "visibilityArchived",
+  CLOSED: "visibilityArchived",
 } as const;
 
 /** The field error messages, keyed by the server's stable error codes. */
@@ -653,7 +651,6 @@ export const GALLERY_REFUSED_MESSAGE_KEY = {
   NOT_ALLOWED_FOR_PROJECT: "refusedNotAllowed",
   ALREADY_EXISTS: "refusedAlreadyExists",
   INVALID_STATE: "refusedInvalidState",
-  LAST_ACTIVE_SOURCE: "refusedLastActiveSource",
   HAS_PICKS: "refusedHasPicks",
   SYNC_IN_PROGRESS: "refusedSyncInProgress",
   RATE_LIMITED: "refusedRateLimited",

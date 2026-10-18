@@ -6,8 +6,8 @@ import type {
   GallerySourceWriter,
   LockedGalleryState,
 } from "../../ports/gallery-source-repository/gallery-source-repository.port";
-import { publishFinalDelivery } from "./publish-final-delivery";
-import type { PublishFinalDeliveryDeps } from "./publish-final-delivery.types";
+import { recordFinalDelivery } from "./record-final-delivery";
+import type { RecordFinalDeliveryDeps } from "./record-final-delivery.types";
 
 const CONTEXT = { workspaceId: asWorkspaceId("00000000-0000-4000-8000-0000000000aa") };
 const NOW = new Date("2026-10-07T10:00:00Z");
@@ -30,19 +30,19 @@ function setup(gallery: Partial<LockedGalleryState> | null, finished = 3) {
         work({ ...GALLERY, ...gallery }, writer),
     ),
   };
-  return { deps: { sources, now: NOW } as unknown as PublishFinalDeliveryDeps, publish };
+  return { deps: { sources, now: NOW } as unknown as RecordFinalDeliveryDeps, publish };
 }
 
-describe("publishFinalDelivery (D-17, BR-DEL-003)", () => {
+describe("recordFinalDelivery (D-17, BR-DEL-003)", () => {
   it("AC-DEL-001 records final delivery with the actor and time", async () => {
     const { deps, publish } = setup({});
-    expect(await publishFinalDelivery(deps, CONTEXT, "owner-1", "p")).toEqual({ ok: true });
+    expect(await recordFinalDelivery(deps, CONTEXT, "owner-1", "p")).toEqual({ ok: true });
     expect(publish).toHaveBeenCalledWith("owner-1", NOW);
   });
 
   it("AC-DEL-002 refuses without a finished file and writes nothing", async () => {
     const { deps, publish } = setup({}, 0);
-    expect(await publishFinalDelivery(deps, CONTEXT, "o", "p")).toEqual({
+    expect(await recordFinalDelivery(deps, CONTEXT, "o", "p")).toEqual({
       ok: false,
       reasons: ["NO_FINISHED_FILE"],
     });
@@ -51,13 +51,13 @@ describe("publishFinalDelivery (D-17, BR-DEL-003)", () => {
 
   it("AC-GFL-017 an expired gallery does not block marking delivered", async () => {
     const { deps, publish } = setup({ expiresAt: new Date("2026-10-01T00:00:00Z") });
-    expect(await publishFinalDelivery(deps, CONTEXT, "o", "p")).toEqual({ ok: true });
+    expect(await recordFinalDelivery(deps, CONTEXT, "o", "p")).toEqual({ ok: true });
     expect(publish).toHaveBeenCalledOnce();
   });
 
   it("AC-GFL-017 a project without a gallery gets only the finished-file reason", async () => {
     const { deps } = setup(null);
-    expect(await publishFinalDelivery(deps, CONTEXT, "o", "p")).toEqual({
+    expect(await recordFinalDelivery(deps, CONTEXT, "o", "p")).toEqual({
       ok: false,
       reasons: ["NO_FINISHED_FILE"],
     });

@@ -9,18 +9,26 @@ import {
 } from "@tests/support/gallery/gallery-fixtures";
 import { describe, expect, it } from "vitest";
 
-import { createGallery } from "../create-gallery/create-gallery";
+import {
+  createGalleryForBooking,
+  prepareGalleryPassword,
+} from "../create-gallery-for-booking/create-gallery-for-booking";
 import { getGalleryPage } from "./get-gallery-page";
 
 const NOW = new Date("2026-10-04T03:00:00Z");
 
 async function withGallery() {
   const galleries = fixtureGalleries();
-  const deps = { galleries, cipher: fakeCipher, hasher: fakeHasher, newId: () => "g-1", now: NOW };
-  await createGallery(deps, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, {
-    password: "mawar-4821",
-    expiry: { type: "NONE" },
-  });
+  const prepared = await prepareGalleryPassword(
+    {
+      cipher: fakeCipher,
+      hasher: fakeHasher,
+      passwords: { propose: () => "mawar-4821" },
+      newId: () => "g-1",
+    },
+    WORKSPACE,
+  );
+  await createGalleryForBooking({ galleries }, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, prepared);
   return galleries;
 }
 
@@ -35,7 +43,7 @@ describe("getGalleryPage", () => {
       NOW,
     );
     expect(page.project.title).toBe("Wisuda Rina");
-    expect(page.gallery).toMatchObject({ status: "PUBLISHED", password: "mawar-4821" });
+    expect(page.gallery).toMatchObject({ state: "OPEN", password: "mawar-4821" });
     expect(page.sources).toEqual([]);
   });
 

@@ -1,4 +1,4 @@
-import type { ProposePasswordAction } from "../use-create-gallery-form/use-create-gallery-form.types";
+import type { ProposePasswordAction } from "../gallery-actions/gallery-actions.types";
 
 export interface UseCreateGalleryLauncherInput {
   readonly workspaceId: string;

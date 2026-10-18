@@ -34,15 +34,12 @@ const SOURCE = {
   tooDeepCount: 0,
 };
 
-function pageWith(
-  status: "DRAFT" | "PUBLISHED" | "EXPIRED" | "ARCHIVED",
-  extra: { expiresAt?: string } = {},
-) {
+function pageWith(state: "OPEN" | "EXPIRED" | "CLOSED", extra: { expiresAt?: string } = {}) {
   return {
     project: { id: "p-1", title: "Wisuda Rina", status: "BOOKED" as const },
     gallery: {
       id: "g-1",
-      status,
+      state,
       password: "mawar-4821",
       expiresAt: extra.expiresAt ?? null,
       expiryDays: null,
@@ -63,45 +60,6 @@ describe("GalleryLifecycle", () => {
     stubViewport(false);
   });
 
-  it("AC-GAL-016 a draft shows Publikasikan, which confirms and publishes", async () => {
-    const publishAction = vi.fn(() => Promise.resolve({ ok: true as const }));
-    render(
-      <GalleryPageScreen
-        workspaceId="ws-1"
-        page={pageWith("DRAFT")}
-        actions={fakePageActions({ publishAction })}
-      />,
-    );
-    await userEvent.click(screen.getByRole("button", { name: "Publikasikan galeri" }));
-    const dialog = await screen.findByRole("dialog", { name: "Publikasikan galeri ini?" });
-    await userEvent.click(within(dialog).getByRole("button", { name: "Publikasikan galeri" }));
-    await waitFor(() => {
-      expect(publishAction).toHaveBeenCalledWith("ws-1", "g-1");
-    });
-  });
-
-  it("AC-GAL-017 a refused publish names the failing folder", async () => {
-    const publishAction = vi.fn(() =>
-      Promise.resolve({
-        ok: false as const,
-        code: "PUBLISH_REFUSED" as const,
-        failures: [{ name: "Rina-Keluarga", code: "NOT_PUBLIC" as const }],
-      }),
-    );
-    render(
-      <GalleryPageScreen
-        workspaceId="ws-1"
-        page={pageWith("DRAFT")}
-        actions={fakePageActions({ publishAction })}
-      />,
-    );
-    await userEvent.click(screen.getByRole("button", { name: "Publikasikan galeri" }));
-    const dialog = await screen.findByRole("dialog", { name: "Publikasikan galeri ini?" });
-    await userEvent.click(within(dialog).getByRole("button", { name: "Publikasikan galeri" }));
-    const refused = await screen.findByRole("dialog", { name: "Galeri belum bisa dipublikasikan" });
-    expect(within(refused).getByText("Rina-Keluarga")).toBeInTheDocument();
-  });
-
   it("AC-GAL-020 an expired gallery shows the Alert and Ubah kedaluwarsa", () => {
     render(
       <GalleryPageScreen
@@ -114,42 +72,18 @@ describe("GalleryLifecycle", () => {
     expect(screen.getByRole("button", { name: "Ubah kedaluwarsa" })).toBeInTheDocument();
   });
 
-  it("AC-GAL-022 an archived gallery is read-only: no actions, no source menu", () => {
+  it("AC-GAL-022 a closed gallery is read-only: no actions, no source menu", () => {
     render(
       <GalleryPageScreen
         workspaceId="ws-1"
-        page={pageWith("ARCHIVED")}
+        page={pageWith("CLOSED")}
         actions={fakePageActions()}
       />,
     );
     expect(screen.getByText("Galeri diarsipkan")).toBeInTheDocument();
-    for (const name of [
-      "Publikasikan hasil akhir",
-      "Ubah kedaluwarsa",
-      "Menu galeri",
-      "Sinkronkan semua",
-      "Tambah folder",
-    ]) {
+    for (const name of ["Ubah kedaluwarsa", "Menu galeri", "Sinkronkan semua", "Tambah folder"]) {
       expect(screen.queryByRole("button", { name })).not.toBeInTheDocument();
     }
-  });
-
-  it("AC-GAL-022 the menu of a published gallery archives it after confirming", async () => {
-    const archiveAction = vi.fn(() => Promise.resolve({ ok: true as const }));
-    render(
-      <GalleryPageScreen
-        workspaceId="ws-1"
-        page={pageWith("PUBLISHED")}
-        actions={fakePageActions({ archiveAction })}
-      />,
-    );
-    await userEvent.click(screen.getByRole("button", { name: "Menu galeri" }));
-    await userEvent.click(await screen.findByRole("menuitem", { name: "Arsipkan galeri" }));
-    const dialog = await screen.findByRole("alertdialog", { name: "Arsipkan galeri ini?" });
-    await userEvent.click(within(dialog).getByRole("button", { name: "Arsipkan galeri" }));
-    await waitFor(() => {
-      expect(archiveAction).toHaveBeenCalledWith("ws-1", "g-1");
-    });
   });
 
   it("AC-GAL-021 Ganti password opens with a proposal and rotates it", async () => {
@@ -158,7 +92,7 @@ describe("GalleryLifecycle", () => {
     render(
       <GalleryPageScreen
         workspaceId="ws-1"
-        page={pageWith("PUBLISHED")}
+        page={pageWith("OPEN")}
         actions={fakePageActions({ rotatePasswordAction, proposeAction })}
       />,
     );
@@ -172,16 +106,12 @@ describe("GalleryLifecycle", () => {
     });
   });
 
-  it("AC-GAL-013 the last folder of a published gallery can't be deleted", async () => {
+  it("AC-GFL-015 the last folder of an open gallery can be removed", async () => {
     render(
-      <GalleryPageScreen
-        workspaceId="ws-1"
-        page={pageWith("PUBLISHED")}
-        actions={fakePageActions()}
-      />,
+      <GalleryPageScreen workspaceId="ws-1" page={pageWith("OPEN")} actions={fakePageActions()} />,
     );
     await userEvent.click(screen.getByRole("button", { name: "Tindakan untuk Rina-Wisuda" }));
-    expect(await screen.findByRole("menuitem", { name: /Lepas folder/ })).toHaveAttribute(
+    expect(await screen.findByRole("menuitem", { name: /Lepas folder/ })).not.toHaveAttribute(
       "aria-disabled",
       "true",
     );

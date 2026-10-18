@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { stubViewport } from "@tests/support/gallery/viewport";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -14,7 +14,7 @@ vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
 const PROJECT = { id: "p-1", title: "Wisuda Rina", status: "BOOKED" as const };
 const GALLERY = {
   id: "g-1",
-  status: "DRAFT" as const,
+  state: "OPEN" as const,
   password: "mawar-4821",
   expiresAt: null,
   expiryDays: null,
@@ -66,11 +66,6 @@ function renderCard(
   const props = {
     workspaceId: "ws-1",
     card,
-    createAction: vi.fn(() =>
-      Promise.resolve({ ok: true as const, galleryId: "g-1", sourceId: null }),
-    ),
-    proposeAction: vi.fn(() => Promise.resolve("mawar-4821")),
-    checkFolderAction: vi.fn(),
     ...overrides,
   };
   render(<GalleryCard {...props} />);
@@ -83,24 +78,15 @@ describe("GalleryCard", () => {
     stubViewport(false);
   });
 
-  it("AC-GAL-001 offers Buat galeri and opens the dialog with a proposal", async () => {
-    const props = renderCard({ project: PROJECT, canCreate: true, gallery: null });
-    expect(screen.getByText("Belum ada galeri")).toBeInTheDocument();
-    await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
-    expect(props.proposeAction).toHaveBeenCalledWith("ws-1", "p-1");
-    expect(await screen.findByRole("dialog", { name: "Buat galeri" })).toBeInTheDocument();
-    expect(screen.getByLabelText("Kata sandi galeri")).toHaveValue("mawar-4821");
-  });
-
   it("AC-GAL-003 shows the booking hint and no Buat galeri on a draft project", () => {
     renderCard({ project: { ...PROJECT, status: "DRAFT" }, canCreate: false, gallery: null });
     expect(screen.getByText("Galeri tersedia setelah pemesanan dikonfirmasi")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Buat galeri" })).not.toBeInTheDocument();
   });
 
-  it("AC-GAL-001 shows the draft gallery facts without the password (Owner 7: it is on the gallery page)", async () => {
+  it("AC-GAL-001 shows the open gallery facts without the password (Owner 7: it is on the gallery page)", async () => {
     renderCard({ project: PROJECT, canCreate: false, gallery: GALLERY });
-    expect(screen.getByText("Draf")).toBeInTheDocument();
+    expect(screen.getByText("Dipublikasikan")).toBeInTheDocument();
     expect(screen.getByText("2 folder")).toBeInTheDocument();
     expect(screen.getByText("8 foto pilihan · 3 hasil akhir")).toBeInTheDocument();
     expect(screen.getByText("Tanpa kedaluwarsa")).toBeInTheDocument();
@@ -111,7 +97,7 @@ describe("GalleryCard", () => {
 
   it("A-34 summarises Pilihan klien and Hasil akhir with chips (r71J5)", () => {
     renderCard(
-      { project: PROJECT, canCreate: false, gallery: { ...GALLERY, status: "PUBLISHED" } },
+      { project: PROJECT, canCreate: false, gallery: { ...GALLERY, state: "OPEN" } },
       { selection: SELECTION, delivery: DELIVERY },
     );
     expect(screen.getByText("Foto edit 10/10 · semua dikunci")).toBeInTheDocument();
@@ -125,7 +111,7 @@ describe("GalleryCard", () => {
   it("A-34 shows only Status and Foto, then the short summaries, on phones (QUSVb)", () => {
     stubViewport(true);
     renderCard(
-      { project: PROJECT, canCreate: false, gallery: { ...GALLERY, status: "PUBLISHED" } },
+      { project: PROJECT, canCreate: false, gallery: { ...GALLERY, state: "OPEN" } },
       { selection: SELECTION, delivery: DELIVERY },
     );
     expect(screen.getByText("8 foto pilihan · 3 hasil akhir")).toBeInTheDocument();
@@ -133,20 +119,6 @@ describe("GalleryCard", () => {
     expect(screen.queryByText(/2 folder/)).not.toBeInTheDocument();
     expect(screen.getByText("Semua grup dikunci")).toBeInTheDocument();
     expect(screen.getByText("Dipublikasikan Sen, 5 Okt 2026")).toBeInTheDocument();
-  });
-
-  it("AC-GAL-001 creates the gallery and opens its page", async () => {
-    const props = renderCard({ project: PROJECT, canCreate: true, gallery: null });
-    await userEvent.click(screen.getByRole("button", { name: "Buat galeri" }));
-    const dialog = await screen.findByRole("dialog", { name: "Buat galeri" });
-    await userEvent.click(within(dialog).getByRole("button", { name: "Buat galeri" }));
-    await waitFor(() => {
-      expect(props.createAction).toHaveBeenCalledWith("ws-1", "p-1", {
-        password: "mawar-4821",
-        expiry: { type: "NONE" },
-      });
-    });
-    expect(push).toHaveBeenCalledWith("/w/ws-1/projects/p-1/gallery");
   });
 
   it("AC-GAL-008 the card names the folder that failed to sync", () => {

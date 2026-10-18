@@ -2,13 +2,11 @@ import "server-only";
 
 import { cache } from "react";
 
-import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { getGalleryCard } from "@/features/gallery/application/use-cases/get-gallery-card/get-gallery-card";
 import { getGalleryPage } from "@/features/gallery/application/use-cases/get-gallery-page/get-gallery-page";
 import { listWorkspaceSources } from "@/features/gallery/application/use-cases/list-workspace-sources/list-workspace-sources";
 import { proposeGalleryPassword } from "@/features/gallery/application/use-cases/propose-gallery-password/propose-gallery-password";
 
-import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
 import { verifyOwnerWorkspace } from "../../workspace/owner-workspace/owner-workspace";
 import {
   galleryIdOrNotFound,
@@ -26,24 +24,6 @@ export async function proposeGalleryPasswordEntry(rawWorkspaceId: string, rawPro
     );
   } catch (error) {
     return gallerySaveError(error, verified.context.workspaceId, "propose-password");
-  }
-}
-
-/** Creates the project's gallery (AC-GAL-001…004). @param rawWorkspaceId - untrusted workspace id @param rawProjectId - untrusted project id @param values - untrusted form values @returns the create result */
-export async function createGalleryEntry(
-  rawWorkspaceId: string,
-  rawProjectId: string,
-  values: unknown,
-) {
-  const projectId = galleryIdOrNotFound(rawProjectId);
-  const account = await requireOwnerOrRedirect();
-  const verified = await verifyOwnerWorkspace(rawWorkspaceId);
-  try {
-    return await withGalleryScope((scope) =>
-      createGallery(scope, verified.context, account.id, projectId, values),
-    );
-  } catch (error) {
-    return gallerySaveError(error, verified.context.workspaceId, "create");
   }
 }
 

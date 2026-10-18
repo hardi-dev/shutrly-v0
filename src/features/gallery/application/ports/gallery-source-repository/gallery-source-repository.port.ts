@@ -1,7 +1,7 @@
 import "server-only";
 
 import type { DriveFolderRef } from "@/features/gallery/domain/drive-folder-link/drive-folder-link.types";
-import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-state/gallery-state.types";
 import type { FolderMapping } from "@/features/gallery/domain/photo-classification/photo-classification.types";
 import type { PickMode } from "@/features/gallery/domain/pick-list/pick-list.types";
 import type {

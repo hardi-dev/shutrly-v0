@@ -7,10 +7,7 @@ import type {
   GallerySourceWriter,
   SyncTarget,
 } from "@/features/gallery/application/ports/gallery-source-repository/gallery-source-repository.port";
-import {
-  canSync,
-  legacyGalleryStatus,
-} from "@/features/gallery/domain/gallery-status/gallery-status";
+import { galleryState, isWritable } from "@/features/gallery/domain/gallery-state/gallery-state";
 import type { SyncFailureCode } from "@/features/gallery/domain/sync-plan/sync-plan.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
@@ -218,12 +215,8 @@ export function createDrizzleGallerySourceRepository(db: DbExecutor): GallerySou
         const locked = target ? await lockGallery(tx, context, target.galleryId) : null;
         if (!(await holdsClaim(tx, context, claim))) return false;
         const open =
-          locked !== null &&
-          canSync(
-            legacyGalleryStatus(locked.projectStatus, locked.expiresAt, now),
-            locked.projectStatus,
-          );
-        // Archived, cancelled or removed meanwhile: discard the step (TD › Concurrency).
+          locked !== null && isWritable(galleryState(locked.projectStatus, locked.expiresAt, now));
+        // Cancelled or removed meanwhile: discard the step (TD › Concurrency).
         if (!target || !open || target.removed) {
           await releaseRun(tx, context, claim, now);
           return false;

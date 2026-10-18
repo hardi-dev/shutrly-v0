@@ -5,8 +5,8 @@ import type {
   GallerySyncErrorCode,
   GallerySyncStatus,
 } from "@/features/gallery/application/ports/gallery-repository/gallery-repository.port";
-import { GALLERY_PROJECT_STATUSES } from "@/features/gallery/domain/gallery-status/gallery-status";
-import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import { GALLERY_PROJECT_STATUSES } from "@/features/gallery/domain/gallery-state/gallery-state";
+import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-state/gallery-state.types";
 
 import type { gallerySource } from "../schema/gallery/gallery";
 

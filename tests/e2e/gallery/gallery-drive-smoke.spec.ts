@@ -98,7 +98,7 @@ async function publishThenArchive(page: Page): Promise<void> {
   await expectGalleryA11y(page);
   await publish.getByRole("button", { name: galleryCopy("publish") }).click();
   await expect(visibleText(page, galleryCopy("publishedTitle"))).toBeVisible();
-  await expect(visibleText(page, galleryCopy(GALLERY_STATUS_MESSAGE_KEY.PUBLISHED))).toBeVisible();
+  await expect(visibleText(page, galleryCopy(GALLERY_STATUS_MESSAGE_KEY.OPEN))).toBeVisible();
 
   const expiry = await openFromMenu(
     page,
@@ -121,7 +121,7 @@ async function publishThenArchive(page: Page): Promise<void> {
     "alertdialog",
   );
   await archive.getByRole("button", { name: galleryCopy("archive") }).click();
-  await expect(visibleText(page, galleryCopy(GALLERY_STATUS_MESSAGE_KEY.ARCHIVED))).toBeVisible();
+  await expect(visibleText(page, galleryCopy(GALLERY_STATUS_MESSAGE_KEY.CLOSED))).toBeVisible();
   await expectGalleryA11y(page);
 }
 

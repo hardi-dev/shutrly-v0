@@ -15,7 +15,7 @@ describe("galleryDeliveryReasons (BR-DEL-003, BR-DEL-002)", () => {
 
 describe("deliveryCardState (hasilakhirowner-kartu A–E)", () => {
   const READY: DeliveryCardFacts = {
-    status: "PUBLISHED",
+    state: "OPEN",
     finishedCount: 30,
     published: false,
     projectStatus: "POST_PROCESSING",
@@ -38,7 +38,8 @@ describe("deliveryCardState (hasilakhirowner-kartu A–E)", () => {
     );
   });
   it("E: gallery not active", () => {
-    expect(deliveryCardState({ ...READY, status: "EXPIRED" })).toBe("GALLERY_INACTIVE");
-    expect(deliveryCardState({ ...READY, status: null })).toBe("GALLERY_INACTIVE");
+    expect(deliveryCardState({ ...READY, state: "EXPIRED" })).toBe("GALLERY_INACTIVE");
+    expect(deliveryCardState({ ...READY, state: "CLOSED" })).toBe("GALLERY_INACTIVE");
+    expect(deliveryCardState({ ...READY, state: null })).toBe("GALLERY_INACTIVE");
   });
 });

@@ -8,19 +8,10 @@ import type { DeliveryCardView } from "@/features/gallery/application/use-cases/
 import type { SelectionCardView } from "@/features/gallery/application/use-cases/owner-selection-views/owner-selection-views.types";
 
 import type { GallerySummaryRow } from "../gallery-summary-text/gallery-summary-text.types";
-import type {
-  CheckNewGalleryFolderAction,
-  CreateGalleryAction,
-  ProposePasswordAction,
-} from "../use-create-gallery-form/use-create-gallery-form.types";
 
 export interface GalleryCardProps {
   readonly workspaceId: string;
   readonly card: GalleryCardView;
-  readonly createAction: CreateGalleryAction;
-  readonly proposeAction: ProposePasswordAction;
-  /** Checks the optional first folder of *Buat galeri* (Revision OT #3). */
-  readonly checkFolderAction: CheckNewGalleryFolderAction;
   /** F-10 *Pilihan klien*, summarised in a row (Owner 7, A-34). */
   readonly selection?: SelectionCardView;
   /** F-10 *Hasil akhir*, summarised in a row (Owner 7, A-34). */

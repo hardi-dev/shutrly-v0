@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { canShareGallery, galleryState, isWritable } from "./gallery-state";
+import {
+  canShareGallery,
+  galleryAllowedForProject,
+  galleryState,
+  isWritable,
+} from "./gallery-state";
 
 const NOW = new Date("2026-10-18T03:00:00Z");
 
@@ -38,6 +43,15 @@ describe("isWritable (BR-GAL-005)", () => {
     ["CLOSED", false],
   ] as const)("BR-GAL-005 treats %s as writable=%s", (state, writable) => {
     expect(isWritable(state)).toBe(writable);
+  });
+});
+
+describe("galleryAllowedForProject (BR-GAL-009, AC-GAL-003)", () => {
+  it("AC-GAL-003 allows a gallery from BOOKED on, never on DRAFT or CANCELLED", () => {
+    expect(galleryAllowedForProject("BOOKED")).toBe(true);
+    expect(galleryAllowedForProject("COMPLETED")).toBe(true);
+    expect(galleryAllowedForProject("DRAFT")).toBe(false);
+    expect(galleryAllowedForProject("CANCELLED")).toBe(false);
   });
 });
 

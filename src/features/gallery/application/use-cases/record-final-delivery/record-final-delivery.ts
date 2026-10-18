@@ -4,9 +4,9 @@ import { galleryDeliveryReasons } from "@/features/gallery/domain/final-delivery
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type {
-  PublishFinalDeliveryDeps,
-  PublishFinalDeliveryResult,
-} from "./publish-final-delivery.types";
+  RecordFinalDeliveryDeps,
+  RecordFinalDeliveryResult,
+} from "./record-final-delivery.types";
 
 const NO_GALLERY = galleryDeliveryReasons({ finishedCount: 0 });
 
@@ -21,15 +21,15 @@ const NO_GALLERY = galleryDeliveryReasons({ finishedCount: 0 });
  * @param projectId - the project id
  * @returns ok, or every reason to refuse
  */
-export async function publishFinalDelivery(
-  deps: PublishFinalDeliveryDeps,
+export async function recordFinalDelivery(
+  deps: RecordFinalDeliveryDeps,
   context: WorkspaceContext,
   actorId: string,
   projectId: string,
-): Promise<PublishFinalDeliveryResult> {
+): Promise<RecordFinalDeliveryResult> {
   const galleryId = await deps.sources.findGalleryIdByProject(context, projectId);
   if (!galleryId) return { ok: false, reasons: NO_GALLERY };
-  const result = await deps.sources.withLockedGallery<PublishFinalDeliveryResult>(
+  const result = await deps.sources.withLockedGallery<RecordFinalDeliveryResult>(
     context,
     galleryId,
     async (gallery, writer) => {

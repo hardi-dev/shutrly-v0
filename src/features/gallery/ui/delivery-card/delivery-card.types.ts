@@ -1,5 +1,5 @@
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
-import type { FinalDeliveryWriteResult } from "@/features/gallery/application/use-cases/publish-final-delivery/publish-final-delivery.types";
+import type { FinalDeliveryWriteResult } from "@/features/gallery/application/use-cases/record-final-delivery/record-final-delivery.types";
 import type { FinalDeliveryReason } from "@/features/gallery/domain/final-delivery/final-delivery.types";
 
 /** *Tandai selesai*'s answer, mirrored from booking's completion result (features never import each other). */

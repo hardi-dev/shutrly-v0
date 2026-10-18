@@ -27,7 +27,9 @@ let ids: Record<string, string>;
 let otherPhotoId: string;
 
 const PROOFS = Array.from({ length: 9 }, (_, index) => `IMG_00${String(index + 1)}.jpg`);
-const HIDDEN = ["IMG_010.jpg", "IMG_099.jpg", "E_001.jpg", "E_002.jpg", "P_001.jpg"];
+// Missing and removed-source proofs stay hidden; synced finished files are visible before delivery (AC-GFL-019).
+const HIDDEN = ["IMG_010.jpg", "IMG_099.jpg"];
+const FINISHED = ["E_001.jpg", "E_002.jpg", "P_001.jpg"];
 
 beforeAll(async () => {
   ({ db, close } = await openTestDb());
@@ -79,10 +81,12 @@ const browse = (query: Record<string, unknown>) =>
 
 describe("client photos (D-15)", () => {
   it("AC-ACC-011 shows only visible proofs in the page, its JSON and image URLs", async () => {
-    const root = await browse({});
+    const root = await browse({ kind: "PROOF" });
     expect(root.proofTotal).toBe(9);
     const page =
-      root.mode === "FOLDER" ? root : await browse({ sourceId: root.folders[0]?.sourceId });
+      root.mode === "FOLDER"
+        ? root
+        : await browse({ kind: "PROOF", sourceId: root.folders[0]?.sourceId });
     expect(page.photos.map((photo) => photo.fileName)).toEqual(PROOFS);
     const json = JSON.stringify([root, page]);
     for (const name of HIDDEN) expect(json).not.toContain(name);
@@ -113,8 +117,9 @@ describe("client photos (D-15)", () => {
       serveClientPhoto(deps, clientContextOf(target), photoId, "thumb");
     expect((await serve(ids["IMG_001.jpg"])).ok).toBe(true);
     for (const name of HIDDEN) expect((await serve(ids[name])).ok).toBe(false);
+    for (const name of FINISHED) expect((await serve(ids[name])).ok).toBe(true);
     expect((await serve(otherPhotoId)).ok).toBe(false);
-    expect(thumbnail).toHaveBeenCalledTimes(1);
+    expect(thumbnail).toHaveBeenCalledTimes(1 + FINISHED.length);
   });
 
   it("AC-DEL-003 serves edited files once final delivery is published", async () => {

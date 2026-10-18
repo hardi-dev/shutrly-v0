@@ -4,8 +4,8 @@ import type { Db } from "@/adapters/db/client/client.types";
 import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
 import { createDrizzleProjectRepository } from "@/adapters/db/project-repository/drizzle-project-repository";
 import { markProjectDelivered } from "@/features/booking/application/use-cases/mark-project-delivered/mark-project-delivered";
-import { publishFinalDelivery } from "@/features/gallery/application/use-cases/publish-final-delivery/publish-final-delivery";
-import type { FinalDeliveryWriteResult } from "@/features/gallery/application/use-cases/publish-final-delivery/publish-final-delivery.types";
+import { recordFinalDelivery } from "@/features/gallery/application/use-cases/record-final-delivery/record-final-delivery";
+import type { FinalDeliveryWriteResult } from "@/features/gallery/application/use-cases/record-final-delivery/record-final-delivery.types";
 import type { FinalDeliveryReason } from "@/features/gallery/domain/final-delivery/final-delivery.types";
 
 import { withRequestDb } from "../../request-db/request-db";
@@ -33,7 +33,7 @@ export async function publishFinalDeliveryWithProject(
   const { context, actorId, projectId } = target;
   const project = await markProjectDelivered(scope.projects, context, actorId, projectId);
   const deps = { sources: scope.sources, now: scope.now };
-  const gallery = await publishFinalDelivery(deps, context, actorId, projectId);
+  const gallery = await recordFinalDelivery(deps, context, actorId, projectId);
   const reasons: FinalDeliveryReason[] = project ? ["PROJECT_STATUS"] : [];
   if (!gallery.ok) reasons.push(...gallery.reasons);
   if (reasons.length > 0) throw new FinalDeliveryRefusal(reasons);

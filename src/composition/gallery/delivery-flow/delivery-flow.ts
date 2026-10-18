@@ -9,7 +9,7 @@ import { completeProject } from "@/features/booking/application/use-cases/comple
 import type { ProjectDeliveryResult } from "@/features/booking/application/use-cases/mark-project-delivered/mark-project-delivered.types";
 import { getDeliveryCard } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card";
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
-import type { FinalDeliveryWriteResult } from "@/features/gallery/application/use-cases/publish-final-delivery/publish-final-delivery.types";
+import type { FinalDeliveryWriteResult } from "@/features/gallery/application/use-cases/record-final-delivery/record-final-delivery.types";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
 import { withRequestDb } from "../../request-db/request-db";
@@ -60,7 +60,7 @@ export async function publishFinalDeliveryEntry(
       projectId,
     });
   } catch (error) {
-    return saveError(error, verified.context.workspaceId, "publish-final-delivery");
+    return saveError(error, verified.context.workspaceId, "record-final-delivery");
   }
 }
 

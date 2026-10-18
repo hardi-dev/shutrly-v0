@@ -1,9 +1,4 @@
-import type {
-  ExpiryInput,
-  ExpiryResolution,
-  ResolvedExpiry,
-  StoredExpiry,
-} from "./gallery-expiry.types";
+import type { ExpiryInput, ExpiryResolution } from "./gallery-expiry.types";
 
 // One MVP time zone, as F-07's schedule zone (A-4, D-2). Asia/Jakarta has no DST, so the
 // end of a day is a fixed +07:00 instant.
@@ -57,10 +52,4 @@ export function resolveExpiry(input: ExpiryInput, now: Date): ExpiryResolution {
   if (input.date < today) return { ok: false, code: "PAST_DATE" };
   const expiresAt = input.date === today ? now : endOfGalleryDay(input.date);
   return { ok: true, expiry: { expiresAt, expiryDays: null } };
-}
-
-/** Computes the expiry written at publish: a stored duration counts from the publish time (BR-GAL-005, AC-GAL-018). @param stored - the draft's expiry columns @param now - the publish instant @returns the published expiry columns */
-export function expiryOnPublish(stored: StoredExpiry, now: Date): ResolvedExpiry {
-  if (stored.expiryDays === null) return { expiresAt: stored.expiresAt, expiryDays: null };
-  return { expiresAt: addDays(now, stored.expiryDays), expiryDays: null };
 }

@@ -1,4 +1,5 @@
-import type { GalleryProjectStatus, GalleryStatus } from "../gallery-status/gallery-status.types";
+import type { GalleryState } from "../gallery-state/gallery-state.types";
+import type { GalleryProjectStatus } from "../gallery-state/gallery-state.types";
 
 /** Why final delivery can't be published (BR-DEL-003, A-17, AC-DEL-002). */
 export type FinalDeliveryReason = "NO_FINISHED_FILE" | "GALLERY_NOT_PUBLISHED" | "PROJECT_STATUS";
@@ -14,8 +15,8 @@ export type DeliveryCardState =
   "NO_FILES" | "READY" | "PUBLISHED" | "COMPLETED" | "GALLERY_INACTIVE";
 
 export interface DeliveryCardFacts extends GalleryDeliveryFacts {
-  /** Effective status, or null when the project has no gallery (the card reads it until iteration 5). */
-  readonly status: GalleryStatus | null;
+  /** The derived gallery state, or null when the project has no gallery (BR-GAL-005, D-1). */
+  readonly state: GalleryState | null;
   readonly published: boolean;
   readonly projectStatus: GalleryProjectStatus;
 }

@@ -92,7 +92,7 @@ describe("client photo-list cache (D-22)", () => {
     expect((await browseClientPhotos(deps, await clientAt(), ROOT)).proofTotal).toBe(2);
   });
 
-  it("D-22 a final-delivery publish serves the finished files at once", async () => {
+  it("AC-GFL-019 D-22 lists the synced finished files before and after delivery, from the cache too", async () => {
     const target = await seed();
     const deps = {
       browse: createDrizzleGalleryBrowseReader(db, { client: true }),
@@ -103,7 +103,9 @@ describe("client photo-list cache (D-22)", () => {
       ...clientContextOf(target),
       contentVersion: await contentVersionOf(target.galleryId),
     };
-    expect((await browseClientPhotos(deps, before, EDITED)).editedTotal).toBe(0);
+    const beforePage = await browseClientPhotos(deps, before, EDITED);
+    expect(beforePage.editedTotal).toBe(1);
+    expect(beforePage.photos.map((photo) => photo.fileName)).toContain("E_001.jpg");
     expect(
       await runFinalDeliveryTransaction(db, {
         context: fixture.context,

@@ -10,16 +10,16 @@ import { createDrizzleGalleryBrowseReader } from "@/adapters/db/gallery-reposito
 import { createDrizzleGalleryRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-repository";
 import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
 import { gallery, galleryPhoto, gallerySource } from "@/adapters/db/schema/gallery/gallery";
-import { archiveGallery } from "@/features/gallery/application/use-cases/archive-gallery/archive-gallery";
 import { browseGalleryPhotos } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos";
-import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
-import { deleteDraftGallery } from "@/features/gallery/application/use-cases/delete-draft-gallery/delete-draft-gallery";
+import {
+  createGalleryForBooking,
+  prepareGalleryPassword,
+} from "@/features/gallery/application/use-cases/create-gallery-for-booking/create-gallery-for-booking";
 import { deleteGallerySource } from "@/features/gallery/application/use-cases/delete-gallery-source/delete-gallery-source";
 import { findFolderUse } from "@/features/gallery/application/use-cases/find-folder-use/find-folder-use";
 import { getGalleryCard } from "@/features/gallery/application/use-cases/get-gallery-card/get-gallery-card";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
 import { proposeGalleryPassword } from "@/features/gallery/application/use-cases/propose-gallery-password/propose-gallery-password";
-import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
 import { renameGallerySource } from "@/features/gallery/application/use-cases/rename-gallery-source/rename-gallery-source";
 import { rotateGalleryPassword } from "@/features/gallery/application/use-cases/rotate-gallery-password/rotate-gallery-password";
 import { serveOwnerPhoto } from "@/features/gallery/application/use-cases/serve-owner-photo/serve-owner-photo";
@@ -66,25 +66,28 @@ describe("AC-GAL-025 workspace isolation", () => {
   it("every gallery action and read answers not found for another workspace and changes nothing", async () => {
     const owner = await seedGalleryWorkspace(db);
     const intruder = await seedGalleryWorkspace(db);
-    const created = await createGallery(
+    const prepared = await prepareGalleryPassword(
       {
-        galleries: createDrizzleGalleryRepository(db),
         cipher,
         hasher: fakeHasher,
+        passwords: { propose: () => "mawar-4821" },
         newId: () => crypto.randomUUID(),
-        now: new Date(),
       },
+      owner.context,
+    );
+    const created = await createGalleryForBooking(
+      { galleries: createDrizzleGalleryRepository(db) },
       owner.context,
       owner.ownerId,
       owner.bookedProjectId,
-      { password: "mawar-4821", expiry: { type: "NONE" } },
+      prepared,
     );
-    if (!created.ok) throw new Error("create failed");
+    if (!created.ok || !created.created) throw new Error("create failed");
     const linked = await linkGallerySource(
       deps(),
       owner.context,
       owner.ownerId,
-      created.galleryId,
+      prepared.galleryId,
       {
         workspaceSourceId: owner.sourceConfigId,
         link: `https://drive.google.com/drive/folders/${RINA_FOLDER_ID}`,
@@ -97,9 +100,9 @@ describe("AC-GAL-025 workspace isolation", () => {
       .select()
       .from(galleryPhoto)
       .where(eq(galleryPhoto.gallerySourceId, linked.sourceId));
-    const before = await snapshot(created.galleryId, linked.sourceId);
+    const before = await snapshot(prepared.galleryId, linked.sourceId);
     const repository = createDrizzleGalleryRepository(db);
-    const { galleryId } = created;
+    const { galleryId } = prepared;
     const { sourceId } = linked;
     const attempts: Record<string, () => Promise<unknown>> = {
       propose: () =>
@@ -132,7 +135,6 @@ describe("AC-GAL-025 workspace isolation", () => {
           label: "",
         }),
       sync: () => syncGallerySourceStep(deps(), intruder.context, sourceId),
-      publish: () => publishGallery(deps(), intruder.context, intruder.ownerId, galleryId),
       expiry: () =>
         setGalleryExpiry(deps(), intruder.context, intruder.ownerId, galleryId, {
           expiry: { type: "NONE" },
@@ -143,8 +145,6 @@ describe("AC-GAL-025 workspace isolation", () => {
         }),
       delete: () => deleteGallerySource(deps(), intruder.context, sourceId),
       rename: () => renameGallerySource(deps(), intruder.context, sourceId, { label: "x" }),
-      archive: () => archiveGallery(deps(), intruder.context, intruder.ownerId, galleryId),
-      deleteDraft: () => deleteDraftGallery(deps(), intruder.context, galleryId),
     };
     for (const [name, attempt] of Object.entries(attempts)) {
       await expect(attempt(), name).rejects.toMatchObject({ code: "NOT_FOUND" });

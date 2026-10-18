@@ -3,18 +3,13 @@ import { describe, expect, it } from "vitest";
 import { accessCardState, maskedClientLink } from "./access-card";
 
 describe("access card (aksesklien-kartu)", () => {
-  it("A: a published or expired gallery is active", () => {
-    expect(accessCardState("PUBLISHED", "DELIVERED")).toBe("ACTIVE");
-    expect(accessCardState("EXPIRED", "POST_PROCESSING")).toBe("ACTIVE");
+  it("A: an open or expired gallery is active", () => {
+    expect(accessCardState("OPEN")).toBe("ACTIVE");
+    expect(accessCardState("EXPIRED")).toBe("ACTIVE");
   });
 
-  it("B: a draft gallery", () => {
-    expect(accessCardState("DRAFT", "BOOKED")).toBe("DRAFT");
-  });
-
-  it("C: an archived gallery or a cancelled project", () => {
-    expect(accessCardState("ARCHIVED", "COMPLETED")).toBe("INACTIVE");
-    expect(accessCardState("PUBLISHED", "CANCELLED")).toBe("INACTIVE");
+  it("C: a closed gallery, which is the cancelled project's, is inactive", () => {
+    expect(accessCardState("CLOSED")).toBe("INACTIVE");
   });
 
   it("masks the token but its last 4 characters", () => {

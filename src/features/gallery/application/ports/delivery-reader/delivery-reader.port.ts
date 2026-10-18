@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-state/gallery-state.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 /** The project's gallery as the *Hasil akhir* card needs it (D-17, D-20). */

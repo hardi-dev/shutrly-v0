@@ -34,7 +34,6 @@ import type { ProjectListParams } from "@/features/booking/domain/project-list-q
 import { PROJECT_SEARCH_MAX_LENGTH } from "@/features/booking/domain/project-record/project-record";
 import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 import { todayInScheduleZone } from "@/features/booking/domain/schedule-clock/schedule-clock";
-import { archiveGalleryOfCancelledProject } from "@/features/gallery/application/use-cases/archive-gallery-of-cancelled-project/archive-gallery-of-cancelled-project";
 import { DomainError } from "@/shared/errors/domain-error";
 import { logger } from "@/shared/logging/logger";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
@@ -218,19 +217,10 @@ export async function cancelProjectEntry(
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
-    // One transaction: a published gallery is archived with the cancel, or neither happens (AC-GAL-024).
-    return await withProjectCancellationScope(async ({ projects, galleries, now }) => {
-      const result = await cancelProject(projects, verified.context, account.id, projectId, values);
-      if (result === undefined) {
-        await archiveGalleryOfCancelledProject(
-          { sources: galleries, now },
-          verified.context,
-          account.id,
-          projectId,
-        );
-      }
-      return result;
-    });
+    // A cancelled project's gallery closes by its project status alone (AC-GFL-016); nothing else to write.
+    return await withProjectCancellationScope(({ projects }) =>
+      cancelProject(projects, verified.context, account.id, projectId, values),
+    );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "cancel");
   }

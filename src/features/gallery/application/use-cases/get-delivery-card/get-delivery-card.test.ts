@@ -9,7 +9,6 @@ import { getDeliveryCard } from "./get-delivery-card";
 const CONTEXT = { workspaceId: asWorkspaceId("00000000-0000-4000-8000-0000000000aa") };
 const NOW = new Date("2026-10-07T10:00:00Z");
 const GALLERY = {
-  status: "PUBLISHED",
   expiresAt: null,
   finalDeliveryPublishedAt: null,
   editedCount: 24,

@@ -8,13 +8,12 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import type { Db } from "@/adapters/db/client/client.types";
 import { createDrizzleGalleryBrowseReader } from "@/adapters/db/gallery-repository/drizzle-gallery-browse-reader";
-import { createDrizzleGalleryRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-repository";
 import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
 import { browseGalleryPhotos } from "@/features/gallery/application/use-cases/browse-gallery-photos/browse-gallery-photos";
-import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
 
 import { openTestDb } from "../helpers/test-db";
+import { createBookedGallery } from "./helpers/booked-gallery";
 import { type GallerySeed, seedGalleryWorkspace } from "./helpers/gallery-seed";
 import { mapFixtureFolders } from "./helpers/map-fixture-folders";
 import { syncSourceToEnd } from "./helpers/sync-to-end";
@@ -33,20 +32,14 @@ const names = (prefix: string, count: number, start = 1) =>
   );
 
 async function galleryWith(seed: GallerySeed, provider: FakeDriveProvider, folderIds: string[]) {
-  const created = await createGallery(
-    {
-      galleries: createDrizzleGalleryRepository(db),
-      cipher: fakeCipher,
-      hasher: fakeHasher,
-      newId: () => crypto.randomUUID(),
-      now: new Date(),
-    },
+  const { galleryId, result } = await createBookedGallery(
+    db,
+    { cipher: fakeCipher, hasher: fakeHasher },
     seed.context,
     seed.ownerId,
     seed.bookedProjectId,
-    { password: "mawar-4821", expiry: { type: "NONE" } },
   );
-  if (!created.ok) throw new Error("create failed");
+  if (!result.ok) throw new Error("create failed");
   const deps = {
     sources: createDrizzleGallerySourceRepository(db),
     provider,
@@ -55,7 +48,7 @@ async function galleryWith(seed: GallerySeed, provider: FakeDriveProvider, folde
   };
   const sourceIds: string[] = [];
   for (const folderId of folderIds) {
-    const linked = await linkGallerySource(deps, seed.context, seed.ownerId, created.galleryId, {
+    const linked = await linkGallerySource(deps, seed.context, seed.ownerId, galleryId, {
       workspaceSourceId: seed.sourceConfigId,
       link: `https://drive.google.com/drive/folders/${folderId}`,
       label: "",
@@ -68,7 +61,7 @@ async function galleryWith(seed: GallerySeed, provider: FakeDriveProvider, folde
     await syncSourceToEnd(deps, seed.context, linked.sourceId);
     sourceIds.push(linked.sourceId);
   }
-  return { galleryId: created.galleryId, sourceIds };
+  return { galleryId: galleryId, sourceIds };
 }
 
 const query = (extra: Record<string, unknown> = {}) => ({

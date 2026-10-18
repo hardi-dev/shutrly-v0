@@ -1,7 +1,5 @@
-import type {
-  GalleryProjectStatus,
-  GalleryStatus,
-} from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import type { GalleryState } from "@/features/gallery/domain/gallery-state/gallery-state.types";
+import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-state/gallery-state.types";
 import type { PhotoKind } from "@/features/gallery/domain/photo-classification/photo-classification.types";
 import type { SourceProvider } from "@/features/gallery/domain/source-provider/source-provider.types";
 
@@ -20,7 +18,8 @@ export interface GalleryProjectView {
 // Dates are ISO strings so the view crosses the server/client boundary unchanged.
 export interface GallerySummaryView {
   readonly id: string;
-  readonly status: GalleryStatus;
+  /** The derived state: OPEN, EXPIRED or CLOSED (BR-GAL-005, D-1). */
+  readonly state: GalleryState;
   readonly password: string;
   readonly expiresAt: string | null;
   readonly expiryDays: number | null;

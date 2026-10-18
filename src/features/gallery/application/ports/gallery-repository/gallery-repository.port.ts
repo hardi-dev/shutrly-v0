@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-state/gallery-state.types";
 import type { PhotoKind } from "@/features/gallery/domain/photo-classification/photo-classification.types";
 import type { SourceProvider } from "@/features/gallery/domain/source-provider/source-provider.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";

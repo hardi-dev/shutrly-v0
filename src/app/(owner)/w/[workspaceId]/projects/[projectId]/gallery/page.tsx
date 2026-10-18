@@ -47,7 +47,7 @@ export default async function GalleryPage({
     <>
       <PageHeadingOverride
         title={t("pageTitle")}
-        status={galleryStatusChip(t, page.gallery.status)}
+        status={galleryStatusChip(t, page.gallery.state)}
         meta={galleryMetaText(t, page.gallery, page.project.title, locale)}
         parent={{ label: page.project.title, href: `/w/${workspaceId}/projects/${projectId}` }}
         hidesBottomNav

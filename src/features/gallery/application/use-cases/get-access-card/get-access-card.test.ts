@@ -15,7 +15,7 @@ const CONTEXT = { workspaceId: asWorkspaceId("00000000-0000-4000-8000-0000000000
 const TOKEN = "abcdefghijklmnopqrstuvwxyz0123456789ABC3kQ9";
 const GALLERY = {
   id: "g",
-  status: "PUBLISHED",
+  state: "OPEN",
   password: "mawar-4821",
   expiresAt: null,
   expiryDays: null,

@@ -2,12 +2,12 @@ import type { FinalDeliveryReason } from "@/features/gallery/domain/final-delive
 
 import type { GallerySourceRepositoryPort } from "../../ports/gallery-source-repository/gallery-source-repository.port";
 
-export interface PublishFinalDeliveryDeps {
+export interface RecordFinalDeliveryDeps {
   readonly sources: GallerySourceRepositoryPort;
   readonly now: Date;
 }
 
-export type PublishFinalDeliveryResult =
+export type RecordFinalDeliveryResult =
   { readonly ok: true } | { readonly ok: false; readonly reasons: readonly FinalDeliveryReason[] };
 
 /** The publish action's answer: undefined once both the gallery and the project moved, or every reason (AC-DEL-002). */

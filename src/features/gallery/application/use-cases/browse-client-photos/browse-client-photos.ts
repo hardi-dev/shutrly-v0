@@ -43,9 +43,9 @@ async function readPage(
 }
 
 /**
- * Reads one page of the client's *Semua foto* (visible proofs) or, once final delivery is published,
- * of *Hasil akhir* (EDITED / PRINT): the F-09 folder levels and search, as client views
- * (BR-DEL-002, BR-GAL-006/007, D-15, AC-ACC-011).
+ * Reads one page of the client's *Semua foto* (visible proofs) or of *Hasil akhir* (EDITED / PRINT) once
+ * synced, without waiting for final delivery: the F-09 folder levels and search, as client views
+ * (BR-DEL-002, AC-GFL-019, BR-GAL-006/007, D-15, AC-ACC-011).
  * @param deps - the client browse reader and whether direct images are on
  * @param client - the signed-in client context
  * @param input - untrusted browse query; a finished kind before delivery reads proofs
@@ -63,8 +63,8 @@ export async function browseClientPhotos(
   return {
     mode: page.mode,
     proofTotal: page.totals.proof,
-    editedTotal: client.finalDeliveryPublished ? page.totals.edited : 0,
-    printTotal: client.finalDeliveryPublished ? page.totals.print : 0,
+    editedTotal: page.totals.edited,
+    printTotal: page.totals.print,
     sourceId: page.sourceId,
     isSingleSource: page.isSingleSource,
     folders: page.folders,

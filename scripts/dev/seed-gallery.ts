@@ -18,13 +18,15 @@ import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-
 import { createGoogleDriveProvider } from "@/adapters/source/google-drive-provider/google-drive-provider";
 import { runFinalDeliveryTransaction } from "@/composition/gallery/final-delivery-scope/final-delivery-scope";
 import type { GalleryScope } from "@/composition/gallery/gallery-scope/gallery-scope.types";
-import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
+import {
+  createGalleryForBooking,
+  prepareGalleryPassword,
+} from "@/features/gallery/application/use-cases/create-gallery-for-booking/create-gallery-for-booking";
 import {
   getFolderMapping,
   setFolderMapping,
 } from "@/features/gallery/application/use-cases/folder-mapping/folder-mapping";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
-import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
 import type { ClientContext } from "@/features/gallery/application/use-cases/resolve-client-access/resolve-client-access.types";
 import { syncGallerySourceStep } from "@/features/gallery/application/use-cases/sync-gallery-source-step/sync-gallery-source-step";
 
@@ -123,13 +125,26 @@ export async function seedGallery(
 ): Promise<SeededGallery> {
   const scope = galleryScope(studio, env);
   const { context, ownerId } = studio;
-  const created = check(
-    "gallery",
-    await createGallery(scope, context, ownerId, seed.projectId, {
-      password: env.galleryPassword,
-      expiry: { type: "NONE" },
-    }),
+  const prepared = await prepareGalleryPassword(
+    {
+      cipher: scope.cipher,
+      hasher: scope.hasher,
+      passwords: { propose: () => env.galleryPassword },
+      newId: scope.newId,
+    },
+    context,
   );
+  check(
+    "gallery",
+    await createGalleryForBooking(
+      { galleries: scope.galleries },
+      context,
+      ownerId,
+      seed.projectId,
+      prepared,
+    ),
+  );
+  const created = { galleryId: prepared.galleryId };
   const linked = check(
     "link folder",
     await linkGallerySource(scope, context, ownerId, created.galleryId, {
@@ -140,10 +155,6 @@ export async function seedGallery(
   );
   await syncSource(studio, scope, linked.sourceId);
   await mapFinishedFolders(studio, scope, linked.sourceId);
-  check(
-    "publish",
-    await publishGallery({ ...scope, now: new Date() }, context, ownerId, created.galleryId),
-  );
   return { galleryId: created.galleryId, sourceId: linked.sourceId };
 }
 

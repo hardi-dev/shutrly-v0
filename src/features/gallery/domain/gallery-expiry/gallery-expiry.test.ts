@@ -1,8 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  endOfGalleryDay,
-  expiryOnPublish,
   GALLERY_EXPIRY_PRESETS,
   isExpiryPreset,
   resolveExpiry,
@@ -67,24 +65,6 @@ describe("isExpiryPreset (A-1, AC-GFL-011)", () => {
 
   it("AC-GFL-011 refuses any other duration", () => {
     expect([1, 6, 8, 45, 91, 3650].some(isExpiryPreset)).toBe(false);
-  });
-});
-
-describe("expiryOnPublish", () => {
-  it("AC-GAL-018 turns 30 days into publish time + 30 days", () => {
-    const publishedAt = new Date("2026-10-04T03:00:00Z");
-    const stored = { status: "DRAFT" as const, expiresAt: null, expiryDays: 30 };
-    expect(expiryOnPublish(stored, publishedAt)).toEqual({
-      expiresAt: new Date("2026-11-03T03:00:00Z"),
-      expiryDays: null,
-    });
-  });
-
-  it("BR-GAL-005 keeps a date or no expiry unchanged", () => {
-    const date = endOfGalleryDay("2026-12-31");
-    expect(
-      expiryOnPublish({ status: "DRAFT", expiresAt: date, expiryDays: null }, new Date()),
-    ).toEqual({ expiresAt: date, expiryDays: null });
   });
 });
 

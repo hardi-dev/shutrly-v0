@@ -1,10 +1,7 @@
 import "server-only";
 
 import { parseDriveFolderLink } from "@/features/gallery/domain/drive-folder-link/drive-folder-link";
-import {
-  canEditSources,
-  legacyGalleryStatus,
-} from "@/features/gallery/domain/gallery-status/gallery-status";
+import { galleryState, isWritable } from "@/features/gallery/domain/gallery-state/gallery-state";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { GalleryError } from "../../errors/gallery-errors/gallery-errors";
@@ -36,8 +33,8 @@ export async function linkGallerySource(
     context,
     galleryId,
     async (gallery, writer) => {
-      const status = legacyGalleryStatus(gallery.projectStatus, gallery.expiresAt, deps.now);
-      if (!canEditSources(status, gallery.projectStatus)) return galleryFailure("INVALID_STATE");
+      const state = galleryState(gallery.projectStatus, gallery.expiresAt, deps.now);
+      if (!isWritable(state)) return galleryFailure("INVALID_STATE");
       if (!(await writer.isWorkspaceSourceActive(parsed.data.workspaceSourceId))) {
         return galleryFieldFailure({ workspaceSourceId: "SOURCE_NOT_ACTIVE" });
       }

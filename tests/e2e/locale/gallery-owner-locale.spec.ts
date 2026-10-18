@@ -7,9 +7,9 @@ import { OWNER_SHELL_COPY } from "@/features/workspace/ui/owner-shell/owner-shel
 import type { AppLocale } from "@/shared/locale/locale.types";
 import { LANGUAGE_SWITCH_COPY } from "@/ui/patterns/language-switch/language-switch.copy";
 
-import { FOLDER_URL, publishedGallery } from "../client-access/client-access-e2e";
+import { FOLDER_URL, linkedGallery } from "../client-access/client-access-e2e";
 
-// Needs the real public folder from .env.test, because the gallery is published over it.
+// Needs the real public folder from .env.test, because the gallery is linked to it.
 test.skip(!FOLDER_URL, "GALLERY_SMOKE_FOLDER_URL is not set");
 test.setTimeout(300_000);
 
@@ -58,7 +58,7 @@ test("AC-L10N-001 a gallery renders in the owner's language and follows an owner
   browser,
 }) => {
   await page.setViewportSize(DESKTOP);
-  const { clientPath } = await publishedGallery(page);
+  const { clientPath } = await linkedGallery(page);
   const ownerLocale = await currentLocale(page);
   const target = other(ownerLocale);
 

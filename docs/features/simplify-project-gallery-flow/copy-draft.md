@@ -126,6 +126,7 @@ File for the share dialog: **new** `src/features/gallery/ui/gallery-share-dialog
 | galleryShare · `copyMessage` | *Salin pesan* button, AC-GFL-023 | Salin pesan | Copy message | new | §10.9 |
 | galleryShare · `copiedTitle` | Toast after copy | Pesan disalin | Message copied | new | §10.9 |
 | galleryShare · `copiedBody` | Toast body | Tempel di WhatsApp. | Paste it into WhatsApp. | new | §10.9 |
+| galleryShare · `copyFailed` | Toast when the clipboard write fails (Owner 2026-10-18) | Pesan tidak bisa disalin. Salin manual dari kotak pesan. | Couldn’t copy the message. Copy it from the message box. | new | §10.9 |
 | galleryShare · `openWhatsapp` | *Buka WhatsApp*, AC-GFL-022 | Buka WhatsApp | Open WhatsApp | existing (`client-copy` `openWhatsapp`, same wording) | §10.9 (reuses §11) |
 | galleryShare · `noNumberTitle` | K2 Alert title, AC-GFL-024 | {name} belum punya nomor WhatsApp | {name} doesn’t have a WhatsApp number yet | new | §10.9 |
 | galleryShare · `noNumberBody` | K2 Alert body | Tambahkan nomor di data klien untuk membuka WhatsApp. Kamu tetap bisa menyalin pesannya. | Add a number in the client’s details to open WhatsApp. You can still copy the message. | new | §10.9 |
@@ -139,6 +140,8 @@ File for the share dialog: **new** `src/features/gallery/ui/gallery-share-dialog
 | booking project-menu · `shareGalleryNoFolder` | Disabled hint, AC-GFL-013 | Galeri harus punya folder dulu. | The gallery needs a folder first. | new (no design text; proposed) | §10 |
 
 ---
+
+**Owner 2026-10-18:** `{clientName}` in the `GALLERY_SHARE` message is the client's first name (same as the client gallery greeting), not the full stored name.
 
 ## Iteration 7 — Client empty state and finished files
 

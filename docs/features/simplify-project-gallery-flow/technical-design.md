@@ -111,3 +111,12 @@ Deviations:
 - `SHARE_GALLERY` is filtered out in `resolve-menu-items.ts` until its copy is approved (iteration 6); the item is not in the UI yet.
 - `GALLERY_NOT_PUBLISHED` stays in `FinalDeliveryReason` until the delivery dialog changes (iteration 5).
 Open (not fixed here, outside the plan's callers): `browse-client-photos` totals, `get-delivery-files` and `get-client-home` still gate *Hasil akhir* on `finalDeliveryPublished`, which contradicts AC-GFL-019 for a synced file before delivery. Needs a decision in iteration 4 or 5.
+
+## Implementation record — iteration 2
+Built: migration `0022_gallery_without_status` (drops `gallery_status_ck`, `gallery_expiry_one_ck`, `gallery_expiry_days_draft_ck`, `gallery_published_ck`; `status` nullable, no default), applied once to the non-production database (success). Ports and adapters read no stored status (lock, summary, source sync, client access, delivery reader); `setExpiry(expiresAt, actor, now)`; writers `publish`, `archive` and `deleteGallery` removed; `legacyGalleryStatus(projectStatus, expiresAt, now)` bridges the remaining callers to iteration 3 (OPEN reads PUBLISHED, EXPIRED reads EXPIRED, CLOSED reads ARCHIVED).
+Commits: `76063109` drop gallery status constraints; `68673c15` read gallery state instead of status in adapters.
+Checks: `pnpm typecheck` green; `npx vitest run src/features/gallery/application src/features/gallery/domain` 84 files, 365 tests pass; integration `gallery-without-status`, `gallery-repository`, `gallery-lifecycle`, `gallery-cancellation`, `client-access/gate` and `client-access/final-delivery` pass; eslint and prettier clean on every changed file.
+Deviations:
+- publish, archive, delete-draft and archive-of-cancelled use cases stay compiling as refusals (`INVALID_STATE`; cancel archives nothing) until iteration 3 deletes them. The plan's `deleteDraft` writer is `deleteGallery`.
+- `GalleryRecord` gained `projectStatus` (joined from `project`); `GallerySummaryView.expiryDays` is always null (no days stored); `resolveExpiry` returns `expiresAt` only.
+- Superseded tests were updated and named in the commit body (AC-GFL-006, AC-GFL-016, D-7). `delete-gallery-source` keeps the last-folder refusal until AC-GFL-015.

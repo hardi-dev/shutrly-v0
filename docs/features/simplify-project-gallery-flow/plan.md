@@ -52,11 +52,11 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 - coding-rules › Data Access; `AGENTS.md` › Hard stops (migrations).
 - Code to follow: `src/adapters/db/schema/gallery/gallery.ts`, `src/adapters/db/gallery-repository/` (`gallery-rows.ts`, `gallery-lock-sql.ts`, `gallery-lifecycle-sql.ts`, `gallery-read-sql.ts`, `drizzle-client-access-repository.ts`, `drizzle-gallery-source-repository.ts`, `drizzle-gallery-repository.ts`), `drizzle/0021_default_item_keys.sql`.
 
-- [ ] **2.1** Schema: `status` nullable without default; remove checks `gallery_status_ck`, `gallery_expiry_days_draft_ck`, `gallery_published_ck`, `gallery_expiry_one_ck`. Keep `published_*`, `archived_*`, `expiry_days` columns in the schema file for now but stop reading and writing them. `pnpm db:generate --name gallery_without_status` → `drizzle/0022_gallery_without_status.sql`; review it (no drops); commit; run `pnpm db:migrate`; report.
-- [ ] **2.2** Rows and lock SQL return `{ expiresAt, projectStatus }`; ports drop `status`, `expiryDays`, `publishedAt`; `GalleryCreateWriter.insert` without status; delete writer methods `publish`, `archive`, `deleteDraft`; `setExpiry(expiresAt, actor, now)`.
-- [ ] **2.3** Client access repository: record drops `galleryStatus`; availability from `galleryState`.
-- [ ] **2.4** Integration test `tests/integration/gallery/gallery-without-status.test.ts`: insert a gallery without status; client access on it is available; a `CANCELLED` project's gallery isn't (AC-GFL-008, 016).
-- [ ] **2.5** Writers stop bumping `content_version` for publish and archive (removed); sync, expiry, rotation and source removal still bump it (D-15).
+- [x] **2.1** Schema: `status` nullable without default; remove checks `gallery_status_ck`, `gallery_expiry_days_draft_ck`, `gallery_published_ck`, `gallery_expiry_one_ck`. Keep `published_*`, `archived_*`, `expiry_days` columns in the schema file for now but stop reading and writing them. `pnpm db:generate --name gallery_without_status` → `drizzle/0022_gallery_without_status.sql`; review it (no drops); commit; run `pnpm db:migrate`; report.
+- [x] **2.2** Rows and lock SQL return `{ expiresAt, projectStatus }`; ports drop `status`, `expiryDays`, `publishedAt`; `GalleryCreateWriter.insert` without status; delete writer methods `publish`, `archive`, `deleteDraft`; `setExpiry(expiresAt, actor, now)`.
+- [x] **2.3** Client access repository: record drops `galleryStatus`; availability from `galleryState`.
+- [x] **2.4** Integration test `tests/integration/gallery/gallery-without-status.test.ts`: insert a gallery without status; client access on it is available; a `CANCELLED` project's gallery isn't (AC-GFL-008, 016).
+- [x] **2.5** Writers stop bumping `content_version` for publish and archive (removed); sync, expiry, rotation and source removal still bump it (D-15).
 - [ ] Commits: `feat(db): drop gallery status constraints`, `refactor(gallery): read gallery state instead of status in adapters`.
 
 **Done when** the migration is applied and reported, the integration file passes, and adapters typecheck.

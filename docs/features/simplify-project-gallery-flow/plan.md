@@ -146,11 +146,11 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 - Criteria: AC-GFL-005, 018 · technical-design › D-13, D-14, R-3, R-4.
 - Code to follow: `scripts/dev/seed.ts`, `seed-gallery.ts`, `seed-projects.ts`, `seed-staging.sh`.
 
-- [ ] **8.1** Confirm R-4: trace the `next/headers` import in the seed path; fix by importing only scope-free modules.
-- [ ] **8.2** Seed books projects (gallery from iteration 4), links the Drive fixture, maps folders, no publish; delivered fixture uses `runMarkDeliveredTransaction`.
-- [ ] **8.3** `scripts/dev/backfill-galleries.ts` + `pnpm db:backfill-galleries` (own `db`, no `request-db` import, D-13); integration test `tests/integration/gallery/backfill-galleries.test.ts`: a `SHOOTING` project without a gallery gets one with its groups, and a second run creates nothing (AC-GFL-005); run against `.dev.vars`; report counts.
-- [ ] **8.4** `scripts/dev/seed-staging.sh <new email>` exits 0 and writes the credentials file (AC-GFL-018).
-- [ ] Commits: `fix(seed): run without a request scope`, `feat(seed): booked projects get galleries`, `feat(db): backfill galleries for booked projects`.
+- [x] **8.1** Confirm R-4: trace the `next/headers` import in the seed path; fix by importing only scope-free modules.
+- [x] **8.2** Seed books projects (gallery from iteration 4), links the Drive fixture, maps folders, no publish; delivered fixture uses `runMarkDeliveredTransaction`.
+- [x] **8.3** `scripts/dev/backfill-galleries.ts` + `pnpm db:backfill-galleries` (own `db`, no `request-db` import, D-13); integration test `tests/integration/gallery/backfill-galleries.test.ts`: a `SHOOTING` project without a gallery gets one with its groups, and a second run creates nothing (AC-GFL-005); run against `.dev.vars`; report counts.
+- [x] **8.4** `scripts/dev/seed-staging.sh <new email>` exits 0 and writes the credentials file (AC-GFL-018).
+- [x] Commits: `fix(seed): run without a request scope`, `feat(seed): booked projects get galleries`, `feat(db): backfill galleries for booked projects`.
 
 **Done when** the seed and the backfill run clean on shutrly-v0 `main` and are reported.
 

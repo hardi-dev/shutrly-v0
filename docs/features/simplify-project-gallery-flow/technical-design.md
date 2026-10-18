@@ -145,3 +145,12 @@ Deviations:
 - Superseded tests updated and named in the commit bodies: BR-PRJ-004 step list, AC-PRJ-015 (POST_PROCESSING step), the BOOKED and SHOOTING menu rows (A-6), AC-DEL-001/002 publish wording.
 Leftover for iteration 5: `Publikasikan hasil akhir` copy and the delivery card still call `publishFinalDeliveryAction` (now `markDeliveredEntry`); `"Tandai terkirim"` has no copy yet (header and menu label); `DELIVERY_REFUSED` has no toast copy; the gallery writer `publishFinalDelivery` keeps its name.
 Leftover for 7.2 and 8: `get-delivery-files` and `get-client-home` still gate on `finalDeliveryPublished`; AC-GFL-016 is checked through `galleryState` = CLOSED, not through client access; `scripts/dev/seed-gallery.ts` still uses `createGalleryForBooking` and the renamed transaction (D-14).
+
+## Implementation record — iteration 8
+Built: R-4 confirmed: the seed reached `next/headers` through `request-db` (mark-delivered-scope, add-on-scope) and `request-locale` (add-on-edits). Fix: scope-free `mark-delivered-transaction.ts`, `add-on-transaction.ts`, `add-on-limit-edits.ts`, `booking-gallery-transaction.ts`; the request-bound scope files re-export them (D-14). Seed books BOOKED projects through `createProjectWithGallery` (D-3, D-4); `seedGallery` links the gallery the booking created; `publishDeliveryIfFinished` renamed `markDeliveredIfFinished`. `scripts/dev/backfill-galleries.ts` + `pnpm db:backfill-galleries` (D-13), `GALLERY_PROJECT_ALLOWED` exported.
+Commits: `d06d72af` fix(seed): run without a request scope; `63deedb2` feat(seed): booked projects get galleries; `ac1d3d27` feat(db): backfill galleries for booked projects.
+Backfill on shutrly-v0 main (non-production): run 1 created 5110, skipped 2995; run 2 created 0, skipped 8105.
+Staging seed: `scripts/dev/seed-staging.sh f27-seed-<ts>@example.test` exit 0; credentials file written (git-ignored, not printed).
+Checks: `pnpm typecheck` green; prettier and eslint clean on changed files; `npx vitest run src/composition/booking` 7 files, 49 pass; integration `backfill-galleries` 3 pass; `booking-creates-gallery` pass.
+Known failing: `tests/integration/booking/add-ons/add-ons.test.ts` 8 tests fail with `headers` outside a request scope from `createAddOnWithTarget` → `getRequestFormattingLocale`; that function is unchanged by iteration 8 (pre-existing in the test, not verified at the baseline commit).
+Deviations: `seed.ts` was imported once for a module check, which ran `main()` (seed entry has no guard): it stopped at "owner already exists" and changed nothing.

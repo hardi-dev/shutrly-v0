@@ -203,7 +203,7 @@ A project belongs to one workspace, one client and one service of that workspace
 While a project is `DRAFT` or `BOOKED`, the Owner may change its agreed price, the values of its project items, its booking-field values, and add or remove project items. An added item is snapshotted from an active item definition that the project doesn't use yet (one item per definition per project), with values valid under BR-CAT-001/002. Edited booking values must stay valid for the snapshotted field type; required fields stay required. Field metadata (key, name, type, options) never changes. From `SHOOTING` onwards the deal is read-only; later changes go through add-ons (BR-ADD-*) or invoices. Edits never touch the service template (BR-CAT-003). *(F-07 discovery, Owner 2026-10-02.)* Once a selection item has a group (BR-SEL-001), an edit is refused if it would remove an item whose group has selections, lower a value below the group's usage, or change an item whose group is no longer `OPEN`. *(F-10 discovery, Owner 2026-10-05.)* Removing an item is also refused while an `APPROVED` add-on targets its group (cancel the add-on first, BR-ADD-005); `DRAFT` and `CANCELLED` add-ons on that group lose their target and stay, since none of them changed the limit (BR-ADD-002). *(F-10 build, Owner 2026-10-07.)*
 
 ### BR-PRJ-010 — Deleting and cancelling projects
-A `DRAFT` project can be deleted permanently, with its snapshots. Any other project is never deleted: `BOOKED` and `SHOOTING` projects are cancelled instead (BR-PRJ-004), recording actor and timestamp (BR-AUD-001). *(F-07 discovery, Owner 2026-10-02.)* Cancelling also archives the project's published or expired gallery in the same transaction (BR-GAL-005). *(F-09 discovery, Owner 2026-10-04.)*
+A `DRAFT` project can be deleted permanently, with its snapshots. Any other project is never deleted: `BOOKED` and `SHOOTING` projects are cancelled instead (BR-PRJ-004), recording actor and timestamp (BR-AUD-001). *(F-07 discovery, Owner 2026-10-02.)* Cancelling closes the project's gallery for good (BR-GAL-005); nothing about the gallery is written, the closure follows from the project status. *(F-09 discovery, Owner 2026-10-04; derived instead of archived: F-27, Owner 2026-10-18.)*
 
 ---
 
@@ -248,23 +248,23 @@ Deleting a session deletes its assignments, and deleting a draft project deletes
 ## Gallery (GAL)
 
 ### BR-GAL-001 — One gallery per project
-A project has at most one gallery. The gallery owns no files; photos are metadata references to external files.
+A project has at most one gallery. The gallery owns no files; photos are metadata references to external files. Every project that is `BOOKED` or later has exactly one: Shutrly creates it when the project becomes `BOOKED` (created as `BOOKED`, or confirmed from `DRAFT`), in the same transaction, with a generated password (BR-GAL-002) and no expiry. The Owner never creates or deletes a gallery. *(F-27, Owner 2026-10-18.)*
 
 ### BR-GAL-002 — Required password, encrypted and Owner-visible
-Every gallery has a password, set when the gallery is created, so no gallery exists without one. Shutrly proposes an easy-to-type generated password that the Owner may keep, regenerate or replace; a password is 6–64 characters. It is stored encrypted with a server-side key, next to a hash used for verification (ADR-017). Only the Owner of the workspace can see it, on the gallery screen; it is decrypted only server-side, never logged, and never sent to anyone but that Owner and the client message they build (BR-MSG-003). *(F-09 discovery and design review, Owner 2026-10-04.)*
+Every gallery has a password, set when the gallery is created, so no gallery exists without one. Shutrly generates an easy-to-type password when it creates the gallery (BR-GAL-001); the Owner may later replace it through rotation (BR-GAL-003). A password is 6–64 characters. It is stored encrypted with a server-side key, next to a hash used for verification (ADR-017). Only the Owner of the workspace can see it, on the gallery screen; it is decrypted only server-side, never logged, and never sent to anyone but that Owner and the client message they build (BR-MSG-003). *(F-09 discovery and design review, Owner 2026-10-04.)*
 
 ### BR-GAL-003 — Password rotation
 The Owner may rotate the gallery password at any time; Shutrly proposes a new generated password, which the Owner may replace. Rotation replaces the encrypted password and the hash, increments `passwordVersion`, and immediately invalidates the old password and all gallery sessions authenticated under older versions. Invoice links are unaffected. The Owner is reminded to share the new password.
 
-### BR-GAL-004 — Publish preconditions
-A gallery can be published only with a password hash and at least one active, accessible source. Draft galleries may have zero sources. A gallery source is *active* while it is linked to the gallery (not removed, BR-GAL-009); deactivating its workspace source does not change that (BR-SRC-006). It is *accessible* when the provider can list its folder at the moment of publishing: publishing checks every linked source again and is refused if none passes. *(F-09 discovery, Owner 2026-10-04.)*
+### BR-GAL-004 — Active sources
+*(Publish preconditions withdrawn 2026-10-18, F-27, Owner: there is no publish.)* A gallery may have zero sources. A gallery source is *active* while it is linked to the gallery (not removed, BR-GAL-009); deactivating its workspace source does not change that (BR-SRC-006).
 
-### BR-GAL-005 — Gallery lifecycle
-`DRAFT → PUBLISHED → EXPIRED | ARCHIVED`; `EXPIRED → PUBLISHED | ARCHIVED`. Every public request honors `status` and `expiresAt`.
-- **Expiry:** none by default. The Owner may set an expiry date or a duration in days, and change or remove it at any time before archiving. A duration on a draft is kept as a duration and becomes `expiresAt` when the gallery is published; on a published gallery it counts from the moment it is saved. A published gallery whose `expiresAt` has passed is `EXPIRED`.
-- **Re-opening:** an `EXPIRED` gallery returns to `PUBLISHED` when the Owner sets a later expiry or removes it; the link and password are unchanged.
-- **Ending:** `ARCHIVED` is final in MVP; there is no unpublish. A `DRAFT` gallery (never published) may be deleted with its sources and photo records; a gallery that was ever published is archived instead. Cancelling the project archives a `PUBLISHED` or `EXPIRED` gallery in the same transaction (BR-PRJ-010); a `DRAFT` gallery stays and can only be deleted. *(F-09 discovery, Owner 2026-10-04.)*
-
+### BR-GAL-005 — Gallery availability (no gallery status)
+*(Replaced 2026-10-18, F-27, Owner; the `DRAFT → PUBLISHED → EXPIRED | ARCHIVED` lifecycle is withdrawn.)* A gallery has no status of its own, and there is no publish, unpublish, archive or delete action. Whether it is **open** follows from stored facts, checked on every public request:
+- **Open** when its project is not `CANCELLED` and its expiry is empty or in the future. A client still needs the project token and the current password (BR-ACC-001), so nobody gets in until the Owner shares both.
+- **Expired** when `expiresAt` has passed. This is a derived label, never stored.
+- **Closed** when its project is `CANCELLED` (BR-PRJ-010): read-only for the Owner, unavailable to clients, for good.
+- **Expiry:** none by default. The Owner may set an expiry date, or pick a duration in days from a preset list; a duration becomes `expiresAt` = the moment it is saved + the duration. The Owner may change or remove the expiry at any time while the project isn't `CANCELLED`; setting it to today closes the gallery by hand, and a later date or no expiry reopens it with the same link and password.
 ### BR-GAL-006 — Idempotent sync
 Sync upserts photos by `(gallerySource, externalFileId)` and records sync status, time, and error. Repeated syncs never duplicate photos. Sync runs only when the Owner links a source or asks for it; nothing is scheduled. A photo whose file is no longer found is kept and marked *missing*: it is hidden from the client and flagged to the Owner, and it becomes visible again if a later sync finds the file. Sync errors never record the Drive link (C-103). *(F-09 discovery, Owner 2026-10-04.)*
 
@@ -275,14 +275,17 @@ Sync upserts photos by `(gallerySource, externalFileId)` and records sync status
 An optional gallery slug never grants access.
 
 ### BR-GAL-009 — Gallery record and sources
-A gallery belongs to one project of the same workspace (BR-WS-002). The Owner can create it while the project is `BOOKED`, `SHOOTING`, `POST_PROCESSING`, `DELIVERED` or `COMPLETED`; never on a `DRAFT` or `CANCELLED` project. On a `CANCELLED` project an unarchived gallery can't be published, synced or edited. Each gallery source is created from an active workspace source (BR-SRC-006) and a public folder link (BR-SRC-002). A folder (by its provider folder ID) is linked at most once per gallery; another gallery may link the same folder, and the Owner is warned. The Owner may delete a source from a non-archived gallery: the gallery source record and every photo synced from it are deleted. Deletion is refused while a client pick references one of its photos (BR-SEL-*), and when it would leave a published or expired gallery without an active source (BR-GAL-004). Another gallery's link to the same folder is a separate source and is not affected. Sources removed before this change keep their photos hidden, like missing photos (BR-GAL-006). The Owner may rename a gallery source's label (1–60 characters, trimmed; empty shows the folder name). *(Delete and rename: Owner manual test, 2026-10-07.)* An `ARCHIVED` gallery is read-only: no sync, no source changes, no password rotation. *(F-09 discovery, Owner 2026-10-04.)*
+A gallery belongs to one project of the same workspace (BR-WS-002) and is created by Shutrly with it (BR-GAL-001). On a `CANCELLED` project the gallery is closed and read-only: no sync, no source changes, no expiry or password changes (BR-GAL-005). Each gallery source is created from an active workspace source (BR-SRC-006) and a public folder link (BR-SRC-002). A folder (by its provider folder ID) is linked at most once per gallery; another gallery may link the same folder, and the Owner is warned. The Owner may delete any source of a gallery that isn't closed, the last one included: the gallery source record and every photo synced from it are deleted. Deletion is refused only while a client pick references one of its photos (BR-SEL-*). Another gallery's link to the same folder is a separate source and is not affected. Sources removed before 2026-10-07 keep their photos hidden, like missing photos (BR-GAL-006). The Owner may rename a gallery source's label (1–60 characters, trimmed; empty shows the folder name). *(F-09 discovery, Owner 2026-10-04; delete and rename: Owner manual test, 2026-10-07; created with the project, last source removable, no archive: F-27, Owner 2026-10-18.)*
+
+### BR-GAL-010 — Sharing needs a linked folder
+The Owner's *Kirim link galeri* action (BR-MSG-003) is offered on a project from `BOOKED` to `COMPLETED` whose gallery has at least one active source and is open (BR-GAL-005), even before its first sync finishes. *(F-27, Owner 2026-10-18; replaces "`SHOOTING` to `COMPLETED`" in the feature map's project menu.)*
 
 ---
 
 ## Client Access (ACC)
 
 ### BR-ACC-001 — Gallery access
-Gallery access requires a valid project token (`/g/{token}`) **and** the correct current gallery password, on a published, non-expired gallery.
+Gallery access requires a valid project token (`/g/{token}`) **and** the correct current gallery password, on an open gallery (BR-GAL-005: project not `CANCELLED`, not expired). *("Published" dropped: F-27, Owner 2026-10-18.)*
 
 ### BR-ACC-002 — Invoice access
 Issued invoices are accessible by project token + invoice ID (`/i/{token}/{invoiceId}`) and only if the invoice belongs to that project. Draft and cancelled invoices are Owner-only.
@@ -302,7 +305,7 @@ Clients receive photos either through a server-controlled URL or from Google's p
 
 ### BR-SEL-001 — Selection groups are the entitlement
 Each project item with `selectionRequired = true` yields one selection group with `baseLimit` = the item's whole-number value. A project may have zero groups. There is no project-wide photo limit.
-Groups exist from the moment the gallery is first published, so the client can select from then on. While the deal is still editable (BR-PRJ-009), groups follow the project items: an added selection item gets an `OPEN` group, and a changed value changes `baseLimit`. *(F-10 discovery, Owner 2026-10-05.)*
+Groups exist from the moment the gallery is created, that is, when the project becomes `BOOKED` (BR-GAL-001), so the client can select as soon as photos arrive. *(Was "from the first publish"; F-27, Owner 2026-10-18.)* While the deal is still editable (BR-PRJ-009), groups follow the project items: an added selection item gets an `OPEN` group, and a changed value changes `baseLimit`. *(F-10 discovery, Owner 2026-10-05.)*
 
 ### BR-SEL-002 — Effective limit is derived
 `effectiveLimit = baseLimit + extraLimit`, never stored. `extraLimit` = sum of `quantity` of approved add-ons targeting the group, maintained transactionally.

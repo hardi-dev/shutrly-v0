@@ -4,7 +4,12 @@ import type { ProjectStatus } from "../project-status/project-status.types";
 import { buildProjectMenu } from "./project-menu";
 
 const kinds = (status: ProjectStatus, hasWhatsappNumber = true) => {
-  const menu = buildProjectMenu({ status, hasWhatsappNumber, canShareGallery: false });
+  const menu = buildProjectMenu({
+    status,
+    hasWhatsappNumber,
+    canShareGallery: false,
+    hasFinishedFiles: false,
+  });
   return [
     menu.project.map((item) => (item.kind === "STEP" ? item.step : item.kind)),
     menu.sendToClient.map((item) => item.kind),
@@ -38,8 +43,19 @@ describe("project menu (AC-PRJ-027)", () => {
       status: "BOOKED",
       hasWhatsappNumber: true,
       canShareGallery: true,
+      hasFinishedFiles: false,
     });
     expect(menu.sendToClient.map((item) => item.kind)).toEqual(["SHARE_GALLERY"]);
+  });
+
+  it("AC-GFL-017 carries the finished-file state on Tandai terkirim", () => {
+    const menu = buildProjectMenu({
+      status: "SHOOTING",
+      hasWhatsappNumber: true,
+      canShareGallery: false,
+      hasFinishedFiles: true,
+    });
+    expect(menu.project).toContainEqual({ kind: "MARK_DELIVERED", hasFinishedFiles: true });
   });
 
   it("A-11 keeps Chat WhatsApp when the gallery can't be shared (A-11 row menus)", () => {

@@ -133,6 +133,8 @@ function DetailBody({
   addOnCard,
   headerAction,
   headerMeta,
+  canShareGallery,
+  hasFinishedFiles,
   api,
   edit,
   team,
@@ -154,7 +156,11 @@ function DetailBody({
     advanceAction: menuActions.advanceAction,
     onSessionRequired,
   });
-  const target = menuTargetOf(t, project, locale);
+  const target = {
+    ...menuTargetOf(t, project, locale),
+    canShareGallery: canShareGallery ?? false,
+    hasFinishedFiles: hasFinishedFiles ?? false,
+  };
   const menu = api.menuFor(target);
   const handleEditInfo = () => {
     api.openInfo(target);

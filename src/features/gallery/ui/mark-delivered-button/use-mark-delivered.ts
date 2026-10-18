@@ -19,6 +19,7 @@ export function useMarkDelivered(input: Readonly<UseMarkDeliveredInput>) {
     try {
       const result = await actions.markDeliveredAction(workspaceId, projectId);
       setIsOpen(false);
+      input.onDone?.();
       if (result) {
         showToast({
           tone: "danger",

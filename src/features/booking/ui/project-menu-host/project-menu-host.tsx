@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import type { ClientInput } from "@/features/booking/application/schemas/client-input/client-input.types";
 import { buildProjectMenu } from "@/features/booking/domain/project-menu/project-menu";
+import { useProjectGalleryActions } from "@/ui/hooks/use-project-gallery-actions/use-project-gallery-actions";
 
 import { ClientDialog } from "../client-dialog/client-dialog";
 import { ProjectInfoDialog } from "../project-info-dialog/project-info-dialog";
@@ -28,6 +29,7 @@ export function ProjectMenuHost(props: Readonly<ProjectMenuHostProps>) {
   const t = useTranslations(PROJECT_MENU_HOST_COPY_NAMESPACE);
   const [dialog, setDialog] = useState<OpenDialog>(null);
   const mutations = useClientMutations();
+  const gallery = useProjectGalleryActions();
   const steps = useProjectActions({
     workspaceId: props.workspaceId,
     projectId: "",
@@ -82,11 +84,18 @@ export function ProjectMenuHost(props: Readonly<ProjectMenuHostProps>) {
       groups={buildProjectMenu({
         status: target.status,
         hasWhatsappNumber: target.whatsappNumber !== null,
-        canShareGallery: false,
+        canShareGallery: target.canShareGallery ?? false,
+        hasFinishedFiles: target.hasFinishedFiles ?? false,
       })}
       handlers={{
         onStep: (step) => void steps.advance(step, target.id),
         onEditInfo: () => void openInfo(target),
+        onShareGallery: () => {
+          gallery?.openShare(target.id);
+        },
+        onMarkDelivered: () => {
+          gallery?.openMarkDelivered({ projectId: target.id, title: target.title });
+        },
         onCancel: () => {
           setDialog({ kind: "cancel", target });
         },

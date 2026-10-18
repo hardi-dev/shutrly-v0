@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type { GalleryPageView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 import type { GalleryAction } from "@/features/gallery/domain/gallery-state/gallery-header-actions";
 
@@ -20,6 +22,8 @@ export interface GalleryHeaderControlsProps {
   /** The phone menu sheet's meta line: the gallery state and the project. */
   readonly menuMeta: string;
   readonly onChoose: (action: GalleryAction) => void;
+  /** *Kirim link ke klien* when the gallery can be shared (AC-GFL-020), else null. */
+  readonly shareButton: ReactNode;
 }
 
 export interface PrimaryButtonProps {

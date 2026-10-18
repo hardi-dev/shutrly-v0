@@ -11,6 +11,8 @@ export interface ProjectMenuHandlers {
   readonly onCancel: () => void;
   readonly onDeleteDraft: () => void;
   readonly onAddNumber: () => void;
+  readonly onShareGallery: () => void;
+  readonly onMarkDelivered: () => void;
 }
 
 export interface ProjectMenuProps {
@@ -29,6 +31,8 @@ export interface ResolvedMenuItem {
   readonly label: string;
   readonly icon: IconName;
   readonly isDestructive: boolean;
+  readonly isDisabled?: boolean;
+  readonly description?: string;
   readonly href?: string;
   readonly run?: () => void;
 }

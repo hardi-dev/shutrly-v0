@@ -4,6 +4,7 @@ import { stubViewport } from "@tests/support/gallery/viewport";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
+import { ProjectGalleryActionsProvider } from "@/ui/hooks/use-project-gallery-actions/use-project-gallery-actions";
 
 import { GalleryCard } from "./gallery-card";
 
@@ -158,5 +159,42 @@ describe("GalleryCard (F-27 P1–P6)", () => {
     expect(
       screen.getByText("Rina-Keluarga belum bisa dibaca. Buka galeri untuk melihat penyebabnya."),
     ).toBeInTheDocument();
+  });
+});
+
+describe("GalleryCard share entry (AC-GFL-020)", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    stubViewport(false);
+  });
+
+  function renderWithHost(card: GalleryCardView, openShare = vi.fn()) {
+    render(
+      <ProjectGalleryActionsProvider value={{ openShare, openMarkDelivered: vi.fn() }}>
+        <GalleryCard workspaceId="ws-1" card={card} />
+      </ProjectGalleryActionsProvider>,
+    );
+    return openShare;
+  }
+
+  it("offers Kirim link ke klien beside Kelola on desktop and asks the host to open the share", async () => {
+    const openShare = renderWithHost({ project: PROJECT, canCreate: false, gallery: GALLERY });
+    await userEvent.click(screen.getByRole("button", { name: "Kirim link ke klien" }));
+    expect(openShare).toHaveBeenCalledWith("p-1");
+  });
+
+  it("hides the share when the gallery is expired (BR-GAL-010)", () => {
+    renderWithHost({
+      project: PROJECT,
+      canCreate: false,
+      gallery: { ...GALLERY, state: "EXPIRED" },
+    });
+    expect(screen.queryByRole("button", { name: "Kirim link ke klien" })).not.toBeInTheDocument();
+  });
+
+  it("leaves the share to the gallery page on phones", () => {
+    stubViewport(true);
+    renderWithHost({ project: PROJECT, canCreate: false, gallery: GALLERY });
+    expect(screen.queryByRole("button", { name: "Kirim link ke klien" })).not.toBeInTheDocument();
   });
 });

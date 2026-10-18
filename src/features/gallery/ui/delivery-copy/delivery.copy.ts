@@ -37,6 +37,12 @@ export const DELIVERY_COPY = {
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
       staleToast: "The project status has changed. Reload the page.",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
+      // Restored original F-27 Tandai selesai wording (DELIVERED to COMPLETED, BR-PRJ-004), before iteration 5.
+      finish: "Mark complete",
+      finishTitle: "Mark the project complete?",
+      finishDescription: "Project {title} will be marked Completed.",
+      finishedToast: "Project marked complete",
+      finishStaleToast: "The project status has changed. Reload the page.",
       failedToast: "Couldn’t save. Try again.",
       emptyNote:
         "No final files are synced yet. Create a final-files subfolder in Drive, map it to a package item in Edit folder, then sync the gallery.",
@@ -68,6 +74,12 @@ export const DELIVERY_COPY = {
       reasonProjectStatus: "Status proyek ini tidak bisa diubah menjadi Terkirim.",
       completedToast: "Proyek ditandai terkirim",
       staleToast: "Status proyek sudah berubah. Muat ulang halaman.",
+      // Restored original F-27 Tandai selesai wording (DELIVERED to COMPLETED, BR-PRJ-004), before iteration 5.
+      finish: "Tandai selesai",
+      finishTitle: "Tandai proyek selesai?",
+      finishDescription: "Proyek {title} akan berstatus Selesai.",
+      finishedToast: "Proyek ditandai selesai",
+      finishStaleToast: "Status proyek sudah berubah. Muat ulang halaman.",
       failedToast: "Gagal menyimpan. Coba lagi.",
       emptyNote:
         "Belum ada hasil akhir yang tersinkron. Buat subfolder hasil akhir di Drive, petakan ke item paket lewat Edit folder, lalu sinkronkan galeri.",

@@ -9,7 +9,7 @@ export function buildProjectMenu(input: ProjectMenuInput): ProjectMenuGroups {
   if (step !== null && step !== "MARK_DELIVERED") project.push({ kind: "STEP", step });
   // The header carries Tandai terkirim on POST_PROCESSING; BOOKED and SHOOTING get it here (A-6).
   if (input.status === "BOOKED" || input.status === "SHOOTING") {
-    project.push({ kind: "MARK_DELIVERED" });
+    project.push({ kind: "MARK_DELIVERED", hasFinishedFiles: input.hasFinishedFiles });
   }
   if (!isClosed) project.push({ kind: "EDIT_INFO" });
   const sendToClient: ProjectMenuItem[] = input.canShareGallery

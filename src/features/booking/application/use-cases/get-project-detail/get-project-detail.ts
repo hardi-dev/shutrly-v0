@@ -35,6 +35,7 @@ export async function getProjectDetail(
       status: detail.status,
       hasWhatsappNumber: detail.client.whatsappNumber !== null,
       canShareGallery: false,
+      hasFinishedFiles: false,
     }),
   };
 }

@@ -46,7 +46,8 @@ export function MarkDeliveredButton(props: Readonly<MarkDeliveredButtonProps>) {
   );
 }
 
-function MarkDeliveredDialog({
+/** The *Tandai terkirim* confirm: the title, the body and the confirm button, with the flow's pending state (AC-GFL-017). @param props - the title, pending state and the close and confirm handlers @returns the dialog */
+export function MarkDeliveredDialog({
   title,
   isPending,
   onClose,

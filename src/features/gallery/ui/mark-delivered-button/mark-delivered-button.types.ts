@@ -16,7 +16,13 @@ export interface MarkDeliveredButtonProps {
   readonly actions: MarkDeliveredActions;
 }
 
-export type UseMarkDeliveredInput = MarkDeliveredButtonProps;
+export interface UseMarkDeliveredInput extends Pick<
+  MarkDeliveredButtonProps,
+  "workspaceId" | "projectId" | "actions"
+> {
+  /** Called after the write was answered, so a host that opened the confirm can close it. */
+  readonly onDone?: () => void;
+}
 
 export interface MarkDeliveredDialogProps {
   readonly title: string;

@@ -6,23 +6,9 @@ import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { projectStepCopy } from "../project-step-copy/project-step-copy";
 import type { ProjectMenuHandlers, ProjectMenuProps, ResolvedMenuItem } from "./project-menu.types";
 
-type RenderableItem = Exclude<
-  ProjectMenuItem,
-  { readonly kind: "SHARE_GALLERY" } | { readonly kind: "MARK_DELIVERED" }
->;
-
-/**
- * SHARE_GALLERY and MARK_DELIVERED are hidden until their copy is approved (F-27 iteration 5/6).
- * @param item - a menu item
- * @returns false for the items without copy yet
- */
-function isRenderable(item: ProjectMenuItem): item is RenderableItem {
-  return item.kind !== "SHARE_GALLERY" && item.kind !== "MARK_DELIVERED";
-}
-
 function resolve(
   t: ProjectTranslate,
-  item: RenderableItem,
+  item: ProjectMenuItem,
   whatsappNumber: string | null,
   handlers: ProjectMenuHandlers,
 ): ResolvedMenuItem {
@@ -67,6 +53,28 @@ function resolve(
         isDestructive: false,
         run: handlers.onAddNumber,
       };
+    case "SHARE_GALLERY":
+      return {
+        key: item.kind,
+        item,
+        label: t("menuShareGallery"),
+        icon: "send",
+        isDestructive: false,
+        run: handlers.onShareGallery,
+      };
+    case "MARK_DELIVERED": {
+      const isDisabled = !item.hasFinishedFiles;
+      return {
+        key: item.kind,
+        item,
+        label: t("menuMarkDelivered"),
+        icon: "circle-check-big",
+        isDestructive: false,
+        isDisabled,
+        description: isDisabled ? t("menuMarkDeliveredHint") : undefined,
+        run: handlers.onMarkDelivered,
+      };
+    }
     case "CANCEL":
       return {
         key: item.kind,
@@ -99,9 +107,7 @@ export function resolveMenuGroups(
   props: Pick<ProjectMenuProps, "groups" | "whatsappNumber" | "handlers">,
 ) {
   const map = (items: readonly ProjectMenuItem[]) =>
-    items
-      .filter(isRenderable)
-      .map((item) => resolve(t, item, props.whatsappNumber, props.handlers));
+    items.map((item) => resolve(t, item, props.whatsappNumber, props.handlers));
   return {
     project: map(props.groups.project),
     sendToClient: map(props.groups.sendToClient),

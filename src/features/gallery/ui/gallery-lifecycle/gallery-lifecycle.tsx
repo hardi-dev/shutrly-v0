@@ -1,11 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
 import type { GalleryAction } from "@/features/gallery/domain/gallery-state/gallery-header-actions";
 import { galleryHeaderActions } from "@/features/gallery/domain/gallery-state/gallery-header-actions";
+import { canShareGallery } from "@/features/gallery/domain/gallery-state/gallery-state";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
+import { useProjectGalleryActions } from "@/ui/hooks/use-project-gallery-actions/use-project-gallery-actions";
 import { CompactBarActions } from "@/ui/patterns/compact-bar/compact-bar-actions";
 import { PageActions } from "@/ui/patterns/page-actions/page-actions";
 import { Button } from "@/ui/primitives/button/button";
@@ -71,11 +73,13 @@ function HeaderControls({
   menu,
   menuMeta,
   onChoose,
+  shareButton,
 }: Readonly<GalleryHeaderControlsProps>) {
   const t = useTranslations(GALLERY_LIFECYCLE_COPY_NAMESPACE);
   const isMobile = useMobileViewport();
   const entries = menuEntries(t, menu, onChoose);
   const button = primary === null ? null : <PrimaryButton primary={primary} onChoose={onChoose} />;
+  const stickyButton = button ?? shareButton;
   const menuButton =
     entries.length === 0 ? null : (
       <GalleryRowMenu
@@ -89,6 +93,7 @@ function HeaderControls({
   if (!isMobile) {
     return (
       <PageActions>
+        {shareButton}
         {button}
         {menuButton}
       </PageActions>
@@ -97,9 +102,9 @@ function HeaderControls({
   return (
     <>
       <CompactBarActions>{menuButton}</CompactBarActions>
-      {button ? (
+      {stickyButton ? (
         <div className="sticky bottom-0 z-10 border-t border-(--color-semantic-border-default) bg-(--color-semantic-surface-panel) p-(--space-4) max-md:-mx-(--space-4) max-md:-mb-(--space-5)">
-          {button}
+          {stickyButton}
         </div>
       ) : null}
     </>
@@ -150,12 +155,33 @@ function GalleryDialogs(props: Readonly<GalleryDialogsProps>) {
   return null;
 }
 
+/** The gallery page's *Kirim link ke klien* when BR-GAL-010 allows it; it opens the app host's share dialog (AC-GFL-020). @param page - the gallery page view @returns the button, or null */
+function useShareButton(page: GalleryLifecycleProps["page"]): ReactNode {
+  const t = useTranslations(GALLERY_LIFECYCLE_COPY_NAMESPACE);
+  const gallery = useProjectGalleryActions();
+  const canShare = canShareGallery({
+    projectStatus: page.project.status,
+    state: page.gallery.state,
+    activeSourceCount: page.gallery.activeSourceCount,
+  });
+  if (!canShare) return null;
+  const handleShare = () => {
+    gallery?.openShare(page.project.id);
+  };
+  return (
+    <Button variant="primary" iconLeading="send" onPress={handleShare} className="max-md:w-full">
+      {t("sendLink")}
+    </Button>
+  );
+}
+
 /** The gallery page's lifecycle controls: header actions by state, the ⋯ menu and every dialog (BR-GAL-003…005, AC-GAL-016…023). */
 export function GalleryLifecycle(props: Readonly<GalleryLifecycleProps>) {
   const t = useTranslations(GALLERY_LIFECYCLE_COPY_NAMESPACE);
   const [open, setOpen] = useState<GalleryDialogsProps["open"]>(null);
   const { page } = props;
   const header = galleryHeaderActions(page.gallery.state);
+  const shareButton = useShareButton(page);
   const menuMeta =
     page.gallery.state === "OPEN"
       ? page.project.title
@@ -173,6 +199,7 @@ export function GalleryLifecycle(props: Readonly<GalleryLifecycleProps>) {
         menu={header.menu}
         menuMeta={menuMeta}
         onChoose={setOpen}
+        shareButton={shareButton}
       />
       <GalleryDialogs {...props} open={open} onClose={handleClose} />
     </>

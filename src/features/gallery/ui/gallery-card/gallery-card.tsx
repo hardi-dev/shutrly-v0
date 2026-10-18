@@ -4,9 +4,11 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
+import { canShareGallery } from "@/features/gallery/domain/gallery-state/gallery-state";
 import type { FormattingLocale } from "@/shared/locale/locale.types";
 import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
+import { useProjectGalleryActions } from "@/ui/hooks/use-project-gallery-actions/use-project-gallery-actions";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
@@ -59,14 +61,18 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
     return <NoFolder galleryHref={galleryHref} />;
   }
   const manageLabel = isMobile ? t("manageMobile") : t("manage");
+  const showShare = !isMobile && canShareCard(card);
   return (
     <SectionCard
       title={t("cardTitle")}
       content="flush"
       actions={
-        <Button variant="secondary" iconLeading="arrow-right" onPress={handleManage}>
-          {card.gallery.state === "CLOSED" ? t("view") : manageLabel}
-        </Button>
+        <>
+          <Button variant="secondary" iconLeading="arrow-right" onPress={handleManage}>
+            {card.gallery.state === "CLOSED" ? t("view") : manageLabel}
+          </Button>
+          {showShare ? <ShareButton projectId={card.project.id} /> : null}
+        </>
       }
     >
       <div className="flex flex-col gap-(--space-4) p-(--space-4) md:gap-(--space-5) md:p-(--space-6)">
@@ -85,6 +91,30 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
         </div>
       ) : null}
     </SectionCard>
+  );
+}
+
+/** Whether the card may offer *Kirim link ke klien*: the gallery exists and BR-GAL-010 allows the share (AC-GFL-020). @param card - the card view @returns true when the share button shows */
+function canShareCard(card: GalleryCardView): boolean {
+  if (card.gallery === null) return false;
+  return canShareGallery({
+    projectStatus: card.project.status,
+    state: card.gallery.state,
+    activeSourceCount: card.gallery.activeSourceCount,
+  });
+}
+
+/** The desktop *Kirim link ke klien* on the Galeri card: it asks the app host to open the share dialog (AC-GFL-020). @param props - the project id @returns the primary button */
+function ShareButton({ projectId }: Readonly<{ projectId: string }>) {
+  const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
+  const gallery = useProjectGalleryActions();
+  const handleShare = () => {
+    gallery?.openShare(projectId);
+  };
+  return (
+    <Button variant="primary" iconLeading="send" onPress={handleShare}>
+      {t("sendLink")}
+    </Button>
   );
 }
 

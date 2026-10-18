@@ -3,6 +3,9 @@ import type { ReactNode } from "react";
 
 import { logoutAction } from "@/app/actions/auth/login";
 import { setOwnerLocaleAction } from "@/app/actions/auth/profile";
+import { PROJECT_MENU_ACTIONS } from "@/app/actions/booking/project-menu-actions";
+import { markDeliveredAction } from "@/app/actions/gallery/delivery";
+import { loadGalleryShareAction } from "@/app/actions/gallery/gallery-share";
 import { createWorkspaceAction } from "@/app/actions/workspace/create";
 import { switchWorkspaceAction } from "@/app/actions/workspace/switch";
 import { requireOwnerOrRedirect } from "@/composition/auth/owner-guard/owner-guard";
@@ -15,6 +18,17 @@ import {
   MESSAGE_TEMPLATE_SUB_PAGES_COPY_NAMESPACE,
   WORKSPACE_LAYOUT_COPY_NAMESPACE,
 } from "./layout.copy";
+import { ProjectGalleryHost } from "./project-gallery-host";
+import type { ProjectGalleryHostActions } from "./project-gallery-host.types";
+
+// The share dialog, the client number dialog and Tandai terkirim are mounted once per workspace (A-8, A-10).
+const GALLERY_HOST_ACTIONS: ProjectGalleryHostActions = {
+  loadShare: loadGalleryShareAction,
+  markDeliveredAction,
+  loadDetailAction: PROJECT_MENU_ACTIONS.loadDetailAction,
+  loadClientAction: PROJECT_MENU_ACTIONS.loadClientAction,
+  updateClientAction: PROJECT_MENU_ACTIONS.updateClientAction,
+};
 
 export default async function WorkspaceLayout({
   children,
@@ -44,7 +58,9 @@ export default async function WorkspaceLayout({
       subPages={messageTemplateSubPages(templateT, workspaceId)}
       trail={crumbs}
     >
-      {children}
+      <ProjectGalleryHost workspaceId={workspaceId} actions={GALLERY_HOST_ACTIONS}>
+        {children}
+      </ProjectGalleryHost>
     </OwnerShell>
   );
 }

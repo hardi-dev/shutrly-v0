@@ -271,6 +271,12 @@ export const PROJECT_COPY = {
       menuCancel: "Cancel project",
       menuDeleteDraft: "Delete draft",
       menuSendGroup: "Send to client",
+      // Owner-approved (F-27 copy draft, iteration 6).
+      menuShareGallery: "Send link to client",
+      // Owner-approved (F-27 copy draft, iteration 5, delivery · complete).
+      menuMarkDelivered: "Mark as delivered",
+      // Owner-approved (F-27 copy draft, iteration 5, delivery · completeDisabledHint).
+      menuMarkDeliveredHint: "No final files are synced yet. Sync the final-files folder first.",
       // Format only (client · date · status); no words, so no deck row is needed.
       menuSheetMeta: "{client} · {when} · {status}",
       infoEditDesktop: "Edit project info",
@@ -621,6 +627,13 @@ export const PROJECT_COPY = {
       menuCancel: "Batalkan proyek",
       menuDeleteDraft: "Hapus draf",
       menuSendGroup: "Kirim ke klien",
+      // Owner-approved (F-27 copy draft, iteration 6).
+      menuShareGallery: "Kirim link ke klien",
+      // Owner-approved (F-27 copy draft, iteration 5, delivery · complete).
+      menuMarkDelivered: "Tandai terkirim",
+      // Owner-approved (F-27 copy draft, iteration 5, delivery · completeDisabledHint).
+      menuMarkDeliveredHint:
+        "Belum ada hasil akhir yang tersinkron. Sinkronkan folder hasil akhir dulu.",
       menuSheetMeta: "{client} · {when} · {status}",
       infoEditDesktop: "Ubah info proyek",
       infoEditMobile: "Ubah",

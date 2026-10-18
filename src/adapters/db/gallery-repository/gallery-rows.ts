@@ -33,8 +33,8 @@ export function toProjectStatus(value: string): GalleryProjectStatus | null {
   return pick(GALLERY_PROJECT_STATUSES, value);
 }
 
-/** Narrows a stored gallery status (check `gallery_status_ck`). @param value - the column value @returns the status or null */
-export function toGalleryStatus(value: string): GalleryStoredStatus | null {
+/** Narrows a stored gallery status. F-27: new galleries store no status (null), which maps to null. @param value - the column value @returns the status or null */
+export function toGalleryStatus(value: string | null): GalleryStoredStatus | null {
   return pick(GALLERY_STORED_STATUSES, value);
 }
 

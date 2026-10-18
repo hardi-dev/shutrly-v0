@@ -32,7 +32,8 @@ export const gallery = pgTable(
     id: idColumn(),
     workspaceId: workspaceIdColumn().references(() => workspace.id, { onDelete: "restrict" }),
     projectId: uuid("project_id").notNull(),
-    status: text("status").notNull().default("DRAFT"),
+    // F-27 / ADR-028: no stored status. Kept nullable until migration 0023 drops it (D-12).
+    status: text("status"),
     passwordCiphertext: text("password_ciphertext").notNull(),
     passwordIv: text("password_iv").notNull(),
     passwordKeyVersion: integer("password_key_version").notNull().default(1),
@@ -65,19 +66,12 @@ export const gallery = pgTable(
       { workspaceId: project.workspaceId, id: project.id },
     ).onDelete("restrict"),
     unique("gallery_project_uq").on(t.projectId),
-    check("gallery_status_ck", sql`${t.status} in ('DRAFT','PUBLISHED','ARCHIVED')`),
     check("gallery_password_version_ck", sql`${t.passwordVersion} >= 1`),
     check("gallery_content_version_ck", sql`${t.contentVersion} >= 1`),
     check(
       "gallery_expiry_days_ck",
       sql`${t.expiryDays} is null or ${t.expiryDays} between 1 and 3650`,
     ),
-    check(
-      "gallery_expiry_one_ck",
-      sql`not (${t.expiresAt} is not null and ${t.expiryDays} is not null)`,
-    ),
-    check("gallery_expiry_days_draft_ck", sql`${t.expiryDays} is null or ${t.status} = 'DRAFT'`),
-    check("gallery_published_ck", sql`(${t.status} = 'DRAFT') = (${t.publishedAt} is null)`),
     check("gallery_archived_ck", sql`(${t.status} = 'ARCHIVED') = (${t.archivedAt} is not null)`),
     check(
       "gallery_final_delivery_ck",

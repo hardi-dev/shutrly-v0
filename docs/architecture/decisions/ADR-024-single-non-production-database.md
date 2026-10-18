@@ -1,6 +1,6 @@
 # ADR-024: One non-production database, the staging project in us-east-2
 
-Status: Accepted (Owner, 2026-10-09)
+Status: Accepted (Owner, 2026-10-09); points 1 and 2 superseded by [ADR-027](ADR-027-non-production-database-in-ap-southeast-1.md) (2026-10-18): the database is `shutrly-v0` in ap-southeast-1
 Date: 2026-10-09
 Amends: [ADR-009](ADR-009-neon-serverless-driver.md) (three databases become two), [ADR-020](ADR-020-staging-on-netlify.md) (point 4 and Consequences)
 

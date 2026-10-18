@@ -12,7 +12,7 @@ export const GALLERY_PROJECT_STATUSES: readonly GalleryProjectStatus[] = [
 ];
 
 // A gallery exists from BOOKED on and stays until the project is cancelled (BR-GAL-009, AC-GFL-001).
-const GALLERY_PROJECT_ALLOWED: readonly GalleryProjectStatus[] = [
+export const GALLERY_PROJECT_ALLOWED: readonly GalleryProjectStatus[] = [
   "BOOKED",
   "SHOOTING",
   "POST_PROCESSING",

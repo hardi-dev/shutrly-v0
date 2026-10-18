@@ -8,10 +8,7 @@ import { CLIENT_HOME_COPY_NAMESPACE } from "@/features/gallery/ui/client-home-sc
 import { CLIENT_PASSWORD_FORM_COPY_NAMESPACE } from "@/features/gallery/ui/client-password-form/client-password-form.copy";
 import { DELIVERY_COPY_NAMESPACE } from "@/features/gallery/ui/delivery-copy/delivery.copy";
 import { DELIVERY_SCREEN_COPY_NAMESPACE } from "@/features/gallery/ui/delivery-screen/delivery-screen.copy";
-import {
-  GALLERY_COPY_NAMESPACE,
-  GALLERY_SOURCE_CHIP_MESSAGE_KEY,
-} from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
+import { GALLERY_COPY_NAMESPACE } from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
 import { PICK_NOTE_COPY_NAMESPACE } from "@/features/gallery/ui/pick-note-sheet/pick-note-sheet.copy";
 import { PICK_COPY_NAMESPACE } from "@/features/gallery/ui/pick-screen/pick-screen.copy";
 import { SELECTION_OWNER_COPY_NAMESPACE } from "@/features/gallery/ui/selection-owner-text/selection-owner.copy";
@@ -22,7 +19,7 @@ import {
   openGalleryWorkspace,
   visibleText,
 } from "../gallery/gallery-e2e";
-import { clientToken, GALLERY_PASSWORD } from "./client-access-e2e";
+import { clientToken, GALLERY_PASSWORD, linkFolder, setGalleryPassword } from "./client-access-e2e";
 
 const galleryCopy = copyTranslator(GALLERY_COPY_NAMESPACE, "id");
 const clientCopy = copyTranslator(CLIENT_COPY_NAMESPACE, "id");
@@ -45,7 +42,8 @@ test.describe.configure({ retries: 2 });
 const RINA = "https://drive.google.com/drive/folders/fixtureRinaWisuda01";
 const PHONE = { width: 390, height: 844 };
 
-/** The Owner's project with *Foto edit* (3 photos, notes on) and a published fixture gallery. */
+/** The Owner's booked project with *Foto edit* (3 photos, notes on) and its fixture gallery, synced. The gallery exists from the booking; there is no publish (F-27). */
+// The saves below go to the remote database and refresh the page, which can pass the 5 s default.
 async function ownerProject(page: Page): Promise<string> {
   const workspaceId = await openGalleryWorkspace(page);
   const projectPath = await createProject(page, workspaceId, "BOOKED");
@@ -58,34 +56,10 @@ async function ownerProject(page: Page): Promise<string> {
   await page.getByRole("option", { name: /Foto edit/ }).click();
   await item.getByRole("textbox", { name: pc("quantityLabel") }).fill("3");
   await item.getByRole("button", { name: pc("itemAddConfirm") }).click();
-  await expect(item).toBeHidden();
-  await page.getByRole("button", { name: galleryCopy("create") }).click();
-  const create = page.getByRole("dialog", { name: galleryCopy("createDialogTitle") });
-  await create.getByRole("textbox", { name: galleryCopy("passwordLabel") }).fill(GALLERY_PASSWORD);
-  await create.getByRole("button", { name: galleryCopy("create") }).click();
-  await expect(page).toHaveURL(`${projectPath}/gallery`);
-  await page
-    .getByRole("button", { name: galleryCopy("addFolder") })
-    .first()
-    .click();
-  const link = page.getByRole("dialog", { name: galleryCopy("linkDialogTitle") });
-  await link.getByRole("textbox", { name: galleryCopy("linkLabel") }).fill(RINA);
-  await link.getByRole("button", { name: galleryCopy("addFolder") }).click();
-  await expect(
-    visibleText(page, galleryCopy(GALLERY_SOURCE_CHIP_MESSAGE_KEY.SUCCEEDED)),
-  ).toBeVisible({
-    timeout: 60_000,
-  });
+  await expect(item).toBeHidden({ timeout: 20_000 });
+  await linkFolder(page, projectPath, RINA);
+  await setGalleryPassword(page, GALLERY_PASSWORD);
   await mapEditedFolder(page);
-  await page
-    .getByRole("button", { name: galleryCopy("publish") })
-    .first()
-    .click();
-  await page
-    .getByRole("dialog", { name: galleryCopy("publishDialogTitle") })
-    .getByRole("button", { name: galleryCopy("publish") })
-    .click();
-  await expect(visibleText(page, galleryCopy("publishedTitle"))).toBeVisible();
   return projectPath;
 }
 
@@ -97,17 +71,18 @@ async function mapEditedFolder(page: Page): Promise<void> {
   await page.getByRole("menuitem", { name: galleryCopy("renameFolder") }).click();
   const edit = page.getByRole("dialog", { name: galleryCopy("renameDialogTitle") });
   await edit.getByRole("button", { name: /Foto edit/ }).click();
-  await page.getByRole("option", { name: "Hasil edit", exact: true }).click();
+  // The option is the Drive subfolder's own name, which is never translated.
+  await page.getByRole("option", { name: "Edited", exact: true }).click();
   await edit.getByRole("button", { name: galleryCopy("save") }).click();
-  await expect(edit).toBeHidden();
-  await expect(visibleText(page, "5 proof · 3 hasil akhir")).toBeVisible();
+  await expect(edit).toBeHidden({ timeout: 20_000 });
+  await expect(visibleText(page, "5 foto pilihan · 3 hasil akhir")).toBeVisible();
 }
 
 async function signIn(browser: Browser, clientPath: string, viewport?: typeof PHONE) {
   const context = await browser.newContext(viewport ? { viewport } : {});
   const client = await context.newPage();
   const field = client.locator('input[name="password"]');
-  // The publish toast can show before the gallery row is readable by the next request.
+  // The sync can finish a moment before the client route reads the gallery, so retry the first load.
   await expect(async () => {
     await client.goto(clientPath);
     await expect(field).toBeVisible({ timeout: 2_000 });
@@ -160,7 +135,7 @@ async function confirmIn(page: Page, button: string): Promise<void> {
     .click();
 }
 
-test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phone widths", async ({
+test("J-04 J-05 J-06 AC-ACC-014 AC-GFL-017 AC-GFL-019 the client journeys with axe at desktop and phone widths", async ({
   page,
   browser,
 }) => {
@@ -225,20 +200,31 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
     expect((await page.request.get(`${projectPath}/gallery/pilihan`)).status()).toBe(404);
     await page.goto(`${projectPath}/gallery`);
     // Sent below the limit, so the card offers Lihat pilihan and the group Kunci pilihan (AC-SEL-011).
-    await page
-      .getByRole("link", { name: selectionCopy("viewPicks") })
-      .first()
-      .click();
-    await expect(page).toHaveURL(`${projectPath}/gallery/picks`);
+    // A click before the page hydrates is dropped, so click again until the picks page opens.
+    const viewPicks = page.getByRole("link", { name: selectionCopy("viewPicks") }).first();
+    await expect(async () => {
+      await viewPicks.click();
+      await expect(page).toHaveURL(`${projectPath}/gallery/picks`, { timeout: 5_000 });
+    }).toPass({ timeout: 45_000 });
     const lock = page.getByRole("button", { name: selectionCopy("lockPicks") }).first();
     await openAndConfirm(page, lock, selectionCopy("lockPicks"));
     await expect(visibleText(page, selectionCopy("statusLocked"))).toBeVisible();
 
-    // J-06: the Owner publishes final delivery from the gallery page; the client downloads one file and then all.
-    await page.goto(`${projectPath}/gallery`);
-    const publish = page.getByRole("button", { name: deliveryCopy("publish") }).first();
-    await openAndConfirm(page, publish, deliveryCopy("publishConfirm"));
-    await expect(visibleText(page, deliveryCopy("publishedToast"))).toBeVisible();
+    // AC-GFL-019: the synced finished files are visible to the client before delivery, while the
+    // project is still BOOKED.
+    await client.goto(`${clientPath}/final`);
+    await expectGalleryA11y(client);
+    await expect(client.getByRole("link", { name: /^Unduh E_/ }).first()).toBeVisible();
+
+    // J-06: the Owner marks the project delivered (Tandai terkirim, AC-GFL-017; the ⋯ menu of a
+    // BOOKED project); the client downloads one file and then all.
+    await page.goto(projectPath);
+    await page
+      .getByRole("button", { name: pc("menuActions", { name: "Wisuda Basic — Rina" }) })
+      .click();
+    await page.getByRole("menuitem", { name: pc("menuMarkDelivered") }).click();
+    await confirmIn(page, deliveryCopy("completeConfirm"));
+    await expect(visibleText(page, deliveryCopy("completedToast"))).toBeVisible();
     expect((await client.request.get(`${clientPath}/hasil-akhir`)).status()).toBe(404);
     await client.goto(`${clientPath}/final`);
     await expectGalleryA11y(client);
@@ -267,9 +253,9 @@ test("J-04 J-05 J-06 AC-ACC-014 the client journeys with axe at desktop and phon
     // J-06 end: Tandai selesai, the project header's action on a delivered project (A-34).
     await page.goto(projectPath);
     await expect(visibleText(page, deliveryCopy("headerMeta", { when: "" }).trim())).toBeVisible();
-    const complete = page.getByRole("button", { name: deliveryCopy("complete") }).first();
-    await openAndConfirm(page, complete, deliveryCopy("complete"));
-    await expect(visibleText(page, deliveryCopy("completedToast"))).toBeVisible();
+    const finish = page.getByRole("button", { name: deliveryCopy("finish") }).first();
+    await openAndConfirm(page, finish, deliveryCopy("finish"));
+    await expect(visibleText(page, deliveryCopy("finishedToast"))).toBeVisible();
 
     // AC-ACC-014 on a phone: Beranda, Semua foto and Hasil akhir.
     const phone = await signIn(browser, clientPath, PHONE);

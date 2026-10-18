@@ -53,7 +53,7 @@ async function galleryFor(seed: GallerySeed) {
   return galleryId;
 }
 
-/** Cancels the project in one transaction, as `withProjectCancellationScope` does; the gallery is not written (AC-GFL-016). */
+/** Cancels the project in one transaction, as `cancelProjectEntry` does; the gallery is not written (AC-GFL-016). */
 function cancelInOneTransaction(seed: GallerySeed, failAfterCancel: boolean) {
   return db.transaction(async (tx) => {
     const projects = createDrizzleProjectRepository(tx);

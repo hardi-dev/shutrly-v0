@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const logger = { error: vi.fn(), info: vi.fn(), warn: vi.fn() };
-const createProject = vi.fn();
+const createProject = vi.fn<(...args: unknown[]) => Promise<unknown>>();
 const getProjectDetail = vi.fn();
 const notFound = vi.fn(() => {
   throw new Error("NEXT_NOT_FOUND");
@@ -24,6 +24,10 @@ vi.mock("../../auth/owner-guard/owner-guard", () => ({
 vi.mock("../../workspace/owner-workspace/owner-workspace", () => ({
   verifyOwnerWorkspace: vi.fn().mockResolvedValue({ context: { workspaceId: "ws-1" } }),
 }));
+vi.mock("../booking-gallery-scope/booking-gallery-scope", () => ({
+  createBookedProject: (...args: unknown[]) => createProject(...args),
+  confirmBookedProject: vi.fn(),
+}));
 vi.mock("../project-scope/project-scope", () => ({
   withProjectScope: (work: (scope: unknown) => Promise<unknown>) =>
     work({ projects: {}, accessTokens: () => "token" }),
@@ -31,7 +35,9 @@ vi.mock("../project-scope/project-scope", () => ({
 
 const { ProjectError } =
   await import("@/features/booking/application/errors/project-errors/project-errors");
-const { createProjectEntry, loadProjectDetail } = await import("./project-flow");
+const { advanceProjectEntry, createProjectEntry, loadProjectDetail } =
+  await import("./project-flow");
+const { confirmBookedProject } = await import("../booking-gallery-scope/booking-gallery-scope");
 
 describe("project-flow", () => {
   beforeEach(() => {
@@ -46,6 +52,12 @@ describe("project-flow", () => {
   it("AC-PRJ-012 maps NOT_FOUND from a use case to notFound", async () => {
     createProject.mockRejectedValue(new ProjectError("NOT_FOUND"));
     await expect(createProjectEntry("ws-1", {})).rejects.toThrow("NEXT_NOT_FOUND");
+  });
+
+  it("AC-GFL-002 confirming a draft runs the booking-gallery scope, not the plain step", async () => {
+    const projectId = "00000000-0000-4000-8000-0000000000a1";
+    await advanceProjectEntry("ws-1", projectId, "CONFIRM_BOOKING");
+    expect(confirmBookedProject).toHaveBeenCalledWith({ workspaceId: "ws-1" }, "owner", projectId);
   });
 
   it("C-103 logs only the workspace and operation on an unexpected error", async () => {

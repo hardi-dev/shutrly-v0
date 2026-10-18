@@ -11,7 +11,6 @@ import { projectListQuerySchema } from "@/features/booking/application/schemas/p
 import { advanceProject } from "@/features/booking/application/use-cases/advance-project/advance-project";
 import { cancelProject } from "@/features/booking/application/use-cases/cancel-project/cancel-project";
 import { countProjects } from "@/features/booking/application/use-cases/count-projects/count-projects";
-import { createProject } from "@/features/booking/application/use-cases/create-project/create-project";
 import { deleteDraft } from "@/features/booking/application/use-cases/delete-draft/delete-draft";
 import {
   addProjectSession,
@@ -40,7 +39,10 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
 import { verifyOwnerWorkspace } from "../../workspace/owner-workspace/owner-workspace";
-import { withProjectCancellationScope } from "../project-cancellation-scope/project-cancellation-scope";
+import {
+  confirmBookedProject,
+  createBookedProject,
+} from "../booking-gallery-scope/booking-gallery-scope";
 import { withProjectScope } from "../project-scope/project-scope";
 import type { CreateProjectOptions } from "./project-flow.types";
 
@@ -74,9 +76,7 @@ export async function createProjectEntry(rawWorkspaceId: string, values: unknown
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   const locale = await getRequestFormattingLocale();
   try {
-    return await withProjectScope(({ projects, accessTokens }) =>
-      createProject(projects, accessTokens, verified.context, account.id, values, locale),
-    );
+    return await createBookedProject(verified.context, account.id, values, locale);
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "create");
   }
@@ -118,6 +118,9 @@ export async function advanceProjectEntry(
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
+    if (step === "CONFIRM_BOOKING") {
+      return await confirmBookedProject(verified.context, account.id, projectId);
+    }
     return await withProjectScope(({ projects }) =>
       advanceProject(projects, verified.context, account.id, projectId, step),
     );
@@ -218,7 +221,7 @@ export async function cancelProjectEntry(
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
     // A cancelled project's gallery closes by its project status alone (AC-GFL-016); nothing else to write.
-    return await withProjectCancellationScope(({ projects }) =>
+    return await withProjectScope(({ projects }) =>
       cancelProject(projects, verified.context, account.id, projectId, values),
     );
   } catch (error) {

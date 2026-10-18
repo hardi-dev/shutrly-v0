@@ -52,17 +52,12 @@ describe("linkGallerySource", () => {
     });
   });
 
-  it("AC-GAL-022 AC-GAL-024 refuses on an archived gallery or a cancelled project", async () => {
-    for (const state of [
-      { status: "ARCHIVED" as const },
-      { projectStatus: "CANCELLED" as const },
-    ]) {
-      const { deps } = sourceSetup(state);
-      expect(await linkGallerySource(deps, WORKSPACE, OWNER_ID, GALLERY_ID, VALUES)).toEqual({
-        ok: false,
-        code: "INVALID_STATE",
-      });
-    }
+  it("AC-GAL-024 refuses on a cancelled project (AC-GFL-016)", async () => {
+    const { deps } = sourceSetup({ projectStatus: "CANCELLED" });
+    expect(await linkGallerySource(deps, WORKSPACE, OWNER_ID, GALLERY_ID, VALUES)).toEqual({
+      ok: false,
+      code: "INVALID_STATE",
+    });
   });
 
   it("AC-GAL-025 treats another workspace's gallery as not found", async () => {

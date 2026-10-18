@@ -33,7 +33,7 @@ export async function setGalleryExpiry(
       if (!isWritable(before)) return galleryFailure("INVALID_STATE");
       const resolved = resolveExpiry(parsed.data.expiry, deps.now);
       if (!resolved.ok) return galleryFieldFailure({ "expiry.date": "PAST_DATE" });
-      await writer.setExpiry(resolved.expiry, actorId, deps.now);
+      await writer.setExpiry(resolved.expiry.expiresAt, actorId, deps.now);
       const after = galleryState(gallery.projectStatus, resolved.expiry.expiresAt, deps.now);
       return { ok: true, reopened: before === "EXPIRED" && after === "OPEN" };
     },

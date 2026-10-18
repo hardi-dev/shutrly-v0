@@ -2,7 +2,7 @@ import "server-only";
 
 import {
   canEditSources,
-  effectiveGalleryStatus,
+  legacyGalleryStatus,
 } from "@/features/gallery/domain/gallery-status/gallery-status";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
@@ -25,7 +25,7 @@ export async function deleteGallerySource(
     context,
     target.galleryId,
     async (gallery, writer) => {
-      const status = effectiveGalleryStatus(gallery.status, gallery.expiresAt, deps.now);
+      const status = legacyGalleryStatus(gallery.projectStatus, gallery.expiresAt, deps.now);
       if (!canEditSources(status, gallery.projectStatus)) return galleryFailure("INVALID_STATE");
       const isLive = status === "PUBLISHED" || status === "EXPIRED";
       if (isLive && (await writer.countActiveSources()) <= 1)

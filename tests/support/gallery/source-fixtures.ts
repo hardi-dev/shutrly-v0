@@ -13,9 +13,7 @@ export function sourceSetup(gallery: Partial<LockedGalleryState> = {}) {
   const sources = new FakeGallerySourceRepository();
   sources.addGallery(WORKSPACE.workspaceId, {
     galleryId: GALLERY_ID,
-    status: "DRAFT",
     expiresAt: null,
-    expiryDays: null,
     projectStatus: "BOOKED",
     ...gallery,
   });

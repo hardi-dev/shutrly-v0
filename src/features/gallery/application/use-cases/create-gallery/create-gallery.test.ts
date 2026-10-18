@@ -32,7 +32,7 @@ function setup() {
 }
 
 describe("createGallery", () => {
-  it("AC-GAL-001 creates one DRAFT gallery storing the password encrypted and hashed", async () => {
+  it("AC-GAL-001 creates one gallery with no stored status, storing the password encrypted and hashed", async () => {
     const { galleries, deps } = setup();
     const result = await createGallery(deps, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, {
       password: "  mawar-4821 ",
@@ -40,7 +40,6 @@ describe("createGallery", () => {
     });
     expect(result).toEqual({ ok: true, galleryId: "gallery-1", sourceId: null });
     const stored = galleries.galleries[0];
-    expect(stored.status).toBe("DRAFT");
     expect(stored.passwordVersion).toBe(1);
     expect(stored.passwordHash).toBe("hash(mawar-4821)");
     expect(stored.password.ciphertext).toContain(`${WORKSPACE.workspaceId}:gallery-1`);
@@ -109,7 +108,6 @@ describe("createGallery", () => {
     await createGallery(deps, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, days);
     expect(galleries.galleries[0]).toMatchObject({
       expiresAt: new Date(NOW.getTime() + 30 * 86_400_000),
-      expiryDays: null,
     });
     const past = { password: "mawar-4821", expiry: { type: "DATE", date: "2026-10-03" } };
     expect(await createGallery(deps, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, past)).toEqual({

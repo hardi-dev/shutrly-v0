@@ -12,7 +12,6 @@ export interface ClientAccessRecord {
   readonly clientFirstName: string;
   readonly studioName: string;
   readonly galleryId: string | null;
-  readonly galleryStatus: "DRAFT" | "PUBLISHED" | "ARCHIVED" | null;
   readonly expiresAt: Date | null;
   readonly passwordHash: string | null;
   readonly passwordVersion: number | null;

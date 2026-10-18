@@ -15,7 +15,6 @@ import { cancelProject } from "@/features/booking/application/use-cases/cancel-p
 import { archiveGalleryOfCancelledProject } from "@/features/gallery/application/use-cases/archive-gallery-of-cancelled-project/archive-gallery-of-cancelled-project";
 import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
-import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
 
 import { openTestDb } from "../helpers/test-db";
 import { type GallerySeed, seedGalleryWorkspace } from "./helpers/gallery-seed";
@@ -39,7 +38,7 @@ function lifecycleDeps() {
   };
 }
 
-async function galleryFor(seed: GallerySeed, published: boolean) {
+async function galleryFor(seed: GallerySeed) {
   const created = await createGallery(
     {
       galleries: createDrizzleGalleryRepository(db),
@@ -59,12 +58,10 @@ async function galleryFor(seed: GallerySeed, published: boolean) {
     link: `https://drive.google.com/drive/folders/${RINA_FOLDER_ID}`,
     label: "",
   });
-  if (published)
-    await publishGallery(lifecycleDeps(), seed.context, seed.ownerId, created.galleryId);
   return created.galleryId;
 }
 
-/** Cancels the project and archives its gallery in one transaction, as `withProjectCancellationScope` does. */
+/** Cancels the project in one transaction, as `withProjectCancellationScope` does; the gallery is not written (AC-GFL-016). */
 function cancelInOneTransaction(seed: GallerySeed, failAfterCancel: boolean) {
   return db.transaction(async (tx) => {
     const projects = createDrizzleProjectRepository(tx);
@@ -89,35 +86,25 @@ async function states(seed: GallerySeed, galleryId: string) {
 }
 
 describe("cancelling a project with a gallery", () => {
-  it("AC-GAL-024 cancels the project and archives its published gallery together", async () => {
+  // AC-GFL-016 supersedes AC-GAL-024: the gallery closes by its derived state, nothing is archived.
+  it("AC-GFL-016 cancels the project and leaves its gallery unwritten", async () => {
     const seed = await seedGalleryWorkspace(db);
-    const galleryId = await galleryFor(seed, true);
+    const galleryId = await galleryFor(seed);
     await cancelInOneTransaction(seed, false);
     expect(await states(seed, galleryId)).toEqual({
       project: "CANCELLED",
-      gallery: "ARCHIVED",
-      archivedBy: seed.ownerId,
-    });
-  });
-
-  it("AC-GAL-024 a failure after the archive rolls back both", async () => {
-    const seed = await seedGalleryWorkspace(db);
-    const galleryId = await galleryFor(seed, true);
-    await expect(cancelInOneTransaction(seed, true)).rejects.toThrow("forced failure");
-    expect(await states(seed, galleryId)).toEqual({
-      project: "BOOKED",
-      gallery: "PUBLISHED",
+      gallery: null,
       archivedBy: null,
     });
   });
 
-  it("A-8 AC-GAL-024 a draft gallery stays a draft on a cancelled project", async () => {
+  it("AC-GAL-024 a failure after the cancel rolls back the project", async () => {
     const seed = await seedGalleryWorkspace(db);
-    const galleryId = await galleryFor(seed, false);
-    await cancelInOneTransaction(seed, false);
+    const galleryId = await galleryFor(seed);
+    await expect(cancelInOneTransaction(seed, true)).rejects.toThrow("forced failure");
     expect(await states(seed, galleryId)).toEqual({
-      project: "CANCELLED",
-      gallery: "DRAFT",
+      project: "BOOKED",
+      gallery: null,
       archivedBy: null,
     });
   });

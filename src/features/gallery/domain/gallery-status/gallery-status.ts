@@ -1,14 +1,6 @@
-import type {
-  GalleryProjectStatus,
-  GalleryStatus,
-  GalleryStoredStatus,
-} from "./gallery-status.types";
+import { galleryState } from "../gallery-state/gallery-state";
+import type { GalleryProjectStatus, GalleryStatus } from "./gallery-status.types";
 
-export const GALLERY_STORED_STATUSES: readonly GalleryStoredStatus[] = [
-  "DRAFT",
-  "PUBLISHED",
-  "ARCHIVED",
-];
 export const GALLERY_PROJECT_STATUSES: readonly GalleryProjectStatus[] = [
   "DRAFT",
   "BOOKED",
@@ -27,14 +19,23 @@ const GALLERY_PROJECT_ALLOWED: readonly GalleryProjectStatus[] = [
 ];
 const OPEN_STATUSES: readonly GalleryStatus[] = ["DRAFT", "PUBLISHED", "EXPIRED"];
 
-/** Derives the status every reader sees: a published gallery past its expiry is EXPIRED (BR-GAL-005, A-7, D-1). @param stored - the stored status @param expiresAt - the expiry instant or null @param now - the current instant @returns the effective status */
-export function effectiveGalleryStatus(
-  stored: GalleryStoredStatus,
+/**
+ * Bridge until iteration 3 (F-27, ADR-028): the legacy status the callers below still switch on,
+ * derived from the project status and the expiry. OPEN reads as PUBLISHED (there is no draft),
+ * EXPIRED as EXPIRED and CLOSED as ARCHIVED, so the existing refusals keep their meaning.
+ * @param projectStatus - the owning project's status
+ * @param expiresAt - the expiry instant or null
+ * @param now - the current instant
+ * @returns the legacy status
+ */
+export function legacyGalleryStatus(
+  projectStatus: GalleryProjectStatus,
   expiresAt: Date | null,
   now: Date,
 ): GalleryStatus {
-  if (stored !== "PUBLISHED" || expiresAt === null) return stored;
-  return expiresAt.getTime() <= now.getTime() ? "EXPIRED" : "PUBLISHED";
+  const state = galleryState(projectStatus, expiresAt, now);
+  if (state === "CLOSED") return "ARCHIVED";
+  return state === "EXPIRED" ? "EXPIRED" : "PUBLISHED";
 }
 
 /** Tells whether a project may have a gallery created for it (BR-GAL-009, AC-GAL-003). @param projectStatus - the project status @returns true from BOOKED on, except CANCELLED */

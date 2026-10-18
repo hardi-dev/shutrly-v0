@@ -9,7 +9,7 @@ import type {
 } from "@/features/gallery/application/ports/gallery-source-repository/gallery-source-repository.port";
 import {
   canSync,
-  effectiveGalleryStatus,
+  legacyGalleryStatus,
 } from "@/features/gallery/domain/gallery-status/gallery-status";
 import type { SyncFailureCode } from "@/features/gallery/domain/sync-plan/sync-plan.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
@@ -26,7 +26,7 @@ import {
 } from "./gallery-folder-map-sql";
 import { lifecycleWriter } from "./gallery-lifecycle-sql";
 import { lockGallery } from "./gallery-lock-sql";
-import { toGalleryStatus, toProjectStatus } from "./gallery-rows";
+import { toProjectStatus } from "./gallery-rows";
 import { insertGallerySource, isWorkspaceSourceActive } from "./gallery-source-link-sql";
 import {
   claimStep,
@@ -76,9 +76,7 @@ async function selectSyncRow(db: DbExecutor, context: WorkspaceContext, sourceId
       resourceKey: gallerySource.resourceKey,
       removedAt: gallerySource.removedAt,
       syncStatus: gallerySource.syncStatus,
-      status: gallery.status,
       expiresAt: gallery.expiresAt,
-      expiryDays: gallery.expiryDays,
       projectStatus: project.status,
     })
     .from(gallerySource)
@@ -103,9 +101,8 @@ async function findSyncTarget(
   sourceId: string,
 ): Promise<Omit<SyncTarget, "mappings"> | null> {
   const row = await selectSyncRow(db, context, sourceId);
-  const status = row ? toGalleryStatus(row.status) : null;
   const projectStatus = row ? toProjectStatus(row.projectStatus) : null;
-  if (!row || !status || !projectStatus) return null;
+  if (!row || !projectStatus) return null;
   return {
     sourceId,
     galleryId: row.galleryId,
@@ -114,9 +111,7 @@ async function findSyncTarget(
     runOpen: row.syncStatus === "SYNCING",
     gallery: {
       galleryId: row.galleryId,
-      status,
       expiresAt: row.expiresAt,
-      expiryDays: row.expiryDays,
       projectStatus,
     },
   };
@@ -225,7 +220,7 @@ export function createDrizzleGallerySourceRepository(db: DbExecutor): GallerySou
         const open =
           locked !== null &&
           canSync(
-            effectiveGalleryStatus(locked.status, locked.expiresAt, now),
+            legacyGalleryStatus(locked.projectStatus, locked.expiresAt, now),
             locked.projectStatus,
           );
         // Archived, cancelled or removed meanwhile: discard the step (TD › Concurrency).

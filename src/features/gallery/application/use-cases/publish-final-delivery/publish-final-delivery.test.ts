@@ -13,9 +13,7 @@ const CONTEXT = { workspaceId: asWorkspaceId("00000000-0000-4000-8000-0000000000
 const NOW = new Date("2026-10-07T10:00:00Z");
 const GALLERY: LockedGalleryState = {
   galleryId: "g",
-  status: "PUBLISHED",
   expiresAt: null,
-  expiryDays: null,
   projectStatus: "POST_PROCESSING",
 };
 

@@ -52,7 +52,8 @@ describe("drizzle gallery repository", () => {
       .select()
       .from(gallery)
       .where(eq(gallery.projectId, seed.bookedProjectId));
-    expect(row).toMatchObject({ status: "DRAFT", passwordVersion: 1, passwordKeyVersion: 1 });
+    // F-27 (ADR-028, D-12): no stored status; the state is derived. Name kept from F-09.
+    expect(row).toMatchObject({ status: null, passwordVersion: 1, passwordKeyVersion: 1 });
     expect(JSON.stringify(row)).not.toContain("mawar-4821");
     const page = await getGalleryPage(
       createDrizzleGalleryRepository(db),
@@ -113,7 +114,8 @@ describe("drizzle gallery repository", () => {
     ).rejects.toMatchObject({ code: "NOT_FOUND" });
   });
 
-  it("D-1 D-2 the checks refuse a stored EXPIRED, both expiries, or a published draft", async () => {
+  // Migration 0022 drops the status and draft checks (ADR-028): only the expiry range is still checked.
+  it("D-1 D-12 the expiry days stay between 1 and 3650", async () => {
     const seed = await seedGalleryWorkspace(db);
     const base = {
       workspaceId: seed.context.workspaceId,
@@ -122,17 +124,8 @@ describe("drizzle gallery repository", () => {
       passwordIv: "i",
       passwordHash: "h",
     };
-    await expect(db.insert(gallery).values({ ...base, status: "EXPIRED" })).rejects.toThrow();
-    await expect(
-      db.insert(gallery).values({ ...base, expiresAt: new Date(), expiryDays: 3 }),
-    ).rejects.toThrow();
-    await expect(
-      db
-        .insert(gallery)
-        .values({ ...base, status: "PUBLISHED", expiryDays: 3, publishedAt: new Date() }),
-    ).rejects.toThrow();
-    await expect(db.insert(gallery).values({ ...base, publishedAt: new Date() })).rejects.toThrow();
     await expect(db.insert(gallery).values({ ...base, expiryDays: 0 })).rejects.toThrow();
+    await expect(db.insert(gallery).values({ ...base, expiryDays: 3651 })).rejects.toThrow();
   });
 
   it("D-20 D-21 D-24 a gallery starts at content version 1 and a source has no open run", async () => {

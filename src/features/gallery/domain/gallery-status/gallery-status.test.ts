@@ -8,30 +8,26 @@ import {
   canRotatePassword,
   canSetExpiry,
   canSync,
-  effectiveGalleryStatus,
   galleryAllowedForProject,
+  legacyGalleryStatus,
 } from "./gallery-status";
 
 const NOW = new Date("2026-10-04T03:00:00Z");
 
-describe("effectiveGalleryStatus", () => {
-  it("AC-GAL-020 derives EXPIRED from a past expiry without a job", () => {
-    expect(effectiveGalleryStatus("PUBLISHED", new Date("2026-10-04T02:59:59Z"), NOW)).toBe(
-      "EXPIRED",
-    );
-    expect(effectiveGalleryStatus("PUBLISHED", NOW, NOW)).toBe("EXPIRED");
+describe("legacyGalleryStatus (F-27 bridge)", () => {
+  it("AC-GAL-020 reads an open gallery past its expiry as EXPIRED without a job", () => {
+    expect(legacyGalleryStatus("SHOOTING", new Date("2026-10-04T02:59:59Z"), NOW)).toBe("EXPIRED");
+    expect(legacyGalleryStatus("SHOOTING", NOW, NOW)).toBe("EXPIRED");
   });
 
-  it("AC-GAL-020 keeps PUBLISHED for a later or no expiry", () => {
-    expect(effectiveGalleryStatus("PUBLISHED", new Date("2026-10-05T00:00:00Z"), NOW)).toBe(
-      "PUBLISHED",
-    );
-    expect(effectiveGalleryStatus("PUBLISHED", null, NOW)).toBe("PUBLISHED");
+  it("AC-GFL-008 reads an open gallery with a later or no expiry as PUBLISHED", () => {
+    expect(legacyGalleryStatus("BOOKED", new Date("2026-10-05T00:00:00Z"), NOW)).toBe("PUBLISHED");
+    expect(legacyGalleryStatus("BOOKED", null, NOW)).toBe("PUBLISHED");
   });
 
-  it("BR-GAL-005 never expires a draft or an archived gallery", () => {
-    expect(effectiveGalleryStatus("DRAFT", null, NOW)).toBe("DRAFT");
-    expect(effectiveGalleryStatus("ARCHIVED", new Date("2020-01-01T00:00:00Z"), NOW)).toBe(
+  it("AC-GFL-016 reads a cancelled project's gallery as ARCHIVED, even past its expiry", () => {
+    expect(legacyGalleryStatus("CANCELLED", null, NOW)).toBe("ARCHIVED");
+    expect(legacyGalleryStatus("CANCELLED", new Date("2020-01-01T00:00:00Z"), NOW)).toBe(
       "ARCHIVED",
     );
   });

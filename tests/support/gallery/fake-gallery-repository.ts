@@ -11,14 +11,11 @@ import type {
   NewGallery,
 } from "@/features/gallery/application/ports/gallery-repository/gallery-repository.port";
 import type { NewGallerySource } from "@/features/gallery/application/ports/gallery-source-repository/gallery-source-repository.port";
-import type { GalleryStoredStatus } from "@/features/gallery/domain/gallery-status/gallery-status.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 export interface StoredGallery extends NewGallery {
   workspaceId: string;
-  status: GalleryStoredStatus;
   passwordVersion: number;
-  publishedAt: Date | null;
   archivedAt: Date | null;
 }
 
@@ -52,12 +49,12 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
     return {
       gallery: {
         id: gallery.id,
-        status: gallery.status,
+        // A gallery whose project is unknown fails closed (the state is CLOSED for CANCELLED).
+        projectStatus:
+          this.projects.find((row) => row.id === gallery.projectId)?.status ?? "CANCELLED",
         password: gallery.password,
         passwordVersion: gallery.passwordVersion,
         expiresAt: gallery.expiresAt,
-        expiryDays: gallery.expiryDays,
-        publishedAt: gallery.publishedAt,
         archivedAt: gallery.archivedAt,
       },
       activeSourceCount: active.length,
@@ -88,9 +85,7 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
         this.galleries.push({
           ...gallery,
           workspaceId: context.workspaceId,
-          status: "DRAFT",
           passwordVersion: 1,
-          publishedAt: null,
           archivedAt: null,
         });
         return "CREATED" as const;

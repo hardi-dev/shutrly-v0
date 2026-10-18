@@ -2,7 +2,7 @@ import "server-only";
 
 import {
   canEditSources,
-  effectiveGalleryStatus,
+  legacyGalleryStatus,
 } from "@/features/gallery/domain/gallery-status/gallery-status";
 import { kindForPickMode } from "@/features/gallery/domain/photo-classification/photo-classification";
 import type { FolderMapping } from "@/features/gallery/domain/photo-classification/photo-classification.types";
@@ -62,7 +62,7 @@ export async function setFolderMapping(
     context,
     record.galleryId,
     async (gallery, writer) => {
-      const status = effectiveGalleryStatus(gallery.status, gallery.expiresAt, deps.now);
+      const status = legacyGalleryStatus(gallery.projectStatus, gallery.expiresAt, deps.now);
       if (!canEditSources(status, gallery.projectStatus)) return galleryFailure("INVALID_STATE");
       await writer.replaceFolderMappings(sourceId, entries);
       await writer.reclassifySource(sourceId, mappings, deps.now);

@@ -1,7 +1,7 @@
 import "server-only";
 
 import { driveFileUrl } from "@/features/gallery/domain/drive-folder-link/drive-folder-link";
-import { effectiveGalleryStatus } from "@/features/gallery/domain/gallery-status/gallery-status";
+import { legacyGalleryStatus } from "@/features/gallery/domain/gallery-status/gallery-status";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { GalleryPasswordCipherPort } from "../../ports/gallery-password-cipher/gallery-password-cipher.port";
@@ -37,10 +37,10 @@ export async function toSummaryView(
   });
   return {
     id: gallery.id,
-    status: effectiveGalleryStatus(gallery.status, gallery.expiresAt, now),
+    status: legacyGalleryStatus(gallery.projectStatus, gallery.expiresAt, now),
     password,
     expiresAt: gallery.expiresAt?.toISOString() ?? null,
-    expiryDays: gallery.expiryDays,
+    expiryDays: null,
     activeSourceCount: summary.activeSourceCount,
     failedSourceCount: summary.failedSourceCount,
     failedSourceNames: summary.failedSourceNames,

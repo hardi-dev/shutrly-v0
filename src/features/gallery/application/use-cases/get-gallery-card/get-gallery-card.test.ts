@@ -35,7 +35,7 @@ describe("getGalleryCard", () => {
     }
   });
 
-  it("AC-GAL-001 shows the draft gallery with its decrypted password", async () => {
+  it("AC-GAL-001 shows the new gallery, with no stored status, and its decrypted password", async () => {
     const galleries = fixtureGalleries();
     const deps = {
       galleries,
@@ -50,7 +50,7 @@ describe("getGalleryCard", () => {
     });
     const card = await getGalleryCard(galleries, fakeCipher, WORKSPACE, BOOKED_PROJECT_ID, NOW);
     expect(card.canCreate).toBe(false);
-    expect(card.gallery).toMatchObject({ id: "g-1", status: "DRAFT", password: "mawar-4821" });
+    expect(card.gallery).toMatchObject({ id: "g-1", status: "PUBLISHED", password: "mawar-4821" });
   });
 
   it("AC-GAL-025 treats another workspace's project as not found", async () => {

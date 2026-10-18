@@ -28,7 +28,6 @@ function createWriter(db: DbExecutor, context: WorkspaceContext): GalleryCreateW
           passwordKeyVersion: row.password.keyVersion,
           passwordHash: row.passwordHash,
           expiresAt: row.expiresAt,
-          expiryDays: row.expiryDays,
           createdBy: row.actorId,
           updatedBy: row.actorId,
         })

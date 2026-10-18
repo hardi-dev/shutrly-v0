@@ -136,22 +136,15 @@ describe("final delivery (D-17, sequence 3)", () => {
     expect(await stateOf(rina.projectId, rina.galleryId)).toEqual(before);
   });
 
-  it("AC-DEL-002 an expired gallery is refused and the project's move rolls back", async () => {
+  // D-7 drops GALLERY_NOT_PUBLISHED: an expired gallery no longer refuses final delivery, so
+  // the old refusal (AC-DEL-002 for expired galleries) is superseded.
+  it("D-7 an expired gallery no longer refuses final delivery", async () => {
     const rina = await seedRina();
     await db
       .update(gallery)
       .set({ expiresAt: new Date(Date.now() - 60_000) })
       .where(eq(gallery.id, rina.galleryId));
-    const before = await stateOf(rina.projectId, rina.galleryId);
-    expect(await publish(rina.projectId)).toEqual({
-      ok: false,
-      code: "REFUSED",
-      reasons: ["GALLERY_NOT_PUBLISHED"],
-    });
-    const after = await stateOf(rina.projectId, rina.galleryId);
-    expect(after).toEqual(before);
-    expect(after.status).toBe("POST_PROCESSING");
-    expect((await card(rina.projectId)).state).toBe("GALLERY_INACTIVE");
+    expect(await publish(rina.projectId)).toBeUndefined();
   });
 
   it("AC-DEL-002 every reason is returned together", async () => {
@@ -194,7 +187,10 @@ describe("Tandai selesai (BR-PRJ-005)", () => {
       now.toISOString(),
     ]);
     const access = await createDrizzleClientAccessRepository(db).findByTokenUnscoped(rina.token);
-    expect([access?.projectStatus, access?.galleryStatus]).toEqual(["COMPLETED", "PUBLISHED"]);
+    expect([access?.projectStatus, access?.galleryId === rina.galleryId]).toEqual([
+      "COMPLETED",
+      true,
+    ]);
     expect((await card(rina.projectId)).state).toBe("COMPLETED");
   });
 

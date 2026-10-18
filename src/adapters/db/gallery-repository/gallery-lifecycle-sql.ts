@@ -16,10 +16,7 @@ type SourceEditWrites = Pick<
   GalleryLifecycleWriter,
   "countSourcePicks" | "deleteSource" | "renameSource"
 >;
-type StatusWrites = Pick<
-  GalleryLifecycleWriter,
-  "publish" | "setExpiry" | "archive" | "deleteGallery"
->;
+type ExpiryWrites = Pick<GalleryLifecycleWriter, "setExpiry">;
 
 interface SourceScope {
   readonly tx: DbExecutor;
@@ -104,47 +101,18 @@ function sourceEditWrites({
   };
 }
 
-function statusWrites(tx: DbExecutor, scope: SQL | undefined): StatusWrites {
+function expiryWrites(tx: DbExecutor, scope: SQL | undefined): ExpiryWrites {
   return {
-    async publish(expiry, actorId, now) {
+    async setExpiry(expiresAt, actorId, now) {
       await tx
         .update(gallery)
         .set({
-          status: "PUBLISHED",
-          publishedAt: now,
-          contentVersion: sql`${gallery.contentVersion} + 1`,
-          ...expiry,
-          updatedBy: actorId,
-          updatedAt: now,
-        })
-        .where(scope);
-    },
-    async setExpiry(expiry, actorId, now) {
-      await tx
-        .update(gallery)
-        .set({
-          ...expiry,
+          expiresAt,
           contentVersion: sql`${gallery.contentVersion} + 1`,
           updatedBy: actorId,
           updatedAt: now,
         })
         .where(scope);
-    },
-    async archive(actorId, now) {
-      await tx
-        .update(gallery)
-        .set({
-          status: "ARCHIVED",
-          contentVersion: sql`${gallery.contentVersion} + 1`,
-          archivedAt: now,
-          archivedBy: actorId,
-          updatedBy: actorId,
-          updatedAt: now,
-        })
-        .where(scope);
-    },
-    async deleteGallery() {
-      await tx.delete(gallery).where(scope);
     },
   };
 }
@@ -159,7 +127,7 @@ export function lifecycleWriter(
   return {
     ...sourceWrites(sourceScope(tx, context, galleryId)),
     ...sourceEditWrites(sourceScope(tx, context, galleryId)),
-    ...statusWrites(tx, scope),
+    ...expiryWrites(tx, scope),
     createSelectionGroups: () => insertSelectionGroups(tx, context, galleryId),
     ...finalDeliveryWrites(tx, context, galleryId),
     async rotatePassword(rotated, actorId, now) {

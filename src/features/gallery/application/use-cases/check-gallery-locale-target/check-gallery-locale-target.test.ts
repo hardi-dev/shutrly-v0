@@ -12,7 +12,6 @@ const RECORD: ClientAccessRecord = {
   clientFirstName: "Rina",
   studioName: "Studio Senja",
   galleryId: "00000000-0000-4000-8000-000000000002",
-  galleryStatus: "PUBLISHED",
   expiresAt: null,
   passwordHash: "hash(mawar-4821)",
   passwordVersion: 1,

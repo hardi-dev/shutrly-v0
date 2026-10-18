@@ -5,28 +5,16 @@ import { describe, expect, it } from "vitest";
 
 import { archiveGallery } from "./archive-gallery";
 
-describe("archiveGallery", () => {
-  it("AC-GAL-022 archives a published or expired gallery, with no way back", async () => {
+describe("archiveGallery (removed in F-27 iteration 3)", () => {
+  // AC-GFL-006 supersedes AC-GAL-022: there is no archive, so nothing is written.
+  it("AC-GFL-006 refuses to archive an open gallery and writes nothing", async () => {
     const { deps, sources } = await lifecycleSetup({
-      status: "PUBLISHED",
       expiresAt: new Date("2026-10-01T00:00:00Z"),
     });
-    expect(await archiveGallery(deps, WORKSPACE, OWNER_ID, GALLERY_ID)).toEqual({ ok: true });
-    expect(sources.galleries.get(GALLERY_ID)).toMatchObject({
-      status: "ARCHIVED",
-      archivedBy: OWNER_ID,
-    });
     expect(await archiveGallery(deps, WORKSPACE, OWNER_ID, GALLERY_ID)).toEqual({
       ok: false,
       code: "INVALID_STATE",
     });
-  });
-
-  it("BR-GAL-005 refuses a draft", async () => {
-    const { deps } = await lifecycleSetup();
-    expect(await archiveGallery(deps, WORKSPACE, OWNER_ID, GALLERY_ID)).toEqual({
-      ok: false,
-      code: "INVALID_STATE",
-    });
+    expect(sources.galleries.get(GALLERY_ID)?.archivedBy).toBeNull();
   });
 });

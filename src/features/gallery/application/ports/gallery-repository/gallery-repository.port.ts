@@ -1,9 +1,6 @@
 import "server-only";
 
-import type {
-  GalleryProjectStatus,
-  GalleryStoredStatus,
-} from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-status/gallery-status.types";
 import type { PhotoKind } from "@/features/gallery/domain/photo-classification/photo-classification.types";
 import type { SourceProvider } from "@/features/gallery/domain/source-provider/source-provider.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
@@ -28,7 +25,6 @@ export interface NewGallery {
   readonly password: EncryptedPassword;
   readonly passwordHash: string;
   readonly expiresAt: Date | null;
-  readonly expiryDays: number | null;
   readonly actorId: string;
 }
 
@@ -50,14 +46,14 @@ export interface GalleryPhotoCounts {
   readonly missing: number;
 }
 
+// F-27: no stored status; the state is derived from the project status and expiresAt (ADR-028).
 export interface GalleryRecord {
   readonly id: string;
-  readonly status: GalleryStoredStatus;
+  /** The owning project's status; the gallery state is derived from it and the expiry. */
+  readonly projectStatus: GalleryProjectStatus;
   readonly password: EncryptedPassword;
   readonly passwordVersion: number;
   readonly expiresAt: Date | null;
-  readonly expiryDays: number | null;
-  readonly publishedAt: Date | null;
   readonly archivedAt: Date | null;
 }
 

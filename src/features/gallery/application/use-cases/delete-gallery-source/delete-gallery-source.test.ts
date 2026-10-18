@@ -6,7 +6,7 @@ import { deleteGallerySource } from "./delete-gallery-source";
 
 describe("deleteGallerySource", () => {
   it("AC-GAL-013 deletes one folder of a published gallery with its photos, but not the last one", async () => {
-    const { deps, sources } = await lifecycleSetup({ status: "PUBLISHED" }, BOTH_FOLDERS);
+    const { deps, sources } = await lifecycleSetup({}, BOTH_FOLDERS);
     expect(await deleteGallerySource(deps, WORKSPACE, "source-2")).toEqual({ ok: true });
     expect(sources.sources.map((row) => row.id)).toEqual(["source-1"]);
     expect(sources.photos.filter((photo) => photo.sourceId === "source-2")).toHaveLength(0);
@@ -27,14 +27,19 @@ describe("deleteGallerySource", () => {
     expect(sources.photos.some((photo) => photo.sourceId === "source-2")).toBe(true);
   });
 
-  it("A-6 deletes the only folder of a draft", async () => {
+  // A-6 (no drafts since F-27): the last folder of an open gallery is still refused here; AC-GFL-015
+  // lets it go in iteration 3.
+  it("A-6 keeps refusing the only folder of an open gallery until AC-GFL-015 lands", async () => {
     const { deps, sources } = await lifecycleSetup();
-    expect(await deleteGallerySource(deps, WORKSPACE, "source-1")).toEqual({ ok: true });
-    expect(sources.photos).toHaveLength(0);
+    expect(await deleteGallerySource(deps, WORKSPACE, "source-1")).toEqual({
+      ok: false,
+      code: "LAST_ACTIVE_SOURCE",
+    });
+    expect(sources.photos.length).toBeGreaterThan(0);
   });
 
-  it("AC-GAL-022 AC-GAL-025 refuses an archived gallery and another workspace", async () => {
-    const { deps } = await lifecycleSetup({ status: "ARCHIVED" }, BOTH_FOLDERS);
+  it("AC-GFL-016 AC-GAL-025 refuses a cancelled project's gallery and another workspace", async () => {
+    const { deps } = await lifecycleSetup({ projectStatus: "CANCELLED" }, BOTH_FOLDERS);
     expect(await deleteGallerySource(deps, WORKSPACE, "source-2")).toEqual({
       ok: false,
       code: "INVALID_STATE",

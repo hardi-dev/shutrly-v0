@@ -35,7 +35,7 @@ describe("getGalleryPage", () => {
       NOW,
     );
     expect(page.project.title).toBe("Wisuda Rina");
-    expect(page.gallery).toMatchObject({ status: "DRAFT", password: "mawar-4821" });
+    expect(page.gallery).toMatchObject({ status: "PUBLISHED", password: "mawar-4821" });
     expect(page.sources).toEqual([]);
   });
 

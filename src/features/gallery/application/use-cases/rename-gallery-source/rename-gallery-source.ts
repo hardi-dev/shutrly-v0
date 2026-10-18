@@ -2,7 +2,7 @@ import "server-only";
 
 import {
   canEditSources,
-  effectiveGalleryStatus,
+  legacyGalleryStatus,
 } from "@/features/gallery/domain/gallery-status/gallery-status";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
@@ -30,7 +30,7 @@ export async function renameGallerySource(
     context,
     target.galleryId,
     async (gallery, writer) => {
-      const status = effectiveGalleryStatus(gallery.status, gallery.expiresAt, deps.now);
+      const status = legacyGalleryStatus(gallery.projectStatus, gallery.expiresAt, deps.now);
       if (!canEditSources(status, gallery.projectStatus)) return galleryFailure("INVALID_STATE");
       const renamed = await writer.renameSource(sourceId, label, deps.now);
       return renamed ? { ok: true } : galleryFailure("INVALID_STATE");

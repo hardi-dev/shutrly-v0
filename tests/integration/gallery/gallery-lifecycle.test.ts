@@ -18,7 +18,6 @@ import { createGallery } from "@/features/gallery/application/use-cases/create-g
 import { deleteDraftGallery } from "@/features/gallery/application/use-cases/delete-draft-gallery/delete-draft-gallery";
 import { deleteGallerySource } from "@/features/gallery/application/use-cases/delete-gallery-source/delete-gallery-source";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
-import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
 import { rotateGalleryPassword } from "@/features/gallery/application/use-cases/rotate-gallery-password/rotate-gallery-password";
 import { setGalleryExpiry } from "@/features/gallery/application/use-cases/set-gallery-expiry/set-gallery-expiry";
 
@@ -81,16 +80,15 @@ async function galleryRow(galleryId: string) {
 }
 
 describe("gallery lifecycle against Postgres", () => {
-  it("AC-GAL-016 AC-GAL-018 AC-GAL-021 AC-GAL-022 publish, re-date, rotate and archive", async () => {
+  // AC-GFL-006 supersedes AC-GAL-016 (publish) and AC-GAL-022 (archive): the gallery opens with its
+  // project, so there is nothing to publish, and archive is refused.
+  it("AC-GAL-018 AC-GAL-021 re-date and rotate an open gallery; archive is refused", async () => {
     const seed = await seedGalleryWorkspace(db);
     const { galleryId, sourceId } = await linkedGallery(seed);
-    expect(await publishGallery(deps(), seed.context, seed.ownerId, galleryId)).toEqual({
-      ok: true,
-    });
-    const published = await galleryRow(galleryId);
-    expect(published.status).toBe("PUBLISHED");
-    expect(published.expiryDays).toBeNull();
-    expect(published.expiresAt?.getTime()).toBeGreaterThan(Date.now() + 29 * 86_400_000);
+    const opened = await galleryRow(galleryId);
+    expect(opened.status).toBeNull();
+    expect(opened.expiryDays).toBeNull();
+    expect(opened.expiresAt?.getTime()).toBeGreaterThan(Date.now() + 29 * 86_400_000);
 
     expect(
       await setGalleryExpiry(deps(), seed.context, seed.ownerId, galleryId, {
@@ -114,16 +112,10 @@ describe("gallery lifecycle against Postgres", () => {
       code: "LAST_ACTIVE_SOURCE",
     });
     expect(await archiveGallery(deps(), seed.context, seed.ownerId, galleryId)).toEqual({
-      ok: true,
-    });
-    expect(await galleryRow(galleryId)).toMatchObject({
-      status: "ARCHIVED",
-      archivedBy: seed.ownerId,
-    });
-    expect(await deleteDraftGallery(deps(), seed.context, galleryId)).toEqual({
       ok: false,
       code: "INVALID_STATE",
     });
+    expect(await galleryRow(galleryId)).toMatchObject({ status: null, archivedBy: null });
   });
 
   it("AC-GAL-001 Revision OT #3 creates a gallery with its first folder, or nothing when the source is inactive", async () => {
@@ -178,17 +170,18 @@ describe("gallery lifecycle against Postgres", () => {
     ).toHaveLength(8);
   });
 
-  it("AC-GAL-023 deletes a draft with its sources and photo records", async () => {
+  // AC-GFL-006 supersedes AC-GAL-023: there are no drafts, so a gallery and its folders stay.
+  it("AC-GFL-006 refuses to delete a gallery; its sources and photo records stay", async () => {
     const seed = await seedGalleryWorkspace(db);
     const { galleryId, sourceId } = await linkedGallery(seed);
-    expect(await deleteDraftGallery(deps(), seed.context, galleryId)).toEqual({ ok: true });
-    expect(await db.select().from(gallery).where(eq(gallery.id, galleryId))).toHaveLength(0);
+    expect(await deleteDraftGallery(deps(), seed.context, galleryId)).toEqual({
+      ok: false,
+      code: "INVALID_STATE",
+    });
+    expect(await db.select().from(gallery).where(eq(gallery.id, galleryId))).toHaveLength(1);
     expect(
       await db.select().from(gallerySource).where(eq(gallerySource.id, sourceId)),
-    ).toHaveLength(0);
-    expect(
-      await db.select().from(galleryPhoto).where(eq(galleryPhoto.gallerySourceId, sourceId)),
-    ).toHaveLength(0);
+    ).toHaveLength(1);
   });
 
   it("AC-GAL-036 the content version rises on each change a client could see, and not on an unchanged re-sync", async () => {
@@ -198,18 +191,17 @@ describe("gallery lifecycle against Postgres", () => {
     expect(await version()).toBe(2);
     await syncSourceToEnd(deps(), seed.context, sourceId);
     expect(await version()).toBe(2);
-    await publishGallery(deps(), seed.context, seed.ownerId, galleryId);
-    expect(await version()).toBe(3);
+    // No publish step (AC-GFL-006): publishing and archiving no longer bump the version (D-15).
     await setGalleryExpiry(deps(), seed.context, seed.ownerId, galleryId, {
       expiry: { type: "NONE" },
     });
-    expect(await version()).toBe(4);
+    expect(await version()).toBe(3);
     await rotateGalleryPassword(deps(), seed.context, seed.ownerId, galleryId, {
       password: "baru2026",
     });
-    expect(await version()).toBe(5);
+    expect(await version()).toBe(4);
     await archiveGallery(deps(), seed.context, seed.ownerId, galleryId);
-    expect(await version()).toBe(6);
+    expect(await version()).toBe(4);
   });
 
   it("AC-GAL-036 deleting a folder and a sync that finds a renamed file each bump the version", async () => {
@@ -222,7 +214,6 @@ describe("gallery lifecycle against Postgres", () => {
     });
     if (!second.ok) throw new Error("link failed");
     await syncSourceToEnd(deps(), seed.context, second.sourceId);
-    await publishGallery(deps(), seed.context, seed.ownerId, galleryId);
     const before = (await galleryRow(galleryId)).contentVersion;
     await deleteGallerySource(deps(), seed.context, second.sourceId);
     expect((await galleryRow(galleryId)).contentVersion).toBe(before + 1);

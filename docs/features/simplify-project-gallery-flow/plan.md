@@ -1,6 +1,6 @@
 # Plan — Simplify project and gallery creation (F-27)
 
-Status: PLANNED (2026-10-18; self-review applied 2026-10-18, Owner accepted A–C) · Design: [technical-design.md](technical-design.md) · Spec: [spec.md](spec.md) · Criteria: [acceptance-criteria.md](acceptance-criteria.md) · Exports: [exports/INDEX.md](exports/INDEX.md) · ADR: [ADR-028](../../architecture/decisions/ADR-028-gallery-without-stored-status.md)
+Status: IN PROGRESS (2026-10-18; self-review applied 2026-10-18, Owner accepted A–C; iteration 1 built) · Design: [technical-design.md](technical-design.md) · Spec: [spec.md](spec.md) · Criteria: [acceptance-criteria.md](acceptance-criteria.md) · Exports: [exports/INDEX.md](exports/INDEX.md) · ADR: [ADR-028](../../architecture/decisions/ADR-028-gallery-without-stored-status.md)
 
 **Goal:**
 - a booked project already has its gallery;
@@ -33,14 +33,14 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 - Code to follow: `src/features/gallery/domain/gallery-status/`, `client-gallery-availability/`, `client-photo-visibility/`, `final-delivery/`, `gallery-expiry/`; `src/features/booking/domain/project-menu/`.
 - Callers updated in this iteration (signature only, so typecheck stays green): `resolve-client-access`, `serve-client-photo`, `serve-client-file`, `browse-client-photos`, `publish-final-delivery`, `set-gallery-expiry`, `create-gallery`.
 
-- [ ] **1.1** Test first, `gallery-state.test.ts`, then `features/gallery/domain/gallery-state/gallery-state{,.types}.ts`: `galleryState(projectStatus, expiresAt, now)` → `OPEN | EXPIRED | CLOSED` (CLOSED wins over EXPIRED); `isWritable(state)`; `canShareGallery({ projectStatus, state, activeSourceCount })` (BR-GAL-010: `BOOKED`…`COMPLETED`, OPEN, ≥ 1 source). Additive: nothing else changes yet.
-- [ ] **1.2** `client-gallery-availability`: input `{ projectStatus, expiresAt, now }`, true only for OPEN; `resolve-client-access` stops passing the stored status. Tests (AC-GFL-008, 012, 016).
-- [ ] **1.3** `client-photo-visibility`: drop `finalDeliveryPublished` from `isInFinalDelivery`, `isServableToClient`, `clientBrowseKind`; update the three callers; tests for a synced `EDITED` file visible without delivery (AC-GFL-019).
-- [ ] **1.4** `final-delivery`: `galleryDeliveryReasons` returns only `NO_FINISHED_FILE`; `publish-final-delivery` stops passing the status. `deliveryCardState` stays until iteration 5 (it drives the card UI).
-- [ ] **1.5** `gallery-expiry`: `GALLERY_EXPIRY_PRESETS = [7, 14, 30, 60, 90]`; `resolveExpiry(input, now)` without status: `DAYS` → `now + days`, a `DATE` of today → `now` (A-2), a later date → end of that day; return shape unchanged (`expiryDays: null`) until iteration 2. `create-gallery` and `set-gallery-expiry` drop the status argument. `expiryOnPublish` stays until iteration 3 deletes publish (AC-GFL-010, 011, 012).
-- [ ] **1.6** `features/communications/domain/whatsapp-link/`: `whatsappLink(number | null, text)` → `https://wa.me/<number>?text=<encoded>` or null (AC-GFL-022: `6281234567890`, newlines and `&` encoded).
-- [ ] **1.7** `project-menu`: input `canShareGallery` (default false at every caller for now) → item `SHARE_GALLERY` in *Kirim ke klien*; `CHAT_WHATSAPP` stays when no template item applies. Callers that build list and dashboard rows always pass false (A-11). `MARK_DELIVERED` is **not** added here (iteration 4).
-- [ ] Commits: `feat(gallery): derive gallery state from project status and expiry`, `feat(gallery): open galleries without publish and show finished files once synced`, `feat(gallery): expiry presets and close today at once`, `feat(communications): whatsapp deep link`, `feat(projects): share gallery menu item`.
+- [x] **1.1** Test first, `gallery-state.test.ts`, then `features/gallery/domain/gallery-state/gallery-state{,.types}.ts`: `galleryState(projectStatus, expiresAt, now)` → `OPEN | EXPIRED | CLOSED` (CLOSED wins over EXPIRED); `isWritable(state)`; `canShareGallery({ projectStatus, state, activeSourceCount })` (BR-GAL-010: `BOOKED`…`COMPLETED`, OPEN, ≥ 1 source). Additive: nothing else changes yet.
+- [x] **1.2** `client-gallery-availability`: input `{ projectStatus, expiresAt, now }`, true only for OPEN; `resolve-client-access` stops passing the stored status. Tests (AC-GFL-008, 012, 016).
+- [x] **1.3** `client-photo-visibility`: drop `finalDeliveryPublished` from `isInFinalDelivery`, `isServableToClient`, `clientBrowseKind`; update the three callers; tests for a synced `EDITED` file visible without delivery (AC-GFL-019).
+- [x] **1.4** `final-delivery`: `galleryDeliveryReasons` returns only `NO_FINISHED_FILE`; `publish-final-delivery` stops passing the status. `deliveryCardState` stays until iteration 5 (it drives the card UI).
+- [x] **1.5** `gallery-expiry`: `GALLERY_EXPIRY_PRESETS = [7, 14, 30, 60, 90]`; `resolveExpiry(input, now)` without status: `DAYS` → `now + days`, a `DATE` of today → `now` (A-2), a later date → end of that day; return shape unchanged (`expiryDays: null`) until iteration 2. `create-gallery` and `set-gallery-expiry` drop the status argument. `expiryOnPublish` stays until iteration 3 deletes publish (AC-GFL-010, 011, 012).
+- [x] **1.6** `features/communications/domain/whatsapp-link/`: `whatsappLink(number | null, text)` → `https://wa.me/<number>?text=<encoded>` or null (AC-GFL-022: `6281234567890`, newlines and `&` encoded).
+- [x] **1.7** `project-menu`: input `canShareGallery` (default false at every caller for now) → item `SHARE_GALLERY` in *Kirim ke klien*; `CHAT_WHATSAPP` stays when no template item applies. Callers that build list and dashboard rows always pass false (A-11). `MARK_DELIVERED` is **not** added here (iteration 4).
+- [x] Commits: `feat(gallery): derive gallery state from project status and expiry`, `feat(gallery): open galleries without publish and show finished files once synced`, `feat(gallery): expiry presets and close today at once`, `feat(communications): whatsapp deep link`, `feat(projects): share gallery menu item`.
 
 **Done when** the domain tests and the touched callers' tests pass, `pnpm typecheck` and lint are clean, and there is no I/O in `domain/`.
 

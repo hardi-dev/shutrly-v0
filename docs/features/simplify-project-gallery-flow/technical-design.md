@@ -1,6 +1,6 @@
 # Technical Design — Simplify project and gallery creation (F-27)
 
-Status: PLANNED (2026-10-18; self-review applied, Owner accepted the recommendations A–C) · Spec: [spec.md](spec.md) · Criteria: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md), [exports/INDEX.md](exports/INDEX.md) · Plan: [plan.md](plan.md) · ADR: [ADR-028](../../architecture/decisions/ADR-028-gallery-without-stored-status.md)
+Status: IN PROGRESS (2026-10-18; self-review applied, Owner accepted the recommendations A–C; iteration 1 built) · Spec: [spec.md](spec.md) · Criteria: [acceptance-criteria.md](acceptance-criteria.md) · Design: [design.md](design.md), [exports/INDEX.md](exports/INDEX.md) · Plan: [plan.md](plan.md) · ADR: [ADR-028](../../architecture/decisions/ADR-028-gallery-without-stored-status.md)
 
 ## Context
 F-27 removes the gallery's own lifecycle and the two publish steps, creates the gallery when a project is booked, and adds the share dialog. Almost every change is to existing F-07, F-09 and F-10 code; the share dialog is the only new surface. No real users exist, so stored data needs no compatibility, but the deployed `staging` code shares the database (ADR-027), so columns are dropped only after the code stops reading them.
@@ -99,3 +99,15 @@ Copy: new and changed strings go through `*.copy.ts` and `docs/product/copy-deck
 - **R-2 Staging window:** between migration 0022 and the F-27 deploy, staging's old code shows galleries created by new code as unavailable. Accepted (no users).
 - **R-3 Backfill needs the key:** run locally with `.dev.vars` (agents may run it against the non-prod DB only, like `db:migrate`).
 - **R-4 Seed root cause** is inferred from the import graph (D-14); confirm in iteration 8 before changing it.
+
+## Implementation record — iteration 1
+Built: `galleryState` / `isWritable` / `canShareGallery` (D-1); client availability from the derived state (D-2); photo visibility without the delivery flag (D-6); `galleryDeliveryReasons` with only `NO_FINISHED_FILE`; `GALLERY_EXPIRY_PRESETS`, `isExpiryPreset`, `resolveExpiry(input, now)` with today = save time (D-8); `whatsappLink` (D-10); `SHARE_GALLERY` in the project menu (D-11, input always false).
+Commits: `8d79eff9` derive gallery state; `4951c7ed` open galleries without publish and show finished files; `31b39868` expiry presets; `1d92866b` whatsapp deep link; `def4bef3` share gallery menu item.
+Checks: `npx vitest run src/features/gallery` 134 files pass; `npx vitest run src/features/booking` 175 files pass; `pnpm typecheck` green; eslint and prettier clean on every changed file.
+Deviations:
+- `isAvailableToClient` takes `projectStatus: string` and fails closed on an unknown status (lint bans the cast from the text column).
+- `clientBrowseKind` deleted: after the change it only returned its input.
+- `setGalleryExpiry` checks `isWritable(galleryState(...))` and `reopened` uses the derived states, not the stored status (needed for D-1).
+- `SHARE_GALLERY` is filtered out in `resolve-menu-items.ts` until its copy is approved (iteration 6); the item is not in the UI yet.
+- `GALLERY_NOT_PUBLISHED` stays in `FinalDeliveryReason` until the delivery dialog changes (iteration 5).
+Open (not fixed here, outside the plan's callers): `browse-client-photos` totals, `get-delivery-files` and `get-client-home` still gate *Hasil akhir* on `finalDeliveryPublished`, which contradicts AC-GFL-019 for a synced file before delivery. Needs a decision in iteration 4 or 5.

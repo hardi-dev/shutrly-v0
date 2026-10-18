@@ -21,7 +21,11 @@ export function GalleryShareActions({ state, onClose }: Readonly<GalleryShareAct
   const ready = state.status === "ready" ? state.message : null;
   const handleCopy = () => {
     if (ready)
-      void copyShareMessage(ready.text, { title: t("copiedTitle"), body: t("copiedBody") });
+      void copyShareMessage(ready.text, {
+        title: t("copiedTitle"),
+        body: t("copiedBody"),
+        failedTitle: t("copyFailed"),
+      });
   };
   return (
     <>

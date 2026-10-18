@@ -18,6 +18,7 @@ export const GALLERY_SHARE_DIALOG_COPY = {
       copyMessage: "Copy message",
       copiedTitle: "Message copied",
       copiedBody: "Paste it into WhatsApp.",
+      copyFailed: "Couldn’t copy the message. Copy it from the message box.",
       openWhatsapp: "Open WhatsApp",
       noNumberTitle: "{name} doesn’t have a WhatsApp number yet",
       noNumberBody:
@@ -41,6 +42,7 @@ export const GALLERY_SHARE_DIALOG_COPY = {
       copyMessage: "Salin pesan",
       copiedTitle: "Pesan disalin",
       copiedBody: "Tempel di WhatsApp.",
+      copyFailed: "Pesan tidak bisa disalin. Salin manual dari kotak pesan.",
       openWhatsapp: "Buka WhatsApp",
       noNumberTitle: "{name} belum punya nomor WhatsApp",
       noNumberBody:

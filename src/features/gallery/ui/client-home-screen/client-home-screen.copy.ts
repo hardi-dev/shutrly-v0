@@ -78,7 +78,9 @@ export const CLIENT_HOME_COPY = {
       allPhotosMeta: "{count, plural, other {# foto}} · lihat-lihat dan pilih dari pratinjau",
       allPhotosMetaNoGroups: "{count, plural, other {# foto}} · lihat-lihat pratinjau",
       finalUnavailable: "Belum tersedia · muncul di sini setelah foto selesai diedit.",
-      finalReadyNoDate: "{edited} Foto edit · {print} Foto cetak",
+      // Same wording as the EN row, with a plural wrapper so the catalog parity check holds.
+      finalReadyNoDate:
+        "{edited, plural, other {# Foto edit}} · {print, plural, other {# Foto cetak}}",
       subtitleNoPhotos: "Belum ada foto · fotografer belum menambahkan foto. Coba lagi nanti.",
       pickTitle: "Pilih foto",
       pickDescription:

@@ -32,6 +32,15 @@ import type { GalleryShareEntry } from "./gallery-share-flow.types";
 
 const idSchema = z.uuid();
 
+/**
+ * The client's first name for the message greeting (Owner 2026-10-18, same as the client gallery greeting).
+ * @param name - the stored full name
+ * @returns the first word, or the trimmed name when it has none
+ */
+function clientFirstName(name: string): string {
+  return name.trim().split(/\s+/)[0] ?? name.trim();
+}
+
 function shareDeps(db: DbExecutor, rc: RequestContext): GetGalleryShareDeps {
   return {
     galleries: createDrizzleGalleryRepository(db),
@@ -67,7 +76,7 @@ async function renderShareText(
   );
   const profile = await getWorkspaceProfile(createDrizzleWorkspaceRepository(db), context);
   return renderTemplateForRecipient(template, locale, {
-    clientName: share.recipient.name,
+    clientName: clientFirstName(share.recipient.name),
     projectTitle: share.projectTitle,
     brandName: profile?.brandName ?? profile?.name ?? workspaceName,
     galleryUrl: share.link,

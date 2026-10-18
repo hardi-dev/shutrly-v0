@@ -103,6 +103,22 @@ describe("GalleryShareDialog (K1, K2, AC-GFL-021 to 025)", () => {
     );
   });
 
+  it("shows a danger toast when the clipboard write fails and keeps the dialog open", async () => {
+    const user = userEvent.setup();
+    const writeText = vi.fn(() => Promise.reject(new Error("denied")));
+    Object.defineProperty(navigator, "clipboard", { value: { writeText }, configurable: true });
+    const value = props();
+    renderInLocale(renderDialog(value), "en");
+    await user.click(await screen.findByRole("button", { name: "Copy message" }));
+    await waitFor(() => {
+      expect(showToast).toHaveBeenCalledWith({
+        tone: "danger",
+        title: "Couldn’t copy the message. Copy it from the message box.",
+      });
+    });
+    expect(value.onOpenChange).not.toHaveBeenCalledWith(false);
+  });
+
   it("loads nothing while closed and reloads when the revision changes", async () => {
     const value = props({ isOpen: false });
     const { rerender } = renderInLocale(renderDialog(value), "en");

@@ -88,6 +88,14 @@ describe("loadGalleryShareEntry (D-9, AC-GFL-021 to 025)", () => {
     expect(entry.waUrl).toBe(`https://wa.me/6281234567890?text=${encodeURIComponent(entry.text)}`);
   });
 
+  it("greets the client by first name in the message (Owner 2026-10-18)", async () => {
+    setUp(SHAREABLE);
+    const entry = await loadGalleryShareEntry(WORKSPACE_ID, PROJECT_ID);
+    if (!entry.ok) throw new Error("expected ok");
+    expect(entry.text).toContain("Rina");
+    expect(entry.text).not.toContain("Rina Wijaya");
+  });
+
   it("returns a null wa.me link and phone for a client without a number (AC-GFL-024)", async () => {
     setUp({ ...SHAREABLE, recipient: { name: "Rina Wijaya", whatsappNumber: null } });
     const entry = await loadGalleryShareEntry(WORKSPACE_ID, PROJECT_ID);

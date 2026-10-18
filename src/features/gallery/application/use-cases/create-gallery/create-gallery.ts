@@ -55,7 +55,7 @@ export async function createGallery(
 ): Promise<CreateGalleryResult> {
   const parsed = createGallerySchema.safeParse(input);
   if (!parsed.success) return toGalleryValidationFailure(parsed.error.issues);
-  const expiry = resolveExpiry(parsed.data.expiry, "DRAFT", deps.now);
+  const expiry = resolveExpiry(parsed.data.expiry, deps.now);
   if (!expiry.ok) return galleryFieldFailure({ "expiry.date": "PAST_DATE" });
   const source = firstFolder(parsed.data.folder, actorId);
   if (source && "ok" in source) return source;

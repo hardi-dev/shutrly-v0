@@ -1,4 +1,3 @@
-import type { GalleryStatus } from "../gallery-status/gallery-status.types";
 import type {
   ExpiryInput,
   ExpiryResolution,
@@ -10,8 +9,8 @@ import type {
 // end of a day is a fixed +07:00 instant.
 export const GALLERY_TIME_ZONE = "Asia/Jakarta";
 const GALLERY_ZONE_OFFSET = "+07:00";
-export const GALLERY_EXPIRY_DAYS_MIN = 1;
-export const GALLERY_EXPIRY_DAYS_MAX = 3650;
+/** The durations, in days, the Owner may pick for a gallery's expiry (A-1, BR-GAL-005). */
+export const GALLERY_EXPIRY_PRESETS: readonly number[] = [7, 14, 30, 60, 90];
 const DAY_MS = 86_400_000;
 
 const DAY_FORMAT = new Intl.DateTimeFormat("en-CA", {
@@ -20,6 +19,11 @@ const DAY_FORMAT = new Intl.DateTimeFormat("en-CA", {
   month: "2-digit",
   day: "2-digit",
 });
+
+/** Tells whether a duration is one of the presets (A-1, AC-GFL-011). @param days - whole days @returns true for a preset duration */
+export function isExpiryPreset(days: number): boolean {
+  return GALLERY_EXPIRY_PRESETS.some((preset) => preset === days);
+}
 
 /** Returns the calendar day in the gallery zone as YYYY-MM-DD (A-4). @param now - the instant @returns the day */
 export function todayInGalleryZone(now: Date): string {
@@ -36,19 +40,23 @@ export function addDays(from: Date, days: number): Date {
   return new Date(from.getTime() + days * DAY_MS);
 }
 
-/** Turns an expiry choice into the stored columns: a draft keeps a duration until publish, otherwise it counts from now (BR-GAL-005, D-2). @param input - the Owner's choice @param status - effective gallery status @param now - the current instant @returns the columns, or PAST_DATE for a day before today */
-export function resolveExpiry(
-  input: ExpiryInput,
-  status: GalleryStatus,
-  now: Date,
-): ExpiryResolution {
+/**
+ * Turns an expiry choice into the stored expiry (BR-GAL-005, A-2, D-8). A duration counts from the
+ * save time; today means the save time itself, so the gallery closes at once; a later date means
+ * the end of that day in Asia/Jakarta. A day before today is refused.
+ * @param input - the Owner's choice
+ * @param now - the save instant
+ * @returns the expiry columns, or PAST_DATE for a day before today
+ */
+export function resolveExpiry(input: ExpiryInput, now: Date): ExpiryResolution {
   if (input.type === "NONE") return { ok: true, expiry: { expiresAt: null, expiryDays: null } };
-  if (input.type === "DATE") {
-    if (input.date < todayInGalleryZone(now)) return { ok: false, code: "PAST_DATE" };
-    return { ok: true, expiry: { expiresAt: endOfGalleryDay(input.date), expiryDays: null } };
+  if (input.type === "DAYS") {
+    return { ok: true, expiry: { expiresAt: addDays(now, input.days), expiryDays: null } };
   }
-  if (status === "DRAFT") return { ok: true, expiry: { expiresAt: null, expiryDays: input.days } };
-  return { ok: true, expiry: { expiresAt: addDays(now, input.days), expiryDays: null } };
+  const today = todayInGalleryZone(now);
+  if (input.date < today) return { ok: false, code: "PAST_DATE" };
+  const expiresAt = input.date === today ? now : endOfGalleryDay(input.date);
+  return { ok: true, expiry: { expiresAt, expiryDays: null } };
 }
 
 /** Computes the expiry written at publish: a stored duration counts from the publish time (BR-GAL-005, AC-GAL-018). @param stored - the draft's expiry columns @param now - the publish instant @returns the published expiry columns */

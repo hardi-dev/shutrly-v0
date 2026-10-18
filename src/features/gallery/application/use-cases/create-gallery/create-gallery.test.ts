@@ -103,11 +103,14 @@ describe("createGallery", () => {
     expect(galleries.galleries).toHaveLength(1);
   });
 
-  it("AC-GAL-018 keeps a duration on the draft and AC-GAL-019 refuses a past date", async () => {
+  it("AC-GFL-010 counts a preset duration from the save time and AC-GFL-011 refuses a past date", async () => {
     const { galleries, deps } = setup();
     const days = { password: "mawar-4821", expiry: { type: "DAYS", days: 30 } };
     await createGallery(deps, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, days);
-    expect(galleries.galleries[0]).toMatchObject({ expiryDays: 30, expiresAt: null });
+    expect(galleries.galleries[0]).toMatchObject({
+      expiresAt: new Date(NOW.getTime() + 30 * 86_400_000),
+      expiryDays: null,
+    });
     const past = { password: "mawar-4821", expiry: { type: "DATE", date: "2026-10-03" } };
     expect(await createGallery(deps, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, past)).toEqual({
       ok: false,

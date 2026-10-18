@@ -166,7 +166,6 @@ export function createDrizzleSelectionRepository(db: DbExecutor): SelectionRepos
           and ${projectItem.projectId} = ${projectId}
           and ${projectItem.definitionId} = ${definitionId}
           and ${projectItem.selectionRequired}
-          and ${gallery.status} = 'PUBLISHED'
         on conflict (project_item_id) do nothing`);
     },
     async setBaseLimit(context, groupId, base) {

@@ -37,6 +37,11 @@ describe("0016 group backfill (A-23)", () => {
       title: "Wisuda Dina",
       status: "BOOKED",
     });
+    // 0016 predates ADR-028 and keys on the stored status, so this test writes the old values itself.
+    await db
+      .update(gallery)
+      .set({ status: "PUBLISHED", publishedAt: new Date() })
+      .where(eq(gallery.projectId, fixture.projectId));
     await db
       .update(gallery)
       .set({ status: "DRAFT", publishedAt: null })

@@ -100,8 +100,7 @@ export async function seedProjectWithGallery(db: Db, seed: ProjectSeed) {
     .values({
       workspaceId: seed.workspaceId,
       projectId: row.id,
-      status: "PUBLISHED",
-      publishedAt: new Date(),
+      // No stored status (ADR-028): whether the gallery is open follows the project and the expiry.
       passwordCiphertext: "enc",
       passwordIv: "iv",
       passwordHash: await fakeHasher.hash(GALLERY_PASSWORD),

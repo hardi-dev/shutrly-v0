@@ -1,6 +1,5 @@
 // Demo projects for `pnpm db:seed`: one per status, with sessions, teams, booking values, add-ons and
 // client picks, all through the app's use cases (status steps, cancel, final delivery, completion).
-import { createWebCryptoAccessTokenGenerator } from "@/adapters/crypto/access-token-generator/web-crypto-access-token-generator";
 import { createDrizzleProjectRepository } from "@/adapters/db/project-repository/drizzle-project-repository";
 import { createNeonRateLimiter } from "@/adapters/db/rate-limiter/neon-rate-limiter";
 import { createDrizzleSelectionRepository } from "@/adapters/db/selection-repository/drizzle-selection-repository";
@@ -9,11 +8,12 @@ import { approveAddOnWithLimit } from "@/composition/booking/add-on-edits/add-on
 import type { AddOnScope } from "@/composition/booking/add-on-scope/add-on-scope.types";
 import { runAddOnTransaction } from "@/composition/booking/add-on-scope/add-on-transaction";
 import { addOnTargetsOf } from "@/composition/booking/add-on-targets/add-on-targets";
+import { createProjectWithGallery } from "@/composition/booking/booking-gallery-scope/booking-gallery-flows";
+import { runBookingGalleryTransaction } from "@/composition/booking/booking-gallery-scope/booking-gallery-transaction";
 import { advanceProject } from "@/features/booking/application/use-cases/advance-project/advance-project";
 import { cancelProject } from "@/features/booking/application/use-cases/cancel-project/cancel-project";
 import { completeProject } from "@/features/booking/application/use-cases/complete-project/complete-project";
 import { createAddOn } from "@/features/booking/application/use-cases/create-add-on/create-add-on";
-import { createProject } from "@/features/booking/application/use-cases/create-project/create-project";
 import { lockSelectionGroup } from "@/features/gallery/application/use-cases/lock-selection-group/lock-selection-group";
 import type { ClientContext } from "@/features/gallery/application/use-cases/resolve-client-access/resolve-client-access.types";
 import { setPick } from "@/features/gallery/application/use-cases/set-pick/set-pick";
@@ -24,10 +24,11 @@ import { submitSelectionGroup } from "@/features/gallery/application/use-cases/s
 import type { SeededService, Team, TeamPick } from "./seed-catalog";
 import {
   clientOf,
+  markDeliveredIfFinished,
   proofIds,
-  publishDeliveryIfFinished,
   type SeededGallery,
   seedGallery,
+  seedGalleryPlan,
 } from "./seed-gallery";
 import { check, definitionId, done, type SeedEnv, sessionDate, type Studio } from "./seed-support";
 
@@ -62,7 +63,15 @@ export interface SeedInputs {
 /** What the credentials file lists: project paths and client links by title. */
 export type SeededLinks = Record<string, string>;
 
-async function createSeedProject(studio: Studio, seed: ProjectSeed): Promise<string> {
+/**
+ * Books or saves a seeded project through the app's booking work: a BOOKED project gets its gallery in the
+ * same transaction (AC-GFL-001, AC-GFL-003), a DRAFT gets none.
+ * @param studio - the seeded studio
+ * @param env - the seed environment (the gallery password)
+ * @param seed - the project to create
+ * @returns the project id
+ */
+async function createSeedProject(studio: Studio, env: SeedEnv, seed: ProjectSeed): Promise<string> {
   const items = await Promise.all(
     seed.service.items.map(async ([name, value]) => ({
       definitionId: await definitionId(studio, name),
@@ -74,26 +83,23 @@ async function createSeedProject(studio: Studio, seed: ProjectSeed): Promise<str
     date: sessionDate(days),
     team: [...team],
   }));
+  const plan = seed.mode === "BOOKED" ? await seedGalleryPlan(studio, env) : null;
+  const values = {
+    mode: seed.mode,
+    clientId: seed.client,
+    serviceId: seed.service.id,
+    title: seed.title,
+    agreedPrice: seed.service.price,
+    notes: seed.notes ?? null,
+    items,
+    sessions,
+    fieldValues: seed.fieldValues ?? {},
+  };
   const result = check(
     `project ${seed.title}`,
-    await createProject(
-      createDrizzleProjectRepository(studio.db),
-      createWebCryptoAccessTokenGenerator(),
-      studio.context,
-      studio.ownerId,
-      {
-        mode: seed.mode,
-        clientId: seed.client,
-        serviceId: seed.service.id,
-        title: seed.title,
-        agreedPrice: seed.service.price,
-        notes: seed.notes ?? null,
-        items,
-        sessions,
-        fieldValues: seed.fieldValues ?? {},
-      },
+    await runBookingGalleryTransaction(studio.db, (scope) =>
       // Seed data is written in Indonesian (the seeded owner's project text).
-      "id-ID",
+      createProjectWithGallery(scope, studio.context, studio.ownerId, values, "id-ID", plan),
     ),
   );
   return result.projectId;
@@ -212,7 +218,7 @@ const session = (
 async function seedWisuda(studio: Studio, inputs: SeedInputs, links: SeededLinks) {
   const { services, clients, team } = inputs;
   const basic = services["Wisuda Basic"];
-  const rina = await createSeedProject(studio, {
+  const rina = await createSeedProject(studio, inputs.env, {
     mode: "BOOKED",
     client: clients["Rina Saputri"],
     service: basic,
@@ -232,7 +238,7 @@ async function seedWisuda(studio: Studio, inputs: SeedInputs, links: SeededLinks
   });
   await seedOpenSelection(studio, rina, rinaGallery);
   links["Wisuda Rina"] = rina;
-  links["Wisuda Sari"] = await createSeedProject(studio, {
+  links["Wisuda Sari"] = await createSeedProject(studio, inputs.env, {
     mode: "DRAFT",
     client: clients["Sari Wulandari"],
     service: basic,
@@ -244,7 +250,7 @@ async function seedWisuda(studio: Studio, inputs: SeedInputs, links: SeededLinks
 /** POST_PROCESSING with a sent and locked selection; and a BOOKED one a month ahead. */
 async function seedWisudaLater(studio: Studio, inputs: SeedInputs, links: SeededLinks) {
   const { services, clients, team } = inputs;
-  const fajar = await createSeedProject(studio, {
+  const fajar = await createSeedProject(studio, inputs.env, {
     mode: "BOOKED",
     client: clients["Fajar Nugroho"],
     service: services["Wisuda Basic"],
@@ -265,7 +271,7 @@ async function seedWisudaLater(studio: Studio, inputs: SeedInputs, links: Seeded
   await seedSubmittedSelection(studio, fajar, fajarGallery);
   await advance(studio, fajar, ["START_SHOOTING", "FINISH_SHOOTING"]);
   links["Wisuda Fajar"] = fajar;
-  links["Wisuda Joko"] = await createSeedProject(studio, {
+  links["Wisuda Joko"] = await createSeedProject(studio, inputs.env, {
     mode: "BOOKED",
     client: clients["Joko Susilo"],
     service: services["Wisuda Premium"],
@@ -282,7 +288,7 @@ async function seedWisudaLater(studio: Studio, inputs: SeedInputs, links: Seeded
 /** SHOOTING with one session done and one to come; and a two-session BOOKED wedding. */
 async function seedEvents(studio: Studio, inputs: SeedInputs, links: SeededLinks) {
   const { services, clients, team } = inputs;
-  const dimas = await createSeedProject(studio, {
+  const dimas = await createSeedProject(studio, inputs.env, {
     mode: "BOOKED",
     client: clients["Dimas & Ayu"],
     service: services["Prewedding Outdoor"],
@@ -301,7 +307,7 @@ async function seedEvents(studio: Studio, inputs: SeedInputs, links: SeededLinks
   await advance(studio, dimas, ["START_SHOOTING"]);
   links["Prewedding Dimas & Ayu"] = dimas;
   const wedding = services["Wedding Full Day"];
-  links["Wedding Gita"] = await createSeedProject(studio, {
+  links["Wedding Gita"] = await createSeedProject(studio, inputs.env, {
     mode: "BOOKED",
     client: clients["Gita Permata"],
     service: wedding,
@@ -323,7 +329,7 @@ async function seedEvents(studio: Studio, inputs: SeedInputs, links: SeededLinks
 
 /** A wedding cancelled from BOOKED with a reason (BR-PRJ-010). */
 async function seedCancelled(studio: Studio, inputs: SeedInputs, links: SeededLinks) {
-  const indra = await createSeedProject(studio, {
+  const indra = await createSeedProject(studio, inputs.env, {
     mode: "BOOKED",
     client: inputs.clients["Indra Wijaya"],
     service: inputs.services["Wedding Full Day"],
@@ -352,7 +358,7 @@ async function seedFinished(studio: Studio, inputs: SeedInputs, links: SeededLin
     ["Wisuda Lina", "Lina Marlina", "Wisuda Basic", {}],
   ] as const;
   for (const [title, client, service, fieldValues] of finished) {
-    const projectId = await createSeedProject(studio, {
+    const projectId = await createSeedProject(studio, inputs.env, {
       mode: "BOOKED",
       client: clients[client],
       service: services[service],
@@ -371,7 +377,7 @@ async function seedFinished(studio: Studio, inputs: SeedInputs, links: SeededLin
       label: "Hasil akhir",
     });
     await advance(studio, projectId, ["START_SHOOTING", "FINISH_SHOOTING"]);
-    if (!(await publishDeliveryIfFinished(studio, projectId, seeded.sourceId))) continue;
+    if (!(await markDeliveredIfFinished(studio, projectId, seeded.sourceId))) continue;
     links[title] = projectId;
   }
   const lina = links["Wisuda Lina"];

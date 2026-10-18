@@ -1,6 +1,5 @@
 import "server-only";
 
-import { createWebCryptoAccessTokenGenerator } from "@/adapters/crypto/access-token-generator/web-crypto-access-token-generator";
 import { createWebCryptoGalleryPasswordCipher } from "@/adapters/crypto/gallery-password-cipher/web-crypto-gallery-password-cipher";
 import { createBetterAuthPasswordHasher } from "@/adapters/crypto/password-hasher/better-auth-password-hasher";
 import { createWebCryptoRandomInt } from "@/adapters/crypto/random-int/web-crypto-random-int";
@@ -24,7 +23,9 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import { withRequestDb } from "../../request-db/request-db";
 import { confirmBookingWithGallery, createProjectWithGallery } from "./booking-gallery-flows";
-import type { BookingGalleryScope } from "./booking-gallery-scope.types";
+import { runBookingGalleryTransaction } from "./booking-gallery-transaction";
+
+export { runBookingGalleryTransaction } from "./booking-gallery-transaction";
 
 /** The ports that encrypt and hash a new gallery password before the booking transaction opens (ADR-017, D-4). */
 export interface GalleryPlanDeps {
@@ -32,20 +33,6 @@ export interface GalleryPlanDeps {
   readonly hasher: PasswordHasherPort;
   readonly randomInt: RandomIntPort;
   readonly newId: () => string;
-}
-
-/** Runs one booking work over project and gallery repositories bound to ONE transaction (ADR-016, AC-GFL-003, C-005). @param db - the database @param work - the booking work @returns whatever `work` resolves to */
-export function runBookingGalleryTransaction<T>(
-  db: Db,
-  work: (scope: BookingGalleryScope) => Promise<T>,
-): Promise<T> {
-  return db.transaction((tx) =>
-    work({
-      projects: createDrizzleProjectRepository(tx),
-      accessTokens: createWebCryptoAccessTokenGenerator(),
-      galleries: createDrizzleGalleryRepository(tx),
-    }),
-  );
 }
 
 /** The production password ports, built from the Worker's gallery key (C-103). @param passwordKey - GALLERY_PASSWORD_KEY @returns the plan dependencies */

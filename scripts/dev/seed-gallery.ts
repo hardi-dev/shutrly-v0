@@ -1,5 +1,6 @@
-// Galleries for `pnpm db:seed`: create with a password, link a public Drive folder, sync it with the
-// real Drive provider, map `edited` / `print` subfolders to the package items (F-21) and publish.
+// Galleries for `pnpm db:seed`: a booking creates the gallery (its password is the seed's shared one),
+// then the seed links a public Drive folder, syncs it with the real Drive provider and maps
+// `edited` / `print` subfolders to the package items (F-21). Nothing is published (F-27).
 import { randomBytes } from "node:crypto";
 
 import { and, asc, eq, isNull } from "drizzle-orm";
@@ -18,10 +19,8 @@ import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-
 import { createGoogleDriveProvider } from "@/adapters/source/google-drive-provider/google-drive-provider";
 import type { GalleryScope } from "@/composition/gallery/gallery-scope/gallery-scope.types";
 import { runMarkDeliveredTransaction } from "@/composition/gallery/mark-delivered-scope/mark-delivered-transaction";
-import {
-  createGalleryForBooking,
-  prepareGalleryPassword,
-} from "@/features/gallery/application/use-cases/create-gallery-for-booking/create-gallery-for-booking";
+import { prepareGalleryPassword } from "@/features/gallery/application/use-cases/create-gallery-for-booking/create-gallery-for-booking";
+import type { PreparedGalleryPassword } from "@/features/gallery/application/use-cases/create-gallery-for-booking/create-gallery-for-booking.types";
 import {
   getFolderMapping,
   setFolderMapping,
@@ -117,7 +116,34 @@ async function mapFinishedFolders(
   console.log(`  mapped: ${mappings.map((entry) => entry.path).join(", ")}`);
 }
 
-/** Creates, links, syncs, maps and publishes one gallery; publishing opens its selection groups. */
+/**
+ * The gallery plan for a seeded booking: the seed's shared password, encrypted and hashed as the app
+ * does before the booking transaction (ADR-017, D-4). The booking itself creates the gallery.
+ * @param studio - the seeded studio
+ * @param env - the seed environment (the password key and the shared password)
+ * @returns the prepared gallery id, ciphertext and hash
+ */
+export function seedGalleryPlan(studio: Studio, env: SeedEnv): Promise<PreparedGalleryPassword> {
+  return prepareGalleryPassword(
+    {
+      cipher: createWebCryptoGalleryPasswordCipher(env.galleryPasswordKey),
+      hasher: createBetterAuthPasswordHasher(),
+      passwords: { propose: () => env.galleryPassword },
+      newId: () => crypto.randomUUID(),
+    },
+    studio.context,
+  );
+}
+
+/** The gallery of a booked project, created by the booking in the same transaction (BR-GAL-001). */
+async function galleryIdOf(studio: Studio, projectId: string): Promise<string> {
+  const row = (
+    await studio.db.select({ id: gallery.id }).from(gallery).where(eq(gallery.projectId, projectId))
+  ).at(0);
+  return present("gallery of the booked project", row).id;
+}
+
+/** Links, syncs and maps the gallery a booking already created: the Drive folder and its finished folders (F-21). @param studio - the seeded studio @param env - the seed environment @param seed - the booked project and its folder @returns the gallery and its linked source */
 export async function seedGallery(
   studio: Studio,
   env: SeedEnv,
@@ -125,29 +151,10 @@ export async function seedGallery(
 ): Promise<SeededGallery> {
   const scope = galleryScope(studio, env);
   const { context, ownerId } = studio;
-  const prepared = await prepareGalleryPassword(
-    {
-      cipher: scope.cipher,
-      hasher: scope.hasher,
-      passwords: { propose: () => env.galleryPassword },
-      newId: scope.newId,
-    },
-    context,
-  );
-  check(
-    "gallery",
-    await createGalleryForBooking(
-      { galleries: scope.galleries },
-      context,
-      ownerId,
-      seed.projectId,
-      prepared,
-    ),
-  );
-  const created = { galleryId: prepared.galleryId };
+  const galleryId = await galleryIdOf(studio, seed.projectId);
   const linked = check(
     "link folder",
-    await linkGallerySource(scope, context, ownerId, created.galleryId, {
+    await linkGallerySource(scope, context, ownerId, galleryId, {
       workspaceSourceId: await workspaceSourceId(studio),
       link: seed.folder,
       label: seed.label,
@@ -155,11 +162,11 @@ export async function seedGallery(
   );
   await syncSource(studio, scope, linked.sourceId);
   await mapFinishedFolders(studio, scope, linked.sourceId);
-  return { galleryId: created.galleryId, sourceId: linked.sourceId };
+  return { galleryId, sourceId: linked.sourceId };
 }
 
-/** Publishes final delivery (the project moves to DELIVERED) when the source holds mapped files. @returns whether it was published */
-export async function publishDeliveryIfFinished(
+/** Marks the project delivered (it moves to DELIVERED) when the source holds mapped finished files (BR-DEL-003). @returns whether it was marked */
+export async function markDeliveredIfFinished(
   studio: Studio,
   projectId: string,
   sourceId: string,

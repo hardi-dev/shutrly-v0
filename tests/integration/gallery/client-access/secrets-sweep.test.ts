@@ -9,7 +9,7 @@ import { createDrizzleGalleryBrowseReader } from "@/adapters/db/gallery-reposito
 import { createNeonRateLimiter } from "@/adapters/db/rate-limiter/neon-rate-limiter";
 import { gallery, galleryPhoto, gallerySource } from "@/adapters/db/schema/gallery/gallery";
 import { createDrizzleSelectionRepository } from "@/adapters/db/selection-repository/drizzle-selection-repository";
-import { runFinalDeliveryTransaction } from "@/composition/gallery/final-delivery-scope/final-delivery-scope";
+import { runMarkDeliveredTransaction } from "@/composition/gallery/mark-delivered-scope/mark-delivered-scope";
 import type { GallerySourceProviderPort } from "@/features/gallery/application/ports/gallery-source-provider/gallery-source-provider.port";
 import { browseClientPhotos } from "@/features/gallery/application/use-cases/browse-client-photos/browse-client-photos";
 import { getClientHome } from "@/features/gallery/application/use-cases/get-client-home/get-client-home";
@@ -127,7 +127,7 @@ async function everyClientResult(w: World) {
       new Date(),
     ),
   };
-  await runFinalDeliveryTransaction(db, {
+  await runMarkDeliveredTransaction(db, {
     context: fixture.context,
     actorId: fixture.ownerId,
     projectId: w.client.projectId,

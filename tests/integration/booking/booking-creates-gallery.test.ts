@@ -22,9 +22,11 @@ import {
   planForCreate,
   runBookingGalleryTransaction,
 } from "@/composition/booking/booking-gallery-scope/booking-gallery-scope";
+import { runMarkDeliveredTransaction } from "@/composition/gallery/mark-delivered-scope/mark-delivered-scope";
 import { cancelProject } from "@/features/booking/application/use-cases/cancel-project/cancel-project";
 import { galleryState } from "@/features/gallery/domain/gallery-state/gallery-state";
 
+import { type PhotoSeed, seedPhotos } from "../gallery/client-access/fixture";
 import { type GallerySeed, seedGalleryWorkspace } from "../gallery/helpers/gallery-seed";
 import { openTestDb } from "../helpers/test-db";
 
@@ -188,5 +190,52 @@ describe("booking creates the project's gallery", () => {
     );
     if (!facts) throw new Error("project missing");
     expect(galleryState(facts.status, null, new Date())).toBe("CLOSED");
+  });
+});
+
+/** A BOOKED project moved to POST_PROCESSING, with its gallery and the given synced photos (AC-GFL-017). */
+async function postProcessingWith(seed: GallerySeed, title: string, photos: readonly PhotoSeed[]) {
+  const booked = await saveBooked(seed, title);
+  if (!booked.ok) throw new Error("booking refused");
+  await db
+    .update(project)
+    .set({ status: "POST_PROCESSING" })
+    .where(eq(project.id, booked.projectId));
+  const [created] = await galleriesOf(booked.projectId);
+  await seedPhotos(db, { workspaceId: seed.context.workspaceId, galleryId: created.id }, photos);
+  return { projectId: booked.projectId, galleryId: created.id };
+}
+
+describe("Tandai terkirim moves the project through the gallery check", () => {
+  it("AC-GFL-017 with a synced EDITED file the project becomes DELIVERED, with the time recorded", async () => {
+    const seed = await seedGalleryWorkspace(db);
+    const { projectId, galleryId } = await postProcessingWith(seed, "Wisuda Terkirim", [
+      { fileName: "E_001.jpg", kind: "EDITED" },
+    ]);
+    const result = await runMarkDeliveredTransaction(db, {
+      context: seed.context,
+      actorId: seed.ownerId,
+      projectId,
+    });
+    expect(result).toBeUndefined();
+    const [row] = await db.select().from(project).where(eq(project.id, projectId));
+    expect(row.status).toBe("DELIVERED");
+    const [g] = await db.select().from(gallery).where(eq(gallery.id, galleryId));
+    expect(g.finalDeliveryPublishedAt).not.toBeNull();
+  });
+
+  it("AC-GFL-017 without a synced finished file Tandai terkirim is refused and nothing moves", async () => {
+    const seed = await seedGalleryWorkspace(db);
+    const { projectId } = await postProcessingWith(seed, "Wisuda Belum Jadi", [
+      { fileName: "IMG_001.jpg" },
+    ]);
+    const result = await runMarkDeliveredTransaction(db, {
+      context: seed.context,
+      actorId: seed.ownerId,
+      projectId,
+    });
+    expect(result).toMatchObject({ ok: false, code: "REFUSED" });
+    const [row] = await db.select().from(project).where(eq(project.id, projectId));
+    expect(row.status).toBe("POST_PROCESSING");
   });
 });

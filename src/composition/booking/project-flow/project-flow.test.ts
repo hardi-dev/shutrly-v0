@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const logger = { error: vi.fn(), info: vi.fn(), warn: vi.fn() };
 const createProject = vi.fn<(...args: unknown[]) => Promise<unknown>>();
 const getProjectDetail = vi.fn();
+const withMarkDeliveredScope = vi.fn<(target: unknown) => Promise<unknown>>();
 const notFound = vi.fn(() => {
   throw new Error("NEXT_NOT_FOUND");
 });
@@ -27,6 +28,9 @@ vi.mock("../../workspace/owner-workspace/owner-workspace", () => ({
 vi.mock("../booking-gallery-scope/booking-gallery-scope", () => ({
   createBookedProject: (...args: unknown[]) => createProject(...args),
   confirmBookedProject: vi.fn(),
+}));
+vi.mock("../../gallery/mark-delivered-scope/mark-delivered-scope", () => ({
+  withMarkDeliveredScope: (target: unknown) => withMarkDeliveredScope(target),
 }));
 vi.mock("../project-scope/project-scope", () => ({
   withProjectScope: (work: (scope: unknown) => Promise<unknown>) =>
@@ -58,6 +62,40 @@ describe("project-flow", () => {
     const projectId = "00000000-0000-4000-8000-0000000000a1";
     await advanceProjectEntry("ws-1", projectId, "CONFIRM_BOOKING");
     expect(confirmBookedProject).toHaveBeenCalledWith({ workspaceId: "ws-1" }, "owner", projectId);
+  });
+
+  it("AC-GFL-017 Tandai terkirim runs the mark-delivered scope and returns undefined when it moves", async () => {
+    const projectId = "00000000-0000-4000-8000-0000000000a1";
+    withMarkDeliveredScope.mockResolvedValue(undefined);
+    await expect(advanceProjectEntry("ws-1", projectId, "MARK_DELIVERED")).resolves.toBeUndefined();
+    expect(withMarkDeliveredScope).toHaveBeenCalledWith({
+      context: { workspaceId: "ws-1" },
+      actorId: "owner",
+      projectId,
+    });
+    expect(confirmBookedProject).not.toHaveBeenCalled();
+  });
+
+  it("AC-GFL-017 a refusal without a synced finished file is DELIVERY_REFUSED, a moved status is STALE", async () => {
+    const projectId = "00000000-0000-4000-8000-0000000000a1";
+    withMarkDeliveredScope.mockResolvedValueOnce({
+      ok: false,
+      code: "REFUSED",
+      reasons: ["NO_FINISHED_FILE"],
+    });
+    await expect(advanceProjectEntry("ws-1", projectId, "MARK_DELIVERED")).resolves.toEqual({
+      ok: false,
+      code: "DELIVERY_REFUSED",
+    });
+    withMarkDeliveredScope.mockResolvedValueOnce({
+      ok: false,
+      code: "REFUSED",
+      reasons: ["PROJECT_STATUS"],
+    });
+    await expect(advanceProjectEntry("ws-1", projectId, "MARK_DELIVERED")).resolves.toEqual({
+      ok: false,
+      code: "STALE",
+    });
   });
 
   it("C-103 logs only the workspace and operation on an unexpected error", async () => {

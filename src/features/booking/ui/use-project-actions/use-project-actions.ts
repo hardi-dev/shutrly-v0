@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-import type { ProjectStep } from "@/features/booking/domain/project-status/project-status.types";
+import type { ManualStep } from "@/features/booking/domain/project-status/project-status.types";
 import { showToast } from "@/ui/patterns/toast/toast";
 
 import type { ProjectTranslate } from "../project-copy/project-copy.types";
@@ -20,8 +20,8 @@ import type { UseProjectActionsInput } from "./use-project-actions.types";
 export function useProjectActions(input: Readonly<UseProjectActionsInput>) {
   const t = useTranslations(USE_PROJECT_ACTIONS_COPY_NAMESPACE);
   const router = useRouter();
-  const [pendingStep, setPendingStep] = useState<ProjectStep | null>(null);
-  const advance = async (step: ProjectStep, projectId = input.projectId): Promise<void> => {
+  const [pendingStep, setPendingStep] = useState<ManualStep | null>(null);
+  const advance = async (step: ManualStep, projectId = input.projectId): Promise<void> => {
     setPendingStep(step);
     try {
       const result = await input.advanceAction(input.workspaceId, projectId, step);
@@ -53,9 +53,9 @@ export function useProjectActions(input: Readonly<UseProjectActionsInput>) {
 
 function showFailure(
   t: ProjectTranslate,
-  step: ProjectStep,
+  step: ManualStep,
   projectId: string,
-  retry: (step: ProjectStep, projectId: string) => Promise<void>,
+  retry: (step: ManualStep, projectId: string) => Promise<void>,
 ): void {
   showToast({
     tone: "danger",

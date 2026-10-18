@@ -1,7 +1,9 @@
-import type { ProjectStatus, ProjectStep } from "../project-status/project-status.types";
+import type { ManualStep, ProjectStatus } from "../project-status/project-status.types";
 
 export type ProjectMenuItem =
-  | { readonly kind: "STEP"; readonly step: ProjectStep }
+  | { readonly kind: "STEP"; readonly step: ManualStep }
+  /** Tandai terkirim beside the header step on BOOKED and SHOOTING (A-6, BR-DEL-003). */
+  | { readonly kind: "MARK_DELIVERED" }
   | { readonly kind: "EDIT_INFO" }
   | { readonly kind: "CHAT_WHATSAPP" }
   | { readonly kind: "ADD_WHATSAPP_NUMBER" }

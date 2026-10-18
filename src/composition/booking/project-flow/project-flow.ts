@@ -38,6 +38,7 @@ import { logger } from "@/shared/logging/logger";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
+import { withMarkDeliveredScope } from "../../gallery/mark-delivered-scope/mark-delivered-scope";
 import { verifyOwnerWorkspace } from "../../workspace/owner-workspace/owner-workspace";
 import {
   confirmBookedProject,
@@ -109,6 +110,26 @@ async function loadProjectDetailUncached(rawWorkspaceId: string, rawProjectId: s
 /** Loads a project's detail; one lookup per request (ADR-026). */
 export const loadProjectDetail = cache(loadProjectDetailUncached);
 
+/**
+ * Tandai terkirim as a project step: project and gallery move together, and a refusal becomes a booking code (BR-DEL-003, C-005).
+ * @param context - verified workspace
+ * @param actorId - the signed-in Owner
+ * @param projectId - the project id
+ * @returns undefined, or STALE when the status moved, or DELIVERY_REFUSED without a synced finished file
+ */
+async function markDeliveredStep(
+  context: WorkspaceContext,
+  actorId: string,
+  projectId: string,
+): Promise<ProjectWriteResult> {
+  const refused = await withMarkDeliveredScope({ context, actorId, projectId });
+  if (refused === undefined) return undefined;
+  return {
+    ok: false,
+    code: refused.reasons.includes("PROJECT_STATUS") ? "STALE" : "DELIVERY_REFUSED",
+  };
+}
+
 export async function advanceProjectEntry(
   rawWorkspaceId: string,
   rawProjectId: string,
@@ -120,6 +141,9 @@ export async function advanceProjectEntry(
   try {
     if (step === "CONFIRM_BOOKING") {
       return await confirmBookedProject(verified.context, account.id, projectId);
+    }
+    if (step === "MARK_DELIVERED") {
+      return await markDeliveredStep(verified.context, account.id, projectId);
     }
     return await withProjectScope(({ projects }) =>
       advanceProject(projects, verified.context, account.id, projectId, step),

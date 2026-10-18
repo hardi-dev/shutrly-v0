@@ -4,13 +4,13 @@ import { revalidatePath } from "next/cache";
 
 import {
   completeProjectEntry,
-  publishFinalDeliveryEntry,
+  markDeliveredEntry,
 } from "@/composition/gallery/delivery-flow/delivery-flow";
 
 const PROJECTS = "/w/[workspaceId]/projects";
 
 export async function publishFinalDeliveryAction(workspaceId: string, projectId: string) {
-  const result = await publishFinalDeliveryEntry(workspaceId, projectId);
+  const result = await markDeliveredEntry(workspaceId, projectId);
   if (result === undefined) revalidatePath(PROJECTS, "layout");
   return result;
 }

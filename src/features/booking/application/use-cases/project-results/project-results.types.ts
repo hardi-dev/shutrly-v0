@@ -12,7 +12,9 @@ export type ProjectDomainCode =
   // F-10 D-10c: the item's selection group was already sent or locked.
   | "SELECTION_CLOSED"
   // F-10 D-10c: an approved add-on targets the item's selection group (BR-PRJ-009).
-  | "SELECTION_HAS_ADD_ON";
+  | "SELECTION_HAS_ADD_ON"
+  // BR-DEL-003: Tandai terkirim needs a synced finished file; the gallery reasons stay in the gallery.
+  | "DELIVERY_REFUSED";
 export interface ProjectValidationFailure {
   readonly ok: false;
   readonly code: "VALIDATION_FAILED";

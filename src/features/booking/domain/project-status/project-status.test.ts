@@ -22,12 +22,12 @@ describe("project status (BR-PRJ-004, BR-PRJ-009, BR-PRJ-010)", () => {
     expect(stepTransition("FINISH_SHOOTING")).toEqual({ from: "SHOOTING", to: "POST_PROCESSING" });
   });
 
-  it("BR-PRJ-004 offers a step only for DRAFT, BOOKED and SHOOTING", () => {
+  it("BR-PRJ-004 offers a step for DRAFT, BOOKED, SHOOTING and POST_PROCESSING (A-6, AC-GFL-017)", () => {
     expect(PROJECT_STATUSES.map(nextStep)).toEqual([
       "CONFIRM_BOOKING",
       "START_SHOOTING",
       "FINISH_SHOOTING",
-      null,
+      "MARK_DELIVERED",
       null,
       null,
       null,

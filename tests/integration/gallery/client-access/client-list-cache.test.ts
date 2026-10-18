@@ -5,7 +5,7 @@ import { createWorkersClientListCache } from "@/adapters/cache/workers-client-li
 import type { Db } from "@/adapters/db/client/client.types";
 import { createDrizzleGalleryBrowseReader } from "@/adapters/db/gallery-repository/drizzle-gallery-browse-reader";
 import { gallery } from "@/adapters/db/schema/gallery/gallery";
-import { runFinalDeliveryTransaction } from "@/composition/gallery/final-delivery-scope/final-delivery-scope";
+import { runMarkDeliveredTransaction } from "@/composition/gallery/mark-delivered-scope/mark-delivered-scope";
 import { browseClientPhotos } from "@/features/gallery/application/use-cases/browse-client-photos/browse-client-photos";
 
 import { openTestDb } from "../../helpers/test-db";
@@ -107,7 +107,7 @@ describe("client photo-list cache (D-22)", () => {
     expect(beforePage.editedTotal).toBe(1);
     expect(beforePage.photos.map((photo) => photo.fileName)).toContain("E_001.jpg");
     expect(
-      await runFinalDeliveryTransaction(db, {
+      await runMarkDeliveredTransaction(db, {
         context: fixture.context,
         actorId: fixture.ownerId,
         projectId: target.projectId,

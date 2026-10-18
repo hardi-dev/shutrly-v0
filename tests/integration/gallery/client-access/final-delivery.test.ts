@@ -7,7 +7,7 @@ import { createDrizzleDeliveryReader } from "@/adapters/db/gallery-repository/dr
 import { createDrizzleProjectRepository } from "@/adapters/db/project-repository/drizzle-project-repository";
 import { project } from "@/adapters/db/schema/booking/project";
 import { gallery } from "@/adapters/db/schema/gallery/gallery";
-import { runFinalDeliveryTransaction } from "@/composition/gallery/final-delivery-scope/final-delivery-scope";
+import { runMarkDeliveredTransaction } from "@/composition/gallery/mark-delivered-scope/mark-delivered-scope";
 import { completeProject } from "@/features/booking/application/use-cases/complete-project/complete-project";
 import { getDeliveryCard } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card";
 import { asWorkspaceId } from "@/shared/workspace-context/workspace-context";
@@ -52,7 +52,7 @@ async function seedRina(status = "POST_PROCESSING", photos: readonly PhotoSeed[]
 }
 
 const publish = (projectId: string) =>
-  runFinalDeliveryTransaction(db, {
+  runMarkDeliveredTransaction(db, {
     context: fixture.context,
     actorId: fixture.ownerId,
     projectId,
@@ -161,7 +161,7 @@ describe("final delivery (D-17, sequence 3)", () => {
     const before = await stateOf(rina.projectId, rina.galleryId);
     const stranger = { workspaceId: asWorkspaceId(crypto.randomUUID()) };
     await expect(
-      runFinalDeliveryTransaction(db, {
+      runMarkDeliveredTransaction(db, {
         context: stranger,
         actorId: fixture.ownerId,
         projectId: rina.projectId,

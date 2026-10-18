@@ -159,7 +159,8 @@ function DetailBody({
   const handleEditInfo = () => {
     api.openInfo(target);
   };
-  const step = project.nextStep;
+  // Tandai terkirim's header button waits for its copy (F-27 iteration 5); until then the header shows no step.
+  const step = project.nextStep === "MARK_DELIVERED" ? null : project.nextStep;
   const button =
     step === null ? (
       (headerAction ?? null)

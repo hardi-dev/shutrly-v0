@@ -6,15 +6,18 @@ import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import { projectStepCopy } from "../project-step-copy/project-step-copy";
 import type { ProjectMenuHandlers, ProjectMenuProps, ResolvedMenuItem } from "./project-menu.types";
 
-type RenderableItem = Exclude<ProjectMenuItem, { readonly kind: "SHARE_GALLERY" }>;
+type RenderableItem = Exclude<
+  ProjectMenuItem,
+  { readonly kind: "SHARE_GALLERY" } | { readonly kind: "MARK_DELIVERED" }
+>;
 
 /**
- * SHARE_GALLERY is hidden until its copy is approved (F-27 iteration 6); no caller enables it yet.
+ * SHARE_GALLERY and MARK_DELIVERED are hidden until their copy is approved (F-27 iteration 5/6).
  * @param item - a menu item
- * @returns false for SHARE_GALLERY
+ * @returns false for the items without copy yet
  */
 function isRenderable(item: ProjectMenuItem): item is RenderableItem {
-  return item.kind !== "SHARE_GALLERY";
+  return item.kind !== "SHARE_GALLERY" && item.kind !== "MARK_DELIVERED";
 }
 
 function resolve(

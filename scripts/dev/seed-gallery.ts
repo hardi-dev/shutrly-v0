@@ -16,8 +16,8 @@ import { gallery, galleryPhoto, gallerySource } from "@/adapters/db/schema/galle
 import { workspaceSourceConfig } from "@/adapters/db/schema/gallery/workspace-source-config";
 import { createDrizzleWorkspaceSourceRepository } from "@/adapters/db/workspace-source-repository/drizzle-workspace-source-repository";
 import { createGoogleDriveProvider } from "@/adapters/source/google-drive-provider/google-drive-provider";
-import { runFinalDeliveryTransaction } from "@/composition/gallery/final-delivery-scope/final-delivery-scope";
 import type { GalleryScope } from "@/composition/gallery/gallery-scope/gallery-scope.types";
+import { runMarkDeliveredTransaction } from "@/composition/gallery/mark-delivered-scope/mark-delivered-scope";
 import {
   createGalleryForBooking,
   prepareGalleryPassword,
@@ -184,7 +184,7 @@ export async function publishDeliveryIfFinished(
     console.log("  final delivery skipped: the folder has no `edited` or `print` subfolder");
     return false;
   }
-  const refused = await runFinalDeliveryTransaction(studio.db, {
+  const refused = await runMarkDeliveredTransaction(studio.db, {
     context: studio.context,
     actorId: studio.ownerId,
     projectId,

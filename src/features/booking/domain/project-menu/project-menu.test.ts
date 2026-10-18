@@ -15,8 +15,12 @@ const kinds = (status: ProjectStatus, hasWhatsappNumber = true) => {
 describe("project menu (AC-PRJ-027)", () => {
   it.each([
     ["DRAFT", [["CONFIRM_BOOKING", "EDIT_INFO"], ["CHAT_WHATSAPP"], ["DELETE_DRAFT"]]],
-    ["BOOKED", [["START_SHOOTING", "EDIT_INFO"], ["CHAT_WHATSAPP"], ["CANCEL"]]],
-    ["SHOOTING", [["FINISH_SHOOTING", "EDIT_INFO"], ["CHAT_WHATSAPP"], ["CANCEL"]]],
+    // A-6, BR-DEL-003: Tandai terkirim sits next to the header step on BOOKED and SHOOTING.
+    ["BOOKED", [["START_SHOOTING", "MARK_DELIVERED", "EDIT_INFO"], ["CHAT_WHATSAPP"], ["CANCEL"]]],
+    [
+      "SHOOTING",
+      [["FINISH_SHOOTING", "MARK_DELIVERED", "EDIT_INFO"], ["CHAT_WHATSAPP"], ["CANCEL"]],
+    ],
     ["POST_PROCESSING", [["EDIT_INFO"], ["CHAT_WHATSAPP"], []]],
     ["DELIVERED", [["EDIT_INFO"], ["CHAT_WHATSAPP"], []]],
     ["COMPLETED", [[], ["CHAT_WHATSAPP"], []]],

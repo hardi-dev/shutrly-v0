@@ -9,7 +9,7 @@ import type { FinalDeliveryWriteResult } from "@/features/gallery/application/us
 import type { FinalDeliveryReason } from "@/features/gallery/domain/final-delivery/final-delivery.types";
 
 import { withRequestDb } from "../../request-db/request-db";
-import type { FinalDeliveryScope, FinalDeliveryTarget } from "./final-delivery-scope.types";
+import type { MarkDeliveredScope, MarkDeliveredTarget } from "./mark-delivered-scope.types";
 
 /** Carries the refusal out of the transaction so both sides roll back (D-17). */
 class FinalDeliveryRefusal extends Error {
@@ -26,9 +26,9 @@ class FinalDeliveryRefusal extends Error {
  * @param target - verified workspace, actor and project
  * @returns undefined once both moved
  */
-export async function publishFinalDeliveryWithProject(
-  scope: FinalDeliveryScope,
-  target: FinalDeliveryTarget,
+export async function markDeliveredWithProject(
+  scope: MarkDeliveredScope,
+  target: MarkDeliveredTarget,
 ): Promise<undefined> {
   const { context, actorId, projectId } = target;
   const project = await markProjectDelivered(scope.projects, context, actorId, projectId);
@@ -47,13 +47,13 @@ export async function publishFinalDeliveryWithProject(
  * @param target - verified workspace, actor and project
  * @returns undefined, or the refusal with its reasons
  */
-export async function runFinalDeliveryTransaction(
+export async function runMarkDeliveredTransaction(
   db: Db,
-  target: FinalDeliveryTarget,
+  target: MarkDeliveredTarget,
 ): Promise<FinalDeliveryWriteResult> {
   try {
     await db.transaction((tx) =>
-      publishFinalDeliveryWithProject(
+      markDeliveredWithProject(
         {
           projects: createDrizzleProjectRepository(tx),
           sources: createDrizzleGallerySourceRepository(tx),
@@ -71,9 +71,9 @@ export async function runFinalDeliveryTransaction(
   }
 }
 
-/** `runFinalDeliveryTransaction` on the request database. @param target - verified workspace, actor and project @returns undefined, or the refusal */
-export function withFinalDeliveryScope(
-  target: FinalDeliveryTarget,
+/** `runMarkDeliveredTransaction` on the request database. @param target - verified workspace, actor and project @returns undefined, or the refusal */
+export function withMarkDeliveredScope(
+  target: MarkDeliveredTarget,
 ): Promise<FinalDeliveryWriteResult> {
-  return withRequestDb((db) => runFinalDeliveryTransaction(db, target));
+  return withRequestDb((db) => runMarkDeliveredTransaction(db, target));
 }

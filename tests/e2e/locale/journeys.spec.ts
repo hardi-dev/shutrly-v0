@@ -7,7 +7,7 @@ import { CLIENT_PASSWORD_FORM_COPY } from "@/features/gallery/ui/client-password
 import { PICK_COPY } from "@/features/gallery/ui/pick-screen/pick-screen.copy";
 
 import { uniqueEmail } from "../auth/auth-e2e";
-import { FOLDER_URL, GALLERY_PASSWORD, publishedGallery } from "../client-access/client-access-e2e";
+import { FOLDER_URL, GALLERY_PASSWORD, linkedGallery } from "../client-access/client-access-e2e";
 import { createProject, openGalleryWorkspace } from "../gallery/gallery-e2e";
 
 // I8.2 journeys (AC-L10N-011). Each journey signs in or registers in Indonesian and checks that the
@@ -77,7 +77,7 @@ const clientOpen: Pair = {
 /** Signs the client in with the fixture password; the password screen is Indonesian for an Indonesian owner. */
 async function signInClient(client: Page, clientPath: string): Promise<void> {
   const field = client.locator('input[name="password"]');
-  // The publish toast can show before the gallery row is readable by the next request.
+  // The sync can finish a moment before the client route reads the gallery, so retry the first load.
   await expect(async () => {
     await client.goto(clientPath);
     await expect(field).toBeVisible({ timeout: 2_000 });
@@ -102,7 +102,8 @@ test.describe("client journey", () => {
   test.skip(!FOLDER_URL, "GALLERY_SMOKE_FOLDER_URL is unset");
 
   test("AC-L10N-011 a client picks and submits in Indonesian", async ({ page, browser }) => {
-    const { clientPath } = await publishedGallery(page);
+    // The client picks, so the project needs a selection item (the e2e package has none).
+    const { clientPath } = await linkedGallery(page, FOLDER_URL, { withPickItem: true });
     const context = await browser.newContext();
     const client = await context.newPage();
     try {

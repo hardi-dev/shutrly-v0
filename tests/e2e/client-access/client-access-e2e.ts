@@ -6,6 +6,7 @@ import { expect } from "@playwright/test";
 import { copyTranslator } from "@tests/support/copy/copy-messages";
 import { parse } from "dotenv";
 
+import { PROJECT_COPY_NAMESPACE } from "@/features/booking/ui/project-copy/project-copy.copy";
 import {
   GALLERY_COPY_NAMESPACE,
   GALLERY_SOURCE_CHIP_MESSAGE_KEY,
@@ -14,6 +15,7 @@ import {
 import { createProject, openGalleryWorkspace, visibleText } from "../gallery/gallery-e2e";
 
 const galleryCopy = copyTranslator(GALLERY_COPY_NAMESPACE, "id");
+const projectCopy = copyTranslator(PROJECT_COPY_NAMESPACE, "id");
 
 export const GALLERY_PASSWORD = "mawar-4821";
 // The real-Drive public folder from .env.test (same as the F-09 smoke test).
@@ -73,9 +75,33 @@ export async function setGalleryPassword(page: Page, password: string): Promise<
  * Books a project for *Rina* from *Wisuda* (the gallery is created with the booking), links the
  * folder, sets the fixture password and waits for the sync. @returns the project id and its client path
  */
-export async function linkedGallery(page: Page, folderUrl = FOLDER_URL) {
+/**
+ * Adds the package item *Foto edit* (3 photos) to a booked project, so its gallery gets a selection
+ * group the client can pick into (BR-SEL-001). The e2e package has no selection item of its own.
+ */
+export async function addPickItem(page: Page): Promise<void> {
+  await page
+    .getByRole("button", { name: projectCopy("addItemDesktop") })
+    .first()
+    .click();
+  const item = page
+    .getByRole("dialog", { name: projectCopy("itemAddTitle") })
+    .filter({ visible: true });
+  await item.getByRole("button", { name: new RegExp(projectCopy("itemPickerLabel")) }).click();
+  await page.getByRole("option", { name: /Foto edit/ }).click();
+  await item.getByRole("textbox", { name: projectCopy("quantityLabel") }).fill("3");
+  await item.getByRole("button", { name: projectCopy("itemAddConfirm") }).click();
+  await expect(item).toBeHidden({ timeout: 20_000 });
+}
+
+export async function linkedGallery(
+  page: Page,
+  folderUrl = FOLDER_URL,
+  options: { withPickItem?: boolean } = {},
+) {
   const workspaceId = await openGalleryWorkspace(page);
   const projectPath = await createProject(page, workspaceId, "BOOKED");
+  if (options.withPickItem) await addPickItem(page);
   await linkFolder(page, projectPath, folderUrl);
   await setGalleryPassword(page, GALLERY_PASSWORD);
   const projectId = projectPath.split("/").at(-1) ?? "";

@@ -7,6 +7,7 @@ export type ButtonSize = "md" | "lg";
 export type ButtonIconName = Extract<
   IconName,
   | "plus"
+  | "message-circle"
   | "send"
   | "chevron-down"
   | "arrow-right"

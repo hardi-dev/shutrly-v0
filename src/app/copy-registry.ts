@@ -35,6 +35,7 @@ import { CLIENT_UNAVAILABLE_COPY } from "@/features/gallery/ui/client-unavailabl
 import { DELIVERY_COPY } from "@/features/gallery/ui/delivery-copy/delivery.copy";
 import { DELIVERY_SCREEN_COPY } from "@/features/gallery/ui/delivery-screen/delivery-screen.copy";
 import { GALLERY_COPY } from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
+import { GALLERY_SHARE_DIALOG_COPY } from "@/features/gallery/ui/gallery-share-dialog/gallery-share-dialog.copy";
 import { GALLERY_SUMMARY_COPY } from "@/features/gallery/ui/gallery-summary-text/gallery-summary.copy";
 import { PICK_NOTE_COPY } from "@/features/gallery/ui/pick-note-sheet/pick-note-sheet.copy";
 import { PICK_COPY } from "@/features/gallery/ui/pick-screen/pick-screen.copy";
@@ -173,6 +174,7 @@ export const COPY_REGISTRY: readonly CopyModule[] = [
   SELECTION_OWNER_COPY,
   DELIVERY_COPY,
   GALLERY_SUMMARY_COPY,
+  GALLERY_SHARE_DIALOG_COPY,
   SPLIT_LAYOUT_COPY,
   EDITORIAL_PANEL_COPY,
   PROFILE_LAYOUT_COPY,
